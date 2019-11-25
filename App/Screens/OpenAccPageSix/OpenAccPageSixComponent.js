@@ -156,11 +156,26 @@ class OpenAccPageSixComponent extends Component {
             const responseKey = ActionTypes.ESIGN_SAVE_OPENING_ACCT;
             if (this.props.accOpeningData[responseKey]) {
                 if (this.props.accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
-                    const tempResponse = this.props.accOpeningData[responseKey];
+                    let tempResponse = this.props.accOpeningData[responseKey];
                     if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
                         let msg = tempResponse.message;
-                        console.log("Account Type Saved ::: :: " + msg);
+                        console.log("Account  Saved ::: :: " + msg);
                         alert(tempResponse.result)
+                    } else {
+                        alert(tempResponse.message)
+                    }
+                }
+            }
+
+            const submitResKey = ActionTypes.SUBMIT_OPENING_ACCT;
+            if (this.props.accOpeningData[submitResKey]) {
+                if (this.props.accOpeningData[submitResKey] !== prevProps.accOpeningData[submitResKey]) {
+                    let tempResponse = this.props.accOpeningData[submitResKey];
+                    if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
+                        let msg = tempResponse.message;
+                        console.log("Account Created ::: :: " + msg);
+                        alert(msg+"  :"+ tempResponse.accountId);
+                        this.props.navigation.goBack('termsAndConditions');
                     } else {
                         alert(tempResponse.message)
                     }
@@ -289,12 +304,10 @@ class OpenAccPageSixComponent extends Component {
             }
         };
 
+
+
         try {
             this.props.submitAccountOpening(payloadData);
-            /*    .then(() => {
-                    this.props.navigation.goBack('dashboardAccounts');
-                });
-                */
         }
         catch (err) {
             console.log("error", err);
@@ -319,7 +332,7 @@ class OpenAccPageSixComponent extends Component {
     onClickSubmit = () => {
         if (this.validateFields()) {
             const payload = this.getPayload();
-            this.submitAccOpening();
+            this.props.submitAccountOpening(payload);
         }
     }
     onClickSave = () => {
@@ -440,13 +453,7 @@ class OpenAccPageSixComponent extends Component {
                                                                  -------------------------- */
     render() {
         console.log("RENDER::: OpenAccPageSix ::>>> ", this.props);
-        if (this.props.accOpeningData.SUBMIT_OPENING_ACCT != null && !this.props.accOpeningData.SUBMIT_OPENING_ACCT != undefined) {
-            if (this.props.accOpeningData.SUBMIT_OPENING_ACCT.accountId != null) {
-                this.props.navigation.goBack('termsAndConditions');
-                alert("You account have succesfully opened. Account ID: " + this.props.accOpeningData.SUBMIT_OPENING_ACCT.accountId);
-
-            }
-        }
+        
 
         let currentPage = 6;
         return (

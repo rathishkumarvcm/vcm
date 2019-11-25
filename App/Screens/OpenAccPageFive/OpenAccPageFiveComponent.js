@@ -52,13 +52,17 @@ class OpenAccPageFiveComponent extends Component {
         this.props.navigation.navigate({ routeName: 'openAccPageSix', key: 'openAccPageSix' });
 
     }
-
+ 
+    getFieldValue = () =>{
+       
+    }
 
 
     /*----------------------
                                  Render Methods
                                                                  -------------------------- */
     render() {
+        
 
         let currentPage = 5;
         return (

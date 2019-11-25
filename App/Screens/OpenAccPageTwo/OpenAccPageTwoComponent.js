@@ -499,7 +499,6 @@ class OpenAccPageTwoComponent extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         console.log("componentDidUpdate::::> ");
-        console.log("componentDidUpdate::::> ");
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.PERSONAL_INFO_SAVE_OPENING_ACCT;
             if (this.props.accOpeningData[responseKey]) {
@@ -555,6 +554,7 @@ class OpenAccPageTwoComponent extends Component {
                 "prefix": this.state.personal.prefix || "-",
                 "firstName": this.state.personal.firstName || "-",
                 "lastName": this.state.personal.lastName || "-",
+                "suffix": this.state.personal.suffix || "-",
                 "dateOfBirth": this.state.personal.dob || "-",
                 "gender": this.state.personal.gender || "-",
                 "maritalStatus": this.state.personal.maritalStatus || "-",
@@ -636,6 +636,7 @@ class OpenAccPageTwoComponent extends Component {
                     "prefix": this.state.jointOwner.prefix || "-",
                     "firstName": this.state.jointOwner.firstName || "-",
                     "lastName": this.state.jointOwner.lastName || "-",
+                    "suffix": this.state.jointOwner.suffix || "-",
                     "dateOfBirth": this.state.jointOwner.dob || "-",
                     "gender": this.state.jointOwner.gender || "-",
                     "maritalStatus": this.state.jointOwner.maritalStatus || "-",
