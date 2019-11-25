@@ -553,7 +553,7 @@ export default {
         profile: "PROFILE",
         deliverySettings: "DELIVERY SETTINGS",
         accouintMessaging: "ACCOUNT MESSAGING",
-        SecurityPreferences: "SECURITY PREFERENCES",
+        securityPreferences: "SECURITY PREFERENCES",
         marketingPrivacy: "MARKETING & PRIVACY",
         securityPref: "Security Preferences",
         changeSigninCredentials: "CHANGE SIGN IN CREDENTIALS",
@@ -565,7 +565,8 @@ export default {
         mobileQuickSignIn: "MOBILE QUICK SIGN IN",
         dropDownError: "Questions Are Same Please Select Different Question",
         inputError: "Please Enter your Answer",
-        emailError: "Please Enter Valid Email"
+        emailError: "Please Enter Valid Email",
+        loremSecurityPref: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
     },
 
     settingAccountMessaging: {

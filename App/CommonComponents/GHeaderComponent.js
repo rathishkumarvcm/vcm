@@ -10,6 +10,10 @@ const {width} = Dimensions.get('window');
 
 const newData = [
     {
+      naviagteTo: 'profilePreference',
+      title: 'Home',
+    },
+    {
       naviagteTo:'generalSettings',
       title: 'Settings',
     },

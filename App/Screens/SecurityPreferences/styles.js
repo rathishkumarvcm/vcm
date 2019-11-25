@@ -1,52 +1,55 @@
-import {StyleSheet} from "react-native";
-import {scaledHeight} from '../../Utils/Resolution';
+import { StyleSheet } from "react-native";
+import { scaledHeight } from '../../Utils/Resolution';
 
 export const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor:'#F7FAFF',
-        width:'100%',
-        paddingLeft:'4%',
-        paddingRight:'4%',
+    container: {
+        flex: 1,
+        backgroundColor: '#F7FAFF',
+        width: '100%'
     },
-    welcomeView:{
-        marginTop:scaledHeight(14),
-        backgroundColor:'#E9E9E9'
+    scrollviewStyle: {
+        flex: 0.85
     },
-    profileHeader:{
-        marginTop:scaledHeight(22),
-        alignItems:'flex-start'
+    welcomeView: {
+        marginTop: scaledHeight(14),
+        backgroundColor: '#E9E9E9'
     },
-    optionHeaderView:{
-        marginTop:scaledHeight(10),
+    header: {
+        marginTop: scaledHeight(22),
+        alignItems: 'flex-start',
+        marginHorizontal: '4%'
     },
-    optionSubHeaderView:{
-        top:scaledHeight(2),
+    optionHeaderView: {
+        marginTop: scaledHeight(10),
+    },
+    optionSubHeaderView: {
+        top: scaledHeight(2),
         paddingLeft: '4%',
         paddingRight: '4%',
     },
-    optionContainer:{
-        borderWidth :1,
-        borderColor:'#D4D4D4',
-        backgroundColor:'#FFFFFF',
-        height:scaledHeight(140),
-        borderRadius:scaledHeight(10),
-        justifyContent:'flex-start',
-        alignItems:'flex-start',
-        marginTop:scaledHeight(20),
+    optionContainer: {
+        borderWidth: 1,
+        borderColor: '#D4D4D4',
+        backgroundColor: '#FFFFFF',
+        height: scaledHeight(140),
+        borderRadius: scaledHeight(10),
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        marginTop: scaledHeight(20),
+        marginHorizontal: '4%'
     },
-    optionHeaderText:{
-        fontSize:scaledHeight(14),
-        color:'#56565A',
-        fontWeight:'bold',
+    optionHeaderText: {
+        fontSize: scaledHeight(14),
+        color: '#56565A',
+        fontWeight: 'bold',
     },
-    optionSubHeaderText:{
-        fontSize:scaledHeight(12),
-        color:'#B2B2B2',
+    optionSubHeaderText: {
+        fontSize: scaledHeight(12),
+        color: '#B2B2B2',
     },
-    profileHeadline:{
-        color:'#56565A',
-        fontSize:scaledHeight(20)
+    headerText: {
+        color: '#56565A',
+        fontSize: scaledHeight(20)
     },
     backButtonFlex: {
         marginLeft: "10%",
@@ -79,4 +82,25 @@ export const styles = StyleSheet.create({
         color: '#56565A',
         fontSize: scaledHeight(16),
     },
+    linkBreak1: {
+        backgroundColor: '#7B8288',
+        opacity: 0.4,
+        height: scaledHeight(1),
+        marginTop: scaledHeight(10),
+        marginHorizontal: '4%'
+    },
+    optionIcon: {
+        position: 'absolute',
+        left: 6,
+        top: 4,
+        marginTop: scaledHeight(15),
+        marginRight: scaledHeight(6),
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    optionSubHeaderText: {
+        fontSize: scaledHeight(16),
+        color: '#B2B2B2',
+        marginTop: scaledHeight(60)
+    }
 });

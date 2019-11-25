@@ -26,7 +26,7 @@ import ChangeLogonCredentialsComponent from './Screens/ChangeLogonCredentials/Ch
 import ResetPasswordComponent from './Screens/ResetPassword/ResetPasswordComponent';
 import ResetPINComponent from './Screens/ResetPIN/ResetPINComponent';
 import AccountRecoveryPrefComponent from './Screens/AccountRecoveryPref';
-import ProfilesAndPreferences from './Screens/ProfilesAndPreferences/ProfilesAndPreferencesComponent';
+import ProfilesAndPreferences from './Screens/ProfilesAndPreferences/';
 import SecurityPreference from './Screens/SecurityPreferences/SecurityPreferencesComponent';
 import AccountMessagingSettings from './Screens/AccountMessagingSettings/AccountMessagingSettingsComponent';
 import AccountMessagingGoals from './Screens/AccountMessagingGoals/AccountMessagingGoalsComponent';
@@ -467,7 +467,7 @@ const AppNavigator = createStackNavigator({
                 header: null,
             }
         },
-        SecurityPreference:
+        securityPreference:
         {
             screen: SecurityPreference,
             navigationOptions: {

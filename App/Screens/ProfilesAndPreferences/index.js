@@ -1,3 +1,3 @@
-import ProfilesAndPreferences from './ProfilesAndPreferencesComponent';
+import ProfilesAndPreferencesComponent from './ProfilesAndPreferencesContainer';
 
-export default ProfilesAndPreferences;
+export default ProfilesAndPreferencesComponent;

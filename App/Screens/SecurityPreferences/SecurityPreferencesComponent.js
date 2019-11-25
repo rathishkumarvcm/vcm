@@ -4,17 +4,16 @@ import {View, ScrollView, Text, TouchableOpacity} from 'react-native';
 import { GHeaderComponent, GIcon, GFooterComponent } from '../../CommonComponents';
 import PropTypes from "prop-types";
 import gblStrings from '../../Constants/GlobalStrings';
-import { scaledHeight } from '../../Utils/Resolution';
 
 class SecurityPreferences extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             isLoading: false,
         };
     }
 
-    componentDidMount(){}
+    componentDidMount() { }
 
     navigateBack = () => this.props.navigation.goBack();
 
@@ -22,38 +21,38 @@ class SecurityPreferences extends Component {
 
     navigateAccountRecovery = () => this.props.navigation.navigate('accountRecoveryPref');
 
-    render(){
-        return(
+    render() {
+        return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
 
-                <ScrollView style={{flex:0.85}} contentContainerStyle={{justifyContent:'center'}}>
-                    <View style={styles.profileHeader}>
-                        <Text style={styles.profileHeadline}>
+                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={{ justifyContent: 'center' }}>
+                    <View style={styles.header}>
+                        <Text style={styles.headerText}>
                             {gblStrings.userManagement.securityPref}
                         </Text>
                     </View>
 
-                    <View style={{backgroundColor: '#7B8288', opacity: 0.4, height: scaledHeight(1), marginTop: scaledHeight(10)}} />
+                    <View style={styles.linkBreak1} />
 
                     <TouchableOpacity onPress={this.navigateChangeLogon}>
                         <View style={styles.optionContainer}>
-                            <View style={{ position: 'absolute', left: 6, top: 4, marginTop: scaledHeight(15), marginRight: scaledHeight(6), flexDirection: 'row', alignItems: 'center' }}>
+                            <View style={styles.optionIcon}>
                                 <GIcon
                                     name="view-grid"
                                     type="material-community"
                                     size={30}
                                     color="black"
-                                /> 
-                            
+                                />
+
                                 <Text style={styles.optionHeaderText}>
                                     {gblStrings.userManagement.changeSigninCredentials}
                                 </Text>
                             </View>
 
                             <View style={styles.optionSubHeaderView}>
-                                <Text style={{ fontSize: scaledHeight(16), color: '#B2B2B2', marginTop: scaledHeight(60) }}>
-                                    {"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"}
+                                <Text style={styles.optionSubHeaderText}>
+                                    {gblStrings.userManagement.loremSecurityPref}
                                 </Text>
                             </View>
                         </View>
@@ -61,7 +60,7 @@ class SecurityPreferences extends Component {
 
                     <TouchableOpacity onPress={this.navigateAccountRecovery}>
                         <View style={styles.optionContainer}>
-                            <View style={{ position: 'absolute', left: 6, top: 4, marginTop: scaledHeight(15), marginRight: scaledHeight(6), flexDirection: 'row', alignItems: 'center' }}>
+                            <View style={styles.optionIcon}>
                                 <GIcon
                                     name="view-grid"
                                     type="material-community"
@@ -75,8 +74,8 @@ class SecurityPreferences extends Component {
                             </View>
 
                             <View style={styles.optionSubHeaderView}>
-                                <Text style={{ fontSize: scaledHeight(16), color: '#B2B2B2', marginTop: scaledHeight(60) }}>
-                                    {"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"}
+                                <Text style={styles.optionSubHeaderText}>
+                                    {gblStrings.userManagement.loremSecurityPref}
                                 </Text>
                             </View>
 
@@ -85,7 +84,7 @@ class SecurityPreferences extends Component {
 
 
                     <View style={styles.optionContainer}>
-                        <View style={{ position: 'absolute', left: 6, top: 4, marginTop: scaledHeight(15), marginRight: scaledHeight(6), flexDirection: 'row', alignItems: 'center' }}>
+                        <View style={styles.optionIcon}>
                             <GIcon
                                 name="view-grid"
                                 type="material-community"
@@ -99,16 +98,16 @@ class SecurityPreferences extends Component {
                         </View>
 
                         <View style={styles.optionSubHeaderView}>
-                            <Text style={{ fontSize: scaledHeight(16), color: '#B2B2B2', marginTop: scaledHeight(60) }}>
-                                {"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"}
+                            <Text style={styles.optionSubHeaderText}>
+                                {gblStrings.userManagement.loremSecurityPref}
                             </Text>
                         </View>
 
                     </View>
 
                     <View style={styles.optionContainer}>
-                        <View style={{ position: 'absolute', left: 6, top: 4, marginTop: scaledHeight(15), marginRight: scaledHeight(6), flexDirection: 'row', alignItems: 'center' }}>
-                            <GIcon 
+                        <View style={styles.optionIcon}>
+                            <GIcon
                                 name="view-grid"
                                 type="material-community"
                                 size={30}
@@ -121,16 +120,16 @@ class SecurityPreferences extends Component {
                         </View>
 
                         <View style={styles.optionSubHeaderView}>
-                            <Text style={{ fontSize: scaledHeight(16), color: '#B2B2B2', marginTop: scaledHeight(60) }}>
-                                {"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"}
+                            <Text style={styles.optionSubHeaderText}>
+                                {gblStrings.userManagement.loremSecurityPref}
                             </Text>
                         </View>
 
                     </View>
 
                     <View style={styles.optionContainer}>
-                        <View style={{ position: 'absolute', left: 6, top: 4, marginTop: scaledHeight(15), right: scaledHeight(6), flexDirection:'row', alignItems:'center' }}>
-                            <GIcon 
+                        <View style={styles.optionIcon}>
+                            <GIcon
                                 name="view-grid"
                                 type="material-community"
                                 size={30}
@@ -139,12 +138,12 @@ class SecurityPreferences extends Component {
 
                             <Text style={styles.optionHeaderText}>
                                 {gblStrings.userManagement.mobileQuickSignIn}
-                            </Text>                        
+                            </Text>
                         </View>
 
                         <View style={styles.optionSubHeaderView}>
-                            <Text style={{fontSize:scaledHeight(16), color:'#B2B2B2', marginTop:scaledHeight(60)}}>
-                                {"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"}
+                            <Text style={styles.optionSubHeaderText}>
+                                {gblStrings.userManagement.loremSecurityPref}
                             </Text>
                         </View>
                     </View>
@@ -171,10 +170,6 @@ class SecurityPreferences extends Component {
 
 SecurityPreferences.propTypes = {
     navigation : PropTypes.instanceOf(Object)
-};
-  
-SecurityPreferences.defaultProps = {
- 
 };
 
 export default SecurityPreferences;

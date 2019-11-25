@@ -11,15 +11,32 @@ class ProfilesAndPreferences extends Component {
         super(props);
         this.state = {
             isLoading:false,
-            showWelcomeText:true
+            showWelcomeText: true,
+            onlineId: "",
+            firstName: "",
+            lastName: ""
         };
     }
 
-    componentDidMount(){}
+    componentDidMount() {
+        if (this.props && this.props.initialState) {
+            if (this.props.initialState.onlineId) {
+                this.setState({ onlineId: this.props.initialState.onlineId });
+            }
+            if (this.props.initialState.firstName) {
+                this.setState({ firstName: this.props.initialState.firstName });
+            }
+            if (this.props.initialState.lastName) {
+                this.setState({ lastName: this.props.initialState.lastName });
+            }
+        }
+    }
 
-    navigateSecurityPreference = ()=>this.props.navigation.navigate('securityPreference');
+    navigateSecurityPreference = () => this.props.navigation.navigate('securityPreference');
 
     navigateBack = () => this.props.navigation.goBack();
+
+    navigateProfile = () => this.props.navigation.navigate('profileSettings');
     
     removeWelcomeText = () => {
         this.setState({showWelcomeText:false});
@@ -30,11 +47,11 @@ class ProfilesAndPreferences extends Component {
             <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
 
-                <ScrollView style={{flex:0.85}} contentContainerStyle={{justifyContent:'center'}}>
+                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={{ justifyContent: 'center' }}>
 
                     <View style={styles.welcomeView}>
-                        <Text style={styles.welcomeText, { flex: 0.82 }}>
-                            {gblStrings.userManagement.welcomeTextProfile}
+                        <Text style={styles.welcomeText}>
+                            {`Welcome ${this.state.firstName + " " + this.state.lastName} to Victory Capital. You have successfully logged as ${this.state.onlineId}. Set up your Security Preferences Now`}
                         </Text>
                     </View>
 
@@ -42,39 +59,41 @@ class ProfilesAndPreferences extends Component {
                         <Text style={styles.profileHeadline}>
                             {gblStrings.userManagement.profilePreferences}
                         </Text>
-                    </View> 
-
-                    <View style={{ backgroundColor: '#7B8288', opacity: 0.4, height: scaledHeight(1), marginTop: scaledHeight(10) }} />
-                    
-                    <View style={styles.optionContainer}>
-                        <GIcon
-                            name="view-grid"
-                            type="material-community"
-                            size={26}
-                            color="black"
-                        />  
-
-                        <View style={styles.optionHeaderView}>                                                    
-                            <Text style={styles.optionHeaderText}>
-                                {gblStrings.userManagement.profile}
-                            </Text>
-                        </View>
-
-                        <View style={styles.optionSubHeaderView}>
-                            <Text style={styles.optionSubHeaderText}>
-                                {gblStrings.userManagement.managePersonalDetails}
-                            </Text>
-                        </View>
                     </View>
 
+                    <View style={styles.linkBreak1} />
+
+                    <TouchableOpacity onPress={this.navigateProfile}>
+                        <View style={styles.optionContainer}>
+                            <GIcon
+                                name="view-grid"
+                                type="material-community"
+                                size={26}
+                                color="black"
+                            />
+
+                            <View style={styles.optionHeaderView}>
+                                <Text style={styles.optionHeaderText}>
+                                    {gblStrings.userManagement.profile}
+                                </Text>
+                            </View>
+
+                            <View style={styles.optionSubHeaderView}>
+                                <Text style={styles.optionSubHeaderText}>
+                                    {gblStrings.userManagement.managePersonalDetails}
+                                </Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+
                     <View style={styles.optionContainer}>
                         <GIcon
                             name="view-grid"
                             type="material-community"
                             size={26}
                             color="black"
-                        />    
-                        <View style={styles.optionHeaderView}>                            
+                        />
+                        <View style={styles.optionHeaderView}>
                             <Text style={styles.optionHeaderText}>
                                 {gblStrings.userManagement.deliverySettings}
                             </Text>
@@ -94,7 +113,7 @@ class ProfilesAndPreferences extends Component {
                             type="material-community"
                             size={26}
                             color="black"
-                        />    
+                        />
                         <View style={styles.optionHeaderView}>
                             <Text style={styles.optionHeaderText}>
                                 {gblStrings.userManagement.accouintMessaging}
@@ -110,17 +129,17 @@ class ProfilesAndPreferences extends Component {
                     </View>
 
 
-                    <TouchableOpacity onPress={this.navigateSecurityPreference}>                    
+                    <TouchableOpacity onPress={this.navigateSecurityPreference}>
                         <View style={styles.optionContainer}>
                             <GIcon
                                 name="view-grid"
                                 type="material-community"
                                 size={26}
                                 color="black"
-                            />    
-                            <View style={styles.optionHeaderView}>   
+                            />
+                            <View style={styles.optionHeaderView}>
                                 <Text style={styles.optionHeaderText}>
-                                    {gblStrings.userManagement.SecurityPreferences}
+                                    {gblStrings.userManagement.securityPreferences}
                                 </Text>
                             </View>
                             <View style={styles.optionSubHeaderView}>
@@ -137,8 +156,8 @@ class ProfilesAndPreferences extends Component {
                             type="material-community"
                             size={26}
                             color="black"
-                        />    
-                        <View style={styles.optionHeaderView}>  
+                        />
+                        <View style={styles.optionHeaderView}>
                             <Text style={styles.optionHeaderText}>
                                 {gblStrings.userManagement.marketingPrivacy}
                             </Text>
@@ -174,10 +193,6 @@ class ProfilesAndPreferences extends Component {
 
 ProfilesAndPreferences.propTypes = {
     navigation : PropTypes.instanceOf(Object)
-};
-  
-ProfilesAndPreferences.defaultProps = {
- 
 };
 
 export default ProfilesAndPreferences;
