@@ -1,0 +1,2 @@
+import CollegePlanBeneficiaryComponent from './CollegePlanBeneficiaryContainer';
+export default CollegePlanBeneficiaryComponent;

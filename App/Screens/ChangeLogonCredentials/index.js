@@ -1,0 +1,3 @@
+import ChangeLogonCredentialsComponent from './ChangeLogonCredentialsContainer';
+
+export default ChangeLogonCredentialsComponent;

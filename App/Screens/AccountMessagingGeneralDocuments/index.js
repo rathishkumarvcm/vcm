@@ -1,0 +1,2 @@
+import AccountMessagingGeneralDocumentsComponent from './AccountMessagingGeneralDocumentsContainer';
+export default AccountMessagingGeneralDocumentsComponent;
