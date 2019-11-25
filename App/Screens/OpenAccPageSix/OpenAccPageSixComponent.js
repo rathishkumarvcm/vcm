@@ -307,10 +307,31 @@ class OpenAccPageSixComponent extends Component {
         alert("#TODO : Download");
     }
     onClickSubmit = () => {
-        this.validateFields();
+        if (this.validateFields()) {
+            const payload = this.getPayload();
+            this.submitAccOpening();
+        }
     }
     onClickSave = () => {
-        this.validateFields();
+        if (this.validateFields()) {
+            const payload = this.getPayload();
+            this.props.saveAccountOpening("OpenAccPageSix", payload);
+        }
+    }
+
+    getPayload = () => {
+        let payload ={};
+        if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
+            payload = {
+                ...payload,
+                "userConsent":{
+                    "backupCertFlag":this.state.confirmTINType || "-",
+                    "certifiedYN":this.state.agreeConditions || "-"
+                  }
+            }
+        }
+        return payload;
+
     }
 
     onPressCheck = (keyName, text) => () => this.setState({
@@ -337,11 +358,13 @@ class OpenAccPageSixComponent extends Component {
             isValidationSuccess = true;
         }
 
-        if (isValidationSuccess) {
-            this.submitAccOpening();
-        } else {
+        if (!isValidationSuccess) {
             alert(errMsg);
+
+        } else {
         }
+        return isValidationSuccess;
+
     }
 
     generateKeyExtractor = (item) => item.id.toString();
@@ -418,8 +441,8 @@ class OpenAccPageSixComponent extends Component {
         let currentPage = 6;
         return (
             <View style={styles.container}>
-                {
-                    this.props.accOpeningData.isLoading && <GLoadingSpinner />
+                 {
+                    (this.props.accOpeningData.isLoading || this.props.masterLookupStateData.isLoading) && <GLoadingSpinner />
                 }
 
                 <GHeaderComponent

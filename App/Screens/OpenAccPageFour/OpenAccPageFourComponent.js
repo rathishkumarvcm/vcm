@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent ,GLoadingSpinner} from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
@@ -30,7 +30,7 @@ class OpenAccPageFourComponent extends Component {
     componentDidMount() {
         let payload = [];
         const compositePayloadData = [
-            "acct_pref",
+            "div_capGain_pref",
             "stmt_pros_rep"
         ];
 
@@ -57,11 +57,34 @@ class OpenAccPageFourComponent extends Component {
     onClickDownloadPDF = () => {
         alert("#TODO : Download");
     }
-    onClickNext = () => {
-        this.validateFields();
+    getPayload = () => {
+        let payload ={};
+        if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
+            payload = {
+                ...payload,
+                "accountPreferences": {
+                    "dividendCapitalGain": this.state.selectedDividendCapitalGains,
+                    "documentDeliveryFormat": this.state.selectedProspectusReportsRef
+                },
+            }
+        }
+        return payload;
+
     }
+
+    onClickNext = () => {
+        if (this.validateFields()) {
+            const payload = this.getPayload();
+            this.props.saveData("OpenAccPageFour", payload);  
+            this.props.navigation.navigate({ routeName: 'openAccPageFive', key: 'openAccPageFive' });
+          }
+        }
     onClickSave = () => {
-        this.validateFields();
+        console.log("onClickSave::::> ");
+        if (this.validateFields()) {
+            const payload = this.getPayload();
+            this.props.saveAccountOpening("OpenAccPageFour", payload);
+        }
     }
     onPressRadio = (keyName, text) => () => this.setState({
         [keyName]: text
@@ -84,11 +107,11 @@ class OpenAccPageFourComponent extends Component {
             isValidationSuccess = true;
         }
 
-        if (isValidationSuccess) {
-            this.props.navigation.navigate({ routeName: 'openAccPageFive', key: 'openAccPageFive' });
-        } else {
+        if (!isValidationSuccess) {
             alert(errMsg);
         }
+
+        return isValidationSuccess;
     }
 
     renderRadio = (radioName, radioSize, componentStyle, layoutStyle) => {
@@ -96,7 +119,7 @@ class OpenAccPageFourComponent extends Component {
         let radioData = dummyData;
         switch (radioName) {
             case "selectedDividendCapitalGains":
-                tempkey = "acct_pref";
+                tempkey = "div_capGain_pref";
                 break;
             case "selectedProspectusReportsRef":
                 tempkey = "stmt_pros_rep";
@@ -143,6 +166,9 @@ class OpenAccPageFourComponent extends Component {
         let currentPage = 4;
         return (
             <View style={styles.container}>
+                 {
+                    (this.props.accOpeningData.isLoading || this.props.masterLookupStateData.isLoading) && <GLoadingSpinner />
+                }
                 <GHeaderComponent
                     navigation={this.props.navigation}
                     onPress={this.onClickHeader}

@@ -1,2 +1,2 @@
-import OpenAccPageFourComponent from './OpenAccPageFourContainer';
-export default OpenAccPageFourComponent;
+import openAccPageFourComponent from './OpenAccPageFourContainer';
+export default openAccPageFourComponent;

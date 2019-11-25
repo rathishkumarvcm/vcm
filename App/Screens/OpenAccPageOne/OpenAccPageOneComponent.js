@@ -262,9 +262,29 @@ class OpenAccPageOneComponent extends Component {
     onChangeNickname = (event) => {
         console.log("onChangeNickname: " + event);
     }
+
+    getPayload = () => {
+        let payload ={};
+        if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
+            payload = {
+                ...payload,
+                "onlineId": "aaru",
+                "customerId": "123456",
+                "accountType": this.state.selectedItemID,
+                "accountSubType": (this.props.accOpeningData && this.props.accOpeningData.accountSubType) ? this.props.accOpeningData.accountSubType.key : "-",
+            }
+        }
+        return payload
+
+    }
+
     onClickNext = () => {
         const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
         if (this.validateFields()) {
+
+            const payload = this.getPayload();
+            this.props.saveData("OpenAccPageOne", payload);             
+
             if (selectedAccount.key == "spec_acct") {
                 this.props.navigation.navigate({ routeName: 'specialtyAccPage', key: 'specialtyAccPage', params: { pageNo: 2, accType: "Specialty Account" } });
             } else if (selectedAccount.key == "inv_child") {

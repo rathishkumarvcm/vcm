@@ -540,9 +540,12 @@ class OpenAccPageTwoComponent extends Component {
     }
     onClickNext = () => {
 
+
         if (this.validateFields()) {
+            const payload = this.getPayload();
+            this.props.saveData("OpenAccPageTwo", payload);  
             this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
-        }
+          }
     }
     getPayload = () => {
         const accType = "" + this.props.navigation.getParam('accType', '');
@@ -559,8 +562,8 @@ class OpenAccPageTwoComponent extends Component {
                 "ssnTin": this.state.personal.ssnNo || "-",
                 "mailingAddress": {
                     "addressType": this.state.personal.citizenship || "-",
-                    "streetNbr": "-",
-                    "streetName": "-",
+                    "streetNbr": this.state.personal.addrLine1 || "-",
+                    "streetName": this.state.personal.addrLine2 || "-",
                     "zip": this.state.personal.zipcode || "-",
                     "city": this.state.personal.city || "-",
                     "state": this.state.personal.stateCity || "-"
@@ -592,69 +595,173 @@ class OpenAccPageTwoComponent extends Component {
                     },
                     "emailAddress": "aaru@test.com"
                 }
+            },
+            "employementInfo": {
+                "employmentStatus": this.state.personal.empStatus || "-",
+                "industry": this.state.personal.empIndustry || "-",
+                "occupation": this.state.personal.empOccupation || "-",
+                "employerName": this.state.personal.empName || "-",
+                "employerAddress": {
+                    "addressLine1": this.state.personal.empAddrLine1 || "-",
+                    "addressLine2": this.state.personal.empAddrLine2 || "-",
+                    "city": this.state.personal.city || "-",
+                    "state": this.state.personal.stateCity || "-",
+                    "zip": this.state.personal.zip || "-",
+                }
+            },
+            "financialInfo": {
+                "annualIncome": this.state.personal.annualIncome || "-",
+                "taxBracket": this.state.personal.taxBracket || "-",
+                "netWorth": this.state.personal.networth || "-",
+                "taxFilingStatus": this.state.personal.taxFilingStatus || "-",
+            },
+            "militaryInfo": {
+                "servingStatus": this.state.personal.isMilitaryHistory || "-",
+                "militaryStatus": this.state.personal.militaryStatus || "-",
+                "branchOfService": this.state.personal.branchOfService || "-",
+                "rank": this.state.personal.rank || "-",
+                "serviceStartDate": this.state.personal.fromDateMilitary || "-",
+                "commissionSource": this.state.personal.commissionSource || "-",
+            },
+            "regulatoryDetails": {
+                "isPep": this.state.personal.isSeniorPoliticalFigure || "-",
+                "pepName": this.state.personal.seniorPoliticalName || "-",
             }
         };
 
         const jointAccPayload = {
-                "jointOwner":{
-                    "relation":"",
-                    "personalInfo": {
-                        "prefix": this.state.jointOwner.prefix || "-",
-                        "firstName": this.state.jointOwner.firstName || "-",
-                        "lastName": this.state.jointOwner.lastName || "-",
-                        "dateOfBirth": this.state.jointOwner.dob || "-",
-                        "gender": this.state.jointOwner.gender || "-",
-                        "maritalStatus": this.state.jointOwner.maritalStatus || "-",
-                        "citizenship": this.state.jointOwner.citizenship || "-",
-                        "ssnTin": this.state.jointOwner.ssnNo || "-",
-                        "mailingAddress": {
-                            "addressType": this.state.jointOwner.citizenship || "-",
-                            "streetNbr": "-",
-                            "streetName": "-",
-                            "zip": this.state.jointOwner.zipcode || "-",
-                            "city": this.state.jointOwner.city || "-",
-                            "state": this.state.jointOwner.stateCity || "-"
+            "jointOwner": {
+                "relation": "-",
+                "personalInfo": {
+                    "prefix": this.state.jointOwner.prefix || "-",
+                    "firstName": this.state.jointOwner.firstName || "-",
+                    "lastName": this.state.jointOwner.lastName || "-",
+                    "dateOfBirth": this.state.jointOwner.dob || "-",
+                    "gender": this.state.jointOwner.gender || "-",
+                    "maritalStatus": this.state.jointOwner.maritalStatus || "-",
+                    "citizenship": this.state.jointOwner.citizenship || "-",
+                    "ssnTin": this.state.jointOwner.ssnNo || "-",
+                    "mailingAddress": {
+                        "addressType": this.state.jointOwner.citizenship || "-",
+                        "streetNbr": "-",
+                        "streetName": "-",
+                        "zip": this.state.jointOwner.zipcode || "-",
+                        "city": this.state.jointOwner.city || "-",
+                        "state": this.state.jointOwner.stateCity || "-"
+                    },
+                    "isPhysAddrSameAsMailAddr": this.state.jointOwner.isYourPhysicalAddresSame || "-",
+                    "physicalAddress": {
+                        "addressType": "U.S or U.S Territories",
+                        "streetNbr": "4900",
+                        "streetName": "Tiedeman Rd",
+                        "zip": "44144",
+                        "city": "Brooklyn",
+                        "state": "OH"
+                    },
+                    "contactDetails": {
+                        "phoneNumber1": {
+                            "phoneNumber": this.state.jointOwner.mobileNo || "-",
+                            "phoneType": "Home",
+                            "contactDuring": this.state.jointOwner.contactDuringMobNo || "-"
                         },
-                        "isPhysAddrSameAsMailAddr": this.state.jointOwner.isYourPhysicalAddresSame || "-",
-                        "physicalAddress": {
-                            "addressType": "U.S or U.S Territories",
-                            "streetNbr": "4900",
-                            "streetName": "Tiedeman Rd",
-                            "zip": "44144",
-                            "city": "Brooklyn",
-                            "state": "OH"
+                        "phoneNumber2": {
+                            "phoneNumber": this.state.jointOwner.telePhoneNo2 || "-",
+                            "phoneType": "Home",
+                            "contactDuring": this.state.jointOwner.contactDuringTelePhone2 || "-"
                         },
-                        "contactDetails": {
-                            "phoneNumber1": {
-                                "phoneNumber": this.state.jointOwner.mobileNo || "-",
-                                "phoneType": "Home",
-                                "contactDuring": this.state.jointOwner.contactDuringMobNo || "-"
-                            },
-                            "phoneNumber2": {
-                                "phoneNumber": this.state.jointOwner.telePhoneNo2 || "-",
-                                "phoneType": "Home",
-                                "contactDuring": this.state.jointOwner.contactDuringTelePhone2 || "-"
-                            },
-                            "phoneNumber3": {
-                                "phoneNumber": this.state.jointOwner.telePhoneNo3 || "-",
-                                "phoneType": "Home",
-                                "contactDuring": this.state.jointOwner.contactDuringTelePhone3 || "-"
-                            },
-                            "emailAddress": "aaru@test.com"
-                        }
+                        "phoneNumber3": {
+                            "phoneNumber": this.state.jointOwner.telePhoneNo3 || "-",
+                            "phoneType": "Home",
+                            "contactDuring": this.state.jointOwner.contactDuringTelePhone3 || "-"
+                        },
+                        "emailAddress": "aaru@test.com"
+                    }
+                },
+                "employementInfo": {
+                    "employmentStatus": this.state.jointOwner.empStatus || "-",
+                    "industry": this.state.jointOwner.empIndustry || "-",
+                    "occupation": this.state.jointOwner.empOccupation || "-",
+                    "employerName": this.state.jointOwner.empName || "-",
+                    "employerAddress": {
+                        "addressLine1": this.state.jointOwner.empAddrLine1 || "-",
+                        "addressLine2": this.state.jointOwner.empAddrLine2 || "-",
+                        "city": this.state.jointOwner.city || "-",
+                        "state": this.state.jointOwner.stateCity || "-",
+                        "zip": this.state.jointOwner.zip || "-",
+                    }
+                },
+                "financialInfo": {
+                    "annualIncome": this.state.jointOwner.annualIncome || "-",
+                    "taxBracket": this.state.jointOwner.taxBracket || "-",
+                    "netWorth": this.state.jointOwner.networth || "-",
+                    "taxFilingStatus": this.state.jointOwner.taxFilingStatus || "-",
+                },
+                "militaryInfo": {
+                    "servingStatus": this.state.jointOwner.isMilitaryHistory || "-",
+                    "militaryStatus": this.state.jointOwner.militaryStatus || "-",
+                    "branchOfService": this.state.jointOwner.branchOfService || "-",
+                    "rank": this.state.jointOwner.rank || "-",
+                    "serviceStartDate": this.state.jointOwner.fromDateMilitary || "-",
+                    "commissionSource": this.state.jointOwner.commissionSource || "-",
+                },
+                "regulatoryDetails": {
+                    "isPep": this.state.jointOwner.isSeniorPoliticalFigure || "-",
+                    "pepName": this.state.jointOwner.seniorPoliticalName || "-",
+                }
+            }
+        };
+
+        const retirementAccPayload ={
+            "beneficiaryInfo": {
+                "primaryBeneficiary": {
+                    "totalBeneficiary": "1",
+                    "beneficiary1Details": {
+                        "type": this.state.retirement.beneficiaryType || "-",
+                        "relation": this.state.retirement.relationshipToAcc || "-",
+                        "distributionPercentage": this.state.retirement.beneficiaryDistPercent || "-",
+                        "firstName":  this.state.retirement.firstName || "-",
+                        "middleInitial": this.state.retirement.middleInitial || "-",
+                        "lastName":this.state.retirement.lastName || "-",
+                        "ssnTin": this.state.retirement.socialSecurityNo || "-",
+                        "dateOfBirth": this.state.retirement.dob || "-",
+                        "emailAddress": "test1@test.com"
+                    }
+                    //"beneficiary2Details,beneficiary3Details": ""
+                },
+                "secondBeneficiary": {   //  #TODO
+                    "beneficiary1Details": {
+                        "type": this.state.retirement.beneficiaryType || "-",
+                        "relation": this.state.retirement.relationshipToAcc || "-",
+                        "distributionPercentage": this.state.retirement.beneficiaryDistPercent || "-",
+                        "firstName":  this.state.retirement.firstName || "-",
+                        "middleInitial": this.state.retirement.middleInitial || "-",
+                        "lastName":this.state.retirement.lastName || "-",
+                        "ssnTin": this.state.retirement.socialSecurityNo || "-",
+                        "dateOfBirth": this.state.retirement.dob || "-",
+                        "emailAddress": "test1@test.com"
                     }
                 }
-            };
+            }
+        }
+
+
            
-        
+
         let payload = {
             "onlineId": "aaru",
             "customerId": "761735",
             "accountType": (this.props.accOpeningData && this.props.accOpeningData.accountType) ? this.props.accOpeningData.accountType.key : "-",
             "accountSubType": (this.props.accOpeningData && this.props.accOpeningData.accountSubType) ? this.props.accOpeningData.accountSubType.key : "-",
-            "accountNickName": this.state.nickname || "-"
-
         };
+
+        if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
+             payload = {
+                 ...payload,
+                 "accountNickName": this.state.nickname || "-"
+             }
+        }
+
+
 
         switch (accType) {
             case "Individual Account":
@@ -671,22 +778,22 @@ class OpenAccPageTwoComponent extends Component {
                 }
                 break;
             case "Retirement Account":
+                    payload = {
+                        ...payload,
+                        ...individualAccPayload,
+                        ...retirementAccPayload
+                    }
                 break;
             case "UGMA/UTMA Account":
                 break;
         }
 
-
-
-
-        return payload
+        return payload;
     }
     onClickSave = () => {
 
         console.log("onClickSave::::> ");
-
         if (this.validateFields()) {
-
             const payload = this.getPayload();
             this.props.saveAccountOpening("OpenAccPageTwo", payload);
         }
