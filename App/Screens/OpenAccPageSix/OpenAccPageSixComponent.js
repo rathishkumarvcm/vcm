@@ -6,6 +6,7 @@ import { CustomRadio, CustomCheckBox, CustomPageWizard } from '../../AppComponen
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 const dummyData = [
     { "key": "key1", "value": "Option1" },
@@ -150,15 +151,24 @@ class OpenAccPageSixComponent extends Component {
         this.props.getCompositeLookUpData(payload);
     }
     componentDidUpdate(prevProps, prevState) {
-        console.log("componentDidUpdate::::> ") + prevState;
-
-        /*if (this.props !== prevProps) {
-            if (this.props.accOpeningData.isSuccess && !this.props.accOpeningData.isError && !this.props.accOpeningData.isLoading) {
-            } else if (!this.props.accOpeningData.isSuccess && this.props.accOpeningData.isError && !this.props.accOpeningData.isLoading) {
-           
+        console.log("componentDidUpdate::::> ");
+        if (this.props !== prevProps) {
+            const responseKey = ActionTypes.ESIGN_SAVE_OPENING_ACCT;
+            if (this.props.accOpeningData[responseKey]) {
+                if (this.props.accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
+                    const tempResponse = this.props.accOpeningData[responseKey];
+                    if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
+                        let msg = tempResponse.message;
+                        console.log("Account Type Saved ::: :: " + msg);
+                        alert(tempResponse.result)
+                    } else {
+                        alert(tempResponse.message)
+                    }
+                }
             }
-        }*/
+        }
     }
+
 
     /*----------------------
                                     Service API 
@@ -323,7 +333,7 @@ class OpenAccPageSixComponent extends Component {
         let payload ={};
         if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
             payload = {
-                ...payload,
+                ...this.props.accOpeningData.savedAccData,
                 "userConsent":{
                     "backupCertFlag":this.state.confirmTINType || "-",
                     "certifiedYN":this.state.agreeConditions || "-"

@@ -6,6 +6,7 @@ import { CustomPageWizard, CustomRadio } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 const dummyData = [
     { "key": "key1", "value": "Option1" },
@@ -42,6 +43,25 @@ class OpenAccPageFourComponent extends Component {
         }
         this.props.getCompositeLookUpData(payload);
     }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log("componentDidUpdate::::> ");
+        if (this.props !== prevProps) {
+            const responseKey = ActionTypes.PREFERENCE_SAVE_OPENING_ACCT;
+            if (this.props.accOpeningData[responseKey]) {
+                if (this.props.accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
+                    const tempResponse = this.props.accOpeningData[responseKey];
+                    if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
+                        let msg = tempResponse.message;
+                        console.log("Account Type Saved ::: :: " + msg);
+                        alert(tempResponse.result)
+                    } else {
+                        alert(tempResponse.message)
+                    }
+                }
+            }
+        }
+    }
     /*----------------------
                                  Button Events
                                                                  -------------------------- */
@@ -61,7 +81,7 @@ class OpenAccPageFourComponent extends Component {
         let payload ={};
         if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
             payload = {
-                ...payload,
+                ...this.props.accOpeningData.savedAccData,
                 "accountPreferences": {
                     "dividendCapitalGain": this.state.selectedDividendCapitalGains,
                     "documentDeliveryFormat": this.state.selectedProspectusReportsRef
@@ -240,6 +260,8 @@ class OpenAccPageFourComponent extends Component {
                             buttonStyle={styles.normalWhiteBtn}
                             buttonText={gblStrings.common.save}
                             textStyle={styles.normalWhiteBtnTxt}
+                            onPress={this.onClickSave}
+
                         />
                         <GButtonComponent
                             buttonStyle={styles.normalWhiteBtn}

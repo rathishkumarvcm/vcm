@@ -747,16 +747,10 @@ class OpenAccPageTwoComponent extends Component {
 
            
 
-        let payload = {
-            "onlineId": "aaru",
-            "customerId": "761735",
-            "accountType": (this.props.accOpeningData && this.props.accOpeningData.accountType) ? this.props.accOpeningData.accountType.key : "-",
-            "accountSubType": (this.props.accOpeningData && this.props.accOpeningData.accountSubType) ? this.props.accOpeningData.accountSubType.key : "-",
-        };
-
+        let payload = {};
         if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
              payload = {
-                 ...payload,
+                 ...this.props.accOpeningData.savedAccData,
                  "accountNickName": this.state.nickname || "-"
              }
         }
