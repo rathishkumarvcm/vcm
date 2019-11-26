@@ -1,3 +1,3 @@
-import EditAddressInfoComponent from './EditAddressInfoContainer';
+import editAddressInfoComponent from './EditAddressInfoContainer';
 
-export default EditAddressInfoComponent;
+export default editAddressInfoComponent;

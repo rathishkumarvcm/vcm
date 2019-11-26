@@ -5,7 +5,7 @@ import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButto
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 
-class EditAddPhoneNumberComponent extends Component {
+class editAddPhoneNumberComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -19,6 +19,8 @@ class EditAddPhoneNumberComponent extends Component {
 
     componentDidMount() { }
 
+    phoneAddNewNumberOnCancel = () => this.props.navigation.navigate('editPhoneInformation');
+
     render() {
         return (
 
@@ -30,7 +32,7 @@ class EditAddPhoneNumberComponent extends Component {
 
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
-                            {"Settings > Pr... > Pers > "}
+                            {globalString.editProfilePageValue.editAddressInfoHead}
                         </Text>
                         <Text style={[styles.settingsInfo, styles.editLabelBold]}>
                             {globalString.addPhoneNumber.addPhoneTitle}
@@ -146,7 +148,7 @@ class EditAddPhoneNumberComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={() => this.props.navigation.navigate('editPhoneInformation')} />
+                            onPress={this.phoneAddNewNumberOnCancel} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -209,4 +211,4 @@ class EditAddPhoneNumberComponent extends Component {
     }
 }
 
-export default EditAddPhoneNumberComponent;
+export default editAddPhoneNumberComponent;

@@ -1,3 +1,3 @@
-import EditRegulatoryComponent from './EditRegulatoryContainer';
+import editRegulatoryComponent from './EditRegulatoryContainer';
 
-export default EditRegulatoryComponent;
+export default editRegulatoryComponent;

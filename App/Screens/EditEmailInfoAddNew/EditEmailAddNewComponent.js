@@ -5,7 +5,7 @@ import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButto
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 
-class EditEmailAddNewComponent extends Component {
+class editEmailAddNewComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -19,6 +19,8 @@ class EditEmailAddNewComponent extends Component {
 
     componentDidMount() { }
 
+    editEmailOnCancel = () => this.props.navigation.navigate('editEmailInformation');
+
     render() {
         return (
             <View style={styles.container}>
@@ -29,7 +31,7 @@ class EditEmailAddNewComponent extends Component {
 
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
-                            {"Settings > Personal info > "}
+                            {globalString.editProfilePageValue.editAddressInfoHead}
                         </Text>
                         <Text style={[styles.settingsInfo, styles.editLabelBold]}>
                             {globalString.editEmailInformations.editEmailTitle}
@@ -101,7 +103,7 @@ class EditEmailAddNewComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={() => this.props.navigation.navigate('editEmailInformation')} />
+                            onPress={this.editEmailOnCancel} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -177,4 +179,4 @@ class EditEmailAddNewComponent extends Component {
     }
 }
 
-export default EditEmailAddNewComponent;
+export default editEmailAddNewComponent;

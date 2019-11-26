@@ -1,3 +1,3 @@
-import EditFamilyMemberComponent from './EditFamilMemberComponent';
+import editFamilyMemberComponent from './EditFamilMemberComponent';
 
-export default EditFamilyMemberComponent;
+export default editFamilyMemberComponent;

@@ -1,3 +1,3 @@
-import EditEmailInfoComponent from './EditEmailInfoContainer';
+import editEmailInfoComponent from './EditEmailInfoContainer';
 
-export default EditEmailInfoComponent;
+export default editEmailInfoComponent;

@@ -1,3 +1,3 @@
-import EditEmailAddNewComponent from './EditEmailAddNewContainer';
+import editEmailAddNewComponent from './EditEmailAddNewContainer';
 
-export default EditEmailAddNewComponent;
+export default editEmailAddNewComponent;

@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
-import EditProfileSettingsComponent from './EditProfileSettingsComponent';
+import editProfileSettingsComponent from './EditProfileSettingsComponent';
+import { profileSettingsAction } from "../../Shared/Actions";
 
 const mapStateToProps = (state /* , props */) => (
   {
@@ -9,9 +10,10 @@ const mapStateToProps = (state /* , props */) => (
 );
 
 const mapDispatchToProps = {
+  ...profileSettingsAction
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditProfileSettingsComponent);
+)(editProfileSettingsComponent);

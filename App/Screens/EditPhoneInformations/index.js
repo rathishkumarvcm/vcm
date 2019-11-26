@@ -1,3 +1,3 @@
-import EditPhoneInfoComponent from './EditPhoneInfoContainer';
+import editPhoneInfoComponent from './EditPhoneInfoContainer';
 
-export default EditPhoneInfoComponent;
+export default editPhoneInfoComponent;

@@ -85,10 +85,10 @@ import ManageIntrestedPartiesComponent from './Screens/ManageIntrestedParties';
 import ManageBeneficiariesComponent from './Screens/ManageBeneficiaries';
 
 
-import EditRelationshipInfo from './Screens/EditRelationshipInformation/EditRelationshipComponent';
+import EditRelationshipInfo from './Screens/EditRelationshipInformation/';
 import EditRegulatoryInfo from './Screens/EditRegulatoryInformations/EditRegulatoryComponent';
 import EditFamilyMemberInfo from './Screens/EditFamilyMemberInformation/EditFamilyMemberComponent';
-import EditFamilyDetail from './Screens/EditFamilyMemberDetails/EditFamilyDetailComponent';
+import EditFamilyDetail from './Screens/EditFamilyMemberDetails/';
 
 //Password Recovery
 import PasswordRecovery from './Screens/RecoverPassword/';

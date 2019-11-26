@@ -44,7 +44,7 @@ class ProfileSettingsComponent extends Component {
                     {/* Header Section - Tree Structure */}
 
                     <View style={styles.settingsView}>
-                        <Text style={{ color: '#0000FF', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.profileSettingHead}>
                             {"Profile"}
                         </Text>
 

@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import EditAddPhoneNumberComponent from './EditAddPhoneNumberComponent';
+import editAddPhoneNumberComponent from './EditAddPhoneNumberComponent';
 
 const mapStateToProps = (state /* , props */) => (
   {
@@ -12,4 +12,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditAddPhoneNumberComponent);
+)(editAddPhoneNumberComponent);

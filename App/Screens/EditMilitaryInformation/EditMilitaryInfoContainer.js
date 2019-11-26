@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import EditMilitaryInfoComponent from './EditMilitaryInfoComponent';
+import editMilitaryInfoComponent from './EditMilitaryInfoComponent';
 
 const mapStateToProps = (state /* , props */) => (
   {
@@ -12,4 +12,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditMilitaryInfoComponent);
+)(editMilitaryInfoComponent);

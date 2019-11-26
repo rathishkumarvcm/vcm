@@ -369,4 +369,8 @@ export const styles = StyleSheet.create({
         height: scaledHeight(70),
         marginTop: scaledHeight(20)
     },
+    profileSettingHead: { color: '#0000FF', fontSize: scaledHeight(14) },
+    profileSettingHeadOne: { color: '#56565A', fontSize: scaledHeight(14) },
+    profileSettingHeadTwo: { color: '#56565A', fontSize: scaledHeight(14), fontWeight: 'bold' },
+    profileSettingView: { justifyContent: 'center', alignItems: 'center' }
 });

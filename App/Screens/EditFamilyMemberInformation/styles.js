@@ -386,5 +386,15 @@ export const styles = StyleSheet.create({
     },
     editAddressSecurity: {
         color: '#56565A', fontSize: scaledHeight(18)
-    }
+    },
+    editFamilyMemberHead: { color: '#0000FF', fontSize: scaledHeight(14) },
+    editFamilyMemberOne: { color: '#56565A', fontSize: scaledHeight(14) },
+    editFamilyMemberView: { color: '#56565A', fontSize: scaledHeight(14), fontWeight: 'bold' },
+    editFamilyMemberDivideOne: { justifyContent: 'center', alignItems: 'center' },
+    editFamilyDivideTwo: { width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },
+    editFamilyDivideThree: { width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' },
+    editFamilyBackground: { borderWidth: 1, borderColor: '#D4D4D4', backgroundColor: '#FFFFFF', marginTop: scaledHeight(20), width: '92%', marginLeft: '4%', marginRight: '4%' },
+    editFamilyLabel: { color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' },
+    editFamilyNameLabel: { color: '#0000FF', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' },
+    editFamilyValue: { color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }
 });

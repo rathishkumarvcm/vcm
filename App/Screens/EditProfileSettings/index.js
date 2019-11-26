@@ -1,3 +1,3 @@
-import EditProfileSettingsComponent from './EditProfileSettingsContainer';
+import editProfileSettingsComponent from './EditProfileSettingsContainer';
 
-export default EditProfileSettingsComponent;
+export default editProfileSettingsComponent;

@@ -1,3 +1,3 @@
-import EditOccupationInfoComponent from './EditOccupationInfoContainer';
+import editOccupationInfoComponent from './EditOccupationInfoContainer';
 
-export default EditOccupationInfoComponent;
+export default editOccupationInfoComponent;

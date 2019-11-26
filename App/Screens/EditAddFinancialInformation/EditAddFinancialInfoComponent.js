@@ -5,7 +5,7 @@ import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButto
 import { scaledHeight } from '../../Utils/Resolution';
 import globalStrings from '../../Constants/GlobalStrings';
 
-class EditAddFinancialInfoComponent extends Component {
+class editAddFinancialInfoComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -19,6 +19,8 @@ class EditAddFinancialInfoComponent extends Component {
 
     componentDidMount() { }
 
+    addFinancialOnCalcel = () => this.props.navigation.navigate('profileSettings');
+
     render() {
         return (
             <View style={styles.container}>
@@ -29,7 +31,7 @@ class EditAddFinancialInfoComponent extends Component {
 
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
-                            {"Settings > Profile > "}
+                            {globalStrings.editProfilePageValue.editAddressInfoHead}
                         </Text>
                         <Text style={[styles.settingsInfo, styles.editLabelBold]}>
                             {globalStrings.addFinancialInformations.addFinancialTitle}
@@ -137,7 +139,7 @@ class EditAddFinancialInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalStrings.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={() => this.props.navigation.navigate('profileSettings')} />
+                            onPress={this.addFinancialOnCalcel} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -213,4 +215,4 @@ class EditAddFinancialInfoComponent extends Component {
     }
 }
 
-export default EditAddFinancialInfoComponent;
+export default editAddFinancialInfoComponent;

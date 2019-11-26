@@ -5,7 +5,7 @@ import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButto
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 
-class EditFamilyMemberComponent extends Component {
+class editFamilyMemberComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -19,6 +19,10 @@ class EditFamilyMemberComponent extends Component {
 
     componentDidMount() { }
 
+    editFamilyDetailManage = () => this.props.navigation.navigate('editFamilyDetail');
+
+    editFamilyDetailOnCancel = () => this.props.navigation.navigate('profileSettings');
+
     render() {
         return (
 
@@ -31,23 +35,23 @@ class EditFamilyMemberComponent extends Component {
                     {/* Header Section - Tree Structure */}
 
                     <View style={styles.settingsView}>
-                        <Text style={{ color: '#0000FF', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.editFamilyMemberHead}>
                             {"Pro.."}
                         </Text>
 
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.editFamilyMemberOne}>
                             {"  >  "}
                         </Text>
 
-                        <Text style={{ color: '#0000FF', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.editFamilyMemberHead}>
                             {"Bas.."}
                         </Text>
 
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.editFamilyMemberOne}>
                             {"  >  "}
                         </Text>
 
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(14), fontWeight: 'bold' }}>
+                        <Text style={styles.editFamilyMemberView}>
                             {"Relationship Information"}
                         </Text>
                     </View>
@@ -55,133 +59,127 @@ class EditFamilyMemberComponent extends Component {
                     {/* Manage Regulagtory Section */}
 
                     <View>
-                        <View style={[styles.settingsView, { justifyContent: 'center', alignItems: 'center' }]}>
-                            <Text style={{ width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                {"Relationship Information"}
+                        <View style={[styles.settingsView, styles.editFamilyMemberDivideOne]}>
+                            <Text style={styles.editFamilyDivideTwo}>
+                                {globalString.profileSettingsPage.profileRelationInfoLabel}
                             </Text>
 
-                            <Text style={{ width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' }}
-                                onPress={() => this.props.navigation.navigate('editFamilyDetail')}>
-                                {"Manage"}
+                            <Text style={styles.editFamilyDivideThree}
+                                onPress={this.editFamilyDetailManage}>
+                                {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
                         <View style={styles.settingsBorder}></View>
 
+                        {/* Manage Personal Informations */}
+
                         <View>
-                            <View style={{
-                                borderWidth: 1,
-                                borderColor: '#D4D4D4',
-                                backgroundColor: '#FFFFFF',
-                                marginTop: scaledHeight(20),
-                                width: '92%',
-                                marginLeft: '4%',
-                                marginRight: '4%'
-                            }}>
+                            <View style={styles.editFamilyBackground}>
                                 <View style={styles.settingsView1}>
-                                    <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {"Name"}
+                                    <Text style={styles.editFamilyLabel}>
+                                        {globalString.profileSettingsPage.profileNameLabel}
                                     </Text>
                                 </View>
 
                                 <View style={styles.signInView}>
-                                    <Text style={{ color: '#0000FF', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                    <Text style={styles.editFamilyNameLabel}>
                                         {"John Doe"}
                                     </Text>
                                 </View>
 
                                 <View style={styles.settingsView1}>
-                                    <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {"Prefix"}
+                                    <Text style={styles.editFamilyLabel}>
+                                        {globalString.profileSettingsPage.profilePrefixLabel}
                                     </Text>
                                 </View>
 
                                 <View style={styles.signInView}>
-                                    <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                    <Text style={styles.editFamilyValue}>
                                         {"1LT"}
                                     </Text>
                                 </View>
 
                                 <View style={styles.settingsView1}>
-                                    <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {"Suffix"}
+                                    <Text style={styles.editFamilyLabel}>
+                                        {globalString.profileSettingsPage.profileSuffixLabel}
                                     </Text>
                                 </View>
 
                                 <View style={styles.signInView}>
-                                    <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                    <Text style={styles.editFamilyValue}>
                                         {"Sr."}
                                     </Text>
                                 </View>
 
                                 <View style={styles.settingsView1}>
-                                    <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {"Relationship"}
+                                    <Text style={styles.editFamilyLabel}>
+                                        {globalString.profileSettingsPage.profileRelationLabel}
                                     </Text>
                                 </View>
 
                                 <View style={styles.signInView}>
-                                    <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                    <Text style={styles.editFamilyValue}>
                                         {"Brother/Sister"}
                                     </Text>
                                 </View>
 
                                 <View style={styles.settingsView1}>
-                                    <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {"Social Security Number"}
+                                    <Text style={styles.editFamilyLabel}>
+                                        {globalString.profileSettingsPage.profileSsnLabel}
                                     </Text>
                                 </View>
 
                                 <View style={styles.signInView}>
-                                    <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                    <Text style={styles.editFamilyValue}>
                                         {"123-45-****"}
                                     </Text>
                                 </View>
 
                                 <View style={styles.settingsView1}>
-                                    <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {"Date of birth"}
+                                    <Text style={styles.editFamilyLabel}>
+                                        {globalString.profileSettingsPage.profileDobLabel}
                                     </Text>
                                 </View>
 
                                 <View style={styles.signInView}>
-                                    <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                    <Text style={styles.editFamilyValue}>
                                         {"MM-DD-YYYY"}
                                     </Text>
                                 </View>
 
                                 <View style={styles.settingsView1}>
-                                    <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {"Gender"}
+                                    <Text style={styles.editFamilyLabel}>
+                                        {globalString.profileSettingsPage.profileGenderLabel}
                                     </Text>
                                 </View>
 
                                 <View style={styles.signInView}>
-                                    <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                    <Text style={styles.editFamilyValue}>
                                         {"Male"}
                                     </Text>
                                 </View>
 
                                 <View style={styles.settingsView1}>
-                                    <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {"Marital Status"}
+                                    <Text style={styles.editFamilyLabel}>
+                                        {globalString.profileSettingsPage.profileStatusLabel}
                                     </Text>
                                 </View>
 
                                 <View style={styles.signInView}>
-                                    <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                    <Text style={styles.editFamilyValue}>
                                         {"Married"}
                                     </Text>
                                 </View>
 
                                 <View style={styles.settingsView1}>
-                                    <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {"Citizenship"}
+                                    <Text style={styles.editFamilyLabel}>
+                                        {globalString.profileSettingsPage.profileCitizenLabel}
                                     </Text>
                                 </View>
 
                                 <View style={styles.signInView}>
-                                    <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                    <Text style={styles.editFamilyValue}>
                                         {"United States"}
                                     </Text>
                                 </View>
@@ -191,14 +189,13 @@ class EditFamilyMemberComponent extends Component {
                         {/* Contact Information with Manage Options */}
 
                         <View>
-                            <View style={[styles.settingsView, { justifyContent: 'center', alignItems: 'center' }]}>
-                                <Text style={{ width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                    {"Contact Information"}
+                            <View style={[styles.settingsView, styles.editFamilyMemberDivideOne]}>
+                                <Text style={styles.editFamilyDivideTwo}>
+                                    {globalString.profileSettingsPage.profileContactLabel}
                                 </Text>
 
-                                <Text style={{ width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' }}
-                                    onPress={() => this.props.navigation.navigate('')}>
-                                    {"Manage"}
+                                <Text style={styles.editFamilyDivideThree}>
+                                    {globalString.profileSettingsPage.profileManage}
                                 </Text>
                             </View>
 
@@ -206,25 +203,25 @@ class EditFamilyMemberComponent extends Component {
 
                             <View style={styles.settingsAddress}>
                                 <View style={styles.settingsView1}>
-                                    <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {"Mailing Address"}
+                                    <Text style={styles.editFamilyLabel}>
+                                        {globalString.profileSettingsPage.profileMailingLabel}
                                     </Text>
                                 </View>
 
                                 <View style={styles.signInView}>
-                                    <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                    <Text style={styles.editFamilyValue}>
                                         {"5400 N Black Oak Lake Rd"}
                                     </Text>
                                 </View>
 
                                 <View style={styles.settingsView1}>
-                                    <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {"Physical Address"}
+                                    <Text style={styles.editFamilyLabel}>
+                                        {globalString.profileSettingsPage.profilePhysicalLabel}
                                     </Text>
                                 </View>
 
                                 <View style={styles.signInView}>
-                                    <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                    <Text style={styles.editFamilyValue}>
                                         {"Same as mailing"}
                                     </Text>
                                 </View>
@@ -234,14 +231,13 @@ class EditFamilyMemberComponent extends Component {
                         {/* Phone Information with Manage Options */}
 
                         <View>
-                            <View style={[styles.settingsView, { justifyContent: 'center', alignItems: 'center' }]}>
-                                <Text style={{ width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                    {"Phone Information"}
+                            <View style={[styles.settingsView, styles.editFamilyMemberDivideOne]}>
+                                <Text style={styles.editFamilyDivideTwo}>
+                                    {globalString.profileSettingsPage.profilePhoneInfoLabel}
                                 </Text>
 
-                                <Text style={{ width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' }}
-                                    onPress={() => this.props.navigation.navigate('')}>
-                                    {"Manage"}
+                                <Text style={styles.editFamilyDivideThree}>
+                                    {globalString.profileSettingsPage.profileManage}
                                 </Text>
                             </View>
 
@@ -249,13 +245,13 @@ class EditFamilyMemberComponent extends Component {
 
                             <View style={styles.settingsPhone}>
                                 <View style={styles.settingsView1}>
-                                    <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {"Primary Mobile"}
+                                    <Text style={styles.editFamilyLabel}>
+                                        {globalString.profileSettingsPage.profilePrimaryMobileLabel}
                                     </Text>
                                 </View>
 
                                 <View style={styles.signInView}>
-                                    <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                    <Text style={styles.editFamilyValue}>
                                         {"+1(xxx) xxx - 7890"}
                                     </Text>
                                 </View>
@@ -265,14 +261,13 @@ class EditFamilyMemberComponent extends Component {
                         {/* Email Information with Manage Options */}
 
                         <View>
-                            <View style={[styles.settingsView, { justifyContent: 'center', alignItems: 'center' }]}>
-                                <Text style={{ width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                    {"Email Information"}
+                            <View style={[styles.settingsView, styles.editFamilyMemberDivideOne]}>
+                                <Text style={styles.editFamilyDivideTwo}>
+                                    {globalString.profileSettingsPage.profileMailLabel}
                                 </Text>
 
-                                <Text style={{ width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' }}
-                                    onPress={() => this.props.navigation.navigate('')}>
-                                    {"Manage"}
+                                <Text style={styles.editFamilyDivideThree}>
+                                    {globalString.profileSettingsPage.profileManage}
                                 </Text>
                             </View>
 
@@ -280,13 +275,13 @@ class EditFamilyMemberComponent extends Component {
 
                             <View style={styles.settingsPhone}>
                                 <View style={styles.settingsView1}>
-                                    <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {"Primary"}
+                                    <Text style={styles.editFamilyLabel}>
+                                        {globalString.profileSettingsPage.profilePrimaryLabel}
                                     </Text>
                                 </View>
 
                                 <View style={styles.signInView}>
-                                    <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                    <Text style={styles.editFamilyValue}>
                                         {"paxxxxx@example.com"}
                                     </Text>
                                 </View>
@@ -300,7 +295,7 @@ class EditFamilyMemberComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.back}
                             textStyle={styles.cancelButtonText}
-                            onPress={() => this.props.navigation.navigate('profileSettings')} />
+                            onPress={this.editFamilyDetailOnCancel} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -355,4 +350,4 @@ class EditFamilyMemberComponent extends Component {
     }
 }
 
-export default EditFamilyMemberComponent;
+export default editFamilyMemberComponent;

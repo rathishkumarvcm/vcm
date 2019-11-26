@@ -1,3 +1,3 @@
-import EditMilitaryInfoComponent from './EditMilitaryInfoContainer';
+import editMilitaryInfoComponent from './EditMilitaryInfoContainer';
 
-export default EditMilitaryInfoComponent;
+export default editMilitaryInfoComponent;

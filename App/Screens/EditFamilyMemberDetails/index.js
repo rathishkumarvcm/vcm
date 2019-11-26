@@ -1,3 +1,3 @@
-import EditFamilyDetailComponent from './EditFamilyDetailComponent';
+import editFamilyDetailComponent from './EditFamilyDetailContainer';
 
-export default EditFamilyDetailComponent;
+export default editFamilyDetailComponent;
