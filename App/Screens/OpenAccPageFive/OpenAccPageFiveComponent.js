@@ -62,11 +62,91 @@ class OpenAccPageFiveComponent extends Component {
                                  Render Methods
                                                                  -------------------------- */
     render() {
-        
+      /*  var {
+            accountType = "",
+            accountSubType = "",
+            personalInfo: {
+                prefix = '',
+                firstName = '',
+                lastName = '',
+                suffix = '',
+                dateOfBirth = '',
+                gender = '',
+                maritalStatus = '',
+                citizenship = '',
+                ssnTin = '',
+                mailingAddress: {
+                    addressType = '',
+                    streetNbr = '',
+                    streetName = '',
+                    zip = '',
+                    city = '',
+                    state = ''
+                },
+                isPhysAddrSameAsMailAddr = ""
+            }
+        }*/
+
+        var {
+            accountType = "",
+            accountSubType = "",
+            personalInfo = {},
+            employementInfo = {},
+            financialInfo = {},
+            militaryInfo = {},
+            regulatoryDetails = {},
+            accountPreferences = {},
+            investmentInfo ={}
+        }
+            = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
+
+        var {
+            prefix = '',
+            firstName = '',
+            lastName = '',
+            suffix = '',
+            dateOfBirth = '',
+            gender = '',
+            maritalStatus = '',
+            citizenship = '',
+            ssnTin = '',
+            mailingAddress: maillAddr_personal = {},
+            physicalAddress: physicAddr_personal = {},
+            isPhysAddrSameAsMailAddr = "",
+            contactDetails : contact_personal = {},
+        } = (personalInfo && personalInfo.prefix) ? personalInfo : {};
+
+        var {
+            addressType = '',
+            streetNb = '',
+            streetName = '',
+            zip = '',
+            city = '',
+            state = '',
+        } = maillAddr_personal;
+        var {
+            addressType:addressType_Phy = '',
+            streetNb:streetNb_Phy = '',
+            streetName:streetName_Phy= '',
+            zip: zip_Phy= '',
+            city: city_Phy = '',
+            state:state_Phy = '',
+        } = physicAddr_personal;
+
+        var {
+            phoneNumber1 = {},
+            phoneNumber2 = {},
+            phoneNumber3 = {},
+            emailAddress = ''
+
+        } = contact_personal;
 
         let currentPage = 5;
         return (
             <View style={styles.container}>
+                  {
+                    this.props.accOpeningData.isLoading && <GLoadingSpinner />
+                }
                 <GHeaderComponent
                     navigation={this.props.navigation}
                     onPress={this.onClickHeader}
@@ -89,7 +169,7 @@ class OpenAccPageFiveComponent extends Component {
                                     {gblStrings.accManagement.registrationType}
                                 </Text>
                                 <Text style={styles.lblRightColTxt}>
-                                    {"Individual"}
+                                    {accountType}
                                 </Text>
                             </View>
                         </View>
@@ -119,28 +199,28 @@ class OpenAccPageFiveComponent extends Component {
                                 {gblStrings.accManagement.name}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"John Due"}
+                                {`${prefix} ${firstName} ${lastName} ${suffix}`}
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.mailingAddress}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"287 Hillcrest Lane"}
+                              {`${streetNb} ${streetName} ${city} ${state} ${zip}`}
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.physicalAddress}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"287 Hillcrest Lane"}
+                            {`${streetNb_Phy} ${streetName_Phy} ${city_Phy} ${state_Phy} ${zip_Phy}`}
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.homeTelephone}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"(555) 555-1234"}
+                               {"(555) 555-1234"}
                             </Text>
 
                             <Text style={styles.lblNameTxt}>

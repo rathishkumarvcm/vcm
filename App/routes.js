@@ -54,7 +54,7 @@ import OpenAccPageOne from './Screens/OpenAccPageOne/';
 import OpenAccPageTwo from './Screens/OpenAccPageTwo/';
 import OpenAccPageThree from './Screens/OpenAccPageThree/';
 import OpenAccPageFour from './Screens/OpenAccPageFour/';
-import OpenAccPageFive from './Screens/OpenAccPageFive/OpenAccPageFiveComponent';
+import OpenAccPageFive from './Screens/OpenAccPageFive/';
 import OpenAccPageSix from './Screens/OpenAccPageSix/';
 import SpecialtyAccPage from './Screens/SpecialtyAccPage/SpecialtyAccPageComponent';
 import SpecialtyAccSubmit from './Screens/SpecialtyAccSubmit/SpecialtyAccSubmitComponent';
