@@ -3,6 +3,7 @@ import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
+import globalString from '../../Constants/GlobalStrings';
 
 class ProfileSettingsComponent extends Component {
     constructor(props) {
@@ -33,6 +34,26 @@ class ProfileSettingsComponent extends Component {
         }
     }
 
+    profileSettingPersonalManage = () => this.props.navigation.navigate('editProfileSettings');
+
+    profileSettingAddressManage = () => this.props.navigation.navigate('editAddressSettings');
+
+    profileSettingPhoneManage = () => this.props.navigation.navigate('editPhoneInformation');
+
+    profileSettingMailManage = () => this.props.navigation.navigate('editEmailInformation');
+
+    profileSettingFinancialManage = () => this.props.navigation.navigate('editAddFinancialInfo');
+
+    profileSettingEmployeeManage = () => this.props.navigation.navigate('editOccupationInfo');
+
+    profileSettingMilitaryManage = () => this.props.navigation.navigate('editMilitaryInfo');
+
+    profileSettingRegulatoryManage = () => this.props.navigation.navigate('editRegulatoryInfo');
+
+    profileSettingAddRelation = () => this.props.navigation.navigate('editRelationshipInfo');
+
+    profileSettingFamilyManage = () => this.props.navigation.navigate('editFamilyMemberInfo');
+
     render() {
         return (
             <View style={styles.container}>
@@ -45,156 +66,148 @@ class ProfileSettingsComponent extends Component {
 
                     <View style={styles.settingsView}>
                         <Text style={styles.profileSettingHead}>
-                            {"Profile"}
+                            {globalString.profileSettingsPage.profileHeadOne}
                         </Text>
 
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(14) }}>
-                            {"  >  "}
+                        <Text style={styles.profileSettingHeadOne}>
+                            {globalString.profileSettingsPage.profileHeadArrow}
                         </Text>
 
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(14), fontWeight: 'bold' }}>
-                            {"Basic Information"}
+                        <Text style={styles.profileSettingHeadTwo}>
+                            {globalString.profileSettingsPage.profileHeadTwo}
                         </Text>
                     </View>
 
                     {/* Personal Information with Manage Options */}
 
                     <View>
-                        <View style={[styles.settingsView, { justifyContent: 'center', alignItems: 'center' }]}>
-                            <Text style={{ width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                {"Personal Information"}
+                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                            <Text style={styles.profileSettingViewOne}>
+                                {globalString.profileSettingsPage.profilePersonalInfo}
                             </Text>
 
-                            <Text style={{ width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' }}
-                                onPress={() => this.props.navigation.navigate('editProfileSettings')}>
-                                {"Manage"}
+                            <Text style={styles.profileSettingViewTwo}
+                                onPress={this.profileSettingPersonalManage}>
+                                {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
                         <View style={styles.settingsBorder}></View>
 
-                        <View style={{
-                            borderWidth: 1,
-                            borderColor: '#D4D4D4',
-                            backgroundColor: '#FFFFFF',
-                            marginTop: scaledHeight(20),
-                            width: '92%',
-                            marginLeft: '4%',
-                            marginRight: '4%'
-                        }}>
+                        <View style={styles.profileSettingPersonalBackground}>
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Name"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileNameLabel}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#0000FF', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}
+                                <Text style={styles.profileSettingNameLabel}
                                     onPress={this.ShowHideComponent}>
                                     {this.state.profileName}
                                 </Text>
                             </View>
 
-                            <View style={{ backgroundColor: '#F3F3F3', marginLeft: '3%', marginRight: '3%' }}>
+                            <View style={styles.profileSettingNameBackground}>
                                 {this.state.show ? (
-                                    <Text style={{ color: '#000000', fontSize: scaledHeight(16), lineHeight: 30, margin: '2%' }}>
-                                        {"If you need to change your name, please call us at <Phone Number>. Depending on the product and services you currently have, documentation may be required in order to make your update"}
+                                    <Text style={styles.profileSettingNameDetailLabel}>
+                                        {globalString.profileSettingsPage.profileNameContentMsg}
                                     </Text>
                                 ) : null}
                             </View>
 
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Prefix"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profilePrefixLabel}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"1LT"}
                                 </Text>
                             </View>
 
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Suffix"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileSuffixLabel}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"Sr."}
                                 </Text>
                             </View>
 
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"VCM ID"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileVcmLabel}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"YYMM9999999"}
                                 </Text>
                             </View>
 
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Social Security Number"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileSsnLabel}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"xxx-xx-1234"}
                                 </Text>
                             </View>
 
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Date of birth"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileDobLabel}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"MM-DD-YYYY"}
                                 </Text>
                             </View>
 
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Gender"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileGenderLabel}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"Male"}
                                 </Text>
                             </View>
 
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Marital Status"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileStatusLabel}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"Married"}
                                 </Text>
                             </View>
 
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Citizenship"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileCitizenLabel}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"United States"}
                                 </Text>
                             </View>
@@ -204,14 +217,14 @@ class ProfileSettingsComponent extends Component {
                     {/* Contact Information with Manage Options */}
 
                     <View>
-                        <View style={[styles.settingsView, { justifyContent: 'center', alignItems: 'center' }]}>
-                            <Text style={{ width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                {"Contact Information"}
+                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                            <Text style={styles.profileSettingViewOne}>
+                                {globalString.profileSettingsPage.profileContactLabel}
                             </Text>
 
-                            <Text style={{ width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' }}
-                                onPress={() => this.props.navigation.navigate('editAddressSettings')}>
-                                {"Manage"}
+                            <Text style={styles.profileSettingViewTwo}
+                                onPress={this.profileSettingAddressManage}>
+                                {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
@@ -219,25 +232,25 @@ class ProfileSettingsComponent extends Component {
 
                         <View style={styles.settingsAddress}>
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Mailing Address"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileMailingLabel}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"5400 N Black Oak Lake Rd"}
                                 </Text>
                             </View>
 
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Physical Address"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profilePhysicalLabel}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"Same as mailing"}
                                 </Text>
                             </View>
@@ -247,14 +260,14 @@ class ProfileSettingsComponent extends Component {
                     {/* Phone Information with Manage Options */}
 
                     <View>
-                        <View style={[styles.settingsView, { justifyContent: 'center', alignItems: 'center' }]}>
-                            <Text style={{ width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                {"Phone Information"}
+                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                            <Text style={styles.profileSettingViewOne}>
+                                {globalString.profileSettingsPage.profilePhoneInfoLabel}
                             </Text>
 
-                            <Text style={{ width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' }}
-                                onPress={() => this.props.navigation.navigate('editPhoneInformation')}>
-                                {"Manage"}
+                            <Text style={styles.profileSettingViewTwo}
+                                onPress={this.profileSettingPhoneManage}>
+                                {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
@@ -262,13 +275,13 @@ class ProfileSettingsComponent extends Component {
 
                         <View style={styles.settingsPhone}>
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Primary Mobile"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profilePrimaryMobileLabel}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"+1(xxx) xxx - 7890"}
                                 </Text>
                             </View>
@@ -278,14 +291,14 @@ class ProfileSettingsComponent extends Component {
                     {/* Email Information with Manage Options */}
 
                     <View>
-                        <View style={[styles.settingsView, { justifyContent: 'center', alignItems: 'center' }]}>
-                            <Text style={{ width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                {"Email Information"}
+                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                            <Text style={styles.profileSettingViewOne}>
+                                {globalString.profileSettingsPage.profileMailLabel}
                             </Text>
 
-                            <Text style={{ width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' }}
-                                onPress={() => this.props.navigation.navigate('editEmailInformation')}>
-                                {"Manage"}
+                            <Text style={styles.profileSettingViewTwo}
+                                onPress={this.profileSettingMailManage}>
+                                {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
@@ -293,13 +306,13 @@ class ProfileSettingsComponent extends Component {
 
                         <View style={styles.settingsPhone}>
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Primary"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileMailPrimaryLabel}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"paxxxxx@example.com"}
                                 </Text>
                             </View>
@@ -309,14 +322,14 @@ class ProfileSettingsComponent extends Component {
                     {/* Financial Information with Manage Options */}
 
                     <View>
-                        <View style={[styles.settingsView, { justifyContent: 'center', alignItems: 'center' }]}>
-                            <Text style={{ width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                {"Financial Information"}
+                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                            <Text style={styles.profileSettingViewOne}>
+                                {globalString.profileSettingsPage.profileFinancialInfo}
                             </Text>
 
-                            <Text style={{ width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' }}
-                                onPress={() => this.props.navigation.navigate('editAddFinancialInfo')}>
-                                {"Manage"}
+                            <Text style={styles.profileSettingViewTwo}
+                                onPress={this.profileSettingFinancialManage}>
+                                {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
@@ -324,49 +337,49 @@ class ProfileSettingsComponent extends Component {
 
                         <View style={styles.settingsFinancial}>
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Annual Income"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileFinancialOne}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"$ 100,000"}
                                 </Text>
                             </View>
 
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Tax Bracket"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileFinancialTwo}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"10%"}
                                 </Text>
                             </View>
 
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Net Worth"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileFinancialThree}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"$ 100,000,000"}
                                 </Text>
                             </View>
 
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Tax Filing Status"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileFinancialFour}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"Single individual"}
                                 </Text>
                             </View>
@@ -377,14 +390,14 @@ class ProfileSettingsComponent extends Component {
                     {/* Employment Information with Manage Options */}
 
                     <View>
-                        <View style={[styles.settingsView, { justifyContent: 'center', alignItems: 'center' }]}>
-                            <Text style={{ width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                {"Employment Information"}
+                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                            <Text style={styles.profileSettingViewOne}>
+                                {globalString.profileSettingsPage.profileEmployeeInfo}
                             </Text>
 
-                            <Text style={{ width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' }}
-                                onPress={() => this.props.navigation.navigate('editOccupationInfo')}>
-                                {"Manage"}
+                            <Text style={styles.profileSettingViewTwo}
+                                onPress={this.profileSettingEmployeeManage}>
+                                {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
@@ -392,49 +405,49 @@ class ProfileSettingsComponent extends Component {
 
                         <View style={styles.settingsFinancial}>
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Employment Status"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileEmployeeOne}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"None on file"}
                                 </Text>
                             </View>
 
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Primary Industry"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileEmployeeTwo}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"None on file"}
                                 </Text>
                             </View>
 
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Primary Occupation"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileEmployeeThree}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"None on file"}
                                 </Text>
                             </View>
 
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Primary Employer"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileEmployeeFour}
                                 </Text>
                             </View>
 
                             <View style={styles.signInView}>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"None on file"}
                                 </Text>
                             </View>
@@ -444,14 +457,14 @@ class ProfileSettingsComponent extends Component {
                     {/* Military Information with Manage Options */}
 
                     <View>
-                        <View style={[styles.settingsView, { justifyContent: 'center', alignItems: 'center' }]}>
-                            <Text style={{ width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                {"Military information (Optional)"}
+                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                            <Text style={styles.profileSettingViewOne}>
+                                {globalString.profileSettingsPage.profileMilitaryInfo}
                             </Text>
 
-                            <Text style={{ width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' }}
-                                onPress={() => this.props.navigation.navigate('editMilitaryInfo')}>
-                                {"Manage"}
+                            <Text style={styles.profileSettingViewTwo}
+                                onPress={this.profileSettingMilitaryManage}>
+                                {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
@@ -459,8 +472,8 @@ class ProfileSettingsComponent extends Component {
 
                         <View style={styles.settingsMilitary}>
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
-                                    {"Providing your current military information"}
+                                <Text style={styles.profileSettingViewBack}>
+                                    {globalString.profileSettingsPage.profileMilitaryProvideInfo}
                                 </Text>
                             </View>
                         </View>
@@ -469,14 +482,14 @@ class ProfileSettingsComponent extends Component {
                     {/* Regulatory Information with Manage Options */}
 
                     <View>
-                        <View style={[styles.settingsView, { justifyContent: 'center', alignItems: 'center' }]}>
-                            <Text style={{ width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                {"Regulatory questions"}
+                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                            <Text style={styles.profileSettingViewOne}>
+                                {globalString.profileSettingsPage.profileRegulatoryInfo}
                             </Text>
 
-                            <Text style={{ width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' }}
-                                onPress={() => this.props.navigation.navigate('editRegulatoryInfo')}>
-                                {"Manage"}
+                            <Text style={styles.profileSettingViewTwo}
+                                onPress={this.profileSettingRegulatoryManage}>
+                                {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
@@ -484,8 +497,8 @@ class ProfileSettingsComponent extends Component {
 
                         <View style={styles.settingsMilitary}>
                             <View style={styles.settingsView1}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
-                                    {"You are not a senior foreign political figure"}
+                                <Text style={styles.profileSettingViewBack}>
+                                    {globalString.profileSettingsPage.profileRegulatoryQues}
                                 </Text>
                             </View>
                         </View>
@@ -494,27 +507,27 @@ class ProfileSettingsComponent extends Component {
                     {/* Manage Relationship with Add Options */}
 
                     <View>
-                        <View style={[styles.settingsView, { justifyContent: 'center', alignItems: 'center' }]}>
-                            <Text style={{ width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                {"Manage relationship"}
+                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                            <Text style={styles.profileSettingViewOne}>
+                                {globalString.profileSettingsPage.profileRelationshipLabel}
                             </Text>
 
-                            <Text style={{ width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' }}
-                                onPress={() => this.props.navigation.navigate('editRelationshipInfo')}>
-                                {"Add"}
+                            <Text style={styles.profileSettingViewTwo}
+                                onPress={this.profileSettingAddRelation}>
+                                {globalString.profileSettingsPage.profileRelationshipAdd}
                             </Text>
                         </View>
 
                         <View style={styles.settingsBorder}></View>
 
                         <View style={styles.settingsRelationShip}
-                            onPress={() => this.props.navigation.navigate('editFamilyMemberInfo')}>
+                            onPress={this.profileSettingFamilyManage}>
                             <View style={styles.settingsBorderGap}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}
-                                    onPress={() => this.props.navigation.navigate('editFamilyMemberInfo')}>
-                                    {"Family Member Name"}
+                                <Text style={styles.profileSettingLabel}
+                                    onPress={this.profileSettingFamilyManage}>
+                                    {globalString.profileSettingsPage.profileFamilyMemberLabel}
                                 </Text>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"Wife"}
                                 </Text>
                             </View>
@@ -522,10 +535,10 @@ class ProfileSettingsComponent extends Component {
 
                         <View style={styles.settingsRelationShip}>
                             <View style={styles.settingsBorderGap}>
-                                <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Family Member Name"}
+                                <Text style={styles.profileSettingLabel}>
+                                    {globalString.profileSettingsPage.profileFamilyMemberLabel}
                                 </Text>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' }}>
+                                <Text style={styles.profileSettingValueLabel}>
                                     {"Daughter"}
                                 </Text>
                             </View>
@@ -536,8 +549,8 @@ class ProfileSettingsComponent extends Component {
 
                     <View>
                         <View style={[styles.settingsView]}>
-                            <Text style={{ width: '70%', color: '#707070', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                {"Social Media Information"}
+                            <Text style={styles.profileSettingSocialView}>
+                                {globalString.profileSettingsPage.profileSocialMediaLabel}
                             </Text>
                         </View>
 
@@ -550,8 +563,8 @@ class ProfileSettingsComponent extends Component {
                                 <Image style={styles.imageWidthHeight}
                                     source={require("../../Images/twitterlogo.png")} />
 
-                                <Text style={{ color: '#0000FF', fontSize: scaledHeight(16), marginTop: scaledHeight(3) }}>
-                                    {"Sign in to Facebook"}
+                                <Text style={styles.profileSettingSocialLabel}>
+                                    {globalString.profileSettingsPage.profileFacebookLabel}
                                 </Text>
                             </View>
 
@@ -560,8 +573,8 @@ class ProfileSettingsComponent extends Component {
                                 <Image style={styles.imageWidthHeight}
                                     source={require("../../Images/linkedinlogo.png")} />
 
-                                <Text style={{ color: '#0000FF', fontSize: scaledHeight(16), marginTop: scaledHeight(3) }}>
-                                    {"Sign in to Twitter"}
+                                <Text style={styles.profileSettingSocialLabel}>
+                                    {globalString.profileSettingsPage.profileTwitterLabel}
                                 </Text>
                             </View>
                         </View>
@@ -571,26 +584,26 @@ class ProfileSettingsComponent extends Component {
                     {/* Footer Section - Privacy and User Agreements */}
 
                     <View>
-                        <View style={{ flexDirection: 'column', width: '92%', margin: '4%' }}>
-                            <Text style={{ color: '#56565A', fontSize: scaledHeight(16), lineHeight: 24, textAlign: 'justify' }}>
-                                {"By Sharing and connecting your social media information with VCM., our team can streamline your experience on VCM's social presences such as Twitter and Facebook, and provide you with personalized tips, tools and support. All social media information collected by VCM is used and protected according to the VCM Private Promise and Online Information Practices"}
+                        <View style={styles.profileSettingFooterView}>
+                            <Text style={styles.profileSettingShareLabel}>
+                                {globalString.profileSettingsPage.profileSharing}
                             </Text>
 
-                            <Text style={{ color: '#56565A', lineHeight: 24, textAlign: 'justify', fontSize: scaledHeight(16), marginTop: '4%' }}>
-                                {"For security reasons, not all information can be uploaded online. Please call us if you need assistance. Phone Number"}
+                            <Text style={styles.profileSettingSecurityLabel}>
+                                {globalString.profileSettingsPage.profileSecurity}
                             </Text>
                         </View>
 
                         <View style={styles.settingsFooter}>
-                            <Text style={{ flexWrap: 'wrap', color: '#56565A', fontSize: scaledHeight(16), lineHeight: 24, textAlign: 'justify', marginBottom: '3%' }}>
-                                {"Investing involves risk including loss of principal.\n\nVictory Mutual Funds and USAA Mutual Funds are distributed by Victory Capital Advisers, Inc. (VCA). VictoryShares ETFs and VictoryShares USAA ETFs are distributed by Foreside Fund Services, LLC (Foreside). VCA and Foreside are members of FINRA and SIPC. Victory Capital Management Inc. (VCM) is the investment adviser to the Victory Mutual Funds, USAA Mutual Funds, VictoryShares ETFs and VictoryShares USAA ETFs. VCA and VCM are not affiliated with Foreside. USAA is not affiliated with Foreside, VCM, or VCA. USAA and the USAA logos are registered trademarks and the USAA Mutual Funds and USAA Investments logos are trademarks of United Services Automobile Association and are being used by Victory Capital and its affiliates under license. Victory Capital means Victory Capital Management Inc., the investment manager of the USAA 529 College Savings Plan (Plan). The Plan is distributed by Victory Capital Advisers, Inc., a broker dealer registered with FINRA and an affiliate of Victory Capital. Victory Capital and its affiliates are not affiliated with United Services Automobile Association or its affiliates. USAA and the USAA logo are registered trademarks and the USAA 529 College Savings Plan logo is a trademark of United Services Automobile Association and are being used by Victory Capital and its affiliates under license."}
+                            <Text style={styles.profileSettingInvestLabel}>
+                                {globalString.profileSettingsPage.profileInvest}
                             </Text>
 
-                            <Image style={{ marginTop: '4%', paddingLeft: '4%', paddingRight: '4%' }}
+                            <Image style={styles.profileSettingSocialIcon}
                                 source={require("../../Images/logo.png")} />
 
-                            <Text style={{ color: '#56565A', fontSize: scaledHeight(18), marginTop: '4%' }}>
-                                {"Connect with Us"}
+                            <Text style={styles.profileSettingConnectLabel}>
+                                {globalString.common.connectWithUs}
                             </Text>
 
                             <View style={styles.whiteBackground}>
@@ -602,28 +615,28 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.privacyAgreement}>
                                 <Text style={styles.privacyText}>
-                                    {"Privacy Policy"}
+                                    {globalString.common.privacyPolicy}
                                 </Text>
 
                                 <Text style={styles.privacyText}>
-                                    {"Fund Documents"}
+                                    {globalString.common.fundDocuments}
                                 </Text>
                             </View>
 
                             <View style={styles.privacyAgreement}>
                                 <Text style={styles.privacyText}>
-                                    {"User Agreement"}
+                                    {globalString.common.userAgreement}
                                 </Text>
 
                                 <Text style={styles.privacyText}>
-                                    {"Support"}
+                                    {globalString.common.support}
                                 </Text>
                             </View>
                         </View>
 
                         <View style={styles.copyRightSection}>
                             <Text style={styles.copyRightText}>
-                                {"Copyright Victory Capital Management Inc. ©2020"}
+                                {globalString.common.copyRights}
                             </Text>
                         </View>
                     </View>
