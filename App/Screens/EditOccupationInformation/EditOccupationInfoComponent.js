@@ -5,7 +5,7 @@ import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButto
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 
-class EditOccupationInfoComponent extends Component {
+class editOccupationInfoComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -19,6 +19,8 @@ class EditOccupationInfoComponent extends Component {
 
     componentDidMount() { }
 
+    editOccupationOnCancel = () => this.props.navigation.navigate('profileSettings');
+
     render() {
         return (
 
@@ -30,7 +32,7 @@ class EditOccupationInfoComponent extends Component {
 
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
-                            {"Settings > Profile > "}
+                            {globalString.editProfilePageValue.editAddressInfoHead}
                         </Text>
                         <Text style={[styles.settingsInfo, styles.editLabelBold]}>
                             {globalString.editOccupationInfo.occupationTitle}
@@ -197,7 +199,7 @@ class EditOccupationInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={() => this.props.navigation.navigate('profileSettings')} />
+                            onPress={this.editOccupationOnCancel} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -253,4 +255,4 @@ class EditOccupationInfoComponent extends Component {
     }
 }
 
-export default EditOccupationInfoComponent;
+export default editOccupationInfoComponent;

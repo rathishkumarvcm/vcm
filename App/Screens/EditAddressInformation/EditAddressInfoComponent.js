@@ -5,7 +5,7 @@ import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButto
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 
-class EditAddressInfoComponent extends Component {
+class editAddressInfoComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -19,6 +19,10 @@ class EditAddressInfoComponent extends Component {
 
     componentDidMount() { }
 
+    editAddressInfoAddNew = () => this.props.navigation.navigate('editAddressAddNew');
+
+    editAddressOnCancel = () => this.props.navigation.navigate('profileSettings');
+
     render() {
         return (
 
@@ -30,7 +34,7 @@ class EditAddressInfoComponent extends Component {
 
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
-                            {"Settings > Personal info > "}
+                            {globalString.editProfilePageValue.editAddressInfoHead}
                         </Text>
                         <Text style={[styles.settingsInfo, styles.editLabelBold]}>
                             {globalString.editAddressInfo.editAddressTitle}
@@ -43,7 +47,7 @@ class EditAddressInfoComponent extends Component {
                         </Text>
 
                         <Text style={styles.addEditTextLabel}
-                            onPress={() => this.props.navigation.navigate('editAddressAddNew')}>
+                            onPress={this.editAddressInfoAddNew}>
                             {globalString.editAddressInfo.editAddressAddNew}
                         </Text>
                     </View>
@@ -55,7 +59,7 @@ class EditAddressInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={() => this.props.navigation.navigate('profileSettings')} />
+                            onPress={this.editAddressOnCancel} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -117,4 +121,4 @@ class EditAddressInfoComponent extends Component {
     }
 }
 
-export default EditAddressInfoComponent;
+export default editAddressInfoComponent;

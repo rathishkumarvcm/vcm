@@ -386,5 +386,12 @@ export const styles = StyleSheet.create({
     },
     editAddressSecurity: {
         color: '#56565A', fontSize: scaledHeight(18)
-    }
+    },
+    editRegulatoryOne: { color: '#0000FF', fontSize: scaledHeight(14) },
+    editRegulatoryTwo: { color: '#56565A', fontSize: scaledHeight(14) },
+    editRegulatoryHead: { color: '#56565A', fontSize: scaledHeight(14), fontWeight: 'bold' },
+    editRegulatoryHeadOne: { width: '100%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },
+    editRegulatoryView: { justifyContent: 'center', alignItems: 'center' },
+    editRegulatoryPolitical: { width: '100%', color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' },
+    editRegulatoryMargin: { margin: '5%' }
 });

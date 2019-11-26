@@ -5,7 +5,7 @@ import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButto
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 
-class EditEmailInfoComponent extends Component {
+class editEmailInfoComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -19,6 +19,10 @@ class EditEmailInfoComponent extends Component {
 
     componentDidMount() { }
 
+    emailAddNew = () => this.props.navigation.navigate('editEmailAddNew');
+
+    emailAddNewOnCancel = () => this.props.navigation.navigate('profileSettings');
+
     render() {
         return (
             <View style={styles.container}>
@@ -29,9 +33,11 @@ class EditEmailInfoComponent extends Component {
 
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
-                            {"Settings > Personal info > "}
+                            {globalString.editProfilePageValue.editAddressInfoHead}
                         </Text>
-                        <Text style={[styles.settingsInfo, styles.editLabelBold]}>{globalString.editEmailInformations.editEmailTitle}</Text>
+                        <Text style={[styles.settingsInfo, styles.editLabelBold]}>
+                            {globalString.editEmailInformations.editEmailTitle}
+                            </Text>
                     </View>
 
                     <View style={styles.settingsView}>
@@ -39,7 +45,7 @@ class EditEmailInfoComponent extends Component {
                             {globalString.editEmailInformations.editEmailTitle}
                         </Text>
                         <Text style={styles.editEmailAddNew}
-                            onPress={() => this.props.navigation.navigate('editEmailAddNew')}>
+                            onPress={this.emailAddNew}>
                             {globalString.editEmailInformations.editEmailAddNew}
                         </Text>
                     </View>
@@ -75,7 +81,7 @@ class EditEmailInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={() => this.props.navigation.navigate('profileSettings')} />
+                            onPress={this.emailAddNewOnCancel} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -150,4 +156,4 @@ class EditEmailInfoComponent extends Component {
     }
 }
 
-export default EditEmailInfoComponent;
+export default editEmailInfoComponent;

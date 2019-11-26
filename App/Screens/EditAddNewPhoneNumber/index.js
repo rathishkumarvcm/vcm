@@ -1,3 +1,3 @@
-import EditAddPhoneNumberComponent from './EditAddPhoneNumberContainer';
+import editAddPhoneNumberComponent from './EditAddPhoneNumberContainer';
 
-export default EditAddPhoneNumberComponent;
+export default editAddPhoneNumberComponent;

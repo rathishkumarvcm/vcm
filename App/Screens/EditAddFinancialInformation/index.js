@@ -1,3 +1,3 @@
-import EditAddFinancialInfoComponent from './EditAddFinancialInfoContainer';
+import editAddFinancialInfoComponent from './EditAddFinancialInfoContainer';
 
-export default EditAddFinancialInfoComponent;
+export default editAddFinancialInfoComponent;

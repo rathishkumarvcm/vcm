@@ -10,7 +10,7 @@ const profileMilitaryService = [
     { index2: 1, question: "No" },
 ];
 
-class EditMilitaryInfoComponent extends Component {
+class editMilitaryInfoComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -40,6 +40,8 @@ class EditMilitaryInfoComponent extends Component {
 
     componentDidMount() { }
 
+    editMilitaryOnCancel = () => this.props.navigation.navigate('profileSettings');
+
     render() {
         return (
 
@@ -51,7 +53,7 @@ class EditMilitaryInfoComponent extends Component {
 
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
-                            {"Settings > Profile > "}
+                            {globalString.editProfilePageValue.editAddressInfoHead}
                         </Text>
                         <Text style={[styles.settingsInfo, styles.editLabelBold]}>
                             {globalString.editMilitaryInfo.militaryInfoTitle}
@@ -100,7 +102,7 @@ class EditMilitaryInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={() => this.props.navigation.navigate('profileSettings')} />
+                            onPress={this.editMilitaryOnCancel} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -162,4 +164,4 @@ class EditMilitaryInfoComponent extends Component {
     }
 }
 
-export default EditMilitaryInfoComponent;
+export default editMilitaryInfoComponent;

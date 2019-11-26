@@ -386,5 +386,22 @@ export const styles = StyleSheet.create({
     },
     editAddressSecurity: {
         color: '#56565A', fontSize: scaledHeight(18)
-    }
+    },
+    editFamilyDetailView: { color: '#0000FF', fontSize: scaledHeight(14) },
+    editFamilyDetailOne: { color: '#56565A', fontSize: scaledHeight(14) },
+    editFamilyDetailTwo: { color: '#56565A', fontSize: scaledHeight(14), fontWeight: 'bold' },
+    editFamilyHeadView: { width: '100%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },
+    editFamilyDetailHeader: { flexDirection: 'column', width: '90%', margin: '4%', alignSelf: 'center' },
+    editFamilyDetailLabel: { color: '#333333DE', fontSize: scaledHeight(14), fontWeight: 'bold', marginBottom: '4%' },
+    editProfileValueView: { color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' },
+    editFamilyDetailDropDown: { flexDirection: 'row', marginTop: scaledHeight(3) },
+    editFamilyDetailValueLabel: { color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: '3%', marginBottom: '4%' },
+    editFamilyDetailDropIcon: { position: 'absolute', right: 20, top: 14 },
+    profileSettingsNameView: { color: '#0000FF', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' },
+    editFamilyDetailMargin: { marginTop: '4%' },
+    editDropDownSelect: { height: 100, borderWidth: 1, marginRight: '4%', marginTop: '1%', width: '92%', borderColor: "#DEDEDF", backgroundColor: 'white'},
+    editFamilyInstBackground: { flexDirection: 'column', width: '92%', marginTop: '4%', marginLeft: '4%', marginRight: '4%', backgroundColor: '#F1F1F2' },
+    editFamilyInstLabel: { color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold', margin: '3%' },
+    editFamilyInstDivider: { borderBottomWidth: 1, borderColor: '#B2B2B2', marginBottom: '4%', marginTop: '4%' },
+    editFamilyInstContent: { color: '#56565A', fontSize: scaledHeight(18), textAlign: 'justify', margin: '3%', lineHeight: 30 }
 });

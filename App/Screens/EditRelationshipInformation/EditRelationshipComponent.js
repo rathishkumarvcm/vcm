@@ -1,11 +1,26 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 
-class EditRelationshipComponent extends Component {
+const profileSettingsTempData = [
+    {
+        key: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+        value: 'First State',
+    },
+    {
+        key: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+        value: 'Second State',
+    },
+    {
+        key: '58694a0f-3da1-471f-bd96-145571e29d72',
+        value: 'Third State',
+    },
+];
+
+class editRelationshipComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -13,13 +28,123 @@ class EditRelationshipComponent extends Component {
             isLoading: false,
             enableBiometric: false,
             faceIdEnrolled: false,
-            touchIdEnrolled: false
+            touchIdEnrolled: false,
+            dropDownState: false,
+            dropDownValue: '',
+            dropDownSuffixState: false,
+            dropDownSuffixValue: '',
+            dropDownGenderState: false,
+            dropDownGenderValue: '',
+            dropDownStatusState: false,
+            dropDownStatusValue: ''
         };
     }
 
-    componentDidMount() { }
+    dropDownOnClick = () => {
+        this.setState({
+            dropDownState: !this.state.dropDownState
+        });
+    }
+
+    dropDownOnSelect = (value) => {
+        this.setState({
+            dropDownValue: value,
+            dropDownState: false
+        });
+    }
+
+    dropDownSuffixClick = () => {
+        this.setState({
+            dropDownSuffixState: !this.state.dropDownSuffixState
+        });
+    }
+
+    dropDownSuffixSelect = (valueSuffix) => {
+        this.setState({
+            dropDownSuffixValue: valueSuffix,
+            dropDownSuffixState: false
+        });
+    }
+
+    dropDownGenderClick = () => {
+        this.setState({
+            dropDownGenderState: !this.state.dropDownGenderState
+        });
+    }
+
+    dropDownGenderSelect = (valueGender) => {
+        this.setState({
+            dropDownGenderValue: valueGender,
+            dropDownGenderState: false
+        });
+    }
+
+    dropDownStatusClick = () => {
+        this.setState({
+            dropDownStatusState: !this.state.dropDownStatusState
+        });
+    }
+
+    dropDownStatusSelect = (valueStatus) => {
+        this.setState({
+            dropDownStatusValue: valueStatus,
+            dropDownStatusState: false
+        });
+    }
+
+    componentDidMount() {
+        let payload = [];
+
+        const compositePayloadData = [
+            "prefix",
+            "suffix",
+            "gender",
+            "marital_status"
+        ];
+
+        for (let i = 0; i < compositePayloadData.length; i++) {
+            let tempkey = compositePayloadData[i];
+            if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
+                payload.push(tempkey)
+            }
+        }
+
+        this.props.getProfileCompositeData(payload);
+    }
+
+    relationCancelOnClick = () => this.props.navigation.navigate('profileSettings');
 
     render() {
+
+        let profilePrefixData = profileSettingsTempData;
+        let profileSuffixData = profileSettingsTempData;
+        let profileGenderData = profileSettingsTempData;
+        let profileStatusData = profileSettingsTempData;
+
+        if (this.props && this.props.profileSettingsLookup &&
+            this.props.profileSettingsLookup.prefix &&
+            this.props.profileSettingsLookup.prefix.value) {
+            profilePrefixData = this.props.profileSettingsLookup.prefix.value
+        }
+
+        if (this.props && this.props.profileSettingsLookup &&
+            this.props.profileSettingsLookup.suffix &&
+            this.props.profileSettingsLookup.suffix.value) {
+            profileSuffixData = this.props.profileSettingsLookup.suffix.value
+        }
+
+        if (this.props && this.props.profileSettingsLookup &&
+            this.props.profileSettingsLookup.gender &&
+            this.props.profileSettingsLookup.gender.value) {
+            profileGenderData = this.props.profileSettingsLookup.gender.value
+        }
+
+        if (this.props && this.props.profileSettingsLookup &&
+            this.props.profileSettingsLookup.marital_status &&
+            this.props.profileSettingsLookup.marital_status.value) {
+            profileStatusData = this.props.profileSettingsLookup.marital_status.value
+        }
+
         return (
 
             <View style={styles.container}>
@@ -31,31 +156,31 @@ class EditRelationshipComponent extends Component {
                     {/* Header Section - Tree Structure */}
 
                     <View style={styles.settingsView}>
-                        <Text style={{ color: '#0000FF', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.relationHeadView}>
                             {"Pro.."}
                         </Text>
 
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.relationHeadOne}>
                             {"  >  "}
                         </Text>
 
-                        <Text style={{ color: '#0000FF', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.relationHeadView}>
                             {"Bas.."}
                         </Text>
 
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.relationHeadOne}>
                             {"  >  "}
                         </Text>
 
-                        <Text style={{ color: '#0000FF', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.relationHeadView}>
                             {"Man.."}
                         </Text>
 
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.relationHeadOne}>
                             {"  >  "}
                         </Text>
 
-                        <Text numberOfLines={1} style={{ color: '#56565A', fontSize: scaledHeight(14), fontWeight: 'bold' }}>
+                        <Text style={styles.relationHeadTwo}>
                             {"Manage Relationship In.."}
                         </Text>
                     </View>
@@ -65,26 +190,26 @@ class EditRelationshipComponent extends Component {
                     <View>
 
                         <View style={styles.settingsView}>
-                            <Text style={{ width: '100%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                {"Manage Relationship Information"}
+                            <Text style={styles.relationHeadLabel}>
+                                {globalString.editRelationShipInformation.relationShipHeadLabel}
                             </Text>
                         </View>
 
                         <View style={styles.settingsBorder}></View>
 
-                        <View style={{ flexDirection: 'column', width: '90%', margin: '4%', alignSelf: 'center' }}>
-                            <Text style={{ color: '#333333DE', fontSize: scaledHeight(14), fontWeight: 'bold', marginBottom: '4%' }}>
-                                {"Family Member's relationship to you"}
+                        <View style={styles.relationFamilyLabel}>
+                            <Text style={styles.relationFamilyLabelView}>
+                                {globalString.editRelationShipInformation.relationShipFamilyLabel}
                             </Text>
 
-                            <TouchableOpacity style={{ flexDirection: 'row', marginTop: scaledHeight(3) }} onPress={this.selectTheState}>
+                            <TouchableOpacity style={styles.relationSpinnerView} onPress={this.selectTheState}>
                                 <GInputComponent
                                     propInputStyle={styles.userIDTextBox1}
-                                    placeholder={"Select"}
+                                    placeholder={""}
                                     editable={false}
                                     value={this.state.valueDropDown} />
 
-                                <TouchableOpacity style={{ position: 'absolute', right: 20, top: 14 }} onPress={this.selectTheState}>
+                                <TouchableOpacity style={styles.relationSpinnerBackground} onPress={this.selectTheState}>
                                     <GIcon
                                         name="md-arrow-dropdown"
                                         type="ionicon"
@@ -93,105 +218,177 @@ class EditRelationshipComponent extends Component {
                                 </TouchableOpacity>
                             </TouchableOpacity>
 
-                            <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: '3%', marginBottom: '4%' }}>
-                                {"First Name"}
+                            <Text style={styles.relationLabels}>
+                                {globalString.editRelationShipInformation.relationFirstName}
                             </Text>
 
-                            <GInputComponent style={{ marginTop: '4%' }}
+                            <GInputComponent style={styles.relationMarginFour}
                                 placeholder="" />
 
-                            <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: '3%', marginBottom: '4%' }}>
-                                {"Prefix"}
-                            </Text>
+                            <View>
+                                <Text style={styles.relationLabels}>
+                                    {globalString.editRelationShipInformation.relationPrefix}
+                                </Text>
 
-                            <TouchableOpacity style={{ flexDirection: 'row', marginTop: scaledHeight(3) }} onPress={this.selectTheState}>
-                                <GInputComponent
-                                    propInputStyle={styles.userIDTextBox1}
-                                    placeholder={"Select"}
-                                    editable={false}
-                                    value={this.state.valueDropDown} />
+                                <TouchableOpacity style={styles.relationSpinnerView}
+                                    onPress={this.dropDownOnClick}>
+                                    <GInputComponent
+                                        propInputStyle={styles.userIDTextBox1}
+                                        placeholder={""}
+                                        editable={false}
+                                        value={this.state.dropDownValue} />
 
-                                <TouchableOpacity style={{ position: 'absolute', right: 20, top: 14 }} onPress={this.selectTheState}>
-                                    <GIcon
-                                        name="md-arrow-dropdown"
-                                        type="ionicon"
-                                        size={20}
-                                        color="black" />
+                                    <TouchableOpacity style={styles.relationSpinnerBackground}
+                                        onPress={this.dropDownOnClick}>
+                                        <GIcon
+                                            name="md-arrow-dropdown"
+                                            type="ionicon"
+                                            size={20}
+                                            color="black" />
+                                    </TouchableOpacity>
                                 </TouchableOpacity>
-                            </TouchableOpacity>
 
-                            <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: '3%', marginBottom: '4%' }}>
-                                {"Suffix"}
-                            </Text>
+                                {this.state.dropDownState &&
+                                    <View style={styles.editDropDownSelect} >
+                                        <FlatList
+                                            data={profilePrefixData}
+                                            renderItem={({ item }) =>
+                                                (<TouchableOpacity style={{ height: 33 }}
+                                                    onPress={() => this.dropDownOnSelect(item.value)}>
+                                                    <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
+                                                </TouchableOpacity>)
+                                            }
+                                            keyExtractor={item => item.key}
+                                        />
+                                    </View>}
+                            </View>
 
-                            <TouchableOpacity style={{ flexDirection: 'row', marginTop: scaledHeight(3) }} onPress={this.selectTheState}>
-                                <GInputComponent
-                                    propInputStyle={styles.userIDTextBox1}
-                                    placeholder={"Select"}
-                                    editable={false}
-                                    value={this.state.valueDropDown} />
+                            <View>
+                                <Text style={styles.relationLabels}>
+                                    {globalString.editRelationShipInformation.relationSuffix}
+                                </Text>
 
-                                <TouchableOpacity style={{ position: 'absolute', right: 20, top: 14 }} onPress={this.selectTheState}>
-                                    <GIcon
-                                        name="md-arrow-dropdown"
-                                        type="ionicon"
-                                        size={20}
-                                        color="black" />
+                                <TouchableOpacity style={styles.relationSpinnerView}
+                                    onPress={this.dropDownSuffixClick}>
+                                    <GInputComponent
+                                        propInputStyle={styles.userIDTextBox1}
+                                        placeholder={""}
+                                        editable={false}
+                                        value={this.state.dropDownSuffixValue} />
+
+                                    <TouchableOpacity style={styles.relationSpinnerBackground}
+                                        onPress={this.dropDownSuffixClick}>
+                                        <GIcon
+                                            name="md-arrow-dropdown"
+                                            type="ionicon"
+                                            size={20}
+                                            color="black" />
+                                    </TouchableOpacity>
                                 </TouchableOpacity>
-                            </TouchableOpacity>
 
-                            <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: '3%', marginBottom: '4%' }}>
-                                {"Date of Birth"}
+                                {this.state.dropDownSuffixState &&
+                                    <View style={styles.editDropDownSelect} >
+                                        <FlatList
+                                            data={profileSuffixData}
+                                            renderItem={({ item }) =>
+                                                (<TouchableOpacity style={{ height: 33 }}
+                                                    onPress={() => this.dropDownSuffixSelect(item.value)}>
+                                                    <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
+                                                </TouchableOpacity>)
+                                            }
+                                            keyExtractor={item => item.key}
+                                        />
+                                    </View>}
+                            </View>
+
+                            <Text style={styles.relationLabels}>
+                                {globalString.editRelationShipInformation.relationDob}
                             </Text>
 
-                            <GInputComponent style={{ marginTop: '4%' }}
+                            <GInputComponent style={styles.relationMarginFour}
                                 placeholder="MM/DD/YYYY" />
 
-                            <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: '3%', marginBottom: '4%' }}>
-                                {"Gender"}
-                            </Text>
+                            <View>
+                                <Text style={styles.relationLabels}>
+                                    {globalString.editRelationShipInformation.relationGender}
+                                </Text>
 
-                            <TouchableOpacity style={{ flexDirection: 'row', marginTop: scaledHeight(3) }} onPress={this.selectTheState}>
-                                <GInputComponent
-                                    propInputStyle={styles.userIDTextBox1}
-                                    placeholder={"Select"}
-                                    editable={false}
-                                    value={this.state.valueDropDown} />
+                                <TouchableOpacity style={styles.relationSpinnerView}
+                                    onPress={this.dropDownGenderClick}>
+                                    <GInputComponent
+                                        propInputStyle={styles.userIDTextBox1}
+                                        placeholder={""}
+                                        editable={false}
+                                        value={this.state.dropDownGenderValue} />
 
-                                <TouchableOpacity style={{ position: 'absolute', right: 20, top: 14 }} onPress={this.selectTheState}>
-                                    <GIcon
-                                        name="md-arrow-dropdown"
-                                        type="ionicon"
-                                        size={20}
-                                        color="black" />
+                                    <TouchableOpacity style={styles.relationSpinnerBackground}
+                                        onPress={this.dropDownGenderClick}>
+                                        <GIcon
+                                            name="md-arrow-dropdown"
+                                            type="ionicon"
+                                            size={20}
+                                            color="black" />
+                                    </TouchableOpacity>
                                 </TouchableOpacity>
-                            </TouchableOpacity>
 
-                            <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: '3%', marginBottom: '4%' }}>
-                                {"Marital Status"}
-                            </Text>
+                                {this.state.dropDownGenderState &&
+                                    <View style={styles.editDropDownSelect} >
+                                        <FlatList
+                                            data={profileGenderData}
+                                            renderItem={({ item }) =>
+                                                (<TouchableOpacity style={{ height: 33 }}
+                                                    onPress={() => this.dropDownGenderSelect(item.value)}>
+                                                    <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
+                                                </TouchableOpacity>)
+                                            }
+                                            keyExtractor={item => item.key}
+                                        />
+                                    </View>}
+                            </View>
 
-                            <TouchableOpacity style={{ flexDirection: 'row', marginTop: scaledHeight(3) }} onPress={this.selectTheState}>
-                                <GInputComponent
-                                    propInputStyle={styles.userIDTextBox1}
-                                    placeholder={"Select"}
-                                    editable={false}
-                                    value={this.state.valueDropDown} />
+                            <View>
+                                <Text style={styles.relationLabels}>
+                                    {globalString.editRelationShipInformation.relationStatus}
+                                </Text>
 
-                                <TouchableOpacity style={{ position: 'absolute', right: 20, top: 14 }} onPress={this.selectTheState}>
-                                    <GIcon
-                                        name="md-arrow-dropdown"
-                                        type="ionicon"
-                                        size={20}
-                                        color="black" />
+                                <TouchableOpacity style={styles.relationSpinnerView}
+                                    onPress={this.dropDownStatusClick}>
+                                    <GInputComponent
+                                        propInputStyle={styles.userIDTextBox1}
+                                        placeholder={""}
+                                        editable={false}
+                                        value={this.state.dropDownStatusValue} />
+
+                                    <TouchableOpacity style={styles.relationSpinnerBackground}
+                                        onPress={this.dropDownStatusClick}>
+                                        <GIcon
+                                            name="md-arrow-dropdown"
+                                            type="ionicon"
+                                            size={20}
+                                            color="black" />
+                                    </TouchableOpacity>
                                 </TouchableOpacity>
-                            </TouchableOpacity>
 
-                            <Text style={{ color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: '3%', marginBottom: '4%' }}>
-                                {"Social Security number"}
+                                {this.state.dropDownStatusState &&
+                                    <View style={styles.editDropDownSelect} >
+                                        <FlatList
+                                            data={profileStatusData}
+                                            renderItem={({ item }) =>
+                                                (<TouchableOpacity style={{ height: 33 }}
+                                                    onPress={() => this.dropDownStatusSelect(item.value)}>
+                                                    <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
+                                                </TouchableOpacity>)
+                                            }
+                                            keyExtractor={item => item.key}
+                                        />
+                                    </View>}
+                            </View>
+
+                            <Text style={styles.relationLabels}>
+                                {globalString.editRelationShipInformation.relationSocialSecurity}
                             </Text>
 
-                            <GInputComponent style={{ marginTop: '4%' }}
+                            <GInputComponent style={styles.relationMarginFour}
                                 placeholder="" />
 
                             <View style={styles.editFlexDirectionColumn}>
@@ -199,7 +396,7 @@ class EditRelationshipComponent extends Component {
                                     buttonStyle={styles.cancelButtonStyle}
                                     buttonText={globalString.common.cancel}
                                     textStyle={styles.cancelButtonText}
-                                    onPress={() => this.props.navigation.navigate('profileSettings')} />
+                                    onPress={this.relationCancelOnClick} />
                             </View>
 
                             <View style={styles.editFlexDirectionColumn}>
@@ -222,15 +419,15 @@ class EditRelationshipComponent extends Component {
                             </Text>
                         </View>
 
-                        <View style={{ flexDirection: 'column', width: '92%', marginTop: '4%', marginLeft: '4%', marginRight: '4%', backgroundColor: '#F1F1F2' }}>
-                            <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold', margin: '3%' }}>
-                                {"Instructions"}
+                        <View style={styles.relationInstructionView}>
+                            <Text style={styles.relationInstructionLabel}>
+                                {globalString.editRelationShipInformation.relationInst}
                             </Text>
 
-                            <View style={{ borderBottomWidth: 1, borderColor: '#B2B2B2', marginBottom: '4%', marginTop: '4%' }}></View>
+                            <View style={styles.relationInstDivider}></View>
 
-                            <Text style={{ color: '#56565A', fontSize: scaledHeight(18), textAlign: 'justify', margin: '3%', lineHeight: 30 }}>
-                                {"To help the government fight the funding of terrorism and money laundering activities, federal law requires all financai institutions to obtain, verify and record information that identifies each person who open an account. what this means for you: when open an account, we will ask for your name, address, date of birth and other information that will allow us to identify you. We may also ask to see your driver's license or other identifying documents."}
+                            <Text style={styles.relationInstContent}>
+                                {globalString.editRelationShipInformation.relationInstContent}
                             </Text>
                         </View>
 
@@ -281,4 +478,4 @@ class EditRelationshipComponent extends Component {
     }
 }
 
-export default EditRelationshipComponent;
+export default editRelationshipComponent;

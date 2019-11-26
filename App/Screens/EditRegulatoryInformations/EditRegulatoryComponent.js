@@ -5,7 +5,7 @@ import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButto
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 
-class EditRegulatoryComponent extends Component {
+class editRegulatoryComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -19,6 +19,8 @@ class EditRegulatoryComponent extends Component {
 
     componentDidMount() { }
 
+    editRegulatoryOnCancel = () => this.props.navigation.navigate('profileSettings');
+
     render() {
         return (
 
@@ -31,41 +33,41 @@ class EditRegulatoryComponent extends Component {
                     {/* Header Section - Tree Structure */}
 
                     <View style={styles.settingsView}>
-                        <Text style={{ color: '#0000FF', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.editRegulatoryOne}>
                             {"Pro.."}
                         </Text>
 
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(14) }}>
-                            {"  >  "}
+                        <Text style={styles.editRegulatoryTwo}>
+                            {globalString.profileSettingsPage.profileHeadArrow}
                         </Text>
 
-                        <Text style={{ color: '#0000FF', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.editRegulatoryOne}>
                             {"Bas.."}
                         </Text>
 
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(14) }}>
-                            {"  >  "}
+                        <Text style={styles.editRegulatoryTwo}>
+                            {globalString.profileSettingsPage.profileHeadArrow}
                         </Text>
 
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(14), fontWeight: 'bold' }}>
-                            {"Manage Regulatory questions"}
+                        <Text style={styles.editRegulatoryHead}>
+                            {globalString.editProfilePageValue.editManageRegulatory}
                         </Text>
                     </View>
 
                     {/* Manage Regulagtory Section */}
 
                     <View>
-                        <View style={[styles.settingsView, { justifyContent: 'center', alignItems: 'center' }]}>
-                            <Text style={{ width: '100%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' }}>
-                                {"Manage Regulatory questions"}
+                        <View style={[styles.settingsView, styles.editRegulatoryView]}>
+                            <Text style={styles.editRegulatoryHeadOne}>
+                                {globalString.editProfilePageValue.editManageRegulatory}
                             </Text>
                         </View>
 
                         <View style={styles.settingsBorder}></View>
 
-                        <View style={{ margin: '5%' }}>
-                            <Text style={{ width: '100%', color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                {"Are you are a senior foreign political figure ?"}
+                        <View style={styles.editRegulatoryMargin}>
+                            <Text style={styles.editRegulatoryPolitical}>
+                                {globalString.editProfilePageValue.editRegulatoryPoliticalLabel}
                             </Text>
                         </View>
 
@@ -74,7 +76,7 @@ class EditRegulatoryComponent extends Component {
                                 buttonStyle={styles.cancelButtonStyle}
                                 buttonText={globalString.common.cancel}
                                 textStyle={styles.cancelButtonText}
-                                onPress={() => this.props.navigation.navigate('profileSettings')} />
+                                onPress={this.editRegulatoryOnCancel} />
                         </View>
 
                         <View style={styles.editFlexDirectionColumn}>
@@ -138,4 +140,4 @@ class EditRegulatoryComponent extends Component {
     }
 }
 
-export default EditRegulatoryComponent;
+export default editRegulatoryComponent;

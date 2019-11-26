@@ -386,5 +386,20 @@ export const styles = StyleSheet.create({
     },
     editAddressSecurity: {
         color: '#56565A', fontSize: scaledHeight(18)
-    }
+    },
+    relationHeadView: { color: '#0000FF', fontSize: scaledHeight(14) },
+    relationHeadOne: { color: '#56565A', fontSize: scaledHeight(14) },
+    relationHeadTwo: { color: '#56565A', fontSize: scaledHeight(14), fontWeight: 'bold' },
+    relationHeadLabel: { width: '100%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },
+    relationFamilyLabel: { flexDirection: 'column', width: '90%', margin: '4%', alignSelf: 'center' },
+    relationFamilyLabelView: { color: '#333333DE', fontSize: scaledHeight(14), fontWeight: 'bold', marginBottom: '4%' },
+    relationSpinnerView: { flexDirection: 'row', marginTop: scaledHeight(3) },
+    relationSpinnerBackground: { position: 'absolute', right: 20, top: 14 },
+    relationLabels: { color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: '3%', marginBottom: '4%' },
+    relationMarginFour: { marginTop: '4%' },
+    relationInstructionView: { flexDirection: 'column', width: '92%', marginTop: '4%', marginLeft: '4%', marginRight: '4%', backgroundColor: '#F1F1F2' },
+    relationInstructionLabel: { color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold', margin: '3%' },
+    relationInstDivider: { borderBottomWidth: 1, borderColor: '#B2B2B2', marginBottom: '4%', marginTop: '4%' },
+    relationInstContent: { color: '#56565A', fontSize: scaledHeight(18), textAlign: 'justify', margin: '3%', lineHeight: 30 },
+    editDropDownSelect: { height: 100, borderWidth: 1, marginRight: '4%', marginTop: '1%', width: '92%', borderColor: "#DEDEDF", backgroundColor: 'white'},
 });

@@ -401,5 +401,15 @@ export const styles = StyleSheet.create({
         paddingLeft: '4%',
         paddingRight: '4%',
         marginTop: '3%'
-    }
+    },
+    editProfileManage: { width: '100%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },
+    editProfileChosen: { color: '#56565A', fontSize: scaledHeight(16), lineHeight: 26 },
+    editProfileLabel: { color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginBottom: scaledHeight(3) },
+    editProfileNameLabel: { color: '#0000FF', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' },
+    editProfileValueView: { color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' },
+    editDropDownView: { flexDirection: 'row', marginTop: scaledHeight(3) },
+    editDropDownIcon: { position: 'absolute', right: 20, top: 14 },
+    editDropDownSelect: { height: 100, borderWidth: 1, marginRight: '4%', marginTop: '1%', width: '92%', borderColor: "#DEDEDF", backgroundColor: 'white'},
+    editRadioView: { flexDirection: 'row', marginLeft: '2%', marginTop: scaledHeight(3), width: '40%' },
+    editSecurityView: { color: '#56565A', fontSize: scaledHeight(18) }
 });

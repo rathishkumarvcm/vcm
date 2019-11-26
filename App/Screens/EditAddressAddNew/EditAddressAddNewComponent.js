@@ -12,7 +12,7 @@ const profileAddNewAddress = [
     { index4: 4, question: "DPO (Diplomatic Post Office)" },
 ];
 
-class EditAddressAddNewComponent extends Component {
+class editAddressAddNewComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -42,6 +42,8 @@ class EditAddressAddNewComponent extends Component {
         }
     }
 
+    editAddressAddNewOnCancel = () => this.props.navigation.navigate('editAddressSettings');
+
     render() {
         return (
 
@@ -53,7 +55,7 @@ class EditAddressAddNewComponent extends Component {
 
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
-                            {"Settings > Personal info > "}
+                            {globalString.editProfilePageValue.editAddressInfoHead}
                         </Text>
                         <Text style={[styles.settingsInfo, styles.editLabelBold]}>
                             {globalString.addAddressInfo.addAddressTitle}
@@ -83,13 +85,6 @@ class EditAddressAddNewComponent extends Component {
                         </View>
 
                         <View style={styles.editAddressInput}>
-                            {/* <View>
-                                <GRadioButtonComponent radioButtonStyle={styles.editAddressWidth} selected questions={globalString.addAddressInfo.radioButtonOne} />
-                                <GRadioButtonComponent radioButtonStyle={styles.editAddressWidth} questions={globalString.addAddressInfo.radioButtonTwo} />
-                                <GRadioButtonComponent radioButtonStyle={styles.editAddressWidth} questions={globalString.addAddressInfo.radioButtonThree} />
-                                <GRadioButtonComponent radioButtonStyle={styles.editAddressWidth} questions={globalString.addAddressInfo.radioButtonFour} />
-                            </View> */}
-
                             {profileAddNewAddress.map((item, index) =>
                                     index == this.state.radioButtonIndex ?
                                         <GRadioButtonComponent
@@ -162,7 +157,7 @@ class EditAddressAddNewComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={() => this.props.navigation.navigate('editAddressSettings')} />
+                            onPress={this.editAddressAddNewOnCancel} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -234,4 +229,4 @@ class EditAddressAddNewComponent extends Component {
     }
 }
 
-export default EditAddressAddNewComponent;
+export default editAddressAddNewComponent;

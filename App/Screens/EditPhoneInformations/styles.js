@@ -403,18 +403,12 @@ export const styles = StyleSheet.create({
         height: scaledHeight(70),
         marginTop: scaledHeight(20)
     },
-    phoneInfoLabel: {
-        color: '#707070', fontSize: scaledHeight(18), width: '70%', marginRight: '4%', fontWeight: 'bold'
-    },
+    phoneInfoLabel: { color: '#707070', fontSize: scaledHeight(18), width: '70%', marginRight: '4%', fontWeight: 'bold' },
     phoneInfoAddNewLabel: {
         color: '#5D83AE', fontSize: scaledHeight(18), width: '30%', marginRight: '2%', fontWeight: 'bold'
     },
-    phoneInfoPrimaryLabel: {
-        color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginBottom: '1%', marginLeft: '2%'
-    },
-    phoneInfoPrimaryData: {
-        color: '#333333DE', fontSize: scaledHeight(15), marginBottom: '1%', marginLeft: '2%'
-    },
+    phoneInfoPrimaryLabel: { color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginBottom: '1%', marginLeft: '2%' },
+    phoneInfoPrimaryData: { color: '#333333DE', fontSize: scaledHeight(15), marginBottom: '1%', marginLeft: '2%' },
     phoneMobileView: { color: '#333333DE', fontSize: scaledHeight(18), fontWeight: 'bold' },
     phonePreferred: { backgroundColor: '#F3F3F3', flexDirection: 'row', alignSelf: 'baseline', marginLeft: '2%' },
     phonePreferredLabel: { color: '#56565A', fontSize: scaledHeight(15), padding: '1%' },
@@ -423,5 +417,7 @@ export const styles = StyleSheet.create({
     phoneSecurity: { color: '#56565A', fontSize: scaledHeight(18) },
     phoneFaxView: { flexDirection: 'column', width: '100%', marginTop: '3%', marginBottom: '2%', marginLeft: '4%', marginRight: '4%' },
     phoneAddFaxLabel: { color: '#707070', fontSize: scaledHeight(18), width: '70%', marginRight: '4%', fontWeight: 'bold' },
-    phoneFaxAddNewLabel: { color: '#5D83AE', fontSize: scaledHeight(18), width: '30%', marginRight: '2%', fontWeight: 'bold' }
+    phoneFaxAddNewLabel: { color: '#5D83AE', fontSize: scaledHeight(18), width: '30%', marginRight: '2%', fontWeight: 'bold' },
+    phonePreferredBackView: { backgroundColor: '#F3F3F3', flexDirection: 'row', alignSelf: 'baseline', marginLeft: '2%', display: 'flex' },
+    phoneDeleteView: { color: '#5D83AE', width: '46%', textAlign: 'right', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: '4%' }
 });

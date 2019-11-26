@@ -1,3 +1,3 @@
-import EditRelationshipComponent from './EditRelationshipContainer';
+import editRelationshipComponent from './EditRelationshipContainer';
 
-export default EditRelationshipComponent;
+export default editRelationshipComponent;

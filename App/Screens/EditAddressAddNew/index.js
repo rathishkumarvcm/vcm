@@ -1,3 +1,3 @@
-import EditAddressAddNewComponent from './EditAddressAddNewContainer';
+import editAddressAddNewComponent from './EditAddressAddNewContainer';
 
-export default EditAddressAddNewComponent;
+export default editAddressAddNewComponent;
