@@ -84,7 +84,10 @@ export const styles = StyleSheet.create({
         flexDirection: 'column',
         flex: 0.3,
         marginRight: scaledWidth(5)
-        //width:scaledWidth(100)
+    },
+    default:{
+        backgroundColor:'#544A54',
+        height: scaledHeight(3),
     },
     strong: {
         backgroundColor: 'green',
@@ -95,11 +98,11 @@ export const styles = StyleSheet.create({
         color: '#56565A',
         marginTop: scaledHeight(3)
     },
-    medium: {
+    good: {
         backgroundColor: 'orange',
         height: scaledHeight(3),
     },
-    poor: {
+    weak: {
         backgroundColor: 'red',
         height: scaledHeight(3),
     },

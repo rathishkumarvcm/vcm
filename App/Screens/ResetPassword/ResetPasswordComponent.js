@@ -5,7 +5,7 @@ import { styles } from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from 'prop-types';
 import * as reGex from '../../Constants/RegexConstants';
-
+import {ValidatePassword} from '../../Utils/ValidatePassword';
 
 class ResetPasswordComponent extends Component {
     constructor(props) {
@@ -15,7 +15,8 @@ class ResetPasswordComponent extends Component {
             confirmNewPassword: '',
             validationPassword: true,
             comparePasswords: true,
-            currentPassword:''
+            currentPassword:'',
+            strength:'default'
         };
         this.disableSubmitButton = true;
         this.resetPasswordJSON={
@@ -37,7 +38,7 @@ class ResetPasswordComponent extends Component {
     }
 
     validateNewPassword = () => {
-        const validate = reGex.passwordRegex.test(this.state.newPassword);
+        const validate = (ValidatePassword(this.state.newPassword)===gblStrings.userManagement.strong);
         this.setState({ validationPassword: validate });
     }
 
@@ -51,7 +52,11 @@ class ResetPasswordComponent extends Component {
         this.setState({
             comparePasswords: (this.state.confirmNewPassword === this.state.newPassword)
         });
-        this.disableSubmitButton = !(this.state.confirmNewPassword === this.state.newPassword);
+        if((this.state.confirmNewPassword === this.state.newPassword)&& (ValidatePassword(this.state.newPassword)==gblStrings.userManagement.strong)){
+            this.disableSubmitButton = false;
+        }else{
+            this.disableSubmitButton = true;
+        }
     }
 
     onClickSubmit = () => {
@@ -109,15 +114,15 @@ class ResetPasswordComponent extends Component {
                     />
                     <View style={styles.passwordStrengthFlex}>
                         <View style={styles.passwordStrongFlex}>
-                            <View style={styles.strong} />
+                            <View style={(ValidatePassword(this.state.newPassword)==gblStrings.userManagement.strong)?styles.strong:styles.default} />
                             <Text style={styles.strongText}>{gblStrings.userManagement.strong}</Text>
                         </View>
                         <View style={styles.passwordStrongFlex}>
-                            <View style={styles.medium} />
+                            <View style={(ValidatePassword(this.state.newPassword)==gblStrings.userManagement.good)?styles.good:styles.default} />
                             <Text style={styles.strongText}>{gblStrings.userManagement.good}</Text>
                         </View>
                         <View style={styles.passwordStrongFlex}>
-                            <View style={styles.poor} />
+                            <View style={(this.state.newPassword.length>0)&&(ValidatePassword(this.state.newPassword)==gblStrings.userManagement.weak)?styles.weak:styles.default} />
                             <Text style={styles.strongText}>{gblStrings.userManagement.weak}</Text>
                         </View>
                     </View>

@@ -15,6 +15,7 @@ class AccountRecoveryPrefComponent extends Component {
             emailId: '',
             mobileNo: '',
         };
+        this.selectedOption='email';
     }
 
     componentDidMount() {
@@ -69,13 +70,18 @@ class AccountRecoveryPrefComponent extends Component {
         console.log("------- onClick save account recovery preferences -------");
         if ((this.state.emailChecked) && (this.state.mobileNoChecked)) {
             this.setState({ message: gblStrings.userManagement.accRecPrefEmailText });
+            this.selectedOption = 'EmailNText';
         } else if (this.state.mobileNoChecked) {
             this.setState({ message: gblStrings.userManagement.accRecPrefText });
+            this.selectedOption = 'Text';
         } else {
             this.setState({ message: gblStrings.userManagement.accRecPrefEmail, emailChecked: true });
+            this.selectedOption = 'Email';
         }
-        console.log("selected account recovery option ------->", this.state.message);
+        console.log("Selected Recovery Option----> "+this.selectedOption);
     }
+
+    
     navigateToSecurityPref = () => this.props.navigation.navigate('securityPreference');
 
     render() {
