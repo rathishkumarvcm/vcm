@@ -1,21 +1,21 @@
 import { connect } from "react-redux";
-import ManageIntrestedPartiesComponent from "./ManageIntrestedPartiesComponent";
+import manageIntrestedPartiesComponent from "./ManageIntrestedPartiesComponent";
+import { accOpeningActions } from "../../Shared/Actions";
 
 /*----------------------
                                   Redux Methods
                                                              -------------------------- */
 
-  const mapStateToProps = (state /* , props */) => (
-    {
-      masterLookupStateData: state.masterLookUpData,
-    }
-  );
+const mapStateToProps = (state /* , props */) => ({
+  accOpeningData: state.accOpeningReducerData,
+  masterLookupStateData: state.masterLookUpData
+});
 
-  const mapDispatchToProps = {
-  
-  };
+const mapDispatchToProps = {
+  ...accOpeningActions
+};
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ManageIntrestedPartiesComponent);
+  mapStateToProps,
+  mapDispatchToProps
+)(manageIntrestedPartiesComponent);

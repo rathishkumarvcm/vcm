@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView ,TouchableOpacity,FlatList} from 'react-native';
+import { Text, View, ScrollView ,TouchableOpacity, FlatList} from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent,GIcon, GInputComponent, GHeaderComponent, GFooterComponent,GCheckBoxComponent } from '../../CommonComponents';
+import { GButtonComponent, GIcon, GDropDownComponent, GInputComponent, GHeaderComponent, GFooterComponent,GCheckBoxComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-import { CustomRadio, CustomDropDown } from '../../AppComponents';
+import { zipCodeRegex,emailRegex } from '../../Constants/RegexConstants';
+import { CustomRadio } from '../../AppComponents';
 import PropTypes from "prop-types";
-
+import { scaledHeight } from '../../Utils/Resolution';
 const dummyData = [
     {
         id: '1',
-        title: 'Option 1',
+        title: 'Weekly',
     },
     {
         id: '2',
-        title: 'Option 2',
+        title: 'Monthly',
     },
     {
         id: '3',
-        title: 'Option 3',
+        title: 'Yearly',
     },
 ];
 
@@ -34,7 +35,18 @@ const manageIntrestedPartiesList=[
     }
 ];
 
-const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+const zipcode=[
+    {
+        zip: "111111111",
+        city: 'Hyderabad',
+        state:'Telangana'
+    },
+    {
+        id:"11111",
+        city: "Mumbai",
+        state:'Maharashtra'
+    }
+];
 
 const DropDownListItem = (props) => {
     return (
@@ -51,7 +63,7 @@ DropDownListItem.propTypes = {
     value: PropTypes.string
 };
 
-class ManageIntrestedPartiesComponent extends Component {
+class manageIntrestedPartiesComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -71,14 +83,11 @@ class ManageIntrestedPartiesComponent extends Component {
                 zipCode:"",
                 state:"",
                 city:"",
-                stateDropDown:false,
-                formatForDocument:"",
-                documentType:"",
                 documentFrequency:"",
+                documentFrequencyDropDown:false,
                 firstNameValidation:true,
                 lastNameValidation: true,
                 emailAddressValidation:true,
-                companyValidation:true,
                 addrLine1Validation:true,
                 addrLine2Validation:true,
                 zipcodeValidation:true,
@@ -91,17 +100,40 @@ class ManageIntrestedPartiesComponent extends Component {
                 {options : "Email",checked: false},
                 {options : "Paper",checked : false},
             ],
+            documentType:[
+                {options : "Statements",checked: false},
+                {options : "Tax Documents",checked : false},
+            ]
         };
     }
    
     componentDidMount() {
         console.log("List of Managed Intrested Parties::::",this.state.listIntrestedParties);
-        console.log("props data::",this.props);
+        let payload = [];
+        const compositePayloadData = [
+            "stmt_pros_rep"
+        ];
+        for (let i = 0; i < compositePayloadData.length; i++) {
+            let tempkey = compositePayloadData[i];
+            if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempkey]) {
+                payload.push(tempkey);
+            }
+        }
+        this.props.getCompositeLookUpData(payload);
     }
-    
+
     setScrollViewRef = (element) => {
         this.scrollViewRef = element;
     };
+
+    setInputRef = (inputComp) => (ref) => {
+        this[inputComp] = ref;
+    }
+
+    onSubmitEditing = (input) => text => {
+        console.log("onSubmitEditing:::>" + text);
+        input.focus();
+    }
 
     isEmpty = (str) => {
         if (str == "" || str == undefined || str == null || str == "null" || str == "undefined") {
@@ -116,6 +148,17 @@ class ManageIntrestedPartiesComponent extends Component {
         this.onUpdateField("personal","emailAddressValidation",validate);
     }
 
+    validateZip = (text) => {
+        let validate = zipCodeRegex.test(text);
+        this.onUpdateField("personal","zipcodeValidation",validate);
+    }
+
+    validateZipCode = (text) => {
+        //allows only 5 digit or 9 digit format(12345 and 12345-6789)
+        let validate = zipCodeRegex.test(text);
+        this.onUpdateField("personal","zipcodeValidation",validate);
+    }
+
     validateFields = () => {
         try {
             console.log("validateFields:::");
@@ -123,10 +166,10 @@ class ManageIntrestedPartiesComponent extends Component {
             this.setState(prevState => ({
                 personal: {
                     ...prevState.personal,
+                    firstNameValidation:true,
                     lastNameValidation: true,
                     addrLine1Validation: true,
                     addrLine2Validation: true,
-                    companyValidation:true,
                     zipcodeValidation: true,
                     cityValidation: true,
                     stateValidation: true
@@ -145,11 +188,28 @@ class ManageIntrestedPartiesComponent extends Component {
         }
     }
 
-    updateState=()=>{
-        this.setState({isAddNewVisible:false,isSavedSuccess:false});
+    onCancelClick=()=>{
+        this.setState(prevState=>({
+          personal:{
+            ...prevState.personal,
+            firstName: "",
+            middleInitial: "",
+            lastName: "",
+            emailAddress:"",
+            company:"",
+            addrLine1:"",
+            addrLine2:"",
+            zipCode:"",
+            state:"",
+            city:"",
+            documentFrequency:"",
+          },
+          isAddNewVisible:false,
+          isSavedSuccess:false 
+        }));
     }
 
-    onClickSave=()=>{
+    onClickSave = () => {
         this.setState({isAddNewVisible:false,isSavedSuccess:true});
         let addValue=[],addContent={};
         addContent.title=this.state.personal.firstName+ " " +this.state.personal.lastName;
@@ -163,17 +223,14 @@ class ManageIntrestedPartiesComponent extends Component {
         obj.address=this.state.personal.addrLine1+","+this.state.personal.addrLine2;
         obj.zipCode=this.state.personal.zipCode;
         obj.city=this.state.personal.city;
-        obj.docFormat=this.state.personal.formatForDocument;
-        obj.docType=this.state.personal.documentType;
         obj.docFrequency=this.state.personal.documentFrequency;
-        obj.docDeliveryFormat=this.state.personal.documentDeliveryFormat;
         arr.push(obj);
-        this.setState({completeData:arr},console.warn("Entered Data for Intrested Parties:::",this.state.completeData));
+        this.setState({completeData:this.state.completeData.concat(arr)},console.log("Entered Data for Intrested Parties:::",this.state.completeData));
         
         this.setState({listIntrestedParties:this.state.listIntrestedParties.concat(addValue)},console.log(this.state.listIntrestedParties));
     }
 
-    onAddClicked=()=>{
+    onAddClicked = () => {
         this.setState({isAddNewVisible:true,isSavedSuccess:false});
     }
     
@@ -181,8 +238,7 @@ class ManageIntrestedPartiesComponent extends Component {
         this.props.navigation.goBack();
     }
     
-    onChangeText = (stateKey,keyName)=> text =>{
-        console.log("change State::",stateKey,keyName);
+    onChangeText = (stateKey,keyName)=> text => {
         this.setState(prevState => ({
             [stateKey]: {
                 ...prevState[stateKey],
@@ -191,7 +247,7 @@ class ManageIntrestedPartiesComponent extends Component {
         }));
     }  
 
-    onUpdateField = (stateKey,keyName,val) =>{
+    onUpdateField = (stateKey,keyName,val) => {
         this.setState(prevState => ({
             [stateKey]: {
                 ...prevState[stateKey],
@@ -200,88 +256,35 @@ class ManageIntrestedPartiesComponent extends Component {
         }));
     }
 
-    onPressRadio = (stateKey,keyName,text)=> () => this.setState(prevState => ({
-        [stateKey]: {
-            ...prevState[stateKey],
-            [keyName]:text
-        }
-    }));
+    onPressRadio = (keyName, text) => () => this.setState({
+        [keyName]: text
+    });
 
-    onPressDropDown = (stateKey,keyName) => () => this.setState(prevState => ({
-        [stateKey]: {
-            ...prevState[stateKey],
-            [keyName]: !this.state.personal[keyName]
-        }
-    }));
-
-    selectedDropDownValue = (dropDownName, value) => {
-        this.state.empstateDropDown;
-        switch (dropDownName) {
-            case "stateDropDown":
-                this.setState(prevState => ({
-                    personal: {
-                        ...prevState.personal,
-                        state: value,
-                        stateDropDown: false
-                    }
-                }));
-                break;
-            case "documentFrequencyDropDown":
-                this.setState(prevState => ({
-                    personal: {
-                        ...prevState.personal,
-                        documentFrequency: value,
-                        documentFrequencyDropDown: false
-                    }
-                }));
-                break;
-            default:
-                break;
-
-        }
-
-    }
-
-    renderDropDown = (dropDownName, dropDownCompState = false, data, width = '100%') => {
-        console.log("renderDropDown::: " + dropDownName);
-        let keyName = "title";
-        if (dropDownCompState) {
-            return (
-                <View style={{ height: 100, borderWidth: 1, width: width, borderColor: "#DEDEDF", backgroundColor: 'white' }}>
-                    <FlatList
-                        data={data}
-                        renderItem={({ item }) => 
-                        (<DropDownListItem
-                            value={item[keyName]}
-                            onSelectedItem={() => this.selectedDropDownValue(dropDownName, item[keyName])}
-                        />)}
-                        keyExtractor={item => item.id}
-                    />
-                </View>
-            );
-
-        }
-    }
-
-    checkBoxClicked = (indexPre,previousValue) => {
+    checkBoxClicked = (indexPre, previousValue, data, value) =>() => {
         var tempArray = [];
-        this.state.documentDeliveryFormat.map((item,index)=>{
+        data.map((item,index)=>{
             var temp = Object.assign({}, item);
             if(index === indexPre){
                 temp.checked = !previousValue;
             }
             tempArray.push(temp);
         });
-        this.setState({documentDeliveryFormat : tempArray});
+        switch(value){
+            case "documentDeliveryFormat":
+                this.setState({documentDeliveryFormat : tempArray});
+                break;
+            case "documentType":
+                this.setState({documentType : tempArray});
+                break;
+            default:
+                break;
+        }
+        
     }
 
     validateEachFields = () => {
         var errMsg = "";
         var isValidationSuccess = false;
-        if (!this.isEmpty(this.state.personal.emailAddress)) {
-            this.validateEmail(this.state.personal.emailAddress);
-            errMsg="error";
-        }
 
         if (this.isEmpty(this.state.personal.firstName)) {
             this.onUpdateField("personal","firstNameValidation",false);
@@ -295,13 +298,6 @@ class ManageIntrestedPartiesComponent extends Component {
             errMsg="error";
         }else{
             this.onUpdateField("personal","lastNameValidation",true); 
-        }
-
-        if (this.isEmpty(this.state.personal.company)) {
-            this.onUpdateField("personal","companyValidation",false);
-            errMsg="error";
-        }else{
-            this.onUpdateField("personal","companyValidation",true);
         }
 
         if (this.isEmpty(this.state.personal.addrLine1)) {
@@ -332,6 +328,13 @@ class ManageIntrestedPartiesComponent extends Component {
             this.onUpdateField("personal","cityValidation",true);
         }
 
+        if (this.isEmpty(this.state.personal.state)) {
+            this.onUpdateField("personal","stateValidation",false);
+            errMsg="error";
+        }else{
+            this.onUpdateField("personal","stateValidation",true);
+        }
+
         if(errMsg!="error")
         {
             isValidationSuccess = true;
@@ -341,9 +344,92 @@ class ManageIntrestedPartiesComponent extends Component {
         
     }
 
+    renderRadio = (radioName, radioSize, componentStyle, layoutStyle) =>{
+        console.log("renderRadio::: " + radioName);
+        let radioData = dummyData, tempkey="";
+        switch (radioName) {
+            case "selectedProspectusReportsRef":
+                tempkey = "stmt_pros_rep";
+                break;
+            default:
+                break;
+        }
+
+        console.log("tempkey::" + tempkey);
+
+        if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
+            radioData = this.props.masterLookupStateData[tempkey].value;
+        }
+
+        let radioCoponents = [];
+        for (let i = 0; i < radioData.length; i++) {
+            radioCoponents.push(
+                <CustomRadio
+                    key={radioData[i].key}
+                    componentStyle={componentStyle}
+                    size={radioSize}
+                    outerCicleColor={"#DEDEDF"}
+                    innerCicleColor={"#61285F"}
+                    labelStyle={styles.lblRadioBtnTxt}
+                    label={radioData[i].value}
+                    selected={(this.state[radioName] !== null && this.state[radioName] == radioData[i].value) ? true : false}
+                    onPress={this.onPressRadio(radioName, radioData[i].value)}
+                />
+            );
+        }
+        return (
+            <View style={layoutStyle}>
+                {radioCoponents}
+            </View>
+        );
+    }
+
+    updateNotificationMsgState=()=>{
+        this.setState({isSavedSuccess:false});
+    }
+
+    updateCityState=()=>{
+        let zip=this.state.zipCode;
+        zipcode.map((m)=>{
+            if(zip === m.zip){
+                this.onUpdateField("personal","city",m.city);
+                this.onUpdateField("personal","state",m.state);
+                
+            }
+        });
+    }
+    
+    selectFrequency = () => {
+        console.log("sonal",this.state.documentFrequencyDropDown);
+        this.setState({documentFrequencyDropDown : !this.state.documentFrequencyDropDown});
+    }
+
+    selectedDropDownValue = (value) => {
+        this.setState({
+            documentFrequency : value,
+            documentFrequencyDropDown : false
+        });
+    }
+
+    documentTypeCheck=()=>{
+        return(
+            <>
+            {this.state.documentType.map((item,index) =>
+                (<GCheckBoxComponent 
+                    onPress={()=>this.checkBoxClicked(index, item.checked,this.state.documentType,"documentType")}
+                    selected = {item.checked}
+                    options = {item.options}
+                    key = {item.options}
+                />)
+            )};
+           </> 
+        )
+        
+    }
+
     addIntrestedParties=()=>{
         return(
-            <View>
+            <>
                 <Text style={styles.subHeadlineText}>
                     {gblStrings.accManagement.addNewIntrestedParties}
                 </Text>
@@ -352,12 +438,15 @@ class ManageIntrestedPartiesComponent extends Component {
                     {gblStrings.accManagement.firstName}
                 </Text>
                 <GInputComponent
-                    propInputStyle={this.state.personal.firstNameValidation?styles.customTxtBox:styles.customTxtBoxError}
+                    inputref={this.setInputRef("firstName")}
+                    propInputStyle={styles.customTxtBox}
                     placeholder={""}
                     maxLength={gblStrings.maxLength.firstName}
                     onChangeText={this.onChangeText("personal","firstName")}
+                    errorFlag={!this.state.personal.firstNameValidation}
+                    errorText={gblStrings.accManagement.emptyFirstNameMsg}
+                    onSubmitEditing={this.onSubmitEditing(this.middleInitial)}
                 />
-                {!this.state.personal.firstNameValidation?<Text style={styles.errorMsg}>{gblStrings.accManagement.emptyFirstNameMsg}</Text>:null}
                 <Text style={styles.lblTxt}>
                     <Text style={styles.lblTxt}>
                         {gblStrings.accManagement.middleInitial}
@@ -367,22 +456,27 @@ class ManageIntrestedPartiesComponent extends Component {
                     </Text>
                 </Text>
                 <GInputComponent
+                    inputref={this.setInputRef("middleInitial")}
                     propInputStyle={styles.customTxtBox}
                     placeholder={""}
                     maxLength={gblStrings.maxLength.middleInitial}
                     onChangeText={this.onChangeText("personal","middleInitial")}
+                    onSubmitEditing={this.onSubmitEditing(this.lastName)}
                 />
                 <Text style={styles.lblTxt}>
                     {gblStrings.accManagement.lastName}
                 </Text>
                 <GInputComponent
-                    propInputStyle={this.state.personal.lastNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                    inputref={this.setInputRef("lastName")}
+                    propInputStyle={styles.customTxtBox}
                     placeholder={""}
                     maxLength={gblStrings.maxLength.lastName}
                     returnKeyType={"done"}
                     onChangeText={this.onChangeText("personal","lastName")}
+                    errorFlag={!this.state.personal.lastNameValidation}
+                    errorText={gblStrings.accManagement.emptyLastNameMsg}
+                    onSubmitEditing={this.onSubmitEditing(this.emailAddress)}
                 />
-                {!this.state.personal.lastNameValidation?<Text style={styles.errorMsg}>{gblStrings.accManagement.emptyLastNameMsg}</Text>:null}
                 <Text style={styles.lblTxt}>
                     <Text style={styles.lblTxt}>
                         {gblStrings.accManagement.emailAddress}
@@ -392,187 +486,116 @@ class ManageIntrestedPartiesComponent extends Component {
                     </Text>
                 </Text>
                 <GInputComponent
-                    propInputStyle={this.state.personal.emailAddressValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                    inputref={this.setInputRef("emailAddress")}
+                    propInputStyle={styles.customTxtBox}
                     placeholder={gblStrings.accManagement.emailformat}
                     keyboardType="email-address"
                     maxLength={gblStrings.maxLength.emailID}
                     onChangeText={this.onChangeText("personal","emailAddress")}
+                    onBlur={this.validateEmail}
+                    errorFlag={!this.state.personal.emailAddressValidation}
+                    errorText={gblStrings.accManagement.emailformat}
+                    onSubmitEditing={this.onSubmitEditing(this.company)}
                 />
-                {!this.state.personal.emailAddressValidation?<Text style={styles.errorMsg}>{gblStrings.accManagement.emailformat}</Text>:null}
                 <Text style={styles.lblTxt}>
-                    {"Company"}
+                    {gblStrings.accManagement.company}
                 </Text>
                 <GInputComponent
-                    propInputStyle={this.state.personal.companyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                    inputref={this.setInputRef("company")}
+                    propInputStyle={styles.customTxtBox}
                     placeholder={""}
                     maxLength={gblStrings.maxLength.company}
-                    returnKeyType={"done"}
                     onChangeText={this.onChangeText("personal","company")}
+                    onSubmitEditing={this.onSubmitEditing(this.addrLine1)}
                 />
-                {!this.state.personal.companyValidation?<Text style={styles.errorMsg}>{gblStrings.accManagement.emptyCompanyMsg}</Text>:null}
                 <Text style={styles.lblTxt}>
                     {gblStrings.accManagement.address}
                 </Text>
                 <GInputComponent
-                    propInputStyle={this.state.personal.addrLine1Validation ? styles.customTxtBox : styles.customTxtBoxError}
+                    inputref={this.setInputRef("addrLine1")}
+                    propInputStyle={styles.customTxtBox}
                     placeholder={""}
                     maxLength={gblStrings.maxLength.emplAddress1}
                     onChangeText={this.onChangeText("personal","addrLine1")}
+                    errorFlag={!this.state.personal.addrLine1Validation}
+                    errorText={gblStrings.accManagement.emptyAddressLine1Msg}
+                    onSubmitEditing={this.onSubmitEditing(this.addrLine2)}
                 />
-                {!this.state.personal.addrLine1Validation?<Text style={styles.errorMsg}>{gblStrings.accManagement.emptyAddressLine1Msg}</Text>:null}
                 <GInputComponent
-                    propInputStyle={this.state.personal.addrLine2Validation ? styles.customTxtBox : styles.customTxtBoxError}
+                    inputref={this.setInputRef("addrLine2")}
+                    propInputStyle={styles.customTxtBox}
                     placeholder={""}
                     maxLength={gblStrings.maxLength.addressLine2}
                     onChangeText={this.onChangeText("personal","addrLine2")}
+                    errorFlag={!this.state.personal.addrLine2Validation}
+                    errorText={gblStrings.accManagement.emptyAddressLine2Msg}
+                    onSubmitEditing={this.onSubmitEditing(this.zipCode)}
                 />
-                {!this.state.personal.addrLine2Validation?<Text style={styles.errorMsg}>{gblStrings.accManagement.emptyAddressLine2Msg}</Text>:null}
                 <Text style={styles.lblTxt}>
                     {gblStrings.accManagement.zipcode}
                 </Text>
                 <GInputComponent
-                    propInputStyle={this.state.personal.zipcodeValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                    inputref={this.setInputRef("zipCode")}
+                    propInputStyle={styles.customTxtBox}
                     placeholder={""}
                     maxLength={gblStrings.maxLength.zipCode}
-                    keyboardType="number-pad"
-                    returnKeyType={"done"}
+                    onBlur={this.updateCityState}
                     onChangeText={this.onChangeText("personal","zipCode")}
+                    errorFlag={!this.state.personal.zipcodeValidation}
+                    errorText={gblStrings.accManagement.emptyZipCodeMsg}
                 />
-                {!this.state.personal.zipcodeValidation?<Text style={styles.errorMsg}>{gblStrings.accManagement.emptyZipCodeMsg}</Text>:null}
                 <Text style={styles.lblTxt}>
                     {gblStrings.accManagement.cityAndState}
                 </Text>
                 <View style={styles.stateCityView}>
-                    <GInputComponent
-                        propInputStyle={this.state.personal.cityValidation?styles.customCityTextBox:styles.customCityErrTextBox}
-                        placeholder={gblStrings.accManagement.enterCity}
-                        returnKeyType={"done"}
-                        maxLength={gblStrings.maxLength.city}
-                        onChangeText={this.onChangeText("personal","city")}
-                    />
-                    <View style={styles.cityWidthDropDown}>
-                        <CustomDropDown
-                            onPress={this.onPressDropDown("personal","stateDropDown")}
+                    <View style={styles.customCityStateView}>
+                        <GInputComponent
+                            propInputStyle={styles.customTxtBox}
+                            placeholder={gblStrings.accManagement.enterCity}
+                            value={this.state.personal.city}
+                            maxLength={gblStrings.maxLength.city}
+                            onChangeText={this.onChangeText("personal","city")}
+                            errorFlag={!this.state.personal.cityValidation}
+                            errorText={gblStrings.accManagement.emptyCityMsg}
+                        />
+                    </View>
+                    <View style={styles.customCityStateView}>
+                        <GInputComponent
+                            propInputStyle={styles.customTxtBox}
+                            placeholder={gblStrings.accManagement.enterState}
                             value={this.state.personal.state}
-                            propInputStyle={styles.customListStateTxtBox}
-                            placeholder={gblStrings.common.select}
+                            maxLength={gblStrings.maxLength.state}
+                            onChangeText={this.onChangeText("personal","state")}
+                            errorFlag={!this.state.personal.stateValidation}
+                            errorText={gblStrings.accManagement.emptyStateMsg}
                         />
                     </View>
                 </View>
-                {!this.state.personal.cityValidation?<Text style={styles.errorMsg}>{gblStrings.accManagement.emptyCityMsg}</Text>:null}
-                {this.renderDropDown('stateDropDown', this.state.personal.stateDropDown, dummyData)}
                 <Text style={styles.lblTxt}>
                     <Text>{gblStrings.accManagement.statements}</Text>
                     <Text>{gblStrings.accManagement.prospectusAndReports}</Text>
                 </Text>
-                <Text style={[styles.lblLargeTxt]}>{"Desired format for delivery of documents"}</Text>
-                <View style={styles.radioBtnColGrp}>
-                    <CustomRadio
-                        size={30}
-                        itemBottom={13}
-                        outerCicleColor={"#DEDEDF"}
-                        innerCicleColor={"#61285F"}
-                        labelStyle={styles.lblRadioBtnTxt}
-                        label={"Online"}
-                        descLabelStyle={styles.lblRadioDescTxt}
-                        descLabel={""}
-                        selected={(this.state.personal.formatForDocument !== null && this.state.personal.formatForDocument == "Online") ? true : false}
-                        onPress={this.onPressRadio("personal","formatForDocument","Online")}  
-
-                    />
-                    <CustomRadio
-                        size={30}
-                        itemBottom={13}
-                        outerCicleColor={"#DEDEDF"}
-                        innerCicleColor={"#61285F"}
-                        labelStyle={styles.lblRadioBtnTxt}
-                        label={"Paper"}
-                        descLabelStyle={styles.lblRadioDescTxt}
-                        descLabel={""}
-                        selected={(this.state.personal.formatForDocument !== null && this.state.personal.formatForDocument == "Paper") ? true : false}
-                        onPress={this.onPressRadio("personal","formatForDocument","Paper")}  
-                    />
-                    <CustomRadio
-                        size={30}
-                        itemBottom={13}
-                        outerCicleColor={"#DEDEDF"}
-                        innerCicleColor={"#61285F"}
-                        labelStyle={styles.lblRadioBtnTxt}
-                        label={"Large Print and Paper"}
-                        descLabelStyle={styles.lblRadioDescTxt}
-                        descLabel={""}
-                        selected={(this.state.personal.formatForDocument !== null && this.state.personal.formatForDocument == "Large Print and Paper") ? true : false}
-                        onPress={this.onPressRadio("personal","formatForDocument","Large Print and Paper")}  
-
-                    />
-                    <CustomRadio
-                        size={30}
-                        itemBottom={13}
-                        outerCicleColor={"#DEDEDF"}
-                        innerCicleColor={"#61285F"}
-                        labelStyle={styles.lblRadioBtnTxt}
-                        label={"Braille and Paper"}
-                        descLabelStyle={styles.lblRadioDescTxt}
-                        descLabel={""}
-                        selected={(this.state.personal.formatForDocument !== null && this.state.personal.formatForDocument == "Braille and Paper") ? true : false}
-                        onPress={this.onPressRadio("personal","formatForDocument","Braille and Paper")}  
-
-                    />
-                    <CustomRadio
-                        size={30}
-                        itemBottom={13}
-                        outerCicleColor={"#DEDEDF"}
-                        innerCicleColor={"#61285F"}
-                        labelStyle={styles.lblRadioBtnTxt}
-                        label={"Screen Reader Compatible and Online"}
-                        descLabelStyle={styles.lblRadioDescTxt}
-                        descLabel={""}
-                        selected={(this.state.personal.formatForDocument !== null && this.state.personal.formatForDocument == "Screen Reader Compatible and Online") ? true : false}
-                        onPress={this.onPressRadio("personal","formatForDocument","Screen Reader Compatible and Online")}  
-
-                    />
-                </View>
-                <Text style={styles.lblTxt}>{"Select Document Type"}</Text>
-                <View style={styles.radioBtnColGrp}>
-                    <CustomRadio
-                        size={30}
-                        itemBottom={13}
-                        outerCicleColor={"#DEDEDF"}
-                        innerCicleColor={"#61285F"}
-                        labelStyle={styles.lblRadioBtnTxt}
-                        label={"Statements"}
-                        descLabelStyle={styles.lblRadioDescTxt}
-                        descLabel={""}
-                        selected={(this.state.personal.documentType !== null && this.state.personal.documentType == "Statements") ? true : false}
-                        onPress={this.onPressRadio("personal","documentType","Statements")}  
-
-                    />
-                    <CustomRadio
-                        size={30}
-                        itemBottom={13}
-                        outerCicleColor={"#DEDEDF"}
-                        innerCicleColor={"#61285F"}
-                        labelStyle={styles.lblRadioBtnTxt}
-                        label={"Tax Documents"}
-                        descLabelStyle={styles.lblRadioDescTxt}
-                        descLabel={""}
-                        selected={(this.state.personal.documentType !== null && this.state.personal.documentType == "Tax Documents") ? true : false}
-                        onPress={this.onPressRadio("personal","documentType","Tax Documents")}  
-                    />
-                </View>
-                <Text style={styles.lblTxt}>{"Select Document Frequency"}</Text>
-                <CustomDropDown
-                // onPress={this.onPressDropDown("personal","documentFrequency")}
-                // value={this.state.personal.documentFrequency}
-                    propInputStyle={styles.customListTxtBox}
-                    placeholder={"Select"}
-                />
-                {/* {this.renderDropDown('documentFrequencyDropDown', this.state.personal.documentFrequency, documentFrequencyData)} */}
+                <Text style={[styles.lblLargeTxt]}>{gblStrings.accManagement.desiredFormatDelivaryDocs}</Text>
+                {this.renderRadio("selectedProspectusReportsRef", 36, { marginBottom: scaledHeight(0), marginTop: scaledHeight(20) }, styles.radioBtnColGrp)}
                 
-                <Text style={styles.lblTxt}>{"Select Document Delivery Format"}</Text>
+                 {/* <Text style={styles.lblTxt}>{gblStrings.accManagement.selectDocumentType}</Text> */}
+                 {/* {<this.documentTypeCheck/>} */}
+
+                <GDropDownComponent 
+                    dropDownName={gblStrings.accManagement.selectDocumentFrequency}
+                    dropDownTextName={styles.lblTxt} 
+                    data={dummyData} 
+                    changeState={this.selectFrequency}
+                    showDropDown={this.state.documentFrequencyDropDown}
+                    dropDownValue={this.state.documentFrequency}
+                    selectedDropDownValue={this.selectedDropDownValue}
+                />
+                
+                
+                <Text style={styles.lblTxt}>{gblStrings.accManagement.selectDocuemntDeleveryFormat}</Text>
                 {this.state.documentDeliveryFormat.map((item,index) =>
                     (<GCheckBoxComponent 
-                        onPress={()=>this.checkBoxClicked(index, item.checked)}
+                        onPress={this.checkBoxClicked(index, item.checked,this.state.documentDeliveryFormat,"documentDeliveryFormat")}
                         selected = {item.checked}
                         options = {item.options}
                         key = {item.options}
@@ -583,7 +606,7 @@ class ManageIntrestedPartiesComponent extends Component {
                         buttonStyle={styles.normalWhiteBtn}
                         buttonText={gblStrings.common.cancel}
                         textStyle={styles.normalWhiteBtnTxt}
-                        onPress={this.updateState}
+                        onPress={this.onCancelClick}
                     />
                     <GButtonComponent
                         buttonStyle={styles.normalBlackBtn}
@@ -592,7 +615,7 @@ class ManageIntrestedPartiesComponent extends Component {
                         onPress={this.validateFields}
                     />
                 </View>
-            </View>    
+            </>    
         );
     }
 
@@ -602,7 +625,7 @@ class ManageIntrestedPartiesComponent extends Component {
                 <Text style={styles.subHeadlineText}>
                     {gblStrings.accManagement.listOfIntrestedParties}
                 </Text>
-                <TouchableOpacity onPress={()=>{this.onAddClicked();}}>
+                <TouchableOpacity onPress={this.onAddClicked}>
                     <Text style={styles.addNewLink}>
                         {gblStrings.accManagement.addNew}
                     </Text>
@@ -620,7 +643,6 @@ class ManageIntrestedPartiesComponent extends Component {
                             </View>
                         </View>
                     );
-                    
                 })}
             </View>
         );
@@ -628,9 +650,9 @@ class ManageIntrestedPartiesComponent extends Component {
     
     renderIntrestedPartiesSection = () => {
         return (
-            <View>
+            <>
                 {this.state.isAddNewVisible?<this.addIntrestedParties />:<this.listIntrestedParties />}
-            </View>
+            </>
         );
     }
 
@@ -651,9 +673,9 @@ class ManageIntrestedPartiesComponent extends Component {
                                 />
                             </TouchableOpacity>
                             <View style={styles.saveSuccessMsgTxt}>
-                                <Text style={styles.notificationTxt}>{"Interested Party Added Successfully"}</Text>
+                                <Text style={styles.notificationTxt}>{gblStrings.accManagement.intrestedPartiesAddedSuccessMeg}</Text>
                             </View>
-                            <TouchableOpacity style={styles.flexSmall} onPress={()=>{this.setState({isSavedSuccess:false});}}>
+                            <TouchableOpacity style={styles.flexSmall} onPress={this.updateNotificationMsgState}>
                                 <GIcon 
                                     name="close"
                                     type="EvilIcons"
@@ -671,7 +693,7 @@ class ManageIntrestedPartiesComponent extends Component {
                 <View style={styles.borderInternal} />
                 <View style={styles.mainHeadingView}>
                     <Text style={styles.disclaimerTextHeading}>{gblStrings.accManagement.VCDiscalimerTitle}</Text>
-                    <Text style={styles.disclaimerTxt}>{"Victory Mutual Funds and USAA Mutual Funds are distributed by Victory Capital Advisers, Inc. (VCA). VictoryShares ETFs and VictoryShares USAA ETFs are distributed by Foreside Fund Services, LLC (Foreside). VCA and Foreside are members of FINRA and SIPC. Victory Capital Management Inc. (VCM) is the investment adviser to the Victory Mutual Funds, USAA Mutual Funds, VictoryShares ETFs and VictoryShares USAA ETFs. VCA and VCM are not affiliated with Foreside. USAA is not affiliated with Foreside, VCM, or VCA. USAA and the USAA logos are registered trademarks and the USAA Mutual Funds and USAA Investments logos are trademarks of United Services Automobile Association and are being used by Victory Capital and its affiliates under license. Victory Capital means Victory Capital Management Inc., the investment manager of the USAA 529 College Savings Plan (Plan). The Plan is distributed by Victory Capital Advisers, Inc., a broker dealer registered with FINRA and an affiliate of Victory Capital. Victory Capital and its affiliates are not affiliated with United Services Automobile Association or its affiliates. USAA and the USAA logo are registered trademarks and the USAA 529 College Savings Plan logo is a trademark of United Services Automobile Association and are being used by Victory Capital and its affiliates under license."}</Text>
+                    <Text style={styles.disclaimerTxt}>{gblStrings.accManagement.VCDiscalimerDescContent}</Text>
                 </View>
                 <GFooterComponent />
                 </ScrollView>
@@ -681,8 +703,8 @@ class ManageIntrestedPartiesComponent extends Component {
     }
 }
 
-ManageIntrestedPartiesComponent.propTypes = {
+manageIntrestedPartiesComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
 };
 
-export default ManageIntrestedPartiesComponent;
+export default manageIntrestedPartiesComponent;

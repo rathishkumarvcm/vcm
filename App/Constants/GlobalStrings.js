@@ -142,7 +142,10 @@ export default {
         enterDetails: "Enter Details",
         accBeneficiaryContent: "You may name one or more people or entities as beneficiaries. Learn more",
         beneficiaryAdd:"Beneficiary Address",
-
+        company:"Company",
+        addPrimaryBeneficiary:"Add Primary Beneficiary",
+        balance:"Balance",
+        zipCodeFormat:"11111 / 11111-1111",
         
         //manageIntrestedParties
         manageIntrestedParties: "Manage Interested Parties",
@@ -151,8 +154,10 @@ export default {
         addNewIntrestedParties: "Add New Interested Party",
         statements: "Statements",
         prospectusAndReports: "Prospectus and Reports",
-
-
+        selectDocumentType:"Select Document Type",
+        selectDocumentFrequency:"Select Document Frequency",
+        intrestedPartiesAddedSuccessMeg:"Interested Party Added Successfully",
+        selectDocuemntDeleveryFormat:"Select Document Delivery Format",   
 
 
         personalInformation: "Personal Information",
