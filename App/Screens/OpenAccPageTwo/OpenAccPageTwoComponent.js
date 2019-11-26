@@ -621,6 +621,7 @@ class OpenAccPageTwoComponent extends Component {
                 "branchOfService": this.state.personal.branchOfService || "-",
                 "rank": this.state.personal.rank || "-",
                 "serviceStartDate": this.state.personal.fromDateMilitary || "-",
+                "serviceToDate":this.state.personal.toDateMilitary || "-",
                 "commissionSource": this.state.personal.commissionSource || "-",
             },
             "regulatoryDetails": {
@@ -703,6 +704,7 @@ class OpenAccPageTwoComponent extends Component {
                     "branchOfService": this.state.jointOwner.branchOfService || "-",
                     "rank": this.state.jointOwner.rank || "-",
                     "serviceStartDate": this.state.jointOwner.fromDateMilitary || "-",
+                    "serviceToDate":this.state.jointOwner.toDateMilitary || "-",
                     "commissionSource": this.state.jointOwner.commissionSource || "-",
                 },
                 "regulatoryDetails": {
