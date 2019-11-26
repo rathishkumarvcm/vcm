@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner } from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
@@ -52,9 +52,9 @@ class OpenAccPageFiveComponent extends Component {
         this.props.navigation.navigate({ routeName: 'openAccPageSix', key: 'openAccPageSix' });
 
     }
- 
-    getFieldValue = () =>{
-       
+
+    getFieldValue = () => {
+
     }
 
 
@@ -62,30 +62,7 @@ class OpenAccPageFiveComponent extends Component {
                                  Render Methods
                                                                  -------------------------- */
     render() {
-      /*  var {
-            accountType = "",
-            accountSubType = "",
-            personalInfo: {
-                prefix = '',
-                firstName = '',
-                lastName = '',
-                suffix = '',
-                dateOfBirth = '',
-                gender = '',
-                maritalStatus = '',
-                citizenship = '',
-                ssnTin = '',
-                mailingAddress: {
-                    addressType = '',
-                    streetNbr = '',
-                    streetName = '',
-                    zip = '',
-                    city = '',
-                    state = ''
-                },
-                isPhysAddrSameAsMailAddr = ""
-            }
-        }*/
+
 
         var {
             accountType = "",
@@ -96,7 +73,7 @@ class OpenAccPageFiveComponent extends Component {
             militaryInfo = {},
             regulatoryDetails = {},
             accountPreferences = {},
-            investmentInfo ={}
+            investmentInfo = {}
         }
             = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
 
@@ -110,10 +87,10 @@ class OpenAccPageFiveComponent extends Component {
             maritalStatus = '',
             citizenship = '',
             ssnTin = '',
-            mailingAddress: maillAddr_personal = {},
-            physicalAddress: physicAddr_personal = {},
+            mailingAddress: maillAddr_primary = {},
+            physicalAddress: physicAddr_primary = {},
             isPhysAddrSameAsMailAddr = "",
-            contactDetails : contact_personal = {},
+            contactDetails: contact_primary = {},
         } = (personalInfo && personalInfo.prefix) ? personalInfo : {};
 
         var {
@@ -123,28 +100,68 @@ class OpenAccPageFiveComponent extends Component {
             zip = '',
             city = '',
             state = '',
-        } = maillAddr_personal;
+        } = (maillAddr_primary && maillAddr_primary.addressType) ? maillAddr_primary : {};
         var {
-            addressType:addressType_Phy = '',
-            streetNb:streetNb_Phy = '',
-            streetName:streetName_Phy= '',
-            zip: zip_Phy= '',
+            addressType: addressType_Phy = '',
+            streetNb: streetNb_Phy = '',
+            streetName: streetName_Phy = '',
+            zip: zip_Phy = '',
             city: city_Phy = '',
-            state:state_Phy = '',
-        } = physicAddr_personal;
+            state: state_Phy = '',
+        } = (physicAddr_primary && physicAddr_primary.addressType) ? physicAddr_primary : {};
 
         var {
             phoneNumber1 = {},
             phoneNumber2 = {},
             phoneNumber3 = {},
-            emailAddress = ''
+            emailAddress: emailAddress_primary = ''
 
-        } = contact_personal;
+        } = (contact_primary && contact_primary.phoneNumber1) ? contact_primary : {};
+
+        var {
+            phoneNumber: phoneNumber1_primary = '',
+            phoneType: phoneType1_primary = '',
+            contactDuring: contactDuring1_primary = '',
+        } = (phoneNumber1 && phoneNumber1.phoneNumber) ? phoneNumber1 : {};
+
+        var {
+            phoneNumber: phoneNumber2_primary = '',
+            phoneType: phoneType2_primary = '',
+            contactDuring: contactDuring2_primary = '',
+        } = (phoneNumber2 && phoneNumber2.phoneNumber) ? phoneNumber2 : {};
+
+        var {
+            phoneNumber: phoneNumber3_primary = '',
+            phoneType: phoneType3_primary = '',
+            contactDuring: contactDuring3_primary = '',
+        } = (phoneNumber3 && phoneNumber3.phoneNumber) ? phoneNumber3 : {};
+
+        var {
+            employmentStatus = '',
+            industry = '',
+            occupation = '',
+            employerName = '',
+            employerAddress = {}
+        } = (employementInfo && employementInfo.employerAddress) ? employementInfo : {};
+
+
+        var {
+            addressLine1 = '',
+            addressLine2 = '',
+            city: city_empInfo = '',
+            state: state_empInfo = '',
+            zip: zip_empInfo = '',
+        } = (employerAddress && employerAddress.addressLine1) ? employerAddress : {};
+
+        var {
+            dividendCapitalGain = '',
+            documentDeliveryFormat = '',
+        } = accountPreferences;
 
         let currentPage = 5;
         return (
             <View style={styles.container}>
-                  {
+                {
                     this.props.accOpeningData.isLoading && <GLoadingSpinner />
                 }
                 <GHeaderComponent
@@ -206,42 +223,42 @@ class OpenAccPageFiveComponent extends Component {
                                 {gblStrings.accManagement.mailingAddress}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                              {`${streetNb} ${streetName} ${city} ${state} ${zip}`}
+                                {`${streetNb} ${streetName} ${city} ${state} ${zip}`}
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.physicalAddress}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                            {`${streetNb_Phy} ${streetName_Phy} ${city_Phy} ${state_Phy} ${zip_Phy}`}
+                                {`${streetNb_Phy} ${streetName_Phy} ${city_Phy} ${state_Phy} ${zip_Phy}`}
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.homeTelephone}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                               {"(555) 555-1234"}
+                                {`${phoneNumber1_primary}`}
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.workPhoneNo}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"(555) 555-1234"}
+                                {`${phoneNumber2_primary}`}
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.emailAddress}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"John@gmail.com"}
+                                {`${emailAddress_primary}`}
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.socialSecurityNo}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"000-00-1234"}
+                                {`${ssnTin}`}
                             </Text>
 
                         </View>
@@ -271,42 +288,42 @@ class OpenAccPageFiveComponent extends Component {
                                 {gblStrings.accManagement.empStatus}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"Employed"}
+                                {`${employmentStatus}`}
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.occupation}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"Accountant"}
+                                {`${occupation}`}
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.empName}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"Cognizant"}
+                                {`${employerName}`}
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.empAddress}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"5400 N Black Oak Lake Rd"}
+                                {`${addressLine1} ${addressLine2} ${city_empInfo} ${state_empInfo} ${zip_empInfo}`}
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.cityAndState}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"Kansas MO"}
+                                {`${city_empInfo} ${state_empInfo}`}
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.zipcode}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"64155"}
+                                {`${zip_empInfo}`}
                             </Text>
                         </View>
                     </View>
@@ -413,7 +430,7 @@ class OpenAccPageFiveComponent extends Component {
                                     {gblStrings.accManagement.prospectus}
                                 </Text>
                                 <Text style={styles.lblRightColTxt}>
-                                    {"Send only one copy of prospectuses and reports to my household"}
+                                    {`${documentDeliveryFormat}`}
                                 </Text>
                             </View>
 
@@ -427,7 +444,7 @@ class OpenAccPageFiveComponent extends Component {
                     { /*----------- Buttons Group -------------------*/}
 
                     <View style={styles.btnGrp}>
-                       
+
                         <GButtonComponent
                             buttonStyle={styles.normalWhiteBtn}
                             buttonText={gblStrings.common.save}
@@ -481,5 +498,5 @@ class OpenAccPageFiveComponent extends Component {
 
 OpenAccPageFiveComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
-  };
+};
 export default OpenAccPageFiveComponent;

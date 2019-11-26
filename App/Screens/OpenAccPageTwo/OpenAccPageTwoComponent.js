@@ -559,7 +559,7 @@ class OpenAccPageTwoComponent extends Component {
                 "gender": this.state.personal.gender || "-",
                 "maritalStatus": this.state.personal.maritalStatus || "-",
                 "citizenship": this.state.personal.citizenship || "-",
-                "ssnTin": this.state.personal.ssnNo || "-",
+                "ssnTin": this.state.personal.socialSecurityNo || "-",
                 "mailingAddress": {
                     "addressType": this.state.personal.citizenship || "-",
                     "streetNbr": this.state.personal.addrLine1 || "-",
@@ -593,7 +593,7 @@ class OpenAccPageTwoComponent extends Component {
                         "phoneType": "Home",
                         "contactDuring": this.state.personal.contactDuringTelePhone3 || "-"
                     },
-                    "emailAddress": "aaru@test.com"
+                    "emailAddress": this.state.personal.emailAddress || "-"
                 }
             },
             "employementInfo": {
@@ -604,9 +604,9 @@ class OpenAccPageTwoComponent extends Component {
                 "employerAddress": {
                     "addressLine1": this.state.personal.empAddrLine1 || "-",
                     "addressLine2": this.state.personal.empAddrLine2 || "-",
-                    "city": this.state.personal.city || "-",
-                    "state": this.state.personal.stateCity || "-",
-                    "zip": this.state.personal.zip || "-",
+                    "city": this.state.personal.empCity || "-",
+                    "state": this.state.personal.empStateCity || "-",
+                    "zip": this.state.personal.empZipcode || "-",
                 }
             },
             "financialInfo": {
@@ -641,7 +641,7 @@ class OpenAccPageTwoComponent extends Component {
                     "gender": this.state.jointOwner.gender || "-",
                     "maritalStatus": this.state.jointOwner.maritalStatus || "-",
                     "citizenship": this.state.jointOwner.citizenship || "-",
-                    "ssnTin": this.state.jointOwner.ssnNo || "-",
+                    "ssnTin": this.state.jointOwner.socialSecurityNo || "-",
                     "mailingAddress": {
                         "addressType": this.state.jointOwner.citizenship || "-",
                         "streetNbr": "-",
@@ -675,7 +675,7 @@ class OpenAccPageTwoComponent extends Component {
                             "phoneType": "Home",
                             "contactDuring": this.state.jointOwner.contactDuringTelePhone3 || "-"
                         },
-                        "emailAddress": "aaru@test.com"
+                        "emailAddress": this.state.jointOwner.emailAddress || "-"
                     }
                 },
                 "employementInfo": {
@@ -686,9 +686,9 @@ class OpenAccPageTwoComponent extends Component {
                     "employerAddress": {
                         "addressLine1": this.state.jointOwner.empAddrLine1 || "-",
                         "addressLine2": this.state.jointOwner.empAddrLine2 || "-",
-                        "city": this.state.jointOwner.city || "-",
-                        "state": this.state.jointOwner.stateCity || "-",
-                        "zip": this.state.jointOwner.zip || "-",
+                        "city": this.state.jointOwner.empCity || "-",
+                        "state": this.state.jointOwner.empStateCity || "-",
+                        "zip": this.state.jointOwner.empZipcode || "-",
                     }
                 },
                 "financialInfo": {
@@ -725,7 +725,7 @@ class OpenAccPageTwoComponent extends Component {
                         "lastName":this.state.retirement.lastName || "-",
                         "ssnTin": this.state.retirement.socialSecurityNo || "-",
                         "dateOfBirth": this.state.retirement.dob || "-",
-                        "emailAddress": "test1@test.com"
+                        "emailAddress": this.state.retirement.emailAddress || "-"
                     }
                     //"beneficiary2Details,beneficiary3Details": ""
                 },
@@ -739,7 +739,7 @@ class OpenAccPageTwoComponent extends Component {
                         "lastName":this.state.retirement.lastName || "-",
                         "ssnTin": this.state.retirement.socialSecurityNo || "-",
                         "dateOfBirth": this.state.retirement.dob || "-",
-                        "emailAddress": "test1@test.com"
+                        "emailAddress": this.state.retirement.emailAddress || "-"
                     }
                 }
             }
@@ -2356,11 +2356,11 @@ class OpenAccPageTwoComponent extends Component {
                                     {gblStrings.accManagement.occupation}
                                 </Text>
                                 <GInputComponent
-                                    inputref={this.setInputRef("occupation")}
+                                    inputref={this.setInputRef("empOccupation")}
                                     propInputStyle={styles.customTxtBox}
                                     placeholder={"Mobile Communication Officer"}
                                     maxLength={gblStrings.maxLength.occupation}
-                                    onChangeText={this.onChangeText("personal", "occupation")}
+                                    onChangeText={this.onChangeText("personal", "empOccupation")}
                                     onSubmitEditing={this.onSubmitEditing(this.empName)}
 
 
