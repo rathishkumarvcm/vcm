@@ -839,5 +839,13 @@ export default {
         retrive_password:'Enter below details to retrieve your Password',
         password_success_footer1:'Neque porro quisquam est qui dolorem',
         password_success_footer2:'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet dictum orci et faucibus. Suspendisse non malesuada enim. Aliquam fringilla lectus ut massa convallis gravida. Integer condimentum mollis velit, nec porta diam mattis sit amet. Quisque sodales, enim quis laoreet aliquet, mauris nisi condimentum libero, a viverra ligula libero sed sem. Pellentesque sed mollis tortor, vitae finibus metus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus blandit consequat arcu nec iaculis. Aenean at pharetra nisl. Sed eget turpis sit amet'
-    }
+    },
+    //Automatic Investment Plan
+    automaticInvestment:{
+        autoInves_Title:'Automatic Investment Plan',
+        autoInves_current:'Current Automatic Investment Plans',
+        autoInves_current_content:'There are two parts for an automatic investment within an IRA. The first is the contribution to the account and sencond is the purchase of the mutual fund(s). if you\'re making a change, be sure adjust both parts',
+        acc_Name:'Account Name',
+        skip:'Skip',
+},
 };

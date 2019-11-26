@@ -1,0 +1,3 @@
+import systematicWithdrawalAddComponent from './SystematicWithdrawalAddContainer';
+
+export default systematicWithdrawalAddComponent;

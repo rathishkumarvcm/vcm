@@ -97,6 +97,14 @@ import PasswordRecoverTemp from './Screens/RecoverTempPassword/';
 import PasswordReset from './Screens/RecoverPasswordNew/';
 import PasswordSuccess from './Screens/RecoverPasswordSuccess/';
 
+//Systematic Withdrawal plan
+import systematicWithdrawal from './Screens/SystematicWithdrawalPlan';
+import systematicWithdrawalAdd from './Screens/SystematicWithdrawalPlanAdd';
+
+//Automatic Investment Plan
+import automaticInvestment from './Screens/AutomaticInvestmentPlan';
+import automaticInvestmentAdd from './Screens/AutomaticInvestmentPlanAdd';
+
 const AppNavigator = createStackNavigator({
         login: {
             screen : LoginComponent,
@@ -598,7 +606,31 @@ const AppNavigator = createStackNavigator({
             navigationOptions:{
                 header:null,
             }  
-        }
+        },
+        automaticInvestment:{
+            screen:automaticInvestment,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        automaticInvestmentAdd:{
+            screen:automaticInvestmentAdd,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        systematicWithdrawal:{
+            screen:systematicWithdrawal,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        systematicWithdrawalAdd:{
+            screen:systematicWithdrawalAdd,
+            navigationOptions:{
+                header:null,
+            }  
+        } 
     },{
         initialRouteName: 'login'
     });

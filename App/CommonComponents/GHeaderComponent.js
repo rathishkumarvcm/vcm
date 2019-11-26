@@ -30,6 +30,14 @@ const newData = [
         title: 'Marketing and Privacy',
       },
       {
+        naviagteTo:'automaticInvestment',
+        title: 'Automatic Investment Plan',
+      },
+      {
+        naviagteTo:'systematicWithdrawal',
+        title: 'Systamatic Withdrawal Plan',
+      },
+      {
           //navigateTo:'Logout'
           title: 'Sign Out',
       }
