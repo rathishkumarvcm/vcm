@@ -95,13 +95,13 @@ GDateComponent.propTypes = {
     dateInputStyle: PropTypes.instanceOf(Object),
     dateTextStyle: PropTypes.instanceOf(Object),
     dateTouchBody: PropTypes.instanceOf(Object),
-   
+    iconComponent: PropTypes.instanceOf(Object),
+
 
     date: PropTypes.string,
     format: PropTypes.string,
     mode: PropTypes.string,
     placeholder: PropTypes.string,
-    iconComponent: PropTypes.string, 
     confirmBtnText: PropTypes.string,
     cancelBtnText: PropTypes.string, 
     errorFlag: PropTypes.bool, 

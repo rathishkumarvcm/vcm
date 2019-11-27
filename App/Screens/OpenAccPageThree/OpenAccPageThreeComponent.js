@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GInputComponent, GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import { GButtonComponent, GInputComponent, GIcon, GHeaderComponent, GFooterComponent ,GLoadingSpinner} from '../../CommonComponents';
 import { CustomPageWizard, CustomDropDown, CustomCheckBox } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
@@ -26,10 +26,6 @@ const fundingSourceList = [
     {
         "key": "government allotment",
         "value": "Government Allotment"
-    },
-    {
-        "key": "ach",
-        "value": "ACH"
     }
 
 ];
@@ -268,10 +264,10 @@ class OpenAccPageThreeComponent extends Component {
             minCount: 5,
             fundList: [...fundList.map(v => ({ ...v, isActive: false }))],
             fundingSourceList: [],
-
+            offLineMethods:[],
+            onLineMethods:[],
             selectedCount: 0,
             fundingSourceName: "",
-            investmentDetailData: [],
             fundName: "",
             fundingOptions: "",
             fundingOptionsDropDown: false,
@@ -286,6 +282,16 @@ class OpenAccPageThreeComponent extends Component {
             investStartDateValidation: true,
 
             total: "",
+            action:"",
+            selectedFundInvestmentsData:[],
+            /* "fundNumber":"123", 
+            "fundName":"Fund1",
+            "fundingOption":"Initial",
+            "initialInvestment":"3000",
+            "monthlyInvestment":"ss",
+            "startDate":"ss",
+            "action":"add"
+            */
 
         };
     }
@@ -325,16 +331,39 @@ class OpenAccPageThreeComponent extends Component {
             if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData["fund_source"] && this.props.masterLookupStateData["fund_source"].value) {
                 tempFundingSourceList = this.props.masterLookupStateData["fund_source"].value;
                 console.log("tempFundingSourceList:: " + JSON.stringify(tempFundingSourceList));
-                /* this.setState({
-                   fundingSourceList: tempFundingSourceListData[0],
-               });
-               */
+                if(tempFundingSourceList.length>0){
+                    const offLineSubtypes = tempFundingSourceList[0].subtypes;
+                    const onLineSubtypes = tempFundingSourceList[1].subtypes;
+                    const bothSubTypes = [...tempFundingSourceList[0].subtypes,...tempFundingSourceList[1].subtypes]
+                    this.setState({
+                        offLineMethods: [...offLineSubtypes.map(v => ({ ...v, isActive: false }))],
+                        onLineMethods: [...onLineSubtypes.map(v => ({ ...v, isActive: false }))],
+                        fundingSourceList: [...this.state.offLineMethods.map(v => ({ ...v, isActive: false })),...this.state.onLineMethods.map(v => ({ ...v, isActive: false }))]
+                    });
+                }
+               
             } else {
                 console.log("else tempFundingSourceList:: " + JSON.stringify(this.props.masterLookupStateData));
 
             }
+
+            const responseKey = ActionTypes.INVEST_SELECT_SAVE_OPENING_ACCT;
+            if (this.props.accOpeningData[responseKey]) {
+                if (this.props.accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
+                    const tempResponse = this.props.accOpeningData[responseKey];
+                    if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
+                        let msg = tempResponse.message;
+                        console.log("Account Type Saved ::: :: " + msg);
+                        alert(tempResponse.result)
+                    } else {
+                        alert(tempResponse.message)
+                    }
+                }
+            }
         }
     }
+
+   
     /*----------------------
                                  Button Events
                                                                  -------------------------- */
@@ -352,10 +381,62 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     onClickNext = () => {
-        this.validateFields();
-    }
+        if (this.validateFields()) {
+            const payload = this.getPayload();
+            this.props.saveData("OpenAccPageThree", payload);  
+            this.props.navigation.navigate({ routeName: 'openAccPageFour', key: 'openAccPageFour' });
+          }
+        }
+    
     onClickSave = () => {
-        this.validateFields();
+        if (this.validateFields()) {
+            const payload = this.getPayload();
+            this.props.saveAccountOpening("OpenAccPageThree", payload);    
+        } 
+      }
+    getSelectedFundsList = () =>{
+        console.log("getSelectedFundsList::::>");
+        let fundDataList = [];
+        for (let i=0;i<this.state.fundList.length;i++){
+            const tempObj = this.state.fundList[i];
+            if(tempObj.isActive){
+                fundDataList.push(tempObj);
+            }
+        }
+        return fundDataList;
+    }
+    getPayload = () => {
+        let payload ={};
+        if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
+            payload = {
+                ...this.props.accOpeningData.savedAccData,
+                "investmentInfo":{ 
+                    "fundingSource":{ 
+                       "method":this.state.fundingSourceName || "-",
+                       "bankAccount":"Axis",
+                       "accountType":"accountType",
+                       "financialInstitutionName":"financialInstitutionName",
+                       "accountOwner":"accountOwner",
+                       "transitRoutingNumber":"transitRoutingNumber",
+                       "accountNumber":"accountNumber"
+                    },
+                    "totalFunds":"1",
+                    "fundDataList":[ 
+                       { 
+                          "fundNumber":this.state.fundName || "-",
+                          "fundName":this.state.fundName || "-",
+                          "fundingOption":this.state.fundingOptions || "-",
+                          "initialInvestment":this.state.initInvestment || "-",
+                          "monthlyInvestment":this.state.monthlyInvestment || "-",
+                          "startDate":this.state.investStartDate || "-",
+                          "action":"add"
+                       }
+                    ]
+                 },
+            }
+        }
+        return payload;
+
     }
     onChangeText = (keyName) => text => {
         console.log("onChangeText:::>");
@@ -386,15 +467,45 @@ class OpenAccPageThreeComponent extends Component {
 
     }
 
-    onSelectSourceFundList = (item) => () => {
+    onSelectSourceFundList = (item, index, method) => () => {
+        console.log("onSelectSourceFundList:::>  "+ method)
+        let toBeChangedData = [];
+        let notToBeChangedData = [];
+        switch (method) {
+            case "offline":
+                toBeChangedData = [...this.state.offLineMethods];
+                notToBeChangedData = [...this.state.onLineMethods];
+
+                break;
+            case "online":
+                toBeChangedData = [...this.state.onLineMethods];
+                notToBeChangedData = [...this.state.offLineMethods];
+
+                break;
+        }
+
+        for (let m = 0; m < toBeChangedData.length; m++) {
+            if (index == m) {
+                toBeChangedData[index].isActive = true;
+            } else {
+                toBeChangedData[m].isActive = false;
+            }
+        }
+        for (let m = 0; m < notToBeChangedData.length; m++) {
+            notToBeChangedData[m].isActive = false;
+        }
 
         this.setState({
+            offLineMethods: method == "offline" ? toBeChangedData : notToBeChangedData,
+            onLineMethods: method == "online" ? toBeChangedData : notToBeChangedData,
             fundingSourceName: item
+
         });
-        // alert("onSelectSourceFundList:: " + item+" "+ this.state.fundingSourceName)
+        alert("onSelectSourceFundList:: " + item+" "+ this.state.fundingSourceName)
 
 
     }
+   
     getSelectedItems = () => {
         console.log("getSelectedItems:: ");
         var selecteditems = [];
@@ -507,11 +618,11 @@ class OpenAccPageThreeComponent extends Component {
 
         />
         );
-    renderFundSourceListItem = () => ({ item }) =>
+    renderFundSourceListItem = (method) => ({ item ,index}) =>
         (<SourceListItem
-            style={styles.accountItem}
+            style={item.isActive? styles.accountItemSelected:styles.accountItem}
             sourceName={item.value}
-            onPress={this.onSelectSourceFundList(item.sourceName)}
+            onPress={this.onSelectSourceFundList(item.value,index,method)}
         />
         );
 
@@ -522,9 +633,11 @@ class OpenAccPageThreeComponent extends Component {
             return false;
         }
     }
+
+
     validateFields = () => {
 
-        return this.props.navigation.navigate({ routeName: 'openAccPageFour', key: 'openAccPageFour' });
+       // return this.props.navigation.navigate({ routeName: 'openAccPageFour', key: 'openAccPageFour' });
 
         var errMsg = "";
         var isValidationSuccess = false;
@@ -549,15 +662,119 @@ class OpenAccPageThreeComponent extends Component {
         }
 
         if (isValidationSuccess) {
-            this.props.navigation.navigate({ routeName: 'openAccPageFour', key: 'openAccPageFour' });
         } else {
             alert(errMsg);
         }
 
+        return isValidationSuccess;
+
+
     }
 
 
+renderFundingInvestmentList= () => {
+        console.log("renderCalender::: " + calendarName);
+        return (
+            <View>
+                <TouchableOpacity
+                    //  onPress={() => { alert("#TODO:: Remove") }}
+                    activeOpacity={0.8}
+                    accessibilityRole={'button'}
+                    style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginTop: scaledHeight(22) }}
+                >
+                    <Text style={{ fontSize: scaledHeight(16), color: '#61285F', fontWeight: 'bold', width: '100%', textAlign: 'right', lineHeight: 20 }}>
+                        {gblStrings.common.remove}
+                    </Text>
+                </TouchableOpacity>
+                <View style={styles.investmentSection}>
+                    <Text style={styles.lblTxt}>
+                        {gblStrings.accManagement.fundName}
+                    </Text>
+                    <Text style={styles.sectionDescTxt}>
+                        {"Aggressive Growth Fund"}
+                    </Text>
 
+                    <Text style={styles.lblTxt}>
+                        {gblStrings.accManagement.fundingOptions}
+                    </Text>
+                    <CustomDropDown
+                        onPress={this.onPressDropDown("fundingOptionsDropDown")}
+                        inputref={this.setInputRef("fundingOptions")}
+                        value={this.state.fundingOptions}
+                        propInputStyle={this.state.fundingOptionsValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                        placeholder={"Select"}
+                    />
+                    {this.renderDropDown('fundingOptionsDropDown', fundingOptionsData)}
+
+                    <Text style={styles.lblTxt}>
+                        {gblStrings.accManagement.initInvestment}
+                    </Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: scaledHeight(7) }}>
+                        <Text style={{ color: '#56565A', fontSize: scaledHeight(16) }}>
+                            {"$"}
+                        </Text>
+                        <GInputComponent
+                            propInputStyle={{ width: '90%' }}
+                            maxLength={gblStrings.maxLength.initInvestment}
+                            placeholder={"Initial Investment"}
+                            returnKeyType={"done"}
+                            onChangeText={this.onChangeText("initInvestment")}
+
+                        />
+                    </View>
+                    <Text style={{ textAlign: 'right', width: '100%', color: '#56565A', fontSize: scaledHeight(12), marginTop: scaledHeight(12), }}>
+                        {"Minimum $3,000"}
+                    </Text>
+
+                    <Text style={styles.lblTxt}>
+                        {gblStrings.accManagement.monthlyInvestment}
+                    </Text>
+                    <CustomDropDown
+                        onPress={this.onPressDropDown("monthlyInvestmentDropDown")}
+                        inputref={this.setInputRef("monthlyInvestment")}
+                        value={this.state.monthlyInvestment}
+                        propInputStyle={this.state.monthlyInvestmentValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                        placeholder={"Select"}
+                    />
+                    {this.renderDropDown('monthlyInvestmentDropDown', monthlyInvestData)}
+
+                    <Text style={styles.lblTxt}>
+                        {gblStrings.accManagement.startDate}
+                    </Text>
+                    <GInputComponent
+                        propInputStyle={styles.customTxtBox}
+                        placeholder={"MM/DD/YYYY "}
+                    />
+                </View>
+                <View style={styles.investmentSectionFooter}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: scaledHeight(20) }}>
+
+                        <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
+                            {gblStrings.accManagement.total}
+                        </Text>
+                        <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
+                            {"$3,000.00"}
+                        </Text>
+                    </View>
+                    <Text style={styles.lblLine} />
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', padding: scaledHeight(20) }}>
+                        <TouchableOpacity
+                            //  onPress={() => { alert("#TODO:: Update") }}
+                            activeOpacity={0.8}
+                            accessibilityRole={'button'}
+                        >
+                            <Text style={styles.downloadPDFBtnTxt}>
+                                {gblStrings.common.update}
+                            </Text>
+                        </TouchableOpacity>
+
+                    </View>
+                </View>
+
+
+            </View>
+        );
+    }
 
     /*----------------------
                                  Render Methods
@@ -571,6 +788,9 @@ class OpenAccPageThreeComponent extends Component {
         console.log("rendering:: " + this.state.fundingSourceName);
         return (
             <View style={styles.container}>
+                 {
+                    (this.props.accOpeningData.isLoading || this.props.masterLookupStateData.isLoading) && <GLoadingSpinner />
+                }
                 <GHeaderComponent
                     navigation={this.props.navigation}
                     onPress={this.onClickHeader}
@@ -674,11 +894,26 @@ class OpenAccPageThreeComponent extends Component {
                                 {gblStrings.accManagement.fundYourAccountNote}
                             </Text>
                             <View style={{ flexGrow: 1, marginVertical: scaledHeight(0) }}>
-
                                 <FlatList
-                                    data={fundingSourceList}
+                                    data={this.state.offLineMethods}
                                     keyExtractor={this.generateFundSourceKeyExtractor}
-                                    renderItem={this.renderFundSourceListItem()}
+                                    renderItem={this.renderFundSourceListItem('offline')}
+                                />
+                            </View>
+                            <Text style={{
+                                marginTop: scaledHeight(12),
+                                fontSize: scaledHeight(18),
+                                color: '#56565A',
+                                lineHeight: 25,
+                                textAlign:'center'
+                            }}>
+                                {"or"}
+                            </Text>
+                            <View style={{ flexGrow: 1, marginVertical: scaledHeight(0) }}>
+                                <FlatList
+                                    data={this.state.onLineMethods}
+                                    keyExtractor={this.generateFundSourceKeyExtractor}
+                                    renderItem={this.renderFundSourceListItem('online')}
                                 />
                             </View>
 
