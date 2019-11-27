@@ -37,8 +37,8 @@ export const styles = StyleSheet.create({
       fontSize:scaledHeight(12)
     },
     errorView:{
-      marginLeft:'4%',
-      marginRight:'4%',
+      //marginLeft:'4%',
+      //marginRight:'4%',
       borderColor:'red'
   },
   arrowIconStyle:{

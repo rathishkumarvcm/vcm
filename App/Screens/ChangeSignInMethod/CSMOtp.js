@@ -24,14 +24,8 @@ class CSMOtp extends Component {
     }
 
     componentDidMount() {
-        if(this.props && this.props.initialState && this.props.initialState.verifiedEmail&& this.props.initialState.phone){
-             
-              this.setState({
-                email : this.props.initialState.verifiedEmail,
-                mobileNo : this.props.initialState.phone,
-              });
-              this.renderMaskedInput();
-                
+        if(this.props && this.props.initialState && this.props.initialState.email&& this.props.initialState.phone){
+              this.renderMaskedInput();       
         }
         console.log("------>mobbbbb",this.state.email,this.state.mobileNo);
              
@@ -39,12 +33,15 @@ class CSMOtp extends Component {
 
     
     renderMaskedInput = () => {
-        
+        this.setState({
+            email : this.props.initialState.email,
+            mobileNo : this.props.initialState.phone,
+          });
         var strmobile = this.props.initialState.phone;
         console.log("------>mobbbbbnext",strmobile);
         //var maskmobile = strmobile.substring(0,2)+strmobile.substring(2,8).replace(/\d/g,"*")+strmobile.substring(8,10)
-        var maskmobile = strmobile.substring(4,6)+strmobile.substring(6,12).replace(/\d/g,"*")+strmobile.substring(12,14)
-        var stremail = this.props.initialState.verifiedEmail;
+        var maskmobile = strmobile.substring(4,6)+strmobile.substring(6,12).replace(/\d/g,"*")+strmobile.substring(12,14);
+        var stremail = this.props.initialState.email;
         var maskemail = "";
         this.setState({ signInMethods :[{ index1 : 0, question:"One Time Password to EmailID",additionalText:stremail},
         { index1 : 1, question:"One Time Password to Mobile",additionalText:maskmobile},
@@ -57,10 +54,10 @@ class CSMOtp extends Component {
     }
 
     onClickCancel = () => {
-        this.props.navigation.navigate('ChangeSignInMethod');
+        this.props.navigation.navigate('changeSignInMethod');
     }
     onClickSave = () => {
-        this.props.navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.otp});
+        this.props.navigation.navigate('changeSignInMethod',{showAlert:true,message:gblStrings.userManagement.otp});
     }
 
     radioButtonClicked = (index) => {
@@ -166,4 +163,9 @@ class CSMOtp extends Component {
         );
     }
 } 
+CSMOtp.propTypes = {
+    navigation: PropTypes.instanceOf(Object),
+    initialState : PropTypes.instanceOf(Object)
+};
+
 export default CSMOtp;

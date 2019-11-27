@@ -1,8 +1,8 @@
 import { StyleSheet, Dimensions } from "react-native";
-import { convertToDeviceResolution, scaledHeight, scaledWidth } from '../../Utils/Resolution';
+import {  scaledHeight,  } from '../../Utils/Resolution';
 
 
-const { width } = Dimensions.get('window');
+//const { width } = Dimensions.get('window');
 
 
 export const styles = StyleSheet.create({
@@ -108,5 +108,10 @@ export const styles = StyleSheet.create({
         marginLeft: "4%",
         color: 'red',
         textAlignVertical: "top",
+    },
+    dropdownTextInput:{
+        width:"100%",
+        marginLeft:"0%",
+        marginRight:"0%"
     }
 });
