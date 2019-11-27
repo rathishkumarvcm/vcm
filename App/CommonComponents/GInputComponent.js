@@ -1,8 +1,8 @@
 import React from "react";
-import { View, TextInput, StyleSheet, Text } from "react-native";
+import { View, TextInput, StyleSheet, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import { scaledHeight } from '../Utils/Resolution';
-
+import {GIcon} from './GIcon';
 /* **************************\
   Function: GInputComponent
   Explanation:
@@ -40,7 +40,12 @@ export const styles = StyleSheet.create({
       marginLeft:'4%',
       marginRight:'4%',
       borderColor:'red'
-  }
+  },
+  arrowIconStyle:{
+    position:'absolute',
+    right:15,
+    top:15
+}
 });
 
   export const GInputComponent = (props) => (
@@ -73,6 +78,20 @@ export const styles = StyleSheet.create({
         >
       {props.inputText}
         </TextInput>
+{props.dropDownBox ? 
+  <TouchableOpacity style={[styles.arrowIconStyle,props.arrowIconStyle]} onPress={props.dropDownClick}>
+        <GIcon 
+            name="md-arrow-dropdown"
+            type="ionicon"
+            size={20}
+            color="black"
+        />
+    </TouchableOpacity>
+    :
+    null}
+        
+
+
     </View>
     {props.errorFlag ? <View style={styles.errorSection}>
       <Text style={styles.errorSectionText}>
