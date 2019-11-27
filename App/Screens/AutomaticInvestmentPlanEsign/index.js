@@ -1,0 +1,3 @@
+import AutomaticInvestmentPlanEsignComponent from './AutomaticInvestmentPlanEsignContainer';
+
+export default AutomaticInvestmentPlanEsignComponent;

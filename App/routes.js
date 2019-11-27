@@ -104,6 +104,9 @@ import systematicWithdrawalAdd from './Screens/SystematicWithdrawalPlanAdd';
 //Automatic Investment Plan
 import automaticInvestment from './Screens/AutomaticInvestmentPlan';
 import automaticInvestmentAdd from './Screens/AutomaticInvestmentPlanAdd';
+import automaticInvestmentSchedule from './Screens/AutomaticInvestmentPlanSchedule';
+import automaticInvestmentVerify from './Screens/AutomaticInvestmentPlanVerify';
+import automaticInvestmentEsign from './Screens/AutomaticInvestmentPlanEsign';
 
 const AppNavigator = createStackNavigator({
         login: {
@@ -615,6 +618,24 @@ const AppNavigator = createStackNavigator({
         },
         automaticInvestmentAdd:{
             screen:automaticInvestmentAdd,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        automaticInvestmentSchedule:{
+            screen:automaticInvestmentSchedule,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        automaticInvestmentVerify:{
+            screen:automaticInvestmentVerify,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        automaticInvestmentEsign:{
+            screen:automaticInvestmentEsign,
             navigationOptions:{
                 header:null,
             }  

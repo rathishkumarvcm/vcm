@@ -1,0 +1,3 @@
+import AutomaticInvestmentPlanVerifyComponent from './AutomaticInvestmentPlanVerifyContainer';
+
+export default AutomaticInvestmentPlanVerifyComponent;

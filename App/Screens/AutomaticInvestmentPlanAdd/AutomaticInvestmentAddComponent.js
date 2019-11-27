@@ -49,7 +49,7 @@ class AutomaticInvestmentAddComponent extends Component {
             autoInvestSwithOff: true,
         };
     }
-
+    navigationNext = () => this.props.navigation.navigate('automaticInvestmentSchedule');
     generateKeyExtractor = (item) => item.account;
     renderInvestment = () => ({ item }) =>
         (
@@ -188,7 +188,7 @@ class AutomaticInvestmentAddComponent extends Component {
                             buttonStyle={styles.continueButton}
                             buttonText={globalString.common.next}
                             textStyle={styles.continueButtonText}
-                            onPress={this.navigationLogin}
+                            onPress={this.navigationNext}
                         />
                     </View>
                     <GFooterComponent />
