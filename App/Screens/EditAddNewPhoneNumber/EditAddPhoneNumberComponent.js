@@ -1,9 +1,43 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
+
+const phoneTypeData = [
+    {
+        "key": "home",
+        "value": "Home"
+    },
+    {
+        "key": "mobile",
+        "value": "Mobile"
+    },
+    {
+        "key": "work",
+        "value": "Work"
+    },
+    {
+        "key": "fax",
+        "value": "Fax"
+    }
+];
+
+const contactTimeData = [
+    {
+        "key": "day",
+        "value": "Daytime"
+    },
+    {
+        "key": "evening",
+        "value": "Evening"
+    },
+    {
+        "key": "any",
+        "value": "Anytime"
+    }
+];
 
 class editAddPhoneNumberComponent extends Component {
     constructor(props) {
@@ -13,8 +47,38 @@ class editAddPhoneNumberComponent extends Component {
             isLoading: false,
             enableBiometric: false,
             faceIdEnrolled: false,
-            touchIdEnrolled: false
+            touchIdEnrolled: false,
+            dropDownPhoneState: false,
+            dropDownPhoneValue: '',
+            dropDownContactState: false,
+            dropDownContactValue: ''
         };
+    }
+
+    dropDownPhoneClick = () => {
+        this.setState({
+            dropDownPhoneState: !this.state.dropDownPhoneState
+        });
+    }
+
+    dropDownPhoneSelect = (valuePhoneType) => {
+        this.setState({
+            dropDownPhoneValue: valuePhoneType.value,
+            dropDownPhoneState: false
+        });
+    }
+
+    dropDownContactClick = () => {
+        this.setState({
+            dropDownContactState: !this.state.dropDownContactState
+        });
+    }
+
+    dropDownContactSelect = (valueContactTime) => {
+        this.setState({
+            dropDownContactValue: valueContactTime.value,
+            dropDownContactState: false
+        });
     }
 
     componentDidMount() { }
@@ -22,6 +86,9 @@ class editAddPhoneNumberComponent extends Component {
     phoneAddNewNumberOnCancel = () => this.props.navigation.navigate('editPhoneInformation');
 
     render() {
+
+        let userPhoneType = phoneTypeData;
+
         return (
 
             <View style={styles.container}>
@@ -54,22 +121,37 @@ class editAddPhoneNumberComponent extends Component {
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
-                        <TouchableOpacity style={styles.phoneFlexRow} onPress={this.selectTheState}>
+                        <TouchableOpacity style={styles.phoneFlexRow}
+                            onPress={this.dropDownPhoneClick}>
                             <GInputComponent
                                 propInputStyle={styles.userIDTextBox1}
                                 placeholder={""}
                                 editable={false}
-                                value={this.state.valueDropDown} />
+                                value={this.state.dropDownPhoneValue} />
 
-                            <TouchableOpacity style={styles.phoneDropDown} onPress={this.selectTheState}>
+                            <TouchableOpacity style={styles.phoneDropDown}
+                                onPress={this.dropDownPhoneClick}>
                                 <GIcon
                                     name="md-arrow-dropdown"
                                     type="ionicon"
                                     size={20}
                                     color="black" />
                             </TouchableOpacity>
-
                         </TouchableOpacity>
+
+                        {this.state.dropDownPhoneState &&
+                            <View style={styles.editDropDownSelect} >
+                                <FlatList
+                                    data={userPhoneType}
+                                    renderItem={({ item }) =>
+                                        (<TouchableOpacity style={{ height: 33 }}
+                                            onPress={() => this.dropDownPhoneSelect(item)}>
+                                            <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
+                                        </TouchableOpacity>)
+                                    }
+                                    keyExtractor={item => item.key}
+                                />
+                            </View>}
                     </View>
 
                     <View style={styles.editPhoneNumType}>
@@ -111,22 +193,37 @@ class editAddPhoneNumberComponent extends Component {
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
-                        <TouchableOpacity style={styles.phoneFlexRow} onPress={this.selectTheState}>
+                        <TouchableOpacity style={styles.phoneFlexRow} 
+                            onPress={this.dropDownContactClick}>
                             <GInputComponent
                                 propInputStyle={styles.userIDTextBox1}
                                 placeholder={""}
                                 editable={false}
-                                value={this.state.valueDropDown} />
+                                value={this.state.dropDownContactValue} />
 
-                            <TouchableOpacity style={styles.phoneDropDown} onPress={this.selectTheState}>
+                            <TouchableOpacity style={styles.phoneDropDown} 
+                            onPress={this.dropDownContactClick}>
                                 <GIcon
                                     name="md-arrow-dropdown"
                                     type="ionicon"
                                     size={20}
                                     color="black" />
                             </TouchableOpacity>
-
                         </TouchableOpacity>
+
+                        {this.state.dropDownContactState &&
+                            <View style={styles.editDropDownSelect} >
+                                <FlatList
+                                    data={contactTimeData}
+                                    renderItem={({ item }) =>
+                                        (<TouchableOpacity style={{ height: 33 }}
+                                            onPress={() => this.dropDownContactSelect(item)}>
+                                            <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
+                                        </TouchableOpacity>)
+                                    }
+                                    keyExtractor={item => item.key}
+                                />
+                            </View>}
                     </View>
 
                     <View style={styles.settingsMobile}>
@@ -205,8 +302,8 @@ class editAddPhoneNumberComponent extends Component {
                     </View>
 
                 </ScrollView>
-            </View>
 
+            </View>
         );
     }
 }
