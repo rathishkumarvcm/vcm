@@ -25,7 +25,7 @@ class RegisterSelfComponent extends Component {
         this.props.navigation.goBack();
     }
 
-    navigateAddress = ()=>{this.props.navigation.navigate('dashboard');}
+    navigateAddress = ()=>{this.props.navigation.navigate('registerPassword');}
  
     render(){
         

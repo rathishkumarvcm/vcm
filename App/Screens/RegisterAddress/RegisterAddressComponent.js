@@ -109,7 +109,7 @@ class registerAddressComponent extends Component {
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
                 placeholder={""}
-                secureTextEntry
+                
             />
 
             <View style={styles.signInView}>
@@ -120,7 +120,7 @@ class registerAddressComponent extends Component {
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
                 placeholder={""}
-                secureTextEntry
+                
             />
 
             <View style={styles.signInView}>
@@ -131,7 +131,7 @@ class registerAddressComponent extends Component {
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
                 placeholder={""}
-                secureTextEntry
+                
             />
 
 <GDropDownComponent 
@@ -141,6 +141,7 @@ class registerAddressComponent extends Component {
     showDropDown={this.state.stateDropDown}
     dropDownValue={this.state.valueDropDown}
     selectedDropDownValue={this.selectedDropDownValue}
+    itemToDisplay={"title"}
     dropDownPostition={{position:'absolute',right:0,top:scaledHeight(700)}}
     />
 

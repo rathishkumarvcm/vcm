@@ -92,7 +92,7 @@ export const GDropDownComponent = props => (
     data={props.data}
     renderItem={({ item }) => 
     (<TouchableOpacity style={{ height: 33 }} onPress={() => props.selectedDropDownValue(item.title)}>
-        <Text> {item.title} </Text>
+        <Text> {item[props.itemToDisplay]} </Text>
      </TouchableOpacity>)
     }
 keyExtractor={item => item.id}

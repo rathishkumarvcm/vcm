@@ -29,7 +29,7 @@ class RegisterPasswordComponent extends Component {
         this.props.navigation.goBack();
     }
 
-    navigateSelf = ()=>{this.props.navigation.navigate('registerSelf');}
+    navigateSelf = ()=>{this.props.navigation.navigate('emailVerify');}
 
     validatePassword = () => {
         const validate = passwordRegex.test(this.state.password);

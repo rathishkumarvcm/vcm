@@ -19,7 +19,7 @@ class EmailVerificationComponent extends Component {
        
     }
 
-    navigatePassword = ()=>this.props.navigation.navigate('registerPassword');
+    navigatePassword = ()=>this.props.navigation.navigate('login');
     
     goBack = () =>{this.props.navigation.goBack()}
  
@@ -61,7 +61,7 @@ class EmailVerificationComponent extends Component {
            
             <GButtonComponent 
                     buttonStyle={styles.backButton}
-                    buttonText="Back"
+                    buttonText="Resend"
                     textStyle={styles.cancelButtonText}
                     onPress={this.goBack}
                    // disabled={this.state.email === '' || !this.state.validationEmail}
@@ -69,7 +69,7 @@ class EmailVerificationComponent extends Component {
 
             <GButtonComponent 
                     buttonStyle={styles.signInButton}
-                    buttonText="Resend"
+                    buttonText="Confirm"
                     textStyle={styles.signInButtonText}
                     onPress={this.navigatePassword}
                    // disabled={this.state.email === '' || !this.state.validationEmail}
