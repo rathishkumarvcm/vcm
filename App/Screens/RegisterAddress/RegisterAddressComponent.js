@@ -51,7 +51,7 @@ class registerAddressComponent extends Component {
 
     selectedDropDownValue = (value) => {
         this.setState({
-            valueDropDown : value,
+            valueDropDown : value.title,
             stateDropDown : false
         });
     }

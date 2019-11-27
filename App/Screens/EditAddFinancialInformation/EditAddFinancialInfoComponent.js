@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GDropDownComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import globalStrings from '../../Constants/GlobalStrings';
 
@@ -51,6 +51,21 @@ const taxFillingStatusData = [
         "key": "mar_sep",
         "value": "Married person fillingseperately"
     }
+];
+
+const newData = [
+    {
+        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+        title: 'First State',
+    },
+    {
+        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+        title: 'Second State',
+    },
+    {
+        id: '58694a0f-3da1-471f-bd96-145571e29d72',
+        title: 'Third State',
+    },
 ];
 
 class editAddFinancialInfoComponent extends Component {
@@ -183,7 +198,7 @@ class editAddFinancialInfoComponent extends Component {
 
                     <View style={styles.settingsBorder}></View>
 
-                    <View style={styles.financialView}>
+                    {/* <View style={styles.financialView}>
                         <View>
                             <Text style={styles.financialTextLabel}>
                                 {globalStrings.addFinancialInformations.annualIncome}
@@ -221,7 +236,18 @@ class editAddFinancialInfoComponent extends Component {
                                     />
                                 </View>}
                         </View>
-                    </View>
+                    </View> */}
+
+                    <GDropDownComponent
+                        dropDownTextName={styles.financialTextLabel}
+                        dropDownName={globalStrings.addFinancialInformations.annualIncome}
+                        data={userAnnualIncome}
+                        changeState={this.dropDownFinancialClick}
+                        showDropDown={this.state.dropDownFinancialState}
+                        dropDownValue={this.state.dropDownFinancialValue}
+                        selectedDropDownValue={this.dropDownFinancialSelect}
+                        itemToDisplay={"value"}
+                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(200) }} />
 
                     <View style={styles.financialViewNormal}>
                         <Text style={styles.financialTextLabel}>

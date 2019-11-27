@@ -91,7 +91,7 @@ export const GDropDownComponent = props => (
 <FlatList
     data={props.data}
     renderItem={({ item }) => 
-    (<TouchableOpacity style={{ height: 33 }} onPress={() => props.selectedDropDownValue(item[props.itemToDisplay])}>
+    (<TouchableOpacity style={{ height: 33 }} onPress={() => props.selectedDropDownValue(item)}>
         <Text> {item[props.itemToDisplay]} </Text>
      </TouchableOpacity>)
     }
