@@ -11,7 +11,7 @@ import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
 import * as regexConst from '../../Constants/RegexConstants';
 //const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
-
+import {ValidatePassword} from '../../Utils/ValidatePassword';
 
 class NewPasswordComponent extends Component {
   constructor(props) {
@@ -27,6 +27,7 @@ class NewPasswordComponent extends Component {
       str_cfm: '',
       style_cfm: styles.userIDTextBox,
       err_cfm: '',
+      validationPassword: true,
     };
     //set true to isLoading if data for this screen yet to be received and wanted to show loader.
   }
@@ -55,7 +56,10 @@ class NewPasswordComponent extends Component {
   //     password: text
   //   });
   // }
-
+  validateNewPassword = () => {
+    const validate = (ValidatePassword(this.state.str_new)===globalString.userManagement.strong);
+    this.setState({ validationPassword: validate });
+}
   navigationLogin = () => this.props.navigation.navigate('login');
   navigationSuccess = () => 
   {
@@ -136,11 +140,29 @@ class NewPasswordComponent extends Component {
 
           <GInputComponent
            propInputStyle={this.state.boo_new ? styles.userIDTextBoxError : styles.userIDTextBox}
-           placeholder={globalString.recoverPassword.passwordPlaceHolder} onChangeText={this.setNew}
-           value={this.state.str_new} secureTextEntry
+           placeholder={globalString.recoverPassword.passwordPlaceHolder} 
+           onChangeText={this.setNew}
+           value={this.state.str_new}
+           onBlur={this.validateNewPassword}
+            onSubmitEditing={this.validateNewPassword}
+           secureTextEntry
           />
           <Text style={styles.errorMessage}>{this.state.err_new}</Text>
 
+          <View style={styles.passwordStrengthFlex}>
+                        <View style={styles.passwordStrongFlex}>
+                            <View style={(ValidatePassword(this.state.str_new)==globalString.userManagement.strong)?styles.strong:styles.default} />
+                            <Text style={styles.strongText}>{globalString.userManagement.strong}</Text>
+                        </View>
+                        <View style={styles.passwordStrongFlex}>
+                            <View style={(ValidatePassword(this.state.str_new)==globalString.userManagement.good)?styles.good:styles.default} />
+                            <Text style={styles.strongText}>{globalString.userManagement.good}</Text>
+                        </View>
+                        <View style={styles.passwordStrongFlex}>
+                            <View style={(this.state.str_new.length>0)&&(ValidatePassword(this.state.str_new)==globalString.userManagement.weak)?styles.weak:styles.default} />
+                            <Text style={styles.strongText}>{globalString.userManagement.weak}</Text>
+                        </View>
+                    </View>
           <View style={styles.passwordView}>
             <Text style={styles.enterOpt}>{globalString.recoverPassword.password_confirm}</Text>
           </View>

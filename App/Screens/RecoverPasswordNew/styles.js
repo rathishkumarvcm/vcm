@@ -1,5 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
-import {scaledHeight} from '../../Utils/Resolution';
+import {scaledHeight,scaledWidth} from '../../Utils/Resolution';
 //import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const {width} = Dimensions.get('window');
@@ -324,5 +324,36 @@ export const styles = StyleSheet.create({
     color:"red",
     paddingLeft:'4%',
     paddingRight:'4%',
-  }
+  },
+  passwordStrengthFlex: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+},
+passwordStrongFlex: {
+    flexDirection: 'column',
+    flex: 0.3,
+    marginRight: scaledWidth(5)
+},
+default:{
+    backgroundColor:'#544A54',
+    height: scaledHeight(3),
+},
+strong: {
+    backgroundColor: 'green',
+    height: scaledHeight(3),
+},
+strongText: {
+    fontSize: scaledHeight(12),
+    color: '#56565A',
+    marginTop: scaledHeight(3)
+},
+good: {
+    backgroundColor: 'orange',
+    height: scaledHeight(3),
+},
+weak: {
+    backgroundColor: 'red',
+    height: scaledHeight(3),
+},
 });
