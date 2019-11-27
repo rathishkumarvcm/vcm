@@ -234,6 +234,12 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(9),
         width : '100%'
     },
+    splitDateGrp:{
+        flexDirection:'row',
+        alignItems:"flex-start",
+        justifyContent:"flex-start",
+        marginTop: scaledHeight(9)
+    },
     suffixTxtBox:{
         marginTop: scaledHeight(9),
         width : '30%'

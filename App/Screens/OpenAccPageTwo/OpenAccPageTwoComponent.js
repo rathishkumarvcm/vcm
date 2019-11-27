@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner } from '../../CommonComponents';
+import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GIcon, GDateComponent } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio, CustomDropDown } from '../../AppComponents';
+import DatePicker from 'react-native-datepicker';
+
 import PropTypes from "prop-types";
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
@@ -542,9 +544,9 @@ class OpenAccPageTwoComponent extends Component {
 
         if (this.validateFields()) {
             const payload = this.getPayload();
-            this.props.saveData("OpenAccPageTwo", payload);  
+            this.props.saveData("OpenAccPageTwo", payload);
             this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
-          }
+        }
     }
     getPayload = () => {
         const accType = "" + this.props.navigation.getParam('accType', '');
@@ -621,7 +623,7 @@ class OpenAccPageTwoComponent extends Component {
                 "branchOfService": this.state.personal.branchOfService || "-",
                 "rank": this.state.personal.rank || "-",
                 "serviceStartDate": this.state.personal.fromDateMilitary || "-",
-                "serviceToDate":this.state.personal.toDateMilitary || "-",
+                "serviceToDate": this.state.personal.toDateMilitary || "-",
                 "commissionSource": this.state.personal.commissionSource || "-",
             },
             "regulatoryDetails": {
@@ -704,7 +706,7 @@ class OpenAccPageTwoComponent extends Component {
                     "branchOfService": this.state.jointOwner.branchOfService || "-",
                     "rank": this.state.jointOwner.rank || "-",
                     "serviceStartDate": this.state.jointOwner.fromDateMilitary || "-",
-                    "serviceToDate":this.state.jointOwner.toDateMilitary || "-",
+                    "serviceToDate": this.state.jointOwner.toDateMilitary || "-",
                     "commissionSource": this.state.jointOwner.commissionSource || "-",
                 },
                 "regulatoryDetails": {
@@ -714,7 +716,7 @@ class OpenAccPageTwoComponent extends Component {
             }
         };
 
-        const retirementAccPayload ={
+        const retirementAccPayload = {
             "beneficiaryInfo": {
                 "primaryBeneficiary": {
                     "totalBeneficiary": "1",
@@ -722,9 +724,9 @@ class OpenAccPageTwoComponent extends Component {
                         "type": this.state.retirement.beneficiaryType || "-",
                         "relation": this.state.retirement.relationshipToAcc || "-",
                         "distributionPercentage": this.state.retirement.beneficiaryDistPercent || "-",
-                        "firstName":  this.state.retirement.firstName || "-",
+                        "firstName": this.state.retirement.firstName || "-",
                         "middleInitial": this.state.retirement.middleInitial || "-",
-                        "lastName":this.state.retirement.lastName || "-",
+                        "lastName": this.state.retirement.lastName || "-",
                         "ssnTin": this.state.retirement.socialSecurityNo || "-",
                         "dateOfBirth": this.state.retirement.dob || "-",
                         "emailAddress": this.state.retirement.emailAddress || "-"
@@ -736,9 +738,9 @@ class OpenAccPageTwoComponent extends Component {
                         "type": this.state.retirement.beneficiaryType || "-",
                         "relation": this.state.retirement.relationshipToAcc || "-",
                         "distributionPercentage": this.state.retirement.beneficiaryDistPercent || "-",
-                        "firstName":  this.state.retirement.firstName || "-",
+                        "firstName": this.state.retirement.firstName || "-",
                         "middleInitial": this.state.retirement.middleInitial || "-",
-                        "lastName":this.state.retirement.lastName || "-",
+                        "lastName": this.state.retirement.lastName || "-",
                         "ssnTin": this.state.retirement.socialSecurityNo || "-",
                         "dateOfBirth": this.state.retirement.dob || "-",
                         "emailAddress": this.state.retirement.emailAddress || "-"
@@ -748,14 +750,14 @@ class OpenAccPageTwoComponent extends Component {
         }
 
 
-           
+
 
         let payload = {};
         if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
-             payload = {
-                 ...this.props.accOpeningData.savedAccData,
-                 "accountNickName": this.state.nickname || "-"
-             }
+            payload = {
+                ...this.props.accOpeningData.savedAccData,
+                "accountNickName": this.state.nickname || "-"
+            }
         }
 
 
@@ -775,11 +777,11 @@ class OpenAccPageTwoComponent extends Component {
                 }
                 break;
             case "Retirement Account":
-                    payload = {
-                        ...payload,
-                        ...individualAccPayload,
-                        ...retirementAccPayload
-                    }
+                payload = {
+                    ...payload,
+                    ...individualAccPayload,
+                    ...retirementAccPayload
+                }
                 break;
             case "UGMA/UTMA Account":
                 break;
@@ -797,7 +799,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
 
-    
+
     isEmpty = (str) => {
         if (str == "" || str == undefined || str == null || str == "null" || str == "undefined") {
             return true;
@@ -822,7 +824,65 @@ class OpenAccPageTwoComponent extends Component {
 
         input.focus();
     }
+    onChangeDate = (stateKey, keyName) => date => {
+        console.log("onChangeDate:::>");
+        this.setState(prevState => ({
+            [stateKey]: {
+                ...prevState[stateKey],
+                [keyName]: date
+            }
+        }));
+    }
+    onChangeSpiltDate = (stateKey, keyName, index) => date => {
+        console.log("onChangeSpiltDate:::>" + index + " " + date);
+        let tempCurrentDate = "" + this.state[stateKey][keyName];
 
+        let tempCurrentDateComp = tempCurrentDate != "" ? tempCurrentDate.split('-') : [];
+
+        let returnDate = "";
+        if (tempCurrentDateComp.length > 2) {
+            tempCurrentDateComp[index] = date;
+        } else {
+            console.log("index:::>" + index);
+
+            switch (index) {
+
+                case 0:
+                    console.log("0:::>" + index);
+
+                    tempCurrentDateComp[index] = date;
+                    tempCurrentDateComp[1] = "";
+                    tempCurrentDateComp[2] = "";
+
+                    break;
+                case 1:
+                    console.log("2:::>" + index);
+
+                    tempCurrentDateComp[0] = "";
+                    tempCurrentDateComp[index] = date;
+                    tempCurrentDateComp[2] = "";
+                    break;
+                case 2:
+                    console.log("3:::>" + index);
+
+                    tempCurrentDateComp[0] = "";
+                    tempCurrentDateComp[1] = "";
+                    tempCurrentDateComp[index] = date;
+                    break;
+            }
+        }
+
+        returnDate = tempCurrentDateComp.join("-");
+
+
+
+        this.setState(prevState => ({
+            [stateKey]: {
+                ...prevState[stateKey],
+                [keyName]: returnDate
+            }
+        }));
+    }
     onChangeText = (stateKey, keyName) => text => {
         console.log("onChangeText:::>");
         this.setState(prevState => ({
@@ -861,6 +921,82 @@ class OpenAccPageTwoComponent extends Component {
             onSelectedItem={this.selectedDropDownValue(dropDownName, item[keyName], item.key)}
         />
         );
+
+    renderCalender = (sectionName, calendarName) => {
+        console.log("renderCalender::: " + calendarName);
+        return (
+            <GDateComponent
+                date={this.state[sectionName][calendarName]}
+                placeholder="Select Date"
+                errorFlag={this.state[sectionName][calendarName + "Validation"] != undefined ? this.state[sectionName][calendarName + "Validation"] : false}
+                errMsg="Please selectDate"
+                onDateChange={this.onChangeDate(sectionName, calendarName)}
+
+            />
+        );
+    }
+
+
+
+
+    renderSplitCalender = (sectionName, calendarName) => {
+        console.log("renderSplitCalender::: " + calendarName);
+
+        let tempCurrentDate = "" + this.state[sectionName][calendarName];
+        let tempCurrentDateComp = tempCurrentDate != "" ? tempCurrentDate.split('-') : [];
+
+        return (
+            <View
+                style={[styles.splitDateGrp]}
+                ref={this.setInputRef(calendarName)} >
+                <GDateComponent
+                    componentStyle={{
+                        width: scaledHeight(80), marginRight: scaledHeight(8), marginTop: scaledHeight(0)
+                    }}
+                    date={tempCurrentDateComp.length > 2 ? tempCurrentDateComp[0] : ""}
+                    placeholder="MM"
+                    format="MM"
+                    iconComponent={<GIcon
+                        name="md-arrow-dropdown"
+                        type="ionicon"
+                        size={20}
+                        color="black"
+                    />}
+                    onDateChange={this.onChangeSpiltDate(sectionName, calendarName, 0)}
+                />
+                <GDateComponent
+                    componentStyle={{ width: scaledHeight(80), marginRight: scaledHeight(8) ,marginTop: scaledHeight(0)}}
+
+                    date={tempCurrentDateComp.length > 2 ? tempCurrentDateComp[1] : ""}
+                    placeholder="DD"
+                    format="DD"
+                    iconComponent={<GIcon
+                        name="md-arrow-dropdown"
+                        type="ionicon"
+                        size={20}
+                        color="black"
+                    />}
+                    onDateChange={this.onChangeSpiltDate(sectionName, calendarName, 1)}
+                />
+                <GDateComponent
+                    componentStyle={{ width: scaledHeight(100),marginTop: scaledHeight(0) }}
+
+                    date={tempCurrentDateComp.length > 2 ? tempCurrentDateComp[2] : ""}
+                    placeholder="YYYY"
+                    format="YYYY"
+                    iconComponent={<GIcon
+                        name="md-arrow-dropdown"
+                        type="ionicon"
+                        size={20}
+                        color="black"
+                    />}
+                    onDateChange={this.onChangeSpiltDate(sectionName, calendarName, 2)}
+                />
+            </View>
+
+        );
+    }
+
 
     renderDropDown = (dropDownName, dropDownCompState = false, data, width = '100%') => {
         console.log("renderDropDown::: " + dropDownName);
@@ -2010,14 +2146,11 @@ class OpenAccPageTwoComponent extends Component {
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.dob}
                         </Text>
-                        <GInputComponent
-                            inputref={this.setInputRef("dob")}
-                            propInputStyle={this.state.personal.dobValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                            placeholder={""}
-                            returnKeyType={"done"}
-                            onChangeText={this.onChangeText("personal", "dob")}
 
-                        />
+                       
+
+                        {this.renderSplitCalender("personal", "dob")}
+
 
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.gender}
@@ -2573,12 +2706,10 @@ class OpenAccPageTwoComponent extends Component {
                                         {gblStrings.accManagement.from}
                                     </Text>
                                     <View style={{ width: '80%', marginLeft: '0%' }}>
-                                        <GInputComponent
-                                            inputref={this.setInputRef("fromDateMilitary")}
-                                            propInputStyle={styles.customTxtBox}
-                                            placeholder={""}
-                                            maxLength={60}
-                                            onChangeText={this.onChangeText("personal", "fromDateMilitary")}
+                                        <GDateComponent
+                                            date={this.state.personal.fromDateMilitary}
+                                            placeholder="Select Date"
+                                            onDateChange={this.onChangeDate("personal", "fromDateMilitary")}
 
                                         />
                                     </View>
@@ -2588,14 +2719,13 @@ class OpenAccPageTwoComponent extends Component {
                                         {gblStrings.accManagement.to}
                                     </Text>
                                     <View style={{ width: '80%', marginLeft: '0%' }}>
-                                        <GInputComponent
-                                            inputref={this.setInputRef("toDateMilitary")}
-                                            propInputStyle={styles.customTxtBox}
-                                            placeholder={""}
-                                            maxLength={60}
-                                            onChangeText={this.onChangeText("personal", "toDateMilitary")}
+                                        <GDateComponent
+                                            date={this.state.personal.fromDateMilitary}
+                                            placeholder="Select Date"
+                                            onDateChange={this.onChangeDate("personal", "toDateMilitary")}
 
                                         />
+
                                     </View>
                                 </View>
 
