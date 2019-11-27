@@ -399,7 +399,7 @@ export const styles = StyleSheet.create({
         width: '92%', marginLeft: '4%', marginRight: '4%', flexDirection: 'column', marginTop: '4%'
     },
     financialTextLabel: {
-        color: '#333333DE', fontSize: scaledHeight(18), fontWeight: 'bold', margin: '4%'
+        color: '#333333DE', fontSize: scaledHeight(18), fontWeight: 'bold', marginTop: '4%', marginBottom: '4%'
     },
     financialViewNormal: {
         width: '92%', marginLeft: '4%', marginRight: '4%', flexDirection: 'column'
@@ -415,5 +415,6 @@ export const styles = StyleSheet.create({
     },
     financialFlexRow: {
         flexDirection: 'row'
-    }
+    },
+    editDropDownSelect: { height: 100, borderWidth: 1, marginRight: '4%', marginTop: '1%', width: '92%', borderColor: "#DEDEDF", backgroundColor: 'white'},
 });

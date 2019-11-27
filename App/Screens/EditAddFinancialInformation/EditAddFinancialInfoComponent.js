@@ -1,9 +1,57 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import globalStrings from '../../Constants/GlobalStrings';
+
+const annualIncomeData = [
+    {
+        "key": "O",
+        "value": "9700 and below",
+        "taxbracket": "10"
+    },
+    {
+        "key": "9701",
+        "value": "9701-39475",
+        "taxbracket": "12"
+    },
+    {
+        "key": "39476",
+        "value": "39476-84200",
+        "taxbracket": "22"
+    }
+];
+
+const netWorthData = [
+    {
+        "key": "349",
+        "value": "34999 and below"
+    },
+    {
+        "key": "35-49",
+        "value": "35000-49999"
+    },
+    {
+        "key": "50-249",
+        "value": "50000-249999"
+    }
+];
+
+const taxFillingStatusData = [
+    {
+        "key": "sing",
+        "value": "Single individual"
+    },
+    {
+        "key": "mar_joi",
+        "value": "Married person fillingjointly or surviving spouse"
+    },
+    {
+        "key": "mar_sep",
+        "value": "Married person fillingseperately"
+    }
+];
 
 class editAddFinancialInfoComponent extends Component {
     constructor(props) {
@@ -13,15 +61,104 @@ class editAddFinancialInfoComponent extends Component {
             isLoading: false,
             enableBiometric: false,
             faceIdEnrolled: false,
-            touchIdEnrolled: false
+            touchIdEnrolled: false,
+            dropDownFinancialState: false,
+            dropDownFinancialValue: '',
+            dropDownNetState: false,
+            dropDownNetValue: '',
+            dropDownTaxFillState: false,
+            dropDownTaxFillValue: '',
+            taxBracketValue: ''
         };
     }
 
-    componentDidMount() { }
+    dropDownFinancialClick = () => {
+        this.setState({
+            dropDownFinancialState: !this.state.dropDownFinancialState
+        });
+    }
+
+    dropDownFinancialSelect = (valueFinancial) => {
+        this.setState({
+            dropDownFinancialValue: valueFinancial.value,
+            dropDownFinancialState: false,
+            taxBracketValue: valueFinancial.taxbracket + '%'
+        });
+    }
+
+    dropDownNetClick = () => {
+        this.setState({
+            dropDownNetState: !this.state.dropDownNetState
+        });
+    }
+
+    dropDownNetSelect = (valueNetWorth) => {
+        this.setState({
+            dropDownNetValue: valueNetWorth,
+            dropDownNetState: false
+        });
+    }
+
+    dropDownTaxFillClick = () => {
+        this.setState({
+            dropDownTaxFillState: !this.state.dropDownTaxFillState
+        });
+    }
+
+    dropDownTaxFillSelect = (valueTaxFilling) => {
+        this.setState({
+            dropDownTaxFillValue: valueTaxFilling,
+            dropDownTaxFillState: false
+        })
+    }
+
+    componentDidMount() {
+        let payload = [];
+
+        const compositePayloadData = [
+            "annual_income",
+            "net_worth",
+            "tax_filling_status"
+        ];
+
+        for (let i = 0; i < compositePayloadData.length; i++) {
+            let tempkey = compositePayloadData[i];
+            if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
+                payload.push(tempkey)
+            }
+        }
+
+        this.props.getProfileCompositeData(payload);
+    }
 
     addFinancialOnCalcel = () => this.props.navigation.navigate('profileSettings');
 
     render() {
+
+        console.log("Financial Data", JSON.stringify(this.props.profileSettingsLookup));
+
+        let userAnnualIncome = annualIncomeData;
+        let userNetWorth = netWorthData;
+        let userTaxFilling = taxFillingStatusData;
+
+        if (this.props && this.props.profileSettingsLookup &&
+            this.props.profileSettingsLookup.annual_income &&
+            this.props.profileSettingsLookup.annual_income.value) {
+            userAnnualIncome = this.props.profileSettingsLookup.annual_income.value
+        }
+
+        if (this.props && this.props.profileSettingsLookup &&
+            this.props.profileSettingsLookup.net_worth &&
+            this.props.profileSettingsLookup.net_worth.value) {
+            userNetWorth = this.props.profileSettingsLookup.net_worth.value
+        }
+
+        if (this.props && this.props.profileSettingsLookup &&
+            this.props.profileSettingsLookup.tax_filling_status &&
+            this.props.profileSettingsLookup.tax_filling_status.value) {
+            userTaxFilling = this.props.profileSettingsLookup.tax_filling_status.value
+        }
+
         return (
             <View style={styles.container}>
                 <GHeaderComponent
@@ -51,17 +188,17 @@ class editAddFinancialInfoComponent extends Component {
                             <Text style={styles.financialTextLabel}>
                                 {globalStrings.addFinancialInformations.annualIncome}
                             </Text>
-                        </View>
 
-                        <View>
-                            <TouchableOpacity style={styles.financialFlexRow} onPress={this.selectTheState}>
+                            <TouchableOpacity style={styles.financialFlexRow}
+                                onPress={this.dropDownFinancialClick}>
                                 <GInputComponent
                                     propInputStyle={styles.userIDTextBox1}
                                     placeholder={""}
                                     editable={false}
-                                    value={this.state.valueDropDown} />
+                                    value={this.state.dropDownFinancialValue} />
 
-                                <TouchableOpacity style={styles.financialDropDown} onPress={this.selectTheState}>
+                                <TouchableOpacity style={styles.financialDropDown}
+                                    onPress={this.dropDownFinancialClick}>
                                     <GIcon
                                         name="md-arrow-dropdown"
                                         type="ionicon"
@@ -69,6 +206,20 @@ class editAddFinancialInfoComponent extends Component {
                                         color="black" />
                                 </TouchableOpacity>
                             </TouchableOpacity>
+
+                            {this.state.dropDownFinancialState &&
+                                <View style={styles.editDropDownSelect} >
+                                    <FlatList
+                                        data={userAnnualIncome}
+                                        renderItem={({ item }) =>
+                                            (<TouchableOpacity style={{ height: 33 }}
+                                                onPress={() => this.dropDownFinancialSelect(item)}>
+                                                <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
+                                            </TouchableOpacity>)
+                                        }
+                                        keyExtractor={item => item.key}
+                                    />
+                                </View>}
                         </View>
                     </View>
 
@@ -77,7 +228,7 @@ class editAddFinancialInfoComponent extends Component {
                             {globalStrings.addFinancialInformations.taxBracket}
                         </Text>
                         <Text style={styles.financialValueLabel}>
-                            {"10%"}
+                            {this.state.taxBracketValue}
                         </Text>
                     </View>
 
@@ -86,17 +237,17 @@ class editAddFinancialInfoComponent extends Component {
                             <Text style={styles.financialTextLabel}>
                                 {globalStrings.addFinancialInformations.netWorth}
                             </Text>
-                        </View>
 
-                        <View>
-                            <TouchableOpacity style={styles.financialFlexRow} onPress={this.selectTheState}>
+                            <TouchableOpacity style={styles.financialFlexRow}
+                                onPress={this.dropDownNetClick}>
                                 <GInputComponent
                                     propInputStyle={styles.userIDTextBox1}
                                     placeholder={""}
                                     editable={false}
-                                    value={this.state.valueDropDown} />
+                                    value={this.state.dropDownNetValue} />
 
-                                <TouchableOpacity style={styles.financialDropDown} onPress={this.selectTheState}>
+                                <TouchableOpacity style={styles.financialDropDown}
+                                    onPress={this.dropDownNetClick}>
                                     <GIcon
                                         name="md-arrow-dropdown"
                                         type="ionicon"
@@ -104,26 +255,39 @@ class editAddFinancialInfoComponent extends Component {
                                         color="black" />
                                 </TouchableOpacity>
                             </TouchableOpacity>
-                        </View>
-                    </View>
 
-                    <View>
-                        <Text style={styles.financialTextLabel}>
-                            {globalStrings.addFinancialInformations.taxFillingStatus}
-                        </Text>
+                            {this.state.dropDownNetState &&
+                                <View style={styles.editDropDownSelect} >
+                                    <FlatList
+                                        data={userNetWorth}
+                                        renderItem={({ item }) =>
+                                            (<TouchableOpacity style={{ height: 33 }}
+                                                onPress={() => this.dropDownNetSelect(item.value)}>
+                                                <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
+                                            </TouchableOpacity>)
+                                        }
+                                        keyExtractor={item => item.key}
+                                    />
+                                </View>}
+                        </View>
                     </View>
 
                     <View style={styles.financialView}>
-
                         <View>
-                            <TouchableOpacity style={styles.financialFlexRow} onPress={this.selectTheState}>
+                            <Text style={styles.financialTextLabel}>
+                                {globalStrings.addFinancialInformations.taxFillingStatus}
+                            </Text>
+
+                            <TouchableOpacity style={styles.financialFlexRow}
+                                onPress={this.dropDownTaxFillClick}>
                                 <GInputComponent
                                     propInputStyle={styles.userIDTextBox1}
                                     placeholder={""}
                                     editable={false}
-                                    value={this.state.valueDropDown} />
+                                    value={this.state.dropDownTaxFillValue} />
 
-                                <TouchableOpacity style={styles.valueDropDown} onPress={this.selectTheState}>
+                                <TouchableOpacity style={styles.financialDropDown}
+                                    onPress={this.dropDownTaxFillClick}>
                                     <GIcon
                                         name="md-arrow-dropdown"
                                         type="ionicon"
@@ -131,6 +295,20 @@ class editAddFinancialInfoComponent extends Component {
                                         color="black" />
                                 </TouchableOpacity>
                             </TouchableOpacity>
+
+                            {this.state.dropDownTaxFillState &&
+                                <View style={styles.editDropDownSelect} >
+                                    <FlatList
+                                        data={userTaxFilling}
+                                        renderItem={({ item }) =>
+                                            (<TouchableOpacity style={{ height: 33 }}
+                                                onPress={() => this.dropDownTaxFillSelect(item.value)}>
+                                                <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
+                                            </TouchableOpacity>)
+                                        }
+                                        keyExtractor={item => item.key}
+                                    />
+                                </View>}
                         </View>
                     </View>
 
