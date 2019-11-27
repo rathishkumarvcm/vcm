@@ -600,7 +600,7 @@ const AppNavigator = createStackNavigator({
             }  
         }
     },{
-        initialRouteName: 'ChangeSignInMethod'
+        initialRouteName: 'login'
     });
 
 export default createAppContainer(AppNavigator);
