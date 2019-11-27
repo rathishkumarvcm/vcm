@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { GButtonComponent, GHeaderComponent, GFooterComponent, GRadioButtonComponent,GIcon } from '../../CommonComponents';
-import { styles } from './styles';
+import { styles } from '../ChangeSignInMethod/styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { CustomCheckBox } from '../../AppComponents';
 import PropTypes from 'prop-types';
@@ -41,9 +41,21 @@ class CSMOtp extends Component {
         console.log("------>mobbbbbnext",strmobile);
         //var maskmobile = strmobile.substring(0,2)+strmobile.substring(2,8).replace(/\d/g,"*")+strmobile.substring(8,10)
         var maskmobile = strmobile.substring(4,6)+strmobile.substring(6,12).replace(/\d/g,"*")+strmobile.substring(12,14);
-        var stremail = this.props.initialState.email;
-        var maskemail = "";
-        this.setState({ signInMethods :[{ index1 : 0, question:"One Time Password to EmailID",additionalText:stremail},
+        var myemailId = this.props.initialState.email;
+        
+        var maskedid = "";
+        var index = myemailId.lastIndexOf("@");
+        var prefix = myemailId.substring(0, index);
+        var postfix = myemailId.substring(index);
+        var mask = prefix.split('').map(function(o, i) {
+        if (i == 0 || i == (index - 1)) {
+            return o;
+        } else {
+            return '*';
+        }
+        }).join('');
+        maskedid = mask + postfix;
+        this.setState({ signInMethods :[{ index1 : 0, question:"One Time Password to EmailID",additionalText:maskedid},
         { index1 : 1, question:"One Time Password to Mobile",additionalText:maskmobile},
         { index1 : 2, question:"Answer Security Questions"}]});
       }
