@@ -157,8 +157,8 @@ const monthlyInvestData = [
 ];
 
 var filtermindata = [
-    { key: '3000', value: '3,000'},
-    { key: '1000', value: '1,000'},
+    { key: '3000', value: '3000'},
+    { key: '1000', value: '1000'},
     { key: '500', value: '500'},
     { key: '50', value: '50 initial and 50 monthly'},    
 ];
@@ -859,7 +859,7 @@ renderFundingInvestmentList= () => {
          console.log("risk=",riskkey);  
          console.log("fundData=",funddatakey);      
  
-         const fundListPayload = {};
+         const fundListPayload = {'minInvestment':mininvestkey};
          this.props.getFundListData(fundListPayload);   
      }
  
@@ -1305,6 +1305,7 @@ renderFundingInvestmentList= () => {
                                         }
                                         return(                                           
                                             <CustomCheckBox
+                                                key={item.key}
                                                 size={20}
                                                 itemBottom={0}
                                                 itemTop={0}
@@ -1327,8 +1328,8 @@ renderFundingInvestmentList= () => {
                                     {
                                     this.state.filterriskdata.map((item,index)=>{          
                                         return(
-                                            <View style={styles.modalRiskViewContainer}>
-                                                <CustomCheckBox
+                                            <View key={item.key} style={styles.modalRiskViewContainer}>
+                                                <CustomCheckBox                                                    
                                                     size={20}
                                                     itemBottom={0}
                                                     itemTop={0}
@@ -1361,6 +1362,7 @@ renderFundingInvestmentList= () => {
                                     this.state.filterfunddata.map((item,index)=>{          
                                         return(
                                             <CustomCheckBox
+                                                key={item.key}
                                                 size={20}
                                                 itemBottom={0}
                                                 itemTop={0}
