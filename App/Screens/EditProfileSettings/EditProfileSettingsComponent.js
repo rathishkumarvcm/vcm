@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GDropDownComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 
@@ -36,13 +36,14 @@ class editProfileSettingsComponent extends Component {
             countryNonUS: false,
             isValidPin: true,
             validPin: '',
-            errorPin: '',
             profileName: '',
             profileMobile: '',
             radioButton: false,
             radioButtonIndex: 0,
             dropDownState: false,
             dropDownValue: '',
+            dropDownPrefixFlag: true,
+            dropDownPrefixMsg: '',
             dropDownSuffixState: false,
             dropDownSuffixValue: '',
             dropDownGenderState: false,
@@ -62,7 +63,8 @@ class editProfileSettingsComponent extends Component {
 
     setValidPin = (text) => {
         this.setState({
-            validPin: text
+            validPin: text,
+            isValidPin: true
         });
     }
 
@@ -91,13 +93,21 @@ class editProfileSettingsComponent extends Component {
     }
 
     navigationSuccess = () => {
-        this.setState({
-            isValidPin: this.state.validPin != "" ? true : false,
-            errorPin: this.state.validPin != "" ? "" : globalString.common.validPincode
-        });
+        if (this.state.validPin === "") {
+            this.setState({
+                isValidPin: false
+            });
+        }
+
+        if (dropDownValue === '') {
+            this.setState({
+                dropDownPrefixFlag: false,
+                dropDownPrefixMsg: globalString.profileValidationMessages.validatePrefix
+            });
+        }
 
         if (this.state.validPin != "") {
-            console.log('Valid Pin');
+            this.props.navigation.navigate('profileSettings')
         }
     }
 
@@ -107,9 +117,9 @@ class editProfileSettingsComponent extends Component {
         });
     }
 
-    dropDownOnSelect = (value) => {
+    dropDownOnSelect = (valuePrefix) => {
         this.setState({
-            dropDownValue: value,
+            dropDownValue: valuePrefix.value,
             dropDownState: false
         });
     }
@@ -122,7 +132,7 @@ class editProfileSettingsComponent extends Component {
 
     dropDownSuffixSelect = (valueSuffix) => {
         this.setState({
-            dropDownSuffixValue: valueSuffix,
+            dropDownSuffixValue: valueSuffix.value,
             dropDownSuffixState: false
         });
     }
@@ -135,7 +145,7 @@ class editProfileSettingsComponent extends Component {
 
     dropDownGenderSelect = (valueGender) => {
         this.setState({
-            dropDownGenderValue: valueGender,
+            dropDownGenderValue: valueGender.value,
             dropDownGenderState: false
         });
     }
@@ -148,7 +158,7 @@ class editProfileSettingsComponent extends Component {
 
     dropDownStatusSelect = (valueStatus) => {
         this.setState({
-            dropDownStatusValue: valueStatus,
+            dropDownStatusValue: valueStatus.value,
             dropDownStatusState: false
         });
     }
@@ -303,83 +313,33 @@ class editProfileSettingsComponent extends Component {
 
                         {/* Prefix Data */}
 
-                        <View style={styles.editFlexDirectionColumn}>
-                            <Text style={styles.editProfileLabel}>
-                                {globalString.profileSettingsPage.profilePrefixLabel}
-                            </Text>
-
-                            <TouchableOpacity style={styles.editDropDownView}
-                                onPress={this.dropDownOnClick}>
-                                <GInputComponent
-                                    propInputStyle={styles.userIDTextBox1}
-                                    placeholder={""}
-                                    editable={false}
-                                    value={this.state.dropDownValue} />
-
-                                <TouchableOpacity style={styles.editDropDownIcon}
-                                    onPress={this.dropDownOnClick}>
-                                    <GIcon
-                                        name="md-arrow-dropdown"
-                                        type="ionicon"
-                                        size={20}
-                                        color="black" />
-                                </TouchableOpacity>
-                            </TouchableOpacity>
-
-                            {this.state.dropDownState &&
-                                <View style={styles.editDropDownSelect} >
-                                    <FlatList
-                                        data={profilePrefixData}
-                                        renderItem={({ item }) =>
-                                            (<TouchableOpacity style={{ height: 33 }}
-                                                onPress={() => this.dropDownOnSelect(item.value)}>
-                                                <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                            </TouchableOpacity>)
-                                        }
-                                        keyExtractor={item => item.key}
-                                    />
-                                </View>}
-                        </View>
+                        <GDropDownComponent
+                            dropDownTextName={styles.editProfileLabel}
+                            dropDownName={globalString.profileSettingsPage.profilePrefixLabel}
+                            data={profilePrefixData}
+                            changeState={this.dropDownOnClick}
+                            showDropDown={this.state.dropDownState}
+                            dropDownValue={this.state.dropDownValue}
+                            selectedDropDownValue={this.dropDownOnSelect}
+                            itemToDisplay={"value"}
+                            errorFlag={!this.state.dropDownPrefixFlag}
+                            errorText={this.dropDownPrefixMsg}
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(490) }} />
 
                         {/* Suffix Data */}
 
-                        <View style={styles.editFlexDirectionColumn}>
-                            <Text style={styles.editProfileLabel}>
-                                {globalString.profileSettingsPage.profileSuffixLabel}
-                            </Text>
+                        <GDropDownComponent
+                            dropDownTextName={styles.editProfileLabel}
+                            dropDownName={globalString.profileSettingsPage.profileSuffixLabel}
+                            data={profileSuffixData}
+                            changeState={this.dropDownSuffixClick}
+                            showDropDown={this.state.dropDownSuffixState}
+                            dropDownValue={this.state.dropDownSuffixValue}
+                            selectedDropDownValue={this.dropDownSuffixSelect}
+                            itemToDisplay={"value"}
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(580) }} />
 
-                            <TouchableOpacity style={styles.editDropDownView}
-                                onPress={this.dropDownSuffixClick}>
-                                <GInputComponent
-                                    propInputStyle={styles.userIDTextBox1}
-                                    placeholder={""}
-                                    editable={false}
-                                    value={this.state.dropDownSuffixValue} />
-
-                                <TouchableOpacity style={styles.editDropDownIcon}
-                                    onPress={this.dropDownSuffixClick}>
-                                    <GIcon
-                                        name="md-arrow-dropdown"
-                                        type="ionicon"
-                                        size={20}
-                                        color="black" />
-                                </TouchableOpacity>
-                            </TouchableOpacity>
-
-                            {this.state.dropDownSuffixState &&
-                                <View style={styles.editDropDownSelect} >
-                                    <FlatList
-                                        data={profileSuffixData}
-                                        renderItem={({ item }) =>
-                                            (<TouchableOpacity style={{ height: 33 }}
-                                                onPress={() => this.dropDownSuffixSelect(item.value)}>
-                                                <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                            </TouchableOpacity>)
-                                        }
-                                        keyExtractor={item => item.key}
-                                    />
-                                </View>}
-                        </View>
+                        {/* Zip Code */}
 
                         <View style={styles.editFlexDirectionColumn}>
                             <Text style={styles.editProfileLabel}>
@@ -387,14 +347,12 @@ class editProfileSettingsComponent extends Component {
                             </Text>
 
                             <GInputComponent
-                                propInputStyle={this.state.isValidPin ? styles.userIDTextBox : styles.userIDTextBoxError}
-                                placeholder=""
+                                placeholder={""}
                                 onChangeText={this.setValidPin}
                                 value={this.state.validPin}
+                                errorFlag={!this.state.isValidPin}
+                                errorText={globalString.profileValidationMessages.validateZipcode}
                                 keyboardType={'numeric'} />
-
-                            <Text style={styles.errorMessage}>{this.state.errorPin}</Text>
-
                         </View>
 
                         {/* Gender Data */}
@@ -605,7 +563,7 @@ class editProfileSettingsComponent extends Component {
                     </View>
 
                 </ScrollView>
-                
+
             </View>
         );
     }

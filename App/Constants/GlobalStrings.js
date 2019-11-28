@@ -938,6 +938,7 @@ export default {
     },
     profileValidationMessages: {
         validateAddressLineOne: "Enter a valid Address.",
-        validateZipcode: "Enter a valid zipcode"
+        validateZipcode: "Enter a valid zipcode",
+        validatePrefix: "Select Valid Prefix"
     }
 };
