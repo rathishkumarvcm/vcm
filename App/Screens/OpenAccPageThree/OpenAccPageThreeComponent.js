@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, FlatList, Modal } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GInputComponent, GIcon, GHeaderComponent, GFooterComponent ,GLoadingSpinner} from '../../CommonComponents';
 import { CustomPageWizard, CustomDropDown, CustomCheckBox } from '../../AppComponents';
@@ -156,6 +156,32 @@ const monthlyInvestData = [
 
 ];
 
+var filtermindata = [
+    { key: '3000', value: '3,000'},
+    { key: '1000', value: '1,000'},
+    { key: '500', value: '500'},
+    { key: '50', value: '50 initial and 50 monthly'},    
+];
+var filterriskdata = [
+    { key: 'pre_cap', value: 'Preservation of Capital'},
+    { key: 'con', value: 'Conservative'},
+    { key: 'mod_con', value: 'Moderately Conservative'},
+    { key: 'mod', value: 'Moderate'},   
+    { key: 'mod_agr', value: 'Moderately Aggressive'},   
+    { key: 'agg', value: 'Aggressive'},  
+    { key: 'very_agg', value: 'Very Aggressive'},    
+];
+var filterfunddata = [
+    { key: 'sta_fund', value: 'Starters Funds'},
+    { key: 'tar_risk', value: 'Target Risk Funds'},
+    { key: 'tar_ret', value: 'Target Retirement Funds'},
+    { key: 'tax_bon', value: 'Taxable Bond Funds'},
+    { key: 'tax_exe', value: 'Tax Exempt Bond Funds'}, 
+    { key: 'sto_fund', value: 'Stock Funds'}, 
+    { key: 'ind_fun', value: 'Index Funds'}, 
+    { key: 'alt_sec', value: 'Alternative/Sector Funds'},    
+    { key: 'mon_fun', value: 'Money Market Funds'},    
+];
 
 const ListItem = (props) => {
     console.log("ListItem:: " + props);
@@ -292,6 +318,11 @@ class OpenAccPageThreeComponent extends Component {
             "startDate":"ss",
             "action":"add"
             */
+           modalVisible: false,    
+           filtermindata: [...filtermindata.map(v => ({ ...v, isActive: false }))],
+           filterriskdata: [...filterriskdata.map(v => ({ ...v, isActive: false }))],
+           filterfunddata: [...filterfunddata.map(v => ({ ...v, isActive: false }))], 
+           applyFilterState : false,   
 
         };
     }
@@ -306,7 +337,10 @@ class OpenAccPageThreeComponent extends Component {
         let payload = [];
         const compositePayloadData = [
             "fund_source",
-            "fund_options"
+            "fund_options",
+            "filter_min_inv",
+            "filter_fund_type",
+            "filter_risk"
         ];
 
         for (let i = 0; i < compositePayloadData.length; i++) {
@@ -461,9 +495,9 @@ class OpenAccPageThreeComponent extends Component {
         });
     }
     onClickRowItem = (item, index) => () => {
-        console.log("onSelectFundList:: " + index);
+        console.log("onSelectFundList:: " + item.fundNumber);
         //  this.props.navigation.navigate({ routeName: 'investmentPlanInfo', key: 'investmentPlanInfo' })
-        this.props.navigation.push('investmentPlanInfo', { fundDetails: "" });
+        this.props.navigation.push('investmentPlanInfo', { fundDetails: item.fundNumber });
 
     }
 
@@ -776,6 +810,139 @@ renderFundingInvestmentList= () => {
         );
     }
 
+    // Modal - Filter Funds
+    setModalVisible = (visible) =>()=>{       
+        if(!visible && !this.state.applyFilterState){       
+             this.clearFilterAction();
+        }
+        this.setState({ modalVisible: visible });   
+        if(!this.state.applyFilterState){        
+            this.constructFilterData();
+        }             
+     }  
+ 
+     // Apply Filter Actions  
+     applyFilterAction = (visible) =>()=>{       
+         this.setState({ modalVisible: visible,applyFilterState:true });    
+ 
+         var mininvestkey="";
+         this.state.filtermindata.map((item)=>{           
+            if(item.isActive){             
+             if(mininvestkey!==null && mininvestkey!==""){
+                 mininvestkey = mininvestkey.concat("|"+item.value)               
+             }else{
+                 mininvestkey = item.value;
+             }
+            }
+         })    
+         var riskkey="";
+         this.state.filterriskdata.map((item)=>{           
+            if(item.isActive){             
+             if(riskkey!==null && riskkey!==""){
+                 riskkey = riskkey.concat("|"+item.key)               
+             }else{
+                 riskkey = item.key;
+             }
+            }
+         })         
+         var funddatakey="";
+         this.state.filterfunddata.map((item)=>{           
+            if(item.isActive){             
+             if(funddatakey!==null && funddatakey!==""){
+                 funddatakey = funddatakey.concat("|"+item.key)               
+             }else{
+                 funddatakey = item.key;
+             }
+            }
+         })        
+         console.log("minInvest=",mininvestkey);   
+         console.log("risk=",riskkey);  
+         console.log("fundData=",funddatakey);      
+ 
+         const fundListPayload = {};
+         this.props.getFundListData(fundListPayload);   
+     }
+ 
+     // Clear Filter Actions  
+     clearFilterAction = () =>{            
+         this.setState({applyFilterState:false });                    
+         var tempmindata = [...this.state.filtermindata];
+         this.setState({       
+             filtermindata: [...tempmindata.map(v => ({...v,isActive:false}))]   
+             });
+ 
+         var tempriskdata = [...this.state.filterriskdata];
+         this.setState({       
+             filterriskdata: [...tempriskdata.map(v => ({...v,isActive:false}))]
+             });
+ 
+             var tempfunddata = [...this.state.filterfunddata];
+         this.setState({       
+             filterfunddata: [...tempfunddata.map(v => ({...v,isActive:false}))]
+             });        
+     }
+ 
+     // Construct Filter values from Master Data on Clicking Filter Funds
+     constructFilterData = () => {      
+        temp_key_min_inv = 'filter_min_inv';       
+        temp_key_risk = 'filter_risk';
+        temp_key_fund_type = 'filter_fund_type';
+        let tempfiltermindata = [];       
+        let tempfilterriskdata = [];
+        let tempfilterfunddata= [];
+ 
+        console.log('Filter Clicked...'); 
+        if (temp_key_min_inv !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[temp_key_min_inv] && this.props.masterLookupStateData[temp_key_min_inv].value) {
+             tempfiltermindata = this.props.masterLookupStateData[temp_key_min_inv].value;                 
+             this.setState({
+                 filtermindata: [...tempfiltermindata.map(v => ({...v,isActive:false}))]  
+             });                             
+             console.log('Master Value : ',JSON.stringify(filtermindata));             
+        }  
+ 
+         if (temp_key_risk !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[temp_key_risk] && this.props.masterLookupStateData[temp_key_risk].value) {
+             tempfilterriskdata = this.props.masterLookupStateData[temp_key_risk].value;            
+             this.setState({
+                 filterriskdata: [...tempfilterriskdata.map(v => ({...v,isActive:false}))]
+             });            
+             console.log('Master Value : ',JSON.stringify(filterriskdata));             
+         }         
+        
+        if (temp_key_fund_type !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[temp_key_fund_type] && this.props.masterLookupStateData[temp_key_fund_type].value) {
+             tempfilterfunddata = this.props.masterLookupStateData[temp_key_fund_type].value;                    
+             this.setState({
+                 filterfunddata: [...tempfilterfunddata.map(v => ({...v,isActive:false}))]
+             });     
+             console.log('Master Value : ',JSON.stringify(filterfunddata));             
+        }     
+     }
+ 
+     // Checkbox selection on Clicking Filters 
+     onCheckboxSelect = (fromtype,item,index) =>()=> {                              
+         console.log('Index : ',index);
+         console.log('Checkbox Selected : ',item.key + " " +item.value + " " +item.isActive);    
+         
+         switch(fromtype){
+             case 'minInvest':
+                 var newItm = [...this.state.filtermindata];
+                 newItm[index].isActive = !newItm[index].isActive;
+                 this.setState({ filtermindata: newItm });
+             break;
+             case 'risk':
+                 var newItm = [...this.state.filterriskdata];
+                 newItm[index].isActive = !newItm[index].isActive;
+                 this.setState({ filterriskdata: newItm });
+             break;
+             case 'fundType':
+                 var newItm = [...this.state.filterfunddata];
+                 newItm[index].isActive = !newItm[index].isActive;
+                 this.setState({ filterfunddata: newItm });
+             break;
+         }                           
+         console.log('New Item:'+JSON.stringify(newItm));              
+     }      
+ 
+
     /*----------------------
                                  Render Methods
                                                                  -------------------------- */
@@ -826,7 +993,9 @@ renderFundingInvestmentList= () => {
                                 buttonStyle={styles.filterFundsBtn}
                                 buttonText={gblStrings.accManagement.filterFunds}
                                 textStyle={styles.filterFundsBtnTxt}
+                                onPress={this.setModalVisible(true)}
                             />
+
                             <GButtonComponent
                                 buttonStyle={styles.compareFundsBtn}
                                 buttonText={gblStrings.accManagement.compareFunds}
@@ -1099,6 +1268,133 @@ renderFundingInvestmentList= () => {
                         </Text>
                     </View>
                     <GFooterComponent />
+
+                    <Modal
+                    transparent={true}
+                    visible={this.state.modalVisible}
+                    onRequestClose={this.setModalVisible(!this.state.modalVisible)}
+                >                
+                    <View style={styles.modalBackgroundView}>
+                       <View style={styles.modalContainer}>
+                            <ScrollView>
+                                <View style={styles.modalTitleView}>   
+                                    <Text style={styles.modalTitleText}> 
+                                        {gblStrings.accManagement.filterFunds}
+                                    </Text>
+                                    <TouchableOpacity onPress={this.setModalVisible(!this.state.modalVisible)}>
+                                        <GIcon
+                                            name="close"
+                                            type="antdesign"
+                                            size={30}
+                                            color="black"
+                                        />
+                                    </TouchableOpacity>
+                                </View>    
+
+                                <View style={styles.modalMinCheckBoxContainer}>
+                                    <Text style={styles.modalMinInvestTitleText}> 
+                                        {gblStrings.accManagement.minimumInvestment}                           
+                                    </Text>  
+                                    {
+                                    this.state.filtermindata.map((item,index)=>{    
+                                        var itemvalue = item.value;                                
+                                        if(item.key == 50){                                          
+                                            itemvalue = itemvalue.replace(new RegExp('50', 'g'), '$50');                                            
+                                        }else{ 
+                                            itemvalue = "$"+item.value;   
+                                        }
+                                        return(                                           
+                                            <CustomCheckBox
+                                                size={20}
+                                                itemBottom={0}
+                                                itemTop={0}
+                                                outerCicleColor={"#DEDEDF"}
+                                                innerCicleColor={"#61285F"}
+                                                labelStyle={styles.modalCheckBoxLabel}
+                                                label={itemvalue}
+                                                selected={item.isActive}
+                                                onPress={this.onCheckboxSelect("minInvest",item,index)}
+                                            /> 
+                                        );
+                                    }) 
+                                    }                             
+                                </View>      
+
+                                <View style={styles.modalRiskCheckBoxContainer}>
+                                    <Text style={styles.modalMinInvestTitleText}> 
+                                        {gblStrings.accManagement.risk}                           
+                                    </Text>  
+                                    {
+                                    this.state.filterriskdata.map((item,index)=>{          
+                                        return(
+                                            <View style={styles.modalRiskViewContainer}>
+                                                <CustomCheckBox
+                                                    size={20}
+                                                    itemBottom={0}
+                                                    itemTop={0}
+                                                    outerCicleColor={"#DEDEDF"}
+                                                    innerCicleColor={"#61285F"}
+                                                    labelStyle={styles.modalCheckBoxLabel}
+                                                    label={item.value}
+                                                    selected={item.isActive}
+                                                    onPress={this.onCheckboxSelect("risk",item,index)}
+                                                /> 
+                                                <TouchableOpacity>
+                                                    <GIcon
+                                                        name="infocirlceo"
+                                                        type="antdesign"
+                                                        size={20}
+                                                        color="#DEDEDF"
+                                                    />
+                                                </TouchableOpacity>
+                                            </View>
+                                        );                                        
+                                    }) 
+                                    }                             
+                                </View>      
+
+                                <View style={styles.modalFundCheckBoxContainer}>
+                                    <Text style={styles.modalMinInvestTitleText}> 
+                                        {gblStrings.accManagement.fundType}                                  
+                                    </Text>  
+                                    {
+                                    this.state.filterfunddata.map((item,index)=>{          
+                                        return(
+                                            <CustomCheckBox
+                                                size={20}
+                                                itemBottom={0}
+                                                itemTop={0}
+                                                outerCicleColor={"#DEDEDF"}
+                                                innerCicleColor={"#61285F"}
+                                                labelStyle={styles.modalCheckBoxLabel}
+                                                label={item.value}
+                                                selected={item.isActive}
+                                                onPress={this.onCheckboxSelect("fundType",item,index)}
+                                            /> 
+                                        );
+                                    }) 
+                                    }                             
+                                </View>    
+
+                                <View style={styles.modalActionContainer}>  
+                                    <GButtonComponent
+                                        buttonStyle={styles.modalClearFilterBtn}
+                                        buttonText={gblStrings.accManagement.clearFilter}
+                                        textStyle={styles.modalCancelBtnTxt}
+                                        onPress={this.clearFilterAction}
+                                    />
+                                    <GButtonComponent
+                                        buttonStyle={styles.modalApplyFilterBtn}
+                                        buttonText={gblStrings.accManagement.applyFilter}
+                                        textStyle={styles.modalApplyBtnTxt}
+                                        onPress={this.applyFilterAction(false)}
+                                    />   
+                                </View>  
+
+                            </ScrollView>
+                        </View>                        
+                    </View>
+                </Modal>    
 
                 </ScrollView>
             </View>

@@ -285,6 +285,11 @@ export default {
         risk: "Risk",
         minW: "Min w/",
         autoInvetsing: "Auto Investing",
+        minimumInvestment:"Minimum Investment",
+        fundType:"Fund Type",
+        clearFilter:"Clear Filters",
+        applyFilter:"Apply Filter",
+
 
         backtInvestmentSelection: "Back to Investment Selection",
         summary: "Summary",
