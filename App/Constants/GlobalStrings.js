@@ -943,5 +943,30 @@ export default {
         validateSuffix: "Select Valid Suffix",
         validateGender: "Select Valid Gender",
         validateStatus: "Select Valid Marital Status"
+    },
+    accountServices: {
+        account_services: 'Account Services',
+        bank_accounts: 'BANK ACCOUNTS',
+        automatic_investment_plan: 'AUTOMATIC INVESTMENT PLAN',
+        systematic_withdrawal_plan: 'SYSTEMATIC WITHDRAWAL PLAN',
+        checkbook: 'CHECKBOOK',
+        dividents: 'DIVIDENTS'
+    },
+    dividents: {
+        dividents_and_capital_gains_preferences: 'Dividents and Capital Gains Preferences',
+        account_name: '-  Account Name',
+        current_securities: '-  Current Securities',
+        no_do_not_want_to_reinvest: 'I do not Reinvest',
+        yes_want_to_reinvest: 'I want to Reinvest',
+        future_securites: '-  Future Securities',
+        setup_instruction: '-  Instructions to Setup and manage Automatic Mutual Fund Purchases',
+        reinvest_future_securites: 'Do you want to Reinvest for all future new securities?',
+        reinvest_current_securites: 'Do you want to Reinvest Dividends and Capital Gains?',
+        lorem_dividents: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        txt_header_dividents: 'To set all future funds purchased in this account to reinvest dividend select "Yes, I want to Reinvest.\n\nTo deposit dividend proceeds into your cash account select "No, I do not Reinvest"',
+        amount_remaining: 'Amount Remaining',
+        min_amt: 'Min $50',
+        dollar_sign: "$"
     }
+
 };

@@ -109,6 +109,10 @@ import automaticInvestmentEsign from './Screens/AutomaticInvestmentPlanEsign';
 import systematicWithdrawal from './Screens/SystematicWithdrawalPlan';
 import systematicWithdrawalAdd from './Screens/SystematicWithdrawalPlanAdd';
 
+//Account Services
+import AccountServicesComponent from './Screens/AccountServices';
+import DividentsAndCapitalGainsPrefComponent from './Screens/Dividents'
+
 const AppNavigator = createStackNavigator({
         login: {
             screen : LoginComponent,
@@ -653,7 +657,18 @@ const AppNavigator = createStackNavigator({
                 header:null,
             }  
         },
-
+        accountService: {
+            screen: AccountServicesComponent,
+            navigationOptions: {
+                header: null,
+            }
+        },
+        dividentsAndCapitalGainsPref: {
+            screen: DividentsAndCapitalGainsPrefComponent,
+            navigationOptions: {
+                header: null,
+            }
+        }
         
     },{
         initialRouteName: 'login'

@@ -14,6 +14,10 @@ const newData = [
       title: 'Home',
     },
     {
+      naviagteTo: 'accountService',
+      title: 'Account Services',
+    },
+    {
       naviagteTo:'generalSettings',
       title: 'Settings',
     },
