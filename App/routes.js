@@ -97,6 +97,17 @@ import PasswordRecoverTemp from './Screens/RecoverTempPassword/';
 import PasswordReset from './Screens/RecoverPasswordNew/';
 import PasswordSuccess from './Screens/RecoverPasswordSuccess/';
 
+//Systematic Withdrawal plan
+import systematicWithdrawal from './Screens/SystematicWithdrawalPlan';
+import systematicWithdrawalAdd from './Screens/SystematicWithdrawalPlanAdd';
+
+//Automatic Investment Plan
+import automaticInvestment from './Screens/AutomaticInvestmentPlan';
+import automaticInvestmentAdd from './Screens/AutomaticInvestmentPlanAdd';
+import automaticInvestmentSchedule from './Screens/AutomaticInvestmentPlanSchedule';
+import automaticInvestmentVerify from './Screens/AutomaticInvestmentPlanVerify';
+import automaticInvestmentEsign from './Screens/AutomaticInvestmentPlanEsign'
+
 const AppNavigator = createStackNavigator({
         login: {
             screen : LoginComponent,
@@ -595,6 +606,48 @@ const AppNavigator = createStackNavigator({
         },
         passwordRecoverTemp:{
             screen:PasswordRecoverTemp,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        automaticInvestment:{
+            screen:automaticInvestment,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        automaticInvestmentAdd:{
+            screen:automaticInvestmentAdd,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        automaticInvestmentVerify:{
+            screen:automaticInvestmentVerify,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        automaticInvestmentEsign:{
+            screen:automaticInvestmentEsign,
+            navigationOptions:{
+                header:null,
+            }
+        },
+            automaticInvestmentSchedule:{
+                screen:automaticInvestmentSchedule,
+                navigationOptions:{
+                    header:null,
+                }  
+        },
+        systematicWithdrawal:{
+            screen:systematicWithdrawal,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        systematicWithdrawalAdd:{
+            screen:systematicWithdrawalAdd,
             navigationOptions:{
                 header:null,
             }  
