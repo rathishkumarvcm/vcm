@@ -72,7 +72,7 @@ import EditAddressAddNew from './Screens/EditAddressAddNew/EditAddressAddNewComp
 import EditPhoneInformation from './Screens/EditPhoneInformations/EditPhoneInfoComponent';
 import EditEmailInformation from './Screens/EditEmailInformation/EditEmailInfoComponent';
 import EditEmailAddNew from './Screens/EditEmailInfoAddNew/EditEmailAddNewComponent';
-import EditAddFinancialInfo from './Screens/EditAddFinancialInformation/EditAddFinancialInfoComponent';
+import EditAddFinancialInfo from './Screens/EditAddFinancialInformation/';
 import EditAddPhoneNumber from './Screens/EditAddNewPhoneNumber/EditAddPhoneNumberComponent';
 import EditMilitaryInfo from './Screens/EditMilitaryInformation/EditMilitaryInfoComponent';
 import EditOccupationInfo from './Screens/EditOccupationInformation/EditOccupationInfoComponent';

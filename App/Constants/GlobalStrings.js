@@ -930,5 +930,9 @@ export default {
         relationSocialSecurity: "Social Security number",
         relationInst: "Instructions",
         relationInstContent: "To help the government fight the funding of terrorism and money laundering activities, federal law requires all financai institutions to obtain, verify and record information that identifies each person who open an account. what this means for you: when open an account, we will ask for your name, address, date of birth and other information that will allow us to identify you. We may also ask to see your driver's license or other identifying documents."
+    },
+    profileValidationMessages: {
+        validateAddressLineOne: "Enter a valid Address.",
+        validateZipcode: "Enter a valid zipcode"
     }
 };

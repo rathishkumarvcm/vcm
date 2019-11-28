@@ -78,7 +78,7 @@ class editEmailAddNewComponent extends Component {
                             editable={false} />
                     </View>
 
-                    <View style={globalString.editEmailInformations.editEmailPreferred}>
+                    <View style={styles.editEmailPrimaryPreferred}>
                         <GRadioButtonComponent radioButtonStyle={styles.editEmailPreferred}
                             questions={globalString.editEmailInformations.editEmailPreferred} />
                         <Text style={styles.editEmailDeleteLabel}>
