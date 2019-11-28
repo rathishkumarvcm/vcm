@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
 import InvestmentPlanInfoComponent from './InvestmentPlanInfoComponent';
-import { getLogin } from "../../Shared/Reducers";
-import { loginActions } from "../../Shared/Actions";
+import { accOpeningActions } from "../../Shared/Actions";
 
 /*----------------------
                                   Redux Methods
@@ -9,15 +8,15 @@ import { loginActions } from "../../Shared/Actions";
 
 const mapStateToProps = (state /* , props */) => (
     {
-      dashboardData: getLogin(state)
+      fundDetailsData:state.accOpeningReducerData
     }
   );
 
 const mapDispatchToProps = {
-    ...loginActions
+    ...accOpeningActions
   };
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(InvestmentPlanInfoComponent);
+  )(InvestmentPlanInfoComponent); 

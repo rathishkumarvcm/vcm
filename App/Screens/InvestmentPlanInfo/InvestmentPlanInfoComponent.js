@@ -5,6 +5,7 @@ import { GButtonComponent, GIcon, GHeaderComponent, GFooterComponent,GRatingStar
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 
 const Table = (props) => {
@@ -132,8 +133,7 @@ class InvestmentPlanInfoComponent extends Component {
             isLoading: false,
             isSummarySelected: true,
             isQuickFactSelected: false,
-            isPerformanceSelected: false,
-
+            isPerformanceSelected: false,           
 
         };
     }
@@ -141,16 +141,17 @@ class InvestmentPlanInfoComponent extends Component {
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
     componentDidMount() {
-
+        const payload = this.props.navigation.getParam('fundDetails', '');           
+        this.props.getFundDetailsData(payload);
     }
     /*----------------------
                                  Button Events 
                                                                  -------------------------- */
     goBack = () => {
         this.props.navigation.goBack();
-    }
+    }      
 
-    renderSummary = () => {
+    renderSummary = (risk,initialInvestment,monthlyInvestment) => {
         return (
             <View style={[styles.summarySectionGrp]}>
                 <View style={styles.riskContainer}>
@@ -159,7 +160,7 @@ class InvestmentPlanInfoComponent extends Component {
                         {gblStrings.accManagement.riskLevel}
                     </Text>
 
-                    <Text style={styles.riskLevelValue}>{"Aggressive"}</Text>
+                    <Text style={styles.riskLevelValue}>{risk}</Text>
                 </View>
                 <Text style={styles.riskDesc}>{gblStrings.accManagement.riskSummary}</Text>
 
@@ -168,14 +169,14 @@ class InvestmentPlanInfoComponent extends Component {
                     {gblStrings.accManagement.initInvestment}
                 </Text>
                 <Text style={styles.lblNameValueTxt}>
-                    {"$3,500"}
+                    {initialInvestment}
                 </Text>
 
                 <Text style={styles.lblNameTxt}>
                     {gblStrings.accManagement.initMonthlyInvestment}
                 </Text>
                 <Text style={styles.lblNameValueTxt}>
-                    {"$3,500 w/$50 monthly"}
+                    {initialInvestment}{' w/ '}{monthlyInvestment}
                 </Text>
 
                 <Text style={styles.headingUnderline}>{gblStrings.accManagement.moreInfo}</Text>
@@ -202,7 +203,7 @@ class InvestmentPlanInfoComponent extends Component {
             </View>
         );
     }
-    renderQuickfacts = () => {
+    renderQuickfacts = (nav,expenseRatio,morningstarRating,morningstarCategory,categoryFunds) => {
         return (
             <View style={[styles.summarySectionGrp]}>
 
@@ -214,14 +215,14 @@ class InvestmentPlanInfoComponent extends Component {
                     {gblStrings.accManagement.pricePerShare}
                 </Text>
                 <Text style={styles.lblNameValueTxt}>
-                    {"$41.42"}
+                    {nav}
                 </Text>
 
                 <Text style={styles.lblNameTxt}>
                     {gblStrings.accManagement.expenseRation}
                 </Text>
                 <Text style={styles.lblNameValueTxt}>
-                    {"0.75%"}
+                    {expenseRatio}
                 </Text>
 
                 <Text style={styles.lblNameTxt}>
@@ -231,7 +232,7 @@ class InvestmentPlanInfoComponent extends Component {
                     {"(as of 06/30/2019)"}
                 </Text>
                 <View style={{ marginTop: scaledHeight(8) }}>
-                    <GRatingStarsComponent rating={3}
+                    <GRatingStarsComponent rating={morningstarRating}
                         ratedStarColor="#393535"
                         unRatedStarColor="#DCDCDC"
                     />
@@ -242,18 +243,15 @@ class InvestmentPlanInfoComponent extends Component {
                     {gblStrings.accManagement.mrngStarCategory}
                 </Text>
                 <Text style={styles.lblNameValueTxt}>
-                    {"Large Growth"}
+                    {morningstarCategory}
                 </Text>
 
                 <Text style={styles.lblNameTxt}>
                     {gblStrings.accManagement.fundsInCategory}
                 </Text>
                 <Text style={styles.lblNameValueTxt}>
-                    {"1235"}
+                    {categoryFunds}
                 </Text>
-
-
-
             </View>
 
         );
@@ -285,11 +283,27 @@ class InvestmentPlanInfoComponent extends Component {
             </View>
         );
     }
+   
 
     /*----------------------
                                  Render Methods
                                                                  -------------------------- */
     render() {
+
+        var {
+            nav = "",    
+            fundName = "", 
+            risk = "",     
+            monthlyInvestment = "", 
+            initialInvestment = "",
+            expenseRatio = "",         
+            morningstarCategory = "",
+            categoryFunds = "",
+            morningstarRating = "",
+            performanceDetails : performance_Details= {},
+        } = (this.props && this.props.fundDetailsData && this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS]) ? this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS] : {};
+
+          
         return (
             <View style={styles.container}>
                 <GHeaderComponent
@@ -318,11 +332,11 @@ class InvestmentPlanInfoComponent extends Component {
                                 </Text>
                             </View>
 
-                        </TouchableOpacity>
+                        </TouchableOpacity>                    
 
                         <View style={styles.accTypeSelectSection} >
                             <Text style={styles.headings}>
-                                {"Aggressive Growth Fund"}
+                                {fundName}
                             </Text>
                         </View>
                         <Text style={styles.lblLine} />
@@ -393,8 +407,8 @@ class InvestmentPlanInfoComponent extends Component {
                     </ScrollView>
 
                     { /*----------- Summary,QuickFacts,Performance  -------------------*/}
-                    {this.state.isSummarySelected && this.renderSummary()}
-                    {this.state.isQuickFactSelected && this.renderQuickfacts()}
+                    {this.state.isSummarySelected && this.renderSummary(risk,initialInvestment,monthlyInvestment)}
+                    {this.state.isQuickFactSelected && this.renderQuickfacts(nav,expenseRatio,morningstarRating,morningstarCategory,categoryFunds)}
                     {this.state.isPerformanceSelected && this.renderPerformnace()}
 
                     { /*----------- Buttons Grp  -------------------*/}
@@ -405,7 +419,7 @@ class InvestmentPlanInfoComponent extends Component {
                             buttonStyle={styles.normalWhiteBtn}
                             buttonText={gblStrings.common.back}
                             textStyle={styles.normalWhiteBtnTxt}
-                            onPress={() => this.goBack()}
+                            onPress={()=>this.goBack()}
                         />
 
                     </View>
@@ -433,5 +447,6 @@ class InvestmentPlanInfoComponent extends Component {
 }
 InvestmentPlanInfoComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
+    fundDetailsData: PropTypes.instanceOf(Object).isRequired,
   };
 export default InvestmentPlanInfoComponent;
