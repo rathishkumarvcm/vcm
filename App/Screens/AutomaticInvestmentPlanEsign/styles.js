@@ -24,28 +24,34 @@ export const styles = StyleSheet.create({
         width: scaledWidth(35),
         height: scaledHeight(35),
         borderRadius: scaledHeight(35)/2,
-        backgroundColor: '#A7E993'
+        backgroundColor: '#A7E993',
+        justifyContent:'center',
+        alignItems:'center'
     },
     circle_Inprogress: {
         width: scaledWidth(35),
         height: scaledHeight(35),
         borderRadius: scaledHeight(35)/2,
         backgroundColor: '#CDDBFC',
-        borderColor:'#9DB6F1'
+        borderColor:'#9DB6F1',
+        justifyContent:'center',
+        alignItems:'center'
     },
     circle_NotStarted: {
         width: scaledWidth(35),
         height: scaledHeight(35),
         borderRadius: scaledHeight(35)/2,
-        backgroundColor: '#C1C1C1'
+        backgroundColor: '#C1C1C1',
+        justifyContent:'center',
+        alignItems:'center'
     },
-    circleText:{      
-        width: scaledWidth(35),
-        height: scaledHeight(35),
-        textAlign:"center",
-        textAlignVertical:"center",
-        
-    },
+    circleTextNew:{      
+        fontSize:scaledHeight(15),
+         fontWeight:'bold'
+     },
+     circleText:{      
+         fontSize:scaledHeight(15)
+     },
     circle_connect:{
         borderTopWidth:1,
         borderTopColor:'#C1C1C1',
@@ -93,13 +99,6 @@ export const styles = StyleSheet.create({
         color:'#56565A',
         marginLeft:'4%',
         marginRight:'4%'
-    },
-    circleTextNew:{      
-        width: scaledWidth(35),
-        height: scaledHeight(35),
-        textAlign:"center",
-        fontSize:scaledHeight(15),
-        fontWeight:'bold'
     },
     seperator_line:{
         borderTopWidth:1,

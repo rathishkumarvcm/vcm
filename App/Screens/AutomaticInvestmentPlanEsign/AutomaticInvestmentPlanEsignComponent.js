@@ -29,8 +29,8 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
             <View style={styles.container}>
                 <GHeaderComponent register navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
-                <Text style={styles.autoInvestHead}>{'Create Automatic Investment Plan'}</Text>
-                        <View style={styles.seperator_line} />
+                    <Text style={styles.autoInvestHead}>{'Create Automatic Investment Plan'}</Text>
+                    <View style={styles.seperator_line} />
                     <View style={styles.circle_view}>
                         <View style={styles.circle_Completed}>
                             <Text style={styles.circleTextNew}>{'1'}</Text>
@@ -41,7 +41,7 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
                         </View>
                         <View style={styles.circle_connect} />
                         <View style={styles.circle_Completed}>
-                            <Text style={styles.circleText}>{'3'}</Text>
+                            <Text style={styles.circleTextNew}>{'3'}</Text>
                         </View>
                         <View style={styles.circle_connect} />
                         <View style={styles.circle_Inprogress}>

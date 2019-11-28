@@ -31,7 +31,9 @@ export const styles = StyleSheet.create({
         width: scaledWidth(35),
         height: scaledHeight(35),
         borderRadius: scaledHeight(35)/2,
-        backgroundColor: '#A7E993'
+        backgroundColor: '#A7E993',
+        alignItems:'center',
+        justifyContent:'center'
     },
     circle_Inprogress: {
         width: scaledWidth(35),
@@ -39,7 +41,8 @@ export const styles = StyleSheet.create({
         borderRadius: scaledHeight(35)/2,
         backgroundColor: '#CDDBFC',
         borderColor:'#9DB6F1',
-        
+        alignItems:'center',
+        justifyContent:'center'
     },
     circle_NotStarted: {
         
@@ -47,19 +50,15 @@ export const styles = StyleSheet.create({
         height: scaledHeight(35),
         borderRadius: scaledHeight(35)/2,
         backgroundColor: '#C1C1C1',
+        alignItems:'center',
+        justifyContent:'center'
         
     },
     circleTextNew:{      
-        width: scaledWidth(35),
-        height: scaledHeight(35),
-        textAlign:"center",
-        fontSize:scaledHeight(15),
+       fontSize:scaledHeight(15),
         fontWeight:'bold'
     },
     circleText:{      
-        width: scaledWidth(35),
-        height: scaledHeight(35),
-        textAlign:"center",
         fontSize:scaledHeight(15)
     },
     circle_connect:{
