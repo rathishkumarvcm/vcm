@@ -939,6 +939,9 @@ export default {
     profileValidationMessages: {
         validateAddressLineOne: "Enter a valid Address.",
         validateZipcode: "Enter a valid zipcode",
-        validatePrefix: "Select Valid Prefix"
+        validatePrefix: "Select Valid Prefix",
+        validateSuffix: "Select Valid Suffix",
+        validateGender: "Select Valid Gender",
+        validateStatus: "Select Valid Marital Status"
     }
 };

@@ -40,16 +40,26 @@ class editProfileSettingsComponent extends Component {
             profileMobile: '',
             radioButton: false,
             radioButtonIndex: 0,
+            
             dropDownState: false,
             dropDownValue: '',
-            dropDownPrefixFlag: true,
+            dropDownPrefixFlag: false,
             dropDownPrefixMsg: '',
+            
             dropDownSuffixState: false,
             dropDownSuffixValue: '',
+            dropDownSuffixFlag: false,
+            dropDownSuffixMsg: '',
+
             dropDownGenderState: false,
             dropDownGenderValue: '',
+            dropDownGenderFlag: false,
+            dropDownGenderMsg: '',
+
             dropDownStatusState: false,
-            dropDownStatusValue: ''
+            dropDownStatusValue: '',
+            dropDownStatusFlag: false,
+            dropDownStatusMsg: ''
         };
     }
 
@@ -99,14 +109,39 @@ class editProfileSettingsComponent extends Component {
             });
         }
 
-        if (dropDownValue === '') {
+        if (this.state.dropDownValue === '') {
             this.setState({
-                dropDownPrefixFlag: false,
+                dropDownPrefixFlag: true,
                 dropDownPrefixMsg: globalString.profileValidationMessages.validatePrefix
             });
         }
 
-        if (this.state.validPin != "") {
+        if (this.state.dropDownSuffixValue === '') {
+            this.setState({
+                dropDownSuffixFlag: true,
+                dropDownSuffixMsg: globalString.profileValidationMessages.validateSuffix
+            })
+        }
+
+        if (this.state.dropDownGenderValue === '') {
+            this.setState({
+                dropDownGenderFlag: true,
+                dropDownGenderMsg: globalString.profileValidationMessages.validateGender
+            })
+        }
+
+        if (this.state.dropDownStatusValue === '') {
+            this.setState({
+                dropDownStatusFlag: true,
+                dropDownStatusMsg: globalString.profileValidationMessages.validateStatus
+            })
+        }
+
+        if (this.state.validPin != "" &&
+            this.state.dropDownValue != "" &&
+            this.state.dropDownSuffixValue != "" &&
+            this.state.dropDownGenderValue != "" &&
+            this.state.dropDownStatusValue != "") {
             this.props.navigation.navigate('profileSettings')
         }
     }
@@ -120,7 +155,8 @@ class editProfileSettingsComponent extends Component {
     dropDownOnSelect = (valuePrefix) => {
         this.setState({
             dropDownValue: valuePrefix.value,
-            dropDownState: false
+            dropDownState: false,
+            dropDownPrefixFlag: false
         });
     }
 
@@ -133,7 +169,8 @@ class editProfileSettingsComponent extends Component {
     dropDownSuffixSelect = (valueSuffix) => {
         this.setState({
             dropDownSuffixValue: valueSuffix.value,
-            dropDownSuffixState: false
+            dropDownSuffixState: false,
+            dropDownSuffixFlag: false
         });
     }
 
@@ -146,7 +183,8 @@ class editProfileSettingsComponent extends Component {
     dropDownGenderSelect = (valueGender) => {
         this.setState({
             dropDownGenderValue: valueGender.value,
-            dropDownGenderState: false
+            dropDownGenderState: false,
+            dropDownGenderFlag: false
         });
     }
 
@@ -159,7 +197,8 @@ class editProfileSettingsComponent extends Component {
     dropDownStatusSelect = (valueStatus) => {
         this.setState({
             dropDownStatusValue: valueStatus.value,
-            dropDownStatusState: false
+            dropDownStatusState: false,
+            dropDownStatusFlag: false
         });
     }
 
@@ -322,7 +361,7 @@ class editProfileSettingsComponent extends Component {
                             dropDownValue={this.state.dropDownValue}
                             selectedDropDownValue={this.dropDownOnSelect}
                             itemToDisplay={"value"}
-                            errorFlag={!this.state.dropDownPrefixFlag}
+                            errorFlag={this.state.dropDownPrefixFlag}
                             errorText={this.dropDownPrefixMsg}
                             dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(490) }} />
 
@@ -337,6 +376,8 @@ class editProfileSettingsComponent extends Component {
                             dropDownValue={this.state.dropDownSuffixValue}
                             selectedDropDownValue={this.dropDownSuffixSelect}
                             itemToDisplay={"value"}
+                            errorFlag={this.state.dropDownSuffixFlag}
+                            errorText={this.dropDownSuffixMsg}
                             dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(580) }} />
 
                         {/* Zip Code */}
@@ -357,7 +398,7 @@ class editProfileSettingsComponent extends Component {
 
                         {/* Gender Data */}
 
-                        <View style={styles.editFlexDirectionColumn}>
+                        {/* <View style={styles.editFlexDirectionColumn}>
 
                             <Text style={styles.editProfileLabel}>
                                 {globalString.profileSettingsPage.profileGenderLabel}
@@ -394,11 +435,24 @@ class editProfileSettingsComponent extends Component {
                                         keyExtractor={item => item.key}
                                     />
                                 </View>}
-                        </View>
+                        </View> */}
+
+                        <GDropDownComponent
+                            dropDownTextName={styles.editProfileLabel}
+                            dropDownName={globalString.profileSettingsPage.profileGenderLabel}
+                            data={profileGenderData}
+                            changeState={this.dropDownGenderClick}
+                            showDropDown={this.state.dropDownGenderState}
+                            dropDownValue={this.state.dropDownGenderValue}
+                            selectedDropDownValue={this.dropDownGenderSelect}
+                            itemToDisplay={"value"}
+                            errorFlag={this.state.dropDownGenderFlag}
+                            errorText={this.dropDownGenderMsg}
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(700) }} />
 
                         {/* Marital Status Data */}
 
-                        <View style={styles.editFlexDirectionColumn}>
+                        {/* <View style={styles.editFlexDirectionColumn}>
                             <Text style={styles.editProfileLabel}>
                                 {globalString.profileSettingsPage.profileStatusLabel}
                             </Text>
@@ -434,7 +488,22 @@ class editProfileSettingsComponent extends Component {
                                         keyExtractor={item => item.key}
                                     />
                                 </View>}
-                        </View>
+                        </View> */}
+
+                        <GDropDownComponent
+                            dropDownTextName={styles.editProfileLabel}
+                            dropDownName={globalString.profileSettingsPage.profileStatusLabel}
+                            data={profileStatusData}
+                            changeState={this.dropDownStatusClick}
+                            showDropDown={this.state.dropDownStatusState}
+                            dropDownValue={this.state.dropDownStatusValue}
+                            selectedDropDownValue={this.dropDownStatusSelect}
+                            itemToDisplay={"value"}
+                            errorFlag={this.state.dropDownStatusFlag}
+                            errorText={this.dropDownStatusMsg}
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(790) }} />
+
+                        {/* Citizenship */}
 
                         <View style={styles.editFlexDirectionColumn}>
                             <Text style={styles.editProfileLabel}>
