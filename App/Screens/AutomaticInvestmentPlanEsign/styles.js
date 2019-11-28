@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     circle_view:{
         flexDirection:'row',
         justifyContent:"center",
-        marginTop:scaledHeight(10),
+        marginTop:scaledHeight(30),
     },
     autoInvest_title_view:{
         marginTop:scaledHeight(20),
@@ -84,6 +84,22 @@ export const styles = StyleSheet.create({
     {
         marginLeft:'4%',
         marginRight:'4%'
+    },
+    autoInvestHead:{
+        marginTop:scaledHeight(10),
+        fontSize:scaledHeight(18),
+        fontWeight:'bold',
+        marginBottom:scaledWidth(10),
+        color:'#56565A',
+        marginLeft:'4%',
+        marginRight:'4%'
+    },
+    circleTextNew:{      
+        width: scaledWidth(35),
+        height: scaledHeight(35),
+        textAlign:"center",
+        fontSize:scaledHeight(15),
+        fontWeight:'bold'
     },
     seperator_line:{
         borderTopWidth:1,
@@ -141,6 +157,10 @@ export const styles = StyleSheet.create({
     esignBody:{
             borderColor:'#61285F45',
             borderWidth:1,
+            
+    },
+    esignBody1:
+    {
             paddingLeft:scaledWidth(15),
             paddingRight:scaledWidth(15),
             paddingTop:scaledHeight(15),
@@ -169,11 +189,17 @@ export const styles = StyleSheet.create({
     },
     esignBottomView:{
         flexDirection:'row',
-        backgroundColor:'#F3F3F3'
+        backgroundColor:'#F3F3F3',
+        paddingLeft:scaledWidth(15),
+        paddingRight:scaledWidth(15),
+        paddingTop:scaledHeight(15),
+        paddingBottom:scaledHeight(15),
     },
-    esignBottomText:{
-        color:'#333333DE',
-        fontSize:scaledHeight(16)
-    }
+    agreeTermsTxt: {
+        textAlign: 'left',
+        fontSize: scaledHeight(16),
+        color: '#333333DE',
+        //marginTop:scaledHeight(5)
+    },
     
 });

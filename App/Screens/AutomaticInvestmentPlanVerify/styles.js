@@ -39,12 +39,19 @@ export const styles = StyleSheet.create({
         borderRadius: scaledHeight(35)/2,
         backgroundColor: '#C1C1C1'
     },
+    circleTextNew:{      
+        width: scaledWidth(35),
+        height: scaledHeight(35),
+        textAlign:"center",
+        fontSize:scaledHeight(15),
+        fontWeight:'bold'
+    },
     circleText:{      
         width: scaledWidth(35),
         height: scaledHeight(35),
         textAlign:"center",
         textAlignVertical:"center",
-        
+        fontSize:scaledHeight(15),
     },
     circle_connect:{
         borderTopWidth:1,
@@ -55,7 +62,7 @@ export const styles = StyleSheet.create({
     circle_view:{
         flexDirection:'row',
         justifyContent:"center",
-        marginTop:scaledHeight(10),
+        marginTop:scaledHeight(30),
     },
     autoInvest_title_view:{
         marginTop:scaledHeight(20),
@@ -72,16 +79,35 @@ export const styles = StyleSheet.create({
         color:'#4D79F6',
     },
     autoInvest_sub_title_view:{
+        flex:1,
+        flexDirection:'row',
         marginTop:scaledHeight(20),
         height:scaledHeight(27),
         marginBottom:scaledHeight(10)
     },
     autoInvest_sub_title_text:{
+        flex:0.9,
         fontSize:scaledHeight(20),
         color:'#56565A',
+        fontWeight:'bold'
+    },
+    autoInvest_sub_edit:{
+        flex:0.1,
+        color:'#5D83AE',
+        fontSize:scaledHeight(15),
+        textAlign:'right'
     },
     body:
     {
+        marginLeft:'4%',
+        marginRight:'4%'
+    },
+    autoInvestHead:{
+        marginTop:scaledHeight(10),
+        fontSize:scaledHeight(18),
+        fontWeight:'bold',
+        marginBottom:scaledWidth(10),
+        color:'#56565A',
         marginLeft:'4%',
         marginRight:'4%'
     },

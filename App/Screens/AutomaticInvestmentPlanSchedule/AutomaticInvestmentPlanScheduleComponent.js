@@ -168,13 +168,15 @@ navigationNext = () => this.props.navigation.navigate('automaticInvestmentVerify
             <View style={styles.container}>
                 <GHeaderComponent register navigation={this.props.navigation}/>
                 <ScrollView style={{ flex: 0.85 }}>
+                <Text style={styles.autoInvestHead}>{'Create Automatic Investment Plan'}</Text>
+                        <View style={styles.seperator_line} />
                 <View style={styles.circle_view}>
                     <View style={styles.circle_Completed}>
-                        <Text style={styles.circleText}>{'1'}</Text>
+                        <Text style={styles.circleTextNew}>{'1'}</Text>
                     </View>
                     <View style={styles.circle_connect}/>
                     <View style={styles.circle_Inprogress}>
-                        <Text style={styles.circleText}>{'2'}</Text>
+                        <Text style={styles.circleTextNew}>{'2'}</Text>
                     </View>
                     <View style={styles.circle_connect}/>
                     <View style={styles.circle_NotStarted}>

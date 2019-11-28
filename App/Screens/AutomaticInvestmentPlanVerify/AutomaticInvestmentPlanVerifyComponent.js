@@ -70,17 +70,19 @@ generateKeyExtractor = (item) => item.id;
             <View style={styles.container}>
                 <GHeaderComponent register navigation={this.props.navigation}/>
                 <ScrollView style={{ flex: 0.85 }}>
+                <Text style={styles.autoInvestHead}>{'Create Automatic Investment Plan'}</Text>
+                <View style={styles.seperator_line} />
                 <View style={styles.circle_view}>
                     <View style={styles.circle_Completed}>
-                        <Text style={styles.circleText}>{'1'}</Text>
+                        <Text style={styles.circleTextNew}>{'1'}</Text>
+                    </View>
+                    <View style={styles.circle_connect}/>
+                    <View style={styles.circle_Completed}>
+                        <Text style={styles.circleTextNew}>{'2'}</Text>
                     </View>
                     <View style={styles.circle_connect}/>
                     <View style={styles.circle_Inprogress}>
-                        <Text style={styles.circleText}>{'2'}</Text>
-                    </View>
-                    <View style={styles.circle_connect}/>
-                    <View style={styles.circle_NotStarted}>
-                        <Text style={styles.circleText}>{'3'}</Text>
+                        <Text style={styles.circleTextNew}>{'3'}</Text>
                     </View>
                     <View style={styles.circle_connect}/>
                     <View style={styles.circle_NotStarted}>
@@ -89,12 +91,12 @@ generateKeyExtractor = (item) => item.id;
                 </View>
 
                 <View style={styles.autoInvest_title_view}>
-                    <Text style={styles.autoInvest_title_text}>{'2 - Verify'}</Text>
+                    <Text style={styles.autoInvest_title_text}>{'3 - Verify'}</Text>
                 </View>
                 <View style={styles.body}>
                     <View style={styles.autoInvest_sub_title_view}>
                         <Text style={styles.autoInvest_sub_title_text}>{'- Verify the Investment Plan'}</Text>
-                        <Text>{'Edit'}</Text>
+                        <Text style={styles.autoInvest_sub_edit}>{'Edit'}</Text>
                     </View>
                     <View style={styles.seperator_line} />
                     <FlatList
