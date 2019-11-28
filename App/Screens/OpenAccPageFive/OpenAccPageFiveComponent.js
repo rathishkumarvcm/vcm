@@ -73,6 +73,7 @@ class OpenAccPageFiveComponent extends Component {
     renderPrimaryPersonalInfo = () => {
         var { personalInfo = {} } = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
 
+        console.log("personalInfo::"+JSON.stringify(personalInfo));
         var {
             prefix = '',
             firstName = '',
@@ -132,6 +133,7 @@ class OpenAccPageFiveComponent extends Component {
             contactDuring: contactDuring3_primary = '',
         } = (phoneNumber3 && phoneNumber3.phoneNumber) ? phoneNumber3 : {};
 
+        
         return (
             <View style={[styles.sectionGrp]}>
                 <View style={styles.accTypeSelectSection} >
@@ -468,111 +470,176 @@ class OpenAccPageFiveComponent extends Component {
             </View>
         );
     }
+
+    renderMutualFundList = () => {
+        return(
+            <View style={[styles.sectionGrp]}>
+            <View style={styles.accTypeSelectSection} >
+                <Text style={styles.headings}>
+                    {gblStrings.accManagement.selectedMutualFunds}
+                </Text>
+            </View>
+
+            <Text style={styles.lblLine} />
+
+            <Text style={styles.detailsGrpHeaderTxt}>
+                {"World Growth Fund"}
+            </Text>
+            <View style={styles.editSeletedFundsDetailsGrp} >
+                <TouchableOpacity
+                    // onPress={() => { alert("#TODO:: Edit") }}
+                    activeOpacity={0.8}
+                    accessibilityRole={'button'}
+                    style={styles.editBtn}
+                >
+                    <Text style={styles.editBtnTxt}>
+                        {gblStrings.common.edit}
+                    </Text>
+                </TouchableOpacity>
+                <View style={styles.detailsRow}>
+                    <Text style={styles.lblLeftColTxt}>
+                        {gblStrings.accManagement.initInvestment}
+                    </Text>
+                    <Text style={styles.lblRightColTxt}>
+                        {"$ 3,000.00"}
+                    </Text>
+                </View>
+            </View>
+        </View>
+
+        );
+    }
+
+    renderInvestmentInfo = () => {
+        var { investmentInfo = {} } = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
+
+
+        var {
+            fundingSource = {},
+            totalFunds = '',
+            fundDataList = []
+        } = (investmentInfo && investmentInfo.fundDataList) ? investmentInfo : {};
+
+
+        var {
+            method = '',
+            bankAccount = '',
+            accountType = '',
+            financialInstitutionName = '',
+            accountOwner = '',
+            transitRoutingNumber = '',
+            accountNumber = '',
+
+        } = (fundingSource && fundingSource.method) ? fundingSource : {};
+
+
+        return (
+            <View style={[styles.sectionGrp]}>
+            <View style={styles.accTypeSelectSection} >
+                <Text style={styles.headings}>
+                    {gblStrings.accManagement.fundingInfo}
+                </Text>
+            </View>
+
+            <Text style={styles.lblLine} />
+
+            <View style={styles.editDetailsGrp} >
+                <TouchableOpacity
+                    //onPress={() => { alert("#TODO:: Edit") }}
+                    activeOpacity={0.8}
+                    accessibilityRole={'button'}
+                    style={styles.editBtn}
+                >
+                    <Text style={styles.editBtnTxt}>
+                        {gblStrings.common.edit}
+                    </Text>
+                </TouchableOpacity>
+                <View style={styles.detailsRow}>
+                    <Text style={styles.lblLeftColTxt}>
+                        {gblStrings.accManagement.fundingSource}
+                    </Text>
+                    <Text style={styles.lblRightColTxt}>
+                        {method}
+                    </Text>
+                </View>
+
+                <View style={styles.detailsRow}>
+                    <Text style={styles.lblLeftColTxt}>
+                        {gblStrings.accManagement.totalInitInvestment}
+                    </Text>
+                    <Text style={styles.lblRightColTxt}>
+                        {"$ 3,000.00"}
+                    </Text>
+                </View>
+            </View>
+        </View>
+
+        );
+    }
+
+    renderAccPrefencesInfo = () =>{
+        var { accountPreferences = {} } = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
+        
+        var {
+            documentDeliveryFormat = '',
+            dividendCapitalGain = ''
+        } = (accountPreferences && accountPreferences.documentDeliveryFormat) ? accountPreferences : {};
+
+
+        return (
+            <View style={[styles.sectionGrp]}>
+            <View style={styles.accTypeSelectSection} >
+                <Text style={styles.headings}>
+                    {gblStrings.accManagement.accountFeatures}
+                </Text>
+            </View>
+
+            <Text style={styles.lblLine} />
+
+            <View style={styles.editDetailsGrp} >
+                <TouchableOpacity
+                    // onPress={() => { alert("#TODO:: Edit") }}
+                    activeOpacity={0.8}
+                    accessibilityRole={'button'}
+                    style={styles.editBtn}
+                >
+                    <Text style={styles.editBtnTxt}>
+                        {gblStrings.common.edit}
+                    </Text>
+                </TouchableOpacity>
+                <View style={styles.detailsRow}>
+                    <Text style={styles.lblLeftColTxt}>
+                        {gblStrings.accManagement.prospectus}
+                    </Text>
+                    <Text style={styles.lblRightColTxt}>
+                        {`${documentDeliveryFormat}`}
+                    </Text>
+                </View>
+
+
+            </View>
+        </View>
+
+
+        )
+    }
     /*----------------------
                                  Render Methods
                                                                  -------------------------- */
     render() {
+        var { accountType = '' } = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
 
 
-        var {
-            accountType = "",
-            accountSubType = "",
-            personalInfo = {},
-            employementInfo = {},
-            financialInfo = {},
-            militaryInfo = {},
-            regulatoryDetails = {},
-            accountPreferences = {},
-            investmentInfo = {}
-        }
-            = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
-
-        var {
-            prefix = '',
-            firstName = '',
-            lastName = '',
-            suffix = '',
-            dateOfBirth = '',
-            gender = '',
-            maritalStatus = '',
-            citizenship = '',
-            ssnTin = '',
-            mailingAddress: maillAddr_primary = {},
-            physicalAddress: physicAddr_primary = {},
-            isPhysAddrSameAsMailAddr = "",
-            contactDetails: contact_primary = {},
-        } = (personalInfo && personalInfo.prefix) ? personalInfo : {};
-
-        var {
-            addressType = '',
-            streetNb = '',
-            streetName = '',
-            zip = '',
-            city = '',
-            state = '',
-        } = (maillAddr_primary && maillAddr_primary.addressType) ? maillAddr_primary : {};
-        var {
-            addressType: addressType_Phy = '',
-            streetNb: streetNb_Phy = '',
-            streetName: streetName_Phy = '',
-            zip: zip_Phy = '',
-            city: city_Phy = '',
-            state: state_Phy = '',
-        } = (physicAddr_primary && physicAddr_primary.addressType) ? physicAddr_primary : {};
-
-        var {
-            phoneNumber1 = {},
-            phoneNumber2 = {},
-            phoneNumber3 = {},
-            emailAddress: emailAddress_primary = ''
-
-        } = (contact_primary && contact_primary.phoneNumber1) ? contact_primary : {};
-
-        var {
-            phoneNumber: phoneNumber1_primary = '',
-            phoneType: phoneType1_primary = '',
-            contactDuring: contactDuring1_primary = '',
-        } = (phoneNumber1 && phoneNumber1.phoneNumber) ? phoneNumber1 : {};
-
-        var {
-            phoneNumber: phoneNumber2_primary = '',
-            phoneType: phoneType2_primary = '',
-            contactDuring: contactDuring2_primary = '',
-        } = (phoneNumber2 && phoneNumber2.phoneNumber) ? phoneNumber2 : {};
-
-        var {
-            phoneNumber: phoneNumber3_primary = '',
-            phoneType: phoneType3_primary = '',
-            contactDuring: contactDuring3_primary = '',
-        } = (phoneNumber3 && phoneNumber3.phoneNumber) ? phoneNumber3 : {};
-
-        var {
-            employmentStatus = '',
-            industry = '',
-            occupation = '',
-            employerName = '',
-            employerAddress = {}
-        } = (employementInfo && employementInfo.employerAddress) ? employementInfo : {};
-
-
-        var {
-            addressLine1 = '',
-            addressLine2 = '',
-            city: city_empInfo = '',
-            state: state_empInfo = '',
-            zip: zip_empInfo = '',
-        } = (employerAddress && employerAddress.addressLine1) ? employerAddress : {};
-
-        var {
+       /* var {
             dividendCapitalGain = '',
             documentDeliveryFormat = '',
         } = accountPreferences;
-
+*/
         let currentPage = 5;
         return (
             <View style={styles.container}>
                 {
-                    this.props.accOpeningData.isLoading && <GLoadingSpinner />
+                    //this.props.accOpeningData.isLoading && <GLoadingSpinner />
                 }
                 <GHeaderComponent
                     navigation={this.props.navigation}
@@ -606,116 +673,13 @@ class OpenAccPageFiveComponent extends Component {
 
 
                     { /*-----------Selected Mutual Funds -------------------*/}
-                    <View style={[styles.sectionGrp]}>
-                        <View style={styles.accTypeSelectSection} >
-                            <Text style={styles.headings}>
-                                {gblStrings.accManagement.selectedMutualFunds}
-                            </Text>
-                        </View>
-
-                        <Text style={styles.lblLine} />
-
-                        <Text style={styles.detailsGrpHeaderTxt}>
-                            {"World Growth Fund"}
-                        </Text>
-                        <View style={styles.editSeletedFundsDetailsGrp} >
-                            <TouchableOpacity
-                                // onPress={() => { alert("#TODO:: Edit") }}
-                                activeOpacity={0.8}
-                                accessibilityRole={'button'}
-                                style={styles.editBtn}
-                            >
-                                <Text style={styles.editBtnTxt}>
-                                    {gblStrings.common.edit}
-                                </Text>
-                            </TouchableOpacity>
-                            <View style={styles.detailsRow}>
-                                <Text style={styles.lblLeftColTxt}>
-                                    {gblStrings.accManagement.initInvestment}
-                                </Text>
-                                <Text style={styles.lblRightColTxt}>
-                                    {"$ 3,000.00"}
-                                </Text>
-                            </View>
-                        </View>
-                    </View>
-
+                    <this.renderMutualFundList/>
+                    <this.renderInvestmentInfo/>
+                    <this.renderAccPrefencesInfo/>
                     { /*-----------Funding Information -------------------*/}
-                    <View style={[styles.sectionGrp]}>
-                        <View style={styles.accTypeSelectSection} >
-                            <Text style={styles.headings}>
-                                {gblStrings.accManagement.fundingInfo}
-                            </Text>
-                        </View>
-
-                        <Text style={styles.lblLine} />
-
-                        <View style={styles.editDetailsGrp} >
-                            <TouchableOpacity
-                                //onPress={() => { alert("#TODO:: Edit") }}
-                                activeOpacity={0.8}
-                                accessibilityRole={'button'}
-                                style={styles.editBtn}
-                            >
-                                <Text style={styles.editBtnTxt}>
-                                    {gblStrings.common.edit}
-                                </Text>
-                            </TouchableOpacity>
-                            <View style={styles.detailsRow}>
-                                <Text style={styles.lblLeftColTxt}>
-                                    {gblStrings.accManagement.fundingSource}
-                                </Text>
-                                <Text style={styles.lblRightColTxt}>
-                                    {"Check"}
-                                </Text>
-                            </View>
-
-                            <View style={styles.detailsRow}>
-                                <Text style={styles.lblLeftColTxt}>
-                                    {gblStrings.accManagement.totalInitInvestment}
-                                </Text>
-                                <Text style={styles.lblRightColTxt}>
-                                    {"$ 3,000.00"}
-                                </Text>
-                            </View>
-                        </View>
-                    </View>
-
+                  
                     { /*-----------Account Features -------------------*/}
-                    <View style={[styles.sectionGrp]}>
-                        <View style={styles.accTypeSelectSection} >
-                            <Text style={styles.headings}>
-                                {gblStrings.accManagement.accountFeatures}
-                            </Text>
-                        </View>
-
-                        <Text style={styles.lblLine} />
-
-                        <View style={styles.editDetailsGrp} >
-                            <TouchableOpacity
-                                // onPress={() => { alert("#TODO:: Edit") }}
-                                activeOpacity={0.8}
-                                accessibilityRole={'button'}
-                                style={styles.editBtn}
-                            >
-                                <Text style={styles.editBtnTxt}>
-                                    {gblStrings.common.edit}
-                                </Text>
-                            </TouchableOpacity>
-                            <View style={styles.detailsRow}>
-                                <Text style={styles.lblLeftColTxt}>
-                                    {gblStrings.accManagement.prospectus}
-                                </Text>
-                                <Text style={styles.lblRightColTxt}>
-                                    {`${documentDeliveryFormat}`}
-                                </Text>
-                            </View>
-
-
-                        </View>
-                    </View>
-
-
+            
 
 
                     { /*----------- Buttons Group -------------------*/}

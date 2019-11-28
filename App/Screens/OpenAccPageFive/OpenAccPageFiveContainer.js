@@ -10,7 +10,7 @@ const mapStateToProps = (state /* , props */) => (
     {
       accOpeningData: state.accOpeningReducerData,
       initialState: state.initialAppData
-       }
+    }
   );
 
 const mapDispatchToProps = {
