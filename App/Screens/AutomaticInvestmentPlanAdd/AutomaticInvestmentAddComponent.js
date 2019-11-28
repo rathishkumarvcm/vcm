@@ -55,7 +55,7 @@ class AutomaticInvestmentAddComponent extends Component {
             selectedItemID: "",
             selectedItemName: "",
         };
-    }
+    }//test
     onSelected = (item) => () => {
         console.log("item: " + item.id);
         this.setState({ selectedItemID: item.id });
