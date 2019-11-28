@@ -431,5 +431,6 @@ export const styles = StyleSheet.create({
     },
     phoneSecurityLabel: {
         color: '#56565A', fontSize: scaledHeight(18)
-    }
+    },
+    editDropDownSelect: { height: 100, borderWidth: 1, marginRight: '4%', marginTop: '1%', width: '92%', borderColor: "#DEDEDF", backgroundColor: 'white'}
 });

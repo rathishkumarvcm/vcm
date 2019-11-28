@@ -1,11 +1,12 @@
 /* eslint-disable react/no-multi-comp */
 import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList, TouchableOpacity } from 'react-native';
-import { GButtonComponent, GHeaderComponent, GFooterComponent, GInputComponent, GRadioButtonComponent,GIcon } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent, GInputComponent, GRadioButtonComponent, GIcon, GDropDownComponent } from '../../CommonComponents';
 import { styles } from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { CustomDropDown } from '../../AppComponents';
 import PropTypes from 'prop-types';
+import { scaledHeight } from '../../Utils/Resolution';
 
 
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
@@ -23,13 +24,13 @@ const dummyData = [
         title: 'What is your first pet name',
     },
     {
-        id:'4',
+        id: '4',
         title: 'What is your College Name'
-}];
+    }];
 
 const securityQuestions = [
-    { index1 : 0, question:"Deliver All my documents online at vcm.com"},
-    { index1 : 1, question:"Do not change my document delivery Prefrence"},
+    { index1: 0, question: "Deliver All my documents online at vcm.com" },
+    { index1: 1, question: "Do not change my document delivery Prefrence" },
 ];
 const DropDownListItem = (props) => {
     console.log("DropDownListItem:: ");
@@ -45,18 +46,21 @@ class ModifySecQuesComponent extends Component {
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
-            question1: "",
+            question1: '',
             question1Dropdown: false,
             question2: "",
             question2Dropdown: false,
             question3: "",
             question3Dropdown: false,
             q1Ans: "",
-            q1Ansval:true,
+            q1Ansval: true,
             q2Ans: "",
-            q2Ansval:true,
+            q2Ansval: true,
             q3Ans: "",
-            q3Ansval:true,
+            q3Ansval: true,
+            q1Val: false,
+            q2Val: false,
+            q3Val: false,
             primaryEmail: "",
             additionalEmail: "",
             validationPrimaryEmail: true,
@@ -65,9 +69,13 @@ class ModifySecQuesComponent extends Component {
             radioButton: false,
             radioButtonIndex: 0,
             firstRender: true,
-            q1Val:false,
-            q2Val:false,
-            q3Val:false
+            q1Select: true,
+            q2Select:true,
+            q3Select:true,
+            errorText1:"",
+            errorText2:"",
+            errorText3:"",
+
         };
 
     }
@@ -77,13 +85,13 @@ class ModifySecQuesComponent extends Component {
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
     componentDidMount() {
-        if(this.props && this.props.initialState && this.props.initialState.email){
+        if (this.props && this.props.initialState && this.props.initialState.email) {
             this.setState({
-                primaryEmail : this.props.initialState.email
+                primaryEmail: this.props.initialState.email
             });
-            
+
         }
-        console.log("------>emailllllllll",this.props);
+        console.log("------>emailllllllll", this.props);
     }
     /*----------------------
                                  Button Events 
@@ -91,7 +99,7 @@ class ModifySecQuesComponent extends Component {
     goBack = () => {
         this.props.navigation.goBack();
     }
-    
+
 
 
     radioButtonClicked = (index) => {
@@ -114,11 +122,11 @@ class ModifySecQuesComponent extends Component {
 
     }));
 
-    onChangeText = (stateKey,val) => text => {
+    onChangeText = (stateKey, val) => text => {
         console.log("onChangeText:::>");
         this.setState({
             [stateKey]: text,
-             [val]: (!this.isEmpty(text)),
+            [val]: (!this.isEmpty(text)),
         });
     }
     validatePrimaryEmail = () => {
@@ -133,55 +141,40 @@ class ModifySecQuesComponent extends Component {
             validationAdditionalEmail: validate
         });
     }
-    renderDropDown = (dropDownName, dropDownCompState = false, data, width = '100%') => {
-        console.log("renderDropDown::: " + dropDownName);
-        let keyName = "title";
-        if (dropDownCompState) {
-            return (
-                <View style={{ height: 100, borderWidth: 1, width: width, borderColor: "#DEDEDF", backgroundColor: 'white' }}>
-                    <FlatList
-                        data={data}
-                        renderItem={({ item }) => 
-                        <DropDownListItem
-                        value={item[keyName]}
-                        onSelectedItem={() => this.selectedDropDownValue(dropDownName, item[keyName])}
-                        />
-                        }
-                        keyExtractor={item => item.id}
-                    />
-                </View>
-            );
-
-        }
+    
+    selectTheQuestion = () => {
+        this.setState({
+            question1Dropdown: !this.state.question1Dropdown
+        });
     }
-    selectedDropDownValue = (dropDownName, value) => {
-        switch (dropDownName) {
+    selectTheQuestion2 = () => {
+        this.setState({
+            question2Dropdown: !this.state.question2Dropdown
+        });
+    }
+    selectTheQuestion3 = () => {
+        this.setState({
+            question3Dropdown: !this.state.question3Dropdown
+        });
+    }
 
-            case "question1Dropdown":
-                this.setState({
-                    question1: value,
-                    question1Dropdown: false
-                });
-                break;
-            case "question2Dropdown":
-                this.setState({
-                    question2: value,
-                    question2Dropdown: false
-
-                });
-                break;
-            case "question3Dropdown":
-                this.setState({
-                    question3: value,
-                    question3Dropdown: false
-
-                });
-                break;
-
-            default:
-                break;
-        }
-
+    selectedDropDownValue = (value) => {
+        this.setState({
+            question1: value,
+            question1Dropdown: false
+        });
+    }
+    selectedDropDownValue2 = (value) => {
+        this.setState({
+            question2: value,
+            question2Dropdown: false
+        });
+    }
+    selectedDropDownValue3 = (value) => {
+        this.setState({
+            question3: value,
+            question3Dropdown: false
+        });
     }
 
     isEmpty = (str) => {
@@ -192,96 +185,107 @@ class ModifySecQuesComponent extends Component {
         }
     }
 
-    additionalEmail = () => 
-    {
-         this.setState({ additionalEmailFlag: true });
+    additionalEmail = () => {
+        this.setState({ additionalEmailFlag: true });
     }
 
     validateFields = () => {
-        
+
         var errMsg = "";
         var isValidationSuccess = false;
-        
+
         if (this.isEmpty(this.state.q1Ans)) {
-            this.setState({q1Ansval:false});
-            errMsg="error";
+            this.setState({ q1Ansval: false });
+            errMsg = "error";
         }
-        else
-        {
-            this.setState({q1Ansval:true}); 
-        }
-
-         if (this.isEmpty(this.state.q2Ans)) {
-            this.setState({q2Ansval:false});
-            errMsg="error";
-        }
-        else
-        {
-            this.setState({q2Ansval:true}); 
+        else {
+            this.setState({ q1Ansval: true });
         }
 
-         if (this.isEmpty(this.state.q3Ans)) {
-            this.setState({q3Ansval:false});
-            errMsg="error";
+        if (this.isEmpty(this.state.q2Ans)) {
+            this.setState({ q2Ansval: false });
+            errMsg = "error";
         }
-        else
-        {
-            this.setState({q3Ansval:true}); 
-        }
-
-         if(this.isEmpty(this.state.primaryEmail))
-        {
-            errMsg="error";
+        else {
+            this.setState({ q2Ansval: true });
         }
 
-         if(!this.state.validationPrimaryEmail)
-        {
+        if (this.isEmpty(this.state.q3Ans)) {
+            this.setState({ q3Ansval: false });
+            errMsg = "error";
+        }
+        else {
+            this.setState({ q3Ansval: true });
+        }
+
+        if (this.isEmpty(this.state.primaryEmail)) {
             errMsg = "error";
         }
 
-        if(this.state.question1 == this.state.question2)
-        {
+        if (!this.state.validationPrimaryEmail) {
             errMsg = "error";
-            this.setState({q1Val:true,q2Val:true,q3Val:false});
         }
-        else if(this.state.question2 == this.state.question3)
-        {
+
+        if (this.isEmpty(this.state.question1)) {
+            this.setState({ q1Select: false,errorText1:"Please Select your Question" });
             errMsg = "error";
-            this.setState({q2Val:true,q3Val:true,q1Val:false});
+        }
+        else{
+            this.setState({ q1Select: true, });
+        }
+        if (this.isEmpty(this.state.question2)) {
+            this.setState({ q2Select: false,errorText2:"Please Select your Question" });
+            errMsg = "error";
+        }
+        else{
+            this.setState({ q2Select: true,});
+        }
+        if (this.isEmpty(this.state.question3)) {
+            this.setState({ q3Select: false,errorText3:"Please Select your Question" });
+            errMsg = "error";
+        }
+        else{
+            this.setState({ q3Select: true, });
         }
         
-        else if(this.state.question3 == this.state.question1)
-        {
+        if (!this.isEmpty(this.state.question1)&&!this.isEmpty(this.state.question2)&&this.state.question1 == this.state.question2) {
             errMsg = "error";
-            this.setState({q3Val:true,q1Val:true,q2Val:false});
-        } 
-        else
-        {
-            this.setState({q3Val:false,q1Val:false,q2Val:false});
+            this.setState({ q1Val: true, q2Val: true, q3Val: false,errorText1:gblStrings.userManagement.dropDownError,errorText2:gblStrings.userManagement.dropDownError });
         }
-       
-        if(errMsg!="error")
-         {
+        else if (!this.isEmpty(this.state.question2)&&!this.isEmpty(this.state.question3)&&this.state.question2 == this.state.question3) {
+            errMsg = "error";
+            this.setState({ q2Val: true, q3Val: true, q1Val: false,errorText2:gblStrings.userManagement.dropDownError,errorText3:gblStrings.userManagement.dropDownError });
+        }
+
+        else if (!this.isEmpty(this.state.question3)&&!this.isEmpty(this.state.question1)&&this.state.question3 == this.state.question1) {
+            errMsg = "error";
+            this.setState({ q3Val: true, q1Val: true, q2Val: false,errorText3:gblStrings.userManagement.dropDownError,errorText1:gblStrings.userManagement.dropDownError });
+        }
+        else {
+            this.setState({ q3Val: false, q1Val: false, q2Val: false});
+        }
+
+        if (errMsg != "error") {
             isValidationSuccess = true;
             if (isValidationSuccess) {
-                console.log("-----> Data",this.state.question1,this.state.q1Ans,this.state.question2,this.state.q2Ans,
-                    this.state.question3,this.state.q3Ans,this.state.primaryEmail,this.state.additionalEmail);
+                console.log("-----> Data", this.state.question1, this.state.q1Ans, this.state.question2, this.state.q2Ans,
+                    this.state.question3, this.state.q3Ans, this.state.primaryEmail, this.state.additionalEmail);
                 //this.props.navigation.navigate({ routeName: 'openAccPageFive', key: 'openAccPageFive' });
             }
-         }
-        
+        }
 
-        
+
+
     }
-    
 
+    
     render() {
 
         return (
             <View style={styles.container} >
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
-                <TouchableOpacity >
+                    <TouchableOpacity >
                         <GIcon
                             name="left"
                             type="antdesign"
@@ -289,7 +293,7 @@ class ModifySecQuesComponent extends Component {
                             color="#707070"
                         />
 
-                </TouchableOpacity>
+                    </TouchableOpacity>
                     <View style={styles.signInView} >
                         <Text style={styles.signIntext}>
                             {gblStrings.userManagement.modifySecurityHeading}
@@ -301,93 +305,112 @@ class ModifySecQuesComponent extends Component {
                                     {gblStrings.userManagement.modifySecuritySelect}
                                 </Text>
                             </View>
-                            <Text style={styles.lblTxt}>
+                            {/*<Text style={styles.lblTxt}>
                                 {gblStrings.userManagement.ques1}
-                            </Text>
-                            <CustomDropDown
-                                onPress={this.onPressDropDown("question1", "question1Dropdown")}
-                                value={this.state.question1}
-                                propInputStyle={this.state.q1Val?styles.customListTxtBoxError:styles.customListTxtBox}
-                                placeholder={gblStrings.common.select}
+                            </Text>*/}
+                            
+                            <GDropDownComponent
+                                textInputStyle={styles.dropdownTextInput}
+                                dropDownName={gblStrings.userManagement.ques1}
+                                data={dummyData}
+                                changeState={this.selectTheQuestion}
+                                showDropDown={this.state.question1Dropdown}
+                                dropDownValue={this.state.question1}
+                                selectedDropDownValue={this.selectedDropDownValue}
+                                errorFlag={!this.state.q1Select||this.state.q1Val}
+                                errorText={this.state.errorText1}
+                                dropDownPostition={{ position: 'absolute', top: scaledHeight(155),width:"100%",marginLeft:"0%",marginRight:"0%" }}
                             />
-                            { this.renderDropDown('question1Dropdown', this.state.question1Dropdown, dummyData)}
-                            {
-                                (this.state.q1Val?(<Text style={styles.errorMsg}>{gblStrings.userManagement.dropDownError}</Text>):null)
-                            }
                             <GInputComponent
-                                propInputStyle={!this.state.q1Ansval ? styles.userIDTextBoxError : styles.userIDTextBox} 
+                                //propInputStyle={!this.state.q1Ansval ? styles.userIDTextBoxError : styles.userIDTextBox} 
+                                propInputStyle={styles.userIDTextBox}
                                 value={this.state.q1Ans}
-                                onChangeText={this.onChangeText("q1Ans","q1Ansval")}
-                                //propInputStyle={{ marginTop: 20, width: "100%" }}
-                                //validateError={this.state.validateEmail}
+                                onChangeText={this.onChangeText("q1Ans", "q1Ansval")}
+                                errorFlag={!this.state.q1Ansval}
+                                errorText={gblStrings.userManagement.inputError}
                             />
-                            {
+                            {/*{
                                 (!this.state.q1Ansval?(<Text style={styles.errorMsg}>{gblStrings.userManagement.inputError}</Text>):null)
-                            }
-                            <Text style={styles.lblTxt}>
-                               {gblStrings.userManagement.ques2}
-                            </Text>
-                            <CustomDropDown
-                                onPress={this.onPressDropDown("question2", "question2Dropdown")}
-                                value={this.state.question2}
-                                propInputStyle={this.state.q2Val?styles.customListTxtBoxError:styles.customListTxtBox}
-                                placeholder={gblStrings.common.select}
+                            }*/}
+                           {/* <Text style={styles.lblTxt}>
+                                {gblStrings.userManagement.ques2}
+                        </Text>*/}
+                            
+                            <GDropDownComponent
+                                textInputStyle={styles.dropdownTextInput}
+                                dropDownName={gblStrings.userManagement.ques2}
+                                data={dummyData}
+                                changeState={this.selectTheQuestion2}
+                                showDropDown={this.state.question2Dropdown}
+                                dropDownValue={this.state.question2}
+                                selectedDropDownValue={this.selectedDropDownValue2}
+                                errorFlag={!this.state.q2Select||this.state.q2Val}
+                                errorText={this.state.errorText2}
+                                dropDownPostition={{ position: 'absolute', top: scaledHeight(330),width:"100%",marginLeft:"0%",marginRight:"0%" }}
                             />
-                            {this.renderDropDown('question2Dropdown', this.state.question2Dropdown, dummyData)}
-                            {
-                                (this.state.q2Val?(<Text style={styles.errorMsg}>{gblStrings.userManagement.dropDownError}</Text>):null)
-                            }
                             <GInputComponent
-                                propInputStyle={!this.state.q2Ansval ? styles.userIDTextBoxError : styles.userIDTextBox} 
+                                //propInputStyle={!this.state.q2Ansval ? styles.userIDTextBoxError : styles.userIDTextBox} 
+                                propInputStyle={styles.userIDTextBox}
                                 //propInputStyle={{ marginTop: 20, width: "100%" }}
                                 value={this.state.q2Ans}
-                                onChangeText={this.onChangeText("q2Ans","q2Ansval")}
-                                //validateError={this.state.validateEmail}
-                            />
-                            {
-                                (!this.state.q2Ansval?(<Text style={styles.errorMsg}>{gblStrings.userManagement.inputError}</Text>):null)
-                            } 
-
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.userManagement.ques3}
-                            </Text>
-                            <CustomDropDown
-                                onPress={this.onPressDropDown("question2", "question3Dropdown")}
-                                value={this.state.question3}
-                                propInputStyle={this.state.q3Val?styles.customListTxtBoxError:styles.customListTxtBox}
-                                placeholder={gblStrings.common.select}
-                            />
-                            {this.renderDropDown('question3Dropdown', this.state.question3Dropdown, dummyData)}
-                            {
-                                (this.state.q3Val?(<Text style={styles.errorMsg}>{gblStrings.userManagement.dropDownError}</Text>):null)
-                            }
-                            <GInputComponent
-                                propInputStyle={!this.state.q3Ansval ? styles.userIDTextBoxError : styles.userIDTextBox} 
-                                //propInputStyle={{ marginTop: 20, width: "100%" }}
-                                value={this.state.q3Ans}
-                                onChangeText={this.onChangeText("q3Ans","q3Ansval")}
+                                onChangeText={this.onChangeText("q2Ans", "q2Ansval")}
+                                errorFlag={!this.state.q2Ansval}
+                                errorText={gblStrings.userManagement.inputError}
                             //validateError={this.state.validateEmail}
                             />
-                            {
+                            {/*{
+                                (!this.state.q2Ansval?(<Text style={styles.errorMsg}>{gblStrings.userManagement.inputError}</Text>):null)
+                            } */}
+                                <GDropDownComponent
+                            //propInputStyle={{width:"100%"}}
+                                textInputStyle={styles.dropdownTextInput}
+                                dropDownName={gblStrings.userManagement.ques3}
+                                data={dummyData}
+                                changeState={this.selectTheQuestion3}
+                                showDropDown={this.state.question3Dropdown}
+                                dropDownValue={this.state.question3}
+                                selectedDropDownValue={this.selectedDropDownValue3}
+                                errorFlag={!this.state.q3Select||this.state.q3Val}
+                                errorText={this.state.errorText3}
+                                dropDownPostition={{ position: 'absolute', top: scaledHeight(500),width:"100%",marginLeft:"0%",marginRight:"0%" }}
+                            />          
+                            {/*<Text style={styles.lblTxt}>
+                                {gblStrings.userManagement.ques3}
+                        </Text>*/}
+                           
+                            <GInputComponent
+                                propInputStyle={!this.state.q3Ansval ? styles.userIDTextBoxError : styles.userIDTextBox}
+                                propInputStyle={styles.userIDTextBox}
+                                //propInputStyle={{ marginTop: 20, width: "100%" }}
+                                value={this.state.q3Ans}
+                                onChangeText={this.onChangeText("q3Ans", "q3Ansval")}
+                                errorFlag={!this.state.q3Ansval}
+                                errorText={gblStrings.userManagement.inputError}
+                            //validateError={this.state.validateEmail}
+                            />
+                            {/*{
                                 (!this.state.q3Ansval?(<Text style={styles.errorMsg}>{gblStrings.userManagement.inputError}</Text>):null)
-                            }
+                            }*/}
                             <Text style={styles.lblTxt}>
                                 {gblStrings.userManagement.confirmPEmail}
                             </Text>
                             <GInputComponent
-                                propInputStyle={!this.state.validationPrimaryEmail ? styles.userIDTextBoxError : styles.userIDTextBox}
-                                //placeholder={gblStrings.accManagement.emailformat}
+                                //propInputStyle={!this.state.validationPrimaryEmail ? styles.userIDTextBoxError : styles.userIDTextBox}
+                                propInputStyle={styles.userIDTextBox}
+                                placeholder={gblStrings.accManagement.emailformat}
                                 keyboardType="email-address"
                                 value={this.state.primaryEmail}
                                 maxLength={gblStrings.maxLength.emailID}
-                                onChangeText={this.onChangeText("primaryEmail","")}
+                                onChangeText={this.onChangeText("primaryEmail", "")}
                                 onBlur={this.validatePrimaryEmail}
+                                errorFlag={!this.state.validationPrimaryEmail}
+                                errorText={gblStrings.userManagement.emailError}
                             />
-                            {
+                            {/*{
                                 (!this.state.validationPrimaryEmail?(<Text style={styles.errorMsg}>{gblStrings.userManagement.emailError}</Text>):null)
-                            }
-                            <TouchableOpacity style={{ alignSelf:'flex-end' }} onPress={this.additionalEmail}>
-                                <Text style={{ textDecorationLine: 'underline',color:"#0000FF" }}>{gblStrings.userManagement.addAdditionalEmail}</Text>
+                            }*/}
+                            <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={this.additionalEmail}>
+                                <Text style={{ textDecorationLine: 'underline', color: "#0000FF" }}>{gblStrings.userManagement.addAdditionalEmail}</Text>
                             </TouchableOpacity>
                             {(this.state.additionalEmailFlag) ?
                                 (
@@ -405,21 +428,21 @@ class ModifySecQuesComponent extends Component {
                             <Text style={styles.lblTxt}>
                                 {gblStrings.userManagement.documentDeliveryPreference}
                             </Text>
-                            
-                    {securityQuestions.map((item,index) => 
-                    index == this.state.radioButtonIndex ? 
-                    <GRadioButtonComponent 
-                    onPress={()=>this.radioButtonClicked(index)}
-                    selected
-                    questions = {item.question}
-                    />
-                    :
-                    <GRadioButtonComponent 
-                    onPress={()=>this.radioButtonClicked(index)}
-                    selected = {false}
-                    questions = {item.question}
-                    />
-                )}
+
+                            {securityQuestions.map((item, index) =>
+                                index == this.state.radioButtonIndex ?
+                                    <GRadioButtonComponent
+                                        onPress={() => this.radioButtonClicked(index)}
+                                        selected
+                                        questions={item.question}
+                                    />
+                                    :
+                                    <GRadioButtonComponent
+                                        onPress={() => this.radioButtonClicked(index)}
+                                        selected={false}
+                                        questions={item.question}
+                                    />
+                            )}
                             <GButtonComponent
                                 buttonStyle={styles.cancelButton}
                                 buttonText={gblStrings.common.back}
@@ -449,7 +472,8 @@ class ModifySecQuesComponent extends Component {
 }
 
 ModifySecQuesComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    initialState: PropTypes.instanceOf(Object)
 };
 
 ModifySecQuesComponent.defaultProps = {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { GButtonComponent, GHeaderComponent, GFooterComponent,GIcon } from '../../CommonComponents';
-import { styles } from './styles';
+import { styles } from '../ChangeSignInMethod/styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from 'prop-types';
 

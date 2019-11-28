@@ -22,6 +22,7 @@ import GRatingStarsComponent from './GRatingStarsComponent';
 import GSwitchComponent from './GSwitchComponent';
 import GFooterSettingsComponent from './GFooterSettingsComponent';
 import GDropDownComponent from './GDropDownComponent';
+import GDateComponent from './GDateComponent';
 
 import {
     SetKeyValueToStore,
@@ -57,5 +58,6 @@ export {
     RemoveKeyValueFromStore,
     GSwitchComponent,
     GFooterSettingsComponent,
-    GDropDownComponent
+    GDropDownComponent,
+    GDateComponent
 };

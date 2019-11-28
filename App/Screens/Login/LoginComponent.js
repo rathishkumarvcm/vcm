@@ -213,7 +213,7 @@ class LoginComponent extends Component {
             </View>
             <View style={styles.signInUser}>
                 <Text style={styles.userIDText}>
-                    {"User ID"}       
+                    {"Online ID"}       
                 </Text>
             </View>
             <GInputComponent 

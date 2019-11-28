@@ -26,7 +26,7 @@ import ChangeLogonCredentialsComponent from './Screens/ChangeLogonCredentials/Ch
 import ResetPasswordComponent from './Screens/ResetPassword/ResetPasswordComponent';
 import ResetPINComponent from './Screens/ResetPIN/ResetPINComponent';
 import AccountRecoveryPrefComponent from './Screens/AccountRecoveryPref';
-import ProfilesAndPreferences from './Screens/ProfilesAndPreferences/';
+import ProfilesAndPreferences from './Screens/ProfilesAndPreferences/ProfilesAndPreferencesComponent';
 import SecurityPreference from './Screens/SecurityPreferences/SecurityPreferencesComponent';
 import AccountMessagingSettings from './Screens/AccountMessagingSettings/AccountMessagingSettingsComponent';
 import AccountMessagingGoals from './Screens/AccountMessagingGoals/AccountMessagingGoalsComponent';
@@ -49,13 +49,13 @@ import RetrieveOnlineId from './Screens/RetrieveOnlineId/RetrieveOnlineIdCompone
 // Acc Management
 import Dashboard from './Screens/Dashboard/DashboardComponent';
 import TermsAndConditions from './Screens/TermsAndConditions/TermsAndConditionsComponent';
-import DashboardAccounts from './Screens/DashboardAccounts/';
-import OpenAccPageOne from './Screens/OpenAccPageOne/';
-import OpenAccPageTwo from './Screens/OpenAccPageTwo/';
-import OpenAccPageThree from './Screens/OpenAccPageThree/';
-import OpenAccPageFour from './Screens/OpenAccPageFour/';
-import OpenAccPageFive from './Screens/OpenAccPageFive/';
-import OpenAccPageSix from './Screens/OpenAccPageSix/';
+import DashboardAccounts from './Screens/DashboardAccounts';
+import OpenAccPageOne from './Screens/OpenAccPageOne';
+import OpenAccPageTwo from './Screens/OpenAccPageTwo';
+import OpenAccPageThree from './Screens/OpenAccPageThree';
+import OpenAccPageFour from './Screens/OpenAccPageFour';
+import OpenAccPageFive from './Screens/OpenAccPageFive/OpenAccPageFiveComponent';
+import OpenAccPageSix from './Screens/OpenAccPageSix';
 import SpecialtyAccPage from './Screens/SpecialtyAccPage/SpecialtyAccPageComponent';
 import SpecialtyAccSubmit from './Screens/SpecialtyAccSubmit/SpecialtyAccSubmitComponent';
 import CollegePlanESA from './Screens/CollegePlanESA/CollegePlanESAComponent';
@@ -78,17 +78,17 @@ import EditMilitaryInfo from './Screens/EditMilitaryInformation/EditMilitaryInfo
 import EditOccupationInfo from './Screens/EditOccupationInformation/EditOccupationInfoComponent';
 import ModifySecurityQues from './Screens/ModifySecurityQues';
 import ChangeSignInMethod from './Screens/ChangeSignInMethod/ChangeSignInMethodComponent';
-import CSMSoftTokenComponent from './Screens/ChangeSignInMethod/CSMSoftTokenComponent';
-import CSMPushNotificationComponent from './Screens/ChangeSignInMethod/CSMPushNotification';
-import CSMOtp from './Screens/ChangeSignInMethod';
+import CSMSoftTokenComponent from './Screens/CSMSoftToken/CSMSoftTokenComponent';
+import CSMPushNotificationComponent from './Screens/CSMPushNotification/CSMPushNotification';
+import CSMOtp from './Screens/CSMOtp';
 import ManageIntrestedPartiesComponent from './Screens/ManageIntrestedParties';
 import ManageBeneficiariesComponent from './Screens/ManageBeneficiaries';
 
 
-import EditRelationshipInfo from './Screens/EditRelationshipInformation/';
+import EditRelationshipInfo from './Screens/EditRelationshipInformation/EditRelationshipComponent';
 import EditRegulatoryInfo from './Screens/EditRegulatoryInformations/EditRegulatoryComponent';
 import EditFamilyMemberInfo from './Screens/EditFamilyMemberInformation/EditFamilyMemberComponent';
-import EditFamilyDetail from './Screens/EditFamilyMemberDetails/';
+import EditFamilyDetail from './Screens/EditFamilyMemberDetails/EditFamilyDetailComponent';
 
 //Password Recovery
 import PasswordRecovery from './Screens/RecoverPassword/';
@@ -96,17 +96,6 @@ import PasswordRecoveryOtp from './Screens/RecoverPasswordOtp/';
 import PasswordRecoverTemp from './Screens/RecoverTempPassword/';
 import PasswordReset from './Screens/RecoverPasswordNew/';
 import PasswordSuccess from './Screens/RecoverPasswordSuccess/';
-
-//Systematic Withdrawal plan
-import systematicWithdrawal from './Screens/SystematicWithdrawalPlan';
-import systematicWithdrawalAdd from './Screens/SystematicWithdrawalPlanAdd';
-
-//Automatic Investment Plan
-import automaticInvestment from './Screens/AutomaticInvestmentPlan';
-import automaticInvestmentAdd from './Screens/AutomaticInvestmentPlanAdd';
-import automaticInvestmentSchedule from './Screens/AutomaticInvestmentPlanSchedule';
-import automaticInvestmentVerify from './Screens/AutomaticInvestmentPlanVerify';
-import automaticInvestmentEsign from './Screens/AutomaticInvestmentPlanEsign';
 
 const AppNavigator = createStackNavigator({
         login: {
@@ -478,7 +467,7 @@ const AppNavigator = createStackNavigator({
                 header: null,
             }
         },
-        securityPreference:
+        SecurityPreference:
         {
             screen: SecurityPreference,
             navigationOptions: {
@@ -609,49 +598,7 @@ const AppNavigator = createStackNavigator({
             navigationOptions:{
                 header:null,
             }  
-        },
-        automaticInvestment:{
-            screen:automaticInvestment,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        automaticInvestmentAdd:{
-            screen:automaticInvestmentAdd,
-            navigationOptions:{
-                header:null,
-            }  
-        },
-        automaticInvestmentSchedule:{
-            screen:automaticInvestmentSchedule,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        automaticInvestmentVerify:{
-            screen:automaticInvestmentVerify,
-            navigationOptions:{
-                header:null,
-            }  
-        },
-        automaticInvestmentEsign:{
-            screen:automaticInvestmentEsign,
-            navigationOptions:{
-                header:null,
-            }  
-        },
-        systematicWithdrawal:{
-            screen:systematicWithdrawal,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        systematicWithdrawalAdd:{
-            screen:systematicWithdrawalAdd,
-            navigationOptions:{
-                header:null,
-            }  
-        } 
+        }
     },{
         initialRouteName: 'login'
     });

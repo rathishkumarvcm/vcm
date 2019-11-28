@@ -39,7 +39,7 @@ class RegisterEmailComponent extends Component {
         this.props.navigation.goBack();
     }
 
-    navigatePassword = ()=>this.props.navigation.navigate('emailVerify');
+    navigatePassword = ()=>this.props.navigation.navigate('registerSelf');
     
  
     render(){
@@ -73,7 +73,7 @@ class RegisterEmailComponent extends Component {
              
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"Email"}       
+                    {"E-mail"}       
                 </Text>
             </View>
             <GInputComponent 

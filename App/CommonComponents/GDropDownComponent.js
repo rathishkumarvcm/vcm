@@ -69,7 +69,7 @@ export const GDropDownComponent = props => (
         </Text>
     </View>
 
-<TouchableOpacity style={{flexDirection:'row'}} onPress={props.changeState}>
+
     <GInputComponent 
         propInputStyle={[styles.textInputStyle,props.textInputStyle]} 
         placeholder={""}
@@ -77,17 +77,11 @@ export const GDropDownComponent = props => (
         value={props.dropDownValue}
         errorFlag={props.errorFlag}
         errorText={props.errorText}
+        dropDownBox={true}
+        dropDownClick={props.changeState}
     />
 
-    <TouchableOpacity style={[styles.arrowIconStyle,props.arrowIconStyle]} onPress={props.changeState}>
-        <GIcon 
-            name="md-arrow-dropdown"
-            type="ionicon"
-            size={20}
-            color="black"
-        />
-    </TouchableOpacity>
-</TouchableOpacity>
+    
 
 
 
@@ -97,8 +91,8 @@ export const GDropDownComponent = props => (
 <FlatList
     data={props.data}
     renderItem={({ item }) => 
-    (<TouchableOpacity style={{ height: 33 }} onPress={() => props.selectedDropDownValue(item.title)}>
-        <Text> {item.title} </Text>
+    (<TouchableOpacity style={{ height: 33 }} onPress={() => props.selectedDropDownValue(item)}>
+        <Text> {item[props.itemToDisplay]} </Text>
      </TouchableOpacity>)
     }
 keyExtractor={item => item.id}
