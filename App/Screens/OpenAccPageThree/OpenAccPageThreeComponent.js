@@ -426,10 +426,10 @@ class OpenAccPageThreeComponent extends Component {
         tempData.initialInvestment = "";
         tempData.monthlyInvestment = "";
         tempData.startDate = "";
-        tempData.fundingOptionValidation = true;
-        tempData.initialInvestmentValidation = true;
-        tempData.monthlyInvestmentValidation = true;
-        tempData.startDateValidation = true;
+        tempData.fundingOptionValidation = false;
+        tempData.initialInvestmentValidation = false;
+        tempData.monthlyInvestmentValidation = false;
+        tempData.startDateValidation = false;
         tempData.action = "add";
 
         this.setState({
