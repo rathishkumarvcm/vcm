@@ -4,6 +4,7 @@ import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
+import * as reGex from '../../Constants/RegexConstants';
 
 const profileAddNewAddress = [
     { index1: 0, question: "U.S. or U.S. Territories" },
@@ -22,7 +23,11 @@ class editAddressAddNewComponent extends Component {
             faceIdEnrolled: false,
             touchIdEnrolled: false,
             radioButton: false,
-            radioButtonIndex: 0
+            radioButtonIndex: 0,
+            validationAddressOne: true,
+            addressOne: '',
+            isZipCodeValid: true,
+            zipCodeValue: ''
         };
     }
 
@@ -39,6 +44,44 @@ class editAddressAddNewComponent extends Component {
             this.setState({
                 radioButton: false
             });
+        }
+    }
+
+    setAddressOne = text => {
+        this.setState({
+            addressOne: text,
+            validationAddressOne: true
+        });
+    }
+
+    setZipcodeValue = text => {
+        this.setState({
+            zipCodeValue: text,
+            isZipCodeValid: true
+        });
+    }
+
+    addAddressOnValidate = (validationType) => () => {
+        switch (validationType) {
+            case 'validateAddressValueOne':
+                if (this.state.addressOne === "") {
+                    this.setState({
+                        validationAddressOne: false
+                    });
+                }
+
+                if (this.state.zipCodeValue === "") {
+                    let validate = reGex.zipCodeRegex.test(this.state.zipCodeValue);
+                    this.setState({
+                        isZipCodeValid: validate
+                    })
+                }
+
+                if (this.state.addressOne != "" &&
+                    this.state.zipCodeValue != "") {
+                    this.props.navigation.navigate('editAddressSettings')
+                }
+                break;
         }
     }
 
@@ -86,17 +129,17 @@ class editAddressAddNewComponent extends Component {
 
                         <View style={styles.editAddressInput}>
                             {profileAddNewAddress.map((item, index) =>
-                                    index == this.state.radioButtonIndex ?
-                                        <GRadioButtonComponent
-                                            onPress={() => this.radioButtonClicked(index)}
-                                            selected
-                                            questions={item.question} />
-                                        :
-                                        <GRadioButtonComponent
-                                            onPress={() => this.radioButtonClicked(index)}
-                                            selected={false}
-                                            questions={item.question} />
-                                )}
+                                index == this.state.radioButtonIndex ?
+                                    <GRadioButtonComponent
+                                        onPress={() => this.radioButtonClicked(index)}
+                                        selected
+                                        questions={item.question} />
+                                    :
+                                    <GRadioButtonComponent
+                                        onPress={() => this.radioButtonClicked(index)}
+                                        selected={false}
+                                        questions={item.question} />
+                            )}
                         </View>
 
                         <View style={styles.settingsView1}>
@@ -107,7 +150,11 @@ class editAddressAddNewComponent extends Component {
 
                         <View style={styles.editAddressInput}>
                             <GInputComponent
-                                placeholder={globalString.addAddressInfo.addressLineOne} />
+                                placeholder={globalString.addAddressInfo.addressLineOne}
+                                onChangeText={this.setAddressOne}
+                                value={this.state.addressOne}
+                                errorFlag={!this.state.validationAddressOne}
+                                errorText={globalString.profileValidationMessages.validateAddressLineOne} />
                         </View>
 
                         <View style={styles.settingsView1}>
@@ -129,10 +176,14 @@ class editAddressAddNewComponent extends Component {
 
                         <View style={styles.editAddressInput}>
                             <GInputComponent
-                                placeholder={globalString.addAddressInfo.zipCode} />
+                                placeholder={globalString.addAddressInfo.zipCode}
+                                onChangeText={this.setZipcodeValue}
+                                value={this.state.zipCodeValue}
+                                errorFlag={!this.state.isZipCodeValid}
+                                errorText={globalString.profileValidationMessages.validateAddressLineOne} />
                         </View>
 
-                        <View style={styles.editAddressViewCity}>
+                        <View style={styles.editFlexDirectionColumn}>
                             <Text style={styles.editAddressCityLabel}>
                                 {globalString.addAddressInfo.cityLabel}
                             </Text>
@@ -141,7 +192,7 @@ class editAddressAddNewComponent extends Component {
                             </Text>
                         </View>
 
-                        <View style={styles.editAddressViewCity}>
+                        <View style={styles.editFlexDirectionColumn}>
                             <Text style={styles.editAddressCityLabel}>
                                 {globalString.addAddressInfo.stateLabel}
                             </Text>
@@ -164,7 +215,8 @@ class editAddressAddNewComponent extends Component {
                         <GButtonComponent
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
-                            textStyle={styles.saveButtonText} />
+                            textStyle={styles.saveButtonText}
+                            onPress={this.addAddressOnValidate('validateAddressValueOne')} />
                     </View>
 
                     <View style={styles.editAddressBorder}></View>
