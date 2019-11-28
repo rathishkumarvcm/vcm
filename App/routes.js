@@ -49,13 +49,13 @@ import RetrieveOnlineId from './Screens/RetrieveOnlineId/RetrieveOnlineIdCompone
 // Acc Management
 import Dashboard from './Screens/Dashboard/DashboardComponent';
 import TermsAndConditions from './Screens/TermsAndConditions/TermsAndConditionsComponent';
-import DashboardAccounts from './Screens/DashboardAccounts';
-import OpenAccPageOne from './Screens/OpenAccPageOne';
-import OpenAccPageTwo from './Screens/OpenAccPageTwo';
-import OpenAccPageThree from './Screens/OpenAccPageThree';
-import OpenAccPageFour from './Screens/OpenAccPageFour';
-import OpenAccPageFive from './Screens/OpenAccPageFive/OpenAccPageFiveComponent';
-import OpenAccPageSix from './Screens/OpenAccPageSix';
+import DashboardAccounts from './Screens/DashboardAccounts/';
+import OpenAccPageOne from './Screens/OpenAccPageOne/';
+import OpenAccPageTwo from './Screens/OpenAccPageTwo/';
+import OpenAccPageThree from './Screens/OpenAccPageThree/';
+import OpenAccPageFour from './Screens/OpenAccPageFour/';
+import OpenAccPageFive from './Screens/OpenAccPageFive/';
+import OpenAccPageSix from './Screens/OpenAccPageSix/';
 import SpecialtyAccPage from './Screens/SpecialtyAccPage/SpecialtyAccPageComponent';
 import SpecialtyAccSubmit from './Screens/SpecialtyAccSubmit/SpecialtyAccSubmitComponent';
 import CollegePlanESA from './Screens/CollegePlanESA/CollegePlanESAComponent';

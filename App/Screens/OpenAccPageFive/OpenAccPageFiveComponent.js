@@ -57,21 +57,24 @@ class OpenAccPageFiveComponent extends Component {
 
     }
 
-    renderPrimarySection = () => {
+    renderAllSection = (data) => {
+        console.log("renderAllSection::"+JSON.stringify(data));
+
         return (
             <View >
-                <this.renderPrimaryPersonalInfo />
-                <this.renderPrimaryEmploymentInfo /> 
-                <this.renderPrimaryMilitaryInfo /> 
-                <this.renderPrimaryFinancialInfo />           
-          
-          
+                {this.renderPrimaryPersonalInfo(data)}
+                {this.renderPrimaryEmploymentInfo (data)}
+                {this.renderPrimaryMilitaryInfo (data)}
+                {this.renderPrimaryFinancialInfo (data)}
+                {this.renderMutualFundList (data)}
+                {this.renderInvestmentInfo (data)}
+                {this.renderAccPrefencesInfo (data)}
             </View>
         );
     }
 
-    renderPrimaryPersonalInfo = () => {
-        var { personalInfo = {} } = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
+    renderPrimaryPersonalInfo = (data) => {
+        var { personalInfo = {} } = data ? data : {};
 
         console.log("personalInfo::"+JSON.stringify(personalInfo));
         var {
@@ -243,10 +246,10 @@ class OpenAccPageFiveComponent extends Component {
         );
     }
 
-    renderPrimaryEmploymentInfo = () => {
+    renderPrimaryEmploymentInfo = (data) => {
 
 
-        var { employementInfo = {} } = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
+        var { employementInfo = {} }  = data ? data : {};
 
 
         var {
@@ -326,11 +329,10 @@ class OpenAccPageFiveComponent extends Component {
         );
     }
 
-    renderPrimaryMilitaryInfo = () => {
+    renderPrimaryMilitaryInfo = (data) => {
 
 
-        var { militaryInfo = {} } = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
-
+        var { militaryInfo = {} } = data ? data : {};
         var {
             servingStatus = '',
             militaryStatus = '',
@@ -404,11 +406,10 @@ class OpenAccPageFiveComponent extends Component {
         );
     }
 
-    renderPrimaryFinancialInfo = () => {
+    renderPrimaryFinancialInfo = (data) => {
 
 
-        var { financialInfo = {} } = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
-
+        var { financialInfo = {} }  = data ? data : {};
         var {
             annualIncome = '',
             taxBracket = '',
@@ -471,7 +472,10 @@ class OpenAccPageFiveComponent extends Component {
         );
     }
 
-    renderMutualFundList = () => {
+    renderMutualFundList = (data) => {
+       
+        var { financialInfo = {} } = data ? data : {};
+
         return(
             <View style={[styles.sectionGrp]}>
             <View style={styles.accTypeSelectSection} >
@@ -510,8 +514,8 @@ class OpenAccPageFiveComponent extends Component {
         );
     }
 
-    renderInvestmentInfo = () => {
-        var { investmentInfo = {} } = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
+    renderInvestmentInfo = (data) => {
+        var { investmentInfo = {} }  = data ? data : {};
 
 
         var {
@@ -577,8 +581,8 @@ class OpenAccPageFiveComponent extends Component {
         );
     }
 
-    renderAccPrefencesInfo = () =>{
-        var { accountPreferences = {} } = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
+    renderAccPrefencesInfo = (data) =>{
+        var { accountPreferences = {} } = data ? data : {};
         
         var {
             documentDeliveryFormat = '',
@@ -628,8 +632,8 @@ class OpenAccPageFiveComponent extends Component {
                                                                  -------------------------- */
     render() {
         var { accountType = '' } = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
-
-
+        let tempInfoData = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
+console.log ("tempInfoData:::"+JSON.stringify(tempInfoData));
        /* var {
             dividendCapitalGain = '',
             documentDeliveryFormat = '',
@@ -669,17 +673,7 @@ class OpenAccPageFiveComponent extends Component {
                         </View>
                     </View>
 
-                    <this.renderPrimarySection />
-
-
-                    { /*-----------Selected Mutual Funds -------------------*/}
-                    <this.renderMutualFundList/>
-                    <this.renderInvestmentInfo/>
-                    <this.renderAccPrefencesInfo/>
-                    { /*-----------Funding Information -------------------*/}
-                  
-                    { /*-----------Account Features -------------------*/}
-            
+                    {this.renderAllSection(tempInfoData)}
 
 
                     { /*----------- Buttons Group -------------------*/}
