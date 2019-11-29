@@ -108,6 +108,9 @@ import automaticInvestmentEsign from './Screens/AutomaticInvestmentPlanEsign';
 //Systematic Withdrawal plan
 import systematicWithdrawal from './Screens/SystematicWithdrawalPlan';
 import systematicWithdrawalAdd from './Screens/SystematicWithdrawalPlanAdd';
+import systematicWithdrawalSchedule from './Screens/SystematicWithdrawalPlanSchedule';
+import systematicWithdrawalVerify from './Screens/SystematicWithdrawalPlanVerify';
+import systematicWithdrawalEsign from './Screens/SystematicWithdrawalPlanEsign';
 
 //Account Services
 import AccountServicesComponent from './Screens/AccountServices';
@@ -668,6 +671,24 @@ const AppNavigator = createStackNavigator({
             navigationOptions: {
                 header: null,
             }
+        },
+        systematicWithdrawalVerify:{
+            screen:systematicWithdrawalVerify,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        systematicWithdrawalSchedule:{
+            screen:systematicWithdrawalSchedule,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        systematicWithdrawalEsign:{
+            screen:systematicWithdrawalEsign,
+            navigationOptions:{
+                header:null,
+            }  
         }
         
     },{

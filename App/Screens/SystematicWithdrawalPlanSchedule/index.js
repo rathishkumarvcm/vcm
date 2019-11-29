@@ -1,0 +1,3 @@
+import SystematicWithdrawalPlanScheduleComponent from './SystematicWithdrawalPlanScheduleContainer';
+
+export default SystematicWithdrawalPlanScheduleComponent;

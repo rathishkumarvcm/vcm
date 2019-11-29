@@ -12,7 +12,7 @@ import globalString from '../../Constants/GlobalStrings';
 
 import * as regEx from '../../Constants/RegexConstants';
 
-class AutomaticInvestmentPlanEsignComponent extends Component {
+class SystematicWithdrawalPlanEsignComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -29,7 +29,7 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
             <View style={styles.container}>
                 <GHeaderComponent register navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
-                    <Text style={styles.autoInvestHead}>{'Create Automatic Investment Plan'}</Text>
+                    <Text style={styles.autoInvestHead}>{'Create Systematic Withdrawal Plan'}</Text>
                     <View style={styles.seperator_line} />
                     <View style={styles.circle_view}>
                         <View style={styles.circle_Completed}>
@@ -112,13 +112,13 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
         );
     }
 }
-AutomaticInvestmentPlanEsignComponent.propTypes = {
+SystematicWithdrawalPlanEsignComponent.propTypes = {
 
     navigation: PropTypes.instanceOf(Object)
 };
 
-AutomaticInvestmentPlanEsignComponent.defaultProps = {
+SystematicWithdrawalPlanEsignComponent.defaultProps = {
 
 };
 
-export default AutomaticInvestmentPlanEsignComponent;
+export default SystematicWithdrawalPlanEsignComponent;

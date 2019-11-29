@@ -1,0 +1,3 @@
+import SystematicWithdrawalPlanEsignComponent from './SystematicWithdrawalPlanEsignContainer';
+
+export default SystematicWithdrawalPlanEsignComponent;

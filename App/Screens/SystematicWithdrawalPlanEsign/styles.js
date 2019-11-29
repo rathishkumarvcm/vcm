@@ -78,23 +78,13 @@ export const styles = StyleSheet.create({
         color:'#4D79F6',
     },
     autoInvest_sub_title_view:{
-        flex:1,
-        flexDirection:'row',
         marginTop:scaledHeight(20),
         height:scaledHeight(27),
         marginBottom:scaledHeight(10)
     },
     autoInvest_sub_title_text:{
-        flex:0.9,
         fontSize:scaledHeight(20),
         color:'#56565A',
-        fontWeight:'bold'
-    },
-    autoInvest_sub_edit:{
-        flex:0.1,
-        color:'#5D83AE',
-        fontSize:scaledHeight(15),
-        textAlign:'right'
     },
     body:
     {
@@ -163,37 +153,52 @@ export const styles = StyleSheet.create({
         color:'#FFFFFF',
         fontWeight:'bold'
     },
-    verifyContentView:{
-        flexDirection:'column',
-        borderWidth:1,
-        borderColor:'#D6D8DC',
-        paddingLeft:scaledWidth(20),
-        paddingTop:scaledHeight(20),
-        paddingBottom:scaledHeight(20),
+    esignBody:{
+            borderColor:'#61285F45',
+            borderWidth:1,
+            
     },
-    verifyConentTitle1:
+    esignBody1:
     {
-        color:'#333333DE',
+            paddingLeft:scaledWidth(15),
+            paddingRight:scaledWidth(15),
+            paddingTop:scaledHeight(15),
+            paddingBottom:scaledHeight(15),
+    },
+    esignTitle:{
+        color:'#54565B',
+        fontSize:scaledHeight(16),
+        marginBottom:scaledHeight(10),
+    },
+    esignHeading:{
+        color:'#2C8DBF',
+        marginBottom:scaledHeight(10),
+        marginTop:scaledHeight(10),
         fontSize:scaledHeight(16),
         fontWeight:'bold'
     },
-    verifyConentTitle2:
-    {
-        color:'#333333DE',
-        fontSize:scaledHeight(16),
-        marginTop:scaledHeight(10)
+    esignContent1:{
+        color:'#56565A',
+        fontSize:scaledHeight(15),
+        marginBottom:scaledHeight(15)
     },
-    verifyBottomView:{
-        backgroundColor:'#E8ECEE',
-        justifyContent:"center",
-        alignItems:'center',
-        height:scaledHeight(120)
+    esignContent2:{
+        color:'#56565A',
+        fontSize:scaledHeight(15),
     },
-    verifyBottomText:{
-        color:'#544A54',
-        fontSize:scaledHeight(16),
-        fontWeight:'bold',
-        paddingLeft:scaledWidth(20),
-        paddingRight:scaledWidth(10)
-    }
+    esignBottomView:{
+        flexDirection:'row',
+        backgroundColor:'#F3F3F3',
+        paddingLeft:scaledWidth(15),
+        paddingRight:scaledWidth(15),
+        paddingTop:scaledHeight(15),
+        paddingBottom:scaledHeight(15),
+    },
+    agreeTermsTxt: {
+        textAlign: 'left',
+        fontSize: scaledHeight(16),
+        color: '#333333DE',
+        //marginTop:scaledHeight(5)
+    },
+    
 });

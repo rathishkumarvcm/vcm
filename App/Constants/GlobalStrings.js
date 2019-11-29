@@ -967,6 +967,14 @@ export default {
         amount_remaining: 'Amount Remaining',
         min_amt: 'Min $50',
         dollar_sign: "$"
-    }
+    },
+    //Systematic Investment Plan
+    systematicWithdrawal: {
+        sysWith_Title: 'Systematic Withdrawal Plan',
+        sysWith_current: 'Current Systematic Withdrawal Plans',
+        sysWith_current_content: 'There are two parts for an systematic withdrawal within an IRA. The first is the contribution to the account and sencond is the purchase of the mutual fund(s). if you\'re making a change, be sure adjust both parts',
+        acc_Name: 'Account Name',
+        skip: 'Skip',
+    },
 
 };
