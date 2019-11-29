@@ -17,6 +17,8 @@ class AccountServicesComponent extends Component {
 
     navigateDividents = () => this.props.navigation.navigate('dividentsAndCapitalGainsPref')
 
+    navigateOrderCheckBook = () => this.props.navigation.navigate('orderCheckBook')
+
     render() {
         return (
             <View style={styles.container}>
@@ -97,27 +99,29 @@ class AccountServicesComponent extends Component {
 
                     </View>
 
-                    <View style={styles.optionContainer}>
-                        <View style={styles.optionIcon}>
-                            <GIcon
-                                name="view-grid"
-                                type="material-community"
-                                size={30}
-                                color="black"
-                            />
+                    <TouchableOpacity onPress={this.navigateOrderCheckBook}>
+                        <View style={styles.optionContainer}>
+                            <View style={styles.optionIcon}>
+                                <GIcon
+                                    name="view-grid"
+                                    type="material-community"
+                                    size={30}
+                                    color="black"
+                                />
 
-                            <Text style={styles.optionHeaderText}>
-                                {gblStrings.accountServices.checkbook}
-                            </Text>
+                                <Text style={styles.optionHeaderText}>
+                                    {gblStrings.accountServices.checkbook}
+                                </Text>
+                            </View>
+
+                            <View style={styles.optionSubHeaderView}>
+                                <Text style={styles.optionSubHeaderText}>
+                                    {gblStrings.userManagement.loremSecurityPref}
+                                </Text>
+                            </View>
+
                         </View>
-
-                        <View style={styles.optionSubHeaderView}>
-                            <Text style={styles.optionSubHeaderText}>
-                                {gblStrings.userManagement.loremSecurityPref}
-                            </Text>
-                        </View>
-
-                    </View>
+                    </TouchableOpacity>
 
                     <TouchableOpacity onPress={this.navigateDividents}>
                         <View style={styles.optionContainer}>
@@ -141,6 +145,27 @@ class AccountServicesComponent extends Component {
                             </View>
                         </View>
                     </TouchableOpacity>
+
+                    <View style={styles.optionContainer}>
+                        <View style={styles.optionIcon}>
+                            <GIcon
+                                name="view-grid"
+                                type="material-community"
+                                size={30}
+                                color="black"
+                            />
+
+                            <Text style={styles.optionHeaderText}>
+                                {gblStrings.accountServices.failed_email}
+                            </Text>
+                        </View>
+
+                        <View style={styles.optionSubHeaderView}>
+                            <Text style={styles.optionSubHeaderText}>
+                                {gblStrings.userManagement.loremSecurityPref}
+                            </Text>
+                        </View>
+                    </View>
 
                     <View style={styles.fullLine} />
 

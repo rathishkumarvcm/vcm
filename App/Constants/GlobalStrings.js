@@ -954,8 +954,9 @@ export default {
         bank_accounts: 'BANK ACCOUNTS',
         automatic_investment_plan: 'AUTOMATIC INVESTMENT PLAN',
         systematic_withdrawal_plan: 'SYSTEMATIC WITHDRAWAL PLAN',
-        checkbook: 'CHECKBOOK',
-        dividents: 'DIVIDENTS'
+        checkbook: 'ORDER CHECKBOOK',
+        dividents: 'DIVIDENTS',
+        failed_email: 'Failed Email - Member Update'
     },
     dividents: {
         dividents_and_capital_gains_preferences: 'Dividents and Capital Gains Preferences',
@@ -981,5 +982,11 @@ export default {
         acc_Name: 'Account Name',
         skip: 'Skip',
     },
-
+    orderCheckBook: {
+        order_checkbook: 'Order Checkbook',
+        checkbook_requested_on: 'Checkbook requested on',
+        number_of_checkleaves: 'Number of Check Leaves',
+        verify_your_account: 'Verify your account information below',
+        request_submit_checkbook: 'You have successfully Submitted the Checkbook request'
+    },
 };
