@@ -146,6 +146,15 @@ export default {
         addPrimaryBeneficiary:"Add Primary Beneficiary",
         balance:"Balance",
         zipCodeFormat:"11111 / 11111-1111",
+        beneficiaryName:"Beneficiary Name",
+        enterDetailsPrimaryDisc:"Distributions for primary beneficiary and for contingent beneficiary must equal 100 percentage.",
+        enterDetailsContingentBene:"Contingent beneficiary are recommended but not required.",
+        enterDetailsIfYouWish:"If you wish to select a spouse or child and that person is not listed, you may add them in your Profile Page If your request cannot be completed using the selections below, please Contact Us.",
+        enterDetailsIfNoBene:"If no beneficiary designation has been received and accepted by the custodian prior to your account (Account Owner) death, or if all of your designated beneficiaries have predeceased you, then your beneficiary sahll be your surviving spouse or, if there is no surviving spouse, then the account owner's estate. See the custodial agreement and disclosure statement applicable to your Victory Capital retirement plan for complete information.",
+        enterDetailsAdditionalAdvisor:"Additionally, you should contact your legal advisor regarding your specific situation.",
+        pleaseProvideCorrectAdd:"Please provide full address. If you do not know the address, please remove and submit without address",
+        emptyDistributionMsg:"Please Enter Distribution %",
+        distributionValidationExceed:"Distribution should not exceed 100",
 
 
         //manageIntrestedParties
@@ -159,6 +168,8 @@ export default {
         selectDocumentFrequency:"Select Document Frequency",
         intrestedPartiesAddedSuccessMeg:"Interested Party Added Successfully",
         selectDocuemntDeleveryFormat:"Select Document Delivery Format",   
+        emptyDocumentFrequencyMsg:"Select the DocumentFrequency",
+        validateRelation:"Please Select the relation",
 
 
         personalInformation: "Personal Information",

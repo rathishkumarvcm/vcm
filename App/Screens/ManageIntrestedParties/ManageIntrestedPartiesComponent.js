@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView ,TouchableOpacity, FlatList} from 'react-native';
+import { Text, View, ScrollView ,TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GIcon, GDropDownComponent, GInputComponent, GHeaderComponent, GFooterComponent,GCheckBoxComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
@@ -19,49 +19,39 @@ const dummyData = [
     {
         id: '3',
         title: 'Yearly',
-    },
+    }
 ];
 
 const manageIntrestedPartiesList=[
     {
-        title:"Bob John",
-        mail:"bobjohn@gmail.com",
-        count:"#3"
+        "title":"Bob John",
+        "mail":"bobjohn@gmail.com",
+        "count":"#3"
     },
     {
-        title:"David M",
-        mail:"davidm@gmail.com",
-        count:"#3"
+        "title":"David M",
+        "mail":"davidm@gmail.com",
+        "count":"#3"
     }
 ];
 
-const zipcode=[
+const zipcodeData=[
     {
-        zip: "111111111",
-        city: 'Hyderabad',
-        state:'Telangana'
+        "zip":"11111",
+        "city": 'Phoenix',
+        "state":'Arizona (AZ)'
     },
     {
-        id:"11111",
-        city: "Mumbai",
-        state:'Maharashtra'
+        "zip":"00000",
+        "city": "Little Rock",
+        "state":'Arkansas (AR)'
+    },
+    {
+        "zip":"22222",
+        "city": "Beverly Hills",
+        "state":'California (CA)'
     }
 ];
-
-const DropDownListItem = (props) => {
-    return (
-        <TouchableOpacity
-            style={{ height: 33}}
-            onPress={props.onSelectedItem}
-        >
-        <Text> {props.value} </Text>
-        </TouchableOpacity>
-    );
-};
-DropDownListItem.propTypes = {
-    onSelectedItem: PropTypes.func,
-    value: PropTypes.string
-};
 
 class manageIntrestedPartiesComponent extends Component {
     constructor(props) {
@@ -92,7 +82,9 @@ class manageIntrestedPartiesComponent extends Component {
                 addrLine2Validation:true,
                 zipcodeValidation:true,
                 cityValidation:true,
-                stateValidation:true
+                stateValidation:true,
+                documentFrequencyValidation:false,
+                zipCodeValidationMsg: ""
             },
             
             listIntrestedParties:manageIntrestedPartiesList,
@@ -131,7 +123,6 @@ class manageIntrestedPartiesComponent extends Component {
     }
 
     onSubmitEditing = (input) => text => {
-        console.log("onSubmitEditing:::>" + text);
         input.focus();
     }
 
@@ -144,19 +135,24 @@ class manageIntrestedPartiesComponent extends Component {
     }
 
     validateEmail = (text) => {
-        let validate = emailRegex.test(text);
-        this.onUpdateField("personal","emailAddressValidation",validate);
-    }
-
-    validateZip = (text) => {
-        let validate = zipCodeRegex.test(text);
-        this.onUpdateField("personal","zipcodeValidation",validate);
+        if(!this.isEmpty(text)){
+            let validate = emailRegex.test(text);
+            this.onUpdateField("personal","emailAddressValidation",validate);
+        }
     }
 
     validateZipCode = (text) => {
         //allows only 5 digit or 9 digit format(12345 and 12345-6789)
-        let validate = zipCodeRegex.test(text);
-        this.onUpdateField("personal","zipcodeValidation",validate);
+        if(!this.isEmpty(text)){
+            let validate = zipCodeRegex.test(text);
+            this.onUpdateField("personal","zipcodeValidation",validate);
+            this.onUpdateField("personal","zipCodeValidationMsg",gblStrings.accManagement.zipCodeFormat);
+            
+            if(validate){
+                this.onUpdateField("personal","zipcodeValidation",validate);
+                this.updateCityState();
+            }
+        }
     }
 
     validateFields = () => {
@@ -195,14 +191,14 @@ class manageIntrestedPartiesComponent extends Component {
             firstName: "",
             middleInitial: "",
             lastName: "",
-            emailAddress:"",
-            company:"",
-            addrLine1:"",
-            addrLine2:"",
-            zipCode:"",
-            state:"",
-            city:"",
-            documentFrequency:"",
+            emailAddress: "",
+            company: "",
+            addrLine1: "",
+            addrLine2: "",
+            zipCode: "",
+            state: "",
+            city: "",
+            documentFrequency: ""
           },
           isAddNewVisible:false,
           isSavedSuccess:false 
@@ -286,6 +282,10 @@ class manageIntrestedPartiesComponent extends Component {
         var errMsg = "";
         var isValidationSuccess = false;
 
+        if (this.state.personal.documentFrequency === '') {
+            this.onUpdateField("personal","documentFrequencyValidation",true);
+        }
+
         if (this.isEmpty(this.state.personal.firstName)) {
             this.onUpdateField("personal","firstNameValidation",false);
             errMsg="error";
@@ -316,9 +316,11 @@ class manageIntrestedPartiesComponent extends Component {
 
         if (this.isEmpty(this.state.personal.zipCode)) {
             this.onUpdateField("personal","zipcodeValidation",false);
+            this.onUpdateField("personal","zipCodeValidationMsg",gblStrings.accManagement.emptyZipCodeMsg);
             errMsg="error";
         }else{
-            this.onUpdateField("personal","zipcodeValidation",true);
+            this.validateZipCode(this.state.personal.zipCode);
+            //this.onUpdateField("personal","zipcodeValidation",true);
         }
 
         if (this.isEmpty(this.state.personal.city)) {
@@ -384,13 +386,13 @@ class manageIntrestedPartiesComponent extends Component {
         );
     }
 
-    updateNotificationMsgState=()=>{
+    updateNotificationMsgState = () => {
         this.setState({isSavedSuccess:false});
     }
 
-    updateCityState=()=>{
-        let zip=this.state.zipCode;
-        zipcode.map((m)=>{
+    updateCityState = () => {
+        let zip=this.state.personal.zipCode;
+        zipcodeData.map((m) => {
             if(zip === m.zip){
                 this.onUpdateField("personal","city",m.city);
                 this.onUpdateField("personal","state",m.state);
@@ -400,28 +402,25 @@ class manageIntrestedPartiesComponent extends Component {
     }
     
     selectFrequency = () => {
-        console.log("sonal",this.state.documentFrequencyDropDown);
-        this.setState({documentFrequencyDropDown : !this.state.documentFrequencyDropDown});
+        this.onUpdateField("personal","documentFrequencyDropDown",!this.state.documentFrequencyDropDown);
     }
 
     selectedDropDownValue = (value) => {
-        this.setState({
-            documentFrequency : value,
-            documentFrequencyDropDown : false
-        });
+        this.onUpdateField("personal","documentFrequency",value.title);
+        this.onUpdateField("personal","documentFrequencyDropDown",false);
     }
 
     documentTypeCheck=()=>{
         return(
             <>
-            {this.state.documentType.map((item,index) =>
+            {/* {this.state.documentType.map((item,index) =>
                 (<GCheckBoxComponent 
                     onPress={()=>this.checkBoxClicked(index, item.checked,this.state.documentType,"documentType")}
                     selected = {item.checked}
                     options = {item.options}
                     key = {item.options}
                 />)
-            )};
+            )}; */}
            </> 
         )
         
@@ -539,10 +538,10 @@ class manageIntrestedPartiesComponent extends Component {
                     propInputStyle={styles.customTxtBox}
                     placeholder={""}
                     maxLength={gblStrings.maxLength.zipCode}
-                    onBlur={this.updateCityState}
+                    onBlur={this.validateZipCode}
                     onChangeText={this.onChangeText("personal","zipCode")}
                     errorFlag={!this.state.personal.zipcodeValidation}
-                    errorText={gblStrings.accManagement.emptyZipCodeMsg}
+                    errorText={this.state.personal.zipCodeValidationMsg}
                 />
                 <Text style={styles.lblTxt}>
                     {gblStrings.accManagement.cityAndState}
@@ -578,17 +577,20 @@ class manageIntrestedPartiesComponent extends Component {
                 <Text style={[styles.lblLargeTxt]}>{gblStrings.accManagement.desiredFormatDelivaryDocs}</Text>
                 {this.renderRadio("selectedProspectusReportsRef", 36, { marginBottom: scaledHeight(0), marginTop: scaledHeight(20) }, styles.radioBtnColGrp)}
                 
-                 {/* <Text style={styles.lblTxt}>{gblStrings.accManagement.selectDocumentType}</Text> */}
-                 {/* {<this.documentTypeCheck/>} */}
+                 <Text style={styles.lblTxt}>{gblStrings.accManagement.selectDocumentType}</Text>
+                 {<this.documentTypeCheck/>}
 
                 <GDropDownComponent 
                     dropDownName={gblStrings.accManagement.selectDocumentFrequency}
                     dropDownTextName={styles.lblTxt} 
                     data={dummyData} 
                     changeState={this.selectFrequency}
-                    showDropDown={this.state.documentFrequencyDropDown}
-                    dropDownValue={this.state.documentFrequency}
+                    showDropDown={this.state.personal.documentFrequencyDropDown}
+                    dropDownValue={this.state.personal.documentFrequency}
+                    itemToDisplay={'title'}
                     selectedDropDownValue={this.selectedDropDownValue}
+                    errorFlag={this.state.personal.documentFrequencyValidation}
+                    errorText={gblStrings.accManagement.emptyDocumentFrequencyMsg}
                 />
                 
                 

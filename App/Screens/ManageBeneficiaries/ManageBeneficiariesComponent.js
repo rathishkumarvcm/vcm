@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, ScrollView, TouchableOpacity, FlatList} from 'react-native';
+import {Text, View, ScrollView} from 'react-native';
 import {styles} from './styles';
 import {
   GHeaderComponent,
@@ -7,177 +7,180 @@ import {
   GIcon,
   GFooterComponent,
   GButtonComponent,
+  GDropDownComponent
 } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-import {CustomDropDown} from '../../AppComponents';
+import {zipCodeRegex} from '../../Constants/RegexConstants';
 import PropTypes from 'prop-types';
 import { scaledHeight } from '../../Utils/Resolution';
 
-const dummyData = [
-  {
-    id: '1',
-    title: 'Option 1',
-  },
-  {
-    id: '2',
-    title: 'Option 2',
-  },
-  {
-    id: '3',
-    title: 'Option 3',
-  },
+const ssnRegex = /^\d{3}-\d{2}-\d{4}$/;
+const phoneRegex = /^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
+const monthData=[
+    { "key": "key1", "title": "Jan" },
+    { "key": "key2", "title": "Feb" },
+    { "key": "key3", "title": "Mar" },
+    { "key": "key4", "title": "April" },
+    { "key": "key5", "title": "March" },
+    { "key": "key6", "title": "June" },
+    { "key": "key7", "title": "July" },
+    { "key": "key8", "title": "Aug" },
+    { "key": "key9", "title": "Sept" },
+    { "key": "key10", "title": "Oct" },
+    { "key": "key11", "title": "Nov" },
+    { "key": "key12", "title": "Dec" }
 ];
 
-const suffixData = [
-  {
-    id: 'Jr',
-    title: 'Jr.',
-  },
-  {
-    id: 'Sr',
-    title: 'Sr.',
-  },
-  {
-    id: 'Ret.',
-    title: 'Ret.',
-  },
+let yearData=[];
+
+const dateData=[
+    { "key": "key1", "title": "01" },
+    { "key": "key2", "title": "02" },
+    { "key": "key3", "title": "03" },
+    { "key": "key4", "title": "04" },
+    { "key": "key5", "title": "05" },
+    { "key": "key6", "title": "06" },
+    { "key": "key7", "title": "07" },
+    { "key": "key8", "title": "08" },
+    { "key": "key9", "title": "09" },
+    { "key": "key10", "title": "10" },
+    { "key": "key11", "title": "11" },
+    { "key": "key12", "title": "12" },
+    { "key": "key13", "title": "13" },
+    { "key": "key14", "title": "14" },
+    { "key": "key15", "title": "15" },
+    { "key": "key16", "title": "16" },
+    { "key": "key17", "title": "17" },
+    { "key": "key18", "title": "18" },
+    { "key": "key19", "title": "19" },
+    { "key": "key20", "title": "20" },
+    { "key": "key21", "title": "21" },
+    { "key": "key22", "title": "22" },
+    { "key": "key23", "title": "23" },
+    { "key": "key24", "title": "24" },
+    { "key": "key25", "title": "25" },
+    { "key": "key26", "title": "26" },
+    { "key": "key27", "title": "27" },
+    { "key": "key28", "title": "28" },
+    { "key": "key29", "title": "29" },
+    { "key": "key30", "title": "30" },
+    { "key": "key31", "title": "31" }
 ];
 
-
-const relationship = [
-  {
-    id: '1',
-    title: 'Aunt Uncle ',
-  },
-  {
-    id: '2',
-    title: 'Brother/Sister',
-  },
-  {
-    id: '3',
-    title: 'Brother/Sister In Law',
-  },
-  {
-    id: '4',
-    title: 'Child',
-  },
-  {
-    id: '5',
-    title: 'Cohabitant',
-  },
-  {
-    id: '6',
-    title: 'Cohabitant Child',
-  },
-  {
-    id: '7',
-    title: 'Cousin ',
-  },
-  {
-    id: '8',
-    title: 'Father/Mother In Law',
-  },
-  {
-    id: '9',
-    title: 'Fiance',
-  },
-  {
-    id: '10',
-    title: 'Spouse',
-  },
-  {
-    id: '11',
-    title: 'Parent',
-  },
-  {
-    id: '12',
-    title: 'Grandparent',
-  },
-  {
-    id: '13',
-    title: 'Grandchild',
-  },
-  {
-    id: '14',
-    title: 'Son/Daughter In Law ',
-  },
-  {
-    id: '15',
-    title: 'Step Child',
-  },
-  {
-    id: '16',
-    title: 'Step Mother/Father',
-  },
-  {
-    id: '17',
-    title: 'Step Sister/Brother',
-  },
-  {
-    id: '18',
-    title: 'Legal Guardian',
-  },
+const nameDobData=[
+  { "key": "key1", "title": "option1" },
+  { "key": "key2", "title": "option2" },
+  { "key": "key3", "title": "option3" },
 ];
 
-const DropDownListItem = props => {
-  return (
-    <TouchableOpacity style={{height: 33}} onPress={props.onSelectedItem}>
-      <Text> {props.value} </Text>
-    </TouchableOpacity>
-  );
-};
-DropDownListItem.propTypes = {
-  onSelectedItem: PropTypes.func,
-  value: PropTypes.string,
-};
+let suffixData=[
+  {"key": "ii", "value": "II"},
+  {"key": "iii", "value": "III"},
+  {"key": "iv", "value": "IV"},
+  {"key": "cpa", "value": "CPA"},
+  {"key": "dds", "value": "DDS"},
+  {"key": "esq", "value": "Esq"},
+  {"key": "jd", "value": "JD"},
+  {"key": "jr", "value": "Jr"},
+  {"key": "lld", "value": "LLD"},
+  {"key": "md", "value": "MD"},
+  {"key": "phd", "value": "PHd"},
+  {"key": "ret", "value": "Ret"},
+  {"key": "rn", "value": "RN"},
+  {"key": "sr", "value": "Sr"},
+  {"key": "do", "value": "DO"}
+];
+
+let relationData=[
+  {"key": "aunt_uncle", "value": "Aunt Uncle"},
+  {"key": "bro_sis", "value": "Brother/Sister"},
+ {"key": "bro_sis_in_law", "value": "Brother/Sister In Law"},
+ {"key": "child", "value": "Child"},
+  {"key": "cohabitant", "value": "Cohabitant"},
+ {"key": "cohab_child", "value": "Cohabitant Child "},
+ {"key": "cousin", "value": "Cousin"},
+ {"key": "fat_mot_in_law", "value": "Father/Mother In Law"},
+ {"key": "fiance", "value": "Fiancé"},
+ {"key": "foster_child", "value": "Foster Child"},
+ {"key": "foster_parent", "value": "Foster Parent"},
+ {"key": "grand_child", "value": "Grandchild"},
+ {"key": "grand_parent", "value": "Grandparent"},
+ {"key": "legal_guard", "value": "Legal Guardian"},
+ {"key": "legal_ward", "value": "Legal Ward"},
+ {"key": "niece_nephew", "value": "Niece/Nephew"},
+ {"key": "parent", "value": "Parent"},
+ {"key": "son_daug_in_law", "value": "Son/Daughter In Law"},
+ {"key": "spouse", "value": "Spouse"},
+ {"key": "step_child", "value": "Step Child"},
+ {"key": "step_mot_fat", "value": "Step Mother/Father"},
+ {"key": "step_sis_bro", "value": "Step Sister/Brother"}
+];
+
+const zipcodeData=[
+  {
+      "zip":"11111",
+      "city": 'Phoenix',
+      "state":'Arizona (AZ)'
+  },
+  {
+      "zip":"00000",
+      "city": "Little Rock",
+      "state":'Arkansas (AR)'
+  },
+  {
+      "zip":"22222",
+      "city": "Beverly Hills",
+      "state":'California (CA)'
+  }
+];
 
 const MultipleAccountData = [
   {
-    accountType: 'Traditional IRA',
-    contractNumber: '123456789',
-    dateModified: '10/10/2018',
-    balance: '$23512',
-    name:"Lorem Ipsum",
-    owner:"Lorem Name",
-    primaryBeneficiary: [
+    "accountType": 'Traditional IRA',
+    "contractNumber": '123456789',
+    "dateModified": '10/10/2018',
+    "balance": '$23512',
+    "name":"Lorem Ipsum",
+    "owner":"Lorem Name",
+    "primaryBeneficiary": [
       {
-        name:'Lorem Name',
-        distribution: '100%',
-        dob: '10/10/2018',
-        relationToOwner:"Wife"
+        "name":'Lorem Name',
+        "distribution": '100',
+        "dob": '10/10/2018',
+        "relationToOwner":"Wife"
       }
     ],
-    contingentBeneficiary:[
+    "contingentBeneficiary":[
       {
-        name:'Lorem Name',
-        relationToOwner: 'Son',
-        distribution: '100%',
-        dob: '01/05/1962'
+        "name":'Lorem Name',
+        "relationToOwner": 'Son',
+        "distribution": '100%',
+        "dob": '01/05/1962'
     }
     ],
   },
   {
-    accountType: 'Roth IRA',
-    contractNumber: '123456789',
-    dateModified: '10/10/2018',
-    balance: '$23512',
-    name:"Lorem Ipsum",
-    owner:"Lorem Name",
-    primaryBeneficiary: [
+    "accountType": 'Roth IRA',
+    "contractNumber": '123456789',
+    "dateModified": '10/10/2018',
+    "balance": '$23512',
+    "name":"Lorem Ipsum",
+    "owner":"Lorem Name",
+    "primaryBeneficiary": [
       {
-        name:'Lorem Name',
-        distribution: '100%',
-        dob: '01/05/1962',
-        relationToOwner:"Wife",
-        balance: '$23512',
+        "name":'Lorem Name',
+        "distribution": '100',
+        "dob": '01/05/1962',
+        "relationToOwner":"Wife",
+        "balance": '$23512',
       }
     ],
-    contingentBeneficiary:[
+    "contingentBeneficiary":[
       {
-        name:'Lorem Name',
-        relationToOwner: 'Son',
-        distribution: '100%',
-        dob: '01/05/1962'
+        "name":'Lorem Name',
+        "relationToOwner": 'Son',
+        "distribution": '100%',
+        "dob": '01/05/1962'
       }
     ],
   },
@@ -197,7 +200,7 @@ class ManageBenificiariesComponent extends Component {
       manageBeneficiaries: MultipleAccountData,
       //contingent Beneficiary fields
       contingent: {
-        nameDOB: '',
+        nameDob: '',
         relationToOwner: '',
         distribution: '',
         firstName: '',
@@ -209,11 +212,12 @@ class ManageBenificiariesComponent extends Component {
         addrLine2: '',
         workTelephone: '',
         city: '',
-        state: '',
+        stateValue: '',
         zipCode: '',
         month: '',
         date: '',
         year: '',
+        totalDistribution: "",
         firstNameValidation: true,
         lastNameValidation: true,
         suffixValidation: true,
@@ -222,9 +226,22 @@ class ManageBenificiariesComponent extends Component {
         addrLine2Validation: true,
         workTelephoneValidation: true,
         cityValidation: true,
+        stateValidation:true,
         zipCodeValidation: true,
         distributionValidation:true,
-        distributionError:""
+        distributionError:"",
+        phoneFormatMessage:"",
+        nameDobDropDown:false,
+        monthDropDown:false,
+        dateDropDown:false,
+        yearDropDown:false,
+        suffixDropDown:false,
+        relationToOwnerDropDown:false,
+        dropDownSuffixFlag: false,
+        dropDownRelationFlag: false,
+        dropDownSuffixMsg: '',
+        dropDownRelationMsg: '',
+        ssnValidationMsg:''
       },
     };
   }
@@ -232,6 +249,8 @@ class ManageBenificiariesComponent extends Component {
   componentDidMount() {
     console.log("Multiple Accounts Data::::",this.state.manageBeneficiaries);
     this.showContingentData();
+    this.getDropDownData();
+    this.getYear();
   }
 
   showContingentData=()=>{
@@ -245,19 +264,66 @@ class ManageBenificiariesComponent extends Component {
    console.log("Contingent Beneficiary Data::::",this.state.contingentData);
   }
 
-  isEmpty = str => {
-    if (
-      str == '' ||
-      str == undefined ||
-      str == null ||
-      str == 'null' ||
-      str == 'undefined'
-    ) {
-      return true;
-    } else {
-      return false;
+  getYear=()=>{
+    let d = new Date();
+    let n = d.getFullYear();
+    let diff=n-100;
+    for (i=0;i<=100;i++){
+      let obj={key:"key"+i,title:"" };
+      obj.title=(diff+i).toString();
+      yearData.push(obj);
     }
+    console.log("YearData in date",yearData);
   };
+
+  updateCityState = () => {
+    let zip=this.state.contingent.zipCode;
+    zipcodeData.map((m) => {
+        if(zip === m.zip){
+            this.onUpdateField("contingent","city",m.city);
+            this.onUpdateField("contingent","stateValue",m.state);
+            
+        }
+    });
+}
+
+  getDropDownData=()=>{
+    let payload = [];
+    const compositePayloadData = [
+            "suffix",
+            "relationship"
+    ];
+
+    for (let i = 0; i < compositePayloadData.length; i++) {
+      let tempkey = compositePayloadData[i];
+        if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempkey]) {
+          payload.push(tempkey);
+      }
+    }
+
+    this.props.getPersonalCompositeData(payload);
+  }
+
+  setScrollViewRef = (element) => {
+    this.scrollViewRef = element;
+  };
+
+  setInputRef = (inputComp) => (ref) => {
+      this[inputComp] = ref;
+  }
+
+  onSubmitEditing = (input) => text => {
+      console.log("onSubmitEditing:::>" + text);
+      input.focus();
+  }
+
+  isEmpty = (str) => {
+      if (str == "" || str == undefined || str == null || str == "null" || str == "undefined") {
+          return true;
+      } else {
+          return false;
+      }
+  }
 
   validateFields = () => {
     try {
@@ -319,9 +385,9 @@ class ManageBenificiariesComponent extends Component {
         obj.ssn=this.state.contingent.ssn;
         obj.address=this.state.contingent.addrLine1+","+this.state.contingent.addrLine2;
         obj.zipCode=this.state.contingent.zipCode;
-        obj.state=this.state.personal.state;
-        obj.workTelephone=this.state.personal.workTelephone;
-        obj.dob=this.state.personal.date+"/"+timingSafeEqual.state.contingent.month+"/"+this.state.contingent.year;
+        obj.stateValue=this.state.contingent.stateValue;
+        obj.workTelephone=this.state.contingent.workTelephone;
+        obj.dob=this.state.contingent.date+"/"+this.state.contingent.month+"/"+this.state.contingent.year;
         obj.distribution=this.state.contingent.distribution;
         arr.push(obj);
         this.setState({contingentData:this.state.contingentData.concat(arr)},console.log("Data for contingent Beneficiary:::",this.state.contingentData));
@@ -337,14 +403,6 @@ class ManageBenificiariesComponent extends Component {
     }));
   };
 
-  onPressDropDown = (stateKey, keyName) => () =>
-    this.setState(prevState => ({
-      [stateKey]: {
-        ...prevState[stateKey],
-        [keyName]: !this.state.contingent[keyName],
-      },
-    }));
-
   onUpdateField = (stateKey, keyName, val) => {
     this.setState(prevState => ({
       [stateKey]: {
@@ -354,101 +412,62 @@ class ManageBenificiariesComponent extends Component {
     }));
   };
 
-  selectedDropDownValue = (dropDownName, value) => {
-    switch (dropDownName) {
-      case 'nameDOBDropDown':
-        this.setState(prevState => ({
-          contingent: {
-            ...prevState.contingent,
-            nameDOB: value,
-            nameDOBDropDown: false,
-          },
-        }));
-        break;
-      case 'relationToOwnerDropDown':
-        this.setState(prevState => ({
-          contingent: {
-            ...prevState.contingent,
-            relationToOwner: value,
-            relationToOwnerDropDown: false,
-          },
-        }));
-        break;
-      case 'suffixDropDown':
-        this.setState(prevState => ({
-          contingent: {
-            ...prevState.contingent,
-            suffix: value,
-            suffixDropDown: false,
-          },
-        }));
-        break;
-      case 'monthDropDown':
-        this.setState(prevState => ({
-          contingent: {
-            ...prevState.contingent,
-            month: value,
-            monthDropDown: false,
-          },
-        }));
-        break;
-      case 'dateDropDown':
-        this.setState(prevState => ({
-          contingent: {
-            ...prevState.contingent,
-            date: value,
-            dateDropDown: false,
-          },
-        }));
-        break;
-      case 'yearDropDown':
-        this.setState(prevState => ({
-          personal: {
-            ...prevState.contingent,
-            year: value,
-            yearDropDown: false,
-          },
-        }));
-        break;
-      default:
-        break;
-    }
-  };
+  selectNameDob = () => {
+    this.onUpdateField("contingent","nameDobDropDown",!this.state.nameDobDropDown);
+  }
 
-  renderDropDown = (
-    dropDownName,
-    dropDownCompState = false,
-    data,
-    width = '100%',
-  ) => {
-    console.log('renderDropDown::: ' + dropDownName);
-    let keyName = 'title';
-    if (dropDownCompState) {
-      return (
-        <View
-          style={{
-            height: 100,
-            borderWidth: 1,
-            width: width,
-            borderColor: '#DEDEDF',
-            backgroundColor: 'white',
-          }}>
-          <FlatList
-            data={data}
-            renderItem={({item}) => (
-              <DropDownListItem
-                value={item[keyName]}
-                onSelectedItem={() =>
-                  this.selectedDropDownValue(dropDownName, item[keyName])
-                }
-              />
-            )}
-            keyExtractor={item => item.id}
-          />
-        </View>
-      );
-    }
-  };
+  selectedNameDobDropDownValue = (value) => {
+    this.onUpdateField("contingent","nameDob",value.value);
+    this.onUpdateField("contingent","nameDobDropDown",false);
+    //this.onUpdateField("contingent","dropDownNameDobFlag",false);
+  }
+
+  selectRelation = () => {
+    this.onUpdateField("contingent","relationToOwnerDropDown",!this.state.relationToOwnerDropDown);
+  }
+
+  selectedRelationDropDownValue = (value) => {
+    this.onUpdateField("contingent","relationToOwnerDropDown",false);
+    this.onUpdateField("contingent","relationToOwner",value.value);
+    this.onUpdateField("contingent","dropDownRelationFlag",false);
+  }
+
+  selectSuffix=()=>{
+    this.onUpdateField("contingent","suffixDropDown",!this.state.suffixDropDown);
+  }
+
+  selectedSuffixDropDownValue=(value)=>{
+    this.onUpdateField("contingent","suffixDropDown",false);
+    this.onUpdateField("contingent","suffix",value.value);
+    this.onUpdateField("contingent","dropDownSuffixFlag",false);
+  }
+
+  selectMonth = () => {
+    this.onUpdateField("contingent","monthDropDown",!this.state.monthDropDown);
+  }
+
+  selectedMonthDropDownValue = (value) => {
+    this.onUpdateField("contingent","monthDropDown",false);
+    this.onUpdateField("contingent","month",value.title);
+  }
+
+  selectDate = () => {
+    this.onUpdateField("contingent","dateDropDown",!this.state.dateDropDown);
+  }
+
+  selectedDateDropDownValue = (value) => {
+    this.onUpdateField("contingent","dateDropDown",false);
+    this.onUpdateField("contingent","date",value.title);
+  }
+
+  selectYear = () => {
+    this.onUpdateField("contingent","yearDropDown",!this.state.yearDropDown);
+  }
+
+  selectedYearDropDownValue = (value) => {
+    this.onUpdateField("contingent","yearDropDown",false);
+    this.onUpdateField("contingent","year",value.title);
+  }
 
   validateEachFields = () => {
     var errMsg = '';
@@ -470,9 +489,11 @@ class ManageBenificiariesComponent extends Component {
 
     if (this.isEmpty(this.state.contingent.ssn)) {
       this.onUpdateField('contingent', 'ssnValidation', false);
+      this.onUpdateField('contingent', "ssnValidation", gblStrings.accManagement.emptySSNMsg);
       errMsg = 'error';
     } else {
-      this.onUpdateField('contingent', 'ssnValidation', true);
+      this.validateSsn(this.state.contingent.ssn);
+     // this.onUpdateField('contingent', 'ssnValidation', true);
     }
 
     if (this.isEmpty(this.state.contingent.addrLine1)) {
@@ -491,16 +512,20 @@ class ManageBenificiariesComponent extends Component {
 
     if (this.isEmpty(this.state.contingent.zipCode)) {
       this.onUpdateField('contingent', 'zipCodeValidation', false);
+      this.onUpdateField('contingent', "zipCodeFormatMsg", gblStrings.accManagement.emptyZipCodeMsg);
       errMsg = 'error';
     } else {
-      this.onUpdateField('contingent', 'zipCodeValidation', true);
+      this.validateZip(this.state.contingent.zipCode);
+      //this.onUpdateField('contingent', 'zipCodeValidation', true);
     }
 
     if (this.isEmpty(this.state.contingent.workTelephone)) {
       this.onUpdateField('contingent', 'workTelephoneValidation', false);
+      this.onUpdateField('contingent', "phoneFormatMessage", gblStrings.accManagement.emptyWorkPhoneNoMsg);
       errMsg = 'error';
     } else {
-      this.onUpdateField('contingent', 'workTelephoneValidation', true);
+      this.validateWorkPhone(this.state.contingent.workTelephone);
+      //this.onUpdateField('contingent', 'workTelephoneValidation', true);
     }
 
     if (this.isEmpty(this.state.contingent.city)) {
@@ -510,14 +535,24 @@ class ManageBenificiariesComponent extends Component {
       this.onUpdateField('contingent', 'cityValidation', true);
     }
 
+    if (this.isEmpty(this.state.contingent.stateValue)) {
+      this.onUpdateField('contingent', 'stateValidation', false);
+      errMsg = 'error';
+    } else {
+      this.onUpdateField('contingent', 'stateValidation', true);
+    }
     if (this.isEmpty(this.state.contingent.distribution)) {
-      this.onUpdateField('contingent', 'distributionError', "Please Enter Distribution");
+      this.onUpdateField('contingent', 'distributionError', gblStrings.accManagement.emptyDistributionMsg);
       this.onUpdateField('contingent', 'distributionValidation', false);
       errMsg = 'error';
     } else {
-      this.validateDistribution();
-      errMsg = 'error';
+      this.validateDistributionValue(this.state.contingent.distribution);
+      //errMsg = 'error';
     }
+
+    if (this.state.contingent.relationToOwner === '') {
+      this.onUpdateField("contingent","dropDownRelationFlag",true);
+    } 
 
     if (errMsg != 'error') {
       isValidationSuccess = true;
@@ -526,8 +561,45 @@ class ManageBenificiariesComponent extends Component {
     return isValidationSuccess;
   };
 
-  updateState = () => {
-    this.setState({isPrimaryBenificiary: true, isMainView: false});
+  validateSsn=(text)=>{
+    if(!this.isEmpty(text)){
+      let validate = ssnRegex.test(text);
+      this.onUpdateField("contingent","ssnValidation",validate);
+      this.onUpdateField("contingent","ssnValidation",gblStrings.accManagement.ssnNoFormat);
+    }
+  };
+
+  validateWorkPhone = (text) => {
+    if(!this.isEmpty(text)){
+      let validate = phoneRegex.test(text);
+      this.onUpdateField("contingent","workTelephoneValidation",validate);
+      this.onUpdateField("contingent","workTelephoneValidation",gblStrings.accManagement.phoneNoFormat);
+    }
+  };
+
+  validateZip=(text)=>{
+    if(!this.isEmpty(text)){
+      let validate = zipCodeRegex.test(text);
+      this.onUpdateField("contingent","zipCodeValidation",validate);
+      this.onUpdateField("contingent","zipCodeValidationMsg",gblStrings.accManagement.zipCodeFormat);
+      
+      if(validate){
+          this.onUpdateField("contingent","zipCodeValidation",validate);
+          this.updateCityState();
+      }
+    }
+  };
+
+  validateDistributionValue=(text)=>{
+    if(!this.isEmpty(text)){
+      let value=parseInt(text);
+      if(value>100){
+        this.onUpdateField("contingent","distributionValidation",false);
+        this.onUpdateField("contingent","distributionError",gblStrings.accManagement.distributionValidationExceed);
+      } else {
+        this.onUpdateField("contingent","distributionValidation",true);
+      }
+    }
   };
 
   updateRothIRA = () => {
@@ -540,8 +612,7 @@ class ManageBenificiariesComponent extends Component {
 
   onClickUpdate=(value)=>{
     if(value!=gblStrings.accManagement.traditionalIra){
-      this.updateState();
-      this.setState({account_Type:value});
+      this.setState({isPrimaryBenificiary: true, isMainView: false, account_Type: value });
     }
   }
   // ------------Primary Beneficiary----------------------------
@@ -563,26 +634,37 @@ class ManageBenificiariesComponent extends Component {
               {gblStrings.accManagement.nameDob}
             </Text>
             <Text style={styles.shortContentText}>
-              {item.name +'|'+item.dob}
+              {item.name +' | '+item.dob}
             </Text>
           </View>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortHeadingText}>
               {'Relationship to Owner'}
             </Text>
-            <Text style={styles.shortContentText}>{item.relationToOwner}</Text>
+            <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToOwner}</Text>
           </View>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortHeadingText}>
               {gblStrings.accManagement.distribution}
             </Text>
-            <Text style={styles.shortContentText}>{item.distribution}</Text>
+            <View style={styles.flexDirectionRowStyle}>
+              <GInputComponent
+                propInputStyle={styles.customDistributionTxtBox}
+                placeholder={''}
+                editable={false}
+                value={item.distribution}
+                maxLength={gblStrings.maxLength.distributionPercentage}
+              />
+              <Text style={[styles.shortContentText, styles.paddingStyleLeft,{marginTop:scaledHeight(20)}]}>
+                {'%'}
+              </Text>
+           </View>
           </View>
           <Text style={[styles.contactUsLink, styles.deleteLink]}>
             {gblStrings.common.delete}
           </Text>
           <Text style={styles.addPrimaryLink}>
-            {'+ Add Primary Beneficiary'}
+          {' + ' + gblStrings.accManagement.addPrimaryBeneficiary}
           </Text>
          </View>
            
@@ -613,9 +695,7 @@ class ManageBenificiariesComponent extends Component {
                   />
                 </View>
                 <Text style={styles.disclaimerTxt}>
-                  {
-                    'Distributions for primary beneficiary and for contingent beneficiary must equal 100 percentage.'
-                  }
+                  {gblStrings.accManagement.enterDetailsPrimaryDisc}
                 </Text>
               </View>
               <View
@@ -629,7 +709,7 @@ class ManageBenificiariesComponent extends Component {
                   />
                 </View>
                 <Text style={styles.disclaimerTxt}>
-                  {'Contingent beneficiary are recommended but not required.'}
+                  {gblStrings.accManagement.enterDetailsContingentBene}
                 </Text>
               </View>
               <View
@@ -643,9 +723,7 @@ class ManageBenificiariesComponent extends Component {
                   />
                 </View>
                 <Text style={styles.disclaimerTxt}>
-                  {
-                    'If you wish to select a spouse or child and that person is not listed, you may add them in your Profile Page If your request cannot be completed using the selections below, please Contact Us.'
-                  }
+                  {gblStrings.accManagement.enterDetailsIfYouWish}
                 </Text>
               </View>
               <View
@@ -659,9 +737,7 @@ class ManageBenificiariesComponent extends Component {
                   />
                 </View>
                 <Text style={styles.disclaimerTxt}>
-                  {
-                    "If no beneficiary designation has been received and accepted by the custodian prior to your account (Account Owner) death, or if all of your designated beneficiaries have predeceased you, then your beneficiary sahll be your surviving spouse or, if there is no surviving spouse, then the account owner's estate. See the custodial agreement and disclosure statement applicable to your Victory Capital retirement plan for complete information."
-                  }
+                  {gblStrings.accManagement.enterDetailsIfNoBene}
                 </Text>
               </View>
               <View
@@ -675,9 +751,7 @@ class ManageBenificiariesComponent extends Component {
                   />
                 </View>
                 <Text style={styles.disclaimerTxt}>
-                  {
-                    'Additionally, you should contact your legal advisor regarding your specific situation.'
-                  }
+                  {gblStrings.accManagement.enterDetailsAdditionalAdvisor}
                 </Text>
               </View>
             </View>
@@ -695,16 +769,13 @@ class ManageBenificiariesComponent extends Component {
               <Text style={styles.shortContentText}>{data.owner}</Text>
             </View>
             <View style={styles.contentViewBlock}>
-              <Text style={styles.shortHeadingText}>{'Balance'}</Text>
+              <Text style={styles.shortHeadingText}>{gblStrings.accManagement.balance}</Text>
               <Text style={styles.shortContentText}>{data.balance}</Text>
             </View>
         </View>
         <View style={styles.contentViewInternal}>
           <Text
-            style={[
-              styles.manageBenificiariesHeadline,
-              styles.paddingStyleLeft,
-            ]}>
+            style={[styles.manageBenificiariesHeadline,styles.paddingStyleLeft]}>
             {gblStrings.accManagement.primaryBeneficiary}
           </Text>
           <View style={styles.borderInternal} />
@@ -722,20 +793,19 @@ class ManageBenificiariesComponent extends Component {
         </View>
         <View style={styles.contentViewInternal}>
           <Text
-            style={[
-              styles.manageBenificiariesHeadline,
-              styles.paddingStyleLeft,
-            ]}>
+            style={[styles.manageBenificiariesHeadline,styles.paddingStyleLeft]}>
             {gblStrings.accManagement.contingentBeneficiary}
           </Text>
           <View style={styles.borderInternal} />
           <View style={styles.contentViewBlock}>
-            <Text style={styles.shortHeadingText}>
-              {gblStrings.accManagement.nameDob}
-            </Text>
-            <CustomDropDown
-              placeholder={gblStrings.common.select}
-              propInputStyle={styles.customListTxtBox}
+            <GDropDownComponent 
+              dropDownName={gblStrings.accManagement.nameDob}
+              dropDownTextName={styles.shortHeadingText} 
+              data={nameDobData}
+              changeState={this.selectNameDob}
+              showDropDown={this.state.contingent.nameDobDropDown}
+              dropDownValue={this.state.contingent.nameDob}
+              selectedDropDownValue={this.selectedNameDobDropDownValue}
             />
           </View>
         </View>
@@ -749,9 +819,7 @@ class ManageBenificiariesComponent extends Component {
             buttonStyle={styles.normalBlackBtn}
             buttonText={gblStrings.common.next}
             textStyle={styles.normalBlackBtnTxt}
-            onPress={() => {
-              this.updateRothIRA();
-            }}
+            onPress={this.updateRothIRA}
           />
         </View>
       </View>
@@ -760,207 +828,189 @@ class ManageBenificiariesComponent extends Component {
 
   // ----------------contingentBeneficiary--------------------------
   contingentBenificiary = () => {
+    if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.suffix && this.props.masterLookupStateData.suffix.value) {
+      suffixData=this.props.masterLookupStateData.suffix.value;
+    }
+    if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.relationship && this.props.masterLookupStateData.relationship.value) {
+      relationData=this.props.masterLookupStateData.relationship.value;
+    }
+
     return (
       <View>
         <View style={[styles.contentViewInternal, styles.paddingStyleLeft]}>
           <Text
-            style={[
-              styles.manageBenificiariesHeadline,
-              styles.paddingStyleLeft,
-            ]}>
+            style={[styles.manageBenificiariesHeadline,styles.paddingStyleLeft]}>
             {gblStrings.accManagement.contingentBeneficiary}
           </Text>
           <View style={styles.borderInternal} />
-          <View style={styles.contingentView}>
-            <Text style={styles.shortHeadingText}>
-              {gblStrings.accManagement.nameDob}
-            </Text>
-          </View>
-          <CustomDropDown
-            placeholder={'Other-Person'}
-            propInputStyle={styles.customListTxtBox}
+          <GDropDownComponent 
+            dropDownName={gblStrings.accManagement.nameDob}
+            dropDownTextName={styles.shortHeadingText} 
+            data={nameDobData}
+            changeState={this.selectNameDob}
+            showDropDown={this.state.contingent.nameDobDropDown}
+            dropDownValue={this.state.contingent.nameDob}
+            selectedDropDownValue={this.selectedNameDobDropDownValue}
           />
-          {this.renderDropDown(
-            'nameDOBDropDown',
-            this.state.contingent.nameDOBDropDown,
-            dummyData,
-          )}
-          <View style={styles.contingentView}>
-            <Text style={styles.shortHeadingText}>
-              {gblStrings.accManagement.relationToOwner}
-            </Text>
-          </View>
-          <CustomDropDown
-            placeholder={gblStrings.common.select}
-            value={this.state.contingent.relationToOwner}
-            propInputStyle={styles.customListTxtBox}
-            onPress={this.onPressDropDown(
-              'contingent',
-              'relationToOwnerDropDown',
-            )}
+          <GDropDownComponent 
+            dropDownName={gblStrings.accManagement.relationToOwner}
+            dropDownTextName={styles.shortHeadingText} 
+            data={relationData}
+            textInputStyle={styles.dropdownTextInput}
+            itemToDisplay={"value"}
+            changeState={this.selectRelation}
+            errorFlag={this.state.contingent.dropDownRelationFlag}
+            errorText={this.dropDownRelationMsg}
+            showDropDown={this.state.contingent.relationToOwnerDropDown}
+            dropDownValue={this.state.contingent.relationToOwner}
+            selectedDropDownValue={this.selectedRelationDropDownValue}
+            errorFlag={this.state.contingent.dropDownRelationFlag}
+            errorText={gblStrings.accManagement.emptyRelationShipMsg}
           />
-          {this.renderDropDown(
-            'relationToOwnerDropDown',
-            this.state.contingent.relationToOwnerDropDown,
-            relationship,
-          )}
           <View style={styles.contingentView}>
             <Text style={styles.shortHeadingText}>
               {gblStrings.accManagement.distribution}
             </Text>
           </View>
-          <View style={styles.flexDirectionRowStyle}>
-            <GInputComponent
-              //inputref={ref => this.distribution = ref}
-              propInputStyle={this.state.contingent.distributionValidation? styles.customDistributionTxtBox:styles.customDistributionErrTxtBox}
-              placeholder={''}
-              keyboardType={'numeric'}
-              maxLength={gblStrings.maxLength.distributionPercentage}
-              onChangeText={this.onChangeText('contingent', 'distribution')}
-              //onSubmitEditing={() => this.firstName.focus()}
-            />
+          <View style={[styles.flexDirectionRowStyle,{paddingLeft:'4%'}]}>
+            <View style={{width:'70%'}}>
+              <GInputComponent
+                inputref={this.setInputRef("distribution")}
+                propInputStyle={styles.customDistributionTxtBox}
+                placeholder={''}
+                keyboardType={'numeric'}
+                onBlur={this.validateDistributionValue}
+                maxLength={gblStrings.maxLength.distributionPercentage}
+                onChangeText={this.onChangeText('contingent', 'distribution')}
+                errorFlag={!this.state.contingent.distributionValidation}
+                errorText={this.state.contingent.distributionError}
+                onSubmitEditing={this.onSubmitEditing(this.firstName)}
+              />
+            </View>
             <Text style={[styles.shortContentText, styles.paddingStyleLeft,{marginTop:scaledHeight(20)}]}>
               {'%'}
             </Text>
           </View>
-          {!this.state.contingent.distributionValidation ? (
-              <Text style={styles.errorMsg}>
-                {this.state.contingent.distributionError}
-              </Text>
-            ) : null}
-          <Text
-            style={[
-              styles.manageBenificiariesHeadline,
-              styles.titleAlignStyle,
-            ]}>
-            {'Beneficiary Name'}
+          <Text style={[styles.manageBenificiariesHeadline,styles.titleAlignStyle]}>
+            {gblStrings.accManagement.beneficiaryName}
           </Text>
           <View style={styles.paddingStyleLeft}>
             <Text style={styles.lblTxt}>
               {'*' + gblStrings.accManagement.firstName}
             </Text>
             <GInputComponent
-              // inputref={ref => this.firstName = ref}
-              propInputStyle={
-                this.state.contingent.firstNameValidation
-                  ? styles.customTxtBox
-                  : styles.customTxtBoxError
-              }
-              placeholder={''}
+              inputref={this.setInputRef("firstName")}
+              propInputStyle={styles.customTxtBox}
+              placeholder={""}
               maxLength={gblStrings.maxLength.firstName}
-              onChangeText={this.onChangeText('contingent', 'firstName')}
-              //onSubmitEditing={() => this.middleInitial.focus()}
+              onChangeText={this.onChangeText('contingent','firstName')}
+              errorFlag={!this.state.contingent.firstNameValidation}
+              errorText={gblStrings.accManagement.emptyFirstNameMsg}
+              onSubmitEditing={this.onSubmitEditing(this.middleInitial)}
             />
-            {!this.state.contingent.firstNameValidation ? (
-              <Text style={styles.errorMsg}>
-                {gblStrings.accManagement.emptyFirstNameMsg}
-              </Text>
-            ) : null}
             <Text style={styles.lblTxt}>
               {gblStrings.accManagement.middleInitial}
             </Text>
             <GInputComponent
-              //inputref={ref => this.middleInitial = ref}
+              inputref={this.setInputRef("middleInitial")}
               propInputStyle={styles.customTxtBox}
-              placeholder={''}
+              placeholder={""}
               maxLength={gblStrings.maxLength.middleInitial}
               onChangeText={this.onChangeText('contingent', 'middleInitial')}
-              onSubmitEditing={() => this.lastName.focus()}
+              onSubmitEditing={this.onSubmitEditing(this.lastName)}
             />
-
             <Text style={styles.lblTxt}>
               {'*' + gblStrings.accManagement.lastName}
             </Text>
             <GInputComponent
-              //inputref={ref => this.lastName= ref}
-              propInputStyle={
-                this.state.contingent.lastNameValidation
-                  ? styles.customTxtBox
-                  : styles.customTxtBoxError
-              }
-              placeholder={''}
+              inputref={this.setInputRef("lastName")}
+              propInputStyle={styles.customTxtBox}
+              placeholder={""}
               maxLength={gblStrings.maxLength.lastName}
-              returnKeyType={'done'}
               onChangeText={this.onChangeText('contingent', 'lastName')}
-              //onSubmitEditing={() =>{this.suffix.focus()}}
+              onSubmitEditing={this.onSubmitEditing(this.lastName)}
+              errorFlag={!this.state.contingent.lastNameValidation}
+              errorText={gblStrings.accManagement.emptyLastNameMsg}
             />
-            {!this.state.contingent.lastNameValidation ? (
-              <Text style={styles.errorMsg}>
-                {gblStrings.accManagement.emptyLastNameMsg}
-              </Text>
-            ) : null}
-            <Text style={styles.lblTxt}>{gblStrings.accManagement.suffix}</Text>
-            <CustomDropDown
+            <GDropDownComponent 
+              dropDownName={gblStrings.accManagement.suffix}
+              dropDownTextName={styles.lblTxt} 
+              data={suffixData} 
               placeholder={gblStrings.common.select}
-              propInputStyle={styles.customListTxtBox}
-              value={this.state.contingent.suffix}
-              onPress={this.onPressDropDown('contingent', 'suffixDropDown')}
+              changeState={this.selectSuffix}
+              itemToDisplay={"value"}
+              errorFlag={this.state.contingent.dropDownSuffixFlag}
+              errorText={this.state.contingent.dropDownSuffixMsg}
+              showDropDown={this.state.contingent.suffixDropDown}
+              dropDownValue={this.state.contingent.suffix}
+              selectedDropDownValue={this.selectedSuffixDropDownValue}
             />
-            {this.renderDropDown(
-              'suffixDropDown',
-              this.state.contingent.suffixDropDown,
-              suffixData,
-            )}
           </View>
 
           {/*------------ beneficiary Information ------------------ */}
 
-          <Text
-            style={[
-              styles.manageBenificiariesHeadline,
-              styles.titleAlignStyle,
-            ]}>
+          <Text style={[styles.manageBenificiariesHeadline,styles.titleAlignStyle]}>
             {gblStrings.accManagement.beneficiaryInfo}
           </Text>
           <View style={styles.paddingStyleLeft}>
-            <Text style={styles.lblTxt}>{'SSN'}</Text>
+            <Text style={styles.lblTxt}>{gblStrings.accManagement.ssn}</Text>
             <GInputComponent
-              //inputref={ref => this.ssn = ref}
-              propInputStyle={
-                this.state.contingent.ssnValidation
-                  ? styles.customTxtBox
-                  : styles.customTxtBoxError
-              }
+              inputref={this.setInputRef("ssn")}
+              propInputStyle={styles.customTxtBox}
               placeholder={''}
               keyboardType={'numeric'}
+              onBlur={this.validateSsn}
               maxLength={gblStrings.maxLength.ssnNo}
               onChangeText={this.onChangeText('contingent', 'ssn')}
+              onSubmitEditing={this.onSubmitEditing(this.dob)}
+              errorFlag={!this.state.contingent.ssnValidation}
+              errorText={this.state.contingent.ssnValidationMsg}
             />
-            {!this.state.contingent.ssnValidation ? (
-              <Text style={styles.errorMsg}>
-                {gblStrings.accManagement.emptySSNMsg}
-              </Text>
-            ) : null}
-            <View style={(styles.flexStyle, styles.noteEnterDetail)}>
+            <View style={(styles.noteEnterDetail,{width:'100%',flexDirection:'row',justifyContent:'space-around'})}>
               <Text style={styles.helpTextStyle}>{'Eg: 222-33-4444'}</Text>
               <Text style={styles.contactUsLink}>
-                {
-                  gblStrings.settingAccountMessaging
-                    .accountMessagingGeneralPrivacyPromise
-                }
+                {gblStrings.settingAccountMessaging.accountMessagingGeneralPrivacyPromise}
               </Text>
             </View>
             <Text style={styles.lblTxt}>{gblStrings.accManagement.dob}</Text>
             <View style={styles.flexDirectionRowStyle}>
               <View style={styles.dateDropDownWidth}>
-                <CustomDropDown
+                <GDropDownComponent  
+                  data={monthData} 
                   placeholder={'MM'}
-                  propInputStyle={styles.customDateTxtBox}
-                  value={this.state.contingent.month}
+                  itemToDisplay={"title"}
+                  changeState={this.selectMonth}
+                  showDropDown={this.state.contingent.monthDropDown}
+                  dropDownValue={this.state.contingent.month}
+                  selectedDropDownValue={this.selectedMonthDropDownValue}
+                  //errorFlag={this.state.contingent.dateValidation}
+                  //errorText={gblStrings.accManagement.emptyDOBMsg}
                 />
               </View>
               <View style={styles.dateDropDownWidth}>
-                <CustomDropDown
+                <GDropDownComponent  
+                  data={dateData} 
                   placeholder={'DD'}
-                  propInputStyle={styles.customDateTxtBox}
-                  value={this.state.contingent.date}
+                  itemToDisplay={"title"}
+                  changeState={this.selectDate}
+                  showDropDown={this.state.contingent.dateDropDown}
+                  dropDownValue={this.state.contingent.date}
+                  selectedDropDownValue={this.selectedDateDropDownValue}
+                  //errorFlag={this.state.contingent.monthValidation}
+                  //errorText={gblStrings.accManagement.emptyDOBMsg}
                 />
               </View>
               <View style={styles.dateDropDownWidth}>
-                <CustomDropDown
+                <GDropDownComponent  
+                  data={yearData} 
                   placeholder={'YYYY'}
-                  propInputStyle={styles.customDateTxtBox}
-                  value={this.state.contingent.year}
+                  itemToDisplay={"title"}
+                  changeState={this.selectYear}
+                  showDropDown={this.state.contingent.yearDropDown}
+                  dropDownValue={this.state.contingent.year}
+                  selectedDropDownValue={this.selectedYearDropDownValue}
+                  //errorFlag={this.state.contingent.yearValidation}
+                  //errorText={gblStrings.accManagement.emptyDOBMsg}
                 />
               </View>
             </View>
@@ -968,113 +1018,89 @@ class ManageBenificiariesComponent extends Component {
 
           {/* --------------Beneficiary Address----------------------------------*/}
 
-          <Text
-            style={[
-              styles.manageBenificiariesHeadline,
-              styles.titleAlignStyle,
-            ]}>
+          <Text style={[styles.manageBenificiariesHeadline,styles.titleAlignStyle]}>
             {gblStrings.accManagement.beneficiaryAdd}
           </Text>
           <Text style={styles.topContentText}>
-            {
-              'Please provide full address. If you do not know the address, please remove and submit without address'
-            }
+            {gblStrings.accManagement.pleaseProvideCorrectAdd}
           </Text>
           <View style={styles.paddingStyleLeft}>
             <Text style={styles.lblTxt}>
               {gblStrings.accManagement.address}
             </Text>
             <GInputComponent
-              propInputStyle={
-                this.state.contingent.addrLine1Validation
-                  ? styles.customTxtBox
-                  : styles.customTxtBoxError
-              }
+              inputref={this.setInputRef("addrLine1")}
+              propInputStyle={styles.customTxtBox}
               placeholder={gblStrings.accManagement.empAddrLine1}
               maxLength={gblStrings.maxLength.emplAddress1}
               onChangeText={this.onChangeText('contingent', 'addrLine1')}
+              onSubmitEditing={this.onSubmitEditing(this.addrLine2)}
+              errorFlag={!this.state.contingent.addrLine1Validation}
+              errorText={gblStrings.accManagement.emptyAddressLine1Msg}
             />
-            {!this.state.contingent.addrLine1Validation ? (
-              <Text style={styles.errorMsg}>
-                {gblStrings.accManagement.emptyAddressLine1Msg}
-              </Text>
-            ) : null}
             <GInputComponent
-              propInputStyle={
-                this.state.contingent.addrLine2Validation
-                  ? styles.customTxtBox
-                  : styles.customTxtBoxError
-              }
+              inputref={this.setInputRef("addrLine2")}
+              propInputStyle={styles.customTxtBox}
               placeholder={gblStrings.accManagement.empAddrLine2}
               maxLength={gblStrings.maxLength.addressLine2}
-              onChangeText={this.onChangeText('contingent', 'addrLine2')}
+              onChangeText={this.onChangeText('contingent', 'adaddrLine2')}
+              onSubmitEditing={this.onSubmitEditing(this.workTelephone)}
+              errorFlag={!this.state.contingent.addrLine2Validation}
+              errorText={gblStrings.accManagement.emptyAddressLine2Msg}
             />
-            {!this.state.contingent.addrLine2Validation ? (
-              <Text style={styles.errorMsg}>
-                {gblStrings.accManagement.emptyEmployerAddressLine2Msg}
-              </Text>
-            ) : null}
             <Text style={styles.lblTxt}>
               {gblStrings.accManagement.workPhoneNo}
             </Text>
             <GInputComponent
-              propInputStyle={
-                this.state.contingent.workTelephoneValidation
-                  ? styles.customTxtBox
-                  : styles.customTxtBoxError
-              }
+              inputref={this.setInputRef("workTelephone")}
+              propInputStyle={styles.customTxtBox}
               placeholder={'XXX-XXX-XXXX'}
               keyboardType={'phone-pad'}
+              onBlur={this.validateWorkPhone}
               maxLength={gblStrings.maxLength.phoneNo}
               onChangeText={this.onChangeText('contingent', 'workTelephone')}
+              onSubmitEditing={this.onSubmitEditing(this.city)}
+              errorFlag={!this.state.contingent.workTelephoneValidation}
+              errorText={this.state.contingent.phoneFormatMessage}
             />
-            {!this.state.contingent.workTelephoneValidation ? (
-              <Text style={styles.errorMsg}>
-                {gblStrings.accManagement.emptyWorkPhoneNoMsg}
-              </Text>
-            ) : null}
             <Text style={styles.lblTxt}>{gblStrings.accManagement.city}</Text>
             <GInputComponent
-              propInputStyle={
-                this.state.contingent.cityValidation
-                  ? styles.customTxtBox
-                  : styles.customTxtBoxError
-              }
+              inputref={this.setInputRef("city")}
+              propInputStyle={styles.customTxtBox}
               placeholder={gblStrings.accManagement.enterCity}
-              returnKeyType={'done'}
               maxLength={gblStrings.maxLength.city}
+              value={this.state.contingent.city}
               onChangeText={this.onChangeText('contingent', 'city')}
+              onSubmitEditing={this.onSubmitEditing(this.stateValue)}
+              errorFlag={!this.state.contingent.cityValidation}
+              errorText={gblStrings.accManagement.emptyCityMsg}
             />
-            {!this.state.contingent.cityValidation ? (
-              <Text style={styles.errorMsg}>
-                {gblStrings.accManagement.emptyCityMsg}
-              </Text>
-            ) : null}
             <Text style={styles.lblTxt}>{gblStrings.accManagement.state}</Text>
-            <CustomDropDown
-              placeholder={gblStrings.common.select}
-              propInputStyle={styles.customListTxtBox}
+            <GInputComponent
+              inputref={this.setInputRef("stateValue")}
+              propInputStyle={styles.customTxtBox}
+              placeholder={gblStrings.accManagement.enterState}
+              maxLength={gblStrings.maxLength.state}
+              value={this.state.contingent.stateValue}
+              onChangeText={this.onChangeText('contingent', 'stateValue')}
+              onSubmitEditing={this.onSubmitEditing(this.Zip)}
+              errorFlag={!this.state.contingent.stateValidation}
+              errorText={gblStrings.accManagement.emptyStateMsg}
             />
             <Text style={styles.lblTxt}>
               {gblStrings.accManagement.zipcode}
             </Text>
             <GInputComponent
-              propInputStyle={
-                this.state.contingent.zipCodeValidation
-                  ? styles.customTxtBox
-                  : styles.customTxtBoxError
-              }
+              inputref={this.setInputRef("Zip")}
+              propInputStyle={styles.customTxtBox}
               placeholder={gblStrings.accManagement.enterZip}
-              returnKeyType={'done'}
               keyboardType={'numeric'}
+              onBlur={this.validateZip}
               maxLength={gblStrings.maxLength.zipCode}
               onChangeText={this.onChangeText('contingent', 'zipCode')}
+              errorFlag={!this.state.contingent.zipCodeValidation}
+              errorText={this.state.contingent.zipCodeFormatMsg}
             />
-            {!this.state.contingent.zipCodeValidation ? (
-              <Text style={styles.errorMsg}>
-                {gblStrings.accManagement.emptyZipCodeMsg}
-              </Text>
-            ) : null}
           </View>
 
           <Text style={styles.addBeneficiaryLink}>
@@ -1158,10 +1184,7 @@ class ManageBenificiariesComponent extends Component {
               return (
                 <View style={styles.contentViewInternal} key={key}>
                   <Text
-                    style={[
-                      styles.manageBenificiariesHeadline,
-                      styles.paddingHorizontalStyle,
-                    ]}>
+                    style={[styles.manageBenificiariesHeadline,styles.paddingHorizontalStyle]}>
                     {item.accountType}
                   </Text>
                   <View style={styles.borderInternal} />
@@ -1170,18 +1193,14 @@ class ManageBenificiariesComponent extends Component {
                       <Text style={styles.shortHeadingText}>
                         {gblStrings.accManagement.contractNumber}
                       </Text>
-                      <Text
-                        style={[
-                          styles.shortContentText,
-                          styles.contractNumberSize,
-                        ]}>
+                      <Text style={[styles.shortContentText, styles.contractNumberSize]}>
                         {item.contractNumber}
                       </Text>
                     </View>
                     <View style={styles.settingsBorder} />
                     <View style={styles.blockMarginTop}>
                       <Text style={styles.infoShortText}>
-                        {'Information as on' + item.dateModified}
+                        {'Information as on ' + item.dateModified}
                       </Text>
                     </View>
                     {beneficiaryData}
@@ -1205,7 +1224,7 @@ class ManageBenificiariesComponent extends Component {
     return (
       <View style={styles.container}>
         <GHeaderComponent navigation={this.props.navigation} />
-        <ScrollView style={styles.flexMainView}>
+        <ScrollView style={styles.flexMainView} keyboardShouldPersistTaps="always" ref={this.setScrollViewRef} >
           <View style={[styles.mainHeadingView, styles.flexStyle]}>
             <Text style={styles.manageBenificiariesHeadline}>
               {gblStrings.accManagement.manageBeneficiaries}
@@ -1241,9 +1260,7 @@ class ManageBenificiariesComponent extends Component {
               {gblStrings.accManagement.VCDiscalimerTitle}
             </Text>
             <Text style={styles.disclaimerTxt}>
-              {
-                'Victory Mutual Funds and USAA Mutual Funds are distributed by Victory Capital Advisers, Inc. (VCA). VictoryShares ETFs and VictoryShares USAA ETFs are distributed by Foreside Fund Services, LLC (Foreside). VCA and Foreside are members of FINRA and SIPC. Victory Capital Management Inc. (VCM) is the investment adviser to the Victory Mutual Funds, USAA Mutual Funds, VictoryShares ETFs and VictoryShares USAA ETFs. VCA and VCM are not affiliated with Foreside. USAA is not affiliated with Foreside, VCM, or VCA. USAA and the USAA logos are registered trademarks and the USAA Mutual Funds and USAA Investments logos are trademarks of United Services Automobile Association and are being used by Victory Capital and its affiliates under license. Victory Capital means Victory Capital Management Inc., the investment manager of the USAA 529 College Savings Plan (Plan). The Plan is distributed by Victory Capital Advisers, Inc., a broker dealer registered with FINRA and an affiliate of Victory Capital. Victory Capital and its affiliates are not affiliated with United Services Automobile Association or its affiliates. USAA and the USAA logo are registered trademarks and the USAA 529 College Savings Plan logo is a trademark of United Services Automobile Association and are being used by Victory Capital and its affiliates under license.'
-              }
+              {gblStrings.accManagement.VCDiscalimerDescContent}
             </Text>
           </View>
           <GFooterComponent />
@@ -1254,7 +1271,7 @@ class ManageBenificiariesComponent extends Component {
 }
 
 ManageBenificiariesComponent.propTypes = {
-  navigation: PropTypes.instanceOf(Object),
+  navigation: PropTypes.instanceOf(Object)
 };
 
 export default ManageBenificiariesComponent;
