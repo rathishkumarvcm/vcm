@@ -49,20 +49,20 @@ import RetrieveOnlineId from './Screens/RetrieveOnlineId/RetrieveOnlineIdCompone
 // Acc Management
 import Dashboard from './Screens/Dashboard/DashboardComponent';
 import TermsAndConditions from './Screens/TermsAndConditions/TermsAndConditionsComponent';
-import DashboardAccounts from './Screens/DashboardAccounts/';
-import OpenAccPageOne from './Screens/OpenAccPageOne/';
-import OpenAccPageTwo from './Screens/OpenAccPageTwo/';
-import OpenAccPageThree from './Screens/OpenAccPageThree/';
-import OpenAccPageFour from './Screens/OpenAccPageFour/';
-import OpenAccPageFive from './Screens/OpenAccPageFive/';
-import OpenAccPageSix from './Screens/OpenAccPageSix/';
+import DashboardAccounts from './Screens/DashboardAccounts';
+import OpenAccPageOne from './Screens/OpenAccPageOne';
+import OpenAccPageTwo from './Screens/OpenAccPageTwo';
+import OpenAccPageThree from './Screens/OpenAccPageThree';
+import OpenAccPageFour from './Screens/OpenAccPageFour';
+import OpenAccPageFive from './Screens/OpenAccPageFive/OpenAccPageFiveComponent';
+import OpenAccPageSix from './Screens/OpenAccPageSix';
 import SpecialtyAccPage from './Screens/SpecialtyAccPage/SpecialtyAccPageComponent';
 import SpecialtyAccSubmit from './Screens/SpecialtyAccSubmit/SpecialtyAccSubmitComponent';
 import CollegePlanESA from './Screens/CollegePlanESA/CollegePlanESAComponent';
 import CollegePlanPartOneTwo from './Screens/CollegePlanPartOneTwo/CollegePlanPartOneTwoComponent';
 import CollegePlanPersonal from './Screens/CollegePlanPersonal/CollegePlanPersonalComponent';
 import CollegePlanBeneficiary from './Screens/CollegePlanBeneficiary/CollegePlanBeneficiaryComponent';
-import InvestmentPlanInfo from './Screens/InvestmentPlanInfo';
+import InvestmentPlanInfo from './Screens/InvestmentPlanInfo/InvestmentPlanInfoComponent';
 
 // Done By 806048
 
@@ -72,7 +72,7 @@ import EditAddressAddNew from './Screens/EditAddressAddNew/EditAddressAddNewComp
 import EditPhoneInformation from './Screens/EditPhoneInformations/EditPhoneInfoComponent';
 import EditEmailInformation from './Screens/EditEmailInformation/EditEmailInfoComponent';
 import EditEmailAddNew from './Screens/EditEmailInfoAddNew/EditEmailAddNewComponent';
-import EditAddFinancialInfo from './Screens/EditAddFinancialInformation/';
+import EditAddFinancialInfo from './Screens/EditAddFinancialInformation/EditAddFinancialInfoComponent';
 import EditAddPhoneNumber from './Screens/EditAddNewPhoneNumber/EditAddPhoneNumberComponent';
 import EditMilitaryInfo from './Screens/EditMilitaryInformation/EditMilitaryInfoComponent';
 import EditOccupationInfo from './Screens/EditOccupationInformation/EditOccupationInfoComponent';
@@ -97,26 +97,7 @@ import PasswordRecoverTemp from './Screens/RecoverTempPassword/';
 import PasswordReset from './Screens/RecoverPasswordNew/';
 import PasswordSuccess from './Screens/RecoverPasswordSuccess/';
 
-
-//Automatic Investment Plan
-import automaticInvestment from './Screens/AutomaticInvestmentPlan';
-import automaticInvestmentAdd from './Screens/AutomaticInvestmentPlanAdd';
-import automaticInvestmentSchedule from './Screens/AutomaticInvestmentPlanSchedule';
-import automaticInvestmentVerify from './Screens/AutomaticInvestmentPlanVerify';
-import automaticInvestmentEsign from './Screens/AutomaticInvestmentPlanEsign';
-
-//Systematic Withdrawal plan
-import systematicWithdrawal from './Screens/SystematicWithdrawalPlan';
-import systematicWithdrawalAdd from './Screens/SystematicWithdrawalPlanAdd';
-import systematicWithdrawalSchedule from './Screens/SystematicWithdrawalPlanSchedule';
-import systematicWithdrawalVerify from './Screens/SystematicWithdrawalPlanVerify';
-import systematicWithdrawalEsign from './Screens/SystematicWithdrawalPlanEsign';
-
-//Account Services
-import AccountServicesComponent from './Screens/AccountServices';
-import DividentsAndCapitalGainsPrefComponent from './Screens/Dividents';
-import CheckBookComponent from './Screens/OrderCheckBook';
-
+import TAmmendComponent from './Screens/TAmmend/TAmmendComponent'
 
 const AppNavigator = createStackNavigator({
         login: {
@@ -620,87 +601,14 @@ const AppNavigator = createStackNavigator({
                 header:null,
             }  
         },
-        automaticInvestment:{
-            screen:automaticInvestment,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        automaticInvestmentAdd:{
-            screen:automaticInvestmentAdd,
+        tAmmendComponent:{
+            screen:TAmmendComponent,
             navigationOptions:{
                 header:null,
             }  
         },
-        automaticInvestmentVerify:{
-            screen:automaticInvestmentVerify,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        automaticInvestmentEsign:{
-            screen:automaticInvestmentEsign,
-            navigationOptions:{
-                header:null,
-            }
-        },
-            automaticInvestmentSchedule:{
-                screen:automaticInvestmentSchedule,
-                navigationOptions:{
-                    header:null,
-                }  
-        },
-        systematicWithdrawal:{
-            screen:systematicWithdrawal,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        systematicWithdrawalAdd:{
-            screen:systematicWithdrawalAdd,
-            navigationOptions:{
-                header:null,
-            }  
-        },
-        accountService: {
-            screen: AccountServicesComponent,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        dividentsAndCapitalGainsPref: {
-            screen: DividentsAndCapitalGainsPrefComponent,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        systematicWithdrawalVerify:{
-            screen:systematicWithdrawalVerify,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        systematicWithdrawalSchedule:{
-            screen:systematicWithdrawalSchedule,
-            navigationOptions:{
-                header:null,
-            }  
-        },
-        systematicWithdrawalEsign:{
-            screen:systematicWithdrawalEsign,
-            navigationOptions:{
-                header:null,
-            }  
-        },
-        orderCheckBook: {
-            screen: CheckBookComponent,
-            navigationOptions: {
-                header: null,
-            }
-        }
-        
     },{
-        initialRouteName: 'login'
+        initialRouteName: 'tAmmendComponent'
     });
 
 export default createAppContainer(AppNavigator);
