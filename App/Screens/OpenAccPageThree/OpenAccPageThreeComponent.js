@@ -210,7 +210,7 @@ class OpenAccPageThreeComponent extends Component {
             monthlyInvestmentValidation: true,
             investStartDateValidation: true,
 
-            total: "",
+            totalInitialInvestment: "",
             action:"",
             selectedFundInvestmentsData:[],
             /* "fundNumber":"123", 
@@ -380,7 +380,20 @@ class OpenAccPageThreeComponent extends Component {
         let newItems = [...this.state.selectedFundInvestmentsData];
         newItems[index][keyName] = text;
 
+        let total = 0;
+        for (let i=0; i< newItems.length; i++){
+            if(!isNaN(newItems[i]["initialInvestment"]) && newItems[i]["initialInvestment"] != ""){
+                total =  total + parseFloat(newItems[i]["initialInvestment"]);
+
+            }else{
+
+            }
+        }
+
+        console.log("total:::>"+total);
+
         this.setState({
+            totalInitialInvestment:"$ "+total,
             selectedFundInvestmentsData: newItems,
         });
     }
@@ -608,8 +621,8 @@ class OpenAccPageThreeComponent extends Component {
         (<ListItem
             isActive={item.isActive}
             fundName={item.fundName}
-            minimum={item.initialInvestment}
-            autoInvesting={`${item.initialInvestment} w/ ${item.monthlyInvestment} monthly`}
+            minimum={`$ ${item.initialInvestment}`}
+            autoInvesting={`$ ${item.initialInvestment} w/ $ ${item.monthlyInvestment} monthly`}
             risk={item.risk}
             onClickCheckbox={this.onSelectFundList(item, index)}
             onClickItem={this.onClickRowItem(item, index)}
@@ -1098,7 +1111,7 @@ class OpenAccPageThreeComponent extends Component {
                                                 />
                                             </View>
                                             <Text style={{ textAlign: 'right', width: '100%', color: '#56565A', fontSize: scaledHeight(12), marginTop: scaledHeight(12), }}>
-                                                {"Minimum $3,000"}
+                                                {`Minimum ${this.state.selectedFundInvestmentsData[index].initialInvestment}`}
                                             </Text>
 
 
@@ -1210,7 +1223,7 @@ class OpenAccPageThreeComponent extends Component {
                                         {gblStrings.accManagement.total}
                                     </Text>
                                     <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {"$3,000.00"}
+                                        {this.state.totalInitialInvestment}
                                     </Text>
                                 </View>
                                 <Text style={styles.lblLine} />
