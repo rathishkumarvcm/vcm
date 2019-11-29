@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity,FlatList } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner } from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
+import { scaledHeight } from '../../Utils/Resolution';
 
 
 
@@ -57,18 +58,79 @@ class OpenAccPageFiveComponent extends Component {
 
     }
 
+    generateKeyExtractor = (item) => item.fundNumber.toString();
+   
+    renderFundItem = () => ({ item }) =>
+    (<View>
+                <Text style={styles.detailsGrpHeaderTxt}>
+                    {item.fundName}
+                </Text>
+                <View style={{flexGrow: 1,backgroundColor: '#FFFFFF',paddingHorizontal: scaledHeight(15),paddingTop: scaledHeight(16),paddingBottom: scaledHeight(10)}} >
+                <TouchableOpacity
+                        // onPress={() => { alert("#TODO:: Edit") }}
+                        activeOpacity={0.8}
+                        accessibilityRole={'button'}
+                        style={styles.editBtn}
+                    >
+                        <Text style={styles.editBtnTxt}>
+                            {gblStrings.common.edit}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+
+               
+                <View style={styles.editSeletedFundsDetailsGrp} >
+                   
+
+                  
+                    <View style={styles.detailsRow}>
+                        <Text style={styles.lblLeftColTxt}>
+                            {gblStrings.accManagement.initInvestment}
+                        </Text>
+                        <Text style={styles.lblRightColTxt}>
+                           {`$ ${item.initialInvestment}`}
+                        </Text>
+                    </View>
+                </View>
+    </View>
+    );
+
     renderAllSection = (data) => {
         console.log("renderAllSection::"+JSON.stringify(data));
-
         return (
             <View >
+                {this.renderAccountTypeInfo(data)}
                 {this.renderPrimaryPersonalInfo(data)}
                 {this.renderPrimaryEmploymentInfo (data)}
                 {this.renderPrimaryMilitaryInfo (data)}
                 {this.renderPrimaryFinancialInfo (data)}
                 {this.renderMutualFundList (data)}
-                {this.renderInvestmentInfo (data)}
                 {this.renderAccPrefencesInfo (data)}
+            </View>
+        );
+    }
+    renderAccountTypeInfo = (data) =>{
+        var { accountType = ''} = data ? data : {};
+
+        return (
+            <View style={[styles.sectionGrp]}>
+                <View style={styles.accTypeSelectSection} >
+                    <Text style={styles.headings}>
+                        {gblStrings.accManagement.vcmInvestAccInfo}
+                    </Text>
+                </View>
+
+                <Text style={styles.lblLine} />
+                <View style={styles.detailsGrp} >
+                    <View style={styles.detailsRow}>
+                        <Text style={styles.lblLeftColTxt}>
+                            {gblStrings.accManagement.registrationType}
+                        </Text>
+                        <Text style={styles.lblRightColTxt}>
+                            {accountType}
+                        </Text>
+                    </View>
+                </View>
             </View>
         );
     }
@@ -474,42 +536,63 @@ class OpenAccPageFiveComponent extends Component {
 
     renderMutualFundList = (data) => {
        
-        var { financialInfo = {} } = data ? data : {};
+        var { investmentInfo = {} }  = data ? data : {};
+        var {
+            fundingSource = {},
+            totalFunds = '',
+            fundDataList = []
+        } = (investmentInfo && investmentInfo.fundDataList) ? investmentInfo : {};
 
+
+        var {
+            method = '',
+            bankAccount = '',
+            accountType = '',
+            financialInstitutionName = '',
+            accountOwner = '',
+            transitRoutingNumber = '',
+            accountNumber = '',
+
+        } = (fundingSource && fundingSource.method) ? fundingSource : {};
+
+        var tempFundDataList = [ {
+            "fundNumber":"123", 
+            "fundName":"Fund1",
+            "fundingOption":"Initial",
+            "initialInvestment":"3000",
+            "monthlyInvestment":"ss",
+            "startDate":"ss",
+            "action":"add"
+          },{
+            "fundNumber":"123", 
+            "fundName":"Fund1",
+            "fundingOption":"Initial",
+            "initialInvestment":"3000",
+            "monthlyInvestment":"ss",
+            "startDate":"ss",
+            "action":"add"
+          }];
         return(
+            <>
             <View style={[styles.sectionGrp]}>
-            <View style={styles.accTypeSelectSection} >
-                <Text style={styles.headings}>
-                    {gblStrings.accManagement.selectedMutualFunds}
-                </Text>
-            </View>
-
-            <Text style={styles.lblLine} />
-
-            <Text style={styles.detailsGrpHeaderTxt}>
-                {"World Growth Fund"}
-            </Text>
-            <View style={styles.editSeletedFundsDetailsGrp} >
-                <TouchableOpacity
-                    // onPress={() => { alert("#TODO:: Edit") }}
-                    activeOpacity={0.8}
-                    accessibilityRole={'button'}
-                    style={styles.editBtn}
-                >
-                    <Text style={styles.editBtnTxt}>
-                        {gblStrings.common.edit}
-                    </Text>
-                </TouchableOpacity>
-                <View style={styles.detailsRow}>
-                    <Text style={styles.lblLeftColTxt}>
-                        {gblStrings.accManagement.initInvestment}
-                    </Text>
-                    <Text style={styles.lblRightColTxt}>
-                        {"$ 3,000.00"}
+                <View style={styles.accTypeSelectSection} >
+                    <Text style={styles.headings}>
+                        {gblStrings.accManagement.selectedMutualFunds}
                     </Text>
                 </View>
+
+                <Text style={styles.lblLine} />
+
+                <FlatList
+                                data={fundDataList}
+                                keyExtractor={this.generateKeyExtractor}
+                                renderItem={this.renderFundItem()}
+
+                            />
+              
             </View>
-        </View>
+             { fundDataList.length >0 && this.renderInvestmentInfo(data)}
+            </>
 
         );
     }
@@ -653,26 +736,7 @@ console.log ("tempInfoData:::"+JSON.stringify(tempInfoData));
                     <CustomPageWizard currentPage={currentPage} pageName={(currentPage) + " " + gblStrings.accManagement.verifyInfo} />
 
                     { /*-----------Account information -------------------*/}
-                    <View style={[styles.sectionGrp]}>
-                        <View style={styles.accTypeSelectSection} >
-                            <Text style={styles.headings}>
-                                {gblStrings.accManagement.vcmInvestAccInfo}
-                            </Text>
-                        </View>
-
-                        <Text style={styles.lblLine} />
-                        <View style={styles.detailsGrp} >
-                            <View style={styles.detailsRow}>
-                                <Text style={styles.lblLeftColTxt}>
-                                    {gblStrings.accManagement.registrationType}
-                                </Text>
-                                <Text style={styles.lblRightColTxt}>
-                                    {accountType}
-                                </Text>
-                            </View>
-                        </View>
-                    </View>
-
+                    
                     {this.renderAllSection(tempInfoData)}
 
 

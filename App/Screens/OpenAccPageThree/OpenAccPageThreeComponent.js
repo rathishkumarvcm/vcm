@@ -362,7 +362,7 @@ class OpenAccPageThreeComponent extends Component {
                     },
                     "totalFunds": ""+this.state.selectedFundInvestmentsData.length || "-",
                     "totalInitialInvestment":"-",
-                    "fundDataList": JSON.stringify(this.state.selectedFundInvestmentsData)
+                    "fundDataList": this.state.selectedFundInvestmentsData
                 },
             }
         }
