@@ -1313,9 +1313,9 @@ class OpenAccPageThreeComponent extends Component {
                                     this.state.filtermindata.map((item,index)=>{    
                                         var itemvalue = item.value;                                
                                         if(item.key == 50){                                          
-                                            itemvalue = itemvalue.replace(new RegExp('50', 'g'), '$50');                                            
+                                            itemvalue = itemvalue.replace(new RegExp('50', 'g'), gblStrings.common.dollar+'50');                                            
                                         }else{ 
-                                            itemvalue = "$"+item.value;   
+                                            itemvalue = gblStrings.common.dollar+item.value;   
                                         }
                                         return(                                           
                                             <CustomCheckBox

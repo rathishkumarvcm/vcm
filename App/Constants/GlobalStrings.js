@@ -44,7 +44,8 @@ export default {
         userAgreement: "User Agreement",
         support: "Support",
         copyRights: "Copyright Victory Capital Management Inc. ©2020",
-        validPincode: "Enter Valid 6 Digit Pin"
+        validPincode: "Enter Valid 6 Digit Pin",
+        dollar:"$"
     },
     login: {
         imageRequest: "imageRequest",
@@ -295,8 +296,8 @@ export default {
         summary: "Summary",
         quickFacts: "Quick Facts",
         performance: "Performance",
-        monthEndAvgAnnualReturns: "Month-End Average Annual Total Returns as of 06/30/2019",
-        quarterEndAvgAnnualReturns: "Quarter -End Average Annual Total Returns as of 06/30/2019",
+        monthEndAvgAnnualReturns: "Month-End Average Annual Total Returns as of ",
+        quarterEndAvgAnnualReturns: "Quarter -End Average Annual Total Returns as of ",
 
         YTD: "YTD",
         oneYear: "1 Year",
