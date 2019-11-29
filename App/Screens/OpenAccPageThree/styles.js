@@ -434,6 +434,8 @@ export const styles = StyleSheet.create({
         paddingLeft: '4%',
         paddingTop: scaledHeight(15),
         paddingBottom: scaledHeight(15),
+        marginTop:scaledHeight(40),
+        marginBottom:scaledHeight(40),
     },
     modalTitleView:{
         flexDirection:'row',

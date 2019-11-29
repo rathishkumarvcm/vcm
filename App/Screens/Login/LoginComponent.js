@@ -166,7 +166,7 @@ class LoginComponent extends Component {
 
     setEmail = text => {
         this.setState({
-            registeredOnlineID : text
+            email : text
         });
     }
 
@@ -290,7 +290,7 @@ class LoginComponent extends Component {
                 placeholder={"E-mail"}
                 onChangeText={this.setEmail}
                 //onBlur={this.validateEmail}
-                value={this.state.registeredOnlineID}
+                value={this.state.email}
                 //validateError={this.state.validateEmail}
                 errorFlag={!this.state.validationEmail}
                 errorText={"Enter a valid email."}
@@ -343,7 +343,7 @@ class LoginComponent extends Component {
                     buttonStyle={styles.signInButton}
                     buttonText="Sign In"
                     textStyle={styles.signInButtonText}
-                    onPress={this.signIn}
+                    onPress={this.callSignIn}
                     //onPress={this.navigateDashboard}
             />
             <View>

@@ -114,7 +114,9 @@ import systematicWithdrawalEsign from './Screens/SystematicWithdrawalPlanEsign';
 
 //Account Services
 import AccountServicesComponent from './Screens/AccountServices';
-import DividentsAndCapitalGainsPrefComponent from './Screens/Dividents'
+import DividentsAndCapitalGainsPrefComponent from './Screens/Dividents';
+import CheckBookComponent from './Screens/OrderCheckBook';
+
 
 const AppNavigator = createStackNavigator({
         login: {
@@ -689,6 +691,12 @@ const AppNavigator = createStackNavigator({
             navigationOptions:{
                 header:null,
             }  
+        },
+        orderCheckBook: {
+            screen: CheckBookComponent,
+            navigationOptions: {
+                header: null,
+            }
         }
         
     },{

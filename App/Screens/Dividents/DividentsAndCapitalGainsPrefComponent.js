@@ -246,14 +246,14 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                         buttonStyle={styles.backBtn}
                         buttonText={gblStrings.common.back}
                         textStyle={styles.backButtonText}
-                        onPress={() => this.webServiceCall()}
+                        onPress={this.navigateBack}
                     />
 
                     <GButtonComponent
                         buttonStyle={styles.backBtn}
                         buttonText={gblStrings.common.cancel}
                         textStyle={styles.backButtonText}
-                        onPress={() => this.webServiceCall()}
+                        onPress={this.navigateBack}
                     />
 
                     <GButtonComponent

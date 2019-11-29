@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GIcon, GHeaderComponent, GFooterComponent,GRatingStarsComponent } from '../../CommonComponents';
+import { GButtonComponent, GIcon, GHeaderComponent, GFooterComponent, GRatingStarsComponent, GLoadingSpinner } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
@@ -133,7 +133,7 @@ class InvestmentPlanInfoComponent extends Component {
             isLoading: false,
             isSummarySelected: true,
             isQuickFactSelected: false,
-            isPerformanceSelected: false,           
+            isPerformanceSelected: false,
 
         };
     }
@@ -141,7 +141,7 @@ class InvestmentPlanInfoComponent extends Component {
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
     componentDidMount() {
-        const payload = this.props.navigation.getParam('fundDetails', '');           
+        const payload = this.props.navigation.getParam('fundDetails', '');
         this.props.getFundDetailsData(payload);
     }
     /*----------------------
@@ -149,9 +149,9 @@ class InvestmentPlanInfoComponent extends Component {
                                                                  -------------------------- */
     goBack = () => {
         this.props.navigation.goBack();
-    }      
+    }
 
-    renderSummary = (risk,initialInvestment,monthlyInvestment) => {
+    renderSummary = (risk, initialInvestment, monthlyInvestment, moreInfo_PDFs) => {
         return (
             <View style={[styles.summarySectionGrp]}>
                 <View style={styles.riskContainer}>
@@ -180,30 +180,27 @@ class InvestmentPlanInfoComponent extends Component {
                 </Text>
 
                 <Text style={styles.headingUnderline}>{gblStrings.accManagement.moreInfo}</Text>
-                <View style={{ flexGrow: 1, marginTop: scaledHeight(30) }}>
-                    <View style={{ flexDirection: 'row', flexGrow: 1, flexWrap: 'wrap', marginVertical: scaledHeight(10.5) }} >
-                        <Text style={styles.pdfFileNameTxt}>
-                            {gblStrings.accManagement.fullFundDeatilDisclosures}
-                        </Text>
-                        <Text style={styles.pdfFileTxt}>
-                            {" (PDF)"}
-                        </Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', flexGrow: 1, flexWrap: 'wrap', marginVertical: scaledHeight(10.5) }} >
-                        <Text style={styles.pdfFileNameTxt}>
-                            {gblStrings.accManagement.prospectus}
-                        </Text>
-                        <Text style={styles.pdfFileTxt}>
-                            {" (PDF)"}
-                        </Text>
-                    </View>
-                </View>
-
-
+                {
+                    (moreInfo_PDFs!==null && moreInfo_PDFs.length > 0) ?
+                        <View style={styles.pdfDisclosureContainer}>
+                            {
+                                moreInfo_PDFs.map((item) => {
+                                    return (
+                                        <View style={styles.pdfDisclosure} key={item.key}>
+                                            <Text style={styles.pdfFileNameTxt}>
+                                                {item.value}
+                                            </Text>
+                                        </View>
+                                    );
+                                })
+                            }
+                        </View>
+                    : null 
+                }
             </View>
         );
     }
-    renderQuickfacts = (nav,expenseRatio,morningstarRating,morningstarCategory,categoryFunds) => {
+    renderQuickfacts = (nav, expenseRatio, morningstarRating, morningstarCategory, categoryFunds) => {
         return (
             <View style={[styles.summarySectionGrp]}>
 
@@ -257,55 +254,69 @@ class InvestmentPlanInfoComponent extends Component {
         );
     }
 
-    renderPerformnace = () => {
+    renderPerformnace = (monthly, quarterly) => {
         return (
             <View >
                 <Table
-                    tableName={gblStrings.accManagement.monthEndAvgAnnualReturns}
-                    YTD={"15.39%"}
-                    oneYear={"1.95%"}
-                    fiveYear={"10.55%"}
-                    tenYear={"12.92%"}
-                    sinceInception={"8.8%"}
-                    sinceInceptionYear={"10/15/1981"}
+                    tableName={gblStrings.accManagement.monthEndAvgAnnualReturns + monthly.asOfDate}
+                    YTD={monthly.ytd}
+                    oneYear={monthly["1year"]}
+                    fiveYear={monthly["5year"]}
+                    tenYear={monthly["10year"]}
+                    sinceInception={monthly.sinceInception}
+                    sinceInceptionYear={monthly.inceptionDate}
                 />
 
                 <Table
-                    tableName={gblStrings.accManagement.quarterEndAvgAnnualReturns}
-                    YTD={"20.39%"}
-                    oneYear={"1.95%"}
-                    fiveYear={"10.55%"}
-                    tenYear={"12.92%"}
-                    sinceInception={"8.8%"}
-                    sinceInceptionYear={"10/15/1981"}
+                    tableName={gblStrings.accManagement.quarterEndAvgAnnualReturns + quarterly.asOfDate}
+                    YTD={quarterly.ytd}
+                    oneYear={monthly["1year"]}
+                    fiveYear={monthly["5year"]}
+                    tenYear={monthly["10year"]}
+                    sinceInception={quarterly.sinceInception}
+                    sinceInceptionYear={quarterly.inceptionDate}
                 />
 
             </View>
         );
     }
-   
-
     /*----------------------
                                  Render Methods
                                                                  -------------------------- */
     render() {
 
         var {
-            nav = "",    
-            fundName = "", 
-            risk = "",     
-            monthlyInvestment = "", 
+            nav = "",
+            fundName = "",
+            risk = "",
+            monthlyInvestment = "",
             initialInvestment = "",
-            expenseRatio = "",         
+            expenseRatio: expense_Ratio = {},
             morningstarCategory = "",
             categoryFunds = "",
             morningstarRating = "",
-            performanceDetails : performance_Details= {},
+            performanceDetails: performance_Details = {},
+            moreInfoPDFs: moreInfo_PDFs = [],
         } = (this.props && this.props.fundDetailsData && this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS]) ? this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS] : {};
 
-          
+        var {
+            expenseRatio = ""
+        } = (expense_Ratio && expense_Ratio.expenseRatio) ? expense_Ratio : {};
+
+        var {
+            totalReturns: total_Returns = {}
+        } = (performance_Details && performance_Details.totalReturns) ? performance_Details : {};
+
+        var {
+            monthly: monthly_Returns = {},
+            quarterly: quarterly_Returns = {}
+        } = (total_Returns && total_Returns.monthly && total_Returns.quarterly) ? total_Returns : {};
+
         return (
             <View style={styles.container}>
+                {
+                    this.props.fundDetailsData.isLoading && <GLoadingSpinner />
+                }
                 <GHeaderComponent
                     navigation={this.props.navigation}
                     onPress={() => { }}
@@ -332,7 +343,7 @@ class InvestmentPlanInfoComponent extends Component {
                                 </Text>
                             </View>
 
-                        </TouchableOpacity>                    
+                        </TouchableOpacity>
 
                         <View style={styles.accTypeSelectSection} >
                             <Text style={styles.headings}>
@@ -407,9 +418,9 @@ class InvestmentPlanInfoComponent extends Component {
                     </ScrollView>
 
                     { /*----------- Summary,QuickFacts,Performance  -------------------*/}
-                    {this.state.isSummarySelected && this.renderSummary(risk,initialInvestment,monthlyInvestment)}
-                    {this.state.isQuickFactSelected && this.renderQuickfacts(nav,expenseRatio,morningstarRating,morningstarCategory,categoryFunds)}
-                    {this.state.isPerformanceSelected && this.renderPerformnace()}
+                    {this.state.isSummarySelected && this.renderSummary(risk, gblStrings.common.dollar + initialInvestment, gblStrings.common.dollar + monthlyInvestment, moreInfo_PDFs)}
+                    {this.state.isQuickFactSelected && this.renderQuickfacts(nav, expenseRatio, morningstarRating, morningstarCategory, categoryFunds)}
+                    {this.state.isPerformanceSelected && this.renderPerformnace(monthly_Returns, quarterly_Returns)}
 
                     { /*----------- Buttons Grp  -------------------*/}
 
@@ -419,7 +430,7 @@ class InvestmentPlanInfoComponent extends Component {
                             buttonStyle={styles.normalWhiteBtn}
                             buttonText={gblStrings.common.back}
                             textStyle={styles.normalWhiteBtnTxt}
-                            onPress={()=>this.goBack()}
+                            onPress={() => this.goBack()}
                         />
 
                     </View>
@@ -448,5 +459,5 @@ class InvestmentPlanInfoComponent extends Component {
 InvestmentPlanInfoComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
     fundDetailsData: PropTypes.instanceOf(Object).isRequired,
-  };
+};
 export default InvestmentPlanInfoComponent;

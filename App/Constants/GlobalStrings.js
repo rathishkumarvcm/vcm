@@ -44,7 +44,8 @@ export default {
         userAgreement: "User Agreement",
         support: "Support",
         copyRights: "Copyright Victory Capital Management Inc. ©2020",
-        validPincode: "Enter Valid 6 Digit Pin"
+        validPincode: "Enter Valid 6 Digit Pin",
+        dollar:"$"
     },
     login: {
         imageRequest: "imageRequest",
@@ -73,7 +74,7 @@ export default {
         houseNo: 50,
         streetName: 50,
         streetNo: 50,
-        zipCode: 9,
+        zipCode: 10,
         city: 30,
         state: 30,
         foreignPostalcode: 8,
@@ -306,8 +307,8 @@ export default {
         summary: "Summary",
         quickFacts: "Quick Facts",
         performance: "Performance",
-        monthEndAvgAnnualReturns: "Month-End Average Annual Total Returns as of 06/30/2019",
-        quarterEndAvgAnnualReturns: "Quarter -End Average Annual Total Returns as of 06/30/2019",
+        monthEndAvgAnnualReturns: "Month-End Average Annual Total Returns as of ",
+        quarterEndAvgAnnualReturns: "Quarter -End Average Annual Total Returns as of ",
 
         YTD: "YTD",
         oneYear: "1 Year",
@@ -478,9 +479,13 @@ export default {
         maximumSeletedFundMsg: "Maximm 10 funds only allowed",
         emptyFundingSourceMsg: "Atleast one funding source should be selected",
         emptyFundOptionsMsg: "Please select a funding options",
-        emptyInitInvestmentMsg: "‘Please enter a initial investment value",
+        emptyInitInvestmentMsg: "Please enter a initial investment value",
+        minInitInvestmentMsg: " Initial investment value should me minimum of $ 3000",
+
         invalidInitInvestmentMsg: "‘Please enter a valid initial investment  value",
         emptyMonthlyInvestmentMsg: "‘Please enter a monthly investment value",
+        minMonthlyInvestmentMsg: " Monthly investment value should me minimum of $ 3000",
+
         invalidMonthlyInvestmentMsg: "‘Please enter a valid monthly investment value",
         emptyStartDate: "Please select a start date",
         emptyDividendCapitalGainsMsg: "Please select any type of Dividend/Capital Gains",
@@ -960,8 +965,9 @@ export default {
         bank_accounts: 'BANK ACCOUNTS',
         automatic_investment_plan: 'AUTOMATIC INVESTMENT PLAN',
         systematic_withdrawal_plan: 'SYSTEMATIC WITHDRAWAL PLAN',
-        checkbook: 'CHECKBOOK',
-        dividents: 'DIVIDENTS'
+        checkbook: 'ORDER CHECKBOOK',
+        dividents: 'DIVIDENTS',
+        failed_email: 'Failed Email - Member Update'
     },
     dividents: {
         dividents_and_capital_gains_preferences: 'Dividents and Capital Gains Preferences',
@@ -987,5 +993,11 @@ export default {
         acc_Name: 'Account Name',
         skip: 'Skip',
     },
-
+    orderCheckBook: {
+        order_checkbook: 'Order Checkbook',
+        checkbook_requested_on: 'Checkbook requested on',
+        number_of_checkleaves: 'Number of Check Leaves',
+        verify_your_account: 'Verify your account information below',
+        request_submit_checkbook: 'You have successfully Submitted the Checkbook request'
+    },
 };

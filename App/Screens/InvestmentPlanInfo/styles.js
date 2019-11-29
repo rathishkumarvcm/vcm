@@ -395,9 +395,15 @@ export const styles = StyleSheet.create({
         lineHeight: 25
 
     },
-
-
-
-
+    pdfDisclosureContainer:{ 
+        flexGrow: 1, 
+        marginTop: scaledHeight(30) 
+    },
+    pdfDisclosure:{ 
+        flexDirection: 'row', 
+        flexGrow: 1, 
+        flexWrap: 'wrap', 
+        marginVertical: scaledHeight(10.5) 
+    }
 
 });
