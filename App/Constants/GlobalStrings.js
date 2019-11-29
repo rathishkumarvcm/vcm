@@ -74,7 +74,7 @@ export default {
         houseNo: 50,
         streetName: 50,
         streetNo: 50,
-        zipCode: 9,
+        zipCode: 10,
         city: 30,
         state: 30,
         foreignPostalcode: 8,

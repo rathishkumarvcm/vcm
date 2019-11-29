@@ -935,7 +935,7 @@ class OpenAccPageThreeComponent extends Component {
 
                             <View style={styles.fundListGrp}>
                                 <Text style={styles.lblSelectedCountTxt}>
-                                    {(this.state.selectedCount > 0) ? this.state.selectedCount + " of 25 Items selected" : ""}
+                                    {(this.state.selectedCount > 0) ? `${this.state.selectedCount} of ${this.state.fundList.length} Items selected` : ""}
                                 </Text>
 
                                 <FlatList
@@ -943,13 +943,13 @@ class OpenAccPageThreeComponent extends Component {
                                     keyExtractor={this.generateFundListKeyExtractor}
                                     renderItem={this.renderFundListItem()}
                                 />
-                                <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
-                                    onPress={this.showAllItems(25)}
+                                {this.state.selectedFundInvestmentsData.length > 25 && <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
+                                    onPress={this.showAllItems(this.state.fundList.length)}
                                     activeOpacity={0.2}
                                 >
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                                         <Text style={styles.showPagesTxt}>
-                                            {"Show all 25 Items"}
+                                            {`Show all ${this.state.fundList.length} Items`}
                                         </Text>
                                         <GIcon
                                             name="right"
@@ -959,7 +959,10 @@ class OpenAccPageThreeComponent extends Component {
                                         />
                                     </View>
 
-                                </TouchableOpacity>
+                                </TouchableOpacity>}
+
+
+                                
 
                             </View>
 
@@ -1036,16 +1039,7 @@ class OpenAccPageThreeComponent extends Component {
                                 {gblStrings.accManagement.fundYourInvestNote}
                             </Text>
 
-                            <TouchableOpacity
-                                //  onPress={() => { alert("#TODO:: Remove") }}
-                                activeOpacity={0.8}
-                                accessibilityRole={'button'}
-                                style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginTop: scaledHeight(22) }}
-                            >
-                                <Text style={{ fontSize: scaledHeight(16), color: '#61285F', fontWeight: 'bold', width: '100%', textAlign: 'right', lineHeight: 20 }}>
-                                    {gblStrings.common.remove}
-                                </Text>
-                            </TouchableOpacity>
+        
                          
                             {this.state.selectedFundInvestmentsData.map((item, index) => {
                                 return (
