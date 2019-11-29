@@ -69,6 +69,9 @@ export const styles = StyleSheet.create({
         borderTopColor:'#C1C1C1',
        
     },
+    touchOpacityPosition: {
+        position: 'relative',
+    },
     addInvestFooterTitle:{
         color:'#54565B',
         fontSize:scaledHeight(15),

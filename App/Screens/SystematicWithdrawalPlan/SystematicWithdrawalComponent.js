@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, FlatList } from 'react-native';
+import { View, ScrollView, Text, FlatList,TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import {
     GHeaderComponent,
     GFooterComponent,
-    GButtonComponent
+    GButtonComponent,
+    GIcon
 } from '../../CommonComponents';
 import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
@@ -44,10 +45,13 @@ const autoInvestmentJson = [
     }
 ];
 
+
+
 class SystematicWithdrawalComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            expand: false,
         };
     }
     generateKeyExtractor = (item) => item.accountName;
@@ -110,6 +114,13 @@ class SystematicWithdrawalComponent extends Component {
             </View>
 
         )
+
+    setStateUpdates = () => {
+
+        this.setState({
+            expand: !this.state.expand,
+        });
+    }
     navigationInvestmentAdd = () => this.props.navigation.navigate('systematicWithdrawalAdd');
 
     render() {
@@ -131,23 +142,41 @@ class SystematicWithdrawalComponent extends Component {
                             renderItem={this.renderInvestment()}
                             keyExtractor={this.generateKeyExtractor}
                         /> */}
-                        <View style={{borderWidth:1,borderColor:'#C7C7C7',borderRadius:4,height:scaledHeight(100),alignItems:'center',justifyContent:'center',marginBottom:scaledHeight(20)}}>
-                            <Text style={{color:'#56565A',fontSize:scaledHeight(20),fontWeight:'bold'}}>{'No Withdrawal Plan'}</Text>
+                        <View style={{ borderWidth: 1, borderColor: '#C7C7C7', borderRadius: 4, height: scaledHeight(100), alignItems: 'center', justifyContent: 'center', marginBottom: scaledHeight(20),backgroundColor:'#FFFFFF' }}>
+                            <Text style={{ color: '#56565A', fontSize: scaledHeight(20), fontWeight: 'bold' }}>{'No Withdrawal Plan'}</Text>
                         </View>
                         <View style={{ borderColor: '#C7C7C7', borderWidth: 1, backgroundColor: '#F2F2F2', paddingLeft: scaledWidth(10), paddingRight: scaledWidth(10) }}>
-                            <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>
-                                <Text style={{ flex: 0.1, }}>{'--'}</Text>
-                                <Text style={styles.addInvestFooterTitle}>{'Instructions to Setup and manage Automatic Mutual Fund Purchases'}</Text>
-                            </View>
-                            <Text style={styles.addInvestFooterText}>{'Setup and manage Automatic Mutual Fund Purchases'}</Text>
-                            <Text style={styles.addInvestFooterText}>{'When you make a habit of investing regularly, it can make it easier to achieve your financial goals. Get started in three easy steps'}</Text>
-                            <Text style={styles.addInvestFooterList}>{'Choose your USAA Investment account'}</Text>
-                            <Text style={styles.addInvestFooterList}>{'Enter an amount of $50 or more'}</Text>
-                            <Text style={styles.addInvestFooterList}>{'Select how often you want to invest'}</Text>
-                            <Text style={styles.addInvestFooterText}>{'There are no fees to setup an automatic investment and if your plans change, you can cancel at any time.'}</Text>
-                            <Text style={styles.addInvestFooterText}>{'For IRA accounts the annual contribution limit for 2019 is $6,000 or $7,000 if you are over age 50. '}</Text>
-                            <Text style={styles.addInvestFooterText}>{'Note: If you don\'t see your account below, you may need to use our Transfer Funds Tool.'}</Text>
-
+                            <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setStateUpdates}>
+                                <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>
+                                    {this.state.expand ?
+                                        <GIcon
+                                            name="minus"
+                                            type="antdesign"
+                                            size={30}
+                                            color="#088ACC"
+                                        /> :
+                                        <GIcon
+                                            name="plus"
+                                            type="antdesign"
+                                            size={30}
+                                            color="#088ACC"
+                                        />
+                                    }
+                                    <Text style={styles.addInvestFooterTitle}>{'Instructions to Setup and manage Automatic Mutual Fund Purchases'}</Text>
+                                </View>
+                            </TouchableOpacity>
+                            {this.state.expand ?
+                                <View>
+                                    <Text style={styles.addInvestFooterText}>{'Setup and manage Automatic Mutual Fund Purchases'}</Text>
+                                    <Text style={styles.addInvestFooterText}>{'When you make a habit of investing regularly, it can make it easier to achieve your financial goals. Get started in three easy steps'}</Text>
+                                    <Text style={styles.addInvestFooterList}>{'Choose your USAA Investment account'}</Text>
+                                    <Text style={styles.addInvestFooterList}>{'Enter an amount of $50 or more'}</Text>
+                                    <Text style={styles.addInvestFooterList}>{'Select how often you want to invest'}</Text>
+                                    <Text style={styles.addInvestFooterText}>{'There are no fees to setup an automatic investment and if your plans change, you can cancel at any time.'}</Text>
+                                    <Text style={styles.addInvestFooterText}>{'For IRA accounts the annual contribution limit for 2019 is $6,000 or $7,000 if you are over age 50. '}</Text>
+                                    <Text style={styles.addInvestFooterText}>{'Note: If you don\'t see your account below, you may need to use our Transfer Funds Tool.'}</Text>
+                                </View>
+                                : null}
                         </View>
                         <GButtonComponent
                             buttonStyle={styles.cancelButton}
@@ -166,10 +195,10 @@ class SystematicWithdrawalComponent extends Component {
 SystematicWithdrawalComponent.propTypes = {
 
     navigation: PropTypes.instanceOf(Object)
-  };
-  
-  SystematicWithdrawalComponent.defaultProps = {
-  
-  };
-  
-  export default SystematicWithdrawalComponent;
+};
+
+SystematicWithdrawalComponent.defaultProps = {
+
+};
+
+export default SystematicWithdrawalComponent;

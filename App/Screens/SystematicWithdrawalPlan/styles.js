@@ -40,6 +40,9 @@ export const styles = StyleSheet.create({
         fontSize:scaledHeight(15),
         marginBottom:scaledHeight(25),
     },
+    touchOpacityPosition: {
+        position: 'relative',
+    },
     autoInvestHead: {
         marginTop: scaledHeight(15),
         marginBottom: scaledHeight(15),

@@ -52,6 +52,21 @@ const autoInvestmentJson = [
         content:'12/2019',
     },
 ];
+
+//var time = new Date();
+// var year = time.getYear();
+// if (year < 1900) {
+// year = year + 1900;
+// }
+// var date = year - 101; /*change the '101' to the number of years in the past you want to show */
+// var future = year + 100; /*change the '100' to the number of years in the future you want to show */ 
+// document.writeln ("<FORM><SELECT><OPTION value=\"\">Year");
+// do {
+// date++;
+// document.write ("<OPTION value=\"" +date+"\">" +date+ "");
+// }
+// while (date < future)
+// document.write ("</SELECT></FORM>");
 class SystematicWithdrawalPlanVerifyComponent extends Component {
     constructor(props) {
         super(props);
