@@ -219,6 +219,8 @@ class editAddFinancialInfoComponent extends Component {
                         dropDownValue={this.state.dropDownFinancialValue}
                         selectedDropDownValue={this.dropDownFinancialSelect}
                         itemToDisplay={"value"}
+                        errorFlag={this.state.dropDownFinancialFlag}
+                        errorText={this.dropDownFinancialMsg}
                         dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(200) }} />
 
                     <View style={styles.financialViewNormal}>
@@ -239,6 +241,8 @@ class editAddFinancialInfoComponent extends Component {
                         dropDownValue={this.state.dropDownNetValue}
                         selectedDropDownValue={this.dropDownNetSelect}
                         itemToDisplay={"value"}
+                        errorFlag={this.state.dropDownNetFlag}
+                        errorText={this.dropDownNetMsg}
                         dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(380) }} />
 
                     <GDropDownComponent
@@ -250,6 +254,8 @@ class editAddFinancialInfoComponent extends Component {
                         dropDownValue={this.state.dropDownTaxFillValue}
                         selectedDropDownValue={this.dropDownTaxFillSelect}
                         itemToDisplay={"value"}
+                        errorFlag={this.state.dropDownTaxFillFlag}
+                        errorText={this.dropDownTaxFillMsg}
                         dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(500) }} />
 
                     <View style={styles.editFlexDirectionColumn}>
