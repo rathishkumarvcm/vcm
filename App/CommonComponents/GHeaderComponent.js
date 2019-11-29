@@ -14,6 +14,10 @@ const newData = [
       title: 'Home',
     },
     {
+      naviagteTo: 'accountService',
+      title: 'Account Services',
+    },
+    {
       naviagteTo:'generalSettings',
       title: 'Settings',
     },
@@ -33,10 +37,10 @@ const newData = [
         naviagteTo:'automaticInvestment',
         title: 'Automatic Investment Plan',
       },
-      {
-        naviagteTo:'systematicWithdrawal',
-        title: 'Systamatic Withdrawal Plan',
-      },
+       {
+         naviagteTo:'systematicWithdrawal',
+         title: 'Systamatic Withdrawal Plan',
+       },
       {
           //navigateTo:'Logout'
           title: 'Sign Out',

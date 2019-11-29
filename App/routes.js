@@ -49,20 +49,20 @@ import RetrieveOnlineId from './Screens/RetrieveOnlineId/RetrieveOnlineIdCompone
 // Acc Management
 import Dashboard from './Screens/Dashboard/DashboardComponent';
 import TermsAndConditions from './Screens/TermsAndConditions/TermsAndConditionsComponent';
-import DashboardAccounts from './Screens/DashboardAccounts';
-import OpenAccPageOne from './Screens/OpenAccPageOne';
-import OpenAccPageTwo from './Screens/OpenAccPageTwo';
-import OpenAccPageThree from './Screens/OpenAccPageThree';
-import OpenAccPageFour from './Screens/OpenAccPageFour';
-import OpenAccPageFive from './Screens/OpenAccPageFive/OpenAccPageFiveComponent';
-import OpenAccPageSix from './Screens/OpenAccPageSix';
+import DashboardAccounts from './Screens/DashboardAccounts/';
+import OpenAccPageOne from './Screens/OpenAccPageOne/';
+import OpenAccPageTwo from './Screens/OpenAccPageTwo/';
+import OpenAccPageThree from './Screens/OpenAccPageThree/';
+import OpenAccPageFour from './Screens/OpenAccPageFour/';
+import OpenAccPageFive from './Screens/OpenAccPageFive/';
+import OpenAccPageSix from './Screens/OpenAccPageSix/';
 import SpecialtyAccPage from './Screens/SpecialtyAccPage/SpecialtyAccPageComponent';
 import SpecialtyAccSubmit from './Screens/SpecialtyAccSubmit/SpecialtyAccSubmitComponent';
 import CollegePlanESA from './Screens/CollegePlanESA/CollegePlanESAComponent';
 import CollegePlanPartOneTwo from './Screens/CollegePlanPartOneTwo/CollegePlanPartOneTwoComponent';
 import CollegePlanPersonal from './Screens/CollegePlanPersonal/CollegePlanPersonalComponent';
 import CollegePlanBeneficiary from './Screens/CollegePlanBeneficiary/CollegePlanBeneficiaryComponent';
-import InvestmentPlanInfo from './Screens/InvestmentPlanInfo/InvestmentPlanInfoComponent';
+import InvestmentPlanInfo from './Screens/InvestmentPlanInfo';
 
 // Done By 806048
 
@@ -97,16 +97,24 @@ import PasswordRecoverTemp from './Screens/RecoverTempPassword/';
 import PasswordReset from './Screens/RecoverPasswordNew/';
 import PasswordSuccess from './Screens/RecoverPasswordSuccess/';
 
-//Systematic Withdrawal plan
-import systematicWithdrawal from './Screens/SystematicWithdrawalPlan';
-import systematicWithdrawalAdd from './Screens/SystematicWithdrawalPlanAdd';
 
 //Automatic Investment Plan
 import automaticInvestment from './Screens/AutomaticInvestmentPlan';
 import automaticInvestmentAdd from './Screens/AutomaticInvestmentPlanAdd';
 import automaticInvestmentSchedule from './Screens/AutomaticInvestmentPlanSchedule';
 import automaticInvestmentVerify from './Screens/AutomaticInvestmentPlanVerify';
-import automaticInvestmentEsign from './Screens/AutomaticInvestmentPlanEsign'
+import automaticInvestmentEsign from './Screens/AutomaticInvestmentPlanEsign';
+
+//Systematic Withdrawal plan
+import systematicWithdrawal from './Screens/SystematicWithdrawalPlan';
+import systematicWithdrawalAdd from './Screens/SystematicWithdrawalPlanAdd';
+import systematicWithdrawalSchedule from './Screens/SystematicWithdrawalPlanSchedule';
+import systematicWithdrawalVerify from './Screens/SystematicWithdrawalPlanVerify';
+import systematicWithdrawalEsign from './Screens/SystematicWithdrawalPlanEsign';
+
+//Account Services
+import AccountServicesComponent from './Screens/AccountServices';
+import DividentsAndCapitalGainsPrefComponent from './Screens/Dividents'
 
 const AppNavigator = createStackNavigator({
         login: {
@@ -651,7 +659,38 @@ const AppNavigator = createStackNavigator({
             navigationOptions:{
                 header:null,
             }  
+        },
+        accountService: {
+            screen: AccountServicesComponent,
+            navigationOptions: {
+                header: null,
+            }
+        },
+        dividentsAndCapitalGainsPref: {
+            screen: DividentsAndCapitalGainsPrefComponent,
+            navigationOptions: {
+                header: null,
+            }
+        },
+        systematicWithdrawalVerify:{
+            screen:systematicWithdrawalVerify,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        systematicWithdrawalSchedule:{
+            screen:systematicWithdrawalSchedule,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        systematicWithdrawalEsign:{
+            screen:systematicWithdrawalEsign,
+            navigationOptions:{
+                header:null,
+            }  
         }
+        
     },{
         initialRouteName: 'login'
     });

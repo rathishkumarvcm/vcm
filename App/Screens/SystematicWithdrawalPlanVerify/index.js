@@ -1,0 +1,3 @@
+import SystematicWithdrawalPlanVerifyComponent from './SystematicWithdrawalPlanVerifyContainer';
+
+export default SystematicWithdrawalPlanVerifyComponent;

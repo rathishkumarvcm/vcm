@@ -86,16 +86,16 @@ const GSwitchComponent = props => (
     <View style={styles.switchContainer}>
         <GButtonComponent
             disabled={props.switchOn}
-            buttonStyle={props.switchOn ? styles.offButtonStyle : styles.offButtonStyleDisable}
+            buttonStyle={props.switchOn ? [styles.offButtonStyle, props.offStyle] : [styles.offButtonStyleDisable, props.offStyleDisabled]}
             buttonText={props.switchOffText}
-            textStyle={props.switchOn ? styles.TextOnStyle : styles.TextOffStyle}
+            textStyle={props.switchOn ? [styles.TextOnStyle, props.textOnStyle] : [styles.TextOffStyle, props.textOffStyle]}
             onPress={props.switchOnMethod}
         />
         <GButtonComponent
             disabled={props.switchOff}
-            buttonStyle={props.switchOff ? styles.onButtonStyle : styles.onButtonStyleDisable}
+            buttonStyle={props.switchOff ? [styles.onButtonStyle, props.onStyle] : [styles.onButtonStyleDisable, props.onStyleDisabled]}
             buttonText={props.switchOnText}
-            textStyle={props.switchOff ? styles.TextOnStyle : styles.TextOffStyle}
+            textStyle={props.switchOff ? [styles.TextOnStyle, props.textOnStyle] : [styles.TextOffStyle, props.textOffStyle]}
             onPress={props.switchOffMethod}
         />
     </View>
@@ -111,12 +111,24 @@ GSwitchComponent.propTypes = {
     disabled: PropTypes.bool,
     buttonStyle: PropTypes.instanceOf(Object),
     textStyle: PropTypes.instanceOf(Object),
+    offStyle: PropTypes.instanceOf(Object),
+    offStyleDisabled: PropTypes.instanceOf(Object),
+    onStyle: PropTypes.instanceOf(Object),
+    onStyleDisabled: PropTypes.instanceOf(Object),
+    textOnStyle: PropTypes.instanceOf(Object),
+    textOffStyle: PropTypes.instanceOf(Object),
 };
 
 GSwitchComponent.defaultProps = {
     disabled: false,
     switchOnText: "",
     switchOffText: "",
+    offStyle: {},
+    offStyleDisabled: {},
+    onStyle: {},
+    onStyleDisabled: {},
+    textOnStyle: {},
+    textOffStyle: {},
 };
 
 export default GSwitchComponent;

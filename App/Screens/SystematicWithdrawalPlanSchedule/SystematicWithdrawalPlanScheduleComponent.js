@@ -18,11 +18,23 @@ import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
 const dummyTypeJson = [
     {
         id: '1',
-        title: 'Monthly',
+        title: 'Twice a Month',
     },
     {
         id: '2',
+        title: 'Monthly',
+    },
+    {
+        id: '3',
         title: 'Quaterly',
+    },
+    {
+        id: '4',
+        title: 'Semi-Annually',
+    },
+    {
+        id: '5',
+        title: 'Annually',
     },
 ];
 
@@ -93,7 +105,7 @@ const dummyYearJson = [
         title: '2015'
     },
 ];
-class AutomaticInvestmentPlanScheduleComponent extends Component {
+class SystematicWithdrawalPlanScheduleComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -160,14 +172,14 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
         });
     }
 
-    navigationNext = () => this.props.navigation.navigate('automaticInvestmentVerify');
+    navigationNext = () => this.props.navigation.navigate('systematicWithdrawalVerify');
 
     render() {
         return (
             <View style={styles.container}>
                 <GHeaderComponent register navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
-                    <Text style={styles.autoInvestHead}>{'Create Automatic Investment Plan'}</Text>
+                    <Text style={styles.autoInvestHead}>{'Create Systematic Withdrawal Plan'}</Text>
                     <View style={styles.seperator_line} />
                     <View style={styles.circle_view}>
                         <View style={styles.circle_Completed}>
@@ -204,7 +216,6 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                             dropDownValue={this.state.valueTypeDropDown}
                             selectedDropDownValue={this.selectedDropDownTypeValue}
                             itemToDisplay={"title"}
-
                         />
                         <GDropDownComponent
                             dropDownTextName={styles.financialTextLabel}
@@ -240,7 +251,6 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                                     dropDownValue={this.state.valueYearDropDown}
                                     selectedDropDownValue={this.selectedDropDownYearValue}
                                     itemToDisplay={"title"}
-
                                 />
                             </View>
                         </View>
@@ -278,13 +288,13 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
         );
     }
 }
-AutomaticInvestmentPlanScheduleComponent.propTypes = {
+SystematicWithdrawalPlanScheduleComponent.propTypes = {
 
     navigation: PropTypes.instanceOf(Object)
 };
 
-AutomaticInvestmentPlanScheduleComponent.defaultProps = {
+SystematicWithdrawalPlanScheduleComponent.defaultProps = {
 
 };
 
-export default AutomaticInvestmentPlanScheduleComponent;
+export default SystematicWithdrawalPlanScheduleComponent;

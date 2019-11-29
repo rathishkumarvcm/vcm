@@ -77,13 +77,22 @@ class editAddFinancialInfoComponent extends Component {
             enableBiometric: false,
             faceIdEnrolled: false,
             touchIdEnrolled: false,
+            taxBracketValue: '',
+
             dropDownFinancialState: false,
             dropDownFinancialValue: '',
+            dropDownFinancialFlag: false,
+            dropDownFinancialMsg: '',
+
             dropDownNetState: false,
             dropDownNetValue: '',
+            dropDownNetFlag: false,
+            dropDownNetMsg: '',
+
             dropDownTaxFillState: false,
             dropDownTaxFillValue: '',
-            taxBracketValue: ''
+            dropDownTaxFillFlag: false,
+            dropDownTaxFillMsg: '',
         };
     }
 
@@ -97,7 +106,8 @@ class editAddFinancialInfoComponent extends Component {
         this.setState({
             dropDownFinancialValue: valueFinancial.value,
             dropDownFinancialState: false,
-            taxBracketValue: valueFinancial.taxbracket + '%'
+            taxBracketValue: valueFinancial.taxbracket + '%',
+            dropDownFinancialFlag: false
         });
     }
 
@@ -110,7 +120,8 @@ class editAddFinancialInfoComponent extends Component {
     dropDownNetSelect = (valueNetWorth) => {
         this.setState({
             dropDownNetValue: valueNetWorth.value,
-            dropDownNetState: false
+            dropDownNetState: false,
+            dropDownNetFlag: false
         });
     }
 
@@ -123,7 +134,8 @@ class editAddFinancialInfoComponent extends Component {
     dropDownTaxFillSelect = (valueTaxFilling) => {
         this.setState({
             dropDownTaxFillValue: valueTaxFilling.value,
-            dropDownTaxFillState: false
+            dropDownTaxFillState: false,
+            dropDownTaxFillFlag: false
         })
     }
 

@@ -146,6 +146,44 @@ export const styles = StyleSheet.create({
         //marginBottom: scaledHeight(7)
     },
 
+    dropDownLayout: {
+        width: '100%',
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        paddingLeft: '0%',
+        paddingRight: '0%',
+        marginLeft: '0%',
+        marginRight: '0%',
+        marginTop: scaledHeight(25)
+    },
+    dropDownTextName: {
+        width: '100%',
+        paddingLeft: '0%',
+        paddingRight: '0%',
+        marginLeft: '0%',
+        marginRight: '0%',
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginTop: scaledHeight(0)
+
+    },
+    textInputStyle: {
+        width: '100%',
+        marginLeft: '0%',
+        marginRight: '0%',
+        marginTop: scaledHeight(0),
+    },
+    dropDownPostition:{
+         width:"100%",
+         marginLeft:scaledHeight(20),
+         marginRight:scaledHeight(20),
+         position: 'absolute', 
+         left: 0
+       
+    },
+
+
 
 
     filterFundsBtn: {
@@ -384,9 +422,102 @@ export const styles = StyleSheet.create({
         lineHeight: 25
 
     },
- 
-   
-
-
-
+    modalBackgroundView: {
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        height: '100%',
+    },
+    modalContainer: {
+        backgroundColor: '#FFFFFF',
+        marginLeft: '5%',
+        marginRight: '5%',
+        paddingRight: '4%',
+        paddingLeft: '4%',
+        paddingTop: scaledHeight(15),
+        paddingBottom: scaledHeight(15),
+    },
+    modalTitleView:{
+        flexDirection:'row',
+    },
+    modalTitleText:{
+        marginLeft: '2%',
+        fontSize: scaledHeight(26),
+        marginTop: scaledHeight(8),
+        fontWeight: 'bold',
+        color: '#56565A',
+        width:'85%'
+    },
+    modalMinInvestTitleText:{
+        fontSize: scaledHeight(16),
+        marginTop: scaledHeight(18),
+        marginBottom: scaledHeight(16),
+        fontWeight: 'bold',
+        color: '#56565A',       
+    },
+    modalCheckBoxLabel:{
+        fontSize: scaledHeight(16),     
+        marginBottom: scaledHeight(18),       
+        color: '#56565A',     
+       
+    },
+    modalMinCheckBoxContainer:{
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop:scaledHeight(10)
+    },
+    modalRiskCheckBoxContainer:{
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop:scaledHeight(20)
+    },
+    modalFundCheckBoxContainer:{
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop:scaledHeight(20)
+    },
+    modalActionContainer:{
+        flexDirection:'row',
+        marginTop:scaledHeight(20),
+        marginBottom:scaledHeight(50)
+    },
+    modalClearFilterBtn: {        
+        width: scaledWidth(140),       
+        height: scaledHeight(60),
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        marginTop: scaledHeight(25),
+        marginLeft:'2%',
+        marginRight:'2%',
+        paddingLeft:'2%'
+    },
+    modalApplyFilterBtn: {        
+        width: scaledWidth(140),      
+        height: scaledHeight(60),
+        backgroundColor: '#5D83AE',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        marginTop: scaledHeight(25),
+        marginLeft:'2%',       
+    },
+    modalCancelBtnTxt: {
+        fontSize: scaledHeight(18),
+        color: '#5D83AE',
+        fontWeight: 'bold',
+        width: '100%',
+        textAlign: 'left'
+    },
+    modalApplyBtnTxt: {
+        fontSize: scaledHeight(18),
+        color: '#FFFFFF',
+        fontWeight: 'bold',
+        width: '100%',
+        textAlign: 'center',
+        textTransform:'uppercase'
+    },
+    modalRiskViewContainer:{
+        flexDirection:'row',
+        width:'80%',
+    }
 });

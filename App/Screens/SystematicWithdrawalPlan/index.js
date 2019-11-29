@@ -1,3 +1,3 @@
-import systematicWithdrawalComponent from './SystematicWithdrawalContainer';
+import systematicWithdrawalPlanComponent from './SystematicWithdrawalContainer';
 
-export default systematicWithdrawalComponent;
+export default systematicWithdrawalPlanComponent;

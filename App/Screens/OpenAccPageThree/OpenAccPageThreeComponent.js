@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, FlatList, Modal } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GInputComponent, GIcon, GHeaderComponent, GFooterComponent ,GLoadingSpinner} from '../../CommonComponents';
+import { GButtonComponent, GInputComponent, GIcon, GHeaderComponent, GFooterComponent, GLoadingSpinner, GDropDownComponent, GDateComponent } from '../../CommonComponents';
 import { CustomPageWizard, CustomDropDown, CustomCheckBox } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+import InvestmentDetails from '../Models/InvestmentDetails';
 
 const dummyData = [
     { "key": "key1", "value": "Option1" },
@@ -46,116 +47,44 @@ var fundList = [
 ];
 
 
-
-var fundList1 = [
-
-    {
-        id: 0,
-        fundName: 'Aggressive Growth Fund',
-        minimum: '$3,500',
-        autoInvesting: "$3000 w/ $50 monthly",
-        risk: 'High'
-
-    },
-    {
-        id: 1,
-        fundName: 'Capital Growth Fund',
-        minimum: '$3,000',
-        autoInvesting: "$3000 w/ $50 monthly",
-        risk: 'Medium'
-
-    },
-    {
-        id: 2,
-        fundName: 'CornerStore Agressive Fund',
-        minimum: '$5,500',
-        autoInvesting: "$3000 w/ $50 monthly",
-        risk: 'High'
-
-    },
-    {
-        id: 3,
-        fundName: 'Aggressive Conservative Fund',
-        minimum: '$500',
-        autoInvesting: "$3000 w/ $50 monthly",
-        risk: 'Low'
-
-    },
-    {
-        id: 4,
-        fundName: 'Cornerstore Equity fund',
-        minimum: '$3,500',
-        autoInvesting: "$3000 w/ $50 monthly",
-        risk: 'High'
-
-    },
-    {
-        id: 5,
-        fundName: 'Aggressive Growth Fund',
-        minimum: '$3,500',
-        autoInvesting: "$3000 w/ $50 monthly",
-        risk: 'High'
-
-    },
-    {
-        id: 6,
-        fundName: 'Capital Growth Fund',
-        minimum: '$3,000',
-        autoInvesting: "$3000 w/ $50 monthly",
-        risk: 'Medium'
-
-    },
-    {
-        id: 7,
-        fundName: 'CornerStore Agressive Fund',
-        minimum: '$5,500',
-        autoInvesting: "$3000 w/ $50 monthly",
-        risk: 'High'
-
-    },
-    {
-        id: 8,
-        fundName: 'Aggressive Conservative Fund',
-        minimum: '$500',
-        autoInvesting: "$3000 w/ $50 monthly",
-        risk: 'Low'
-
-    },
-    {
-        id: 9,
-        fundName: 'Cornerstore Equity fund',
-        minimum: '$3,500',
-        autoInvesting: "$3000 w/ $50 monthly",
-        risk: 'High'
-
-    }
-];
-
-
 const fundingOptionsData = [
     {
-        id: '0',
-        title: 'Initial Investment',
+        "key": "init",
+        "value": "Initial Investment"
     },
     {
-        id: '2',
-        title: 'Initial & Monthly Investment',
+        "key": "init_mon", "value": "Initial and Monthly Investment"
     }
-
 ];
 
-const monthlyInvestData = [
-    {
-        id: '0',
-        title: 'Quaterly',
-    },
-    {
-        id: '2',
-        title: 'Half Yearly',
-    }
 
+
+var filtermindata = [
+    { key: '3000', value: '3000'},
+    { key: '1000', value: '1000'},
+    { key: '500', value: '500'},
+    { key: '50', value: '50 initial and 50 monthly'},    
 ];
-
+var filterriskdata = [
+    { key: 'pre_cap', value: 'Preservation of Capital'},
+    { key: 'con', value: 'Conservative'},
+    { key: 'mod_con', value: 'Moderately Conservative'},
+    { key: 'mod', value: 'Moderate'},   
+    { key: 'mod_agr', value: 'Moderately Aggressive'},   
+    { key: 'agg', value: 'Aggressive'},  
+    { key: 'very_agg', value: 'Very Aggressive'},    
+];
+var filterfunddata = [
+    { key: 'sta_fund', value: 'Starters Funds'},
+    { key: 'tar_risk', value: 'Target Risk Funds'},
+    { key: 'tar_ret', value: 'Target Retirement Funds'},
+    { key: 'tax_bon', value: 'Taxable Bond Funds'},
+    { key: 'tax_exe', value: 'Tax Exempt Bond Funds'}, 
+    { key: 'sto_fund', value: 'Stock Funds'}, 
+    { key: 'ind_fun', value: 'Index Funds'}, 
+    { key: 'alt_sec', value: 'Alternative/Sector Funds'},    
+    { key: 'mon_fun', value: 'Money Market Funds'},    
+];
 
 const ListItem = (props) => {
     console.log("ListItem:: " + props);
@@ -292,6 +221,11 @@ class OpenAccPageThreeComponent extends Component {
             "startDate":"ss",
             "action":"add"
             */
+           modalVisible: false,    
+           filtermindata: [...filtermindata.map(v => ({ ...v, isActive: false }))],
+           filterriskdata: [...filterriskdata.map(v => ({ ...v, isActive: false }))],
+           filterfunddata: [...filterfunddata.map(v => ({ ...v, isActive: false }))], 
+           applyFilterState : false,   
 
         };
     }
@@ -300,13 +234,19 @@ class OpenAccPageThreeComponent extends Component {
                                                                  -------------------------- */
     componentDidMount() {
         console.log("componentDidMount::::> ");
-        const fundListPayload = {};
-        this.props.getFundListData(fundListPayload);
+        if (this.props && this.props.accOpeningData && !this.props.accOpeningData[ActionTypes.GET_FUNDLIST]) {
+            const fundListPayload = {};
+            this.props.getFundListData(fundListPayload);
+        }
+
 
         let payload = [];
         const compositePayloadData = [
             "fund_source",
-            "fund_options"
+            "fund_options",
+            "filter_min_inv",
+            "filter_fund_type",
+            "filter_risk"
         ];
 
         for (let i = 0; i < compositePayloadData.length; i++) {
@@ -320,32 +260,32 @@ class OpenAccPageThreeComponent extends Component {
     componentDidUpdate(prevProps, prevState) {
         if (this.props !== prevProps) {
             let tempFundListData = [];
-            let tempFundingSourceListData = [];
 
             if (this.props.accOpeningData[ActionTypes.GET_FUNDLIST] != undefined && this.props.accOpeningData[ActionTypes.GET_FUNDLIST].Items != null) {
                 tempFundListData = this.props.accOpeningData[ActionTypes.GET_FUNDLIST].Items;
-                this.setState({
-                    fundList: [...tempFundListData.map(v => ({ ...v, isActive: false }))],
-                });
+                if (!prevProps.accOpeningData[ActionTypes.GET_FUNDLIST]) {
+                    tempFundListData = this.props.accOpeningData[ActionTypes.GET_FUNDLIST].Items;
+                    this.setState({
+                        fundList: [...tempFundListData.map(v => ({ ...v, isActive: false }))],
+                    });
+                }
             }
             if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData["fund_source"] && this.props.masterLookupStateData["fund_source"].value) {
                 tempFundingSourceList = this.props.masterLookupStateData["fund_source"].value;
                 console.log("tempFundingSourceList:: " + JSON.stringify(tempFundingSourceList));
-                if(tempFundingSourceList.length>0){
-                    const offLineSubtypes = tempFundingSourceList[0].subtypes;
-                    const onLineSubtypes = tempFundingSourceList[1].subtypes;
-                    const bothSubTypes = [...tempFundingSourceList[0].subtypes,...tempFundingSourceList[1].subtypes]
-                    this.setState({
-                        offLineMethods: [...offLineSubtypes.map(v => ({ ...v, isActive: false }))],
-                        onLineMethods: [...onLineSubtypes.map(v => ({ ...v, isActive: false }))],
-                        fundingSourceList: [...this.state.offLineMethods.map(v => ({ ...v, isActive: false })),...this.state.onLineMethods.map(v => ({ ...v, isActive: false }))]
-                    });
+                if (!prevProps.masterLookupStateData["fund_source"]) {
+                    if (tempFundingSourceList.length > 0) {
+                        const offLineSubtypes = tempFundingSourceList[0].subtypes;
+                        const onLineSubtypes = tempFundingSourceList[1].subtypes;
+                        this.setState({
+                            offLineMethods: [...offLineSubtypes.map(v => ({ ...v, isActive: false }))],
+                            onLineMethods: [...onLineSubtypes.map(v => ({ ...v, isActive: false }))],
+                            fundingSourceList: [...this.state.offLineMethods.map(v => ({ ...v, isActive: false })), ...this.state.onLineMethods.map(v => ({ ...v, isActive: false }))]
+                        });
+                    }
                 }
                
-            } else {
-                console.log("else tempFundingSourceList:: " + JSON.stringify(this.props.masterLookupStateData));
-
-            }
+            } 
 
             const responseKey = ActionTypes.INVEST_SELECT_SAVE_OPENING_ACCT;
             if (this.props.accOpeningData[responseKey]) {
@@ -406,33 +346,24 @@ class OpenAccPageThreeComponent extends Component {
         return fundDataList;
     }
     getPayload = () => {
-        let payload ={};
+        let payload = {};
         if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
             payload = {
                 ...this.props.accOpeningData.savedAccData,
-                "investmentInfo":{ 
-                    "fundingSource":{ 
-                       "method":this.state.fundingSourceName || "-",
-                       "bankAccount":"Axis",
-                       "accountType":"accountType",
-                       "financialInstitutionName":"financialInstitutionName",
-                       "accountOwner":"accountOwner",
-                       "transitRoutingNumber":"transitRoutingNumber",
-                       "accountNumber":"accountNumber"
+                "investmentInfo": {
+                    "fundingSource": {
+                        "method": this.state.fundingSourceName || "-",
+                        "bankAccount": "Axis",
+                        "accountType": "accountType",
+                        "financialInstitutionName": "financialInstitutionName",
+                        "accountOwner": "accountOwner",
+                        "transitRoutingNumber": "transitRoutingNumber",
+                        "accountNumber": "accountNumber"
                     },
-                    "totalFunds":"1",
-                    "fundDataList":[ 
-                       { 
-                          "fundNumber":this.state.fundName || "-",
-                          "fundName":this.state.fundName || "-",
-                          "fundingOption":this.state.fundingOptions || "-",
-                          "initialInvestment":this.state.initInvestment || "-",
-                          "monthlyInvestment":this.state.monthlyInvestment || "-",
-                          "startDate":this.state.investStartDate || "-",
-                          "action":"add"
-                       }
-                    ]
-                 },
+                    "totalFunds": ""+this.state.selectedFundInvestmentsData.length || "-",
+                    "totalInitialInvestment":"-",
+                    "fundDataList": JSON.stringify(this.state.selectedFundInvestmentsData)
+                },
             }
         }
         return payload;
@@ -444,31 +375,79 @@ class OpenAccPageThreeComponent extends Component {
             [keyName]: text
         });
     }
+    onChangeTextForInvestment = (keyName, index) => text => {
+        console.log("onChangeTextForInvestment:::>");
+        let newItems = [...this.state.selectedFundInvestmentsData];
+        newItems[index][keyName] = text;
+
+        this.setState({
+            selectedFundInvestmentsData: newItems,
+        });
+    }
+
+    onChangeDateForInvestment = (keyName,index) => date => {
+        console.log("onChangeDateForInvestment:::>");
+        let newItems = [...this.state.selectedFundInvestmentsData];
+        newItems[index][keyName] = date;
+
+        this.setState({
+            selectedFundInvestmentsData: newItems,
+        });
+    }
+
     onPressDropDown = (keyName) => () => this.setState({
         [keyName]: !this.state[keyName]
     });
+
+    onPressDropDownForInvestment = (keyName, index) => () => {
+        console.log("onPressDropDownForInvestment::: " + keyName);
+        let newItems = [...this.state.selectedFundInvestmentsData];
+        newItems[index][keyName] = !newItems[index][keyName];
+
+        this.setState({
+            selectedFundInvestmentsData: newItems,
+        });
+
+    }
+
     setInputRef = (inputComp) => (ref) => {
         this[inputComp] = ref;
     }
 
     onSelectFundList = (item, index) => () => {
         console.log("onSelectFundList:: " + index);
-        const newItems = [...this.state.fundList];
+        let newItems = [...this.state.fundList];
         newItems[index].isActive = !newItems[index].isActive;
+        let tempData = new InvestmentDetails();
+        tempData.fundName = item.fundName;
+        tempData.fundNumber = item.fundNumber;
+        tempData.fundingOption = "";
+        tempData.fundingOptionDropDown = false;
+        tempData.initialInvestment = "";
+        tempData.monthlyInvestment = "";
+        tempData.startDate = "";
+        tempData.fundingOptionValidation = false;
+        tempData.initialInvestmentValidation = false;
+        tempData.monthlyInvestmentValidation = false;
+        tempData.startDateValidation = false;
+        tempData.action = "add";
+
         this.setState({
             fundList: newItems,
+            selectedFundInvestmentsData: [...this.state.selectedFundInvestmentsData, tempData],
             selectedCount: this.getSelectedItems().length
         });
     }
+
     onClickRowItem = (item, index) => () => {
-        console.log("onSelectFundList:: " + index);
+        console.log("onSelectFundList:: " + item.fundNumber);
         //  this.props.navigation.navigate({ routeName: 'investmentPlanInfo', key: 'investmentPlanInfo' })
-        this.props.navigation.push('investmentPlanInfo', { fundDetails: "" });
+        this.props.navigation.push('investmentPlanInfo', { fundDetails: item.fundNumber });
 
     }
 
-    onSelectSourceFundList = (item, index, method) => () => {
-        console.log("onSelectSourceFundList:::>  "+ method)
+        onSelectSourceFundList = (item, index, method) => () => {
+        console.log("onSelectSourceFundList:::>  " + method)
         let toBeChangedData = [];
         let notToBeChangedData = [];
         switch (method) {
@@ -501,7 +480,7 @@ class OpenAccPageThreeComponent extends Component {
             fundingSourceName: item
 
         });
-        alert("onSelectSourceFundList:: " + item+" "+ this.state.fundingSourceName)
+        alert("onSelectSourceFundList:: " + item + " " + this.state.fundingSourceName)
 
 
     }
@@ -526,6 +505,31 @@ class OpenAccPageThreeComponent extends Component {
         this.setState({ minCount: count });
 
     }
+
+    onSelectedDropDownValue = (dropDownName, index) => (item) => {
+        console.log("onSelectedDropDownValue:: " + dropDownName);
+
+        switch (dropDownName) {
+            case "fundingOptionDropDown":
+                let newItems = [...this.state.selectedFundInvestmentsData];
+                newItems[index].fundingOptionDropDown = false;
+                newItems[index].fundingOption = item.value;
+
+                console.log("item.value:: " + item.value);
+                console.log("newItems[index]:: " + newItems[index]);
+
+                this.setState({
+                    selectedFundInvestmentsData: newItems
+                });
+
+
+                break;
+
+            default:
+                break;
+
+        }
+    }
     selectedDropDownValue = (dropDownName, value) => () => {
         switch (dropDownName) {
             case "fundingOptionsDropDown":
@@ -534,13 +538,6 @@ class OpenAccPageThreeComponent extends Component {
                     fundingOptionsDropDown: false
                 }); break;
 
-
-            case "monthlyInvestmentDropDown":
-                this.setState({
-                    monthlyInvestment: value,
-                    monthlyInvestmentDropDown: false
-                });
-                break;
 
             default:
                 break;
@@ -555,6 +552,7 @@ class OpenAccPageThreeComponent extends Component {
     generateDropDownListKeyExtractor = (item) => item.key;
     generateFundListKeyExtractor = (item) => item.fundNumber.toString();
     generateFundSourceKeyExtractor = (item) => item.key;
+    generateFundInvestmentListKeyExtractor = (item) => item.fundNumber.toString();
 
     renderDropDownListItem = (keyName, dropDownName) => ({ item }) =>
         (<TouchableOpacity
@@ -635,12 +633,80 @@ class OpenAccPageThreeComponent extends Component {
     }
 
 
+ 
     validateFields = () => {
 
-       // return this.props.navigation.navigate({ routeName: 'openAccPageFour', key: 'openAccPageFour' });
+        // return this.props.navigation.navigate({ routeName: 'openAccPageFour', key: 'openAccPageFour' });
 
         var errMsg = "";
         var isValidationSuccess = false;
+        var errMsgCount = 0;
+
+        if (this.isEmpty(this.state.selectedCount)) {
+            errMsg = gblStrings.accManagement.emptySeletedFundMsg;
+            ++errMsgCount;
+
+        } else if (this.state.selectedFundInvestmentsData.length > 0) {
+
+            for (let i = 0; i < this.state.selectedFundInvestmentsData.length; i++) {
+                var tempErrMsg = "";
+                let tempObj = this.state.selectedFundInvestmentsData[i];
+                console.log("tempObj::" + JSON.stringify(tempObj));
+                console.log("tempObj.fundname::" + tempObj.fundName);
+
+                let tempValidation = false;
+                if (this.isEmpty(this.state.selectedCount)) {
+                    tempErrMsg = gblStrings.accManagement.emptySeletedFundMsg;
+                } else if (this.state.selectedCount > 10) {
+                    tempErrMsg = gblStrings.accManagement.maximumSeletedFundMsg;
+                } else if (this.isEmpty(this.state.fundingSourceName)) {
+                    tempErrMsg = gblStrings.accManagement.emptyFundingSourceMsg;
+                } else if (this.isEmpty(tempObj.fundingOption)) {
+                    tempErrMsg = gblStrings.accManagement.emptyFundOptionsMsg;
+                } else if (this.isEmpty(tempObj.initialInvestment)) {
+                    tempErrMsg = gblStrings.accManagement.emptyInitInvestmentMsg;
+                } else if (tempObj.fundingOption == "Initial and Monthly Investment" && this.isEmpty(tempObj.monthlyInvestment)) {
+                    tempErrMsg = gblStrings.accManagement.emptyMonthlyInvestmentMsg;
+                }else if(this.isEmpty(tempObj.startDate)){
+                    tempErrMsg = gblStrings.accManagement.emptyStartDate;
+                
+               } else {
+                    tempValidation = true;
+                }
+
+                console.log("tempErrMsg: " + tempErrMsg);
+
+                if (!tempValidation) {
+                    errMsg = tempErrMsg;
+                    ++errMsgCount;
+                    break;
+                }else{
+                }
+            }
+
+            if(errMsgCount == 0){
+                isValidationSuccess = true;
+            }
+
+          
+
+        } else {
+            isValidationSuccess = true;
+        }
+
+        if (!isValidationSuccess) {
+            alert(errMsg);
+
+        } else {
+        }
+
+        /* if(errMsgArray.length>0){
+             alert ("Error::"+JSON.stringify(errMsgArray));
+         }
+         */
+
+        /*
+
         if (this.isEmpty(this.state.selectedCount)) {
             errMsg = gblStrings.accManagement.emptySeletedFundMsg;
         } else if (this.state.selectedCount > 10) {
@@ -654,10 +720,10 @@ class OpenAccPageThreeComponent extends Component {
         } else if (this.state.fundingOptions == "Initial & Monthly Investment" && this.isEmpty(this.state.monthlyInvestment)) {
             errMsg = gblStrings.accManagement.emptyMonthlyInvestmentMsg;
         }
-        /* else if(this.isEmpty(this.state.investStartDate)){
+        else if(this.isEmpty(this.state.investStartDate)){
              errMsg = gblStrings.accManagement.emptyStartDate
-         }*/
-        else {
+         
+        }else {
             isValidationSuccess = true;
         }
 
@@ -665,6 +731,7 @@ class OpenAccPageThreeComponent extends Component {
         } else {
             alert(errMsg);
         }
+        */
 
         return isValidationSuccess;
 
@@ -672,120 +739,151 @@ class OpenAccPageThreeComponent extends Component {
     }
 
 
-renderFundingInvestmentList= () => {
-        console.log("renderCalender::: " + calendarName);
-        return (
-            <View>
-                <TouchableOpacity
-                    //  onPress={() => { alert("#TODO:: Remove") }}
-                    activeOpacity={0.8}
-                    accessibilityRole={'button'}
-                    style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginTop: scaledHeight(22) }}
-                >
-                    <Text style={{ fontSize: scaledHeight(16), color: '#61285F', fontWeight: 'bold', width: '100%', textAlign: 'right', lineHeight: 20 }}>
-                        {gblStrings.common.remove}
-                    </Text>
-                </TouchableOpacity>
-                <View style={styles.investmentSection}>
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.accManagement.fundName}
-                    </Text>
-                    <Text style={styles.sectionDescTxt}>
-                        {"Aggressive Growth Fund"}
-                    </Text>
 
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.accManagement.fundingOptions}
-                    </Text>
-                    <CustomDropDown
-                        onPress={this.onPressDropDown("fundingOptionsDropDown")}
-                        inputref={this.setInputRef("fundingOptions")}
-                        value={this.state.fundingOptions}
-                        propInputStyle={this.state.fundingOptionsValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                        placeholder={"Select"}
-                    />
-                    {this.renderDropDown('fundingOptionsDropDown', fundingOptionsData)}
-
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.accManagement.initInvestment}
-                    </Text>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: scaledHeight(7) }}>
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(16) }}>
-                            {"$"}
-                        </Text>
-                        <GInputComponent
-                            propInputStyle={{ width: '90%' }}
-                            maxLength={gblStrings.maxLength.initInvestment}
-                            placeholder={"Initial Investment"}
-                            returnKeyType={"done"}
-                            onChangeText={this.onChangeText("initInvestment")}
-
-                        />
-                    </View>
-                    <Text style={{ textAlign: 'right', width: '100%', color: '#56565A', fontSize: scaledHeight(12), marginTop: scaledHeight(12), }}>
-                        {"Minimum $3,000"}
-                    </Text>
-
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.accManagement.monthlyInvestment}
-                    </Text>
-                    <CustomDropDown
-                        onPress={this.onPressDropDown("monthlyInvestmentDropDown")}
-                        inputref={this.setInputRef("monthlyInvestment")}
-                        value={this.state.monthlyInvestment}
-                        propInputStyle={this.state.monthlyInvestmentValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                        placeholder={"Select"}
-                    />
-                    {this.renderDropDown('monthlyInvestmentDropDown', monthlyInvestData)}
-
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.accManagement.startDate}
-                    </Text>
-                    <GInputComponent
-                        propInputStyle={styles.customTxtBox}
-                        placeholder={"MM/DD/YYYY "}
-                    />
-                </View>
-                <View style={styles.investmentSectionFooter}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: scaledHeight(20) }}>
-
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                            {gblStrings.accManagement.total}
-                        </Text>
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                            {"$3,000.00"}
-                        </Text>
-                    </View>
-                    <Text style={styles.lblLine} />
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', padding: scaledHeight(20) }}>
-                        <TouchableOpacity
-                            //  onPress={() => { alert("#TODO:: Update") }}
-                            activeOpacity={0.8}
-                            accessibilityRole={'button'}
-                        >
-                            <Text style={styles.downloadPDFBtnTxt}>
-                                {gblStrings.common.update}
-                            </Text>
-                        </TouchableOpacity>
-
-                    </View>
-                </View>
-
-
-            </View>
-        );
-    }
+    // Modal - Filter Funds
+    setModalVisible = (visible) =>()=>{       
+        if(!visible && !this.state.applyFilterState){       
+             this.clearFilterAction();
+        }
+        this.setState({ modalVisible: visible });   
+        if(!this.state.applyFilterState){        
+            this.constructFilterData();
+        }             
+     }  
+ 
+     // Apply Filter Actions  
+     applyFilterAction = (visible) =>()=>{       
+         this.setState({ modalVisible: visible,applyFilterState:true });    
+ 
+         var mininvestkey="";
+         this.state.filtermindata.map((item)=>{           
+            if(item.isActive){             
+             if(mininvestkey!==null && mininvestkey!==""){
+                 mininvestkey = mininvestkey.concat("|"+item.value)               
+             }else{
+                 mininvestkey = item.value;
+             }
+            }
+         })    
+         var riskkey="";
+         this.state.filterriskdata.map((item)=>{           
+            if(item.isActive){             
+             if(riskkey!==null && riskkey!==""){
+                 riskkey = riskkey.concat("|"+item.key)               
+             }else{
+                 riskkey = item.key;
+             }
+            }
+         })         
+         var funddatakey="";
+         this.state.filterfunddata.map((item)=>{           
+            if(item.isActive){             
+             if(funddatakey!==null && funddatakey!==""){
+                 funddatakey = funddatakey.concat("|"+item.key)               
+             }else{
+                 funddatakey = item.key;
+             }
+            }
+         })        
+         console.log("minInvest=",mininvestkey);   
+         console.log("risk=",riskkey);  
+         console.log("fundData=",funddatakey);      
+ 
+         const fundListPayload = {'minInvestment':mininvestkey};
+         this.props.getFundListData(fundListPayload);   
+     }
+ 
+     // Clear Filter Actions  
+     clearFilterAction = () =>{            
+         this.setState({applyFilterState:false });                    
+         var tempmindata = [...this.state.filtermindata];
+         this.setState({       
+             filtermindata: [...tempmindata.map(v => ({...v,isActive:false}))]   
+             });
+ 
+         var tempriskdata = [...this.state.filterriskdata];
+         this.setState({       
+             filterriskdata: [...tempriskdata.map(v => ({...v,isActive:false}))]
+             });
+ 
+             var tempfunddata = [...this.state.filterfunddata];
+         this.setState({       
+             filterfunddata: [...tempfunddata.map(v => ({...v,isActive:false}))]
+             });        
+     }
+ 
+     // Construct Filter values from Master Data on Clicking Filter Funds
+     constructFilterData = () => {      
+        temp_key_min_inv = 'filter_min_inv';       
+        temp_key_risk = 'filter_risk';
+        temp_key_fund_type = 'filter_fund_type';
+        let tempfiltermindata = [];       
+        let tempfilterriskdata = [];
+        let tempfilterfunddata= [];
+ 
+        console.log('Filter Clicked...'); 
+        if (temp_key_min_inv !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[temp_key_min_inv] && this.props.masterLookupStateData[temp_key_min_inv].value) {
+             tempfiltermindata = this.props.masterLookupStateData[temp_key_min_inv].value;                 
+             this.setState({
+                 filtermindata: [...tempfiltermindata.map(v => ({...v,isActive:false}))]  
+             });                             
+             console.log('Master Value : ',JSON.stringify(filtermindata));             
+        }  
+ 
+         if (temp_key_risk !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[temp_key_risk] && this.props.masterLookupStateData[temp_key_risk].value) {
+             tempfilterriskdata = this.props.masterLookupStateData[temp_key_risk].value;            
+             this.setState({
+                 filterriskdata: [...tempfilterriskdata.map(v => ({...v,isActive:false}))]
+             });            
+             console.log('Master Value : ',JSON.stringify(filterriskdata));             
+         }         
+        
+        if (temp_key_fund_type !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[temp_key_fund_type] && this.props.masterLookupStateData[temp_key_fund_type].value) {
+             tempfilterfunddata = this.props.masterLookupStateData[temp_key_fund_type].value;                    
+             this.setState({
+                 filterfunddata: [...tempfilterfunddata.map(v => ({...v,isActive:false}))]
+             });     
+             console.log('Master Value : ',JSON.stringify(filterfunddata));             
+        }     
+     }
+ 
+     // Checkbox selection on Clicking Filters 
+     onCheckboxSelect = (fromtype,item,index) =>()=> {                              
+         console.log('Index : ',index);
+         console.log('Checkbox Selected : ',item.key + " " +item.value + " " +item.isActive);    
+         
+         switch(fromtype){
+             case 'minInvest':
+                 var newItm = [...this.state.filtermindata];
+                 newItm[index].isActive = !newItm[index].isActive;
+                 this.setState({ filtermindata: newItm });
+             break;
+             case 'risk':
+                 var newItm = [...this.state.filterriskdata];
+                 newItm[index].isActive = !newItm[index].isActive;
+                 this.setState({ filterriskdata: newItm });
+             break;
+             case 'fundType':
+                 var newItm = [...this.state.filterfunddata];
+                 newItm[index].isActive = !newItm[index].isActive;
+                 this.setState({ filterfunddata: newItm });
+             break;
+         }                           
+         console.log('New Item:'+JSON.stringify(newItm));              
+     }      
+ 
 
     /*----------------------
                                  Render Methods
                                                                  -------------------------- */
     render() {
         console.log("RENDER::: OpenAccPageThree ::>>>  ::::" + JSON.stringify(this.props));
+        let tempFundOptionsData = fundingOptionsData;
         let tempFundListData = [];
-        tempFundListData = this.state.fundList.length > this.state.minCount ? this.state.fundList.slice(0, this.state.minCount) : this.state.fundList;
-
         let currentPage = 3;
-        console.log("rendering:: " + this.state.fundingSourceName);
+
+        tempFundListData = this.state.fundList.length > this.state.minCount ? this.state.fundList.slice(0, this.state.minCount) : this.state.fundList;
+       
         return (
             <View style={styles.container}>
                  {
@@ -826,7 +924,9 @@ renderFundingInvestmentList= () => {
                                 buttonStyle={styles.filterFundsBtn}
                                 buttonText={gblStrings.accManagement.filterFunds}
                                 textStyle={styles.filterFundsBtnTxt}
+                                onPress={this.setModalVisible(true)}
                             />
+
                             <GButtonComponent
                                 buttonStyle={styles.compareFundsBtn}
                                 buttonText={gblStrings.accManagement.compareFunds}
@@ -875,16 +975,6 @@ renderFundingInvestmentList= () => {
                             <Text style={styles.headings}>
                                 {gblStrings.accManagement.fundYourAccount}
                             </Text>
-                            <TouchableOpacity
-                                // onPress={() => { alert("Expand/Cllapse") }}
-                                activeOpacity={0.8}
-                                accessibilityRole={'button'}
-                            >
-                                <Text style={styles.expandCollpaseTxt}>
-                                    {"[ - ]"}
-                                </Text>
-                            </TouchableOpacity>
-
                         </View>
 
                         <Text style={styles.lblLine} />
@@ -941,9 +1031,6 @@ renderFundingInvestmentList= () => {
                         </View>
                         <Text style={styles.lblLine} />
 
-
-
-
                         <View style={styles.childSectionGrp}>
                             <Text style={styles.sectionDescTxt}>
                                 {gblStrings.accManagement.fundYourInvestNote}
@@ -959,6 +1046,100 @@ renderFundingInvestmentList= () => {
                                     {gblStrings.common.remove}
                                 </Text>
                             </TouchableOpacity>
+                         
+                            {this.state.selectedFundInvestmentsData.map((item, index) => {
+                                return (
+                                    <View keyExtractor={this.generateFundInvestmentListKeyExtractor}>
+                                        <TouchableOpacity
+                                            //  onPress={() => { alert("#TODO:: Remove") }}
+                                            activeOpacity={0.8}
+                                            accessibilityRole={'button'}
+                                            style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginTop: scaledHeight(22) }}
+                                        >
+                                            <Text style={{ fontSize: scaledHeight(16), color: '#61285F', fontWeight: 'bold', width: '100%', textAlign: 'right', lineHeight: 20 }}>
+                                                {gblStrings.common.remove}
+                                            </Text>
+                                        </TouchableOpacity>
+                                        <View style={styles.investmentSection}>
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.fundName}
+                                            </Text>
+                                            <Text style={styles.sectionDescTxt}>
+                                                {item.fundName}
+                                            </Text>
+
+
+
+                                            <GDropDownComponent
+                                                dropDownLayout={styles.dropDownLayout}
+                                                dropDownTextName={styles.dropDownTextName}
+                                                textInputStyle={styles.textInputStyle}
+                                                dropDownName={gblStrings.accManagement.fundingOptions}
+                                                data={tempFundOptionsData}
+                                                changeState={this.onPressDropDownForInvestment("fundingOptionDropDown", index)}
+                                                showDropDown={this.state.selectedFundInvestmentsData[index].fundingOptionDropDown}
+                                                dropDownValue={this.state.selectedFundInvestmentsData[index].fundingOption}
+                                                selectedDropDownValue={this.onSelectedDropDownValue("fundingOptionDropDown", index)}
+                                                itemToDisplay={"value"}
+                                                dropDownPostition={{ ...styles.dropDownPostition, top: scaledHeight(160) }} />
+
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.initInvestment}
+                                            </Text>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: scaledHeight(7) }}>
+                                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16) }}>
+                                                    {"$"}
+                                                </Text>
+                                                <GInputComponent
+                                                    propInputStyle={{ width: '90%' }}
+                                                    maxLength={gblStrings.maxLength.initInvestment}
+                                                    placeholder={"Initial Investment"}
+                                                    onChangeText={this.onChangeTextForInvestment("initialInvestment", index)}
+
+                                                />
+                                            </View>
+                                            <Text style={{ textAlign: 'right', width: '100%', color: '#56565A', fontSize: scaledHeight(12), marginTop: scaledHeight(12), }}>
+                                                {"Minimum $3,000"}
+                                            </Text>
+
+
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.monthlyInvestment}
+                                            </Text>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: scaledHeight(7) }}>
+                                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16) }}>
+                                                    {"$"}
+                                                </Text>
+                                                <GInputComponent
+                                                    propInputStyle={{ width: '90%' }}
+                                                    maxLength={gblStrings.maxLength.monthlyInvestment}
+                                                    placeholder={"Monthly Investment"}
+                                                    onChangeText={this.onChangeTextForInvestment("monthlyInvestment", index)}
+
+                                                />
+                                            </View>
+                                            <Text style={{ textAlign: 'right', width: '100%', color: '#56565A', fontSize: scaledHeight(12), marginTop: scaledHeight(12), }}>
+                                                {"Minimum $3,000"}
+                                            </Text>
+
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.startDate}
+                                            </Text>
+                                           
+                                            <GDateComponent  startDateValidation
+                                                date={this.state.selectedFundInvestmentsData[index].startDate}
+                                                placeholder = "MM/DD/YYYY"
+                                                errorFlag={this.state.selectedFundInvestmentsData[index].startDateValidation}
+                                                errMsg = ""
+                                                onDateChange={this.onChangeDateForInvestment("startDate", index)}
+                                            />
+                                        </View>
+                                    </View>
+
+                                );
+                            })}
+
+                          {/*
                             <View style={styles.investmentSection}>
                                 <Text style={styles.lblTxt}>
                                     {gblStrings.accManagement.fundName}
@@ -1021,6 +1202,7 @@ renderFundingInvestmentList= () => {
                                     placeholder={"MM/DD/YYYY "}
                                 />
                             </View>
+                         */}
                             <View style={styles.investmentSectionFooter}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: scaledHeight(20) }}>
 
@@ -1048,6 +1230,7 @@ renderFundingInvestmentList= () => {
 
 
                         </View>
+                    
                     </View>
 
 
@@ -1099,6 +1282,135 @@ renderFundingInvestmentList= () => {
                         </Text>
                     </View>
                     <GFooterComponent />
+
+                    <Modal
+                    transparent={true}
+                    visible={this.state.modalVisible}
+                    onRequestClose={this.setModalVisible(!this.state.modalVisible)}
+                >                
+                    <View style={styles.modalBackgroundView}>
+                       <View style={styles.modalContainer}>
+                            <ScrollView>
+                                <View style={styles.modalTitleView}>   
+                                    <Text style={styles.modalTitleText}> 
+                                        {gblStrings.accManagement.filterFunds}
+                                    </Text>
+                                    <TouchableOpacity onPress={this.setModalVisible(!this.state.modalVisible)}>
+                                        <GIcon
+                                            name="close"
+                                            type="antdesign"
+                                            size={30}
+                                            color="black"
+                                        />
+                                    </TouchableOpacity>
+                                </View>    
+
+                                <View style={styles.modalMinCheckBoxContainer}>
+                                    <Text style={styles.modalMinInvestTitleText}> 
+                                        {gblStrings.accManagement.minimumInvestment}                           
+                                    </Text>  
+                                    {
+                                    this.state.filtermindata.map((item,index)=>{    
+                                        var itemvalue = item.value;                                
+                                        if(item.key == 50){                                          
+                                            itemvalue = itemvalue.replace(new RegExp('50', 'g'), '$50');                                            
+                                        }else{ 
+                                            itemvalue = "$"+item.value;   
+                                        }
+                                        return(                                           
+                                            <CustomCheckBox
+                                                key={item.key}
+                                                size={20}
+                                                itemBottom={0}
+                                                itemTop={0}
+                                                outerCicleColor={"#DEDEDF"}
+                                                innerCicleColor={"#61285F"}
+                                                labelStyle={styles.modalCheckBoxLabel}
+                                                label={itemvalue}
+                                                selected={item.isActive}
+                                                onPress={this.onCheckboxSelect("minInvest",item,index)}
+                                            /> 
+                                        );
+                                    }) 
+                                    }                             
+                                </View>      
+
+                                <View style={styles.modalRiskCheckBoxContainer}>
+                                    <Text style={styles.modalMinInvestTitleText}> 
+                                        {gblStrings.accManagement.risk}                           
+                                    </Text>  
+                                    {
+                                    this.state.filterriskdata.map((item,index)=>{          
+                                        return(
+                                            <View key={item.key} style={styles.modalRiskViewContainer}>
+                                                <CustomCheckBox                                                    
+                                                    size={20}
+                                                    itemBottom={0}
+                                                    itemTop={0}
+                                                    outerCicleColor={"#DEDEDF"}
+                                                    innerCicleColor={"#61285F"}
+                                                    labelStyle={styles.modalCheckBoxLabel}
+                                                    label={item.value}
+                                                    selected={item.isActive}
+                                                    onPress={this.onCheckboxSelect("risk",item,index)}
+                                                /> 
+                                                <TouchableOpacity>
+                                                    <GIcon
+                                                        name="infocirlceo"
+                                                        type="antdesign"
+                                                        size={20}
+                                                        color="#DEDEDF"
+                                                    />
+                                                </TouchableOpacity>
+                                            </View>
+                                        );                                        
+                                    }) 
+                                    }                             
+                                </View>      
+
+                                <View style={styles.modalFundCheckBoxContainer}>
+                                    <Text style={styles.modalMinInvestTitleText}> 
+                                        {gblStrings.accManagement.fundType}                                  
+                                    </Text>  
+                                    {
+                                    this.state.filterfunddata.map((item,index)=>{          
+                                        return(
+                                            <CustomCheckBox
+                                                key={item.key}
+                                                size={20}
+                                                itemBottom={0}
+                                                itemTop={0}
+                                                outerCicleColor={"#DEDEDF"}
+                                                innerCicleColor={"#61285F"}
+                                                labelStyle={styles.modalCheckBoxLabel}
+                                                label={item.value}
+                                                selected={item.isActive}
+                                                onPress={this.onCheckboxSelect("fundType",item,index)}
+                                            /> 
+                                        );
+                                    }) 
+                                    }                             
+                                </View>    
+
+                                <View style={styles.modalActionContainer}>  
+                                    <GButtonComponent
+                                        buttonStyle={styles.modalClearFilterBtn}
+                                        buttonText={gblStrings.accManagement.clearFilter}
+                                        textStyle={styles.modalCancelBtnTxt}
+                                        onPress={this.clearFilterAction}
+                                    />
+                                    <GButtonComponent
+                                        buttonStyle={styles.modalApplyFilterBtn}
+                                        buttonText={gblStrings.accManagement.applyFilter}
+                                        textStyle={styles.modalApplyBtnTxt}
+                                        onPress={this.applyFilterAction(false)}
+                                    />   
+                                </View>  
+
+                            </ScrollView>
+                        </View>                        
+                    </View>
+                </Modal>    
 
                 </ScrollView>
             </View>

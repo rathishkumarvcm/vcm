@@ -44,6 +44,7 @@ class DashboardAccComponent extends Component {
             itemID: "",
             selectedItemID: "",
             selectedItemName: ""
+            
         };
     }
     /*----------------------
@@ -110,18 +111,29 @@ class DashboardAccComponent extends Component {
     render() {
         console.log("RENDER::: DashboardAccounts ::>>> ", this.props);
         let accList = [];
+        let tempkey = ActionTypes.GET_ACCOUNT_TYPES;    
+        if (this.props && this.props.dashboardData && this.props.dashboardData[tempkey] ) {
+            const tempResponse = this.props.dashboardData[tempkey];
+            if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
+                accList = tempResponse.result;
+                accList = accList.value;
+            } else {
 
-        if (this.props.dashboardData.result != undefined && this.props.dashboardData.result != null) {
+            }
+        }
+        
+      /*  if (this.props.dashboardData.result != undefined && this.props.dashboardData.result != null) {
             accList = this.props.dashboardData.result;
             accList = accList.value;
         }
+        */
         console.log("accList:::", accList);
 
         return (
             <View style={styles.container}>
-                {
-                    this.props.dashboardData.isLoading && <GLoadingSpinner />
-                }
+                { this.props.dashboardData.isLoading && <GLoadingSpinner />}
+                { this.props.dashboardData.isError && alert("Service Error")}
+
 
                 <GHeaderComponent navigation={this.props.navigation} onPress={this.onClickHeader} />
                 <ScrollView style={{ flex: .85 }}>

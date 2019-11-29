@@ -34,7 +34,7 @@
 {
 #if DEBUG
   return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
-//  return [NSURL URLWithString:@"http://localhost:8081/index.bundle?platform=ios&dev=true"];
+//  return [NSURL URLWithString:@"http://192.168.43.163:8088/index.bundle?platform=ios&dev=true"];
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
