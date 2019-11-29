@@ -39,7 +39,7 @@ class RegisterEmailComponent extends Component {
         this.props.navigation.goBack();
     }
 
-    navigatePassword = ()=>this.props.navigation.navigate('registerSelf');
+    navigatePassword = ()=>this.props.navigation.navigate('registerSelf',{emailID:this.state.email});
     
  
     render(){

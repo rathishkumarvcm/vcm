@@ -62,6 +62,11 @@ export const styles = StyleSheet.create({
         fontWeight:'bold',
         marginBottom:scaledHeight(8)
     },
+    signInView:{
+        marginTop:scaledHeight(18),
+        paddingLeft:'4%',
+        paddingRight:'4%',
+    },
     userIDTextBox:{
         marginLeft:'4%',
         marginRight:'4%',

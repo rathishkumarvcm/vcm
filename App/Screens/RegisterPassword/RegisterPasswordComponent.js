@@ -4,6 +4,7 @@ import {styles} from './styles';
 import {GButtonComponent,GInputComponent,GIcon,GHeaderComponent} from '../../CommonComponents';
 import { scaledHeight} from '../../Utils/Resolution';
 import PropTypes from 'prop-types';
+import { Auth } from "aws-amplify";
 
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 
@@ -17,7 +18,11 @@ class RegisterPasswordComponent extends Component {
             faceIdEnrolled: false,
             touchIdEnrolled: false,
             validationPassword : true,
-            password : ''
+            password : 'rathi123',
+            name : 'rathish.kumar2@cognizant.com',
+            //password : 'rathi123',
+            phone : '+918754499334',
+            email : 'rathish.kumar2@cognizant.com',
         };
     }
 
@@ -29,7 +34,41 @@ class RegisterPasswordComponent extends Component {
         this.props.navigation.goBack();
     }
 
-    navigateSelf = ()=>{this.props.navigation.navigate('emailVerify');}
+    navigateSelf = ()=>{
+        let registerSelfData = this.props.navigation.getParam('selfData');
+        let username = registerSelfData.emailID;
+        let password = this.state.password;
+        let email = registerSelfData.emailID;
+        let phone_number = registerSelfData.phone;
+        let firstName = registerSelfData.firstName;
+        let lastName = registerSelfData.lastName;
+        let middleName = registerSelfData.middleName;
+        Auth.signUp({
+            username,
+            password,
+            //phone_number,
+            attributes: {
+                email : email,
+                given_name : firstName,
+                family_name: lastName,
+                middle_name: middleName,
+                phone_number: phone_number,
+                'custom:prefix':'Mr',
+                'custom:suffix' : 'Jr'             
+            },
+           
+        }).then(data => {
+            console.log("Data",data);
+           
+            alert("Signed Up Successfully. OTP received.")
+
+            this.props.navigation.navigate('emailVerify',{passwordData:registerSelfData});
+        })
+
+        
+        //this.props.navigation.navigate('emailVerify');
+    
+    }
 
     validatePassword = () => {
         const validate = passwordRegex.test(this.state.password);
@@ -45,6 +84,7 @@ class RegisterPasswordComponent extends Component {
     }
  
     render(){
+        let registerSelfData = this.props.navigation.getParam('selfData');
         
         return (
            
@@ -73,6 +113,21 @@ class RegisterPasswordComponent extends Component {
                 </Text> 
             </View>
 
+            <View style={styles.signInView}>
+                <Text style={styles.userIDText}>
+                    {"Preferred Online ID"}       
+                </Text>
+            </View>
+            <GInputComponent 
+                propInputStyle={styles.userIDTextBox} 
+                placeholder={"Online ID"}
+                value={registerSelfData.emailID}
+                onChangeText={this.setPassword}
+                onBlur={this.validatePassword}
+                errorFlag={!this.state.validationPassword}
+                errorText={"Enter a valid password."}
+            />
+
 
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
@@ -89,7 +144,7 @@ class RegisterPasswordComponent extends Component {
                 errorText={"Enter a valid password."}
             />
 
-           {/*} <View style={{flexDirection:'row',marginLeft:'4%',marginRight:'4%',width:'92%',height: scaledHeight(5)}}>
+            <View style={{flexDirection:'row',marginLeft:'4%',marginRight:'4%',width:'92%',height: scaledHeight(5)}}>
                 <View style={{width:'30%',marginRight:'1%',height: scaledHeight(5),backgroundColor: "#DB5A28"}} />
 
                 <View style={{width:'30%',marginRight:'1%',height: scaledHeight(5),backgroundColor: "#E6E6E6"}} />
@@ -98,7 +153,22 @@ class RegisterPasswordComponent extends Component {
             </View>
             <Text style={{paddingLeft:'4%',paddingRight:'4%'}}>
                 {"Weak"}
-    </Text>*/}
+    </Text>
+
+    <View style={styles.signInView}>
+                <Text style={styles.userIDText}>
+                    {"Confirm Password"}       
+                </Text>
+            </View>
+            <GInputComponent 
+                propInputStyle={styles.userIDTextBox} 
+                placeholder={"Password"}
+                onChangeText={this.setPassword}
+                secureTextEntry
+                onBlur={this.validatePassword}
+                errorFlag={!this.state.validationPassword}
+                errorText={"Enter a valid password."}
+            />
 
 
             <GButtonComponent 

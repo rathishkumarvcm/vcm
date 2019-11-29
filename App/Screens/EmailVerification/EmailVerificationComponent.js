@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Text,View,ScrollView,TouchableOpacity} from 'react-native';
 import {styles} from './styles';
-import {GButtonComponent,GHeaderComponent,GIcon} from '../../CommonComponents';
+import {GButtonComponent,GHeaderComponent,GInputComponent} from '../../CommonComponents';
 import PropTypes from 'prop-types';
+import { Auth } from "aws-amplify";
 
 class EmailVerificationComponent extends Component {
     constructor(props){
@@ -10,8 +11,10 @@ class EmailVerificationComponent extends Component {
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
             isLoading:false,
-            email:'',
-            validationEmail: true
+            code:'',
+            validationEmail: true,
+            name : 'rathish.kumar2@cognizant.com',
+            confirmCode : false
         };
     }
 
@@ -19,9 +22,52 @@ class EmailVerificationComponent extends Component {
        
     }
 
+    setCode = text => {
+        this.setState({
+            code : text
+        });
+    }
+
+    verifyOTP = () => {
+        let username = this.state.name;
+        let code = this.state.code; 
+        let registerSelfData = this.props.navigation.getParam('passwordData');
+
+
+        Auth.confirmSignUp(username, code, {
+            // Optional. Force user confirmation irrespective of existing alias. By default set to True.
+            forceAliasCreation: true    
+        }).then(data => { alert("verified OTP");
+        
+        
+                          console.log(data);
+                          this.props.navigation.navigate('login',{emailVerified : true,emailVerifiedData:registerSelfData})
+        })
+          .catch(err => console.log(err));
+    }
+
+    resendOTP = () => {
+        let username = this.state.name;
+
+        Auth.resendSignUp(username).then(() => {
+            console.log('code resent successfully');
+        }).catch(e => {
+            console.log(e);
+        });
+    }
+
+
     navigatePassword = ()=>this.props.navigation.navigate('login');
     
     goBack = () =>{this.props.navigation.goBack()}
+
+    validCode = () => {
+        if(this.state.code.length === 6){
+            this.setState({
+                confirmCode : true
+            })
+        }
+    }
  
     render(){
         
@@ -57,23 +103,43 @@ class EmailVerificationComponent extends Component {
                         {"If you do not see the validation email in your inbox, Click Resend Verification."}
                 </Text> 
             </View>
-             
-           
-            <GButtonComponent 
-                    buttonStyle={styles.backButton}
-                    buttonText="Resend"
-                    textStyle={styles.cancelButtonText}
-                    onPress={this.goBack}
-                   // disabled={this.state.email === '' || !this.state.validationEmail}
+
+            <View style={styles.signInView}>
+                <Text style={styles.userIDText}>
+                    {"Enter the OTP"}       
+                </Text>
+            </View>
+
+            <GInputComponent 
+            propInputStyle={{marginLeft:'4%',marginRight:'4%'}}
+            onChangeText={this.setCode}
+            onBlur={this.validCode}
+            value={this.state.code}
             />
 
-            <GButtonComponent 
-                    buttonStyle={styles.signInButton}
-                    buttonText="Confirm"
-                    textStyle={styles.signInButtonText}
-                    onPress={this.navigatePassword}
-                   // disabled={this.state.email === '' || !this.state.validationEmail}
-            />
+             
+           
+           {!this.state.confirmCode ? 
+           <GButtonComponent 
+           buttonStyle={styles.backButton}
+           buttonText="Resend"
+           textStyle={styles.cancelButtonText}
+           onPress={this.resendOTP}
+          // disabled={this.state.email === '' || !this.state.validationEmail}
+   />
+:
+null} 
+
+           {this.state.confirmCode ? 
+           <GButtonComponent 
+           buttonStyle={styles.signInButton}
+           buttonText="Confirm"
+           textStyle={styles.signInButtonText}
+           onPress={this.verifyOTP}
+          // disabled={this.state.email === '' || !this.state.validationEmail}
+   />
+ : 
+ null} 
 
 
             <View style={styles.termsofuse}>

@@ -13,7 +13,11 @@ class RegisterSelfComponent extends Component {
             enableBiometric:false,
             faceIdEnrolled: false,
             touchIdEnrolled: false,
-            language :'java'
+            language :'java',
+            lastName : '',
+            firstName : '',
+            middleName : '',
+            phone : ''
         };
     }
 
@@ -25,7 +29,43 @@ class RegisterSelfComponent extends Component {
         this.props.navigation.goBack();
     }
 
-    navigateAddress = ()=>{this.props.navigation.navigate('registerPassword');}
+    setFirstName = text => {
+        this.setState({
+            firstName : text
+        });
+    }
+
+    setMiddleName = text => {
+        this.setState({
+            middleName : text
+        });
+    }
+
+    setLastName = text => {
+        this.setState({
+            lastName : text
+        });
+    }
+
+    setPhone = text => {
+        this.setState({
+            phone : text
+        });
+    }
+
+
+    navigateAddress = ()=>{
+        
+        const passingData = {
+            emailID : this.props.navigation.getParam('emailID'),
+            lastName : this.state.lastName,
+            firstName : this.state.firstName,
+            middleName : this.state.middleName,
+            phone : this.state.phone
+        }
+      
+        this.props.navigation.navigate('registerPassword',{selfData:passingData});
+    }
  
     render(){
         
@@ -64,7 +104,8 @@ class RegisterSelfComponent extends Component {
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
                 placeholder={"First name"}
-                secureTextEntry
+                onChangeText={this.setFirstName}
+                value={this.state.firstName}
             />
 
             <View style={styles.signInView}>
@@ -75,7 +116,9 @@ class RegisterSelfComponent extends Component {
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
                 placeholder={"Middle Name"}
-                secureTextEntry
+                onChangeText={this.setMiddleName}
+                value={this.state.middleName}
+                
             />
 
             <View style={styles.signInView}>
@@ -86,8 +129,25 @@ class RegisterSelfComponent extends Component {
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
                 placeholder={"Last name"}
-                secureTextEntry
+                onChangeText={this.setLastName}
+                value={this.state.lastName}
             />
+
+
+            <View style={styles.signInView}>
+                <Text style={styles.userIDText}>
+                    {"Phone"}       
+                </Text>
+            </View>
+            <GInputComponent 
+                propInputStyle={styles.userIDTextBox} 
+                placeholder={"Phone"}
+                onChangeText={this.setPhone}
+                value={this.state.phone}
+            />
+
+
+
 
            <View style={styles.signInView}>
                 <Text style={styles.userIDText}>

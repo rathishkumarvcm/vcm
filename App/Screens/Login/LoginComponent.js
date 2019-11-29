@@ -6,8 +6,32 @@ import {GButtonComponent,GInputComponent,GBiometricAuthentication,GHeaderCompone
 import TouchID from 'react-native-touch-id';
 import PropTypes from 'prop-types';
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
-import * as reGex from '../../Constants/RegexConstants'
+import * as reGex from '../../Constants/RegexConstants';
+import Amplify from 'aws-amplify';
+import { Auth } from "aws-amplify";
 
+const awsmobile = {
+    "aws_project_region": "us-east-2",
+    "aws_cognito_identity_pool_id": "us-east-2:47948e7d-eb40-4622-918a-a5682bb6796f",
+    "aws_cognito_region": "us-east-2",
+    "aws_user_pools_id": "us-east-2_AFKupYHWn",
+    "aws_user_pools_web_client_id": "2vl5oiufeh9c1dpfcm8qmj7v1i",
+    "oauth": {}
+};
+
+//Amplify.configure(awsmobile);
+
+const testawsMobile = {
+    "aws_project_region": "us-east-2",
+   // "aws_cognito_identity_pool_id": "us-east-2:47948e7d-eb40-4622-918a-a5682bb6796f",
+    "aws_cognito_region": "us-east-2",
+    "aws_user_pools_id": "us-east-2_TOS87x5Rt",
+    "aws_user_pools_web_client_id": "3a3rpdjb4gi1iqu1g6i2blk37c",
+    "oauth": {}
+}
+
+
+Amplify.configure(testawsMobile);
 
 class LoginComponent extends Component {
     constructor(props){
@@ -20,10 +44,16 @@ class LoginComponent extends Component {
             touchIdEnrolled: false,
             validationEmail : true,
             validationPassword : true,
-            password: '',
+           // password: '',
             email:'',
+            registeredOnlineID: '',
             switchOn : true,
-            switchOff : false
+            switchOff : false,
+            registeredSuccess : false,
+            name : 'rathish.kumar2@cognizant.com',
+            password : '',
+            phone : '+918754499334',
+            //email : 'rathish.kumar2@cognizant.com',
         };
     }
 
@@ -32,6 +62,7 @@ class LoginComponent extends Component {
 
 
     componentDidMount(){
+        console.log("componentDidMount")
         TouchID.isSupported()
         .then(biometryType => {
             if (biometryType === 'TouchID') {
@@ -70,8 +101,16 @@ class LoginComponent extends Component {
     }
 
     componentDidUpdate(){
-        console.log('this',this.props);
-
+        let emailVerify = this.props.navigation.getParam('emailVerified')
+        let onlineID = this.props.navigation.getParam('emailVerifiedData');
+        if(emailVerify !== undefined && !this.state.registeredSuccess){
+            this.setState({
+                registeredSuccess : true,
+                registeredOnlineID : onlineID.emailID
+            });
+        }
+        console.log('componentDidUpdate',emailVerify);
+       
         let validEmail = 'vcm.com';
         let validPassword = 'Vcm123';
         let test = validEmail.localeCompare(this.state.email);
@@ -127,7 +166,7 @@ class LoginComponent extends Component {
 
     setEmail = text => {
         this.setState({
-            email : text
+            registeredOnlineID : text
         });
     }
 
@@ -143,6 +182,28 @@ class LoginComponent extends Component {
             password : text
         });
     }
+
+    signIn = () => {
+        console.log("test")
+        let username = this.state.name;
+        let password = this.state.password;
+        let email = this.state.email;
+        let phone_number = this.state.phone;
+        Auth.signIn({
+            username,
+            password,
+            email,
+            //phone_number
+        }).then(data => {
+            console.log("Data",data);
+            alert("Signed In Successfully.")
+            this.props.navigation.navigate('dashboard');
+        }).catch(error => {
+            alert("Username and Password Incorrect.")
+            console.log(error);
+        });
+    }
+
 
     callSignIn = () => {
         const payload = {
@@ -186,6 +247,8 @@ class LoginComponent extends Component {
 
     render(){
         console.log("this.props----",this.props)
+
+
         return (
            
             <>
@@ -205,7 +268,13 @@ class LoginComponent extends Component {
             
             
         <ScrollView style={{flex:0.85}}>
-
+            {this.state.registeredSuccess ? 
+            <View style={{marginLeft:'4%',marginRight:'4%'}}>
+            <Text> {"Your Online ID successfully created"}</Text>
+            </View>
+            :
+            null
+            }
             <View style={styles.signInView}>
                 <Text style={styles.signIntext}>
                     {"Sign In"}
@@ -221,7 +290,7 @@ class LoginComponent extends Component {
                 placeholder={"E-mail"}
                 onChangeText={this.setEmail}
                 //onBlur={this.validateEmail}
-                value={this.state.email}
+                value={this.state.registeredOnlineID}
                 //validateError={this.state.validateEmail}
                 errorFlag={!this.state.validationEmail}
                 errorText={"Enter a valid email."}
@@ -274,7 +343,7 @@ class LoginComponent extends Component {
                     buttonStyle={styles.signInButton}
                     buttonText="Sign In"
                     textStyle={styles.signInButtonText}
-                    onPress={this.callSignIn}
+                    onPress={this.signIn}
                     //onPress={this.navigateDashboard}
             />
             <View>
