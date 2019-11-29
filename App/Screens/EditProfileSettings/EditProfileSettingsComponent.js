@@ -142,7 +142,7 @@ class editProfileSettingsComponent extends Component {
             this.state.dropDownSuffixValue != "" &&
             this.state.dropDownGenderValue != "" &&
             this.state.dropDownStatusValue != "") {
-            this.props.navigation.navigate('profileSettings')
+                this.manageProfileInformations();
         }
     }
 
@@ -226,6 +226,24 @@ class editProfileSettingsComponent extends Component {
         }
 
         this.props.getProfileCompositeData(payload);
+    }
+
+    manageProfileInformations = () => {
+        const profileInformationPayload = {
+            "userName": this.state.profileName,
+            "userVcmID": '',
+            "userSsnNumber": '',
+            "userDob": '',
+            "userPrefix": this.state.dropDownValue,
+            "userSuffix": this.state.dropDownSuffixValue,
+            "userZipcode": this.state.validPin,
+            "userGender": this.state.dropDownGenderValue,
+            "userMaritalStatue": this.state.dropDownStatusValue
+        };
+
+        console.log("Profile Informations", JSON.stringify(profileInformationPayload));
+
+        this.props.navigation.navigate('profileSettings');
     }
 
     editProfileOnCancel = () => { this.props.navigation.navigate('profileSettings') }
@@ -398,45 +416,6 @@ class editProfileSettingsComponent extends Component {
 
                         {/* Gender Data */}
 
-                        {/* <View style={styles.editFlexDirectionColumn}>
-
-                            <Text style={styles.editProfileLabel}>
-                                {globalString.profileSettingsPage.profileGenderLabel}
-                            </Text>
-
-                            <TouchableOpacity style={styles.editDropDownView}
-                                onPress={this.dropDownGenderClick}>
-                                <GInputComponent
-                                    propInputStyle={styles.userIDTextBox1}
-                                    placeholder={""}
-                                    editable={false}
-                                    value={this.state.dropDownGenderValue} />
-
-                                <TouchableOpacity style={styles.editDropDownIcon}
-                                    onPress={this.dropDownGenderClick}>
-                                    <GIcon
-                                        name="md-arrow-dropdown"
-                                        type="ionicon"
-                                        size={20}
-                                        color="black" />
-                                </TouchableOpacity>
-                            </TouchableOpacity>
-
-                            {this.state.dropDownGenderState &&
-                                <View style={styles.editDropDownSelect} >
-                                    <FlatList
-                                        data={profileGenderData}
-                                        renderItem={({ item }) =>
-                                            (<TouchableOpacity style={{ height: 33 }}
-                                                onPress={() => this.dropDownGenderSelect(item.value)}>
-                                                <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                            </TouchableOpacity>)
-                                        }
-                                        keyExtractor={item => item.key}
-                                    />
-                                </View>}
-                        </View> */}
-
                         <GDropDownComponent
                             dropDownTextName={styles.editProfileLabel}
                             dropDownName={globalString.profileSettingsPage.profileGenderLabel}
@@ -451,44 +430,6 @@ class editProfileSettingsComponent extends Component {
                             dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(700) }} />
 
                         {/* Marital Status Data */}
-
-                        {/* <View style={styles.editFlexDirectionColumn}>
-                            <Text style={styles.editProfileLabel}>
-                                {globalString.profileSettingsPage.profileStatusLabel}
-                            </Text>
-
-                            <TouchableOpacity style={styles.editDropDownView}
-                                onPress={this.dropDownStatusClick}>
-                                <GInputComponent
-                                    propInputStyle={styles.userIDTextBox1}
-                                    placeholder={""}
-                                    editable={false}
-                                    value={this.state.dropDownStatusValue} />
-
-                                <TouchableOpacity style={styles.editDropDownIcon}
-                                    onPress={this.dropDownStatusClick}>
-                                    <GIcon
-                                        name="md-arrow-dropdown"
-                                        type="ionicon"
-                                        size={20}
-                                        color="black" />
-                                </TouchableOpacity>
-                            </TouchableOpacity>
-
-                            {this.state.dropDownStatusState &&
-                                <View style={styles.editDropDownSelect} >
-                                    <FlatList
-                                        data={profileStatusData}
-                                        renderItem={({ item }) =>
-                                            (<TouchableOpacity style={{ height: 33 }}
-                                                onPress={() => this.dropDownStatusSelect(item.value)}>
-                                                <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                            </TouchableOpacity>)
-                                        }
-                                        keyExtractor={item => item.key}
-                                    />
-                                </View>}
-                        </View> */}
 
                         <GDropDownComponent
                             dropDownTextName={styles.editProfileLabel}

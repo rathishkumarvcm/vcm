@@ -27,7 +27,10 @@ class editAddressAddNewComponent extends Component {
             validationAddressOne: true,
             addressOne: '',
             isZipCodeValid: true,
-            zipCodeValue: ''
+            zipCodeValue: '',
+            addressTwo: '',
+            userCity: '',
+            userState: ''
         };
     }
 
@@ -79,10 +82,26 @@ class editAddressAddNewComponent extends Component {
 
                 if (this.state.addressOne != "" &&
                     this.state.zipCodeValue != "") {
-                    this.props.navigation.navigate('editAddressSettings')
+                        this.addNewAddress();
+                    
                 }
                 break;
         }
+    }
+
+    addNewAddress = () => {
+        const addNewAddressPayload = {
+            "addressType": '',
+            "addressLineOne": this.state.addressOne,
+            "addressLineTwo": this.state.addressTwo,
+            "zipCode": this.state.zipCodeValue,
+            "city": this.state.userCity,
+            "state": this.state.userState
+        };
+
+        console.log("Add New Address", JSON.stringify(addNewAddressPayload));
+
+        this.props.navigation.navigate('editAddressSettings')
     }
 
     editAddressAddNewOnCancel = () => this.props.navigation.navigate('editAddressSettings');
@@ -180,7 +199,7 @@ class editAddressAddNewComponent extends Component {
                                 onChangeText={this.setZipcodeValue}
                                 value={this.state.zipCodeValue}
                                 errorFlag={!this.state.isZipCodeValid}
-                                errorText={globalString.profileValidationMessages.validateAddressLineOne} />
+                                errorText={globalString.profileValidationMessages.validateZipcode} />
                         </View>
 
                         <View style={styles.editFlexDirectionColumn}>
