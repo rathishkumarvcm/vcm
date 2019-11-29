@@ -665,9 +665,15 @@ class OpenAccPageThreeComponent extends Component {
                     tempErrMsg = gblStrings.accManagement.emptyFundOptionsMsg;
                 } else if (this.isEmpty(tempObj.initialInvestment)) {
                     tempErrMsg = gblStrings.accManagement.emptyInitInvestmentMsg;
-                } else if (tempObj.fundingOption == "Initial and Monthly Investment" && this.isEmpty(tempObj.monthlyInvestment)) {
+                }else if (tempObj.initialInvestment < 3000) {
+                    tempErrMsg = gblStrings.accManagement.minInitInvestmentMsg;
+                } 
+                
+                else if (tempObj.fundingOption == "Initial and Monthly Investment" && this.isEmpty(tempObj.monthlyInvestment)) {
                     tempErrMsg = gblStrings.accManagement.emptyMonthlyInvestmentMsg;
-                }else if(this.isEmpty(tempObj.startDate)){
+                } else if ( tempObj.fundingOption == "Initial and Monthly Investment" && tempObj.monthlyInvestment < 3000) {
+                    tempErrMsg = gblStrings.accManagement.minMonthlyInvestmentMsg;
+                } else if(this.isEmpty(tempObj.startDate)){
                     tempErrMsg = gblStrings.accManagement.emptyStartDate;
                 
                } else {
@@ -1086,6 +1092,7 @@ class OpenAccPageThreeComponent extends Component {
                                                     propInputStyle={{ width: '90%' }}
                                                     maxLength={gblStrings.maxLength.initInvestment}
                                                     placeholder={"Initial Investment"}
+                                                    keyboardType="number-pad"
                                                     onChangeText={this.onChangeTextForInvestment("initialInvestment", index)}
 
                                                 />
@@ -1106,6 +1113,7 @@ class OpenAccPageThreeComponent extends Component {
                                                     propInputStyle={{ width: '90%' }}
                                                     maxLength={gblStrings.maxLength.monthlyInvestment}
                                                     placeholder={"Monthly Investment"}
+                                                    keyboardType="number-pad"
                                                     onChangeText={this.onChangeTextForInvestment("monthlyInvestment", index)}
 
                                                 />

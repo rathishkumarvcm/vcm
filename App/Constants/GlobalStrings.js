@@ -468,9 +468,13 @@ export default {
         maximumSeletedFundMsg: "Maximm 10 funds only allowed",
         emptyFundingSourceMsg: "Atleast one funding source should be selected",
         emptyFundOptionsMsg: "Please select a funding options",
-        emptyInitInvestmentMsg: "‘Please enter a initial investment value",
+        emptyInitInvestmentMsg: "Please enter a initial investment value",
+        minInitInvestmentMsg: " Initial investment value should me minimum of $ 3000",
+
         invalidInitInvestmentMsg: "‘Please enter a valid initial investment  value",
         emptyMonthlyInvestmentMsg: "‘Please enter a monthly investment value",
+        minMonthlyInvestmentMsg: " Monthly investment value should me minimum of $ 3000",
+
         invalidMonthlyInvestmentMsg: "‘Please enter a valid monthly investment value",
         emptyStartDate: "Please select a start date",
         emptyDividendCapitalGainsMsg: "Please select any type of Dividend/Capital Gains",
