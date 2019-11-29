@@ -1038,9 +1038,7 @@ class OpenAccPageThreeComponent extends Component {
                             <Text style={styles.sectionDescTxt}>
                                 {gblStrings.accManagement.fundYourInvestNote}
                             </Text>
-
-        
-                         
+                            
                             {this.state.selectedFundInvestmentsData.map((item, index) => {
                                 return (
                                     <View keyExtractor={this.generateFundInvestmentListKeyExtractor}>
