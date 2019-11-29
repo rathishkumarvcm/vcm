@@ -3,6 +3,7 @@ import { StyleSheet, View, ScrollView,Text } from 'react-native';
 import { GButtonComponent, GHeaderComponent, GFooterComponent, GRadioButtonComponent,GIcon} from '../../CommonComponents';
 import Accordian from './Accordian';
 import { styles } from './styles';
+import PropTypes from 'prop-types';
 
 
 
