@@ -14,7 +14,45 @@ class ProfileSettingsComponent extends Component {
             faceIdEnrolled: false,
             touchIdEnrolled: false,
             show: false,
-            profileName: ''
+            
+            // Profile Information
+            profileName: '',
+            profilePrefix: '',
+            profileSuffix: '',
+            profileVcmID: '',
+            profileSsnNumber: '',
+            profileDob: '',
+            profileGender: '',
+            profileMaritalStatus: '',
+            profileCitizenship: '',
+
+            // Contact Information
+            profileMailingAddress: '',
+            profilePhysicalAddress: '',
+
+            // Phone Information
+            profilePrimaryMobile: '',
+
+            // Email Information
+            profilePrimayMail: '',
+
+            // Finanicial Information
+            profileAnnualIncome: '',
+            profileTaxBracket: '',
+            profileNetWorth: '',
+            profileTaxFilling: '',
+
+            // Employment Information
+            profileEmploymentStatus: '',
+            profileEmpIndustry: '',
+            profileEmpOccupation: '',
+            profileEmpEmployer: '',
+
+            // RelationShip Information
+            profileRelationToOwner: '',
+            profileRelationGender: '',
+            profileRelationMail: '',
+            profileRelationMarital: ''
         };
     }
 
@@ -30,6 +68,78 @@ class ProfileSettingsComponent extends Component {
         if (this.props && this.props.initialState && this.props.initialState.firstName) {
             this.setState({
                 profileName: this.props.initialState.firstName
+            })
+        }
+
+        if (this.props && this.props.initialState && this.props.initialState.phone) {
+            this.setState({
+                profilePrimaryMobile: this.props.initialState.phone
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profilePrefix) {
+            this.setState({
+                profilePrefix: this.props.profileState.profilePrefix
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileSuffix) {
+            this.setState({
+                profileSuffix: this.props.profileState.profileSuffix
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileVcmID) {
+            this.setState({
+                profileVcmID: this.props.profileState.profileVcmID
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileSsnNumber) {
+            this.setState({
+                profileSsnNumber: this.props.profileState.profileSsnNumber
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileDob) {
+            this.setState({
+                profileDob: this.props.profileState.profileDob
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileGender) {
+            this.setState({
+                profileGender: this.props.profileState.profileGender
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileMaritalStatus) {
+            this.setState({
+                profileMaritalStatus: this.props.profileState.profileMaritalStatus
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileCitizenship) {
+            this.setState({
+                profileCitizenship: this.props.profileState.profileCitizenship
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileMailingAddress) {
+            this.setState({
+                profileMailingAddress: this.props.profileState.profileMailingAddress
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profilePhysicalAddress) {
+            this.setState({
+                profilePhysicalAddress: this.props.profileState.profilePhysicalAddress
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profilePrimaryMobile) {
+            this.setState({
+                profilePrimaryMobile: this.props.profileState.profilePrimaryMobile
             })
         }
     }
@@ -124,7 +234,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"1LT"}
+                                    {this.state.profilePrefix}
                                 </Text>
                             </View>
 
@@ -136,7 +246,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"Sr."}
+                                    {this.state.profileSuffix}
                                 </Text>
                             </View>
 
@@ -148,7 +258,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"YYMM9999999"}
+                                    {this.state.profileVcmID}
                                 </Text>
                             </View>
 
@@ -160,7 +270,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"xxx-xx-1234"}
+                                    {this.state.profileSsnNumber}
                                 </Text>
                             </View>
 
@@ -172,7 +282,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"MM-DD-YYYY"}
+                                    {this.state.profileDob}
                                 </Text>
                             </View>
 
@@ -184,7 +294,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"Male"}
+                                    {this.state.profileGender}
                                 </Text>
                             </View>
 
@@ -196,7 +306,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"Married"}
+                                    {this.state.profileMaritalStatus}
                                 </Text>
                             </View>
 
@@ -208,7 +318,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"United States"}
+                                    {this.state.profileCitizenship}
                                 </Text>
                             </View>
                         </View>
@@ -239,7 +349,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"5400 N Black Oak Lake Rd"}
+                                    {this.state.profileMailingAddress}
                                 </Text>
                             </View>
 
@@ -251,7 +361,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"Same as mailing"}
+                                    {this.state.profilePhysicalAddress}
                                 </Text>
                             </View>
                         </View>
@@ -282,7 +392,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"+1(xxx) xxx - 7890"}
+                                    {this.state.profilePrimaryMobile}
                                 </Text>
                             </View>
                         </View>
@@ -313,7 +423,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"paxxxxx@example.com"}
+                                    {this.state.profilePrimayMail}
                                 </Text>
                             </View>
                         </View>
@@ -344,7 +454,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"$ 100,000"}
+                                    {this.state.profileAnnualIncome}
                                 </Text>
                             </View>
 
@@ -356,7 +466,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"10%"}
+                                    {this.state.profileTaxBracket}
                                 </Text>
                             </View>
 
@@ -368,7 +478,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"$ 100,000,000"}
+                                    {this.state.profileNetWorth}
                                 </Text>
                             </View>
 
@@ -380,7 +490,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"Single individual"}
+                                    {this.state.profileTaxFilling}
                                 </Text>
                             </View>
 
@@ -412,7 +522,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"None on file"}
+                                    {this.state.profileEmploymentStatus}
                                 </Text>
                             </View>
 
@@ -424,7 +534,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"None on file"}
+                                    {this.state.profileEmpIndustry}
                                 </Text>
                             </View>
 
@@ -436,7 +546,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"None on file"}
+                                    {this.state.profileEmpOccupation}
                                 </Text>
                             </View>
 
@@ -448,7 +558,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingValueLabel}>
-                                    {"None on file"}
+                                    {this.state.profileEmpEmployer}
                                 </Text>
                             </View>
                         </View>
