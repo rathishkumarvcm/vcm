@@ -58,6 +58,11 @@ class OpenAccPageFiveComponent extends Component {
 
     }
 
+    navigateToScreen = (routeName) =>{
+        this.props.navigation.navigate({ routeName: routeName, key: routeName });
+
+    }
+
     generateKeyExtractor = (item) => item.fundNumber.toString();
    
     renderFundItem = () => ({ item }) =>
@@ -210,7 +215,7 @@ class OpenAccPageFiveComponent extends Component {
                 <Text style={styles.lblLine} />
                 <View style={styles.editDetailsGrp} >
                     <TouchableOpacity
-                        // onPress={() => { alert("#TODO:: Edit") }}
+                        onPress={() => { this.navigateToScreen("openAccPageTwo") }}
                         activeOpacity={0.8}
                         accessibilityRole={'button'}
                         style={styles.editBtn}
@@ -343,7 +348,7 @@ class OpenAccPageFiveComponent extends Component {
                 <Text style={styles.lblLine} />
                 <View style={styles.editDetailsGrp} >
                     <TouchableOpacity
-                        //onPress={() => { alert("#TODO:: Edit") }}
+                        onPress={() => { this.navigateToScreen("openAccPageTwo") }}
                         activeOpacity={0.8}
                         accessibilityRole={'button'}
                         style={styles.editBtn}
@@ -419,7 +424,7 @@ class OpenAccPageFiveComponent extends Component {
                 <Text style={styles.lblLine} />
                 <View style={styles.editDetailsGrp} >
                     <TouchableOpacity
-                        //onPress={() => { alert("#TODO:: Edit") }}
+                        onPress={() => { this.navigateToScreen("openAccPageTwo") }}
                         activeOpacity={0.8}
                         accessibilityRole={'button'}
                         style={styles.editBtn}
@@ -493,7 +498,7 @@ class OpenAccPageFiveComponent extends Component {
                 <Text style={styles.lblLine} />
                 <View style={styles.editDetailsGrp} >
                     <TouchableOpacity
-                        //onPress={() => { alert("#TODO:: Edit") }}
+                        onPress={() => { this.navigateToScreen("openAccPageTwo") }}
                         activeOpacity={0.8}
                         accessibilityRole={'button'}
                         style={styles.editBtn}
@@ -633,8 +638,8 @@ class OpenAccPageFiveComponent extends Component {
 
             <View style={styles.editDetailsGrp} >
                 <TouchableOpacity
-                    //onPress={() => { alert("#TODO:: Edit") }}
-                    activeOpacity={0.8}
+                        onPress={() => { this.navigateToScreen("openAccPageThree") }}
+                        activeOpacity={0.8}
                     accessibilityRole={'button'}
                     style={styles.editBtn}
                 >
@@ -686,8 +691,8 @@ class OpenAccPageFiveComponent extends Component {
 
             <View style={styles.editDetailsGrp} >
                 <TouchableOpacity
-                    // onPress={() => { alert("#TODO:: Edit") }}
-                    activeOpacity={0.8}
+                        onPress={() => { this.navigateToScreen("openAccPageFour") }}
+                        activeOpacity={0.8}
                     accessibilityRole={'button'}
                     style={styles.editBtn}
                 >
