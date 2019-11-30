@@ -604,6 +604,7 @@ class OpenAccPageFiveComponent extends Component {
         var {
             fundingSource = {},
             totalFunds = '',
+            totalInitialInvestment ='',
             fundDataList = []
         } = (investmentInfo && investmentInfo.fundDataList) ? investmentInfo : {};
 
@@ -655,7 +656,7 @@ class OpenAccPageFiveComponent extends Component {
                         {gblStrings.accManagement.totalInitInvestment}
                     </Text>
                     <Text style={styles.lblRightColTxt}>
-                        {"$ 3,000.00"}
+                        {totalInitialInvestment}
                     </Text>
                 </View>
             </View>

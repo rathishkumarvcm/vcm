@@ -361,7 +361,7 @@ class OpenAccPageThreeComponent extends Component {
                         "accountNumber": "accountNumber"
                     },
                     "totalFunds": ""+this.state.selectedFundInvestmentsData.length || "-",
-                    "totalInitialInvestment":"-",
+                    "totalInitialInvestment":this.state.totalInitialInvestment || "-",
                     "fundDataList": this.state.selectedFundInvestmentsData
                 },
             }
@@ -437,7 +437,9 @@ class OpenAccPageThreeComponent extends Component {
         tempData.fundingOption = "";
         tempData.fundingOptionDropDown = false;
         tempData.initialInvestment = "";
+        tempData.mininitialInvestment = item.initialInvestment;
         tempData.monthlyInvestment = "";
+        tempData.minmonthlyInvestment = item.initialInvestment;
         tempData.startDate = "";
         tempData.fundingOptionValidation = false;
         tempData.initialInvestmentValidation = false;
@@ -445,11 +447,40 @@ class OpenAccPageThreeComponent extends Component {
         tempData.startDateValidation = false;
         tempData.action = "add";
 
+         
+        var newSelectedData = [...this.state.selectedFundInvestmentsData];
+        var isObjExistIndex = this.getIndex(tempData.fundNumber, newSelectedData, 'fundNumber');
+
+        if(isObjExistIndex == -1 && newItems[index].isActive){
+            
+            newSelectedData = [...newSelectedData, tempData];
+           
+        }else if (isObjExistIndex != -1 && newItems[index].isActive == false) {
+           
+
+             newSelectedData.splice(isObjExistIndex,1);
+
+        }
+
+
         this.setState({
             fundList: newItems,
-            selectedFundInvestmentsData: [...this.state.selectedFundInvestmentsData, tempData],
+            selectedFundInvestmentsData:newSelectedData ,
             selectedCount: this.getSelectedItems().length
         });
+
+
+
+
+    }
+
+     getIndex = (value, arr, prop) => {
+        for(var i = 0; i < arr.length; i++) {
+            if(arr[i][prop] === value) {
+                return i;
+            }
+        }
+        return -1; //to handle the case where the value doesn't exist
     }
 
     onClickRowItem = (item, index) => () => {
@@ -678,13 +709,13 @@ class OpenAccPageThreeComponent extends Component {
                     tempErrMsg = gblStrings.accManagement.emptyFundOptionsMsg;
                 } else if (this.isEmpty(tempObj.initialInvestment)) {
                     tempErrMsg = gblStrings.accManagement.emptyInitInvestmentMsg;
-                }else if (tempObj.initialInvestment < 3000) {
+                }else if (tempObj.initialInvestment < tempObj.mininitialInvestment) {
                     tempErrMsg = gblStrings.accManagement.minInitInvestmentMsg;
                 } 
                 
                 else if (tempObj.fundingOption == "Initial and Monthly Investment" && this.isEmpty(tempObj.monthlyInvestment)) {
                     tempErrMsg = gblStrings.accManagement.emptyMonthlyInvestmentMsg;
-                } else if ( tempObj.fundingOption == "Initial and Monthly Investment" && tempObj.monthlyInvestment < 3000) {
+                } else if ( tempObj.fundingOption == "Initial and Monthly Investment" && tempObj.monthlyInvestment < tempObj.mininitialInvestment) {
                     tempErrMsg = gblStrings.accManagement.minMonthlyInvestmentMsg;
                 } else if(this.isEmpty(tempObj.startDate)){
                     tempErrMsg = gblStrings.accManagement.emptyStartDate;
@@ -1111,7 +1142,7 @@ class OpenAccPageThreeComponent extends Component {
                                                 />
                                             </View>
                                             <Text style={{ textAlign: 'right', width: '100%', color: '#56565A', fontSize: scaledHeight(12), marginTop: scaledHeight(12), }}>
-                                                {`Minimum ${this.state.selectedFundInvestmentsData[index].initialInvestment}`}
+                                                {`Minimum $${item.mininitialInvestment}`}
                                             </Text>
 
 
@@ -1132,7 +1163,7 @@ class OpenAccPageThreeComponent extends Component {
                                                 />
                                             </View>
                                             <Text style={{ textAlign: 'right', width: '100%', color: '#56565A', fontSize: scaledHeight(12), marginTop: scaledHeight(12), }}>
-                                                {"Minimum $3,000"}
+                                            {`Minimum $${item.mininitialInvestment}`}
                                             </Text>
 
                                             <Text style={styles.lblTxt}>
