@@ -194,6 +194,7 @@ class OpenAccPageThreeComponent extends Component {
             minCount: 5,
             fundList: [...fundList.map(v => ({ ...v, isActive: false }))],
             fundingSourceList: [],
+            method:"",
             offLineMethods:[],
             onLineMethods:[],
             selectedCount: 0,
@@ -205,6 +206,12 @@ class OpenAccPageThreeComponent extends Component {
             monthlyInvestment: "",
             monthlyInvestmentDropDown: "",
             investStartDate: "",
+
+            accountType: "",
+            financialInstitutionName: "",
+            accountOwner: "",
+            transitRoutingNumber: "",
+            accountNumber: "",
 
             fundingOptionsValidation: true,
             initInvestmentValidation: true,
@@ -355,13 +362,13 @@ class OpenAccPageThreeComponent extends Component {
                 ...this.props.accOpeningData.savedAccData,
                 "investmentInfo": {
                     "fundingSource": {
-                        "method": this.state.fundingSourceName || "-",
-                        "bankAccount": "Axis",
-                        "accountType": "accountType",
-                        "financialInstitutionName": "financialInstitutionName",
-                        "accountOwner": "accountOwner",
-                        "transitRoutingNumber": "transitRoutingNumber",
-                        "accountNumber": "accountNumber"
+                        "method": this.state.method || "-",
+                        "bankAccount": this.state.fundingSourceName || "-",
+                        "accountType": this.state.accountType || "-",
+                        "financialInstitutionName": this.state.financialInstitutionName || "-",
+                        "accountOwner": this.state.accountOwner || "-",
+                        "transitRoutingNumber": this.state.transitRoutingNumber || "-",
+                        "accountNumber": this.state.accountNumber || "-",
                     },
                     "totalFunds": ""+this.state.selectedFundInvestmentsData.length || "-",
                     "totalInitialInvestment":this.state.totalInitialInvestment || "-",
@@ -522,6 +529,7 @@ class OpenAccPageThreeComponent extends Component {
         }
 
         this.setState({
+            method:method,
             offLineMethods: method == "offline" ? toBeChangedData : notToBeChangedData,
             onLineMethods: method == "online" ? toBeChangedData : notToBeChangedData,
             fundingSourceName: item

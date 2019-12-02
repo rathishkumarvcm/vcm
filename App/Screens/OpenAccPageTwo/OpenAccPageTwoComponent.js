@@ -480,6 +480,9 @@ class OpenAccPageTwoComponent extends Component {
             "industry",
             "prim_src_income",
             "annual_income",
+            "net_worth",
+            "tax_filling_status",
+            "mil_status",
             "mil_serv_branch",
             "relationship",
             "ben_type",
@@ -915,10 +918,10 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     generateKeyExtractor = (item) => item.key;
-    renderDropDownListItem = (keyName, dropDownName) => ({ item }) =>
+    renderDropDownListItem = (dropDownName) => ({ item }) =>
         (<DropDownListItem
-            value={item[keyName]}
-            onSelectedItem={this.selectedDropDownValue(dropDownName, item[keyName], item.key)}
+            value={item.value}
+            onSelectedItem={this.selectedDropDownValue(dropDownName, item, item.key)}
         />
         );
 
@@ -1090,7 +1093,7 @@ class OpenAccPageTwoComponent extends Component {
             case "networthDropDown_IRA":
             case "networthDropDown_childben":
 
-                tempkey = "networth";
+                tempkey = "net_worth";
 
                 break;
             case "taxFilingStatusDropDown":
@@ -1098,14 +1101,14 @@ class OpenAccPageTwoComponent extends Component {
             case "taxFilingStatusDropDown_IRA":
             case "taxFilingStatusDropDown_childben":
 
-                tempkey = "taxFilingStatus";
+                tempkey = "tax_filling_status";
                 break;
 
             case "militaryStatusDropDown":
             case "militaryStatusDropDown_joint":
             case "militaryStatusDropDown_IRA":
             case "militaryStatusDropDown_childben":
-                tempkey = "militaryStatus";
+                tempkey = "mil_status";
                 break;
             case "branchOfServiceDropDown":
             case "branchOfServiceDropDown_joint":
@@ -1146,7 +1149,7 @@ class OpenAccPageTwoComponent extends Component {
                 <View style={{ height: 100, borderWidth: 1, width: width, borderColor: "#DEDEDF", backgroundColor: 'white' }}>
                     <FlatList
                         data={dropDownData}
-                        renderItem={this.renderDropDownListItem(keyName, dropDownName)}
+                        renderItem={this.renderDropDownListItem(dropDownName)}
                         keyExtractor={this.generateKeyExtractor}
                     />
                 </View>
@@ -1156,16 +1159,16 @@ class OpenAccPageTwoComponent extends Component {
     }
 
 
-    selectedDropDownValue = (dropDownName, value, key) => () => {
+    selectedDropDownValue = (dropDownName, item, key) => () => {
 
-        let tempRankKey = key + "_rank";
+        let tempRankKey = "mil_rank_"+key;
         let payload = "";
         switch (dropDownName) {
             case "prefixDropDown":
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        prefix: value,
+                        prefix: item.value,
                         prefixDropDown: false
                     }
                 }));
@@ -1174,7 +1177,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        suffix: value,
+                        suffix: item.value,
                         suffixDropDown: false
                     }
                 }));
@@ -1183,7 +1186,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        maritalStatus: value,
+                        maritalStatus: item.value,
                         maritalStatusDropDown: false
                     }
                 }));
@@ -1192,7 +1195,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        stateCity: value,
+                        stateCity: item.value,
                         stateCityDropDown: false
                     }
                 }));
@@ -1201,7 +1204,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        contactDuringMobNo: value,
+                        contactDuringMobNo: item.value,
                         contactDuringMobNoDropDown: false
                     }
                 }));
@@ -1210,7 +1213,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        contactDuringTelePhone2: value,
+                        contactDuringTelePhone2: item.value,
                         contactDuringTelePhone2DropDown: false
                     }
                 }));
@@ -1219,7 +1222,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        contactDuringTelePhone3: value,
+                        contactDuringTelePhone3: item.value,
                         contactDuringTelePhone3DropDown: false
                     }
                 }));
@@ -1228,7 +1231,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        empStatus: value,
+                        empStatus: item.value,
                         empStatusDropDown: false
                     }
                 }));
@@ -1238,7 +1241,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        empIndustry: value,
+                        empIndustry: item.value,
                         empIndustryDropDown: false
                     }
                 }));
@@ -1247,7 +1250,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        empStateCity: value,
+                        empStateCity: item.value,
                         empStateCityDropDown: false
                     }
                 }));
@@ -1257,8 +1260,10 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        annualIncome: value,
-                        annualIncomeDropDown: false
+                        annualIncome: item.value,
+                        annualIncomeDropDown: false,
+                        taxBracket: item.taxbracket,
+                        taxBracketDropDown: false
                     }
                 }));
                 break;
@@ -1266,7 +1271,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        taxBracket: value,
+                        taxBracket: item.value,
                         taxBracketDropDown: false
                     }
                 }));
@@ -1275,7 +1280,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        networth: value,
+                        networth: item.value,
                         networthDropDown: false
                     }
                 }));
@@ -1284,7 +1289,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        taxFilingStatus: value,
+                        taxFilingStatus: item.value,
                         taxFilingStatusDropDown: false
                     }
                 }));
@@ -1294,7 +1299,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        militaryStatus: value,
+                        militaryStatus: item.value,
                         militaryStatusDropDown: false
                     }
                 }));
@@ -1305,7 +1310,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        branchOfService: value,
+                        branchOfService: item.value,
                         branchOfServiceDropDown: false,
                         rankKey: tempRankKey
                     }
@@ -1324,7 +1329,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
-                        rank: value,
+                        rank: item.value,
                         rankDropDown: false
                     }
                 }));
@@ -1335,7 +1340,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        relationshipToAcc: value,
+                        relationshipToAcc: item.value,
                         relationshipToAccDropDown: false
                     }
                 }));
@@ -1344,7 +1349,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        prefix: value,
+                        prefix: item.value,
                         prefixDropDown: false
                     }
                 }));
@@ -1353,7 +1358,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        suffix: value,
+                        suffix: item.value,
                         suffixDropDown: false
                     }
                 }));
@@ -1362,7 +1367,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        maritalStatus: value,
+                        maritalStatus: item.value,
                         maritalStatusDropDown: false
                     }
                 }));
@@ -1371,7 +1376,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        stateCity: value,
+                        stateCity: item.value,
                         stateCityDropDown: false
                     }
                 }));
@@ -1380,7 +1385,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        contactDuringMobNo: value,
+                        contactDuringMobNo: item.value,
                         contactDuringMobNoDropDown: false
                     }
                 }));
@@ -1389,7 +1394,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        contactDuringTelePhone2: value,
+                        contactDuringTelePhone2: item.value,
                         contactDuringTelePhone2DropDown: false
                     }
                 }));
@@ -1398,7 +1403,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        contactDuringTelePhone3: value,
+                        contactDuringTelePhone3: item.value,
                         contactDuringTelePhone3DropDown: false
                     }
                 }));
@@ -1407,7 +1412,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        empStatus: value,
+                        empStatus: item.value,
                         empStatusDropDown: false
                     }
                 }));
@@ -1417,7 +1422,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        empIndustry: value,
+                        empIndustry: item.value,
                         empIndustryDropDown: false
                     }
                 }));
@@ -1426,7 +1431,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        empStateCity: value,
+                        empStateCity: item.value,
                         empStateCityDropDown: false
                     }
                 }));
@@ -1436,8 +1441,10 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        annualIncome: value,
-                        annualIncomeDropDown: false
+                        annualIncome: item.value,
+                        annualIncomeDropDown: false,
+                        taxBracket: item.taxbracket,
+                        taxBracketDropDown: false
                     }
                 }));
                 break;
@@ -1445,7 +1452,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        taxBracket: value,
+                        taxBracket: item.value,
                         taxBracketDropDown: false
                     }
                 }));
@@ -1454,7 +1461,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        networth: value,
+                        networth: item.value,
                         networthDropDown: false
                     }
                 }));
@@ -1463,7 +1470,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        taxFilingStatus: value,
+                        taxFilingStatus: item.value,
                         taxFilingStatusDropDown: false
                     }
                 }));
@@ -1473,7 +1480,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        militaryStatus: value,
+                        militaryStatus: item.value,
                         militaryStatusDropDown: false
                     }
                 }));
@@ -1482,7 +1489,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        branchOfService: value,
+                        branchOfService: item.value,
                         branchOfServiceDropDown: false,
                         rankKey: tempRankKey
                     }
@@ -1497,7 +1504,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     jointOwner: {
                         ...prevState.jointOwner,
-                        rank: value,
+                        rank: item.value,
                         rankDropDown: false
                     }
                 }));
@@ -1508,7 +1515,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     childBeneficiary: {
                         ...prevState.childBeneficiary,
-                        relationshipToAcc: value,
+                        relationshipToAcc: item.value,
                         relationshipToAccDropDown: false
                     }
                 }));
@@ -1519,7 +1526,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     retirement: {
                         ...prevState.retirement,
-                        beneficiaryType: value,
+                        beneficiaryType: item.value,
                         beneficiaryTypeDropDown: false
                     }
                 }));
@@ -1528,7 +1535,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState(prevState => ({
                     retirement: {
                         ...prevState.retirement,
-                        relationshipToAcc: value,
+                        relationshipToAcc: item.value,
                         relationshipToAccDropDown: false
                     }
                 }));
@@ -2797,13 +2804,15 @@ class OpenAccPageTwoComponent extends Component {
                         </Text>
                         <CustomDropDown
                             inputref={this.setInputRef("taxBracket")}
-                            onPress={this.onPressDropDown("personal", "taxBracketDropDown")}
                             value={this.state.personal.taxBracket}
                             propInputStyle={styles.customListTxtBox}
                             placeholder={gblStrings.common.select}
 
                         />
-                        {this.renderDropDown('taxBracketDropDown', this.state.personal.taxBracketDropDown, dummyData)}
+                        { // this.renderDropDown('taxBracketDropDown', this.state.personal.taxBracketDropDown, dummyData)
+                                                   // onPress={this.onPressDropDown("personal", "taxBracketDropDown")}
+
+                        }
 
 
                         <Text style={styles.lblTxt}>
