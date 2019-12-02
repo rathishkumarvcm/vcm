@@ -32,7 +32,7 @@ const fundingSourceList = [
 ];
 
 var fundList = [
-    {
+   /* {
         "fundName": "USAA Intermediate-Term Bond Adviser",
         "fundNumber": 330,
         "risk": "High",
@@ -44,6 +44,7 @@ var fundList = [
         "id": 1,
         "fundDescription": "USAA Intermediate-Term Bond Adviser"
     }
+    */
 ];
 
 
@@ -234,10 +235,12 @@ class OpenAccPageThreeComponent extends Component {
                                                                  -------------------------- */
     componentDidMount() {
         console.log("componentDidMount::::> ");
-        if (this.props && this.props.accOpeningData && !this.props.accOpeningData[ActionTypes.GET_FUNDLIST]) {
+        if (this.state && this.state.fundList && ! this.state.fundList.length>0) {   
             const fundListPayload = {};
             this.props.getFundListData(fundListPayload);
         }
+
+       
 
 
         let payload = [];
@@ -438,7 +441,7 @@ class OpenAccPageThreeComponent extends Component {
         tempData.fundingOptionDropDown = false;
         tempData.initialInvestment = "";
         tempData.mininitialInvestment = item.initialInvestment;
-        tempData.monthlyInvestment = "";
+        tempData.monthlyInvestment = "0";
         tempData.minmonthlyInvestment = item.initialInvestment;
         tempData.startDate = "";
         tempData.fundingOptionValidation = false;
@@ -709,15 +712,15 @@ class OpenAccPageThreeComponent extends Component {
                     tempErrMsg = gblStrings.accManagement.emptyFundOptionsMsg;
                 } else if (this.isEmpty(tempObj.initialInvestment)) {
                     tempErrMsg = gblStrings.accManagement.emptyInitInvestmentMsg;
-                }else if (tempObj.initialInvestment < tempObj.mininitialInvestment) {
+                }else if (parseFloat(tempObj.initialInvestment) < parseFloat(tempObj.mininitialInvestment)) {
                     tempErrMsg = gblStrings.accManagement.minInitInvestmentMsg;
                 } 
                 
                 else if (tempObj.fundingOption == "Initial and Monthly Investment" && this.isEmpty(tempObj.monthlyInvestment)) {
                     tempErrMsg = gblStrings.accManagement.emptyMonthlyInvestmentMsg;
-                } else if ( tempObj.fundingOption == "Initial and Monthly Investment" && tempObj.monthlyInvestment < tempObj.mininitialInvestment) {
+                }/* else if ( tempObj.fundingOption == "Initial and Monthly Investment" && tempObj.monthlyInvestment < tempObj.mininitialInvestment) {
                     tempErrMsg = gblStrings.accManagement.minMonthlyInvestmentMsg;
-                } else if(this.isEmpty(tempObj.startDate)){
+                }*/ else if(this.isEmpty(tempObj.startDate)){
                     tempErrMsg = gblStrings.accManagement.emptyStartDate;
                 
                } else {
@@ -1145,8 +1148,9 @@ class OpenAccPageThreeComponent extends Component {
                                                 {`Minimum $${item.mininitialInvestment}`}
                                             </Text>
 
-
-                                            <Text style={styles.lblTxt}>
+                                            {
+                                                this.state.selectedFundInvestmentsData[index].fundingOption == "Initial and Monthly Investment" &&  <> 
+                                                 <Text style={styles.lblTxt}>
                                                 {gblStrings.accManagement.monthlyInvestment}
                                             </Text>
                                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: scaledHeight(7) }}>
@@ -1157,15 +1161,16 @@ class OpenAccPageThreeComponent extends Component {
                                                     propInputStyle={{ width: '90%' }}
                                                     maxLength={gblStrings.maxLength.monthlyInvestment}
                                                     placeholder={"Monthly Investment"}
+                                                    value =  {this.state.selectedFundInvestmentsData[index].monthlyInvestment}
                                                     keyboardType="number-pad"
                                                     onChangeText={this.onChangeTextForInvestment("monthlyInvestment", index)}
 
                                                 />
                                             </View>
-                                            <Text style={{ textAlign: 'right', width: '100%', color: '#56565A', fontSize: scaledHeight(12), marginTop: scaledHeight(12), }}>
-                                            {`Minimum $${item.mininitialInvestment}`}
-                                            </Text>
-
+                                           
+                                                </>
+                                            }
+                                           
                                             <Text style={styles.lblTxt}>
                                                 {gblStrings.accManagement.startDate}
                                             </Text>
