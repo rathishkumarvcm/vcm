@@ -265,8 +265,8 @@ class OpenAccPageOneComponent extends Component {
 
     getPayload = () => {
         let payload  = {
-            "onlineId": "aaru",
-            "customerId": "123456",
+            "onlineId": "arumugamt",
+            "customerId": "761735",
             "accountType": this.state.selectedItemID,
             "accountSubType": (this.props.accOpeningData && this.props.accOpeningData.accountSubType) ? this.props.accOpeningData.accountSubType.key : "-",
         };

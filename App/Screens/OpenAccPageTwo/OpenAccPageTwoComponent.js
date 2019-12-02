@@ -575,12 +575,12 @@ class OpenAccPageTwoComponent extends Component {
                 },
                 "isPhysAddrSameAsMailAddr": this.state.personal.isYourPhysicalAddresSame || "-",
                 "physicalAddress": {
-                    "addressType": "U.S or U.S Territories",
-                    "streetNbr": "4900",
-                    "streetName": "Tiedeman Rd",
-                    "zip": "44144",
-                    "city": "Brooklyn",
-                    "state": "OH"
+                    "addressType": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.citizenship || "-" : "-",
+                    "streetNbr": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.addrLine1 || "-" : "-",
+                    "streetName": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.addrLine2 || "-" : "-",
+                    "zip": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.zipcode || "-" : "-",
+                    "city": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.city || "-" : "-",
+                    "state": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.stateCity || "-" : "-",
                 },
                 "contactDetails": {
                     "phoneNumber1": {
