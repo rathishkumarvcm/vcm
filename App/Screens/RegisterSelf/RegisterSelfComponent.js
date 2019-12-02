@@ -17,7 +17,11 @@ class RegisterSelfComponent extends Component {
             lastName : '',
             firstName : '',
             middleName : '',
-            phone : ''
+            phone : '',
+            firstNameFlag :false,
+            middleNameFlag : false,
+            lastNameFlag : false,
+            phoneFlag : false
         };
     }
 
@@ -63,9 +67,66 @@ class RegisterSelfComponent extends Component {
             middleName : this.state.middleName,
             phone : this.state.phone
         }
-      
+        
+        
         this.props.navigation.navigate('registerPassword',{selfData:passingData});
     }
+
+    checkFirstName = () =>{
+        if(this.state.firstName != ""){
+            this.setState({
+                firstNameFlag : true
+            })
+        }
+        else{
+            this.setState({
+                firstNameFlag : false
+            })
+        }
+    }
+
+    checkMiddleName = () =>{
+        if(this.state.middleName != ""){
+            this.setState({
+                middleNameFlag : true
+            })
+        }
+        else{
+            this.setState({
+                middleNameFlag : false
+            })
+        }
+    }
+
+
+    checkLastName = () =>{
+        if(this.state.lastName != ""){
+            this.setState({
+                lastNameFlag : true
+            })
+        }
+        else{
+            this.setState({
+                lastNameFlag : false
+            })
+        }
+    }
+
+    checkPhone = () => {
+        if(this.state.phone != ""){
+            this.setState({
+                phoneFlag : true
+            })
+        }
+        else{
+            this.setState({
+                phoneFlag : false
+            })
+        }
+    }
+
+
+
  
     render(){
         
@@ -105,7 +166,10 @@ class RegisterSelfComponent extends Component {
                 propInputStyle={styles.userIDTextBox} 
                 placeholder={"First name"}
                 onChangeText={this.setFirstName}
+                onBlur={this.checkFirstName}
                 value={this.state.firstName}
+                errorFlag={!this.state.firstNameFlag && this.state.firstName!=""}
+                errorText={"Enter a Valid First Name"}
             />
 
             <View style={styles.signInView}>
@@ -118,7 +182,9 @@ class RegisterSelfComponent extends Component {
                 placeholder={"Middle Name"}
                 onChangeText={this.setMiddleName}
                 value={this.state.middleName}
-                
+                onBlur={this.checkMiddleName}
+                errorFlag={!this.state.middleNameFlag && this.state.middleName!=""}
+                errorText={"Enter a Valid Middle Name"}
             />
 
             <View style={styles.signInView}>
@@ -131,6 +197,9 @@ class RegisterSelfComponent extends Component {
                 placeholder={"Last name"}
                 onChangeText={this.setLastName}
                 value={this.state.lastName}
+                onBlur={this.checkLastName}
+                errorFlag={!this.state.lastNameFlag && this.state.lastName!=""}
+                errorText={"Enter a Valid Last Name"}
             />
 
 
@@ -144,6 +213,9 @@ class RegisterSelfComponent extends Component {
                 placeholder={"Phone"}
                 onChangeText={this.setPhone}
                 value={this.state.phone}
+                onBlur={this.checkPhone}
+                errorFlag={!this.state.phoneFlag && this.state.phone!=""}
+                errorText={"Enter a Valid Phone Number"}
             />
 
 
@@ -226,6 +298,7 @@ class RegisterSelfComponent extends Component {
                     buttonText="Continue"
                     textStyle={styles.signInButtonText}
                     onPress={this.navigateAddress}
+                    disabled={!this.state.phoneFlag || !this.state.firstNameFlag || !this.state.middleNameFlag || !this.state.lastNameFlag}
             />
             
             <TouchableOpacity onPress={this.goBack} style={styles.goBack}>

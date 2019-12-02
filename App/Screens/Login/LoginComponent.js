@@ -389,6 +389,14 @@ class LoginComponent extends Component {
                 </TouchableOpacity>
             }
             </View>
+
+            <GButtonComponent 
+                    buttonStyle={styles.signInButton}
+                    buttonText="Cognito Sign In"
+                    textStyle={styles.signInButtonText}
+                    onPress={this.signIn}
+                    //onPress={this.navigateDashboard}
+            />
             
 
             <View style={styles.newVictorySection}>

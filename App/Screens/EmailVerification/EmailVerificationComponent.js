@@ -13,7 +13,7 @@ class EmailVerificationComponent extends Component {
             isLoading:false,
             code:'',
             validationEmail: true,
-            name : 'rathish.kumar2@cognizant.com',
+            name : '',
             confirmCode : false
         };
     }
@@ -32,9 +32,10 @@ class EmailVerificationComponent extends Component {
         let username = this.state.name;
         let code = this.state.code; 
         let registerSelfData = this.props.navigation.getParam('passwordData');
+        console.log("-----username-----",username,code);
 
 
-        Auth.confirmSignUp(username, code, {
+        Auth.confirmSignUp(registerSelfData.username, code, {
             // Optional. Force user confirmation irrespective of existing alias. By default set to True.
             forceAliasCreation: true    
         }).then(data => { alert("verified OTP");
@@ -49,7 +50,7 @@ class EmailVerificationComponent extends Component {
     resendOTP = () => {
         let username = this.state.name;
 
-        Auth.resendSignUp(username).then(() => {
+        Auth.resendSignUp(registerSelfData.username).then(() => {
             console.log('code resent successfully');
         }).catch(e => {
             console.log(e);
