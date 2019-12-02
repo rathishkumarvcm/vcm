@@ -4,6 +4,7 @@ import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GDropDownComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
+import { JS } from 'aws-amplify';
 
 const profileSettingsCitizenship = [
     { index1: 0, question: "U.S" },
@@ -147,8 +148,7 @@ class editProfileSettingsComponent extends Component {
             })
         }
 
-        if (this.state.validPin != "" &&
-            this.state.dropDownValue != "" &&
+        if (this.state.dropDownValue != "" &&
             this.state.dropDownSuffixValue != "" &&
             this.state.dropDownGenderValue != "" &&
             this.state.dropDownStatusValue != "") {
@@ -281,24 +281,27 @@ class editProfileSettingsComponent extends Component {
     }
 
     manageProfileInformations = () => {
-        const profileInformationPayload = {
-            "userName": this.state.profileName,
-            "userVcmID": '',
-            "userSsnNumber": '',
-            "userDob": '',
-            "userPrefix": this.state.dropDownValue,
-            "userSuffix": this.state.dropDownSuffixValue,
-            "userZipcode": this.state.validPin,
-            "userGender": this.state.dropDownGenderValue,
-            "userMaritalStatue": this.state.dropDownStatusValue
-        };
-
-        console.log("Profile Informations", JSON.stringify(profileInformationPayload));
-
-        this.props.navigation.navigate('profileSettings');
+        const payloadData = this.getProfilePayloadData();
+        this.props.saveProfileData("editProfileManage", payloadData);
+        this.props.navigation.goBack();
     }
 
-    editProfileBack = () => this.props.navigation.navigate('profileSettings');
+    getProfilePayloadData = () => {
+        let profilePayload = {};
+        if (this.props && this.props.profileState) {
+            profilePayload = {
+                ...this.props.profileState,
+                "profilePrefix": this.state.dropDownValue,
+                "profileSuffix": this.state.dropDownSuffixValue,
+                "profileGender": this.state.dropDownGenderValue,
+                "profileMaritalStatus": this.state.dropDownStatusValue
+            }
+            console.log("Profile", JSON.stringify(profilePayload));
+        }
+        return profilePayload;
+    }
+
+    editProfileBack = () => { this.props.navigation.navigate('profileSettings') };
 
     editProfileOnCancel = () => { this.props.navigation.navigate('profileSettings') }
 
