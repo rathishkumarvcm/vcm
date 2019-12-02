@@ -36,16 +36,26 @@ class editProfileSettingsComponent extends Component {
             countryNonUS: false,
             isValidPin: true,
             validPin: '',
+
             profileName: '',
             profileMobile: '',
+            profileVcm: '',
+            profileSsn: '',
+            profileDob: '',
+            profilePrefix: '',
+            profileSuffix: '',
+            profileGender: '',
+            profileMaritalStatus: '',
+            profileCitizenShip: '',
+
             radioButton: false,
             radioButtonIndex: 0,
-            
+
             dropDownState: false,
             dropDownValue: '',
             dropDownPrefixFlag: false,
             dropDownPrefixMsg: '',
-            
+
             dropDownSuffixState: false,
             dropDownSuffixValue: '',
             dropDownSuffixFlag: false,
@@ -142,7 +152,7 @@ class editProfileSettingsComponent extends Component {
             this.state.dropDownSuffixValue != "" &&
             this.state.dropDownGenderValue != "" &&
             this.state.dropDownStatusValue != "") {
-                this.manageProfileInformations();
+            this.manageProfileInformations();
         }
     }
 
@@ -209,6 +219,48 @@ class editProfileSettingsComponent extends Component {
             })
         }
 
+        if (this.props && this.props.profileState && this.props.profileState.profileVcmID) {
+            this.setState({
+                profileVcm: this.props.profileState.profileVcmID
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileSsnNumber) {
+            this.setState({
+                profileSsn: this.props.profileState.profileSsnNumber
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileDob) {
+            this.setState({
+                profileDob: this.props.profileState.profileDob
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profilePrefix) {
+            this.setState({
+                profilePrefix: this.props.profileState.profilePrefix
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileSuffix) {
+            this.setState({
+                profileSuffix: this.props.profileState.profileSuffix
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileGender) {
+            this.setState({
+                profileGender: this.props.profileState.profileGender
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileMaritalStatus) {
+            this.setState({
+                profileMaritalStatus: this.props.profileState.profileMaritalStatus
+            })
+        }
+
         let payload = [];
 
         const compositePayloadData = [
@@ -245,6 +297,8 @@ class editProfileSettingsComponent extends Component {
 
         this.props.navigation.navigate('profileSettings');
     }
+
+    editProfileBack = () => this.props.navigation.navigate('profileSettings');
 
     editProfileOnCancel = () => { this.props.navigation.navigate('profileSettings') }
 
@@ -289,20 +343,20 @@ class editProfileSettingsComponent extends Component {
                     {/* Header Section - Tree Structure */}
 
                     <View style={styles.settingsView}>
-                        <Text style={{ color: '#0000FF', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.editProfileHeadOne}>
                             {"Pro.."}
                         </Text>
 
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.editProfileHeadTwo}>
                             {"  >  "}
                         </Text>
 
-                        <Text style={{ color: '#0000FF', fontSize: scaledHeight(14) }}
-                            onPress={() => this.props.navigation.navigate('profileSettings')}>
+                        <Text style={styles.editProfileHeadOne}
+                            onPress={this.editProfileBack}>
                             {"Bas.."}
                         </Text>
 
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(14) }}>
+                        <Text style={styles.editProfileHeadTwo}>
                             {"  >  "}
                         </Text>
 
@@ -344,7 +398,7 @@ class editProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.editProfileValueView}>
-                                {"YYMM999999"}
+                                {this.state.profileVcm}
                             </Text>
                         </View>
 
@@ -354,7 +408,7 @@ class editProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.editProfileValueView}>
-                                {"12345-67***"}
+                                {this.state.profileSsn}
                             </Text>
                         </View>
 
@@ -364,13 +418,14 @@ class editProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.editProfileValueView}>
-                                {"MM-DD-YY"}
+                                {this.state.profileDob}
                             </Text>
                         </View>
 
                         {/* Prefix Data */}
 
                         <GDropDownComponent
+                            placeholder={this.state.profilePrefix}
                             dropDownTextName={styles.editProfileLabel}
                             dropDownName={globalString.profileSettingsPage.profilePrefixLabel}
                             data={profilePrefixData}
@@ -381,11 +436,12 @@ class editProfileSettingsComponent extends Component {
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownPrefixFlag}
                             errorText={this.dropDownPrefixMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(490) }} />
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(492) }} />
 
                         {/* Suffix Data */}
 
                         <GDropDownComponent
+                            placeholder={this.state.profileSuffix}
                             dropDownTextName={styles.editProfileLabel}
                             dropDownName={globalString.profileSettingsPage.profileSuffixLabel}
                             data={profileSuffixData}
@@ -396,11 +452,11 @@ class editProfileSettingsComponent extends Component {
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownSuffixFlag}
                             errorText={this.dropDownSuffixMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(580) }} />
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(581) }} />
 
                         {/* Zip Code */}
 
-                        <View style={styles.editFlexDirectionColumn}>
+                        {/* <View style={styles.editFlexDirectionColumn}>
                             <Text style={styles.editProfileLabel}>
                                 {globalString.editProfilePageValue.editProfilePin}
                             </Text>
@@ -412,11 +468,12 @@ class editProfileSettingsComponent extends Component {
                                 errorFlag={!this.state.isValidPin}
                                 errorText={globalString.profileValidationMessages.validateZipcode}
                                 keyboardType={'numeric'} />
-                        </View>
+                        </View> */}
 
                         {/* Gender Data */}
 
                         <GDropDownComponent
+                            placeholder={this.state.profileGender}
                             dropDownTextName={styles.editProfileLabel}
                             dropDownName={globalString.profileSettingsPage.profileGenderLabel}
                             data={profileGenderData}
@@ -427,11 +484,12 @@ class editProfileSettingsComponent extends Component {
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownGenderFlag}
                             errorText={this.dropDownGenderMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(700) }} />
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(670) }} />
 
                         {/* Marital Status Data */}
 
                         <GDropDownComponent
+                            placeholder={this.state.profileMaritalStatus}
                             dropDownTextName={styles.editProfileLabel}
                             dropDownName={globalString.profileSettingsPage.profileStatusLabel}
                             data={profileStatusData}
@@ -442,7 +500,7 @@ class editProfileSettingsComponent extends Component {
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownStatusFlag}
                             errorText={this.dropDownStatusMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(790) }} />
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(760) }} />
 
                         {/* Citizenship */}
 

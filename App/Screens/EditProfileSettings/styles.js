@@ -411,5 +411,7 @@ export const styles = StyleSheet.create({
     editDropDownIcon: { position: 'absolute', right: 20, top: 14 },
     editDropDownSelect: { height: 100, borderWidth: 1, marginRight: '4%', marginTop: '1%', width: '92%', borderColor: "#DEDEDF", backgroundColor: 'white'},
     editRadioView: { flexDirection: 'row', marginLeft: '2%', marginTop: scaledHeight(3), width: '40%' },
-    editSecurityView: { color: '#56565A', fontSize: scaledHeight(18) }
+    editSecurityView: { color: '#56565A', fontSize: scaledHeight(18) },
+    editProfileHeadOne: { color: '#0000FF', fontSize: scaledHeight(14) },
+    editProfileHeadTwo: { color: '#56565A', fontSize: scaledHeight(14) }
 });
