@@ -1,0 +1,51 @@
+// "off" or 0 - turn the rule off
+// "warn" or 1 - turn the rule on as a warning(doesn’ t affect exit code)
+// "error" or 2 - turn the rule on as an error(exit code is 1 when triggered)
+{
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true
+  },
+  "plugins": [
+    "react",
+    "react-native"
+  ],
+  "ecmaFeatures": {
+    "jsx": true
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "rules": {
+    "react/no-did-mount-set-state": 2,
+    "react/no-direct-mutation-state": 2,
+    "react/jsx-uses-vars": 2,
+    "no-undef": 2,
+    "semi": 2,
+    "react/prop-types": 2,
+    "react/jsx-no-bind": 2,
+    "react/jsx-no-duplicate-props": 2,
+    "react/no-multi-comp": 2,
+    "react/forbid-prop-types": 2,
+    "react/prefer-es6-class": 2,
+    "react/prefer-stateless-function": 2,
+    "react/jsx-pascal-case": 2,
+    "react/jsx-closing-bracket-location": 2,
+    "react/jsx-closing-tag-location": 2,
+    "jsx-quotes": 2,
+    "no-multi-spaces": 2,
+    "react/jsx-tag-spacing": 2,
+    "react/jsx-curly-spacing": 2,
+    "react/jsx-boolean-value": 2,
+    "react/no-array-index-key": 2,
+    "react/no-string-refs": 2,
+    "react/jsx-wrap-multilines": 2,
+    "react/self-closing-comp": 2,   
+    "react/require-render-return": 2,   
+    "react/no-is-mounted": 2
+  },
+  "globals": {
+    "GLOBAL": false,
+    "it": false,
+    "expect": false,
+    "describe": false
+   }
+}
