@@ -159,12 +159,10 @@ export const styles = StyleSheet.create({
         marginHorizontal: '4%'
     },
     instructionsView: {
-        flexDirection: 'row',
         backgroundColor: '#F2F2F2',
         borderColor: '#C7C7C7',
         borderRadius: scaledHeight(4),
         marginHorizontal: '4%',
-        height: scaledHeight(72),
         marginTop: scaledHeight(50),
         marginBottom: scaledHeight(30),
         alignItems: 'center',
@@ -173,7 +171,9 @@ export const styles = StyleSheet.create({
     instructionText: {
         fontSize: scaledHeight(15),
         color: '#54565B',
-        marginRight: '4%'
+        marginRight: '4%',
+        flex:0.8,
+        alignSelf: 'center', borderWidth: 1
     },
     submitButtonText: {
         fontSize: scaledHeight(16),
@@ -296,5 +296,18 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(13),
         color:'#54565B',
         textAlign:'center'
-    }
+    },
+    touchOpacityPosition: {
+        marginVertical: scaledHeight(15),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        flex: 1,
+         borderWidth: 1
+    },
+    setupInstructionText: {
+        color: '#54565B', 
+        fontSize: scaledHeight(14),
+        marginHorizontal: '4%',
+        marginVertical: scaledHeight(20),
+    },
 });
