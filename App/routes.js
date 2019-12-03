@@ -62,7 +62,7 @@ import CollegePlanESA from './Screens/CollegePlanESA/CollegePlanESAComponent';
 import CollegePlanPartOneTwo from './Screens/CollegePlanPartOneTwo/CollegePlanPartOneTwoComponent';
 import CollegePlanPersonal from './Screens/CollegePlanPersonal/CollegePlanPersonalComponent';
 import CollegePlanBeneficiary from './Screens/CollegePlanBeneficiary/CollegePlanBeneficiaryComponent';
-import InvestmentPlanInfo from './Screens/InvestmentPlanInfo/InvestmentPlanInfoComponent';
+import InvestmentPlanInfo from './Screens/InvestmentPlanInfo';
 
 // Done By 806048
 

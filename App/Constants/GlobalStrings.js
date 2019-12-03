@@ -316,7 +316,7 @@ export default {
         tenYear: "10 Year",
         sinceInception: "Since Inception",
         netAssetValue: "Net Asset Value",
-        pricePerShare: "(price per share as of 08/05/2019)",
+        pricePerShare: "(price per share as of ",
         expenseRation: "Expense Ratio",
         overallMrngStarRating: "Overall Morningstar Rating",
         mrngStarCategory: "Morningstar Category",
