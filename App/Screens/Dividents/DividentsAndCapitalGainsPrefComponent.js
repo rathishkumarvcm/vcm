@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { styles } from './styles';
-import { View, ScrollView, Text, FlatList, Switch } from 'react-native';
-import { GHeaderComponent, GInputComponent, GSwitchComponent, GFooterComponent, GButtonComponent } from '../../CommonComponents';
+import { View, ScrollView, Text, FlatList, Switch, TouchableOpacity } from 'react-native';
+import { GHeaderComponent, GInputComponent, GSwitchComponent, GFooterComponent, GButtonComponent, GIcon } from '../../CommonComponents';
 import PropTypes from "prop-types";
 import gblStrings from '../../Constants/GlobalStrings';
 
@@ -103,6 +103,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
             isLoading: false,
             currentSecuritiesChanged: false,
             reinvestChanged: false,
+            expand: false,
         };
     }
 
@@ -207,6 +208,12 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
             break;
         }
     }
+
+    setExpandInstruction = () => {
+        this.setState({
+            expand: !this.state.expand,
+        });
+    }
    
 
     render() {
@@ -237,9 +244,39 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                     />
 
                     <View style={styles.instructionsView}>
-                        <Text style={styles.instructionText}>
-                            {gblStrings.dividents.setup_instruction}
-                        </Text>
+                        <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setExpandInstruction}>
+                            <View style={{flex:0.1, alignSelf:'center', borderWidth:1}}>
+                                {this.state.expand ?
+                                    <GIcon
+                                        name="minus"
+                                        type="antdesign"
+                                        size={30}
+                                    /> :
+                                    <GIcon
+                                        name="plus"
+                                        type="antdesign"
+                                        size={30}
+                                    />
+                                }
+                                </View>
+                                <Text style={styles.instructionText}>{gblStrings.dividents.setup_instruction}</Text>
+                        </TouchableOpacity>
+                        {this.state.expand ?
+                            <View>
+                                <Text style={styles.setupInstructionText}>{gblStrings.dividents.dividents_faq}</Text>
+                                <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_header}</Text>
+                                <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_subheader}</Text>
+                                <View style={styles.linkBreak1} />
+                                <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_header}</Text>
+                                <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_subheader}</Text>
+                                <View style={styles.linkBreak1} />
+                                <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_header}</Text>
+                                <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_subheader}</Text>
+                                <View style={styles.linkBreak1} />
+                                <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_header}</Text>
+                                <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_subheader}</Text>
+                            </View>
+                            : null}
                     </View>
                     
                     <GButtonComponent

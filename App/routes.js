@@ -99,6 +99,11 @@ import PasswordSuccess from './Screens/RecoverPasswordSuccess/';
 
 import TAmmendComponent from './Screens/TAmmend/TAmmendComponent'
 
+//Account Services
+import AccountServicesComponent from './Screens/AccountServices';
+import DividentsAndCapitalGainsPrefComponent from './Screens/Dividents';
+import CheckBookComponent from './Screens/OrderCheckBook';
+
 const AppNavigator = createStackNavigator({
         login: {
             screen : LoginComponent,
@@ -607,6 +612,24 @@ const AppNavigator = createStackNavigator({
                 header:null,
             }  
         },
+        accountService: {
+            screen: AccountServicesComponent,
+            navigationOptions: {
+                header: null,
+            }
+        },
+        dividentsAndCapitalGainsPref: {
+            screen: DividentsAndCapitalGainsPrefComponent,
+            navigationOptions: {
+                header: null,
+            }
+        },
+        orderCheckBook: {
+            screen: CheckBookComponent,
+            navigationOptions: {
+                header: null,
+            }
+        }
     },{
         initialRouteName: 'login'
     });
