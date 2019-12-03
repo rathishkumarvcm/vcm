@@ -97,12 +97,27 @@ import PasswordRecoverTemp from './Screens/RecoverTempPassword/';
 import PasswordReset from './Screens/RecoverPasswordNew/';
 import PasswordSuccess from './Screens/RecoverPasswordSuccess/';
 
-import TAmmendComponent from './Screens/TAmmend/TAmmendComponent'
+import TAmmendComponent from './Screens/TAmmend/TAmmendComponent';
 
 //Account Services
 import AccountServicesComponent from './Screens/AccountServices';
 import DividentsAndCapitalGainsPrefComponent from './Screens/Dividents';
 import CheckBookComponent from './Screens/OrderCheckBook';
+
+//Systematic Withdrawal plan
+import systematicWithdrawal from './Screens/SystematicWithdrawalPlan';
+import systematicWithdrawalAdd from './Screens/SystematicWithdrawalPlanAdd';
+import systematicWithdrawalSchedule from './Screens/SystematicWithdrawalPlanSchedule';
+import systematicWithdrawalVerify from './Screens/SystematicWithdrawalPlanVerify';
+import systematicWithdrawalEsign from './Screens/SystematicWithdrawalPlanEsign';
+
+
+//Automatic Investment Plan
+import automaticInvestment from './Screens/AutomaticInvestmentPlan';
+import automaticInvestmentAdd from './Screens/AutomaticInvestmentPlanAdd';
+import automaticInvestmentSchedule from './Screens/AutomaticInvestmentPlanSchedule';
+import automaticInvestmentVerify from './Screens/AutomaticInvestmentPlanVerify';
+import automaticInvestmentEsign from './Screens/AutomaticInvestmentPlanEsign';
 
 const AppNavigator = createStackNavigator({
         login: {
@@ -629,6 +644,66 @@ const AppNavigator = createStackNavigator({
             navigationOptions: {
                 header: null,
             }
+        },
+        automaticInvestment:{
+            screen:automaticInvestment,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        automaticInvestmentAdd:{
+            screen:automaticInvestmentAdd,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        automaticInvestmentVerify:{
+            screen:automaticInvestmentVerify,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        automaticInvestmentEsign:{
+            screen:automaticInvestmentEsign,
+            navigationOptions:{
+                header:null,
+            }
+        },
+            automaticInvestmentSchedule:{
+                screen:automaticInvestmentSchedule,
+                navigationOptions:{
+                    header:null,
+                }  
+        },
+        systematicWithdrawal:{
+            screen:systematicWithdrawal,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        systematicWithdrawalAdd:{
+            screen:systematicWithdrawalAdd,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        systematicWithdrawalVerify:{
+            screen:systematicWithdrawalVerify,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        systematicWithdrawalSchedule:{
+            screen:systematicWithdrawalSchedule,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        systematicWithdrawalEsign:{
+            screen:systematicWithdrawalEsign,
+            navigationOptions:{
+                header:null,
+            }  
         }
     },{
         initialRouteName: 'login'
