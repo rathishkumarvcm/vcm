@@ -1003,4 +1003,20 @@ export default {
         verify_your_account: 'Verify your account information below',
         request_submit_checkbook: 'You have successfully Submitted the Checkbook request'
     },
+    addBankAccount: {
+        addBankAccountHypen: " - ",
+        addBankAccountLabel: "Add Bank Account",
+        accountType: "Type of Account",
+        accountTypeSaving: "Savings",
+        accountTypeChecking: "Checking",
+        accountFinancialName: "Name of Financial Institution",
+        accountOwnerName: "Name of Accouner Owner",
+        accountTransitRouting: "Transit Routing Number",
+        accountNumber: "Account Number",
+        accountSpecimen: "Specimen",
+        accountFinancialError: "Enter Valid Financial Number",
+        accountOwnerError: "Enter Valid Owner Name",
+        accountTransitError: "Enter Valid Transit Routing Number",
+        accountValidNumber: "Enter Valid Account Number"
+    }
 };

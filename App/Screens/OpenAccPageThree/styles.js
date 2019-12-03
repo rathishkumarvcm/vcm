@@ -521,5 +521,37 @@ export const styles = StyleSheet.create({
     modalRiskViewContainer:{
         flexDirection:'row',
         width:'80%',
-    }
+    },
+    editFlexDirectionColumn: {
+        flexDirection: 'column',
+        width: '100%',
+        marginTop: scaledHeight(20),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+    },
+    settingsBorder: {
+        marginTop: scaledHeight(10),
+        marginLeft: '4%',
+        marginRight: '4%',
+        borderBottomWidth: 1,
+        borderColor: '#B2B2B2'
+    },
+    saveButtonStyle: {
+        borderColor: '#56565A',
+        borderWidth: 1,
+        width: '92%',
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop: scaledHeight(12),
+        height: scaledHeight(50),
+        backgroundColor: '#56565A',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    saveButtonText: {
+        fontSize: scaledHeight(16),
+        color: '#FFFFFF'
+    },
+    editProfileLabel: { color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginBottom: scaledHeight(3) },
+    editRadioView: { flexDirection: 'row', marginLeft: '2%', marginTop: scaledHeight(3), width: '40%' },
 });
