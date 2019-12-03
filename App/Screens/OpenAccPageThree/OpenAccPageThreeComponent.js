@@ -347,6 +347,8 @@ class OpenAccPageThreeComponent extends Component {
 
         this.props.addBankAccountAction(validateBankAccountPayload);
 
+        console.log("Add Account 001", this.props.addBankAccount);
+
         if (!this.state.isValidBankAccount) {
             this.setState({
                 isValidBankAccount: true 
