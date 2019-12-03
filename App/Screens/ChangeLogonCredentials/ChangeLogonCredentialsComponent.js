@@ -32,7 +32,7 @@ class ChangeLogonCredentialsComponent extends Component {
 
     navigateResetPassword = () => this.props.navigation.navigate('resetPassword');
     navigateResetPIN = () => this.props.navigation.navigate('resetPIN');
-    navigateToSecurityPref = () => this.props.navigation.navigate('securityPreference');
+    navigateToSecurityPref = () => this.props.navigation.navigate('SecurityPreference');
 
     render() {
         return (
