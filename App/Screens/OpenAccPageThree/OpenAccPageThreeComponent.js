@@ -242,6 +242,7 @@ class OpenAccPageThreeComponent extends Component {
 
             isAddBankAccount: false,
             isValidBankAccount: false,
+            validBankAccountMsg: '',
 
             radioButton: false,
             radioButtonIndex: 0,
@@ -303,36 +304,36 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     validateBankAccount = () => {
-        if (validFinancialNumber === "") {
+        if (this.state.validFinancialNumber === "") {
             this.setState({
                 isValidFinancial: false
             })
         }
 
-        if (validAccountOwner === "") {
+        if (this.state.validAccountOwner === "") {
             this.setState({
                 isValidAccountOwner: false
             })
         }
 
-        if (validTransitNumber === "") {
+        if (this.state.validTransitNumber === "") {
             this.setState({
                 isValidTransitNumber: false
             })
         }
 
-        if (validAccountNumber === "") {
+        if (this.state.validAccountNumber === "") {
             this.setState({
                 isValidAccountNumber: false
             })
         }
 
-        if (validFinancialNumber != "" &&
-            validAccountOwner != "" &&
-            validTransitNumber != "" &&
-            validAccountNumber != "") {
-                this.callValidateBankAccount();
-            }
+        if (this.state.validFinancialNumber != "" &&
+            this.state.validAccountOwner != "" &&
+            this.state.validTransitNumber != "" &&
+            this.state.validAccountNumber != "") {
+            this.callValidateBankAccount();
+        }
     }
 
     callValidateBankAccount = () => {
@@ -342,9 +343,15 @@ class OpenAccPageThreeComponent extends Component {
             "accountOwnerNames": "Abc",
             "transitRoutingNumber": 123456,
             "accountNumber": 345213123456
-           }
+        }
 
-           this.props.addBankAccountAction(validateBankAccountPayload);
+        this.props.addBankAccountAction(validateBankAccountPayload);
+
+        if (!this.state.isValidBankAccount) {
+            this.setState({
+                isValidBankAccount: true 
+            });
+        }
     }
 
     /*----------------------
@@ -1264,7 +1271,7 @@ class OpenAccPageThreeComponent extends Component {
                             <GInputComponent
                                 placeholder={gblStrings.addBankAccount.accountNumber}
                                 onChangeText={this.setValidAccountNumber}
-                                value={this.state.validAccountOwner}
+                                value={this.state.validAccountNumber}
                                 errorFlag={!this.state.isValidAccountNumber}
                                 errorText={gblStrings.addBankAccount.accountValidNumber} />
                         </View>
@@ -1276,6 +1283,11 @@ class OpenAccPageThreeComponent extends Component {
                                 onPress={this.validateBankAccount}
                                 textStyle={styles.saveButtonText} />
                         </View>
+
+                        {this.state.isValidBankAccount ? (
+                            <Text style={{ width: '92%', marginTop: '4%', marginBottom: '4%', color: '#333300', justifyContent: 'center', alignItems: 'center' }}>
+                                {this.state.validBankAccountMsg}
+                            </Text>) : null}
 
                     </View>
 
