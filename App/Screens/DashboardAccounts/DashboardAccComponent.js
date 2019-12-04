@@ -43,7 +43,8 @@ class DashboardAccComponent extends Component {
             isLoading: false,
             itemID: "",
             selectedItemID: "",
-            selectedItemName: ""
+            selectedItemName: "",
+            retrivePendingAppData:{}
             
         };
     }
@@ -54,16 +55,36 @@ class DashboardAccComponent extends Component {
         console.log("componentDidMount::::> ");
         const payload = "acct_type";
         this.props.getAccountTypes(payload);
+        const pendingAppPayload = {
+            "customerId": "761735",
+            "onlineId": "arumugamt",
+            "accountType": "ind"
+        }
+        this.props.retriveSavedData(pendingAppPayload);
     }
     componentDidUpdate(prevProps, prevState) {
         console.log("componentDidUpdate::::> " + prevState);
-        /*
+        
            if(this.props !== prevProps){
-             if(this.props.dashboardData.isSuccess && !this.props.dashboardData.isError  && !this.props.dashboardData.isLoading){
-              }else if(!this.props.dashboardData.isSuccess && this.props.dashboardData.isError  && !this.props.dashboardData.isLoading){
-            } 
+            const responseKey = ActionTypes.RETRIVE_OPENING_ACCT;
+            if (this.props.accOpeningData[responseKey]) {
+                if (this.props.accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
+                    let tempResponse = this.props.accOpeningData[responseKey];
+                    if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
+                        let msg = tempResponse.message;
+                        console.log("Account  Saved ::: :: " + msg);
+                        //alert( JSON.stringify(tempResponse.result));
+                        this.setState({
+                            retrivePendingAppData:tempResponse.result.Item
+                        });
+
+                    } else {
+                       // alert(tempResponse.message)
+                    }
+                }
+            }
            }
-           */
+           
     }
     /*----------------------
                                  Button Events 
@@ -97,7 +118,7 @@ class DashboardAccComponent extends Component {
         console.log("accType :: " + accType);
 
         if (screenName !== "") {
-            //this.props.dashboardData.accountType !=undefined && this.props.dashboardData.accountType !=null 
+            //this.props.accOpeningData.accountType !=undefined && this.props.accOpeningData.accountType !=null 
             this.props.selectAccount({ accountType: item });
             this.props.navigation.navigate({ routeName: screenName, key: screenName, params: { type: item.key, selectedAccount: item ,accountType: item} });
         }
@@ -112,8 +133,8 @@ class DashboardAccComponent extends Component {
         console.log("RENDER::: DashboardAccounts ::>>> ", this.props);
         let accList = [];
         let tempkey = ActionTypes.GET_ACCOUNT_TYPES;    
-        if (this.props && this.props.dashboardData && this.props.dashboardData[tempkey] ) {
-            const tempResponse = this.props.dashboardData[tempkey];
+        if (this.props && this.props.accOpeningData && this.props.accOpeningData[tempkey] ) {
+            const tempResponse = this.props.accOpeningData[tempkey];
             if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
                 accList = tempResponse.result;
                 accList = accList.value;
@@ -121,9 +142,12 @@ class DashboardAccComponent extends Component {
 
             }
         }
+
+        let tempPendingAppData = this.state.retrivePendingAppData;
+     
         
-      /*  if (this.props.dashboardData.result != undefined && this.props.dashboardData.result != null) {
-            accList = this.props.dashboardData.result;
+      /*  if (this.props.accOpeningData.result != undefined && this.props.accOpeningData.result != null) {
+            accList = this.props.accOpeningData.result;
             accList = accList.value;
         }
         */
@@ -131,8 +155,8 @@ class DashboardAccComponent extends Component {
 
         return (
             <View style={styles.container}>
-                { this.props.dashboardData.isLoading && <GLoadingSpinner />}
-                { this.props.dashboardData.isError && alert("Service Error")}
+                { this.props.accOpeningData.isLoading && <GLoadingSpinner />}
+                { this.props.accOpeningData.isError && alert("Service Error")}
 
 
                 <GHeaderComponent navigation={this.props.navigation} onPress={this.onClickHeader} />
@@ -165,6 +189,28 @@ class DashboardAccComponent extends Component {
                                     </TouchableHighlight>
                                 );
                             })}
+
+                            {
+                                (this.state.retrivePendingAppData && this.state.retrivePendingAppData.accountType) &&
+                                <TouchableHighlight
+                                    key={this.state.retrivePendingAppData.accountType}
+                                    activeOpacity={0.8}
+                                    accessibilityRole={'button'}
+                                    style={[styles.touchItem]}
+                                >
+                                    {
+                                        <View style={[styles.accountItem]}>
+                                            <Text style={styles.accountItemTxt}>
+                                                {this.state.retrivePendingAppData.accountType}
+                                            </Text>
+                                            <Text style={styles.accountItemDescTxt}>
+                                                {`Last Saved:: ${this.state.retrivePendingAppData.lastSavedDate}`}
+                                            </Text>
+                                        </View>
+                                    }
+                                </TouchableHighlight>
+                            }
+
                         </View>
                     </View>
 
@@ -192,7 +238,7 @@ class DashboardAccComponent extends Component {
 
 DashboardAccComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
-    dashboardData: PropTypes.instanceOf(Object).isRequired,
+    accOpeningData: PropTypes.instanceOf(Object).isRequired,
     getAccountTypes: PropTypes.func,
     selectAccount: PropTypes.func,
 

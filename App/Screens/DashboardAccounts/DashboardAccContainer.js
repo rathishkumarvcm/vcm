@@ -8,7 +8,7 @@ import { accOpeningActions } from "../../Shared/Actions";
 
 const mapStateToProps = (state /* , props */) => (
     {
-      dashboardData: state.accOpeningReducerData
+      accOpeningData: state.accOpeningReducerData
     }
   );
 
