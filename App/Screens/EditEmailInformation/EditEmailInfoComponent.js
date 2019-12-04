@@ -1,9 +1,41 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
+import PropTypes from "prop-types";
 import globalString from '../../Constants/GlobalStrings';
+
+const tempPrimaryMailData = [
+    {
+        "emailType": 'Primary Email',
+        "emailId": 'abc@gmail.com'
+    },
+    {
+        "emailType": 'Secondary Email',
+        "emailId": 'abcd@gmail.com'
+    }
+];
+
+const UserEmailInformation = (props) => {
+    return (
+        <View style={{ width: '92%', marginLeft: '4%', marginRight: '4%', backgroundColor: '#fff',  flexGrow: 1, marginTop: scaledHeight(5) }}>
+            <View style={{ flexDirection: 'row', flexGrow: 1, flexWrap: 'wrap', marginVertical: scaledHeight(10.5) }} >
+                <Text>
+                    {props.emailType}
+                </Text>
+            </View>
+            <Text>
+                {props.emailId}
+            </Text>
+        </View>
+    );
+};
+
+UserEmailInformation.propTypes = {
+    emailType: PropTypes.string,
+    emailId: PropTypes.string
+};
 
 class editEmailInfoComponent extends Component {
     constructor(props) {
@@ -13,11 +45,24 @@ class editEmailInfoComponent extends Component {
             isLoading: false,
             enableBiometric: false,
             faceIdEnrolled: false,
-            touchIdEnrolled: false
+            touchIdEnrolled: false,
+
+            profilePrimayMail: ''
         };
     }
 
-    componentDidMount() { }
+    renderEmailInformation = (dataLength) =>  ({ item, index }) =>
+        (<UserEmailInformation
+            emailType={item.emailType}
+            emailId={item.emailId} />);
+
+    componentDidMount() {
+        if (this.props && this.props.initialState && this.props.initialState.email) {
+            this.setState({
+                profilePrimayMail: this.props.initialState.email
+            })
+        }
+    }
 
     emailAddNew = () => this.props.navigation.navigate('editEmailAddNew');
 
@@ -37,7 +82,7 @@ class editEmailInfoComponent extends Component {
                         </Text>
                         <Text style={[styles.settingsInfo, styles.editLabelBold]}>
                             {globalString.editEmailInformations.editEmailTitle}
-                            </Text>
+                        </Text>
                     </View>
 
                     <View style={styles.settingsView}>
@@ -56,13 +101,16 @@ class editEmailInfoComponent extends Component {
                         <Text style={styles.editEmailPrimary}>
                             {globalString.editEmailInformations.editEmailPrimary}
                         </Text>
-                    </View>
 
-                    <View style={styles.editEmailMargin}>
                         <GInputComponent
-                            placeholder={""}
+                            placeholder={this.state.profilePrimayMail}
                             editable={false} />
                     </View>
+
+                    <FlatList
+                        data={tempPrimaryMailData}
+                        keyExtractor={this.generateKeyExtractor}
+                        renderItem={this.renderEmailInformation(tempPrimaryMailData.length)} />
 
                     <View style={styles.editEmailInformations}>
                         <Text style={styles.editEmailInfoView}>

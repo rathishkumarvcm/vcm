@@ -24,6 +24,7 @@ class editAddressAddNewComponent extends Component {
             touchIdEnrolled: false,
             radioButton: false,
             radioButtonIndex: 0,
+            
             validationAddressOne: true,
             addressOne: '',
             isZipCodeValid: true,
@@ -35,7 +36,6 @@ class editAddressAddNewComponent extends Component {
     }
 
     componentDidMount() {
-        console.log("Add New Address", this.props);
         if (this.props && this.props.profileState && this.props.profileState.profileUserCity){
             this.setState({
                 userCity: this.props.profileState.profileUserCity
@@ -111,8 +111,6 @@ class editAddressAddNewComponent extends Component {
             "city": this.state.userCity,
             "state": this.state.userState
         };
-
-        console.log("Add New Address", JSON.stringify(addNewAddressPayload));
 
         this.props.navigation.navigate('editAddressSettings')
     }

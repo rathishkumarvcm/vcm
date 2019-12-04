@@ -67,15 +67,15 @@ import InvestmentPlanInfo from './Screens/InvestmentPlanInfo';
 // Done By 806048
 
 import EditProfileSettings from './Screens/EditProfileSettings/';
-import EditAddressSettings from './Screens/EditAddressInformation/EditAddressInfoComponent';
+import EditAddressSettings from './Screens/EditAddressInformation/';
 import EditAddressAddNew from './Screens/EditAddressAddNew/';
-import EditPhoneInformation from './Screens/EditPhoneInformations/EditPhoneInfoComponent';
-import EditEmailInformation from './Screens/EditEmailInformation/EditEmailInfoComponent';
-import EditEmailAddNew from './Screens/EditEmailInfoAddNew/EditEmailAddNewComponent';
-import EditAddFinancialInfo from './Screens/EditAddFinancialInformation/EditAddFinancialInfoComponent';
-import EditAddPhoneNumber from './Screens/EditAddNewPhoneNumber/EditAddPhoneNumberComponent';
-import EditMilitaryInfo from './Screens/EditMilitaryInformation/EditMilitaryInfoComponent';
-import EditOccupationInfo from './Screens/EditOccupationInformation/EditOccupationInfoComponent';
+import EditPhoneInformation from './Screens/EditPhoneInformations/';
+import EditEmailInformation from './Screens/EditEmailInformation/';
+import EditEmailAddNew from './Screens/EditEmailInfoAddNew/';
+import EditAddFinancialInfo from './Screens/EditAddFinancialInformation/';
+import EditAddPhoneNumber from './Screens/EditAddNewPhoneNumber/';
+import EditMilitaryInfo from './Screens/EditMilitaryInformation/';
+import EditOccupationInfo from './Screens/EditOccupationInformation/';
 import ModifySecurityQues from './Screens/ModifySecurityQues';
 import ChangeSignInMethod from './Screens/ChangeSignInMethod/ChangeSignInMethodComponent';
 import CSMSoftTokenComponent from './Screens/CSMSoftToken/CSMSoftTokenComponent';
