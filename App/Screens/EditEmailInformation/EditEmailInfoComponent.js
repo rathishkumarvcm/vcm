@@ -19,15 +19,21 @@ const tempPrimaryMailData = [
 
 const UserEmailInformation = (props) => {
     return (
-        <View style={{ width: '92%', marginLeft: '4%', marginRight: '4%', backgroundColor: '#fff',  flexGrow: 1, marginTop: scaledHeight(5) }}>
-            <View style={{ flexDirection: 'row', flexGrow: 1, flexWrap: 'wrap', marginVertical: scaledHeight(10.5) }} >
-                <Text>
-                    {props.emailType}
-                </Text>
-            </View>
-            <Text>
+        <View style={styles.editEmailHolder}>
+            <Text style={styles.editEmailType}>
+                {props.emailType}
+            </Text>
+            <Text style={styles.editEmailId}>
                 {props.emailId}
             </Text>
+
+            <View style={styles.editEmailBorder}></View>
+
+            <View style={styles.editEmailPrimaryContent}>
+                <Text style={styles.editEmailId}>
+                    {globalString.profileSettingsPage.profileMailPrimaryLabel}
+                </Text>
+            </View>
         </View>
     );
 };
@@ -51,7 +57,7 @@ class editEmailInfoComponent extends Component {
         };
     }
 
-    renderEmailInformation = (dataLength) =>  ({ item, index }) =>
+    renderEmailInformation = (dataLength) => ({ item, index }) =>
         (<UserEmailInformation
             emailType={item.emailType}
             emailId={item.emailId} />);
@@ -97,22 +103,12 @@ class editEmailInfoComponent extends Component {
 
                     <View style={styles.settingsBorder}></View>
 
-                    <View>
-                        <Text style={styles.editEmailPrimary}>
-                            {globalString.editEmailInformations.editEmailPrimary}
-                        </Text>
-
-                        <GInputComponent
-                            placeholder={this.state.profilePrimayMail}
-                            editable={false} />
-                    </View>
-
                     <FlatList
                         data={tempPrimaryMailData}
                         keyExtractor={this.generateKeyExtractor}
                         renderItem={this.renderEmailInformation(tempPrimaryMailData.length)} />
 
-                    <View style={styles.editEmailInformations}>
+                    {/* <View style={styles.editEmailInformations}>
                         <Text style={styles.editEmailInfoView}>
                             {globalString.editEmailInformations.editEmailInfoOne}
                         </Text>
@@ -122,21 +118,14 @@ class editEmailInfoComponent extends Component {
                         <Text style={styles.editEmailInfoView}>
                             {globalString.editEmailInformations.editEmailInfoTwo}
                         </Text>
-                    </View>
+                    </View> */}
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
                             buttonStyle={styles.cancelButtonStyle}
-                            buttonText={globalString.common.cancel}
+                            buttonText={globalString.common.back}
                             textStyle={styles.cancelButtonText}
                             onPress={this.emailAddNewOnCancel} />
-                    </View>
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <GButtonComponent
-                            buttonStyle={styles.saveButtonStyle}
-                            buttonText={globalString.common.save}
-                            textStyle={styles.saveButtonText} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
