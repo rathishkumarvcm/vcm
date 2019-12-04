@@ -226,14 +226,9 @@ class OpenAccPageThreeComponent extends Component {
             totalInitialInvestment: "",
             action: "",
             selectedFundInvestmentsData: [],
-            /* "fundNumber":"123", 
-            "fundName":"Fund1",
-            "fundingOption":"Initial",
-            "initialInvestment":"3000",
-            "monthlyInvestment":"ss",
-            "startDate":"ss",
-            "action":"add"
-            */
+           
+// Filters
+            isFilterApplied:false,
             modalVisible: false,
             filtermindata: [...filtermindata.map(v => ({ ...v, isActive: false }))],
             filterriskdata: [...filterriskdata.map(v => ({ ...v, isActive: false }))],
@@ -387,15 +382,21 @@ class OpenAccPageThreeComponent extends Component {
         this.props.getCompositeLookUpData(payload);
     }
     componentDidUpdate(prevProps, prevState) {
+
+        
         if (this.props !== prevProps) {
             let tempFundListData = [];
-
             if (this.props.accOpeningData[ActionTypes.GET_FUNDLIST] != undefined && this.props.accOpeningData[ActionTypes.GET_FUNDLIST].Items != null) {
                 tempFundListData = this.props.accOpeningData[ActionTypes.GET_FUNDLIST].Items;
-                if (!prevProps.accOpeningData[ActionTypes.GET_FUNDLIST]) {
-                    tempFundListData = this.props.accOpeningData[ActionTypes.GET_FUNDLIST].Items;
+                if (!prevProps.accOpeningData[ActionTypes.GET_FUNDLIST] && this.state.isFilterApplied == false) {
                     this.setState({
                         fundList: [...tempFundListData.map(v => ({ ...v, isActive: false }))],
+                        isFilterApplied:false
+                    });
+                }else{
+                    this.setState({
+                        fundList: [...tempFundListData.map(v => ({ ...v, isActive: false }))],
+                        isFilterApplied:false
                     });
                 }
             }
@@ -430,6 +431,7 @@ class OpenAccPageThreeComponent extends Component {
                 }
             }
         }
+
     }
 
 
@@ -596,6 +598,7 @@ class OpenAccPageThreeComponent extends Component {
             fundList: newItems,
             selectedFundInvestmentsData: newSelectedData,
             selectedCount: this.getSelectedItems().length
+
         });
 
 
@@ -933,7 +936,7 @@ class OpenAccPageThreeComponent extends Component {
 
     // Apply Filter Actions  
     applyFilterAction = (visible) => () => {
-        this.setState({ modalVisible: visible, applyFilterState: true });
+        this.setState({ modalVisible: visible, applyFilterState: true,isFilterApplied :true });
 
         var mininvestkey = "";
         this.state.filtermindata.map((item) => {
