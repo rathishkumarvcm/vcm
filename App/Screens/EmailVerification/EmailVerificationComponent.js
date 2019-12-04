@@ -49,7 +49,8 @@ class EmailVerificationComponent extends Component {
 
     resendOTP = () => {
         let username = this.state.name;
-
+        let registerSelfData = this.props.navigation.getParam('passwordData');
+        
         Auth.resendSignUp(registerSelfData.emailID).then(() => {
             console.log('code resent successfully');
         }).catch(e => {
