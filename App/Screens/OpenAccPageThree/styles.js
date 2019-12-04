@@ -183,7 +183,34 @@ export const styles = StyleSheet.create({
        
     },
 
-
+    radioBtnGrp:{
+        flexGrow:1,
+        marginTop:scaledHeight(19),
+        flexDirection:'row'
+    },
+    radioBtnGrp:{
+        flexGrow:1,
+        marginTop:scaledHeight(19),
+        flexDirection:'row'
+    },
+    radioBtnColGrp:{
+        flexGrow:1,
+        marginTop:scaledHeight(19)
+    },
+    lblRadioBtnTxt:{
+        color:'#333333DE',
+        fontSize:scaledHeight(16),
+        lineHeight:28,
+        flexWrap:'wrap'
+    },
+    lblRadioDescTxt:{
+        marginTop:scaledHeight(14),
+        color:'#333333DE',
+        fontSize:scaledHeight(14),
+        lineHeight:22,
+        flexWrap:'wrap',
+        opacity:.75
+    },
 
 
     filterFundsBtn: {

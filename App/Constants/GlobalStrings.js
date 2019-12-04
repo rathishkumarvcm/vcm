@@ -45,7 +45,8 @@ export default {
         support: "Support",
         copyRights: "Copyright Victory Capital Management Inc. ©2020",
         validPincode: "Enter Valid 6 Digit Pin",
-        dollar:"$"
+        dollar:"$",
+        validate:"Validate"
     },
     login: {
         imageRequest: "imageRequest",
@@ -100,6 +101,9 @@ export default {
 
         initInvestment: 10,
         monthlyInvestment: 10,
+        accountNumber:15,
+        transitRoutingNumber:15,
+        common:250
 
 
     },
@@ -301,7 +305,15 @@ export default {
         fundType:"Fund Type",
         clearFilter:"Clear Filters",
         applyFilter:"Apply Filter",
-
+        addBankAccount: "Add Bank Account",
+        typeOfAccount: "Type of Account",
+        savings: "Savings",
+        checking: "Checking",
+        financialInstitution: "Name of Financial Institution",
+        accountOwner: "Name of Accouner Owner",
+        transitRoutingNo: "Transit Routing Number",
+        accountNumber: "Account Number",
+        specimen: "Specimen",
 
         backtInvestmentSelection: "Back to Investment Selection",
         summary: "Summary",
@@ -481,6 +493,11 @@ export default {
         emptyFundOptionsMsg: "Please select a funding options",
         emptyInitInvestmentMsg: "Please enter a initial investment value",
         minInitInvestmentMsg: " Initial investment value should me minimum of $ 3000",
+       
+        emptyFinancialInstitution: "Enter Valid Financial Institution",
+        emptyOwnerName: "Enter Valid Owner Name",
+        emptyTransitRoutingNo: "Enter Valid Transit Routing Number",
+        emptyAccountNumber: "Enter Valid Account Number",
 
         invalidInitInvestmentMsg: "‘Please enter a valid initial investment  value",
         emptyMonthlyInvestmentMsg: "‘Please enter a monthly investment value",
