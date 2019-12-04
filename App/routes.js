@@ -103,6 +103,8 @@ import TAmmendComponent from './Screens/TAmmend/TAmmendComponent';
 import AccountServicesComponent from './Screens/AccountServices';
 import DividentsAndCapitalGainsPrefComponent from './Screens/Dividents';
 import CheckBookComponent from './Screens/OrderCheckBook';
+import BankAccountsComponent from './Screens/BankAccounts';
+import AddBankAccountComponent from './Screens/AddBankAccount';
 
 //Systematic Withdrawal plan
 import systematicWithdrawal from './Screens/SystematicWithdrawalPlan';
@@ -704,6 +706,18 @@ const AppNavigator = createStackNavigator({
             navigationOptions:{
                 header:null,
             }  
+        },
+        bankAccount: {
+            screen: BankAccountsComponent,
+            navigationOptions: {
+                header: null,
+            }
+        },
+        addBankAccount: {
+            screen: AddBankAccountComponent,
+            navigationOptions: {
+                header: null,
+            }
         }
     },{
         initialRouteName: 'login'

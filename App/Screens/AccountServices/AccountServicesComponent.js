@@ -19,6 +19,8 @@ class AccountServicesComponent extends Component {
 
     navigateOrderCheckBook = () => this.props.navigation.navigate('orderCheckBook')
 
+    navigateBankAccount = () => this.props.navigation.navigate('bankAccount')
+
     render() {
         return (
             <View style={styles.container}>
@@ -33,26 +35,28 @@ class AccountServicesComponent extends Component {
 
                     <View style={styles.linkBreak1} />
 
-                    <View style={styles.optionContainer}>
-                        <View style={styles.optionIcon}>
-                            <GIcon
-                                name="view-grid"
-                                type="material-community"
-                                size={30}
-                                color="black"
-                            />
+                    <TouchableOpacity onPress={this.navigateBankAccount}>
+                        <View style={styles.optionContainer}>
+                            <View style={styles.optionIcon}>
+                                <GIcon
+                                    name="view-grid"
+                                    type="material-community"
+                                    size={30}
+                                    color="black"
+                                />
 
-                            <Text style={styles.optionHeaderText}>
-                                {gblStrings.accountServices.bank_accounts}
-                            </Text>
-                        </View>
+                                <Text style={styles.optionHeaderText}>
+                                    {gblStrings.accountServices.bank_accounts}
+                                </Text>
+                            </View>
 
-                        <View style={styles.optionSubHeaderView}>
-                            <Text style={styles.optionSubHeaderText}>
-                                {gblStrings.userManagement.loremSecurityPref}
-                            </Text>
+                            <View style={styles.optionSubHeaderView}>
+                                <Text style={styles.optionSubHeaderText}>
+                                    {gblStrings.userManagement.loremSecurityPref}
+                                </Text>
+                            </View>
                         </View>
-                    </View>
+                    </TouchableOpacity>
 
                     <View style={styles.optionContainer}>
                         <View style={styles.optionIcon}>

@@ -1018,5 +1018,21 @@ export default {
         accountOwnerError: "Enter Valid Owner Name",
         accountTransitError: "Enter Valid Transit Routing Number",
         accountValidNumber: "Enter Valid Account Number"
+    },
+    bankAccounts: {
+        bank_account_header: 'Bank Accounts',
+        current_bank_accounts: 'Current Bank Accounts',
+        lorem_bank_account: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        account_number: 'Account Number',
+        transit_routing_number: 'Transit Routing Number',
+        date_added: 'Date added',
+        add: 'Add'
+    },
+    addPopularBankAccount: {
+        add_bank_account: 'Add Bank Account',
+        add_popular_bank_account: 'Add your account by choosing from the popular banks below.',
+        popular_account: 'Popular Account',
+        instruction_add_account: 'Instruction to Add an Account for Funds Transfer',
     }
+
 };

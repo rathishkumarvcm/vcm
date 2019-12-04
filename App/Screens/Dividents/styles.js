@@ -173,7 +173,7 @@ export const styles = StyleSheet.create({
         color: '#54565B',
         marginRight: '4%',
         flex:0.8,
-        alignSelf: 'center', borderWidth: 1
+        alignSelf: 'center'
     },
     submitButtonText: {
         fontSize: scaledHeight(16),
@@ -302,7 +302,6 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         flex: 1,
-         borderWidth: 1
     },
     setupInstructionText: {
         color: '#54565B', 
