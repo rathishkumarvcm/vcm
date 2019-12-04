@@ -32,10 +32,10 @@ class EmailVerificationComponent extends Component {
         let username = this.state.name;
         let code = this.state.code; 
         let registerSelfData = this.props.navigation.getParam('passwordData');
-        console.log("-----username-----",username,code);
+        console.log("-----username-----",registerSelfData,code);
 
 
-        Auth.confirmSignUp(registerSelfData.username, code, {
+        Auth.confirmSignUp(registerSelfData.emailID, code, {
             // Optional. Force user confirmation irrespective of existing alias. By default set to True.
             forceAliasCreation: true    
         }).then(data => { alert("verified OTP");
@@ -50,7 +50,7 @@ class EmailVerificationComponent extends Component {
     resendOTP = () => {
         let username = this.state.name;
 
-        Auth.resendSignUp(registerSelfData.username).then(() => {
+        Auth.resendSignUp(registerSelfData.emailID).then(() => {
             console.log('code resent successfully');
         }).catch(e => {
             console.log(e);

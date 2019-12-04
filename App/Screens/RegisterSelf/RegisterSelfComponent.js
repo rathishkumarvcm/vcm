@@ -35,25 +35,29 @@ class RegisterSelfComponent extends Component {
 
     setFirstName = text => {
         this.setState({
-            firstName : text
+            firstName : text,
+            firstNameFlag : true
         });
     }
 
     setMiddleName = text => {
         this.setState({
-            middleName : text
+            middleName : text,
+            middleNameFlag : true
         });
     }
 
     setLastName = text => {
         this.setState({
-            lastName : text
+            lastName : text,
+            lastNameFlag : true
         });
     }
 
     setPhone = text => {
         this.setState({
-            phone : text
+            phone : text, 
+            phoneFlag : true
         });
     }
 
