@@ -14,7 +14,7 @@ class ProfileSettingsComponent extends Component {
             faceIdEnrolled: false,
             touchIdEnrolled: false,
             show: false,
-            
+
             // Profile Information
             profileName: '',
             profilePrefix: '',
@@ -222,6 +222,37 @@ class ProfileSettingsComponent extends Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props !== prevProps) {
+            if (this.props && this.props.profileState) {
+                this.setState({
+                    profilePrefix: this.props.profileState.profilePrefix,
+                    profileSuffix: this.props.profileState.profileSuffix,
+                    profileVcmID: this.props.profileState.profileVcmID,
+                    profileSsnNumber: this.props.profileState.profileSsnNumber,
+                    profileDob: this.props.profileState.profileDob,
+                    profileGender: this.props.profileState.profileGender,
+                    profileMaritalStatus: this.props.profileState.profileMaritalStatus,
+                    profileCitizenship: this.props.profileState.profileCitizenship,
+                    profileMailingAddress: this.props.profileState.profileMailingAddress,
+                    profilePhysicalAddress: this.props.profileState.profilePhysicalAddress,
+                    profilePrimaryMobile: this.props.profileState.profilePrimaryMobile,
+                    profileAnnualIncome: this.props.profileState.profileAnnualIncome,
+                    profileTaxBracket: this.props.profileState.profileTaxBracket,
+                    profileNetWorth: this.props.profileState.profileNetWorth,
+                    profileTaxFilling: this.props.profileState.profileTaxFilling,
+                    profileEmploymentStatus: this.props.profileState.profileEmploymentStatus,
+                    profileEmpIndustry: this.props.profileState.profileEmpIndustry,
+                    profileEmpOccupation: this.props.profileState.profileEmpOccupation,
+                    profileRelationToOwner: this.props.profileState.profileRelationToOwner,
+                    profileRelationGender: this.props.profileState.profileRelationGender,
+                    profileRelationMail: this.props.profileState.profileRelationMail,
+                    profileRelationMarital: this.props.profileState.profileRelationMarital,
+                })
+            }
+        }
+    }
+
     profileSettingPersonalManage = () => this.props.navigation.navigate('editProfileSettings');
 
     profileSettingAddressManage = () => this.props.navigation.navigate('editAddressSettings');
@@ -243,6 +274,7 @@ class ProfileSettingsComponent extends Component {
     profileSettingFamilyManage = () => this.props.navigation.navigate('editFamilyMemberInfo');
 
     render() {
+        console.log("Profile On Back ", this.props);
         return (
             <View style={styles.container}>
                 <GHeaderComponent

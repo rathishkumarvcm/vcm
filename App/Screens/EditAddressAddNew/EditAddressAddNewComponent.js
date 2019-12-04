@@ -34,7 +34,20 @@ class editAddressAddNewComponent extends Component {
         };
     }
 
-    componentDidMount() { }
+    componentDidMount() {
+        console.log("Add New Address", this.props);
+        if (this.props && this.props.profileState && this.props.profileState.profileUserCity){
+            this.setState({
+                userCity: this.props.profileState.profileUserCity
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileUserState){
+            this.setState({
+                userState: this.props.profileState.profileUserState
+            })
+        }
+    }
 
     radioButtonClicked = (index) => {
         if (index !== this.state.radioButtonIndex) {
@@ -207,7 +220,7 @@ class editAddressAddNewComponent extends Component {
                                 {globalString.addAddressInfo.cityLabel}
                             </Text>
                             <Text style={styles.editAddressCityValue}>
-                                {"Chicago"}
+                                {this.state.userCity}
                             </Text>
                         </View>
 
@@ -216,7 +229,7 @@ class editAddressAddNewComponent extends Component {
                                 {globalString.addAddressInfo.stateLabel}
                             </Text>
                             <Text style={styles.editAddressCityValue}>
-                                {"San Diago"}
+                                {this.state.userState}
                             </Text>
                         </View>
 

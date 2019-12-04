@@ -68,7 +68,7 @@ import InvestmentPlanInfo from './Screens/InvestmentPlanInfo';
 
 import EditProfileSettings from './Screens/EditProfileSettings/';
 import EditAddressSettings from './Screens/EditAddressInformation/EditAddressInfoComponent';
-import EditAddressAddNew from './Screens/EditAddressAddNew/EditAddressAddNewComponent';
+import EditAddressAddNew from './Screens/EditAddressAddNew/';
 import EditPhoneInformation from './Screens/EditPhoneInformations/EditPhoneInfoComponent';
 import EditEmailInformation from './Screens/EditEmailInformation/EditEmailInfoComponent';
 import EditEmailAddNew from './Screens/EditEmailInfoAddNew/EditEmailAddNewComponent';

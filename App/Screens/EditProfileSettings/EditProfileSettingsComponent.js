@@ -296,7 +296,6 @@ class editProfileSettingsComponent extends Component {
                 "profileGender": this.state.dropDownGenderValue,
                 "profileMaritalStatus": this.state.dropDownStatusValue
             }
-            console.log("Profile", JSON.stringify(profilePayload));
         }
         return profilePayload;
     }
