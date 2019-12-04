@@ -491,7 +491,7 @@ const AppNavigator = createStackNavigator({
                 header: null,
             }
         },
-        SecurityPreference:
+        securityPreference:
         {
             screen: SecurityPreference,
             navigationOptions: {
