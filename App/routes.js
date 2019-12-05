@@ -120,6 +120,7 @@ import automaticInvestmentAdd from './Screens/AutomaticInvestmentPlanAdd';
 import automaticInvestmentSchedule from './Screens/AutomaticInvestmentPlanSchedule';
 import automaticInvestmentVerify from './Screens/AutomaticInvestmentPlanVerify';
 import automaticInvestmentEsign from './Screens/AutomaticInvestmentPlanEsign';
+import ImageUpload from './Screens/First';
 
 const AppNavigator = createStackNavigator({
         login: {
@@ -715,6 +716,12 @@ const AppNavigator = createStackNavigator({
         },
         addBankAccount: {
             screen: AddBankAccountComponent,
+            navigationOptions: {
+                header: null,
+            }
+        },
+        imageUpload: {
+            screen: ImageUpload,
             navigationOptions: {
                 header: null,
             }
