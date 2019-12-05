@@ -60,6 +60,21 @@ export const GFooterComponent = props => (
                                 resizeMode="contain"
                                 source={require("../Images/linkedin.png")} />
                         </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Image style={{ width: scaledHeight(40), height: scaledHeight(33), alignItems: 'flex-start', marginLeft: scaledHeight(30), marginTop: scaledHeight(30), }}
+                                resizeMode="contain"
+                                source={require("../Images/youtube.png")} />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Image style={{ width: scaledHeight(40), height: scaledHeight(33), alignItems: 'flex-start', marginLeft: scaledHeight(30), marginTop: scaledHeight(30), }}
+                                resizeMode="contain"
+                                source={require("../Images/facebook.png")} />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Image style={{ width: scaledHeight(40), height: scaledHeight(33), alignItems: 'flex-start', marginLeft: scaledHeight(30), marginTop: scaledHeight(30), }}
+                                resizeMode="contain"
+                                source={require("../Images/insta.png")} />
+                        </TouchableOpacity>
                     </View>
         <View style={styles.privacyAgreement}>
             <Text style={styles.privacyText}>
