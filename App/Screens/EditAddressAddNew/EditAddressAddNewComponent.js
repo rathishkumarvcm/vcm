@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GLoadingSpinner } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 import * as reGex from '../../Constants/RegexConstants';
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 const profileAddNewAddress = [
     { index1: 0, question: "U.S. or U.S. Territories" },
@@ -24,7 +25,7 @@ class editAddressAddNewComponent extends Component {
             touchIdEnrolled: false,
             radioButton: false,
             radioButtonIndex: 0,
-            
+
             validationAddressOne: true,
             addressOne: '',
             isZipCodeValid: true,
@@ -36,13 +37,13 @@ class editAddressAddNewComponent extends Component {
     }
 
     componentDidMount() {
-        if (this.props && this.props.profileState && this.props.profileState.profileUserCity){
+        if (this.props && this.props.profileState && this.props.profileState.profileUserCity) {
             this.setState({
                 userCity: this.props.profileState.profileUserCity
             })
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.profileUserState){
+        if (this.props && this.props.profileState && this.props.profileState.profileUserState) {
             this.setState({
                 userState: this.props.profileState.profileUserState
             })
@@ -95,8 +96,8 @@ class editAddressAddNewComponent extends Component {
 
                 if (this.state.addressOne != "" &&
                     this.state.zipCodeValue != "") {
-                        this.addNewAddress();
-                    
+                    this.addNewAddress();
+
                 }
                 break;
         }
@@ -115,12 +116,28 @@ class editAddressAddNewComponent extends Component {
         this.props.navigation.navigate('editAddressSettings')
     }
 
+    validateZipCodeValue = () => {
+        const payload = {
+            'Zip': this.state.zipCodeValue
+        };
+        this.props.getStateCity(payload);
+    }
+
     editAddressAddNewOnCancel = () => this.props.navigation.navigate('editAddressSettings');
 
     render() {
+        var {
+            City = "",
+            State = ""
+        } = (this.props
+            && this.props.stateCityData
+            && this.props.stateCityData[ActionTypes.GET_STATECITY]) ?
+                this.props.stateCityData[ActionTypes.GET_STATECITY] : {};
         return (
-
             <View style={styles.container}>
+                {
+                    this.props.stateCityData.isLoading && <GLoadingSpinner />
+                }
                 <GHeaderComponent
                     navigation={this.props.navigation} />
 
@@ -218,7 +235,7 @@ class editAddressAddNewComponent extends Component {
                                 {globalString.addAddressInfo.cityLabel}
                             </Text>
                             <Text style={styles.editAddressCityValue}>
-                                {this.state.userCity}
+                                {City}
                             </Text>
                         </View>
 
@@ -227,7 +244,7 @@ class editAddressAddNewComponent extends Component {
                                 {globalString.addAddressInfo.stateLabel}
                             </Text>
                             <Text style={styles.editAddressCityValue}>
-                                {this.state.userState}
+                                {State}
                             </Text>
                         </View>
 
@@ -238,7 +255,7 @@ class editAddressAddNewComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.editAddressAddNewOnCancel} />
+                            onPress={this.validateZipCodeValue} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
