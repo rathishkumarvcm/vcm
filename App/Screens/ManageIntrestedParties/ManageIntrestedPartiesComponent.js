@@ -7,6 +7,7 @@ import { zipCodeRegex,emailRegex } from '../../Constants/RegexConstants';
 import { CustomRadio } from '../../AppComponents';
 import PropTypes from "prop-types";
 import { scaledHeight } from '../../Utils/Resolution';
+const nameRegex=/^[a-zA-Z]+$/;
 const dummyData = [
     {
         id: '1',
@@ -81,10 +82,9 @@ class manageIntrestedPartiesComponent extends Component {
                 addrLine1Validation:true,
                 addrLine2Validation:true,
                 zipcodeValidation:true,
-                cityValidation:true,
-                stateValidation:true,
-                documentFrequencyValidation:false,
-                zipCodeValidationMsg: ""
+                zipCodeValidationMsg: "",
+                firstNameValidatingMsg:"",
+                lastNameValidationMsg:""
             },
             
             listIntrestedParties:manageIntrestedPartiesList,
@@ -134,24 +134,15 @@ class manageIntrestedPartiesComponent extends Component {
         }
     }
 
-    validateEmail = (text) => {
-        if(!this.isEmpty(text)){
-            let validate = emailRegex.test(text);
-            this.onUpdateField("personal","emailAddressValidation",validate);
-        }
-    }
-
     validateZipCode = (text) => {
+        console.log("in validate Zip", text);
         //allows only 5 digit or 9 digit format(12345 and 12345-6789)
         if(!this.isEmpty(text)){
             let validate = zipCodeRegex.test(text);
+            console.log("in validate validate", validate);
             this.onUpdateField("personal","zipcodeValidation",validate);
             this.onUpdateField("personal","zipCodeValidationMsg",gblStrings.accManagement.zipCodeFormat);
-            
-            if(validate){
-                this.onUpdateField("personal","zipcodeValidation",validate);
-                this.updateCityState();
-            }
+            this.updateCityState();
         }
     }
 
@@ -191,14 +182,24 @@ class manageIntrestedPartiesComponent extends Component {
             firstName: "",
             middleInitial: "",
             lastName: "",
-            emailAddress: "",
-            company: "",
-            addrLine1: "",
-            addrLine2: "",
-            zipCode: "",
-            state: "",
-            city: "",
-            documentFrequency: ""
+            emailAddress:"",
+            company:"",
+            addrLine1:"",
+            addrLine2:"",
+            zipCode:"",
+            state:"",
+            city:"",
+            documentFrequency:"",
+            documentFrequencyDropDown:false,
+            firstNameValidation:true,
+            lastNameValidation: true,
+            emailAddressValidation:true,
+            addrLine1Validation:true,
+            addrLine2Validation:true,
+            zipcodeValidation:true,
+            zipCodeValidationMsg: "",
+            firstNameValidatingMsg:"",
+            lastNameValidationMsg:""
           },
           isAddNewVisible:false,
           isSavedSuccess:false 
@@ -206,6 +207,7 @@ class manageIntrestedPartiesComponent extends Component {
     }
 
     onClickSave = () => {
+        console.log("Save:::");
         this.setState({isAddNewVisible:false,isSavedSuccess:true});
         let addValue=[],addContent={};
         addContent.title=this.state.personal.firstName+ " " +this.state.personal.lastName;
@@ -221,9 +223,10 @@ class manageIntrestedPartiesComponent extends Component {
         obj.city=this.state.personal.city;
         obj.docFrequency=this.state.personal.documentFrequency;
         arr.push(obj);
-        this.setState({completeData:this.state.completeData.concat(arr)},console.log("Entered Data for Intrested Parties:::",this.state.completeData));
+        console.log(arr);
+        this.setState({completeData:this.state.completeData.concat(arr)});
         
-        this.setState({listIntrestedParties:this.state.listIntrestedParties.concat(addValue)},console.log(this.state.listIntrestedParties));
+        this.setState({listIntrestedParties:this.state.listIntrestedParties.concat(addValue)});
     }
 
     onAddClicked = () => {
@@ -282,22 +285,34 @@ class manageIntrestedPartiesComponent extends Component {
         var errMsg = "";
         var isValidationSuccess = false;
 
-        if (this.state.personal.documentFrequency === '') {
-            this.onUpdateField("personal","documentFrequencyValidation",true);
-        }
-
         if (this.isEmpty(this.state.personal.firstName)) {
             this.onUpdateField("personal","firstNameValidation",false);
+            this.onUpdateField("personal","firstNameValidatingMsg",gblStrings.accManagement.emptyFirstNameMsg);
             errMsg="error";
         }else{
-            this.onUpdateField("personal","firstNameValidation",true);
+            let validate = nameRegex.test(this.state.personal.firstName);
+            this.onUpdateField("personal","firstNameValidation",validate);
+            this.onUpdateField("personal","firstNameValidatingMsg",gblStrings.accManagement.firstNameFormat);
+            if(!validate){ errMsg="error" }
         }
 
         if (this.isEmpty(this.state.personal.lastName)) {
             this.onUpdateField("personal","lastNameValidation",false);
+            this.onUpdateField("personal","lastNameValidationMsg",gblStrings.accManagement.emptyLastNameMsg);
             errMsg="error";
         }else{
-            this.onUpdateField("personal","lastNameValidation",true); 
+            let validate = nameRegex.test(this.state.personal.lastName);
+            this.onUpdateField("personal","lastNameValidation",validate);
+            this.onUpdateField("personal","lastNameValidationMsg",gblStrings.accManagement.lastNameFormat);
+            if(!validate){ errMsg="error" }
+        }
+
+        if (!this.isEmpty(this.state.personal.emailAddress)) {
+            let validate = emailRegex.test(this.state.personal.emailAddress);
+            this.onUpdateField("personal","emailAddressValidation",validate);
+            if(!validate){ errMsg="error" }
+        }else{
+            this.onUpdateField("personal","emailAddressValidation",true); 
         }
 
         if (this.isEmpty(this.state.personal.addrLine1)) {
@@ -319,22 +334,11 @@ class manageIntrestedPartiesComponent extends Component {
             this.onUpdateField("personal","zipCodeValidationMsg",gblStrings.accManagement.emptyZipCodeMsg);
             errMsg="error";
         }else{
-            this.validateZipCode(this.state.personal.zipCode);
-            //this.onUpdateField("personal","zipcodeValidation",true);
-        }
-
-        if (this.isEmpty(this.state.personal.city)) {
-            this.onUpdateField("personal","cityValidation",false);
-            errMsg="error";
-        }else{
-            this.onUpdateField("personal","cityValidation",true);
-        }
-
-        if (this.isEmpty(this.state.personal.state)) {
-            this.onUpdateField("personal","stateValidation",false);
-            errMsg="error";
-        }else{
-            this.onUpdateField("personal","stateValidation",true);
+            let validate = zipCodeRegex.test(this.state.personal.zipCode);
+            this.onUpdateField("personal","zipcodeValidation",validate);
+            this.onUpdateField("personal","zipCodeValidationMsg",gblStrings.accManagement.zipCodeFormat);
+            this.updateCityState();
+            if(!validate){ errMsg="error" }
         }
 
         if(errMsg!="error")
@@ -443,7 +447,7 @@ class manageIntrestedPartiesComponent extends Component {
                     maxLength={gblStrings.maxLength.firstName}
                     onChangeText={this.onChangeText("personal","firstName")}
                     errorFlag={!this.state.personal.firstNameValidation}
-                    errorText={gblStrings.accManagement.emptyFirstNameMsg}
+                    errorText={this.state.personal.firstNameValidatingMsg}
                     onSubmitEditing={this.onSubmitEditing(this.middleInitial)}
                 />
                 <Text style={styles.lblTxt}>
@@ -470,10 +474,9 @@ class manageIntrestedPartiesComponent extends Component {
                     propInputStyle={styles.customTxtBox}
                     placeholder={""}
                     maxLength={gblStrings.maxLength.lastName}
-                    returnKeyType={"done"}
                     onChangeText={this.onChangeText("personal","lastName")}
                     errorFlag={!this.state.personal.lastNameValidation}
-                    errorText={gblStrings.accManagement.emptyLastNameMsg}
+                    errorText={this.state.personal.lastNameValidationMsg}
                     onSubmitEditing={this.onSubmitEditing(this.emailAddress)}
                 />
                 <Text style={styles.lblTxt}>
@@ -491,7 +494,6 @@ class manageIntrestedPartiesComponent extends Component {
                     keyboardType="email-address"
                     maxLength={gblStrings.maxLength.emailID}
                     onChangeText={this.onChangeText("personal","emailAddress")}
-                    onBlur={this.validateEmail}
                     errorFlag={!this.state.personal.emailAddressValidation}
                     errorText={gblStrings.accManagement.emailformat}
                     onSubmitEditing={this.onSubmitEditing(this.company)}
@@ -552,10 +554,7 @@ class manageIntrestedPartiesComponent extends Component {
                             propInputStyle={styles.customTxtBox}
                             placeholder={gblStrings.accManagement.enterCity}
                             value={this.state.personal.city}
-                            maxLength={gblStrings.maxLength.city}
-                            onChangeText={this.onChangeText("personal","city")}
-                            errorFlag={!this.state.personal.cityValidation}
-                            errorText={gblStrings.accManagement.emptyCityMsg}
+                            editable={false}
                         />
                     </View>
                     <View style={styles.customCityStateView}>
@@ -563,10 +562,7 @@ class manageIntrestedPartiesComponent extends Component {
                             propInputStyle={styles.customTxtBox}
                             placeholder={gblStrings.accManagement.enterState}
                             value={this.state.personal.state}
-                            maxLength={gblStrings.maxLength.state}
-                            onChangeText={this.onChangeText("personal","state")}
-                            errorFlag={!this.state.personal.stateValidation}
-                            errorText={gblStrings.accManagement.emptyStateMsg}
+                            editable={false}
                         />
                     </View>
                 </View>
@@ -577,8 +573,8 @@ class manageIntrestedPartiesComponent extends Component {
                 <Text style={[styles.lblLargeTxt]}>{gblStrings.accManagement.desiredFormatDelivaryDocs}</Text>
                 {this.renderRadio("selectedProspectusReportsRef", 36, { marginBottom: scaledHeight(0), marginTop: scaledHeight(20) }, styles.radioBtnColGrp)}
                 
-                 <Text style={styles.lblTxt}>{gblStrings.accManagement.selectDocumentType}</Text>
-                 {<this.documentTypeCheck/>}
+                 {/* <Text style={styles.lblTxt}>{gblStrings.accManagement.selectDocumentType}</Text>
+                 {<this.documentTypeCheck/>} */}
 
                 <GDropDownComponent 
                     dropDownName={gblStrings.accManagement.selectDocumentFrequency}
@@ -589,11 +585,7 @@ class manageIntrestedPartiesComponent extends Component {
                     dropDownValue={this.state.personal.documentFrequency}
                     itemToDisplay={'title'}
                     selectedDropDownValue={this.selectedDropDownValue}
-                    errorFlag={this.state.personal.documentFrequencyValidation}
-                    errorText={gblStrings.accManagement.emptyDocumentFrequencyMsg}
                 />
-                
-                
                 <Text style={styles.lblTxt}>{gblStrings.accManagement.selectDocuemntDeleveryFormat}</Text>
                 {this.state.documentDeliveryFormat.map((item,index) =>
                     (<GCheckBoxComponent 

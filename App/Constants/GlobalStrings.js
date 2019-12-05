@@ -65,7 +65,7 @@ export default {
         martialStatus: 10,
         emailID: 30,
         ssnNo: 9,
-
+        company:30,
 
 
         address: 60,
@@ -156,7 +156,8 @@ export default {
         pleaseProvideCorrectAdd:"Please provide full address. If you do not know the address, please remove and submit without address",
         emptyDistributionMsg:"Please Enter Distribution %",
         distributionValidationExceed:"Distribution should not exceed 100",
-
+        firstNameFormat:"Please Enter Valid First Name",
+        lastNameFormat:"Please Enter Valid Last Name",
 
         //manageIntrestedParties
         manageIntrestedParties: "Manage Interested Parties",

@@ -13,9 +13,11 @@ import gblStrings from '../../Constants/GlobalStrings';
 import {zipCodeRegex} from '../../Constants/RegexConstants';
 import PropTypes from 'prop-types';
 import { scaledHeight } from '../../Utils/Resolution';
-
-const ssnRegex = /^\d{3}-\d{2}-\d{4}$/;
-const phoneRegex = /^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
+const maskSSNRegex=/(?=\d{5})\d/;
+const nameRegex=/^[a-zA-Z]+$/;
+const ssnRegex = /@"^\d{9}$"/;
+const phoneRegex = /@"^\d{10}$"/;
+//const phoneRegex = /^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$/;
 const monthData=[
     { "key": "key1", "title": "Jan" },
     { "key": "key2", "title": "Feb" },
@@ -198,6 +200,9 @@ class ManageBenificiariesComponent extends Component {
       account_Type:"",
       contingentData:[],
       manageBeneficiaries: MultipleAccountData,
+      primary:{
+        distribution:'100'
+      },
       //contingent Beneficiary fields
       contingent: {
         nameDob: '',
@@ -219,7 +224,9 @@ class ManageBenificiariesComponent extends Component {
         year: '',
         totalDistribution: "",
         firstNameValidation: true,
+        firstNameValiMsg:'',
         lastNameValidation: true,
+        lastNameValiMsg:'',
         suffixValidation: true,
         ssnValidation: true,
         addrLine1Validation: true,
@@ -241,7 +248,9 @@ class ManageBenificiariesComponent extends Component {
         dropDownRelationFlag: false,
         dropDownSuffixMsg: '',
         dropDownRelationMsg: '',
-        ssnValidationMsg:''
+        ssnValidationMsg:'',
+        dropDownDobFlag:false,
+        dropDownDobMsg:''
       },
     };
   }
@@ -379,6 +388,8 @@ class ManageBenificiariesComponent extends Component {
 
   onClickSave=()=>{
     let arr=[],obj={};
+    let ssnData=this.state.contingent.ssn;
+    let maskedData=ssnData.replace(r,maskSSNRegex);
         obj.name=this.state.contingent.firstName+" "+this.state.contingent.middleInitial+" "+this.state.contingent.lastName;
         obj.suffix=this.state.contingent.suffix;
         obj.relationToOwner=this.state.contingent.relationToOwner;
@@ -473,27 +484,49 @@ class ManageBenificiariesComponent extends Component {
     var errMsg = '';
     var isValidationSuccess = false;
 
+    let fullDate=this.state.contingent.date +"/" +this.state.contingent.month +"/"+this.state.contingent.year;
+    console.log(fullDate,":::dateofBirth");
+
+     if (!this.state.contingent.date === '' || !this.state.contingent.month===''||!this.state.contingent.year==='') {
+       let d=new Date(); 
+        var date = d.getDate();
+        var month = d.getMonth() + 1;
+        var year = d.getFullYear();
+        var dateStr = date + "/" + month + "/" + year;
+        if(dateStr===fullDate){
+          this.onUpdateField("contingent","dropDownDobFlag",true);
+          this.onUpdateField('contingent',"dropDownDobMsg","Please enter the valid Date of Birth");
+        }
+    }
+
     if (this.isEmpty(this.state.contingent.firstName)) {
       this.onUpdateField('contingent', 'firstNameValidation', false);
+      this.onUpdateField('contingent',"firstNameValiMsg",gblStrings.accManagement.emptyFirstNameMsg);
       errMsg = 'error';
     } else {
-      this.onUpdateField('contingent', 'firstNameValidation', true);
+      let validate = nameRegex.test(this.state.contingent.firstName);
+      this.onUpdateField("contingent","firstNameValidation",validate);
+      this.onUpdateField("contingent","firstNameValiMsg",gblStrings.accManagement.firstNameFormat);
+      if(!validate){ errMsg="error" }
     }
 
     if (this.isEmpty(this.state.contingent.lastName)) {
       this.onUpdateField('contingent', 'lastNameValidation', false);
       errMsg = 'error';
     } else {
-      this.onUpdateField('contingent', 'lastNameValidation', true);
+      let validate = nameRegex.test(this.state.contingent.lastName);
+      this.onUpdateField("contingent","lastNameValidation",validate);
+      this.onUpdateField("contingent","lastNameValiMsg",gblStrings.accManagement.lastNameFormat);
+      if(!validate){ errMsg="error" }
     }
 
-    if (this.isEmpty(this.state.contingent.ssn)) {
-      this.onUpdateField('contingent', 'ssnValidation', false);
-      this.onUpdateField('contingent', "ssnValidation", gblStrings.accManagement.emptySSNMsg);
+    if (!this.isEmpty(this.state.contingent.ssn)) {
+      let validate = ssnRegex.test(this.state.contingent.ssn);
+      this.onUpdateField("contingent","ssnValidation",validate);
+      this.onUpdateField("contingent","ssnValidationMsg",gblStrings.accManagement.ssnNoFormat);
       errMsg = 'error';
     } else {
-      this.validateSsn(this.state.contingent.ssn);
-     // this.onUpdateField('contingent', 'ssnValidation', true);
+      this.onUpdateField('contingent', 'ssnValidation', true);
     }
 
     if (this.isEmpty(this.state.contingent.addrLine1)) {
@@ -515,8 +548,11 @@ class ManageBenificiariesComponent extends Component {
       this.onUpdateField('contingent', "zipCodeFormatMsg", gblStrings.accManagement.emptyZipCodeMsg);
       errMsg = 'error';
     } else {
-      this.validateZip(this.state.contingent.zipCode);
-      //this.onUpdateField('contingent', 'zipCodeValidation', true);
+      let validate = zipCodeRegex.test(this.state.contingent.zipCode);
+      this.onUpdateField("contingent","zipCodeValidation",validate);
+      this.onUpdateField("contingent","zipCodeFormatMsg",gblStrings.accManagement.zipCodeFormat);
+      this.updateCityState();
+      if(!validate){ errMsg="error" }
     }
 
     if (this.isEmpty(this.state.contingent.workTelephone)) {
@@ -524,23 +560,12 @@ class ManageBenificiariesComponent extends Component {
       this.onUpdateField('contingent', "phoneFormatMessage", gblStrings.accManagement.emptyWorkPhoneNoMsg);
       errMsg = 'error';
     } else {
-      this.validateWorkPhone(this.state.contingent.workTelephone);
-      //this.onUpdateField('contingent', 'workTelephoneValidation', true);
+      let validate = phoneRegex.test(this.state.contingent.workTelephone);
+      this.onUpdateField("contingent","workTelephoneValidation",validate);
+      this.onUpdateField("contingent","phoneFormatMessage",gblStrings.accManagement.phoneNoFormat);
+      if(!validate){ errMsg="error" }
     }
 
-    if (this.isEmpty(this.state.contingent.city)) {
-      this.onUpdateField('contingent', 'cityValidation', false);
-      errMsg = 'error';
-    } else {
-      this.onUpdateField('contingent', 'cityValidation', true);
-    }
-
-    if (this.isEmpty(this.state.contingent.stateValue)) {
-      this.onUpdateField('contingent', 'stateValidation', false);
-      errMsg = 'error';
-    } else {
-      this.onUpdateField('contingent', 'stateValidation', true);
-    }
     if (this.isEmpty(this.state.contingent.distribution)) {
       this.onUpdateField('contingent', 'distributionError', gblStrings.accManagement.emptyDistributionMsg);
       this.onUpdateField('contingent', 'distributionValidation', false);
@@ -561,34 +586,16 @@ class ManageBenificiariesComponent extends Component {
     return isValidationSuccess;
   };
 
-  validateSsn=(text)=>{
-    if(!this.isEmpty(text)){
-      let validate = ssnRegex.test(text);
-      this.onUpdateField("contingent","ssnValidation",validate);
-      this.onUpdateField("contingent","ssnValidation",gblStrings.accManagement.ssnNoFormat);
-    }
-  };
 
-  validateWorkPhone = (text) => {
-    if(!this.isEmpty(text)){
-      let validate = phoneRegex.test(text);
-      this.onUpdateField("contingent","workTelephoneValidation",validate);
-      this.onUpdateField("contingent","workTelephoneValidation",gblStrings.accManagement.phoneNoFormat);
-    }
-  };
-
-  validateZip=(text)=>{
-    if(!this.isEmpty(text)){
-      let validate = zipCodeRegex.test(text);
+  validateZip=()=>{
+    if(!this.isEmpty(this.state.contingent.zipCode)){
+      let validate = zipCodeRegex.test(this.state.contingent.zipCode);
       this.onUpdateField("contingent","zipCodeValidation",validate);
       this.onUpdateField("contingent","zipCodeValidationMsg",gblStrings.accManagement.zipCodeFormat);
-      
-      if(validate){
-          this.onUpdateField("contingent","zipCodeValidation",validate);
-          this.updateCityState();
-      }
+      this.updateCityState();
     }
   };
+
 
   validateDistributionValue=(text)=>{
     if(!this.isEmpty(text)){
@@ -651,8 +658,8 @@ class ManageBenificiariesComponent extends Component {
               <GInputComponent
                 propInputStyle={styles.customDistributionTxtBox}
                 placeholder={''}
-                editable={false}
-                value={item.distribution}
+                value={this.state.primary.distribution}
+                onChangeText={this.onChangeText("personal","distribution")}
                 maxLength={gblStrings.maxLength.distributionPercentage}
               />
               <Text style={[styles.shortContentText, styles.paddingStyleLeft,{marginTop:scaledHeight(20)}]}>
@@ -788,7 +795,7 @@ class ManageBenificiariesComponent extends Component {
           </Text>
           <Text
             style={[styles.shortContentText, styles.distributionFieldInput]}>
-            {'100.00%'}
+            {this.state.primary.distribution+ '%'}
           </Text>
         </View>
         <View style={styles.contentViewInternal}>
@@ -802,6 +809,7 @@ class ManageBenificiariesComponent extends Component {
               dropDownName={gblStrings.accManagement.nameDob}
               dropDownTextName={styles.shortHeadingText} 
               data={nameDobData}
+              itemToDisplay={"title"}
               changeState={this.selectNameDob}
               showDropDown={this.state.contingent.nameDobDropDown}
               dropDownValue={this.state.contingent.nameDob}
@@ -847,6 +855,7 @@ class ManageBenificiariesComponent extends Component {
             dropDownName={gblStrings.accManagement.nameDob}
             dropDownTextName={styles.shortHeadingText} 
             data={nameDobData}
+            itemToDisplay={"title"}
             changeState={this.selectNameDob}
             showDropDown={this.state.contingent.nameDobDropDown}
             dropDownValue={this.state.contingent.nameDob}
@@ -905,7 +914,7 @@ class ManageBenificiariesComponent extends Component {
               maxLength={gblStrings.maxLength.firstName}
               onChangeText={this.onChangeText('contingent','firstName')}
               errorFlag={!this.state.contingent.firstNameValidation}
-              errorText={gblStrings.accManagement.emptyFirstNameMsg}
+              errorText={this.state.contingent.firstNameValiMsg}
               onSubmitEditing={this.onSubmitEditing(this.middleInitial)}
             />
             <Text style={styles.lblTxt}>
@@ -953,16 +962,14 @@ class ManageBenificiariesComponent extends Component {
             {gblStrings.accManagement.beneficiaryInfo}
           </Text>
           <View style={styles.paddingStyleLeft}>
-            <Text style={styles.lblTxt}>{gblStrings.accManagement.ssn}</Text>
+            <Text style={styles.lblTxt}>{"SSN"}</Text>
             <GInputComponent
               inputref={this.setInputRef("ssn")}
               propInputStyle={styles.customTxtBox}
               placeholder={''}
               keyboardType={'numeric'}
-              onBlur={this.validateSsn}
               maxLength={gblStrings.maxLength.ssnNo}
               onChangeText={this.onChangeText('contingent', 'ssn')}
-              onSubmitEditing={this.onSubmitEditing(this.dob)}
               errorFlag={!this.state.contingent.ssnValidation}
               errorText={this.state.contingent.ssnValidationMsg}
             />
@@ -983,8 +990,6 @@ class ManageBenificiariesComponent extends Component {
                   showDropDown={this.state.contingent.monthDropDown}
                   dropDownValue={this.state.contingent.month}
                   selectedDropDownValue={this.selectedMonthDropDownValue}
-                  //errorFlag={this.state.contingent.dateValidation}
-                  //errorText={gblStrings.accManagement.emptyDOBMsg}
                 />
               </View>
               <View style={styles.dateDropDownWidth}>
@@ -996,8 +1001,6 @@ class ManageBenificiariesComponent extends Component {
                   showDropDown={this.state.contingent.dateDropDown}
                   dropDownValue={this.state.contingent.date}
                   selectedDropDownValue={this.selectedDateDropDownValue}
-                  //errorFlag={this.state.contingent.monthValidation}
-                  //errorText={gblStrings.accManagement.emptyDOBMsg}
                 />
               </View>
               <View style={styles.dateDropDownWidth}>
@@ -1009,11 +1012,10 @@ class ManageBenificiariesComponent extends Component {
                   showDropDown={this.state.contingent.yearDropDown}
                   dropDownValue={this.state.contingent.year}
                   selectedDropDownValue={this.selectedYearDropDownValue}
-                  //errorFlag={this.state.contingent.yearValidation}
-                  //errorText={gblStrings.accManagement.emptyDOBMsg}
                 />
               </View>
             </View>
+            {this.state.contingent.dropDownDobFlag?<Text style={styles.errorMsg}>{this.state.contingent.dropDownDobMsg}</Text>:null}
           </View>
 
           {/* --------------Beneficiary Address----------------------------------*/}
@@ -1043,7 +1045,7 @@ class ManageBenificiariesComponent extends Component {
               propInputStyle={styles.customTxtBox}
               placeholder={gblStrings.accManagement.empAddrLine2}
               maxLength={gblStrings.maxLength.addressLine2}
-              onChangeText={this.onChangeText('contingent', 'adaddrLine2')}
+              onChangeText={this.onChangeText('contingent', "addrLine2")}
               onSubmitEditing={this.onSubmitEditing(this.workTelephone)}
               errorFlag={!this.state.contingent.addrLine2Validation}
               errorText={gblStrings.accManagement.emptyAddressLine2Msg}
@@ -1056,36 +1058,11 @@ class ManageBenificiariesComponent extends Component {
               propInputStyle={styles.customTxtBox}
               placeholder={'XXX-XXX-XXXX'}
               keyboardType={'phone-pad'}
-              onBlur={this.validateWorkPhone}
               maxLength={gblStrings.maxLength.phoneNo}
               onChangeText={this.onChangeText('contingent', 'workTelephone')}
               onSubmitEditing={this.onSubmitEditing(this.city)}
               errorFlag={!this.state.contingent.workTelephoneValidation}
               errorText={this.state.contingent.phoneFormatMessage}
-            />
-            <Text style={styles.lblTxt}>{gblStrings.accManagement.city}</Text>
-            <GInputComponent
-              inputref={this.setInputRef("city")}
-              propInputStyle={styles.customTxtBox}
-              placeholder={gblStrings.accManagement.enterCity}
-              maxLength={gblStrings.maxLength.city}
-              value={this.state.contingent.city}
-              onChangeText={this.onChangeText('contingent', 'city')}
-              onSubmitEditing={this.onSubmitEditing(this.stateValue)}
-              errorFlag={!this.state.contingent.cityValidation}
-              errorText={gblStrings.accManagement.emptyCityMsg}
-            />
-            <Text style={styles.lblTxt}>{gblStrings.accManagement.state}</Text>
-            <GInputComponent
-              inputref={this.setInputRef("stateValue")}
-              propInputStyle={styles.customTxtBox}
-              placeholder={gblStrings.accManagement.enterState}
-              maxLength={gblStrings.maxLength.state}
-              value={this.state.contingent.stateValue}
-              onChangeText={this.onChangeText('contingent', 'stateValue')}
-              onSubmitEditing={this.onSubmitEditing(this.Zip)}
-              errorFlag={!this.state.contingent.stateValidation}
-              errorText={gblStrings.accManagement.emptyStateMsg}
             />
             <Text style={styles.lblTxt}>
               {gblStrings.accManagement.zipcode}
@@ -1101,6 +1078,27 @@ class ManageBenificiariesComponent extends Component {
               errorFlag={!this.state.contingent.zipCodeValidation}
               errorText={this.state.contingent.zipCodeFormatMsg}
             />
+            <Text style={styles.lblTxt}>{gblStrings.accManagement.city}</Text>
+            <GInputComponent
+              inputref={this.setInputRef("city")}
+              propInputStyle={styles.customTxtBox}
+              placeholder={gblStrings.accManagement.enterCity}
+              maxLength={gblStrings.maxLength.city}
+              editable={false}
+              value={this.state.contingent.city}
+              onSubmitEditing={this.onSubmitEditing(this.stateValue)}
+            />
+            <Text style={styles.lblTxt}>{gblStrings.accManagement.state}</Text>
+            <GInputComponent
+              inputref={this.setInputRef("stateValue")}
+              propInputStyle={styles.customTxtBox}
+              placeholder={gblStrings.accManagement.enterState}
+              maxLength={gblStrings.maxLength.state}
+              value={this.state.contingent.stateValue}
+              editable={false}
+              onSubmitEditing={this.onSubmitEditing(this.Zip)}
+            />
+           
           </View>
 
           <Text style={styles.addBeneficiaryLink}>
