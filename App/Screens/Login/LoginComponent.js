@@ -197,6 +197,12 @@ class LoginComponent extends Component {
         }).then(data => {
             console.log("Data",data);
             alert("Signed In Successfully.")
+            RNSecureKeyStore.set("EmailAddress",username, {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+      .then((res) => {
+          console.log("stored",res);
+      }, (err) => {
+          console.log(err);
+      });
             this.props.navigation.navigate('dashboard');
         }).catch(error => {
             alert("Username and Password Incorrect.")

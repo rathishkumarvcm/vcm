@@ -141,7 +141,7 @@ class InvestmentPlanInfoComponent extends Component {
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
     componentDidMount() {
-        const payload = this.props.navigation.getParam('fundDetails', '');
+        const payload = "fundNumber1="+this.props.navigation.getParam('fundDetails', '');
         this.props.getFundDetailsData(payload);
     }
     /*----------------------
@@ -209,10 +209,10 @@ class InvestmentPlanInfoComponent extends Component {
                     {gblStrings.accManagement.netAssetValue}
                 </Text>
                 <Text style={styles.lblSubNameTxt}>
-                    {gblStrings.accManagement.pricePerShare}
+                    {gblStrings.accManagement.pricePerShare}{nav.asOfDate}{")"}
                 </Text>
                 <Text style={styles.lblNameValueTxt}>
-                    {nav}
+                    {nav.value}
                 </Text>
 
                 <Text style={styles.lblNameTxt}>
@@ -226,10 +226,10 @@ class InvestmentPlanInfoComponent extends Component {
                     {gblStrings.accManagement.overallMrngStarRating}
                 </Text>
                 <Text style={styles.lblSubNameTxt}>
-                    {"(as of 06/30/2019)"}
+                    {"(as of "+morningstarRating.asOfDate+")"}
                 </Text>
                 <View style={{ marginTop: scaledHeight(8) }}>
-                    <GRatingStarsComponent rating={morningstarRating}
+                    <GRatingStarsComponent rating={parseInt(morningstarRating.value)}
                         ratedStarColor="#393535"
                         unRatedStarColor="#DCDCDC"
                     />
@@ -283,10 +283,9 @@ class InvestmentPlanInfoComponent extends Component {
     /*----------------------
                                  Render Methods
                                                                  -------------------------- */
-    render() {
-
+    render() {      
         var {
-            nav = "",
+            nav : nav_values = {},
             fundName = "",
             risk = "",
             monthlyInvestment = "",
@@ -294,10 +293,18 @@ class InvestmentPlanInfoComponent extends Component {
             expenseRatio: expense_Ratio = {},
             morningstarCategory = "",
             categoryFunds = "",
-            morningstarRating = "",
+            morningstarRating :  morningstarRating_values = {},
             performanceDetails: performance_Details = {},
             moreInfoPDFs: moreInfo_PDFs = [],
-        } = (this.props && this.props.fundDetailsData && this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS]) ? this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS] : {};
+        } = (this.props && this.props.fundDetailsData && this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS] && this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS].result && this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS].result[0]) ? this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS].result[0]: {};
+
+        var {
+            value = ""
+        } = (nav_values && nav_values.value) ? nav_values : {};
+
+        var {
+            value = ""
+        } = (morningstarRating_values && morningstarRating_values.value) ? morningstarRating_values : {};
 
         var {
             expenseRatio = ""
@@ -419,7 +426,7 @@ class InvestmentPlanInfoComponent extends Component {
 
                     { /*----------- Summary,QuickFacts,Performance  -------------------*/}
                     {this.state.isSummarySelected && this.renderSummary(risk, gblStrings.common.dollar + initialInvestment, gblStrings.common.dollar + monthlyInvestment, moreInfo_PDFs)}
-                    {this.state.isQuickFactSelected && this.renderQuickfacts(nav, expenseRatio, morningstarRating, morningstarCategory, categoryFunds)}
+                    {this.state.isQuickFactSelected && this.renderQuickfacts(nav_values, expenseRatio, morningstarRating_values, morningstarCategory, categoryFunds)}
                     {this.state.isPerformanceSelected && this.renderPerformnace(monthly_Returns, quarterly_Returns)}
 
                     { /*----------- Buttons Grp  -------------------*/}

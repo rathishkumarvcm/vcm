@@ -11,7 +11,7 @@ const {width} = Dimensions.get('window');
 const newData = [
     {
       naviagteTo: 'profilePreference',
-      title: 'Home',
+      title: 'Profile and Preferences',
     },
     {
       naviagteTo: 'accountService',

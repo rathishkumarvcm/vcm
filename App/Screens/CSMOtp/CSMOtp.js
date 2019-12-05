@@ -66,10 +66,10 @@ class CSMOtp extends Component {
     }
 
     onClickCancel = () => {
-        this.props.navigation.navigate('changeSignInMethod');
+        this.props.navigation.navigate('ChangeSignInMethod');
     }
     onClickSave = () => {
-        this.props.navigation.navigate('changeSignInMethod',{showAlert:true,message:gblStrings.userManagement.otp});
+        this.props.navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.otp});
     }
 
     radioButtonClicked = (index) => {

@@ -21,6 +21,10 @@ class SecurityPreferences extends Component {
 
     navigateAccountRecovery = () => this.props.navigation.navigate('accountRecoveryPref');
 
+    navigateModifySecurity = () => this.props.navigation.navigate('modifySecurityQues');
+
+    navigateChooseSignIn = () => this.props.navigation.navigate('ChangeSignInMethod');
+
     render() {
         return (
             <View style={styles.container}>
@@ -83,49 +87,53 @@ class SecurityPreferences extends Component {
                     </TouchableOpacity>
 
 
-                    <View style={styles.optionContainer}>
-                        <View style={styles.optionIcon}>
-                            <GIcon
-                                name="view-grid"
-                                type="material-community"
-                                size={30}
-                                color="black"
-                            />
+                    <TouchableOpacity onPress={this.navigateModifySecurity}>
+                        <View style={styles.optionContainer}>
+                            <View style={styles.optionIcon}>
+                                <GIcon
+                                    name="view-grid"
+                                    type="material-community"
+                                    size={30}
+                                    color="black"
+                                />
 
-                            <Text style={styles.optionHeaderText}>
-                                {gblStrings.userManagement.modifySecurityQuestions}
-                            </Text>
+                                <Text style={styles.optionHeaderText}>
+                                    {gblStrings.userManagement.modifySecurityQuestions}
+                                </Text>
+                            </View>
+
+                            <View style={styles.optionSubHeaderView}>
+                                <Text style={styles.optionSubHeaderText}>
+                                    {gblStrings.userManagement.loremSecurityPref}
+                                </Text>
+                            </View>
+
                         </View>
+                    </TouchableOpacity>
 
-                        <View style={styles.optionSubHeaderView}>
-                            <Text style={styles.optionSubHeaderText}>
-                                {gblStrings.userManagement.loremSecurityPref}
-                            </Text>
+                    <TouchableOpacity onPress={this.navigateChooseSignIn}>
+                        <View style={styles.optionContainer}>
+                            <View style={styles.optionIcon}>
+                                <GIcon
+                                    name="view-grid"
+                                    type="material-community"
+                                    size={30}
+                                    color="black"
+                                />
+
+                                <Text style={styles.optionHeaderText}>
+                                    {gblStrings.userManagement.chooseSigninMethods}
+                                </Text>
+                            </View>
+
+                            <View style={styles.optionSubHeaderView}>
+                                <Text style={styles.optionSubHeaderText}>
+                                    {gblStrings.userManagement.loremSecurityPref}
+                                </Text>
+                            </View>
+
                         </View>
-
-                    </View>
-
-                    <View style={styles.optionContainer}>
-                        <View style={styles.optionIcon}>
-                            <GIcon
-                                name="view-grid"
-                                type="material-community"
-                                size={30}
-                                color="black"
-                            />
-
-                            <Text style={styles.optionHeaderText}>
-                                {gblStrings.userManagement.chooseSigninMethods}
-                            </Text>
-                        </View>
-
-                        <View style={styles.optionSubHeaderView}>
-                            <Text style={styles.optionSubHeaderText}>
-                                {gblStrings.userManagement.loremSecurityPref}
-                            </Text>
-                        </View>
-
-                    </View>
+                    </TouchableOpacity>
 
                     <View style={styles.optionContainer}>
                         <View style={styles.optionIcon}>

@@ -1,9 +1,82 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
+import PropTypes from "prop-types";
+
+const tempUserAddress = [
+    {
+        "addressType": 'Diplomatic Post Office',
+        "addressLineOne": '5400 N Black Lake Oak Rd',
+        "addressCity": 'San Diego',
+        "addressState": 'California',
+        "addressZipcode": '90001',
+        "isMailingAddress": true,
+        "isPhysicalAddress": false
+    },
+    {
+        "addressType": 'Diplomatic Post Office',
+        "addressLineOne": '5400 N Black Lake Oak Rd',
+        "addressCity": 'San Diego',
+        "addressState": 'California',
+        "addressZipcode": '90001',
+        "isMailingAddress": false,
+        "isPhysicalAddress": true
+    },
+    {
+        "addressType": 'Diplomatic Post Office',
+        "addressLineOne": '5400 N Black Lake Oak Rd',
+        "addressCity": 'San Diego',
+        "addressState": 'California',
+        "addressZipcode": '90001',
+        "isMailingAddress": false,
+        "isPhysicalAddress": false
+    }
+];
+
+const UserAddressInformation = (props) => {
+    return (
+        <View style={styles.editEmailHolder}>
+            <Text style={styles.editEmailType}>
+                {props.addressType}
+            </Text>
+            <Text style={styles.editEmailId}>
+                {props.addressLineOne}
+            </Text>
+            <Text style={styles.editEmailId}>
+                {props.addressCity}
+            </Text>
+            <Text style={styles.editEmailId}>
+                {props.addressState}
+            </Text>
+
+            <View style={styles.editEmailBorder}></View>
+
+            <View style={styles.editEmailPrimaryContent}>
+                <Text style={styles.editEmailId}>
+                    {globalString.profileSettingsPage.profileMailingLabel}
+                </Text>
+            </View>
+            <View style={styles.editEmailPrimaryContent}>
+                <Text style={styles.editEmailId}>
+                    {globalString.profileSettingsPage.profilePhysicalLabel}
+                </Text>
+            </View>
+        </View>
+    );
+};
+
+UserAddressInformation.propTypes = {
+    addressType: PropTypes.string,
+    addressLineOne: PropTypes.string,
+    addressCity: PropTypes.string,
+    addressState: PropTypes.string,
+    addressZipcode: PropTypes.string,
+    isMailingAddress: PropTypes.bool,
+    isPhysicalAddress: PropTypes.bool
+};
 
 class editAddressInfoComponent extends Component {
     constructor(props) {
@@ -16,6 +89,13 @@ class editAddressInfoComponent extends Component {
             touchIdEnrolled: false
         };
     }
+
+    renderAddressInformation = (dataLength) => ({ item, index }) =>
+        (<UserAddressInformation
+            addressType={item.addressType}
+            addressLineOne={item.addressLineOne}
+            addressCity={item.addressCity}
+            addressState={item.addressState + ' ' + item.addressZipcode} />);
 
     componentDidMount() { }
 
@@ -54,25 +134,17 @@ class editAddressInfoComponent extends Component {
 
                     <View style={styles.settingsBorder}></View>
 
+                    <FlatList
+                        data={tempUserAddress}
+                        keyExtractor={this.generateKeyExtractor}
+                        renderItem={this.renderAddressInformation(tempUserAddress.length)} />
+                    
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
                             buttonStyle={styles.cancelButtonStyle}
-                            buttonText={globalString.common.cancel}
+                            buttonText={globalString.common.back}
                             textStyle={styles.cancelButtonText}
                             onPress={this.editAddressOnCancel} />
-                    </View>
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <GButtonComponent
-                            buttonStyle={styles.saveButtonStyle}
-                            buttonText={globalString.common.save}
-                            textStyle={styles.saveButtonText} />
-                    </View>
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <Text style={styles.editAddressSecurity}>
-                            {globalString.editAddressInfo.editAddressSecurity}
-                        </Text>
                     </View>
 
                     <View style={styles.newVictorySection}>

@@ -45,7 +45,8 @@ export default {
         support: "Support",
         copyRights: "Copyright Victory Capital Management Inc. ©2020",
         validPincode: "Enter Valid 6 Digit Pin",
-        dollar:"$"
+        dollar:"$",
+        validate:"Validate"
     },
     login: {
         imageRequest: "imageRequest",
@@ -100,6 +101,9 @@ export default {
 
         initInvestment: 10,
         monthlyInvestment: 10,
+        accountNumber:15,
+        transitRoutingNumber:15,
+        common:250
 
 
     },
@@ -302,7 +306,15 @@ export default {
         fundType:"Fund Type",
         clearFilter:"Clear Filters",
         applyFilter:"Apply Filter",
-
+        addBankAccount: "Add Bank Account",
+        typeOfAccount: "Type of Account",
+        savings: "Savings",
+        checking: "Checking",
+        financialInstitution: "Name of Financial Institution",
+        accountOwner: "Name of Accouner Owner",
+        transitRoutingNo: "Transit Routing Number",
+        accountNumber: "Account Number",
+        specimen: "Specimen",
 
         backtInvestmentSelection: "Back to Investment Selection",
         summary: "Summary",
@@ -317,7 +329,7 @@ export default {
         tenYear: "10 Year",
         sinceInception: "Since Inception",
         netAssetValue: "Net Asset Value",
-        pricePerShare: "(price per share as of 08/05/2019)",
+        pricePerShare: "(price per share as of ",
         expenseRation: "Expense Ratio",
         overallMrngStarRating: "Overall Morningstar Rating",
         mrngStarCategory: "Morningstar Category",
@@ -482,6 +494,11 @@ export default {
         emptyFundOptionsMsg: "Please select a funding options",
         emptyInitInvestmentMsg: "Please enter a initial investment value",
         minInitInvestmentMsg: " Initial investment value should me minimum of $ 3000",
+       
+        emptyFinancialInstitution: "Enter Valid Financial Institution",
+        emptyOwnerName: "Enter Valid Owner Name",
+        emptyTransitRoutingNo: "Enter Valid Transit Routing Number",
+        emptyAccountNumber: "Enter Valid Account Number",
 
         invalidInitInvestmentMsg: "‘Please enter a valid initial investment  value",
         emptyMonthlyInvestmentMsg: "‘Please enter a monthly investment value",
@@ -535,8 +552,8 @@ export default {
         confirmNewPassword: "Confirm New Password",
         changePIN: "Change PIN",
         submit: "Submit",
-        pinDoesntMatch: "PIN does not match",
-        passwordDoesnotMatch: "Password does not match",
+        pinDoesntMatch: "Both PIN do not match",
+        passwordDoesnotMatch: "Both passwords do not match",
         currentPIN: "Current PIN",
         currentPassword: "Current Password",
         newPIN: "New PIN",
@@ -1004,4 +1021,36 @@ export default {
         verify_your_account: 'Verify your account information below',
         request_submit_checkbook: 'You have successfully Submitted the Checkbook request'
     },
+    addBankAccount: {
+        addBankAccountHypen: " - ",
+        addBankAccountLabel: "Add Bank Account",
+        accountType: "Type of Account",
+        accountTypeSaving: "Savings",
+        accountTypeChecking: "Checking",
+        accountFinancialName: "Name of Financial Institution",
+        accountOwnerName: "Name of Accouner Owner",
+        accountTransitRouting: "Transit Routing Number",
+        accountNumber: "Account Number",
+        accountSpecimen: "Specimen",
+        accountFinancialError: "Enter Valid Financial Number",
+        accountOwnerError: "Enter Valid Owner Name",
+        accountTransitError: "Enter Valid Transit Routing Number",
+        accountValidNumber: "Enter Valid Account Number"
+    },
+    bankAccounts: {
+        bank_account_header: 'Bank Accounts',
+        current_bank_accounts: 'Current Bank Accounts',
+        lorem_bank_account: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        account_number: 'Account Number',
+        transit_routing_number: 'Transit Routing Number',
+        date_added: 'Date added',
+        add: 'Add'
+    },
+    addPopularBankAccount: {
+        add_bank_account: 'Add Bank Account',
+        add_popular_bank_account: 'Add your account by choosing from the popular banks below.',
+        popular_account: 'Popular Account',
+        instruction_add_account: 'Instruction to Add an Account for Funds Transfer',
+    }
+
 };

@@ -419,5 +419,23 @@ export const styles = StyleSheet.create({
     phoneAddFaxLabel: { color: '#707070', fontSize: scaledHeight(18), width: '70%', marginRight: '4%', fontWeight: 'bold' },
     phoneFaxAddNewLabel: { color: '#5D83AE', fontSize: scaledHeight(18), width: '30%', marginRight: '2%', fontWeight: 'bold' },
     phonePreferredBackView: { backgroundColor: '#F3F3F3', flexDirection: 'row', alignSelf: 'baseline', marginLeft: '2%', display: 'flex' },
-    phoneDeleteView: { color: '#5D83AE', width: '46%', textAlign: 'right', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: '4%' }
+    phoneDeleteView: { color: '#5D83AE', width: '46%', textAlign: 'right', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: '4%' },
+    editEmailHolder: {
+        width: '92%', marginLeft: '4%', marginRight: '4%', marginTop: '4%', borderColor: '#CCCCCC', borderWidth: 1, backgroundColor: '#fff'
+    },
+    editEmailType: {
+        color: '#707070', fontSize: scaledHeight(16), fontWeight: 'bold', marginLeft: '3%', marginBottom: '2%', marginTop: '4%'
+    },
+    editEmailId: {
+        color: '#707070', fontSize: scaledHeight(16), marginLeft: '3%', marginBottom: '2%'
+    },
+    editEmailBorder: { 
+        borderBottomWidth: 1, borderColor: '#B2B2B2', marginTop: '4%', marginBottom: '4%' 
+    },
+    editEmailPrimaryContent: { 
+        marginTop: '2%', marginBottom: '2%', flexDirection: 'row' 
+    },
+    editEmailId: {
+        color: '#707070', fontSize: scaledHeight(16), marginLeft: '3%', marginBottom: '2%'
+    }
 });

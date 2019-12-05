@@ -453,7 +453,10 @@ class OpenAccPageTwoComponent extends Component {
                 isRegulatoryInfoExpanded: true,
             },
 
-
+             currentZipCodeRef :{
+                   stateKey:"",
+                   keyName:""
+             }
             // others
         };
         // this.onChangeText = this.onChangeText.bind(this);
@@ -518,7 +521,32 @@ class OpenAccPageTwoComponent extends Component {
                     }
                 }
             }
+
+            const stateCityKey = ActionTypes.GET_STATECITY;
+            if (this.props.addressFormatData[stateCityKey]) {
+                if (this.props.addressFormatData[stateCityKey] !== prevProps.addressFormatData[stateCityKey]) {
+                    const tempResponse = this.props.addressFormatData[stateCityKey];
+                    if (tempResponse && tempResponse.City) {
+                      
+                            this.setState(prevState => ({
+                                [this.state.currentZipCodeRef.stateKey]: {
+                                    ...prevState[this.state.currentZipCodeRef.stateKey],
+                                    city: tempResponse.City,
+                                    stateCity: tempResponse.State
+
+                                }
+                            }));
+
+                        
+                        
+                    } else {
+                    }
+                }
+            }
+            
         }
+
+
     }
 
 
@@ -809,6 +837,21 @@ class OpenAccPageTwoComponent extends Component {
         } else {
             return false;
         }
+    }
+
+    onSubmitZipEditing = (stateKey,keyName,nextInputFocus) => text =>{
+        console.log("onSubmitZipEditing:::>" );
+
+        let newItems = {...this.state.currentZipCodeRef};
+        newItems.keyName = keyName;
+        newItems.stateKey = stateKey;
+        this.setState({ currentZipCodeRef: newItems });
+
+        const payload = {
+            "Zip": this.state[stateKey][keyName]
+        };
+        this.props.getStateCity(payload);
+       // nextInputFocus.focus();
     }
 
     onSubmitEditing = (input) => text => {
@@ -2227,10 +2270,10 @@ class OpenAccPageTwoComponent extends Component {
                             propInputStyle={this.state.personal.zipcodeValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder={gblStrings.accManagement.enterZip}
                             maxLength={gblStrings.maxLength.zipCode}
-                            keyboardType="number-pad"
                             returnKeyType={"done"}
                             onChangeText={this.onChangeText("personal", "zipcode")}
-                            onSubmitEditing={this.onSubmitEditing(this.city)}
+                            //onSubmitEditing={() => {}}
+                            onSubmitEditing={ this.onSubmitZipEditing("personal","zipcode",this.city)}
 
                         />
 
@@ -2243,6 +2286,7 @@ class OpenAccPageTwoComponent extends Component {
                             placeholder={gblStrings.accManagement.enterCity}
                             returnKeyType={"done"}
                             maxLength={gblStrings.maxLength.city}
+                            value={this.state.personal.city}
                             onChangeText={this.onChangeText("personal", "city")}
                             onSubmitEditing={this.onSubmitEditing(this.stateCity)}
 

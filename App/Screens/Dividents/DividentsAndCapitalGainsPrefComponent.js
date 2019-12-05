@@ -245,7 +245,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
 
                     <View style={styles.instructionsView}>
                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setExpandInstruction}>
-                            <View style={{flex:0.1, alignSelf:'center', borderWidth:1}}>
+                            <View style={{flex:0.1, alignSelf:'center'}}>
                                 {this.state.expand ?
                                     <GIcon
                                         name="minus"

@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import OpenAccPageThreeComponent from './OpenAccPageThreeComponent';
 import { accOpeningActions } from "../../Shared/Actions";
+import { addBankAccountAction } from "../../Shared/Actions";
 
 /*----------------------
                                   Redux Methods
@@ -11,12 +12,13 @@ const mapStateToProps = (state /* , props */) => (
     accOpeningData: state.accOpeningReducerData,
     initialState: state.initialAppData,
     masterLookupStateData: state.masterLookUpData,
-
+    addBankAccount: state.addBankAccountData
   }
 );
 
 const mapDispatchToProps = {
-  ...accOpeningActions
+  ...accOpeningActions,
+  ...addBankAccountAction
   };
 
 export default connect(

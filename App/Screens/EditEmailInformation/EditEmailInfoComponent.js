@@ -1,9 +1,47 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
+import PropTypes from "prop-types";
 import globalString from '../../Constants/GlobalStrings';
+
+const tempPrimaryMailData = [
+    {
+        "emailType": 'Primary Email',
+        "emailId": 'abc@gmail.com'
+    },
+    {
+        "emailType": 'Secondary Email',
+        "emailId": 'abcd@gmail.com'
+    }
+];
+
+const UserEmailInformation = (props) => {
+    return (
+        <View style={styles.editEmailHolder}>
+            <Text style={styles.editEmailType}>
+                {props.emailType}
+            </Text>
+            <Text style={styles.editEmailId}>
+                {props.emailId}
+            </Text>
+
+            <View style={styles.editEmailBorder}></View>
+
+            <View style={styles.editEmailPrimaryContent}>
+                <Text style={styles.editEmailId}>
+                    {globalString.profileSettingsPage.profileMailPrimaryLabel}
+                </Text>
+            </View>
+        </View>
+    );
+};
+
+UserEmailInformation.propTypes = {
+    emailType: PropTypes.string,
+    emailId: PropTypes.string
+};
 
 class editEmailInfoComponent extends Component {
     constructor(props) {
@@ -13,11 +51,24 @@ class editEmailInfoComponent extends Component {
             isLoading: false,
             enableBiometric: false,
             faceIdEnrolled: false,
-            touchIdEnrolled: false
+            touchIdEnrolled: false,
+
+            profilePrimayMail: ''
         };
     }
 
-    componentDidMount() { }
+    renderEmailInformation = (dataLength) => ({ item, index }) =>
+        (<UserEmailInformation
+            emailType={item.emailType}
+            emailId={item.emailId} />);
+
+    componentDidMount() {
+        if (this.props && this.props.initialState && this.props.initialState.email) {
+            this.setState({
+                profilePrimayMail: this.props.initialState.email
+            })
+        }
+    }
 
     emailAddNew = () => this.props.navigation.navigate('editEmailAddNew');
 
@@ -37,7 +88,7 @@ class editEmailInfoComponent extends Component {
                         </Text>
                         <Text style={[styles.settingsInfo, styles.editLabelBold]}>
                             {globalString.editEmailInformations.editEmailTitle}
-                            </Text>
+                        </Text>
                     </View>
 
                     <View style={styles.settingsView}>
@@ -52,19 +103,12 @@ class editEmailInfoComponent extends Component {
 
                     <View style={styles.settingsBorder}></View>
 
-                    <View>
-                        <Text style={styles.editEmailPrimary}>
-                            {globalString.editEmailInformations.editEmailPrimary}
-                        </Text>
-                    </View>
+                    <FlatList
+                        data={tempPrimaryMailData}
+                        keyExtractor={this.generateKeyExtractor}
+                        renderItem={this.renderEmailInformation(tempPrimaryMailData.length)} />
 
-                    <View style={styles.editEmailMargin}>
-                        <GInputComponent
-                            placeholder={""}
-                            editable={false} />
-                    </View>
-
-                    <View style={styles.editEmailInformations}>
+                    {/* <View style={styles.editEmailInformations}>
                         <Text style={styles.editEmailInfoView}>
                             {globalString.editEmailInformations.editEmailInfoOne}
                         </Text>
@@ -74,21 +118,14 @@ class editEmailInfoComponent extends Component {
                         <Text style={styles.editEmailInfoView}>
                             {globalString.editEmailInformations.editEmailInfoTwo}
                         </Text>
-                    </View>
+                    </View> */}
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
                             buttonStyle={styles.cancelButtonStyle}
-                            buttonText={globalString.common.cancel}
+                            buttonText={globalString.common.back}
                             textStyle={styles.cancelButtonText}
                             onPress={this.emailAddNewOnCancel} />
-                    </View>
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <GButtonComponent
-                            buttonStyle={styles.saveButtonStyle}
-                            buttonText={globalString.common.save}
-                            textStyle={styles.saveButtonText} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>

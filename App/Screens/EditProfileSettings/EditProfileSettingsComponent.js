@@ -48,6 +48,7 @@ class editProfileSettingsComponent extends Component {
             profileGender: '',
             profileMaritalStatus: '',
             profileCitizenShip: '',
+            profileCountryValue: '',
 
             radioButton: false,
             radioButtonIndex: 0,
@@ -70,7 +71,12 @@ class editProfileSettingsComponent extends Component {
             dropDownStatusState: false,
             dropDownStatusValue: '',
             dropDownStatusFlag: false,
-            dropDownStatusMsg: ''
+            dropDownStatusMsg: '',
+
+            dropDownCountryState: false,
+            dropDownCountryValue: '',
+            dropDownCountryFlag: false,
+            dropDownCountryMsg: ''
         };
     }
 
@@ -212,6 +218,20 @@ class editProfileSettingsComponent extends Component {
         });
     }
 
+    dropDownCountryClick = () => {
+        this.setState({
+            dropDownCountryState: !this.state.dropDownCountryState
+        })
+    }
+
+    dropDownCountrySelect = (valueCountry) => {
+        this.setState({
+            dropDownCountryValue: valueCountry.value,
+            dropDownCountryState: false,
+            dropDownCountryFlag: false
+        })
+    }
+
     componentDidMount() {
         if (this.props && this.props.initialstate && this.props.initialstate.firstName) {
             this.setState({
@@ -296,7 +316,6 @@ class editProfileSettingsComponent extends Component {
                 "profileGender": this.state.dropDownGenderValue,
                 "profileMaritalStatus": this.state.dropDownStatusValue
             }
-            console.log("Profile", JSON.stringify(profilePayload));
         }
         return profilePayload;
     }
@@ -528,29 +547,20 @@ class editProfileSettingsComponent extends Component {
                             </View>
                         </View>
 
-                        <View style={styles.editFlexDirectionColumn}>
-                            {this.state.countryNonUS ? (<View>
-                                <Text style={styles.editProfileLabel}>
-                                    {globalString.profileSettingsPage.profileCountryLabel}
-                                </Text>
-
-                                <TouchableOpacity style={styles.editDropDownView} onPress={this.selectTheState}>
-                                    <GInputComponent
-                                        propInputStyle={styles.userIDTextBox1}
-                                        placeholder={""}
-                                        editable={false}
-                                        value={this.state.valueDropDown} />
-
-                                    <TouchableOpacity style={styles.editDropDownIcon} onPress={this.selectTheState}>
-                                        <GIcon
-                                            name="md-arrow-dropdown"
-                                            type="ionicon"
-                                            size={20}
-                                            color="black" />
-                                    </TouchableOpacity>
-
-                                </TouchableOpacity></View>) : null}
-                        </View>
+                        {this.state.countryNonUS ? (
+                            <GDropDownComponent
+                                placeholder={this.state.profileCountryValue}
+                                dropDownTextName={styles.editProfileLabel}
+                                dropDownName={globalString.profileSettingsPage.profileCountryLabel}
+                                data={profileSettingsTempData}
+                                changeState={this.dropDownCountryClick}
+                                showDropDown={this.state.dropDownCountryState}
+                                dropDownValue={this.state.dropDownCountryValue}
+                                selectedDropDownValue={this.dropDownCountrySelect}
+                                itemToDisplay={"value"}
+                                errorFlag={this.state.dropDownCountryFlag}
+                                errorText={this.dropDownCountryMsg}
+                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(950) }} />) : null}
 
                         <View style={styles.editFlexDirectionColumn}>
                             <GButtonComponent

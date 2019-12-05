@@ -30,10 +30,10 @@ import ProfilesAndPreferences from './Screens/ProfilesAndPreferences/ProfilesAnd
 import SecurityPreference from './Screens/SecurityPreferences/SecurityPreferencesComponent';
 import AccountMessagingSettings from './Screens/AccountMessagingSettings/AccountMessagingSettingsComponent';
 import AccountMessagingGoals from './Screens/AccountMessagingGoals/AccountMessagingGoalsComponent';
-import AccountMessagingAdvice from './Screens/AccountMessagingAdvice/AccountMessagingAdviceComponent';
-import AccountMessagingGeneralDocuments from './Screens/AccountMessagingGeneralDocuments/AccountMessagingGeneralDocumentsComponent';
+import AccountMessagingAdvice from './Screens/AccountMessagingAdvice/';
+import AccountMessagingGeneralDocuments from './Screens/AccountMessagingGeneralDocuments/';
 import AccountMessagingSecurityAndFraud from './Screens/AccountMessagingSecurityAndFraud/AccountMessagingSecurityAndFraudComponent';
-import AccountMessagingDeviceManagement from './Screens/AccountMessagingDeviceManagement/AccountMessagingDeviceManagementComponent';
+import AccountMessagingDeviceManagement from './Screens/AccountMessagingDeviceManagement/';
 //Dashboard
 
 
@@ -62,20 +62,20 @@ import CollegePlanESA from './Screens/CollegePlanESA/CollegePlanESAComponent';
 import CollegePlanPartOneTwo from './Screens/CollegePlanPartOneTwo/CollegePlanPartOneTwoComponent';
 import CollegePlanPersonal from './Screens/CollegePlanPersonal/CollegePlanPersonalComponent';
 import CollegePlanBeneficiary from './Screens/CollegePlanBeneficiary/CollegePlanBeneficiaryComponent';
-import InvestmentPlanInfo from './Screens/InvestmentPlanInfo/InvestmentPlanInfoComponent';
+import InvestmentPlanInfo from './Screens/InvestmentPlanInfo';
 
 // Done By 806048
 
 import EditProfileSettings from './Screens/EditProfileSettings/';
-import EditAddressSettings from './Screens/EditAddressInformation/EditAddressInfoComponent';
-import EditAddressAddNew from './Screens/EditAddressAddNew/EditAddressAddNewComponent';
-import EditPhoneInformation from './Screens/EditPhoneInformations/EditPhoneInfoComponent';
-import EditEmailInformation from './Screens/EditEmailInformation/EditEmailInfoComponent';
-import EditEmailAddNew from './Screens/EditEmailInfoAddNew/EditEmailAddNewComponent';
-import EditAddFinancialInfo from './Screens/EditAddFinancialInformation/EditAddFinancialInfoComponent';
-import EditAddPhoneNumber from './Screens/EditAddNewPhoneNumber/EditAddPhoneNumberComponent';
-import EditMilitaryInfo from './Screens/EditMilitaryInformation/EditMilitaryInfoComponent';
-import EditOccupationInfo from './Screens/EditOccupationInformation/EditOccupationInfoComponent';
+import EditAddressSettings from './Screens/EditAddressInformation/';
+import EditAddressAddNew from './Screens/EditAddressAddNew/';
+import EditPhoneInformation from './Screens/EditPhoneInformations/';
+import EditEmailInformation from './Screens/EditEmailInformation/';
+import EditEmailAddNew from './Screens/EditEmailInfoAddNew/';
+import EditAddFinancialInfo from './Screens/EditAddFinancialInformation/';
+import EditAddPhoneNumber from './Screens/EditAddNewPhoneNumber/';
+import EditMilitaryInfo from './Screens/EditMilitaryInformation/';
+import EditOccupationInfo from './Screens/EditOccupationInformation/';
 import ModifySecurityQues from './Screens/ModifySecurityQues';
 import ChangeSignInMethod from './Screens/ChangeSignInMethod/ChangeSignInMethodComponent';
 import CSMSoftTokenComponent from './Screens/CSMSoftToken/CSMSoftTokenComponent';
@@ -97,12 +97,29 @@ import PasswordRecoverTemp from './Screens/RecoverTempPassword/';
 import PasswordReset from './Screens/RecoverPasswordNew/';
 import PasswordSuccess from './Screens/RecoverPasswordSuccess/';
 
-import TAmmendComponent from './Screens/TAmmend/TAmmendComponent'
+import TAmmendComponent from './Screens/TAmmend/TAmmendComponent';
 
 //Account Services
 import AccountServicesComponent from './Screens/AccountServices';
 import DividentsAndCapitalGainsPrefComponent from './Screens/Dividents';
 import CheckBookComponent from './Screens/OrderCheckBook';
+import BankAccountsComponent from './Screens/BankAccounts';
+import AddBankAccountComponent from './Screens/AddBankAccount';
+
+//Systematic Withdrawal plan
+import systematicWithdrawal from './Screens/SystematicWithdrawalPlan';
+import systematicWithdrawalAdd from './Screens/SystematicWithdrawalPlanAdd';
+import systematicWithdrawalSchedule from './Screens/SystematicWithdrawalPlanSchedule';
+import systematicWithdrawalVerify from './Screens/SystematicWithdrawalPlanVerify';
+import systematicWithdrawalEsign from './Screens/SystematicWithdrawalPlanEsign';
+
+
+//Automatic Investment Plan
+import automaticInvestment from './Screens/AutomaticInvestmentPlan';
+import automaticInvestmentAdd from './Screens/AutomaticInvestmentPlanAdd';
+import automaticInvestmentSchedule from './Screens/AutomaticInvestmentPlanSchedule';
+import automaticInvestmentVerify from './Screens/AutomaticInvestmentPlanVerify';
+import automaticInvestmentEsign from './Screens/AutomaticInvestmentPlanEsign';
 
 const AppNavigator = createStackNavigator({
         login: {
@@ -474,7 +491,7 @@ const AppNavigator = createStackNavigator({
                 header: null,
             }
         },
-        SecurityPreference:
+        securityPreference:
         {
             screen: SecurityPreference,
             navigationOptions: {
@@ -626,6 +643,78 @@ const AppNavigator = createStackNavigator({
         },
         orderCheckBook: {
             screen: CheckBookComponent,
+            navigationOptions: {
+                header: null,
+            }
+        },
+        automaticInvestment:{
+            screen:automaticInvestment,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        automaticInvestmentAdd:{
+            screen:automaticInvestmentAdd,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        automaticInvestmentVerify:{
+            screen:automaticInvestmentVerify,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        automaticInvestmentEsign:{
+            screen:automaticInvestmentEsign,
+            navigationOptions:{
+                header:null,
+            }
+        },
+            automaticInvestmentSchedule:{
+                screen:automaticInvestmentSchedule,
+                navigationOptions:{
+                    header:null,
+                }  
+        },
+        systematicWithdrawal:{
+            screen:systematicWithdrawal,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        systematicWithdrawalAdd:{
+            screen:systematicWithdrawalAdd,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        systematicWithdrawalVerify:{
+            screen:systematicWithdrawalVerify,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        systematicWithdrawalSchedule:{
+            screen:systematicWithdrawalSchedule,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        systematicWithdrawalEsign:{
+            screen:systematicWithdrawalEsign,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        bankAccount: {
+            screen: BankAccountsComponent,
+            navigationOptions: {
+                header: null,
+            }
+        },
+        addBankAccount: {
+            screen: AddBankAccountComponent,
             navigationOptions: {
                 header: null,
             }

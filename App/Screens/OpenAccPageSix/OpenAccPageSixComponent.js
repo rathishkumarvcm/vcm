@@ -15,54 +15,24 @@ const dummyData = [
 
 
 const viewPdfList = [
-
     {
-        id: 0,
-        fileName: 'World Growth Fund Prospectus',
-        fileType: 'PDF'
-    },
-    {
-        id: 1,
-        fileName: 'Business Continuation Disclosure Statement',
-        fileType: 'PDF'
+        "s3Loc": " ",
+        "value": "World Growth Fund Properties",
+        "key": "wg_fund_props"
     }
 ];
 const signPdfList = [
-
     {
-        id: 0,
-        fileName: 'Mutual Fund Account Application',
-        fileType: 'PDF',
-        fileDesc: 'This Document contains the information provided by you as part of your application, including terms and conditions.'
-
+        "description": "This document contains the information provided by you as a part of your application,including terms and conditions",
+        "s3Loc": " ",
+        "value": "Mutual Fund Account Application",
+        "key": "mf_acct_appln"
     },
     {
-        id: 1,
-        fileName: 'Consent to Electronic Delivery',
-        fileType: 'PDF',
-        fileDesc: 'This Document contains the information provided by you as part of your application, including terms and conditions.'
-
-    },
-    {
-        id: 3,
-        fileName: 'Account Opening Documents provided to Signer',
-        fileType: 'PDF',
-        fileDesc: 'This Document contains the information provided by you as part of your application, including terms and conditions.'
-
-    },
-    {
-        id: 4,
-        fileName: 'Privacy Notice',
-        fileType: 'PDF',
-        fileDesc: 'This Document contains the information provided by you as part of your application, including terms and conditions.'
-
-    },
-    {
-        id: 5,
-        fileName: 'Terms of Services',
-        fileType: 'PDF',
-        fileDesc: 'This Document contains the information provided by you as part of your application, including terms and conditions.'
-
+        "description": " This document contains the information provided by you as a part of your application, including terms and conditions",
+        "s3Loc": " ",
+        "value": "Consent to Electronic Delivery",
+        "key": "consent_elect_del"
     }
 ];
 const ViewPDFItem = (props) => {
@@ -139,7 +109,9 @@ class OpenAccPageSixComponent extends Component {
         console.log("componentDidMount::::> ");
         let payload = [];
         const compositePayloadData = [
-            "backup_withholding"
+            "backup_withholding",
+            "docs_to_sign",
+            "docs_to_view"
         ];
 
         for (let i = 0; i < compositePayloadData.length; i++) {
@@ -390,19 +362,19 @@ class OpenAccPageSixComponent extends Component {
 
     }
 
-    generateKeyExtractor = (item) => item.id.toString();
+    generateKeyExtractor = (item) => item.key;
     renderViewPDFItem = () => ({ item }) =>
         (<ViewPDFItem
-            fileName={item.fileName}
-            fileType={item.fileType}
+            fileName={item.value}
+            fileType={"PDF"}
         />
         );
 
     renderSignPDFItem = (dataLength) => ({ item, index }) =>
         (<SignPDFItem
-            fileName={item.fileName}
-            fileType={item.fileType}
-            fileDesc={item.fileDesc}
+            fileName={item.value}
+            fileType={"PDF"}
+            fileDesc={item.description}
             isSeparatorShow={index < dataLength - 1 ? true : false}
         />
         );
@@ -453,8 +425,15 @@ class OpenAccPageSixComponent extends Component {
                                                                  -------------------------- */
     render() {
         console.log("RENDER::: OpenAccPageSix ::>>> ", this.props);
-        
+        let  tempViewPdfList = {...viewPdfList};
+        if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData["docs_to_view"] && this.props.masterLookupStateData["docs_to_view"].value) {
+            tempViewPdfList = this.props.masterLookupStateData["docs_to_view"].value;
+        }
 
+        let  tempSignPdfList = {...signPdfList};
+        if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData["docs_to_sign"] && this.props.masterLookupStateData["docs_to_sign"].value) {
+            tempSignPdfList = this.props.masterLookupStateData["docs_to_sign"].value;
+        }
         let currentPage = 6;
         return (
             <View style={styles.container}>
@@ -499,7 +478,7 @@ class OpenAccPageSixComponent extends Component {
                         <Text style={styles.lblLine} />
                         <View style={styles.pdfSectionGrp} >
                             <FlatList
-                                data={viewPdfList}
+                                data={tempViewPdfList}
                                 keyExtractor={this.generateKeyExtractor}
                                 renderItem={this.renderViewPDFItem()}
 
@@ -523,7 +502,7 @@ class OpenAccPageSixComponent extends Component {
 
                         <View style={styles.pdfSectionGrp} >
                             <FlatList
-                                data={signPdfList}
+                                data={tempSignPdfList}
                                 keyExtractor={this.generateKeyExtractor}
                                 renderItem={this.renderSignPDFItem(signPdfList.length)}
                             />

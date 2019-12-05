@@ -1,18 +1,17 @@
 import { connect } from 'react-redux';
 import AccountMessagingGeneralDocumentsComponent from './AccountMessagingGeneralDocumentsComponent';
-import { getLogin } from '../../Reducers';
-import { loginActions } from '../../Actions';
+import { accMessagingDocumentsActions } from "../../Shared/Actions";
 
 /*----------------------
                                   Redux Methods
                                                              -------------------------- */
 
-const mapStateToProps = (state /* , props */) => ({
-  dashboardData: getLogin(state),
+const mapStateToProps = (state /* , props */) => ({  
+  accMessageDocumentinitialState: state.accMessagingDocumentsData,  
 });
 
 const mapDispatchToProps = {
-  ...loginActions,
+  ...accMessagingDocumentsActions
 };
 
 export default connect(
