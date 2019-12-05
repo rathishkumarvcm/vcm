@@ -1,9 +1,87 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
+import PropTypes from "prop-types";
+
+const tempUserMobile = [
+    {
+        "mobileNumberType": 'Primary Mobile',
+        "mobileNumber": '+1(xxx) xxx-7890',
+        "mobilePreferredTime": 'Morning',
+        "isPrimaryMobile": true
+    },
+    {
+        "mobileNumberType": 'Secondary Mobile',
+        "mobileNumber": '+1(xxx) xxx-7890',
+        "mobilePreferredTime": 'Morning',
+        "isPrimaryMobile": false
+    },
+    {
+        "mobileNumberType": 'Teritary Mobile',
+        "mobileNumber": '+1(xxx) xxx-7890',
+        "mobilePreferredTime": 'Morning',
+        "isPrimaryMobile": false
+    }
+];
+
+const tempUserHome = [
+    {
+        "mobileNumberType": 'Primary Mobile',
+        "mobileNumber": '+1(xxx) xxx-7890',
+        "mobilePreferredTime": 'Morning',
+        "isPrimaryMobile": true
+    },
+    {
+        "mobileNumberType": 'Secondary Mobile',
+        "mobileNumber": '+1(xxx) xxx-7890',
+        "mobilePreferredTime": 'Morning',
+        "isPrimaryMobile": false
+    }
+];
+
+const tempUserWork = [
+    {
+        "mobileNumberType": 'Primary Mobile',
+        "mobileNumber": '+1(xxx) xxx-7890',
+        "mobilePreferredTime": 'Morning',
+        "isPrimaryMobile": true
+    }
+];
+
+const UserPhoneInformation = (props) => {
+    return (
+        <View style={styles.editEmailHolder}>
+            <Text style={styles.editEmailType}>
+                {props.mobileNumberType}
+            </Text>
+
+            <Text style={styles.editEmailId}>
+                {props.mobileNumber}
+            </Text>
+
+            <Text style={styles.editEmailId}>
+                {props.mobilePreferredTime}
+            </Text>
+
+            <View style={styles.editEmailBorder}></View>
+
+            <View style={styles.editEmailPrimaryContent}>
+                <Text style={styles.editEmailId}>
+                    {globalString.profileSettingsPage.profileMailPrimaryLabel}
+                </Text>
+            </View>
+        </View>
+    );
+};
+
+UserPhoneInformation.propTypes = {
+    mobileNumberType: PropTypes.string,
+    mobileNumber: PropTypes.string,
+    mobilePreferredTime: PropTypes.string
+};
 
 class editPhoneInfoComponent extends Component {
     constructor(props) {
@@ -16,6 +94,12 @@ class editPhoneInfoComponent extends Component {
             touchIdEnrolled: false
         };
     }
+
+    renderPhoneInformation = (dataLength) => ({ item, index }) =>
+        (<UserPhoneInformation
+            mobileNumberType={item.mobileNumberType}
+            mobileNumber={item.mobileNumber}
+            mobilePreferredTime={item.mobilePreferredTime} />);
 
     componentDidMount() { }
 
@@ -41,14 +125,6 @@ class editPhoneInfoComponent extends Component {
                     </View>
 
                     <View style={styles.settingsView}>
-                        <Text style={[styles.settingsHeadline, styles.editTitleBold]}>
-                            {globalString.editPhoneInformations.phoneInfoTitle}
-                        </Text>
-                    </View>
-
-                    <View style={styles.settingsBorder}></View>
-
-                    <View style={styles.settingsView}>
                         <Text style={styles.phoneInfoLabel}>
                             {globalString.editPhoneInformations.phoneLabel}
                         </Text>
@@ -67,59 +143,11 @@ class editPhoneInfoComponent extends Component {
                             </Text>
                         </View>
 
-                        <View style={styles.contentContainer}>
-                            <Text style={styles.phoneInfoPrimaryLabel}>
-                                {globalString.editPhoneInformations.phonePrimaryNumber}
-                            </Text>
-                            <Text style={styles.phoneInfoPrimaryData}>
-                                {"+1 XXXXXXXXXX"}
-                            </Text>
-                            <Text style={styles.phoneInfoPrimaryData}>
-                                {"Morning 8:00 AM - 10:00 AM"}
-                            </Text>
+                        <FlatList
+                            data={tempUserMobile}
+                            keyExtractor={this.generateKeyExtractor}
+                            renderItem={this.renderPhoneInformation(tempUserMobile.length)} />
 
-                            <View style={styles.phonePreferred}>
-                                <Text style={styles.phonePreferredLabel}>
-                                    {globalString.editPhoneInformations.phonePreferred}
-                                </Text>
-                            </View>
-
-                            <View style={styles.phoneEditView}>
-                                <Text style={styles.phoneEditLabel}>
-                                    {globalString.editPhoneInformations.phoneEditLabel}
-                                </Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.contentContainer}>
-                            <Text style={styles.phoneInfoPrimaryLabel}>{"Secondary Number"}</Text>
-                            <Text style={styles.phoneInfoPrimaryData}>{"+1 XXXXXXXXXX"}</Text>
-                            <Text style={styles.phoneInfoPrimaryData}>{"Evening 6:00 PM - 8:00 PM"}</Text>
-
-                            <View style={styles.phonePreferredBackView}>
-                                <Text style={styles.phonePreferredLabel}>{"Preferred"}</Text>
-                            </View>
-
-                            <View style={styles.phoneEditView}>
-                                <Text style={styles.phoneEditLabel}>{"Edit"}</Text>
-                                <Text style={styles.phoneDeleteView}>{"Delete"}</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.contentContainer}>
-                            <Text style={styles.phoneInfoPrimaryLabel}>{"Tertiary Number"}</Text>
-                            <Text style={styles.phoneInfoPrimaryData}>{"+1 XXXXXXXXXX"}</Text>
-                            <Text style={styles.phoneInfoPrimaryData}>{"Evening 4:00 PM - 6:00 PM"}</Text>
-
-                            <View style={styles.phonePreferredBackView}>
-                                <Text style={styles.phonePreferredLabel}>{"Preferred"}</Text>
-                            </View>
-
-                            <View style={styles.phoneEditView}>
-                                <Text style={styles.phoneEditLabel}>{"Edit"}</Text>
-                                <Text style={styles.phoneDeleteView}>{"Delete"}</Text>
-                            </View>
-                        </View>
                     </View>
 
                     <View>
@@ -127,34 +155,11 @@ class editPhoneInfoComponent extends Component {
                             <Text style={styles.phoneMobileView}>{"Home"}</Text>
                         </View>
 
-                        <View style={styles.contentContainer}>
-                            <Text style={styles.phoneInfoPrimaryLabel}>{"Primary Number"}</Text>
-                            <Text style={styles.phoneInfoPrimaryData}>{"+1 XXXXXXXXXX"}</Text>
-                            <Text style={styles.phoneInfoPrimaryData}>{"Morning 8:00 AM - 10:00 AM"}</Text>
+                        <FlatList
+                            data={tempUserHome}
+                            keyExtractor={this.generateKeyExtractor}
+                            renderItem={this.renderPhoneInformation(tempUserHome.length)} />
 
-                            <View style={styles.phonePreferred}>
-                                <Text style={styles.phonePreferredLabel}>{"Preferred"}</Text>
-                            </View>
-
-                            <View style={styles.phoneEditView}>
-                                <Text style={styles.phoneEditLabel}>{"Edit"}</Text>
-                            </View>
-                        </View>
-
-                        <View style={styles.contentContainer}>
-                            <Text style={styles.phoneInfoPrimaryLabel}>{"Secondary Number"}</Text>
-                            <Text style={styles.phoneInfoPrimaryData}>{"+1 XXXXXXXXXX"}</Text>
-                            <Text style={styles.phoneInfoPrimaryData}>{"Evening 6:00 PM - 8:00 PM"}</Text>
-
-                            <View style={styles.phonePreferredBackView}>
-                                <Text style={styles.phonePreferredLabel}>{"Preferred"}</Text>
-                            </View>
-
-                            <View style={styles.phoneEditView}>
-                                <Text style={styles.phoneEditLabel}>{"Edit"}</Text>
-                                <Text style={styles.phoneDeleteView}>{"Delete"}</Text>
-                            </View>
-                        </View>
                     </View>
 
                     <View>
@@ -162,21 +167,13 @@ class editPhoneInfoComponent extends Component {
                             <Text style={styles.phoneMobileView}>{"Work"}</Text>
                         </View>
 
-                        <View style={styles.contentContainer}>
-                            <Text style={styles.phoneInfoPrimaryLabel}>{"Primary Number"}</Text>
-                            <Text style={styles.phoneInfoPrimaryData}>{"+1 XXXXXXXXXX"}</Text>
-                            <Text style={styles.phoneInfoPrimaryData}>{"Morning 8:00 AM - 10:00 AM"}</Text>
+                        <FlatList
+                            data={tempUserWork}
+                            keyExtractor={this.generateKeyExtractor}
+                            renderItem={this.renderPhoneInformation(tempUserWork.length)} />
 
-                            <View style={styles.phonePreferred}>
-                                <Text style={styles.phonePreferredLabel}>{"Preferred"}</Text>
-                            </View>
-
-                            <View style={styles.phoneEditView}>
-                                <Text style={styles.phoneEditLabel}>{"Edit"}</Text>
-                            </View>
-                        </View>
                     </View>
-                    
+
                     <View style={styles.settingsView}>
                         <Text style={styles.phoneAddFaxLabel}>
                             {globalString.editPhoneInformations.phoneFax}
@@ -199,19 +196,6 @@ class editPhoneInfoComponent extends Component {
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
                             onPress={this.phoneInformationOnCancel} />
-                    </View>
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <GButtonComponent
-                            buttonStyle={styles.saveButtonStyle}
-                            buttonText={globalString.common.save}
-                            textStyle={styles.saveButtonText} />
-                    </View>
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <Text style={styles.phoneSecurity}>
-                            {globalString.editPhoneInformations.phoneSecurity}
-                        </Text>
                     </View>
 
                     <View style={styles.newVictorySection}>

@@ -50,6 +50,27 @@ class editAddressAddNewComponent extends Component {
         }
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        const stateCityResponseData = ActionTypes.GET_STATECITY;
+        if (this.props != prevProps) {
+            if (this.props && this.props.stateCityData[stateCityResponseData]) {
+                const tempResponse = this.props.stateCityData[stateCityResponseData];
+                console.log("Error Update 001", tempResponse);
+                if (tempResponse && tempResponse.City) {
+                    this.setState({
+                        userCity: tempResponse.City,
+                        userState: tempResponse.State
+                    });
+                }
+            } else {
+                if (this.props && this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR]) {
+                    const tempErrorResponse = this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR];
+                    console.log("Error", tempErrorResponse);
+                }
+            }
+        }
+    }
+
     radioButtonClicked = (index) => {
         if (index !== this.state.radioButtonIndex) {
             this.setState({
@@ -126,13 +147,6 @@ class editAddressAddNewComponent extends Component {
     editAddressAddNewOnCancel = () => this.props.navigation.navigate('editAddressSettings');
 
     render() {
-        var {
-            City = "",
-            State = ""
-        } = (this.props
-            && this.props.stateCityData
-            && this.props.stateCityData[ActionTypes.GET_STATECITY]) ?
-                this.props.stateCityData[ActionTypes.GET_STATECITY] : {};
         return (
             <View style={styles.container}>
                 {
@@ -235,7 +249,7 @@ class editAddressAddNewComponent extends Component {
                                 {globalString.addAddressInfo.cityLabel}
                             </Text>
                             <Text style={styles.editAddressCityValue}>
-                                {City}
+                                {this.state.userCity}
                             </Text>
                         </View>
 
@@ -244,7 +258,7 @@ class editAddressAddNewComponent extends Component {
                                 {globalString.addAddressInfo.stateLabel}
                             </Text>
                             <Text style={styles.editAddressCityValue}>
-                                {State}
+                                {this.state.userState}
                             </Text>
                         </View>
 

@@ -386,5 +386,20 @@ export const styles = StyleSheet.create({
     },
     editAddressSecurity: {
         color: '#56565A', fontSize: scaledHeight(18)
+    },
+    editEmailHolder: {
+        width: '92%', marginLeft: '4%', marginRight: '4%', marginTop: '4%', borderColor: '#CCCCCC', borderWidth: 1, backgroundColor: '#fff'
+    },
+    editEmailType: {
+        color: '#707070', fontSize: scaledHeight(16), fontWeight: 'bold', marginLeft: '3%', marginBottom: '2%', marginTop: '4%'
+    },
+    editEmailId: {
+        color: '#707070', fontSize: scaledHeight(16), marginLeft: '3%', marginBottom: '2%'
+    },
+    editEmailBorder: { 
+        borderBottomWidth: 1, borderColor: '#B2B2B2', marginTop: '4%', marginBottom: '4%' 
+    },
+    editEmailPrimaryContent: { 
+        marginTop: '2%', marginBottom: '2%', flexDirection: 'row' 
     }
 });
