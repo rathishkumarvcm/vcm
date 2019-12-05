@@ -30,10 +30,10 @@ import ProfilesAndPreferences from './Screens/ProfilesAndPreferences/ProfilesAnd
 import SecurityPreference from './Screens/SecurityPreferences/SecurityPreferencesComponent';
 import AccountMessagingSettings from './Screens/AccountMessagingSettings/AccountMessagingSettingsComponent';
 import AccountMessagingGoals from './Screens/AccountMessagingGoals/AccountMessagingGoalsComponent';
-import AccountMessagingAdvice from './Screens/AccountMessagingAdvice/AccountMessagingAdviceComponent';
-import AccountMessagingGeneralDocuments from './Screens/AccountMessagingGeneralDocuments/AccountMessagingGeneralDocumentsComponent';
+import AccountMessagingAdvice from './Screens/AccountMessagingAdvice/';
+import AccountMessagingGeneralDocuments from './Screens/AccountMessagingGeneralDocuments/';
 import AccountMessagingSecurityAndFraud from './Screens/AccountMessagingSecurityAndFraud/AccountMessagingSecurityAndFraudComponent';
-import AccountMessagingDeviceManagement from './Screens/AccountMessagingDeviceManagement/AccountMessagingDeviceManagementComponent';
+import AccountMessagingDeviceManagement from './Screens/AccountMessagingDeviceManagement/';
 //Dashboard
 
 

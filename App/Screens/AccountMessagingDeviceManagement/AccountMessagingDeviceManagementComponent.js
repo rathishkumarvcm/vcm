@@ -20,14 +20,14 @@ class AccountMessagingDeviceManagementComponent extends Component {
         this.props.navigation.goBack();
     }
 
-    validateFieds = () => {        
-        console.log('Save Button Clicked...');        
-        if (this.state.deviceSelected === false) {
-            console.log('selected:',this.state.deviceSelected);
-            alert(" Please select the device you wish to remove.");
-        }else{
-            console.log('selected:',this.state.deviceSelected);
+    saveButtonAction = () => {        
+        console.log('Save Button Clicked...');       
+        const payloadData = {
+            deviceSelected: this.state.deviceSelected
         }
+        this.props.saveData(payloadData);
+        this.props.navigation.goBack();                
+        
     }
 
     setDeviceState = () => {     
@@ -37,6 +37,10 @@ class AccountMessagingDeviceManagementComponent extends Component {
     navigategeneralSettings = () => this.props.navigation.navigate('generalSettings');
 
     componentDidMount() {
+        if (this.props && this.props.accMessageDeviceinitialState){
+            (this.props.accMessageDeviceinitialState.deviceSelected)
+                this.setState({ deviceSelected : this.props.accMessageDeviceinitialState.deviceSelected });
+        }        
     }
    
     render() {
@@ -118,7 +122,7 @@ class AccountMessagingDeviceManagementComponent extends Component {
                         buttonStyle={styles.saveButton}
                         buttonText={gblStrings.common.save}
                         textStyle={styles.saveButtonText}
-                        onPress={this.validateFieds}
+                        onPress={this.saveButtonAction}
                     />
                     <GFooterSettingsComponent />
                 </ScrollView>

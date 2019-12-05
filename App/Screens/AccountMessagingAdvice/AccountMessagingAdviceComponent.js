@@ -95,7 +95,114 @@ class AccountMessagingAdviceComponent extends Component {
 
     navigategeneralSettings = () => this.props.navigation.navigate('generalSettings');
 
-    componentDidMount() {
+    componentDidMount() {     
+        if (this.props && this.props.accMessageAdviceinitialState){
+            (this.props.accMessageAdviceinitialState.gettingStartedSwitchOff)
+                this.setState({ 
+                    gettingStartedSwitchOff: this.props.accMessageAdviceinitialState.gettingStartedSwitchOff, 
+                    gettingStartedSwitchOn: this.props.accMessageAdviceinitialState.gettingStartedSwitchOn 
+                });
+            (this.props.accMessageAdviceinitialState.livingSwitchOff)
+                this.setState({ 
+                    livingSwitchOff: this.props.accMessageAdviceinitialState.livingSwitchOff, 
+                    livingSwitchOn: this.props.accMessageAdviceinitialState.livingSwitchOn 
+                });
+            (this.props.accMessageAdviceinitialState.growingSwitchOff)
+                this.setState({ 
+                    growingSwitchOff: this.props.accMessageAdviceinitialState.growingSwitchOff, 
+                    growingSwitchOn: this.props.accMessageAdviceinitialState.growingSwitchOn 
+                });
+            (this.props.accMessageAdviceinitialState.eastPlanningSwitchOff)
+                this.setState({ 
+                    eastPlanningSwitchOff: this.props.accMessageAdviceinitialState.eastPlanningSwitchOff,
+                    eastPlanningSwitchOn: this.props.accMessageAdviceinitialState.eastPlanningSwitchOn,
+                 });
+            (this.props.accMessageAdviceinitialState.taxCenterSwitchOff)
+                this.setState({ 
+                    taxCenterSwitchOff: this.props.accMessageAdviceinitialState.taxCenterSwitchOff,
+                    taxCenterSwitchOn: this.props.accMessageAdviceinitialState.taxCenterSwitchOn
+                 });
+            (this.props.accMessageAdviceinitialState.understandingInvestSwitchOff) 
+                this.setState({ 
+                    understandingInvestSwitchOff: this.props.accMessageAdviceinitialState.understandingInvestSwitchOff,
+                    understandingInvestSwitchOn: this.props.accMessageAdviceinitialState.understandingInvestSwitchOn,
+                });
+            (this.props.accMessageAdviceinitialState.saveBudgetSwitchOff)
+                this.setState({ 
+                    saveBudgetSwitchOff: this.props.accMessageAdviceinitialState.saveBudgetSwitchOff,
+                    saveBudgetSwitchOn: this.props.accMessageAdviceinitialState.saveBudgetSwitchOn
+                });
+            (this.props.accMessageAdviceinitialState.debtCreditSwitchOff)
+                this.setState({ 
+                    debtCreditSwitchOff: this.props.accMessageAdviceinitialState.debtCreditSwitchOff,
+                    debtCreditSwitchOn: this.props.accMessageAdviceinitialState.debtCreditSwitchOn
+                });
+            (this.props.accMessageAdviceinitialState.financialSetSwitchOff)
+                this.setState({ 
+                    financialSetSwitchOff: this.props.accMessageAdviceinitialState.financialSetSwitchOff,
+                    financialSetSwitchOn: this.props.accMessageAdviceinitialState.financialSetSwitchOn
+                });
+            (this.props.accMessageAdviceinitialState.getMarriedSwitchOff)    
+                this.setState({
+                     getMarriedSwitchOff: this.props.accMessageAdviceinitialState.getMarriedSwitchOff, 
+                     getMarriedSwitchOn: this.props.accMessageAdviceinitialState.getMarriedSwitchOn, 
+                    });
+            (this.props.accMessageAdviceinitialState.becomeParentSwitchOff)
+                this.setState({ 
+                    becomeParentSwitchOff: this.props.accMessageAdviceinitialState.becomeParentSwitchOff,
+                    becomeParentSwitchOn: this.props.accMessageAdviceinitialState.becomeParentSwitchOn
+                 });
+            (this.props.accMessageAdviceinitialState.parentingSwitchOff)
+                this.setState({
+                     parentingSwitchOff: this.props.accMessageAdviceinitialState.parentingSwitchOff, 
+                     parentingSwitchOn: this.props.accMessageAdviceinitialState.parentingSwitchOn
+                    });
+            (this.props.accMessageAdviceinitialState.youngAdultSwitchOff)
+                this.setState({ 
+                    youngAdultSwitchOff: this.props.accMessageAdviceinitialState.youngAdultSwitchOff,
+                    youngAdultSwitchOn: this.props.accMessageAdviceinitialState.youngAdultSwitchOn  
+                });
+            (this.props.accMessageAdviceinitialState.getDivorceSwitchOff)
+                this.setState({ 
+                    getDivorceSwitchOff: this.props.accMessageAdviceinitialState.getDivorceSwitchOff,
+                    getDivorceSwitchOn: this.props.accMessageAdviceinitialState.getDivorceSwitchOn 
+                });
+            (this.props.accMessageAdviceinitialState.lossOfLovedSwitchOff) 
+                this.setState({ 
+                    lossOfLovedSwitchOff: this.props.accMessageAdviceinitialState.lossOfLovedSwitchOff, 
+                    lossOfLovedSwitchOn: this.props.accMessageAdviceinitialState.lossOfLovedSwitchOn
+                });   
+            (this.props.accMessageAdviceinitialState.lifeInsuranceSwitchOff)
+                this.setState({
+                    lifeInsuranceSwitchOff: this.props.accMessageAdviceinitialState.lifeInsuranceSwitchOff, 
+                    lifeInsuranceSwitchOn: this.props.accMessageAdviceinitialState.lifeInsuranceSwitchOn 
+                });
+            (this.props.accMessageAdviceinitialState.healthInsuranceSwitchOff)
+                this.setState({
+                    healthInsuranceSwitchOff: this.props.accMessageAdviceinitialState.healthInsuranceSwitchOff,
+                    healthInsuranceSwitchOn: this.props.accMessageAdviceinitialState.healthInsuranceSwitchOn  
+                });
+            (this.props.accMessageAdviceinitialState.joiningMilitarySwitchOff) 
+                this.setState({ 
+                    joiningMilitarySwitchOff: this.props.accMessageAdviceinitialState.joiningMilitarySwitchOff,
+                    joiningMilitarySwitchOn: this.props.accMessageAdviceinitialState.joiningMilitarySwitchOn
+                 });  
+            (this.props.accMessageAdviceinitialState.deploymentSwitchOff)
+                this.setState({
+                     deploymentSwitchOff: this.props.accMessageAdviceinitialState.deploymentSwitchOff,
+                     deploymentSwitchOn: this.props.accMessageAdviceinitialState.deploymentSwitchOn
+                     });
+            (this.props.accMessageAdviceinitialState.pcsSwitchOff)
+                this.setState({ 
+                    pcsSwitchOff: this.props.accMessageAdviceinitialState.pcsSwitchOff,
+                    pcsSwitchOn: this.props.accMessageAdviceinitialState.pcsSwitchOn
+                 });
+            (this.props.accMessageAdviceinitialState.leaveMilitarySwitchOff)
+                this.setState({
+                    leaveMilitarySwitchOff: this.props.accMessageAdviceinitialState.leaveMilitarySwitchOff, 
+                    leaveMilitarySwitchOn: this.props.accMessageAdviceinitialState.leaveMilitarySwitchOn
+                });
+        }                 
     }
 
     setStateUpdates = (fromlist) => () => {
@@ -317,7 +424,74 @@ class AccountMessagingAdviceComponent extends Component {
     }    
 
     saveButtonAction = () =>{
-       console.log('Save Button Clicked...');      
+       console.log('Save Button Clicked...');           
+
+       const payloadData = {
+            gettingStartedSwitchOff: this.state.gettingStartedSwitchOff,    
+            gettingStartedSwitchOn: this.state.gettingStartedSwitchOn,   
+
+            livingSwitchOff: this.state.livingSwitchOff,    
+            livingSwitchOn: this.state.livingSwitchOn,    
+
+            growingSwitchOff: this.state.growingSwitchOff,   
+            growingSwitchOn: this.state.growingSwitchOn,   
+
+            eastPlanningSwitchOff: this.state.eastPlanningSwitchOff,
+            eastPlanningSwitchOn: this.state.eastPlanningSwitchOn,
+
+            taxCenterSwitchOff: this.state.taxCenterSwitchOff,
+            taxCenterSwitchOn: this.state.taxCenterSwitchOn,  
+
+            understandingInvestSwitchOff: this.state.understandingInvestSwitchOff,
+            understandingInvestSwitchOn: this.state.understandingInvestSwitchOn,
+
+            saveBudgetSwitchOff: this.state.saveBudgetSwitchOff,
+            saveBudgetSwitchOn: this.state.saveBudgetSwitchOn,
+
+            debtCreditSwitchOff: this.state.debtCreditSwitchOff,
+            debtCreditSwitchOn: this.state.debtCreditSwitchOn,
+
+            financialSetSwitchOff: this.state.financialSetSwitchOff,
+            financialSetSwitchOn: this.state.financialSetSwitchOn,
+
+            getMarriedSwitchOff: this.state.getMarriedSwitchOff,
+            getMarriedSwitchOn: this.state.getMarriedSwitchOn,
+
+            becomeParentSwitchOff: this.state.becomeParentSwitchOff,
+            becomeParentSwitchOn: this.state.becomeParentSwitchOn,
+
+            parentingSwitchOff: this.state.parentingSwitchOff,
+            parentingSwitchOn: this.state.parentingSwitchOn,
+
+            youngAdultSwitchOff: this.state.youngAdultSwitchOff,
+            youngAdultSwitchOn: this.state.youngAdultSwitchOn,
+
+            getDivorceSwitchOff: this.state.getDivorceSwitchOff,
+            getDivorceSwitchOn: this.state.getDivorceSwitchOn,
+
+            lossOfLovedSwitchOff: this.state.lossOfLovedSwitchOff,
+            lossOfLovedSwitchOn: this.state.lossOfLovedSwitchOn,
+
+            lifeInsuranceSwitchOff: this.state.lifeInsuranceSwitchOff,
+            lifeInsuranceSwitchOn: this.state.lifeInsuranceSwitchOn,
+
+            healthInsuranceSwitchOff: this.state.healthInsuranceSwitchOff,
+            healthInsuranceSwitchOn: this.state.healthInsuranceSwitchOn,
+
+            joiningMilitarySwitchOff: this.state.joiningMilitarySwitchOff,
+            joiningMilitarySwitchOn: this.state.joiningMilitarySwitchOn,
+
+            deploymentSwitchOff: this.state.deploymentSwitchOff,
+            deploymentSwitchOn: this.state.deploymentSwitchOn,
+
+            pcsSwitchOff: this.state.pcsSwitchOff,
+            pcsSwitchOn: this.state.pcsSwitchOn,
+
+            leaveMilitarySwitchOff: this.state.leaveMilitarySwitchOff,   
+            leaveMilitarySwitchOn: this.state.leaveMilitarySwitchOn,   
+        }        
+        this.props.saveData(payloadData);
+        this.props.navigation.goBack();    
     }
 
     render() {

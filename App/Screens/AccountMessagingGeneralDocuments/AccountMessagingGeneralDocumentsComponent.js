@@ -7,16 +7,16 @@ import PropTypes from 'prop-types';
 import gblStrings from '../../Constants/GlobalStrings';
 
 const documentsTypes = [
-    { id: 0, name: gblStrings.settingAccountMessaging.accountMessagingGeneralOnline },
-    { id: 1, name: gblStrings.settingAccountMessaging.accountMessagingGeneralPaper },
-    { id: 2, name: gblStrings.settingAccountMessaging.accountMessagingGeneralLargePrint },
-    { id: 3, name: gblStrings.settingAccountMessaging.accountMessagingGeneralBraillePaper },
-    { id: 4, name: gblStrings.settingAccountMessaging.accountMessagingGeneralScreenReader }
+    { key: 'online', name: gblStrings.settingAccountMessaging.accountMessagingGeneralOnline },
+    { key: 'paper', name: gblStrings.settingAccountMessaging.accountMessagingGeneralPaper },
+    { key: 'largeprint', name: gblStrings.settingAccountMessaging.accountMessagingGeneralLargePrint },
+    { key: 'braille', name: gblStrings.settingAccountMessaging.accountMessagingGeneralBraillePaper },
+    { key: 'screen', name: gblStrings.settingAccountMessaging.accountMessagingGeneralScreenReader }
 ];
 
 const documentsTypesConfirm = [
-    { id: 0, name: gblStrings.common.yes },
-    { id: 1, name: gblStrings.common.no }   
+    { key: 'confirm_yes', name: gblStrings.common.yes },
+    { key: 'confirm_no', name: gblStrings.common.no }   
 ];
 
 class AccountMessagingGeneralDocumentsComponent extends Component {
@@ -51,27 +51,39 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
     }
 
     componentDidMount() {
+        if (this.props && this.props.accMessageDocumentinitialState && this.props.accMessageDocumentinitialState.selectedTaxDocumentsItemID) {
+            this.setState({ selectedTaxDocumentsItemID: this.props.accMessageDocumentinitialState.selectedTaxDocumentsItemID });
+        }
+        if (this.props && this.props.accMessageDocumentinitialState && this.props.accMessageDocumentinitialState.selectedConfirmItemID) {
+            this.setState({ selectedConfirmItemID: this.props.accMessageDocumentinitialState.selectedConfirmItemID });
+        }
+        if (this.props && this.props.accMessageDocumentinitialState && this.props.accMessageDocumentinitialState.selectedGeneralDocumentsAnnualItemID) {
+            this.setState({ selectedGeneralDocumentsAnnualItemID: this.props.accMessageDocumentinitialState.selectedGeneralDocumentsAnnualItemID });
+        }
+        if (this.props && this.props.accMessageDocumentinitialState && this.props.accMessageDocumentinitialState.selectedGeneralDocumentsPrivacyItemID) {
+            this.setState({ selectedGeneralDocumentsPrivacyItemID: this.props.accMessageDocumentinitialState.selectedGeneralDocumentsPrivacyItemID });
+        }
     }
 
     onSelected = (item,fromType) =>()=> {        
         switch(fromType){
             case 'taxDocuments':
             this.setState({
-                    selectedTaxDocumentsItemID: item.id,
+                    selectedTaxDocumentsItemID: item.key,
                     selectedTaxDocumentsItemName: item.name              
                 }
             );             
             break;
             case 'generalDocumentsAnnual':
             this.setState({
-                    selectedGeneralDocumentsAnnualItemID: item.id,
+                    selectedGeneralDocumentsAnnualItemID: item.key,
                     selectedGeneralDocumentsAnnualItemName: item.name              
                 }
             );  
             break;
             case 'generalDocumentsPrivacy':
             this.setState({
-                    selectedGeneralDocumentsPrivacyItemID: item.id,
+                    selectedGeneralDocumentsPrivacyItemID: item.key,
                     selectedGeneralDocumentsPrivacyItemName: item.name              
                 }
             );  
@@ -81,7 +93,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
 
     onSelectedConfirm = (item) => () =>{        
         this.setState({
-                selectedConfirmItemID: item.id,
+                selectedConfirmItemID: item.key,
                 selectedConfirmItemName: item.name              
             }
         );     
@@ -89,6 +101,21 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
 
     saveButtonAction = () => {
         console.log('Save Button Clicked...');           
+        console.log('---Tax Documents---');
+        console.log(this.state.selectedTaxDocumentsItemName+":",this.state.selectedTaxDocumentsItemID);
+        console.log(this.state.selectedConfirmItemName+":",this.state.selectedConfirmItemID);
+        console.log('---General Documents---');
+        console.log(this.state.selectedGeneralDocumentsAnnualItemName+":",this.state.selectedGeneralDocumentsAnnualItemID);
+        console.log(this.state.selectedGeneralDocumentsPrivacyItemName+":",this.state.selectedGeneralDocumentsPrivacyItemID);  
+
+        const payloadData = {
+            selectedTaxDocumentsItemID : this.state.selectedTaxDocumentsItemID,
+            selectedConfirmItemID:this.state.selectedConfirmItemID,
+            selectedGeneralDocumentsAnnualItemID: this.state.selectedGeneralDocumentsAnnualItemID,
+            selectedGeneralDocumentsPrivacyItemID: this.state.selectedGeneralDocumentsPrivacyItemID,    
+        }        
+        this.props.saveData(payloadData);
+        this.props.navigation.goBack();        
     }
 
     renderToolTip(){       
@@ -179,9 +206,9 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                             {
                                 documentsTypes.map((item) => {
                                 return (
-                                    <View key={item.id}>
+                                    <View key={item.key}>
                                         <CustomRadio
-                                            key={item.id}
+                                            key={item.key}
                                             size={30}
                                             itemBottom={10}
                                             itemTop={10}
@@ -191,11 +218,11 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                             label={item.name}     
                                             descLabelStyle={styles.lblRadioDescTxt}
                                             descLabel={""}                                                             
-                                            selected={(this.state.selectedTaxDocumentsItemID !== "" && item.id == this.state.selectedTaxDocumentsItemID) ? true : false}
+                                            selected={(this.state.selectedTaxDocumentsItemID !== "" && item.key == this.state.selectedTaxDocumentsItemID) ? true : false}
                                             onPress={this.onSelected(item,'taxDocuments')}
                                         />
                                         {
-                                        (this.state.selectedTaxDocumentsItemID !== "" && item.id == this.state.selectedTaxDocumentsItemID && item.id == 0) ? 
+                                        (this.state.selectedTaxDocumentsItemID !== "" && (item.key == this.state.selectedTaxDocumentsItemID && item.key == 'online') || (item.key == this.state.selectedTaxDocumentsItemID && item.key == 'braille')) ? 
                                             this.renderToolTip()
                                         : null
                                         }                                 
@@ -212,7 +239,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                             {documentsTypesConfirm.map((item) => {
                                 return (
                                     <CustomRadio
-                                        key={item.id}
+                                        key={item.key}
                                         size={30}
                                         itemBottom={10}
                                         itemTop={10}
@@ -222,7 +249,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                         label={item.name}          
                                         descLabelStyle={styles.lblRadioDescTxt}
                                         descLabel={""}                                                              
-                                        selected={(this.state.selectedConfirmItemID !== "" && item.id == this.state.selectedConfirmItemID) ? true : false}
+                                        selected={(this.state.selectedConfirmItemID !== "" && item.key == this.state.selectedConfirmItemID) ? true : false}
                                         onPress={this.onSelectedConfirm(item)}
                                     />
                                 );
@@ -254,9 +281,9 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                             <View style={styles.radioBtnGrp} >
                                 {documentsTypes.map((item) => {
                                     return (
-                                        <View key={item.id}> 
+                                        <View key={item.key}> 
                                             <CustomRadio
-                                                key={item.id}
+                                                key={item.key}
                                                 size={30}
                                                 itemBottom={10}
                                                 itemTop={10}
@@ -266,11 +293,11 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                                 label={item.name}     
                                                 descLabelStyle={styles.lblRadioDescTxt}
                                                 descLabel={""}                                                                   
-                                                selected={(this.state.selectedGeneralDocumentsAnnualItemID !== "" && item.id == this.state.selectedGeneralDocumentsAnnualItemID) ? true : false}
+                                                selected={(this.state.selectedGeneralDocumentsAnnualItemID !== "" && item.key == this.state.selectedGeneralDocumentsAnnualItemID) ? true : false}
                                                 onPress={this.onSelected(item,'generalDocumentsAnnual')}
                                             />
                                             {
-                                                (this.state.selectedGeneralDocumentsAnnualItemID !== "" && item.id == this.state.selectedGeneralDocumentsAnnualItemID && item.id == 0) ? 
+                                                (this.state.selectedGeneralDocumentsAnnualItemID !== "" && (item.key == this.state.selectedGeneralDocumentsAnnualItemID && item.key == 'online') || (item.key == this.state.selectedGeneralDocumentsAnnualItemID && item.key == 'braille')) ? 
                                                     this.renderToolTip()
                                                 : null
                                             }    
@@ -287,9 +314,9 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                             <View style={styles.radioBtnGrp} >
                                 {documentsTypes.map((item) => {
                                     return (
-                                        <View key={item.id}>
+                                        <View key={item.key}>
                                             <CustomRadio
-                                                key={item.id}
+                                                key={item.key}
                                                 size={30}
                                                 itemBottom={10}
                                                 itemTop={10}
@@ -299,11 +326,11 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                                 label={item.name}      
                                                 descLabelStyle={styles.lblRadioDescTxt}
                                                 descLabel={""}                                                                  
-                                                selected={(this.state.selectedGeneralDocumentsPrivacyItemID !== "" && item.id == this.state.selectedGeneralDocumentsPrivacyItemID) ? true : false}
+                                                selected={(this.state.selectedGeneralDocumentsPrivacyItemID !== "" && item.key == this.state.selectedGeneralDocumentsPrivacyItemID) ? true : false}
                                                 onPress={this.onSelected(item,'generalDocumentsPrivacy')}
                                             />
                                             {
-                                                (this.state.selectedGeneralDocumentsPrivacyItemID !== "" && item.id == this.state.selectedGeneralDocumentsPrivacyItemID && item.id == 0) ? 
+                                                (this.state.selectedGeneralDocumentsPrivacyItemID !== "" && (item.key == this.state.selectedGeneralDocumentsPrivacyItemID && item.key == 'online') || (item.key == this.state.selectedGeneralDocumentsPrivacyItemID && item.key == 'braille')) ? 
                                                     this.renderToolTip()
                                                 : null
                                             }  
@@ -345,7 +372,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
 }
 
 AccountMessagingGeneralDocumentsComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),    
 };
 
 AccountMessagingGeneralDocumentsComponent.defaultProps = {

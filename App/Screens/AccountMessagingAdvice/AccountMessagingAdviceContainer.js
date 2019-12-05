@@ -1,18 +1,17 @@
 import { connect } from 'react-redux';
 import AccountMessagingAdviceComponent from './AccountMessagingAdviceComponent';
-import { getLogin } from '../../Reducers';
-import { loginActions } from '../../Actions';
+import { accMessagingAdviceActions } from "../../Shared/Actions";
 
 /*----------------------
                                   Redux Methods
                                                              -------------------------- */
 
 const mapStateToProps = (state /* , props */) => ({
-  dashboardData: getLogin(state),
+  accMessageAdviceinitialState: state.accMessagingAdviceData,  
 });
 
 const mapDispatchToProps = {
-  ...loginActions,
+  ...accMessagingAdviceActions,
 };
 
 export default connect(
