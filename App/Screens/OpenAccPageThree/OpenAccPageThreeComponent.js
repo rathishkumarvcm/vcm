@@ -9,32 +9,13 @@ import PropTypes from "prop-types";
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import InvestmentDetails from '../Models/InvestmentDetails';
 
-const addBankAccountType = [
-    { index1: 0, question: gblStrings.addBankAccount.accountTypeSaving },
-    { index2: 1, question: gblStrings.addBankAccount.accountTypeChecking },
-];
+
 
 const dummyData = [
     { "key": "key1", "value": "Option1" },
     { "key": "key2", "value": "Option2" }
 ];
 
-
-const fundingSourceList = [
-    {
-        "key": "pers_check",
-        "value": "Personal Check"
-    },
-    {
-        "key": "wire transfer",
-        "value": "Wire Transfer"
-    },
-    {
-        "key": "government allotment",
-        "value": "Government Allotment"
-    }
-
-];
 
 var fundList = [
     /* {
@@ -59,7 +40,8 @@ const fundingOptionsData = [
         "value": "Initial Investment"
     },
     {
-        "key": "init_mon", "value": "Initial and Monthly Investment"
+        "key": "init_mon",
+        "value": "Initial and Monthly Investment"
     }
 ];
 
@@ -196,6 +178,8 @@ class OpenAccPageThreeComponent extends Component {
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
+            isValidationSuccess: true,
+            errMsg:"",
             minCount: 5,
             fundList: [...fundList.map(v => ({ ...v, isActive: false }))],
             fundingSourceList: [],

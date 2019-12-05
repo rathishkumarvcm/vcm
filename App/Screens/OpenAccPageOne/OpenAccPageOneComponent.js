@@ -66,7 +66,8 @@ class OpenAccPageOneComponent extends Component {
             selectedItemID: "",
             selectedItemName: "",
             accType: "",
-            isValidationSuccess: false
+            isValidationSuccess: true,
+            errMsg:""
 
         };
     }
@@ -120,15 +121,6 @@ class OpenAccPageOneComponent extends Component {
     }
     onSelected = (item) => () => {
         console.log("item: " + item.key);
-        /* this.setState(
-             {
-                 selectedItemID: item.id,
-                 selectedItemName: item.name,
-                 accType: item.accType,
-                 regPlanName: item.name,
-                 isValidationSuccess: true
-             }
-         );*/
         this.setState(
             {
                 selectedItemID: item.key,

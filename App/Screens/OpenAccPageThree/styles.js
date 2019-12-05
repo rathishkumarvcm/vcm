@@ -188,11 +188,6 @@ export const styles = StyleSheet.create({
         marginTop:scaledHeight(19),
         flexDirection:'row'
     },
-    radioBtnGrp:{
-        flexGrow:1,
-        marginTop:scaledHeight(19),
-        flexDirection:'row'
-    },
     radioBtnColGrp:{
         flexGrow:1,
         marginTop:scaledHeight(19)
