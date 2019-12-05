@@ -8,7 +8,6 @@ import PropTypes from "prop-types";
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import { scaledHeight } from '../../Utils/Resolution';
 
-
 const pageOne = {
     "gen_inv_acct": {
         "pageName": "Non IRA Types",
@@ -55,121 +54,7 @@ const pageOne = {
 };
 
 
-const nonIRAAccTypes = [
-    {
-        id: 0,
-        name: 'Individual',
-        desc: 'Lorum ipsium individual account mandatory fields confirmation required helapfule',
-        group: "For Individuals",
-        accType: 'Individual Acccount'
 
-    },
-    {
-        id: 1,
-        name: 'Joint Tenants With Right of Survivorship',
-        desc: 'Lorum ipsium individual account mandatory fields confirmation required helapfule',
-        group: "For Individuals",
-        accType: 'Joint Account'
-
-
-    },
-    {
-        id: 2,
-        name: 'Joint Tenants in Common',
-        desc: 'Lorum ipsium individual account mandatory fields confirmation required helapfule',
-        group: "For Individuals",
-        accType: 'Joint Account'
-
-
-    },
-    {
-        id: 3,
-        name: 'Joint Tenants by Entirety',
-        desc: 'Lorum ipsium individual account mandatory fields confirmation required helapfule',
-        group: "For Individuals",
-        accType: 'Joint Account'
-
-
-
-    }
-];
-const IRAAccTypes = [
-    {
-        id: 0,
-        name: 'dTraditional IRA',
-        desc: 'Lorum ipsium individual account mandatory fields confirmation required helapfule',
-        group: "For Individuals",
-        accType: 'Retirement Account'
-
-
-    },
-    {
-        id: 1,
-        name: 'dRoth IRA',
-        desc: 'Lorum ipsium individual account mandatory fields confirmation required helapfule',
-        group: "For Individuals",
-        accType: 'Retirement Account'
-
-    }
-];
-const IRAAccTypes1 = [
-    {
-        id: 2,
-        name: 'dSEP IRA (Paper Application)',
-        desc: 'Lorum ipsium individual account mandatory fields confirmation required helapfule',
-        group: "For Self-Employed or Small Business",
-        accType: 'Retirement Account'
-
-    },
-    {
-        id: 3,
-        name: 'dSimple IRA (Paper Application)',
-        desc: 'Lorum ipsium individual account mandatory fields confirmation required helapfule',
-        group: "For Self-Employed or Small Business",
-        accType: 'Retirement Account'
-
-
-    }
-];
-
-const childInvest = [
-    {
-        id: 0,
-        name: '529 College Saving Plan',
-        desc: 'Lorum ipsium individual account mandatory fields confirmation required helapfule',
-        group: "An account designed to encourage savings for education or other expenses",
-        accType: '529 Plan'
-    },
-    {
-        id: 1,
-        name: 'Uniforms Gifts/Trnsfers to Minors (UGMA/UTMA) ',
-        desc: 'Lorum ipsium individual account mandatory fields confirmation required helapfule',
-        group: "An account designed to encourage savings for education or other expenses",
-        accType: 'UGMA/UTMA Account'
-
-
-    }
-];
-
-const specialtyAcc = [
-    {
-        id: 0,
-        name: 'Trust Account(Paper Applcation)',
-        desc: 'Lorum ipsium individual account mandatory fields confirmation required helapfule',
-        group: "An account designed to encourage savings for education or other expenses",
-        accType: 'Specialty Account'
-
-    },
-    {
-        id: 1,
-        name: 'Business Entity and Organization (Paper Application)',
-        desc: 'Lorum ipsium individual account mandatory fields confirmation required helapfule',
-        group: "An account designed to encourage savings for education or other expenses",
-        accType: 'Specialty Account'
-
-
-    }
-];
 
 
 class OpenAccPageOneComponent extends Component {
@@ -202,7 +87,7 @@ class OpenAccPageOneComponent extends Component {
         this.props.getAccountSubTypes(payload);
     }
     componentDidUpdate(prevProps, prevState) {
-        console.log("componentDidUpdate::::> ");
+        console.log("componentDidUpdate::::> "+prevState);
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.ACCT_TYPE_SAVE_OPENING_ACCT;
             if (this.props.accOpeningData[responseKey]) {
@@ -211,18 +96,16 @@ class OpenAccPageOneComponent extends Component {
                     if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
                         let msg = tempResponse.message;
                         console.log("Account Type Saved ::: :: " + msg);
-                        alert(tempResponse.result)
+                        alert(tempResponse.result);
                     } else {
-                        alert(tempResponse.message)
+                        alert(tempResponse.message);
                     }
                 }
             }
         }
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return true;
-    }
+
     /*----------------------
                                  Button Events 
                                                                  -------------------------- */
@@ -267,7 +150,7 @@ class OpenAccPageOneComponent extends Component {
         const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
         console.log("selectedAccount::::> " + selectedAccount);
 
-        let payload  = {
+        let payload = {
             "onlineId": "arumugamt",
             "customerId": "761735",
             "accountType": this.state.selectedItemID,
@@ -279,9 +162,9 @@ class OpenAccPageOneComponent extends Component {
             payload = {
                 ...payload,
                 ...this.props.accOpeningData.savedAccData
-            }
+            };
         }
-        return payload
+        return payload;
 
     }
 
@@ -348,52 +231,7 @@ class OpenAccPageOneComponent extends Component {
                                  Render Methods
                                                                  -------------------------- */
 
-    renderRadio = (radioName, radioSize, componentStyle, layoutStyle) => {
-        console.log("renderRadio::: " + radioName);
-        let radioData = dummyData;
-        switch (radioName) {
-            case "selectedDividendCapitalGains":
-                tempkey = "acct_pref";
-                break;
-            case "selectedProspectusReportsRef":
-                tempkey = "stmt_pros_rep";
-                break;
-        }
-
-        console.log("tempkey::" + tempkey)
-
-        if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
-            radioData = this.props.masterLookupStateData[tempkey].value;
-        }
-
-        let radioCoponents = [];
-        for (let i = 0; i < radioData.length; i++) {
-            radioCoponents.push(
-                <CustomRadio
-                    key={radioData[i].key}
-                    componentStyle={componentStyle}
-                    size={radioSize}
-                    outerCicleColor={"#DEDEDF"}
-                    innerCicleColor={"#61285F"}
-                    labelStyle={styles.lblRadioBtnTxt}
-                    label={radioData[i].value}
-                    descLabelStyle={styles.lblRadioDescTxt}
-                    descLabel={radioData[i].value}
-                    selected={(this.state[radioName] !== null && this.state[radioName] == radioData[i].value) ? true : false}
-                    onPress={this.onPressRadio(radioName, radioData[i].value)}
-                />
-            );
-        }
-        return (
-            <View style={layoutStyle}>
-                {radioCoponents}
-            </View>
-        );
-
-    }
-
     renderRadioBtnGrp = () => {
-        const { navigation } = this.props;
         let isSectionAvailable = false;
         let sectionData = [];
         let result = [];
@@ -404,7 +242,7 @@ class OpenAccPageOneComponent extends Component {
                 accSubTypes = result.subtypes;
             } else {
                 sectionData = result.value;
-                isSectionAvailable = true
+                isSectionAvailable = true;
             }
         }
 
@@ -556,6 +394,11 @@ class OpenAccPageOneComponent extends Component {
 }
 
 OpenAccPageOneComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object).isRequired,
+    navigation: PropTypes.instanceOf(Object),
+    accOpeningData: PropTypes.instanceOf(Object),
+    getAccountSubTypes:PropTypes.func,
+    saveData:PropTypes.func,
+    saveAccountOpening:PropTypes.func,
+    selectAccTypes:PropTypes.func
 };
 export default OpenAccPageOneComponent;
