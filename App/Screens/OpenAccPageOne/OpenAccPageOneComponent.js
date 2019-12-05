@@ -134,7 +134,8 @@ class OpenAccPageOneComponent extends Component {
                 selectedItemID: item.key,
                 selectedItemName: item.value,
                 accType: item.value,
-                isValidationSuccess: true
+                isValidationSuccess: true,
+                errMsg:""
 
             }
         );
@@ -222,7 +223,13 @@ class OpenAccPageOneComponent extends Component {
 
         if (!isValidationSuccess) {
             alert(errMsg);
+           
         }
+
+        this.setState({
+            isValidationSuccess: isValidationSuccess,
+            errMsg:isValidationSuccess == false ? errMsg:""
+         });
 
         return isValidationSuccess;
 
@@ -342,6 +349,11 @@ class OpenAccPageOneComponent extends Component {
                         </View>
 
                         <Text style={styles.lblLine} />
+                        {!this.state.isValidationSuccess &&
+                            <Text style={styles.errMsg}>
+                                {this.state.errMsg}
+                            </Text>
+                        }
                         {this.renderRadioBtnGrp()}
                     </View>
 

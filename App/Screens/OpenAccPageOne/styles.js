@@ -199,7 +199,12 @@ export const styles = StyleSheet.create({
         flexWrap:'wrap',
         opacity:.75
     },
-    
+    errMsg:{
+        color:'red',
+        fontSize:scaledHeight(12),
+        marginVertical: scaledHeight(12),
+
+      },
     customTxtBox:{
         marginTop: scaledHeight(9),
         width : '100%'
@@ -348,8 +353,6 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(20),
         textAlign: 'center',
         lineHeight: scaledHeight(35)
-    },
-
-
+    }
 
 });
