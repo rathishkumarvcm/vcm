@@ -149,51 +149,55 @@ class ProfileSettingsComponent extends Component {
             })
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.profileAnnualIncome) {
+        // Financial Informations 
+
+        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileAnnualIncome) {
             this.setState({
-                profileAnnualIncome: this.props.profileState.profileAnnualIncome
+                profileAnnualIncome: this.props.profileState.financialInformations.profileAnnualIncome
             })
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.profileTaxBracket) {
+        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileTaxBracket) {
             this.setState({
-                profileTaxBracket: this.props.profileState.profileTaxBracket
+                profileTaxBracket: this.props.profileState.financialInformations.profileTaxBracket
             })
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.profileNetWorth) {
+        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileNetWorth) {
             this.setState({
-                profileNetWorth: this.props.profileState.profileNetWorth
+                profileNetWorth: this.props.profileState.financialInformations.profileNetWorth
             })
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.profileTaxFilling) {
+        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileTaxFilling) {
             this.setState({
-                profileTaxFilling: this.props.profileState.profileTaxFilling
+                profileTaxFilling: this.props.profileState.financialInformations.profileTaxFilling
             })
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.profileEmploymentStatus) {
+        // Employment Informations
+
+        if (this.props && this.props.profileState && this.props.profileState.employmentInformations && this.props.profileState.employmentInformations.profileEmploymentStatus) {
             this.setState({
-                profileEmploymentStatus: this.props.profileState.profileEmploymentStatus
+                profileEmploymentStatus: this.props.profileState.employmentInformations.profileEmploymentStatus
             })
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.profileEmpIndustry) {
+        if (this.props && this.props.profileState && this.props.profileState.employmentInformations && this.props.profileState.employmentInformations.profileEmpIndustry) {
             this.setState({
-                profileEmpIndustry: this.props.profileState.profileEmpIndustry
+                profileEmpIndustry: this.props.profileState.employmentInformations.profileEmpIndustry
             })
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.profileEmpOccupation) {
+        if (this.props && this.props.profileState && this.props.profileState.employmentInformations && this.props.profileState.employmentInformations.profileEmpOccupation) {
             this.setState({
-                profileEmpOccupation: this.props.profileState.profileEmpOccupation
+                profileEmpOccupation: this.props.profileState.employmentInformations.profileEmpOccupation
             })
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.profileEmpEmployer) {
+        if (this.props && this.props.profileState && this.props.profileState.employmentInformations && this.props.profileState.employmentInformations.profileEmpEmployer) {
             this.setState({
-                profileEmpEmployer: this.props.profileState.profileEmpEmployer
+                profileEmpEmployer: this.props.profileState.employmentInformations.profileEmpEmployer
             })
         }
 
