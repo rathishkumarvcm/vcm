@@ -264,11 +264,16 @@ class OpenAccPageOneComponent extends Component {
     }
 
     getPayload = () => {
+        const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
+        console.log("selectedAccount::::> " + selectedAccount);
+
         let payload  = {
             "onlineId": "arumugamt",
             "customerId": "761735",
             "accountType": this.state.selectedItemID,
+            "accountMainCategory":selectedAccount.value,
             "accountSubType": (this.props.accOpeningData && this.props.accOpeningData.accountSubType) ? this.props.accOpeningData.accountSubType.key : "-",
+            "accountSubCategory": (this.props.accOpeningData && this.props.accOpeningData.accountSubType) ? this.props.accOpeningData.accountSubType.value : "-",
         };
         if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
             payload = {
@@ -308,11 +313,7 @@ class OpenAccPageOneComponent extends Component {
     }
     onClickSave = () => {
         if (this.validateFields()) {
-            const payload = {
-                "onlineId": "aaru",
-                "customerId": "123456",
-                "accountType": this.state.selectedItemID
-            }
+            const payload = this.getPayload();
             this.props.saveAccountOpening("OpenAccPageOne", payload);
         }
     }
@@ -393,7 +394,6 @@ class OpenAccPageOneComponent extends Component {
 
     renderRadioBtnGrp = () => {
         const { navigation } = this.props;
-        const type = navigation.getParam('type', '');
         let isSectionAvailable = false;
         let sectionData = [];
         let result = [];
@@ -480,7 +480,9 @@ class OpenAccPageOneComponent extends Component {
     render() {
         console.log("RENDER::: OpenAccPageOne ::>>> ", this.props);
         const { navigation } = this.props;
-        const type = navigation.getParam('type', '');
+        const selectedAccount = navigation.getParam('selectedAccount', {});
+
+        const type = selectedAccount.key || "";
         let currentPage = 1;
         var nextBtnstyle = this.state.isValidationSuccess ? styles.normalBlackBtn : [styles.normalBlackBtn, { opacity: .45 }];
         return (
