@@ -37,6 +37,10 @@ class ProfilesAndPreferences extends Component {
     navigateBack = () => this.props.navigation.goBack();
 
     navigateProfile = () => this.props.navigation.navigate('profileSettings');
+
+    navigateDeliverySettings = () => this.props.navigation.navigate('deliverySettings');
+
+    navigateAccountMessaging = () => this.props.navigation.navigate('accountMessagingSettings');
     
     removeWelcomeText = () => {
         this.setState({showWelcomeText:false});
@@ -86,47 +90,51 @@ class ProfilesAndPreferences extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <View style={styles.optionContainer}>
-                        <GIcon
-                            name="view-grid"
-                            type="material-community"
-                            size={26}
-                            color="black"
-                        />
-                        <View style={styles.optionHeaderView}>
-                            <Text style={styles.optionHeaderText}>
-                                {gblStrings.userManagement.deliverySettings}
-                            </Text>
+                    <TouchableOpacity onPress={this.navigateDeliverySettings}>
+                        <View style={styles.optionContainer}>
+                            <GIcon
+                                name="view-grid"
+                                type="material-community"
+                                size={26}
+                                color="black"
+                            />
+                            <View style={styles.optionHeaderView}>
+                                <Text style={styles.optionHeaderText}>
+                                    {gblStrings.userManagement.deliverySettings}
+                                </Text>
+                            </View>
+
+                            <View style={styles.optionSubHeaderView}>
+                                <Text style={styles.optionSubHeaderText}>
+                                    {gblStrings.userManagement.managePersonalDetails}
+                                </Text>
+                            </View>
+
                         </View>
+                    </TouchableOpacity>
 
-                        <View style={styles.optionSubHeaderView}>
-                            <Text style={styles.optionSubHeaderText}>
-                                {gblStrings.userManagement.managePersonalDetails}
-                            </Text>
+                    <TouchableOpacity onPress={this.navigateAccountMessaging}>
+                        <View style={styles.optionContainer}>
+                            <GIcon
+                                name="view-grid"
+                                type="material-community"
+                                size={26}
+                                color="black"
+                            />
+                            <View style={styles.optionHeaderView}>
+                                <Text style={styles.optionHeaderText}>
+                                    {gblStrings.userManagement.accouintMessaging}
+                                </Text>
+                            </View>
+
+                            <View style={styles.optionSubHeaderView}>
+                                <Text style={styles.optionSubHeaderText}>
+                                    {gblStrings.userManagement.managePersonalDetails}
+                                </Text>
+                            </View>
+
                         </View>
-
-                    </View>
-
-                    <View style={styles.optionContainer}>
-                        <GIcon
-                            name="view-grid"
-                            type="material-community"
-                            size={26}
-                            color="black"
-                        />
-                        <View style={styles.optionHeaderView}>
-                            <Text style={styles.optionHeaderText}>
-                                {gblStrings.userManagement.accouintMessaging}
-                            </Text>
-                        </View>
-
-                        <View style={styles.optionSubHeaderView}>
-                            <Text style={styles.optionSubHeaderText}>
-                                {gblStrings.userManagement.managePersonalDetails}
-                            </Text>
-                        </View>
-
-                    </View>
+                    </TouchableOpacity>
 
 
                     <TouchableOpacity onPress={this.navigateSecurityPreference}>

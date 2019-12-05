@@ -61,18 +61,83 @@ class DeliverySettingsComponent extends Component {
     }
     componentDidMount() {
         if (this.props && this.props.initialState && this.props.initialState.email) {
-            this.setState({
-                email: this.props.initialState.email
-            });
+            this.setState({ email: this.props.initialState.email});
         }
         if (this.props && this.props.initialState && this.props.initialState.phone) {
-            this.setState({
-                phoneno: this.props.initialState.phone
-            });
+            this.setState({ phoneno: this.props.initialState.phone});
+        }
+
+        if (this.props && this.props.deliverySettingsinitialState){
+            (this.props.deliverySettingsinitialState.emailUrgentSwitchOff)
+                this.setState({ 
+                    emailUrgentSwitchOn: this.props.deliverySettingsinitialState.emailUrgentSwitchOn, 
+                    emailUrgentSwitchOff: this.props.deliverySettingsinitialState.emailUrgentSwitchOff 
+                });
+            (this.props.deliverySettingsinitialState.emailNotificationSwitchOn)
+            this.setState({ 
+                emailNotificationSwitchOn: this.props.deliverySettingsinitialState.emailNotificationSwitchOn, 
+                emailNotificationSwitchOff: this.props.deliverySettingsinitialState.emailNotificationSwitchOff 
+            }); 
+            (this.props.deliverySettingsinitialState.emailGuidanceSwitchOn)
+                this.setState({ 
+                    emailGuidanceSwitchOn: this.props.deliverySettingsinitialState.emailGuidanceSwitchOn, 
+                    emailGuidanceSwitchOff: this.props.deliverySettingsinitialState.emailGuidanceSwitchOff
+                });  
+            (this.props.deliverySettingsinitialState.notificationUrgentSwitchOn)
+                this.setState({ 
+                    notificationUrgentSwitchOn: this.props.deliverySettingsinitialState.notificationUrgentSwitchOn, 
+                    notificationUrgentSwitchOff: this.props.deliverySettingsinitialState.notificationUrgentSwitchOff
+                }); 
+            (this.props.deliverySettingsinitialState.notificationNotificationSwitchOn)
+                this.setState({ 
+                    notificationNotificationSwitchOn: this.props.deliverySettingsinitialState.notificationNotificationSwitchOn, 
+                    notificationNotificationSwitchOff: this.props.deliverySettingsinitialState.notificationNotificationSwitchOff
+                }); 
+            (this.props.deliverySettingsinitialState.notificationGuidanceSwitchOn)
+                this.setState({ 
+                    notificationGuidanceSwitchOn: this.props.deliverySettingsinitialState.notificationGuidanceSwitchOn, 
+                    notificationGuidanceSwitchOff: this.props.deliverySettingsinitialState.notificationGuidanceSwitchOff
+                });  
+            (this.props.deliverySettingsinitialState.textUrgentSwitchOn)
+                this.setState({ 
+                    textUrgentSwitchOn: this.props.deliverySettingsinitialState.textUrgentSwitchOn, 
+                    textUrgentSwitchOff: this.props.deliverySettingsinitialState.textUrgentSwitchOff
+                }); 
+            (this.props.deliverySettingsinitialState.textNotificationSwitchOn)
+                this.setState({ 
+                    textNotificationSwitchOn: this.props.deliverySettingsinitialState.textNotificationSwitchOn, 
+                    textNotificationSwitchOff: this.props.deliverySettingsinitialState.textNotificationSwitchOff
+                }); 
+            (this.props.deliverySettingsinitialState.textGuidanceSwitchOn)
+                this.setState({ 
+                    textGuidanceSwitchOn: this.props.deliverySettingsinitialState.textGuidanceSwitchOn, 
+                    textGuidanceSwitchOff: this.props.deliverySettingsinitialState.textGuidanceSwitchOff
+                });
+
+            (this.props.deliverySettingsinitialState.preferenceMorning)
+                this.setState({ preferenceMorning: this.props.deliverySettingsinitialState.preferenceMorning }); 
+            (this.props.deliverySettingsinitialState.preferenceMidDay)
+                this.setState({ preferenceMidDay: this.props.deliverySettingsinitialState.preferenceMidDay });
+            (this.props.deliverySettingsinitialState.preferenceEarlyEvening)
+                this.setState({ preferenceEarlyEvening: this.props.deliverySettingsinitialState.preferenceEarlyEvening });
+            (this.props.deliverySettingsinitialState.preferenceNight)
+                this.setState({ preferenceNight: this.props.deliverySettingsinitialState.preferenceNight });                     
         }
     }
     goBack = () => {
         this.props.navigation.goBack();
+    };
+
+    navigateEditEmail = () =>{
+        this.props.navigation.navigate('editEmailInformation');
+    };
+
+    navigateEditPhone = () =>{
+        this.props.navigation.navigate('editPhoneInformation');
+    };
+
+    navigateEditNotification = () =>{
+        this.props.navigation.navigate('accountMessagingDeviceManagement');
     };
 
     setModalVisible = (visible) =>()=> {
@@ -211,7 +276,7 @@ class DeliverySettingsComponent extends Component {
         switch (fromview) {
             case 'morning':
                 this.setState({
-                    preferenceMorning: true,
+                    preferenceMorning: !this.state.preferenceMorning,
                     preferenceMidDay: false,
                     preferenceEarlyEvening: false,
                     preferenceNight: false,
@@ -220,7 +285,7 @@ class DeliverySettingsComponent extends Component {
             case 'midDay':
                 this.setState({
                     preferenceMorning: false,
-                    preferenceMidDay: true,
+                    preferenceMidDay: !this.state.preferenceMidDay,
                     preferenceEarlyEvening: false,
                     preferenceNight: false,
                 });
@@ -229,7 +294,7 @@ class DeliverySettingsComponent extends Component {
                 this.setState({
                     preferenceMorning: false,
                     preferenceMidDay: false,
-                    preferenceEarlyEvening: true,
+                    preferenceEarlyEvening: !this.state.preferenceEarlyEvening,
                     preferenceNight: false,
                 });
                 break;
@@ -238,14 +303,51 @@ class DeliverySettingsComponent extends Component {
                     preferenceMorning: false,
                     preferenceMidDay: false,
                     preferenceEarlyEvening: false,
-                    preferenceNight: true,
+                    preferenceNight: !this.state.preferenceNight,
                 });
                 break;
         }
     }
 
     saveButtonAction = () => {
-        console.log('Save Button Clicked...');        
+        console.log('Save Button Clicked...'); 
+
+        const payloadData = {                              
+                            
+            emailUrgentSwitchOn: this.state.emailUrgentSwitchOn,    
+            emailUrgentSwitchOff: this.state.emailUrgentSwitchOff,   
+
+            emailNotificationSwitchOn: this.state.emailNotificationSwitchOn,    
+            emailNotificationSwitchOff: this.state.emailNotificationSwitchOff,  
+            
+            emailGuidanceSwitchOn: this.state.emailGuidanceSwitchOn,    
+            emailGuidanceSwitchOff: this.state.emailGuidanceSwitchOff, 
+
+            notificationUrgentSwitchOn: this.state.notificationUrgentSwitchOn,    
+            notificationUrgentSwitchOff: this.state.notificationUrgentSwitchOff, 
+
+            notificationNotificationSwitchOn: this.state.notificationNotificationSwitchOn,    
+            notificationNotificationSwitchOff: this.state.notificationNotificationSwitchOff, 
+
+            notificationGuidanceSwitchOn: this.state.notificationGuidanceSwitchOn,    
+            notificationGuidanceSwitchOff: this.state.notificationGuidanceSwitchOff,
+
+            textUrgentSwitchOn: this.state.textUrgentSwitchOn,    
+            textUrgentSwitchOff: this.state.textUrgentSwitchOff,   
+
+            textNotificationSwitchOn: this.state.textNotificationSwitchOn,    
+            textNotificationSwitchOff: this.state.textNotificationSwitchOff,  
+            
+            textGuidanceSwitchOn: this.state.textGuidanceSwitchOn,    
+            textGuidanceSwitchOff: this.state.textGuidanceSwitchOff, 
+
+            preferenceMorning: this.state.preferenceMorning,
+            preferenceMidDay: this.state.preferenceMidDay,
+            preferenceEarlyEvening: this.state.preferenceEarlyEvening,
+            preferenceNight: this.state.preferenceNight          
+        }        
+        this.props.saveData(payloadData);
+        this.props.navigation.goBack();    
     }
 
     render() {
@@ -296,7 +398,7 @@ class DeliverySettingsComponent extends Component {
                         <Text style={styles.emailText}>
                             {gblStrings.settingsDeliveryPreference.deliveryPreferenceEmail}
                         </Text>
-                        <Text style={styles.emailEditText}>
+                        <Text style={styles.emailEditText} onPress={this.navigateEditEmail}>
                             {gblStrings.common.edit}
                         </Text>
                     </View>
@@ -422,7 +524,7 @@ class DeliverySettingsComponent extends Component {
                         <Text style={styles.pushNotificationDeviceText}>
                             {'iphone1'}
                         </Text>
-                        <Text style={styles.emailEditText}>
+                        <Text style={styles.emailEditText} onPress={this.navigateEditNotification}>
                             {gblStrings.common.edit}
                         </Text>
                     </View>
@@ -536,7 +638,7 @@ class DeliverySettingsComponent extends Component {
                         <Text style={styles.emailText}>
                             {gblStrings.settingsDeliveryPreference.deliveryPreferenceTextMessage}
                         </Text>
-                        <Text style={styles.emailEditText}>
+                        <Text style={styles.emailEditText} onPress={this.navigateEditPhone}>
                             {gblStrings.common.edit}
                         </Text>
                     </View>
@@ -884,6 +986,7 @@ class DeliverySettingsComponent extends Component {
 DeliverySettingsComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     initialState: PropTypes.instanceOf(Object).isRequired,
+    deliverySettingsinitialState: PropTypes.instanceOf(Object).isRequired,
 };
 
 DeliverySettingsComponent.defaultProps = {

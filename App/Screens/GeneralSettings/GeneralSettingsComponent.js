@@ -23,6 +23,7 @@ class GeneralSettingsComponent extends Component {
     
     navigateprofileSettings = ()=>this.props.navigation.navigate('profileSettings');    
     navigateaccountMessagingSettings = ()=>this.props.navigation.navigate('accountMessagingSettings'); 
+    navigateDeliverySettings = () => this.props.navigation.navigate('deliverySettings'); 
  
     render(){
         
@@ -47,154 +48,149 @@ class GeneralSettingsComponent extends Component {
                 </Text>
             </View>
 
-            <View style={styles.listContainer}>
-                <TouchableOpacity style={{position:'absolute',left:6,top:4,marginTop:scaledHeight(5)}} onPress={this.navigateprofileSettings}>
+            <TouchableOpacity onPress={this.navigateprofileSettings}>
+            <View style={styles.listContainer}>               
                     <GIcon 
-                        name="person"
-                        type="material"
-                        size={30}
-                        color="black"
-                    />
-                </TouchableOpacity>
-
+                        name="appstore1"
+                        type="antdesign"
+                        size={35}
+                        color="#000000"
+                    />                 
+                
                 <View style={styles.settingsView1}>
-                    <Text style={{ color:'#56565A',fontSize:scaledHeight(16),fontWeight:'bold',marginTop:scaledHeight(40)}}>
+                    <Text style={{ color:'#56565A',fontSize:scaledHeight(16),fontWeight:'bold'}}>
                         {"PROFILE"}
                     </Text>
                 </View>
 
                 <View style={styles.signInView}>
-                    <Text style={{color:'#B2B2B2',fontSize:scaledHeight(14),marginTop:scaledHeight(10)}}>
+                    <Text style={{color:'#B2B2B2',fontSize:scaledHeight(14)}}>
                         {"Manage your personal details"}
                     </Text>
-                </View>
-
+                </View>              
             </View>
+            </TouchableOpacity>
 
-            <View style={styles.listContainer}>
-                <TouchableOpacity style={{position:'absolute',left:6,top:4,marginTop:scaledHeight(5)}} onPress={this.selectTheState}>
+            <TouchableOpacity onPress={this.selectTheState}>
+            <View style={styles.listContainer}>                
                     <GIcon 
-                        name="mail"
-                        type="feather"
-                        size={30}
-                        color="black"
-                    />
-                </TouchableOpacity>
+                        name="appstore1"
+                        type="antdesign"
+                        size={35}
+                        color="#000000"
+                    />                
 
                 <View style={styles.settingsView1}>
-                    <Text style={{ color:'#56565A',fontSize:scaledHeight(16),fontWeight:'bold',marginTop:scaledHeight(40)}}>
+                    <Text style={{ color:'#56565A',fontSize:scaledHeight(16),fontWeight:'bold'}}>
                         {"COMMUNITY PROFILE"}
                     </Text>
                 </View>
 
                 <View style={styles.signInView}>
-                    <Text style={{color:'#B2B2B2',fontSize:scaledHeight(14),marginTop:scaledHeight(10)}}>
+                    <Text style={{color:'#B2B2B2',fontSize:scaledHeight(14)}}>
                         {"Manage your personal details"}
                     </Text>
-                </View>
-
+                </View>               
             </View>
+            </TouchableOpacity>
 
 
-            <View style={styles.listContainer}>
-                <TouchableOpacity style={{position:'absolute',left:6,top:4,marginTop:scaledHeight(5)}} onPress={this.selectTheState}>
+            <TouchableOpacity onPress={this.navigateDeliverySettings}>
+            <View style={styles.listContainer}>                
                     <GIcon 
-                        name="mail"
-                        type="feather"
-                        size={30}
-                        color="black"
-                    />
-                </TouchableOpacity>
+                        name="appstore1"
+                        type="antdesign"
+                        size={35}
+                        color="#000000"
+                    />                
 
                 <View style={styles.settingsView1}>
-                    <Text style={{ color:'#56565A',fontSize:scaledHeight(16),fontWeight:'bold',marginTop:scaledHeight(40)}}>
+                    <Text style={{ color:'#56565A',fontSize:scaledHeight(16),fontWeight:'bold'}}>
                         {"DELIVERY SETTINGS"}
                     </Text>
                 </View>
 
                 <View style={styles.signInView}>
-                    <Text style={{color:'#B2B2B2',fontSize:scaledHeight(14),marginTop:scaledHeight(10)}}>
+                    <Text style={{color:'#B2B2B2',fontSize:scaledHeight(14)}}>
                         {"Manage your personal details"}
                     </Text>
-                </View>
+                </View>               
 
             </View>
+            </TouchableOpacity>
 
 
-            <View style={styles.listContainer}>
-                <TouchableOpacity style={{position:'absolute',left:6,top:4,marginTop:scaledHeight(5)}} onPress={this.navigateaccountMessagingSettings}>
+            <TouchableOpacity onPress={this.navigateaccountMessagingSettings}>
+            <View style={styles.listContainer}>                
                     <GIcon 
-                        name="mail"
-                        type="feather"
-                        size={30}
-                        color="black"
-                    />
-                </TouchableOpacity>
+                        name="appstore1"
+                        type="antdesign"
+                        size={35}
+                        color="#000000"
+                    />                
 
                 <View style={styles.settingsView1}>
-                    <Text style={{ color:'#56565A',fontSize:scaledHeight(16),fontWeight:'bold',marginTop:scaledHeight(40)}}>
+                    <Text style={{ color:'#56565A',fontSize:scaledHeight(16),fontWeight:'bold'}}>
                         {"ACCOUNT MESSAGING"}
                     </Text>
                 </View>
 
                 <View style={styles.signInView}>
-                    <Text style={{color:'#B2B2B2',fontSize:scaledHeight(14),marginTop:scaledHeight(10)}}>
+                    <Text style={{color:'#B2B2B2',fontSize:scaledHeight(14)}}>
                         {"Manage your personal details"}
                     </Text>
-                </View>
-
+                </View>                
             </View>
+            </TouchableOpacity>
 
-            <View style={styles.listContainer}>
-                <TouchableOpacity style={{position:'absolute',left:6,top:4,marginTop:scaledHeight(5)}} onPress={this.selectTheState}>
+            <TouchableOpacity onPress={this.selectTheState}>
+            <View style={styles.listContainer}>                
                     <GIcon 
-                        name="mail"
-                        type="feather"
-                        size={30}
-                        color="black"
-                    />
-                </TouchableOpacity>
+                        name="appstore1"
+                        type="antdesign"
+                        size={35}
+                        color="#000000"
+                    />                
 
                 <View style={styles.settingsView1}>
-                    <Text style={{ color:'#56565A',fontSize:scaledHeight(16),fontWeight:'bold',marginTop:scaledHeight(40)}}>
+                    <Text style={{ color:'#56565A',fontSize:scaledHeight(16),fontWeight:'bold'}}>
                         {"SECURITY"}
                     </Text>
                 </View>
 
                 <View style={styles.signInView}>
-                    <Text style={{color:'#B2B2B2',fontSize:scaledHeight(14),marginTop:scaledHeight(10)}}>
+                    <Text style={{color:'#B2B2B2',fontSize:scaledHeight(14)}}>
                         {"Manage your personal details"}
                     </Text>
-                </View>
-
+                </View>               
             </View>
+            </TouchableOpacity>
 
 
-            <View style={styles.listContainer}>
-                <TouchableOpacity style={{position:'absolute',left:6,top:4,marginTop:scaledHeight(5)}} onPress={this.selectTheState}>
+            <TouchableOpacity onPress={this.selectTheState}>
+            <View style={styles.listContainer}>                
                     <GIcon 
-                        name="mail"
-                        type="feather"
-                        size={30}
-                        color="black"
+                        name="appstore1"
+                        type="antdesign"
+                        size={35}
+                        color="#000000"
                     />
-                </TouchableOpacity>
+                
 
                 <View style={styles.settingsView1}>
-                    <Text style={{ color:'#56565A',fontSize:scaledHeight(16),fontWeight:'bold',marginTop:scaledHeight(40)}}>
+                    <Text style={{ color:'#56565A',fontSize:scaledHeight(16),fontWeight:'bold'}}>
                         {"MARKETING & PRIVACY"}
                     </Text>
                 </View>
 
                 <View style={styles.signInView}>
-                    <Text style={{color:'#B2B2B2',fontSize:scaledHeight(14),marginTop:scaledHeight(10)}}>
+                    <Text style={{color:'#B2B2B2',fontSize:scaledHeight(14)}}>
                         {"Manage your personal details"}
                     </Text>
-                </View>
+                </View>              
 
             </View>
-
-            
+            </TouchableOpacity>           
 
             
             

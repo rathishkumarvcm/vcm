@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
     },
 
     settingsView1:{
-        marginTop:scaledHeight(18),
+        marginTop:scaledHeight(33),
         paddingLeft:'4%',
         paddingRight:'4%',
     },
@@ -71,13 +71,12 @@ export const styles = StyleSheet.create({
         borderWidth :1,
         borderColor:'#D4D4D4',
         backgroundColor:'#FFFFFF',
-        marginTop:scaledHeight(20),
-        width:'84%',
-        height:scaledHeight(140),
+        marginTop:scaledHeight(20),       
+        height:scaledHeight(160),
         borderRadius:scaledHeight(16),
-        marginLeft:'8%',
-        marginRight:'8%'
-
+        marginHorizontal: '4%',
+        alignItems:'center',
+        justifyContent:'center',               
     },
     signIntext:{
         color:'#486D89',
