@@ -140,6 +140,33 @@ class editAddFinancialInfoComponent extends Component {
     }
 
     componentDidMount() {
+
+        // Financial Informations 
+
+        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileAnnualIncome) {
+            this.setState({
+                dropDownFinancialValue: this.props.profileState.financialInformations.profileAnnualIncome
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileTaxBracket) {
+            this.setState({
+                taxBracketValue: this.props.profileState.financialInformations.profileTaxBracket
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileNetWorth) {
+            this.setState({
+                dropDownNetValue: this.props.profileState.financialInformations.profileNetWorth
+            })
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileTaxFilling) {
+            this.setState({
+                dropDownTaxFillValue: this.props.profileState.financialInformations.profileTaxFilling
+            })
+        }
+
         let payload = [];
 
         const compositePayloadData = [
@@ -158,7 +185,59 @@ class editAddFinancialInfoComponent extends Component {
         this.props.getProfileCompositeData(payload);
     }
 
-    addFinancialOnCalcel = () => this.props.navigation.navigate('profileSettings');
+    navigationSuccess = () => {
+
+        if (this.state.dropDownFinancialValue === '') {
+            this.setState({
+                dropDownFinancialFlag: true,
+                dropDownFinancialMsg: globalString.profileValidationMessages.validateFinancialInformation
+            })
+        }
+
+        if (this.state.dropDownNetValue === '') {
+            this.setState({
+                dropDownNetFlag: true,
+                dropDownNetMsg: globalStrings.profileValidationMessages.validateNetWorth
+            })
+        }
+
+        if (this.state.dropDownTaxFillValue === '') {
+            this.setState({
+                dropDownTaxFillFlag: true,
+                dropDownTaxFillMsg: globalStrings.profileValidationMessages.validateTaxFilling
+            })
+        }
+
+        if (this.state.dropDownFinancialValue != ''
+            && this.state.dropDownNetValue != ''
+            && this.state.dropDownTaxFillValue != '') {
+                this.manageFinancialInformations();
+        }
+    }
+
+    manageFinancialInformations = () => {
+        const payloadData = this.getProfilePayloadData();
+        this.props.saveProfileData("editFinancialInformatios", payloadData);
+        this.props.navigation.goBack();
+    }
+
+    getProfilePayloadData = () => {
+        let profilePayload = {};
+        if (this.props && this.props.profileState) {
+            profilePayload = {
+                ...this.props.profileState,
+                "financialInformations": {
+                    profileAnnualIncome: this.state.dropDownFinancialValue,
+                    profileTaxBracket: this.state.taxBracketValue,
+                    profileNetWorth: this.state.dropDownNetValue,
+                    profileTaxFilling: this.state.dropDownTaxFillValue
+                }
+            }
+        }
+        return profilePayload;
+    }
+
+    addFinancialOnCancel = () => this.props.navigation.navigate('profileSettings');
 
     render() {
 
@@ -263,13 +342,14 @@ class editAddFinancialInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalStrings.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.addFinancialOnCalcel} />
+                            onPress={this.addFinancialOnCancel} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalStrings.common.save}
+                            onPress={this.navigationSuccess}
                             textStyle={styles.saveButtonText} />
                     </View>
 

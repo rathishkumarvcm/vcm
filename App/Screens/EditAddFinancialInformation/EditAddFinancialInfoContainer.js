@@ -4,7 +4,8 @@ import { profileSettingsAction } from "../../Shared/Actions";
 
 const mapStateToProps = (state /* , props */) => (
   {
-    profileSettingsLookup: state.masterLookUpData
+    profileSettingsLookup: state.masterLookUpData,
+    profileState: state.profileInformationData
   }
 );
 

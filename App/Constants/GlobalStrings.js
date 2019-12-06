@@ -976,7 +976,10 @@ export default {
         validatePrefix: "Select Valid Prefix",
         validateSuffix: "Select Valid Suffix",
         validateGender: "Select Valid Gender",
-        validateStatus: "Select Valid Marital Status"
+        validateStatus: "Select Valid Marital Status",
+        validateFinancialInformation: "Select Valid Financial Information",
+        validateNetWorth: "Select Valid Net Worth",
+        validateTaxFilling: "Select Valid Tax Filling"
     },
     accountServices: {
         account_services: 'Account Services',

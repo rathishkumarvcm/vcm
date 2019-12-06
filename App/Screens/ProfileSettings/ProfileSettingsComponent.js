@@ -153,19 +153,19 @@ class ProfileSettingsComponent extends Component {
 
         if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileAnnualIncome) {
             this.setState({
-                profileAnnualIncome: this.props.profileState.financialInformations.profileAnnualIncome
+                profileAnnualIncome: '$ ' + this.props.profileState.financialInformations.profileAnnualIncome
             })
         }
 
         if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileTaxBracket) {
             this.setState({
-                profileTaxBracket: this.props.profileState.financialInformations.profileTaxBracket
+                profileTaxBracket: this.props.profileState.financialInformations.profileTaxBracket + ' %'
             })
         }
 
         if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileNetWorth) {
             this.setState({
-                profileNetWorth: this.props.profileState.financialInformations.profileNetWorth
+                profileNetWorth: '$ ' + this.props.profileState.financialInformations.profileNetWorth
             })
         }
 
@@ -241,18 +241,28 @@ class ProfileSettingsComponent extends Component {
                     profileMailingAddress: this.props.profileState.profileMailingAddress,
                     profilePhysicalAddress: this.props.profileState.profilePhysicalAddress,
                     profilePrimaryMobile: this.props.profileState.profilePrimaryMobile,
-                    profileAnnualIncome: this.props.profileState.profileAnnualIncome,
-                    profileTaxBracket: this.props.profileState.profileTaxBracket,
-                    profileNetWorth: this.props.profileState.profileNetWorth,
-                    profileTaxFilling: this.props.profileState.profileTaxFilling,
+
+                    // Employment Informations
                     profileEmploymentStatus: this.props.profileState.profileEmploymentStatus,
                     profileEmpIndustry: this.props.profileState.profileEmpIndustry,
                     profileEmpOccupation: this.props.profileState.profileEmpOccupation,
                     profileRelationToOwner: this.props.profileState.profileRelationToOwner,
+
                     profileRelationGender: this.props.profileState.profileRelationGender,
                     profileRelationMail: this.props.profileState.profileRelationMail,
                     profileRelationMarital: this.props.profileState.profileRelationMarital,
                 })
+            }
+
+            if (this.props && this.props.profileState && this.props.profileState.financialInformations) {
+                this.setState({
+                    //Financial Informations
+                    profileAnnualIncome: '$ ' + this.props.profileState.financialInformations.profileAnnualIncome,
+                    profileTaxBracket: this.props.profileState.financialInformations.profileTaxBracket + ' %',
+                    profileNetWorth: '$ ' + this.props.profileState.financialInformations.profileNetWorth,
+                    profileTaxFilling: this.props.profileState.financialInformations.profileTaxFilling,
+                })
+
             }
         }
     }
