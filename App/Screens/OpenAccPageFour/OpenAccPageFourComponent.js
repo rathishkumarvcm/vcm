@@ -45,7 +45,7 @@ class OpenAccPageFourComponent extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log("componentDidUpdate::::> ");
+        console.log("componentDidUpdate::::> "+prevState);
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.PREFERENCE_SAVE_OPENING_ACCT;
             if (this.props.accOpeningData[responseKey]) {
@@ -54,9 +54,9 @@ class OpenAccPageFourComponent extends Component {
                     if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
                         let msg = tempResponse.message;
                         console.log("Account Type Saved ::: :: " + msg);
-                        alert(tempResponse.result)
+                        alert(tempResponse.result);
                     } else {
-                        alert(tempResponse.message)
+                        alert(tempResponse.message);
                     }
                 }
             }
@@ -86,7 +86,7 @@ class OpenAccPageFourComponent extends Component {
                     "dividendCapitalGain": this.state.selectedDividendCapitalGains,
                     "documentDeliveryFormat": this.state.selectedProspectusReportsRef
                 },
-            }
+            };
         }
         return payload;
 
@@ -136,6 +136,7 @@ class OpenAccPageFourComponent extends Component {
 
     renderRadio = (radioName, radioSize, componentStyle, layoutStyle) => {
         console.log("renderRadio::: " + radioName);
+        let tempkey = "";
         let radioData = dummyData;
         switch (radioName) {
             case "selectedDividendCapitalGains":
@@ -146,7 +147,7 @@ class OpenAccPageFourComponent extends Component {
                 break;
         }
 
-        console.log("tempkey::" + tempkey)
+        console.log("tempkey::" + tempkey);
 
         if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
             radioData = this.props.masterLookupStateData[tempkey].value;
@@ -308,6 +309,12 @@ class OpenAccPageFourComponent extends Component {
 }
 
 OpenAccPageFourComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object).isRequired,
+    navigation: PropTypes.instanceOf(Object),
+    accOpeningData: PropTypes.instanceOf(Object),
+    masterLookupStateData: PropTypes.instanceOf(Object),
+   
+    saveData:PropTypes.func,
+    saveAccountOpening:PropTypes.func,
+    getCompositeLookUpData:PropTypes.func
 };
 export default OpenAccPageFourComponent;

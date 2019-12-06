@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity,FlatList } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
@@ -58,7 +58,7 @@ class OpenAccPageFiveComponent extends Component {
 
     }
 
-    navigateToScreen = (routeName) =>{
+    navigateToScreen = (routeName) =>()=>{
         this.props.navigation.navigate({ routeName: routeName, key: routeName });
 
     }
@@ -76,11 +76,11 @@ class OpenAccPageFiveComponent extends Component {
                         activeOpacity={0.8}
                         accessibilityRole={'button'}
                         style={styles.editBtn}
-                    >
+                >
                         <Text style={styles.editBtnTxt}>
                             {gblStrings.common.edit}
                         </Text>
-                    </TouchableOpacity>
+                </TouchableOpacity>
                 </View>
 
                
@@ -97,8 +97,7 @@ class OpenAccPageFiveComponent extends Component {
                         </Text>
                     </View>
                 </View>
-    </View>
-    );
+     </View>);
 
     renderAllSection = (data) => {
         console.log("renderAllSection::"+JSON.stringify(data));
@@ -156,12 +155,12 @@ class OpenAccPageFiveComponent extends Component {
             ssnTin = '',
             mailingAddress: maillAddr_primary = {},
             physicalAddress: physicAddr_primary = {},
-            isPhysAddrSameAsMailAddr = "",
+            //isPhysAddrSameAsMailAddr = "",
             contactDetails: contact_primary = {},
         } = (personalInfo && personalInfo.prefix) ? personalInfo : {};
 
         var {
-            addressType = '',
+            //addressType = '',
             streetNb = '',
             streetName = '',
             zip = '',
@@ -169,7 +168,7 @@ class OpenAccPageFiveComponent extends Component {
             state = '',
         } = (maillAddr_primary && maillAddr_primary.addressType) ? maillAddr_primary : {};
         var {
-            addressType: addressType_Phy = '',
+            //addressType: addressType_Phy = '',
             streetNb: streetNb_Phy = '',
             streetName: streetName_Phy = '',
             zip: zip_Phy = '',
@@ -187,20 +186,20 @@ class OpenAccPageFiveComponent extends Component {
 
         var {
             phoneNumber: phoneNumber1_primary = '',
-            phoneType: phoneType1_primary = '',
-            contactDuring: contactDuring1_primary = '',
+            // phoneType: phoneType1_primary = '',
+            //contactDuring: contactDuring1_primary = '',
         } = (phoneNumber1 && phoneNumber1.phoneNumber) ? phoneNumber1 : {};
 
         var {
             phoneNumber: phoneNumber2_primary = '',
-            phoneType: phoneType2_primary = '',
-            contactDuring: contactDuring2_primary = '',
+            //  phoneType: phoneType2_primary = '',
+            // contactDuring: contactDuring2_primary = '',
         } = (phoneNumber2 && phoneNumber2.phoneNumber) ? phoneNumber2 : {};
 
         var {
             phoneNumber: phoneNumber3_primary = '',
-            phoneType: phoneType3_primary = '',
-            contactDuring: contactDuring3_primary = '',
+            // phoneType: phoneType3_primary = '',
+            // contactDuring: contactDuring3_primary = '',
         } = (phoneNumber3 && phoneNumber3.phoneNumber) ? phoneNumber3 : {};
 
         
@@ -215,7 +214,7 @@ class OpenAccPageFiveComponent extends Component {
                 <Text style={styles.lblLine} />
                 <View style={styles.editDetailsGrp} >
                     <TouchableOpacity
-                        onPress={() => { this.navigateToScreen("openAccPageTwo") }}
+                        onPress={this.navigateToScreen("openAccPageTwo")}
                         activeOpacity={0.8}
                         accessibilityRole={'button'}
                         style={styles.editBtn}
@@ -316,7 +315,7 @@ class OpenAccPageFiveComponent extends Component {
     renderPrimaryEmploymentInfo = (data) => {
 
 
-        var { employementInfo = {} }  = data ? data : {};
+        var { employementInfo = {} } = data ? data : {};
 
 
         var {
@@ -348,7 +347,7 @@ class OpenAccPageFiveComponent extends Component {
                 <Text style={styles.lblLine} />
                 <View style={styles.editDetailsGrp} >
                     <TouchableOpacity
-                        onPress={() => { this.navigateToScreen("openAccPageTwo") }}
+                        onPress={this.navigateToScreen("openAccPageTwo")}
                         activeOpacity={0.8}
                         accessibilityRole={'button'}
                         style={styles.editBtn}
@@ -401,7 +400,7 @@ class OpenAccPageFiveComponent extends Component {
 
         var { militaryInfo = {} } = data ? data : {};
         var {
-            servingStatus = '',
+            //servingStatus = '',
             militaryStatus = '',
             branchOfService = '',
             rank = '',
@@ -424,7 +423,7 @@ class OpenAccPageFiveComponent extends Component {
                 <Text style={styles.lblLine} />
                 <View style={styles.editDetailsGrp} >
                     <TouchableOpacity
-                        onPress={() => { this.navigateToScreen("openAccPageTwo") }}
+                        onPress={this.navigateToScreen("openAccPageTwo")}
                         activeOpacity={0.8}
                         accessibilityRole={'button'}
                         style={styles.editBtn}
@@ -476,7 +475,7 @@ class OpenAccPageFiveComponent extends Component {
     renderPrimaryFinancialInfo = (data) => {
 
 
-        var { financialInfo = {} }  = data ? data : {};
+        var { financialInfo = {}} = data ? data : {};
         var {
             annualIncome = '',
             taxBracket = '',
@@ -498,7 +497,7 @@ class OpenAccPageFiveComponent extends Component {
                 <Text style={styles.lblLine} />
                 <View style={styles.editDetailsGrp} >
                     <TouchableOpacity
-                        onPress={() => { this.navigateToScreen("openAccPageTwo") }}
+                        onPress={this.navigateToScreen("openAccPageTwo")}
                         activeOpacity={0.8}
                         accessibilityRole={'button'}
                         style={styles.editBtn}
@@ -541,14 +540,14 @@ class OpenAccPageFiveComponent extends Component {
 
     renderMutualFundList = (data) => {
        
-        var { investmentInfo = {} }  = data ? data : {};
+        var { investmentInfo = {}} = data ? data : {};
         var {
-            fundingSource = {},
-            totalFunds = '',
+            //fundingSource = {},
+            //totalFunds = '',
             fundDataList = []
         } = (investmentInfo && investmentInfo.fundDataList) ? investmentInfo : {};
 
-
+       /*
         var {
             method = '',
             bankAccount = '',
@@ -560,23 +559,7 @@ class OpenAccPageFiveComponent extends Component {
 
         } = (fundingSource && fundingSource.method) ? fundingSource : {};
 
-        var tempFundDataList = [ {
-            "fundNumber":"123", 
-            "fundName":"Fund1",
-            "fundingOption":"Initial",
-            "initialInvestment":"3000",
-            "monthlyInvestment":"ss",
-            "startDate":"ss",
-            "action":"add"
-          },{
-            "fundNumber":"123", 
-            "fundName":"Fund1",
-            "fundingOption":"Initial",
-            "initialInvestment":"3000",
-            "monthlyInvestment":"ss",
-            "startDate":"ss",
-            "action":"add"
-          }];
+        */
         return(
             <>
             <View style={[styles.sectionGrp]}>
@@ -593,7 +576,7 @@ class OpenAccPageFiveComponent extends Component {
                                 keyExtractor={this.generateKeyExtractor}
                                 renderItem={this.renderFundItem()}
 
-                            />
+                />
               
             </View>
              { fundDataList.length >0 && this.renderInvestmentInfo(data)}
@@ -603,69 +586,62 @@ class OpenAccPageFiveComponent extends Component {
     }
 
     renderInvestmentInfo = (data) => {
-        var { investmentInfo = {} }  = data ? data : {};
+        var { investmentInfo = {}} = data ? data : {};
 
 
         var {
             fundingSource = {},
-            totalFunds = '',
+           // totalFunds = '',
             totalInitialInvestment ='',
-            fundDataList = []
+           // fundDataList = []
         } = (investmentInfo && investmentInfo.fundDataList) ? investmentInfo : {};
 
 
         var {
-            method = '',
-            bankAccount = '',
-            accountType = '',
-            financialInstitutionName = '',
-            accountOwner = '',
-            transitRoutingNumber = '',
-            accountNumber = '',
-
+            method = ''
         } = (fundingSource && fundingSource.method) ? fundingSource : {};
 
 
         return (
             <View style={[styles.sectionGrp]}>
-            <View style={styles.accTypeSelectSection} >
-                <Text style={styles.headings}>
-                    {gblStrings.accManagement.fundingInfo}
-                </Text>
-            </View>
+                <View style={styles.accTypeSelectSection} >
+                    <Text style={styles.headings}>
+                        {gblStrings.accManagement.fundingInfo}
+                    </Text>
+                </View>
 
-            <Text style={styles.lblLine} />
+                <Text style={styles.lblLine} />
 
-            <View style={styles.editDetailsGrp} >
-                <TouchableOpacity
-                        onPress={() => { this.navigateToScreen("openAccPageThree") }}
+                <View style={styles.editDetailsGrp} >
+                    <TouchableOpacity
+                        onPress={this.navigateToScreen("openAccPageThree")}
                         activeOpacity={0.8}
-                    accessibilityRole={'button'}
-                    style={styles.editBtn}
-                >
-                    <Text style={styles.editBtnTxt}>
-                        {gblStrings.common.edit}
-                    </Text>
-                </TouchableOpacity>
-                <View style={styles.detailsRow}>
-                    <Text style={styles.lblLeftColTxt}>
-                        {gblStrings.accManagement.fundingSource}
-                    </Text>
-                    <Text style={styles.lblRightColTxt}>
-                        {method}
-                    </Text>
-                </View>
+                        accessibilityRole={'button'}
+                        style={styles.editBtn}
+                    >
+                        <Text style={styles.editBtnTxt}>
+                            {gblStrings.common.edit}
+                        </Text>
+                    </TouchableOpacity>
+                    <View style={styles.detailsRow}>
+                        <Text style={styles.lblLeftColTxt}>
+                            {gblStrings.accManagement.fundingSource}
+                        </Text>
+                        <Text style={styles.lblRightColTxt}>
+                            {method}
+                        </Text>
+                    </View>
 
-                <View style={styles.detailsRow}>
-                    <Text style={styles.lblLeftColTxt}>
-                        {gblStrings.accManagement.totalInitInvestment}
-                    </Text>
-                    <Text style={styles.lblRightColTxt}>
-                        {totalInitialInvestment}
-                    </Text>
+                    <View style={styles.detailsRow}>
+                        <Text style={styles.lblLeftColTxt}>
+                            {gblStrings.accManagement.totalInitInvestment}
+                        </Text>
+                        <Text style={styles.lblRightColTxt}>
+                            {totalInitialInvestment}
+                        </Text>
+                    </View>
                 </View>
             </View>
-        </View>
 
         );
     }
@@ -675,59 +651,51 @@ class OpenAccPageFiveComponent extends Component {
         
         var {
             documentDeliveryFormat = '',
-            dividendCapitalGain = ''
+            //dividendCapitalGain = ''
         } = (accountPreferences && accountPreferences.documentDeliveryFormat) ? accountPreferences : {};
 
 
         return (
             <View style={[styles.sectionGrp]}>
-            <View style={styles.accTypeSelectSection} >
-                <Text style={styles.headings}>
-                    {gblStrings.accManagement.accountFeatures}
-                </Text>
-            </View>
-
-            <Text style={styles.lblLine} />
-
-            <View style={styles.editDetailsGrp} >
-                <TouchableOpacity
-                        onPress={() => { this.navigateToScreen("openAccPageFour") }}
-                        activeOpacity={0.8}
-                    accessibilityRole={'button'}
-                    style={styles.editBtn}
-                >
-                    <Text style={styles.editBtnTxt}>
-                        {gblStrings.common.edit}
-                    </Text>
-                </TouchableOpacity>
-                <View style={styles.detailsRow}>
-                    <Text style={styles.lblLeftColTxt}>
-                        {gblStrings.accManagement.prospectus}
-                    </Text>
-                    <Text style={styles.lblRightColTxt}>
-                        {`${documentDeliveryFormat}`}
+                <View style={styles.accTypeSelectSection} >
+                    <Text style={styles.headings}>
+                        {gblStrings.accManagement.accountFeatures}
                     </Text>
                 </View>
 
+                <Text style={styles.lblLine} />
 
+                <View style={styles.editDetailsGrp} >
+                    <TouchableOpacity
+                        onPress={this.navigateToScreen("openAccPageFour")}
+                        activeOpacity={0.8}
+                        accessibilityRole={'button'}
+                        style={styles.editBtn}
+                    >
+                        <Text style={styles.editBtnTxt}>
+                            {gblStrings.common.edit}
+                        </Text>
+                    </TouchableOpacity>
+                    <View style={styles.detailsRow}>
+                        <Text style={styles.lblLeftColTxt}>
+                            {gblStrings.accManagement.prospectus}
+                        </Text>
+                        <Text style={styles.lblRightColTxt}>
+                            {`${documentDeliveryFormat}`}
+                        </Text>
+                    </View>
+
+
+                </View>
             </View>
-        </View>
-
-
-        )
+        );
     }
     /*----------------------
                                  Render Methods
                                                                  -------------------------- */
     render() {
-        var { accountType = '' } = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
         let tempInfoData = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
-console.log ("tempInfoData:::"+JSON.stringify(tempInfoData));
-       /* var {
-            dividendCapitalGain = '',
-            documentDeliveryFormat = '',
-        } = accountPreferences;
-*/
+
         let currentPage = 5;
         return (
             <View style={styles.container}>
@@ -802,6 +770,7 @@ console.log ("tempInfoData:::"+JSON.stringify(tempInfoData));
 }
 
 OpenAccPageFiveComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object).isRequired,
+    navigation: PropTypes.instanceOf(Object),
+    accOpeningData: PropTypes.instanceOf(Object)
 };
 export default OpenAccPageFiveComponent;

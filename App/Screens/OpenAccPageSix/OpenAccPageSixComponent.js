@@ -1,3 +1,4 @@
+/* eslint-disable react/no-multi-comp */
 import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList } from 'react-native';
 import { styles } from './styles';
@@ -123,7 +124,7 @@ class OpenAccPageSixComponent extends Component {
         this.props.getCompositeLookUpData(payload);
     }
     componentDidUpdate(prevProps, prevState) {
-        console.log("componentDidUpdate::::> ");
+        console.log("componentDidUpdate::::> "+prevState);
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.ESIGN_SAVE_OPENING_ACCT;
             if (this.props.accOpeningData[responseKey]) {
@@ -132,9 +133,9 @@ class OpenAccPageSixComponent extends Component {
                     if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
                         let msg = tempResponse.message;
                         console.log("Account  Saved ::: :: " + msg);
-                        alert(tempResponse.result)
+                        alert(tempResponse.result);
                     } else {
-                        alert(tempResponse.message)
+                        alert(tempResponse.message);
                     }
                 }
             }
@@ -149,7 +150,7 @@ class OpenAccPageSixComponent extends Component {
                         alert(msg+"  :"+ tempResponse.accountId);
                         this.props.navigation.goBack('termsAndConditions');
                     } else {
-                        alert(tempResponse.message)
+                        alert(tempResponse.message);
                     }
                 }
             }
@@ -323,7 +324,7 @@ class OpenAccPageSixComponent extends Component {
                     "backupCertFlag":this.state.confirmTINType || "-",
                     "certifiedYN":this.state.agreeConditions || "-"
                   }
-            }
+            };
         }
         return payload;
 
@@ -356,7 +357,6 @@ class OpenAccPageSixComponent extends Component {
         if (!isValidationSuccess) {
             alert(errMsg);
 
-        } else {
         }
         return isValidationSuccess;
 
@@ -367,7 +367,7 @@ class OpenAccPageSixComponent extends Component {
         (<ViewPDFItem
             fileName={item.value}
             fileType={"PDF"}
-        />
+         />
         );
 
     renderSignPDFItem = (dataLength) => ({ item, index }) =>
@@ -376,19 +376,20 @@ class OpenAccPageSixComponent extends Component {
             fileType={"PDF"}
             fileDesc={item.description}
             isSeparatorShow={index < dataLength - 1 ? true : false}
-        />
+         />
         );
 
     renderRadio = (radioName, radioSize, componentStyle, layoutStyle) => {
         console.log("renderRadio::: " + radioName);
         let radioData = dummyData;
+        let tempkey ="";
         switch (radioName) {
             case "confirmTINType":
                 tempkey = "backup_withholding";
                 break;
         }
 
-        console.log("tempkey::" + tempkey)
+        console.log("tempkey::" + tempkey);
 
         if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
             radioData = this.props.masterLookupStateData[tempkey].value;
@@ -425,12 +426,12 @@ class OpenAccPageSixComponent extends Component {
                                                                  -------------------------- */
     render() {
         console.log("RENDER::: OpenAccPageSix ::>>> ", this.props);
-        let  tempViewPdfList = {...viewPdfList};
+        let tempViewPdfList = {...viewPdfList};
         if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData["docs_to_view"] && this.props.masterLookupStateData["docs_to_view"].value) {
             tempViewPdfList = this.props.masterLookupStateData["docs_to_view"].value;
         }
 
-        let  tempSignPdfList = {...signPdfList};
+        let tempSignPdfList = {...signPdfList};
         if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData["docs_to_sign"] && this.props.masterLookupStateData["docs_to_sign"].value) {
             tempSignPdfList = this.props.masterLookupStateData["docs_to_sign"].value;
         }
@@ -592,6 +593,9 @@ class OpenAccPageSixComponent extends Component {
 OpenAccPageSixComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
     accOpeningData: PropTypes.instanceOf(Object),
-    submitAccountOpening: PropTypes.func
+    masterLookupStateData: PropTypes.instanceOf(Object),
+    submitAccountOpening: PropTypes.func,
+    saveAccountOpening: PropTypes.func,
+    getCompositeLookUpData:PropTypes.func
 };
 export default OpenAccPageSixComponent;
