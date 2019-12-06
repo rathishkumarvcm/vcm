@@ -37,7 +37,7 @@ class DashboardComponent extends Component {
         this.props.navigation.goBack();
     }
     onClickOpenAnAccount = () => {
-        this.props.navigation.navigate({ routeName: 'termsAndConditions', key: 'termsAndConditions' })
+        this.props.navigation.navigate({ routeName: 'termsAndConditions', key: 'termsAndConditions' });
     }
     /*----------------------
                                  Render Methods

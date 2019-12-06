@@ -1,9 +1,9 @@
+/* eslint-disable react/no-multi-comp */
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList,Image } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GIcon, GDateComponent } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio, CustomDropDown } from '../../AppComponents';
-import DatePicker from 'react-native-datepicker';
 
 import PropTypes from "prop-types";
 import { scaledHeight } from '../../Utils/Resolution';
@@ -29,6 +29,7 @@ const dummyData = [
     { "key": "key2", "value": "Option2" }
 ];
 
+/*
 const prefixData = [
     { "key": "atty", "value": "Atty" },
     { "key": "brother", "value": "Brother" },
@@ -36,7 +37,17 @@ const prefixData = [
     { "key": "dr", "value": "Dr" },
     { "key": "elder", "value": "Elder" },
     { "key": "father", "value": "Father" },
-]
+];
+const genderData = [
+    { "key": "M", "value": "male" },
+    { "key": "F", "value": "female" }
+];
+const maritalStatusData = [
+    { "key": "D", "value": "divorced" },
+    { "key": "M", "value": "married" },
+    { "key": "S", "value": "single" }
+];
+*/
 
 const suffixData = [
     { "key": "cpa", "value": "CPA" },
@@ -50,15 +61,7 @@ const suffixData = [
     { "key": "ret", "value": "Ret" },
     { "key": "rn", "value": "RN" },
     { "key": "sr", "value": "Sr" },
-    { "key": "do", "value": "DO" }];
-const genderData = [
-    { "key": "M", "value": "male" },
-    { "key": "F", "value": "female" }
-];
-const maritalStatusData = [
-    { "key": "D", "value": "divorced" },
-    { "key": "M", "value": "married" },
-    { "key": "S", "value": "single" }
+    { "key": "do", "value": "DO" }
 ];
 
 
@@ -509,7 +512,7 @@ class OpenAccPageTwoComponent extends Component {
         for (let i = 0; i < compositePayloadData.length; i++) {
             let tempkey = compositePayloadData[i];
             if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempkey]) {
-                payload.push(tempkey)
+                payload.push(tempkey);
             }
         }
 
@@ -519,7 +522,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log("componentDidUpdate::::> ");
+        console.log("componentDidUpdate::::> "+prevState);
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.PERSONAL_INFO_SAVE_OPENING_ACCT;
             if (this.props.accOpeningData[responseKey]) {
@@ -528,9 +531,9 @@ class OpenAccPageTwoComponent extends Component {
                     if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
                         let msg = tempResponse.message;
                         console.log("Account Type Saved ::: :: " + msg);
-                        alert(tempResponse.result)
+                        alert(tempResponse.result);
                     } else {
-                        alert(tempResponse.message)
+                        alert(tempResponse.message);
                     }
                 }
             }
@@ -549,8 +552,7 @@ class OpenAccPageTwoComponent extends Component {
 
                                 }
                             }));
-                    } else {
-                    }
+                    } 
                 }
             }
 
@@ -560,7 +562,7 @@ class OpenAccPageTwoComponent extends Component {
                     const tempResponse = this.props.accOpeningData[uploadImgKey];
                     if (tempResponse && tempResponse.b ) {
                          if(tempResponse.b.Location){
-                             alert ("Image Uploaded Successfully \n::"+tempResponse.b.Location)
+                             alert ("Image Uploaded Successfully \n::"+tempResponse.b.Location);
                          }
                     }
                 }
@@ -788,7 +790,7 @@ class OpenAccPageTwoComponent extends Component {
                     }
                     //"beneficiary2Details,beneficiary3Details": ""
                 },
-                "secondBeneficiary": {   //  #TODO
+                "secondBeneficiary": { //  #TODO
                     "beneficiary1Details": {
                         "type": this.state.retirement.beneficiaryType || "-",
                         "relation": this.state.retirement.relationshipToAcc || "-",
@@ -802,7 +804,7 @@ class OpenAccPageTwoComponent extends Component {
                     }
                 }
             }
-        }
+        };
 
 
 
@@ -812,7 +814,7 @@ class OpenAccPageTwoComponent extends Component {
             payload = {
                 ...this.props.accOpeningData.savedAccData,
                 "accountNickName": this.state.nickname || "-"
-            }
+            };
         }
 
 
@@ -822,21 +824,21 @@ class OpenAccPageTwoComponent extends Component {
                 payload = {
                     ...payload,
                     ...individualAccPayload
-                }
+                };
                 break;
             case "Joint Account":
                 payload = {
                     ...payload,
                     ...individualAccPayload,
                     ...jointAccPayload
-                }
+                };
                 break;
             case "Retirement Account":
                 payload = {
                     ...payload,
                     ...individualAccPayload,
                     ...retirementAccPayload
-                }
+                };
                 break;
             case "UGMA/UTMA Account":
                 break;
@@ -876,14 +878,14 @@ class OpenAccPageTwoComponent extends Component {
 
                 const source = { uri: response.uri };
                 const base64source = { uri: 'data:image/jpeg;base64,' + response.data };
-                console.log("base64source", base64source.length)
+                console.log("base64source", base64source.length);
                 this.setState({
                     userAvatar: source
-                })
-              if(response.data  && response.data  != null && response.data != undefined && response.data.length>0){
+                });
+              if(response.data && response.data != null && response.data != undefined && response.data.length>0){
                     const payload = {
                         "Body":""+response.data
-                    }
+                    };
                     this.props.uploadAavatarImg(payload);
               }
                 
@@ -908,7 +910,7 @@ class OpenAccPageTwoComponent extends Component {
             console.log('User tapped custom button: ', response.customButton);
             alert(response.customButton);
           } else {
-            const source = { uri: response.uri };
+           // const source = { uri: response.uri };
             // console.log('response', JSON.stringify(response));
             this.setState({
               filePath: response,
@@ -921,7 +923,7 @@ class OpenAccPageTwoComponent extends Component {
       }
 
     onSubmitZipEditing = (stateKey,keyName,nextInputFocus) => text =>{
-        console.log("onSubmitZipEditing:::>" );
+        console.log("onSubmitZipEditing:::>" +nextInputFocus+" "+text);
 
         let newItems = {...this.state.currentZipCodeRef};
         newItems.keyName = keyName;
@@ -1138,7 +1140,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
                 }
-            }))
+            }));
 
 
             if (input !== "" && input !== null && input !== undefined) {
@@ -1322,7 +1324,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
     validateFields = () => {
-        return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
+       // return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
         try {
 
 
@@ -1434,7 +1436,7 @@ class OpenAccPageTwoComponent extends Component {
         (<DropDownListItem
             value={item.value}
             onSelectedItem={this.selectedDropDownValue(dropDownName, item, item.key)}
-        />
+         />
         );
 
     renderCalender = (sectionName, calendarName) => {
@@ -1460,7 +1462,8 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View
                 style={[styles.splitDateGrp]}
-                ref={this.setInputRef(calendarName)} >
+                ref={this.setInputRef(calendarName)}
+            >
                 <GDateComponent
                     componentStyle={{
                         width: scaledHeight(80), marginRight: scaledHeight(8), marginTop: scaledHeight(0)
@@ -1473,7 +1476,7 @@ class OpenAccPageTwoComponent extends Component {
                         type="ionicon"
                         size={20}
                         color="black"
-                    />}
+                                   />}
                     onDateChange={this.onChangeSpiltDate(sectionName, calendarName, 0)}
                 />
                 <GDateComponent
@@ -1487,7 +1490,7 @@ class OpenAccPageTwoComponent extends Component {
                         type="ionicon"
                         size={20}
                         color="black"
-                    />}
+                                   />}
                     onDateChange={this.onChangeSpiltDate(sectionName, calendarName, 1)}
                 />
                 <GDateComponent
@@ -1501,7 +1504,7 @@ class OpenAccPageTwoComponent extends Component {
                         type="ionicon"
                         size={20}
                         color="black"
-                    />}
+                                   />}
                     onDateChange={this.onChangeSpiltDate(sectionName, calendarName, 2)}
                 />
             </View>
@@ -1512,7 +1515,6 @@ class OpenAccPageTwoComponent extends Component {
 
     renderDropDown = (dropDownName, dropDownCompState = false, data, width = '100%') => {
         console.log("renderDropDown::: " + dropDownName);
-        let keyName = "value";//"title";
         let dropDownData = dummyData;
         let tempkey = "";
 
@@ -1547,15 +1549,12 @@ class OpenAccPageTwoComponent extends Component {
             case "contactDuringMobNoDropDown":
             case "contactDuringTelePhone2DropDown":
             case "contactDuringTelePhone3DropDown":
-
             case "contactDuringMobNoDropDown_joint":
             case "contactDuringTelePhone2DropDown_joint":
             case "contactDuringTelePhone3DropDown_joint":
-
             case "contactDuringMobNoDropDown_IRA":
             case "contactDuringTelePhone2DropDown_IRA":
             case "contactDuringTelePhone3DropDown_IRA":
-
             case "contactDuringMobNoDropDown_childben":
             case "contactDuringTelePhone2DropDown_childben":
             case "contactDuringTelePhone3DropDown_childben":
@@ -2061,7 +2060,7 @@ class OpenAccPageTwoComponent extends Component {
 
     renderRadio = (sectionName, radioName, radioSize, componentStyle, layoutStyle) => {
         console.log("renderRadio::: " + radioName);
-        let keyName = "value";//"title";
+        let tempkey = "";//"title";
         let radioData = dummyData;
         switch (radioName) {
             case "gender":
@@ -2077,13 +2076,13 @@ class OpenAccPageTwoComponent extends Component {
 
         }
 
-        console.log("tempkey::" + tempkey)
+        console.log("tempkey::" + tempkey);
 
         if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
-            console.log("tempkey inside::" + tempkey)
+            console.log("tempkey inside::" + tempkey);
             radioData = this.props.masterLookupStateData[tempkey].value;
         } else {
-            console.log("tempkey not there::" + tempkey)
+            console.log("tempkey not there::" + tempkey);
 
         }
 
@@ -2355,7 +2354,7 @@ class OpenAccPageTwoComponent extends Component {
                             returnKeyType={"done"}
                             onChangeText={this.onChangeText("personal", "zipcode")}
                             //onSubmitEditing={() => {}}
-                            onSubmitEditing={ this.onSubmitZipEditing("personal","zipcode",this.city)}
+                            onSubmitEditing={this.onSubmitZipEditing("personal","zipcode",this.city)}
 
                         />
 
@@ -3646,7 +3645,8 @@ class OpenAccPageTwoComponent extends Component {
                             </View>
                         }
                     </View>
-                }</View>
+                }
+            </View>
         );
     }
 
@@ -4615,6 +4615,15 @@ class OpenAccPageTwoComponent extends Component {
 
 OpenAccPageTwoComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
+    getPersonalCompositeData: PropTypes.instanceOf(Object),
+    addressFormatData:PropTypes.instanceOf(Object),
+    accOpeningData: PropTypes.instanceOf(Object),
+    masterLookupStateData: PropTypes.instanceOf(Object),
+    saveData:PropTypes.func,
+    uploadAavatarImg:PropTypes.func,
+    getStateCity:PropTypes.func,
+    saveAccountOpening:PropTypes.func,
+    getRankData:PropTypes.func
 };
 export default OpenAccPageTwoComponent;
 

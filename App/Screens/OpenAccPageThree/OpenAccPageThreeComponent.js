@@ -1,7 +1,8 @@
+/* eslint-disable react/no-multi-comp */
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList, Modal } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GInputComponent, GIcon, GHeaderComponent, GFooterComponent, GLoadingSpinner, GDropDownComponent, GDateComponent, GRadioButtonComponent } from '../../CommonComponents';
+import { GButtonComponent, GInputComponent, GIcon, GHeaderComponent, GFooterComponent, GLoadingSpinner, GDropDownComponent, GDateComponent } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio, CustomCheckBox } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
@@ -289,38 +290,7 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     validateBankAccount = () => {
-
         return this.callValidateBankAccount();
-        if (this.state.validFinancialNumber === "") {
-            this.setState({
-                isValidFinancial: false
-            })
-        }
-
-        if (this.state.validAccountOwner === "") {
-            this.setState({
-                isValidAccountOwner: false
-            })
-        }
-
-        if (this.state.validTransitNumber === "") {
-            this.setState({
-                isValidTransitNumber: false
-            })
-        }
-
-        if (this.state.validAccountNumber === "") {
-            this.setState({
-                isValidAccountNumber: false
-            })
-        }
-
-        if (this.state.validFinancialNumber != "" &&
-            this.state.validAccountOwner != "" &&
-            this.state.validTransitNumber != "" &&
-            this.state.validAccountNumber != "") {
-            this.callValidateBankAccount();
-        }
     }
 
     callValidateBankAccount = () => {
@@ -330,7 +300,7 @@ class OpenAccPageThreeComponent extends Component {
             "accountOwnerNames": "Abc",
             "transitRoutingNumber": 123456,
             "accountNumber": 345213123456
-        }
+        };
 
         this.props.addBankAccountAction(validateBankAccountPayload);
 
@@ -374,6 +344,7 @@ class OpenAccPageThreeComponent extends Component {
         this.props.getCompositeLookUpData(payload);
     }
     componentDidUpdate(prevProps, prevState) {
+        console.log("componentDidUpdate::::> "+prevState);
 
 
         if (this.props !== prevProps) {
@@ -392,6 +363,7 @@ class OpenAccPageThreeComponent extends Component {
                     });
                 }
             }
+            let tempFundingSourceList = [];
             if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData["fund_source"] && this.props.masterLookupStateData["fund_source"].value) {
                 tempFundingSourceList = this.props.masterLookupStateData["fund_source"].value;
                 console.log("tempFundingSourceList:: " + JSON.stringify(tempFundingSourceList));
@@ -416,9 +388,9 @@ class OpenAccPageThreeComponent extends Component {
                     if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
                         let msg = tempResponse.message;
                         console.log("Account Type Saved ::: :: " + msg);
-                        alert(tempResponse.result)
+                        alert(tempResponse.result);
                     } else {
-                        alert(tempResponse.message)
+                        alert(tempResponse.message);
                     }
                 }
             }
@@ -487,7 +459,7 @@ class OpenAccPageThreeComponent extends Component {
                     "totalInitialInvestment": this.state.totalInitialInvestment || "-",
                     "fundDataList": this.state.selectedFundInvestmentsData
                 },
-            }
+            };
         }
         return payload;
 
@@ -513,8 +485,6 @@ class OpenAccPageThreeComponent extends Component {
         for (let i = 0; i < newItems.length; i++) {
             if (!isNaN(newItems[i]["initialInvestment"]) && newItems[i]["initialInvestment"] != "") {
                 total = total + parseFloat(newItems[i]["initialInvestment"]);
-
-            } else {
 
             }
         }
@@ -618,14 +588,14 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     onClickRowItem = (item, index) => () => {
-        console.log("onSelectFundList:: " + item.fundNumber);
+        console.log("onSelectFundList:: " + item.fundNumber)+" "+index;
         //  this.props.navigation.navigate({ routeName: 'investmentPlanInfo', key: 'investmentPlanInfo' })
         this.props.navigation.push('investmentPlanInfo', { fundDetails: item.fundNumber });
 
     }
 
     onSelectSourceFundList = (item, index, method) => () => {
-        console.log("onSelectSourceFundList:::>  " + method)
+        console.log("onSelectSourceFundList:::>  " + method);
         let toBeChangedData = [];
         let notToBeChangedData = [];
         switch (method) {
@@ -686,10 +656,10 @@ class OpenAccPageThreeComponent extends Component {
 
     onSelectedDropDownValue = (dropDownName, index) => (item) => {
         console.log("onSelectedDropDownValue:: " + dropDownName);
+        let newItems = [...this.state.selectedFundInvestmentsData];
 
         switch (dropDownName) {
             case "fundingOptionDropDown":
-                let newItems = [...this.state.selectedFundInvestmentsData];
                 newItems[index].fundingOptionDropDown = false;
                 newItems[index].fundingOption = item.value;
 
@@ -736,9 +706,9 @@ class OpenAccPageThreeComponent extends Component {
         (<TouchableOpacity
             style={{ height: 120 / 3, alignItems: 'flex-start', justifyContent: 'center' }}
             onPress={this.selectedDropDownValue(dropDownName, item[keyName])}
-        >
+         >
             <Text style={{ textAlign: 'left', flexWrap: 'wrap', paddingHorizontal: scaledHeight(12) }}> {item[keyName]} </Text>
-        </TouchableOpacity>
+         </TouchableOpacity>
         );
 
     renderDropDown = (dropDownName, data, width = '100%') => {
@@ -791,15 +761,14 @@ class OpenAccPageThreeComponent extends Component {
             risk={item.risk}
             onClickCheckbox={this.onSelectFundList(item, index)}
             onClickItem={this.onClickRowItem(item, index)}
-
-        />
+         />
         );
     renderFundSourceListItem = (method) => ({ item, index }) =>
         (<SourceListItem
             style={item.isActive ? styles.accountItemSelected : styles.accountItem}
             sourceName={item.value}
             onPress={this.onSelectSourceFundList(item.value, index, method)}
-        />
+         />
         );
 
     isEmpty = (str) => {
@@ -864,7 +833,6 @@ class OpenAccPageThreeComponent extends Component {
                     errMsg = tempErrMsg;
                     ++errMsgCount;
                     break;
-                } else {
                 }
             }
 
@@ -881,7 +849,6 @@ class OpenAccPageThreeComponent extends Component {
         if (!isValidationSuccess) {
             alert(errMsg);
 
-        } else {
         }
 
         /* if(errMsgArray.length>0){
@@ -943,32 +910,32 @@ class OpenAccPageThreeComponent extends Component {
         this.state.filtermindata.map((item) => {
             if (item.isActive) {
                 if (mininvestkey !== null && mininvestkey !== "") {
-                    mininvestkey = mininvestkey.concat("|" + item.value)
+                    mininvestkey = mininvestkey.concat("|" + item.value);
                 } else {
                     mininvestkey = item.value;
                 }
             }
-        })
+        });
         var riskkey = "";
         this.state.filterriskdata.map((item) => {
             if (item.isActive) {
                 if (riskkey !== null && riskkey !== "") {
-                    riskkey = riskkey.concat("|" + item.key)
+                    riskkey = riskkey.concat("|" + item.key);
                 } else {
                     riskkey = item.key;
                 }
             }
-        })
+        });
         var funddatakey = "";
         this.state.filterfunddata.map((item) => {
             if (item.isActive) {
                 if (funddatakey !== null && funddatakey !== "") {
-                    funddatakey = funddatakey.concat("|" + item.key)
+                    funddatakey = funddatakey.concat("|" + item.key);
                 } else {
                     funddatakey = item.key;
                 }
             }
-        })
+        });
         console.log("minInvest=", mininvestkey);
         console.log("risk=", riskkey);
         console.log("fundData=", funddatakey);
@@ -998,9 +965,9 @@ class OpenAccPageThreeComponent extends Component {
 
     // Construct Filter values from Master Data on Clicking Filter Funds
     constructFilterData = () => {
-        temp_key_min_inv = 'filter_min_inv';
-        temp_key_risk = 'filter_risk';
-        temp_key_fund_type = 'filter_fund_type';
+       const temp_key_min_inv = 'filter_min_inv';
+       const temp_key_risk = 'filter_risk';
+       const temp_key_fund_type = 'filter_fund_type';
         let tempfiltermindata = [];
         let tempfilterriskdata = [];
         let tempfilterfunddata = [];
@@ -1035,20 +1002,20 @@ class OpenAccPageThreeComponent extends Component {
     onCheckboxSelect = (fromtype, item, index) => () => {
         console.log('Index : ', index);
         console.log('Checkbox Selected : ', item.key + " " + item.value + " " + item.isActive);
-
+        var newItm = [];
         switch (fromtype) {
             case 'minInvest':
-                var newItm = [...this.state.filtermindata];
+                newItm = [...this.state.filtermindata];
                 newItm[index].isActive = !newItm[index].isActive;
                 this.setState({ filtermindata: newItm });
                 break;
             case 'risk':
-                var newItm = [...this.state.filterriskdata];
+                 newItm = [...this.state.filterriskdata];
                 newItm[index].isActive = !newItm[index].isActive;
                 this.setState({ filterriskdata: newItm });
                 break;
             case 'fundType':
-                var newItm = [...this.state.filterfunddata];
+                 newItm = [...this.state.filterfunddata];
                 newItm[index].isActive = !newItm[index].isActive;
                 this.setState({ filterfunddata: newItm });
                 break;
@@ -1130,7 +1097,7 @@ class OpenAccPageThreeComponent extends Component {
                                 {this.state.selectedFundInvestmentsData.length > 25 && <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
                                     onPress={this.showAllItems(this.state.fundList.length)}
                                     activeOpacity={0.2}
-                                >
+                                                                                       >
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                                         <Text style={styles.showPagesTxt}>
                                             {`Show all ${this.state.fundList.length} Items`}
@@ -1143,7 +1110,7 @@ class OpenAccPageThreeComponent extends Component {
                                         />
                                     </View>
 
-                                </TouchableOpacity>}
+                                                                                       </TouchableOpacity>}
 
 
 
@@ -1183,7 +1150,8 @@ class OpenAccPageThreeComponent extends Component {
                                 color: '#56565A',
                                 lineHeight: 25,
                                 textAlign: 'center'
-                            }}>
+                            }}
+                            >
                                 {"or"}
                             </Text>
                             <View style={{ flexGrow: 1, marginVertical: scaledHeight(0) }}>
@@ -1450,7 +1418,9 @@ class OpenAccPageThreeComponent extends Component {
 
                             {this.state.selectedFundInvestmentsData.map((item, index) => {
                                 return (
-                                    <View keyExtractor={this.generateFundInvestmentListKeyExtractor}>
+                                    <View 
+                                         key = {this.generateFundInvestmentListKeyExtractor}
+                                    >
                                         <TouchableOpacity
                                             //  onPress={() => { alert("#TODO:: Remove") }}
                                             activeOpacity={0.8}
@@ -1482,7 +1452,8 @@ class OpenAccPageThreeComponent extends Component {
                                                 dropDownValue={this.state.selectedFundInvestmentsData[index].fundingOption}
                                                 selectedDropDownValue={this.onSelectedDropDownValue("fundingOptionDropDown", index)}
                                                 itemToDisplay={"value"}
-                                                dropDownPostition={{ ...styles.dropDownPostition, top: scaledHeight(160) }} />
+                                                dropDownPostition={{ ...styles.dropDownPostition, top: scaledHeight(160) }}
+                                            />
 
                                             <Text style={styles.lblTxt}>
                                                 {gblStrings.accManagement.initInvestment}
@@ -1524,7 +1495,7 @@ class OpenAccPageThreeComponent extends Component {
                                                         />
                                                     </View>
 
-                                                </>
+                                                                                                                                                   </>
                                             }
 
                                             <Text style={styles.lblTxt}>
@@ -1624,7 +1595,7 @@ class OpenAccPageThreeComponent extends Component {
                     <GFooterComponent />
 
                     <Modal
-                        transparent={true}
+                        transparent
                         visible={this.state.modalVisible}
                         onRequestClose={this.setModalVisible(!this.state.modalVisible)}
                     >
@@ -1761,5 +1732,15 @@ class OpenAccPageThreeComponent extends Component {
 
 OpenAccPageThreeComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
+    accOpeningData: PropTypes.instanceOf(Object),
+    masterLookupStateData: PropTypes.instanceOf(Object),
+    addBankAccount:PropTypes.instanceOf(Object),
+    
+    saveData:PropTypes.func,
+    saveAccountOpening:PropTypes.func,
+    getFundListData:PropTypes.func,
+    getCompositeLookUpData:PropTypes.func,
+    addBankAccountAction:PropTypes.func
+
 };
 export default OpenAccPageThreeComponent;

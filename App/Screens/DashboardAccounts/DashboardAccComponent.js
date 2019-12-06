@@ -59,7 +59,7 @@ class DashboardAccComponent extends Component {
             "onlineId": 'arumugamt',
             "customerId": '761735',
             "accountType": 'ind'
-        }
+        };
         this.props.retriveSavedData(pendingAppPayload);
     }
     componentDidUpdate(prevProps, prevState) {
@@ -94,7 +94,7 @@ class DashboardAccComponent extends Component {
                             "key": this.state.retrivePendingAppData.accountType || "",
                             "value": this.state.retrivePendingAppData.accountMainCategory || ""
 
-                        }
+                        };
                         let pageNo = "" + this.state.retrivePendingAppData.savedPages;
                         let screenName = 'openAccPageOne';
 
@@ -184,12 +184,10 @@ class DashboardAccComponent extends Component {
             if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
                 accList = tempResponse.result;
                 accList = accList.value;
-            } else {
-
             }
         }
 
-        let tempPendingAppData = this.state.retrivePendingAppData;
+        //let tempPendingAppData = this.state.retrivePendingAppData;
 
 
         /*  if (this.props.accOpeningData.result != undefined && this.props.accOpeningData.result != null) {
@@ -289,6 +287,8 @@ DashboardAccComponent.propTypes = {
     accOpeningData: PropTypes.instanceOf(Object).isRequired,
     getAccountTypes: PropTypes.func,
     selectAccount: PropTypes.func,
+    retriveSavedData:PropTypes.instanceOf(Object),
+    populatePendingApplication:PropTypes.func
 
 };
 export default DashboardAccComponent;
