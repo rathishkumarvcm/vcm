@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, FlatList,Image } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GIcon, GDateComponent } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio, CustomDropDown } from '../../AppComponents';
@@ -9,6 +9,19 @@ import PropTypes from "prop-types";
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+import ImagePicker from 'react-native-image-picker';
+
+let imagePickerOptions = {
+    title: 'Select Image',
+    customButtons: [
+      { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+    ],
+    storageOptions: {
+      skipBackup: true,
+      path: 'images',
+      avatarSource : ''
+    },
+  };
 
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
 const dummyData = [
@@ -130,7 +143,7 @@ class OpenAccPageTwoComponent extends Component {
             selectedItemName: "",
             // Perosnal info
             nickname: "",
-
+            userAvatar:"",
             personal: {
                 prefix: "",
                 prefixDropDown: false,
@@ -553,6 +566,8 @@ class OpenAccPageTwoComponent extends Component {
     /*----------------------
                                  Button Events 
                                                                  -------------------------- */
+    /*------- Page Navigation methods --------*/
+
     onClickHeader = () => {
         console.log("#TODO : onClickHeader");
     }
@@ -829,8 +844,6 @@ class OpenAccPageTwoComponent extends Component {
         }
     }
 
-
-
     isEmpty = (str) => {
         if (str == "" || str == undefined || str == null || str == "null" || str == "undefined") {
             return true;
@@ -838,6 +851,59 @@ class OpenAccPageTwoComponent extends Component {
             return false;
         }
     }
+    /*------- Input Events & Delegate methods --------*/
+    uploadImage = () => {
+        ImagePicker.showImagePicker(imagePickerOptions, (response) => {
+            //console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                console.log('IMAGE PICKER SUCCESS::> ');
+
+                const source = { uri: response.uri };
+                const base64source = { uri: 'data:image/jpeg;base64,' + response.data };
+                console.log("base64source", base64source.length)
+                this.setState({
+                    userAvatar: source
+                })
+               // alert("Url Selected");
+            }
+        });
+    }
+
+    launchCamera = () => {
+        let options = {
+          storageOptions: {
+            skipBackup: true,
+            path: 'images',
+          },
+        };
+        ImagePicker.launchCamera(options, (response) => {
+         // console.log('Response = ', response);
+          if (response.didCancel) {
+            console.log('User cancelled image picker');
+          } else if (response.error) {
+            console.log('ImagePicker Error: ', response.error);
+          } else if (response.customButton) {
+            console.log('User tapped custom button: ', response.customButton);
+            alert(response.customButton);
+          } else {
+            const source = { uri: response.uri };
+            // console.log('response', JSON.stringify(response));
+            this.setState({
+              filePath: response,
+              fileData: response.data,
+              fileUri: response.uri
+            });
+          }
+        });
+    
+      }
 
     onSubmitZipEditing = (stateKey,keyName,nextInputFocus) => text =>{
         console.log("onSubmitZipEditing:::>" );
@@ -960,6 +1026,394 @@ class OpenAccPageTwoComponent extends Component {
         this[inputComp] = ref;
     }
 
+
+    /*------- Validations methods --------*/
+
+    validateIndividualAccInfoFields = () => {
+
+        let errMsg = "";
+        let isValidationSuccess = false;
+        let input = "";
+        // var employmentInfoVisible = false;
+
+        if (this.isEmpty(this.state.personal.empStatus) && this.state.personal.empStatus !== "Not Employed" && this.state.personal.empStatus !== "Homemaker" && this.state.personal.empStatus !== "Others" && this.state.personal.empStatus !== "Self-Employed") {
+            //  employmentInfoVisible = true;
+        }
+
+        /* if (this.isEmpty(this.state.personal.prefix)) {
+             errMsg = gblStrings.accManagement.emptyPrefixMsg;
+             input = 'prefix';
+         } else 
+         */
+        if (this.isEmpty(this.state.personal.firstName)) {
+            errMsg = gblStrings.accManagement.emptyFirstNameMsg;
+            input = 'firstName';
+        } else if (this.isEmpty(this.state.personal.lastName)) {
+            errMsg = gblStrings.accManagement.emptyLastNameMsg;
+            input = 'lastName';
+        } else if (this.isEmpty(this.state.personal.dob)) {
+            errMsg = gblStrings.accManagement.emptyDOBMsg;
+            input = 'dob';
+        } else if (this.isEmpty(this.state.personal.gender)) {
+            errMsg = gblStrings.accManagement.emptyGenderMsg;
+        } else if (this.isEmpty(this.state.personal.maritalStatus)) {
+            errMsg = gblStrings.accManagement.emptyMaritalMsg;
+            input = 'maritalStatus';
+        } else if (this.isEmpty(this.state.personal.citizenship)) {
+            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+        } else if (this.isEmpty(this.state.personal.mailingAddressType)) {
+            errMsg = gblStrings.accManagement.emptyAddressTypeMsg;
+        } else if (this.isEmpty(this.state.personal.addrLine1)) {
+            errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
+            input = 'addrLine1';
+        } else if (this.isEmpty(this.state.personal.addrLine2)) {
+            errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
+            input = 'addrLine2';
+        } else if (this.isEmpty(this.state.personal.zipcode)) {
+            errMsg = gblStrings.accManagement.emptyZipCodeMsg;
+            input = 'zipcode';
+        } else if (this.isEmpty(this.state.personal.city)) {
+            errMsg = gblStrings.accManagement.emptyCityMsg;
+            input = 'city';
+        } else if (this.isEmpty(this.state.personal.stateCity)) {
+            errMsg = gblStrings.accManagement.emptyStateMsg;
+            input = 'stateCity';
+        } else if (this.isEmpty(this.state.personal.isYourPhysicalAddresSame)) {
+            errMsg = gblStrings.accManagement.confirmPhysicalAddressSame;
+        } else if (this.isEmpty(this.state.personal.mobileNo)) {
+            errMsg = gblStrings.accManagement.emptyMobileNoMsg;
+            input = 'mobileNo';
+        } else if (this.isEmpty(this.state.personal.emailAddress)) {
+            errMsg = gblStrings.accManagement.emptyEmailAddressMsg;
+            input = 'emailAddress';
+        } else if (!emailRegex.test(this.state.personal.emailAddress)) {
+            errMsg = gblStrings.accManagement.invalidEmailMasg;
+            input = 'emailAddress';
+        } else if (this.isEmpty(this.state.personal.socialSecurityNo)) {
+            errMsg = gblStrings.accManagement.emptySSNMsg;
+            input = 'socialSecurityNo';
+        } else if (this.isEmpty(this.state.personal.empStatus)) {
+            errMsg = gblStrings.accManagement.emptyEmploymentStatusMsg;
+            input = 'empStatus';
+        } else if (this.isEmpty(this.state.personal.isMilitaryHistory)) {
+            errMsg = gblStrings.accManagement.emptymilitaryServingStatus;
+        } else if (this.isEmpty(this.state.personal.isSeniorPoliticalFigure)) {
+            errMsg = gblStrings.accManagement.emptyIsSeniorPoliticalFigureMsg;
+        } else if (this.state.personal.isSeniorPoliticalFigure == true && this.isEmpty(this.state.personal.seniorPoliticalName)) {
+            errMsg = gblStrings.accManagement.emptySeniorPoliticalNameMsg;
+            input = 'seniorPoliticalName';
+        } else {
+            isValidationSuccess = true;
+        }
+
+
+
+        if (!isValidationSuccess) {
+            console.log("Personal Info errMsg:: " + errMsg);
+
+            this.setState(prevState => ({
+                personal: {
+                    ...prevState.personal,
+                    [input + 'Validation']: false,
+                    isPersonalInfoExpanded: true,
+                    isEmploymentInfoExpanded: true,
+                    isFinancialInfoExpanded: true,
+                    isMilitaryInfoExpanded: true,
+                    isRegulatoryInfoExpanded: true,
+
+
+                }
+            }))
+
+
+            if (input !== "" && input !== null && input !== undefined) {
+                if (this[input] !== null && input !== undefined) {
+                    if (typeof this[input].focus === 'function') {
+                        this[input].focus();
+                    }
+                }
+            }
+            alert(errMsg);
+        }
+
+        return isValidationSuccess;
+    }
+
+    validateJointAccInfoFields = () => {
+
+        let errMsg = "";
+        let isValidationSuccess = false;
+        let input = "";
+        //var employmentInfoVisible = false;
+
+        if (this.isEmpty(this.state.jointOwner.empStatus) && this.state.jointOwner.empStatus !== "Not Employed" && this.state.jointOwner.empStatus !== "Homemaker" && this.state.jointOwner.empStatus !== "Others" && this.state.jointOwner.empStatus !== "Self-Employed") {
+            //employmentInfoVisible = true;
+        }
+
+        if (this.isEmpty(this.state.jointOwner.prefix)) {
+            errMsg = gblStrings.accManagement.emptyPrefixMsg;
+            input = 'prefix';
+        } else if (this.isEmpty(this.state.jointOwner.firstName)) {
+            errMsg = gblStrings.accManagement.emptyFirstNameMsg;
+            input = 'firstName';
+        } else if (this.isEmpty(this.state.jointOwner.lastName)) {
+            errMsg = gblStrings.accManagement.emptyLastNameMsg;
+            input = 'lastName';
+        } else if (this.isEmpty(this.state.jointOwner.dob)) {
+            errMsg = gblStrings.accManagement.emptyDOBMsg;
+            input = 'dob';
+        } else if (this.isEmpty(this.state.jointOwner.gender)) {
+            errMsg = gblStrings.accManagement.emptyGenderMsg;
+        } else if (this.isEmpty(this.state.jointOwner.maritalStatus)) {
+            errMsg = gblStrings.accManagement.emptyMaritalMsg;
+            input = 'maritalStatus';
+        } else if (this.isEmpty(this.state.jointOwner.citizenship)) {
+            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+        } else if (this.isEmpty(this.state.jointOwner.mailingAddressType)) {
+            errMsg = gblStrings.accManagement.emptyAddressTypeMsg;
+        } else if (this.isEmpty(this.state.jointOwner.addrLine1)) {
+            errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
+            input = 'addrLine1';
+        } else if (this.isEmpty(this.state.jointOwner.addrLine2)) {
+            errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
+            input = 'addrLine2';
+        } else if (this.isEmpty(this.state.jointOwner.zipcode)) {
+            errMsg = gblStrings.accManagement.emptyZipCodeMsg;
+            input = 'zipcode';
+        } else if (this.isEmpty(this.state.jointOwner.city)) {
+            errMsg = gblStrings.accManagement.emptyCityMsg;
+            input = 'city';
+        } else if (this.isEmpty(this.state.jointOwner.stateCity)) {
+            errMsg = gblStrings.accManagement.emptyStateMsg;
+            input = 'stateCity';
+        } else if (this.isEmpty(this.state.jointOwner.isYourPhysicalAddresSame)) {
+            errMsg = gblStrings.accManagement.confirmPhysicalAddressSame;
+        } else if (this.isEmpty(this.state.jointOwner.mobileNo)) {
+            errMsg = gblStrings.accManagement.emptyMobileNoMsg;
+            input = 'mobileNo';
+        } else if (this.isEmpty(this.state.jointOwner.emailAddress)) {
+            errMsg = gblStrings.accManagement.emptyEmailAddressMsg;
+            input = 'emailAddress';
+        } else if (!emailRegex.test(this.state.jointOwner.emailAddress)) {
+            errMsg = gblStrings.accManagement.invalidEmailMasg;
+            input = 'emailAddress';
+        } else if (this.isEmpty(this.state.jointOwner.socialSecurityNo)) {
+            errMsg = gblStrings.accManagement.emptySSNMsg;
+            input = 'socialSecurityNo';
+        } else if (this.isEmpty(this.state.jointOwner.empStatus)) {
+            errMsg = gblStrings.accManagement.emptyEmploymentStatusMsg;
+            input = 'empStatus';
+        } else if (this.isEmpty(this.state.jointOwner.isMilitaryHistory)) {
+            errMsg = gblStrings.accManagement.emptymilitaryServingStatus;
+        } else if (this.isEmpty(this.state.jointOwner.isSeniorPoliticalFigure)) {
+            errMsg = gblStrings.accManagement.emptyIsSeniorPoliticalFigureMsg;
+        } else if (this.state.jointOwner.isSeniorPoliticalFigure && this.isEmpty(this.state.jointOwner.seniorPoliticalName)) {
+            errMsg = gblStrings.accManagement.emptySeniorPoliticalNameMsg;
+            input = 'seniorPoliticalName';
+        } else {
+            isValidationSuccess = true;
+        }
+
+
+
+        if (!isValidationSuccess) {
+            console.log("JointOwner Info errMsg:: " + errMsg);
+
+            this.setState(prevState => ({
+                jointOwner: {
+                    ...prevState.jointOwner,
+                    [input + 'Validation']: false
+                }
+            }));
+
+            if (input !== "" && input !== null && input !== undefined) {
+                if (this[input] !== null && input !== undefined) {
+                    if (typeof this[input].focus === 'function') {
+                        this[input].focus();
+                    }
+                }
+            }
+            alert(errMsg);
+        }
+
+        return isValidationSuccess;
+    }
+
+    validateChildBeneficiaryInfoFields = () => {
+
+        let errMsg = "";
+        let isValidationSuccess = false;
+        let input = "";
+        //var employmentInfoVisible = false;
+
+
+        if (this.isEmpty(this.state.childBeneficiary.vcmNo)) {
+            errMsg = gblStrings.accManagement.emptyVCMNoMsg;
+            input = 'prefix';
+        } else if (this.isEmpty(this.state.childBeneficiary.firstName)) {
+            errMsg = gblStrings.accManagement.emptyFirstNameMsg;
+            input = 'firstName';
+        } else if (this.isEmpty(this.state.childBeneficiary.lastName)) {
+            errMsg = gblStrings.accManagement.emptyLastNameMsg;
+            input = 'lastName';
+        } else if (this.isEmpty(this.state.childBeneficiary.dob)) {
+            errMsg = gblStrings.accManagement.emptyDOBMsg;
+            input = 'dob';
+        } else if (this.isEmpty(this.state.childBeneficiary.socialSecurityNo)) {
+            errMsg = gblStrings.accManagement.emptySSNMsg;
+            input = 'socialSecurityNo';
+        } else if (this.isEmpty(this.state.childBeneficiary.relationshipToAcc)) {
+            errMsg = gblStrings.accManagement.emptyRelationShipMsg;
+            input = 'empStatus';
+        } else if (this.isEmpty(this.state.childBeneficiary.isSeniorPoliticalFigure)) {
+            errMsg = gblStrings.accManagement.emptyIsSeniorPoliticalFigureMsg;
+        } else if (this.state.childBeneficiary.isSeniorPoliticalFigure == true && this.isEmpty(this.state.childBeneficiary.seniorPoliticalName)) {
+            errMsg = gblStrings.accManagement.emptySeniorPoliticalNameMsg;
+            input = 'seniorPoliticalName';
+        } else {
+            isValidationSuccess = true;
+        }
+
+
+
+        if (!isValidationSuccess) {
+            console.log("Personal Info errMsg:: " + errMsg);
+
+            this.setState(prevState => ({
+                childBeneficiary: {
+                    ...prevState.childBeneficiary,
+                    [input + 'Validation']: false
+                }
+            }));
+
+            if (input !== "" && input !== null && input !== undefined) {
+                if (this[input] !== null && input !== undefined) {
+                    if (typeof this[input].focus === 'function') {
+                        this[input].focus();
+                    }
+                }
+            }
+            alert(errMsg);
+        }
+
+        return isValidationSuccess;
+    }
+
+    validateIRABeneficiaryInfoFields = () => {
+
+        let isValidationSuccess = false;
+        return isValidationSuccess;
+    }
+
+
+    validateFields = () => {
+        return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
+        try {
+
+
+            const accType = this.props.navigation.getParam('accType', '');
+            console.log("validateFields::: " + accType);
+
+            let isValidationSuccess = false;
+
+            this.setState(prevState => ({
+                personal: {
+                    ...prevState.personal,
+                    prefixValidation: true,
+                    firstNameValidation: true,
+                    lastNameValidation: true,
+                    dobValidation: true,
+                    genderValidation: true,
+                    maritalStatusValidation: true,
+                    citizenshipValidation: true,
+                    addressTypeValidation: true,
+                    addrLine1Validation: true,
+                    addrLine2Validation: true,
+                    zipcodeValidation: true,
+                    cityValidation: true,
+                    stateCityValidation: true,
+                    stateValidation: true,
+                    isYourPhysicalAddresSameValidation: false,
+                    mobileNoValidation: true,
+                    workPhoneNoValidation: true,
+                    emailAddressValidation: true,
+                    socialSecurityNoValidation: true,
+
+                    empStatusValidation: true,
+                    seniorPoliticalNameValidation: true,
+
+                    militaryStatusValidation: true,
+
+
+                },
+                jointOwner: {
+                    ...prevState.jointOwner,
+                    prefixValidation: true,
+                    firstNameValidation: true,
+                    lastNameValidation: true,
+                    dobValidation: true,
+                    genderValidation: true,
+                    maritalStatusValidation: true,
+                    citizenshipValidation: true,
+                    addressTypeValidation: true,
+                    addrLine1Validation: true,
+                    addrLine2Validation: true,
+                    zipcodeValidation: true,
+                    cityValidation: true,
+                    stateCityValidation: true,
+                    stateValidation: true,
+                    isYourPhysicalAddresSameValidation: false,
+                    mobileNoValidation: true,
+                    workPhoneNoValidation: true,
+                    emailAddressValidation: true,
+                    socialSecurityNoValidation: true,
+
+                    empStatusValidation: true,
+                    seniorPoliticalNameValidation: true,
+
+                    militaryStatusValidation: true,
+
+
+                },
+                childBeneficiary: {
+                    ...prevState.childBeneficiary,
+
+                    prefixValidation: true,
+                    firstNameValidation: true,
+                    lastNameValidation: true,
+                    dobValidation: true,
+                    genderValidation: true,
+                    vcmNoValidation: true,
+                    mobileNoValidation: true,
+                    emailAddressValidation: true,
+                    socialSecurityNoValidation: true,
+                    relationshipToAccValidation: true,
+                    seniorPoliticalNameValidation: true,
+
+                }
+            }));
+
+
+            if (!this.validateIndividualAccInfoFields()) {
+                isValidationSuccess = false;
+            } else if (accType == "Joint Account" && !this.validateJointAccInfoFields()) {
+                isValidationSuccess = false;
+            } else if (accType == "UGMA/UTMA Account" && !this.validateChildBeneficiaryInfoFields()) {
+                isValidationSuccess = false;
+            } else {
+                isValidationSuccess = true;
+            }
+
+
+            return isValidationSuccess;
+        } catch (err) {
+            console.log("Error:::" + JSON.stringify(err));
+        }
+
+    }
+    
+    /*------- Custom render methods --------*/
+
     generateKeyExtractor = (item) => item.key;
     renderDropDownListItem = (dropDownName) => ({ item }) =>
         (<DropDownListItem
@@ -981,9 +1435,6 @@ class OpenAccPageTwoComponent extends Component {
             />
         );
     }
-
-
-
 
     renderSplitCalender = (sectionName, calendarName) => {
         console.log("renderSplitCalender::: " + calendarName);
@@ -1666,390 +2117,6 @@ class OpenAccPageTwoComponent extends Component {
         }));
     }
 
-
-    validateIndividualAccInfoFields = () => {
-
-        let errMsg = "";
-        let isValidationSuccess = false;
-        let input = "";
-        // var employmentInfoVisible = false;
-
-        if (this.isEmpty(this.state.personal.empStatus) && this.state.personal.empStatus !== "Not Employed" && this.state.personal.empStatus !== "Homemaker" && this.state.personal.empStatus !== "Others" && this.state.personal.empStatus !== "Self-Employed") {
-            //  employmentInfoVisible = true;
-        }
-
-        /* if (this.isEmpty(this.state.personal.prefix)) {
-             errMsg = gblStrings.accManagement.emptyPrefixMsg;
-             input = 'prefix';
-         } else 
-         */
-        if (this.isEmpty(this.state.personal.firstName)) {
-            errMsg = gblStrings.accManagement.emptyFirstNameMsg;
-            input = 'firstName';
-        } else if (this.isEmpty(this.state.personal.lastName)) {
-            errMsg = gblStrings.accManagement.emptyLastNameMsg;
-            input = 'lastName';
-        } else if (this.isEmpty(this.state.personal.dob)) {
-            errMsg = gblStrings.accManagement.emptyDOBMsg;
-            input = 'dob';
-        } else if (this.isEmpty(this.state.personal.gender)) {
-            errMsg = gblStrings.accManagement.emptyGenderMsg;
-        } else if (this.isEmpty(this.state.personal.maritalStatus)) {
-            errMsg = gblStrings.accManagement.emptyMaritalMsg;
-            input = 'maritalStatus';
-        } else if (this.isEmpty(this.state.personal.citizenship)) {
-            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
-        } else if (this.isEmpty(this.state.personal.mailingAddressType)) {
-            errMsg = gblStrings.accManagement.emptyAddressTypeMsg;
-        } else if (this.isEmpty(this.state.personal.addrLine1)) {
-            errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
-            input = 'addrLine1';
-        } else if (this.isEmpty(this.state.personal.addrLine2)) {
-            errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
-            input = 'addrLine2';
-        } else if (this.isEmpty(this.state.personal.zipcode)) {
-            errMsg = gblStrings.accManagement.emptyZipCodeMsg;
-            input = 'zipcode';
-        } else if (this.isEmpty(this.state.personal.city)) {
-            errMsg = gblStrings.accManagement.emptyCityMsg;
-            input = 'city';
-        } else if (this.isEmpty(this.state.personal.stateCity)) {
-            errMsg = gblStrings.accManagement.emptyStateMsg;
-            input = 'stateCity';
-        } else if (this.isEmpty(this.state.personal.isYourPhysicalAddresSame)) {
-            errMsg = gblStrings.accManagement.confirmPhysicalAddressSame;
-        } else if (this.isEmpty(this.state.personal.mobileNo)) {
-            errMsg = gblStrings.accManagement.emptyMobileNoMsg;
-            input = 'mobileNo';
-        } else if (this.isEmpty(this.state.personal.emailAddress)) {
-            errMsg = gblStrings.accManagement.emptyEmailAddressMsg;
-            input = 'emailAddress';
-        } else if (!emailRegex.test(this.state.personal.emailAddress)) {
-            errMsg = gblStrings.accManagement.invalidEmailMasg;
-            input = 'emailAddress';
-        } else if (this.isEmpty(this.state.personal.socialSecurityNo)) {
-            errMsg = gblStrings.accManagement.emptySSNMsg;
-            input = 'socialSecurityNo';
-        } else if (this.isEmpty(this.state.personal.empStatus)) {
-            errMsg = gblStrings.accManagement.emptyEmploymentStatusMsg;
-            input = 'empStatus';
-        } else if (this.isEmpty(this.state.personal.isMilitaryHistory)) {
-            errMsg = gblStrings.accManagement.emptymilitaryServingStatus;
-        } else if (this.isEmpty(this.state.personal.isSeniorPoliticalFigure)) {
-            errMsg = gblStrings.accManagement.emptyIsSeniorPoliticalFigureMsg;
-        } else if (this.state.personal.isSeniorPoliticalFigure == true && this.isEmpty(this.state.personal.seniorPoliticalName)) {
-            errMsg = gblStrings.accManagement.emptySeniorPoliticalNameMsg;
-            input = 'seniorPoliticalName';
-        } else {
-            isValidationSuccess = true;
-        }
-
-
-
-        if (!isValidationSuccess) {
-            console.log("Personal Info errMsg:: " + errMsg);
-
-            this.setState(prevState => ({
-                personal: {
-                    ...prevState.personal,
-                    [input + 'Validation']: false,
-                    isPersonalInfoExpanded: true,
-                    isEmploymentInfoExpanded: true,
-                    isFinancialInfoExpanded: true,
-                    isMilitaryInfoExpanded: true,
-                    isRegulatoryInfoExpanded: true,
-
-
-                }
-            }))
-
-
-            if (input !== "" && input !== null && input !== undefined) {
-                if (this[input] !== null && input !== undefined) {
-                    if (typeof this[input].focus === 'function') {
-                        this[input].focus();
-                    }
-                }
-            }
-            alert(errMsg);
-        }
-
-        return isValidationSuccess;
-    }
-
-    validateJointAccInfoFields = () => {
-
-        let errMsg = "";
-        let isValidationSuccess = false;
-        let input = "";
-        //var employmentInfoVisible = false;
-
-        if (this.isEmpty(this.state.jointOwner.empStatus) && this.state.jointOwner.empStatus !== "Not Employed" && this.state.jointOwner.empStatus !== "Homemaker" && this.state.jointOwner.empStatus !== "Others" && this.state.jointOwner.empStatus !== "Self-Employed") {
-            //employmentInfoVisible = true;
-        }
-
-        if (this.isEmpty(this.state.jointOwner.prefix)) {
-            errMsg = gblStrings.accManagement.emptyPrefixMsg;
-            input = 'prefix';
-        } else if (this.isEmpty(this.state.jointOwner.firstName)) {
-            errMsg = gblStrings.accManagement.emptyFirstNameMsg;
-            input = 'firstName';
-        } else if (this.isEmpty(this.state.jointOwner.lastName)) {
-            errMsg = gblStrings.accManagement.emptyLastNameMsg;
-            input = 'lastName';
-        } else if (this.isEmpty(this.state.jointOwner.dob)) {
-            errMsg = gblStrings.accManagement.emptyDOBMsg;
-            input = 'dob';
-        } else if (this.isEmpty(this.state.jointOwner.gender)) {
-            errMsg = gblStrings.accManagement.emptyGenderMsg;
-        } else if (this.isEmpty(this.state.jointOwner.maritalStatus)) {
-            errMsg = gblStrings.accManagement.emptyMaritalMsg;
-            input = 'maritalStatus';
-        } else if (this.isEmpty(this.state.jointOwner.citizenship)) {
-            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
-        } else if (this.isEmpty(this.state.jointOwner.mailingAddressType)) {
-            errMsg = gblStrings.accManagement.emptyAddressTypeMsg;
-        } else if (this.isEmpty(this.state.jointOwner.addrLine1)) {
-            errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
-            input = 'addrLine1';
-        } else if (this.isEmpty(this.state.jointOwner.addrLine2)) {
-            errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
-            input = 'addrLine2';
-        } else if (this.isEmpty(this.state.jointOwner.zipcode)) {
-            errMsg = gblStrings.accManagement.emptyZipCodeMsg;
-            input = 'zipcode';
-        } else if (this.isEmpty(this.state.jointOwner.city)) {
-            errMsg = gblStrings.accManagement.emptyCityMsg;
-            input = 'city';
-        } else if (this.isEmpty(this.state.jointOwner.stateCity)) {
-            errMsg = gblStrings.accManagement.emptyStateMsg;
-            input = 'stateCity';
-        } else if (this.isEmpty(this.state.jointOwner.isYourPhysicalAddresSame)) {
-            errMsg = gblStrings.accManagement.confirmPhysicalAddressSame;
-        } else if (this.isEmpty(this.state.jointOwner.mobileNo)) {
-            errMsg = gblStrings.accManagement.emptyMobileNoMsg;
-            input = 'mobileNo';
-        } else if (this.isEmpty(this.state.jointOwner.emailAddress)) {
-            errMsg = gblStrings.accManagement.emptyEmailAddressMsg;
-            input = 'emailAddress';
-        } else if (!emailRegex.test(this.state.jointOwner.emailAddress)) {
-            errMsg = gblStrings.accManagement.invalidEmailMasg;
-            input = 'emailAddress';
-        } else if (this.isEmpty(this.state.jointOwner.socialSecurityNo)) {
-            errMsg = gblStrings.accManagement.emptySSNMsg;
-            input = 'socialSecurityNo';
-        } else if (this.isEmpty(this.state.jointOwner.empStatus)) {
-            errMsg = gblStrings.accManagement.emptyEmploymentStatusMsg;
-            input = 'empStatus';
-        } else if (this.isEmpty(this.state.jointOwner.isMilitaryHistory)) {
-            errMsg = gblStrings.accManagement.emptymilitaryServingStatus;
-        } else if (this.isEmpty(this.state.jointOwner.isSeniorPoliticalFigure)) {
-            errMsg = gblStrings.accManagement.emptyIsSeniorPoliticalFigureMsg;
-        } else if (this.state.jointOwner.isSeniorPoliticalFigure && this.isEmpty(this.state.jointOwner.seniorPoliticalName)) {
-            errMsg = gblStrings.accManagement.emptySeniorPoliticalNameMsg;
-            input = 'seniorPoliticalName';
-        } else {
-            isValidationSuccess = true;
-        }
-
-
-
-        if (!isValidationSuccess) {
-            console.log("JointOwner Info errMsg:: " + errMsg);
-
-            this.setState(prevState => ({
-                jointOwner: {
-                    ...prevState.jointOwner,
-                    [input + 'Validation']: false
-                }
-            }));
-
-            if (input !== "" && input !== null && input !== undefined) {
-                if (this[input] !== null && input !== undefined) {
-                    if (typeof this[input].focus === 'function') {
-                        this[input].focus();
-                    }
-                }
-            }
-            alert(errMsg);
-        }
-
-        return isValidationSuccess;
-    }
-
-    validateChildBeneficiaryInfoFields = () => {
-
-        let errMsg = "";
-        let isValidationSuccess = false;
-        let input = "";
-        //var employmentInfoVisible = false;
-
-
-        if (this.isEmpty(this.state.childBeneficiary.vcmNo)) {
-            errMsg = gblStrings.accManagement.emptyVCMNoMsg;
-            input = 'prefix';
-        } else if (this.isEmpty(this.state.childBeneficiary.firstName)) {
-            errMsg = gblStrings.accManagement.emptyFirstNameMsg;
-            input = 'firstName';
-        } else if (this.isEmpty(this.state.childBeneficiary.lastName)) {
-            errMsg = gblStrings.accManagement.emptyLastNameMsg;
-            input = 'lastName';
-        } else if (this.isEmpty(this.state.childBeneficiary.dob)) {
-            errMsg = gblStrings.accManagement.emptyDOBMsg;
-            input = 'dob';
-        } else if (this.isEmpty(this.state.childBeneficiary.socialSecurityNo)) {
-            errMsg = gblStrings.accManagement.emptySSNMsg;
-            input = 'socialSecurityNo';
-        } else if (this.isEmpty(this.state.childBeneficiary.relationshipToAcc)) {
-            errMsg = gblStrings.accManagement.emptyRelationShipMsg;
-            input = 'empStatus';
-        } else if (this.isEmpty(this.state.childBeneficiary.isSeniorPoliticalFigure)) {
-            errMsg = gblStrings.accManagement.emptyIsSeniorPoliticalFigureMsg;
-        } else if (this.state.childBeneficiary.isSeniorPoliticalFigure == true && this.isEmpty(this.state.childBeneficiary.seniorPoliticalName)) {
-            errMsg = gblStrings.accManagement.emptySeniorPoliticalNameMsg;
-            input = 'seniorPoliticalName';
-        } else {
-            isValidationSuccess = true;
-        }
-
-
-
-        if (!isValidationSuccess) {
-            console.log("Personal Info errMsg:: " + errMsg);
-
-            this.setState(prevState => ({
-                childBeneficiary: {
-                    ...prevState.childBeneficiary,
-                    [input + 'Validation']: false
-                }
-            }));
-
-            if (input !== "" && input !== null && input !== undefined) {
-                if (this[input] !== null && input !== undefined) {
-                    if (typeof this[input].focus === 'function') {
-                        this[input].focus();
-                    }
-                }
-            }
-            alert(errMsg);
-        }
-
-        return isValidationSuccess;
-    }
-
-    validateIRABeneficiaryInfoFields = () => {
-
-        let isValidationSuccess = false;
-        return isValidationSuccess;
-    }
-
-
-
-    validateFields = () => {
-        return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
-        try {
-
-
-            const accType = this.props.navigation.getParam('accType', '');
-            console.log("validateFields::: " + accType);
-
-            let isValidationSuccess = false;
-
-            this.setState(prevState => ({
-                personal: {
-                    ...prevState.personal,
-                    prefixValidation: true,
-                    firstNameValidation: true,
-                    lastNameValidation: true,
-                    dobValidation: true,
-                    genderValidation: true,
-                    maritalStatusValidation: true,
-                    citizenshipValidation: true,
-                    addressTypeValidation: true,
-                    addrLine1Validation: true,
-                    addrLine2Validation: true,
-                    zipcodeValidation: true,
-                    cityValidation: true,
-                    stateCityValidation: true,
-                    stateValidation: true,
-                    isYourPhysicalAddresSameValidation: false,
-                    mobileNoValidation: true,
-                    workPhoneNoValidation: true,
-                    emailAddressValidation: true,
-                    socialSecurityNoValidation: true,
-
-                    empStatusValidation: true,
-                    seniorPoliticalNameValidation: true,
-
-                    militaryStatusValidation: true,
-
-
-                },
-                jointOwner: {
-                    ...prevState.jointOwner,
-                    prefixValidation: true,
-                    firstNameValidation: true,
-                    lastNameValidation: true,
-                    dobValidation: true,
-                    genderValidation: true,
-                    maritalStatusValidation: true,
-                    citizenshipValidation: true,
-                    addressTypeValidation: true,
-                    addrLine1Validation: true,
-                    addrLine2Validation: true,
-                    zipcodeValidation: true,
-                    cityValidation: true,
-                    stateCityValidation: true,
-                    stateValidation: true,
-                    isYourPhysicalAddresSameValidation: false,
-                    mobileNoValidation: true,
-                    workPhoneNoValidation: true,
-                    emailAddressValidation: true,
-                    socialSecurityNoValidation: true,
-
-                    empStatusValidation: true,
-                    seniorPoliticalNameValidation: true,
-
-                    militaryStatusValidation: true,
-
-
-                },
-                childBeneficiary: {
-                    ...prevState.childBeneficiary,
-
-                    prefixValidation: true,
-                    firstNameValidation: true,
-                    lastNameValidation: true,
-                    dobValidation: true,
-                    genderValidation: true,
-                    vcmNoValidation: true,
-                    mobileNoValidation: true,
-                    emailAddressValidation: true,
-                    socialSecurityNoValidation: true,
-                    relationshipToAccValidation: true,
-                    seniorPoliticalNameValidation: true,
-
-                }
-            }));
-
-
-            if (!this.validateIndividualAccInfoFields()) {
-                isValidationSuccess = false;
-            } else if (accType == "Joint Account" && !this.validateJointAccInfoFields()) {
-                isValidationSuccess = false;
-            } else if (accType == "UGMA/UTMA Account" && !this.validateChildBeneficiaryInfoFields()) {
-                isValidationSuccess = false;
-            } else {
-                isValidationSuccess = true;
-            }
-
-
-            return isValidationSuccess;
-        } catch (err) {
-            console.log("Error:::" + JSON.stringify(err));
-        }
-
-    }
 
     renderIndividualSection = () => {
         return (
@@ -4426,9 +4493,13 @@ class OpenAccPageTwoComponent extends Component {
                                 buttonStyle={styles.browseBtn}
                                 buttonText={gblStrings.common.browse}
                                 textStyle={styles.normalBlackBtnTxt}
-                                onPress={this.onClickNext}
+                                onPress={this.uploadImage}
 
                             />
+
+                            {
+                                this.state.userAvatar!="" && <Image source={this.state.userAvatar} style={styles.userAvatar} />
+                            }
                         </View>
                     </View>
 

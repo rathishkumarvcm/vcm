@@ -418,9 +418,11 @@ export const styles = StyleSheet.create({
         lineHeight: 25
 
     },
-   
-    
 
+    userAvatar:{
+        height : scaledHeight(200),
+        width: '100%'
+    }
 
 
 });
