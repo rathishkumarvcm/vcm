@@ -549,10 +549,19 @@ class OpenAccPageTwoComponent extends Component {
 
                                 }
                             }));
-
-                        
-                        
                     } else {
+                    }
+                }
+            }
+
+            const uploadImgKey = ActionTypes.UPLOAD_AVATAR;
+            if (this.props.accOpeningData[uploadImgKey]) {
+                if (this.props.accOpeningData[uploadImgKey] !== prevProps.accOpeningData[uploadImgKey]) {
+                    const tempResponse = this.props.accOpeningData[uploadImgKey];
+                    if (tempResponse && tempResponse.b ) {
+                         if(tempResponse.b.Location){
+                             alert ("Image Uploaded Successfully \n::"+tempResponse.b.Location)
+                         }
                     }
                 }
             }
@@ -871,7 +880,13 @@ class OpenAccPageTwoComponent extends Component {
                 this.setState({
                     userAvatar: source
                 })
-               // alert("Url Selected");
+              if(response.data  && response.data  != null && response.data != undefined && response.data.length>0){
+                    const payload = {
+                        "Body":""+response.data
+                    }
+                    this.props.uploadAavatarImg(payload);
+              }
+                
             }
         });
     }

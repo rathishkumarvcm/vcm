@@ -46,7 +46,8 @@ export default {
         copyRights: "Copyright Victory Capital Management Inc. ©2020",
         validPincode: "Enter Valid 6 Digit Pin",
         dollar:"$",
-        validate:"Validate"
+        validate:"Validate",
+        upload:"Upload"
     },
     login: {
         imageRequest: "imageRequest",
