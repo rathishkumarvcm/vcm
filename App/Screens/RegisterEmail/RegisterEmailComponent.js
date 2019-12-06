@@ -87,13 +87,13 @@ class RegisterEmailComponent extends Component {
             />
 
 
-            <GButtonComponent 
+            {/*<GButtonComponent 
                     buttonStyle={styles.cancelButton}
                     buttonText="Back"
                     textStyle={styles.cancelButtonText}
                     onPress={this.goBack}
                     
-            />
+            />*/}
 
             <GButtonComponent 
                     buttonStyle={styles.cancelButton}
@@ -115,7 +115,7 @@ class RegisterEmailComponent extends Component {
            
 
 
-            <View style={styles.termsofuse}>
+           {/* <View style={styles.termsofuse}>
                 <Text style={styles.termsofuseText}>
                     {"Need Assistance?  "}
                    
@@ -127,7 +127,7 @@ class RegisterEmailComponent extends Component {
 
             <View style={{paddingLeft:'4%',paddingRight:'4%',marginTop:20}}>
                  <View style={{borderBottomWidth:1,borderBottomColor:'#56565A'}} />  
-            </View>
+    </View> */}
             
             
             

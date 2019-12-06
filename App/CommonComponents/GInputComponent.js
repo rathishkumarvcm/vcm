@@ -56,6 +56,7 @@ export const styles = StyleSheet.create({
         style={[styles.textInputStyle,props.inputStyle]}
         value={props.value}
         secureTextEntry={props.secureTextEntry}
+        autoCorrect={false}
         autoFocus={props.autoFocus}
         editable={props.editable}
         onBlur={props.onBlur}
