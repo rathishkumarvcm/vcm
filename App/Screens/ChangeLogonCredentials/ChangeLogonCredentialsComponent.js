@@ -30,9 +30,9 @@ class ChangeLogonCredentialsComponent extends Component {
         return null;
     }
 
-    navigateResetPassword = () => this.props.navigation.navigate('resetPassword');
-    navigateResetPIN = () => this.props.navigation.navigate('resetPIN');
-    navigateToSecurityPref = () => this.props.navigation.navigate('SecurityPreference');
+    navigateCurrentPassword = () => this.props.navigation.navigate('currentPassword');
+    navigateCurrentPIN = () => this.props.navigation.navigate('currentPIN');
+    navigateToSecurityPref = () => this.props.navigation.navigate('securityPreference');
 
     render() {
         return (
@@ -55,7 +55,7 @@ class ChangeLogonCredentialsComponent extends Component {
 
                     <Text style={styles.changeLogonCredentialsText}>{gblStrings.userManagement.changeLogonSelection}</Text>
 
-                    <View style={styles.resetPasswordFlex} onTouchStart={this.navigateResetPassword}>
+                    <View style={styles.resetPasswordFlex} onTouchStart={this.navigateCurrentPassword}>
                         <View style={styles.resetPasswordFlex1}>
                             <View style={styles.horizontalFlex}>
                                 <GIcon
@@ -71,7 +71,7 @@ class ChangeLogonCredentialsComponent extends Component {
                         </View>
                     </View>
 
-                    <View style={styles.resetPasswordFlex} onTouchStart={this.navigateResetPIN}>
+                    <View style={styles.resetPasswordFlex} onTouchStart={this.navigateCurrentPIN}>
                         <View style={styles.resetPasswordFlex1}>
                             <View style={styles.horizontalFlex}>
                                 <GIcon

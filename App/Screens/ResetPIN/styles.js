@@ -28,12 +28,6 @@ export const styles = StyleSheet.create({
         marginLeft: "4%",
         marginRight: '4%',
     },
-    fullLine: {
-        backgroundColor: '#7B8288',
-        opacity: 0.4,
-        height: scaledHeight(1),
-        marginTop: scaledHeight(45),
-    },
     enterPINFlex: {
         marginTop: scaledHeight(34),
         paddingLeft: '4%',
@@ -61,29 +55,22 @@ export const styles = StyleSheet.create({
         marginLeft: "4%",
         marginBottom: scaledHeight(5),
         color: 'red',
-        borderColor: 'red'
+        borderColor: 'red',
     },
-    errorMsg: {
-        fontSize: scaledHeight(12),
-        marginLeft: "4%",
-        color: 'red',
-        textAlignVertical: "top",
-    },
-    buttonsFlex: {
+    flex6:{
+        height:scaledHeight(118),
         flexDirection: 'column',
-        marginTop: scaledHeight(20),
         marginLeft: "10%",
         marginRight: "10%",
-        width: "80%",
+        marginTop:"10%",
     },
     backButtonFlex: {
-        // width: scaledHeight(294),
         height: scaledHeight(50),
         borderColor: '#61285F45',
         borderWidth: scaledHeight(1),
+        backgroundColor:'#FFFFFF',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: scaledHeight(16)
     },
     backButtonText: {
         color: '#544A54',
@@ -91,29 +78,38 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
     },
     submitFlex: {
-        backgroundColor: '#544A54',
         height: scaledHeight(50),
+        borderColor: '#61285F45',
+        borderWidth: scaledHeight(1),
+        backgroundColor:'#544A54',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: scaledHeight(16)
+        marginTop:scaledHeight(18)
     },
-    submitFlexDisabled:{
-        backgroundColor: '#544A54',
-        opacity:0.5,
+    submitFlexDisabled: {
         height: scaledHeight(50),
+        borderColor: '#61285F45',
+        borderWidth: scaledHeight(1),
+        backgroundColor:'#544A54',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: scaledHeight(16)
+        marginTop:scaledHeight(18),
+        opacity:0.4
     },
     submitText: {
         color: '#FFFFFF',
         fontWeight: 'bold',
         fontSize: scaledHeight(16),
     },
-
+    fullLine: {
+        backgroundColor: '#7B8288',
+        opacity: 0.4,
+        height: scaledHeight(1),
+        marginTop: scaledHeight(40),
+    },
     tNCFlex: {
         marginLeft: "4%",
-        marginTop: "4%",
+        marginTop: scaledHeight(41),
         width: "92%",
     },
     tNcHeader: {
@@ -125,6 +121,4 @@ export const styles = StyleSheet.create({
         color: '#56565A',
         fontSize: scaledHeight(16),
     },
-
-
 });

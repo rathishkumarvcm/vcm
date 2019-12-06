@@ -82,7 +82,7 @@ class AccountRecoveryPrefComponent extends Component {
     }
 
     
-    navigateToSecurityPref = () => this.props.navigation.navigate('SecurityPreference');
+    navigateToSecurityPref = () => this.props.navigation.navigate('securityPreference');
 
     render() {
         return (

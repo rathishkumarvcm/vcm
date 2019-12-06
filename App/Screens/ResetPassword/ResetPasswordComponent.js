@@ -4,7 +4,6 @@ import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent } from '../.
 import { styles } from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from 'prop-types';
-import * as reGex from '../../Constants/RegexConstants';
 import {ValidatePassword} from '../../Utils/ValidatePassword';
 
 class ResetPasswordComponent extends Component {
@@ -13,10 +12,8 @@ class ResetPasswordComponent extends Component {
         this.state = {
             newPassword: '',
             confirmNewPassword: '',
-            validationPassword: true,
+            passwordStrengthStrong: true,
             comparePasswords: true,
-            currentPassword:'',
-            strength:'default'
         };
         this.disableSubmitButton = true;
         this.resetPasswordJSON={
@@ -25,24 +22,19 @@ class ResetPasswordComponent extends Component {
         };
     }
 
-    setPassword = text => {
-        this.setState({
-            newPassword: text
-        });
-    }
-
-    validateCurrentPassword = text =>{
-        this.setState({
-            currentPassword:text
-        });
+    setNewPassword = text => {
+         this.setState({
+             newPassword: text
+         });
+        this.disableSubmitButton = !((this.state.newPassword)===gblStrings.userManagement.strong);
     }
 
     validateNewPassword = () => {
         const validate = (ValidatePassword(this.state.newPassword)===gblStrings.userManagement.strong);
-        this.setState({ validationPassword: validate });
+        this.setState({ passwordStrengthStrong: validate });
     }
 
-    confirmNewPassword = text => {
+    setConfirmNewPassword = text => {
         this.setState({
             confirmNewPassword: text
         });
@@ -52,7 +44,7 @@ class ResetPasswordComponent extends Component {
         this.setState({
             comparePasswords: (this.state.confirmNewPassword === this.state.newPassword)
         });
-        if((this.state.confirmNewPassword === this.state.newPassword)&& (ValidatePassword(this.state.newPassword)==gblStrings.userManagement.strong)){
+        if((this.state.confirmNewPassword === this.state.newPassword)&& (this.state.passwordStrengthStrong)){
             this.disableSubmitButton = false;
         }else{
             this.disableSubmitButton = true;
@@ -86,30 +78,18 @@ class ResetPasswordComponent extends Component {
 
                     <View style={styles.line} />
 
-                    <View style={styles.enterPasswordFlex}>
-                        <Text style={styles.enterPasswordText}>{gblStrings.userManagement.enterCurrentPassword}</Text>
-                    </View>
-                    <GInputComponent
-                        propInputStyle={styles.passwordTextBox}
-                        placeholder={gblStrings.userManagement.currentPassword}
-                        value={this.state.currentPassword}
-                        onChangeText={this.validateCurrentPassword}
-                        secureTextEntry
-                    />
-
                     <View style={styles.enterNewPasswordFlex}>
-                        
                         <Text style={styles.enterPasswordText}>{gblStrings.userManagement.enterNewPassword}</Text>
                         <Text style={styles.explainStyle}>{gblStrings.userManagement.explain}</Text>
                     </View>
                     <GInputComponent
-                        propInputStyle={this.state.validationPassword ? styles.passwordTextBox : styles.passwordTextBoxError}
+                        propInputStyle={this.state.passwordStrengthStrong ? styles.passwordTextBox : styles.passwordTextBoxError}
                         placeholder={gblStrings.userManagement.newPassword}
                         value={this.state.newPassword}
-                        onChangeText={this.setPassword}
+                        onChangeText={this.setNewPassword}
                         onBlur={this.validateNewPassword}
                         onSubmitEditing={this.validateNewPassword}
-                        validateError={this.state.validationPassword}
+                        validateError={this.state.passwordStrengthStrong}
                         secureTextEntry
                     />
                     <View style={styles.passwordStrengthFlex}>
@@ -136,25 +116,22 @@ class ResetPasswordComponent extends Component {
                         inputStyle={this.state.comparePasswords ? null : styles.passwordTextBoxError}
                         placeholder={gblStrings.userManagement.confirmNewPassword}
                         value={this.state.confirmNewPassword}
-                        onChangeText={this.confirmNewPassword}
+                        onChangeText={this.setConfirmNewPassword}
                         onSubmitEditing={this.confirmNewlyEnteredPasswords}
                         onBlur={this.confirmNewlyEnteredPasswords}
                         errorFlag={!this.state.comparePasswords}
                         errorText={gblStrings.userManagement.passwordDoesnotMatch}
                         secureTextEntry
                     />
-                    <View style={styles.buttonsFlex}>
+
+                    <View style={styles.flex6}>
                         <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateChangeLogonCredentials}>
-                            <Text style={styles.backButtonText}>{gblStrings.userManagement.back}</Text>
+                            <Text style={styles.backButtonText}>{gblStrings.common.cancel}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateChangeLogonCredentials}>
-                            <Text style={styles.backButtonText}>{gblStrings.userManagement.cancel}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={this.disableSubmitButton?styles.submitFlexDisabled:styles.submitFlex} disabled={this.disableSubmitButton} onPress = {this.onClickSubmit}>
-                            <Text style={styles.submitText}>{gblStrings.userManagement.submit}</Text>
+                        <TouchableOpacity style={this.disableSubmitButton?styles.submitFlexDisabled:styles.submitFlex} disabled={this.disableSubmitButton} onPress={this.onClickSubmit}>
+                            <Text style={styles.submitText}>{gblStrings.common.submit}</Text>
                         </TouchableOpacity>
                     </View>
-
 
                     <View style={styles.fullLine} />
                     <View style={styles.tNCFlex}>

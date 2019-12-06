@@ -23,7 +23,9 @@ import ProfileSettings from './Screens/ProfileSettings/';
 import DeliverySettings from './Screens/DeliverySettings';
 import MarketingandPrivacySettings from './Screens/MarketingandPrivacy/MarketingandPrivacyComponent';
 import ChangeLogonCredentialsComponent from './Screens/ChangeLogonCredentials/ChangeLogonCredentialsComponent';
+import CurrentPasswordComponent from './Screens/CurrentPassword/CurrentPasswordComponent';
 import ResetPasswordComponent from './Screens/ResetPassword/ResetPasswordComponent';
+import CurrentPINComponent from './Screens/CurrentPIN/CurrentPINComponent';
 import ResetPINComponent from './Screens/ResetPIN/ResetPINComponent';
 import AccountRecoveryPrefComponent from './Screens/AccountRecoveryPref';
 import ProfilesAndPreferences from './Screens/ProfilesAndPreferences/ProfilesAndPreferencesComponent';
@@ -508,6 +510,18 @@ const AppNavigator = createStackNavigator({
             navigationOptions: {
                 header: null,
             }
+        },
+        currentPassword:{
+            screen: CurrentPasswordComponent,
+            navigationOptions: {
+                header: null,
+            } 
+        },
+        currentPIN:{
+            screen: CurrentPINComponent,
+            navigationOptions: {
+                header: null,
+            } 
         },
         resetPassword: {
             screen: ResetPasswordComponent,

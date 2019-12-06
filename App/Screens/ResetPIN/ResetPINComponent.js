@@ -15,7 +15,6 @@ class ResetPINComponent extends Component {
             validationPIN: true,
             comparePINS: true,
             pinlength:true,
-            currentPIN:''
         };
         this.disableSubmitButton = true;
         this.resetPINJSON={
@@ -23,21 +22,18 @@ class ResetPINComponent extends Component {
             message:globalStrings.userManagement.changedPINSuccessfully
         };
     }
-    setNewPIN = text => {
+    setNewPIN = pin => {
         this.setState({
-            newPIN: text
+            newPIN: pin
         });
-    }
-
-    validateCurrentPIN = text =>{
-        this.setState({
-            currentPIN: text
-        });
+        if(pin.length!=4){
+            this.disableSubmitButton=true;
+        }
     }
 
     validateNewPIN = () => {
             this.setState({
-                pinlength:(this.state.newPIN.length>=4)
+                pinlength:(this.state.newPIN.length==4)
             });
     }
 
@@ -85,34 +81,24 @@ class ResetPINComponent extends Component {
 
                     <View style={styles.line} />
 
-                    <View style={styles.enterPINFlex}>
-                        <Text style={styles.enterPINText}>{globalStrings.userManagement.enterCurrentPIN}</Text>
-                    </View>
-                    <GInputComponent
-                        propInputStyle={styles.pinTextBox}
-                        placeholder={globalStrings.userManagement.currentPIN}
-                        value={this.state.currentPIN}
-                        onChangeText={this.validateCurrentPIN}
-                        keyboardType="number-pad"
-                        maxLength={4}
-                        secureTextEntry
-                    />
 
                     <View style={styles.enterNewPINFlex}>
                         <Text style={styles.enterPINText}>{globalStrings.userManagement.enterNewPIN}</Text>
                     </View>
+                    
                     <GInputComponent
                         propInputStyle={this.state.pinlength ? styles.pinTextBox : styles.pinTextBoxError}
                         inputStyle={this.state.pinlength ? null : styles.pinTextBoxError}
                         placeholder={globalStrings.userManagement.newPIN}
                         value={this.state.newPIN}
                         onChangeText={this.setNewPIN}
+                        onSubmitEditing={this.validateNewPIN}
                         onBlur={this.validateNewPIN}
-                        keyboardType="numeric"
-                        maxLength={4}
                         errorFlag={!this.state.pinlength}
                         errorText={globalStrings.userManagement.pinLengthLessThanFour}
                         secureTextEntry
+                        keyboardType="numeric"
+                        maxLength={4}
                     />
 
                     <View style={styles.enterPINFlex}>
@@ -132,22 +118,16 @@ class ResetPINComponent extends Component {
                         secureTextEntry
                     />
 
-                    <View style={styles.buttonsFlex}>
+                    <View style={styles.flex6}>
                         <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateChangeLogonCredentials}>
-                            <Text style={styles.backButtonText}>{globalStrings.userManagement.back}</Text>
+                            <Text style={styles.backButtonText}>{globalStrings.common.cancel}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateChangeLogonCredentials}>
-                            <Text style={styles.backButtonText}>{globalStrings.userManagement.cancel}</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={this.disableSubmitButton?styles.submitFlexDisabled:styles.submitFlex} disabled={this.disableSubmitButton} onPress = {this.onClickSubmit}>
-                            <Text style={styles.submitText}>{globalStrings.userManagement.submit}</Text>
+                        <TouchableOpacity style={this.disableSubmitButton?styles.submitFlexDisabled:styles.submitFlex} disabled={this.disableSubmitButton} onPress={this.onClickSubmit}>
+                            <Text style={styles.submitText}>{globalStrings.common.submit}</Text>
                         </TouchableOpacity>
                     </View>
 
-
                     <View style={styles.fullLine} />
-
-
                     <View style={styles.tNCFlex}>
                         <Text style={styles.tNcHeader}>{globalStrings.userManagement.VCDiscalimerTitle}{"\n"}</Text>
                         <Text style={styles.tNcBody}>{globalStrings.userManagement.VCDiscalimerDesc}{"\n"}{"\n"}{globalStrings.userManagement.VCPrivacyNoticeDesc} </Text>

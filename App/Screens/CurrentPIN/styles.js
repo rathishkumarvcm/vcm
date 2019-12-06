@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
+import { scaledHeight } from '../../Utils/Resolution';
 
 
 export const styles = StyleSheet.create({
@@ -11,8 +11,9 @@ export const styles = StyleSheet.create({
     mainFlex:{
         flex: 0.85
     },
-    resetYourPasswordText: {
+    resetYourPINText: {
         marginLeft: "4%",
+        marginRight: "4%",
         fontWeight: 'bold',
         color: '#535353',
         fontSize: scaledHeight(20),
@@ -25,73 +26,23 @@ export const styles = StyleSheet.create({
         width: "92%",
         marginTop: '4%',
         marginLeft: "4%",
-        marginRight: "4%"
+        marginRight: '4%',
     },
-    enterPasswordFlex: {
+    enterPINFlex: {
         marginTop: scaledHeight(34),
         paddingLeft: '4%',
         paddingRight: '4%',
     },
-    enterPasswordText: {
+    enterPINText: {
         color: '#333333DE',
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
         marginBottom: scaledHeight(8)
     },
-    passwordTextBox: {
+    pinTextBox: {
         marginLeft: "4%",
         marginBottom: scaledHeight(18),
         color: '#56565A'
-    },
-    passwordTextBoxError: {
-        marginLeft: "4%",
-        marginBottom: scaledHeight(5),
-        borderColor: 'red',
-        color: 'red'
-    },
-    enterNewPasswordFlex: {
-        flexDirection: 'row',
-        marginTop: scaledHeight(34),
-        paddingLeft: '4%',
-        paddingRight: '4%',
-    },
-    explainStyle: {
-        color: '#333333DE',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold',
-        textDecorationLine: 'underline',
-        marginLeft:"3%"
-    },
-    passwordStrengthFlex: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    passwordStrongFlex: {
-        flexDirection: 'column',
-        flex: 0.3,
-        marginRight: scaledWidth(5)
-    },
-    default:{
-        backgroundColor:'#544A54',
-        height: scaledHeight(3),
-    },
-    strong: {
-        backgroundColor: 'green',
-        height: scaledHeight(3),
-    },
-    strongText: {
-        fontSize: scaledHeight(12),
-        color: '#56565A',
-        marginTop: scaledHeight(3)
-    },
-    good: {
-        backgroundColor: 'orange',
-        height: scaledHeight(3),
-    },
-    weak: {
-        backgroundColor: 'red',
-        height: scaledHeight(3),
     },
     flex6:{
         height:scaledHeight(118),
@@ -121,16 +72,6 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop:scaledHeight(18)
-    },
-    submitFlexDisabled: {
-        height: scaledHeight(50),
-        borderColor: '#61285F45',
-        borderWidth: scaledHeight(1),
-        backgroundColor:'#544A54',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop:scaledHeight(18),
-        opacity:0.4
     },
     submitText: {
         color: '#FFFFFF',
