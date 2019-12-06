@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image, ScrollView } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
+import { GHeaderComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 
 class ProfileSettingsComponent extends Component {

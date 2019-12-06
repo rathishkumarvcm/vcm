@@ -1,6 +1,5 @@
 import { connect } from "react-redux";
 import RegisterEmailComponent from './RegisterEmailComponent';
-import { getLogin } from "../../Shared/Reducers";
 import { loginActions } from "../../Shared/Actions";
 
 
