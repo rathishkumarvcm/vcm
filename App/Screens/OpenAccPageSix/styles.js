@@ -69,7 +69,12 @@ export const styles = StyleSheet.create({
         paddingVertical: scaledHeight(12)
 
     },
+    errMsg:{
+        color:'red',
+        fontSize:scaledHeight(12),
+        marginVertical: scaledHeight(12),
 
+      },
     radioBtnGrp:{
         flexGrow:1,
         marginTop:scaledHeight(19),

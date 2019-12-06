@@ -96,10 +96,13 @@ class OpenAccPageSixComponent extends Component {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
             itemID: "",
             confirmTINType: "",
-            agreeConditions: false
+            confirmTINTypeValidation:true,
+            agreeConditionsValidation:true,
+            agreeConditions: false,
+            isValidationSuccess: true,
+            errMsg:""
 
         };
     }
@@ -331,10 +334,14 @@ class OpenAccPageSixComponent extends Component {
     }
 
     onPressCheck = (keyName, text) => () => this.setState({
-        [keyName]: text
+        [keyName]: text,
+        confirmTINTypeValidation:true,
+        agreeConditionsValidation:true
     });
     onPressRadio = (keyName, text) => () => this.setState({
-        [keyName]: text
+        [keyName]: text,
+        confirmTINTypeValidation:true,
+        agreeConditionsValidation:true
     });
     isEmpty = (str) => {
         if (str == "" || str == undefined || str == null || str == "null" || str == "undefined") {
@@ -345,11 +352,16 @@ class OpenAccPageSixComponent extends Component {
     }
     validateFields = () => {
         var errMsg = "";
+        let input = "";
+
         var isValidationSuccess = false;
         if (this.isEmpty(this.state.confirmTINType)) {
             errMsg = gblStrings.accManagement.confirmTINBackupWithholdingMsg;
+            input = "confirmTINTypeValidation";
         } else if (this.state.agreeConditions === false) {
             errMsg = gblStrings.accManagement.confirmAgreeCondMsg;
+            input = "agreeConditionsValidation";
+
         } else {
             isValidationSuccess = true;
         }
@@ -358,6 +370,11 @@ class OpenAccPageSixComponent extends Component {
             alert(errMsg);
 
         }
+        this.setState({
+            isValidationSuccess: isValidationSuccess,
+            errMsg:isValidationSuccess == false ? errMsg:"",
+            [input]: false
+         });
         return isValidationSuccess;
 
     }
@@ -461,6 +478,11 @@ class OpenAccPageSixComponent extends Component {
 
 
                         <View style={styles.pdfSectionGrp} >
+                            {!this.state.confirmTINTypeValidation &&
+                                <Text style={styles.errMsg}>
+                                    {gblStrings.accManagement.confirmTINBackupWithholdingMsg}
+                                </Text>
+                            }
                             {this.renderRadio("confirmTINType", 36, { marginBottom: scaledHeight(24), marginTop: scaledHeight(24) }, styles.radioBtnColGrp)}
                         </View>
 
@@ -523,6 +545,12 @@ class OpenAccPageSixComponent extends Component {
                                 onPress={this.onPressCheck("agreeConditions", !this.state.agreeConditions)}
 
                             />
+
+                            {!this.state.agreeConditionsValidation &&
+                                <Text style={styles.errMsg}>
+                                    { gblStrings.accManagement.confirmAgreeCondMsg}
+                                </Text>
+                            }
 
                         </View>
                         <View style={{ flexGrow: 1, marginTop: scaledHeight(22) }}>

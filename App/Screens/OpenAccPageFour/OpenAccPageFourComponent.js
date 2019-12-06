@@ -19,9 +19,12 @@ class OpenAccPageFourComponent extends Component {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
             selectedDividendCapitalGains: "",
             selectedProspectusReportsRef: "",
+            dividendCapitalGainsValidation:true,
+            ProspectusReportsRefValidation:true,
+            isValidationSuccess: true,
+            errMsg:""
 
         };
     }
@@ -107,7 +110,9 @@ class OpenAccPageFourComponent extends Component {
         }
     }
     onPressRadio = (keyName, text) => () => this.setState({
-        [keyName]: text
+        [keyName]: text,
+        dividendCapitalGainsValidation:true,
+        ProspectusReportsRefValidation:true
     });
     isEmpty = (str) => {
         if (str == "" || str == undefined || str == null || str == "null" || str == "undefined") {
@@ -118,11 +123,15 @@ class OpenAccPageFourComponent extends Component {
     }
     validateFields = () => {
         var errMsg = "";
+        let input = "";
         var isValidationSuccess = false;
         if (this.isEmpty(this.state.selectedDividendCapitalGains)) {
             errMsg = gblStrings.accManagement.emptyDividendCapitalGainsMsg;
+            input = "dividendCapitalGainsValidation";
         } else if (this.isEmpty(this.state.selectedProspectusReportsRef)) {
             errMsg = gblStrings.accManagement.emptyProspectusReportsRefMsg;
+            input = "ProspectusReportsRefValidation";
+
         } else {
             isValidationSuccess = true;
         }
@@ -130,6 +139,13 @@ class OpenAccPageFourComponent extends Component {
         if (!isValidationSuccess) {
             alert(errMsg);
         }
+        this.setState({
+            isValidationSuccess: isValidationSuccess,
+            errMsg:isValidationSuccess == false ? errMsg:"",
+            [input]: false
+
+         });
+
 
         return isValidationSuccess;
     }
@@ -214,6 +230,11 @@ class OpenAccPageFourComponent extends Component {
                             <Text style={styles.questTxt}>
                                 {gblStrings.accManagement.dividensAndCapitalQuest}
                             </Text>
+                            {!this.state.dividendCapitalGainsValidation &&
+                                <Text style={styles.errMsg}>
+                                    {gblStrings.accManagement.emptyDividendCapitalGainsMsg}
+                                </Text>
+                            }
 
                             <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "flex-start", flexWrap: 'wrap', marginTop: scaledHeight(13) }}>
                                 <Text style={styles.explainTxt}>
@@ -228,10 +249,16 @@ class OpenAccPageFourComponent extends Component {
 
                             {this.renderRadio("selectedDividendCapitalGains", 36, { marginBottom: scaledHeight(24), marginTop: scaledHeight(24) }, styles.radioBtnColGrp)}
 
+                           
 
                             <Text style={styles.questTxt}>
                                 {gblStrings.accManagement.prospectusReports}
                             </Text>
+                            {!this.state.ProspectusReportsRefValidation &&
+                                <Text style={styles.errMsg}>
+                                    {gblStrings.accManagement.emptyProspectusReportsRefMsg}
+                                </Text>
+                            }
                             <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "flex-start", flexWrap: 'wrap', marginTop: scaledHeight(13) }}>
                                 <Text style={styles.explainTxt}>
                                     {"Explain - "}

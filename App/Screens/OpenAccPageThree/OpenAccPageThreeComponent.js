@@ -18,23 +18,6 @@ const dummyData = [
 ];
 
 
-var fundList = [
-    /* {
-         "fundName": "USAA Intermediate-Term Bond Adviser",
-         "fundNumber": 330,
-         "risk": "High",
-         "monthlyInvestment": "$0",
-         "companyId": 591,
-         "id_sort": 1,
-         "symbol": "UITBX",
-         "initialInvestment": "$3,000",
-         "id": 1,
-         "fundDescription": "USAA Intermediate-Term Bond Adviser"
-     }
-     */
-];
-
-
 const fundingOptionsData = [
     {
         "key": "init",
@@ -182,7 +165,7 @@ class OpenAccPageThreeComponent extends Component {
             isValidationSuccess: true,
             errMsg:"",
             minCount: 5,
-            fundList: [...fundList.map(v => ({ ...v, isActive: false }))],
+            fundList: [],
             fundingSourceList: [],
             method: "",
             offLineMethods: [],
@@ -349,37 +332,33 @@ class OpenAccPageThreeComponent extends Component {
 
         if (this.props !== prevProps) {
             let tempFundListData = [];
-            if (this.props.accOpeningData[ActionTypes.GET_FUNDLIST] != undefined && this.props.accOpeningData[ActionTypes.GET_FUNDLIST].Items != null) {
-                tempFundListData = this.props.accOpeningData[ActionTypes.GET_FUNDLIST].Items;
-                if (!prevProps.accOpeningData[ActionTypes.GET_FUNDLIST] && this.state.isFilterApplied == false) {
-                    this.setState({
-                        fundList: [...tempFundListData.map(v => ({ ...v, isActive: false }))],
-                        isFilterApplied: false
-                    });
-                } else {
+            if (this.state.fundList.length == 0) {
+                if (this.props.accOpeningData[ActionTypes.GET_FUNDLIST] != undefined && this.props.accOpeningData[ActionTypes.GET_FUNDLIST].Items != null) {
+                    tempFundListData = this.props.accOpeningData[ActionTypes.GET_FUNDLIST].Items;
                     this.setState({
                         fundList: [...tempFundListData.map(v => ({ ...v, isActive: false }))],
                         isFilterApplied: false
                     });
                 }
             }
-            let tempFundingSourceList = [];
-            if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData["fund_source"] && this.props.masterLookupStateData["fund_source"].value) {
-                tempFundingSourceList = this.props.masterLookupStateData["fund_source"].value;
-                console.log("tempFundingSourceList:: " + JSON.stringify(tempFundingSourceList));
-                if (!prevProps.masterLookupStateData["fund_source"]) {
-                    if (tempFundingSourceList.length > 0) {
-                        const offLineSubtypes = tempFundingSourceList[0].subtypes;
-                        const onLineSubtypes = tempFundingSourceList[1].subtypes;
-                        this.setState({
-                            offLineMethods: [...offLineSubtypes.map(v => ({ ...v, isActive: false }))],
-                            onLineMethods: [...onLineSubtypes.map(v => ({ ...v, isActive: false }))],
-                            fundingSourceList: [...this.state.offLineMethods.map(v => ({ ...v, isActive: false })), ...this.state.onLineMethods.map(v => ({ ...v, isActive: false }))]
-                        });
-                    }
-                }
 
+            let tempFundingSourceList = [];
+            if(this.state.fundingSourceList.length == 0){
+                if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData["fund_source"] && this.props.masterLookupStateData["fund_source"].value) {
+                    tempFundingSourceList = this.props.masterLookupStateData["fund_source"].value;
+                    console.log("tempFundingSourceList:: " + JSON.stringify(tempFundingSourceList));
+                        if (tempFundingSourceList.length > 0) {
+                            const offLineSubtypes = tempFundingSourceList[0].subtypes;
+                            const onLineSubtypes = tempFundingSourceList[1].subtypes;
+                            this.setState({
+                                offLineMethods: [...offLineSubtypes.map(v => ({ ...v, isActive: false }))],
+                                onLineMethods: [...onLineSubtypes.map(v => ({ ...v, isActive: false }))],
+                                fundingSourceList: [...this.state.offLineMethods.map(v => ({ ...v, isActive: false })), ...this.state.onLineMethods.map(v => ({ ...v, isActive: false }))]
+                            });
+                        }
+                }
             }
+           
 
             const responseKey = ActionTypes.INVEST_SELECT_SAVE_OPENING_ACCT;
             if (this.props.accOpeningData[responseKey]) {
