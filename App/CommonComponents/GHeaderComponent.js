@@ -206,7 +206,7 @@ class GHeaderComponent extends Component {
             
         <View style={{width:'15%'}} />
 
-        <TouchableOpacity style={{alignItems:'center',justifyContent:'center',marginTop:scaledHeight(15)}}
+      {!this.props.registerShow ?  <TouchableOpacity style={{alignItems:'center',justifyContent:'center',marginTop:scaledHeight(15)}}
         onPress={this.setMenu}
         >
                     <GIcon 
@@ -215,7 +215,7 @@ class GHeaderComponent extends Component {
                         size={40}
                         color="black"
                     />
-        </TouchableOpacity>
+        </TouchableOpacity> : null }
 
         <View style={{width:'20%'}} />
 

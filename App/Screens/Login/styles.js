@@ -88,7 +88,7 @@ export const styles = StyleSheet.create({
     },
     forgotLineTextColor:{
         fontSize : scaledHeight(18),
-        color:'#56565A',
+        color:'#2C8DBF',
         fontWeight:'bold'
     },
     termsofuse:{
@@ -105,9 +105,9 @@ export const styles = StyleSheet.create({
     signInButton:{
         borderColor:'#56565A',
         borderWidth:1,
-        width:'92%',
-        marginLeft:'4%',
-        marginRight:'4%',
+        width:'84%',
+        marginLeft:'8%',
+        marginRight:'8%',
         marginTop:scaledHeight(42),
        // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
@@ -122,13 +122,13 @@ export const styles = StyleSheet.create({
     },
     newVictoryButton:{
         borderColor:'#56565A',
-        borderRadius:scaledHeight(25),
+        //borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         borderWidth:1,
         marginTop:scaledHeight(25),
         width:'60%',
         backgroundColor:'#FFFFFF',
-        alignItems:'center',
+        alignSelf:'center',
         justifyContent:'center'
 
     },

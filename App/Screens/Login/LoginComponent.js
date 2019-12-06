@@ -50,10 +50,9 @@ class LoginComponent extends Component {
             switchOn : true,
             switchOff : false,
             registeredSuccess : false,
-            name : 'rathish.kumar2@cognizant.com',
+            name : '',
             password : '',
-            phone : '+918754499334',
-            //email : 'rathish.kumar2@cognizant.com',
+            phone : ''
         };
     }
 
@@ -267,7 +266,7 @@ class LoginComponent extends Component {
                     this.props.loginState && this.props.loginState.isloading && <GLoadingSpinner />
                 }
 
-             <GHeaderComponent register
+             <GHeaderComponent registerShow
              onPress={this.navigateEmail}
              
              />
@@ -416,7 +415,7 @@ class LoginComponent extends Component {
 
                 <GButtonComponent 
                 buttonStyle={styles.newVictoryButton}
-                buttonText="Register now"
+                buttonText="Sign Up"
                 textStyle={styles.newVictoryButtonText}
                 onPress={this.navigateEmail}
                 />
