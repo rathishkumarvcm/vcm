@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
 export const GDateComponent = props => (
     <View>
     <DatePicker
+        ref={props.inputref}
         style={props.errorFlag ? [styles.componentStyle,props.componentStyle,styles.errorView]:[styles.componentStyle,props.componentStyle]}
         date={props.date}
         mode={props.mode}
@@ -113,6 +114,11 @@ GDateComponent.propTypes = {
     onCloseModal: PropTypes.func,
     onPressMask: PropTypes.func,
     getDateStr: PropTypes.func,
+
+    inputref : PropTypes.oneOfType([
+        PropTypes.func, 
+        PropTypes.shape({ current: PropTypes.object })
+    ])
 
 };
 

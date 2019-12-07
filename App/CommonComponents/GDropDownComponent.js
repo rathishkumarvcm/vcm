@@ -71,6 +71,7 @@ export const GDropDownComponent = props => (
 
 
     <GInputComponent 
+        inputref={props.inputref}
         propInputStyle={[styles.textInputStyle,props.textInputStyle]} 
         placeholder={""}
         editable={false}
@@ -110,7 +111,11 @@ GDropDownComponent.propTypes = {
   textInputStyle: PropTypes.instanceOf(Object),
   dropDownPostition : PropTypes.instanceOf(Object),
   selectedDropDownValue: PropTypes.func,
-  changeState : PropTypes.func
+  changeState : PropTypes.func,
+  inputref : PropTypes.oneOfType([
+    PropTypes.func, 
+    PropTypes.shape({ current: PropTypes.object })
+]),
 };
 
 GDropDownComponent.defaultProps = {

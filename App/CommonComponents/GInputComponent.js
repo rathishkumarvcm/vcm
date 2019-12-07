@@ -2,7 +2,7 @@ import React from "react";
 import { View, TextInput, StyleSheet, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
 import { scaledHeight } from '../Utils/Resolution';
-import {GIcon} from './GIcon';
+import { GIcon } from './GIcon';
 /* **************************\
   Function: GInputComponent
   Explanation:
@@ -12,48 +12,48 @@ import {GIcon} from './GIcon';
 
 export const styles = StyleSheet.create({
 
-    textInputStyle : {
-        fontSize: scaledHeight(16),
-        marginLeft:scaledHeight(14),
-        alignItems : 'center',
-        justifyContent : 'center',
-        color:'#B5B5B5'
-    },
-    inputBoxStyle : {
-        height:scaledHeight(48),
-        backgroundColor : "#FFFFFF",
-        width : '92%',
-        borderRadius:scaledHeight(4),
-        justifyContent: "center",
-        borderWidth : 1,
-        borderColor : "#DEDEDF"
-    },
-    errorSection:{
-      marginLeft:'4%',
-      marginRight:'4%'
-    },
-    errorSectionText:{
-      color:'red',
-      fontSize:scaledHeight(12)
-    },
-    errorView:{
-      //marginLeft:'4%',
-      //marginRight:'4%',
-      borderColor:'red'
+  textInputStyle: {
+    fontSize: scaledHeight(16),
+    marginLeft: scaledHeight(14),
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#B5B5B5'
   },
-  arrowIconStyle:{
-    position:'absolute',
-    right:15,
-    top:15
-}
+  inputBoxStyle: {
+    height: scaledHeight(48),
+    backgroundColor: "#FFFFFF",
+    width: '92%',
+    borderRadius: scaledHeight(4),
+    justifyContent: "center",
+    borderWidth: 1,
+    borderColor: "#DEDEDF"
+  },
+  errorSection: {
+    marginLeft: '4%',
+    marginRight: '4%'
+  },
+  errorSectionText: {
+    color: 'red',
+    fontSize: scaledHeight(12)
+  },
+  errorView: {
+    //marginLeft:'4%',
+    //marginRight:'4%',
+    borderColor: 'red'
+  },
+  arrowIconStyle: {
+    position: 'absolute',
+    right: 15,
+    top: 15
+  }
 });
 
-  export const GInputComponent = (props) => (
-    <>
-    <View style={props.errorFlag ? [styles.inputBoxStyle,props.propInputStyle,styles.errorView] : [styles.inputBoxStyle,props.propInputStyle]}>
-        <TextInput 
+export const GInputComponent = (props) => (
+  <>
+    <View style={props.errorFlag ? [styles.inputBoxStyle, props.propInputStyle, styles.errorView] : [styles.inputBoxStyle, props.propInputStyle]}>
+      <TextInput
         {...props}
-        style={[styles.textInputStyle,props.inputStyle]}
+        style={[styles.textInputStyle, props.inputStyle]}
         value={props.value}
         secureTextEntry={props.secureTextEntry}
         autoCorrect={false}
@@ -76,82 +76,82 @@ export const styles = StyleSheet.create({
         underlineColorAndroid={props.underlineColorAndroid}
         autoCapitalize={props.autoCapitalize}
         ref={props.inputref}
-        >
-      {props.inputText}
-        </TextInput>
-{props.dropDownBox ? 
-  <TouchableOpacity style={[styles.arrowIconStyle,props.arrowIconStyle]} onPress={props.dropDownClick}>
-        <GIcon 
+      >
+        {props.inputText}
+      </TextInput>
+      {props.dropDownBox ?
+        <TouchableOpacity style={[styles.arrowIconStyle, props.arrowIconStyle]} onPress={props.dropDownClick}>
+          <GIcon
             name="md-arrow-dropdown"
             type="ionicon"
             size={20}
             color="black"
-        />
-    </TouchableOpacity>
-    :
-    null}
-        
+          />
+        </TouchableOpacity>
+        :
+        null}
+
 
 
     </View>
     {props.errorFlag ? <View style={styles.errorSection}>
       <Text style={styles.errorSectionText}>
-          {props.errorText}
+        {props.errorText}
       </Text>
-  </View> : null}
-    
-</> 
-  );
-  
-  GInputComponent.propTypes = {
-    inputStyle: PropTypes.instanceOf(Object),
-    value : PropTypes.string,
-    secureTextEntry: PropTypes.bool,
-    autoFocus: PropTypes.bool,
-    editable: PropTypes.bool,
-    inputText: PropTypes.string,
-    keyboardType : PropTypes.string,
-    returnKeyType : PropTypes.string,
-    onBlur: PropTypes.func,
-    onChange : PropTypes.func,
-    onChangeText : PropTypes.func,
-    onSubmitEditing : PropTypes.func,
-    maxLength : PropTypes.number,
-    multiline : PropTypes.bool,
-    numberOfLines : PropTypes.number,
-    placeholder : PropTypes.string,
-    placeholderTextColor : PropTypes.string,
-    selectionColor : PropTypes.string,
-    underlineColorAndroid : PropTypes.string,
-    autoCapitalize : PropTypes.string,
-    onFocus: PropTypes.func,
-    onKeyPress : PropTypes.func,
-    inputref : PropTypes.oneOfType([
-      PropTypes.func, 
-      PropTypes.shape({ current: PropTypes.object })
+    </View> : null}
+
+  </>
+);
+
+GInputComponent.propTypes = {
+  inputStyle: PropTypes.instanceOf(Object),
+  value: PropTypes.string,
+  secureTextEntry: PropTypes.bool,
+  autoFocus: PropTypes.bool,
+  editable: PropTypes.bool,
+  inputText: PropTypes.string,
+  keyboardType: PropTypes.string,
+  returnKeyType: PropTypes.string,
+  onBlur: PropTypes.func,
+  onChange: PropTypes.func,
+  onChangeText: PropTypes.func,
+  onSubmitEditing: PropTypes.func,
+  maxLength: PropTypes.number,
+  multiline: PropTypes.bool,
+  numberOfLines: PropTypes.number,
+  placeholder: PropTypes.string,
+  placeholderTextColor: PropTypes.string,
+  selectionColor: PropTypes.string,
+  underlineColorAndroid: PropTypes.string,
+  autoCapitalize: PropTypes.string,
+  onFocus: PropTypes.func,
+  onKeyPress: PropTypes.func,
+  inputref: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.object })
   ]),
-    propInputStyle : PropTypes.instanceOf(Object)
-  };
-  
-  GInputComponent.defaultProps = {
-    inputStyle: {},
-   // value: '',
-    autoFocus: false,
-    editable: true,
-    keyboardType : "default",
-    returnKeyType : "next",
-    onBlur : null,
-    onChange : null,
-    onChangeText : null,
-    onSubmitEditing:null,
-    maxLength : 100,
-    multiline : false,
-    numberOfLines : 1,
-    placeholder : "",
-    placeholderTextColor : null,
-    selectionColor: null,
-    underlineColorAndroid : null,
-    autoCapitalize : "none"
-  };
-  
-  export default GInputComponent;
+  propInputStyle: PropTypes.instanceOf(Object)
+};
+
+GInputComponent.defaultProps = {
+  inputStyle: {},
+  // value: '',
+  autoFocus: false,
+  editable: true,
+  keyboardType: "default",
+  returnKeyType: "next",
+  onBlur: null,
+  onChange: null,
+  onChangeText: null,
+  onSubmitEditing: null,
+  maxLength: 100,
+  multiline: false,
+  numberOfLines: 1,
+  placeholder: "",
+  placeholderTextColor: null,
+  selectionColor: null,
+  underlineColorAndroid: null,
+  autoCapitalize: "none"
+};
+
+export default GInputComponent;
