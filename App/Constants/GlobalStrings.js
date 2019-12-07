@@ -307,6 +307,11 @@ export default {
         fundType:"Fund Type",
         clearFilter:"Clear Filters",
         applyFilter:"Apply Filter",
+        offlinMethod: "Offline Method",
+        offlinMethodDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcittet",
+        onlineMethod: "Online Method",
+        onlineMethodDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcittet",
+
         addBankAccount: "Add Bank Account",
         typeOfAccount: "Type of Account",
         savings: "Savings",
@@ -496,8 +501,9 @@ export default {
         emptyInitInvestmentMsg: "Please enter a initial investment value",
         minInitInvestmentMsg: " Initial investment value should me minimum of $ 3000",
        
+        emptyTypeOfAccount: "Please select type of account ",
         emptyFinancialInstitution: "Enter Valid Financial Institution",
-        emptyOwnerName: "Enter Valid Owner Name",
+        emptyAccountOwnerName: "Enter Valid Owner Name",
         emptyTransitRoutingNo: "Enter Valid Transit Routing Number",
         emptyAccountNumber: "Enter Valid Account Number",
 

@@ -1,6 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity, FlatList, Modal } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, FlatList, Modal ,Image} from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GInputComponent, GIcon, GHeaderComponent, GFooterComponent, GLoadingSpinner, GDropDownComponent, GDateComponent } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio, CustomCheckBox } from '../../AppComponents';
@@ -140,7 +140,14 @@ const SourceListItem = (props) => {
             style={[styles.touchItem]}
 
         >
+           
             <View style={props.style}>
+                <View style={styles.accountItemImgBG}>
+                    <Image style={styles.accountItemImg}
+                        resizeMode="contain"
+                        source={require("../../Images/addaccount.png")}
+                    />
+                </View>
                 <Text style={styles.accountItemTxt}>
                     {props.sourceName}
                 </Text>
@@ -213,20 +220,6 @@ class OpenAccPageThreeComponent extends Component {
             isValidBankAccount: false,
             validBankAccountMsg: '',
 
-            radioButton: false,
-            radioButtonIndex: 0,
-
-            isValidFinancial: true,
-            validFinancialNumber: '',
-
-            isValidAccountOwner: true,
-            validAccountOwner: '',
-
-            isValidTransitNumber: true,
-            validTransitNumber: '',
-
-            isValidAccountNumber: true,
-            validAccountNumber: ''
         };
     }
 
@@ -273,7 +266,36 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     validateBankAccount = () => {
-        return this.callValidateBankAccount();
+
+        let errMsg = "";
+        let isValidationSuccess = false;
+        let input = "";
+
+        if (this.isEmpty(this.state.accountType)) {
+            errMsg = gblStrings.accManagement.emptyTypeOfAccount;
+            input = "emptyTypeOfAccount";
+        } else if (this.isEmpty(this.state.financialInstitutionName)) {
+            errMsg = gblStrings.accManagement.emptyFinancialInstitution;
+            input = "financialInstitutionName";
+        } else if (this.isEmpty(this.state.accountOwner)) {
+            errMsg = gblStrings.accManagement.emptyAccountOwnerName;
+            input = "accountOwner";
+        } else if (this.isEmpty(this.state.transitRoutingNumber)) {
+            errMsg = gblStrings.accManagement.emptyTransitRoutingNo;
+            input = "transitRoutingNumber";
+        } else if (this.isEmpty(this.state.accountNumber)) {
+            errMsg = gblStrings.accManagement.emptyAccountNumber;
+            input = "accountNumber";
+        } else {
+            isValidationSuccess = true;
+        }
+
+        if (!isValidationSuccess) {
+            alert(errMsg);
+        }else{
+            return this.callValidateBankAccount();
+        }
+
     }
 
     callValidateBankAccount = () => {
@@ -458,6 +480,7 @@ class OpenAccPageThreeComponent extends Component {
         console.log("onChangeTextForInvestment:::>");
         let newItems = [...this.state.selectedFundInvestmentsData];
         newItems[index][keyName] = text;
+        newItems[index][keyName+"Validation"] = false;
 
         let total = 0;
         for (let i = 0; i < newItems.length; i++) {
@@ -479,6 +502,7 @@ class OpenAccPageThreeComponent extends Component {
         console.log("onChangeDateForInvestment:::>");
         let newItems = [...this.state.selectedFundInvestmentsData];
         newItems[index][keyName] = date;
+        newItems[index][keyName+"Validation"] = false;
 
         this.setState({
             selectedFundInvestmentsData: newItems,
@@ -493,6 +517,7 @@ class OpenAccPageThreeComponent extends Component {
         console.log("onPressDropDownForInvestment::: " + keyName);
         let newItems = [...this.state.selectedFundInvestmentsData];
         newItems[index][keyName] = !newItems[index][keyName];
+        newItems[index][keyName+"Validation"] = false;
 
         this.setState({
             selectedFundInvestmentsData: newItems,
@@ -508,8 +533,6 @@ class OpenAccPageThreeComponent extends Component {
         if (isObjExistIndex != -1) {
 
             newItems[isObjExistIndex].isActive = false;
-            newItems.splice(isObjExistIndex, 1);
-
             newSelectedData[index].isActive = false;
             newSelectedData.splice(index, 1);
 
@@ -547,10 +570,10 @@ class OpenAccPageThreeComponent extends Component {
         tempData.monthlyInvestment = "0";
         tempData.minmonthlyInvestment = item.initialInvestment;
         tempData.startDate = "";
-        tempData.fundingOptionValidation = false;
-        tempData.initialInvestmentValidation = false;
-        tempData.monthlyInvestmentValidation = false;
-        tempData.startDateValidation = false;
+        tempData.fundingOptionValidation = true;
+        tempData.initialInvestmentValidation = true;
+        tempData.monthlyInvestmentValidation = true;
+        tempData.startDateValidation = true;
         tempData.action = "add";
 
 
@@ -791,9 +814,23 @@ class OpenAccPageThreeComponent extends Component {
         var errMsg = "";
         var isValidationSuccess = false;
         var errMsgCount = 0;
+        let input = "";
+
 
         if (this.isEmpty(this.state.selectedCount)) {
             errMsg = gblStrings.accManagement.emptySeletedFundMsg;
+            ++errMsgCount;
+
+        }if (this.isEmpty(this.state.selectedCount)) {
+            errMsg = gblStrings.accManagement.emptySeletedFundMsg;
+            ++errMsgCount;
+
+        } else if (this.state.selectedCount > 10) {
+            errMsg = gblStrings.accManagement.maximumSeletedFundMsg;
+            ++errMsgCount;
+
+        } else if (this.isEmpty(this.state.fundingSourceName)) {
+            errMsg = gblStrings.accManagement.emptyFundingSourceMsg;
             ++errMsgCount;
 
         } else if (this.state.selectedFundInvestmentsData.length > 0) {
@@ -805,26 +842,29 @@ class OpenAccPageThreeComponent extends Component {
                 console.log("tempObj.fundname::" + tempObj.fundName);
 
                 let tempValidation = false;
-                if (this.isEmpty(this.state.selectedCount)) {
-                    tempErrMsg = gblStrings.accManagement.emptySeletedFundMsg;
-                } else if (this.state.selectedCount > 10) {
-                    tempErrMsg = gblStrings.accManagement.maximumSeletedFundMsg;
-                } else if (this.isEmpty(this.state.fundingSourceName)) {
-                    tempErrMsg = gblStrings.accManagement.emptyFundingSourceMsg;
-                } else if (this.isEmpty(tempObj.fundingOption)) {
+                if (this.isEmpty(tempObj.fundingOption)) {
                     tempErrMsg = gblStrings.accManagement.emptyFundOptionsMsg;
+                    input = "fundingOption";
+
                 } else if (this.isEmpty(tempObj.initialInvestment)) {
                     tempErrMsg = gblStrings.accManagement.emptyInitInvestmentMsg;
+                    input = "initialInvestment";
+
                 } else if (parseFloat(tempObj.initialInvestment) < parseFloat(tempObj.mininitialInvestment)) {
                     tempErrMsg = gblStrings.accManagement.minInitInvestmentMsg;
+                    input = "initialInvestment";
+
                 }
 
                 else if (tempObj.fundingOption == "Initial and Monthly Investment" && this.isEmpty(tempObj.monthlyInvestment)) {
                     tempErrMsg = gblStrings.accManagement.emptyMonthlyInvestmentMsg;
+                    input = "monthlyInvestment";
+
                 }/* else if ( tempObj.fundingOption == "Initial and Monthly Investment" && tempObj.monthlyInvestment < tempObj.mininitialInvestment) {
                     tempErrMsg = gblStrings.accManagement.minMonthlyInvestmentMsg;
                 }*/ else if (this.isEmpty(tempObj.startDate)) {
                     tempErrMsg = gblStrings.accManagement.emptyStartDate;
+                    input = "startDate";
 
                 } else {
                     tempValidation = true;
@@ -835,6 +875,20 @@ class OpenAccPageThreeComponent extends Component {
                 if (!tempValidation) {
                     errMsg = tempErrMsg;
                     ++errMsgCount;
+                    let newItems = [...this.state.selectedFundInvestmentsData];
+                    newItems[i][input+"Validation"] = false;
+                    this.setState({
+                        selectedFundInvestmentsData: newItems,
+                    });
+
+                    if (input !== "" && input !== null && input !== undefined) {
+                        if (this[input+i] !== null && this[input+i] !== undefined) {
+                            if (typeof this[input+i].focus === 'function') {
+                                this[input+i].focus();
+                            }
+                        }
+                    }
+        
                     break;
                 }
             }
@@ -851,7 +905,6 @@ class OpenAccPageThreeComponent extends Component {
 
         if (!isValidationSuccess) {
             alert(errMsg);
-
         }
 
         /* if(errMsgArray.length>0){
@@ -1138,6 +1191,12 @@ class OpenAccPageThreeComponent extends Component {
                             <Text style={styles.sectionDescTxt}>
                                 {gblStrings.accManagement.fundYourAccountNote}
                             </Text>
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.accManagement.onlineMethod}
+                            </Text>
+                            <Text style={styles.sectionDescTxt}>
+                                {gblStrings.accManagement.onlineMethodDesc}
+                            </Text>
                             <View style={{ flexGrow: 1, marginVertical: scaledHeight(0) }}>
                                 <FlatList
                                     data={this.state.offLineMethods}
@@ -1145,6 +1204,7 @@ class OpenAccPageThreeComponent extends Component {
                                     renderItem={this.renderFundSourceListItem('offline')}
                                 />
                             </View>
+                            
                             <Text style={{
                                 marginTop: scaledHeight(12),
                                 fontSize: scaledHeight(18),
@@ -1154,6 +1214,13 @@ class OpenAccPageThreeComponent extends Component {
                             }}
                             >
                                 {"or"}
+                            </Text>
+                            
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.accManagement.onlineMethod}
+                            </Text>
+                            <Text style={styles.sectionDescTxt}>
+                                {gblStrings.accManagement.onlineMethodDesc}
                             </Text>
                             <View style={{ flexGrow: 1, marginVertical: scaledHeight(0) }}>
                                 <FlatList
@@ -1169,9 +1236,8 @@ class OpenAccPageThreeComponent extends Component {
 
                     { /*----------- Add Bank Account  New-------------------*/}
 
-                    {this.state.method == "online" &&
-
-
+                    {
+                        this.state.method == "online" &&
                         <View style={styles.sectionGrp}>
                             <View style={styles.accTypeSelectSection}>
                                 <Text style={styles.headings}>
@@ -1184,7 +1250,7 @@ class OpenAccPageThreeComponent extends Component {
                             <View style={styles.childSectionGrp}>
                                 <View style={styles.radioBtnGrp}>
                                     <CustomRadio
-                                        componentStyle={{ width: "30%", marginBottom: scaledHeight(0) }}
+                                        componentStyle={{ width: "50%", marginBottom: scaledHeight(0) }}
                                         size={30}
                                         outerCicleColor={"#DEDEDF"}
                                         innerCicleColor={"#61285F"}
@@ -1196,7 +1262,7 @@ class OpenAccPageThreeComponent extends Component {
                                         onPress={this.onPressRadio("accountType", "Savings")}
                                     />
                                     <CustomRadio
-                                        componentStyle={{ marginBottom: scaledHeight(0) }}
+                                        componentStyle={{width: "50%", marginBottom: scaledHeight(0) }}
                                         size={30}
                                         outerCicleColor={"#DEDEDF"}
                                         innerCicleColor={"#61285F"}
@@ -1236,7 +1302,7 @@ class OpenAccPageThreeComponent extends Component {
                                     maxLength={gblStrings.maxLength.common}
                                     value={this.state.accountOwner}
                                     errorFlag={!this.state.accountOwnerValidation}
-                                    errorText={gblStrings.accManagement.emptyFinancialInstitution}
+                                    errorText={gblStrings.accManagement.emptyAccountOwnerName}
                                     onChangeText={this.onChangeText("accountOwner")}
                                     onSubmitEditing={this.onSubmitEditing(this.transitRoutingNumber)}
 
@@ -1291,106 +1357,7 @@ class OpenAccPageThreeComponent extends Component {
                             </View>
                         </View>
                     }
-
-                    { /*----------- Add Bank Account -------------------*/}
-
-                    {/*   <View>
-
-                        <View style={{ flexDirection: 'row', width: '92%', marginLeft: '4%', marginRight: '4%' }}>
-                            <Text style={styles.editProfileLabel}>{gblStrings.addBankAccount.addBankAccountHypen}</Text>
-                            <Text style={styles.editProfileLabel}>{gblStrings.addBankAccount.addBankAccountLabel}</Text>
-                        </View>
-
-                        <View style={styles.settingsBorder}></View>
-
-                        <View style={styles.editFlexDirectionColumn}>
-                            <Text style={styles.editProfileLabel}>
-                                {gblStrings.profileSettingsPage.accountType}
-                            </Text>
-
-                            <View style={styles.editRadioView}>
-                                {addBankAccountType.map((item, index) =>
-                                    index == this.state.radioButtonIndex ?
-                                        <GRadioButtonComponent
-                                            onPress={() => this.radioButtonClicked(index)}
-                                            selected
-                                            questions={item.question} />
-                                        :
-                                        <GRadioButtonComponent
-                                            onPress={() => this.radioButtonClicked(index)}
-                                            selected={false}
-                                            questions={item.question} />
-                                )}
-                            </View>
-                        </View>
-
-                        <View style={styles.editFlexDirectionColumn}>
-                            <Text style={styles.editProfileLabel}>
-                                {gblStrings.addBankAccount.accountFinancialName}
-                            </Text>
-
-                            <GInputComponent
-                                placeholder={gblStrings.addBankAccount.accountFinancialName}
-                                onChangeText={this.setValidFinancial}
-                                value={this.state.validFinancialNumber}
-                                errorFlag={!this.state.isValidFinancial}
-                                errorText={gblStrings.addBankAccount.accountFinancialError} />
-                        </View>
-
-                        <View style={styles.editFlexDirectionColumn}>
-                            <Text style={styles.editProfileLabel}>
-                                {gblStrings.addBankAccount.accountOwnerName}
-                            </Text>
-
-                            <GInputComponent
-                                placeholder={gblStrings.addBankAccount.accountOwnerName}
-                                onChangeText={this.setValidOwner}
-                                value={this.state.validAccountOwner}
-                                errorFlag={!this.state.isValidAccountOwner}
-                                errorText={gblStrings.addBankAccount.accountOwnerError} />
-                        </View>
-
-                        <View style={styles.editFlexDirectionColumn}>
-                            <Text style={styles.editProfileLabel}>
-                                {gblStrings.addBankAccount.accountTransitRouting}
-                            </Text>
-
-                            <GInputComponent
-                                placeholder={gblStrings.addBankAccount.accountTransitRouting}
-                                onChangeText={this.setValidTransit}
-                                value={this.state.validTransitNumber}
-                                errorFlag={!this.state.isValidTransitNumber}
-                                errorText={gblStrings.addBankAccount.accountTransitError} />
-                        </View>
-
-                        <View style={styles.editFlexDirectionColumn}>
-                            <Text style={styles.editProfileLabel}>
-                                {gblStrings.addBankAccount.accountNumber}
-                            </Text>
-
-                            <GInputComponent
-                                placeholder={gblStrings.addBankAccount.accountNumber}
-                                onChangeText={this.setValidAccountNumber}
-                                value={this.state.validAccountNumber}
-                                errorFlag={!this.state.isValidAccountNumber}
-                                errorText={gblStrings.addBankAccount.accountValidNumber} />
-                        </View>
-
-                        <View style={styles.editFlexDirectionColumn}>
-                            <GButtonComponent
-                                buttonStyle={styles.saveButtonStyle}
-                                buttonText={gblStrings.common.save}
-                                onPress={this.validateBankAccount}
-                                textStyle={styles.saveButtonText} />
-                        </View>
-
-                        {this.state.isValidBankAccount ? (
-                            <Text style={{ width: '92%', marginTop: '4%', marginBottom: '4%', color: '#333300', justifyContent: 'center', alignItems: 'center' }}>
-                                {this.state.validBankAccountMsg}
-                            </Text>) : null}
-
-                    </View>
-                        */}
+                  
 
                     { /*----------- Fund Your Investments -------------------*/}
                     {this.state.selectedFundInvestmentsData.length > 0 &&
@@ -1442,8 +1409,8 @@ class OpenAccPageThreeComponent extends Component {
                                                 </Text>
 
 
-
                                                 <GDropDownComponent
+                                                    inputref={this.setInputRef("fundingOptionDropDown"+index)}
                                                     dropDownLayout={styles.dropDownLayout}
                                                     dropDownTextName={styles.dropDownTextName}
                                                     textInputStyle={styles.textInputStyle}
@@ -1455,6 +1422,8 @@ class OpenAccPageThreeComponent extends Component {
                                                     selectedDropDownValue={this.onSelectedDropDownValue("fundingOptionDropDown", index)}
                                                     itemToDisplay={"value"}
                                                     dropDownPostition={{ ...styles.dropDownPostition, top: scaledHeight(160) }}
+                                                    errorFlag={!this.state.selectedFundInvestmentsData[index].fundingOptionValidation}
+                                                    errorText={gblStrings.accManagement.emptyFundOptionsMsg}
                                                 />
 
                                                 <Text style={styles.lblTxt}>
@@ -1465,12 +1434,14 @@ class OpenAccPageThreeComponent extends Component {
                                                         {"$"}
                                                     </Text>
                                                     <GInputComponent
+                                                        inputref={this.setInputRef("initialInvestment"+index)}
                                                         propInputStyle={{ width: '90%' }}
                                                         maxLength={gblStrings.maxLength.initInvestment}
                                                         placeholder={"Initial Investment"}
                                                         keyboardType="number-pad"
                                                         onChangeText={this.onChangeTextForInvestment("initialInvestment", index)}
-
+                                                        errorFlag={!this.state.selectedFundInvestmentsData[index].initialInvestmentValidation}
+                                                        errorText={gblStrings.accManagement.emptyInitInvestmentMsg}
                                                     />
                                                 </View>
                                                 <Text style={{ textAlign: 'right', width: '100%', color: '#56565A', fontSize: scaledHeight(12), marginTop: scaledHeight(12), }}>
@@ -1478,7 +1449,8 @@ class OpenAccPageThreeComponent extends Component {
                                                 </Text>
 
                                                 {
-                                                    this.state.selectedFundInvestmentsData[index].fundingOption == "Initial and Monthly Investment" && <>
+                                                    this.state.selectedFundInvestmentsData[index].fundingOption == "Initial and Monthly Investment" && 
+                                                    <>
                                                         <Text style={styles.lblTxt}>
                                                             {gblStrings.accManagement.monthlyInvestment}
                                                         </Text>
@@ -1487,15 +1459,18 @@ class OpenAccPageThreeComponent extends Component {
                                                                 {"$"}
                                                             </Text>
                                                             <GInputComponent
+                                                                inputref={this.setInputRef("monthlyInvestment"+index)}
                                                                 propInputStyle={{ width: '90%' }}
                                                                 maxLength={gblStrings.maxLength.monthlyInvestment}
                                                                 placeholder={"Monthly Investment"}
                                                                 value={this.state.selectedFundInvestmentsData[index].monthlyInvestment}
                                                                 keyboardType="number-pad"
                                                                 onChangeText={this.onChangeTextForInvestment("monthlyInvestment", index)}
+                                                                errorFlag={!this.state.selectedFundInvestmentsData[index].monthlyInvestmentValidation}
+                                                                errorText={gblStrings.accManagement.emptyMonthlyInvestmentMsg}
 
                                                             />
-                                                        </View>
+                                                        </View> 
 
                                                     </>
                                                 }
@@ -1504,11 +1479,12 @@ class OpenAccPageThreeComponent extends Component {
                                                     {gblStrings.accManagement.startDate}
                                                 </Text>
 
-                                                <GDateComponent startDateValidation
+                                                <GDateComponent 
+                                                    inputref={this.setInputRef("startDate"+index)}
                                                     date={this.state.selectedFundInvestmentsData[index].startDate}
                                                     placeholder="MM/DD/YYYY"
-                                                    errorFlag={this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                                    errMsg=""
+                                                    errorFlag={!this.state.selectedFundInvestmentsData[index].startDateValidation}
+                                                    errMsg={this.state.selectedFundInvestmentsData[index].startDateValidation}
                                                     onDateChange={this.onChangeDateForInvestment("startDate", index)}
                                                 />
                                             </View>

@@ -253,35 +253,60 @@ export const styles = StyleSheet.create({
        marginVertical:scaledHeight(24),
      },
     accountItem: {
+        flexDirection:'row',
         backgroundColor: '#FFFFFF',
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'flex-start',
+        alignItems: "center",
         alignContent: 'center',
         borderColor:'#5D83AE99',
         borderWidth:1,
         borderStyle:'solid',
-        width:'100%',
-        height:scaledHeight(60),
+       //width:'75%',
+       height:scaledHeight(80),
+       //flexWrap:"wrap"
+
     },
     accountItemSelected: {
+        flexDirection:'row',
+
         backgroundColor: '#dbeafc',
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'flex-start',
+        alignItems: "center",
         alignContent: 'center',
         borderColor:'#5d83ae',
         borderWidth:6,
         borderStyle:'solid',
-        width:'100%',
-        height:scaledHeight(60),
+        //width:'75%',
+        height:scaledHeight(92),
+        //flexWrap:"wrap"
     },
     accountItemTxt: {
         color: '#56565A',
         fontWeight: 'bold',
         fontSize: scaledHeight(20),
-        textAlign:'center',
-        lineHeight:scaledHeight(20)
+        textAlign:'left',
+        lineHeight:scaledHeight(20),
+        marginLeft:scaledHeight(26),
+        flexWrap:"wrap"
+
     },
 
+   accountItemImg: {
+        height:scaledHeight(45),
+        width:scaledHeight(45)
+
+    },
+    accountItemImgBG: {
+        backgroundColor: '#E9E9E9',
+        justifyContent: 'center',
+        alignItems: "center",
+        alignContent: 'center',
+        height:scaledHeight(65),
+        width:scaledHeight(75),
+        marginLeft:scaledHeight(8)
+
+
+    },
     investmentSection: {
         flexGrow: 1,
         backgroundColor: '#FFFFFF',
