@@ -1324,7 +1324,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
     validateFields = () => {
-       //return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
+       return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
         try {
 
 

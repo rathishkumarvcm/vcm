@@ -332,7 +332,6 @@ class OpenAccPageThreeComponent extends Component {
 
         if (this.props !== prevProps) {
             let tempFundListData = [];
-            if (this.state.fundList.length == 0) {
                 if (this.props.accOpeningData[ActionTypes.GET_FUNDLIST] != undefined && this.props.accOpeningData[ActionTypes.GET_FUNDLIST].Items != null) {
                     tempFundListData = this.props.accOpeningData[ActionTypes.GET_FUNDLIST].Items;
                     this.setState({
@@ -340,7 +339,7 @@ class OpenAccPageThreeComponent extends Component {
                         isFilterApplied: false
                     });
                 }
-            }
+            
 
             let tempFundingSourceList = [];
             if(this.state.fundingSourceList.length == 0){
@@ -499,6 +498,31 @@ class OpenAccPageThreeComponent extends Component {
             selectedFundInvestmentsData: newItems,
         });
 
+    }
+    onPressRemoveInvestment = (item, index) => () => {
+        console.log("onPressRemoveInvestment::: " + item);
+        let newSelectedData = [...this.state.selectedFundInvestmentsData];
+        let newItems = [...this.state.fundList];
+        var isObjExistIndex = this.getIndex(item.fundNumber, newSelectedData, 'fundNumber');
+
+        if (isObjExistIndex != -1) {
+
+            newItems[isObjExistIndex].isActive = false;
+            newItems.splice(isObjExistIndex, 1);
+
+            newSelectedData[index].isActive = false;
+            newSelectedData.splice(index, 1);
+
+        }
+
+        // newSelectedData[index].isActive = false;
+        // newSelectedData.splice(index, 1);
+        this.setState({
+            fundList: newItems,
+            selectedFundInvestmentsData: newSelectedData,
+            selectedCount: this.getSelectedItems().length
+
+        });
     }
 
     onPressRadio = (keyName, text) => () => this.setState({
@@ -679,7 +703,7 @@ class OpenAccPageThreeComponent extends Component {
     generateDropDownListKeyExtractor = (item) => item.key;
     generateFundListKeyExtractor = (item) => item.fundNumber.toString();
     generateFundSourceKeyExtractor = (item) => item.key;
-    generateFundInvestmentListKeyExtractor = (item) => item.fundNumber.toString();
+    generateFundInvestmentListKeyExtractor = (item) => { return (""+item.fundNumber); };
 
     renderDropDownListItem = (keyName, dropDownName) => ({ item }) =>
         (<TouchableOpacity
@@ -883,9 +907,14 @@ class OpenAccPageThreeComponent extends Component {
 
     // Apply Filter Actions  
     applyFilterAction = (visible) => () => {
-        this.setState({ modalVisible: visible, applyFilterState: true, isFilterApplied: true });
+        this.setState({
+            modalVisible: visible,
+            applyFilterState: true,
+            fundList:[],
+            isFilterApplied: true
+        });
 
-        var mininvestkey = "";
+        let mininvestkey = "";
         this.state.filtermindata.map((item) => {
             if (item.isActive) {
                 if (mininvestkey !== null && mininvestkey !== "") {
@@ -895,7 +924,8 @@ class OpenAccPageThreeComponent extends Component {
                 }
             }
         });
-        var riskkey = "";
+     
+        let riskkey = "";
         this.state.filterriskdata.map((item) => {
             if (item.isActive) {
                 if (riskkey !== null && riskkey !== "") {
@@ -905,7 +935,8 @@ class OpenAccPageThreeComponent extends Component {
                 }
             }
         });
-        var funddatakey = "";
+      
+        let funddatakey = "";
         this.state.filterfunddata.map((item) => {
             if (item.isActive) {
                 if (funddatakey !== null && funddatakey !== "") {
@@ -926,55 +957,46 @@ class OpenAccPageThreeComponent extends Component {
     // Clear Filter Actions  
     clearFilterAction = () => {
         this.setState({ applyFilterState: false });
-        var tempmindata = [...this.state.filtermindata];
-        this.setState({
-            filtermindata: [...tempmindata.map(v => ({ ...v, isActive: false }))]
-        });
+        let tempmindata = [...this.state.filtermindata];
+        let tempriskdata = [...this.state.filterriskdata];
+        let tempfunddata = [...this.state.filterfunddata];
 
-        var tempriskdata = [...this.state.filterriskdata];
         this.setState({
-            filterriskdata: [...tempriskdata.map(v => ({ ...v, isActive: false }))]
-        });
-
-        var tempfunddata = [...this.state.filterfunddata];
-        this.setState({
+            filtermindata: [...tempmindata.map(v => ({ ...v, isActive: false }))],
+            filterriskdata: [...tempriskdata.map(v => ({ ...v, isActive: false }))],
             filterfunddata: [...tempfunddata.map(v => ({ ...v, isActive: false }))]
         });
     }
 
     // Construct Filter values from Master Data on Clicking Filter Funds
     constructFilterData = () => {
-       const temp_key_min_inv = 'filter_min_inv';
-       const temp_key_risk = 'filter_risk';
-       const temp_key_fund_type = 'filter_fund_type';
-        let tempfiltermindata = [];
-        let tempfilterriskdata = [];
-        let tempfilterfunddata = [];
+        const temp_key_min_inv = 'filter_min_inv';
+        const temp_key_risk = 'filter_risk';
+        const temp_key_fund_type = 'filter_fund_type';
+        let tempMinInvData = [];
+        let tempRiskData = [];
+        let tempFundTypeData = [];
+
+       
 
         console.log('Filter Clicked...');
         if (temp_key_min_inv !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[temp_key_min_inv] && this.props.masterLookupStateData[temp_key_min_inv].value) {
-            tempfiltermindata = this.props.masterLookupStateData[temp_key_min_inv].value;
-            this.setState({
-                filtermindata: [...tempfiltermindata.map(v => ({ ...v, isActive: false }))]
-            });
-            console.log('Master Value : ', JSON.stringify(filtermindata));
+            tempMinInvData = this.props.masterLookupStateData[temp_key_min_inv].value;
         }
 
         if (temp_key_risk !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[temp_key_risk] && this.props.masterLookupStateData[temp_key_risk].value) {
-            tempfilterriskdata = this.props.masterLookupStateData[temp_key_risk].value;
-            this.setState({
-                filterriskdata: [...tempfilterriskdata.map(v => ({ ...v, isActive: false }))]
-            });
-            console.log('Master Value : ', JSON.stringify(filterriskdata));
+            tempRiskData = this.props.masterLookupStateData[temp_key_risk].value; 
         }
 
         if (temp_key_fund_type !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[temp_key_fund_type] && this.props.masterLookupStateData[temp_key_fund_type].value) {
-            tempfilterfunddata = this.props.masterLookupStateData[temp_key_fund_type].value;
-            this.setState({
-                filterfunddata: [...tempfilterfunddata.map(v => ({ ...v, isActive: false }))]
-            });
-            console.log('Master Value : ', JSON.stringify(filterfunddata));
+            tempFundTypeData = this.props.masterLookupStateData[temp_key_fund_type].value;
         }
+
+        this.setState({
+            filtermindata: [...tempMinInvData.map(v => ({ ...v, isActive: false }))],
+            filterriskdata: [...tempRiskData.map(v => ({ ...v, isActive: false }))],
+            tempfiltedata: [...tempFundTypeData.map(v => ({ ...v, isActive: false }))]
+        });
     }
 
     // Checkbox selection on Clicking Filters 
@@ -989,12 +1011,12 @@ class OpenAccPageThreeComponent extends Component {
                 this.setState({ filtermindata: newItm });
                 break;
             case 'risk':
-                 newItm = [...this.state.filterriskdata];
+                newItm = [...this.state.filterriskdata];
                 newItm[index].isActive = !newItm[index].isActive;
                 this.setState({ filterriskdata: newItm });
                 break;
             case 'fundType':
-                 newItm = [...this.state.filterfunddata];
+                newItm = [...this.state.filterfunddata];
                 newItm[index].isActive = !newItm[index].isActive;
                 this.setState({ filterfunddata: newItm });
                 break;
@@ -1371,159 +1393,145 @@ class OpenAccPageThreeComponent extends Component {
                         */}
 
                     { /*----------- Fund Your Investments -------------------*/}
-
-                    <View style={styles.sectionGrp}>
-                        <View style={styles.accTypeSelectSection}>
-                            <Text style={styles.headings}>
-                                {gblStrings.accManagement.fundYourInvest}
-                            </Text>
-                            <TouchableOpacity
-                                //  onPress={() => { alert("Expand/Cllapse") }}
-                                activeOpacity={0.8}
-                                accessibilityRole={'button'}
-                            >
-                                <Text style={styles.expandCollpaseTxt}>
-                                    {"[ - ]"}
+                    {this.state.selectedFundInvestmentsData.length > 0 &&
+                        <View style={styles.sectionGrp}>
+                            <View style={styles.accTypeSelectSection}>
+                                <Text style={styles.headings}>
+                                    {gblStrings.accManagement.fundYourInvest}
                                 </Text>
-                            </TouchableOpacity>
+                                <TouchableOpacity
+                                    //  onPress={() => { alert("Expand/Cllapse") }}
+                                    activeOpacity={0.8}
+                                    accessibilityRole={'button'}
+                                >
+                                    <Text style={styles.expandCollpaseTxt}>
+                                        {"[ - ]"}
+                                    </Text>
+                                </TouchableOpacity>
 
-                        </View>
-                        <Text style={styles.lblLine} />
+                            </View>
+                            <Text style={styles.lblLine} />
 
-                        <View style={styles.childSectionGrp}>
-                            <Text style={styles.sectionDescTxt}>
-                                {gblStrings.accManagement.fundYourInvestNote}
-                            </Text>
 
-                            {this.state.selectedFundInvestmentsData.map((item, index) => {
-                                return (
-                                    <View 
-                                         key = {this.generateFundInvestmentListKeyExtractor}
-                                    >
-                                        <TouchableOpacity
-                                            //  onPress={() => { alert("#TODO:: Remove") }}
-                                            activeOpacity={0.8}
-                                            accessibilityRole={'button'}
-                                            style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginTop: scaledHeight(22) }}
+                            <View style={styles.childSectionGrp}>
+                                <Text style={styles.sectionDescTxt}>
+                                    {gblStrings.accManagement.fundYourInvestNote}
+                                </Text>
+
+                                {this.state.selectedFundInvestmentsData.map((item, index) => {
+                                    return (
+                                        <View
+                                            key={this.generateFundInvestmentListKeyExtractor}
                                         >
-                                            <Text style={{ fontSize: scaledHeight(16), color: '#61285F', fontWeight: 'bold', width: '100%', textAlign: 'right', lineHeight: 20 }}>
-                                                {gblStrings.common.remove}
-                                            </Text>
-                                        </TouchableOpacity>
-                                        <View style={styles.investmentSection}>
-                                            <Text style={styles.lblTxt}>
-                                                {gblStrings.accManagement.fundName}
-                                            </Text>
-                                            <Text style={styles.sectionDescTxt}>
-                                                {item.fundName}
-                                            </Text>
-
-
-
-                                            <GDropDownComponent
-                                                dropDownLayout={styles.dropDownLayout}
-                                                dropDownTextName={styles.dropDownTextName}
-                                                textInputStyle={styles.textInputStyle}
-                                                dropDownName={gblStrings.accManagement.fundingOptions}
-                                                data={tempFundOptionsData}
-                                                changeState={this.onPressDropDownForInvestment("fundingOptionDropDown", index)}
-                                                showDropDown={this.state.selectedFundInvestmentsData[index].fundingOptionDropDown}
-                                                dropDownValue={this.state.selectedFundInvestmentsData[index].fundingOption}
-                                                selectedDropDownValue={this.onSelectedDropDownValue("fundingOptionDropDown", index)}
-                                                itemToDisplay={"value"}
-                                                dropDownPostition={{ ...styles.dropDownPostition, top: scaledHeight(160) }}
-                                            />
-
-                                            <Text style={styles.lblTxt}>
-                                                {gblStrings.accManagement.initInvestment}
-                                            </Text>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: scaledHeight(7) }}>
-                                                <Text style={{ color: '#56565A', fontSize: scaledHeight(16) }}>
-                                                    {"$"}
+                                            <TouchableOpacity
+                                                onPress={this.onPressRemoveInvestment(item,index)}
+                                                activeOpacity={0.8}
+                                                accessibilityRole={'button'}
+                                                style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', marginTop: scaledHeight(22) }}
+                                            >
+                                                <Text style={{ fontSize: scaledHeight(16), color: '#61285F', fontWeight: 'bold', width: '100%', textAlign: 'right', lineHeight: 20 }}>
+                                                    {gblStrings.common.remove}
                                                 </Text>
-                                                <GInputComponent
-                                                    propInputStyle={{ width: '90%' }}
-                                                    maxLength={gblStrings.maxLength.initInvestment}
-                                                    placeholder={"Initial Investment"}
-                                                    keyboardType="number-pad"
-                                                    onChangeText={this.onChangeTextForInvestment("initialInvestment", index)}
+                                            </TouchableOpacity>
+                                            <View style={styles.investmentSection}>
+                                                <Text style={styles.lblTxt}>
+                                                    {gblStrings.accManagement.fundName}
+                                                </Text>
+                                                <Text style={styles.sectionDescTxt}>
+                                                    {item.fundName}
+                                                </Text>
 
+
+
+                                                <GDropDownComponent
+                                                    dropDownLayout={styles.dropDownLayout}
+                                                    dropDownTextName={styles.dropDownTextName}
+                                                    textInputStyle={styles.textInputStyle}
+                                                    dropDownName={gblStrings.accManagement.fundingOptions}
+                                                    data={tempFundOptionsData}
+                                                    changeState={this.onPressDropDownForInvestment("fundingOptionDropDown", index)}
+                                                    showDropDown={this.state.selectedFundInvestmentsData[index].fundingOptionDropDown}
+                                                    dropDownValue={this.state.selectedFundInvestmentsData[index].fundingOption}
+                                                    selectedDropDownValue={this.onSelectedDropDownValue("fundingOptionDropDown", index)}
+                                                    itemToDisplay={"value"}
+                                                    dropDownPostition={{ ...styles.dropDownPostition, top: scaledHeight(160) }}
+                                                />
+
+                                                <Text style={styles.lblTxt}>
+                                                    {gblStrings.accManagement.initInvestment}
+                                                </Text>
+                                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: scaledHeight(7) }}>
+                                                    <Text style={{ color: '#56565A', fontSize: scaledHeight(16) }}>
+                                                        {"$"}
+                                                    </Text>
+                                                    <GInputComponent
+                                                        propInputStyle={{ width: '90%' }}
+                                                        maxLength={gblStrings.maxLength.initInvestment}
+                                                        placeholder={"Initial Investment"}
+                                                        keyboardType="number-pad"
+                                                        onChangeText={this.onChangeTextForInvestment("initialInvestment", index)}
+
+                                                    />
+                                                </View>
+                                                <Text style={{ textAlign: 'right', width: '100%', color: '#56565A', fontSize: scaledHeight(12), marginTop: scaledHeight(12), }}>
+                                                    {`Minimum $${item.mininitialInvestment}`}
+                                                </Text>
+
+                                                {
+                                                    this.state.selectedFundInvestmentsData[index].fundingOption == "Initial and Monthly Investment" && <>
+                                                        <Text style={styles.lblTxt}>
+                                                            {gblStrings.accManagement.monthlyInvestment}
+                                                        </Text>
+                                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: scaledHeight(7) }}>
+                                                            <Text style={{ color: '#56565A', fontSize: scaledHeight(16) }}>
+                                                                {"$"}
+                                                            </Text>
+                                                            <GInputComponent
+                                                                propInputStyle={{ width: '90%' }}
+                                                                maxLength={gblStrings.maxLength.monthlyInvestment}
+                                                                placeholder={"Monthly Investment"}
+                                                                value={this.state.selectedFundInvestmentsData[index].monthlyInvestment}
+                                                                keyboardType="number-pad"
+                                                                onChangeText={this.onChangeTextForInvestment("monthlyInvestment", index)}
+
+                                                            />
+                                                        </View>
+
+                                                    </>
+                                                }
+
+                                                <Text style={styles.lblTxt}>
+                                                    {gblStrings.accManagement.startDate}
+                                                </Text>
+
+                                                <GDateComponent startDateValidation
+                                                    date={this.state.selectedFundInvestmentsData[index].startDate}
+                                                    placeholder="MM/DD/YYYY"
+                                                    errorFlag={this.state.selectedFundInvestmentsData[index].startDateValidation}
+                                                    errMsg=""
+                                                    onDateChange={this.onChangeDateForInvestment("startDate", index)}
                                                 />
                                             </View>
-                                            <Text style={{ textAlign: 'right', width: '100%', color: '#56565A', fontSize: scaledHeight(12), marginTop: scaledHeight(12), }}>
-                                                {`Minimum $${item.mininitialInvestment}`}
-                                            </Text>
-
-                                            {
-                                                this.state.selectedFundInvestmentsData[index].fundingOption == "Initial and Monthly Investment" && <>
-                                                    <Text style={styles.lblTxt}>
-                                                        {gblStrings.accManagement.monthlyInvestment}
-                                                    </Text>
-                                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: scaledHeight(7) }}>
-                                                        <Text style={{ color: '#56565A', fontSize: scaledHeight(16) }}>
-                                                            {"$"}
-                                                        </Text>
-                                                        <GInputComponent
-                                                            propInputStyle={{ width: '90%' }}
-                                                            maxLength={gblStrings.maxLength.monthlyInvestment}
-                                                            placeholder={"Monthly Investment"}
-                                                            value={this.state.selectedFundInvestmentsData[index].monthlyInvestment}
-                                                            keyboardType="number-pad"
-                                                            onChangeText={this.onChangeTextForInvestment("monthlyInvestment", index)}
-
-                                                        />
-                                                    </View>
-
-                                                                                                                                                   </>
-                                            }
-
-                                            <Text style={styles.lblTxt}>
-                                                {gblStrings.accManagement.startDate}
-                                            </Text>
-
-                                            <GDateComponent startDateValidation
-                                                date={this.state.selectedFundInvestmentsData[index].startDate}
-                                                placeholder="MM/DD/YYYY"
-                                                errorFlag={this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                                errMsg=""
-                                                onDateChange={this.onChangeDateForInvestment("startDate", index)}
-                                            />
                                         </View>
-                                    </View>
 
-                                );
-                            })}
+                                    );
+                                })}
 
-                            <View style={styles.investmentSectionFooter}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: scaledHeight(20) }}>
+                                <View style={styles.investmentSectionFooter}>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: scaledHeight(20) }}>
 
-                                    <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {gblStrings.accManagement.total}
-                                    </Text>
-                                    <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                        {this.state.totalInitialInvestment}
-                                    </Text>
-                                </View>
-                                <Text style={styles.lblLine} />
-                                <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', padding: scaledHeight(20) }}>
-                                    <TouchableOpacity
-                                        //  onPress={() => { alert("#TODO:: Update") }}
-                                        activeOpacity={0.8}
-                                        accessibilityRole={'button'}
-                                    >
-                                        <Text style={styles.downloadPDFBtnTxt}>
-                                            {gblStrings.common.update}
+                                        <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
+                                            {gblStrings.accManagement.total}
                                         </Text>
-                                    </TouchableOpacity>
-
+                                        <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
+                                            {this.state.totalInitialInvestment}
+                                        </Text>
+                                    </View>
                                 </View>
                             </View>
 
-
                         </View>
-
-                    </View>
-
+                    }
 
 
                     { /*----------- Buttons Group -------------------*/}
