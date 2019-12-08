@@ -176,25 +176,29 @@ class ProfileSettingsComponent extends Component {
 
         // Employment Informations
 
-        if (this.props && this.props.profileState && this.props.profileState.employmentInformations && this.props.profileState.employmentInformations.profileEmploymentStatus) {
+        if (this.props && this.props.profileState && this.props.profileState.employmentInformations
+            && this.props.profileState.employmentInformations.profileEmploymentStatus) {
             this.setState({
                 profileEmploymentStatus: this.props.profileState.employmentInformations.profileEmploymentStatus
             })
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.employmentInformations && this.props.profileState.employmentInformations.profileEmpIndustry) {
+        if (this.props && this.props.profileState && this.props.profileState.employmentInformations
+            && this.props.profileState.employmentInformations.profileEmpIndustry) {
             this.setState({
                 profileEmpIndustry: this.props.profileState.employmentInformations.profileEmpIndustry
             })
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.employmentInformations && this.props.profileState.employmentInformations.profileEmpOccupation) {
+        if (this.props && this.props.profileState && this.props.profileState.employmentInformations
+            && this.props.profileState.employmentInformations.profileEmpOccupation) {
             this.setState({
                 profileEmpOccupation: this.props.profileState.employmentInformations.profileEmpOccupation
             })
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.employmentInformations && this.props.profileState.employmentInformations.profileEmpEmployer) {
+        if (this.props && this.props.profileState && this.props.profileState.employmentInformations
+            && this.props.profileState.employmentInformations.profileEmpEmployer) {
             this.setState({
                 profileEmpEmployer: this.props.profileState.employmentInformations.profileEmpEmployer
             })
@@ -241,27 +245,29 @@ class ProfileSettingsComponent extends Component {
                     profilePhysicalAddress: this.props.profileState.profilePhysicalAddress,
                     profilePrimaryMobile: this.props.profileState.profilePrimaryMobile,
 
-                    // Employment Informations
-                    profileEmploymentStatus: this.props.profileState.profileEmploymentStatus,
-                    profileEmpIndustry: this.props.profileState.profileEmpIndustry,
-                    profileEmpOccupation: this.props.profileState.profileEmpOccupation,
-                    profileRelationToOwner: this.props.profileState.profileRelationToOwner,
-
                     profileRelationGender: this.props.profileState.profileRelationGender,
                     profileRelationMail: this.props.profileState.profileRelationMail,
                     profileRelationMarital: this.props.profileState.profileRelationMarital,
                 })
-            }
 
-            if (this.props && this.props.profileState && this.props.profileState.financialInformations) {
-                this.setState({
-                    //Financial Informations
-                    profileAnnualIncome: '$ ' + this.props.profileState.financialInformations.profileAnnualIncome,
-                    profileTaxBracket: this.props.profileState.financialInformations.profileTaxBracket + ' %',
-                    profileNetWorth: '$ ' + this.props.profileState.financialInformations.profileNetWorth,
-                    profileTaxFilling: this.props.profileState.financialInformations.profileTaxFilling,
-                })
-
+                if (this.props && this.props.profileState && this.props.profileState.financialInformations) {
+                    this.setState({
+                        profileAnnualIncome: '$ ' + this.props.profileState.financialInformations.profileAnnualIncome,
+                        profileTaxBracket: this.props.profileState.financialInformations.profileTaxBracket + ' %',
+                        profileNetWorth: '$ ' + this.props.profileState.financialInformations.profileNetWorth,
+                        profileTaxFilling: this.props.profileState.financialInformations.profileTaxFilling,
+                    })
+    
+                }
+    
+                if (this.props && this.props.profileState && this.props.profileState.employmentInformations) {
+                    this.setState({
+                        profileEmploymentStatus: this.props.profileState.employmentInformations.profileEmploymentStatus,
+                        profileEmpIndustry: this.props.profileState.employmentInformations.profileEmpIndustry,
+                        profileEmpOccupation: this.props.profileState.employmentInformations.profileEmpOccupation,
+                        profileRelationToOwner: this.props.profileState.employmentInformations.profileRelationToOwner
+                    })
+                }
             }
         }
     }

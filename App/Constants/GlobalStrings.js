@@ -990,7 +990,10 @@ export default {
         validateStatus: "Select Valid Marital Status",
         validateFinancialInformation: "Select Valid Financial Information",
         validateNetWorth: "Select Valid Net Worth",
-        validateTaxFilling: "Select Valid Tax Filling"
+        validateTaxFilling: "Select Valid Tax Filling",
+        validateEmpOccupation: "Enter Valid Occupation",
+        validateEmpName: "Enter Valid Employee Name",
+        validateEmpLineOne: "Enter Valid Employee Line One"
     },
     accountServices: {
         account_services: 'Account Services',

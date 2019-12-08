@@ -106,7 +106,7 @@ class editAddFinancialInfoComponent extends Component {
         this.setState({
             dropDownFinancialValue: valueFinancial.value,
             dropDownFinancialState: false,
-            taxBracketValue: valueFinancial.taxbracket + '%',
+            taxBracketValue: valueFinancial.taxbracket,
             dropDownFinancialFlag: false
         });
     }
@@ -307,7 +307,7 @@ class editAddFinancialInfoComponent extends Component {
                             {globalStrings.addFinancialInformations.taxBracket}
                         </Text>
                         <Text style={styles.financialValueLabel}>
-                            {this.state.taxBracketValue}
+                            {this.state.taxBracketValue + '%'}
                         </Text>
                     </View>
 
