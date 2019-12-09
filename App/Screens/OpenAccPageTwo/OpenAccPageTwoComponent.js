@@ -544,14 +544,27 @@ class OpenAccPageTwoComponent extends Component {
                     const tempResponse = this.props.addressFormatData[stateCityKey];
                     if (tempResponse && tempResponse.City) {
                       
-                            this.setState(prevState => ({
-                                [this.state.currentZipCodeRef.stateKey]: {
-                                    ...prevState[this.state.currentZipCodeRef.stateKey],
-                                    city: tempResponse.City,
-                                    stateCity: tempResponse.State
+                       // alert("currentZipCodeRef::"+this.state.currentZipCodeRef.keyName);
 
-                                }
-                            }));
+                            if(this.state.currentZipCodeRef.keyName == "empZipcode"){
+                                this.setState(prevState => ({
+                                    [this.state.currentZipCodeRef.stateKey]: {
+                                        ...prevState[this.state.currentZipCodeRef.stateKey],
+                                        empCity: tempResponse.City,
+                                        empStateCity: tempResponse.State
+    
+                                    }
+                                }));
+                            }else{
+                                this.setState(prevState => ({
+                                    [this.state.currentZipCodeRef.stateKey]: {
+                                        ...prevState[this.state.currentZipCodeRef.stateKey],
+                                        city: tempResponse.City,
+                                        stateCity: tempResponse.State
+    
+                                    }
+                                }));
+                            }
                     } 
                 }
             }
@@ -561,18 +574,32 @@ class OpenAccPageTwoComponent extends Component {
                 if (this.props.addressFormatData[addressKey] !== prevProps.addressFormatData[addressKey]) {
                     const tempResponse = this.props.addressFormatData[addressKey];
                     if (tempResponse && tempResponse.City) {
-                      
+
+                        if (this.state.currentZipCodeRef.keyName == "empZipcode") {
+                            this.setState(prevState => ({
+                                [this.state.currentZipCodeRef.stateKey]: {
+                                    ...prevState[this.state.currentZipCodeRef.stateKey],
+                                    empCity: tempResponse.City,
+                                    empStateCity: tempResponse.State,
+                                    empAddrLine1: tempResponse.Address1 || "",
+                                    empAddrLine2: tempResponse.Address2 || ""
+
+                                }
+                            }));
+                        } else {
                             this.setState(prevState => ({
                                 [this.state.currentZipCodeRef.stateKey]: {
                                     ...prevState[this.state.currentZipCodeRef.stateKey],
                                     city: tempResponse.City,
                                     stateCity: tempResponse.State,
-                                    addrLine1:tempResponse.Address1 || "" ,
-                                    addrLine2:tempResponse.Address2 || ""
+                                    addrLine1: tempResponse.Address1 || "",
+                                    addrLine2: tempResponse.Address2 || ""
 
                                 }
                             }));
-                    } 
+                        }
+
+                    }
                 }
             }
 
@@ -949,6 +976,7 @@ class OpenAccPageTwoComponent extends Component {
         let newItems = {...this.state.currentZipCodeRef};
         newItems.keyName = keyName;
         newItems.stateKey = stateKey;
+       // alert("onSubmitZipEditing::"+JSON.stringify(newItems));
         this.setState({ currentZipCodeRef: newItems });
 
         const payload = {
@@ -960,6 +988,32 @@ class OpenAccPageTwoComponent extends Component {
             "Address2": this.state[stateKey]["addrLine2"],
             "City": this.state[stateKey]["city"],
             "State":this.state[stateKey]["stateCity"]
+        };
+
+        
+        this.props.getStateCity(payload);
+        this.props.getAddressFormat(addressPayload);
+
+       // nextInputFocus.focus();
+    }
+    onSubmitEmpZipEditing = (stateKey,keyName,nextInputFocus) => text =>{
+        console.log("onSubmitEmpZipEditing:::>" +nextInputFocus+" "+text);
+
+        let newItems = {...this.state.currentZipCodeRef};
+        newItems.keyName = keyName;
+        newItems.stateKey = stateKey;
+       // alert("onSubmitEmpZipEditing::"+JSON.stringify(newItems));
+        this.setState({ currentZipCodeRef: newItems });
+
+        const payload = {
+            "Zip": this.state[stateKey][keyName]
+        };
+        const addressPayload = {
+            ...payload,
+            "Address1": this.state[stateKey]["empAddrLine1"],
+            "Address2": this.state[stateKey]["empAddrLine2"],
+            "City": this.state[stateKey]["empCity"],
+            "State":this.state[stateKey]["empStateCity"]
         };
 
         
@@ -2705,20 +2759,6 @@ s
                                 />
 
                                 <Text style={styles.lblTxt}>
-                                    {gblStrings.accManagement.workPhoneNo}
-                                </Text>
-                                <GInputComponent
-                                    inputref={this.setInputRef("empWorkPhoneNo")}
-                                    propInputStyle={styles.customTxtBox}
-                                    placeholder={gblStrings.accManagement.phoneNoFormat}
-                                    maxLength={gblStrings.maxLength.workPhone}
-                                    keyboardType="phone-pad"
-                                    onChangeText={this.onChangeText("personal", "empWorkPhoneNo")}
-                                    onSubmitEditing={this.onSubmitEditing(this.empZipcode)}
-
-                                />
-
-                                <Text style={styles.lblTxt}>
                                     {gblStrings.accManagement.zipcode}
                                 </Text>
                                 <GInputComponent
@@ -2728,7 +2768,7 @@ s
                                     maxLength={gblStrings.maxLength.zipCode}
                                     keyboardType="number-pad"
                                     onChangeText={this.onChangeText("personal", "empZipcode")}
-                                    onSubmitEditing={this.onSubmitEditing(this.empCity)}
+                                    onSubmitEditing={this.onSubmitEmpZipEditing("personal", "empZipcode", this.empCity)}
 
                                 />
 
@@ -2739,22 +2779,39 @@ s
                                     inputref={this.setInputRef("empCity")}
                                     propInputStyle={styles.customTxtBox}
                                     placeholder={gblStrings.accManagement.enterCity}
-                                    returnKeyType={"done"}
                                     maxLength={gblStrings.maxLength.city}
+                                    value={this.state.personal.empCity}
                                     onChangeText={this.onChangeText("personal", "empCity")}
                                     onSubmitEditing={this.onSubmitEditing(this.empStateCity)}
 
 
                                 />
-                                <CustomDropDown
+                                <GInputComponent
                                     inputref={this.setInputRef("empStateCity")}
-                                    onPress={this.onPressDropDown("personal", "empStateCityDropDown")}
+                                    propInputStyle={styles.customTxtBox}
+                                    placeholder={gblStrings.accManagement.enterCity}
+                                    returnKeyType={"done"}
+                                    maxLength={gblStrings.maxLength.city}
                                     value={this.state.personal.empStateCity}
-                                    propInputStyle={styles.customListTxtBox}
-                                    placeholder={"Select State"}
+                                    onChangeText={this.onChangeText("personal", "empCity")}
+                                    onSubmitEditing={this.onSubmitEditing(this.empWorkPhoneNo)}
+
 
                                 />
-                                {this.renderDropDown('empStateCityDropDown', this.state.personal.empStateCityDropDown, dummyData)}
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.workPhoneNo}
+                                </Text>
+                                <GInputComponent
+                                    inputref={this.setInputRef("empWorkPhoneNo")}
+                                    propInputStyle={styles.customTxtBox}
+                                    placeholder={gblStrings.accManagement.phoneNoFormat}
+                                    maxLength={gblStrings.maxLength.workPhone}
+                                    keyboardType="phone-pad"
+                                    onChangeText={this.onChangeText("personal", "empWorkPhoneNo")}
+
+                                />
+
+                            
                             </View>
                         }
                     </View>
