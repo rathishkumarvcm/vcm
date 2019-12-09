@@ -934,7 +934,7 @@ class OpenAccPageTwoComponent extends Component {
                     const payload = {
                         "Body":""+response.data
                     };
-                   // this.props.uploadAavatarImg(payload);
+                    this.props.uploadAavatarImg(payload);
               }
                 
             }

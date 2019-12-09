@@ -103,8 +103,9 @@ export default {
         initInvestment: 10,
         monthlyInvestment: 10,
         accountNumber:15,
-        transitRoutingNumber:15,
-        common:250
+        transitRoutingNumber:9,
+        common:250,
+
 
 
     },
