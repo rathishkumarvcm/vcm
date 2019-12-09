@@ -9,7 +9,7 @@ pipeline {
             steps {
                 sh 'npm install'
                 sh 'cd ios'
-                sh '/usr/local/bin/pod install'
+                sh 'LANG=en_US.UTF-8 /usr/local/bin/pod install'
                 sh '/usr/bin/xcodebuild -scheme MemberServices -workspace MemberServices.xcworkspace -configuration Release build DEVELOPMENT_TEAM=ADDJLMH3Z7 -allowProvisioningUpdates'
             }
         }
