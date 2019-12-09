@@ -2743,6 +2743,7 @@ s
                                     propInputStyle={styles.customTxtBox}
                                     placeholder={gblStrings.accManagement.empAddrLine1}
                                     maxLength={gblStrings.maxLength.address}
+                                    value={this.state.personal.empAddrLine1}
                                     onChangeText={this.onChangeText("personal", "empAddrLine1")}
                                     onSubmitEditing={this.onSubmitEditing(this.empAddrLine2)}
 
@@ -2753,6 +2754,7 @@ s
                                     propInputStyle={styles.customTxtBox}
                                     placeholder={gblStrings.accManagement.empAddrLine2}
                                     maxLength={gblStrings.maxLength.address}
+                                    value={this.state.personal.empAddrLine2}
                                     onChangeText={this.onChangeText("personal", "empAddrLine2")}
                                     onSubmitEditing={this.onSubmitEditing(this.workPhoneNo)}
 
