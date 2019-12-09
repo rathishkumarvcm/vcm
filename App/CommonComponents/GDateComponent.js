@@ -67,8 +67,8 @@ export const GDateComponent = props => (
         mode={props.mode}
         placeholder={props.placeholder}
         format={props.format}
-        // minDate=""
-        // maxDate=""
+        minDate={props.minDate}
+        maxDate={props.maxDate}
         iconComponent={props.iconComponent}
         confirmBtnText= {props.confirmBtnText}
         cancelBtnText= {props.cancelBtnText}
@@ -133,6 +133,8 @@ GDateComponent.defaultProps = {
     date: "",
     format: "MM-DD-YYYY",
     mode: "date",
+    minDate:"",
+    maxDate:"",
     placeholder: "Select Date",
     iconComponent: <GIcon
         name="calendar"

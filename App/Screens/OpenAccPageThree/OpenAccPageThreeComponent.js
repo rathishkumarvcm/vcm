@@ -867,7 +867,7 @@ class OpenAccPageThreeComponent extends Component {
 
                 }/* else if ( tempObj.fundingOption == "Initial and Monthly Investment" && tempObj.monthlyInvestment < tempObj.mininitialInvestment) {
                     tempErrMsg = gblStrings.accManagement.minMonthlyInvestmentMsg;
-                }*/ else if (this.isEmpty(tempObj.startDate)) {
+                }*/ else if (tempObj.fundingOption == "Initial and Monthly Investment" && this.isEmpty(tempObj.startDate)) {
                     tempErrMsg = gblStrings.accManagement.emptyStartDate;
                     inputField = "startDate";
 
@@ -1114,7 +1114,10 @@ class OpenAccPageThreeComponent extends Component {
         let tempFundOptionsData = fundingOptionsData;
         let tempFundListData = [];
         let currentPage = 3;
-
+        const date = new Date().getDate(); //Current Date
+        const month = new Date().getMonth() + 1; //Current Month
+        const year = new Date().getFullYear(); //Current Year
+        const currentdate = month+"-"+date+"-"+year;
         tempFundListData = this.state.fundList.length > this.state.minCount ? this.state.fundList.slice(0, this.state.minCount) : this.state.fundList;
 
         return (
@@ -1486,7 +1489,7 @@ class OpenAccPageThreeComponent extends Component {
                                                         propInputStyle={{ width: '90%' }}
                                                         maxLength={gblStrings.maxLength.initInvestment}
                                                         placeholder={"Initial Investment"}
-                                                        keyboardType="number-pad"
+                                                        keyboardType="decimal-pad"
                                                         onChangeText={this.onChangeTextForInvestment("initialInvestment", index)}
                                                         errorFlag={!this.state.selectedFundInvestmentsData[index].initialInvestmentValidation}
                                                         errorText={gblStrings.accManagement.emptyInitInvestmentMsg}
@@ -1512,7 +1515,7 @@ class OpenAccPageThreeComponent extends Component {
                                                                 maxLength={gblStrings.maxLength.monthlyInvestment}
                                                                 placeholder={"Monthly Investment"}
                                                                 value={this.state.selectedFundInvestmentsData[index].monthlyInvestment}
-                                                                keyboardType="number-pad"
+                                                                keyboardType="decimal-pad"
                                                                 onChangeText={this.onChangeTextForInvestment("monthlyInvestment", index)}
                                                                 errorFlag={!this.state.selectedFundInvestmentsData[index].monthlyInvestmentValidation}
                                                                 errorText={gblStrings.accManagement.emptyMonthlyInvestmentMsg}
@@ -1520,21 +1523,24 @@ class OpenAccPageThreeComponent extends Component {
                                                             />
                                                         </View> 
 
+                                                        <Text style={styles.lblTxt}>
+                                                            {gblStrings.accManagement.startDate}
+                                                        </Text>
+
+                                                        <GDateComponent
+                                                            inputref={this.setInputRef("startDate" + index)}
+                                                            date={this.state.selectedFundInvestmentsData[index].startDate}
+                                                            minDate={currentdate}
+                                                            placeholder="MM/DD/YYYY"
+                                                            errorFlag={!this.state.selectedFundInvestmentsData[index].startDateValidation}
+                                                            errMsg={this.state.selectedFundInvestmentsData[index].startDateValidation}
+                                                            onDateChange={this.onChangeDateForInvestment("startDate", index)}
+                                                        />
+
                                                     </>
                                                 }
 
-                                                <Text style={styles.lblTxt}>
-                                                    {gblStrings.accManagement.startDate}
-                                                </Text>
-
-                                                <GDateComponent 
-                                                    inputref={this.setInputRef("startDate"+index)}
-                                                    date={this.state.selectedFundInvestmentsData[index].startDate}
-                                                    placeholder="MM/DD/YYYY"
-                                                    errorFlag={!this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                                    errMsg={this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                                    onDateChange={this.onChangeDateForInvestment("startDate", index)}
-                                                />
+                                               
                                             </View>
                                         </View>
 

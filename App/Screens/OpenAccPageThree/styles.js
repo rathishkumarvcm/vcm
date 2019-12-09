@@ -228,12 +228,12 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
-        width: '100%',
-        textAlign: 'center'
+        width: '80%',
+        textAlign: 'left'
     },
 
     compareFundsBtn: {
-        width: scaledWidth(180),
+        width: scaledWidth(200),
         borderWidth: 1,
         borderColor: "#61285F45",       
         height: scaledHeight(60),
@@ -248,8 +248,8 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
-        width: '100%',
-        textAlign: 'center'
+        width: '80%',
+        textAlign: 'left'
     },
     touchItem: {
         // width:scaledHeight(250),
