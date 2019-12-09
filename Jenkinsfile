@@ -28,7 +28,7 @@ pipeline {
                 dir('ios')
                 {
                     sh 'LANG=en_US.UTF-8 /usr/local/bin/pod install'
-                    sh '/usr/bin/xcodebuild -scheme MemberServices -workspace MemberServices.xcworkspace -configuration Release build DEVELOPMENT_TEAM=ADDJLMH3Z7 -allowProvisioningUpdates -destination generic/platform=iOS -derivedDataPath build/MemberServices'
+                    sh '/usr/bin/xcodebuild -scheme MemberServices -workspace MemberServices.xcworkspace -configuration Release build DEVELOPMENT_TEAM=ADDJLMH3Z7 -allowProvisioningUpdates -destination "platform=iOS Simulator,name=iPhone 11,OS=13.1" -derivedDataPath build/MemberServices'
                 }
             }
         }
