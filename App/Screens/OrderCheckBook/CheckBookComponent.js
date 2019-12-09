@@ -95,7 +95,8 @@ class CheckBookComponent extends Component {
                         renderItem={({ item, i }) => (<ViewAccountItem
                             item={item}
                             updateCurrentSecurityChanged={this.updateCurrentSecurityChanged}
-                            switchOnOffReinvest={this.switchOnOffReinvest} />)}
+                            switchOnOffReinvest={this.switchOnOffReinvest}
+                                                      />)}
                     />
 
                     <GButtonComponent
@@ -160,7 +161,8 @@ const ViewAccountItem = (props) => {
 
                     <GDropDownComponent
                         dropDownValue={item.NoOfCheckLeaves}
-                        textInputStyle={styles.dropDownInput} />
+                        textInputStyle={styles.dropDownInput}
+                    />
                 </View>
 
                 {item.enableReinvest ?

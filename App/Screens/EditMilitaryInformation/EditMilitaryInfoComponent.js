@@ -47,7 +47,8 @@ class editMilitaryInfoComponent extends Component {
 
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -66,7 +67,7 @@ class editMilitaryInfoComponent extends Component {
                         </Text>
                     </View>
 
-                    <View style={styles.settingsBorder}></View>
+                    <View style={styles.settingsBorder} />
 
                     <View style={styles.editFlexDirectionColumn}>
                         <Text style={styles.editMilitaryInfo}>
@@ -87,12 +88,14 @@ class editMilitaryInfoComponent extends Component {
                                     <GRadioButtonComponent
                                         onPress={() => this.radioButtonClicked(index)}
                                         selected
-                                        questions={item.question} />
+                                        questions={item.question}
+                                    />
                                     :
                                     <GRadioButtonComponent
                                         onPress={() => this.radioButtonClicked(index)}
                                         selected={false}
-                                        questions={item.question} />
+                                        questions={item.question}
+                                    />
                             )}
                         </View>
                     </View>
@@ -102,14 +105,16 @@ class editMilitaryInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.editMilitaryOnCancel} />
+                            onPress={this.editMilitaryOnCancel}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
-                            textStyle={styles.saveButtonText} />
+                            textStyle={styles.saveButtonText}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -129,7 +134,8 @@ class editMilitaryInfoComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={require("../../Images/logo.png")}
+                        />
                     </View>
 
                     <View style={styles.privacyAgreement}>

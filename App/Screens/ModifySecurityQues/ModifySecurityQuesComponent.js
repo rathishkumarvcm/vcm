@@ -373,7 +373,7 @@ class ModifySecQuesComponent extends Component {
                                 errorFlag={!this.state.q3Select||this.state.q3Val}
                                 errorText={this.state.errorText3}
                                 dropDownPostition={{ position: 'absolute', top: scaledHeight(500),width:"100%",marginLeft:"0%",marginRight:"0%" }}
-                            />          
+                                />          
                             {/*<Text style={styles.lblTxt}>
                                 {gblStrings.userManagement.ques3}
                         </Text>*/}

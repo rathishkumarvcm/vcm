@@ -240,7 +240,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                         switchOnOffStateUpdates={this.switchOnOffStateUpdates}
                         updateCurrentSecurityChanged={this.updateCurrentSecurityChanged}
                         switchOnOffReinvest={this.switchOnOffReinvest}
-                        setDividentAmount={this.setDividentAmount}/>)}
+                        setDividentAmount={this.setDividentAmount}
+                                                      />)}
                     />
 
                     <View style={styles.instructionsView}>
@@ -258,7 +259,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                                         size={30}
                                     />
                                 }
-                                </View>
+                            </View>
                                 <Text style={styles.instructionText}>{gblStrings.dividents.setup_instruction}</Text>
                         </TouchableOpacity>
                         {this.state.expand ?
@@ -371,7 +372,7 @@ const ViewAccountItem = (props) => {
             {item.currentSecuritiesSwitchOn ?
                 <View style={styles.reinvestContainer}>
                     {currentSecurities.map((fund, index) =>
-                    <>                    
+                    (<>                    
                         <View style={styles.fundContainer}>
                             <Text style={styles.fundText}>
                                 {fund.FundName}
@@ -407,7 +408,7 @@ const ViewAccountItem = (props) => {
                                 {gblStrings.dividents.min_amt}
                             </Text>
                         </View>
-                    </>)}
+                     </>))}
                 </View>
                 : null
             }
@@ -452,10 +453,7 @@ const ViewAccountItem = (props) => {
 
 
             {item.futureSecuritiesSwitchOn ?
-                <View style={styles.reinvestContainer}>
-
-
-                </View>
+                <View style={styles.reinvestContainer} />
                 : null
             }
         </>

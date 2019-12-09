@@ -98,7 +98,7 @@ export const GInputComponent = (props) => (
       <Text style={styles.errorSectionText}>
         {props.errorText}
       </Text>
-    </View> : null}
+                       </View> : null}
 
   </>
 );

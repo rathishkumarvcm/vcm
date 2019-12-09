@@ -78,7 +78,8 @@ class BankAccountsComponent extends Component {
                         data={data}
                         keyExtractor={(item) => item.Id}
                         renderItem={({ item, i }) => (<ViewAccountItem
-                            item={item}/>)}
+                            item={item}
+                                                      />)}
                     />
 
                     <View style={styles.fullLine} />

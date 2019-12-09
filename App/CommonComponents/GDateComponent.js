@@ -85,7 +85,7 @@ export const GDateComponent = props => (
             <Text style={styles.errorSectionText}>
                 {props.errorMsg}
             </Text>
-        </View> : null}
+                           </View> : null}
     </View>
 
 );
@@ -139,7 +139,7 @@ GDateComponent.defaultProps = {
         type="font-awesome"
         size={20}
         color="#B5B5B5"
-    />,
+                   />,
     confirmBtnText: "Confirm",
     cancelBtnText: "Cancel",
     errorFlag: false, 

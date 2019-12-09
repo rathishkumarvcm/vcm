@@ -67,85 +67,85 @@ class ProfileSettingsComponent extends Component {
         if (this.props && this.props.initialState && this.props.initialState.firstName) {
             this.setState({
                 profileName: this.props.initialState.firstName
-            })
+            });
         }
 
         if (this.props && this.props.initialState && this.props.initialState.phone) {
             this.setState({
                 profilePrimaryMobile: this.props.initialState.phone
-            })
+            });
         }
 
         if (this.props && this.props.initialState && this.props.initialState.email) {
             this.setState({
                 profilePrimayMail: this.props.initialState.email
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profilePrefix) {
             this.setState({
                 profilePrefix: this.props.profileState.profilePrefix
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileSuffix) {
             this.setState({
                 profileSuffix: this.props.profileState.profileSuffix
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileVcmID) {
             this.setState({
                 profileVcmID: this.props.profileState.profileVcmID
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileSsnNumber) {
             this.setState({
                 profileSsnNumber: this.props.profileState.profileSsnNumber
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileDob) {
             this.setState({
                 profileDob: this.props.profileState.profileDob
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileGender) {
             this.setState({
                 profileGender: this.props.profileState.profileGender
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileMaritalStatus) {
             this.setState({
                 profileMaritalStatus: this.props.profileState.profileMaritalStatus
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileCitizenship) {
             this.setState({
                 profileCitizenship: this.props.profileState.profileCitizenship
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileMailingAddress) {
             this.setState({
                 profileMailingAddress: this.props.profileState.profileMailingAddress
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profilePhysicalAddress) {
             this.setState({
                 profilePhysicalAddress: this.props.profileState.profilePhysicalAddress
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profilePrimaryMobile) {
             this.setState({
                 profilePrimaryMobile: this.props.profileState.profilePrimaryMobile
-            })
+            });
         }
 
         // Financial Informations 
@@ -153,25 +153,25 @@ class ProfileSettingsComponent extends Component {
         if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileAnnualIncome) {
             this.setState({
                 profileAnnualIncome: '$ ' + this.props.profileState.financialInformations.profileAnnualIncome
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileTaxBracket) {
             this.setState({
                 profileTaxBracket: this.props.profileState.financialInformations.profileTaxBracket + ' %'
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileNetWorth) {
             this.setState({
                 profileNetWorth: '$ ' + this.props.profileState.financialInformations.profileNetWorth
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileTaxFilling) {
             this.setState({
                 profileTaxFilling: this.props.profileState.financialInformations.profileTaxFilling
-            })
+            });
         }
 
         // Employment Informations
@@ -180,52 +180,52 @@ class ProfileSettingsComponent extends Component {
             && this.props.profileState.employmentInformations.profileEmploymentStatus) {
             this.setState({
                 profileEmploymentStatus: this.props.profileState.employmentInformations.profileEmploymentStatus
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.employmentInformations
             && this.props.profileState.employmentInformations.profileEmpIndustry) {
             this.setState({
                 profileEmpIndustry: this.props.profileState.employmentInformations.profileEmpIndustry
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.employmentInformations
             && this.props.profileState.employmentInformations.profileEmpOccupation) {
             this.setState({
                 profileEmpOccupation: this.props.profileState.employmentInformations.profileEmpOccupation
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.employmentInformations
             && this.props.profileState.employmentInformations.profileEmpEmployer) {
             this.setState({
                 profileEmpEmployer: this.props.profileState.employmentInformations.profileEmpEmployer
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileRelationToOwner) {
             this.setState({
                 profileRelationToOwner: this.props.profileState.profileRelationToOwner
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileRelationGender) {
             this.setState({
                 profileRelationGender: this.props.profileState.profileRelationGender
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileRelationMail) {
             this.setState({
                 profileRelationMail: this.props.profileState.profileRelationMail
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileRelationMarital) {
             this.setState({
                 profileRelationMarital: this.props.profileState.profileRelationMarital
-            })
+            });
         }
     }
 
@@ -248,7 +248,7 @@ class ProfileSettingsComponent extends Component {
                     profileRelationGender: this.props.profileState.profileRelationGender,
                     profileRelationMail: this.props.profileState.profileRelationMail,
                     profileRelationMarital: this.props.profileState.profileRelationMarital,
-                })
+                });
 
                 if (this.props && this.props.profileState && this.props.profileState.financialInformations) {
                     this.setState({
@@ -256,7 +256,7 @@ class ProfileSettingsComponent extends Component {
                         profileTaxBracket: this.props.profileState.financialInformations.profileTaxBracket + ' %',
                         profileNetWorth: '$ ' + this.props.profileState.financialInformations.profileNetWorth,
                         profileTaxFilling: this.props.profileState.financialInformations.profileTaxFilling,
-                    })
+                    });
     
                 }
     
@@ -266,7 +266,7 @@ class ProfileSettingsComponent extends Component {
                         profileEmpIndustry: this.props.profileState.employmentInformations.profileEmpIndustry,
                         profileEmpOccupation: this.props.profileState.employmentInformations.profileEmpOccupation,
                         profileRelationToOwner: this.props.profileState.employmentInformations.profileRelationToOwner
-                    })
+                    });
                 }
             }
         }
@@ -297,7 +297,8 @@ class ProfileSettingsComponent extends Component {
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -326,12 +327,13 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingPersonalManage}>
+                                onPress={this.profileSettingPersonalManage}
+                            >
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
-                        <View style={styles.settingsBorder}></View>
+                        <View style={styles.settingsBorder} />
 
                         <View style={styles.profileSettingPersonalBackground}>
                             <View style={styles.settingsView1}>
@@ -342,7 +344,8 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingNameLabel}
-                                    onPress={this.ShowHideComponent}>
+                                    onPress={this.ShowHideComponent}
+                                >
                                     {this.state.profileName}
                                 </Text>
                             </View>
@@ -462,12 +465,13 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingAddressManage}>
+                                onPress={this.profileSettingAddressManage}
+                            >
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
-                        <View style={styles.settingsBorder}></View>
+                        <View style={styles.settingsBorder} />
 
                         <View style={styles.settingsAddress}>
                             <View style={styles.settingsView1}>
@@ -505,12 +509,13 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingPhoneManage}>
+                                onPress={this.profileSettingPhoneManage}
+                            >
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
-                        <View style={styles.settingsBorder}></View>
+                        <View style={styles.settingsBorder} />
 
                         <View style={styles.settingsPhone}>
                             <View style={styles.settingsView1}>
@@ -536,12 +541,13 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingMailManage}>
+                                onPress={this.profileSettingMailManage}
+                            >
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
-                        <View style={styles.settingsBorder}></View>
+                        <View style={styles.settingsBorder} />
 
                         <View style={styles.settingsPhone}>
                             <View style={styles.settingsView1}>
@@ -567,12 +573,13 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingFinancialManage}>
+                                onPress={this.profileSettingFinancialManage}
+                            >
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
-                        <View style={styles.settingsBorder}></View>
+                        <View style={styles.settingsBorder} />
 
                         <View style={styles.settingsFinancial}>
                             <View style={styles.settingsView1}>
@@ -635,12 +642,13 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingEmployeeManage}>
+                                onPress={this.profileSettingEmployeeManage}
+                            >
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
-                        <View style={styles.settingsBorder}></View>
+                        <View style={styles.settingsBorder} />
 
                         <View style={styles.settingsFinancial}>
                             <View style={styles.settingsView1}>
@@ -702,12 +710,13 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingMilitaryManage}>
+                                onPress={this.profileSettingMilitaryManage}
+                            >
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
-                        <View style={styles.settingsBorder}></View>
+                        <View style={styles.settingsBorder} />
 
                         <View style={styles.settingsMilitary}>
                             <View style={styles.settingsView1}>
@@ -727,12 +736,13 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingRegulatoryManage}>
+                                onPress={this.profileSettingRegulatoryManage}
+                            >
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
-                        <View style={styles.settingsBorder}></View>
+                        <View style={styles.settingsBorder} />
 
                         <View style={styles.settingsMilitary}>
                             <View style={styles.settingsView1}>
@@ -752,18 +762,21 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingAddRelation}>
+                                onPress={this.profileSettingAddRelation}
+                            >
                                 {globalString.profileSettingsPage.profileRelationshipAdd}
                             </Text>
                         </View>
 
-                        <View style={styles.settingsBorder}></View>
+                        <View style={styles.settingsBorder} />
 
                         <View style={styles.settingsRelationShip}
-                            onPress={this.profileSettingFamilyManage}>
+                            onPress={this.profileSettingFamilyManage}
+                        >
                             <View style={styles.settingsBorderGap}>
                                 <Text style={styles.profileSettingLabel}
-                                    onPress={this.profileSettingFamilyManage}>
+                                    onPress={this.profileSettingFamilyManage}
+                                >
                                     {globalString.profileSettingsPage.profileFamilyMemberLabel}
                                 </Text>
                                 <Text style={styles.profileSettingValueLabel}>
@@ -793,14 +806,15 @@ class ProfileSettingsComponent extends Component {
                             </Text>
                         </View>
 
-                        <View style={styles.settingsBorder}></View>
+                        <View style={styles.settingsBorder} />
 
                         <View style={styles.settingsSocialContainer}>
 
                             <View style={styles.settingsSocial}>
 
                                 <Image style={styles.imageWidthHeight}
-                                    source={require("../../Images/twitterlogo.png")} />
+                                    source={require("../../Images/twitterlogo.png")}
+                                />
 
                                 <Text style={styles.profileSettingSocialLabel}>
                                     {globalString.profileSettingsPage.profileFacebookLabel}
@@ -810,7 +824,8 @@ class ProfileSettingsComponent extends Component {
                             <View style={styles.settingsSocial}>
 
                                 <Image style={styles.imageWidthHeight}
-                                    source={require("../../Images/linkedinlogo.png")} />
+                                    source={require("../../Images/linkedinlogo.png")}
+                                />
 
                                 <Text style={styles.profileSettingSocialLabel}>
                                     {globalString.profileSettingsPage.profileTwitterLabel}
@@ -839,7 +854,8 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Image style={styles.profileSettingSocialIcon}
-                                source={require("../../Images/logo.png")} />
+                                source={require("../../Images/logo.png")}
+                            />
 
                             <Text style={styles.profileSettingConnectLabel}>
                                 {globalString.common.connectWithUs}
@@ -847,9 +863,11 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.whiteBackground}>
                                 <Image style={styles.imageWidthHeight}
-                                    source={require("../../Images/twitterlogo.png")} />
+                                    source={require("../../Images/twitterlogo.png")}
+                                />
                                 <Image style={styles.imageWidthHeight}
-                                    source={require("../../Images/linkedinlogo.png")} />
+                                    source={require("../../Images/linkedinlogo.png")}
+                                />
                             </View>
 
                             <View style={styles.privacyAgreement}>

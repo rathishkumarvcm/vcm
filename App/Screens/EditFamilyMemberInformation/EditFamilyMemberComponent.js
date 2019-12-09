@@ -28,7 +28,8 @@ class editFamilyMemberComponent extends Component {
 
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -65,12 +66,13 @@ class editFamilyMemberComponent extends Component {
                             </Text>
 
                             <Text style={styles.editFamilyDivideThree}
-                                onPress={this.editFamilyDetailManage}>
+                                onPress={this.editFamilyDetailManage}
+                            >
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
-                        <View style={styles.settingsBorder}></View>
+                        <View style={styles.settingsBorder} />
 
                         {/* Manage Personal Informations */}
 
@@ -199,7 +201,7 @@ class editFamilyMemberComponent extends Component {
                                 </Text>
                             </View>
 
-                            <View style={styles.settingsBorder}></View>
+                            <View style={styles.settingsBorder} />
 
                             <View style={styles.settingsAddress}>
                                 <View style={styles.settingsView1}>
@@ -241,7 +243,7 @@ class editFamilyMemberComponent extends Component {
                                 </Text>
                             </View>
 
-                            <View style={styles.settingsBorder}></View>
+                            <View style={styles.settingsBorder} />
 
                             <View style={styles.settingsPhone}>
                                 <View style={styles.settingsView1}>
@@ -271,7 +273,7 @@ class editFamilyMemberComponent extends Component {
                                 </Text>
                             </View>
 
-                            <View style={styles.settingsBorder}></View>
+                            <View style={styles.settingsBorder} />
 
                             <View style={styles.settingsPhone}>
                                 <View style={styles.settingsView1}>
@@ -295,7 +297,8 @@ class editFamilyMemberComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.back}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.editFamilyDetailOnCancel} />
+                            onPress={this.editFamilyDetailOnCancel}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -315,7 +318,8 @@ class editFamilyMemberComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={require("../../Images/logo.png")}
+                        />
                     </View>
 
                     <View style={styles.privacyAgreement}>

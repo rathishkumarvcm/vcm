@@ -70,8 +70,8 @@ class SystematicWithdrawalComponent extends Component {
             </View>
         )
     toggleSwitch1 = (value) => {
-        this.setState({ switch1Value: value })
-        console.log('Switch 1 is: ' + value)
+        this.setState({ switch1Value: value });
+        console.log('Switch 1 is: ' + value);
     }
 
     generateAmountKeyExtractor = (item) => item.accountName;
@@ -85,7 +85,8 @@ class SystematicWithdrawalComponent extends Component {
                     <View style={{ flex: 0.3, alignItems: 'flex-end', marginRight: '4%' }}>
                         <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
                             onValueChange={this.toggleSwitch1}
-                            value={this.state.switch1Value} />
+                            value={this.state.switch1Value}
+                        />
                     </View>
                 </View>
                 <View style={styles.auto_invest_to_flat}>
@@ -225,7 +226,7 @@ class SystematicWithdrawalComponent extends Component {
                                     <CustomRadio
 
                                         size={30}
-                                        componentStyle={{  marginBottom: scaledHeight(0), marginTop: scaledHeight(24) }}
+                                        componentStyle={{ marginBottom: scaledHeight(0), marginTop: scaledHeight(24) }}
                                         outerCicleColor={"#DEDEDF"}
                                         innerCicleColor={"#61285F"}
                                         labelStyle={styles.lblRadioBtnTxt1}

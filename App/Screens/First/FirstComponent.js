@@ -35,19 +35,19 @@ class FirstComponent extends Component {
             code : 0,
             otpVerified : false
         };
-        console.log('constructor')
+        console.log('constructor');
     }
 
     setName = text =>{
         this.setState({
             name : text
-        })
+        });
     }
 
     setCode = text =>{
         this.setState({
             code : text
-        })
+        });
     }
 
     uploadDoc = () => {
@@ -64,10 +64,10 @@ class FirstComponent extends Component {
             } else {
               const source = { uri: response.uri };
               const base64source = { uri: 'data:image/jpeg;base64,' + response.data };
-              console.log("base64source",base64source)
+              console.log("base64source",base64source);
               this.setState({
                 avatarSource : source
-              })
+              });
 
             /*  ImgToBase64.getBase64String(source)
                         .then(base64String => console.log("image uri base 64",base64String))
@@ -76,7 +76,7 @@ class FirstComponent extends Component {
           
               // You can also display the image using data:
               // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-          alert("Url Selected")
+          alert("Url Selected");
             /*  this.setState({
                filePath: response,
                fileData: response.data,
@@ -118,8 +118,8 @@ class FirstComponent extends Component {
       }
  
     render(){
-        console.log(this.props)
-        console.log("render method")
+        console.log(this.props);
+        console.log("render method");
         return (
             <ScrollView style={styles.container}>
             <View style={styles.signInView1}>
@@ -154,11 +154,11 @@ class FirstComponent extends Component {
                 //onPress = {this.updateState}
                 //onPress={()=> this.props.homeActionMethod(ActionTypes.LOGIN_SUCESS)}
                 onPress={this.launchCamera}
-            /> 
+/> 
 
 <Image source={this.state.avatarSource} style={styles.uploadAvatar} />
 
-        </ScrollView>
+            </ScrollView>
         
         );
     }

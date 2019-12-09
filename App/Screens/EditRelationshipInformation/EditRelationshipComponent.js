@@ -105,7 +105,7 @@ class editRelationshipComponent extends Component {
         for (let i = 0; i < compositePayloadData.length; i++) {
             let tempkey = compositePayloadData[i];
             if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
-                payload.push(tempkey)
+                payload.push(tempkey);
             }
         }
 
@@ -124,32 +124,33 @@ class editRelationshipComponent extends Component {
         if (this.props && this.props.profileSettingsLookup &&
             this.props.profileSettingsLookup.prefix &&
             this.props.profileSettingsLookup.prefix.value) {
-            profilePrefixData = this.props.profileSettingsLookup.prefix.value
+            profilePrefixData = this.props.profileSettingsLookup.prefix.value;
         }
 
         if (this.props && this.props.profileSettingsLookup &&
             this.props.profileSettingsLookup.suffix &&
             this.props.profileSettingsLookup.suffix.value) {
-            profileSuffixData = this.props.profileSettingsLookup.suffix.value
+            profileSuffixData = this.props.profileSettingsLookup.suffix.value;
         }
 
         if (this.props && this.props.profileSettingsLookup &&
             this.props.profileSettingsLookup.gender &&
             this.props.profileSettingsLookup.gender.value) {
-            profileGenderData = this.props.profileSettingsLookup.gender.value
+            profileGenderData = this.props.profileSettingsLookup.gender.value;
         }
 
         if (this.props && this.props.profileSettingsLookup &&
             this.props.profileSettingsLookup.marital_status &&
             this.props.profileSettingsLookup.marital_status.value) {
-            profileStatusData = this.props.profileSettingsLookup.marital_status.value
+            profileStatusData = this.props.profileSettingsLookup.marital_status.value;
         }
 
         return (
 
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -195,7 +196,7 @@ class editRelationshipComponent extends Component {
                             </Text>
                         </View>
 
-                        <View style={styles.settingsBorder}></View>
+                        <View style={styles.settingsBorder} />
 
                         <View style={styles.relationFamilyLabel}>
                             <Text style={styles.relationFamilyLabelView}>
@@ -207,14 +208,16 @@ class editRelationshipComponent extends Component {
                                     propInputStyle={styles.userIDTextBox1}
                                     placeholder={""}
                                     editable={false}
-                                    value={this.state.valueDropDown} />
+                                    value={this.state.valueDropDown}
+                                />
 
                                 <TouchableOpacity style={styles.relationSpinnerBackground} onPress={this.selectTheState}>
                                     <GIcon
                                         name="md-arrow-dropdown"
                                         type="ionicon"
                                         size={20}
-                                        color="black" />
+                                        color="black"
+                                    />
                                 </TouchableOpacity>
                             </TouchableOpacity>
 
@@ -223,7 +226,8 @@ class editRelationshipComponent extends Component {
                             </Text>
 
                             <GInputComponent style={styles.relationMarginFour}
-                                placeholder="" />
+                                placeholder=""
+                            />
 
                             <View>
                                 <Text style={styles.relationLabels}>
@@ -231,20 +235,24 @@ class editRelationshipComponent extends Component {
                                 </Text>
 
                                 <TouchableOpacity style={styles.relationSpinnerView}
-                                    onPress={this.dropDownOnClick}>
+                                    onPress={this.dropDownOnClick}
+                                >
                                     <GInputComponent
                                         propInputStyle={styles.userIDTextBox1}
                                         placeholder={""}
                                         editable={false}
-                                        value={this.state.dropDownValue} />
+                                        value={this.state.dropDownValue}
+                                    />
 
                                     <TouchableOpacity style={styles.relationSpinnerBackground}
-                                        onPress={this.dropDownOnClick}>
+                                        onPress={this.dropDownOnClick}
+                                    >
                                         <GIcon
                                             name="md-arrow-dropdown"
                                             type="ionicon"
                                             size={20}
-                                            color="black" />
+                                            color="black"
+                                        />
                                     </TouchableOpacity>
                                 </TouchableOpacity>
 
@@ -254,9 +262,10 @@ class editRelationshipComponent extends Component {
                                             data={profilePrefixData}
                                             renderItem={({ item }) =>
                                                 (<TouchableOpacity style={{ height: 33 }}
-                                                    onPress={() => this.dropDownOnSelect(item.value)}>
+                                                    onPress={() => this.dropDownOnSelect(item.value)}
+                                                >
                                                     <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                                </TouchableOpacity>)
+                                                 </TouchableOpacity>)
                                             }
                                             keyExtractor={item => item.key}
                                         />
@@ -269,20 +278,24 @@ class editRelationshipComponent extends Component {
                                 </Text>
 
                                 <TouchableOpacity style={styles.relationSpinnerView}
-                                    onPress={this.dropDownSuffixClick}>
+                                    onPress={this.dropDownSuffixClick}
+                                >
                                     <GInputComponent
                                         propInputStyle={styles.userIDTextBox1}
                                         placeholder={""}
                                         editable={false}
-                                        value={this.state.dropDownSuffixValue} />
+                                        value={this.state.dropDownSuffixValue}
+                                    />
 
                                     <TouchableOpacity style={styles.relationSpinnerBackground}
-                                        onPress={this.dropDownSuffixClick}>
+                                        onPress={this.dropDownSuffixClick}
+                                    >
                                         <GIcon
                                             name="md-arrow-dropdown"
                                             type="ionicon"
                                             size={20}
-                                            color="black" />
+                                            color="black"
+                                        />
                                     </TouchableOpacity>
                                 </TouchableOpacity>
 
@@ -292,9 +305,10 @@ class editRelationshipComponent extends Component {
                                             data={profileSuffixData}
                                             renderItem={({ item }) =>
                                                 (<TouchableOpacity style={{ height: 33 }}
-                                                    onPress={() => this.dropDownSuffixSelect(item.value)}>
+                                                    onPress={() => this.dropDownSuffixSelect(item.value)}
+                                                >
                                                     <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                                </TouchableOpacity>)
+                                                 </TouchableOpacity>)
                                             }
                                             keyExtractor={item => item.key}
                                         />
@@ -306,7 +320,8 @@ class editRelationshipComponent extends Component {
                             </Text>
 
                             <GInputComponent style={styles.relationMarginFour}
-                                placeholder="MM/DD/YYYY" />
+                                placeholder="MM/DD/YYYY"
+                            />
 
                             <View>
                                 <Text style={styles.relationLabels}>
@@ -314,20 +329,24 @@ class editRelationshipComponent extends Component {
                                 </Text>
 
                                 <TouchableOpacity style={styles.relationSpinnerView}
-                                    onPress={this.dropDownGenderClick}>
+                                    onPress={this.dropDownGenderClick}
+                                >
                                     <GInputComponent
                                         propInputStyle={styles.userIDTextBox1}
                                         placeholder={""}
                                         editable={false}
-                                        value={this.state.dropDownGenderValue} />
+                                        value={this.state.dropDownGenderValue}
+                                    />
 
                                     <TouchableOpacity style={styles.relationSpinnerBackground}
-                                        onPress={this.dropDownGenderClick}>
+                                        onPress={this.dropDownGenderClick}
+                                    >
                                         <GIcon
                                             name="md-arrow-dropdown"
                                             type="ionicon"
                                             size={20}
-                                            color="black" />
+                                            color="black"
+                                        />
                                     </TouchableOpacity>
                                 </TouchableOpacity>
 
@@ -337,9 +356,10 @@ class editRelationshipComponent extends Component {
                                             data={profileGenderData}
                                             renderItem={({ item }) =>
                                                 (<TouchableOpacity style={{ height: 33 }}
-                                                    onPress={() => this.dropDownGenderSelect(item.value)}>
+                                                    onPress={() => this.dropDownGenderSelect(item.value)}
+                                                >
                                                     <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                                </TouchableOpacity>)
+                                                 </TouchableOpacity>)
                                             }
                                             keyExtractor={item => item.key}
                                         />
@@ -352,20 +372,24 @@ class editRelationshipComponent extends Component {
                                 </Text>
 
                                 <TouchableOpacity style={styles.relationSpinnerView}
-                                    onPress={this.dropDownStatusClick}>
+                                    onPress={this.dropDownStatusClick}
+                                >
                                     <GInputComponent
                                         propInputStyle={styles.userIDTextBox1}
                                         placeholder={""}
                                         editable={false}
-                                        value={this.state.dropDownStatusValue} />
+                                        value={this.state.dropDownStatusValue}
+                                    />
 
                                     <TouchableOpacity style={styles.relationSpinnerBackground}
-                                        onPress={this.dropDownStatusClick}>
+                                        onPress={this.dropDownStatusClick}
+                                    >
                                         <GIcon
                                             name="md-arrow-dropdown"
                                             type="ionicon"
                                             size={20}
-                                            color="black" />
+                                            color="black"
+                                        />
                                     </TouchableOpacity>
                                 </TouchableOpacity>
 
@@ -375,9 +399,10 @@ class editRelationshipComponent extends Component {
                                             data={profileStatusData}
                                             renderItem={({ item }) =>
                                                 (<TouchableOpacity style={{ height: 33 }}
-                                                    onPress={() => this.dropDownStatusSelect(item.value)}>
+                                                    onPress={() => this.dropDownStatusSelect(item.value)}
+                                                >
                                                     <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                                </TouchableOpacity>)
+                                                 </TouchableOpacity>)
                                             }
                                             keyExtractor={item => item.key}
                                         />
@@ -389,21 +414,24 @@ class editRelationshipComponent extends Component {
                             </Text>
 
                             <GInputComponent style={styles.relationMarginFour}
-                                placeholder="" />
+                                placeholder=""
+                            />
 
                             <View style={styles.editFlexDirectionColumn}>
                                 <GButtonComponent
                                     buttonStyle={styles.cancelButtonStyle}
                                     buttonText={globalString.common.cancel}
                                     textStyle={styles.cancelButtonText}
-                                    onPress={this.relationCancelOnClick} />
+                                    onPress={this.relationCancelOnClick}
+                                />
                             </View>
 
                             <View style={styles.editFlexDirectionColumn}>
                                 <GButtonComponent
                                     buttonStyle={styles.saveButtonStyle}
                                     buttonText={globalString.common.save}
-                                    textStyle={styles.saveButtonText} />
+                                    textStyle={styles.saveButtonText}
+                                />
                             </View>
 
                         </View>
@@ -424,7 +452,7 @@ class editRelationshipComponent extends Component {
                                 {globalString.editRelationShipInformation.relationInst}
                             </Text>
 
-                            <View style={styles.relationInstDivider}></View>
+                            <View style={styles.relationInstDivider} />
 
                             <Text style={styles.relationInstContent}>
                                 {globalString.editRelationShipInformation.relationInstContent}
@@ -442,7 +470,8 @@ class editRelationshipComponent extends Component {
 
                         <View style={styles.connectWithUs}>
                             <Image
-                                source={require("../../Images/logo.png")} />
+                                source={require("../../Images/logo.png")}
+                            />
                         </View>
 
                         <View style={styles.privacyAgreement}>

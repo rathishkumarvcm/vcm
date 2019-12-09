@@ -206,16 +206,16 @@ class GHeaderComponent extends Component {
             
         <View style={{width:'15%'}} />
 
-      {!this.props.registerShow ?  <TouchableOpacity style={{alignItems:'center',justifyContent:'center',marginTop:scaledHeight(15)}}
+      {!this.props.registerShow ? <TouchableOpacity style={{alignItems:'center',justifyContent:'center',marginTop:scaledHeight(15)}}
         onPress={this.setMenu}
-        >
+                                  >
                     <GIcon 
                         name="user"
                         type="evilicon"
                         size={40}
                         color="black"
                     />
-        </TouchableOpacity> : null }
+                                  </TouchableOpacity> : null }
 
         <View style={{width:'20%'}} />
 
@@ -250,15 +250,16 @@ class GHeaderComponent extends Component {
                 { this.state.SignOut ?
              (
              <Modal
-                transparent={true}
-                visible={this.state.ModalVisibleStatus}>
+                transparent
+                visible={this.state.ModalVisibleStatus}
+             >
                 <View style={styles.modalView}>
                   <View style={styles.modalInsideView}>
                     <Text style={styles.signIntext}>Signing Out </Text>
-                    <Image source={require('../Images/logo.png')} style={styles.modalImage} ></Image>
+                    <Image source={require('../Images/logo.png')} style={styles.modalImage} />
                   </View>
                 </View>
-              </Modal>):null
+             </Modal>):null
                 }
             </TouchableOpacity> }
             

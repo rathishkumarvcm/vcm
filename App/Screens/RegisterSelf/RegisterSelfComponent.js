@@ -70,7 +70,7 @@ class RegisterSelfComponent extends Component {
             firstName : this.state.firstName,
             middleName : this.state.middleName,
             phone : this.state.phone
-        }
+        };
         
         
         this.props.navigation.navigate('registerPassword',{selfData:passingData});
@@ -80,12 +80,12 @@ class RegisterSelfComponent extends Component {
         if(this.state.firstName != ""){
             this.setState({
                 firstNameFlag : true
-            })
+            });
         }
         else{
             this.setState({
                 firstNameFlag : false
-            })
+            });
         }
     }
 
@@ -93,12 +93,12 @@ class RegisterSelfComponent extends Component {
         if(this.state.middleName != ""){
             this.setState({
                 middleNameFlag : true
-            })
+            });
         }
         else{
             this.setState({
                 middleNameFlag : false
-            })
+            });
         }
     }
 
@@ -107,12 +107,12 @@ class RegisterSelfComponent extends Component {
         if(this.state.lastName != ""){
             this.setState({
                 lastNameFlag : true
-            })
+            });
         }
         else{
             this.setState({
                 lastNameFlag : false
-            })
+            });
         }
     }
 
@@ -120,12 +120,12 @@ class RegisterSelfComponent extends Component {
         if(this.state.phone != ""){
             this.setState({
                 phoneFlag : true
-            })
+            });
         }
         else{
             this.setState({
                 phoneFlag : false
-            })
+            });
         }
     }
 
@@ -229,7 +229,7 @@ class RegisterSelfComponent extends Component {
                 <Text style={styles.userIDText}>
                     {"Prefix (Optional)"}       
                 </Text>
-            </View>
+           </View>
 
             <View style={{flexDirection:'row'}}>
                 <GInputComponent 

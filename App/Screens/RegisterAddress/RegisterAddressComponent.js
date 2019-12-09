@@ -143,7 +143,7 @@ class registerAddressComponent extends Component {
     selectedDropDownValue={this.selectedDropDownValue}
     itemToDisplay={"title"}
     dropDownPostition={{position:'absolute',right:0,top:scaledHeight(700)}}
-    />
+/>
 
            {/*} <View style={styles.signInView}>
                 <Text style={styles.userIDText}>

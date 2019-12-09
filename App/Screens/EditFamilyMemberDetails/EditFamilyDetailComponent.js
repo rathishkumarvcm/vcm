@@ -29,7 +29,7 @@ const profileCountryProofData = [
         key: 'bd7acbeb',
         value: 'Passport'
     }
-]
+];
 
 class editFamilyDetailComponent extends Component {
     constructor(props) {
@@ -116,13 +116,13 @@ class editFamilyDetailComponent extends Component {
                     this.setState({
                         showCountryNonUs: true,
                         profileSocialSecurity: false
-                    })
+                    });
                 } else {
                     this.setState({ profileCountryUS: false, profileCountryNonUS: true });
                     this.setState({
                         showCountryNonUs: false,
                         profileSocialSecurity: true
-                    })
+                    });
                 }
                 break;
         }
@@ -132,7 +132,7 @@ class editFamilyDetailComponent extends Component {
         if (this.props && this.props.initialState && this.props.initialState.firstName) {
             this.setState({
                 profileName: this.props.initialState.firstName
-            })
+            });
         }
 
         let payload = [];
@@ -146,7 +146,7 @@ class editFamilyDetailComponent extends Component {
         for (let i = 0; i < compositePayloadData.length; i++) {
             let tempkey = compositePayloadData[i];
             if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
-                payload.push(tempkey)
+                payload.push(tempkey);
             }
         }
 
@@ -165,26 +165,27 @@ class editFamilyDetailComponent extends Component {
         if (this.props && this.props.profileSettingsLookup &&
             this.props.profileSettingsLookup.prefix &&
             this.props.profileSettingsLookup.prefix.value) {
-            profilePrefixData = this.props.profileSettingsLookup.prefix.value
+            profilePrefixData = this.props.profileSettingsLookup.prefix.value;
         }
 
         if (this.props && this.props.profileSettingsLookup &&
             this.props.profileSettingsLookup.suffix &&
             this.props.profileSettingsLookup.suffix.value) {
-            profileSuffixData = this.props.profileSettingsLookup.suffix.value
+            profileSuffixData = this.props.profileSettingsLookup.suffix.value;
         }
 
         if (this.props && this.props.profileSettingsLookup &&
             this.props.profileSettingsLookup.marital_status &&
             this.props.profileSettingsLookup.marital_status.value) {
-            profileStatusData = this.props.profileSettingsLookup.marital_status.value
+            profileStatusData = this.props.profileSettingsLookup.marital_status.value;
         }
 
         return (
 
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -230,7 +231,7 @@ class editFamilyDetailComponent extends Component {
                             </Text>
                         </View>
 
-                        <View style={styles.settingsBorder}></View>
+                        <View style={styles.settingsBorder} />
 
                         <View style={styles.editFamilyDetailHeader}>
                             <View>
@@ -243,14 +244,16 @@ class editFamilyDetailComponent extends Component {
                                         propInputStyle={styles.userIDTextBox1}
                                         placeholder={""}
                                         editable={false}
-                                        value={this.state.valueDropDown} />
+                                        value={this.state.valueDropDown}
+                                    />
 
                                     <TouchableOpacity style={styles.editFamilyDetailDropIcon} onPress={this.selectTheState}>
                                         <GIcon
                                             name="md-arrow-dropdown"
                                             type="ionicon"
                                             size={20}
-                                            color="black" />
+                                            color="black"
+                                        />
                                     </TouchableOpacity>
                                 </TouchableOpacity>
                             </View>
@@ -271,20 +274,24 @@ class editFamilyDetailComponent extends Component {
                                 </Text>
 
                                 <TouchableOpacity style={styles.editFamilyDetailDropDown}
-                                    onPress={this.dropDownOnClick}>
+                                    onPress={this.dropDownOnClick}
+                                >
                                     <GInputComponent
                                         propInputStyle={styles.userIDTextBox1}
                                         placeholder={""}
                                         editable={false}
-                                        value={this.state.dropDownValue} />
+                                        value={this.state.dropDownValue}
+                                    />
 
                                     <TouchableOpacity style={styles.editFamilyDetailDropIcon}
-                                        onPress={this.dropDownOnClick}>
+                                        onPress={this.dropDownOnClick}
+                                    >
                                         <GIcon
                                             name="md-arrow-dropdown"
                                             type="ionicon"
                                             size={20}
-                                            color="black" />
+                                            color="black"
+                                        />
                                     </TouchableOpacity>
                                 </TouchableOpacity>
 
@@ -294,9 +301,10 @@ class editFamilyDetailComponent extends Component {
                                             data={profilePrefixData}
                                             renderItem={({ item }) =>
                                                 (<TouchableOpacity style={{ height: 33 }}
-                                                    onPress={() => this.dropDownOnSelect(item.value)}>
+                                                    onPress={() => this.dropDownOnSelect(item.value)}
+                                                >
                                                     <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                                </TouchableOpacity>)
+                                                 </TouchableOpacity>)
                                             }
                                             keyExtractor={item => item.key}
                                         />
@@ -309,20 +317,24 @@ class editFamilyDetailComponent extends Component {
                                 </Text>
 
                                 <TouchableOpacity style={styles.editFamilyDetailDropDown}
-                                    onPress={this.dropDownSuffixClick}>
+                                    onPress={this.dropDownSuffixClick}
+                                >
                                     <GInputComponent
                                         propInputStyle={styles.userIDTextBox1}
                                         placeholder={""}
                                         editable={false}
-                                        value={this.state.dropDownSuffixValue} />
+                                        value={this.state.dropDownSuffixValue}
+                                    />
 
                                     <TouchableOpacity style={styles.editFamilyDetailDropIcon}
-                                        onPress={this.dropDownSuffixClick}>
+                                        onPress={this.dropDownSuffixClick}
+                                    >
                                         <GIcon
                                             name="md-arrow-dropdown"
                                             type="ionicon"
                                             size={20}
-                                            color="black" />
+                                            color="black"
+                                        />
                                     </TouchableOpacity>
                                 </TouchableOpacity>
 
@@ -332,9 +344,10 @@ class editFamilyDetailComponent extends Component {
                                             data={profileSuffixData}
                                             renderItem={({ item }) =>
                                                 (<TouchableOpacity style={{ height: 33 }}
-                                                    onPress={() => this.dropDownSuffixSelect(item.value)}>
+                                                    onPress={() => this.dropDownSuffixSelect(item.value)}
+                                                >
                                                     <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                                </TouchableOpacity>)
+                                                 </TouchableOpacity>)
                                             }
                                             keyExtractor={item => item.key}
                                         />
@@ -367,20 +380,24 @@ class editFamilyDetailComponent extends Component {
                                 </Text>
 
                                 <TouchableOpacity style={styles.editFamilyDetailDropDown}
-                                    onPress={this.dropDownStatusClick}>
+                                    onPress={this.dropDownStatusClick}
+                                >
                                     <GInputComponent
                                         propInputStyle={styles.userIDTextBox1}
                                         placeholder={""}
                                         editable={false}
-                                        value={this.state.dropDownStatusValue} />
+                                        value={this.state.dropDownStatusValue}
+                                    />
 
                                     <TouchableOpacity style={styles.editFamilyDetailDropIcon}
-                                        onPress={this.dropDownStatusClick}>
+                                        onPress={this.dropDownStatusClick}
+                                    >
                                         <GIcon
                                             name="md-arrow-dropdown"
                                             type="ionicon"
                                             size={20}
-                                            color="black" />
+                                            color="black"
+                                        />
                                     </TouchableOpacity>
                                 </TouchableOpacity>
 
@@ -390,9 +407,10 @@ class editFamilyDetailComponent extends Component {
                                             data={profileStatusData}
                                             renderItem={({ item }) =>
                                                 (<TouchableOpacity style={{ height: 33 }}
-                                                    onPress={() => this.dropDownStatusSelect(item.value)}>
+                                                    onPress={() => this.dropDownStatusSelect(item.value)}
+                                                >
                                                     <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                                </TouchableOpacity>)
+                                                 </TouchableOpacity>)
                                             }
                                             keyExtractor={item => item.key}
                                         />
@@ -411,7 +429,8 @@ class editFamilyDetailComponent extends Component {
                                         switchOn={this.state.profileCountryNonUS}
                                         switchOff={this.state.profileCountryUS}
                                         switchOnText={globalString.common.no}
-                                        switchOffText={globalString.common.yes} />
+                                        switchOffText={globalString.common.yes}
+                                    />
                                 </View>
 
                                 {this.state.showCountryNonUs ? (
@@ -427,20 +446,24 @@ class editFamilyDetailComponent extends Component {
                                         </Text>
 
                                         <TouchableOpacity style={styles.editFamilyDetailDropDown}
-                                            onPress={this.dropDownProofClick}>
+                                            onPress={this.dropDownProofClick}
+                                        >
                                             <GInputComponent
                                                 propInputStyle={styles.userIDTextBox1}
                                                 placeholder={""}
                                                 editable={false}
-                                                value={this.state.dropDownProofValue} />
+                                                value={this.state.dropDownProofValue}
+                                            />
 
                                             <TouchableOpacity style={styles.editFamilyDetailDropIcon}
-                                                onPress={this.dropDownProofClick}>
+                                                onPress={this.dropDownProofClick}
+                                            >
                                                 <GIcon
                                                     name="md-arrow-dropdown"
                                                     type="ionicon"
                                                     size={20}
-                                                    color="black" />
+                                                    color="black"
+                                                />
                                             </TouchableOpacity>
                                         </TouchableOpacity>
 
@@ -450,9 +473,10 @@ class editFamilyDetailComponent extends Component {
                                                     data={profileProofData}
                                                     renderItem={({ item }) =>
                                                         (<TouchableOpacity style={{ height: 33 }}
-                                                            onPress={() => this.dropDownProofSelect(item.value)}>
+                                                            onPress={() => this.dropDownProofSelect(item.value)}
+                                                        >
                                                             <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                                        </TouchableOpacity>)
+                                                         </TouchableOpacity>)
                                                     }
                                                     keyExtractor={item => item.key}
                                                 />
@@ -468,7 +492,8 @@ class editFamilyDetailComponent extends Component {
                                     </Text>
 
                                     <GInputComponent style={styles.editFamilyDetailMargin}
-                                        placeholder="" />
+                                        placeholder=""
+                                    />
                                 </View>
                             ) : null}
 
@@ -477,14 +502,16 @@ class editFamilyDetailComponent extends Component {
                                     buttonStyle={styles.cancelButtonStyle}
                                     buttonText={globalString.common.cancel}
                                     textStyle={styles.cancelButtonText}
-                                    onPress={this.editFamilyOnCancel} />
+                                    onPress={this.editFamilyOnCancel}
+                                />
                             </View>
 
                             <View style={styles.editFlexDirectionColumn}>
                                 <GButtonComponent
                                     buttonStyle={styles.saveButtonStyle}
                                     buttonText={globalString.common.save}
-                                    textStyle={styles.saveButtonText} />
+                                    textStyle={styles.saveButtonText}
+                                />
                             </View>
 
                         </View>
@@ -505,7 +532,7 @@ class editFamilyDetailComponent extends Component {
                                 {globalString.editRelationShipInformation.relationInst}
                             </Text>
 
-                            <View style={styles.editFamilyInstDivider}></View>
+                            <View style={styles.editFamilyInstDivider} />
 
                             <Text style={styles.editFamilyInstContent}>
                                 {globalString.editRelationShipInformation.relationInstContent}
@@ -523,7 +550,8 @@ class editFamilyDetailComponent extends Component {
 
                         <View style={styles.connectWithUs}>
                             <Image
-                                source={require("../../Images/logo.png")} />
+                                source={require("../../Images/logo.png")}
+                            />
                         </View>
 
                         <View style={styles.privacyAgreement}>

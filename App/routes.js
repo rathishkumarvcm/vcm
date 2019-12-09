@@ -69,7 +69,7 @@ import LiquidationPageOneComponent from './Screens/LiquidationPageOne/Liquidatio
 import LiquidationPageTwoComponent from './Screens/LiquidationPageTwo/LiquidationPageTwoComponent';
 import LiquidationPageThreeComponent from './Screens/LiquidationPageThree/LiquidationPageThreeComponent';
 import LiquidationFinishComponent from './Screens/LiquidationFinish/LiquidationFinishComponent';
-import LiquidationPageFourComponent from './Screens/LiquidationPageFour/LiquidationPageFourComponent'
+import LiquidationPageFourComponent from './Screens/LiquidationPageFour/LiquidationPageFourComponent';
 // Done By 806048
 
 import EditProfileSettings from './Screens/EditProfileSettings/';

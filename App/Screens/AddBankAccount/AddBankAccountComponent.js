@@ -65,7 +65,7 @@ class AddBankAccountComponent extends Component {
                         data={this.state.popularAccountsList}
                         renderItem={({ item }) => (<ViewAccountItem
                             item={item}
-                        />)}
+                                                   />)}
                         keyExtractor={(item) => this.state.popularAccountsList.indexOf(item)}
                     />
 
@@ -88,9 +88,7 @@ class AddBankAccountComponent extends Component {
                             <Text style={styles.instructionText}>{gblStrings.addPopularBankAccount.instruction_add_account}</Text>
                         </TouchableOpacity>
                         {this.state.expand ?
-                            <View>
-                                
-                            </View>
+                            <View />
                             : null}
                     </View>
 

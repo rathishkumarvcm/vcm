@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import SpecialtyAccSubmitComponent from  './SpecialtyAccSubmitComponent';
+import SpecialtyAccSubmitComponent from './SpecialtyAccSubmitComponent';
 import { getLogin } from "../../Shared/Reducers";
 import { loginActions } from "../../Shared/Actions";
 

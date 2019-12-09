@@ -68,59 +68,59 @@ class DeliverySettingsComponent extends Component {
         }
 
         if (this.props && this.props.deliverySettingsinitialState){
-            (this.props.deliverySettingsinitialState.emailUrgentSwitchOff)
+            (this.props.deliverySettingsinitialState.emailUrgentSwitchOff);
                 this.setState({ 
                     emailUrgentSwitchOn: this.props.deliverySettingsinitialState.emailUrgentSwitchOn, 
                     emailUrgentSwitchOff: this.props.deliverySettingsinitialState.emailUrgentSwitchOff 
                 });
-            (this.props.deliverySettingsinitialState.emailNotificationSwitchOn)
+            (this.props.deliverySettingsinitialState.emailNotificationSwitchOn);
             this.setState({ 
                 emailNotificationSwitchOn: this.props.deliverySettingsinitialState.emailNotificationSwitchOn, 
                 emailNotificationSwitchOff: this.props.deliverySettingsinitialState.emailNotificationSwitchOff 
             }); 
-            (this.props.deliverySettingsinitialState.emailGuidanceSwitchOn)
+            (this.props.deliverySettingsinitialState.emailGuidanceSwitchOn);
                 this.setState({ 
                     emailGuidanceSwitchOn: this.props.deliverySettingsinitialState.emailGuidanceSwitchOn, 
                     emailGuidanceSwitchOff: this.props.deliverySettingsinitialState.emailGuidanceSwitchOff
                 });  
-            (this.props.deliverySettingsinitialState.notificationUrgentSwitchOn)
+            (this.props.deliverySettingsinitialState.notificationUrgentSwitchOn);
                 this.setState({ 
                     notificationUrgentSwitchOn: this.props.deliverySettingsinitialState.notificationUrgentSwitchOn, 
                     notificationUrgentSwitchOff: this.props.deliverySettingsinitialState.notificationUrgentSwitchOff
                 }); 
-            (this.props.deliverySettingsinitialState.notificationNotificationSwitchOn)
+            (this.props.deliverySettingsinitialState.notificationNotificationSwitchOn);
                 this.setState({ 
                     notificationNotificationSwitchOn: this.props.deliverySettingsinitialState.notificationNotificationSwitchOn, 
                     notificationNotificationSwitchOff: this.props.deliverySettingsinitialState.notificationNotificationSwitchOff
                 }); 
-            (this.props.deliverySettingsinitialState.notificationGuidanceSwitchOn)
+            (this.props.deliverySettingsinitialState.notificationGuidanceSwitchOn);
                 this.setState({ 
                     notificationGuidanceSwitchOn: this.props.deliverySettingsinitialState.notificationGuidanceSwitchOn, 
                     notificationGuidanceSwitchOff: this.props.deliverySettingsinitialState.notificationGuidanceSwitchOff
                 });  
-            (this.props.deliverySettingsinitialState.textUrgentSwitchOn)
+            (this.props.deliverySettingsinitialState.textUrgentSwitchOn);
                 this.setState({ 
                     textUrgentSwitchOn: this.props.deliverySettingsinitialState.textUrgentSwitchOn, 
                     textUrgentSwitchOff: this.props.deliverySettingsinitialState.textUrgentSwitchOff
                 }); 
-            (this.props.deliverySettingsinitialState.textNotificationSwitchOn)
+            (this.props.deliverySettingsinitialState.textNotificationSwitchOn);
                 this.setState({ 
                     textNotificationSwitchOn: this.props.deliverySettingsinitialState.textNotificationSwitchOn, 
                     textNotificationSwitchOff: this.props.deliverySettingsinitialState.textNotificationSwitchOff
                 }); 
-            (this.props.deliverySettingsinitialState.textGuidanceSwitchOn)
+            (this.props.deliverySettingsinitialState.textGuidanceSwitchOn);
                 this.setState({ 
                     textGuidanceSwitchOn: this.props.deliverySettingsinitialState.textGuidanceSwitchOn, 
                     textGuidanceSwitchOff: this.props.deliverySettingsinitialState.textGuidanceSwitchOff
                 });
 
-            (this.props.deliverySettingsinitialState.preferenceMorning)
+            (this.props.deliverySettingsinitialState.preferenceMorning);
                 this.setState({ preferenceMorning: this.props.deliverySettingsinitialState.preferenceMorning }); 
-            (this.props.deliverySettingsinitialState.preferenceMidDay)
+            (this.props.deliverySettingsinitialState.preferenceMidDay);
                 this.setState({ preferenceMidDay: this.props.deliverySettingsinitialState.preferenceMidDay });
-            (this.props.deliverySettingsinitialState.preferenceEarlyEvening)
+            (this.props.deliverySettingsinitialState.preferenceEarlyEvening);
                 this.setState({ preferenceEarlyEvening: this.props.deliverySettingsinitialState.preferenceEarlyEvening });
-            (this.props.deliverySettingsinitialState.preferenceNight)
+            (this.props.deliverySettingsinitialState.preferenceNight);
                 this.setState({ preferenceNight: this.props.deliverySettingsinitialState.preferenceNight });                     
         }
     }
@@ -345,7 +345,7 @@ class DeliverySettingsComponent extends Component {
             preferenceMidDay: this.state.preferenceMidDay,
             preferenceEarlyEvening: this.state.preferenceEarlyEvening,
             preferenceNight: this.state.preferenceNight          
-        }        
+        };        
         this.props.saveData(payloadData);
         this.props.navigation.goBack();    
     }
@@ -898,7 +898,7 @@ class DeliverySettingsComponent extends Component {
                     </Text>
 
                     <Modal
-                        transparent={true}
+                        transparent
                         visible={this.state.modalVisible}
                         onRequestClose={this.setModalVisible(!this.state.modalVisible)}
                     >

@@ -24,7 +24,7 @@ class AccountMessagingDeviceManagementComponent extends Component {
         console.log('Save Button Clicked...');       
         const payloadData = {
             deviceSelected: this.state.deviceSelected
-        }
+        };
         this.props.saveData(payloadData);
         this.props.navigation.goBack();                
         
@@ -38,7 +38,7 @@ class AccountMessagingDeviceManagementComponent extends Component {
 
     componentDidMount() {
         if (this.props && this.props.accMessageDeviceinitialState){
-            (this.props.accMessageDeviceinitialState.deviceSelected)
+            (this.props.accMessageDeviceinitialState.deviceSelected);
                 this.setState({ deviceSelected : this.props.accMessageDeviceinitialState.deviceSelected });
         }        
     }

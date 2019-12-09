@@ -25,7 +25,8 @@ class editEmailAddNewComponent extends Component {
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -44,7 +45,7 @@ class editEmailAddNewComponent extends Component {
                         </Text>
                     </View>
 
-                    <View style={styles.settingsBorder}></View>
+                    <View style={styles.settingsBorder} />
 
                     <View>
                         <Text style={styles.editEmailPrimaryLabel}>
@@ -55,12 +56,14 @@ class editEmailAddNewComponent extends Component {
                     <View style={styles.editEamilMargin}>
                         <GInputComponent
                             placeholder={""}
-                            editable={false} />
+                            editable={false}
+                        />
                     </View>
 
                     <View style={styles.editEmailPrimaryPreferred}>
                         <GRadioButtonComponent radioButtonStyle={styles.editEmailPreferred}
-                            selected questions={globalString.editEmailInformations.editEmailPreferred} />
+                            selected questions={globalString.editEmailInformations.editEmailPreferred}
+                        />
                         <Text style={styles.editEmailDeleteLabel}>
                             {globalString.editEmailInformations.editEmailDelete}
                         </Text>
@@ -75,12 +78,14 @@ class editEmailAddNewComponent extends Component {
                     <View style={styles.editEamilMargin}>
                         <GInputComponent
                             placeholder={""}
-                            editable={false} />
+                            editable={false}
+                        />
                     </View>
 
                     <View style={styles.editEmailPrimaryPreferred}>
                         <GRadioButtonComponent radioButtonStyle={styles.editEmailPreferred}
-                            questions={globalString.editEmailInformations.editEmailPreferred} />
+                            questions={globalString.editEmailInformations.editEmailPreferred}
+                        />
                         <Text style={styles.editEmailDeleteLabel}>
                             {globalString.editEmailInformations.editEmailDelete}
                         </Text>
@@ -103,14 +108,16 @@ class editEmailAddNewComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.editEmailOnCancel} />
+                            onPress={this.editEmailOnCancel}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
-                            textStyle={styles.saveButtonText} />
+                            textStyle={styles.saveButtonText}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -130,7 +137,8 @@ class editEmailAddNewComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={require("../../Images/logo.png")}
+                        />
                     </View>
 
                     <View style={styles.whiteBackground}>
@@ -141,9 +149,11 @@ class editEmailAddNewComponent extends Component {
 
                     <View style={styles.whiteBackground}>
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/twitterlogo.png")} />
+                            source={require("../../Images/twitterlogo.png")}
+                        />
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/linkedinlogo.png")} />
+                            source={require("../../Images/linkedinlogo.png")}
+                        />
                     </View>
 
                     <View style={styles.privacyAgreement}>

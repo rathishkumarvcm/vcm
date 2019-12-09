@@ -19,7 +19,7 @@ class LiquidationPageOneComponent extends Component {
 
     render() {
         let currentPage = 1;
-        let pageName =  '1 - Account Selection';
+        let pageName = '1 - Account Selection';
         return (
             <View style={styles.container} >
                 <GHeaderComponent navigation={this.props.navigation} />
@@ -33,7 +33,7 @@ class LiquidationPageOneComponent extends Component {
                         />
                     </TouchableOpacity>
 
-                   <PageNumber currentPage={currentPage} pageName = {pageName}/>
+                   <PageNumber currentPage={currentPage} pageName = {pageName} />
                     
                     <View style={styles.fullLine} />
                     <View style={styles.tNCFlex}>

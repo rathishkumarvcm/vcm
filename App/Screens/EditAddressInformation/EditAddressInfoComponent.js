@@ -52,7 +52,7 @@ const UserAddressInformation = (props) => {
                 {props.addressState}
             </Text>
 
-            <View style={styles.editEmailBorder}></View>
+            <View style={styles.editEmailBorder} />
 
             <View style={styles.editEmailPrimaryContent}>
                 <Text style={styles.editEmailId}>
@@ -95,7 +95,8 @@ class editAddressInfoComponent extends Component {
             addressType={item.addressType}
             addressLineOne={item.addressLineOne}
             addressCity={item.addressCity}
-            addressState={item.addressState + ' ' + item.addressZipcode} />);
+            addressState={item.addressState + ' ' + item.addressZipcode}
+        />);
 
     componentDidMount() { }
 
@@ -108,7 +109,8 @@ class editAddressInfoComponent extends Component {
 
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -127,24 +129,27 @@ class editAddressInfoComponent extends Component {
                         </Text>
 
                         <Text style={styles.addEditTextLabel}
-                            onPress={this.editAddressInfoAddNew}>
+                            onPress={this.editAddressInfoAddNew}
+                        >
                             {globalString.editAddressInfo.editAddressAddNew}
                         </Text>
                     </View>
 
-                    <View style={styles.settingsBorder}></View>
+                    <View style={styles.settingsBorder} />
 
                     <FlatList
                         data={tempUserAddress}
                         keyExtractor={this.generateKeyExtractor}
-                        renderItem={this.renderAddressInformation(tempUserAddress.length)} />
+                        renderItem={this.renderAddressInformation(tempUserAddress.length)}
+                    />
                     
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.back}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.editAddressOnCancel} />
+                            onPress={this.editAddressOnCancel}
+                        />
                     </View>
 
                     <View style={styles.newVictorySection}>
@@ -158,7 +163,8 @@ class editAddressInfoComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={require("../../Images/logo.png")}
+                        />
                     </View>
 
                     <View style={styles.privacyAgreement}>

@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import CommonUIComponent from './CommonUIComponent';
-import { getLogin } from "../../Shared/Reducers"
+import { getLogin } from "../../Shared/Reducers";
 import { loginActions } from "../../Shared/Actions";
 
 

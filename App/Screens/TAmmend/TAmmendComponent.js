@@ -62,32 +62,32 @@ export default class TAmmendComponent extends Component {
                 
                 
             ]
-        }
+        };
     }
 
     selectIndex = (item, title) => {
-        console.log('parent trigger', item)
+        console.log('parent trigger', item);
         this.setState({
             //selectedIndex: item.data.USS,
             selectedTitle: title,
             selectedValue: item.CurrentValue
-        })
+        });
     }
 
     render() {
         return (
             <View style={styles.container}>
             <GHeaderComponent navigation={this.props.navigation} />
-            <ScrollView  style={{ flex: 0.85 }}>
+            <ScrollView style={{ flex: 0.85 }}>
             <View style={styles.signInView} >
             <Text style={styles.signIntext}>
                 Transactions
-                </Text>
+            </Text>
                 <Text style={styles.lblLine} />
                 <View style={styles.container}>
                     {this.renderAccordians()}
                 </View>
-                </View>
+            </View>
             </ScrollView>
             </View>
         );

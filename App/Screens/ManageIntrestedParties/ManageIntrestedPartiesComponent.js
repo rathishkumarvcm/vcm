@@ -293,7 +293,7 @@ class manageIntrestedPartiesComponent extends Component {
             let validate = nameRegex.test(this.state.personal.firstName);
             this.onUpdateField("personal","firstNameValidation",validate);
             this.onUpdateField("personal","firstNameValidatingMsg",gblStrings.accManagement.firstNameFormat);
-            if(!validate){ errMsg="error" }
+            if(!validate){ errMsg="error"; }
         }
 
         if (this.isEmpty(this.state.personal.lastName)) {
@@ -304,13 +304,13 @@ class manageIntrestedPartiesComponent extends Component {
             let validate = nameRegex.test(this.state.personal.lastName);
             this.onUpdateField("personal","lastNameValidation",validate);
             this.onUpdateField("personal","lastNameValidationMsg",gblStrings.accManagement.lastNameFormat);
-            if(!validate){ errMsg="error" }
+            if(!validate){ errMsg="error"; }
         }
 
         if (!this.isEmpty(this.state.personal.emailAddress)) {
             let validate = emailRegex.test(this.state.personal.emailAddress);
             this.onUpdateField("personal","emailAddressValidation",validate);
-            if(!validate){ errMsg="error" }
+            if(!validate){ errMsg="error"; }
         }else{
             this.onUpdateField("personal","emailAddressValidation",true); 
         }
@@ -338,7 +338,7 @@ class manageIntrestedPartiesComponent extends Component {
             this.onUpdateField("personal","zipcodeValidation",validate);
             this.onUpdateField("personal","zipCodeValidationMsg",gblStrings.accManagement.zipCodeFormat);
             this.updateCityState();
-            if(!validate){ errMsg="error" }
+            if(!validate){ errMsg="error"; }
         }
 
         if(errMsg!="error")
@@ -425,8 +425,8 @@ class manageIntrestedPartiesComponent extends Component {
                     key = {item.options}
                 />)
             )}; */}
-           </> 
-        )
+            </> 
+        );
         
     }
 

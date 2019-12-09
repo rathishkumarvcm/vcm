@@ -60,10 +60,10 @@ class RegisterPasswordComponent extends Component {
         }).then(data => {
             console.log("Data",data);
            
-            alert("Signed Up Successfully. OTP received.")
+            alert("Signed Up Successfully. OTP received.");
 
             this.props.navigation.navigate('emailVerify',{passwordData:registerSelfData});
-        })
+        });
 
         
         //this.props.navigation.navigate('emailVerify');
@@ -153,13 +153,13 @@ class RegisterPasswordComponent extends Component {
             </View>
             <Text style={{paddingLeft:'4%',paddingRight:'4%'}}>
                 {"Weak"}
-    </Text>
+            </Text>
 
     <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
                     {"Confirm Password"}       
                 </Text>
-            </View>
+    </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
                 placeholder={"Password"}

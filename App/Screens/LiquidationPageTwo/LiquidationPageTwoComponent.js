@@ -68,14 +68,14 @@ class LiquidationPageTwoComponent extends Component {
                             <View style={styles.sellAllShares}>
                             <View style={styles.radioButtonFlexOff}>
                                     <View style={styles.radioButtonFlexOn} />
-                                </View>
+                            </View>
                                 <Text style={styles.dollarText}>$</Text>
                                 <Text style ={styles.value}>1500</Text>
                             </View>
                             <View style={styles.sellAllShares}>
                             <View style={styles.radioButtonFlexOff}>
                                     <View style={styles.radioButtonFlexOn} />
-                                </View>
+                            </View>
                                 <Text style={styles.dollarText}>%</Text>
                                 <Text style ={styles.value}>1500</Text>
                             </View>

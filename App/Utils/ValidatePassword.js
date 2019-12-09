@@ -128,7 +128,7 @@ export const ValidatePassword = pswd => {
     console.log("strength : " + strength);
     return strength;
 
-}
+};
 
 
 

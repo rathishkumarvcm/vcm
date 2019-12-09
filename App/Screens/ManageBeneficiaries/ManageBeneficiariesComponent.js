@@ -507,7 +507,7 @@ class ManageBenificiariesComponent extends Component {
       let validate = nameRegex.test(this.state.contingent.firstName);
       this.onUpdateField("contingent","firstNameValidation",validate);
       this.onUpdateField("contingent","firstNameValiMsg",gblStrings.accManagement.firstNameFormat);
-      if(!validate){ errMsg="error" }
+      if(!validate){ errMsg="error"; }
     }
 
     if (this.isEmpty(this.state.contingent.lastName)) {
@@ -517,7 +517,7 @@ class ManageBenificiariesComponent extends Component {
       let validate = nameRegex.test(this.state.contingent.lastName);
       this.onUpdateField("contingent","lastNameValidation",validate);
       this.onUpdateField("contingent","lastNameValiMsg",gblStrings.accManagement.lastNameFormat);
-      if(!validate){ errMsg="error" }
+      if(!validate){ errMsg="error"; }
     }
 
     if (!this.isEmpty(this.state.contingent.ssn)) {
@@ -552,7 +552,7 @@ class ManageBenificiariesComponent extends Component {
       this.onUpdateField("contingent","zipCodeValidation",validate);
       this.onUpdateField("contingent","zipCodeFormatMsg",gblStrings.accManagement.zipCodeFormat);
       this.updateCityState();
-      if(!validate){ errMsg="error" }
+      if(!validate){ errMsg="error"; }
     }
 
     if (this.isEmpty(this.state.contingent.workTelephone)) {
@@ -563,7 +563,7 @@ class ManageBenificiariesComponent extends Component {
       let validate = phoneRegex.test(this.state.contingent.workTelephone);
       this.onUpdateField("contingent","workTelephoneValidation",validate);
       this.onUpdateField("contingent","phoneFormatMessage",gblStrings.accManagement.phoneNoFormat);
-      if(!validate){ errMsg="error" }
+      if(!validate){ errMsg="error"; }
     }
 
     if (this.isEmpty(this.state.contingent.distribution)) {
@@ -643,7 +643,7 @@ class ManageBenificiariesComponent extends Component {
             <Text style={styles.shortContentText}>
               {item.name +' | '+item.dob}
             </Text>
-          </View>
+           </View>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortHeadingText}>
               {'Relationship to Owner'}
@@ -665,7 +665,7 @@ class ManageBenificiariesComponent extends Component {
               <Text style={[styles.shortContentText, styles.paddingStyleLeft,{marginTop:scaledHeight(20)}]}>
                 {'%'}
               </Text>
-           </View>
+            </View>
           </View>
           <Text style={[styles.contactUsLink, styles.deleteLink]}>
             {gblStrings.common.delete}
@@ -692,7 +692,8 @@ class ManageBenificiariesComponent extends Component {
             </Text>
             <View style={styles.dataAccountBeneficiary}>
               <View
-                style={[styles.noteEnterDetail, styles.flexDirectionRowStyle]}>
+                style={[styles.noteEnterDetail, styles.flexDirectionRowStyle]}
+              >
                 <View style={styles.noteIconView}>
                   <GIcon
                     name="circle"
@@ -706,7 +707,8 @@ class ManageBenificiariesComponent extends Component {
                 </Text>
               </View>
               <View
-                style={[styles.noteEnterDetail, styles.flexDirectionRowStyle]}>
+                style={[styles.noteEnterDetail, styles.flexDirectionRowStyle]}
+              >
                 <View style={styles.noteIconView}>
                   <GIcon
                     name="circle"
@@ -720,7 +722,8 @@ class ManageBenificiariesComponent extends Component {
                 </Text>
               </View>
               <View
-                style={[styles.noteEnterDetail, styles.flexDirectionRowStyle]}>
+                style={[styles.noteEnterDetail, styles.flexDirectionRowStyle]}
+              >
                 <View style={styles.noteIconView}>
                   <GIcon
                     name="circle"
@@ -734,7 +737,8 @@ class ManageBenificiariesComponent extends Component {
                 </Text>
               </View>
               <View
-                style={[styles.noteEnterDetail, styles.flexDirectionRowStyle]}>
+                style={[styles.noteEnterDetail, styles.flexDirectionRowStyle]}
+              >
                 <View style={styles.noteIconView}>
                   <GIcon
                     name="circle"
@@ -748,7 +752,8 @@ class ManageBenificiariesComponent extends Component {
                 </Text>
               </View>
               <View
-                style={[styles.noteEnterDetail, styles.flexDirectionRowStyle]}>
+                style={[styles.noteEnterDetail, styles.flexDirectionRowStyle]}
+              >
                 <View style={styles.noteIconView}>
                   <GIcon
                     name="circle"
@@ -782,7 +787,8 @@ class ManageBenificiariesComponent extends Component {
         </View>
         <View style={styles.contentViewInternal}>
           <Text
-            style={[styles.manageBenificiariesHeadline,styles.paddingStyleLeft]}>
+            style={[styles.manageBenificiariesHeadline,styles.paddingStyleLeft]}
+          >
             {gblStrings.accManagement.primaryBeneficiary}
           </Text>
           <View style={styles.borderInternal} />
@@ -790,17 +796,20 @@ class ManageBenificiariesComponent extends Component {
         </View>
         <View style={styles.distributionTotalView}>
           <Text
-            style={[styles.shortContentText, styles.distributionFieldInput]}>
+            style={[styles.shortContentText, styles.distributionFieldInput]}
+          >
             {'Distribution Total'}
           </Text>
           <Text
-            style={[styles.shortContentText, styles.distributionFieldInput]}>
+            style={[styles.shortContentText, styles.distributionFieldInput]}
+          >
             {this.state.primary.distribution+ '%'}
           </Text>
         </View>
         <View style={styles.contentViewInternal}>
           <Text
-            style={[styles.manageBenificiariesHeadline,styles.paddingStyleLeft]}>
+            style={[styles.manageBenificiariesHeadline,styles.paddingStyleLeft]}
+          >
             {gblStrings.accManagement.contingentBeneficiary}
           </Text>
           <View style={styles.borderInternal} />
@@ -847,7 +856,8 @@ class ManageBenificiariesComponent extends Component {
       <View>
         <View style={[styles.contentViewInternal, styles.paddingStyleLeft]}>
           <Text
-            style={[styles.manageBenificiariesHeadline,styles.paddingStyleLeft]}>
+            style={[styles.manageBenificiariesHeadline,styles.paddingStyleLeft]}
+          >
             {gblStrings.accManagement.contingentBeneficiary}
           </Text>
           <View style={styles.borderInternal} />
@@ -1107,11 +1117,13 @@ class ManageBenificiariesComponent extends Component {
         </View>
         <View style={styles.distributionTotalView}>
           <Text
-            style={[styles.shortContentText, styles.distributionFieldInput]}>
+            style={[styles.shortContentText, styles.distributionFieldInput]}
+          >
             {'Total Distribution'}
           </Text>
           <Text
-            style={[styles.shortContentText, styles.distributionFieldInput]}>
+            style={[styles.shortContentText, styles.distributionFieldInput]}
+          >
             {'00.00%'}
           </Text>
         </View>
@@ -1147,7 +1159,7 @@ class ManageBenificiariesComponent extends Component {
                       <Text style={styles.shortContentText}>
                         {m.name}
                       </Text>
-                      </View>
+                    </View>
                       {AccountType===
                       gblStrings.accManagement.traditionalIra ? (
                           <View style={styles.blockMarginTop}>
@@ -1182,7 +1194,8 @@ class ManageBenificiariesComponent extends Component {
               return (
                 <View style={styles.contentViewInternal} key={key}>
                   <Text
-                    style={[styles.manageBenificiariesHeadline,styles.paddingHorizontalStyle]}>
+                    style={[styles.manageBenificiariesHeadline,styles.paddingHorizontalStyle]}
+                  >
                     {item.accountType}
                   </Text>
                   <View style={styles.borderInternal} />
@@ -1246,7 +1259,7 @@ class ManageBenificiariesComponent extends Component {
                     {gblStrings.accManagement.contactUs}
                   </Text>
                 </Text>
-                {<this.renderList/>}
+                {<this.renderList />}
               </View>
             )}
           </View>

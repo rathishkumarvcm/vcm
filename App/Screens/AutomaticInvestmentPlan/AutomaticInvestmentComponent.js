@@ -113,7 +113,7 @@ class AutomaticInvestmentComponent extends Component {
 
         )
 
-        setStateUpdates =  () => {
+        setStateUpdates = () => {
 
             this.setState({
                 expand:!this.state.expand,
@@ -141,7 +141,7 @@ class AutomaticInvestmentComponent extends Component {
                             keyExtractor={this.generateKeyExtractor}
                         />
                         <View style={{ borderColor: '#C7C7C7', borderWidth: 1, backgroundColor: '#F2F2F2', paddingLeft: scaledWidth(10), paddingRight: scaledWidth(10) }}>
-                        <TouchableOpacity style={styles.touchOpacityPosition}  onPress={this.setStateUpdates}>
+                        <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setStateUpdates}>
                             <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>
                             {this.state.expand ?
                                     <GIcon

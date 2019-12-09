@@ -40,13 +40,13 @@ class editAddressAddNewComponent extends Component {
         if (this.props && this.props.profileState && this.props.profileState.profileUserCity) {
             this.setState({
                 userCity: this.props.profileState.profileUserCity
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileUserState) {
             this.setState({
                 userState: this.props.profileState.profileUserState
-            })
+            });
         }
     }
 
@@ -112,7 +112,7 @@ class editAddressAddNewComponent extends Component {
                     let validate = reGex.zipCodeRegex.test(this.state.zipCodeValue);
                     this.setState({
                         isZipCodeValid: validate
-                    })
+                    });
                 }
 
                 if (this.state.addressOne != "" &&
@@ -134,7 +134,7 @@ class editAddressAddNewComponent extends Component {
             "state": this.state.userState
         };
 
-        this.props.navigation.navigate('editAddressSettings')
+        this.props.navigation.navigate('editAddressSettings');
     }
 
     validateZipCodeValue = () => {
@@ -153,7 +153,8 @@ class editAddressAddNewComponent extends Component {
                     this.props.stateCityData.isLoading && <GLoadingSpinner />
                 }
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -172,7 +173,7 @@ class editAddressAddNewComponent extends Component {
                         </Text>
                     </View>
 
-                    <View style={styles.settingsBorder}></View>
+                    <View style={styles.settingsBorder} />
 
                     <View style={styles.editFlexDirectionColumn}>
                         <Text style={styles.editLabelText}>
@@ -194,12 +195,14 @@ class editAddressAddNewComponent extends Component {
                                     <GRadioButtonComponent
                                         onPress={() => this.radioButtonClicked(index)}
                                         selected
-                                        questions={item.question} />
+                                        questions={item.question}
+                                    />
                                     :
                                     <GRadioButtonComponent
                                         onPress={() => this.radioButtonClicked(index)}
                                         selected={false}
-                                        questions={item.question} />
+                                        questions={item.question}
+                                    />
                             )}
                         </View>
 
@@ -215,7 +218,8 @@ class editAddressAddNewComponent extends Component {
                                 onChangeText={this.setAddressOne}
                                 value={this.state.addressOne}
                                 errorFlag={!this.state.validationAddressOne}
-                                errorText={globalString.profileValidationMessages.validateAddressLineOne} />
+                                errorText={globalString.profileValidationMessages.validateAddressLineOne}
+                            />
                         </View>
 
                         <View style={styles.settingsView1}>
@@ -226,7 +230,8 @@ class editAddressAddNewComponent extends Component {
 
                         <View style={styles.editAddressInput}>
                             <GInputComponent
-                                placeholder={globalString.addAddressInfo.addressLineTwo} />
+                                placeholder={globalString.addAddressInfo.addressLineTwo}
+                            />
                         </View>
 
                         <View style={styles.settingsView1}>
@@ -241,7 +246,8 @@ class editAddressAddNewComponent extends Component {
                                 onChangeText={this.setZipcodeValue}
                                 value={this.state.zipCodeValue}
                                 errorFlag={!this.state.isZipCodeValid}
-                                errorText={globalString.profileValidationMessages.validateZipcode} />
+                                errorText={globalString.profileValidationMessages.validateZipcode}
+                            />
                         </View>
 
                         <View style={styles.editFlexDirectionColumn}>
@@ -269,7 +275,8 @@ class editAddressAddNewComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.validateZipCodeValue} />
+                            onPress={this.validateZipCodeValue}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -277,10 +284,11 @@ class editAddressAddNewComponent extends Component {
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
                             textStyle={styles.saveButtonText}
-                            onPress={this.addAddressOnValidate('validateAddressValueOne')} />
+                            onPress={this.addAddressOnValidate('validateAddressValueOne')}
+                        />
                     </View>
 
-                    <View style={styles.editAddressBorder}></View>
+                    <View style={styles.editAddressBorder} />
 
                     <View style={styles.editAddressBackground}>
                         <Text style={styles.termsofuseText1}>
@@ -293,7 +301,8 @@ class editAddressAddNewComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={require("../../Images/logo.png")}
+                        />
                     </View>
 
                     <View style={styles.whiteBackground}>
@@ -304,9 +313,11 @@ class editAddressAddNewComponent extends Component {
 
                     <View style={styles.whiteBackground}>
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/twitterlogo.png")} />
+                            source={require("../../Images/twitterlogo.png")}
+                        />
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/linkedinlogo.png")} />
+                            source={require("../../Images/linkedinlogo.png")}
+                        />
                     </View>
 
                     <View style={styles.privacyAgreement}>

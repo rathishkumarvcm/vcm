@@ -85,7 +85,7 @@ class LiquidationPageThreeComponent extends Component {
                 ...prevState.taxAccountingMethodData,
                 amountBeforeTaxes: amount,
             }
-        }))
+        }));
     }
 
     onChangeAmountAfterTaxes = (amount) => {
@@ -94,7 +94,7 @@ class LiquidationPageThreeComponent extends Component {
                 ...prevState.taxAccountingMethodData,
                 amountAfterTaxes: amount,
             }
-        }))
+        }));
     }
 
     onChangeStateTax = (tax) => {
@@ -103,7 +103,7 @@ class LiquidationPageThreeComponent extends Component {
                 ...prevState.taxAccountingMethodData,
                 stateTax: tax,
             }
-        }))
+        }));
     }
     onChangeFederalTax = (tax) => {
         this.setState(prevState => ({
@@ -111,7 +111,7 @@ class LiquidationPageThreeComponent extends Component {
                 ...prevState.taxAccountingMethodData,
                 federalTax: tax,
             }
-        }))
+        }));
     }
     onSubmitEditingStateTax = (tax) => {
         var statetax = this.state.taxAccountingMethodData.stateTax;
@@ -128,7 +128,7 @@ class LiquidationPageThreeComponent extends Component {
                     totalYouWillReceive: amount - totalTaxToBWithhold,
                     totalWithdrawal: amount
                 }
-            }))
+            }));
         } else {
             amount = this.state.taxAccountingMethodData.amountAfterTaxes;
             totalTaxToBWithhold = ((((statetax) / 100) * (amount)) + (((federaltax) / 100) * (amount)));
@@ -139,7 +139,7 @@ class LiquidationPageThreeComponent extends Component {
                     totalYouWillReceive: amount,
                     totalWithdrawal: parseInt(amount) + parseInt(totalTaxToBWithhold)
                 }
-            }))
+            }));
         }
 
     }
@@ -163,17 +163,17 @@ class LiquidationPageThreeComponent extends Component {
         this.setState({
             switchOff: !this.state.switchOff,
             switchOn: !this.state.switchOn,
-        })
+        });
     }
 
     onClickExpandFundSource = () => {
         this.setState({ collapseFundSource: !this.state.collapseFundSource });
-        (this.state.collapseFundSource ? this.setState({ collapseFSIcon: "-   " }) : this.setState({ collapseFSIcon: "+  " }))
+        (this.state.collapseFundSource ? this.setState({ collapseFSIcon: "-   " }) : this.setState({ collapseFSIcon: "+  " }));
     };
 
     onClickExpandTaxAccounting = () => {
         this.setState({ collapseTaxAccounting: !this.state.collapseTaxAccounting });
-        (this.state.collapseTaxAccounting ? this.setState({ collapseTAIcon: "-   " }) : this.setState({ collapseTAIcon: "+  " }))
+        (this.state.collapseTaxAccounting ? this.setState({ collapseTAIcon: "-   " }) : this.setState({ collapseTAIcon: "+  " }));
     };
 
 
@@ -193,7 +193,7 @@ class LiquidationPageThreeComponent extends Component {
                     {props.accountNo ? <Text style={styles.bankAccountNo}>{props.accountNo}</Text> : null}
                 </View>
             </View>
-        )
+        );
     }
 
     navigateLiquidationPageOne = () => this.props.navigation.navigate('LiquidationPageOne');
@@ -227,7 +227,7 @@ class LiquidationPageThreeComponent extends Component {
                         <Text style={styles.accountNumberText}>Account Number xxx-xxx-xxxx</Text>
                     </View>
                     <View style={styles.line} />
-                    <View style={styles.emptyFlex}></View>
+                    <View style={styles.emptyFlex} />
 
                     <View style={styles.headerFlex} onTouchStart={this.onClickExpandFundSource}>
                         <Text style={styles.headerText}>{this.state.collapseFSIcon}</Text>
@@ -241,7 +241,7 @@ class LiquidationPageThreeComponent extends Component {
 
                     <View style = {styles.flex2}>
                          <Text style={styles.fundSourceContent}>{gblStrings.liquidation.fundSourceContext}</Text>
-                         </View>
+                    </View>
                         <View style={styles.offlineMethodFlex}>
                             <Text style={styles.subHeadingText}>{gblStrings.liquidation.offlineMethod}</Text>
                             <Text style={styles.offlineMethodContent}>{gblStrings.liquidation.offlineMethodContext}</Text>
@@ -271,7 +271,7 @@ class LiquidationPageThreeComponent extends Component {
                                                 <Text style={styles.bankAccountNo}>{item.bankAccountNo}</Text>
                                             </View>
                                         </View>
-                                    )
+                                    );
                                 }}
                                 keyExtractor={a => a.bankAccountNo}
                             />
@@ -352,7 +352,8 @@ class LiquidationPageThreeComponent extends Component {
                                                         propInputStyle={styles.amountBeforeTaxesVal}
                                                         inputStyle={styles.inputStyle}
                                                         value={this.state.taxAccountingMethodData.amountAfterTaxes}
-                                                        onChangeText={this.onChangeAmountAfterTaxes} />
+                                                        onChangeText={this.onChangeAmountAfterTaxes}
+                                                    />
                                                 </View>
                                             </View>
                                     }
@@ -375,7 +376,8 @@ class LiquidationPageThreeComponent extends Component {
                                             inputStyle={styles.inputStyle}
                                             value={this.state.taxAccountingMethodData.stateTax}
                                             onChangeText={this.onChangeStateTax}
-                                            onSubmitEditing={this.onSubmitEditingStateTax} />
+                                            onSubmitEditing={this.onSubmitEditingStateTax}
+                                        />
                                     </View>
 
                                     <View style={styles.stateTaxFlex}>

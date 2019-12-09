@@ -72,8 +72,8 @@ class AutomaticInvestmentAddComponent extends Component {
             </View>
         )
     toggleSwitch1 = (value) => {
-        this.setState({ switch1Value: value })
-        console.log('Switch 1 is: ' + value)
+        this.setState({ switch1Value: value });
+        console.log('Switch 1 is: ' + value);
     }
 
     generateAmountKeyExtractor = (item) => item.accountName;
@@ -87,7 +87,8 @@ class AutomaticInvestmentAddComponent extends Component {
                     <View style={{ flex: 0.3, alignItems: 'flex-end', marginRight: '4%' }}>
                         <Switch trackColor={{flase:'#DBDBDB',true:'#444444'}}
                             onValueChange={this.toggleSwitch1}
-                            value={this.state.switch1Value} />
+                            value={this.state.switch1Value}
+                        />
                     </View>
                 </View>
                 <View style={styles.auto_invest_to_flat}>
@@ -185,7 +186,7 @@ class AutomaticInvestmentAddComponent extends Component {
                                     selected={(this.state.selectedItemID !== "" && "N" == this.state.selectedItemID) ? true : false}
                                     onPress={this.onSelected({ name: 'No', id: 'N' })}
                                 />
-                            </View>
+                                </View>
                                 </View>
                             </View>
 

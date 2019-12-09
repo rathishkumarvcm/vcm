@@ -162,7 +162,7 @@ class NewPasswordComponent extends Component {
                             <View style={(this.state.str_new.length>0)&&(ValidatePassword(this.state.str_new)==globalString.userManagement.weak)?styles.weak:styles.default} />
                             <Text style={styles.strongText}>{globalString.userManagement.weak}</Text>
                         </View>
-                    </View>
+          </View>
           <View style={styles.passwordView}>
             <Text style={styles.enterOpt}>{globalString.recoverPassword.password_confirm}</Text>
           </View>

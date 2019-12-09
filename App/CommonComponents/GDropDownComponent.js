@@ -78,7 +78,7 @@ export const GDropDownComponent = props => (
         value={props.dropDownValue}
         errorFlag={props.errorFlag}
         errorText={props.errorText}
-        dropDownBox={true}
+        dropDownBox
         dropDownClick={props.changeState}
     />
 
@@ -87,8 +87,7 @@ export const GDropDownComponent = props => (
 
 
 {props.showDropDown && 
-<View style={[styles.showDropDownSectionStyle,props.dropDownPostition]}
->
+<View style={[styles.showDropDownSectionStyle,props.dropDownPostition]}>
 <FlatList
     data={props.data}
     renderItem={({ item }) => 
@@ -99,7 +98,7 @@ export const GDropDownComponent = props => (
 keyExtractor={item => item.id}
 />
 </View> }
-</>
+    </>
 
 );
 

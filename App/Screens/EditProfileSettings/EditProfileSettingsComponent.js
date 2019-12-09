@@ -137,21 +137,21 @@ class editProfileSettingsComponent extends Component {
             this.setState({
                 dropDownSuffixFlag: true,
                 dropDownSuffixMsg: globalString.profileValidationMessages.validateSuffix
-            })
+            });
         }
 
         if (this.state.dropDownGenderValue === '') {
             this.setState({
                 dropDownGenderFlag: true,
                 dropDownGenderMsg: globalString.profileValidationMessages.validateGender
-            })
+            });
         }
 
         if (this.state.dropDownStatusValue === '') {
             this.setState({
                 dropDownStatusFlag: true,
                 dropDownStatusMsg: globalString.profileValidationMessages.validateStatus
-            })
+            });
         }
 
         if (this.state.dropDownValue != "" &&
@@ -221,7 +221,7 @@ class editProfileSettingsComponent extends Component {
     dropDownCountryClick = () => {
         this.setState({
             dropDownCountryState: !this.state.dropDownCountryState
-        })
+        });
     }
 
     dropDownCountrySelect = (valueCountry) => {
@@ -229,56 +229,56 @@ class editProfileSettingsComponent extends Component {
             dropDownCountryValue: valueCountry.value,
             dropDownCountryState: false,
             dropDownCountryFlag: false
-        })
+        });
     }
 
     componentDidMount() {
         if (this.props && this.props.initialstate && this.props.initialstate.firstName) {
             this.setState({
                 profileName: this.props.initialstate.firstName
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileVcmID) {
             this.setState({
                 profileVcm: this.props.profileState.profileVcmID
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileSsnNumber) {
             this.setState({
                 profileSsn: this.props.profileState.profileSsnNumber
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileDob) {
             this.setState({
                 profileDob: this.props.profileState.profileDob
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profilePrefix) {
             this.setState({
                 profilePrefix: this.props.profileState.profilePrefix
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileSuffix) {
             this.setState({
                 profileSuffix: this.props.profileState.profileSuffix
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileGender) {
             this.setState({
                 profileGender: this.props.profileState.profileGender
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileMaritalStatus) {
             this.setState({
                 profileMaritalStatus: this.props.profileState.profileMaritalStatus
-            })
+            });
         }
 
         let payload = [];
@@ -293,7 +293,7 @@ class editProfileSettingsComponent extends Component {
         for (let i = 0; i < compositePayloadData.length; i++) {
             let tempkey = compositePayloadData[i];
             if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
-                payload.push(tempkey)
+                payload.push(tempkey);
             }
         }
 
@@ -315,14 +315,14 @@ class editProfileSettingsComponent extends Component {
                 "profileSuffix": this.state.dropDownSuffixValue,
                 "profileGender": this.state.dropDownGenderValue,
                 "profileMaritalStatus": this.state.dropDownStatusValue
-            }
+            };
         }
         return profilePayload;
     }
 
-    editProfileBack = () => { this.props.navigation.navigate('profileSettings') };
+    editProfileBack = () => { this.props.navigation.navigate('profileSettings'); };
 
-    editProfileOnCancel = () => { this.props.navigation.navigate('profileSettings') }
+    editProfileOnCancel = () => { this.props.navigation.navigate('profileSettings'); }
 
     render() {
 
@@ -334,31 +334,32 @@ class editProfileSettingsComponent extends Component {
         if (this.props && this.props.profileSettingsLookup &&
             this.props.profileSettingsLookup.prefix &&
             this.props.profileSettingsLookup.prefix.value) {
-            profilePrefixData = this.props.profileSettingsLookup.prefix.value
+            profilePrefixData = this.props.profileSettingsLookup.prefix.value;
         }
 
         if (this.props && this.props.profileSettingsLookup &&
             this.props.profileSettingsLookup.suffix &&
             this.props.profileSettingsLookup.suffix.value) {
-            profileSuffixData = this.props.profileSettingsLookup.suffix.value
+            profileSuffixData = this.props.profileSettingsLookup.suffix.value;
         }
 
         if (this.props && this.props.profileSettingsLookup &&
             this.props.profileSettingsLookup.gender &&
             this.props.profileSettingsLookup.gender.value) {
-            profileGenderData = this.props.profileSettingsLookup.gender.value
+            profileGenderData = this.props.profileSettingsLookup.gender.value;
         }
 
         if (this.props && this.props.profileSettingsLookup &&
             this.props.profileSettingsLookup.marital_status &&
             this.props.profileSettingsLookup.marital_status.value) {
-            profileStatusData = this.props.profileSettingsLookup.marital_status.value
+            profileStatusData = this.props.profileSettingsLookup.marital_status.value;
         }
 
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -374,7 +375,8 @@ class editProfileSettingsComponent extends Component {
                         </Text>
 
                         <Text style={styles.editProfileHeadOne}
-                            onPress={this.editProfileBack}>
+                            onPress={this.editProfileBack}
+                        >
                             {"Bas.."}
                         </Text>
 
@@ -396,7 +398,7 @@ class editProfileSettingsComponent extends Component {
                             </Text>
                         </View>
 
-                        <View style={styles.settingsBorder}></View>
+                        <View style={styles.settingsBorder} />
 
                         <View style={styles.settingsView}>
                             <Text style={styles.editProfileChosen}>
@@ -458,7 +460,8 @@ class editProfileSettingsComponent extends Component {
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownPrefixFlag}
                             errorText={this.dropDownPrefixMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(492) }} />
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(492) }}
+                        />
 
                         {/* Suffix Data */}
 
@@ -474,7 +477,8 @@ class editProfileSettingsComponent extends Component {
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownSuffixFlag}
                             errorText={this.dropDownSuffixMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(581) }} />
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(581) }}
+                        />
 
                         {/* Zip Code */}
 
@@ -506,7 +510,8 @@ class editProfileSettingsComponent extends Component {
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownGenderFlag}
                             errorText={this.dropDownGenderMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(670) }} />
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(670) }}
+                        />
 
                         {/* Marital Status Data */}
 
@@ -522,7 +527,8 @@ class editProfileSettingsComponent extends Component {
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownStatusFlag}
                             errorText={this.dropDownStatusMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(760) }} />
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(760) }}
+                        />
 
                         {/* Citizenship */}
 
@@ -537,12 +543,14 @@ class editProfileSettingsComponent extends Component {
                                         <GRadioButtonComponent
                                             onPress={() => this.radioButtonClicked(index)}
                                             selected
-                                            questions={item.question} />
+                                            questions={item.question}
+                                        />
                                         :
                                         <GRadioButtonComponent
                                             onPress={() => this.radioButtonClicked(index)}
                                             selected={false}
-                                            questions={item.question} />
+                                            questions={item.question}
+                                        />
                                 )}
                             </View>
                         </View>
@@ -560,14 +568,16 @@ class editProfileSettingsComponent extends Component {
                                 itemToDisplay={"value"}
                                 errorFlag={this.state.dropDownCountryFlag}
                                 errorText={this.dropDownCountryMsg}
-                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(950) }} />) : null}
+                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(950) }}
+                            />) : null}
 
                         <View style={styles.editFlexDirectionColumn}>
                             <GButtonComponent
                                 buttonStyle={styles.cancelButtonStyle}
                                 buttonText={globalString.common.cancel}
                                 textStyle={styles.cancelButtonText}
-                                onPress={this.editProfileOnCancel} />
+                                onPress={this.editProfileOnCancel}
+                            />
                         </View>
 
                         <View style={styles.editFlexDirectionColumn}>
@@ -575,7 +585,8 @@ class editProfileSettingsComponent extends Component {
                                 buttonStyle={styles.saveButtonStyle}
                                 buttonText={globalString.common.save}
                                 onPress={this.navigationSuccess}
-                                textStyle={styles.saveButtonText} />
+                                textStyle={styles.saveButtonText}
+                            />
                         </View>
 
                     </View>
@@ -600,7 +611,8 @@ class editProfileSettingsComponent extends Component {
 
                         <View style={styles.connectWithUs}>
                             <Image
-                                source={require("../../Images/logo.png")} />
+                                source={require("../../Images/logo.png")}
+                            />
                         </View>
 
                         <View style={styles.whiteBackground}>
@@ -611,9 +623,11 @@ class editProfileSettingsComponent extends Component {
 
                         <View style={styles.whiteBackground}>
                             <Image style={styles.imageWidthHeight}
-                                source={require("../../Images/twitterlogo.png")} />
+                                source={require("../../Images/twitterlogo.png")}
+                            />
                             <Image style={styles.imageWidthHeight}
-                                source={require("../../Images/linkedinlogo.png")} />
+                                source={require("../../Images/linkedinlogo.png")}
+                            />
                         </View>
 
                         <View style={styles.privacyAgreement}>

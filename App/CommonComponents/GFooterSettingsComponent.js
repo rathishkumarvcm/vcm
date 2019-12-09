@@ -79,7 +79,7 @@ export const styles = StyleSheet.create({
 export const GFooterSettingsComponent = props => (
 
     <View>
-        <View style={styles.lineBorder}></View>
+        <View style={styles.lineBorder} />
         <View style={styles.backgroundColor}>
             <View style={styles.disclaimerView}>
                 <Text style={styles.disclaimerViewTitle}>
@@ -94,8 +94,8 @@ export const GFooterSettingsComponent = props => (
             <View style={styles.logoImageView}>
                 <Image
                     resizeMode="contain"
-                    source={require("../Images/logo.png")}>
-                </Image>
+                    source={require("../Images/logo.png")}
+                />
             </View>
 
             <View style={styles.connectWithUs}>

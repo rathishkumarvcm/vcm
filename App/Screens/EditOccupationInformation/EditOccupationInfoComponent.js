@@ -62,28 +62,28 @@ class editOccupationInfoComponent extends Component {
             && this.props.profileState.employmentInformations.profileEmploymentStatus) {
             this.setState({
                 dropDownEmployeeValue: this.props.profileState.employmentInformations.profileEmploymentStatus
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.employmentInformations
             && this.props.profileState.employmentInformations.profileEmpIndustry) {
             this.setState({
                 dropDownIndustryValue: this.props.profileState.employmentInformations.profileEmpIndustry
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.employmentInformations
             && this.props.profileState.employmentInformations.profileEmpOccupation) {
             this.setState({
                 employeeOccupationValue: this.props.profileState.employmentInformations.profileEmpOccupation
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.employmentInformations
             && this.props.profileState.employmentInformations.profileEmpEmployer) {
             this.setState({
                 employeeNameValue: this.props.profileState.employmentInformations.profileEmpEmployer
-            })
+            });
         }
 
         // Employee City and State
@@ -91,13 +91,13 @@ class editOccupationInfoComponent extends Component {
         if (this.props && this.props.profileState && this.props.profileState.profileUserCity) {
             this.setState({
                 employeeCityValue: this.props.profileState.profileUserCity
-            })
+            });
         }
 
         if (this.props && this.props.profileState && this.props.profileState.profileUserState) {
             this.setState({
                 employeeStateValue: this.props.profileState.profileUserState
-            })
+            });
         }
     }
 
@@ -161,27 +161,27 @@ class editOccupationInfoComponent extends Component {
         this.setState({
             employeeNameValue: text,
             isValidName: true
-        })
+        });
     }
 
     setValidEmpLineOne = (text) => {
         this.setState({
             employeeLineOneValue: text,
             isValidLineOne: true
-        })
+        });
     }
 
     setValidEmpLineTwo = (text) => {
         this.setState({
             employeeLineTwoValue: text
-        })
+        });
     }
 
     setValidEmpZipcode = (text) => {
         this.setState({
             employeeZipCodeValue: text,
             isValidZipCode: true
-        })
+        });
     }
 
     validateZipCodeValue = () => {
@@ -196,38 +196,38 @@ class editOccupationInfoComponent extends Component {
             this.setState({
                 dropDownEmployeeFlag: true,
                 dropDownEmployeeMsg: globalStrings.profileValidationMessages.validateNetWorth
-            })
+            });
         }
 
         if (this.state.dropDownIndustryValue === '') {
             this.setState({
                 dropDownIndustryFlag: true,
                 dropDownIndustryMsg: globalStrings.profileValidationMessages.validateNetWorth
-            })
+            });
         }
 
         if (this.state.employeeOccupationValue === '') {
             this.setState({
                 isValidOccupation: false
-            })
+            });
         }
 
         if (this.state.employeeNameValue === '') {
             this.setState({
                 isValidName: false
-            })
+            });
         }
 
         if (this.state.employeeLineOneValue === '') {
             this.setState({
                 isValidLineOne: false
-            })
+            });
         }
 
         if (this.state.employeeZipCodeValue === '') {
             this.setState({
                 isValidZipCode: false
-            })
+            });
         }
 
         if (this.state.dropDownEmployeeValue != '' &&
@@ -257,7 +257,7 @@ class editOccupationInfoComponent extends Component {
                     profileEmpOccupation: this.state.employeeOccupationValue,
                     profileEmpEmployer: this.state.employeeNameValue,
                 }
-            }
+            };
         }
         return profilePayload;
     }
@@ -269,7 +269,8 @@ class editOccupationInfoComponent extends Component {
                     this.props.stateCityData.isLoading && <GLoadingSpinner />
                 }
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -288,7 +289,7 @@ class editOccupationInfoComponent extends Component {
                         </Text>
                     </View>
 
-                    <View style={styles.settingsBorder}></View>
+                    <View style={styles.settingsBorder} />
 
                     <View style={styles.editFlexDirectionColumn}>
                         <Text style={styles.occupationIndustryChoose}>
@@ -307,7 +308,8 @@ class editOccupationInfoComponent extends Component {
                         itemToDisplay={"value"}
                         errorFlag={this.state.dropDownEmployeeFlag}
                         errorText={this.dropDownEmployeeMsg}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(290) }} />
+                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(290) }}
+                    />
 
                     <GDropDownComponent
                         dropDownTextName={styles.occupationEmploymentLabel}
@@ -320,7 +322,8 @@ class editOccupationInfoComponent extends Component {
                         itemToDisplay={"value"}
                         errorFlag={this.state.dropDownIndustryFlag}
                         errorText={this.dropDownIndustryMsg}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(390) }} />
+                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(390) }}
+                    />
 
                     <View style={styles.editFlexDirectionColumn}>
                         <Text style={styles.occupationIndustryLabel}>
@@ -334,7 +337,8 @@ class editOccupationInfoComponent extends Component {
                                 onChangeText={this.setValidOccupation}
                                 value={this.state.employeeOccupationValue}
                                 errorFlag={!this.state.isValidOccupation}
-                                errorText={globalString.profileValidationMessages.validateEmpOccupation} />
+                                errorText={globalString.profileValidationMessages.validateEmpOccupation}
+                            />
                         </View>
                     </View>
 
@@ -350,7 +354,8 @@ class editOccupationInfoComponent extends Component {
                                 onChangeText={this.setValidEmpName}
                                 value={this.state.employeeNameValue}
                                 errorFlag={!this.state.isValidName}
-                                errorText={globalString.profileValidationMessages.validateEmpName} />
+                                errorText={globalString.profileValidationMessages.validateEmpName}
+                            />
                         </View>
                     </View>
 
@@ -366,7 +371,8 @@ class editOccupationInfoComponent extends Component {
                                 onChangeText={this.setValidEmpLineOne}
                                 value={this.state.employeeLineOneValue}
                                 errorFlag={!this.state.isValidLineOne}
-                                errorText={globalString.profileValidationMessages.validateEmpLineOne} />
+                                errorText={globalString.profileValidationMessages.validateEmpLineOne}
+                            />
                         </View>
                     </View>
 
@@ -380,7 +386,8 @@ class editOccupationInfoComponent extends Component {
                                 style={styles.occupationMarginTop}
                                 placeholder={""}
                                 onChangeText={this.setValidEmpLineTwo}
-                                value={this.state.employeeLineTwoValue} />
+                                value={this.state.employeeLineTwoValue}
+                            />
                         </View>
                     </View>
 
@@ -397,7 +404,8 @@ class editOccupationInfoComponent extends Component {
                                     onChangeText={this.setValidEmpZipcode}
                                     value={this.state.employeeZipCodeValue}
                                     errorFlag={!this.state.isValidZipCode}
-                                    errorText={globalString.profileValidationMessages.validateZipcode} />
+                                    errorText={globalString.profileValidationMessages.validateZipcode}
+                                />
                             </View>
                         </View>
 
@@ -406,7 +414,8 @@ class editOccupationInfoComponent extends Component {
                                 buttonStyle={styles.saveButtonStyle}
                                 buttonText={globalString.common.save}
                                 textStyle={styles.saveButtonText}
-                                onPress={this.validateZipCodeValue} />
+                                onPress={this.validateZipCodeValue}
+                            />
                         </View>
                     </View>
 
@@ -441,7 +450,8 @@ class editOccupationInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.editOccupationOnCancel} />
+                            onPress={this.editOccupationOnCancel}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -449,7 +459,8 @@ class editOccupationInfoComponent extends Component {
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
                             textStyle={styles.saveButtonText}
-                            onPress={this.validateEmployementValues} />
+                            onPress={this.validateEmployementValues}
+                        />
                     </View>
 
                     <View style={styles.newVictorySection}>
@@ -463,7 +474,8 @@ class editOccupationInfoComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={require("../../Images/logo.png")}
+                        />
                     </View>
 
                     <View style={styles.privacyAgreement}>

@@ -26,7 +26,8 @@ class editRegulatoryComponent extends Component {
 
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -63,7 +64,7 @@ class editRegulatoryComponent extends Component {
                             </Text>
                         </View>
 
-                        <View style={styles.settingsBorder}></View>
+                        <View style={styles.settingsBorder} />
 
                         <View style={styles.editRegulatoryMargin}>
                             <Text style={styles.editRegulatoryPolitical}>
@@ -76,14 +77,16 @@ class editRegulatoryComponent extends Component {
                                 buttonStyle={styles.cancelButtonStyle}
                                 buttonText={globalString.common.cancel}
                                 textStyle={styles.cancelButtonText}
-                                onPress={this.editRegulatoryOnCancel} />
+                                onPress={this.editRegulatoryOnCancel}
+                            />
                         </View>
 
                         <View style={styles.editFlexDirectionColumn}>
                             <GButtonComponent
                                 buttonStyle={styles.saveButtonStyle}
                                 buttonText={globalString.common.save}
-                                textStyle={styles.saveButtonText} />
+                                textStyle={styles.saveButtonText}
+                            />
                         </View>
 
                     </View>
@@ -105,7 +108,8 @@ class editRegulatoryComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={require("../../Images/logo.png")}
+                        />
                     </View>
 
                     <View style={styles.privacyAgreement}>

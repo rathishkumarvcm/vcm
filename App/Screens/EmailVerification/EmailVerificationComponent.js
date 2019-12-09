@@ -42,7 +42,7 @@ class EmailVerificationComponent extends Component {
         
         
                           console.log(data);
-                          this.props.navigation.navigate('login',{emailVerified : true,emailVerifiedData:registerSelfData})
+                          this.props.navigation.navigate('login',{emailVerified : true,emailVerifiedData:registerSelfData});
         })
           .catch(err => console.log(err));
     }
@@ -61,13 +61,13 @@ class EmailVerificationComponent extends Component {
 
     navigatePassword = ()=>this.props.navigation.navigate('login');
     
-    goBack = () =>{this.props.navigation.goBack()}
+    goBack = () =>{this.props.navigation.goBack();}
 
     validCode = () => {
         if(this.state.code.length === 6){
             this.setState({
                 confirmCode : true
-            })
+            });
         }
     }
  
@@ -127,8 +127,7 @@ class EmailVerificationComponent extends Component {
            buttonText="Resend"
            textStyle={styles.cancelButtonText}
            onPress={this.resendOTP}
-          // disabled={this.state.email === '' || !this.state.validationEmail}
-   />
+           />
 :
 null} 
 
@@ -138,8 +137,7 @@ null}
            buttonText="Confirm"
            textStyle={styles.signInButtonText}
            onPress={this.verifyOTP}
-          // disabled={this.state.email === '' || !this.state.validationEmail}
-   />
+           />
  : 
  null} 
 

@@ -113,7 +113,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
             selectedConfirmItemID:this.state.selectedConfirmItemID,
             selectedGeneralDocumentsAnnualItemID: this.state.selectedGeneralDocumentsAnnualItemID,
             selectedGeneralDocumentsPrivacyItemID: this.state.selectedGeneralDocumentsPrivacyItemID,    
-        }        
+        };        
         this.props.saveData(payloadData);
         this.props.navigation.goBack();        
     }

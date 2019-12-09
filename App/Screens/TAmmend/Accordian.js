@@ -14,7 +14,7 @@ export default class Accordian extends Component {
             expanded: false,
             modalVisible:false,
             ammend:false
-        }
+        };
 
     }
 
@@ -31,16 +31,16 @@ export default class Accordian extends Component {
     showAmmend = () => {
         this.setState({
             ammend:true,
-        })
+        });
     }
     hideAmmend = () => {
         this.setState({
             ammend:false,
-        })
+        });
     }
 
     render() {
-        console.log('data', this.props.selectedIndex)
+        console.log('data', this.props.selectedIndex);
         return (
             
             <View>
@@ -48,7 +48,7 @@ export default class Accordian extends Component {
                 <TouchableOpacity style={styles.row} onPress={() => this.toggleExpand(item)}>
                 <Text style={styles.expandImage}>{this.state.expanded ? "-" : "+"}</Text>
                     <Text style={styles.lblTxt}>{this.props.title}</Text>
-                    <TouchableOpacity  style={styles.ellipseImage} onPress={this.showAmmend}>
+                    <TouchableOpacity style={styles.ellipseImage} onPress={this.showAmmend}>
                     
                     <GIcon 
                         name="ellipsis-v"
@@ -56,7 +56,7 @@ export default class Accordian extends Component {
                         size={20}
                         color="black"
                     />
-                </TouchableOpacity>
+                    </TouchableOpacity>
                 </TouchableOpacity>
                 
                 <View />
@@ -71,62 +71,65 @@ export default class Accordian extends Component {
                                 <TouchableOpacity onPress={this.hideAmmend} >
                                 <Text style={[styles.lblTxtInner,{marginBottom:"2%"}]} >Cancel</Text>
                                 </TouchableOpacity>
-                                </View>):null}
+                                                    </View>):null}
                                 <View style={styles.viewRow}>
                                         <Text style={styles.lblTxtInner} >{this.props.data.USS}</Text>
                                         <Text style={styles.lblTxtInner} >{this.props.data.count}</Text>
                                 </View>
 
                                 <View style={styles.viewRow}>
-                                        <Text style={styles.lblTxtSmall}  >Date added:</Text>
+                                        <Text style={styles.lblTxtSmall} >Date added:</Text>
                                         <Text style={styles.lblTxtSmall} >{this.props.data.Dateadded}</Text>
                                 </View>
                                 <Text style={styles.lblLine} />
                                 <View style={styles.viewColum}>
-                                        <Text style={styles.lblTxtInner}  >CurrentValue</Text>
+                                        <Text style={styles.lblTxtInner} >CurrentValue</Text>
                                         <Text style={styles.lblTxtMedium} >{this.props.data.CurrentValue}</Text>
                                 </View>
                                 <View style={styles.viewColum}>
-                                        <Text style={styles.lblTxtInner}  >TransactionType</Text>
+                                        <Text style={styles.lblTxtInner} >TransactionType</Text>
                                         <Text style={styles.lblTxtMedium} >{this.props.data.TransactionType}</Text>
                                 </View>
                                 <View style={styles.viewColum}>
-                                        <Text style={styles.lblTxtInner}  >PaymentMode</Text>
+                                        <Text style={styles.lblTxtInner} >PaymentMode</Text>
                                         <Text style={styles.lblTxtMedium} >{this.props.data.PaymentMode}</Text>
                                 </View>
                                 <View style={styles.viewColum}>
-                                        <Text style={styles.lblTxtInner}  >OrderStatus</Text>
+                                        <Text style={styles.lblTxtInner} >OrderStatus</Text>
                                         <Text style={styles.lblTxtMedium} >{this.props.data.OrderStatus}</Text>
                                 </View>
                     </View>
                 }
                 { this.state.modalVisible ?
             (<Modal
-            transparent={true}
-            visible={this.state.modalVisible}>
+            transparent
+            visible={this.state.modalVisible}
+            >
             <View style={styles.modalView}>
               <View style={styles.modalInsideView}>
                 <Text style={styles.modalText}>Are you Sure you want to Amend {this.props.selectedTitle}
-                (Purchase of {this.props.selectedValue} of UAUX fund)</Text>
+                (Purchase of {this.props.selectedValue} of UAUX fund)
+                </Text>
                 <View style={{flexDirection:'row',marginTop:"5%"}}>
             <GButtonComponent
                                 buttonStyle={styles.cancelButton}
                                 buttonText={gblStrings.common.cancel}
                                 textStyle={styles.cancelButtonText}
                                 onPress={this.hideModal}
-                            />
+            />
                             <GButtonComponent
                                 buttonStyle={styles.saveButton}
                                 buttonText="Proceed"
                                 textStyle={styles.saveButtonText}
                             //onPress={()=>this.props.navigation.navigate('registerPassword')}
-                            /></View>
+                            />
+                </View>
               </View>
             </View>
             
-            </Modal>):null}
+             </Modal>):null}
             </View>
-        )
+        );
     }
 
     /*onClick = (item) => {
@@ -138,7 +141,7 @@ export default class Accordian extends Component {
 
     toggleExpand = () => {
         this.setState({ expanded: !this.state.expanded });
-        this.props.selectDataIndex(this.props.data, this.props.title)
+        this.props.selectDataIndex(this.props.data, this.props.title);
     }
 }
 

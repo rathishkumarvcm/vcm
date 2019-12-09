@@ -397,6 +397,6 @@ export const styles = StyleSheet.create({
         color: '#56565A', fontSize: scaledHeight(18), lineHeight: 30
     },
     editMilitaryServingRadio: {
-        flexDirection: 'row', marginLeft: '2%',  width: '40%', marginTop: scaledHeight(2)
+        flexDirection: 'row', marginLeft: '2%', width: '40%', marginTop: scaledHeight(2)
     }
 });

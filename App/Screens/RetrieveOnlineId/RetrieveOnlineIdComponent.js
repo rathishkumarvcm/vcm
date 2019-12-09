@@ -96,7 +96,7 @@ class RetrieveOnlineIdComponent extends Component {
             
             
             
-            <GFooterSettingsComponent ></GFooterSettingsComponent>
+            <GFooterSettingsComponent />
             </ScrollView>
             </View>
     

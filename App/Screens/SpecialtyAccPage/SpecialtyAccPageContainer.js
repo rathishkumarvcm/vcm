@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import SpecialtyAccPageComponent from  './SpecialtyAccPageComponent';
+import SpecialtyAccPageComponent from './SpecialtyAccPageComponent';
 import { getLogin } from "../../Shared/Reducers";
 import { loginActions } from "../../Shared/Actions";
 

@@ -27,7 +27,7 @@ const UserEmailInformation = (props) => {
                 {props.emailId}
             </Text>
 
-            <View style={styles.editEmailBorder}></View>
+            <View style={styles.editEmailBorder} />
 
             <View style={styles.editEmailPrimaryContent}>
                 <Text style={styles.editEmailId}>
@@ -60,13 +60,14 @@ class editEmailInfoComponent extends Component {
     renderEmailInformation = (dataLength) => ({ item, index }) =>
         (<UserEmailInformation
             emailType={item.emailType}
-            emailId={item.emailId} />);
+            emailId={item.emailId}
+        />);
 
     componentDidMount() {
         if (this.props && this.props.initialState && this.props.initialState.email) {
             this.setState({
                 profilePrimayMail: this.props.initialState.email
-            })
+            });
         }
     }
 
@@ -78,7 +79,8 @@ class editEmailInfoComponent extends Component {
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -96,17 +98,19 @@ class editEmailInfoComponent extends Component {
                             {globalString.editEmailInformations.editEmailTitle}
                         </Text>
                         <Text style={styles.editEmailAddNew}
-                            onPress={this.emailAddNew}>
+                            onPress={this.emailAddNew}
+                        >
                             {globalString.editEmailInformations.editEmailAddNew}
                         </Text>
                     </View>
 
-                    <View style={styles.settingsBorder}></View>
+                    <View style={styles.settingsBorder} />
 
                     <FlatList
                         data={tempPrimaryMailData}
                         keyExtractor={this.generateKeyExtractor}
-                        renderItem={this.renderEmailInformation(tempPrimaryMailData.length)} />
+                        renderItem={this.renderEmailInformation(tempPrimaryMailData.length)}
+                    />
 
                     {/* <View style={styles.editEmailInformations}>
                         <Text style={styles.editEmailInfoView}>
@@ -125,7 +129,8 @@ class editEmailInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.back}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.emailAddNewOnCancel} />
+                            onPress={this.emailAddNewOnCancel}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -145,7 +150,8 @@ class editEmailInfoComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={require("../../Images/logo.png")}
+                        />
                     </View>
 
                     <View style={styles.whiteBackground}>
@@ -156,9 +162,11 @@ class editEmailInfoComponent extends Component {
 
                     <View style={styles.whiteBackground}>
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/twitterlogo.png")} />
+                            source={require("../../Images/twitterlogo.png")}
+                        />
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/linkedinlogo.png")} />
+                            source={require("../../Images/linkedinlogo.png")}
+                        />
                     </View>
 
                     <View style={styles.privacyAgreement}>

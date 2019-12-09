@@ -66,7 +66,7 @@ const UserPhoneInformation = (props) => {
                 {props.mobilePreferredTime}
             </Text>
 
-            <View style={styles.editEmailBorder}></View>
+            <View style={styles.editEmailBorder} />
 
             <View style={styles.editEmailPrimaryContent}>
                 <Text style={styles.editEmailId}>
@@ -99,7 +99,8 @@ class editPhoneInfoComponent extends Component {
         (<UserPhoneInformation
             mobileNumberType={item.mobileNumberType}
             mobileNumber={item.mobileNumber}
-            mobilePreferredTime={item.mobilePreferredTime} />);
+            mobilePreferredTime={item.mobilePreferredTime}
+        />);
 
     componentDidMount() { }
 
@@ -111,7 +112,8 @@ class editPhoneInfoComponent extends Component {
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -129,12 +131,13 @@ class editPhoneInfoComponent extends Component {
                             {globalString.editPhoneInformations.phoneLabel}
                         </Text>
                         <Text style={styles.phoneInfoAddNewLabel}
-                            onPress={this.phoneInformationOnAdd}>
+                            onPress={this.phoneInformationOnAdd}
+                        >
                             {globalString.editPhoneInformations.phoneAddNew}
                         </Text>
                     </View>
 
-                    <View style={styles.settingsBorder}></View>
+                    <View style={styles.settingsBorder} />
 
                     <View>
                         <View style={styles.settingsView}>
@@ -146,7 +149,8 @@ class editPhoneInfoComponent extends Component {
                         <FlatList
                             data={tempUserMobile}
                             keyExtractor={this.generateKeyExtractor}
-                            renderItem={this.renderPhoneInformation(tempUserMobile.length)} />
+                            renderItem={this.renderPhoneInformation(tempUserMobile.length)}
+                        />
 
                     </View>
 
@@ -158,7 +162,8 @@ class editPhoneInfoComponent extends Component {
                         <FlatList
                             data={tempUserHome}
                             keyExtractor={this.generateKeyExtractor}
-                            renderItem={this.renderPhoneInformation(tempUserHome.length)} />
+                            renderItem={this.renderPhoneInformation(tempUserHome.length)}
+                        />
 
                     </View>
 
@@ -170,7 +175,8 @@ class editPhoneInfoComponent extends Component {
                         <FlatList
                             data={tempUserWork}
                             keyExtractor={this.generateKeyExtractor}
-                            renderItem={this.renderPhoneInformation(tempUserWork.length)} />
+                            renderItem={this.renderPhoneInformation(tempUserWork.length)}
+                        />
 
                     </View>
 
@@ -183,11 +189,12 @@ class editPhoneInfoComponent extends Component {
                         </Text>
                     </View>
 
-                    <View style={styles.settingsBorder}></View>
+                    <View style={styles.settingsBorder} />
 
                     <View style={styles.phoneFaxView}>
                         <GInputComponent
-                            placeholder={globalString.editPhoneInformations.phoneFaxLabel} />
+                            placeholder={globalString.editPhoneInformations.phoneFaxLabel}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -195,7 +202,8 @@ class editPhoneInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.phoneInformationOnCancel} />
+                            onPress={this.phoneInformationOnCancel}
+                        />
                     </View>
 
                     <View style={styles.newVictorySection}>
@@ -209,7 +217,8 @@ class editPhoneInfoComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={require("../../Images/logo.png")}
+                        />
                     </View>
 
                     <View style={styles.whiteBackground}>
@@ -220,9 +229,11 @@ class editPhoneInfoComponent extends Component {
 
                     <View style={styles.whiteBackground}>
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/twitterlogo.png")} />
+                            source={require("../../Images/twitterlogo.png")}
+                        />
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/linkedinlogo.png")} />
+                            source={require("../../Images/linkedinlogo.png")}
+                        />
                     </View>
 
                     <View style={styles.privacyAgreement}>

@@ -89,7 +89,7 @@ generateKeyExtractor = (item) => item.id;
     {
         return (
             <View style={styles.container}>
-                <GHeaderComponent register navigation={this.props.navigation}/>
+                <GHeaderComponent register navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
                 <Text style={styles.autoInvestHead}>{'Create Systematic Withdrawal Plan'}</Text>
                 <View style={styles.seperator_line} />
@@ -97,15 +97,15 @@ generateKeyExtractor = (item) => item.id;
                     <View style={styles.circle_Completed}>
                         <Text style={styles.circleTextNew}>{'1'}</Text>
                     </View>
-                    <View style={styles.circle_connect}/>
+                    <View style={styles.circle_connect} />
                     <View style={styles.circle_Completed}>
                         <Text style={styles.circleTextNew}>{'2'}</Text>
                     </View>
-                    <View style={styles.circle_connect}/>
+                    <View style={styles.circle_connect} />
                     <View style={styles.circle_Inprogress}>
                         <Text style={styles.circleTextNew}>{'3'}</Text>
                     </View>
-                    <View style={styles.circle_connect}/>
+                    <View style={styles.circle_connect} />
                     <View style={styles.circle_NotStarted}>
                         <Text style={styles.circleText}>{'4'}</Text>
                     </View>
@@ -124,7 +124,7 @@ generateKeyExtractor = (item) => item.id;
                             data={autoInvestmentJson}
                             renderItem={this.renderInvestment()}
                             keyExtractor={this.generateKeyExtractor}
-                        />
+                    />
                         <View style={styles.verifyBottomView}>
                             <Text style={styles.verifyBottomText}>
                                 {'Note : If the day you selected falls on a weekend or holiday, your Fund Transfer on next business day'}
@@ -135,7 +135,7 @@ generateKeyExtractor = (item) => item.id;
                         buttonText={globalString.common.save}
                         textStyle={styles.cancelButtonText}
                         onPress={this.navigationLogin}
-                    />
+                        />
                     <GButtonComponent
                         buttonStyle={styles.cancelButton}
                         buttonText={globalString.common.cancel}

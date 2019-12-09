@@ -93,7 +93,8 @@ class editAddPhoneNumberComponent extends Component {
 
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -112,7 +113,7 @@ class editAddPhoneNumberComponent extends Component {
                         </Text>
                     </View>
 
-                    <View style={styles.settingsBorder}></View>
+                    <View style={styles.settingsBorder} />
 
                     <GDropDownComponent
                         dropDownTextName={styles.phoneTypeLabel}
@@ -123,7 +124,8 @@ class editAddPhoneNumberComponent extends Component {
                         dropDownValue={this.state.dropDownPhoneValue}
                         selectedDropDownValue={this.dropDownPhoneSelect}
                         itemToDisplay={"value"}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(190) }} />
+                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(190) }}
+                    />
 
                     <View style={styles.editPhoneNumType}>
                         <Text style={styles.phoneTypeLabel}>
@@ -137,14 +139,16 @@ class editAddPhoneNumberComponent extends Component {
                                 propInputStyle={styles.userIDTextBox1}
                                 placeholder={""}
                                 editable={false}
-                                value={this.state.valueDropDown} />
+                                value={this.state.valueDropDown}
+                            />
 
                             <TouchableOpacity style={styles.phoneDropDown} onPress={this.selectTheState}>
                                 <GIcon
                                     name="md-arrow-dropdown"
                                     type="ionicon"
                                     size={20}
-                                    color="black" />
+                                    color="black"
+                                />
                             </TouchableOpacity>
                         </TouchableOpacity>
                     </View>
@@ -153,7 +157,8 @@ class editAddPhoneNumberComponent extends Component {
                         <GInputComponent
                             propInputStyle={styles.userIDTextBox1}
                             placeholder={""}
-                            editable={false} />
+                            editable={false}
+                        />
                     </View>
 
                     <GDropDownComponent
@@ -165,7 +170,8 @@ class editAddPhoneNumberComponent extends Component {
                         dropDownValue={this.state.dropDownContactValue}
                         selectedDropDownValue={this.dropDownContactSelect}
                         itemToDisplay={"value"}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(460) }} />
+                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(460) }}
+                    />
 
                     <View style={styles.settingsMobile}>
                         <View style={{ width: '15%' }}>
@@ -173,7 +179,8 @@ class editAddPhoneNumberComponent extends Component {
                                 name="ios-square-outline"
                                 type="ionicon"
                                 size={40}
-                                color="#ACACAC" />
+                                color="#ACACAC"
+                            />
                         </View>
 
                         <Text style={styles.phonePreferredLabel}>
@@ -186,14 +193,16 @@ class editAddPhoneNumberComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.phoneAddNewNumberOnCancel} />
+                            onPress={this.phoneAddNewNumberOnCancel}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
-                            textStyle={styles.saveButtonText} />
+                            textStyle={styles.saveButtonText}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -213,7 +222,8 @@ class editAddPhoneNumberComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={require("../../Images/logo.png")}
+                        />
                     </View>
 
                     <View style={styles.privacyAgreement}>

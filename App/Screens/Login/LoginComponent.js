@@ -28,7 +28,7 @@ const testawsMobile = {
     "aws_user_pools_id": "us-east-2_TOS87x5Rt",
     "aws_user_pools_web_client_id": "3a3rpdjb4gi1iqu1g6i2blk37c",
     "oauth": {}
-}
+};
 
 
 Amplify.configure(testawsMobile);
@@ -61,7 +61,7 @@ class LoginComponent extends Component {
 
 
     componentDidMount(){
-        console.log("componentDidMount")
+        console.log("componentDidMount");
         TouchID.isSupported()
         .then(biometryType => {
             if (biometryType === 'TouchID') {
@@ -95,12 +95,12 @@ class LoginComponent extends Component {
         if(this.props && this.props.initialState && this.props.initialState.verifiedEmail){
             this.setState({
                 email : this.props.initialState.verifiedEmail
-            })
+            });
         }
     }
 
     componentDidUpdate(){
-        let emailVerify = this.props.navigation.getParam('emailVerified')
+        let emailVerify = this.props.navigation.getParam('emailVerified');
         let onlineID = this.props.navigation.getParam('emailVerifiedData');
         if(emailVerify !== undefined && !this.state.registeredSuccess){
             this.setState({
@@ -183,7 +183,7 @@ class LoginComponent extends Component {
     }
 
     signIn = () => {
-        console.log("test")
+        console.log("test");
         let username = this.state.name;
         let password = this.state.password;
         let email = this.state.email;
@@ -195,7 +195,7 @@ class LoginComponent extends Component {
             //phone_number
         }).then(data => {
             console.log("Data",data);
-            alert("Signed In Successfully.")
+            alert("Signed In Successfully.");
             RNSecureKeyStore.set("EmailAddress",username, {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
       .then((res) => {
           console.log("stored",res);
@@ -204,7 +204,7 @@ class LoginComponent extends Component {
       });
             this.props.navigation.navigate('dashboard');
         }).catch(error => {
-            alert("Username and Password Incorrect.")
+            alert("Username and Password Incorrect.");
             console.log(error);
         });
     }
@@ -251,7 +251,7 @@ class LoginComponent extends Component {
   
 
     render(){
-        console.log("this.props----",this.props)
+        console.log("this.props----",this.props);
 
 
         return (
