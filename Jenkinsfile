@@ -5,6 +5,19 @@ pipeline {
     }
     tools {nodejs "node"}
     stages {
+        stage('Checkout Shared Repo') {
+            steps {
+                dir('App')
+                {
+                    deleteDir('Shared')
+                    sh 'mkdir Shared'
+                }
+                checkout([$class: 'GitSCM', branches: [[name: '*/master']], 
+                            userRemoteConfigs: [[url: 'https://github.com/victorycapital/vcm-ms-shared.git']],
+                            extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'App/Shared']] 
+                        ])
+            }
+        }
         stage('Build') { 
             steps {
                 sh 'npm install'
