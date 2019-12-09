@@ -3,6 +3,7 @@ pipeline {
     options {
         skipStagesAfterUnstable()
     }
+    tools {nodejs "node"}
     stages {
         stage('Build') { 
             steps {
