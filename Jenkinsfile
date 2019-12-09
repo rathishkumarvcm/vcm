@@ -28,7 +28,7 @@ pipeline {
                 dir('ios')
                 {
                     sh 'LANG=en_US.UTF-8 /usr/local/bin/pod install'
-                    sh '/usr/bin/xcodebuild -scheme MemberServices -workspace MemberServices.xcworkspace -configuration Release build DEVELOPMENT_TEAM=ADDJLMH3Z7 -allowProvisioningUpdates'
+                    sh '/usr/bin/xcodebuild -scheme MemberServices -workspace MemberServices.xcworkspace -configuration Release build DEVELOPMENT_TEAM=ADDJLMH3Z7 -allowProvisioningUpdates -destination id=BC62E743-C381-4FD9-8F88-34144DED2802 -derivedDataPath build/MemberServices'
                 }
             }
         }
