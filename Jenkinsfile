@@ -9,7 +9,10 @@ pipeline {
             steps {
                 dir('App')
                 {
-                    deleteDir('Shared')
+                    dir('Shared')
+                    {
+                        deleteDir()
+                    }
                     sh 'mkdir Shared'
                 }
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], 
