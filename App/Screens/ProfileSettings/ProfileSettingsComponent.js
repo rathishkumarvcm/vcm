@@ -1,8 +1,80 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView } from 'react-native';
+import { Text, View, Image, ScrollView, FlatList } from 'react-native';
 import { styles } from './styles';
 import { GHeaderComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
+import PropTypes from "prop-types";
+
+const tempRelationShipDetails = [
+    {
+        "relationShipName": 'Anna',
+        "relationShipType": 'Wife',
+        "relationShipGender": 'Female',
+        "relationShipEmail": 'xyz@abc.com',
+        "relationShipStatus": 'Married',
+    }
+];
+
+const UserRelationShipInformation = (props) => {
+    return (
+        <View style={styles.editEmailHolder}>
+            <Text style={styles.editEmailType}>
+                {props.relationShipName}
+            </Text>
+
+            <View style={styles.editEmailBorder} />
+
+            <View style={styles.relationLabelTextView}>
+                <Text style={styles.profileSettingLabel}>
+                    {globalString.accManagement.relationToOwner}
+                </Text>
+
+                <Text style={styles.profileSettingValueLabel}>
+                    {props.relationShipType}
+                </Text>
+            </View>
+
+            <View style={styles.relationLabelTextView}>
+                <Text style={styles.profileSettingLabel}>
+                    {globalString.accManagement.gender}
+                </Text>
+
+                <Text style={styles.profileSettingValueLabel}>
+                    {props.relationShipGender}
+                </Text>
+            </View>
+
+            <View style={styles.relationLabelTextView}>
+                <Text style={styles.profileSettingLabel}>
+                    {globalString.accManagement.emailAddress}
+                </Text>
+
+                <Text style={styles.profileSettingValueLabel}>
+                    {props.relationShipEmail}
+                </Text>
+            </View>
+
+            <View style={styles.relationLabelTextView}>
+                <Text style={styles.profileSettingLabel}>
+                    {globalString.accManagement.maritalStatus}
+                </Text>
+
+                <Text style={styles.profileSettingValueLabel}>
+                    {props.relationShipStatus}
+                </Text>
+            </View>
+
+        </View>
+    );
+};
+
+UserRelationShipInformation.propTypes = {
+    relationShipName: PropTypes.string,
+    relationShipType: PropTypes.string,
+    relationShipGender: PropTypes.string,
+    relationShipEmail: PropTypes.string,
+    relationShipStatus: PropTypes.string
+};
 
 class ProfileSettingsComponent extends Component {
     constructor(props) {
@@ -54,6 +126,14 @@ class ProfileSettingsComponent extends Component {
             profileRelationMarital: ''
         };
     }
+
+    renderRelationShipInformation = (dataLength) => ({ item, index }) =>
+        (<UserRelationShipInformation
+            relationShipName={item.relationShipName}
+            relationShipType={item.relationShipType}
+            relationShipGender={item.relationShipGender}
+            relationShipEmail={item.relationShipEmail}
+            relationShipStatus={item.relationShipStatus} />);
 
     ShowHideComponent = () => {
         if (this.state.show == true) {
@@ -257,9 +337,9 @@ class ProfileSettingsComponent extends Component {
                         profileNetWorth: '$ ' + this.props.profileState.financialInformations.profileNetWorth,
                         profileTaxFilling: this.props.profileState.financialInformations.profileTaxFilling,
                     });
-    
+
                 }
-    
+
                 if (this.props && this.props.profileState && this.props.profileState.employmentInformations) {
                     this.setState({
                         profileEmploymentStatus: this.props.profileState.employmentInformations.profileEmploymentStatus,
@@ -293,12 +373,19 @@ class ProfileSettingsComponent extends Component {
     profileSettingFamilyManage = () => this.props.navigation.navigate('editFamilyMemberInfo');
 
     render() {
-        console.log("Profile On Back ", this.props);
+
+        let profileRelationShipData = tempRelationShipDetails;
+
+        if (this.props &&
+            this.props.profileState &&
+            this.props.profileState.profileRelationShipDetails) {
+            profileRelationShipData = this.props.profileState.profileRelationShipDetails;
+        }
+
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation}
-                />
+                    navigation={this.props.navigation} />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -727,32 +814,6 @@ class ProfileSettingsComponent extends Component {
                         </View>
                     </View>
 
-                    {/* Regulatory Information with Manage Options */}
-
-                    <View>
-                        <View style={[styles.settingsView, styles.profileSettingView]}>
-                            <Text style={styles.profileSettingViewOne}>
-                                {globalString.profileSettingsPage.profileRegulatoryInfo}
-                            </Text>
-
-                            <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingRegulatoryManage}
-                            >
-                                {globalString.profileSettingsPage.profileManage}
-                            </Text>
-                        </View>
-
-                        <View style={styles.settingsBorder} />
-
-                        <View style={styles.settingsMilitary}>
-                            <View style={styles.settingsView1}>
-                                <Text style={styles.profileSettingViewBack}>
-                                    {globalString.profileSettingsPage.profileRegulatoryQues}
-                                </Text>
-                            </View>
-                        </View>
-                    </View>
-
                     {/* Manage Relationship with Add Options */}
 
                     <View>
@@ -762,39 +823,18 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingAddRelation}
-                            >
+                                onPress={this.profileSettingAddRelation}>
                                 {globalString.profileSettingsPage.profileRelationshipAdd}
                             </Text>
                         </View>
 
                         <View style={styles.settingsBorder} />
 
-                        <View style={styles.settingsRelationShip}
-                            onPress={this.profileSettingFamilyManage}
-                        >
-                            <View style={styles.settingsBorderGap}>
-                                <Text style={styles.profileSettingLabel}
-                                    onPress={this.profileSettingFamilyManage}
-                                >
-                                    {globalString.profileSettingsPage.profileFamilyMemberLabel}
-                                </Text>
-                                <Text style={styles.profileSettingValueLabel}>
-                                    {"Wife"}
-                                </Text>
-                            </View>
-                        </View>
+                        <FlatList
+                            data={profileRelationShipData}
+                            keyExtractor={this.generateKeyExtractor}
+                            renderItem={this.renderRelationShipInformation(profileRelationShipData.length)} />
 
-                        <View style={styles.settingsRelationShip}>
-                            <View style={styles.settingsBorderGap}>
-                                <Text style={styles.profileSettingLabel}>
-                                    {globalString.profileSettingsPage.profileFamilyMemberLabel}
-                                </Text>
-                                <Text style={styles.profileSettingValueLabel}>
-                                    {"Daughter"}
-                                </Text>
-                            </View>
-                        </View>
                     </View>
 
                     {/* Social Media Informations */}

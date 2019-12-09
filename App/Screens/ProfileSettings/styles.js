@@ -389,5 +389,23 @@ export const styles = StyleSheet.create({
     profileSettingInvestLabel: { flexWrap: 'wrap', color: '#56565A', fontSize: scaledHeight(16), lineHeight: 24, textAlign: 'justify', marginBottom: '3%' },
     profileSettingSecurityLabel: { color: '#56565A', lineHeight: 24, textAlign: 'justify', fontSize: scaledHeight(16), marginTop: '4%' },
     profileSettingShareLabel: { color: '#56565A', fontSize: scaledHeight(16), lineHeight: 24, textAlign: 'justify' },
-    profileSettingFooterView: { flexDirection: 'column', width: '92%', margin: '4%' }
+    profileSettingFooterView: { flexDirection: 'column', width: '92%', margin: '4%' },
+    editEmailHolder: {
+        width: '92%', marginLeft: '4%', marginRight: '4%', marginTop: '4%', borderColor: '#CCCCCC', borderWidth: 1, backgroundColor: '#fff'
+    },
+    editEmailType: {
+        color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold', marginLeft: '3%', marginBottom: '2%', marginTop: '4%'
+    },
+    editEmailId: {
+        color: '#707070', fontSize: scaledHeight(16), marginLeft: '3%', marginBottom: '2%'
+    },
+    editEmailBorder: { 
+        borderBottomWidth: 1, borderColor: '#B2B2B2', marginTop: '4%', marginBottom: '4%' 
+    },
+    relationLabelTextView: {
+        marginTop: scaledHeight(12),
+        marginBottom: scaledHeight(12),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+    },
 });

@@ -12,18 +12,6 @@ const tempUserMobile = [
         "mobileNumber": '+1(xxx) xxx-7890',
         "mobilePreferredTime": 'Morning',
         "isPrimaryMobile": true
-    },
-    {
-        "mobileNumberType": 'Secondary Mobile',
-        "mobileNumber": '+1(xxx) xxx-7890',
-        "mobilePreferredTime": 'Morning',
-        "isPrimaryMobile": false
-    },
-    {
-        "mobileNumberType": 'Teritary Mobile',
-        "mobileNumber": '+1(xxx) xxx-7890',
-        "mobilePreferredTime": 'Morning',
-        "isPrimaryMobile": false
     }
 ];
 
@@ -33,12 +21,6 @@ const tempUserHome = [
         "mobileNumber": '+1(xxx) xxx-7890',
         "mobilePreferredTime": 'Morning',
         "isPrimaryMobile": true
-    },
-    {
-        "mobileNumberType": 'Secondary Mobile',
-        "mobileNumber": '+1(xxx) xxx-7890',
-        "mobilePreferredTime": 'Morning',
-        "isPrimaryMobile": false
     }
 ];
 
@@ -109,11 +91,33 @@ class editPhoneInfoComponent extends Component {
     phoneInformationOnCancel = () => this.props.navigation.navigate('profileSettings');
 
     render() {
+
+        let userMobileNumber = tempUserMobile;
+        let userHomeNumber = tempUserHome;
+        let userWorkNumber = tempUserWork;
+
+        if (this.props &&
+            this.props.profileState &&
+            this.props.profileState.profileUserMobileNumber) {
+            userMobileNumber = this.props.profileState.profileUserMobileNumber;
+        }
+
+        if (this.props &&
+            this.props.profileState &&
+            this.props.profileState.profileUserHomeNumber) {
+            userHomeNumber = this.props.profileState.profileUserHomeNumber;
+        }
+
+        if (this.props &&
+            this.props.profileState &&
+            this.props.profileState.profileUserWorkNumber) {
+            userWorkNumber = this.props.profileState.profileUserWorkNumber;
+        }
+
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation}
-                />
+                    navigation={this.props.navigation} />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -131,8 +135,7 @@ class editPhoneInfoComponent extends Component {
                             {globalString.editPhoneInformations.phoneLabel}
                         </Text>
                         <Text style={styles.phoneInfoAddNewLabel}
-                            onPress={this.phoneInformationOnAdd}
-                        >
+                            onPress={this.phoneInformationOnAdd}>
                             {globalString.editPhoneInformations.phoneAddNew}
                         </Text>
                     </View>
@@ -147,10 +150,9 @@ class editPhoneInfoComponent extends Component {
                         </View>
 
                         <FlatList
-                            data={tempUserMobile}
+                            data={userMobileNumber}
                             keyExtractor={this.generateKeyExtractor}
-                            renderItem={this.renderPhoneInformation(tempUserMobile.length)}
-                        />
+                            renderItem={this.renderPhoneInformation(userMobileNumber.length)} />
 
                     </View>
 
@@ -160,10 +162,9 @@ class editPhoneInfoComponent extends Component {
                         </View>
 
                         <FlatList
-                            data={tempUserHome}
+                            data={userHomeNumber}
                             keyExtractor={this.generateKeyExtractor}
-                            renderItem={this.renderPhoneInformation(tempUserHome.length)}
-                        />
+                            renderItem={this.renderPhoneInformation(userHomeNumber.length)} />
 
                     </View>
 
@@ -173,10 +174,9 @@ class editPhoneInfoComponent extends Component {
                         </View>
 
                         <FlatList
-                            data={tempUserWork}
+                            data={userWorkNumber}
                             keyExtractor={this.generateKeyExtractor}
-                            renderItem={this.renderPhoneInformation(tempUserWork.length)}
-                        />
+                            renderItem={this.renderPhoneInformation(userWorkNumber.length)} />
 
                     </View>
 
@@ -193,8 +193,7 @@ class editPhoneInfoComponent extends Component {
 
                     <View style={styles.phoneFaxView}>
                         <GInputComponent
-                            placeholder={globalString.editPhoneInformations.phoneFaxLabel}
-                        />
+                            placeholder={globalString.editPhoneInformations.phoneFaxLabel} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -202,8 +201,7 @@ class editPhoneInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.phoneInformationOnCancel}
-                        />
+                            onPress={this.phoneInformationOnCancel} />
                     </View>
 
                     <View style={styles.newVictorySection}>
@@ -217,8 +215,7 @@ class editPhoneInfoComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")}
-                        />
+                            source={require("../../Images/logo.png")} />
                     </View>
 
                     <View style={styles.whiteBackground}>
@@ -229,11 +226,9 @@ class editPhoneInfoComponent extends Component {
 
                     <View style={styles.whiteBackground}>
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/twitterlogo.png")}
-                        />
+                            source={require("../../Images/twitterlogo.png")} />
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/linkedinlogo.png")}
-                        />
+                            source={require("../../Images/linkedinlogo.png")} />
                     </View>
 
                     <View style={styles.privacyAgreement}>

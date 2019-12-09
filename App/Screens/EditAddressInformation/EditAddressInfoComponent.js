@@ -15,24 +15,6 @@ const tempUserAddress = [
         "addressZipcode": '90001',
         "isMailingAddress": true,
         "isPhysicalAddress": false
-    },
-    {
-        "addressType": 'Diplomatic Post Office',
-        "addressLineOne": '5400 N Black Lake Oak Rd',
-        "addressCity": 'San Diego',
-        "addressState": 'California',
-        "addressZipcode": '90001',
-        "isMailingAddress": false,
-        "isPhysicalAddress": true
-    },
-    {
-        "addressType": 'Diplomatic Post Office',
-        "addressLineOne": '5400 N Black Lake Oak Rd',
-        "addressCity": 'San Diego',
-        "addressState": 'California',
-        "addressZipcode": '90001',
-        "isMailingAddress": false,
-        "isPhysicalAddress": false
     }
 ];
 
@@ -95,8 +77,7 @@ class editAddressInfoComponent extends Component {
             addressType={item.addressType}
             addressLineOne={item.addressLineOne}
             addressCity={item.addressCity}
-            addressState={item.addressState + ' ' + item.addressZipcode}
-        />);
+            addressState={item.addressState + ' ' + item.addressZipcode} />);
 
     componentDidMount() { }
 
@@ -105,12 +86,19 @@ class editAddressInfoComponent extends Component {
     editAddressOnCancel = () => this.props.navigation.navigate('profileSettings');
 
     render() {
-        return (
 
+        let profileAddressData = tempUserAddress;
+
+        if (this.props &&
+            this.props.profileState &&
+            this.props.profileState.profileUserAddressInformation) {
+            profileAddressData = this.props.profileState.profileUserAddressInformation;
+        }
+
+        return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation}
-                />
+                    navigation={this.props.navigation} />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -129,8 +117,7 @@ class editAddressInfoComponent extends Component {
                         </Text>
 
                         <Text style={styles.addEditTextLabel}
-                            onPress={this.editAddressInfoAddNew}
-                        >
+                            onPress={this.editAddressInfoAddNew} >
                             {globalString.editAddressInfo.editAddressAddNew}
                         </Text>
                     </View>
@@ -138,18 +125,16 @@ class editAddressInfoComponent extends Component {
                     <View style={styles.settingsBorder} />
 
                     <FlatList
-                        data={tempUserAddress}
+                        data={profileAddressData}
                         keyExtractor={this.generateKeyExtractor}
-                        renderItem={this.renderAddressInformation(tempUserAddress.length)}
-                    />
-                    
+                        renderItem={this.renderAddressInformation(profileAddressData.length)} />
+
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.back}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.editAddressOnCancel}
-                        />
+                            onPress={this.editAddressOnCancel} />
                     </View>
 
                     <View style={styles.newVictorySection}>
@@ -163,8 +148,7 @@ class editAddressInfoComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")}
-                        />
+                            source={require("../../Images/logo.png")} />
                     </View>
 
                     <View style={styles.privacyAgreement}>
