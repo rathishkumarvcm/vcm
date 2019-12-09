@@ -25,6 +25,7 @@ class editAddressAddNewComponent extends Component {
             touchIdEnrolled: false,
             radioButton: false,
             radioButtonIndex: 0,
+            radioButtonValue: '',
 
             validationAddressOne: true,
             addressOne: '',
@@ -69,6 +70,19 @@ class editAddressAddNewComponent extends Component {
                 }
             }
         }
+
+        const addressResponseData = ActionTypes.GET_ADDRESSFORMAT;
+        if (this.props != prevProps) {
+            if (this.props && this.props.stateCityData[addressResponseData]) {
+                const tempAddressResponse = this.props.stateCityData[addressResponseData];
+                console.log("Error Update 001", tempAddressResponse);
+            } else {
+                if (this.props && this.props.stateCityData[ActionTypes.GET_ADDRESSFORMAT_ERROR]) {
+                    const tempErrorAddress = this.props.stateCityDatap[ActionTypes.GET_ADDRESSFORMAT_ERROR];
+                    console.log("Error Update 001", tempErrorAddress);
+                }
+            }
+        }
     }
 
     radioButtonClicked = (index) => {
@@ -77,11 +91,41 @@ class editAddressAddNewComponent extends Component {
                 radioButtonIndex: index,
                 radioButton: false
             });
+            console.log("Radio Button Clicked :: ", index + ' ::: ' + this.state.radioButtonIndex);
         }
         else {
             this.setState({
-                radioButton: false
+                radioButton: false,
+                radioButtonValue: 'U.S. or U.S. Territories'
             });
+        }
+
+        if (this.state.radioButtonIndex == 1) {
+            this.setState({
+                radioButtonValue: 'U.S. or U.S. Territories'
+            });
+            console.log("Radio Button Clicked 0", this.state.radioButtonValue);
+        }
+
+        if (this.state.radioButtonIndex == 2) {
+            this.setState({
+                radioButtonValue: 'APO (Army or Air Force Post Office)'
+            });
+            console.log("Radio Button Clicked 1", this.state.radioButtonValue);
+        }
+
+        if (this.state.radioButtonIndex == 3) {
+            this.setState({
+                radioButtonValue: 'FPO (Fleet Post Office)'
+            });
+            console.log("Radio Button Clicked 2", this.state.radioButtonValue);
+        }
+
+        if (this.state.radioButtonIndex == 4) {
+            this.setState({
+                radioButtonValue: 'DPO (Diplomatic Post Office)'
+            });
+            console.log("Radio Button Clicked 3", this.state.radioButtonValue);
         }
     }
 
@@ -118,23 +162,31 @@ class editAddressAddNewComponent extends Component {
                 if (this.state.addressOne != "" &&
                     this.state.zipCodeValue != "") {
                     this.addNewAddress();
-
                 }
                 break;
         }
     }
 
     addNewAddress = () => {
-        const addNewAddressPayload = {
-            "addressType": '',
-            "addressLineOne": this.state.addressOne,
-            "addressLineTwo": this.state.addressTwo,
-            "zipCode": this.state.zipCodeValue,
-            "city": this.state.userCity,
-            "state": this.state.userState
-        };
+        var addNewAddressPayload = {};
+        if (this.state.zipCodeValue != '') {
+            addNewAddressPayload = {
+                "Address1": this.state.addressOne,
+                "Address2": this.state.addressTwo,
+                "City": this.state.userCity,
+                "State": this.state.userState,
+                "Zip": this.state.zipCodeValue
+            };
+        } else {
+            addNewAddressPayload = {
+                "Address1": this.state.addressOne,
+                "Address2": this.state.addressTwo,
+                "City": this.state.userCity,
+                "State": this.state.userState,
+            };
+        }
 
-        this.props.navigation.navigate('editAddressSettings');
+        this.props.getAddressFormat(addNewAddressPayload);
     }
 
     validateZipCodeValue = () => {
@@ -284,8 +336,7 @@ class editAddressAddNewComponent extends Component {
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
                             textStyle={styles.saveButtonText}
-                            onPress={this.addAddressOnValidate('validateAddressValueOne')}
-                        />
+                            onPress={this.addAddressOnValidate('validateAddressValueOne')} />
                     </View>
 
                     <View style={styles.editAddressBorder} />
