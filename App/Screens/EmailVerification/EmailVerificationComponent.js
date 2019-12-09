@@ -117,6 +117,8 @@ class EmailVerificationComponent extends Component {
             onChangeText={this.setCode}
             onBlur={this.validCode}
             value={this.state.code}
+            keyboardType="number-pad"
+            maxLength={6}
             />
 
              

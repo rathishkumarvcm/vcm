@@ -35,29 +35,25 @@ class RegisterSelfComponent extends Component {
 
     setFirstName = text => {
         this.setState({
-            firstName : text,
-            firstNameFlag : true
+            firstName : text
         });
     }
 
     setMiddleName = text => {
         this.setState({
-            middleName : text,
-            middleNameFlag : true
+            middleName : text
         });
     }
 
     setLastName = text => {
         this.setState({
-            lastName : text,
-            lastNameFlag : true
+            lastName : text
         });
     }
 
     setPhone = text => {
         this.setState({
-            phone : text, 
-            phoneFlag : true
+            phone : text
         });
     }
 
@@ -79,12 +75,12 @@ class RegisterSelfComponent extends Component {
     checkFirstName = () =>{
         if(this.state.firstName != ""){
             this.setState({
-                firstNameFlag : true
+                firstNameFlag : false
             });
         }
         else{
             this.setState({
-                firstNameFlag : false
+                firstNameFlag : true
             });
         }
     }
@@ -92,12 +88,12 @@ class RegisterSelfComponent extends Component {
     checkMiddleName = () =>{
         if(this.state.middleName != ""){
             this.setState({
-                middleNameFlag : true
+                middleNameFlag : false
             });
         }
         else{
             this.setState({
-                middleNameFlag : false
+                middleNameFlag : true
             });
         }
     }
@@ -106,12 +102,12 @@ class RegisterSelfComponent extends Component {
     checkLastName = () =>{
         if(this.state.lastName != ""){
             this.setState({
-                lastNameFlag : true
+                lastNameFlag : false
             });
         }
         else{
             this.setState({
-                lastNameFlag : false
+                lastNameFlag : true
             });
         }
     }
@@ -119,12 +115,12 @@ class RegisterSelfComponent extends Component {
     checkPhone = () => {
         if(this.state.phone != ""){
             this.setState({
-                phoneFlag : true
+                phoneFlag : false
             });
         }
         else{
             this.setState({
-                phoneFlag : false
+                phoneFlag : true
             });
         }
     }
@@ -172,7 +168,7 @@ class RegisterSelfComponent extends Component {
                 onChangeText={this.setFirstName}
                 onBlur={this.checkFirstName}
                 value={this.state.firstName}
-                errorFlag={!this.state.firstNameFlag && this.state.firstName!=""}
+                errorFlag={this.state.firstNameFlag}
                 errorText={"Enter a Valid First Name"}
             />
 
@@ -187,7 +183,7 @@ class RegisterSelfComponent extends Component {
                 onChangeText={this.setMiddleName}
                 value={this.state.middleName}
                 onBlur={this.checkMiddleName}
-                errorFlag={!this.state.middleNameFlag && this.state.middleName!=""}
+                errorFlag={this.state.middleNameFlag}
                 errorText={"Enter a Valid Middle Name"}
             />
 
@@ -202,7 +198,7 @@ class RegisterSelfComponent extends Component {
                 onChangeText={this.setLastName}
                 value={this.state.lastName}
                 onBlur={this.checkLastName}
-                errorFlag={!this.state.lastNameFlag && this.state.lastName!=""}
+                errorFlag={this.state.lastNameFlag}
                 errorText={"Enter a Valid Last Name"}
             />
 
@@ -218,8 +214,10 @@ class RegisterSelfComponent extends Component {
                 onChangeText={this.setPhone}
                 value={this.state.phone}
                 onBlur={this.checkPhone}
-                errorFlag={!this.state.phoneFlag && this.state.phone!=""}
+                errorFlag={this.state.phoneFlag}
                 errorText={"Enter a Valid Phone Number"}
+                keyboardType="number-pad"
+                maxLength={13}
             />
 
 

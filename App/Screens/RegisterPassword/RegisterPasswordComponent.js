@@ -18,11 +18,12 @@ class RegisterPasswordComponent extends Component {
             faceIdEnrolled: false,
             touchIdEnrolled: false,
             validationPassword : true,
-            password : 'rathi123',
-            name : 'rathish.kumar2@cognizant.com',
-            //password : 'rathi123',
-            phone : '+918754499334',
-            email : 'rathish.kumar2@cognizant.com',
+            validationConfirmPassword : true,
+            password : '',
+            confirmPassword : '',
+            name : '',
+            phone : '',
+            email : '',
         };
     }
 
@@ -77,6 +78,28 @@ class RegisterPasswordComponent extends Component {
         });
     }
 
+    validateConfirmPassword = () => {
+
+        if(this.state.password === this.state.confirmPassword){
+            this.setState({
+                validationConfirmPassword : true
+            });
+        }
+        else{
+            this.setState({
+                validationConfirmPassword : false
+            });
+        }
+    }
+
+    setConfirmPassword = text => {
+        this.setState({
+            confirmPassword : text
+        });
+    }
+ 
+
+
     setPassword = text => {
         this.setState({
             password : text
@@ -124,8 +147,8 @@ class RegisterPasswordComponent extends Component {
                 value={registerSelfData.emailID}
                 onChangeText={this.setPassword}
                 onBlur={this.validatePassword}
-                errorFlag={!this.state.validationPassword}
-                errorText={"Enter a valid password."}
+                //errorFlag={!this.state.validationPassword}
+                //errorText={"Enter a valid password."}
             />
 
 
@@ -144,7 +167,7 @@ class RegisterPasswordComponent extends Component {
                 errorText={"Enter a valid password."}
             />
 
-            <View style={{flexDirection:'row',marginLeft:'4%',marginRight:'4%',width:'92%',height: scaledHeight(5)}}>
+           {/*} <View style={{flexDirection:'row',marginLeft:'4%',marginRight:'4%',width:'92%',height: scaledHeight(5)}}>
                 <View style={{width:'30%',marginRight:'1%',height: scaledHeight(5),backgroundColor: "#DB5A28"}} />
 
                 <View style={{width:'30%',marginRight:'1%',height: scaledHeight(5),backgroundColor: "#E6E6E6"}} />
@@ -153,7 +176,7 @@ class RegisterPasswordComponent extends Component {
             </View>
             <Text style={{paddingLeft:'4%',paddingRight:'4%'}}>
                 {"Weak"}
-            </Text>
+    </Text>*/}
 
     <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
@@ -162,12 +185,12 @@ class RegisterPasswordComponent extends Component {
     </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                placeholder={"Password"}
-                onChangeText={this.setPassword}
+                placeholder={"Confirm Password"}
+                onChangeText={this.setConfirmPassword}
                 secureTextEntry
-                onBlur={this.validatePassword}
-                errorFlag={!this.state.validationPassword}
-                errorText={"Enter a valid password."}
+                onBlur={this.validateConfirmPassword}
+                errorFlag={!this.state.validationConfirmPassword}
+                errorText={"Entered password doesnt match."}
             />
 
 
@@ -176,13 +199,13 @@ class RegisterPasswordComponent extends Component {
                     buttonText="Continue"
                     textStyle={styles.signInButtonText}
                     onPress={this.navigateSelf}
-                    disabled={this.state.password === '' || !this.state.validationPassword}
+                    disabled={this.state.password === '' || !this.state.validationPassword || !this.state.validationConfirmPassword}
             />
             
             <TouchableOpacity onPress={this.goBack} style={styles.goBack}>
             <GIcon 
                         name="left"
-                        type="antdesign"
+                        type="antdesign" 
                         size={25}
                         color="black"
             />
