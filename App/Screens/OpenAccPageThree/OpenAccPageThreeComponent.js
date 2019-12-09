@@ -1056,7 +1056,7 @@ class OpenAccPageThreeComponent extends Component {
         this.setState({
             filtermindata: [...tempMinInvData.map(v => ({ ...v, isActive: false }))],
             filterriskdata: [...tempRiskData.map(v => ({ ...v, isActive: false }))],
-            tempfiltedata: [...tempFundTypeData.map(v => ({ ...v, isActive: false }))]
+            filterfunddata: [...tempFundTypeData.map(v => ({ ...v, isActive: false }))]
         });
     }
 
@@ -1085,6 +1085,26 @@ class OpenAccPageThreeComponent extends Component {
         console.log('New Item:' + JSON.stringify(newItm));
     }
 
+    navigateCompareFunds= () =>{
+        //console.log(this.state.selectedFundInvestmentsData);
+        if(this.state.selectedFundInvestmentsData.length > 0){
+            if(this.state.selectedFundInvestmentsData.length < 5){
+
+                let fundSelectedCompare = "";
+                this.state.selectedFundInvestmentsData.map((item,index)=>{                   
+                    fundSelectedCompare = fundSelectedCompare.concat('fundNumber'+(index+1)+'='+item.fundNumber)+"&";
+                })                                               
+               //console.log("Selected Funds:"+fundSelectedCompare);
+               if (fundSelectedCompare !== null && fundSelectedCompare !== "") {
+                    this.props.navigation.push('compareFunds', { fundDetails: fundSelectedCompare });
+               }
+            }else {
+                alert('Maximum only 4 funds are compared');
+            }
+        }else {
+            alert('Please select funds to compare');
+        }      
+    }
 
     /*----------------------
                                  Render Methods
@@ -1144,6 +1164,7 @@ class OpenAccPageThreeComponent extends Component {
                                 buttonStyle={styles.compareFundsBtn}
                                 buttonText={gblStrings.accManagement.compareFunds}
                                 textStyle={styles.compareFundsBtnTxt}
+                                onPress={this.navigateCompareFunds}
                             />
 
                             <View style={styles.fundListGrp}>

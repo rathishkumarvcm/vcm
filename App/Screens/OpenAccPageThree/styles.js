@@ -214,11 +214,10 @@ export const styles = StyleSheet.create({
 
 
     filterFundsBtn: {
-        width: scaledWidth(150),
+        width: scaledWidth(120),
         borderWidth: 1,
-        borderColor: "#61285F45",
-        borderRadius: scaledHeight(25),
-        height: scaledHeight(50),
+        borderColor: "#61285F45",        
+        height: scaledHeight(60),
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
         alignContent: 'center',
@@ -227,27 +226,27 @@ export const styles = StyleSheet.create({
     },
     filterFundsBtnTxt: {
         fontSize: scaledHeight(16),
-        color: '#61285F',
+        color: '#5D83AE',
         fontWeight: 'bold',
         width: '100%',
         textAlign: 'center'
     },
 
     compareFundsBtn: {
-        width: scaledWidth(250),
+        width: scaledWidth(180),
         borderWidth: 1,
-        borderColor: "#61285F45",
-        borderRadius: scaledHeight(25),
-        height: scaledHeight(50),
+        borderColor: "#61285F45",       
+        height: scaledHeight(60),
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        marginTop: scaledHeight(15)
+        marginTop: scaledHeight(15),
+        marginBottom:scaledHeight(5)
     },
     compareFundsBtnTxt: {
         fontSize: scaledHeight(16),
-        color: '#61285F',
+        color: '#5D83AE',
         fontWeight: 'bold',
         width: '100%',
         textAlign: 'center'
