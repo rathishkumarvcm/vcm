@@ -18,7 +18,7 @@ const GRatingStarsComponent = (props) => {
             <GIcon
                 name="star"
                 type="font-awesome"
-                size={30}
+                size={props.size}
                 color={tempcolor}
                 key={i}
 
@@ -35,14 +35,18 @@ const GRatingStarsComponent = (props) => {
 GRatingStarsComponent.propTypes = {
     rating: PropTypes.number,
     ratedStarColor: PropTypes.string,
-    unRatedStarColor: PropTypes.string
+    unRatedStarColor: PropTypes.string,
+    size: PropTypes.number,
+
 
 };
 
 GRatingStarsComponent.defaultProps = {
     rating: 0,
     ratedStarColor: '#DCDCDC',
-    unRatedStarColor: '#393535'
+    unRatedStarColor: '#393535',
+    size: 30,
+
 };
 
 export default GRatingStarsComponent;
