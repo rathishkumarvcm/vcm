@@ -556,10 +556,31 @@ class OpenAccPageTwoComponent extends Component {
                 }
             }
 
+            const addressKey = ActionTypes.GET_ADDRESSFORMAT;
+            if (this.props.addressFormatData[addressKey]) {
+                if (this.props.addressFormatData[addressKey] !== prevProps.addressFormatData[addressKey]) {
+                    const tempResponse = this.props.addressFormatData[addressKey];
+                    if (tempResponse && tempResponse.City) {
+                      
+                            this.setState(prevState => ({
+                                [this.state.currentZipCodeRef.stateKey]: {
+                                    ...prevState[this.state.currentZipCodeRef.stateKey],
+                                    city: tempResponse.City,
+                                    stateCity: tempResponse.State,
+                                    addrLine1:tempResponse.Address1 || "" ,
+                                    addrLine2:tempResponse.Address2 || ""
+
+                                }
+                            }));
+                    } 
+                }
+            }
+
             const uploadImgKey = ActionTypes.UPLOAD_AVATAR;
             if (this.props.accOpeningData[uploadImgKey]) {
                 if (this.props.accOpeningData[uploadImgKey] !== prevProps.accOpeningData[uploadImgKey]) {
                     const tempResponse = this.props.accOpeningData[uploadImgKey];
+                    //alert ("Image stautus \n::"+JSON.stringify(tempResponse));
                     if (tempResponse && tempResponse.b ) {
                          if(tempResponse.b.Location){
                              alert ("Image Uploaded Successfully \n::"+tempResponse.b.Location);
@@ -886,7 +907,7 @@ class OpenAccPageTwoComponent extends Component {
                     const payload = {
                         "Body":""+response.data
                     };
-                    this.props.uploadAavatarImg(payload);
+                   // this.props.uploadAavatarImg(payload);
               }
                 
             }
@@ -933,7 +954,18 @@ class OpenAccPageTwoComponent extends Component {
         const payload = {
             "Zip": this.state[stateKey][keyName]
         };
+        const addressPayload = {
+            ...payload,
+            "Address1": this.state[stateKey]["addrLine1"],
+            "Address2": this.state[stateKey]["addrLine2"],
+            "City": this.state[stateKey]["city"],
+            "State":this.state[stateKey]["stateCity"]
+        };
+
+        
         this.props.getStateCity(payload);
+        this.props.getAddressFormat(addressPayload);
+
        // nextInputFocus.focus();
     }
 
@@ -2326,16 +2358,18 @@ class OpenAccPageTwoComponent extends Component {
                             propInputStyle={this.state.personal.addrLine1Validation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder={gblStrings.accManagement.empAddrLine1}
                             maxLength={gblStrings.maxLength.emplAddress1}
+                            value={this.state.personal.addrLine1}
                             onChangeText={this.onChangeText("personal", "addrLine1")}
                             onSubmitEditing={this.onSubmitEditing(this.addrLine2)}
 
-
+s
                         />
                         <GInputComponent
                             inputref={this.setInputRef("addrLine2")}
                             propInputStyle={this.state.personal.addrLine2Validation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder={gblStrings.accManagement.empAddrLine2}
                             maxLength={gblStrings.maxLength.addressLine2}
+                            value={this.state.personal.addrLine2}
                             onChangeText={this.onChangeText("personal", "addrLine2")}
                             onSubmitEditing={this.onSubmitEditing(this.zipcode)}
 
@@ -2365,23 +2399,23 @@ class OpenAccPageTwoComponent extends Component {
                             inputref={this.setInputRef("city")}
                             propInputStyle={this.state.personal.cityValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder={gblStrings.accManagement.enterCity}
-                            returnKeyType={"done"}
                             maxLength={gblStrings.maxLength.city}
                             value={this.state.personal.city}
                             onChangeText={this.onChangeText("personal", "city")}
                             onSubmitEditing={this.onSubmitEditing(this.stateCity)}
 
-
                         />
-                        <CustomDropDown
+                        <GInputComponent
                             inputref={this.setInputRef("stateCity")}
-                            onPress={this.onPressDropDown("personal", "stateCityDropDown")}
+                            propInputStyle={this.state.personal.stateCityValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder={gblStrings.accManagement.enterState}
+                            returnKeyType={"done"}
+                            maxLength={gblStrings.maxLength.state}
                             value={this.state.personal.stateCity}
-                            propInputStyle={this.state.personal.stateCityValidation ? styles.customListTxtBox : styles.customListTxtBoxError}
-                            placeholder={"Select State"}
-                        />
-                        {this.renderDropDown('stateCityDropDown', this.state.personal.stateCityDropDown, dummyData)}
+                            onChangeText={this.onChangeText("personal", "stateCity")}
+                            onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
 
+                        />
 
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.isYourPhysicalAddressSame}
@@ -4623,7 +4657,8 @@ OpenAccPageTwoComponent.propTypes = {
     uploadAavatarImg:PropTypes.func,
     getStateCity:PropTypes.func,
     saveAccountOpening:PropTypes.func,
-    getRankData:PropTypes.func
+    getRankData:PropTypes.func,
+    getAddressFormat:PropTypes.func
 };
 export default OpenAccPageTwoComponent;
 
