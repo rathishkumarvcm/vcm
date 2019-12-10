@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "777050578604",
+    "firebase_url": "https://vcmmemberservices.firebaseio.com",
+    "project_id": "vcmmemberservices",
+    "storage_bucket": "vcmmemberservices.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777050578604:android:f0c7e2168093a5fc730909",
+        "android_client_info": {
+          "package_name": "com.memberservices"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "777050578604-39l5eecn4lltjrc9v3cdq58mtscugosk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfG_nsqRGdx-5P1me-KU1wJhNfjAvDaSE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "777050578604-39l5eecn4lltjrc9v3cdq58mtscugosk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
