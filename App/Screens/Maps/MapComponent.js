@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PanResponder} from 'react-native';
-import MapView from 'react-native-maps';
+//import MapView from 'react-native-maps';
 
 class MapComponent extends Component {
     constructor(props){
@@ -63,7 +63,7 @@ class MapComponent extends Component {
 
     render() {
       return(
-        <MapView 
+       /* <MapView 
         style={{height:'100%',width:'100%'}}
         scrollEnabled
         //provider={PROVIDER_GOOGLE}
@@ -73,7 +73,9 @@ class MapComponent extends Component {
           latitudeDelta : 0.0922,
           longitudeDelta : 0.0421
         }}
-        />
+        />*/
+        <>
+        </>
       );
     }
 }

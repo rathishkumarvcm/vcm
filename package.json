@@ -20,7 +20,6 @@
     "react-native-gesture-handler": "^1.4.0",
     "react-native-html-to-pdf": "^0.8.0",
     "react-native-image-picker": "^1.1.0",
-    "react-native-maps": "^0.25.0",
     "react-native-pdf": "^5.1.4",
     "react-native-secure-key-store": "^2.0.5",
     "react-native-share": "^2.0.0",
