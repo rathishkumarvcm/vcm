@@ -1263,15 +1263,38 @@ class OpenAccPageThreeComponent extends Component {
                                     renderItem={this.renderFundSourceListItem('offline')}
                                 />
                             </View>
+
+                            {this.state.method == "offline" &&
+                                <View style={styles.tollFreeContainer}>
+                                    <Text style={styles.lblMSRDescTxt}>
+                                        {gblStrings.accManagement.contactMSRDesc}
+                                    </Text>
+                                    <View style={styles.contactMSR}>
+                                        <GIcon
+                                            name="phone"
+                                            type="font-awesome"
+                                            size={35}
+                                            color="#000000"
+                                        />
+                                        <Text style={styles.lblMSRTxt}>
+                                            {gblStrings.accManagement.contactMSR}
+                                        </Text>
+                                    </View>
+
+                                    <TouchableOpacity
+                                        style={styles.callMSR}
+                                        onPress={null}
+                                    >
+                                        <Text>
+                                            <Text style={{ fontSize: scaledHeight(15), color: '#333333DE', textAlign: 'center', lineHeight: 22 }}>{gblStrings.accManagement.callTollFee} </Text>
+                                            <Text style={{ fontSize: scaledHeight(18), fontWeight: 'bold', color: '#333333DE', textAlign: 'center', lineHeight: 22 }}>{gblStrings.accManagement.callTollFeeNo} </Text>
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            }
+
                             
-                            <Text style={{
-                                marginVertical: scaledHeight(12),
-                                fontSize: scaledHeight(18),
-                                color: '#333333DE',
-                                lineHeight: 22,
-                                textAlign: 'center'
-                            }}
-                            >
+                            <Text style={styles.labOR}>
                                 {"or"}
                             </Text>
                             
