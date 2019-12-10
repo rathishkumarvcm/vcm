@@ -105,7 +105,7 @@ import PasswordSuccess from './Screens/RecoverPasswordSuccess/';
 
 //Transactions  
 import TAmmendComponent from './Screens/TAmmend/';
-import FundSelectionComponent from './Screens/FundSelection/';
+//import FundSelectionComponent from './Screens/FundSelection/';
 
 //Account Services
 import AccountServicesComponent from './Screens/AccountServices';
@@ -777,12 +777,12 @@ const AppNavigator = createStackNavigator({
                 header:null,
             }
         },
-        FundSelectionComponent:{
-            screen:FundSelectionComponent,
-            navigationOptions:{
-                header:null,
-            }  
-        },
+        // FundSelectionComponent:{
+        //     screen:FundSelectionComponent,
+        //     navigationOptions:{
+        //         header:null,
+        //     }  
+        // },
         compareFunds:{
             screen:CompareFunds,
             navigationOptions:{
