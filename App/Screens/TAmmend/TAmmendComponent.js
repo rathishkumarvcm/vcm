@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, ScrollView,Text } from 'react-native';
-import { GButtonComponent, GHeaderComponent, GFooterComponent, GRadioButtonComponent,GIcon} from '../../CommonComponents';
+import {  View, ScrollView,Text } from 'react-native';
+import {  GHeaderComponent, GFooterComponent ,GIcon} from '../../CommonComponents';
 import Accordian from './Accordian';
 import { styles } from './styles';
 import PropTypes from 'prop-types';
@@ -26,7 +26,9 @@ export default class TAmmendComponent extends Component {
                             CurrentValue: '$1300',
                             TransactionType : 'Purchase',
                             PaymentMode:'NetBanking',           
-                            OrderStatus:'Pending'
+                            OrderStatus:'Pending',
+                            totalSHares:"2452",
+                            worth:"5400"
 
                      
                     }
@@ -40,7 +42,9 @@ export default class TAmmendComponent extends Component {
                             CurrentValue: '$5602',
                             TransactionType : 'Liquidation',
                             PaymentMode:'Wire Transfer',           
-                            OrderStatus:'Pending'
+                            OrderStatus:'Pending',
+                            totalSHares:"2452",
+                            worth:"5400"
 
                      
                     }
@@ -53,7 +57,9 @@ export default class TAmmendComponent extends Component {
                             CurrentValue: '$2062',
                             TransactionType : 'Exchange',
                             PaymentMode:'In Order',           
-                            OrderStatus:'Pending'
+                            OrderStatus:'Pending',
+                            totalSHares:"2452",
+                            worth:"5400"
 
                      
                     }
