@@ -1,3 +1,3 @@
-import CheckBookComponent from './CheckBookComponent';
+import CheckBookComponent from './CheckBookContainer';
 
 export default CheckBookComponent;

@@ -1,3 +1,3 @@
-import DividentsAndCapitalGainsPrefComponent from './DividentsAndCapitalGainsPrefComponent';
+import DividentsAndCapitalGainsPrefComponent from './DividentsAndCapitalGainsPrefContainer';
 
 export default DividentsAndCapitalGainsPrefComponent;

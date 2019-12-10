@@ -6,96 +6,6 @@ import PropTypes from "prop-types";
 import gblStrings from '../../Constants/GlobalStrings';
 
 
-const data = [
-    {
-        Id: "1",
-        AccountNumber: "56654654",
-        currentSecuritiesSwitchOn: false,
-        currentSecuritiesSwitchOff: true,
-        futureSecuritiesSwitchOn: false,
-        futureSecuritiesSwitchOff: true,
-        CurrentSecurities: [
-            {
-                FundId: "1",
-                FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                enableReinvest: false,
-                amountRemaining: '0',
-            },
-            {
-                FundId: "2",
-                FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                enableReinvest: false,
-                amountRemaining: '0',
-            },
-            {
-                FundId: "3",
-                FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                enableReinvest: false,
-                amountRemaining: '0',
-            },
-
-        ]
-    },
-    {
-        Id: "2",
-        AccountNumber: "56654654",
-        currentSecuritiesSwitchOn: false,
-        currentSecuritiesSwitchOff: true,
-        futureSecuritiesSwitchOn: false,
-        futureSecuritiesSwitchOff: true,
-        CurrentSecurities: [
-            {
-                FundId: "1",
-                FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                enableReinvest: false,
-                amountRemaining: '0',
-            },
-            {
-                FundId: "2",
-                FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                enableReinvest: false,
-                amountRemaining: '0',
-            },
-            {
-                FundId: "3",
-                FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                enableReinvest: false,
-                amountRemaining: '0',
-            },
-
-        ]
-    },
-    {
-        Id: "3",
-        AccountNumber: "56654654",
-        currentSecuritiesSwitchOn: false,
-        currentSecuritiesSwitchOff: true,
-        futureSecuritiesSwitchOn: false,
-        futureSecuritiesSwitchOff: true,
-        CurrentSecurities: [
-            {
-                FundId:"1",
-                FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                enableReinvest: false,
-                amountRemaining: '0',
-            },
-            {
-                FundId:"2",
-                FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                enableReinvest: false,
-                amountRemaining: '0',
-            },
-            {
-                FundId:"3",
-                FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                enableReinvest: false,
-                amountRemaining: '0',
-            },
-
-        ]
-    },
-];
-
 class DividentsAndCapitalGainsPrefComponent extends Component {
     constructor(props) {
         super(props);
@@ -104,10 +14,114 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
             currentSecuritiesChanged: false,
             reinvestChanged: false,
             expand: false,
+            dividentsData: [
+                {
+                    Id: "1",
+                    AccountNumber: "56654654",
+                    currentSecuritiesSwitchOn: false,
+                    currentSecuritiesSwitchOff: true,
+                    futureSecuritiesSwitchOn: false,
+                    futureSecuritiesSwitchOff: true,
+                    CurrentSecurities: [
+                        {
+                            FundId: "1",
+                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
+                            enableReinvest: false,
+                            amountRemaining: '0',
+                        },
+                        {
+                            FundId: "2",
+                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
+                            enableReinvest: false,
+                            amountRemaining: '0',
+                        },
+                        {
+                            FundId: "3",
+                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
+                            enableReinvest: false,
+                            amountRemaining: '0',
+                        },
+
+                    ]
+                },
+                {
+                    Id: "2",
+                    AccountNumber: "56654654",
+                    currentSecuritiesSwitchOn: false,
+                    currentSecuritiesSwitchOff: true,
+                    futureSecuritiesSwitchOn: false,
+                    futureSecuritiesSwitchOff: true,
+                    CurrentSecurities: [
+                        {
+                            FundId: "1",
+                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
+                            enableReinvest: false,
+                            amountRemaining: '0',
+                        },
+                        {
+                            FundId: "2",
+                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
+                            enableReinvest: false,
+                            amountRemaining: '0',
+                        },
+                        {
+                            FundId: "3",
+                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
+                            enableReinvest: false,
+                            amountRemaining: '0',
+                        },
+
+                    ]
+                },
+                {
+                    Id: "3",
+                    AccountNumber: "56654654",
+                    currentSecuritiesSwitchOn: false,
+                    currentSecuritiesSwitchOff: true,
+                    futureSecuritiesSwitchOn: false,
+                    futureSecuritiesSwitchOff: true,
+                    CurrentSecurities: [
+                        {
+                            FundId: "1",
+                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
+                            enableReinvest: false,
+                            amountRemaining: '0',
+                        },
+                        {
+                            FundId: "2",
+                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
+                            enableReinvest: false,
+                            amountRemaining: '0',
+                        },
+                        {
+                            FundId: "3",
+                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
+                            enableReinvest: false,
+                            amountRemaining: '0',
+                        },
+
+                    ]
+                },
+            ]
         };
     }
 
-    componentDidMount() { }   
+    componentDidMount() {
+
+        let payload = [
+
+        ];
+
+        payload.push(JSON.stringify(this.state.dividentsData));
+        this.props.getDividentsInfo(JSON.stringify(payload));
+    }
+
+
+    componentDidUpdate(prevProps) {
+        if (this.props && this.props.dividentsInfo && this.props.dividentsInfo != prevProps.dividentsInfo) {
+            this.setState({ dividentsData: JSON.parse(JSON.parse(this.props.dividentsInfo)[0]) });
+        }
+    }
 
     navigateBack = () => this.props.navigation.goBack();
 
@@ -116,83 +130,89 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
     updateReinvestChanged = () => this.setState({ reinvestChanged: !this.state.reinvestChanged });
 
     setDividentAmount = (text, accountId, fundId) => {
-        tmpData = data;
-        tmpData.map((item, i) => {
-            
+        let tmpData = [];
+        tmpData = this.state.dividentsData;
+        tmpData.map((item) => {
             if (item.Id == accountId) {
+                let tmpCurrentSecurities = [];
                 tmpCurrentSecurities = item.CurrentSecurities;
-                tmpCurrentSecurities.map((fund, index) => {
+                tmpCurrentSecurities.map((fund) => {
                     if (fund.FundId == fundId) {
                         fund.amountRemaining = text;
                     }
                 });
             }
         });
-        data = tmpData;
+        this.setState({ dividentsData: tmpData });
     }
 
     switchOnOffStateUpdates = (fromView, flag, itemId) => () => {
+        let tmpData = [];
         switch (fromView) {
-            // Email Section Switch
             case 'currentSecurities':
-                if (flag){
-                    tmpData = data;
-                    tmpData.map((item, i) => { if (item.Id == itemId) { 
-                        item.currentSecuritiesSwitchOn= true; 
-                        item.currentSecuritiesSwitchOff= false;
-                        this.updateCurrentSecurityChanged();
-                    
-                    }});
-                    data = tmpData;
+                if (flag) {
+
+                    tmpData = this.state.dividentsData;
+                    tmpData.map((item) => {
+                        if (item.Id == itemId) {
+                            item.currentSecuritiesSwitchOn = true;
+                            item.currentSecuritiesSwitchOff = false;
+                            this.updateCurrentSecurityChanged();
+
+                        }
+                    });
+                    this.setState({ dividentsData: tmpData });
                 }
                 else {
-                    tmpData = data;
-                    tmpData.map((item, i) => {
+                    tmpData = this.state.dividentsData;
+                    tmpData.map((item) => {
                         if (item.Id == itemId) {
                             item.currentSecuritiesSwitchOn = false;
                             item.currentSecuritiesSwitchOff = true;
                             this.updateCurrentSecurityChanged();
                         }
                     });
-                    data = tmpData;
+                    this.setState({ dividentsData: tmpData });
                 }
                 break;
             case 'futureSecurities':
                 if (flag) {
-                    tmpData = data;
-                    tmpData.map((item, i) => {
+                    tmpData = this.state.dividentsData;
+                    tmpData.map((item) => {
                         if (item.Id == itemId) {
                             item.futureSecuritiesSwitchOn = true;
                             item.futureSecuritiesSwitchOff = false;
                             this.updateCurrentSecurityChanged();
                         }
                     });
-                    data = tmpData;
+                    this.setState({ dividentsData: tmpData });
                 }
                 else {
-                    tmpData = data;
-                    tmpData.map((item, i) => {
+                    tmpData = this.state.dividentsData;
+                    tmpData.map((item) => {
                         if (item.Id == itemId) {
                             item.futureSecuritiesSwitchOn = false;
                             item.futureSecuritiesSwitchOff = true;
-                            this.updateCurrentSecurityChanged();  
+                            this.updateCurrentSecurityChanged();
                         }
                     });
-                    data = tmpData;
+                    this.setState({ dividentsData: tmpData });
                 }
                 break;
-            
+
         }
     }
 
     switchOnOffReinvest = (fromView, flag, accountId, fundId) => () => {
+        let tmpData = [];
         switch (fromView) {
             case 'reinvestFund':
-                tmpData = data;
-                tmpData.map((item, i) => {
+                tmpData = this.state.dividentsData;
+                tmpData.map((item) => {
                     if (item.Id == accountId) {
+                        let tmpCurrentSecurities = [];
                         tmpCurrentSecurities = item.CurrentSecurities;
-                        tmpCurrentSecurities.map((fund, index) => {
+                        tmpCurrentSecurities.map((fund) => {
                             if (fund.FundId == fundId) {
                                 if (flag) {
                                     fund.enableReinvest = true;
@@ -204,8 +224,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                         });
                     }
                 });
-                data = tmpData;
-            break;
+                this.setState({ dividentsData: tmpData });
+                break;
         }
     }
 
@@ -214,7 +234,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
             expand: !this.state.expand,
         });
     }
-   
+
 
     render() {
         return (
@@ -228,25 +248,28 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                         </Text>
                     </View>
 
-                    <View style={styles.linkBreak1} />                  
+                    <View style={styles.linkBreak1} />
 
-                    <FlatList
-                        data={data}
-                        extraData={this.state.currentSecuritiesChanged}
-                        currentSecuritiesSwitchOn={this.state.currentSecuritiesSwitchOn}
-                        keyExtractor={(item) => item.Id}
-                        renderItem={({ item, i }) => (<ViewAccountItem
-                        item = {item}
-                        switchOnOffStateUpdates={this.switchOnOffStateUpdates}
-                        updateCurrentSecurityChanged={this.updateCurrentSecurityChanged}
-                        switchOnOffReinvest={this.switchOnOffReinvest}
-                        setDividentAmount={this.setDividentAmount}
-                                                      />)}
-                    />
+                    {this.props && this.props.dividentsInfo &&
+                        <FlatList
+                            data={this.state.dividentsData}
+                            extraData={this.state.currentSecuritiesChanged}
+                            currentSecuritiesSwitchOn={this.state.currentSecuritiesSwitchOn}
+                            keyExtractor={(item) => item.Id}
+                            renderItem={({ item }) => (
+                                <ViewAccountItem
+                                    item={item}
+                                    switchOnOffStateUpdates={this.switchOnOffStateUpdates}
+                                    updateCurrentSecurityChanged={this.updateCurrentSecurityChanged}
+                                    switchOnOffReinvest={this.switchOnOffReinvest}
+                                    setDividentAmount={this.setDividentAmount}
+                                />)}
+                        />
+                    }
 
                     <View style={styles.instructionsView}>
                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setExpandInstruction}>
-                            <View style={{flex:0.1, alignSelf:'center'}}>
+                            <View style={{ flex: 0.1, alignSelf: 'center' }}>
                                 {this.state.expand ?
                                     <GIcon
                                         name="minus"
@@ -260,7 +283,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                                     />
                                 }
                             </View>
-                                <Text style={styles.instructionText}>{gblStrings.dividents.setup_instruction}</Text>
+                            <Text style={styles.instructionText}>{gblStrings.dividents.setup_instruction}</Text>
                         </TouchableOpacity>
                         {this.state.expand ?
                             <View>
@@ -279,7 +302,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                             </View>
                             : null}
                     </View>
-                    
+
                     <GButtonComponent
                         buttonStyle={styles.backBtn}
                         buttonText={gblStrings.common.back}
@@ -317,6 +340,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
 }
 
 const ViewAccountItem = (props) => {
+    let item = [];
+    let currentSecurities = [];
     item = props.item;
     currentSecurities = item.CurrentSecurities;
     props.updateCurrentSecurityChanged;
@@ -331,7 +356,7 @@ const ViewAccountItem = (props) => {
             <Text style={styles.subHeaderText}>
                 {gblStrings.dividents.txt_header_dividents}
             </Text>
-            
+
             <View style={styles.optionHeaderView}>
                 <Text style={styles.optionHeaderText}>
                     {gblStrings.dividents.current_securities}
@@ -371,44 +396,44 @@ const ViewAccountItem = (props) => {
 
             {item.currentSecuritiesSwitchOn ?
                 <View style={styles.reinvestContainer}>
-                    {currentSecurities.map((fund, index) =>
-                    (<>                    
-                        <View style={styles.fundContainer}>
-                            <Text style={styles.fundText}>
-                                {fund.FundName}
-                            </Text>
-                            <Switch style={styles.switchStyle}                                    
-                                onValueChange={props.switchOnOffReinvest('reinvestFund', !fund.enableReinvest, item.Id, fund.FundId)}
-                                value={fund.enableReinvest}
-                                trackColor={{ true: '#000000', false: '#DBDBDB' }}
-                            />                                    
-                                                              
-                        </View>
-                        <View style={styles.fundAmtContainer}>
+                    {currentSecurities.map((fund) =>
+                        <>
+                            <View style={styles.fundContainer}>
+                                <Text style={styles.fundText}>
+                                    {fund.FundName}
+                                </Text>
+                                <Switch style={styles.switchStyle}
+                                    onValueChange={props.switchOnOffReinvest('reinvestFund', !fund.enableReinvest, item.Id, fund.FundId)}
+                                    value={fund.enableReinvest}
+                                    trackColor={{ true: '#000000', false: '#DBDBDB' }}
+                                />
 
-                            <View style={styles.amountHeader}>
-                                <Text style={styles.amtText}>
-                                    {gblStrings.dividents.amount_remaining}
+                            </View>
+                            <View style={styles.fundAmtContainer}>
+
+                                <View style={styles.amountHeader}>
+                                    <Text style={styles.amtText}>
+                                        {gblStrings.dividents.amount_remaining}
+                                    </Text>
+                                </View>
+
+                                <View style={styles.ammountView}>
+                                    <Text style={styles.amtText2}>
+                                        {gblStrings.dividents.dollar_sign}
+                                    </Text>
+
+                                    <GInputComponent
+                                        propInputStyle={styles.amountTextBox}
+                                        placeholder={"0"}
+                                        onChangeText={(text) => props.setDividentAmount(text, item.Id, fund.FundId)}
+                                        value={fund.amountRemaining}
+                                    />
+                                </View>
+                                <Text style={styles.minText}>
+                                    {gblStrings.dividents.min_amt}
                                 </Text>
                             </View>
- 
-                            <View style={styles.ammountView}>
-                                <Text style={styles.amtText2}>
-                                    {gblStrings.dividents.dollar_sign}
-                                </Text>                            
-
-                            <GInputComponent
-                                propInputStyle={styles.amountTextBox}
-                                placeholder={"0"}
-                                onChangeText={(text) => props.setDividentAmount(text, item.Id, fund.FundId)}
-                                value={fund.amountRemaining}                   
-                            />
-                            </View>
-                            <Text style={styles.minText}>
-                                {gblStrings.dividents.min_amt}
-                            </Text>
-                        </View>
-                     </>))}
+                        </>)}
                 </View>
                 : null
             }
@@ -460,8 +485,18 @@ const ViewAccountItem = (props) => {
     );
 };
 
+ViewAccountItem.propTypes = {
+    item: PropTypes.instanceOf(Object),
+    updateCurrentSecurityChanged: PropTypes.instanceOf(Function),
+    switchOnOffStateUpdates: PropTypes.instanceOf(Function),
+    switchOnOffReinvest: PropTypes.instanceOf(Function),
+    setDividentAmount: PropTypes.instanceOf(Function),
+};
+
 DividentsAndCapitalGainsPrefComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    getDividentsInfo: PropTypes.instanceOf(Function),
+    dividentsInfo: PropTypes.instanceOf(Object),
 };
 
 export default DividentsAndCapitalGainsPrefComponent;

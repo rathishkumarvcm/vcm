@@ -1,3 +1,3 @@
-import BankAccountsComponent from './BankAccountsComponent';
+import BankAccountsComponent from './BankAccountsContainer';
 
 export default BankAccountsComponent;

@@ -1,40 +1,9 @@
 import React, { Component } from 'react';
 import { styles } from './styles';
 import { View, ScrollView, Text, FlatList, Switch } from 'react-native';
-import { GHeaderComponent, GInputComponent, GDropDownComponent, GFooterComponent, GButtonComponent } from '../../CommonComponents';
+import { GHeaderComponent, GDropDownComponent, GFooterComponent, GButtonComponent } from '../../CommonComponents';
 import PropTypes from "prop-types";
 import gblStrings from '../../Constants/GlobalStrings';
-import { scaledHeight } from '../../Utils/Resolution';
-
-
-const data = [
-    {
-        Id: "1",
-        AccountNumber: "56654654",
-        NoOfCheckLeaves: "50",
-        enableReinvest: false,
-        CheckBookRequestedOn: "30/10/2019",
-        
-    },
-    {
-        Id: "2",
-        AccountNumber: "56654654",
-        NoOfCheckLeaves: "50",
-        enableReinvest: false,
-        CheckBookRequestedOn: "30/10/2019",
-        
-    },
-    {
-        Id: "3",
-        AccountNumber: "56654654",
-        NoOfCheckLeaves: "50",
-        enableReinvest: false,
-        CheckBookRequestedOn: "30/10/2019",
-        
-    },
-];
-
-
 
 class CheckBookComponent extends Component {
     constructor(props) {
@@ -43,20 +12,57 @@ class CheckBookComponent extends Component {
             isLoading: false,
             currentSecuritiesChanged: false,
             reinvestChanged: false,
+            checkBookDetails: [
+                {
+                    Id: "1",
+                    AccountNumber: "56654654",
+                    NoOfCheckLeaves: "50",
+                    enableReinvest: false,
+                    CheckBookRequestedOn: "30/10/2019",
+
+                },
+                {
+                    Id: "2",
+                    AccountNumber: "56654654",
+                    NoOfCheckLeaves: "50",
+                    enableReinvest: false,
+                    CheckBookRequestedOn: "30/10/2019",
+
+                },
+                {
+                    Id: "3",
+                    AccountNumber: "56654654",
+                    NoOfCheckLeaves: "50",
+                    enableReinvest: false,
+                    CheckBookRequestedOn: "30/10/2019",
+
+                },
+            ],
         };
     }
 
-    componentDidMount() { }
+    componentDidMount() {
+        let payload = [];
 
+        payload.push(JSON.stringify(this.state.checkBookDetails));
+        this.props.getCheckBookInfo(JSON.stringify(payload));
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props && this.props.checkBookInfo && this.props.checkBookInfo != prevProps.checkBookInfo) {
+            this.setState({ checkBookDetails: JSON.parse(JSON.parse(this.props.checkBookInfo)[0]) });
+        }
+    }
     navigateBack = () => this.props.navigation.goBack();
 
     updateCurrentSecurityChanged = () => this.setState({ currentSecuritiesChanged: !this.state.currentSecuritiesChanged });
 
     switchOnOffReinvest = (fromView, flag, accountId) => () => {
+        let tmpData = [];
         switch (fromView) {
             case 'orderNew':
-                tmpData = data;
-                tmpData.map((item, i) => {
+                tmpData = this.state.checkBookDetails;
+                tmpData.map((item) => {
                     if (item.Id == accountId) {
                         if (flag) {
                             item.enableReinvest = true;
@@ -64,8 +70,9 @@ class CheckBookComponent extends Component {
                             item.enableReinvest = false;
                         }
                         this.updateCurrentSecurityChanged();
-                    }});
-                data = tmpData;
+                    }
+                });
+                this.setState({ checkBookDetails: tmpData });
                 break;
         }
     }
@@ -88,16 +95,18 @@ class CheckBookComponent extends Component {
                         {gblStrings.orderCheckBook.verify_your_account}
                     </Text>
 
-                    <FlatList
-                        data={data}
-                        extraData={this.state.currentSecuritiesChanged}
-                        keyExtractor={(item) => item.Id}
-                        renderItem={({ item, i }) => (<ViewAccountItem
-                            item={item}
-                            updateCurrentSecurityChanged={this.updateCurrentSecurityChanged}
-                            switchOnOffReinvest={this.switchOnOffReinvest}
-                                                      />)}
-                    />
+                    {this.props && this.props.checkBookInfo &&
+                        <FlatList
+                            data={this.state.checkBookDetails}
+                            extraData={this.state.currentSecuritiesChanged}
+                            keyExtractor={(item) => item.Id}
+                            renderItem={({ item }) => (
+                                <ViewAccountItem
+                                    item={item}
+                                    updateCurrentSecurityChanged={this.updateCurrentSecurityChanged}
+                                    switchOnOffReinvest={this.switchOnOffReinvest}
+                                />)}
+                        />}
 
                     <GButtonComponent
                         buttonStyle={styles.backBtn}
@@ -136,6 +145,7 @@ class CheckBookComponent extends Component {
 }
 
 const ViewAccountItem = (props) => {
+    let item = [];
     item = props.item;
     props.updateCurrentSecurityChanged;
     return (
@@ -166,28 +176,36 @@ const ViewAccountItem = (props) => {
                 </View>
 
                 {item.enableReinvest ?
-                <>
-                    <View style={styles.linkBreak2} />
+                    <>
+                        <View style={styles.linkBreak2} />
 
-                    <View style={styles.requestInfoView}>
-                        <Text style={styles.requestText}>
-                            {gblStrings.orderCheckBook.checkbook_requested_on}
-                        </Text>
+                        <View style={styles.requestInfoView}>
+                            <Text style={styles.requestText}>
+                                {gblStrings.orderCheckBook.checkbook_requested_on}
+                            </Text>
 
-                        <Text style={styles.requestValue}>
-                            {item.CheckBookRequestedOn}
-                        </Text>
-                    </View>
-                </> : null}
-                
-            </View> 
-            
+                            <Text style={styles.requestValue}>
+                                {item.CheckBookRequestedOn}
+                            </Text>
+                        </View>
+                    </> : null}
+
+            </View>
+
         </>
     );
 };
 
+ViewAccountItem.propTypes = {
+    item: PropTypes.instanceOf(Object),
+    updateCurrentSecurityChanged: PropTypes.instanceOf(Function),
+};
+
 CheckBookComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    getCheckBookInfo: PropTypes.instanceOf(Function),
+    checkBookInfo: PropTypes.instanceOf(Object),
+    switchOnOffReinvest: PropTypes.instanceOf(Function),
 };
 
 export default CheckBookComponent;

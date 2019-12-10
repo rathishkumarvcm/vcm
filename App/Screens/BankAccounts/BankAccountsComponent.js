@@ -5,39 +5,44 @@ import { GHeaderComponent, GInputComponent, GSwitchComponent, GFooterComponent, 
 import PropTypes from "prop-types";
 import gblStrings from '../../Constants/GlobalStrings';
 
-const data = [
-    {
-        Id: "1",
-        bankName: "Wells Fargo",
-        accountType: "Checking Account",
-        accountNumber: "0012556968666",
-        transitRoutingNumber: "569933659",
-        dateAdded: "20/11/2019"      
-    },
-    {
-        Id: "2",
-        bankName: "Bank Of America",
-        accountType: "Checking Account",
-        accountNumber: "0012556968666",
-        transitRoutingNumber: "569933659",
-        dateAdded: "20/11/2019"     
-    },
-    {
-        Id: "3",
-        bankName: "Wells Fargo",
-        accountType: "Checking Account",
-        accountNumber: "0012556968666",
-        transitRoutingNumber: "569933659",
-        dateAdded: "20/11/2019"     
-    },
-];
-
 class BankAccountsComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: false,
+            bankAccountInfo: [
+                {
+                    Id: "1",
+                    bankName: "Wells Fargo",
+                    accountType: "Checking Account",
+                    accountNumber: "0012556968666",
+                    transitRoutingNumber: "569933659",
+                    dateAdded: "20/11/2019"
+                },
+                {
+                    Id: "2",
+                    bankName: "Bank Of America",
+                    accountType: "Checking Account",
+                    accountNumber: "0012556968666",
+                    transitRoutingNumber: "569933659",
+                    dateAdded: "20/11/2019"
+                },
+                {
+                    Id: "3",
+                    bankName: "Wells Fargo",
+                    accountType: "Checking Account",
+                    accountNumber: "0012556968666",
+                    transitRoutingNumber: "569933659",
+                    dateAdded: "20/11/2019"
+                },
+            ]
         };
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props && this.props.bankAccountInfo && this.props.bankAccountInfo != prevProps.bankAccountInfo) {
+            this.setState({ bankAccountInfo: JSON.parse(JSON.parse(this.props.bankAccountInfo)[0]) });
+        }
     }
 
     navigateAddBankAccount = () => this.props.navigation.navigate('addBankAccount')
@@ -74,13 +79,13 @@ class BankAccountsComponent extends Component {
                         {gblStrings.bankAccounts.lorem_bank_account}
                     </Text>
 
-                    <FlatList
-                        data={data}
-                        keyExtractor={(item) => item.Id}
-                        renderItem={({ item, i }) => (<ViewAccountItem
-                            item={item}
-                                                      />)}
-                    />
+                    {this.props && this.props.bankAccountInfo &&
+                        <FlatList
+                            data={this.state.bankAccountInfo}
+                            keyExtractor={(item) => item.Id}
+                            renderItem={({ item, i }) => (<ViewAccountItem
+                                item={item} />)}
+                        />}
 
                     <View style={styles.fullLine} />
 
@@ -112,7 +117,7 @@ const ViewAccountItem = (props) => {
             </Text>
 
             <Text style={styles.dateAddedText}>
-                {gblStrings.bankAccounts.date_added +` : ${item.dateAdded}`}
+                {gblStrings.bankAccounts.date_added + ` : ${item.dateAdded}`}
             </Text>
 
             <View style={styles.linkBreak2} />
