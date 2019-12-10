@@ -317,7 +317,7 @@ export default {
         savings: "Savings",
         checking: "Checking",
         financialInstitution: "Name of Financial Institution",
-        accountOwner: "Name of Accouner Owner",
+        accountOwner: "Name of Accouner Owner(s)",
         transitRoutingNo: "Transit Routing Number",
         accountNumber: "Account Number",
         specimen: "SPECIMEN",
