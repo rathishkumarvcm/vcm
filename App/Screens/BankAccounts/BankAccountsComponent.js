@@ -39,6 +39,13 @@ class BankAccountsComponent extends Component {
         };
     }
 
+    componentDidMount() {
+        let payload = [];
+
+        payload.push(JSON.stringify(this.state.bankAccountInfo));
+        this.props.getBankAccountInfo(JSON.stringify(payload));
+    }
+
     componentDidUpdate(prevProps) {
         if (this.props && this.props.bankAccountInfo && this.props.bankAccountInfo != prevProps.bankAccountInfo) {
             this.setState({ bankAccountInfo: JSON.parse(JSON.parse(this.props.bankAccountInfo)[0]) });
