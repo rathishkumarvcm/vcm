@@ -132,7 +132,10 @@ class AccountMessagingDeviceManagementComponent extends Component {
 }
 
 AccountMessagingDeviceManagementComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    accMessageDeviceinitialState: PropTypes.instanceOf(Object),
+
+    saveData:PropTypes.func,
 };
 
 AccountMessagingDeviceManagementComponent.defaultProps = {

@@ -987,6 +987,8 @@ DeliverySettingsComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     initialState: PropTypes.instanceOf(Object).isRequired,
     deliverySettingsinitialState: PropTypes.instanceOf(Object).isRequired,
+
+    saveData:PropTypes.func,
 };
 
 DeliverySettingsComponent.defaultProps = {

@@ -373,6 +373,9 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
 
 AccountMessagingGeneralDocumentsComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),    
+    accMessageDocumentinitialState: PropTypes.instanceOf(Object),
+
+    saveData:PropTypes.func,
 };
 
 AccountMessagingGeneralDocumentsComponent.defaultProps = {

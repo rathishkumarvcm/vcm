@@ -1105,7 +1105,7 @@ class OpenAccPageThreeComponent extends Component {
                 let fundSelectedCompare = "";
                 this.state.selectedFundInvestmentsData.map((item,index)=>{                   
                     fundSelectedCompare = fundSelectedCompare.concat('fundNumber'+(index+1)+'='+item.fundNumber)+"&";
-                })                                               
+                });                                               
                //console.log("Selected Funds:"+fundSelectedCompare);
                if (fundSelectedCompare !== null && fundSelectedCompare !== "") {
                     this.props.navigation.push('compareFunds', { fundDetails: fundSelectedCompare });

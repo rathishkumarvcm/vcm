@@ -931,7 +931,10 @@ class AccountMessagingAdviceComponent extends Component {
 }
 
 AccountMessagingAdviceComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    accMessageAdviceinitialState: PropTypes.instanceOf(Object),
+
+    saveData:PropTypes.func,
 };
 
 AccountMessagingAdviceComponent.defaultProps = {

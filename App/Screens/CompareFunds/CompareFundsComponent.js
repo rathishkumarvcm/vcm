@@ -180,10 +180,10 @@ class CompareFundsComponent extends Component {
                             contentContainerStyle={{ flexDirection: 'row',flexGrow: 1}}
                         >  
                         {
-                        compareFundsData.map((item) => {
+                        compareFundsData.map((item,index) => {
                             //console.log("Item======",item);   
                             return (                        
-                                <View style={styles.fundCompareContainer} key={item}>
+                                <View style={styles.fundCompareContainer} key={index}>
                                     <View style={styles.fundDetailsHeadContainer}>
                                         <View style={styles.fundDetailsHeadContents}>
                                             <Text style={styles.fundDetailsHeadTitle}>

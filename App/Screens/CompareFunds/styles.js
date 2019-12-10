@@ -160,6 +160,7 @@ export const styles = StyleSheet.create({
     fundDetailsHeadContainer:{       
         borderRightWidth:0.8,       
         borderTopWidth:0.2,
+        borderLeftWidth:0.2,
         borderBottomWidth:0.8,
         borderColor:'#7B8288',        
         marginTop: scaledHeight(30),
@@ -167,6 +168,7 @@ export const styles = StyleSheet.create({
     fundDetailsPriceHeadContainer:{       
         borderRightWidth:0.8,      
         borderTopWidth:0.2,
+        borderLeftWidth:0.2,
         borderBottomWidth:0.8,
         borderColor:'#7B8288',       
     },
