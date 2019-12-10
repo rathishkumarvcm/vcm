@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { scaledHeight,scaledWidth } from '../../Utils/Resolution';
+import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
 
 
 
@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#F7FAFF',
         width: '100%'
     },
-  
+
     sectionGrp: {
         overflow: 'hidden',
         marginHorizontal: scaledHeight(12),
@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
         flexGrow: 1
     },
     sectionDescTxt: {
-        marginTop:scaledHeight(12),
+        marginTop: scaledHeight(12),
         fontSize: scaledHeight(18),
         color: '#56565A',
         lineHeight: 25
@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
     childSectionGrp: {
         flexGrow: 1
     },
-   
+
 
     accTypeSelectSection: {
         marginTop: scaledHeight(20),
@@ -37,7 +37,7 @@ export const styles = StyleSheet.create({
     },
     headings: {
         width: '80%',
-        textAlign:'left',
+        textAlign: 'left',
         fontSize: scaledHeight(20),
         fontWeight: 'bold',
         color: '#000000',
@@ -49,67 +49,114 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(9.5),
         height: scaledHeight(1),
         backgroundColor: '#707070',
-        opacity:0.5
+        opacity: 0.5
     },
-    
+
     lblLine1: {
         //width:"100%",
 
         height: scaledHeight(1),
         backgroundColor: '#696069'
     },
-    lblTxt:{
-        color:'rgba(51, 51, 51, 0.87)',
-        fontSize:scaledHeight(16),
-        fontWeight:'bold',
+    lblTxt: {
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
         marginTop: scaledHeight(25)
     },
-    lblOfflineTxt:{
-        color:'#56565A',
-        fontSize:scaledHeight(18),
-        fontWeight:'bold',
+    lblOfflineTxt: {
+        color: '#56565A',
+        fontSize: scaledHeight(18),
+        fontWeight: 'bold',
         marginTop: scaledHeight(80)
     },
     lblOfflineDescTxt: {
-        marginTop:scaledHeight(12),
-        marginBottom:scaledHeight(25),
+        marginTop: scaledHeight(12),
+        marginBottom: scaledHeight(25),
 
         fontSize: scaledHeight(14),
         color: '#333333DE',
         lineHeight: 25
     },
+    tollFreeContainer: {
+        flexGrow: 1,
+        backgroundColor: '#FFFFFF',
+        padding: scaledHeight(23),
+        borderWidth: 1,
+        borderColor: "#CFCFCF",
+        alignItems: 'flex-start',
+        alignContent: 'center',
+        justifyContent: 'center',
+    },
+    contactMSR: {
+        flexGrow: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center'
+    },
+    callMSR: {
+        borderWidth: 1, borderColor: "#707070",
+        paddingHorizontal: scaledHeight(19),
+        paddingVertical: scaledHeight(10),
 
-    lblSpecimen:{
-        color:'rgba(51, 51, 51, 0.87)',
-        fontSize:scaledHeight(16),
-        fontWeight:'bold',
-        textAlign:'center',
+        borderRadius: scaledHeight(31),
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+    },
+    labOR:{
+        marginVertical: scaledHeight(12),
+        fontSize: scaledHeight(18),
+        color: '#333333DE',
+        lineHeight: 22,
+        textAlign: 'center'
+    },
+    lblMSRTxt: {
+        marginVertical: scaledHeight(25),
+        fontWeight: 'bold',
+        fontSize: scaledHeight(15),
+        color: '#000000',
+        lineHeight: 25
+    },
+    lblMSRDescTxt: {
+        marginBottom: scaledHeight(25),
+
+        fontSize: scaledHeight(14),
+        color: '#333333DE',
+        lineHeight: 25
+    },
+    lblSpecimen: {
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        textAlign: 'center',
         marginTop: scaledHeight(58),
-        textDecorationStyle:'solid',
+        textDecorationStyle: 'solid',
         textDecorationLine: 'underline'
 
     },
-    lblSpecimenDesc:{
-        color:'#333333DE',
-        fontSize:scaledHeight(11),
-        textAlign:'left',
+    lblSpecimenDesc: {
+        color: '#333333DE',
+        fontSize: scaledHeight(11),
+        textAlign: 'left',
         marginTop: scaledHeight(58)
 
     },
-    specimenImg:{
-        height:scaledHeight(176)
+    specimenImg: {
+        height: scaledHeight(176)
     },
-  
+
     lblSelectedCountTxt: {
         color: '#56565A',
-        opacity:.65,
+        opacity: .65,
         fontSize: scaledHeight(13),
         //marginTop: scaledHeight(25),
-       // marginBottom: scaledHeight(15)
+        // marginBottom: scaledHeight(15)
     },
     fundListGrp: {
         flexGrow: 1,
-        marginTop:scaledHeight(27)
+        marginTop: scaledHeight(27)
     },
 
     rowHeaderItem: {
@@ -119,7 +166,7 @@ export const styles = StyleSheet.create({
         flexGrow: 1,
         // borderColor:'#afabb0',
         //  borderWidth:1 ,
-        marginTop:scaledHeight(0)
+        marginTop: scaledHeight(0)
     },
     rowItem: {
         flexDirection: 'row',
@@ -128,18 +175,18 @@ export const styles = StyleSheet.create({
         flexGrow: 1,
         // borderColor:'#afabb0',
         //  borderWidth:1 ,
-        marginTop:scaledHeight(22)
+        marginTop: scaledHeight(22)
     },
     colItem: {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
         flexGrow: 1,
-        backgroundColor:'#FFFFFF',
-        borderColor:'#70707080',
-        borderWidth:1 ,
-        padding:scaledHeight(15),
-        marginVertical:scaledHeight(15)
+        backgroundColor: '#FFFFFF',
+        borderColor: '#70707080',
+        borderWidth: 1,
+        padding: scaledHeight(15),
+        marginVertical: scaledHeight(15)
     },
 
     lblRowtitleTxt: {
@@ -147,7 +194,7 @@ export const styles = StyleSheet.create({
         color: '#0D7CB5',
         fontSize: scaledHeight(22),
         fontWeight: 'bold',
-      //  lineHeight:20
+        //  lineHeight:20
     },
 
     lblLeftColTxt: {
@@ -155,7 +202,7 @@ export const styles = StyleSheet.create({
         color: '#333333DE',
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
-       
+
 
     },
     lblRightColTxt: {
@@ -169,14 +216,14 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
 
-      //  marginTop: scaledHeight(25),
+        //  marginTop: scaledHeight(25),
         //marginBottom: scaledHeight(7)
     },
     showPagesNosTxt: {
         color: '#584f58',
         fontSize: scaledHeight(15),
-     //   marginTop: scaledHeight(25),
-        letterSpacing:1
+        //   marginTop: scaledHeight(25),
+        letterSpacing: 1
         //marginBottom: scaledHeight(7)
     },
 
@@ -208,48 +255,48 @@ export const styles = StyleSheet.create({
         marginRight: '0%',
         marginTop: scaledHeight(0),
     },
-    dropDownPostition:{
-         width:"100%",
-         marginLeft:scaledHeight(20),
-         marginRight:scaledHeight(20),
-         position: 'absolute', 
-         left: 0
-       
+    dropDownPostition: {
+        width: "100%",
+        marginLeft: scaledHeight(20),
+        marginRight: scaledHeight(20),
+        position: 'absolute',
+        left: 0
+
     },
-    errMsg:{
-        color:'red',
-        fontSize:scaledHeight(12),
+    errMsg: {
+        color: 'red',
+        fontSize: scaledHeight(12),
         marginVertical: scaledHeight(12),
 
-      },
-    radioBtnGrp:{
-        flexGrow:1,
-        marginTop:scaledHeight(19),
-        flexDirection:'row'
     },
-    radioBtnColGrp:{
-        flexGrow:1,
-        marginTop:scaledHeight(19)
+    radioBtnGrp: {
+        flexGrow: 1,
+        marginTop: scaledHeight(19),
+        flexDirection: 'row'
     },
-    lblRadioBtnTxt:{
-        color:'#333333DE',
-        fontSize:scaledHeight(16),
-        lineHeight:28,
-        flexWrap:'wrap'
+    radioBtnColGrp: {
+        flexGrow: 1,
+        marginTop: scaledHeight(19)
     },
-    lblRadioDescTxt:{
-        marginTop:scaledHeight(14),
-        color:'#333333DE',
-        fontSize:scaledHeight(14),
-        lineHeight:22,
-        flexWrap:'wrap',
-        opacity:.75
+    lblRadioBtnTxt: {
+        color: '#333333DE',
+        fontSize: scaledHeight(16),
+        lineHeight: 28,
+        flexWrap: 'wrap'
+    },
+    lblRadioDescTxt: {
+        marginTop: scaledHeight(14),
+        color: '#333333DE',
+        fontSize: scaledHeight(14),
+        lineHeight: 22,
+        flexWrap: 'wrap',
+        opacity: .75
     },
     filterFundsBtn: {
         width: scaledWidth(180),
         borderWidth: 1,
-        borderColor: "#61285F45",        
-        height: scaledHeight(60),
+        borderColor: "#61285F45",
+        height: scaledHeight(50),
         backgroundColor: '#FFFFFF',
         alignItems: 'flex-start',
         alignContent: 'center',
@@ -268,14 +315,14 @@ export const styles = StyleSheet.create({
     compareFundsBtn: {
         width: scaledWidth(280),
         borderWidth: 1,
-        borderColor: "#61285F45",       
-        height: scaledHeight(60),
+        borderColor: "#61285F45",
+        height: scaledHeight(50),
         backgroundColor: '#FFFFFF',
         alignItems: 'flex-start',
         alignContent: 'center',
         justifyContent: 'center',
         marginTop: scaledHeight(15),
-        marginBottom:scaledHeight(5),
+        marginBottom: scaledHeight(5),
         paddingHorizontal: scaledHeight(25)
 
     },
@@ -283,56 +330,56 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
-       // width: '80%',
-       textAlign: 'left'
+        // width: '80%',
+        textAlign: 'left'
     },
     touchItem: {
         // width:scaledHeight(250),
-       //  height:scaledHeight(250),
-       marginVertical:scaledHeight(14),
-     },
+        //  height:scaledHeight(250),
+        marginVertical: scaledHeight(14),
+    },
     accountItem: {
-        flexDirection:'row',
+        flexDirection: 'row',
         backgroundColor: '#FFFFFF',
         justifyContent: 'flex-start',
         alignItems: "center",
         alignContent: 'center',
-        borderColor:'#5D83AE99',
-        borderWidth:1,
-        borderStyle:'solid',
-       //width:'75%',
-       height:scaledHeight(80),
-       //flexWrap:"wrap"
+        borderColor: '#5D83AE99',
+        borderWidth: 1,
+        borderStyle: 'solid',
+        //width:'75%',
+        height: scaledHeight(80),
+        //flexWrap:"wrap"
 
     },
     accountItemSelected: {
-        flexDirection:'row',
+        flexDirection: 'row',
 
         backgroundColor: '#FFFFFF',
         justifyContent: 'flex-start',
         alignItems: "center",
         alignContent: 'center',
-        borderColor:'#B5E198',
-        borderWidth:6,
-        borderStyle:'solid',
+        borderColor: '#B5E198',
+        borderWidth: 6,
+        borderStyle: 'solid',
         //width:'75%',
-        height:scaledHeight(92),
+        height: scaledHeight(92),
         //flexWrap:"wrap"
     },
     accountItemTxt: {
         color: '#56565A',
         fontWeight: 'bold',
         fontSize: scaledHeight(18),
-        textAlign:'left',
-        lineHeight:scaledHeight(20),
-        marginLeft:scaledHeight(26),
-        flexWrap:"wrap"
+        textAlign: 'left',
+        lineHeight: scaledHeight(20),
+        marginLeft: scaledHeight(26),
+        flexWrap: "wrap"
 
     },
 
-   accountItemImg: {
-        height:scaledHeight(45),
-        width:scaledHeight(45)
+    accountItemImg: {
+        height: scaledHeight(45),
+        width: scaledHeight(45)
 
     },
     accountItemImgBG: {
@@ -340,9 +387,9 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: "center",
         alignContent: 'center',
-        height:scaledHeight(65),
-        width:scaledHeight(75),
-        marginLeft:scaledHeight(8)
+        height: scaledHeight(65),
+        width: scaledHeight(75),
+        marginLeft: scaledHeight(8)
 
 
     },
@@ -360,29 +407,29 @@ export const styles = StyleSheet.create({
         flexGrow: 1,
         backgroundColor: '#FFFFFF',
         borderWidth: 1,
-        borderTopColor:"#FFFFFF",
+        borderTopColor: "#FFFFFF",
         borderColor: '#70707080',
-      //  padding: scaledHeight(20)
-      
+        //  padding: scaledHeight(20)
+
     },
-    expandCollpaseTxt:{
-        color:'#56565A',
-        fontSize:scaledHeight(15),
-        textAlign:'center'
-    },
-    
-    customTxtBoxError:{
-        marginTop: scaledHeight(9),
-        width : '100%',
-        borderColor : 'red'
-    },
-    customTxtBox:{
-        marginTop: scaledHeight(9),
-        width : '100%'
-        
+    expandCollpaseTxt: {
+        color: '#56565A',
+        fontSize: scaledHeight(15),
+        textAlign: 'center'
     },
 
-    btnGrp:{
+    customTxtBoxError: {
+        marginTop: scaledHeight(9),
+        width: '100%',
+        borderColor: 'red'
+    },
+    customTxtBox: {
+        marginTop: scaledHeight(9),
+        width: '100%'
+
+    },
+
+    btnGrp: {
         marginHorizontal: scaledHeight(12),
         marginVertical: scaledHeight(50),
         flexGrow: 1,
@@ -392,64 +439,64 @@ export const styles = StyleSheet.create({
     },
     normalWhiteBtn: {
         //  width: '90%',
-          borderWidth : 1,
-          borderColor : "#61285F45",
-          height: scaledHeight(50),
-          backgroundColor: '#fff',
-          alignItems: 'center',
-          alignContent: 'center',
-          justifyContent: 'center',
-          marginVertical:scaledHeight(7.5),
-          marginHorizontal:scaledHeight(37)
-  
-      },
-      normalWhiteBtnTxt: {
-          fontSize: scaledHeight(16),
-          color:'#544A54',
-          width: '100%',
-          textAlign: 'center',
-          lineHeight:22
-      },
-      normalBlackBtn: {
-           //  width: '90%',
-           borderWidth : 1,
-           borderColor : "#61285F45",
-           height: scaledHeight(50),
-           backgroundColor: '#544A54',
-           alignItems: 'center',
-           alignContent: 'center',
-           justifyContent: 'center',
-           marginVertical:scaledHeight(7.5),
-           marginHorizontal:scaledHeight(37)
-          
-  
-      },
-      normalBlackBtnTxt: {
-          fontSize: scaledHeight(16),
-          color:'#fff',
-          width: '100%',
-          textAlign: 'center'
-      },
+        borderWidth: 1,
+        borderColor: "#61285F45",
+        height: scaledHeight(50),
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        marginVertical: scaledHeight(7.5),
+        marginHorizontal: scaledHeight(37)
 
-      normalBlackDisabledBtn: {
+    },
+    normalWhiteBtnTxt: {
+        fontSize: scaledHeight(16),
+        color: '#544A54',
+        width: '100%',
+        textAlign: 'center',
+        lineHeight: 22
+    },
+    normalBlackBtn: {
         //  width: '90%',
-        borderWidth : 1,
-        borderColor : "#61285F45",
+        borderWidth: 1,
+        borderColor: "#61285F45",
         height: scaledHeight(50),
         backgroundColor: '#544A54',
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        marginVertical:scaledHeight(7.5),
-        marginHorizontal:scaledHeight(37)
-   },
-   normalBlackBtnDisabledTxt: {
-       fontSize: scaledHeight(16),
-       color:'#fff',
-       width: '100%',
-       textAlign: 'center'
-   },
-  
+        marginVertical: scaledHeight(7.5),
+        marginHorizontal: scaledHeight(37)
+
+
+    },
+    normalBlackBtnTxt: {
+        fontSize: scaledHeight(16),
+        color: '#fff',
+        width: '100%',
+        textAlign: 'center'
+    },
+
+    normalBlackDisabledBtn: {
+        //  width: '90%',
+        borderWidth: 1,
+        borderColor: "#61285F45",
+        height: scaledHeight(50),
+        backgroundColor: '#544A54',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        marginVertical: scaledHeight(7.5),
+        marginHorizontal: scaledHeight(37)
+    },
+    normalBlackBtnDisabledTxt: {
+        fontSize: scaledHeight(16),
+        color: '#fff',
+        width: '100%',
+        textAlign: 'center'
+    },
+
 
 
 
@@ -494,74 +541,74 @@ export const styles = StyleSheet.create({
         paddingLeft: '4%',
         paddingTop: scaledHeight(15),
         paddingBottom: scaledHeight(15),
-        marginTop:scaledHeight(40),
-        marginBottom:scaledHeight(40),
+        marginTop: scaledHeight(40),
+        marginBottom: scaledHeight(40),
     },
-    modalTitleView:{
-        flexDirection:'row',
+    modalTitleView: {
+        flexDirection: 'row',
     },
-    modalTitleText:{
+    modalTitleText: {
         marginLeft: '2%',
         fontSize: scaledHeight(26),
         marginTop: scaledHeight(8),
         fontWeight: 'bold',
         color: '#56565A',
-        width:'85%'
+        width: '85%'
     },
-    modalMinInvestTitleText:{
+    modalMinInvestTitleText: {
         fontSize: scaledHeight(16),
         marginTop: scaledHeight(18),
         marginBottom: scaledHeight(16),
         fontWeight: 'bold',
-        color: '#56565A',       
+        color: '#56565A',
     },
-    modalCheckBoxLabel:{
-        fontSize: scaledHeight(16),     
-        marginBottom: scaledHeight(18),       
-        color: '#56565A',     
-       
+    modalCheckBoxLabel: {
+        fontSize: scaledHeight(16),
+        marginBottom: scaledHeight(18),
+        color: '#56565A',
+
     },
-    modalMinCheckBoxContainer:{
+    modalMinCheckBoxContainer: {
         marginLeft: '4%',
         marginRight: '4%',
-        marginTop:scaledHeight(10)
+        marginTop: scaledHeight(10)
     },
-    modalRiskCheckBoxContainer:{
+    modalRiskCheckBoxContainer: {
         marginLeft: '4%',
         marginRight: '4%',
-        marginTop:scaledHeight(20)
+        marginTop: scaledHeight(20)
     },
-    modalFundCheckBoxContainer:{
+    modalFundCheckBoxContainer: {
         marginLeft: '4%',
         marginRight: '4%',
-        marginTop:scaledHeight(20)
+        marginTop: scaledHeight(20)
     },
-    modalActionContainer:{
-        flexDirection:'row',
-        marginTop:scaledHeight(20),
-        marginBottom:scaledHeight(50)
+    modalActionContainer: {
+        flexDirection: 'row',
+        marginTop: scaledHeight(20),
+        marginBottom: scaledHeight(50)
     },
-    modalClearFilterBtn: {        
-        width: scaledWidth(140),       
+    modalClearFilterBtn: {
+        width: scaledWidth(140),
         height: scaledHeight(60),
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
         marginTop: scaledHeight(25),
-        marginLeft:'2%',
-        marginRight:'2%',
-        paddingLeft:'2%'
+        marginLeft: '2%',
+        marginRight: '2%',
+        paddingLeft: '2%'
     },
-    modalApplyFilterBtn: {        
-        width: scaledWidth(140),      
+    modalApplyFilterBtn: {
+        width: scaledWidth(140),
         height: scaledHeight(60),
         backgroundColor: '#5D83AE',
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
         marginTop: scaledHeight(25),
-        marginLeft:'2%',       
+        marginLeft: '2%',
     },
     modalCancelBtnTxt: {
         fontSize: scaledHeight(18),
@@ -576,11 +623,11 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         width: '100%',
         textAlign: 'center',
-        textTransform:'uppercase'
+        textTransform: 'uppercase'
     },
-    modalRiskViewContainer:{
-        flexDirection:'row',
-        width:'80%',
+    modalRiskViewContainer: {
+        flexDirection: 'row',
+        width: '80%',
     },
     editFlexDirectionColumn: {
         flexDirection: 'column',
