@@ -35,7 +35,10 @@ pipeline {
         stage('AndroidBuild') { 
             steps {
                 sh 'npm install'
-                sh 'android/gradlew assembleDebug'
+                dir('android')
+                {
+                    sh 'gradlew assembleDebug'
+                }
             }
         }
         stage('Test') { 
