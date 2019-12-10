@@ -420,8 +420,8 @@ export const styles = StyleSheet.create({
     },
 
     userAvatar:{
-        height : scaledHeight(200),
-        width: '100%'
+        height : scaledHeight(100),
+        width: scaledHeight(100)
     }
 
 

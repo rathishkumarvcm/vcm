@@ -107,7 +107,6 @@ export default {
         common:250,
 
 
-
     },
     dashBoard: {
         openAnAccount: "Open an Account",
@@ -308,8 +307,8 @@ export default {
         fundType:"Fund Type",
         clearFilter:"Clear Filters",
         applyFilter:"Apply Filter",
-        offlinMethod: "Offline Method",
-        offlinMethodDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcittet",
+        offlineMethod: "Offline Method",
+        offlineMethodDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcittet",
         onlineMethod: "Online Method",
         onlineMethodDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcittet",
 
@@ -321,7 +320,8 @@ export default {
         accountOwner: "Name of Accouner Owner",
         transitRoutingNo: "Transit Routing Number",
         accountNumber: "Account Number",
-        specimen: "Specimen",
+        specimen: "SPECIMEN",
+        accNumberOwnerDesc:"Account number and all owner names must be preprinted and unaltered",
 
         backtInvestmentSelection: "Back to Investment Selection",
         summary: "Summary",
