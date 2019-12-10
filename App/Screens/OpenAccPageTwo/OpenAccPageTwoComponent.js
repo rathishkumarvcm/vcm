@@ -1410,7 +1410,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
     validateFields = () => {
-       return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
+       //return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
         try {
 
 
@@ -2385,7 +2385,7 @@ class OpenAccPageTwoComponent extends Component {
 
                             value={this.state.personal.maritalStatus}
                             propInputStyle={this.state.personal.maritalStatusValidation ? styles.customListTxtBox : styles.customListTxtBoxError}
-                            placeholder={"e.g Employed"}
+                            placeholder={""}
 
                         />
                         {this.renderDropDown('maritalStatusDropDown', this.state.personal.maritalStatusDropDown, dummyData)}
@@ -2586,7 +2586,7 @@ s
                         <GInputComponent
                             inputref={this.setInputRef("telePhoneNo3")}
                             propInputStyle={styles.customTxtBox}
-                            placeholder={gblStrings.accManagement.phoneNoFormat}
+                            placeholder={""}
                             maxLength={gblStrings.maxLength.telePhoneNo3}
                             keyboardType="phone-pad"
                             onChangeText={this.onChangeText("personal", "telePhoneNo3")}
@@ -2682,7 +2682,7 @@ s
                             onPress={this.onPressDropDown("personal", "empStatusDropDown")}
                             value={this.state.personal.empStatus}
                             propInputStyle={this.state.personal.empStatusValidation ? styles.customListTxtBox : styles.customListTxtBoxError}
-                            placeholder={"e.g Employed"}
+                            placeholder={""}
 
                         />
                         {this.renderDropDown('empStatusDropDown', this.state.personal.empStatusDropDown, empStatusData)}
@@ -2713,7 +2713,7 @@ s
                                 <GInputComponent
                                     inputref={this.setInputRef("empOccupation")}
                                     propInputStyle={styles.customTxtBox}
-                                    placeholder={"Mobile Communication Officer"}
+                                    placeholder={""}
                                     maxLength={gblStrings.maxLength.occupation}
                                     onChangeText={this.onChangeText("personal", "empOccupation")}
                                     onSubmitEditing={this.onSubmitEditing(this.empName)}
@@ -3315,7 +3315,7 @@ s
                             onPress={this.onPressDropDown("jointOwner", "maritalStatusDropDown")}
                             value={this.state.jointOwner.maritalStatus}
                             propInputStyle={this.state.jointOwner.maritalStatusValidation ? styles.customListTxtBox : styles.customListTxtBoxError}
-                            placeholder={"e.g Employed"}
+                            placeholder={""}
 
                         />
                         {this.renderDropDown('maritalStatusDropDown_joint', this.state.jointOwner.maritalStatusDropDown, dummyData)}

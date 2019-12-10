@@ -6,10 +6,9 @@ import GIcon from './GIcon';
 
 const GRatingStarsComponent = (props) => {
     var stars = [];
-    var tempcolor = props.unRatedStarColor;
 
     for (let i = 1; i <= 5; i++) {
-        tempcolor = props.unRatedStarColor;
+       let tempcolor = props.unRatedStarColor;
         if (i <= props.rating) {
             tempcolor = props.ratedStarColor;
         }

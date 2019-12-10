@@ -254,7 +254,7 @@ class CollegePlanBeneficiaryComponent extends Component {
     }
 
     isEmpty = (str) => {
-        if (str == "" || str == undefined || str == null || str == "null" || str == "undefined") {
+        if (str == "" || str == undefined || str == "null" || str == "undefined") {
             return true;
         } else {
             return false;
