@@ -4668,23 +4668,6 @@ s
 
                     { /*----------- Privacy Notice -------------------*/}
 
-                    <View style={styles.privacySection}>
-                        <Text style={styles.privacyNoticeTitleTxt}>
-                            {gblStrings.accManagement.VCPrivacyNotice}
-                        </Text>
-                        <Text style={styles.privacyNoticeTxt}>
-                            {gblStrings.accManagement.VCPrivacyNoticeDesc}
-                        </Text>
-
-
-                        <GButtonComponent
-                            buttonStyle={styles.downloadPDFBtn}
-                            buttonText={gblStrings.common.downloadPDF}
-                            textStyle={styles.downloadPDFBtnTxt}
-                            onPress={this.onClickDownloadPDF}
-                        />
-
-                    </View>
 
                     { /*----------- Disclaimer -------------------*/}
 

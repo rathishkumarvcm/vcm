@@ -82,7 +82,7 @@ export const styles = StyleSheet.create({
     lblSpecimen:{
         color:'rgba(51, 51, 51, 0.87)',
         fontSize:scaledHeight(16),
-       // fontWeight:'bold',
+        fontWeight:'bold',
         textAlign:'center',
         marginTop: scaledHeight(58),
         textDecorationStyle:'solid',
@@ -246,41 +246,45 @@ export const styles = StyleSheet.create({
         opacity:.75
     },
     filterFundsBtn: {
-        width: scaledWidth(140),
+        width: scaledWidth(180),
         borderWidth: 1,
         borderColor: "#61285F45",        
         height: scaledHeight(60),
         backgroundColor: '#FFFFFF',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         alignContent: 'center',
         justifyContent: 'center',
-        marginTop: scaledHeight(25)
+        marginTop: scaledHeight(25),
+        paddingHorizontal: scaledHeight(25)
+
     },
     filterFundsBtnTxt: {
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
         width: '80%',
-        textAlign: 'center'
+        textAlign: 'left'
     },
     compareFundsBtn: {
-        width: scaledWidth(260),
+        width: scaledWidth(280),
         borderWidth: 1,
         borderColor: "#61285F45",       
         height: scaledHeight(60),
         backgroundColor: '#FFFFFF',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         alignContent: 'center',
         justifyContent: 'center',
         marginTop: scaledHeight(15),
-        marginBottom:scaledHeight(5)
+        marginBottom:scaledHeight(5),
+        paddingHorizontal: scaledHeight(25)
+
     },
     compareFundsBtnTxt: {
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
        // width: '80%',
-       textAlign: 'center'
+       textAlign: 'left'
     },
     touchItem: {
         // width:scaledHeight(250),
@@ -304,7 +308,7 @@ export const styles = StyleSheet.create({
     accountItemSelected: {
         flexDirection:'row',
 
-        backgroundColor: '#B5E198',
+        backgroundColor: '#FFFFFF',
         justifyContent: 'flex-start',
         alignItems: "center",
         alignContent: 'center',

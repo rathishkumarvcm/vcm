@@ -208,7 +208,7 @@ class DashboardAccComponent extends Component {
                     <View style={styles.accountSection}>
 
                         <Text style={styles.welcomeTxt}>
-                            {gblStrings.dashBoard.openAnAccount}
+                            {gblStrings.dashBoard.openAnAccountWithVCM}
                         </Text>
                         <View style={{ flexGrow: 1, marginTop: scaledHeight(59) }}>
                             {accList.map((item) => {

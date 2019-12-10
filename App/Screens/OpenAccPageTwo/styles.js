@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
         textAlign:'left',
         fontSize: scaledHeight(20),
         fontWeight: 'bold',
-        color: '#5D83AE',
+        color: '#000000',
         lineHeight: 35
     },
     lblLine: {
@@ -173,29 +173,7 @@ export const styles = StyleSheet.create({
         color: '#56565A',
         lineHeight: 22
     },
-    downloadPDFBtn:{
-        width: '75%',
-        borderWidth : 1,
-        borderColor : "#61285F",
-        borderRadius: scaledHeight(24),
-        height: scaledHeight(50),
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
-        marginTop:scaledHeight(22)
-    },
-    downloadPDFBtnTxt:{
-        fontSize: scaledHeight(16),
-        color:'#61285F',
-        fontWeight: 'bold',
-        width: '100%',
-        textAlign: 'center',
-        lineHeight: 20
-
-    },
-
-
+    
     expandCollpaseTxt:{
         color:'#56565A',
         fontSize:scaledHeight(15),
@@ -268,7 +246,6 @@ export const styles = StyleSheet.create({
       //  width: '90%',
         borderWidth : 1,
         borderColor : "#61285F45",
-        borderRadius: scaledHeight(24),
         height: scaledHeight(50),
         backgroundColor: '#fff',
         alignItems: 'center',
@@ -289,7 +266,6 @@ export const styles = StyleSheet.create({
          //  width: '90%',
          borderWidth : 1,
          borderColor : "#61285F45",
-         borderRadius: scaledHeight(24),
          height: scaledHeight(50),
          backgroundColor: '#544A54',
          alignItems: 'center',
@@ -311,7 +287,6 @@ export const styles = StyleSheet.create({
         //  width: '90%',
         borderWidth : 1,
         borderColor : "#61285F45",
-        borderRadius: scaledHeight(24),
         height: scaledHeight(50),
         backgroundColor: '#544A54',
         alignItems: 'center',
@@ -334,7 +309,7 @@ export const styles = StyleSheet.create({
     width : scaledHeight(160),
     borderWidth : scaledHeight(1),
     borderColor : "#61285F45",
-    borderRadius: scaledHeight(4),
+   // borderRadius: scaledHeight(4),
     height: scaledHeight(50),
     backgroundColor: '#544A54',
     alignItems: 'center',

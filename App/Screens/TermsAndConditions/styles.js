@@ -19,9 +19,9 @@ export const styles = StyleSheet.create({
     headings: {
         width: '80%',
         textAlign: 'left',
-        fontSize: scaledHeight(20),
+        fontSize: scaledHeight(21),
         fontWeight: 'bold',
-        color: '#5D83AE',
+        color: '#56565A',
         lineHeight: scaledHeight(26),
     },
     lblLine: {
@@ -42,9 +42,9 @@ export const styles = StyleSheet.create({
     },
     sectionDescTxt: {
         marginTop: scaledHeight(8),
-        fontSize: scaledHeight(15),
+        fontSize: scaledHeight(16),
         color: '#56565A',
-        lineHeight: 22
+        lineHeight: 25
 
     },
 
@@ -67,7 +67,7 @@ export const styles = StyleSheet.create({
     agreeTermsTxt: {
         textAlign: 'left',
         fontSize: scaledHeight(16),
-        color: '#333333DE',
+        color: '#54565B',
         lineHeight: scaledHeight(19),
 
     },
@@ -86,7 +86,6 @@ export const styles = StyleSheet.create({
         //  width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
-        borderRadius: scaledHeight(24),
         height: scaledHeight(50),
         backgroundColor: '#fff',
         alignItems: 'center',
@@ -107,7 +106,6 @@ export const styles = StyleSheet.create({
         //  width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
-        borderRadius: scaledHeight(24),
         height: scaledHeight(50),
         backgroundColor: '#544A54',
         alignItems: 'center',
@@ -128,7 +126,6 @@ export const styles = StyleSheet.create({
         //  width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
-        borderRadius: scaledHeight(24),
         height: scaledHeight(50),
         backgroundColor: '#544A54',
         alignItems: 'center',
@@ -201,7 +198,7 @@ export const styles = StyleSheet.create({
     },
     bulletText: {
         width: '90%',
-        fontSize: scaledHeight(15),
+        fontSize: scaledHeight(16),
         color: '#56565A',
         lineHeight: 22,
         textAlign: "left",

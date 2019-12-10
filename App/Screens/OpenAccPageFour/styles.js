@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
         textAlign: 'left',
         fontSize: scaledHeight(20),
         fontWeight: 'bold',
-        color: '#5D83AE',
+        color: '#000000',
         lineHeight: 35
     },
     lblLine: {
@@ -206,7 +206,6 @@ export const styles = StyleSheet.create({
         //  width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
-        borderRadius: scaledHeight(24),
         height: scaledHeight(50),
         backgroundColor: '#544A54',
         alignItems: 'center',
@@ -227,7 +226,6 @@ export const styles = StyleSheet.create({
         //  width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
-        borderRadius: scaledHeight(24),
         height: scaledHeight(50),
         backgroundColor: '#544A54',
         alignItems: 'center',
