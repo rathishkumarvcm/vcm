@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
-import { PageNumber, CustomDropDown, CustomCheckBox } from '../../AppComponents';
+import { PageNumber } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import { styles } from './styles';
 import PropTypes from 'prop-types';
-import { scaledHeight } from '../../Utils/Resolution';
 
 class LiquidationPageFourComponent extends Component {
     constructor(props) {
@@ -40,7 +39,6 @@ class LiquidationPageFourComponent extends Component {
             this.amount = taxAccountingMethodData.amountAfterTaxes;
         }
         console.log("this.amount------> ",this.amount);
-        var formattedAmount = 
         console.log("formatted amount------> ",parseInt(this.amount).toLocaleString());
         return (
             <View style={styles.container} >

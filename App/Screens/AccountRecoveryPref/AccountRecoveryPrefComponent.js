@@ -197,9 +197,9 @@ class AccountRecoveryPrefComponent extends Component {
     }
 }
 
-
 AccountRecoveryPrefComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation : PropTypes.instanceOf(Object),
+    initialState : PropTypes.instanceOf(Object),
 };
 
 AccountRecoveryPrefComponent.defaultProps = {

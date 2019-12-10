@@ -17,10 +17,6 @@ class ResetPINComponent extends Component {
             pinlength:true,
         };
         this.disableSubmitButton = true;
-        this.resetPINJSON={
-            newPIN:'',
-            message:globalStrings.userManagement.changedPINSuccessfully
-        };
     }
     setNewPIN = pin => {
         this.setState({
@@ -54,16 +50,29 @@ class ResetPINComponent extends Component {
         }
     }
 
-    onClickSubmit = () => {
+    /*onClickSubmit = () => {
         console.log("------- onClick submit reset PIN -------");
         this.resetPINJSON.newPIN = this.state.confirmNewPIN;
         console.log("resetPINJSON ------- "+JSON.stringify(this.resetPINJSON));
         this.props.navigation.navigate('changeLogonCredentials',{message:globalStrings.userManagement.changedPINSuccessfully,newPIN:this.state.confirmNewPIN});
+    }*/
+
+    onClickSubmit = () => {        
+        console.log('Submit Button Clicked...');       
+        const payloadData = {
+            newPIN: this.state.confirmNewPIN
+        };
+        this.props.saveNewPIN(payloadData);
+        this.props.navigation.navigate('changeLogonCredentials',{message:globalStrings.userManagement.changedPINSuccessfully, newPIN:this.state.confirmNewPIN});               
     }
 
     navigateChangeLogonCredentials = () => this.props.navigation.navigate('changeLogonCredentials');
-
+    
+    
+    componentDidMount(){
+    }
     render() {
+        console.log("render--->this.props"+JSON.stringify(this.props));
         return (
             <View style={styles.container} >
                 <GHeaderComponent navigation={this.props.navigation} />
@@ -142,7 +151,10 @@ class ResetPINComponent extends Component {
 
 
 ResetPINComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation : PropTypes.instanceOf(Object),
+    loginState : PropTypes.instanceOf(Object),
+    initialState : PropTypes.instanceOf(Object),
+    saveNewPIN : PropTypes.func,
 };
 
 ResetPINComponent.defaultProps = {

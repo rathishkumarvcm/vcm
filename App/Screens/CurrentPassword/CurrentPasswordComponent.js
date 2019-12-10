@@ -9,7 +9,7 @@ class CurrentPasswordComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentPassword : "Password",
+            currentPassword : "",
             userEnteredPassword:'',
             errMsg:''
         };
@@ -34,6 +34,15 @@ class CurrentPasswordComponent extends Component {
 
     validateCurrentPassword=(pswd)=>{
         this.setState({userEnteredPassword:pswd});
+    }
+
+    componentDidMount() {
+        console.log("this.props.initialState--->"+JSON.stringify(this.props.initialState.currentPassword));
+         if (this.props && this.props.initialState && this.props.initialState.currentPassword) {
+            this.setState({
+                currentPassword:this.props.initialState.currentPassword
+            });
+         }
     }
 
 
@@ -96,7 +105,8 @@ class CurrentPasswordComponent extends Component {
 
 
 CurrentPasswordComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    initialState : PropTypes.instanceOf(Object),
 };
 
 CurrentPasswordComponent.defaultProps = {

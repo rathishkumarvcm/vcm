@@ -11,14 +11,22 @@ export const styles = StyleSheet.create({
     mainFlex:{
         flex: 0.85
     },
+    horizontalFlex:{
+        flexDirection: 'row'
+    },
     accountFlex:{
-        height:scaledHeight(58),
+        height:scaledHeight(82),
         flexDirection:'column',
+        borderWidth:scaledHeight(1),
+        borderColor:'#9DB4CE',
+        marginBottom:"6%"
     },
     accountNumberText:{
-        color:'#56565A',
-        fontSize:scaledHeight(22),
-        fontWeight:'bold'
+        color:'#54565B',
+        fontSize:scaledHeight(18),
+        fontWeight:'bold',
+        marginTop:scaledHeight(10),
+        marginLeft:scaledHeight(10)
     },
     emptyFlex:{
         height:scaledHeight(30)
@@ -120,6 +128,10 @@ export const styles = StyleSheet.create({
     switchFlex:{
         height: scaledHeight(54),
     },
+    dropDownLayout:{
+        marginTop:scaledHeight(18),
+        paddingLeft:'0%',
+    },
     amountBeforeTaxVal:{
         height: scaledHeight(48), 
         width: scaledHeight(318), 
@@ -178,6 +190,24 @@ export const styles = StyleSheet.create({
         paddingTop:scaledHeight(15), 
         marginLeft:"3%"
     },
+    stateTaxToDollarFlex:{
+        marginLeft: "10%", 
+        flexDirection: 'row', 
+        marginTop: "4%"
+    },
+    stateTaxToDollarText:{
+        fontSize: scaledHeight(16), 
+        color: '#56565A', 
+        backgroundColor:'#F1F1F1',
+        borderColor:'#DEDEDF',
+        borderWidth:scaledHeight(1),
+        opacity: 0.8,
+        height: scaledHeight(48), 
+        width:"58%",
+        paddingLeft:"4%",
+        paddingTop:scaledHeight(15), 
+        marginLeft:"6%"
+    },
     amountBeforeTaxesVal:{
         fontSize: scaledHeight(16), 
         color: '#56565A', 
@@ -193,7 +223,7 @@ export const styles = StyleSheet.create({
         borderColor:'#DEDEDF',
         borderWidth:scaledHeight(1),
         height: scaledHeight(48), 
-        width:"100%",
+        width:"45%",
         marginTop:scaledHeight(15), 
     },
     inputStyle:{
@@ -269,26 +299,42 @@ export const styles = StyleSheet.create({
         opacity:0.5,
         fontSize: scaledHeight(14),
         fontWeight: 'bold',
-        textAlign:'center',
-        paddingLeft:"8%"
+        textAlign:'left',
+        marginLeft:"4%"
     },
     TextOffStyleWithholdtax:{
         color:'#544A54',
         opacity:0.5,
         fontSize: scaledHeight(14),
         fontWeight: 'bold',
-        marginLeft:"0%",
-        textAlign:'center',
-        paddingLeft:"3%"
+        textAlign:'right',
+        marginLeft:"38%"
+    },
+    messageFlex:{
+        backgroundColor:'#F8F6DE',
+        borderColor:'#61285F45',
+        borderWidth:scaledHeight(1),
+        marginLeft:"4%",
+        marginRight:"4%",
+    },
+    messageText:{
+        color:'#333333DE',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold',
+        padding:"4%"
     },
     flex2:{
         marginLeft: "4%",
         marginRight:"4%",
     },
+    flexTaxAccounting:{
+        height: scaledHeight(40),
+    },
     flex4:{
         height: scaledHeight(951),
         marginLeft: "4%",
         marginRight:"4%",
+        marginTop:"4%"
     },
     flex4Hide:{
         height: scaledHeight(180),
@@ -301,6 +347,59 @@ export const styles = StyleSheet.create({
     },
     flex4b:{
         height: scaledHeight(782),
+    },
+    flex5:{
+        flexDirection:'column',
+        marginLeft: "4%",
+        marginRight:"4%",
+        marginTop:"4%",
+    },
+    cityHeading:{
+        fontSize: scaledHeight(16), 
+        fontWeight: 'bold', 
+        color: '#333333DE', 
+        height: scaledHeight(19) ,
+        marginTop:scaledHeight(20)
+    },
+    greyText14pxRegular:{
+       color:'#56565A',
+       fontSize:scaledHeight(14),
+       padding:"2%"
+    },
+    flexGreyBG:{
+        height: scaledHeight(78),
+        backgroundColor:'#F2F2F2',
+        borderWidth:scaledHeight(1),
+        borderColor:'#DADBDB',
+        marginTop:scaledHeight(10)
+    },
+    addressBox:{
+        fontSize: scaledHeight(16), 
+        color: '#56565A', 
+        backgroundColor:'#F1F1F1',
+        borderColor:'#DEDEDF',
+        borderWidth:scaledHeight(1),
+        opacity: 0.7,
+        height: scaledHeight(48), 
+        width:"100%",
+        paddingLeft:"2%",
+        marginTop:scaledHeight(10)
+    },
+    flexCityNState:{
+        flexDirection:'row',
+        justifyContent:"space-between"
+    },
+    city:{
+        fontSize: scaledHeight(16), 
+        color: '#56565A', 
+        backgroundColor:'#F1F1F1',
+        borderColor:'#DEDEDF',
+        borderWidth:scaledHeight(1),
+        opacity: 0.7,
+        height: scaledHeight(48), 
+        width:"45%",
+        paddingLeft:"2%",
+        marginTop:scaledHeight(10)
     },
     flex6:{
         height:scaledHeight(205),

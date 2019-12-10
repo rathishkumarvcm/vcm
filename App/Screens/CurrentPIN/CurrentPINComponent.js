@@ -10,7 +10,7 @@ class CurrentPINComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentPIN : "1234",
+            currentPIN : "",
             userEnteredPIN:'',
             errMsg:''
         };
@@ -40,6 +40,15 @@ class CurrentPINComponent extends Component {
 
     navigateChangeLogonCredentials = () => this.props.navigation.navigate('changeLogonCredentials');
   
+    componentDidMount() {
+        console.log("this.props.initialState--->"+JSON.stringify(this.props.initialState.currentPIN));
+         if (this.props && this.props.initialState && this.props.initialState.currentPIN) {
+            this.setState({
+                currentPIN:this.props.initialState.currentPIN
+            });
+         }
+    }
+
     render() {
         return (
             <View style={styles.container} >
@@ -97,7 +106,8 @@ class CurrentPINComponent extends Component {
 
 
 CurrentPINComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    initialState : PropTypes.instanceOf(Object)
 };
 
 CurrentPINComponent.defaultProps = {

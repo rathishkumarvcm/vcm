@@ -6,6 +6,7 @@ import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from 'prop-types';
 import {ValidatePassword} from '../../Utils/ValidatePassword';
 
+
 class ResetPasswordComponent extends Component {
     constructor(props) {
         super(props);
@@ -16,10 +17,6 @@ class ResetPasswordComponent extends Component {
             comparePasswords: true,
         };
         this.disableSubmitButton = true;
-        this.resetPasswordJSON={
-            newPassword:'',
-            message:gblStrings.userManagement.changedPasswordSuccessfully
-        };
     }
 
     setNewPassword = text => {
@@ -51,16 +48,24 @@ class ResetPasswordComponent extends Component {
         }
     }
 
-    onClickSubmit = () => {
-        console.log("------- onClick submit reset password -------");
-        this.resetPasswordJSON.newPassword = this.state.confirmNewPassword;
-        console.log("resetPasswordJSON ------- "+JSON.stringify(this.resetPasswordJSON));
-        this.props.navigation.navigate('changeLogonCredentials',{message:gblStrings.userManagement.changedPasswordSuccessfully, newPassword:this.state.confirmNewPassword});
+    onClickSubmit = () => {        
+        console.log('Submit Button Clicked...');       
+        const payloadData = {
+            newPassword: this.state.confirmNewPassword
+        };
+        this.props.saveNewPassword(payloadData);
+        this.props.navigation.navigate('changeLogonCredentials',{message:gblStrings.userManagement.changedPasswordSuccessfully, newPassword:this.state.confirmNewPassword});               
+    }
+
+    componentDidMount(){
+        
     }
 
     navigateChangeLogonCredentials = () => this.props.navigation.navigate('changeLogonCredentials');
 
-    render() {
+
+    render() { 
+        console.log("render--->this.props"+JSON.stringify(this.props));
         return (
             <View style={styles.container} >
                 <GHeaderComponent navigation={this.props.navigation} />
@@ -150,7 +155,10 @@ class ResetPasswordComponent extends Component {
 
 
 ResetPasswordComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation : PropTypes.instanceOf(Object),
+    loginState : PropTypes.instanceOf(Object),
+    initialState : PropTypes.instanceOf(Object),
+    saveNewPassword : PropTypes.func,
 };
 
 ResetPasswordComponent.defaultProps = {

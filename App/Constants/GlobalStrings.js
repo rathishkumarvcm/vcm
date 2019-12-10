@@ -1105,6 +1105,13 @@ export default {
         confirmationMsg1:"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. .",
         confirmationMsg2:"Please wait for 3-5 business days for Settlement of your transaction.",
         targetPage:"TARGET PAGE",
+        accountSelectionContent:"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.",
+        generalAccountHeading:"General Account",
+        iraAccountHeading:"IRA Account",
+        utmaAccountHeading:"UTMA Account",
+        currentValue:"Current Value",
+        holding:"Holding",
+        automaticInvestmentPlan:"Automatic Investment Plan",
     },
     compareFunds:{
         fundComparison:"Fund Comparison",

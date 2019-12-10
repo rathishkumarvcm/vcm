@@ -12,39 +12,102 @@ export const styles = StyleSheet.create({
         flex: 0.85
     },
     headerFlex:{
-        backgroundColor:'#E4EBFE',
-        height:scaledHeight(46),
-        justifyContent:'center',
-        alignItems:'center'
+        height:scaledHeight(29),
+        flexDirection:'row'
     },
     headerText:{
-        color:'#4D79F6',
-        fontSize:scaledHeight(20),
+        color:'#56565A',
+        fontSize:scaledHeight(22),
         fontWeight:'bold',
+    },
+    flex1:{
+        marginLeft: "4%",
+        marginRight: "4%"
+    },
+    greyText16px:{
+        color:'#56565A',
+        fontSize:scaledHeight(16),
+    },
+    blackTextBold18px:{
+        color:'#54565B',
+        fontSize:scaledHeight(18),
+        fontWeight:'bold'
+    },
+    currentValueflex:{
+        flexDirection:'column',
+        width:"50%",
+        justifyContent:'space-between'
+    },
+    blackTextBold14px:{
+        color:'#56565A',
+        fontSize:scaledHeight(14),
+        fontWeight:'bold'
+    },
+    blackText14px:{
+        color:'#56565A',
+        fontSize:scaledHeight(14),
+    },
+    accountTypeFlex:{
+        height:scaledHeight(45),
+        marginTop:scaledHeight(30),
+        flexDirection:'column'
     },
     line: {
         backgroundColor: '#535353',
         opacity: 0.25,
         height: scaledHeight(1),
-        width: "92%",
+        width: "100%",
         marginTop: '4%',
+    },
+
+    accountDetailsFlex:{
+        height:scaledHeight(246),
+        marginTop:scaledHeight(20),
+        flexDirection:'column',
+        borderColor:'#9DB4CE',
+        borderWidth:scaledHeight(1),
+        backgroundColor:'#FFFFFF',
+    },
+    flexAccDetails1:{
+        height:scaledHeight(73),
+        marginLeft: '4%',
+        marginRight:"4%",
+        marginTop:"4%",
+        flexDirection:'row',
+    },
+    accountNumberFlex:{
+        width:"85%"
+    },
+    flexAccDetails2:{
+        height:scaledHeight(44),
+        marginTop: scaledHeight(20),
+        flexDirection:'row',
         marginLeft: "4%",
         marginRight: "4%"
     },
-    buttonsFlex: {
+    flexAccDetails3:{
+        height:scaledHeight(44),
+        marginTop: scaledHeight(20),
+        flexDirection:'column',
+        marginLeft: "4%",
+        marginRight: "4%",
+        justifyContent:'space-between'
+    },
+    flex6:{
+        height:scaledHeight(140),
         flexDirection: 'column',
         marginLeft: "10%",
         marginRight: "10%",
-        width: "80%",
-        marginTop: scaledHeight(20),
+        marginTop:"12%",
     },
     backButtonFlex: {
         height: scaledHeight(50),
         borderColor: '#61285F45',
         borderWidth: scaledHeight(1),
+        backgroundColor:'#FFFFFF',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: scaledHeight(16)
+        marginTop:scaledHeight(18)
     },
     backButtonText: {
         color: '#544A54',
@@ -52,11 +115,13 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
     },
     submitFlex: {
-        backgroundColor: '#544A54',
         height: scaledHeight(50),
+        borderColor: '#61285F45',
+        borderWidth: scaledHeight(1),
+        backgroundColor:'#544A54',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: scaledHeight(16)
+        marginTop:scaledHeight(19)
     },
     submitText: {
         color: '#FFFFFF',

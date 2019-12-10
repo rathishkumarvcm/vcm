@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, ImageBackground } from 'react-native';
-import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import { Text, View, ScrollView } from 'react-native';
+import { GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import { styles } from './styles';
 import PropTypes from 'prop-types';
-import { scaledHeight } from '../../Utils/Resolution';
 
 class LiquidationFinishComponent extends Component {
     constructor(props) {
