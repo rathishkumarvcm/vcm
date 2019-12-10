@@ -307,6 +307,11 @@ export default {
         fundType:"Fund Type",
         clearFilter:"Clear Filters",
         applyFilter:"Apply Filter",
+        contactMSR:"Contact MSR",
+        callTollFee:"Call toll-free",
+        callTollFeeNo:"(855) 756-7520",
+
+        contactMSRDesc:"Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcittet",
         offlineMethod: "Offline Method",
         offlineMethodDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcittet",
         onlineMethod: "Online Method",
