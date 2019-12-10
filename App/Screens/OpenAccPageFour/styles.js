@@ -149,28 +149,6 @@ export const styles = StyleSheet.create({
     },
 
 
-    downloadPDFBtn: {
-        width: '75%',
-        borderWidth: 1,
-        borderColor: "#61285F",
-        borderRadius: scaledHeight(24),
-        height: scaledHeight(50),
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
-        marginTop: scaledHeight(22)
-    },
-    downloadPDFBtnTxt: {
-        fontSize: scaledHeight(16),
-        color: '#61285F',
-        fontWeight: 'bold',
-        width: '100%',
-        textAlign: 'center',
-        lineHeight: 20
-
-    },
-
 
 
     btnGrp: {
@@ -185,7 +163,6 @@ export const styles = StyleSheet.create({
         //  width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
-        borderRadius: scaledHeight(24),
         height: scaledHeight(50),
         backgroundColor: '#fff',
         alignItems: 'center',

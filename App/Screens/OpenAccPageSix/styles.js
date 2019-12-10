@@ -152,7 +152,6 @@ export const styles = StyleSheet.create({
         //  width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
-        borderRadius: scaledHeight(24),
         height: scaledHeight(50),
         backgroundColor: '#fff',
         alignItems: 'center',
