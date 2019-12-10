@@ -11,6 +11,17 @@ import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants
 import InvestmentDetails from '../Models/InvestmentDetails';
 
 
+const images = {
+    offline: [
+        require("../../Images/offlinemethod1.png"),
+        require("../../Images/offlinemethod2.png"),
+        require("../../Images/offlinemethod3.png")
+    ],
+    online:[
+        require("../../Images/onlinemethod1.png")
+    ]
+      
+    };
 
 const dummyData = [
     { "key": "key1", "value": "Option1" },
@@ -145,7 +156,7 @@ const SourceListItem = (props) => {
                 <View style={styles.accountItemImgBG}>
                     <Image style={styles.accountItemImg}
                         resizeMode="contain"
-                        source={require("../../Images/addaccount.png")}
+                        source={props.img}
                     />
                 </View>
                 <Text style={styles.accountItemTxt}>
@@ -158,6 +169,7 @@ const SourceListItem = (props) => {
 SourceListItem.propTypes = {
     onPress: PropTypes.func,
     sourceName: PropTypes.string,
+    img: PropTypes.number,
     style: PropTypes.instanceOf(Object)
 
 };
@@ -732,7 +744,7 @@ class OpenAccPageThreeComponent extends Component {
     generateDropDownListKeyExtractor = (item) => item.key;
     generateFundListKeyExtractor = (item) => item.fundNumber.toString();
     generateFundSourceKeyExtractor = (item) => item.key;
-    generateFundInvestmentListKeyExtractor = (item) => { return (""+item.fundNumber); };
+    generateFundInvestmentListKeyExtractor = (item) => item.fundNumber.toString();
 
     renderDropDownListItem = (keyName, dropDownName) => ({ item }) =>
         (<TouchableOpacity
@@ -799,6 +811,7 @@ class OpenAccPageThreeComponent extends Component {
         (<SourceListItem
             style={item.isActive ? styles.accountItemSelected : styles.accountItem}
             sourceName={item.value}
+            img = {images[method][index]}
             onPress={this.onSelectSourceFundList(item.value, index, method)}
          />
         );
@@ -1238,10 +1251,10 @@ class OpenAccPageThreeComponent extends Component {
                             }
 
                             <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.onlineMethod}
+                                {gblStrings.accManagement.offlineMethod}
                             </Text>
                             <Text style={styles.sectionDescTxt}>
-                                {gblStrings.accManagement.onlineMethodDesc}
+                                {gblStrings.accManagement.offlineMethodDesc}
                             </Text>
                             <View style={{ flexGrow: 1, marginVertical: scaledHeight(0) }}>
                                 <FlatList
@@ -1294,6 +1307,9 @@ class OpenAccPageThreeComponent extends Component {
                             <Text style={styles.lblLine} />
 
                             <View style={styles.childSectionGrp}>
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.typeOfAccount}
+                                </Text>
                                 <View style={styles.radioBtnGrp}>
                                     <CustomRadio
                                         componentStyle={{ width: "50%", marginBottom: scaledHeight(0) }}
@@ -1392,6 +1408,18 @@ class OpenAccPageThreeComponent extends Component {
                                     returnKeyType={"done"}
 
                                 />
+
+                                <Text style={styles.lblSpecimen}>
+                                    {gblStrings.accManagement.specimen}
+                                </Text>
+                                <Text style={styles.lblSpecimenDesc}>
+                                    {gblStrings.accManagement.accNumberOwnerDesc}
+                                </Text>
+                                <Image style={styles.specimenImg}
+                                    resizeMode="contain"
+                                    source={require("../../Images/specimen.png")}
+                                />
+
                                 {this.state.isValidBankAccount ? (
                                     <Text style={{ width: '92%', marginTop: '4%', marginBottom: '4%', color: '#333300', justifyContent: 'center', alignItems: 'center' }}>
                                         {this.state.validBankAccountMsg}
@@ -1439,7 +1467,7 @@ class OpenAccPageThreeComponent extends Component {
                                 {this.state.selectedFundInvestmentsData.map((item, index) => {
                                     return (
                                         <View
-                                            key={this.generateFundInvestmentListKeyExtractor}
+                                            key={item.fundNumber}
                                         >
                                             <TouchableOpacity
                                                 onPress={this.onPressRemoveInvestment(item,index)}

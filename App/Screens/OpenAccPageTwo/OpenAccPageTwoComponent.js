@@ -4590,20 +4590,23 @@ s
                             onChangeText={this.onChangeNickName()}
                             secureTextEntry={false}
                         />
-                        <View style={{ flexGrow: 1 }}>
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.uploadImage}
-                            </Text>
-                            <Text style={styles.optionalTxt}>
-                                {gblStrings.accManagement.optional}
-                            </Text>
-                            <GButtonComponent
-                                buttonStyle={styles.browseBtn}
-                                buttonText={gblStrings.common.browse}
-                                textStyle={styles.normalBlackBtnTxt}
-                                onPress={this.uploadImage}
+                        <View style={{ flexGrow: 1,flexDirection:'row',justifyContent:'flex-start',alignItems:'center' }}>
+                            <View style={{ flexGrow: 1 }}>
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.uploadImage}
+                                </Text>
+                                <Text style={styles.optionalTxt}>
+                                    {gblStrings.accManagement.optional}
+                                </Text>
+                                <GButtonComponent
+                                    buttonStyle={styles.browseBtn}
+                                    buttonText={gblStrings.common.browse}
+                                    textStyle={styles.normalBlackBtnTxt}
+                                    onPress={this.uploadImage}
 
-                            />
+                                />
+                            </View>
+
 
                             {
                                 this.state.userAvatar!="" && <Image source={this.state.userAvatar} style={styles.userAvatar} />

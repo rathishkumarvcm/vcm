@@ -63,7 +63,26 @@ export const styles = StyleSheet.create({
         fontSize:scaledHeight(16),
         fontWeight:'bold',
         marginTop: scaledHeight(25)
-        
+    },
+    lblSpecimen:{
+        color:'rgba(51, 51, 51, 0.87)',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold',
+        textAlign:'center',
+        marginTop: scaledHeight(58),
+        textDecorationStyle:'solid',
+        textDecorationLine: 'underline'
+
+    },
+    lblSpecimenDesc:{
+        color:'#333333DE',
+        fontSize:scaledHeight(11),
+        textAlign:'left',
+        marginTop: scaledHeight(58)
+
+    },
+    specimenImg:{
+        height:scaledHeight(176)
     },
   
     lblSelectedCountTxt: {
@@ -214,41 +233,44 @@ export const styles = StyleSheet.create({
 
 
     filterFundsBtn: {
-        width: scaledWidth(120),
+        width: scaledWidth(140),
         borderWidth: 1,
         borderColor: "#61285F45",        
         height: scaledHeight(60),
         backgroundColor: '#FFFFFF',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         alignContent: 'center',
         justifyContent: 'center',
-        marginTop: scaledHeight(25)
+        marginTop: scaledHeight(25),
+        paddingHorizontal:scaledHeight(12)
     },
     filterFundsBtnTxt: {
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
-        width: '80%',
+       // width: '80%',
         textAlign: 'left'
     },
 
     compareFundsBtn: {
-        width: scaledWidth(200),
+        width: scaledWidth(260),
         borderWidth: 1,
         borderColor: "#61285F45",       
         height: scaledHeight(60),
         backgroundColor: '#FFFFFF',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         alignContent: 'center',
         justifyContent: 'center',
         marginTop: scaledHeight(15),
-        marginBottom:scaledHeight(5)
+        marginBottom:scaledHeight(5),
+        paddingHorizontal:scaledHeight(12)
+
     },
     compareFundsBtnTxt: {
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
-        width: '80%',
+       // width: '80%',
         textAlign: 'left'
     },
     touchItem: {
