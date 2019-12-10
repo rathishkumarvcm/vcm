@@ -37,7 +37,7 @@ pipeline {
                 sh 'npm install'
                 dir('android')
                 {
-                    sh 'gradlew assembleDebug'
+                    sh './gradlew assembleDebug'
                 }
             }
         }
