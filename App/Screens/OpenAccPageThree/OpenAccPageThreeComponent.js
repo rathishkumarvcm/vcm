@@ -1118,6 +1118,7 @@ class OpenAccPageThreeComponent extends Component {
         }      
     }
 
+
     /*----------------------
                                  Render Methods
                                                                  -------------------------- */
@@ -1249,10 +1250,10 @@ class OpenAccPageThreeComponent extends Component {
                                 </Text>
                             }
 
-                            <Text style={styles.lblTxt}>
+                            <Text style={styles.lblOfflineTxt}>
                                 {gblStrings.accManagement.offlineMethod}
                             </Text>
-                            <Text style={styles.sectionDescTxt}>
+                            <Text style={styles.lblOfflineDescTxt}>
                                 {gblStrings.accManagement.offlineMethodDesc}
                             </Text>
                             <View style={{ flexGrow: 1, marginVertical: scaledHeight(0) }}>
@@ -1264,10 +1265,10 @@ class OpenAccPageThreeComponent extends Component {
                             </View>
                             
                             <Text style={{
-                                marginTop: scaledHeight(12),
+                                marginVertical: scaledHeight(12),
                                 fontSize: scaledHeight(18),
-                                color: '#56565A',
-                                lineHeight: 25,
+                                color: '#333333DE',
+                                lineHeight: 22,
                                 textAlign: 'center'
                             }}
                             >
