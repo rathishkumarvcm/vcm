@@ -115,9 +115,9 @@ export const styles = StyleSheet.create({
     },
     addEditTextLabel: {
         width: '30%',
-        color: '#5D83AE',
+        color: '#0000FF',
         fontSize: scaledHeight(18),
-        fontWeight: 'bold'
+        textAlign: 'right'
     },
     settingsInfo: {
         color: '#B2B2B2',
@@ -401,5 +401,14 @@ export const styles = StyleSheet.create({
     },
     editEmailPrimaryContent: { 
         marginTop: '2%', marginBottom: '2%', flexDirection: 'row' 
+    },
+    editAddressView: {
+        width: '100%', marginLeft: '3%', marginTop: '2%', marginBottom: '2%', flexDirection: 'row', alignItems: "center", justifyContent: 'center'
+    },
+    editAddressLabel: {
+        width: '70%', color: '#707070', fontSize: scaledHeight(16), marginLeft: '3%', marginBottom: '2%'
+    },
+    editSwitchButton: {
+        width: '30%', marginTop: '2%', marginBottom: '2%'
     }
 });

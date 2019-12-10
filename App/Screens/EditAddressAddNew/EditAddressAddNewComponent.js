@@ -67,6 +67,11 @@ class editAddressAddNewComponent extends Component {
                 if (this.props && this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR]) {
                     const tempErrorResponse = this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR];
                     console.log("Error", tempErrorResponse);
+                    if (tempErrorResponse) {
+                        this.setState({
+                            isZipCodeValid: false
+                        })
+                    }
                 }
             }
         }
@@ -75,11 +80,22 @@ class editAddressAddNewComponent extends Component {
         if (this.props != prevProps) {
             if (this.props && this.props.stateCityData[addressResponseData]) {
                 const tempAddressResponse = this.props.stateCityData[addressResponseData];
+                if (tempAddressResponse) {
+                    this.setState({
+                        addressOne: tempAddressResponse.Address1,
+                        addressTwo: tempAddressResponse.Address2
+                    });
+                }
                 console.log("Error Update 001", tempAddressResponse);
             } else {
                 if (this.props && this.props.stateCityData[ActionTypes.GET_ADDRESSFORMAT_ERROR]) {
-                    const tempErrorAddress = this.props.stateCityDatap[ActionTypes.GET_ADDRESSFORMAT_ERROR];
+                    const tempErrorAddress = this.props.stateCityData[ActionTypes.GET_ADDRESSFORMAT_ERROR];
                     console.log("Error Update 001", tempErrorAddress);
+                    if (tempErrorAddress) {
+                        this.setState({
+                            validationAddressOne: false
+                        });
+                    }
                 }
             }
         }
@@ -136,7 +152,7 @@ class editAddressAddNewComponent extends Component {
         });
     }
 
-    setZipcodeValue = text => {
+    setZipcodeValue = (text) => {
         this.setState({
             zipCodeValue: text,
             isZipCodeValid: true
@@ -159,12 +175,22 @@ class editAddressAddNewComponent extends Component {
                     });
                 }
 
-                if (this.state.addressOne != "" &&
-                    this.state.zipCodeValue != "") {
+                if (this.state.addressOne != '') {
                     this.addNewAddress();
+                }
+
+                if (this.state.zipCodeValue != '') {
+                    this.validateZipCodeValue();
                 }
                 break;
         }
+    }
+
+    validateZipCodeValue = () => {
+        const payload = {
+            'Zip': this.state.zipCodeValue
+        };
+        this.props.getStateCity(payload);
     }
 
     addNewAddress = () => {
@@ -185,15 +211,35 @@ class editAddressAddNewComponent extends Component {
                 "State": this.state.userState,
             };
         }
-
         this.props.getAddressFormat(addNewAddressPayload);
     }
 
-    validateZipCodeValue = () => {
-        const payload = {
-            'Zip': this.state.zipCodeValue
-        };
-        this.props.getStateCity(payload);
+    manageContactInformations = () => {
+        const payloadData = this.getContactPayloadData();
+        this.props.saveProfileData("editContactInformation", payloadData);
+        this.props.navigation.goBack();
+    }
+
+    getContactPayloadData = () => {
+        let contactPayload = {};
+        let payload = [];
+        if (this.props && this.props.profileState) {
+            const newContactInformation = {
+                "addressType": 'Post Office',
+                "addressLineOne": 'N Black Lake Oak Rd',
+                "addressCity": 'San Diego',
+                "addressState": 'California',
+                "addressZipcode": '90001',
+                "isMailingAddress": false,
+                "isPhysicalAddress": false
+            };
+
+            contactPayload = {
+                ...this.props.profileState,
+                profileUserAddressInformation: [newContactInformation],
+            };
+        }
+        return contactPayload;
     }
 
     editAddressAddNewOnCancel = () => this.props.navigation.navigate('editAddressSettings');
@@ -205,8 +251,7 @@ class editAddressAddNewComponent extends Component {
                     this.props.stateCityData.isLoading && <GLoadingSpinner />
                 }
                 <GHeaderComponent
-                    navigation={this.props.navigation}
-                />
+                    navigation={this.props.navigation} />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -270,8 +315,7 @@ class editAddressAddNewComponent extends Component {
                                 onChangeText={this.setAddressOne}
                                 value={this.state.addressOne}
                                 errorFlag={!this.state.validationAddressOne}
-                                errorText={globalString.profileValidationMessages.validateAddressLineOne}
-                            />
+                                errorText={globalString.profileValidationMessages.validateAddressLineOne} />
                         </View>
 
                         <View style={styles.settingsView1}>
@@ -282,8 +326,7 @@ class editAddressAddNewComponent extends Component {
 
                         <View style={styles.editAddressInput}>
                             <GInputComponent
-                                placeholder={globalString.addAddressInfo.addressLineTwo}
-                            />
+                                placeholder={globalString.addAddressInfo.addressLineTwo} />
                         </View>
 
                         <View style={styles.settingsView1}>
@@ -297,9 +340,10 @@ class editAddressAddNewComponent extends Component {
                                 placeholder={globalString.addAddressInfo.zipCode}
                                 onChangeText={this.setZipcodeValue}
                                 value={this.state.zipCodeValue}
+                                keyboardType="number-pad"
+                                maxLength={5}
                                 errorFlag={!this.state.isZipCodeValid}
-                                errorText={globalString.profileValidationMessages.validateZipcode}
-                            />
+                                errorText={globalString.profileValidationMessages.validateZipcode} />
                         </View>
 
                         <View style={styles.editFlexDirectionColumn}>
@@ -319,7 +363,6 @@ class editAddressAddNewComponent extends Component {
                                 {this.state.userState}
                             </Text>
                         </View>
-
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -327,8 +370,7 @@ class editAddressAddNewComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.validateZipCodeValue}
-                        />
+                            onPress={this.manageContactInformations} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -352,8 +394,7 @@ class editAddressAddNewComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")}
-                        />
+                            source={require("../../Images/logo.png")} />
                     </View>
 
                     <View style={styles.whiteBackground}>
@@ -364,11 +405,9 @@ class editAddressAddNewComponent extends Component {
 
                     <View style={styles.whiteBackground}>
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/twitterlogo.png")}
-                        />
+                            source={require("../../Images/twitterlogo.png")} />
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/linkedinlogo.png")}
-                        />
+                            source={require("../../Images/linkedinlogo.png")} />
                     </View>
 
                     <View style={styles.privacyAgreement}>

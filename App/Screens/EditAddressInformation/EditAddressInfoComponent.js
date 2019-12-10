@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { Text, View, Image, ScrollView, TouchableOpacity, FlatList, Switch } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
@@ -17,6 +17,8 @@ const tempUserAddress = [
         "isPhysicalAddress": false
     }
 ];
+
+let profileAddressData = [];
 
 const UserAddressInformation = (props) => {
     return (
@@ -36,15 +38,27 @@ const UserAddressInformation = (props) => {
 
             <View style={styles.editEmailBorder} />
 
-            <View style={styles.editEmailPrimaryContent}>
-                <Text style={styles.editEmailId}>
-                    {globalString.profileSettingsPage.profileMailingLabel}
+            <View style={styles.editAddressView}>
+                <Text style={styles.editAddressLabel}>
+                    {globalString.editAddressInfo.editAddressSetMailing}
                 </Text>
+
+                <View style={styles.editSwitchButton}>
+                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                        onValueChange={this.toggleSwitchMailing}
+                        value={props.isMailingAddress} />
+                </View>
             </View>
-            <View style={styles.editEmailPrimaryContent}>
-                <Text style={styles.editEmailId}>
-                    {globalString.profileSettingsPage.profilePhysicalLabel}
+
+            <View style={styles.editAddressView}>
+                <Text style={styles.editAddressLabel}>
+                    {globalString.editAddressInfo.editAddressSetPhysical}
                 </Text>
+                <View style={styles.editSwitchButton}>
+                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                        onValueChange={this.toggleSwitchPhysical}
+                        value={props.isPhysicalAddress} />
+                </View>
             </View>
         </View>
     );
@@ -68,8 +82,19 @@ class editAddressInfoComponent extends Component {
             isLoading: false,
             enableBiometric: false,
             faceIdEnrolled: false,
-            touchIdEnrolled: false
+            touchIdEnrolled: false,
+
+            isAddressTypeMailing: false,
+            isAddressTypePhysical: false
         };
+    }
+
+    toggleSwitchMailing = (value) => {
+        this.props.isMailingAddress = value
+    }
+
+    toggleSwitchPhysical = (value) => {
+        this.props.isPhysicalAddress = value
     }
 
     renderAddressInformation = (dataLength) => ({ item, index }) =>
@@ -77,9 +102,29 @@ class editAddressInfoComponent extends Component {
             addressType={item.addressType}
             addressLineOne={item.addressLineOne}
             addressCity={item.addressCity}
-            addressState={item.addressState + ' ' + item.addressZipcode} />);
+            addressState={item.addressState + ' ' + item.addressZipcode}
+            isMailingAddress={item.isMailingAddress}
+            isPhysicalAddress={item.isPhysicalAddress} />);
 
-    componentDidMount() { }
+    componentDidMount() { 
+        if (this.props &&
+            this.props.profileState &&
+            this.props.profileState.profileUserAddressInformation) {
+            profileAddressData = this.props.profileState.profileUserAddressInformation;
+        }
+
+        console.log("Updated Address Info ::: 001", profileAddressData);
+    }
+
+    componentDidUpdate() {
+        if (this.props &&
+            this.props.profileState &&
+            this.props.profileState.profileUserAddressInformation) {
+            profileAddressData = this.props.profileState.profileUserAddressInformation;
+        }
+
+        console.log("Updated Address Info ::: 002", profileAddressData);
+    }
 
     editAddressInfoAddNew = () => this.props.navigation.navigate('editAddressAddNew');
 
@@ -87,14 +132,12 @@ class editAddressInfoComponent extends Component {
 
     render() {
 
-        let profileAddressData = tempUserAddress;
-
         if (this.props &&
             this.props.profileState &&
             this.props.profileState.profileUserAddressInformation) {
             profileAddressData = this.props.profileState.profileUserAddressInformation;
         }
-
+        
         return (
             <View style={styles.container}>
                 <GHeaderComponent
@@ -113,7 +156,7 @@ class editAddressInfoComponent extends Component {
 
                     <View style={styles.settingsView}>
                         <Text style={[styles.settingsHeadline, styles.editTitleBold]}>
-                            {globalString.editAddressInfo.editAddressInformations}
+                            {globalString.editAddressInfo.editAddressTitle}
                         </Text>
 
                         <Text style={styles.addEditTextLabel}

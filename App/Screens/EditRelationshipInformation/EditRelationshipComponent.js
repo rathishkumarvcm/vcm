@@ -29,14 +29,26 @@ class editRelationshipComponent extends Component {
             enableBiometric: false,
             faceIdEnrolled: false,
             touchIdEnrolled: false,
+            
             dropDownState: false,
             dropDownValue: '',
+            dropDownFlag: false,
+            dropDownMsg: '',
+            
             dropDownSuffixState: false,
             dropDownSuffixValue: '',
+            dropDownSuffixFlag: false,
+            dropDownSuffixMsg: '',
+
             dropDownGenderState: false,
             dropDownGenderValue: '',
+            dropDownGenderFlag: false,
+            dropDownGenderMsg: '',
+
             dropDownStatusState: false,
-            dropDownStatusValue: ''
+            dropDownStatusValue: '',
+            dropDownStatusFlag: false,
+            dropDownStatusMsg: ''
         };
     }
 
