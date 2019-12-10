@@ -20,14 +20,65 @@ class ChangeSignInMethod extends Component {
         super(props);
         this.state = {
               radioButton: false,
-              radioButtonIndex: 0,
+              radioButtonIndex: this.props.navigation.getParam('index'),
               alertString:"",
               initialSelection:false,
+              lastUpdate:''
             };
     }
-    
-    onClickContinue = () => 
-    { 
+
+    componentDidMount()
+    {
+        if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.selectedMethod &&
+            this.props.signInMethodsData.selectedMethod == "OTP")
+        {
+            this.setState({radioButtonIndex:0});
+        }
+        else if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.selectedMethod &&
+            this.props.signInMethodsData.selectedMethod == "SOFTTOKEN")
+        {
+            this.setState({radioButtonIndex:1});
+        }
+        else if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.selectedMethod &&
+            this.props.signInMethodsData.selectedMethod == "PUSHNOTIFICATION")
+        {
+            this.setState({radioButtonIndex:2});
+        }
+        if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.lastUpdatedTime)
+        {
+            this.setState({lastUpdate:this.props.signInMethodsData.lastUpdatedTime});
+        }
+     }
+
+     componentDidUpdate(prevProps, prevState) 
+     {
+        console.log("componentDidUpdate::::> "+prevState);
+        if (this.props !== prevProps) {
+            if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.selectedMethod &&
+                this.props.signInMethodsData.selectedMethod == "OTP")
+            {
+                this.setState({radioButtonIndex:0});
+            }
+            else if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.selectedMethod &&
+                this.props.signInMethodsData.selectedMethod == "SOFTTOKEN")
+            {
+                this.setState({radioButtonIndex:1});
+            }
+            else if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.selectedMethod &&
+                this.props.signInMethodsData.selectedMethod == "PUSHNOTIFICATION")
+            {
+                this.setState({radioButtonIndex:2});
+            }
+            if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.lastUpdatedTime)
+            {
+                this.setState({lastUpdate:this.props.signInMethodsData.lastUpdatedTime});
+            }
+        }
+     }
+
+
+       onClickContinue = () => 
+       { 
         if(this.state.radioButtonIndex == 0)
         {
         this.props.navigation.navigate('CSMOtp');
@@ -47,21 +98,7 @@ class ChangeSignInMethod extends Component {
                 radioButtonIndex: index,
                 radioButton: false
             });
-            if(index == 0)
-            {
-                //alert("OTP Selected");
-                //this.setState({alertString:gblStrings.userManagement.otp});
-            }
-            else if(index == 1)
-            {
-                //alert("Soft Token Selected");
-                //this.setState({alertString:gblStrings.userManagement.softToken,initialSelection:true});
-            }
-            else if(index == 2)
-            {
-                //alert("Push Notification");
-                //this.setState({alertString:gblStrings.userManagement.pushNotification,initialSelection:true});
-            }   
+            
         }
         else {
             this.setState({
@@ -69,12 +106,18 @@ class ChangeSignInMethod extends Component {
             });
         }
     }
-    render() {
+
+    goBack = () => {
+        this.props.navigation.goBack();
+    }
+      
+
+    render() { 
         return(
             <View style={styles.container} >
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
-                <TouchableOpacity >
+                <TouchableOpacity onPress={(this.goBack)}>
                         <GIcon
                             name="left"
                             type="antdesign"
@@ -99,7 +142,7 @@ class ChangeSignInMethod extends Component {
                 {gblStrings.userManagement.changeSignInSelection}
                 </Text>
                 <Text style={styles.lblTxtSmall} >
-                Last Update : 21/05/2018 5:22 PM
+                Last Update: {this.state.lastUpdate}
                 </Text>
                 </View> 
                 {signInMethods.map((item,index) => 
@@ -122,13 +165,13 @@ class ChangeSignInMethod extends Component {
                 buttonStyle={styles.cancelButton}
                 buttonText={gblStrings.common.back}
                 textStyle={styles.cancelButtonText}
-                //onPress={()=>this.props.navigation.navigate('registerPassword')}
+                onPress={this.goBack}
                 />
                 <GButtonComponent
                 buttonStyle={styles.cancelButton}
                 buttonText={gblStrings.common.cancel}
                 textStyle={styles.cancelButtonText}
-                //onPress={()=>this.props.navigation.navigate('registerPassword')}
+                onPress={this.goBack}
                 />
                 <GButtonComponent
                 buttonStyle={styles.saveButton}
@@ -149,7 +192,9 @@ class ChangeSignInMethod extends Component {
     }
 }
 ChangeSignInMethod.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    signInMethodsData : PropTypes.instanceOf(Object),
+    
 };
 
 ChangeSignInMethod.defaultProps = {

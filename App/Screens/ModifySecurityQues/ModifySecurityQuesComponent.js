@@ -1,16 +1,15 @@
 /* eslint-disable react/no-multi-comp */
 import React, { Component } from 'react';
-import { Text, View, ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { GButtonComponent, GHeaderComponent, GFooterComponent, GInputComponent, GRadioButtonComponent, GIcon, GDropDownComponent } from '../../CommonComponents';
 import { styles } from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
-import { CustomDropDown } from '../../AppComponents';
 import PropTypes from 'prop-types';
 import { scaledHeight } from '../../Utils/Resolution';
 
 
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
-const dummyData = [
+let quesData = [
     {
         id: '1',
         title: 'Which City were you born',
@@ -32,14 +31,16 @@ const securityQuestions = [
     { index1: 0, question: "Deliver All my documents online at vcm.com" },
     { index1: 1, question: "Do not change my document delivery Prefrence" },
 ];
-const DropDownListItem = (props) => {
+
+
+/*const DropDownListItem = (props) => {
     console.log("DropDownListItem:: ");
     return (
         <TouchableOpacity style={{ height: 33 }} onPress={props.onSelectedItem}>
             <Text> {props.value} </Text>
         </TouchableOpacity>
     );
-};
+};*/
 class ModifySecQuesComponent extends Component {
     constructor(props) {
         super(props);
@@ -70,11 +71,12 @@ class ModifySecQuesComponent extends Component {
             radioButtonIndex: 0,
             firstRender: true,
             q1Select: true,
-            q2Select:true,
-            q3Select:true,
-            errorText1:"",
-            errorText2:"",
-            errorText3:"",
+            q2Select: true,
+            q3Select: true,
+            errorText1: "",
+            errorText2: "",
+            errorText3: "",
+            documentPreference: "Deliver All my documents online at vcm.com"
 
         };
 
@@ -91,7 +93,24 @@ class ModifySecQuesComponent extends Component {
             });
 
         }
+        let payload = [];
+        const compositePayloadData = [
+            "security_ques"
+        ];
+
+        for (let i = 0; i < compositePayloadData.length; i++) {
+            let tempkey = compositePayloadData[i];
+            if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempkey]) {
+                payload.push(tempkey);
+            }
+        }
+
+        this.props.getPersonalCompositeData(payload);
         console.log("------>emailllllllll", this.props);
+        console.log("payload", payload);
+
+
+        //console.log("questions",this.props.masterLookupStateData.security_ques.value);
     }
     /*----------------------
                                  Button Events 
@@ -100,7 +119,40 @@ class ModifySecQuesComponent extends Component {
         this.props.navigation.goBack();
     }
 
+    onClickSave = () => {
+        console.log("Save:::");
+        this.manageData();
+    }
 
+    saveQuestions = () => {
+        let addedQuestionsPayload = {}, questionsList = [];
+
+        questionsList.push({ "question1": this.state.question1, "answer1": this.state.q1Ans });
+        questionsList.push({ "question2": this.state.question2, "answer2": this.state.q2Ans });
+        questionsList.push({ "question3": this.state.question3, "answer3": this.state.q3Ans });
+
+
+        addedQuestionsPayload = {
+            list_security_questions: questionsList,
+            primaryEmail: this.state.primaryEmail,
+            additonalEmail: this.state.additionalEmail,
+            documentDeliveryPreference: this.state.documentPreference
+        };
+
+
+        //list.push(addedQuestionsPayload);
+        return addedQuestionsPayload;
+    }
+
+    manageData = () => {
+        const payloadData = this.saveQuestions();
+        this.props.saveQuestions("saveQuestionsData", payloadData);
+        console.log("----questions", payloadData);
+        //this.props.navigation.navigate('otpSecurityConfirm');
+        this.goBack();
+        //this.scrollToTop();
+        //this.setState({isAddNewVisible:false,isSavedSuccess:true});
+    }
 
     radioButtonClicked = (index) => {
         if (index !== this.state.radioButtonIndex) {
@@ -108,6 +160,17 @@ class ModifySecQuesComponent extends Component {
                 radioButtonIndex: index,
                 radioButton: false
             });
+
+            if (index == 1) {
+                this.setState({
+                    documentPreference: "Do not change my document delivery Prefrence"
+                });
+            }
+            else {
+                this.setState({
+                    documentPreference: "Deliver All my documents online at vcm.com"
+                });
+            }
         }
         else {
             this.setState({
@@ -160,19 +223,19 @@ class ModifySecQuesComponent extends Component {
 
     selectedDropDownValue = (value) => {
         this.setState({
-            question1: value,
+            question1: value.value,
             question1Dropdown: false
         });
     }
     selectedDropDownValue2 = (value) => {
         this.setState({
-            question2: value,
+            question2: value.value,
             question2Dropdown: false
         });
     }
     selectedDropDownValue3 = (value) => {
         this.setState({
-            question3: value,
+            question3: value.value,
             question3Dropdown: false
         });
     }
@@ -271,6 +334,7 @@ class ModifySecQuesComponent extends Component {
                 console.log("-----> Data", this.state.question1, this.state.q1Ans, this.state.question2, this.state.q2Ans,
                     this.state.question3, this.state.q3Ans, this.state.primaryEmail, this.state.additionalEmail);
                 //this.props.navigation.navigate({ routeName: 'openAccPageFive', key: 'openAccPageFive' });
+                this.onClickSave();
             }
         }
 
@@ -280,12 +344,16 @@ class ModifySecQuesComponent extends Component {
 
     
     render() {
-
+        if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.security_ques && this.props.masterLookupStateData.security_ques.value) {
+            quesData = this.props.masterLookupStateData.security_ques.value;
+        }
+        console.log("props", this.props.masterLookupStateData);
         return (
+
             <View style={styles.container} >
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
-                    <TouchableOpacity >
+                    <TouchableOpacity onPress={(this.goBack)}>
                         <GIcon
                             name="left"
                             type="antdesign"
@@ -312,7 +380,9 @@ class ModifySecQuesComponent extends Component {
                             <GDropDownComponent
                                 textInputStyle={styles.dropdownTextInput}
                                 dropDownName={gblStrings.userManagement.ques1}
-                                data={dummyData}
+                                data={quesData}
+                                placeholder={gblStrings.common.select}
+                                itemToDisplay={"value"}
                                 changeState={this.selectTheQuestion}
                                 showDropDown={this.state.question1Dropdown}
                                 dropDownValue={this.state.question1}
@@ -339,7 +409,9 @@ class ModifySecQuesComponent extends Component {
                             <GDropDownComponent
                                 textInputStyle={styles.dropdownTextInput}
                                 dropDownName={gblStrings.userManagement.ques2}
-                                data={dummyData}
+                                data={quesData}
+                                placeholder={gblStrings.common.select}
+                                itemToDisplay={"value"}
                                 changeState={this.selectTheQuestion2}
                                 showDropDown={this.state.question2Dropdown}
                                 dropDownValue={this.state.question2}
@@ -365,7 +437,9 @@ class ModifySecQuesComponent extends Component {
                             //propInputStyle={{width:"100%"}}
                                 textInputStyle={styles.dropdownTextInput}
                                 dropDownName={gblStrings.userManagement.ques3}
-                                data={dummyData}
+                                data={quesData}
+                                placeholder={gblStrings.common.select}
+                                itemToDisplay={"value"}
                                 changeState={this.selectTheQuestion3}
                                 showDropDown={this.state.question3Dropdown}
                                 dropDownValue={this.state.question3}
@@ -379,7 +453,7 @@ class ModifySecQuesComponent extends Component {
                         </Text>*/}
                            
                             <GInputComponent
-                                propInputStyle={!this.state.q3Ansval ? styles.userIDTextBoxError : styles.userIDTextBox}
+                                //propInputStyle={!this.state.q3Ansval ? styles.userIDTextBoxError : styles.userIDTextBox}
                                 propInputStyle={styles.userIDTextBox}
                                 //propInputStyle={{ marginTop: 20, width: "100%" }}
                                 value={this.state.q3Ans}
@@ -447,13 +521,13 @@ class ModifySecQuesComponent extends Component {
                                 buttonStyle={styles.cancelButton}
                                 buttonText={gblStrings.common.back}
                                 textStyle={styles.cancelButtonText}
-                            //onPress={()=>this.props.navigation.navigate('registerPassword')}
+                                onPress={this.goBack}
                             />
                             <GButtonComponent
                                 buttonStyle={styles.cancelButton}
                                 buttonText={gblStrings.common.cancel}
                                 textStyle={styles.cancelButtonText}
-                            //onPress={()=>this.props.navigation.navigate('registerPassword')}
+                                onPress={this.goBack}
                             />
                             <GButtonComponent
                                 buttonStyle={styles.saveButton}
@@ -473,11 +547,16 @@ class ModifySecQuesComponent extends Component {
 
 ModifySecQuesComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    initialState: PropTypes.instanceOf(Object)
+    initialState: PropTypes.instanceOf(Object),
+    masterLookupStateData: PropTypes.instanceOf(Object),
+    onSelectedItem: PropTypes.func,
+    value: PropTypes.instanceOf(Object),
+    //signInMethodsData : PropTypes.instanceOf(Object),
+    saveQuestions: PropTypes.func,
+    getPersonalCompositeData: PropTypes.func
 };
 
 ModifySecQuesComponent.defaultProps = {
-    onSelectedItem: PropTypes.instanceOf(Object),
-    value: PropTypes.instanceOf(Object)
+
 };
 export default ModifySecQuesComponent;

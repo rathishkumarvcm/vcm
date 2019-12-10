@@ -17,7 +17,7 @@ class CSMSoftTokenComponent extends Component {
           secondToken:"",
           additionaProtection:false,
           isValidationSuccess:false,
-          errMsg:""
+          errMsg:"",
         };
     }
 
@@ -36,8 +36,25 @@ class CSMSoftTokenComponent extends Component {
     onClickCancel = () => {
         this.props.navigation.navigate('ChangeSignInMethod');
     }
+  
+    
     onClickSave = () => {
-        this.props.navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.softToken});
+        let payloadData = {} ;
+        var date = new Date().getDate(); //Current Date
+        var month = new Date().getMonth() + 1; //Current Month
+        var year = new Date().getFullYear(); //Current Year
+        var hours = new Date().getHours(); //Current Hours
+        var min = new Date().getMinutes(); //Current Minutes
+        var sec = new Date().getSeconds(); //Current Seconds
+          let updatedDate=date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec;
+        payloadData = {
+            selectedMethod:'SOFTTOKEN',
+            lastUpdatedTime:updatedDate
+        };
+        this.props.signInMethods("signInMethodsData", payloadData);
+        //console.log("----signInMethods",payloadData);
+        
+        this.props.navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.softToken,index:1});
     }
 
     isEmpty = (str) => {
@@ -158,7 +175,9 @@ class CSMSoftTokenComponent extends Component {
 }
 }
 CSMSoftTokenComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    signInMethodsData : PropTypes.instanceOf(Object),
+    signInMethods : PropTypes.func
 };
 
 CSMSoftTokenComponent.defaultProps = {

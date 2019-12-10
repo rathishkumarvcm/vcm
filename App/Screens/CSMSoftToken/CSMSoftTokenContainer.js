@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import CSMOtp from './CSMOtp';
+import CSMOtpSoftToken from './CSMSoftTokenComponent';
 import {loginActions,SignInMethodsActions} from "../../Shared/Actions";
 
 
@@ -20,4 +20,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(CSMOtp);
+  )(CSMOtpSoftToken);

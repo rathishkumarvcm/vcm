@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { GButtonComponent, GHeaderComponent, GFooterComponent, GRadioButtonComponent,GIcon } from '../../CommonComponents';
+import { Text, View, ScrollView } from 'react-native';
+import { GButtonComponent, GHeaderComponent, GFooterComponent, GRadioButtonComponent } from '../../CommonComponents';
 import { styles } from '../ChangeSignInMethod/styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { CustomCheckBox } from '../../AppComponents';
@@ -19,7 +19,7 @@ class CSMOtp extends Component {
             email:"",
             signInMethods : [         
             ],
-            saveCurrentDevice:false
+            saveCurrentDevice:false,
         };
     }
 
@@ -28,9 +28,56 @@ class CSMOtp extends Component {
               this.renderMaskedInput();       
         }
         console.log("------>mobbbbb",this.state.email,this.state.mobileNo);
-             
+        if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.saveCurrentDevice)
+        {
+           this.setState({saveCurrentDevice:this.props.signInMethodsData.saveCurrentDevice});
+        }
+
+        if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.otpMethodType &&
+            this.props.signInMethodsData.otpMethodType == "Email")
+        {
+            this.setState({radioButtonIndex:0});
+        }
+        else if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.otpMethodType &&
+            this.props.signInMethodsData.otpMethodType == "Mobile")
+        {
+            this.setState({radioButtonIndex:1});
+        }
+        else if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.otpMethodType &&
+            this.props.signInMethodsData.otpMethodType == "Security")
+        {
+            this.setState({radioButtonIndex:2});
+        }
+        
     }
 
+    componentDidUpdate(prevProps, prevState) 
+     {
+        console.log("componentDidUpdate::::> "+prevState);
+        if (this.props !== prevProps) {
+            if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.saveCurrentDevice)
+        {
+           this.setState({saveCurrentDevice:this.props.signInMethodsData.saveCurrentDevice});
+        }
+        if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.otpMethodType &&
+            this.props.signInMethodsData.otpMethodType == "Email")
+        {
+            this.setState({radioButtonIndex:0});
+        }
+        else if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.otpMethodType &&
+            this.props.signInMethodsData.otpMethodType == "Mobile")
+        {
+            this.setState({radioButtonIndex:1});
+        }
+        else if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.otpMethodType &&
+            this.props.signInMethodsData.otpMethodType == "Security")
+        {
+            this.setState({radioButtonIndex:2});
+        }
+        }
+    }
+    
+    
     
     renderMaskedInput = () => {
         this.setState({
@@ -68,8 +115,38 @@ class CSMOtp extends Component {
     onClickCancel = () => {
         this.props.navigation.navigate('ChangeSignInMethod');
     }
+
     onClickSave = () => {
-        this.props.navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.otp});
+        let payloadData = {};
+        var date = new Date().getDate(); //Current Date
+        var month = new Date().getMonth() + 1; //Current Month
+        var year = new Date().getFullYear(); //Current Year
+        var hours = new Date().getHours(); //Current Hours
+        var min = new Date().getMinutes(); //Current Minutes
+        var sec = new Date().getSeconds(); //Current Seconds
+        var otpType = '';
+          let updatedDate=date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec;
+          if(this.state.radioButtonIndex == 0)
+        {
+            otpType = 'Email';
+        }
+        if(this.state.radioButtonIndex == 1)
+        {
+            otpType = 'Mobile';
+        }
+        if(this.state.radioButtonIndex == 2)
+        {
+            otpType = 'Security';
+        }
+        payloadData = {
+            selectedMethod:'OTP',
+            lastUpdatedTime:updatedDate,
+            saveCurrentDevice:this.state.saveCurrentDevice,
+            otpMethodType:otpType
+        };
+        this.props.signInMethods("signInMethodsData", payloadData);
+        //console.log("----signInMethods",payloadData);
+        this.props.navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.otp,index:0});
     }
 
     radioButtonClicked = (index) => {
@@ -177,7 +254,9 @@ class CSMOtp extends Component {
 } 
 CSMOtp.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    initialState : PropTypes.instanceOf(Object)
+    initialState : PropTypes.instanceOf(Object),
+    signInMethodsData : PropTypes.instanceOf(Object),
+    signInMethods : PropTypes.func
 };
 
 export default CSMOtp;

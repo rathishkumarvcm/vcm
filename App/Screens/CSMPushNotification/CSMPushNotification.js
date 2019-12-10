@@ -20,8 +20,36 @@ class CSMPushNotificationComponent extends Component {
       onClickCancel = () => {
         this.props.navigation.navigate('ChangeSignInMethod');
       }
+
+      dateFormat = () => {
+        var date = new Date().getDate(); //Current Date
+        var month = new Date().getMonth() + 1; //Current Month
+        var year = new Date().getFullYear(); //Current Year
+        var hours = new Date().getHours(); //Current Hours
+        var min = new Date().getMinutes(); //Current Minutes
+        var sec = new Date().getSeconds(); //Current Seconds
+        this.setState({
+            //Setting the value of the date time
+            date:
+              date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
+          });
+      }
       onClickSave = () => {
-      this.props.navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.pushNotification});
+        let payloadData = {};
+        var date = new Date().getDate(); //Current Date
+        var month = new Date().getMonth() + 1; //Current Month
+        var year = new Date().getFullYear(); //Current Year
+        var hours = new Date().getHours(); //Current Hours
+        var min = new Date().getMinutes(); //Current Minutes
+        var sec = new Date().getSeconds(); //Current Seconds
+          let updatedDate=date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec;
+        payloadData = {
+            selectedMethod:'PUSHNOTIFICATION',
+            lastUpdatedTime:updatedDate
+        };
+        this.props.signInMethods("signInMethodsData", payloadData);
+        //console.log("----signInMethods",payloadData);
+        this.props.navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.pushNotification,index:2});
       
       }
 
@@ -78,7 +106,9 @@ class CSMPushNotificationComponent extends Component {
     }
   }
 CSMPushNotificationComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    signInMethodsData : PropTypes.instanceOf(Object),
+    signInMethods : PropTypes.func
 };
 
 CSMPushNotificationComponent.defaultProps = {

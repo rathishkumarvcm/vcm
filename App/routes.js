@@ -44,7 +44,7 @@ import AccountMessagingDeviceManagement from './Screens/AccountMessagingDeviceMa
 import OtpAuthentication from './Screens/OtpAuthentication/OtpAuthenticationComponent';
 import OtpConfirm from './Screens/OtpConfirm/OtpConfirmComponent';
 import OtpSeurity from './Screens/OtpSeucrityQuestions/OtpSeucrityQuestionsComponent';
-import OtpSecurityConfirm from './Screens/OtpSeucrityConfirm/OtpSeucrityConfirmComponent';
+import OtpSecurityConfirm from './Screens/OtpSeucrityConfirm';
 import EmailVerify from './Screens/EmailVerification/EmailVerificationComponent';
 import RetrieveOnlineId from './Screens/RetrieveOnlineId/RetrieveOnlineIdComponent';
 
@@ -83,9 +83,9 @@ import EditAddPhoneNumber from './Screens/EditAddNewPhoneNumber/';
 import EditMilitaryInfo from './Screens/EditMilitaryInformation/';
 import EditOccupationInfo from './Screens/EditOccupationInformation/';
 import ModifySecurityQues from './Screens/ModifySecurityQues';
-import ChangeSignInMethod from './Screens/ChangeSignInMethod/ChangeSignInMethodComponent';
-import CSMSoftTokenComponent from './Screens/CSMSoftToken/CSMSoftTokenComponent';
-import CSMPushNotificationComponent from './Screens/CSMPushNotification/CSMPushNotification';
+import ChangeSignInMethod from './Screens/ChangeSignInMethod';
+import CSMSoftTokenComponent from './Screens/CSMSoftToken';
+import CSMPushNotificationComponent from './Screens/CSMPushNotification';
 import CSMOtp from './Screens/CSMOtp';
 import ManageIntrestedPartiesComponent from './Screens/ManageIntrestedParties';
 import ManageBeneficiariesComponent from './Screens/ManageBeneficiaries';
@@ -103,7 +103,9 @@ import PasswordRecoverTemp from './Screens/RecoverTempPassword/';
 import PasswordReset from './Screens/RecoverPasswordNew/';
 import PasswordSuccess from './Screens/RecoverPasswordSuccess/';
 
-import TAmmendComponent from './Screens/TAmmend/TAmmendComponent';
+//Transactions  
+import TAmmendComponent from './Screens/TAmmend/';
+import FundSelectionComponent from './Screens/FundSelection/';
 
 //Account Services
 import AccountServicesComponent from './Screens/AccountServices';
@@ -774,6 +776,12 @@ const AppNavigator = createStackNavigator({
                 header:null,
             }
         },
+        FundSelectionComponent:{
+            screen:FundSelectionComponent,
+            navigationOptions:{
+                header:null,
+            }  
+        }
     },{
         initialRouteName: 'login'
     });
