@@ -303,8 +303,7 @@ export const styles = StyleSheet.create({
     normalWhiteBtn: {
         //  width: '90%',
         borderWidth: 1,
-        borderColor: "#61285F45",
-        borderRadius: scaledHeight(24),
+        borderColor: "#61285F45",        
         height: scaledHeight(50),
         backgroundColor: '#fff',
         alignItems: 'center',

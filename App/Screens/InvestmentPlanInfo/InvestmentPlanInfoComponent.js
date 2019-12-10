@@ -212,7 +212,7 @@ class InvestmentPlanInfoComponent extends Component {
                     {gblStrings.accManagement.pricePerShare}{nav.asOfDate}{")"}
                 </Text>
                 <Text style={styles.lblNameValueTxt}>
-                    {nav.value}
+                    {gblStrings.common.dollar}{nav.value}
                 </Text>
 
                 <Text style={styles.lblNameTxt}>

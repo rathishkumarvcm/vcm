@@ -129,6 +129,7 @@ import automaticInvestmentSchedule from './Screens/AutomaticInvestmentPlanSchedu
 import automaticInvestmentVerify from './Screens/AutomaticInvestmentPlanVerify';
 import automaticInvestmentEsign from './Screens/AutomaticInvestmentPlanEsign';
 import ImageUpload from './Screens/First';
+import CompareFunds from './Screens/CompareFunds';
 
 const AppNavigator = createStackNavigator({
         login: {
@@ -781,7 +782,13 @@ const AppNavigator = createStackNavigator({
             navigationOptions:{
                 header:null,
             }  
-        }
+        },
+        compareFunds:{
+            screen:CompareFunds,
+            navigationOptions:{
+                header:null,
+            }
+        },
     },{
         initialRouteName: 'login'
     });

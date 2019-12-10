@@ -1100,9 +1100,8 @@ class OpenAccPageThreeComponent extends Component {
 
     navigateCompareFunds= () =>{
         //console.log(this.state.selectedFundInvestmentsData);
-        if(this.state.selectedFundInvestmentsData.length > 0){
+        if(this.state.selectedFundInvestmentsData.length > 1){
             if(this.state.selectedFundInvestmentsData.length < 5){
-
                 let fundSelectedCompare = "";
                 this.state.selectedFundInvestmentsData.map((item,index)=>{                   
                     fundSelectedCompare = fundSelectedCompare.concat('fundNumber'+(index+1)+'='+item.fundNumber)+"&";
@@ -1111,13 +1110,14 @@ class OpenAccPageThreeComponent extends Component {
                if (fundSelectedCompare !== null && fundSelectedCompare !== "") {
                     this.props.navigation.push('compareFunds', { fundDetails: fundSelectedCompare });
                }
-            }else {
-                alert('Maximum only 4 funds are compared');
+            }else{
+                alert('Please select minimum 2 or maximum 4 funds to compare');
             }
-        }else {
-            alert('Please select funds to compare');
+        }else{
+            alert('Please select minimum 2 or maximum 4 funds to compare');
         }      
     }
+
 
     /*----------------------
                                  Render Methods
@@ -1250,10 +1250,10 @@ class OpenAccPageThreeComponent extends Component {
                                 </Text>
                             }
 
-                            <Text style={styles.lblTxt}>
+                            <Text style={styles.lblOfflineTxt}>
                                 {gblStrings.accManagement.offlineMethod}
                             </Text>
-                            <Text style={styles.sectionDescTxt}>
+                            <Text style={styles.lblOfflineDescTxt}>
                                 {gblStrings.accManagement.offlineMethodDesc}
                             </Text>
                             <View style={{ flexGrow: 1, marginVertical: scaledHeight(0) }}>
@@ -1265,10 +1265,10 @@ class OpenAccPageThreeComponent extends Component {
                             </View>
                             
                             <Text style={{
-                                marginTop: scaledHeight(12),
+                                marginVertical: scaledHeight(12),
                                 fontSize: scaledHeight(18),
-                                color: '#56565A',
-                                lineHeight: 25,
+                                color: '#333333DE',
+                                lineHeight: 22,
                                 textAlign: 'center'
                             }}
                             >

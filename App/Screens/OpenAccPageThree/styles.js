@@ -64,10 +64,25 @@ export const styles = StyleSheet.create({
         fontWeight:'bold',
         marginTop: scaledHeight(25)
     },
+    lblOfflineTxt:{
+        color:'#56565A',
+        fontSize:scaledHeight(18),
+        fontWeight:'bold',
+        marginTop: scaledHeight(80)
+    },
+    lblOfflineDescTxt: {
+        marginTop:scaledHeight(12),
+        marginBottom:scaledHeight(25),
+
+        fontSize: scaledHeight(14),
+        color: '#333333DE',
+        lineHeight: 25
+    },
+
     lblSpecimen:{
         color:'rgba(51, 51, 51, 0.87)',
         fontSize:scaledHeight(16),
-        fontWeight:'bold',
+       // fontWeight:'bold',
         textAlign:'center',
         marginTop: scaledHeight(58),
         textDecorationStyle:'solid',
@@ -129,7 +144,7 @@ export const styles = StyleSheet.create({
 
     lblRowtitleTxt: {
         width: '90%',
-        color: '#56565A',
+        color: '#0D7CB5',
         fontSize: scaledHeight(22),
         fontWeight: 'bold',
       //  lineHeight:20
@@ -230,53 +245,47 @@ export const styles = StyleSheet.create({
         flexWrap:'wrap',
         opacity:.75
     },
-
-
     filterFundsBtn: {
         width: scaledWidth(140),
         borderWidth: 1,
         borderColor: "#61285F45",        
         height: scaledHeight(60),
         backgroundColor: '#FFFFFF',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        marginTop: scaledHeight(25),
-        paddingHorizontal:scaledHeight(12)
+        marginTop: scaledHeight(25)
     },
     filterFundsBtnTxt: {
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
-       // width: '80%',
-        textAlign: 'left'
+        width: '80%',
+        textAlign: 'center'
     },
-
     compareFundsBtn: {
         width: scaledWidth(260),
         borderWidth: 1,
         borderColor: "#61285F45",       
         height: scaledHeight(60),
         backgroundColor: '#FFFFFF',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
         marginTop: scaledHeight(15),
-        marginBottom:scaledHeight(5),
-        paddingHorizontal:scaledHeight(12)
-
+        marginBottom:scaledHeight(5)
     },
     compareFundsBtnTxt: {
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
        // width: '80%',
-        textAlign: 'left'
+       textAlign: 'center'
     },
     touchItem: {
         // width:scaledHeight(250),
        //  height:scaledHeight(250),
-       marginVertical:scaledHeight(24),
+       marginVertical:scaledHeight(14),
      },
     accountItem: {
         flexDirection:'row',
@@ -295,11 +304,11 @@ export const styles = StyleSheet.create({
     accountItemSelected: {
         flexDirection:'row',
 
-        backgroundColor: '#dbeafc',
+        backgroundColor: '#B5E198',
         justifyContent: 'flex-start',
         alignItems: "center",
         alignContent: 'center',
-        borderColor:'#5d83ae',
+        borderColor:'#B5E198',
         borderWidth:6,
         borderStyle:'solid',
         //width:'75%',
@@ -309,7 +318,7 @@ export const styles = StyleSheet.create({
     accountItemTxt: {
         color: '#56565A',
         fontWeight: 'bold',
-        fontSize: scaledHeight(20),
+        fontSize: scaledHeight(18),
         textAlign:'left',
         lineHeight:scaledHeight(20),
         marginLeft:scaledHeight(26),
