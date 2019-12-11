@@ -1,3 +1,3 @@
-import SecurityPreferences from './ProfilesAndPreferencesComponent';
+import SecurityPreferences from './SecurityPreferencesComponent';
 
 export default SecurityPreferences;
