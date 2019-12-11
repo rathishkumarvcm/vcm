@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { Text, View, Image, ScrollView, TouchableOpacity, FlatList, Switch } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
@@ -58,11 +58,18 @@ const UserPhoneInformation = (props) => {
 
             <View style={styles.editEmailBorder} />
 
-            <View style={styles.editEmailPrimaryContent}>
-                <Text style={styles.editEmailId}>
+            <View style={styles.editAddressView}>
+                <Text style={styles.editAddressLabel}>
                     {globalString.profileSettingsPage.profileMailPrimaryLabel}
                 </Text>
+
+                <View style={styles.editSwitchButton}>
+                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                        onValueChange={this.toggleSwitchMailing}
+                        value={props.isPrimaryMobile} />
+                </View>
             </View>
+
         </View>
     );
 };
@@ -70,7 +77,8 @@ const UserPhoneInformation = (props) => {
 UserPhoneInformation.propTypes = {
     mobileNumberType: PropTypes.string,
     mobileNumber: PropTypes.string,
-    mobilePreferredTime: PropTypes.string
+    mobilePreferredTime: PropTypes.string,
+    isPrimaryMobile: PropTypes.bool
 };
 
 class editPhoneInfoComponent extends Component {
@@ -90,7 +98,11 @@ class editPhoneInfoComponent extends Component {
             mobileNumberType={item.mobileNumberType}
             mobileNumber={item.mobileNumber}
             mobilePreferredTime={item.mobilePreferredTime}
-        />);
+            isPrimaryMobile={item.isPrimaryMobile} />);
+
+    toggleSwitchMailing = (value) => {
+        this.props.isMailingAddress = value
+    }
 
     componentDidMount() { }
 
@@ -138,11 +150,12 @@ class editPhoneInfoComponent extends Component {
                         </Text>
                     </View>
 
-                    <View style={styles.settingsView}>
-                        <Text style={styles.phoneInfoLabel}>
+                    <View style={[styles.settingsView]}>
+                        <Text style={styles.profileSettingViewOne}>
                             {globalString.editPhoneInformations.phoneLabel}
                         </Text>
-                        <Text style={styles.phoneInfoAddNewLabel}
+
+                        <Text style={styles.profileSettingViewTwo}
                             onPress={this.phoneInformationOnAdd}>
                             {globalString.editPhoneInformations.phoneAddNew}
                         </Text>

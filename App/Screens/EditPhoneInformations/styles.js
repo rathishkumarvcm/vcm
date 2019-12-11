@@ -230,7 +230,7 @@ export const styles = StyleSheet.create({
     },
     termsofuseText1: {
         fontSize: scaledHeight(18),
-        color: '#486D89',
+        color: '#56565A',
         marginBottom: scaledHeight(5)
     },
     signInButton: {
@@ -362,7 +362,6 @@ export const styles = StyleSheet.create({
         width: '50%',
         paddingLeft: '4%',
         color: '#5D83AE',
-        fontWeight: 'bold',
         fontSize: scaledHeight(16)
     },
     copyRightSection: {
@@ -405,7 +404,7 @@ export const styles = StyleSheet.create({
     },
     phoneInfoLabel: { color: '#707070', fontSize: scaledHeight(18), width: '70%', marginRight: '4%', fontWeight: 'bold' },
     phoneInfoAddNewLabel: {
-        color: '#5D83AE', fontSize: scaledHeight(18), width: '30%', marginRight: '2%', fontWeight: 'bold'
+        color: '#5D83AE', fontSize: scaledHeight(18), width: '30%', marginRight: '2%'
     },
     phoneInfoPrimaryLabel: { color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginBottom: '1%', marginLeft: '2%' },
     phoneInfoPrimaryData: { color: '#333333DE', fontSize: scaledHeight(15), marginBottom: '1%', marginLeft: '2%' },
@@ -420,6 +419,8 @@ export const styles = StyleSheet.create({
     phoneFaxAddNewLabel: { color: '#5D83AE', fontSize: scaledHeight(18), width: '30%', marginRight: '2%', fontWeight: 'bold' },
     phonePreferredBackView: { backgroundColor: '#F3F3F3', flexDirection: 'row', alignSelf: 'baseline', marginLeft: '2%', display: 'flex' },
     phoneDeleteView: { color: '#5D83AE', width: '46%', textAlign: 'right', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: '4%' },
+    profileSettingViewOne: { width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },
+    profileSettingViewTwo: { width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' },
     editEmailHolder: {
         width: '92%', marginLeft: '4%', marginRight: '4%', marginTop: '4%', borderColor: '#CCCCCC', borderWidth: 1, backgroundColor: '#fff'
     },
@@ -435,8 +436,14 @@ export const styles = StyleSheet.create({
     editEmailPrimaryContent: { 
         marginTop: '2%', marginBottom: '2%', flexDirection: 'row' 
     },
-    editEmailId: {
-        color: '#707070', fontSize: scaledHeight(16), marginLeft: '3%', marginBottom: '2%'
+    editAddressView: {
+        width: '100%', marginLeft: '3%', marginTop: '2%', marginBottom: '2%', flexDirection: 'row', alignItems: "center", justifyContent: 'center'
+    },
+    editAddressLabel: {
+        width: '70%', color: '#707070', fontSize: scaledHeight(16), marginLeft: '3%', marginBottom: '2%'
+    },
+    editSwitchButton: {
+        width: '30%', marginTop: '2%', marginBottom: '2%'
     },
     profileDivideIcon: { width: '100%', margin: '3%', flexDirection: 'row'},
     profileDivideIconOne: { width: '80%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },

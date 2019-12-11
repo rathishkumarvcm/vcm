@@ -292,15 +292,12 @@ class editAddressAddNewComponent extends Component {
                                     <GRadioButtonComponent
                                         onPress={() => this.radioButtonClicked(index)}
                                         selected
-                                        questions={item.question}
-                                    />
+                                        questions={item.question} />
                                     :
                                     <GRadioButtonComponent
                                         onPress={() => this.radioButtonClicked(index)}
                                         selected={false}
-                                        questions={item.question}
-                                    />
-                            )}
+                                        questions={item.question} /> )}
                         </View>
 
                         <View style={styles.settingsView1}>

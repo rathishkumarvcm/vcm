@@ -230,7 +230,7 @@ export const styles = StyleSheet.create({
     },
     termsofuseText1: {
         fontSize: scaledHeight(18),
-        color: '#486D89',
+        color: '#56565A',
         marginBottom: scaledHeight(5)
     },
     signInButton: {
@@ -362,7 +362,6 @@ export const styles = StyleSheet.create({
         width: '50%',
         paddingLeft: '4%',
         color: '#5D83AE',
-        fontWeight: 'bold',
         fontSize: scaledHeight(16)
     },
     copyRightSection: {
@@ -432,5 +431,6 @@ export const styles = StyleSheet.create({
     phoneSecurityLabel: {
         color: '#56565A', fontSize: scaledHeight(18)
     },
+    editAddressInput: { flexDirection: 'column', width: '100%', paddingLeft: '4%', paddingRight: '4%', marginBottom: '2%', marginTop: '1%' },
     editDropDownSelect: { height: 100, borderWidth: 1, marginRight: '4%', marginTop: '1%', width: '92%', borderColor: "#DEDEDF", backgroundColor: 'white'}
 });

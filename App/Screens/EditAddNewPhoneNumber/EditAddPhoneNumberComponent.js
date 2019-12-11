@@ -48,10 +48,21 @@ class editAddPhoneNumberComponent extends Component {
             enableBiometric: false,
             faceIdEnrolled: false,
             touchIdEnrolled: false,
+            
             dropDownPhoneState: false,
             dropDownPhoneValue: '',
+            dropDownPhoneFlag: false,
+            dropDownPhoneMsg: '',
+
+            dropDownCodeState: false,
+            dropDownCodeValue: '',
+            dropDownCodeFlag: false,
+            dropDownCodeMsg: '',
+
             dropDownContactState: false,
-            dropDownContactValue: ''
+            dropDownContactValue: '',
+            dropDownContactFlag: '',
+            dropDownContactMsg: ''
         };
     }
 
@@ -64,7 +75,22 @@ class editAddPhoneNumberComponent extends Component {
     dropDownPhoneSelect = (valuePhoneType) => {
         this.setState({
             dropDownPhoneValue: valuePhoneType.value,
-            dropDownPhoneState: false
+            dropDownPhoneState: false,
+            dropDownPhoneFlag: false
+        });
+    }
+
+    dropDownCodeClick = () => {
+        this.setState({
+            dropDownCodeState: !this.state.dropDownCodeState
+        });
+    }
+
+    dropDownCodeSelect = (valueCode) => {
+        this.setState({
+            dropDownCodeValue: valueCode.value,
+            dropDownCodeState: false,
+            dropDownCodeFlag: false
         });
     }
 
@@ -77,7 +103,8 @@ class editAddPhoneNumberComponent extends Component {
     dropDownContactSelect = (valueContactTime) => {
         this.setState({
             dropDownContactValue: valueContactTime.value,
-            dropDownContactState: false
+            dropDownContactState: false,
+            dropDownContactFlag: false
         });
     }
 
@@ -93,11 +120,9 @@ class editAddPhoneNumberComponent extends Component {
 
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation}
-                />
+                    navigation={this.props.navigation} />
 
                 <ScrollView style={{ flex: 0.85 }}>
-
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
                             {globalString.editProfilePageValue.editAddressInfoHead}
@@ -124,41 +149,28 @@ class editAddPhoneNumberComponent extends Component {
                         dropDownValue={this.state.dropDownPhoneValue}
                         selectedDropDownValue={this.dropDownPhoneSelect}
                         itemToDisplay={"value"}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(190) }}
-                    />
+                        errorFlag={this.state.dropDownPhoneFlag}
+                        errorText={this.dropDownPhoneMsg}
+                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(190) }} />
 
-                    <View style={styles.editPhoneNumType}>
-                        <Text style={styles.phoneTypeLabel}>
-                            {globalString.addPhoneNumber.phoneNumber}
-                        </Text>
-                    </View>
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <TouchableOpacity style={styles.phoneFlexRow} onPress={this.selectTheState}>
-                            <GInputComponent
-                                propInputStyle={styles.userIDTextBox1}
-                                placeholder={""}
-                                editable={false}
-                                value={this.state.valueDropDown}
-                            />
-
-                            <TouchableOpacity style={styles.phoneDropDown} onPress={this.selectTheState}>
-                                <GIcon
-                                    name="md-arrow-dropdown"
-                                    type="ionicon"
-                                    size={20}
-                                    color="black"
-                                />
-                            </TouchableOpacity>
-                        </TouchableOpacity>
-                    </View>
+                    <GDropDownComponent
+                        dropDownTextName={styles.phoneTypeLabel}
+                        dropDownName={globalString.addPhoneNumber.phoneNumber}
+                        data={contactTimeData}
+                        changeState={this.dropDownCodeClick}
+                        showDropDown={this.state.dropDownCodeState}
+                        dropDownValue={this.state.dropDownCodeValue}
+                        selectedDropDownValue={this.dropDownCodeSelect}
+                        itemToDisplay={"value"}
+                        errorFlag={this.state.dropDownCodeFlag}
+                        errorText={this.dropDownCodeMsg}
+                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(290) }} />
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GInputComponent
-                            propInputStyle={styles.userIDTextBox1}
+                            propInputStyle={styles.editAddressInput}
                             placeholder={""}
-                            editable={false}
-                        />
+                            editable={false} />
                     </View>
 
                     <GDropDownComponent
@@ -170,31 +182,16 @@ class editAddPhoneNumberComponent extends Component {
                         dropDownValue={this.state.dropDownContactValue}
                         selectedDropDownValue={this.dropDownContactSelect}
                         itemToDisplay={"value"}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(460) }}
-                    />
-
-                    <View style={styles.settingsMobile}>
-                        <View style={{ width: '15%' }}>
-                            <GIcon
-                                name="ios-square-outline"
-                                type="ionicon"
-                                size={40}
-                                color="#ACACAC"
-                            />
-                        </View>
-
-                        <Text style={styles.phonePreferredLabel}>
-                            {globalString.addPhoneNumber.setPreferred}
-                        </Text>
-                    </View>
+                        errorFlag={this.state.dropDownContactFlag}
+                        errorText={this.dropDownContactMsg}
+                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(460) }} />
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.phoneAddNewNumberOnCancel}
-                        />
+                            onPress={this.phoneAddNewNumberOnCancel} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -203,12 +200,6 @@ class editAddPhoneNumberComponent extends Component {
                             buttonText={globalString.common.save}
                             textStyle={styles.saveButtonText}
                         />
-                    </View>
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <Text style={styles.phoneSecurityLabel}>
-                            {globalString.addPhoneNumber.phoneSecurity}
-                        </Text>
                     </View>
 
                     <View style={styles.newVictorySection}>

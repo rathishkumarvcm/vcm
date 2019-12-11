@@ -584,9 +584,6 @@ class editProfileSettingsComponent extends Component {
                         </View>
 
                         <View style={styles.newVictorySection}>
-                            <Text style={styles.termsofuseText1}>
-                                {globalString.editProfilePageValue.editProfileInvesting}
-                            </Text>
                             <Text style={styles.openInvestment}>
                                 {globalString.profileSettingsPage.profileInvest}
                             </Text>

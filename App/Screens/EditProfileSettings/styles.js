@@ -215,7 +215,7 @@ export const styles = StyleSheet.create({
     },
     termsofuseText1: {
         fontSize: scaledHeight(18),
-        color: '#486D89',
+        color: '#56565A',
         marginBottom: scaledHeight(5)
     },
     signInButton: {

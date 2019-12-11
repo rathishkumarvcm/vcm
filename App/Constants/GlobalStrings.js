@@ -790,7 +790,7 @@ export default {
         financialOpenInvestment: "Victory Mutual Funds and USAA Mutual Funds are distributed by Victory Capital Advisers, Inc. (VCA). VictoryShares ETFs and VictoryShares USAA ETFs are distributed by Foreside Fund Services, LLC (Foreside). VCA and Foreside are members of FINRA and SIPC. Victory Capital Management Inc. (VCM) is the investment adviser to the Victory Mutual Funds, USAA Mutual Funds, VictoryShares ETFs and VictoryShares USAA ETFs. VCA and VCM are not affiliated with Foreside. USAA is not affiliated with Foreside, VCM, or VCA. USAA and the USAA logos are registered trademarks and the USAA Mutual Funds and USAA Investments logos are trademarks of United Services Automobile Association and are being used by Victory Capital and its affiliates under license. Victory Capital means Victory Capital Management Inc., the investment manager of the USAA 529 College Savings Plan (Plan). The Plan is distributed by Victory Capital Advisers, Inc., a broker dealer registered with FINRA and an affiliate of Victory Capital. Victory Capital and its affiliates are not affiliated with United Services Automobile Association or its affiliates. USAA and the USAA logo are registered trademarks and the USAA 529 College Savings Plan logo is a trademark of United Services Automobile Association and are being used by Victory Capital and its affiliates under license."
     },
     addPhoneNumber: {
-        addPhoneTitle: "Add Phone Number",
+        addPhoneTitle: "Add Number",
         phoneType: "Phone type",
         phoneNumber: "Phone Number",
         callTimePreference: "Call Time Preference",
@@ -800,8 +800,8 @@ export default {
         phoneInvestments: "Victory Mutual Funds and USAA Mutual Funds are distributed by Victory Capital Advisers, Inc. (VCA). VictoryShares ETFs and VictoryShares USAA ETFs are distributed by Foreside Fund Services, LLC (Foreside). VCA and Foreside are members of FINRA and SIPC. Victory Capital Management Inc. (VCM) is the investment adviser to the Victory Mutual Funds, USAA Mutual Funds, VictoryShares ETFs and VictoryShares USAA ETFs. VCA and VCM are not affiliated with Foreside. USAA is not affiliated with Foreside, VCM, or VCA. USAA and the USAA logos are registered trademarks and the USAA Mutual Funds and USAA Investments logos are trademarks of United Services Automobile Association and are being used by Victory Capital and its affiliates under license. Victory Capital means Victory Capital Management Inc., the investment manager of the USAA 529 College Savings Plan (Plan). The Plan is distributed by Victory Capital Advisers, Inc., a broker dealer registered with FINRA and an affiliate of Victory Capital. Victory Capital and its affiliates are not affiliated with United Services Automobile Association or its affiliates. USAA and the USAA logo are registered trademarks and the USAA 529 College Savings Plan logo is a trademark of United Services Automobile Association and are being used by Victory Capital and its affiliates under license."
     },
     addAddressInfo: {
-        addAddressTitle: "Address Information",
-        editAddressInformation: "Edit Address Information",
+        addAddressTitle: "Edit Contact Information",
+        editAddressInformation: "Edit Contact Information",
         mailingAddress: "Mailing Address",
         addressType: "Address Type",
         radioButtonOne: "U.S. or U.S. Territories",
@@ -861,8 +861,8 @@ export default {
     },
     editPhoneInformations: {
         phoneInfoTitle: "Personal Profile Phone",
-        phoneLabel: "Phone",
-        phoneAddNew: "Add New",
+        phoneLabel: "Manage Phone Information",
+        phoneAddNew: "Add",
         phoneMobileLabel: "Mobile",
         phonePrimaryNumber: "Primary Number",
         phonePreferred: "Preferred",
