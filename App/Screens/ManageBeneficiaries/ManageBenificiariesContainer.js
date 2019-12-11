@@ -1,22 +1,20 @@
 import { connect } from "react-redux";
-import ManageBenificiariesComponent from './ManageBeneficiariesComponent';
-import {accOpeningActions} from '../../Shared/Actions';
+import ManageBenificiariesComponent from "./ManageBeneficiariesComponent";
+import { manageBeneficiaryActions } from "../../Shared/Actions";
+
 /*----------------------
                                   Redux Methods
                                                              -------------------------- */
 
-const mapStateToProps = (state /* , props */) => (
-    {
-      accOpeningData: state.accOpeningReducerData,
-      masterLookupStateData: state.masterLookUpData,
-    }
-  );
+const mapStateToProps = (state /* , props */) => ({
+  manageBeneficiaryData: state.manageBeneficiaryData
+});
 
 const mapDispatchToProps = {
-  ...accOpeningActions
-  };
+  ...manageBeneficiaryActions
+};
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(ManageBenificiariesComponent);
+  mapStateToProps,
+  mapDispatchToProps
+)(ManageBenificiariesComponent);
