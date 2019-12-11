@@ -389,6 +389,35 @@ class editRelationshipComponent extends Component {
 
                             <View style={styles.relationInstDivider} />
 
+                            <View style={styles.column}>
+                                <View style={styles.row}>
+                                    <Text style={styles.bullet}>
+                                        {"" + '\u2022' + ""}
+                                    </Text>
+                                    <Text style={styles.bulletText}>
+                                        {globalString.editRelationShipInformation.relationInstOne}
+                                    </Text>
+                                </View>
+
+                                <View style={styles.row}>
+                                    <Text style={styles.bullet}>
+                                        {"" + '\u2022' + ""}
+                                    </Text>
+                                    <Text style={styles.bulletText}>
+                                        {globalString.editRelationShipInformation.relationInstTwo}
+                                    </Text>
+                                </View>
+
+                                <View style={styles.row}>
+                                    <Text style={styles.bullet}>
+                                        {"" + '\u2022' + ""}
+                                    </Text>
+                                    <Text style={styles.bulletText}>
+                                        {globalString.editRelationShipInformation.relationInstThree}
+                                    </Text>
+                                </View>
+                            </View>
+
                             <Text style={styles.relationInstContent}>
                                 {globalString.editRelationShipInformation.relationInstContent}
                             </Text>
@@ -405,8 +434,7 @@ class editRelationshipComponent extends Component {
 
                         <View style={styles.connectWithUs}>
                             <Image
-                                source={require("../../Images/logo.png")}
-                            />
+                                source={require("../../Images/logo.png")} />
                         </View>
 
                         <View style={styles.privacyAgreement}>

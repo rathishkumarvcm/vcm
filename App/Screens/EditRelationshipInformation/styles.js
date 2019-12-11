@@ -222,7 +222,7 @@ export const styles = StyleSheet.create({
     },
     termsofuseText1: {
         fontSize: scaledHeight(18),
-        color: '#486D89',
+        color: '#56565A',
         marginBottom: scaledHeight(5)
     },
     signInButton: {
@@ -343,7 +343,6 @@ export const styles = StyleSheet.create({
         width: '50%',
         paddingLeft: '4%',
         color: '#5D83AE',
-        fontWeight: 'bold',
         fontSize: scaledHeight(16)
     },
     copyRightSection: {
@@ -403,4 +402,26 @@ export const styles = StyleSheet.create({
     relationInstDivider: { borderBottomWidth: 1, borderColor: '#B2B2B2', marginBottom: '4%', marginTop: '4%' },
     relationInstContent: { color: '#56565A', fontSize: scaledHeight(18), textAlign: 'justify', margin: '3%', lineHeight: 30 },
     editDropDownSelect: { height: 100, borderWidth: 1, marginRight: '4%', marginTop: '1%', width: '92%', borderColor: "#DEDEDF", backgroundColor: 'white'},
+    column: { 
+        flexDirection: 'column', 
+        alignItems: 'flex-start', },
+    row: {
+        width: '100%',
+        alignItems: 'flex-start',
+        justifyContent: 'space-around', 
+        alignContent: 'flex-start', 
+        flexDirection: 'row', 
+        marginTop: scaledHeight(28), 
+    },
+    bullet: {
+        width: scaledHeight(16),
+        fontSize: scaledHeight(18),
+        fontWeight: 'bold'},
+    bulletText: {
+        width: '90%',
+        fontSize: scaledHeight(18),
+        color: '#56565A',
+        lineHeight: 22,
+        textAlign: "left",
+    },
 });
