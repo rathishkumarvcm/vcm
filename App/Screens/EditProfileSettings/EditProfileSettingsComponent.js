@@ -477,24 +477,7 @@ class editProfileSettingsComponent extends Component {
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownSuffixFlag}
                             errorText={this.dropDownSuffixMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(581) }}
-                        />
-
-                        {/* Zip Code */}
-
-                        {/* <View style={styles.editFlexDirectionColumn}>
-                            <Text style={styles.editProfileLabel}>
-                                {globalString.editProfilePageValue.editProfilePin}
-                            </Text>
-
-                            <GInputComponent
-                                placeholder={""}
-                                onChangeText={this.setValidPin}
-                                value={this.state.validPin}
-                                errorFlag={!this.state.isValidPin}
-                                errorText={globalString.profileValidationMessages.validateZipcode}
-                                keyboardType={'numeric'} />
-                        </View> */}
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(581) }} />
 
                         {/* Gender Data */}
 

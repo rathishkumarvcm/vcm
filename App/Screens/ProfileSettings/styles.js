@@ -408,4 +408,7 @@ export const styles = StyleSheet.create({
         paddingLeft: '4%',
         paddingRight: '4%',
     },
+    profileDivideIcon: { width: '100%', margin: '3%', flexDirection: 'row'},
+    profileDivideIconOne: { width: '80%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },
+    profileDivideIconTwo: { width: '20%', color: '#0000FF', fontSize: scaledHeight(14) }
 });

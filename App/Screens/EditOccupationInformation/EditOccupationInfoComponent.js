@@ -117,6 +117,11 @@ class editOccupationInfoComponent extends Component {
                 if (this.props && this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR]) {
                     const tempErrorResponse = this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR];
                     console.log("Error", tempErrorResponse);
+                    if (tempErrorResponse) {
+                        this.setState({
+                            isValidZipCode: false
+                        })
+                    }
                 }
             }
         }
@@ -185,10 +190,16 @@ class editOccupationInfoComponent extends Component {
     }
 
     validateZipCodeValue = () => {
-        const payload = {
-            'Zip': this.state.employeeZipCodeValue
-        };
-        this.props.getStateCity(payload);
+        if (this.state.employeeZipCodeValue != '') {
+            const payload = {
+                'Zip': this.state.employeeZipCodeValue
+            };
+            this.props.getStateCity(payload);
+        } else {
+            this.setState({
+                isValidZipCode: false
+            })
+        }
     }
 
     validateEmployementValues = () => {
@@ -236,7 +247,7 @@ class editOccupationInfoComponent extends Component {
             this.state.employeeNameValue != '' &&
             this.state.employeeLineOneValue != '' &&
             this.state.employeeZipCodeValue != '') {
-                this.manageEmployeeInformations();
+            this.manageEmployeeInformations();
         }
     }
 
@@ -386,36 +397,23 @@ class editOccupationInfoComponent extends Component {
                                 style={styles.occupationMarginTop}
                                 placeholder={""}
                                 onChangeText={this.setValidEmpLineTwo}
-                                value={this.state.employeeLineTwoValue}
-                            />
+                                value={this.state.employeeLineTwoValue} />
                         </View>
                     </View>
 
-                    <View style={styles.occupationEmployeeDetail}>
-                        <View style={styles.occupationEmployeeOne}>
-                            <Text style={styles.occupationIndustryLabel}>
-                                {globalString.editOccupationInfo.occupationZipcode}
-                            </Text>
+                    <View style={styles.editFlexDirectionColumn}>
+                        <Text style={styles.occupationIndustryLabel}>
+                            {globalString.editOccupationInfo.occupationZipcode}
+                        </Text>
 
-                            <View style={styles.occupationMarginTop}>
-                                <GInputComponent
-                                    style={styles.occupationMarginTop}
-                                    placeholder={""}
-                                    onChangeText={this.setValidEmpZipcode}
-                                    value={this.state.employeeZipCodeValue}
-                                    errorFlag={!this.state.isValidZipCode}
-                                    errorText={globalString.profileValidationMessages.validateZipcode}
-                                />
-                            </View>
-                        </View>
-
-                        <View style={styles.occupationEmployeeTwo}>
-                            <GButtonComponent
-                                buttonStyle={styles.saveButtonStyle}
-                                buttonText={globalString.common.save}
-                                textStyle={styles.saveButtonText}
-                                onPress={this.validateZipCodeValue}
-                            />
+                        <View style={styles.occupationMarginTop}>
+                            <GInputComponent
+                                style={styles.occupationMarginTop}
+                                placeholder={""}
+                                onChangeText={this.setValidEmpZipcode}
+                                value={this.state.employeeZipCodeValue}
+                                errorFlag={!this.state.isValidZipCode}
+                                errorText={globalString.profileValidationMessages.validateZipcode} />
                         </View>
                     </View>
 
@@ -439,6 +437,12 @@ class editOccupationInfoComponent extends Component {
                         </Text>
                     </View>
 
+                    <GButtonComponent
+                            buttonStyle={styles.cancelButtonStyle}
+                            buttonText={globalString.common.validate}
+                            textStyle={styles.cancelButtonText}
+                            onPress={this.validateZipCodeValue} />
+
                     <View style={styles.editFlexDirectionColumn}>
                         <Text style={styles.occupationHint}>
                             {globalString.editOccupationInfo.occupationHint}
@@ -450,8 +454,7 @@ class editOccupationInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.editOccupationOnCancel}
-                        />
+                            onPress={this.editOccupationOnCancel} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>

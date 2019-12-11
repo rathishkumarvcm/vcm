@@ -36,17 +36,25 @@ const tempUserWork = [
 const UserPhoneInformation = (props) => {
     return (
         <View style={styles.editEmailHolder}>
-            <Text style={styles.editEmailType}>
-                {props.mobileNumberType}
-            </Text>
 
-            <Text style={styles.editEmailId}>
-                {props.mobileNumber}
-            </Text>
+            <View style={[styles.profileDivideIcon]}>
+                <View style={styles.profileDivideIconOne}>
+                    <Text style={styles.editEmailType}>
+                        {props.mobileNumberType}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {props.mobileNumber}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {props.mobilePreferredTime}
+                    </Text>
+                </View>
 
-            <Text style={styles.editEmailId}>
-                {props.mobilePreferredTime}
-            </Text>
+                <View style={styles.profileDivideIconTwo}>
+                    <Image style={styles.imageWidthHeight}
+                        source={require("../../Images/menu_icon.png")} />
+                </View>
+            </View>
 
             <View style={styles.editEmailBorder} />
 
@@ -177,19 +185,13 @@ class editPhoneInfoComponent extends Component {
                             data={userWorkNumber}
                             keyExtractor={this.generateKeyExtractor}
                             renderItem={this.renderPhoneInformation(userWorkNumber.length)} />
-
                     </View>
 
                     <View style={styles.settingsView}>
                         <Text style={styles.phoneAddFaxLabel}>
                             {globalString.editPhoneInformations.phoneFax}
                         </Text>
-                        <Text style={styles.phoneFaxAddNewLabel}>
-                            {globalString.editPhoneInformations.phoneAddNew}
-                        </Text>
                     </View>
-
-                    <View style={styles.settingsBorder} />
 
                     <View style={styles.phoneFaxView}>
                         <GInputComponent
