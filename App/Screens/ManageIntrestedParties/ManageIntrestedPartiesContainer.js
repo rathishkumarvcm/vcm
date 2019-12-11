@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import manageIntrestedPartiesComponent from "./ManageIntrestedPartiesComponent";
-import { accOpeningActions } from "../../Shared/Actions";
+import { accOpeningActions, addressFormatActions, manageIntrestedPartiesActions } from "../../Shared/Actions";
 
 /*----------------------
                                   Redux Methods
@@ -8,11 +8,15 @@ import { accOpeningActions } from "../../Shared/Actions";
 
 const mapStateToProps = (state /* , props */) => ({
   accOpeningData: state.accOpeningReducerData,
-  masterLookupStateData: state.masterLookUpData
+  masterLookupStateData: state.masterLookUpData,
+  manageIntrestedPartiesData: state.manageIntrestedPartiesData,
+  stateCityData: state.addressFormatData
 });
 
 const mapDispatchToProps = {
-  ...accOpeningActions
+  ...accOpeningActions,
+  ...addressFormatActions,
+  ...manageIntrestedPartiesActions
 };
 
 export default connect(

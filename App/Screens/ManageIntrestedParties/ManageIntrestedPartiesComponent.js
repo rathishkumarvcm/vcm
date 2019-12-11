@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView ,TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView ,TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GIcon, GDropDownComponent, GInputComponent, GHeaderComponent, GFooterComponent,GCheckBoxComponent } from '../../CommonComponents';
+import { GButtonComponent, GIcon, GDropDownComponent, GInputComponent, GHeaderComponent, GFooterComponent,GCheckBoxComponent, GLoadingSpinner } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-import { zipCodeRegex,emailRegex } from '../../Constants/RegexConstants';
+import { zipCodeRegex,emailRegex, nameRegex } from '../../Constants/RegexConstants';
 import { CustomRadio } from '../../AppComponents';
 import PropTypes from "prop-types";
 import { scaledHeight } from '../../Utils/Resolution';
-const nameRegex=/^[a-zA-Z]+$/;
-const dummyData = [
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+const documentFrequencyData = [
     {
         id: '1',
         title: 'Weekly',
@@ -23,37 +23,6 @@ const dummyData = [
     }
 ];
 
-const manageIntrestedPartiesList=[
-    {
-        "title":"Bob John",
-        "mail":"bobjohn@gmail.com",
-        "count":"#3"
-    },
-    {
-        "title":"David M",
-        "mail":"davidm@gmail.com",
-        "count":"#3"
-    }
-];
-
-const zipcodeData=[
-    {
-        "zip":"11111",
-        "city": 'Phoenix',
-        "state":'Arizona (AZ)'
-    },
-    {
-        "zip":"00000",
-        "city": "Little Rock",
-        "state":'Arkansas (AR)'
-    },
-    {
-        "zip":"22222",
-        "city": "Beverly Hills",
-        "state":'California (CA)'
-    }
-];
-
 class manageIntrestedPartiesComponent extends Component {
     constructor(props) {
         super(props);
@@ -63,6 +32,8 @@ class manageIntrestedPartiesComponent extends Component {
             isSavedSuccess:false,
             errorMessage:"",
             completeData:[],
+            userCity:'',
+            userState:'',
             personal:{
                 firstName: "",
                 middleInitial: "",
@@ -72,7 +43,7 @@ class manageIntrestedPartiesComponent extends Component {
                 addrLine1:"",
                 addrLine2:"",
                 zipCode:"",
-                state:"",
+                stateValue:"",
                 city:"",
                 documentFrequency:"",
                 documentFrequencyDropDown:false,
@@ -84,10 +55,10 @@ class manageIntrestedPartiesComponent extends Component {
                 zipcodeValidation:true,
                 zipCodeValidationMsg: "",
                 firstNameValidatingMsg:"",
-                lastNameValidationMsg:""
+                lastNameValidationMsg:"",
+                addressValidateMsg:"",
+                addressValidateFlag:true
             },
-            
-            listIntrestedParties:manageIntrestedPartiesList,
             documentDeliveryFormat:[
                 {options : "Email",checked: false},
                 {options : "Paper",checked : false},
@@ -100,7 +71,6 @@ class manageIntrestedPartiesComponent extends Component {
     }
    
     componentDidMount() {
-        console.log("List of Managed Intrested Parties::::",this.state.listIntrestedParties);
         let payload = [];
         const compositePayloadData = [
             "stmt_pros_rep"
@@ -112,6 +82,53 @@ class manageIntrestedPartiesComponent extends Component {
             }
         }
         this.props.getCompositeLookUpData(payload);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        console.log("didUpdate::");
+        const stateCityResponseData = ActionTypes.GET_STATECITY;
+        if (this.props != prevProps) {
+            if (this.props && this.props.stateCityData[stateCityResponseData]) {
+                const tempResponse = this.props.stateCityData[stateCityResponseData];
+                console.log("Error Update 001", tempResponse);
+                if (tempResponse && tempResponse.City) {
+                    this.onUpdateField("personal","city",tempResponse.City);
+                    this.onUpdateField("personal","stateValue",tempResponse.State);
+                }
+            } else {
+                if (this.props && this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR]) {
+                    conmsole.log("address error::",this.props.stateCityData)
+                    const tempErrorResponse = this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR];
+                    console.log("Error", tempErrorResponse);
+                    this.onUpdateField("personal","addressValidateFlag",true);
+                    this.onUpdateField("personal","addressValidateMsg",this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR]);
+                    console.log("error",this.state.personal.addressValidateMsg) ;
+                }
+            }
+        }
+    }
+
+
+    getZipCodeValue = (text) => {
+        const payload = {
+            'Zip': text
+        };
+        this.props.getStateCity(payload);
+    }
+
+    getAddressValidated=()=>{
+        const addressPayload = {
+            "Address1": this.state.personal.addrLine1,
+            "Address2": this.state.personal.addrLine2,
+            "City": this.state.personal.city,
+            "State": this.state.personal.stateValue,
+            "Zip": this.state.personal.zipCode
+        };
+        this.props.getAddressFormat(addressPayload);
+    }
+
+    scrollToTop=()=>{
+        this.scrollViewRef.scrollTo({x: 0, y: 0, animated: true});
     }
 
     setScrollViewRef = (element) => {
@@ -134,15 +151,14 @@ class manageIntrestedPartiesComponent extends Component {
         }
     }
 
-    validateZipCode = (text) => {
-        console.log("in validate Zip", text);
-        //allows only 5 digit or 9 digit format(12345 and 12345-6789)
-        if(!this.isEmpty(text)){
-            let validate = zipCodeRegex.test(text);
-            console.log("in validate validate", validate);
+    validateZipCode = () => {
+        if(!this.isEmpty(this.state.personal.zipCode)){
+            let validate = zipCodeRegex.test(this.state.personal.zipCode);
             this.onUpdateField("personal","zipcodeValidation",validate);
             this.onUpdateField("personal","zipCodeValidationMsg",gblStrings.accManagement.zipCodeFormat);
-            this.updateCityState();
+            if(validate){
+                this.getZipCodeValue(this.state.personal.zipCode);
+            }
         }
     }
 
@@ -176,6 +192,7 @@ class manageIntrestedPartiesComponent extends Component {
     }
 
     onCancelClick=()=>{
+        this.scrollToTop();
         this.setState(prevState=>({
           personal:{
             ...prevState.personal,
@@ -208,28 +225,38 @@ class manageIntrestedPartiesComponent extends Component {
 
     onClickSave = () => {
         console.log("Save:::");
-        this.setState({isAddNewVisible:false,isSavedSuccess:true});
-        let addValue=[],addContent={};
-        addContent.title=this.state.personal.firstName+ " " +this.state.personal.lastName;
-        addContent.mail=this.state.personal.emailAddress?this.state.personal.emailAddress:"abc@gmail.com";
-        addContent.count='#3';
-        addValue.push(addContent);
-        let arr=[],obj={};
-        obj.name=this.state.personal.firstName+" "+this.state.personal.middleInitial+" "+this.state.personal.lastName;
-        obj.emailAddress=this.state.personal.emailAddress;
-        obj.company=this.state.personal.company;
-        obj.address=this.state.personal.addrLine1+","+this.state.personal.addrLine2;
-        obj.zipCode=this.state.personal.zipCode;
-        obj.city=this.state.personal.city;
-        obj.docFrequency=this.state.personal.documentFrequency;
-        arr.push(obj);
-        console.log(arr);
-        this.setState({completeData:this.state.completeData.concat(arr)});
-        
-        this.setState({listIntrestedParties:this.state.listIntrestedParties.concat(addValue)});
+        this.manageData();
+    }
+
+    getAddedData = () => {
+        let addedPartyPayload = {}, list=[];
+            addedPartyPayload = {
+                "title": this.state.personal.firstName+" "+this.state.personal.middleInitial+" "+this.state.personal.lastName,
+                "mail": this.state.personal.emailAddress?this.state.personal.emailAddress:"abc@gmail.com",
+                "company": this.state.personal.company,
+                "address":this.state.personal.addrLine1+","+this.state.personal.addrLine2,
+                "zipCode": this.state.personal.zipCode,
+                "city": this.state.personal.city,
+                "state":this.state.personal.stateValue,
+                "count":"#3"
+            }
+            if (this.props && this.props.manageIntrestedPartiesData && this.props.manageIntrestedPartiesData.list_manage_intrested_parties ) {
+                list=this.props.manageIntrestedPartiesData.list_manage_intrested_parties;
+                
+            }
+            list.push(addedPartyPayload);
+        return list;
+    }
+
+    manageData = () => {
+        const payloadData = this.getAddedData();
+        // this.props.saveIntrestedParties("addIntrestedParty", payloadData);
+        // this.scrollToTop();
+        // this.setState({isAddNewVisible:false,isSavedSuccess:true});
     }
 
     onAddClicked = () => {
+        this.scrollToTop();
         this.setState({isAddNewVisible:true,isSavedSuccess:false});
     }
     
@@ -293,7 +320,7 @@ class manageIntrestedPartiesComponent extends Component {
             let validate = nameRegex.test(this.state.personal.firstName);
             this.onUpdateField("personal","firstNameValidation",validate);
             this.onUpdateField("personal","firstNameValidatingMsg",gblStrings.accManagement.firstNameFormat);
-            if(!validate){ errMsg="error"; }
+            if(!validate){ errMsg="error" }
         }
 
         if (this.isEmpty(this.state.personal.lastName)) {
@@ -304,13 +331,13 @@ class manageIntrestedPartiesComponent extends Component {
             let validate = nameRegex.test(this.state.personal.lastName);
             this.onUpdateField("personal","lastNameValidation",validate);
             this.onUpdateField("personal","lastNameValidationMsg",gblStrings.accManagement.lastNameFormat);
-            if(!validate){ errMsg="error"; }
+            if(!validate){ errMsg="error" }
         }
 
         if (!this.isEmpty(this.state.personal.emailAddress)) {
             let validate = emailRegex.test(this.state.personal.emailAddress);
             this.onUpdateField("personal","emailAddressValidation",validate);
-            if(!validate){ errMsg="error"; }
+            if(!validate){ errMsg="error" }
         }else{
             this.onUpdateField("personal","emailAddressValidation",true); 
         }
@@ -337,10 +364,11 @@ class manageIntrestedPartiesComponent extends Component {
             let validate = zipCodeRegex.test(this.state.personal.zipCode);
             this.onUpdateField("personal","zipcodeValidation",validate);
             this.onUpdateField("personal","zipCodeValidationMsg",gblStrings.accManagement.zipCodeFormat);
-            this.updateCityState();
-            if(!validate){ errMsg="error"; }
+            this.getZipCodeValue(this.state.personal.zipCode);
+            if(!validate){ errMsg="error" }
         }
 
+        if(!this.isEmpty(this.state.personal.addrLine1) && !this.isEmpty(this.state.personal.addrLine2) && !this.isEmpty(this.state.personal.zipCode))
         if(errMsg!="error")
         {
             isValidationSuccess = true;
@@ -352,7 +380,7 @@ class manageIntrestedPartiesComponent extends Component {
 
     renderRadio = (radioName, radioSize, componentStyle, layoutStyle) =>{
         console.log("renderRadio::: " + radioName);
-        let radioData = dummyData, tempkey="";
+        let radioData = documentFrequencyData, tempkey="";
         switch (radioName) {
             case "selectedProspectusReportsRef":
                 tempkey = "stmt_pros_rep";
@@ -394,16 +422,16 @@ class manageIntrestedPartiesComponent extends Component {
         this.setState({isSavedSuccess:false});
     }
 
-    updateCityState = () => {
-        let zip=this.state.personal.zipCode;
-        zipcodeData.map((m) => {
-            if(zip === m.zip){
-                this.onUpdateField("personal","city",m.city);
-                this.onUpdateField("personal","state",m.state);
+    // updateCityState = () => {
+    //     let zip=this.state.personal.zipCode;
+    //     zipcodeData.map((m) => {
+    //         if(zip === m.zip){
+    //             this.onUpdateField("personal","city",m.city);
+    //             this.onUpdateField("personal","state",m.stateValue);
                 
-            }
-        });
-    }
+    //         }
+    //     });
+    // }
     
     selectFrequency = () => {
         this.onUpdateField("personal","documentFrequencyDropDown",!this.state.documentFrequencyDropDown);
@@ -425,8 +453,8 @@ class manageIntrestedPartiesComponent extends Component {
                     key = {item.options}
                 />)
             )}; */}
-            </> 
-        );
+           </> 
+        )
         
     }
 
@@ -561,7 +589,7 @@ class manageIntrestedPartiesComponent extends Component {
                         <GInputComponent
                             propInputStyle={styles.customTxtBox}
                             placeholder={gblStrings.accManagement.enterState}
-                            value={this.state.personal.state}
+                            value={this.state.personal.stateValue}
                             editable={false}
                         />
                     </View>
@@ -579,7 +607,7 @@ class manageIntrestedPartiesComponent extends Component {
                 <GDropDownComponent 
                     dropDownName={gblStrings.accManagement.selectDocumentFrequency}
                     dropDownTextName={styles.lblTxt} 
-                    data={dummyData} 
+                    data={documentFrequencyData} 
                     changeState={this.selectFrequency}
                     showDropDown={this.state.personal.documentFrequencyDropDown}
                     dropDownValue={this.state.personal.documentFrequency}
@@ -613,46 +641,59 @@ class manageIntrestedPartiesComponent extends Component {
         );
     }
 
-    listIntrestedParties=()=>{
+    renderListData=({item})=>{
         return(
-            <View>
-                <Text style={styles.subHeadlineText}>
-                    {gblStrings.accManagement.listOfIntrestedParties}
-                </Text>
-                <TouchableOpacity onPress={this.onAddClicked}>
-                    <Text style={styles.addNewLink}>
-                        {gblStrings.accManagement.addNew}
-                    </Text>
-                </TouchableOpacity>
-                
-                <View style={styles.settingsBorder} />
-                {this.state.listIntrestedParties.map((item,key)=>{
-                    return(
-                        <View style={styles.cardView} key={key}>
-                            <Text style={styles.cardTitleText}>{item.title}</Text>
-                            <Text style={styles.cardMailText}>{item.mail}</Text>
-                            <View style={styles.accountTaggedView}>
-                                <Text style={styles.accContentText}>{"Accounts Tagged"}</Text>
-                                <Text style={styles.accCountText}>{item.count}</Text>
-                            </View>
-                        </View>
-                    );
-                })}
+            <View style={styles.cardView}>
+                <Text style={styles.cardTitleText}>{item.title}</Text>
+                <Text style={styles.cardMailText}>{item.mail}</Text>
+                <View style={styles.accountTaggedView}>
+                    <Text style={styles.accContentText}>{"Accounts Tagged"}</Text>
+                    <Text style={styles.accCountText}>{item.count}</Text>
+                </View>
             </View>
         );
     }
     
+    generateKeyExtractor = (item) => item.key;
+
     renderIntrestedPartiesSection = () => {
+        let data=[];
+
+        if (this.props && this.props.manageIntrestedPartiesData && this.props.manageIntrestedPartiesData.list_manage_intrested_parties ) {
+            data=this.props.manageIntrestedPartiesData.list_manage_intrested_parties;
+        }
+
         return (
             <>
-                {this.state.isAddNewVisible?<this.addIntrestedParties />:<this.listIntrestedParties />}
+                {this.state.isAddNewVisible?<this.addIntrestedParties />: <View>
+                    <Text style={styles.subHeadlineText}>
+                        {gblStrings.accManagement.listOfIntrestedParties}
+                    </Text>
+                    <TouchableOpacity onPress={this.onAddClicked}>
+                        <Text style={styles.addNewLink}>
+                            {gblStrings.accManagement.addNew}
+                        </Text>
+                    </TouchableOpacity>
+                    <View style={styles.settingsBorder} />
+                    <FlatList
+                        data={data}
+                        extraData={this.props}
+                        keyExtractor={this.generateKeyExtractor}
+                        renderItem={this.renderListData}
+                    />
+                </View>
+                }
             </>
         );
     }
 
     render() {
+        console.log("this.props:::",this.props);
         return (
             <View style={styles.container} >
+                {
+                    this.props.stateCityData.isLoading && <GLoadingSpinner />
+                }
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.flexMainView} keyboardShouldPersistTaps="always" ref={this.setScrollViewRef}>
                 <View style={styles.mainHeadingView}>

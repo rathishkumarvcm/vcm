@@ -239,15 +239,5 @@ export const styles = StyleSheet.create({
     width: '100%',
     justifyContent:'space-between',
     flex: 1,
-  },
-  cityWidthDropDown: {
-    width: '50%',
-  },
-  dropDownListView: {
-    height: 100,
-    borderWidth: 1,
-    width: 100,
-    borderColor: '#DEDEDF',
-    backgroundColor: 'white',
-  },
+  }
 });
