@@ -360,7 +360,7 @@ class editAddFinancialInfoComponent extends Component {
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
-                        <Text style={styles.financialSecurityLabel}>
+                        <Text style={[styles.openInvestment, lineHeight = 40]}>
                             {globalStrings.addFinancialInformations.financialSecurity}
                         </Text>
                     </View>
@@ -376,8 +376,7 @@ class editAddFinancialInfoComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")}
-                        />
+                            source={require("../../Images/logo.png")} />
                     </View>
 
                     <View style={styles.whiteBackground}>

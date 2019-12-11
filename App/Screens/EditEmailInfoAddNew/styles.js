@@ -220,7 +220,7 @@ export const styles = StyleSheet.create({
     },
     termsofuseText1: {
         fontSize: scaledHeight(18),
-        color: '#486D89',
+        color: '#56565A',
         marginBottom: scaledHeight(5)
     },
     signInButton: {
@@ -352,7 +352,6 @@ export const styles = StyleSheet.create({
         width: '50%',
         paddingLeft: '4%',
         color: '#5D83AE',
-        fontWeight: 'bold',
         fontSize: scaledHeight(16)
     },
     copyRightSection: {

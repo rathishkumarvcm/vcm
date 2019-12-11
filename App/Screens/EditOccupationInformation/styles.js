@@ -222,7 +222,7 @@ export const styles = StyleSheet.create({
     },
     termsofuseText1: {
         fontSize: scaledHeight(18),
-        color: '#486D89',
+        color: '#56565A',
         marginBottom: scaledHeight(5)
     },
     signInButton: {
@@ -343,7 +343,6 @@ export const styles = StyleSheet.create({
         width: '50%',
         paddingLeft: '4%',
         color: '#5D83AE',
-        fontWeight: 'bold',
         fontSize: scaledHeight(16)
     },
     copyRightSection: {
@@ -397,5 +396,6 @@ export const styles = StyleSheet.create({
     occupationEmployeeDetail: { flexDirection: 'row', width: '100%', justifyContent: 'center', alignItems: 'center' },
     occupationEmployeeOne: { width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },
     occupationEmployeeTwo: { width: '30%', color: '#333333DE', fontSize: scaledHeight(14), textAlign: 'right' },
-    occupationHint: { color: '#56565A', fontSize: scaledHeight(18), lineHeight: 30 }
+    occupationHint: { color: '#56565A', fontSize: scaledHeight(18), lineHeight: 30 },
+    editAddressInput: { flexDirection: 'column', width: '100%', paddingLeft: '1%', paddingRight: '4%', marginBottom: '2%' }
 });

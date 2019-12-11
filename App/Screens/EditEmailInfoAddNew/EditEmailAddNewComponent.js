@@ -116,14 +116,7 @@ class editEmailAddNewComponent extends Component {
                         <GButtonComponent
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
-                            textStyle={styles.saveButtonText}
-                        />
-                    </View>
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <Text style={styles.editEmailSecurity}>
-                            {globalString.editEmailInformations.editEmailSecondary}
-                        </Text>
+                            textStyle={styles.saveButtonText} />
                     </View>
 
                     <View style={styles.newVictorySection}>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { Text, View, Image, ScrollView, TouchableOpacity, FlatList, Switch } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
@@ -9,7 +9,8 @@ import globalString from '../../Constants/GlobalStrings';
 const tempPrimaryMailData = [
     {
         "emailType": 'Primary Email',
-        "emailId": 'abc@gmail.com'
+        "emailId": 'abc@gmail.com',
+        "isPrimaryEmail": false
     }
 ];
 
@@ -34,10 +35,16 @@ const UserEmailInformation = (props) => {
 
             <View style={styles.editEmailBorder} />
 
-            <View style={styles.editEmailPrimaryContent}>
-                <Text style={styles.editEmailId}>
+            <View style={styles.editAddressView}>
+                <Text style={styles.editAddressLabel}>
                     {globalString.profileSettingsPage.profileMailPrimaryLabel}
                 </Text>
+
+                <View style={styles.editSwitchButton}>
+                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                        onValueChange={this.toggleSwitchPrimaryMail}
+                        value={props.isPrimaryEmail} />
+                </View>
             </View>
         </View>
     );
@@ -45,7 +52,8 @@ const UserEmailInformation = (props) => {
 
 UserEmailInformation.propTypes = {
     emailType: PropTypes.string,
-    emailId: PropTypes.string
+    emailId: PropTypes.string,
+    isPrimaryEmail: PropTypes.bool
 };
 
 class editEmailInfoComponent extends Component {
@@ -65,7 +73,8 @@ class editEmailInfoComponent extends Component {
     renderEmailInformation = (dataLength) => ({ item, index }) =>
         (<UserEmailInformation
             emailType={item.emailType}
-            emailId={item.emailId} />);
+            emailId={item.emailId}
+            isPrimaryEmail={item.isPrimaryEmail} />);
 
     componentDidMount() {
         if (this.props && this.props.initialState && this.props.initialState.email) {
@@ -73,6 +82,10 @@ class editEmailInfoComponent extends Component {
                 profilePrimayMail: this.props.initialState.email
             });
         }
+    }
+
+    toggleSwitchPrimaryMail = (value) => {
+        this.props.isPrimaryEmail = value
     }
 
     emailAddNew = () => this.props.navigation.navigate('editEmailAddNew');
@@ -105,13 +118,14 @@ class editEmailInfoComponent extends Component {
                         </Text>
                     </View>
 
-                    <View style={styles.settingsView}>
-                        <Text style={styles.editEmailTitle}>
+                    <View style={[styles.settingsView]}>
+                        <Text style={styles.profileSettingViewOne}>
                             {globalString.editEmailInformations.editEmailTitle}
                         </Text>
-                        <Text style={styles.editEmailAddNew}
+
+                        <Text style={styles.profileSettingViewTwo}
                             onPress={this.emailAddNew}>
-                            {globalString.editEmailInformations.editEmailAddNew}
+                            {globalString.editPhoneInformations.phoneAddNew}
                         </Text>
                     </View>
 
@@ -128,12 +142,6 @@ class editEmailInfoComponent extends Component {
                             buttonText={globalString.common.back}
                             textStyle={styles.cancelButtonText}
                             onPress={this.emailAddNewOnCancel} />
-                    </View>
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <Text style={styles.editEmailSecurityView}>
-                            {globalString.editEmailInformations.editEmailSecurity}
-                        </Text>
                     </View>
 
                     <View style={styles.newVictorySection}>

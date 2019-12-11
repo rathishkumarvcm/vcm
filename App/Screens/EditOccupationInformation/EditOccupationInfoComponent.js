@@ -6,6 +6,37 @@ import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
+const tempEmploymentClass = [
+    {
+        "key": "sing",
+        "value": "Full-time Military Service"
+    },
+    {
+        "key": "mar_joi",
+        "value": "Government(non- military) Public Sector"
+    },
+    {
+        "key": "mar_sep",
+        "value": "Homemaker"
+    },
+    {
+        "key": "mar_sep",
+        "value": "Private Sector or non-Government"
+    },
+    {
+        "key": "mar_sep",
+        "value": "Retired"
+    },
+    {
+        "key": "mar_sep",
+        "value": "Self employed"
+    },
+    {
+        "key": "mar_sep",
+        "value": "Student Unemployed"
+    }
+];
+
 const tempDataDropDown = [
     {
         "key": "sing",
@@ -30,6 +61,8 @@ class editOccupationInfoComponent extends Component {
             enableBiometric: false,
             faceIdEnrolled: false,
             touchIdEnrolled: false,
+            isOccupationRetired: true,
+            isOccupationNotRetired: false,
 
             dropDownEmployeeState: false,
             dropDownEmployeeValue: '',
@@ -40,6 +73,11 @@ class editOccupationInfoComponent extends Component {
             dropDownIndustryValue: '',
             dropDownIndustryFlag: false,
             dropDownIndustryMsg: '',
+
+            dropDownPrimarySourceState: false,
+            dropDownPrimarySourceValue: '',
+            dropDownPrimarySourceFlag: false,
+            dropDownPrimarySourceMsg: '',
 
             employeeOccupationValue: '',
             employeeNameValue: '',
@@ -136,9 +174,36 @@ class editOccupationInfoComponent extends Component {
     }
 
     dropDownOccupationSelect = (valueOccupation) => {
+        if (valueOccupation.value === 'Retired') {
+            this.setState({
+                isOccupationNotRetired: true,
+                isOccupationRetired: false
+            });
+        } else {
+            this.setState({
+                isOccupationNotRetired: false,
+                isOccupationRetired: true
+            });
+        }
+
         this.setState({
             dropDownEmployeeValue: valueOccupation.value,
             dropDownEmployeeState: false,
+            dropDownEmployeeFlag: false
+        });
+    }
+
+    dropDownSourceClick = () => {
+        this.setState({
+            dropDownPrimarySourceState: !this.state.dropDownPrimarySourceState
+        });
+    }
+
+    dropDownSourceSelect = (valuePrimarySource) => {
+        this.setState({
+            dropDownPrimarySourceValue: valuePrimarySource.value,
+            dropDownPrimarySourceState: false,
+            dropDownPrimarySourceFlag: false
         });
     }
 
@@ -280,8 +345,7 @@ class editOccupationInfoComponent extends Component {
                     this.props.stateCityData.isLoading && <GLoadingSpinner />
                 }
                 <GHeaderComponent
-                    navigation={this.props.navigation}
-                />
+                    navigation={this.props.navigation} />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -311,7 +375,7 @@ class editOccupationInfoComponent extends Component {
                     <GDropDownComponent
                         dropDownTextName={styles.occupationEmploymentLabel}
                         dropDownName={globalString.editOccupationInfo.occupationEmployment}
-                        data={tempDataDropDown}
+                        data={tempEmploymentClass}
                         changeState={this.dropDownOccupationClick}
                         showDropDown={this.state.dropDownEmployeeState}
                         dropDownValue={this.state.dropDownEmployeeValue}
@@ -319,135 +383,148 @@ class editOccupationInfoComponent extends Component {
                         itemToDisplay={"value"}
                         errorFlag={this.state.dropDownEmployeeFlag}
                         errorText={this.dropDownEmployeeMsg}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(290) }}
-                    />
+                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(290) }} />
 
-                    <GDropDownComponent
-                        dropDownTextName={styles.occupationEmploymentLabel}
-                        dropDownName={globalString.editOccupationInfo.occupationIndustry}
-                        data={tempDataDropDown}
-                        changeState={this.dropDownIndustryClick}
-                        showDropDown={this.state.dropDownIndustryState}
-                        dropDownValue={this.state.dropDownIndustryValue}
-                        selectedDropDownValue={this.dropDownIndustrySelect}
-                        itemToDisplay={"value"}
-                        errorFlag={this.state.dropDownIndustryFlag}
-                        errorText={this.dropDownIndustryMsg}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(390) }}
-                    />
+                    {this.state.isOccupationRetired ? (
+                        <View>
+                            <GDropDownComponent
+                                dropDownTextName={styles.occupationEmploymentLabel}
+                                dropDownName={globalString.editOccupationInfo.occupationIndustry}
+                                data={tempDataDropDown}
+                                changeState={this.dropDownIndustryClick}
+                                showDropDown={this.state.dropDownIndustryState}
+                                dropDownValue={this.state.dropDownIndustryValue}
+                                selectedDropDownValue={this.dropDownIndustrySelect}
+                                itemToDisplay={"value"}
+                                errorFlag={this.state.dropDownIndustryFlag}
+                                errorText={this.dropDownIndustryMsg}
+                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(390) }} />
 
-                    <View style={styles.editFlexDirectionColumn}>
-                        <Text style={styles.occupationIndustryLabel}>
-                            {globalString.editOccupationInfo.occupationLabel}
-                        </Text>
+                            <View style={styles.editFlexDirectionColumn}>
+                                <Text style={styles.occupationIndustryLabel}>
+                                    {globalString.editOccupationInfo.occupationLabel}
+                                </Text>
 
-                        <View style={styles.occupationMarginTop}>
-                            <GInputComponent
-                                style={styles.occupationMarginTop}
-                                placeholder={""}
-                                onChangeText={this.setValidOccupation}
-                                value={this.state.employeeOccupationValue}
-                                errorFlag={!this.state.isValidOccupation}
-                                errorText={globalString.profileValidationMessages.validateEmpOccupation}
-                            />
+                                <View style={styles.occupationMarginTop}>
+                                    <GInputComponent
+                                        propInputStyle={styles.editAddressInput}
+                                        placeholder={""}
+                                        onChangeText={this.setValidOccupation}
+                                        value={this.state.employeeOccupationValue}
+                                        errorFlag={!this.state.isValidOccupation}
+                                        errorText={globalString.profileValidationMessages.validateEmpOccupation} />
+                                </View>
+                            </View>
+
+                            <View style={styles.editFlexDirectionColumn}>
+                                <Text style={styles.occupationIndustryLabel}>
+                                    {globalString.editOccupationInfo.occupationEmployerName}
+                                </Text>
+
+                                <View style={styles.occupationMarginTop}>
+                                    <GInputComponent
+                                        propInputStyle={styles.editAddressInput}
+                                        placeholder={""}
+                                        onChangeText={this.setValidEmpName}
+                                        value={this.state.employeeNameValue}
+                                        errorFlag={!this.state.isValidName}
+                                        errorText={globalString.profileValidationMessages.validateEmpName} />
+                                </View>
+                            </View>
+
+                            <View style={styles.editFlexDirectionColumn}>
+                                <Text style={styles.occupationIndustryLabel}>
+                                    {globalString.editOccupationInfo.occupationEmployerOne}
+                                </Text>
+
+                                <View style={styles.occupationMarginTop}>
+                                    <GInputComponent
+                                        propInputStyle={styles.editAddressInput}
+                                        placeholder={""}
+                                        onChangeText={this.setValidEmpLineOne}
+                                        value={this.state.employeeLineOneValue}
+                                        errorFlag={!this.state.isValidLineOne}
+                                        errorText={globalString.profileValidationMessages.validateEmpLineOne} />
+                                </View>
+                            </View>
+
+                            <View style={styles.editFlexDirectionColumn}>
+                                <Text style={styles.occupationIndustryLabel}>
+                                    {globalString.editOccupationInfo.occupationEmployerTwo}
+                                </Text>
+
+                                <View style={styles.occupationMarginTop}>
+                                    <GInputComponent
+                                        propInputStyle={styles.editAddressInput}
+                                        placeholder={""}
+                                        onChangeText={this.setValidEmpLineTwo}
+                                        value={this.state.employeeLineTwoValue} />
+                                </View>
+                            </View>
+
+                            <View style={styles.editFlexDirectionColumn}>
+                                <Text style={styles.occupationIndustryLabel}>
+                                    {globalString.editOccupationInfo.occupationZipcode}
+                                </Text>
+
+                                <View style={styles.occupationMarginTop}>
+                                    <GInputComponent
+                                        propInputStyle={styles.editAddressInput}
+                                        placeholder={""}
+                                        onChangeText={this.setValidEmpZipcode}
+                                        value={this.state.employeeZipCodeValue}
+                                        errorFlag={!this.state.isValidZipCode}
+                                        errorText={globalString.profileValidationMessages.validateZipcode} />
+                                </View>
+                            </View>
+
+                            <View style={styles.editFlexDirectionColumn}>
+                                <Text style={styles.occupationIndustryLabel}>
+                                    {globalString.editOccupationInfo.occupationCity}
+                                </Text>
+
+                                <Text style={styles.occupationCityStateLabel}>
+                                    {this.state.employeeCityValue}
+                                </Text>
+                            </View>
+
+                            <View style={styles.editFlexDirectionColumn}>
+                                <Text style={styles.occupationIndustryLabel}>
+                                    {globalString.editOccupationInfo.occupationState}
+                                </Text>
+
+                                <Text style={styles.occupationCityStateLabel}>
+                                    {this.state.employeeStateValue}
+                                </Text>
+                            </View>
+
+                            <GButtonComponent
+                                buttonStyle={styles.cancelButtonStyle}
+                                buttonText={globalString.common.validate}
+                                textStyle={styles.cancelButtonText}
+                                onPress={this.validateZipCodeValue} />
                         </View>
-                    </View>
+                    ) : null}
 
-                    <View style={styles.editFlexDirectionColumn}>
-                        <Text style={styles.occupationIndustryLabel}>
-                            {globalString.editOccupationInfo.occupationEmployerName}
-                        </Text>
-
-                        <View style={styles.occupationMarginTop}>
-                            <GInputComponent
-                                style={styles.occupationMarginTop}
-                                placeholder={""}
-                                onChangeText={this.setValidEmpName}
-                                value={this.state.employeeNameValue}
-                                errorFlag={!this.state.isValidName}
-                                errorText={globalString.profileValidationMessages.validateEmpName}
-                            />
+                    {this.state.isOccupationNotRetired ? (
+                        <View>
+                            <GDropDownComponent
+                                dropDownTextName={styles.occupationEmploymentLabel}
+                                dropDownName={globalString.editOccupationInfo.occupationPrimarySource}
+                                data={tempDataDropDown}
+                                changeState={this.dropDownSourceClick}
+                                showDropDown={this.state.dropDownPrimarySourceState}
+                                dropDownValue={this.state.dropDownPrimarySourceValue}
+                                selectedDropDownValue={this.dropDownSourceSelect}
+                                itemToDisplay={"value"}
+                                errorFlag={this.state.dropDownPrimarySourceFlag}
+                                errorText={this.dropDownPrimarySourceMsg} />
                         </View>
-                    </View>
+                        ) : null}
 
-                    <View style={styles.editFlexDirectionColumn}>
-                        <Text style={styles.occupationIndustryLabel}>
-                            {globalString.editOccupationInfo.occupationEmployerOne}
-                        </Text>
-
-                        <View style={styles.occupationMarginTop}>
-                            <GInputComponent
-                                style={styles.occupationMarginTop}
-                                placeholder={""}
-                                onChangeText={this.setValidEmpLineOne}
-                                value={this.state.employeeLineOneValue}
-                                errorFlag={!this.state.isValidLineOne}
-                                errorText={globalString.profileValidationMessages.validateEmpLineOne}
-                            />
-                        </View>
-                    </View>
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <Text style={styles.occupationIndustryLabel}>
-                            {globalString.editOccupationInfo.occupationEmployerTwo}
-                        </Text>
-
-                        <View style={styles.occupationMarginTop}>
-                            <GInputComponent
-                                style={styles.occupationMarginTop}
-                                placeholder={""}
-                                onChangeText={this.setValidEmpLineTwo}
-                                value={this.state.employeeLineTwoValue} />
-                        </View>
-                    </View>
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <Text style={styles.occupationIndustryLabel}>
-                            {globalString.editOccupationInfo.occupationZipcode}
-                        </Text>
-
-                        <View style={styles.occupationMarginTop}>
-                            <GInputComponent
-                                style={styles.occupationMarginTop}
-                                placeholder={""}
-                                onChangeText={this.setValidEmpZipcode}
-                                value={this.state.employeeZipCodeValue}
-                                errorFlag={!this.state.isValidZipCode}
-                                errorText={globalString.profileValidationMessages.validateZipcode} />
-                        </View>
-                    </View>
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <Text style={styles.occupationIndustryLabel}>
-                            {globalString.editOccupationInfo.occupationCity}
-                        </Text>
-
-                        <Text style={styles.occupationCityStateLabel}>
-                            {this.state.employeeCityValue}
-                        </Text>
-                    </View>
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <Text style={styles.occupationIndustryLabel}>
-                            {globalString.editOccupationInfo.occupationState}
-                        </Text>
-
-                        <Text style={styles.occupationCityStateLabel}>
-                            {this.state.employeeStateValue}
-                        </Text>
-                    </View>
-
-                    <GButtonComponent
-                            buttonStyle={styles.cancelButtonStyle}
-                            buttonText={globalString.common.validate}
-                            textStyle={styles.cancelButtonText}
-                            onPress={this.validateZipCodeValue} />
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <Text style={styles.occupationHint}>
-                            {globalString.editOccupationInfo.occupationHint}
-                        </Text>
-                    </View>
+                    <Text style={[styles.occupationHint, styles.editFlexDirectionColumn]}>
+                        {globalString.editOccupationInfo.occupationHint}
+                    </Text>
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent

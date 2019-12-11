@@ -791,7 +791,7 @@ export default {
         modalCodeSentSuccess: "Code has been sent successfully",
     },
     addFinancialInformations: {
-        addFinancialTitle: "Add Financial Information",
+        addFinancialTitle: "Manage Financial Information",
         annualIncome: "Annual Income (USD)",
         taxBracket: "Tax Bracket (Percentage)",
         netWorth: "Net Worth (USD)",
@@ -856,7 +856,7 @@ export default {
         militaryInformations: "Please Provide current military information. We want to ensure that our members receive ourmost competitive offers and rates and are addressed according to correct military protocol"
     },
     editOccupationInfo: {
-        occupationTitle: "Edit Occupation Information",
+        occupationTitle: "Manage Occupation Information",
         occupationLabel: "Occupation",
         occupationEmployerName: "Employer Name",
         occupationEmployerOne: "Employer Line 1",
@@ -867,6 +867,7 @@ export default {
         occupationOptional: "Optional",
         occupationHint: "This information is collected on behalf of each of the VCM companies, and will be used for business purpose, including identification, verification of eligibility, and to market their products and services",
         occupationIndustry: "Industry",
+        occupationPrimarySource: "Primary Source of Income",
         occupationEmployment: "Employment Class",
         occupationIndustryChoose: "If you can't find an exact match for your industry or occupation, choose the closest one"
     },

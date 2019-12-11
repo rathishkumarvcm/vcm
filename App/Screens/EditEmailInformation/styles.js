@@ -220,7 +220,7 @@ export const styles = StyleSheet.create({
     },
     termsofuseText1: {
         fontSize: scaledHeight(18),
-        color: '#486D89',
+        color: '#56565A',
         marginBottom: scaledHeight(5)
     },
     signInButton: {
@@ -352,7 +352,6 @@ export const styles = StyleSheet.create({
         width: '50%',
         paddingLeft: '4%',
         color: '#5D83AE',
-        fontWeight: 'bold',
         fontSize: scaledHeight(16)
     },
     copyRightSection: {
@@ -429,6 +428,17 @@ export const styles = StyleSheet.create({
     editEmailPrimaryContent: { 
         marginTop: '2%', marginBottom: '2%', flexDirection: 'row' 
     },
+    editAddressView: {
+        width: '100%', marginLeft: '3%', marginTop: '2%', marginBottom: '2%', flexDirection: 'row', alignItems: "center", justifyContent: 'center'
+    },
+    editAddressLabel: {
+        width: '70%', color: '#707070', fontSize: scaledHeight(16), marginLeft: '3%', marginBottom: '2%'
+    },
+    editSwitchButton: {
+        width: '30%', marginTop: '2%', marginBottom: '2%'
+    },
+    profileSettingViewOne: { width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },
+    profileSettingViewTwo: { width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' },
     profileDivideIcon: { width: '100%', margin: '3%', flexDirection: 'row'},
     profileDivideIconOne: { width: '80%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },
     profileDivideIconTwo: { width: '20%', color: '#0000FF', fontSize: scaledHeight(14) }

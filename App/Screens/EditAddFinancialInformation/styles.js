@@ -219,7 +219,7 @@ export const styles = StyleSheet.create({
     },
     termsofuseText1: {
         fontSize: scaledHeight(18),
-        color: '#486D89',
+        color: '#56565A',
         marginBottom: scaledHeight(5)
     },
     signInButton: {
@@ -293,7 +293,7 @@ export const styles = StyleSheet.create({
         padding: scaledHeight(15),
         width: '100%',
         backgroundColor: '#FFFFFF',
-        marginTop: scaledHeight(24)
+        marginTop: scaledHeight(12)
     },
     newVictory: {
         height: scaledHeight(20),
@@ -351,7 +351,6 @@ export const styles = StyleSheet.create({
         width: '50%',
         paddingLeft: '4%',
         color: '#5D83AE',
-        fontWeight: 'bold',
         fontSize: scaledHeight(16)
     },
     copyRightSection: {
@@ -411,7 +410,7 @@ export const styles = StyleSheet.create({
         position: 'absolute', right: 20, top: 14
     },
     financialSecurityLabel: {
-        color: '#56565A', fontSize: scaledHeight(18), lineHeight: 30
+        color: '#56565A', fontSize: scaledHeight(18)
     },
     financialFlexRow: {
         flexDirection: 'row'
