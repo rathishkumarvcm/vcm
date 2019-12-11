@@ -397,7 +397,52 @@ export const styles = StyleSheet.create({
     userAvatar:{
         height : scaledHeight(100),
         width: scaledHeight(100)
-    }
+    },
+    dropDownLayout: {
+        width: '100%',
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
+        paddingLeft: '0%',
+        paddingRight: '0%',
+        marginLeft: '0%',
+        marginRight: '0%',
+        marginTop: scaledHeight(25)
+    },
+    dropDownTextName: {
+        width: '100%',
+        paddingLeft: '0%',
+        paddingRight: '0%',
+        marginLeft: '0%',
+        marginRight: '0%',
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginTop: scaledHeight(0)
+
+    },
+    textInputStyle: {
+        width: '100%',
+        marginLeft: '0%',
+        marginRight: '0%',
+        marginTop: scaledHeight(0),
+    },
+   /* dropDownPostition: {
+        width: "100%",
+        marginLeft: scaledHeight(20),
+        marginRight: scaledHeight(20),
+        position: 'absolute',
+        left: 0
+
+    },
+    */
+    dropDownPostition: {
+        marginLeft: scaledHeight(0),
+        marginRight: scaledHeight(0),
+        width:'100%',
+        //position: 'absolute',
+        //left: 0
+    },
+   
 
 
 });

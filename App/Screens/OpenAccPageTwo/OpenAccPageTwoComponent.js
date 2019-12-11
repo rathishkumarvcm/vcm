@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList,Image } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GIcon, GDateComponent } from '../../CommonComponents';
+import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GIcon, GDateComponent,GDropDownComponent } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio, CustomDropDown } from '../../AppComponents';
 
 import PropTypes from "prop-types";
@@ -181,10 +181,11 @@ class OpenAccPageTwoComponent extends Component {
                 contactDuringTelePhone3DropDown: false,
                 emailAddress: "",
                 socialSecurityNo: "",
+                phoneType:"",
+                phoneTypeDropDown:false,
 
 
-
-
+                phoneTypeValidation:true,
                 prefixValidation: true,
                 firstNameValidation: true,
                 lastNameValidation: true,
@@ -302,9 +303,11 @@ class OpenAccPageTwoComponent extends Component {
                 socialSecurityNo: "",
                 relationshipToAcc: "",
                 relationshipToAccDropDown: false,
+                phoneType:"",
+                phoneTypeDropDown:false,
 
 
-
+                phoneTypeValidation:true,
                 prefixValidation: true,
                 firstNameValidation: true,
                 lastNameValidation: true,
@@ -400,8 +403,11 @@ class OpenAccPageTwoComponent extends Component {
                 relationshipToAcc: "",
                 relationshipToAccDropDown: false,
                 vcmNo: "",
+                phoneType:"",
+                phoneTypeDropDown:false,
 
 
+                phoneTypeValidation:true,
                 prefixValidation: true,
                 firstNameValidation: true,
                 lastNameValidation: true,
@@ -450,8 +456,11 @@ class OpenAccPageTwoComponent extends Component {
                 socialSecurityNo: "",
                 relationshipToAcc: "",
                 relationshipToAccDropDown: false,
+                phoneType:"",
+                phoneTypeDropDown:false,
 
 
+                phoneTypeValidation:true,
                 firstNameValidation: true,
                 lastNameValidation: true,
                 dobValidation: true,
@@ -910,7 +919,6 @@ class OpenAccPageTwoComponent extends Component {
             return false;
         }
     }
-    /*------- Input Events & Delegate methods --------*/
     uploadImage = () => {
         ImagePicker.showImagePicker(imagePickerOptions, (response) => {
             //console.log('Response = ', response);
@@ -969,6 +977,12 @@ class OpenAccPageTwoComponent extends Component {
         });
     
       }
+
+    uploadForm = () => {
+        
+    }
+    /*------- Input Events & Delegate methods --------*/
+
 
     onSubmitZipEditing = (stateKey,keyName,nextInputFocus) => text =>{
         console.log("onSubmitZipEditing:::>" +nextInputFocus+" "+text);
@@ -1531,7 +1545,7 @@ class OpenAccPageTwoComponent extends Component {
             <GDateComponent
                 date={this.state[sectionName][calendarName]}
                 placeholder="Select Date"
-                errorFlag={this.state[sectionName][calendarName + "Validation"] != undefined ? this.state[sectionName][calendarName + "Validation"] : false}
+                errorFlag={this.state[sectionName][calendarName + "Validation"] != undefined ? !this.state[sectionName][calendarName + "Validation"] : false}
                 errMsg="Please selectDate"
                 onDateChange={this.onChangeDate(sectionName, calendarName)}
 
@@ -1731,6 +1745,12 @@ class OpenAccPageTwoComponent extends Component {
             case "relationshipToAccDropDown_IRA":
                 tempkey = "relationship";
                 break;
+            case "phoneTypeDropDown":
+            case "phoneTypeDropDown_joint":
+            case "phoneTypeDropDown_childben":
+            case "phoneTypeDropDown_IRA":
+                tempkey = "phone_type";
+                break;
 
         }
 
@@ -1794,6 +1814,16 @@ class OpenAccPageTwoComponent extends Component {
                     }
                 }));
                 break;
+            case "phoneTypeDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        phoneType: item.value,
+                        phoneTypeDropDown: false
+                    }
+                }));
+                break;
+
             case "contactDuringMobNoDropDown":
                 this.setState(prevState => ({
                     personal: {
@@ -1975,6 +2005,426 @@ class OpenAccPageTwoComponent extends Component {
                     }
                 }));
                 break;
+            case "phoneTypeDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        phoneType: item.value,
+                        phoneTypeDropDown: false
+                    }
+                }));
+                break;
+    
+            case "contactDuringMobNoDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        contactDuringMobNo: item.value,
+                        contactDuringMobNoDropDown: false
+                    }
+                }));
+                break;
+            case "contactDuringTelePhone2DropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        contactDuringTelePhone2: item.value,
+                        contactDuringTelePhone2DropDown: false
+                    }
+                }));
+                break;
+            case "contactDuringTelePhone3DropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        contactDuringTelePhone3: item.value,
+                        contactDuringTelePhone3DropDown: false
+                    }
+                }));
+                break;
+            case "empStatusDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        empStatus: item.value,
+                        empStatusDropDown: false
+                    }
+                }));
+                break;
+
+            case "empIndustryDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        empIndustry: item.value,
+                        empIndustryDropDown: false
+                    }
+                }));
+                break;
+            case "empStateCityDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        empStateCity: item.value,
+                        empStateCityDropDown: false
+                    }
+                }));
+                break;
+
+            case "annualIncomeDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        annualIncome: item.value,
+                        annualIncomeDropDown: false,
+                        taxBracket: item.taxbracket,
+                        taxBracketDropDown: false
+                    }
+                }));
+                break;
+            case "taxBracketDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        taxBracket: item.value,
+                        taxBracketDropDown: false
+                    }
+                }));
+                break;
+            case "networthDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        networth: item.value,
+                        networthDropDown: false
+                    }
+                }));
+                break;
+            case "taxFilingStatusDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        taxFilingStatus: item.value,
+                        taxFilingStatusDropDown: false
+                    }
+                }));
+                break;
+
+            case "militaryStatusDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        militaryStatus: item.value,
+                        militaryStatusDropDown: false
+                    }
+                }));
+                break;
+            case "branchOfServiceDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        branchOfService: item.value,
+                        branchOfServiceDropDown: false,
+                        rankKey: tempRankKey
+                    }
+                }));
+
+                if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempRankKey]) {
+                    payload = tempRankKey;
+                    this.props.getRankData(payload);
+                }
+                break;
+            case "rankDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        rank: item.value,
+                        rankDropDown: false
+                    }
+                }));
+                break;
+
+            // Child benefriciary
+            case "relationshipToAccDropDown_childben":
+                this.setState(prevState => ({
+                    childBeneficiary: {
+                        ...prevState.childBeneficiary,
+                        relationshipToAcc: item.value,
+                        relationshipToAccDropDown: false
+                    }
+                }));
+                break;
+
+            // Retirment benefriciary
+            case "beneficiaryTypeDropDown_IRA":
+                this.setState(prevState => ({
+                    retirement: {
+                        ...prevState.retirement,
+                        beneficiaryType: item.value,
+                        beneficiaryTypeDropDown: false
+                    }
+                }));
+                break;
+            case "relationshipToAccDropDown_IRA":
+                this.setState(prevState => ({
+                    retirement: {
+                        ...prevState.retirement,
+                        relationshipToAcc: item.value,
+                        relationshipToAccDropDown: false
+                    }
+                }));
+                break;
+
+
+
+            default:
+                break;
+
+        }
+
+    }
+    onSelectedDropDownValue = (dropDownName, key="") => (item) => {
+       console.log("onSelectedDropDownValue:");
+        let tempRankKey = "mil_rank_"+key;
+        let payload = "";
+        switch (dropDownName) {
+            case "prefixDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        prefix: item.value,
+                        prefixDropDown: false
+                    }
+                }));
+                break;
+            case "suffixDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        suffix: item.value,
+                        suffixDropDown: false
+                    }
+                }));
+                break;
+            case "maritalStatusDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        maritalStatus: item.value,
+                        maritalStatusDropDown: false
+                    }
+                }));
+                break;
+            case "stateCityDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        stateCity: item.value,
+                        stateCityDropDown: false
+                    }
+                }));
+                break;
+            case "phoneTypeDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        phoneType: item.value,
+                        phoneTypeDropDown: false
+                    }
+                }));
+                break;
+
+            case "contactDuringMobNoDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        contactDuringMobNo: item.value,
+                        contactDuringMobNoDropDown: false
+                    }
+                }));
+                break;
+            case "contactDuringTelePhone2DropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        contactDuringTelePhone2: item.value,
+                        contactDuringTelePhone2DropDown: false
+                    }
+                }));
+                break;
+            case "contactDuringTelePhone3DropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        contactDuringTelePhone3: item.value,
+                        contactDuringTelePhone3DropDown: false
+                    }
+                }));
+                break;
+            case "empStatusDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        empStatus: item.value,
+                        empStatusDropDown: false
+                    }
+                }));
+                break;
+
+            case "empIndustryDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        empIndustry: item.value,
+                        empIndustryDropDown: false
+                    }
+                }));
+                break;
+            case "empStateCityDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        empStateCity: item.value,
+                        empStateCityDropDown: false
+                    }
+                }));
+                break;
+
+            case "annualIncomeDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        annualIncome: item.value,
+                        annualIncomeDropDown: false,
+                        taxBracket: item.taxbracket,
+                        taxBracketDropDown: false
+                    }
+                }));
+                break;
+            case "taxBracketDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        taxBracket: item.value,
+                        taxBracketDropDown: false
+                    }
+                }));
+                break;
+            case "networthDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        networth: item.value,
+                        networthDropDown: false
+                    }
+                }));
+                break;
+            case "taxFilingStatusDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        taxFilingStatus: item.value,
+                        taxFilingStatusDropDown: false
+                    }
+                }));
+                break;
+
+            case "militaryStatusDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        militaryStatus: item.value,
+                        militaryStatusDropDown: false
+                    }
+                }));
+                break;
+            case "branchOfServiceDropDown":
+
+
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        branchOfService: item.value,
+                        branchOfServiceDropDown: false,
+                        rankKey: tempRankKey
+                    }
+                }));
+
+
+
+                if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempRankKey]) {
+                    payload = tempRankKey;
+                    this.props.getRankData(payload);
+                }
+
+
+                break;
+            case "rankDropDown":
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        rank: item.value,
+                        rankDropDown: false
+                    }
+                }));
+                break;
+
+            // Joint account owner
+            case "relationshipToAccDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        relationshipToAcc: item.value,
+                        relationshipToAccDropDown: false
+                    }
+                }));
+                break;
+            case "prefixDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        prefix: item.value,
+                        prefixDropDown: false
+                    }
+                }));
+                break;
+            case "suffixDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        suffix: item.value,
+                        suffixDropDown: false
+                    }
+                }));
+                break;
+            case "maritalStatusDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        maritalStatus: item.value,
+                        maritalStatusDropDown: false
+                    }
+                }));
+                break;
+            case "stateCityDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        stateCity: item.value,
+                        stateCityDropDown: false
+                    }
+                }));
+                break;
+            case "phoneTypeDropDown_joint":
+                this.setState(prevState => ({
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        phoneType: item.value,
+                        phoneTypeDropDown: false
+                    }
+                }));
+                break;
+    
             case "contactDuringMobNoDropDown_joint":
                 this.setState(prevState => ({
                     jointOwner: {
@@ -2144,6 +2594,7 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
+
     renderRadio = (sectionName, radioName, radioSize, componentStyle, layoutStyle) => {
         console.log("renderRadio::: " + radioName);
         let tempkey = "";//"title";
@@ -2254,7 +2705,12 @@ class OpenAccPageTwoComponent extends Component {
                     this.state.personal.isPersonalInfoExpanded &&
                     <View style={styles.childSectionGrp}>
                         <Text style={styles.lblTxt}>
-                            {gblStrings.accManagement.prefix}
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.accManagement.prefix}
+                            </Text>
+                            <Text style={styles.optionalTxt}>
+                                {" " + gblStrings.accManagement.optional}
+                            </Text>
                         </Text>
                         <View style={{ flexGrow: 1, width: "40%" }}>
                             <CustomDropDown
@@ -2276,7 +2732,26 @@ class OpenAccPageTwoComponent extends Component {
                                 placeholder={""}
 
                             />
-                            {this.renderDropDown('prefixDropDown', this.state.personal.prefixDropDown, suffixData)}
+                            {this.renderDropDown('prefixDropDown', this.state.personal.prefixDropDown, suffixData) }
+                            { /* <GDropDownComponent
+                                inputref={this.setInputRef("prefixDropDown")}
+                                dropDownLayout={styles.dropDownLayout}
+                                dropDownTextName={styles.dropDownTextName}
+                                textInputStyle={styles.textInputStyle}
+                                dropDownName={gblStrings.accManagement.prefix}
+                                data={dummyData}
+                                dropDownValue={this.state.personal.prefix}
+                                showDropDown={this.state.personal.prefixDropDown}
+                                changeState={this.onPressDropDown("personal", "prefixDropDown")}
+                                selectedDropDownValue={this.onSelectedDropDownValue("prefixDropDown")}
+                                itemToDisplay={"value"}
+                                dropDownPostition={{ ...styles.dropDownPostition}}
+                                errorFlag={!this.state.personal.prefixValidation}
+                                errorText={""}
+                            />
+                            */ }
+
+
                         </View>
 
 
@@ -2363,11 +2838,14 @@ class OpenAccPageTwoComponent extends Component {
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.dob}
                         </Text>
+                        <GDateComponent
+                            date={this.state.personal.dob}
+                            placeholder="Select Date"
+                            errorFlag={!this.state.personal.dobValidation}
+                            errMsg="Please selectDate"
+                            onDateChange={this.onChangeDate("personal", "dob")}
 
-                       
-
-                        {this.renderSplitCalender("personal", "dob")}
-
+                        />
 
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.gender}
@@ -2385,7 +2863,7 @@ class OpenAccPageTwoComponent extends Component {
 
                             value={this.state.personal.maritalStatus}
                             propInputStyle={this.state.personal.maritalStatusValidation ? styles.customListTxtBox : styles.customListTxtBoxError}
-                            placeholder={""}
+                            placeholder={gblStrings.common.select}
 
                         />
                         {this.renderDropDown('maritalStatusDropDown', this.state.personal.maritalStatusDropDown, dummyData)}
@@ -2395,6 +2873,25 @@ class OpenAccPageTwoComponent extends Component {
                             {gblStrings.accManagement.citizenship}
                         </Text>
                         {this.renderRadio("personal", "citizenship", 30, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
+                        <View style={{ flexGrow: 1 ,marginTop:scaledHeight(25)}}>
+                            <Text>
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.uploadW8Form}
+                                </Text>
+                                <Text style={styles.optionalTxt}>
+                                    {`  ${gblStrings.accManagement.whatISW8Form}`}
+                                </Text>
+                            </Text>
+                            
+                            
+                            <GButtonComponent
+                                buttonStyle={styles.browseBtn}
+                                buttonText={gblStrings.common.browse}
+                                textStyle={styles.normalBlackBtnTxt}
+                                onPress={this.uploadForm}
+
+                            />
+                        </View>
 
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.addressType}
@@ -2502,10 +2999,24 @@ s
                             />
                         </View>
 
+                        <Text style={styles.lblTxt}>
+                            {gblStrings.accManagement.phoneType}
+                        </Text>
+                        <CustomDropDown
+                            inputref={this.setInputRef("phoneType")}
+                            onPress={this.onPressDropDown("personal", "phoneType")}
+                            value={this.state.personal.phoneType}
+                            propInputStyle={styles.customListTxtBox}
+                            placeholder={gblStrings.common.select}
+
+                        />
+                        {this.renderDropDown('phoneTypeDropDown', this.state.personal.phoneTypeDropDown, dummyData)}
+                    
+
 
 
                         <Text style={styles.lblTxt}>
-                            {gblStrings.accManagement.mobileNo}
+                            {gblStrings.accManagement.phoneNo}
                         </Text>
                         <GInputComponent
                             inputref={this.setInputRef("mobileNo")}
@@ -2518,14 +3029,14 @@ s
 
                         />
 
-                        <View style={{ flexGrow: 1 }}>
+                        <Text>
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.contactMeDuring}
                             </Text>
                             <Text style={styles.optionalTxt}>
                                 {" " + gblStrings.accManagement.optional}
                             </Text>
-                        </View>
+                        </Text>
                         <CustomDropDown
                             inputref={this.setInputRef("contactDuringMobNo")}
                             onPress={this.onPressDropDown("personal", "contactDuringMobNoDropDown")}
@@ -2537,14 +3048,14 @@ s
                         {this.renderDropDown('contactDuringMobNoDropDown', this.state.personal.contactDuringMobNoDropDown, dummyData)}
 
 
-                        <View style={{ flexGrow: 1 }}>
+                        <Text>
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.telePhoneNo2}
                             </Text>
                             <Text style={styles.optionalTxt}>
                                 {" " + gblStrings.accManagement.optional}
                             </Text>
-                        </View>
+                        </Text>
                         <GInputComponent
                             inputref={this.setInputRef("telePhoneNo2")}
                             propInputStyle={styles.customTxtBox}
@@ -2556,14 +3067,14 @@ s
 
                         />
 
-                        <View style={{ flexGrow: 1 }}>
+                        <Text>
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.contactMeDuring}
                             </Text>
                             <Text style={styles.optionalTxt}>
                                 {" " + gblStrings.accManagement.optional}
                             </Text>
-                        </View>
+                        </Text>
                         <CustomDropDown
                             inputref={this.setInputRef("contactDuringTelePhone2")}
                             onPress={this.onPressDropDown("personal", "contactDuringTelePhone2DropDown")}
@@ -2639,8 +3150,6 @@ s
                             returnKeyType={"done"}
                             maxLength={gblStrings.maxLength.ssnNo}
                             onChangeText={this.onChangeText("personal", "socialSecurityNo")}
-
-
                         />
                     </View>
                 }

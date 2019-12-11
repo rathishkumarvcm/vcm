@@ -131,6 +131,8 @@ export default {
         nickname: "Nick Name",
         optional: "(Optional)",
         uploadImage: "Upload Image",
+        uploadW8Form: "Upload W-8 form",
+        whatISW8Form:"What is W-8 form?",
 
         //manage beneficiearies
         manageBeneficiaries: "Manage Beneficiaries",
@@ -141,24 +143,15 @@ export default {
         contractNumber: "Contract Number",
         primaryBeneficiary: "Primary Beneficiary",
         rothIra: "Roth IRA",
-        accumulatedValue:"Accumulated Value",
         contingentBeneficiary: "Contingent Beneficiary",
-        dob: "Date of Birth",
-        beneficiary_type:"Beneficiary Type",
-        registrationOwner:"Registration Owner",
-        relationToOwner: "Relationship to Account owner",
-        relationToInsured:"Relationship to Insured",
+        nameDob: "Name / Date of Birth",
+        relationToOwner: "Relationship to owner",
         distribution: "Distribution",
+        enterDetails: "Enter Details",
         accBeneficiaryContent: "You may name one or more people or entities as beneficiaries. Learn more",
         beneficiaryAdd:"Beneficiary Address",
         company:"Company",
-        editPrimaryBene:"Edit Primary Beneficiary Information",
-        editContingentBene:"Edit Contingent Beneficiary Information",
-        editTodBene:"Edit Contingent Beneficiary Information",
-        verifyTOD:"Verify-Transfer on Death Beneficiary Information",
         addPrimaryBeneficiary:"Add Primary Beneficiary",
-        contingentInfo:"Contingent Beneficiary Information",
-        primaryInfo:"Primary Beneficiary Information",
         balance:"Balance",
         zipCodeFormat:"11111 / 11111-1111",
         beneficiaryName:"Beneficiary Name",
@@ -172,8 +165,6 @@ export default {
         distributionValidationExceed:"Distribution should not exceed 100",
         firstNameFormat:"Please Enter Valid First Name",
         lastNameFormat:"Please Enter Valid Last Name",
-        addContingentBeneficiary:"Add Contingent Beneficiary",
-
 
         //manageIntrestedParties
         manageIntrestedParties: "Manage Interested Parties",
@@ -235,9 +226,9 @@ export default {
 
         isYourPhysicalAddressSame: "Is your physical address same as mailing address ?",
         mobileNo: "Mobile Number",
-        telePhoneNo2: "Telephone Number 2",
-        contactMeDuring: "Contact me during",
-        telePhoneNo3: "Telephone Number 3",
+        telePhoneNo2: "Phone Number 2",
+        contactMeDuring: "Call Time Preference",
+        telePhoneNo3: "Phone Number 3",
 
 
 
@@ -245,6 +236,7 @@ export default {
         mailingAddress: "Mailing Address",
         physicalAddress: "Physical Address",
         address: "Address",
+        phoneType: "Phone Type",
         phoneNo: "Phone Number",
         phoneNoFormat: "XXX-XXX-XXXX",
         emailAddress: "Email Address",
