@@ -1136,5 +1136,14 @@ export default {
         overAll:"Overall",
         ratingCategory:"Rating\nCategory",
         numberInCategory:"Number in\nCategory",        
+    },
+    militaryInformationLabel: {
+        militaryStatus: 'Military Status',
+        militaryBranchService: 'Branch of Service',
+        militaryRank: 'Rank',
+        militaryDateService: 'Dates of Service',
+        militaryDateFrom: 'From',
+        militaryDateTo: 'To',
+        militaryCommissionSource: 'Commission Source'
     }
 };

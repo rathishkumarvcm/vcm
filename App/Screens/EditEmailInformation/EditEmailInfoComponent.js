@@ -16,12 +16,21 @@ const tempPrimaryMailData = [
 const UserEmailInformation = (props) => {
     return (
         <View style={styles.editEmailHolder}>
-            <Text style={styles.editEmailType}>
-                {props.emailType}
-            </Text>
-            <Text style={styles.editEmailId}>
-                {props.emailId}
-            </Text>
+            <View style={[styles.profileDivideIcon]}>
+                <View style={styles.profileDivideIconOne}>
+                    <Text style={styles.editEmailType}>
+                        {props.emailType}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {props.emailId}
+                    </Text>
+                </View>
+
+                <View style={styles.profileDivideIconTwo}>
+                    <Image style={styles.imageWidthHeight}
+                        source={require("../../Images/menu_icon.png")} />
+                </View>
+            </View>
 
             <View style={styles.editEmailBorder} />
 

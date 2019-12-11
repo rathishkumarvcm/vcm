@@ -23,18 +23,27 @@ let profileAddressData = [];
 const UserAddressInformation = (props) => {
     return (
         <View style={styles.editEmailHolder}>
-            <Text style={styles.editEmailType}>
-                {props.addressType}
-            </Text>
-            <Text style={styles.editEmailId}>
-                {props.addressLineOne}
-            </Text>
-            <Text style={styles.editEmailId}>
-                {props.addressCity}
-            </Text>
-            <Text style={styles.editEmailId}>
-                {props.addressState}
-            </Text>
+            <View style={[styles.profileDivideIcon]}>
+                <View style={styles.profileDivideIconOne}>
+                    <Text style={styles.editEmailType}>
+                        {props.addressType}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {props.addressLineOne}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {props.addressCity}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {props.addressState}
+                    </Text>
+                </View>
+
+                <View style={styles.profileDivideIconTwo}>
+                    <Image style={styles.imageWidthHeight}
+                        source={require("../../Images/menu_icon.png")} />
+                </View>
+            </View>
 
             <View style={styles.editEmailBorder} />
 
@@ -106,7 +115,7 @@ class editAddressInfoComponent extends Component {
             isMailingAddress={item.isMailingAddress}
             isPhysicalAddress={item.isPhysicalAddress} />);
 
-    componentDidMount() { 
+    componentDidMount() {
         if (this.props &&
             this.props.profileState &&
             this.props.profileState.profileUserAddressInformation) {
@@ -137,7 +146,7 @@ class editAddressInfoComponent extends Component {
             this.props.profileState.profileUserAddressInformation) {
             profileAddressData = this.props.profileState.profileUserAddressInformation;
         }
-        
+
         return (
             <View style={styles.container}>
                 <GHeaderComponent

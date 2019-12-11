@@ -410,5 +410,14 @@ export const styles = StyleSheet.create({
     },
     editSwitchButton: {
         width: '30%', marginTop: '2%', marginBottom: '2%'
-    }
+    },
+    imageWidthHeight: {
+        width: 40,
+        height: 40,
+        margin: '4%',
+        resizeMode: 'contain'
+    },
+    profileDivideIcon: { width: '100%', margin: '3%', flexDirection: 'row'},
+    profileDivideIconOne: { width: '80%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },
+    profileDivideIconTwo: { width: '20%', color: '#0000FF', fontSize: scaledHeight(14) }
 });

@@ -18,9 +18,19 @@ const tempRelationShipDetails = [
 const UserRelationShipInformation = (props) => {
     return (
         <View style={styles.editEmailHolder}>
-            <Text style={styles.editEmailType}>
-                {props.relationShipName}
-            </Text>
+
+            <View style={[styles.profileDivideIcon]}>
+                <View style={styles.profileDivideIconOne}>
+                    <Text style={styles.editEmailType}>
+                        {props.relationShipName}
+                    </Text>
+                </View>
+
+                <View style={styles.profileDivideIconTwo}>
+                    <Image style={styles.imageWidthHeight}
+                        source={require("../../Images/menu_icon.png")} />
+                </View>
+            </View>
 
             <View style={styles.editEmailBorder} />
 
