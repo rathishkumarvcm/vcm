@@ -112,7 +112,7 @@ export const styles = StyleSheet.create({
         width:'80%',
         marginLeft:'10%',
         marginRight:'10%',
-        marginTop:scaledHeight(12),
+        //marginTop:scaledHeight(12),
         //borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#FFFFFF',
