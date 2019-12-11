@@ -51,15 +51,13 @@ const styles = StyleSheet.create({
       fontSize:scaledHeight(12)
     },
     errorView:{
-      marginLeft:'4%',
-      marginRight:'4%',
       borderColor:'red'
   }
 });
 
 
 export const GDateComponent = props => (
-    <View>
+    <View style={{flexGrow:1}}>
     <DatePicker
         ref={props.inputref}
         style={props.errorFlag ? [styles.componentStyle,props.componentStyle,styles.errorView]:[styles.componentStyle,props.componentStyle]}
@@ -81,11 +79,11 @@ export const GDateComponent = props => (
         }}
         onDateChange={props.onDateChange}
     />
-        {props.errorFlag ? <View style={styles.errorSection}>
+        {props.errorFlag ? 
             <Text style={styles.errorSectionText}>
                 {props.errorMsg}
             </Text>
-                           </View> : null}
+            : null}
     </View>
 
 );
@@ -95,7 +93,7 @@ GDateComponent.propTypes = {
     dateIconStyle: PropTypes.instanceOf(Object),
     dateInputStyle: PropTypes.instanceOf(Object),
     dateTextStyle: PropTypes.instanceOf(Object),
-    dateTouchBody: PropTypes.instanceOf(Object),
+    dateTouchBodyStyle: PropTypes.instanceOf(Object),
     iconComponent: PropTypes.instanceOf(Object),
 
 
@@ -107,7 +105,8 @@ GDateComponent.propTypes = {
     cancelBtnText: PropTypes.string, 
     errorFlag: PropTypes.bool, 
     errorMsg: PropTypes.string, 
-
+    minDate:PropTypes.string, 
+    maxDate:PropTypes.string, 
    
     onDateChange: PropTypes.func,
     onOpenModal: PropTypes.func,

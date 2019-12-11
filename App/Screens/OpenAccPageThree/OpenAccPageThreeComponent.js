@@ -232,7 +232,7 @@ class OpenAccPageThreeComponent extends Component {
             applyFilterState: false,
 
             isAddBankAccount: false,
-            isValidBankAccount: false,
+            isValidBankAccount: true,
             validBankAccountMsg: '',
 
         };
@@ -286,22 +286,17 @@ class OpenAccPageThreeComponent extends Component {
 
     callValidateBankAccount = () => {
         const validateBankAccountPayload = {
-            "accountType": "Checking",
-            "financialInstitutionName": " HDFC",
-            "accountOwnerNames": "Abc",
-            "transitRoutingNumber": 123456,
-            "accountNumber": 345213123456
+            "accountType": this.state.accountType || "-",
+            "financialInstitutionName": this.state.financialInstitutionName || "-",
+            "accountOwnerNames": this.state.accountOwner || "-",
+            "transitRoutingNumber": this.state.transitRoutingNumber || "-",
+            "accountNumber": this.state.accountNumber || "-"
+
         };
 
         this.props.addBankAccountAction(validateBankAccountPayload);
 
-        console.log("Add Account 001", this.props.addBankAccount);
-
-        if (!this.state.isValidBankAccount) {
-            this.setState({
-                isValidBankAccount: true
-            });
-        }
+       
     }
 
     /*----------------------
@@ -371,7 +366,7 @@ class OpenAccPageThreeComponent extends Component {
             if (this.props.accOpeningData[responseKey]) {
                 if (this.props.accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
                     const tempResponse = this.props.accOpeningData[responseKey];
-                    if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
+                    if (tempResponse.statusCode == 200) {
                         let msg = tempResponse.message;
                         console.log("Account Type Saved ::: :: " + msg);
                         alert(tempResponse.result);
@@ -380,6 +375,31 @@ class OpenAccPageThreeComponent extends Component {
                     }
                 }
             }
+
+            const addBankAccKey = ActionTypes.ADD_BANK_ACCOUNT;
+            if (this.props.addBankAccount[addBankAccKey]) {
+                if (this.props.addBankAccount[addBankAccKey] !== prevProps.addBankAccount[addBankAccKey]) {
+                    const tempResponse = this.props.addBankAccount[addBankAccKey];
+                    if (tempResponse.statusCode == 200 && tempResponse.statusType =="S") {
+                        console.log("Valid bank account::"+tempResponse.message);
+                            this.setState({
+                                isValidBankAccount: true,
+                                validBankAccountMsg:tempResponse.message
+                            });
+                        
+                    } else {
+                        console.log("Not Valid bank account::"+tempResponse.message);
+
+                        this.setState({
+                            isValidBankAccount: false,
+                            validBankAccountMsg:tempResponse.message
+
+                        });
+                    }
+                }
+            }
+
+
         }
 
     }
@@ -1443,10 +1463,11 @@ class OpenAccPageThreeComponent extends Component {
                                     source={require("../../Images/specimen.png")}
                                 />
 
-                                {this.state.isValidBankAccount ? (
-                                    <Text style={{ width: '92%', marginTop: '4%', marginBottom: '4%', color: '#333300', justifyContent: 'center', alignItems: 'center' }}>
+                                {!this.state.isValidBankAccount &&
+                                    <Text style={styles.errMsg}>
                                         {this.state.validBankAccountMsg}
-                                    </Text>) : null}
+                                    </Text>
+                                }
 
                                 <GButtonComponent
                                     buttonStyle={styles.saveButtonStyle}
@@ -1532,6 +1553,7 @@ class OpenAccPageThreeComponent extends Component {
                                                     {gblStrings.accManagement.initInvestment}
                                                 </Text>
                                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: scaledHeight(7) }}>
+
                                                     <Text style={{ color: '#56565A', fontSize: scaledHeight(16) }}>
                                                         {"$"}
                                                     </Text>
@@ -1543,16 +1565,23 @@ class OpenAccPageThreeComponent extends Component {
                                                         keyboardType="decimal-pad"
                                                         onChangeText={this.onChangeTextForInvestment("initialInvestment", index)}
                                                         errorFlag={!this.state.selectedFundInvestmentsData[index].initialInvestmentValidation}
-                                                        errorText={gblStrings.accManagement.emptyInitInvestmentMsg}
+                                                        errorText={""}
                                                     />
+                                                
                                                 </View>
+                                                {!this.state.selectedFundInvestmentsData[index].initialInvestmentValidation &&
+                                                    <Text style={styles.errMsg}>
+                                                        {gblStrings.accManagement.emptyInitInvestmentMsg}
+                                                    </Text>
+                                                }
                                                 <Text style={{ textAlign: 'right', width: '100%', color: '#56565A', fontSize: scaledHeight(12), marginTop: scaledHeight(12), }}>
                                                     {`Minimum $${item.mininitialInvestment}`}
                                                 </Text>
 
+
                                                 {
                                                     this.state.selectedFundInvestmentsData[index].fundingOption == "Initial and Monthly Investment" && 
-                                                    <>
+                                                    <View style={{flexGrow:1}}>
                                                         <Text style={styles.lblTxt}>
                                                             {gblStrings.accManagement.monthlyInvestment}
                                                         </Text>
@@ -1573,6 +1602,12 @@ class OpenAccPageThreeComponent extends Component {
 
                                                             />
                                                         </View> 
+                                                        {!this.state.selectedFundInvestmentsData[index].monthlyInvestmentValidation &&
+                                                            <Text style={styles.errMsg}>
+                                                                {gblStrings.accManagement.emptyMonthlyInvestmentMsg}
+                                                            </Text>
+                                                        }
+
 
                                                         <Text style={styles.lblTxt}>
                                                             {gblStrings.accManagement.startDate}
@@ -1584,11 +1619,11 @@ class OpenAccPageThreeComponent extends Component {
                                                             minDate={currentdate}
                                                             placeholder="MM/DD/YYYY"
                                                             errorFlag={!this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                                            errMsg={this.state.selectedFundInvestmentsData[index].startDateValidation}
+                                                            errorMsg={gblStrings.accManagement.emptyStartDate}
                                                             onDateChange={this.onChangeDateForInvestment("startDate", index)}
                                                         />
 
-                                                    </>
+                                                    </View>
                                                 }
 
                                                
