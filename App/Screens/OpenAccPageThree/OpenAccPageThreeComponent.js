@@ -1598,7 +1598,7 @@ class OpenAccPageThreeComponent extends Component {
                                                                 keyboardType="decimal-pad"
                                                                 onChangeText={this.onChangeTextForInvestment("monthlyInvestment", index)}
                                                                 errorFlag={!this.state.selectedFundInvestmentsData[index].monthlyInvestmentValidation}
-                                                                errorText={gblStrings.accManagement.emptyMonthlyInvestmentMsg}
+                                                                errorText={""}
 
                                                             />
                                                         </View> 
