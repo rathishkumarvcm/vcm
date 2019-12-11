@@ -23,6 +23,7 @@ import GSwitchComponent from './GSwitchComponent';
 import GFooterSettingsComponent from './GFooterSettingsComponent';
 import GDropDownComponent from './GDropDownComponent';
 import GDateComponent from './GDateComponent';
+import GModalComponent from './GModalComponent';
 
 import {
     SetKeyValueToStore,
@@ -59,5 +60,6 @@ export {
     GSwitchComponent,
     GFooterSettingsComponent,
     GDropDownComponent,
-    GDateComponent
+    GDateComponent,
+    GModalComponent
 };

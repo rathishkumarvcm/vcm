@@ -213,7 +213,8 @@ class ProfilesAndPreferences extends Component {
 }
 
 ProfilesAndPreferences.propTypes = {
-    navigation : PropTypes.instanceOf(Object)
+    navigation : PropTypes.instanceOf(Object),
+    initialState : PropTypes.instanceOf(Object)
 };
 
 export default ProfilesAndPreferences;

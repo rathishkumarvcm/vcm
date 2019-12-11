@@ -256,7 +256,8 @@ export const styles = StyleSheet.create({
     },
     settingsTitleDescText:{
         color:'#B2B2B2',
-        fontSize:scaledHeight(16)
+        fontSize:scaledHeight(15),
+        marginRight:'4%'
     },
     listTitleContainer:
     {
