@@ -18,18 +18,18 @@ import PdfLinking from './Screens/PdfLinking';
 import PdfRNFetchblobDownload from './Screens/PdfRNFetchblobDownload';
 import NativePdf from './Screens/NativePDF';
 import AccountInquiry from './Screens/AccountInquiry/AccountInquiryComponent';
-import GeneralSettings from './Screens/GeneralSettings';
+import GeneralSettings from './Screens/GeneralSettings/GeneralSettingsComponent';
 import ProfileSettings from './Screens/ProfileSettings/';
 import DeliverySettings from './Screens/DeliverySettings';
 import MarketingandPrivacySettings from './Screens/MarketingandPrivacy/MarketingandPrivacyComponent';
 import ChangeLogonCredentialsComponent from './Screens/ChangeLogonCredentials/ChangeLogonCredentialsComponent';
-import CurrentPasswordComponent from './Screens/CurrentPassword';
-import ResetPasswordComponent from './Screens/ResetPassword';
-import CurrentPINComponent from './Screens/CurrentPIN';
-import ResetPINComponent from './Screens/ResetPIN';
+import CurrentPasswordComponent from './Screens/CurrentPassword/CurrentPasswordComponent';
+import ResetPasswordComponent from './Screens/ResetPassword/ResetPasswordComponent';
+import CurrentPINComponent from './Screens/CurrentPIN/CurrentPINComponent';
+import ResetPINComponent from './Screens/ResetPIN/ResetPINComponent';
 import AccountRecoveryPrefComponent from './Screens/AccountRecoveryPref';
-import ProfilesAndPreferences from './Screens/ProfilesAndPreferences/';
-import SecurityPreference from './Screens/SecurityPreferences/';
+import ProfilesAndPreferences from './Screens/ProfilesAndPreferences/ProfilesAndPreferencesComponent';
+import SecurityPreference from './Screens/SecurityPreferences/SecurityPreferencesComponent';
 import AccountMessagingSettings from './Screens/AccountMessagingSettings/AccountMessagingSettingsComponent';
 import AccountMessagingGoals from './Screens/AccountMessagingGoals/AccountMessagingGoalsComponent';
 import AccountMessagingAdvice from './Screens/AccountMessagingAdvice/';
@@ -87,6 +87,7 @@ import ChangeSignInMethod from './Screens/ChangeSignInMethod';
 import CSMSoftTokenComponent from './Screens/CSMSoftToken';
 import CSMPushNotificationComponent from './Screens/CSMPushNotification';
 import CSMOtp from './Screens/CSMOtp';
+import QuickSigninComponent from './Screens/QuickSignIn';
 import ManageIntrestedPartiesComponent from './Screens/ManageIntrestedParties';
 import ManageBeneficiariesComponent from './Screens/ManageBeneficiaries';
 
@@ -789,6 +790,12 @@ const AppNavigator = createStackNavigator({
                 header:null,
             }
         },
+        QuickSigninComponent:{
+            screen:QuickSigninComponent,
+            navigationOptions:{
+                header:null,
+            }
+        }
     },{
         initialRouteName: 'login'
     });
