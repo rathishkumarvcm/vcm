@@ -5,7 +5,7 @@ import {GButtonComponent,GHeaderComponent,GInputComponent,GFooterSettingsCompone
 import PropTypes from 'prop-types';
 import { Auth } from "aws-amplify";
 
-class EmailVerificationComponent extends Component {
+class OnlineIDVerificationComponent extends Component {
     constructor(props){
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -28,35 +28,7 @@ class EmailVerificationComponent extends Component {
         });
     }
 
-    verifyOTP = () => {
-        let username = this.state.name;
-        let code = this.state.code; 
-        let registerSelfData = this.props.navigation.getParam('passwordData');
-        console.log("-----username-----",registerSelfData,code);
 
-
-        Auth.confirmSignUp(registerSelfData.emailID, code, {
-            // Optional. Force user confirmation irrespective of existing alias. By default set to True.
-            forceAliasCreation: true    
-        }).then(data => { alert("verified OTP");
-        
-        
-                          console.log(data);
-                          this.props.navigation.navigate('login',{emailVerified : true,emailVerifiedData:registerSelfData});
-        })
-          .catch(err => console.log(err));
-    }
-
-    resendOTP = () => {
-        let username = this.state.name;
-        let registerSelfData = this.props.navigation.getParam('passwordData');
-        
-        Auth.resendSignUp(registerSelfData.emailID).then(() => {
-            console.log('code resent successfully');
-        }).catch(e => {
-            console.log(e);
-        });
-    }
 
 
     navigatePassword = ()=>this.props.navigation.navigate('login');
@@ -89,26 +61,13 @@ class EmailVerificationComponent extends Component {
            
             <View style={styles.signInView}>
                 <Text style={styles.signIntext}>
-                    {"Check your Inbox - Email Verification required"}
+                    {"Check your Inbox"}
                 </Text>
-            </View>
-
-            <View style={styles.newVictorySection1}>
-                <Text style={styles.openInvestment}>
-                        {"You entered"}
-                <Text style={styles.openInvestmentBold}>
-                    {" John.murphy@gmail.com "}
-                </Text>
-                <Text style={styles.openInvestment}>
-                    {"as the email address that you will use to sign in to your account."}
-                </Text>
-                </Text> 
-
             </View>
 
             <View style={styles.newVictorySection2}>
                 <Text style={styles.openInvestment1}>
-                        {"To complete your registration, we need to verify that this email address belongs to you."}
+                        {"You can now access your Online ID sent to your email id"}
                 </Text>
 
             </View>
@@ -145,25 +104,14 @@ class EmailVerificationComponent extends Component {
 
              
            
-           {!this.state.confirmCode ? 
+          
            <GButtonComponent 
            buttonStyle={styles.backButton}
-           buttonText="Resend"
+           buttonText="Back"
            textStyle={styles.cancelButtonText}
-           onPress={this.resendOTP}
+           onPress={this.goBack}
            />
-:
-null} 
 
-           {this.state.confirmCode ? 
-           <GButtonComponent 
-           buttonStyle={styles.signInButton}
-           buttonText="Confirm"
-           textStyle={styles.signInButtonText}
-           onPress={this.verifyOTP}
-           />
- : 
- null} 
 
             <GFooterSettingsComponent />
 
@@ -216,11 +164,11 @@ null}
 }
 
 
-EmailVerificationComponent.propTypes = {
+OnlineIDVerificationComponent.propTypes = {
     navigation : PropTypes.instanceOf(Object)
   };
   
-  EmailVerificationComponent.defaultProps = {
+  OnlineIDVerificationComponent.defaultProps = {
  
   };
-export default EmailVerificationComponent;
+export default OnlineIDVerificationComponent;

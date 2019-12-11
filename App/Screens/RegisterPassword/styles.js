@@ -53,7 +53,7 @@ export const styles = StyleSheet.create({
         paddingRight:'4%'
     },
     signIntext:{
-        color:'#486D89',
+        color:'#56565A',
         fontSize:scaledHeight(24)
     },
     userIDText:{
@@ -97,9 +97,9 @@ export const styles = StyleSheet.create({
     signInButton:{
         borderColor:'#56565A',
         borderWidth:1,
-        width:'92%',
-        marginLeft:'4%',
-        marginRight:'4%',
+        width:'72%',
+        marginLeft:'14%',
+        marginRight:'14%',
         marginTop:scaledHeight(12),
         //borderRadius:scaledHeight(25),
         height:scaledHeight(50),
@@ -110,6 +110,24 @@ export const styles = StyleSheet.create({
      signInButtonText:{
         fontSize:scaledHeight(16),
         color:'#FFFFFF',
+        fontWeight:'bold'
+    },
+    cancelButton:{
+        borderColor:'#61285F45',
+        borderWidth:1,
+        width:'72%',
+        marginLeft:'14%',
+        marginRight:'14%',
+        marginTop:scaledHeight(12),
+        //borderRadius:scaledHeight(25),
+        height:scaledHeight(50),
+        backgroundColor:'#FFFFFF',
+        alignItems:'center',
+        justifyContent:'center'
+     },
+     cancelButtonText:{
+        fontSize:scaledHeight(16),
+        color:'#56565A',
         fontWeight:'bold'
     },
     newVictoryButton:{
@@ -196,25 +214,28 @@ export const styles = StyleSheet.create({
     faceIDtextStyle:{
         height:scaledHeight(20),
         alignItems:'center'
-    }, stepsOuter :{
+    }, 
+    stepsOuter :{
         height: scaledHeight(8),
         width: '92%',
         backgroundColor: "#E6E6E6",
         justifyContent: "center",
         marginTop:scaledHeight(30),
         marginLeft:'4%',
-        marginRight:'4%'
+        marginRight:'4%',
+        flexDirection:'row'
     },
     stepsInner:{
         height: scaledHeight(8),
-        width:'40%',
+        width:'49%',
+        marginRight:'1%',
         backgroundColor:'#56565A'
     },
     newVictorySection1:{
         paddingLeft:'4%',
         paddingRight:'4%',
         width:'100%',
-        height:scaledHeight(70),
+        //height:scaledHeight(70),
         marginTop:scaledHeight(20)
     },
     goBack:{

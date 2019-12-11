@@ -73,9 +73,10 @@ export const GInputComponent = (props) => (
         placeholder={props.placeholder}
         placeholderTextColor={props.placeholderTextColor}
         selectionColor={props.selectionColor}
-        underlineColorAndroid={props.underlineColorAndroid}
+        //underlineColorAndroid={props.underlineColorAndroid}
         autoCapitalize={props.autoCapitalize}
         ref={props.inputref}
+        underlineColorAndroid="transparent"
       >
         {props.inputText}
       </TextInput>

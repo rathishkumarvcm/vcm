@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text,View,ScrollView } from 'react-native';
 import {styles} from './styles';
-import {GButtonComponent,GInputComponent,GHeaderComponent} from '../../CommonComponents';
+import {GButtonComponent,GInputComponent,GHeaderComponent,GFooterSettingsComponent} from '../../CommonComponents';
 import PropTypes from 'prop-types';
 
 
@@ -61,13 +61,13 @@ class RegisterEmailComponent extends Component {
 
             <View style={styles.signInView}>
                 <Text style={styles.signIntext}>
-                    {"Great, let's start with your email Address."}
+                    {"Great, let's start with your email address."}
                 </Text>
             </View>
 
             <View style={styles.newVictorySection1}>
                 <Text style={styles.openInvestment}>
-                        {"For USAA Members USAA Investments has been backed by the investment expertise of Victory Capital Management since July 2019."}
+                        {"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type."}
                 </Text> 
             </View>
              
@@ -78,7 +78,7 @@ class RegisterEmailComponent extends Component {
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox}
-                placeholder={"Email"}
+                //placeholder={"Email"}
                 onChangeText={this.setEmail}
                 onBlur={this.validateEmail}
                 value={this.state.email}
@@ -129,9 +129,9 @@ class RegisterEmailComponent extends Component {
                  <View style={{borderBottomWidth:1,borderBottomColor:'#56565A'}} />  
     </View> */}
             
+            <GFooterSettingsComponent />
             
-            
-            <View style={styles.newVictorySection}>
+           {/*  <View style={styles.newVictorySection}>
                 <Text style={styles.termsofuseText1}>
                     {"Investments for USAA Members"}
                 </Text>
@@ -154,7 +154,7 @@ class RegisterEmailComponent extends Component {
                 <Text style={styles.copyRightText}>
                     {"Copyright Victory Capital Management Inc. ©2020"}
                 </Text>
-            </View>
+</View> */}
 
             </ScrollView>
             </View>

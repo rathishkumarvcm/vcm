@@ -35,7 +35,7 @@ class RetrieveOnlineIdComponent extends Component {
         });
     }
 
-    navigatePassword = ()=>this.props.navigation.navigate('login');
+    navigatePassword = ()=>this.props.navigation.navigate('onlineIDVerification');
     
  
     render(){
@@ -60,6 +60,12 @@ class RetrieveOnlineIdComponent extends Component {
                     {"Retrieve your Online ID"}
                 </Text>
             </View>
+
+            <View style={styles.retrieveSection}>
+                <Text style={styles.retrieveText}>
+                    {"Enter your registered Email ID to continue"}
+                </Text>
+            </View>
              
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
@@ -68,7 +74,7 @@ class RetrieveOnlineIdComponent extends Component {
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox}
-                placeholder={"Email"}
+                //placeholder={"Email"}
                 onChangeText={this.setEmail}
                 onBlur={this.validateEmail}
                 value={this.state.email}
@@ -87,7 +93,7 @@ class RetrieveOnlineIdComponent extends Component {
 
             <GButtonComponent 
                     buttonStyle={styles.signInButton}
-                    buttonText="Continue"
+                    buttonText="Next"
                     textStyle={styles.signInButtonText}
                     onPress={this.navigatePassword}
                     disabled={this.state.email === '' || !this.state.validationEmail}

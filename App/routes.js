@@ -47,6 +47,7 @@ import OtpSeurity from './Screens/OtpSeucrityQuestions/OtpSeucrityQuestionsCompo
 import OtpSecurityConfirm from './Screens/OtpSeucrityConfirm';
 import EmailVerify from './Screens/EmailVerification/EmailVerificationComponent';
 import RetrieveOnlineId from './Screens/RetrieveOnlineId/RetrieveOnlineIdComponent';
+import OnlineIDVerification from './Screens/OnlineIDVerification/OnlineIDVerificationComponent';
 
 // Acc Management
 import Dashboard from './Screens/Dashboard/DashboardComponent';
@@ -792,6 +793,12 @@ const AppNavigator = createStackNavigator({
         },
         QuickSigninComponent:{
             screen:QuickSigninComponent,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        onlineIDVerification:{
+            screen:OnlineIDVerification,
             navigationOptions:{
                 header:null,
             }

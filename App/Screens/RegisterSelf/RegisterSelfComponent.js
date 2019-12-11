@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text,View,ScrollView,TouchableOpacity } from 'react-native';
 import {styles} from './styles';
-import {GButtonComponent,GInputComponent,GIcon,GHeaderComponent} from '../../CommonComponents';
+import {GButtonComponent,GInputComponent,GIcon,GHeaderComponent,GFooterSettingsComponent} from '../../CommonComponents';
 import PropTypes from 'prop-types';
 
 class RegisterSelfComponent extends Component {
@@ -140,19 +140,19 @@ class RegisterSelfComponent extends Component {
              />
             <ScrollView style={{flex:0.85}}>
 
-            {/*<View style={styles.stepsOuter}>
+            <View style={styles.stepsOuter}>
                 <View style={styles.stepsInner} />
-        </View>*/}
+        </View>
 
             <View style={styles.signInView}>
                 <Text style={styles.signIntext}>
-                    {"Enter Your Personal Details."}
+                    {"Enter your Personal details."}
                 </Text>
             </View>
 
             <View style={styles.newVictorySection1}>
                 <Text style={styles.openInvestment}>
-                        {"For USAA Members USAA Investments has been backed by the investment expertise of Victory Capital Management since July 2019."}
+                        {"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type."}
                 </Text>  
             </View>
 
@@ -164,7 +164,7 @@ class RegisterSelfComponent extends Component {
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                placeholder={"First name"}
+                //placeholder={"First name"}
                 onChangeText={this.setFirstName}
                 onBlur={this.checkFirstName}
                 value={this.state.firstName}
@@ -179,7 +179,7 @@ class RegisterSelfComponent extends Component {
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                placeholder={"Middle Name"}
+                //placeholder={"Middle Name"}
                 onChangeText={this.setMiddleName}
                 value={this.state.middleName}
                 onBlur={this.checkMiddleName}
@@ -194,30 +194,12 @@ class RegisterSelfComponent extends Component {
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                placeholder={"Last name"}
+                //placeholder={"Last name"}
                 onChangeText={this.setLastName}
                 value={this.state.lastName}
                 onBlur={this.checkLastName}
                 errorFlag={this.state.lastNameFlag}
                 errorText={"Enter a Valid Last Name"}
-            />
-
-
-            <View style={styles.signInView}>
-                <Text style={styles.userIDText}>
-                    {"Phone"}       
-                </Text>
-            </View>
-            <GInputComponent 
-                propInputStyle={styles.userIDTextBox} 
-                placeholder={"Phone"}
-                onChangeText={this.setPhone}
-                value={this.state.phone}
-                onBlur={this.checkPhone}
-                errorFlag={this.state.phoneFlag}
-                errorText={"Enter a Valid Phone Number"}
-                keyboardType="number-pad"
-                maxLength={13}
             />
 
 
@@ -269,7 +251,24 @@ class RegisterSelfComponent extends Component {
                 </View>
             </View>
 
-            <View style={{flexDirection:'row',marginLeft:'4%',marginRight:'4%',alignItems:'center',justifyContent:'center'}}>
+            <View style={styles.signInView}>
+                <Text style={styles.userIDText}>
+                    {"Mobile Number (Optional)"}       
+                </Text>
+            </View>
+            <GInputComponent 
+                propInputStyle={styles.userIDTextBox} 
+                //placeholder={"Phone"}
+                onChangeText={this.setPhone}
+                value={this.state.phone}
+                onBlur={this.checkPhone}
+                errorFlag={this.state.phoneFlag}
+                errorText={"Enter a Valid Phone Number"}
+                keyboardType="number-pad"
+                maxLength={13}
+            />
+
+           {/* <View style={{flexDirection:'row',marginLeft:'4%',marginRight:'4%',alignItems:'center',justifyContent:'center'}}>
                     <GIcon 
                         name="ios-checkbox-outline"
                         type="ionicon"
@@ -279,7 +278,7 @@ class RegisterSelfComponent extends Component {
                 <Text style={styles.militaryTextColor}>
                     {"I serve or have served in U.S. Military Service."}
                 </Text>
-            </View>
+    </View> */}
            
 
             
@@ -293,17 +292,24 @@ class RegisterSelfComponent extends Component {
            </Picker>*/}
 
 
-
+            <GButtonComponent 
+                    buttonStyle={styles.cancelButton}
+                    buttonText="Cancel"
+                    textStyle={styles.cancelButtonText}
+                    onPress={this.goBack}
+                    
+            />
 
             <GButtonComponent 
                     buttonStyle={styles.signInButton}
-                    buttonText="Continue"
+                    buttonText="Next"
                     textStyle={styles.signInButtonText}
                     onPress={this.navigateAddress}
-                    disabled={!this.state.phoneFlag || !this.state.firstNameFlag || !this.state.middleNameFlag || !this.state.lastNameFlag}
+                    //disabled={!this.state.phoneFlag || !this.state.firstNameFlag || !this.state.middleNameFlag || !this.state.lastNameFlag}
             />
             
-            <TouchableOpacity onPress={this.goBack} style={styles.goBack}>
+            
+           {/* <TouchableOpacity onPress={this.goBack} style={styles.goBack}>
             <GIcon 
                         name="left"
                         type="antdesign"
@@ -327,10 +333,12 @@ class RegisterSelfComponent extends Component {
 
             <View style={{paddingLeft:'4%',paddingRight:'4%',marginTop:20}}>
                  <View style={{borderBottomWidth:1,borderBottomColor:'#56565A'}} />  
-            </View>
+        </View> */}
+
+        <GFooterSettingsComponent />
             
 
-            <View style={styles.newVictorySection}>
+            {/*<View style={styles.newVictorySection}>
                 <Text style={styles.termsofuseText}>
                     {"Investments for USAA Members"}
                 </Text>
@@ -353,7 +361,7 @@ class RegisterSelfComponent extends Component {
                 <Text style={styles.copyRightText}>
                     {"Copyright Victory Capital Management Inc. ©2020"}
                 </Text>
-            </View>
+    </View> */}
 
             </ScrollView>
             </View>

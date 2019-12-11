@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
         color:'#56565A'
     },
     signInView:{
-        marginTop:scaledHeight(18),
+        marginTop:scaledHeight(12),
         paddingLeft:'4%',
         paddingRight:'4%',
     },
@@ -53,8 +53,8 @@ export const styles = StyleSheet.create({
         paddingRight:'4%'
     },
     signIntext:{
-        color:'#486D89',
-        fontSize:scaledHeight(24)
+        color:'#56565A',
+        fontSize:scaledHeight(28)
     },
     userIDText:{
         color:'#000000',
@@ -103,9 +103,9 @@ export const styles = StyleSheet.create({
     signInButton:{
         borderColor:'#56565A',
         borderWidth:1,
-        width:'84%',
-        marginLeft:'8%',
-        marginRight:'8%',
+        width:'72%',
+        marginLeft:'14%',
+        marginRight:'14%',
         marginTop:scaledHeight(12),
         //borderRadius:scaledHeight(25),
         height:scaledHeight(50),
@@ -119,11 +119,11 @@ export const styles = StyleSheet.create({
         fontWeight:'bold'
     },
     cancelButton:{
-        borderColor:'#56565A',
+        borderColor:'#61285F45',
         borderWidth:1,
-        width:'84%',
-        marginLeft:'8%',
-        marginRight:'8%',
+        width:'72%',
+        marginLeft:'14%',
+        marginRight:'14%',
         marginTop:scaledHeight(12),
         //borderRadius:scaledHeight(25),
         height:scaledHeight(50),

@@ -43,6 +43,19 @@ export const styles = StyleSheet.create({
         fontSize:scaledHeight(10),
         color:'#56565A'
     },
+    onlineIDSuccess:
+    {
+        marginTop:scaledHeight(10),
+        height:scaledHeight(50),
+        borderRadius:5,
+        alignItems:'center',
+        justifyContent:'center',
+        marginLeft:'4%',
+        marginRight:'4%',
+        backgroundColor:'#F2F2F2',
+        borderWidth:1,
+        borderColor:'#E0E1E2'
+    },
     signInView:{
         marginTop:scaledHeight(18),
         paddingLeft:'4%',
@@ -60,12 +73,13 @@ export const styles = StyleSheet.create({
     },
     signIntext:{
         color:'#56565A',
-        fontSize:scaledHeight(30)
+        fontSize:scaledHeight(30),
+        fontWeight : '300'
     },
     userIDText:{
         color:'#333333DE',
-        fontSize:scaledHeight(20),
-        fontWeight:'bold',
+        fontSize:scaledHeight(18),
+        fontWeight : '500',
         marginBottom:scaledHeight(8)
     },
     userIDTextBox:{
@@ -105,9 +119,9 @@ export const styles = StyleSheet.create({
     signInButton:{
         borderColor:'#56565A',
         borderWidth:1,
-        width:'84%',
-        marginLeft:'8%',
-        marginRight:'8%',
+        width:'72%',
+        marginLeft:'14%',
+        marginRight:'14%',
         marginTop:scaledHeight(42),
        // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
@@ -142,7 +156,7 @@ export const styles = StyleSheet.create({
         marginRight:'4%',
         padding:scaledHeight(15),
         width:'92%',
-        height:scaledHeight(450),
+        height:scaledHeight(220),
         backgroundColor:'#FFFFFF',
         marginTop:scaledHeight(29)
     },

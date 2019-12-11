@@ -56,6 +56,16 @@ export const styles = StyleSheet.create({
         color:'#56565A',
         fontSize:scaledHeight(32)
     },
+    retrieveSection: {
+        marginLeft:'4%',
+        marginRight:'4%',
+        marginTop:scaledHeight(10)
+    },
+    retrieveText:{
+        color:'#A7A7A7',
+        fontSize:scaledHeight(16)
+
+    },
     userIDText:{
         color:'#000000',
         fontSize:scaledHeight(16),
@@ -103,9 +113,9 @@ export const styles = StyleSheet.create({
     signInButton:{
         borderColor:'#56565A',
         borderWidth:1,
-        width:'84%',
-        marginLeft:'8%',
-        marginRight:'8%',
+        width:'72%',
+        marginLeft:'14%',
+        marginRight:'14%',
         marginTop:scaledHeight(12),
         //borderRadius:scaledHeight(25),
         height:scaledHeight(50),
@@ -122,9 +132,9 @@ export const styles = StyleSheet.create({
     cancelButton:{
         borderColor:'#61285F45',
         borderWidth:1,
-        width:'84%',
-        marginLeft:'8%',
-        marginRight:'8%',
+        width:'72%',
+        marginLeft:'14%',
+        marginRight:'14%',
         marginTop:scaledHeight(12),
         //borderRadius:scaledHeight(25),
         height:scaledHeight(50),

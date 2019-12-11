@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text,View,ScrollView,TouchableOpacity} from 'react-native';
 import {styles} from './styles';
-import {GButtonComponent,GInputComponent,GIcon,GHeaderComponent} from '../../CommonComponents';
+import {GButtonComponent,GInputComponent,GFooterSettingsComponent,GHeaderComponent} from '../../CommonComponents';
 import { scaledHeight} from '../../Utils/Resolution';
 import PropTypes from 'prop-types';
 import { Auth } from "aws-amplify";
@@ -120,19 +120,20 @@ class RegisterPasswordComponent extends Component {
 
             <ScrollView style={{flex:0.85}}>
 
-           {/* <View style={styles.stepsOuter}>
+            <View style={styles.stepsOuter}>
                 <View style={styles.stepsInner} />
-        </View>*/}
+                <View style={styles.stepsInner} />
+        </View>
 
             <View style={styles.signInView}>
                 <Text style={styles.signIntext}>
-                    {"Now,let's choose a password."}
+                    {"Create your Online Id and Password"}
                 </Text>
             </View>
 
             <View style={styles.newVictorySection1}>
                 <Text style={styles.openInvestment}>
-                        {"For USAA Members USAA Investments has been backed by the investment expertise of Victory Capital Management since July 2019."}
+                        {"Choose your Online ID and Password"}
                 </Text> 
             </View>
 
@@ -143,7 +144,7 @@ class RegisterPasswordComponent extends Component {
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                placeholder={"Online ID"}
+                //placeholder={"Online ID"}
                 value={registerSelfData.emailID}
                 onChangeText={this.setPassword}
                 onBlur={this.validatePassword}
@@ -159,7 +160,7 @@ class RegisterPasswordComponent extends Component {
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                placeholder={"Password"}
+                //placeholder={"Password"}
                 onChangeText={this.setPassword}
                 secureTextEntry
                 onBlur={this.validatePassword}
@@ -185,7 +186,7 @@ class RegisterPasswordComponent extends Component {
     </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                placeholder={"Confirm Password"}
+                //placeholder={"Confirm Password"}
                 onChangeText={this.setConfirmPassword}
                 secureTextEntry
                 onBlur={this.validateConfirmPassword}
@@ -193,16 +194,32 @@ class RegisterPasswordComponent extends Component {
                 errorText={"Entered password doesnt match."}
             />
 
+<GButtonComponent 
+                    buttonStyle={styles.cancelButton}
+                    buttonText="Back"
+                    textStyle={styles.cancelButtonText}
+                    onPress={this.goBack}
+                    
+            />
+
+<GButtonComponent 
+                    buttonStyle={styles.cancelButton}
+                    buttonText="Cancel"
+                    textStyle={styles.cancelButtonText}
+                    onPress={this.goBack}
+                    
+            />
+
 
             <GButtonComponent 
                     buttonStyle={styles.signInButton}
-                    buttonText="Continue"
+                    buttonText="Submit"
                     textStyle={styles.signInButtonText}
                     onPress={this.navigateSelf}
                     disabled={this.state.password === '' || !this.state.validationPassword || !this.state.validationConfirmPassword}
             />
             
-            <TouchableOpacity onPress={this.goBack} style={styles.goBack}>
+           {/* <TouchableOpacity onPress={this.goBack} style={styles.goBack}>
             <GIcon 
                         name="left"
                         type="antdesign" 
@@ -222,7 +239,7 @@ class RegisterPasswordComponent extends Component {
                 {"Get Help"}
                 </Text>
                 </Text>
-            </View>
+            </View> 
 
             <View style={{paddingLeft:'4%',paddingRight:'4%',marginTop:20}}>
                  <View style={{borderBottomWidth:1,borderBottomColor:'#56565A'}} />  
@@ -252,7 +269,9 @@ class RegisterPasswordComponent extends Component {
                 <Text style={styles.copyRightText}>
                     {"Copyright Victory Capital Management Inc. ©2020"}
                 </Text>
-            </View>
+</View> */}
+
+<GFooterSettingsComponent />
 
             </ScrollView>
             </View>

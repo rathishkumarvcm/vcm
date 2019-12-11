@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Text,View,Image,ScrollView,Linking,TouchableOpacity } from 'react-native';
 import {styles} from './styles';
-import {GButtonComponent,GInputComponent,GBiometricAuthentication,GHeaderComponent,GFooterComponent, GLoadingSpinner} from '../../CommonComponents';
+import {GButtonComponent,GInputComponent,GBiometricAuthentication,GHeaderComponent,GFooterSettingsComponent, GLoadingSpinner} from '../../CommonComponents';
 import TouchID from 'react-native-touch-id';
 import PropTypes from 'prop-types';
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
@@ -274,8 +274,8 @@ class LoginComponent extends Component {
             
         <ScrollView style={{flex:0.85}}>
             {this.state.registeredSuccess ? 
-            <View style={{marginLeft:'4%',marginRight:'4%'}}>
-            <Text> {"Your Online ID successfully created"}</Text>
+            <View style={styles.onlineIDSuccess}>
+            <Text> {"Your Online ID successfully created."}</Text>
             </View>
             :
             null
@@ -292,7 +292,7 @@ class LoginComponent extends Component {
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                placeholder={"E-mail"}
+                //placeholder={"E-mail"}
                 onChangeText={this.setEmail}
                 //onBlur={this.validateEmail}
                 value={this.state.email}
@@ -309,7 +309,7 @@ class LoginComponent extends Component {
         
             <GInputComponent 
                 propInputStyle={!this.state.validationPassword ? styles.userIDTextBoxError : styles.userIDTextBox} 
-                placeholder={"Password"}
+                //placeholder={"Password"}
                 onChangeText={this.setPassword}
                 //onBlur={this.validatePassword}
                 validateError={this.state.validatePassword}
@@ -330,7 +330,7 @@ class LoginComponent extends Component {
                     {" or "}
                 </Text>
                 <Text style={styles.forgotLineTextColor} onPress={this.navigationResetPassword}>
-                    {"Password"}
+                    {"Password."}
                 </Text>
             </View>
 
@@ -420,7 +420,7 @@ class LoginComponent extends Component {
                 onPress={this.navigateEmail}
                 />
 
-                <View style={styles.lineBorder} />
+              {/*}  <View style={styles.lineBorder} />
 
                 <View style={styles.usaaMemberSection}>
                     <Text style={styles.newVictory}>
@@ -431,9 +431,9 @@ class LoginComponent extends Component {
 
                 <Text style={styles.openInvestment}>
                     {"USAA Members has been backed by the investment expertise of Victory Capital Management since July 2019. Your USAA online login credentials have not changed. They are the same details you used to you create your USAA online account."}
-                </Text>
+        </Text>*/}
                     
-            </View>
+        </View> 
 
             <View style={{marginLeft:'4%',marginRight:'4%',width:'92%'}}>
                     <GButtonComponent 
@@ -444,7 +444,7 @@ class LoginComponent extends Component {
                     />                   
             </View>
 
-           <GFooterComponent />
+           <GFooterSettingsComponent />
 
         </ScrollView>
             </View>
