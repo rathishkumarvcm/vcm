@@ -293,12 +293,11 @@ export const styles = StyleSheet.create({
         opacity: .75
     },
     filterFundsBtn: {
-        width: scaledWidth(180),
+        width: '50%',
         borderWidth: 1,
-        borderColor: "#61285F45",
-        height: scaledHeight(50),
-        backgroundColor: '#FFFFFF',
-        alignItems: 'flex-start',
+        borderColor: "#61285F45",        
+        height: scaledHeight(60),
+        backgroundColor: '#FFFFFF',      
         alignContent: 'center',
         justifyContent: 'center',
         marginTop: scaledHeight(25),
@@ -309,20 +308,19 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
-        width: '80%',
-        textAlign: 'left'
+        //width: '80%',
+        textAlign: 'center'
     },
     compareFundsBtn: {
-        width: scaledWidth(280),
+        width: '72%',
         borderWidth: 1,
-        borderColor: "#61285F45",
-        height: scaledHeight(50),
-        backgroundColor: '#FFFFFF',
-        alignItems: 'flex-start',
+        borderColor: "#61285F45",       
+        height: scaledHeight(60),
+        backgroundColor: '#FFFFFF',      
         alignContent: 'center',
         justifyContent: 'center',
         marginTop: scaledHeight(15),
-        marginBottom: scaledHeight(5),
+        marginBottom:scaledHeight(5),
         paddingHorizontal: scaledHeight(25)
 
     },
@@ -330,9 +328,10 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
-        // width: '80%',
-        textAlign: 'left'
+       // width: '80%',
+       textAlign: 'center'
     },
+
     touchItem: {
         // width:scaledHeight(250),
         //  height:scaledHeight(250),

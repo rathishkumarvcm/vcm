@@ -611,12 +611,12 @@ export default {
         confirmPEmail: "Confirm Primary Email",
         documentDeliveryPreference: "Update Document Delivery Preference",
         addAdditionalEmail: "Add Additional Email",
-        profilePreferences: "Profiles & Preferences",
-        profile: "PROFILE",
-        deliverySettings: "DELIVERY SETTINGS",
-        accouintMessaging: "ACCOUNT MESSAGING",
-        securityPreferences: "SECURITY PREFERENCES",
-        marketingPrivacy: "MARKETING & PRIVACY",
+        profilePreferences: "Profile",
+        profile: "Basic Information",
+        deliverySettings: "Delivery Setting",
+        accouintMessaging: "Account Messaging",
+        securityPreferences: "Security",
+        marketingPrivacy: "Marketing & Privacy",
         securityPref: "Security Preferences",
         changeSigninCredentials: "CHANGE SIGN IN CREDENTIALS",
         setAccountRecoveryPreferences: "SET ACCOUNT RECOVERY PREFERENCES",
@@ -628,7 +628,8 @@ export default {
         dropDownError: "Questions Are Same Please Select Different Question",
         inputError: "Please Enter your Answer",
         emailError: "Please Enter Valid Email",
-        loremSecurityPref: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s"
+        loremSecurityPref: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
+        securityText:"For security reasons, not all information can be updated online. Please call us if you need assistance with link to VCM support number <Phone Number>"
     },
 
     settingAccountMessaging: {

@@ -53,11 +53,11 @@ class ProfilesAndPreferences extends Component {
 
                 <ScrollView style={styles.scrollviewStyle} contentContainerStyle={{ justifyContent: 'center' }}>
 
-                    <View style={styles.welcomeView}>
+                    {/* <View style={styles.welcomeView}>
                         <Text style={styles.welcomeText}>
                             {`Welcome ${this.state.firstName + " " + this.state.lastName} to Victory Capital. You have successfully logged as ${this.state.onlineId}. Set up your Security Preferences Now`}
                         </Text>
-                    </View>
+                    </View> */}
 
                     <View style={styles.profileHeader}>
                         <Text style={styles.profileHeadline}>
@@ -65,26 +65,27 @@ class ProfilesAndPreferences extends Component {
                         </Text>
                     </View>
 
-                    <View style={styles.linkBreak1} />
+                    {/* <View style={styles.linkBreak1} /> */}
 
                     <TouchableOpacity onPress={this.navigateProfile}>
+
                         <View style={styles.optionContainer}>
-                            <GIcon
-                                name="view-grid"
-                                type="material-community"
-                                size={26}
-                                color="black"
-                            />
-
-                            <View style={styles.optionHeaderView}>
-                                <Text style={styles.optionHeaderText}>
-                                    {gblStrings.userManagement.profile}
-                                </Text>
+                            <View style={styles.optionRowContainer}>
+                                <GIcon
+                                    name="view-grid"
+                                    type="material-community"
+                                    size={26}
+                                    color="black"
+                                />
+                                <View style={styles.optionHeaderView}>
+                                    <Text style={styles.optionHeaderText}>
+                                        {gblStrings.userManagement.profile}
+                                    </Text>
+                                </View>
                             </View>
-
                             <View style={styles.optionSubHeaderView}>
                                 <Text style={styles.optionSubHeaderText}>
-                                    {gblStrings.userManagement.managePersonalDetails}
+                                    {gblStrings.userManagement.loremSecurityPref}
                                 </Text>
                             </View>
                         </View>
@@ -92,21 +93,23 @@ class ProfilesAndPreferences extends Component {
 
                     <TouchableOpacity onPress={this.navigateDeliverySettings}>
                         <View style={styles.optionContainer}>
-                            <GIcon
-                                name="view-grid"
-                                type="material-community"
-                                size={26}
-                                color="black"
-                            />
-                            <View style={styles.optionHeaderView}>
-                                <Text style={styles.optionHeaderText}>
-                                    {gblStrings.userManagement.deliverySettings}
-                                </Text>
+                            <View style={styles.optionRowContainer}>
+                                <GIcon
+                                    name="view-grid"
+                                    type="material-community"
+                                    size={26}
+                                    color="black"
+                                />
+                                <View style={styles.optionHeaderView}>
+                                    <Text style={styles.optionHeaderText}>
+                                        {gblStrings.userManagement.deliverySettings}
+                                    </Text>
+                                </View>
                             </View>
 
                             <View style={styles.optionSubHeaderView}>
                                 <Text style={styles.optionSubHeaderText}>
-                                    {gblStrings.userManagement.managePersonalDetails}
+                                    {gblStrings.userManagement.loremSecurityPref}
                                 </Text>
                             </View>
 
@@ -115,21 +118,23 @@ class ProfilesAndPreferences extends Component {
 
                     <TouchableOpacity onPress={this.navigateAccountMessaging}>
                         <View style={styles.optionContainer}>
-                            <GIcon
-                                name="view-grid"
-                                type="material-community"
-                                size={26}
-                                color="black"
-                            />
-                            <View style={styles.optionHeaderView}>
-                                <Text style={styles.optionHeaderText}>
-                                    {gblStrings.userManagement.accouintMessaging}
-                                </Text>
+                            <View style={styles.optionRowContainer}>
+                                <GIcon
+                                    name="view-grid"
+                                    type="material-community"
+                                    size={26}
+                                    color="black"
+                                />
+                                <View style={styles.optionHeaderView}>
+                                    <Text style={styles.optionHeaderText}>
+                                        {gblStrings.userManagement.accouintMessaging}
+                                    </Text>
+                                </View>
                             </View>
 
                             <View style={styles.optionSubHeaderView}>
                                 <Text style={styles.optionSubHeaderText}>
-                                    {gblStrings.userManagement.managePersonalDetails}
+                                    {gblStrings.userManagement.loremSecurityPref}
                                 </Text>
                             </View>
 
@@ -139,6 +144,29 @@ class ProfilesAndPreferences extends Component {
 
                     <TouchableOpacity onPress={this.navigateSecurityPreference}>
                         <View style={styles.optionContainer}>
+                            <View style={styles.optionRowContainer}>
+                                <GIcon
+                                    name="view-grid"
+                                    type="material-community"
+                                    size={26}
+                                    color="black"
+                                />
+                                <View style={styles.optionHeaderView}>
+                                    <Text style={styles.optionHeaderText}>
+                                        {gblStrings.userManagement.securityPreferences}
+                                    </Text>
+                                </View>
+                            </View>
+                            <View style={styles.optionSubHeaderView}>
+                                <Text style={styles.optionSubHeaderText}>
+                                    {gblStrings.userManagement.loremSecurityPref}
+                                </Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+
+                    <View style={styles.optionContainer}>
+                        <View style={styles.optionRowContainer}>
                             <GIcon
                                 name="view-grid"
                                 type="material-community"
@@ -147,37 +175,24 @@ class ProfilesAndPreferences extends Component {
                             />
                             <View style={styles.optionHeaderView}>
                                 <Text style={styles.optionHeaderText}>
-                                    {gblStrings.userManagement.securityPreferences}
+                                    {gblStrings.userManagement.marketingPrivacy}
                                 </Text>
                             </View>
-                            <View style={styles.optionSubHeaderView}>
-                                <Text style={styles.optionSubHeaderText}>
-                                    {gblStrings.userManagement.managePersonalDetails}
-                                </Text>
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-
-                    <View style={styles.optionContainer}>
-                        <GIcon
-                            name="view-grid"
-                            type="material-community"
-                            size={26}
-                            color="black"
-                        />
-                        <View style={styles.optionHeaderView}>
-                            <Text style={styles.optionHeaderText}>
-                                {gblStrings.userManagement.marketingPrivacy}
-                            </Text>
                         </View>
 
                         <View style={styles.optionSubHeaderView}>
                             <Text style={styles.optionSubHeaderText}>
-                                {gblStrings.userManagement.managePersonalDetails}
+                                {gblStrings.userManagement.loremSecurityPref}
                             </Text>
-                        </View>
-
+                        </View>                        
                     </View>
+
+                    <View style={styles.securityContainer}>
+                        <Text style={styles.securityContainerText}>
+                            {gblStrings.userManagement.securityText}                           
+                        </Text>
+                    </View>
+                   
 
                     <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateBack}>
                         <Text style={styles.backButtonText}>{gblStrings.userManagement.back}</Text>

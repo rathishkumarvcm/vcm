@@ -23,27 +23,33 @@ export const styles = StyleSheet.create({
         marginHorizontal: '4%'
     },
     optionHeaderView: {
-        marginTop: scaledHeight(33)
+        marginTop: scaledHeight(3),
+        marginLeft:'2%'
     },
     optionSubHeaderView: {
-        marginTop: scaledHeight(2),
+        marginTop: scaledHeight(25),
+        marginHorizontal: '2%',
     },
     optionContainer: {
         borderWidth: 1,
         borderColor: '#B5B5B5',
         backgroundColor: '#FFFFFF',
-        height: scaledHeight(160),
-        borderRadius: scaledHeight(10),
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: scaledHeight(20),
-        marginHorizontal: '4%'
+        height: scaledHeight(150),
+        borderRadius: scaledHeight(5),      
+        marginTop: scaledHeight(30),
+        paddingTop:scaledHeight(15),    
+        paddingBottom:scaledHeight(15),  
+        marginHorizontal: '6%',
+        paddingLeft:'2%'
+    },
+    optionRowContainer: {
+       flexDirection:'row'
     },
     backButtonFlex: {
         marginLeft: "10%",
         marginRight: "10%",
         width: "80%",
-        height: scaledHeight(50),
+        height: scaledHeight(60),
         borderColor: '#61285F45',
         borderWidth: scaledHeight(1),
         marginTop: scaledHeight(36),
@@ -64,10 +70,13 @@ export const styles = StyleSheet.create({
     optionSubHeaderText: {
         fontSize: scaledHeight(16),
         color: '#B5B5B5',
+        lineHeight:scaledHeight(22),       
     },
     profileHeadline: {
         color: '#56565A',
-        fontSize: scaledHeight(24)
+        fontSize: scaledHeight(24),
+        fontWeight:'bold'
+
     },
     fullLine: {
         backgroundColor: '#7B8288',
@@ -95,5 +104,17 @@ export const styles = StyleSheet.create({
         height: scaledHeight(1),
         marginTop: scaledHeight(10),
         marginHorizontal: '4%'
-    }
+    },
+    securityContainer: {      
+        backgroundColor: '#FFFFFF',            
+        marginTop: scaledHeight(30),
+        paddingTop:scaledHeight(15),    
+        paddingBottom:scaledHeight(15),  
+        marginHorizontal: '6%',
+        paddingLeft:'2%'
+    },
+    securityContainerText: {      
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+    },
 });
