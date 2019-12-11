@@ -37,6 +37,9 @@ class editMilitaryInfoComponent extends Component {
             radioButton: false,
             radioButtonIndex: 1,
             isMilitaryService: false,
+            
+            dateFromValue: '',
+            dateToValue: '',
 
             militaryFromDate: '',
             militaryToDate: '',
@@ -125,6 +128,18 @@ class editMilitaryInfoComponent extends Component {
             dropDownMarineValue: valueMarine.value,
             dropDownMarineFlag: false,
             dropDownMarineMsg: ''
+        });
+    }
+
+    onChangeFromDateValue = (date) => {
+        this.setState({
+            dateFromValue: date
+        });
+    }
+
+    onChangeToDateValue = (date) => {
+        this.setState({
+            dateToValue: date
         });
     }
 
@@ -246,7 +261,9 @@ class editMilitaryInfoComponent extends Component {
 
                                 <GDateComponent
                                     minDate={currentdate}
-                                    placeholder="MM/DD/YYYY" />
+                                    placeholder="MM/DD/YYYY"
+                                    date={this.state.dateFromValue}
+                                    onDateChange={this.onChangeFromDateValue} />
                             </View>
 
                             <View style={styles.editFlexDirectionColumn}>
@@ -256,7 +273,9 @@ class editMilitaryInfoComponent extends Component {
 
                                 <GDateComponent
                                     minDate={currentdate}
-                                    placeholder="MM/DD/YYYY" />
+                                    placeholder="MM/DD/YYYY"
+                                    date={this.state.dateToValue}
+                                    onDateChange={this.onChangeToDateValue} />
                             </View>
 
                             <View style={styles.editFlexDirectionColumn}>
@@ -284,12 +303,6 @@ class editMilitaryInfoComponent extends Component {
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
                             textStyle={styles.saveButtonText} />
-                    </View>
-
-                    <View style={styles.editFlexDirectionColumn}>
-                        <Text style={styles.editMilitarySecurity}>
-                            {globalString.editEmailInformations.editEmailSecurity}
-                        </Text>
                     </View>
 
                     <View style={styles.newVictorySection}>
