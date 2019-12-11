@@ -18,7 +18,7 @@ import PdfLinking from './Screens/PdfLinking';
 import PdfRNFetchblobDownload from './Screens/PdfRNFetchblobDownload';
 import NativePdf from './Screens/NativePDF';
 import AccountInquiry from './Screens/AccountInquiry/AccountInquiryComponent';
-import GeneralSettings from './Screens/GeneralSettings/GeneralSettingsComponent';
+import GeneralSettings from './Screens/GeneralSettings';
 import ProfileSettings from './Screens/ProfileSettings/';
 import DeliverySettings from './Screens/DeliverySettings';
 import MarketingandPrivacySettings from './Screens/MarketingandPrivacy/MarketingandPrivacyComponent';

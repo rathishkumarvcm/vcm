@@ -49,15 +49,14 @@ export const styles = StyleSheet.create({
         paddingRight:'4%',
     },
 
-    settingsView1:{
-        marginTop:scaledHeight(33),
+    settingsView1:{       
         paddingLeft:'4%',
         paddingRight:'4%',
     },
     signInView:{
         marginTop:scaledHeight(2),
         paddingLeft:'4%',
-        paddingRight:'4%',
+        paddingRight:'4%',        
     },
     passwordView:{
         paddingLeft:'4%',
@@ -71,16 +70,24 @@ export const styles = StyleSheet.create({
         borderWidth :1,
         borderColor:'#D4D4D4',
         backgroundColor:'#FFFFFF',
-        marginTop:scaledHeight(20),       
-        height:scaledHeight(160),
-        borderRadius:scaledHeight(16),
-        marginHorizontal: '4%',
-        alignItems:'center',
-        justifyContent:'center',               
+        marginTop:scaledHeight(30),       
+        height:scaledHeight(110),
+        borderRadius:scaledHeight(12),
+        marginHorizontal: '4%',       
+        flexDirection:'row', 
+        paddingVertical: scaledHeight(20),  
+        paddingHorizontal:'2%', 
+        alignItems:'center',        
     },
-    signIntext:{
-        color:'#486D89',
-        fontSize:scaledHeight(14)
+    signInUserEmailtext:{
+        color:'#B2B2B2',
+        fontSize:scaledHeight(14),
+        fontWeight:'normal'
+    },
+    signInUserNametext:{
+        color:'#B2B2B2',
+        fontSize:scaledHeight(14),
+        fontWeight:'bold'
     },
     userIDText:{
         color:'#000000',
@@ -243,4 +250,16 @@ export const styles = StyleSheet.create({
         height:scaledHeight(70),
         marginTop:scaledHeight(20)
     },
+    settingsTitleText:{
+         color:'#56565A',
+         fontSize:scaledHeight(18),        
+    },
+    settingsTitleDescText:{
+        color:'#B2B2B2',
+        fontSize:scaledHeight(16)
+    },
+    listTitleContainer:
+    {
+        flexDirection: 'column'
+     }    
 });

@@ -63,7 +63,7 @@ export const styles = StyleSheet.create({
         textAlign: 'left'
     },
     optionHeaderText: {
-        fontSize: scaledHeight(16),
+        fontSize: scaledHeight(18),
         color: '#56565A',
         fontWeight: 'bold',
     },

@@ -4,7 +4,6 @@ import {View, ScrollView, Text, TouchableOpacity} from 'react-native';
 import { GHeaderComponent, GIcon, GFooterComponent } from '../../CommonComponents';
 import PropTypes from "prop-types";
 import gblStrings from '../../Constants/GlobalStrings';
-import { scaledHeight } from '../../Utils/Resolution';
 
 class ProfilesAndPreferences extends Component {
     constructor(props){
@@ -32,15 +31,12 @@ class ProfilesAndPreferences extends Component {
         }
     }
 
-    navigateSecurityPreference = () => this.props.navigation.navigate('securityPreference');
-
-    navigateBack = () => this.props.navigation.goBack();
-
+    navigateBack = () => this.props.navigation.goBack();   
     navigateProfile = () => this.props.navigation.navigate('profileSettings');
-
     navigateDeliverySettings = () => this.props.navigation.navigate('deliverySettings');
-
     navigateAccountMessaging = () => this.props.navigation.navigate('accountMessagingSettings');
+    navigateSecurityPreference = () => this.props.navigation.navigate('securityPreference');    
+    navigateMarketingPrivacySettings = () => this.props.navigation.navigate('marketingandPrivacySettings');
     
     removeWelcomeText = () => {
         this.setState({showWelcomeText:false});
@@ -165,27 +161,29 @@ class ProfilesAndPreferences extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <View style={styles.optionContainer}>
-                        <View style={styles.optionRowContainer}>
-                            <GIcon
-                                name="view-grid"
-                                type="material-community"
-                                size={26}
-                                color="black"
-                            />
-                            <View style={styles.optionHeaderView}>
-                                <Text style={styles.optionHeaderText}>
-                                    {gblStrings.userManagement.marketingPrivacy}
-                                </Text>
+                    <TouchableOpacity onPress={this.navigateMarketingPrivacySettings}>
+                        <View style={styles.optionContainer}>
+                            <View style={styles.optionRowContainer}>
+                                <GIcon
+                                    name="view-grid"
+                                    type="material-community"
+                                    size={26}
+                                    color="black"
+                                />
+                                <View style={styles.optionHeaderView}>
+                                    <Text style={styles.optionHeaderText}>
+                                        {gblStrings.userManagement.marketingPrivacy}
+                                    </Text>
+                                </View>
                             </View>
-                        </View>
 
-                        <View style={styles.optionSubHeaderView}>
-                            <Text style={styles.optionSubHeaderText}>
-                                {gblStrings.userManagement.loremSecurityPref}
-                            </Text>
-                        </View>                        
-                    </View>
+                            <View style={styles.optionSubHeaderView}>
+                                <Text style={styles.optionSubHeaderText}>
+                                    {gblStrings.userManagement.loremSecurityPref}
+                                </Text>
+                            </View>                        
+                        </View>
+                    </TouchableOpacity>
 
                     <View style={styles.securityContainer}>
                         <Text style={styles.securityContainerText}>
