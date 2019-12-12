@@ -25,7 +25,7 @@ class editAddressAddNewComponent extends Component {
             touchIdEnrolled: false,
             radioButton: false,
             radioButtonIndex: 0,
-            radioButtonValue: '',
+            radioButtonValue: 'U.S. or U.S. Territories',
 
             validationAddressOne: true,
             addressOne: '',
@@ -61,12 +61,18 @@ class editAddressAddNewComponent extends Component {
                 console.log("@@@@@@@@@@@@@@@ Success Update", tempResponse);
                 if (tempResponse && tempResponse.City) {
                     this.setState({
+                        userCity: '',
+                        userState: ''
+                    });
+                    this.setState({
                         userCity: tempResponse.City,
                         userState: tempResponse.State,
                         isZipCodeValid: true
                     });
                 } else {
                     this.setState({
+                        userCity: ' - ',
+                        userState: ' - ',
                         isZipCodeValid: false
                     });
                 }
@@ -79,6 +85,13 @@ class editAddressAddNewComponent extends Component {
                 console.log("@@@@@@@@@@@@@@@@@@@@ Success Address", tempAddressResponse);
                 if (tempAddressResponse && tempAddressResponse.Address2) {
                     this.setState({
+                        addressOne: '',
+                        addressTwo: '',
+                        zipCodeValue: '',
+                        userCity: '',
+                        userState: ''
+                    })
+                    this.setState({
                         addressOne: tempAddressResponse.Address2,
                         addressTwo: tempAddressResponse.Address2,
                         zipCodeValue: tempAddressResponse.Zip,
@@ -88,6 +101,10 @@ class editAddressAddNewComponent extends Component {
                     });
                 } else {
                     this.setState({
+                        addressOne: '',
+                        addressTwo: '',zipCodeValue: '',
+                        userCity: '',
+                        userState: '',
                         validationAddressOne: false
                     });
                 }
@@ -134,7 +151,7 @@ class editAddressAddNewComponent extends Component {
         }
     }
 
-    setAddressOne = text => {
+    setAddressOne = (text) => {
         this.setState({
             addressOne: text,
             validationAddressOne: true
@@ -220,7 +237,7 @@ class editAddressAddNewComponent extends Component {
         let payloadUserAddress = [];
         if (this.props && this.props.profileState) {
             const newContactInformation = {
-                "addressType": 'U.S. or U.S. Territories',
+                "addressType": this.state.radioButtonValue,
                 "addressLineOne": this.state.addressOne,
                 "addressCity": this.state.userCity,
                 "addressState": this.state.userState,
@@ -231,7 +248,6 @@ class editAddressAddNewComponent extends Component {
 
             payloadUserAddress = this.props.profileState.profileUserAddressInformation;
             payloadUserAddress.push(newContactInformation);
-
             contactPayload = {
                 ...this.props.profileState,
                 profileUserAddressInformation: [newContactInformation],
