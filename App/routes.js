@@ -89,9 +89,12 @@ import CSMSoftTokenComponent from './Screens/CSMSoftToken';
 import CSMPushNotificationComponent from './Screens/CSMPushNotification';
 import CSMOtp from './Screens/CSMOtp';
 import QuickSigninComponent from './Screens/QuickSignIn';
+
+
 import ManageIntrestedPartiesComponent from './Screens/ManageIntrestedParties';
 import ManageBeneficiariesComponent from './Screens/ManageBeneficiaries';
-
+import EditManageBeneficiariesComponent from './Screens/EditManageBeneficiaries';
+import VerifyManageBenificiariesComponent from './Screens/VerifyManageBeneficiaries';
 
 import EditRelationshipInfo from './Screens/EditRelationshipInformation/';
 import EditRegulatoryInfo from './Screens/EditRegulatoryInformations/EditRegulatoryComponent';
@@ -801,6 +804,18 @@ const AppNavigator = createStackNavigator({
             screen:OnlineIDVerification,
             navigationOptions:{
                 header:null,
+            }
+        },
+        editManageBeneficiaries:{
+            screen:EditManageBeneficiariesComponent,
+            navigationOptions:{
+                header: null
+            }
+        },
+        verifyManageBeneficiaries:{
+            screen:VerifyManageBenificiariesComponent,
+            navigationOptions:{
+                header: null
             }
         }
     },{

@@ -23,7 +23,7 @@ class ManageBenificiariesComponent extends Component {
   }
 
   handleEdit=(data)=>{
-    //this.props.navigation.navigate("editManageBeneficiaries",{ acc_Data:data });
+    this.props.navigation.navigate("editManageBeneficiaries",{ acc_Data:data });
   }
 
   generateKeyExtractor = (item) => item.key;

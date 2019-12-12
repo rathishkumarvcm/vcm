@@ -1,0 +1,2 @@
+import EditManageBenificiariesComponent from './EditManageBenificiariesContainer';
+export default EditManageBenificiariesComponent;
