@@ -146,7 +146,6 @@ export default {
         rothIra: "Roth IRA",
         accumulatedValue:"Accumulated Value",
         contingentBeneficiary: "Contingent Beneficiary",
-        dob: "Date of Birth",
         beneficiary_type:"Beneficiary Type",
         registrationOwner:"Registration Owner",
         relationToOwner: "Relationship to Account owner",
@@ -270,7 +269,7 @@ export default {
         city: "City",
         state: "State",
         seniorPoliticalName: "Senior Foreign Political Figure Name",
-
+        primarySourceIncome:"Primary Source of Income",
         annualIncome: "Annual Income (USD)",
         taxBracket: "Tax Bracket  (Percentage)",
         networth: "Net Worth (USD)",
