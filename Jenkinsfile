@@ -49,6 +49,10 @@ pipeline {
         stage('Deploy') { 
             steps {
                 sh 'echo Deploying'
+                dir('android')
+                {
+                    sh './bundle exec fastlane beta'
+                }
             }
         }
     }
