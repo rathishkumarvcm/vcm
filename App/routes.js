@@ -71,6 +71,7 @@ import LiquidationPageTwoComponent from './Screens/LiquidationPageTwo/Liquidatio
 import LiquidationPageThreeComponent from './Screens/LiquidationPageThree/LiquidationPageThreeComponent';
 import LiquidationFinishComponent from './Screens/LiquidationFinish/LiquidationFinishComponent';
 import LiquidationPageFourComponent from './Screens/LiquidationPageFour/LiquidationPageFourComponent';
+import CompareFunds from './Screens/CompareFunds';
 // Done By 806048
 
 import EditProfileSettings from './Screens/EditProfileSettings/';
@@ -134,7 +135,10 @@ import automaticInvestmentSchedule from './Screens/AutomaticInvestmentPlanSchedu
 import automaticInvestmentVerify from './Screens/AutomaticInvestmentPlanVerify';
 import automaticInvestmentEsign from './Screens/AutomaticInvestmentPlanEsign';
 import ImageUpload from './Screens/First';
-import CompareFunds from './Screens/CompareFunds';
+
+// Special MFA Requirements
+import VerifySSNComponent from './Screens/VerifySSN/VerifySSNComponent';
+import VerifyMobileComponent from './Screens/VerifyMobile/VerifyMobileComponent';
 
 const AppNavigator = createStackNavigator({
         login: {
@@ -817,7 +821,19 @@ const AppNavigator = createStackNavigator({
             navigationOptions:{
                 header: null
             }
-        }
+        },
+        verifySSN:{
+            screen : VerifySSNComponent,
+            navigationOptions:{
+                header : null,
+            }
+        },
+        verifyMobileNumber:{
+            screen : VerifyMobileComponent,
+            navigationOptions:{
+                header : null,
+            }
+        },
     },{
         initialRouteName: 'login'
     });

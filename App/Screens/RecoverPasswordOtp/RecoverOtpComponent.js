@@ -21,9 +21,10 @@ class RecoveryOtpComponent extends Component {
       str_otp: '',
       style_otp: styles.userIDTextBox,
       err_otp: '',
-      phoneNo:''
+      phoneNo:'',
+      pageSpecialMFA : false
     };
-    //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+    //set true to isLoading if data for this screen yet to be received and wanted to show loader.    
   }
 
   protect_phone(user_phone) {
@@ -42,9 +43,26 @@ class RecoveryOtpComponent extends Component {
 //       return null;
 //  }
    
+isEmpty = (str) => {
+  if (str == "" || str == undefined || str == "null" || str == "undefined") {
+      return true;
+  } else {
+      return false;
+  }
+}
 
 componentDidMount(){
   //if(props.initialState)
+ 
+   // Special MFA Requirements Scenario
+  if(this.props){
+    let fromPage = this.props.navigation.getParam('fromPage', '');
+    console.log('FromPage : '+fromPage);
+    if(!this.isEmpty(fromPage) && fromPage=='SpecialMFA'){
+      this.setState({pageSpecialMFA : true});
+    }
+  }  
+
   if(this.props && this.props.initialState && this.props.initialState.phone){
     this.setState({
       phoneNo : this.protect_phone(this.props.initialState.phone)
@@ -68,7 +86,7 @@ componentDidMount(){
       boo_otp: !validOtp,
       err_otp: !validOtp ? globalStrings.recoverPassword.otp_err : '',
 
-    });
+    }); 
 
     if (validOtp)
     {
@@ -76,7 +94,11 @@ componentDidMount(){
         otp:this.state.str_otp,
       };
       console.log(recoveryJson);
-      this.props.navigation.navigate('passwordReset');
+      if(this.state.pageSpecialMFA){
+        this.props.navigation.navigate('registerPassword',{fromPage:'SpecialMFA'}); 
+      }else{
+        this.props.navigation.navigate('passwordReset');
+      }
     }
   }
   navigationPasswordOtp = () => this.props.navigation.goBack();
@@ -87,14 +109,28 @@ componentDidMount(){
           navigation={this.props.navigation}
         />
         <ScrollView style={{ flex: 0.85 }}>
-        <View style={styles.notifOuter}>
-            <View style={styles.notifInner}>
-              <Text style={styles.notifInnerText}>{globalStrings.recoverPassword.otp_notify}</Text>
-            </View>
-            <View style={styles.notifClose}>
-            <Text>{'X'}</Text>
-            </View>
-        </View>
+        {
+          (!this.state.pageSpecialMFA)?
+              <View style={styles.notifOuter}>         
+                <View style={styles.notifInner}>
+                  <Text style={styles.notifInnerText}>{globalStrings.recoverPassword.otp_notify}</Text>
+                </View>
+                <View style={styles.notifClose}>
+                <Text>{'X'}</Text>
+                </View>            
+              </View>
+          :null
+        }
+        {
+          (this.state.pageSpecialMFA)?
+          <View style={styles.pagerContainer}>
+            <View style={styles.pagerOne}/>    
+            <View style={styles.pagerOne}/>    
+            <View style={styles.pagerOne}/>    
+            <View style={styles.pagerTwo}/>                                
+          </View>
+          :null
+        }
           <View style={styles.signInView}>
 
             <Text style={styles.retrievePasswordText}>{globalStrings.recoverPassword.otp_label}</Text>
@@ -114,7 +150,7 @@ componentDidMount(){
 
           <GInputComponent propInputStyle={this.state.boo_otp ? styles.userIDTextBoxError : styles.userIDTextBox}
             placeholder={globalStrings.recoverPassword.passwordPlaceHolder} onChangeText={this.setOtp}
-            value={this.state.str_otp}
+            value={this.state.str_otp} maxLength={globalStrings.maxLength.otp} secureTextEntry keyboardType={'numeric'}
           />
           <Text style={styles.errorMessage}>{this.state.err_otp}</Text>
 
@@ -136,7 +172,7 @@ componentDidMount(){
           />
           <GButtonComponent
             buttonStyle={styles.continueButton}
-            buttonText={globalStrings.common.submit}
+            buttonText={this.state.pageSpecialMFA ? globalStrings.common.next : globalStrings.common.submit}
             textStyle={styles.continueButtonText}
             onPress={this.navigationPasswordNew}
           />

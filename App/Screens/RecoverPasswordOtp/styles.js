@@ -294,19 +294,16 @@ export const styles = StyleSheet.create({
     refreshOtp:
     {
         
-        color:'#0000FF',
-        //textDecorationLine:"underline",
+        color:'#2C8DBF',
+        textDecorationLine:"underline",
         fontSize:scaledHeight(16),
-        fontWeight:'500',
+        fontWeight:'bold',
         
 
     },
-    refreshOtpView:{
-        
-        marginTop:scaledHeight(28),
-        borderBottomColor: '#0000FF',
-        borderBottomWidth: 1,
-        alignSelf:'center',
+    refreshOtpView:{       
+         marginRight:'4%', 
+        alignSelf:'flex-end',
         marginBottom:scaledHeight(42)
         
     },
@@ -315,6 +312,26 @@ export const styles = StyleSheet.create({
         color:"red",
         paddingLeft:'4%',
         paddingRight:'4%',
-      }
+      },
+      pagerContainer:{
+        flexDirection:'row',   
+        marginTop:scaledHeight(30),       
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: '4%',
+        marginRight: '4%',
+    },
+    pagerOne:{
+        flex:0.4,
+        height:scaledHeight(8),
+        backgroundColor:'#56565A',       
+        marginRight:'1%'
+    },
+    pagerTwo:{
+        height:scaledHeight(8),
+        backgroundColor:'#E6E6E6',
+        flex:0.4,
+        marginRight:'1%'
+    },
     
 });

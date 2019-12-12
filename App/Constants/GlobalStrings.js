@@ -106,6 +106,7 @@ export default {
         transitRoutingNumber:9,
         common:250,
 
+        otp:4,
 
     },
     dashBoard: {
@@ -648,6 +649,14 @@ export default {
         manageAccountMessaging: "Manage your account messaging",
         manageSecurityDetails: "Manage your security details",
         manageMarketingDetails: "Manage your marketing & privacy details",
+
+        verification : "Verification",
+        userDetails:"Enter the details for User Verification",
+        onlineIdPassword: "Create your Online Id and Password",
+        chooseonlineIdPassword:"Choose your Online ID and Password",
+        preferredOnlineId:"Preferred Online ID",
+        password:"Password",
+        confirmPassword:"Confirm Password"
     },
 
     settingAccountMessaging: {
