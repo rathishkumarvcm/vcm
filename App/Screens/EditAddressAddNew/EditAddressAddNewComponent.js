@@ -345,6 +345,7 @@ class editAddressAddNewComponent extends Component {
                             <GInputComponent
                                 propInputStyle={styles.editAddressInput}
                                 placeholder={globalString.addAddressInfo.zipCode}
+                                onBlur={this.validateZipCodeValue}
                                 onChangeText={this.setZipcodeValue}
                                 value={this.state.zipCodeValue}
                                 keyboardType="number-pad"
