@@ -80,13 +80,16 @@ class editAddressAddNewComponent extends Component {
         if (this.props != prevProps) {
             if (this.props && this.props.stateCityData[addressResponseData]) {
                 const tempAddressResponse = this.props.stateCityData[addressResponseData];
+                console.log("Address Response Data ::", tempAddressResponse);
                 if (tempAddressResponse) {
                     this.setState({
-                        addressOne: tempAddressResponse.Address1,
-                        addressTwo: tempAddressResponse.Address2
+                        addressOne: tempAddressResponse.Address2,
+                        addressTwo: tempAddressResponse.Address2,
+                        zipCodeValue: tempAddressResponse.Zip,
+                        userCity: tempAddressResponse.City,
+                        userState: tempAddressResponse.State
                     });
                 }
-                console.log("Error Update 001", tempAddressResponse);
             } else {
                 if (this.props && this.props.stateCityData[ActionTypes.GET_ADDRESSFORMAT_ERROR]) {
                     const tempErrorAddress = this.props.stateCityData[ActionTypes.GET_ADDRESSFORMAT_ERROR];
@@ -175,22 +178,25 @@ class editAddressAddNewComponent extends Component {
                     });
                 }
 
-                if (this.state.addressOne != '') {
+                if (this.state.addressOne != '' &&
+                    this.state.zipCodeValue != '') {
                     this.addNewAddress();
-                }
-
-                if (this.state.zipCodeValue != '') {
-                    this.validateZipCodeValue();
                 }
                 break;
         }
     }
 
     validateZipCodeValue = () => {
-        const payload = {
-            'Zip': this.state.zipCodeValue
-        };
-        this.props.getStateCity(payload);
+        if (this.state.zipCodeValue != '') {
+            const payload = {
+                'Zip': this.state.zipCodeValue
+            };
+            this.props.getStateCity(payload);
+        } else {
+            this.setState({
+                isZipCodeValid: false
+            })
+        }
     }
 
     addNewAddress = () => {
@@ -222,14 +228,13 @@ class editAddressAddNewComponent extends Component {
 
     getContactPayloadData = () => {
         let contactPayload = {};
-        let payload = [];
         if (this.props && this.props.profileState) {
             const newContactInformation = {
-                "addressType": 'Post Office',
-                "addressLineOne": 'N Black Lake Oak Rd',
-                "addressCity": 'San Diego',
-                "addressState": 'California',
-                "addressZipcode": '90001',
+                "addressType": this.state.radioButtonValue,
+                "addressLineOne": this.state.addressOne,
+                "addressCity": this.state.userCity,
+                "addressState": this.state.userState,
+                "addressZipcode": this.state.zipCodeValue,
                 "isMailingAddress": false,
                 "isPhysicalAddress": false
             };
@@ -290,14 +295,16 @@ class editAddressAddNewComponent extends Component {
                             {profileAddNewAddress.map((item, index) =>
                                 index == this.state.radioButtonIndex ?
                                     <GRadioButtonComponent
+                                        questionsStyle={{justifyContent: 'center'}}
                                         onPress={() => this.radioButtonClicked(index)}
                                         selected
                                         questions={item.question} />
                                     :
                                     <GRadioButtonComponent
+                                        questionsStyle={{justifyContent: 'center'}}
                                         onPress={() => this.radioButtonClicked(index)}
                                         selected={false}
-                                        questions={item.question} /> )}
+                                        questions={item.question} />)}
                         </View>
 
                         <View style={styles.settingsView1}>
@@ -308,6 +315,7 @@ class editAddressAddNewComponent extends Component {
 
                         <View style={styles.editAddressInput}>
                             <GInputComponent
+                                propInputStyle={styles.editAddressInput}
                                 placeholder={globalString.addAddressInfo.addressLineOne}
                                 onChangeText={this.setAddressOne}
                                 value={this.state.addressOne}
@@ -323,6 +331,7 @@ class editAddressAddNewComponent extends Component {
 
                         <View style={styles.editAddressInput}>
                             <GInputComponent
+                                propInputStyle={styles.editAddressInput}
                                 placeholder={globalString.addAddressInfo.addressLineTwo} />
                         </View>
 
@@ -334,6 +343,7 @@ class editAddressAddNewComponent extends Component {
 
                         <View style={styles.editAddressInput}>
                             <GInputComponent
+                                propInputStyle={styles.editAddressInput}
                                 placeholder={globalString.addAddressInfo.zipCode}
                                 onChangeText={this.setZipcodeValue}
                                 value={this.state.zipCodeValue}
@@ -359,6 +369,14 @@ class editAddressAddNewComponent extends Component {
                             <Text style={styles.editAddressCityValue}>
                                 {this.state.userState}
                             </Text>
+                        </View>
+
+                        <View style={[styles.editFlexDirectionColumn, { marginBottom: '3%' }]}>
+                            <GButtonComponent
+                                buttonStyle={styles.cancelButtonStyle}
+                                buttonText={'Validate Zip Code'}
+                                textStyle={styles.cancelButtonText}
+                                onPress={this.validateZipCodeValue} />
                         </View>
                     </View>
 

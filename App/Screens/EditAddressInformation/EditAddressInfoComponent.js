@@ -5,6 +5,7 @@ import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButto
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 const tempUserAddress = [
     {
@@ -125,14 +126,23 @@ class editAddressInfoComponent extends Component {
         console.log("Updated Address Info ::: 001", profileAddressData);
     }
 
-    componentDidUpdate() {
-        if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileUserAddressInformation) {
-            profileAddressData = this.props.profileState.profileUserAddressInformation;
-        }
+    componentDidUpdate(prevProps, prevState) {
+        console.log("Address Value :: 00", this.props);
+        console.log("Address Value :: 01", prevProps);
 
-        console.log("Updated Address Info ::: 002", profileAddressData);
+        if (this.props != prevProps) {
+            if (this.props && 
+                this.props.profileState &&
+                this.props.profileState.profileUserAddressInformation) {
+                const tempAddress = this.props.profileState.profileUserAddressInformation;
+                console.log("Address Value 02:: ", tempAddress);
+                if (tempAddress) {
+                    profileAddressData = this.props.profileState.profileUserAddressInformation;
+                }
+            } else {
+                profileAddressData = tempUserAddress;
+            }
+        }
     }
 
     editAddressInfoAddNew = () => this.props.navigation.navigate('editAddressAddNew');
@@ -140,6 +150,8 @@ class editAddressInfoComponent extends Component {
     editAddressOnCancel = () => this.props.navigation.navigate('profileSettings');
 
     render() {
+
+        console.log("Updated Address Info ::: 002", this.props);
 
         if (this.props &&
             this.props.profileState &&

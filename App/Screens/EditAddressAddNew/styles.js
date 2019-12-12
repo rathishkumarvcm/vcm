@@ -133,9 +133,10 @@ export const styles = StyleSheet.create({
         borderColor: '#D4D4D4',
         backgroundColor: '#FFFFFF',
         marginTop: scaledHeight(20),
-        width: '92%',
-        marginLeft: '4%',
-        marginRight: '4%'
+        width: '96%',
+        marginLeft: '2%',
+        marginRight: '2%',
+        padding: '2%'
     },
     settingsPhone: {
         borderWidth: 1,
@@ -421,5 +422,6 @@ export const styles = StyleSheet.create({
     },
     editAddressBackground: {
         padding: scaledHeight(15), width: '100%', backgroundColor: '#FFFFFF'
-    }
+    },
+    editAddressInput: { flexDirection: 'column', width: '100%', paddingLeft: '2%', paddingRight: '2%', marginBottom: '2%', justifyContent: 'center' }
 });
