@@ -140,7 +140,8 @@ class OpenAccPageTwoComponent extends Component {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
+            isValidationSuccess: true,
+            errMsg:"",
             itemID: "",
             selectedItemID: "",
             selectedItemName: "",
@@ -183,9 +184,16 @@ class OpenAccPageTwoComponent extends Component {
                 socialSecurityNo: "",
                 phoneType:"",
                 phoneTypeDropDown:false,
+                PhoneType2:"",
+                phoneType2DropDown:false,
+                PhoneType3:"",
+                phoneType3DropDown:false,
 
 
                 phoneTypeValidation:true,
+                phoneType2Validation:true,
+                phoneType3Validation:true,
+                contactDuringMobNoValidation:true,
                 prefixValidation: true,
                 firstNameValidation: true,
                 lastNameValidation: true,
@@ -305,9 +313,16 @@ class OpenAccPageTwoComponent extends Component {
                 relationshipToAccDropDown: false,
                 phoneType:"",
                 phoneTypeDropDown:false,
+                PhoneType2:"",
+                phoneType2DropDown:false,
+                PhoneType3:"",
+                phoneType3DropDown:false,
 
 
                 phoneTypeValidation:true,
+                phoneType2Validation:true,
+                phoneType3Validation:true,
+                contactDuringMobNoValidation:true,
                 prefixValidation: true,
                 firstNameValidation: true,
                 lastNameValidation: true,
@@ -1237,9 +1252,9 @@ class OpenAccPageTwoComponent extends Component {
                     isFinancialInfoExpanded: true,
                     isMilitaryInfoExpanded: true,
                     isRegulatoryInfoExpanded: true,
-
-
-                }
+                },
+                isValidationSuccess: isValidationSuccess,
+                errMsg:isValidationSuccess == false ? errMsg:""
             }));
 
 
@@ -1251,6 +1266,9 @@ class OpenAccPageTwoComponent extends Component {
                 }
             }
             alert(errMsg);
+            this.setState({
+               
+             });
         }
 
         return isValidationSuccess;
@@ -1424,7 +1442,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
     validateFields = () => {
-       return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
+       //return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
         try {
 
 
@@ -1613,6 +1631,173 @@ class OpenAccPageTwoComponent extends Component {
     }
 
 
+    renderCustomDropDown = ({section="",stateKey="",dropDownName="",lblDropdownName="",isOptional = false}) =>{
+        let validationKey = stateKey+"Validation";
+        let validationKeyValue = !this.state[section][validationKey];
+
+        let dropDownData = dummyData;
+        let tempkey = "";
+
+        switch (dropDownName) {
+            case "prefixDropDown":
+            case "prefixDropDown_joint":
+            case "prefixDropDown_IRA":
+            case "prefixDropDown_childben":
+                tempkey = "prefix";
+                break;
+            case "suffixDropDown":
+            case "suffixDropDown_joint":
+            case "suffixDropDown_IRA":
+            case "suffixDropDown_childben":
+
+                tempkey = "suffix";
+                break;
+            case "maritalStatusDropDown":
+            case "maritalStatusDropDown_joint":
+            case "maritalStatusDropDown_IRA":
+            case "maritalStatusDropDown_childben":
+
+                tempkey = "marital_status";
+                break;
+            case "stateCityDropDown":
+            case "stateCityDropDown_joint":
+            case "stateCityDropDown_IRA":
+            case "stateCityDropDown_childben":
+
+                tempkey = "city";
+                break;
+            case "contactDuringMobNoDropDown":
+            case "contactDuringTelePhone2DropDown":
+            case "contactDuringTelePhone3DropDown":
+            case "contactDuringMobNoDropDown_joint":
+            case "contactDuringTelePhone2DropDown_joint":
+            case "contactDuringTelePhone3DropDown_joint":
+            case "contactDuringMobNoDropDown_IRA":
+            case "contactDuringTelePhone2DropDown_IRA":
+            case "contactDuringTelePhone3DropDown_IRA":
+            case "contactDuringMobNoDropDown_childben":
+            case "contactDuringTelePhone2DropDown_childben":
+            case "contactDuringTelePhone3DropDown_childben":
+
+                tempkey = "contact_time";
+                break;
+            case "empStatusDropDown":
+            case "empStatusDropDown_joint":
+            case "empStatusDropDown_IRA":
+            case "empStatusDropDown_childben":
+
+                tempkey = "employment_status";
+                break;
+            case "empIndustryDropDown":
+            case "empIndustryDropDown_joint":
+            case "empIndustryDropDown_IRA":
+            case "empIndustryDropDown_childben":
+
+                tempkey = "industry";
+                break;
+            case "empStateCityDropDown":
+            case "empStateCityDropDown_joint":
+            case "empStateCityDropDown_IRA":
+            case "empStateCityDropDown_childben":
+
+                tempkey = "city";
+                break;
+            case "annualIncomeDropDown":
+            case "annualIncomeDropDown_joint":
+            case "annualIncomeDropDown_IRA":
+            case "annualIncomeDropDown_childben":
+
+                tempkey = "annual_income";
+                break;
+            case "taxBracketDropDown":
+            case "taxBracketDropDown_joint":
+            case "taxBracketDropDown_IRA":
+            case "taxBracketDropDown_childben":
+
+                tempkey = "taxBracket";
+                break;
+            case "networthDropDown":
+            case "networthDropDown_joint":
+            case "networthDropDown_IRA":
+            case "networthDropDown_childben":
+
+                tempkey = "net_worth";
+
+                break;
+            case "taxFilingStatusDropDown":
+            case "taxFilingStatusDropDown_joint":
+            case "taxFilingStatusDropDown_IRA":
+            case "taxFilingStatusDropDown_childben":
+
+                tempkey = "tax_filling_status";
+                break;
+
+            case "militaryStatusDropDown":
+            case "militaryStatusDropDown_joint":
+            case "militaryStatusDropDown_IRA":
+            case "militaryStatusDropDown_childben":
+                tempkey = "mil_status";
+                break;
+            case "branchOfServiceDropDown":
+            case "branchOfServiceDropDown_joint":
+            case "branchOfServiceDropDown_IRA":
+            case "branchOfServiceDropDown_childben":
+
+                tempkey = "mil_serv_branch";
+                break;
+            case "rankDropDown":
+                tempkey = this.state.personal.rankKey;
+                dropDownData = [];
+                break;
+            case "rankDropDown_joint":
+                tempkey = this.state.jointOwner.rankKey;
+                dropDownData = [];
+                break;
+            case "rankDropDown_IRA":
+            case "rankDropDown_childben":
+                dropDownData = [];
+                break;
+            case "beneficiaryTypeDropDown_IRA":
+                tempkey = "ben_type";
+                break;
+            case "relationshipToAccDropDown_joint":
+            case "relationshipToAccDropDown_childben":
+            case "relationshipToAccDropDown_IRA":
+                tempkey = "relationship";
+                break;
+            case "phoneTypeDropDown":
+            case "phoneTypeDropDown_joint":
+            case "phoneTypeDropDown_childben":
+            case "phoneTypeDropDown_IRA":
+                tempkey = "phone_type";
+                break;
+
+        }
+
+        if (tempkey !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
+            dropDownData = this.props.masterLookupStateData[tempkey].value;
+        }
+        return (
+            <GDropDownComponent
+                inputref={this.setInputRef(dropDownName)}
+                dropDownLayout={styles.dropDownLayout}
+                dropDownTextName={styles.dropDownTextName}
+                textInputStyle={styles.textInputStyle}
+                dropDownName={lblDropdownName}
+                data={dropDownData}
+                dropDownValue={this.state[section][stateKey]}
+                showDropDown={this.state[section][dropDownName]}
+                changeState={this.onPressDropDown(section, dropDownName)}
+                selectedDropDownValue={this.onSelectedDropDownValue(dropDownName)}
+                itemToDisplay={"value"}
+                dropDownPostition={{ ...styles.dropDownPostition }}
+                errorFlag={isOptional ? false : validationKeyValue}
+                errorText={this.state.errMsg}
+                isOptional={isOptional}
+            />
+        );
+
+    }
     renderDropDown = (dropDownName, dropDownCompState = false, data, width = '100%') => {
         console.log("renderDropDown::: " + dropDownName);
         let dropDownData = dummyData;
@@ -2704,54 +2889,15 @@ class OpenAccPageTwoComponent extends Component {
                 {
                     this.state.personal.isPersonalInfoExpanded &&
                     <View style={styles.childSectionGrp}>
-                        <Text style={styles.lblTxt}>
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.prefix}
-                            </Text>
-                            <Text style={styles.optionalTxt}>
-                                {" " + gblStrings.accManagement.optional}
-                            </Text>
-                        </Text>
                         <View style={{ flexGrow: 1, width: "40%" }}>
-                            <CustomDropDown
-                                // inputref={(ref)=> this.prefix = ref}
-                                inputref={this.setInputRef("prefix")}
-                                /* onPress={() => {
-                                        this.setState(prevState => ({
-                                            personal: {
-                                                ...prevState.personal,
-                                                prefixDropDown: !this.state.personal.prefixDropDown
-                                            }
-                                        }));
-                                    }}
-                                    */
-                                onPress={this.onPressDropDown("personal", "prefixDropDown")}
-
-                                value={this.state.personal.prefix}
-                                propInputStyle={this.state.personal.prefixValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                placeholder={""}
-
-                            />
-                            {this.renderDropDown('prefixDropDown', this.state.personal.prefixDropDown, suffixData) }
-                            { /* <GDropDownComponent
-                                inputref={this.setInputRef("prefixDropDown")}
-                                dropDownLayout={styles.dropDownLayout}
-                                dropDownTextName={styles.dropDownTextName}
-                                textInputStyle={styles.textInputStyle}
-                                dropDownName={gblStrings.accManagement.prefix}
-                                data={dummyData}
-                                dropDownValue={this.state.personal.prefix}
-                                showDropDown={this.state.personal.prefixDropDown}
-                                changeState={this.onPressDropDown("personal", "prefixDropDown")}
-                                selectedDropDownValue={this.onSelectedDropDownValue("prefixDropDown")}
-                                itemToDisplay={"value"}
-                                dropDownPostition={{ ...styles.dropDownPostition}}
-                                errorFlag={!this.state.personal.prefixValidation}
-                                errorText={""}
-                            />
-                            */ }
-
-
+                            {this.renderCustomDropDown({
+                                section: "personal",
+                                stateKey: "prefix",
+                                dropDownName: "prefixDropDown",
+                                lblDropdownName: gblStrings.accManagement.prefix,
+                                isOptional:true
+                            })
+                            }
                         </View>
 
 
@@ -2765,15 +2911,6 @@ class OpenAccPageTwoComponent extends Component {
                             propInputStyle={this.state.personal.firstNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder={""}
                             maxLength={gblStrings.maxLength.firstName}
-                            /*  onChangeText={(text) => {
-                                this.setState(prevState => ({
-                                    personal: {
-                                        ...prevState.personal,
-                                        firstName: text
-                                    }
-                                }));
-                            }}
-                            */
                             onChangeText={this.onChangeText("personal", "firstName")}
                             onSubmitEditing={this.onSubmitEditing(this.middleInitial)}
 
@@ -2805,7 +2942,6 @@ class OpenAccPageTwoComponent extends Component {
                         <GInputComponent
                             // inputref={ref => this.lastName = ref}
                             inputref={this.setInputRef("lastName")}
-
                             propInputStyle={this.state.personal.lastNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder={""}
                             maxLength={gblStrings.maxLength.lastName}
@@ -2815,24 +2951,15 @@ class OpenAccPageTwoComponent extends Component {
 
                         />
 
-                        <Text style={styles.lblTxt}>
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.suffix}
-                            </Text>
-                            <Text style={styles.optionalTxt}>
-                                {" " + gblStrings.accManagement.optional}
-                            </Text>
-                        </Text>
                         <View style={{ flexGrow: 1, width: "40%" }}>
-                            <CustomDropDown
-                                inputref={this.setInputRef("suffix")}
-                                onPress={this.onPressDropDown("personal", "suffixDropDown")}
-                                value={this.state.personal.suffix}
-                                propInputStyle={styles.customListTxtBox}
-                                placeholder={""}
-
-                            />
-                            {this.renderDropDown('suffixDropDown', this.state.personal.suffixDropDown, suffixData)}
+                            {this.renderCustomDropDown({
+                                section: "personal",
+                                stateKey: "suffix",
+                                dropDownName: "suffixDropDown",
+                                lblDropdownName: gblStrings.accManagement.suffix,
+                                isOptional:true
+                            })
+                            }
                         </View>
 
                         <Text style={styles.lblTxt}>
@@ -2854,20 +2981,14 @@ class OpenAccPageTwoComponent extends Component {
 
 
 
-                        <Text style={styles.lblTxt}>
-                            {gblStrings.accManagement.maritalStatus}
-                        </Text>
-                        <CustomDropDown
-                            inputref={this.setInputRef("maritalStatus")}
-                            onPress={this.onPressDropDown("personal", "maritalStatusDropDown")}
-
-                            value={this.state.personal.maritalStatus}
-                            propInputStyle={this.state.personal.maritalStatusValidation ? styles.customListTxtBox : styles.customListTxtBoxError}
-                            placeholder={gblStrings.common.select}
-
-                        />
-                        {this.renderDropDown('maritalStatusDropDown', this.state.personal.maritalStatusDropDown, dummyData)}
-
+                        {this.renderCustomDropDown({
+                            section: "personal",
+                            stateKey: "maritalStatus",
+                            dropDownName: "maritalStatusDropDown",
+                            lblDropdownName: gblStrings.accManagement.maritalStatus,
+                            isOptional:false
+                          })
+                        }
 
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.citizenship}
@@ -2899,8 +3020,6 @@ class OpenAccPageTwoComponent extends Component {
                         {this.renderRadio("personal", "mailingAddressType", 30, { marginBottom: scaledHeight(13) }, styles.radioBtnColGrp)}
 
 
-
-
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.address}
                         </Text>
@@ -2912,8 +3031,6 @@ class OpenAccPageTwoComponent extends Component {
                             value={this.state.personal.addrLine1}
                             onChangeText={this.onChangeText("personal", "addrLine1")}
                             onSubmitEditing={this.onSubmitEditing(this.addrLine2)}
-
-s
                         />
                         <GInputComponent
                             inputref={this.setInputRef("addrLine2")}
@@ -2999,20 +3116,14 @@ s
                             />
                         </View>
 
-                        <Text style={styles.lblTxt}>
-                            {gblStrings.accManagement.phoneType}
-                        </Text>
-                        <CustomDropDown
-                            inputref={this.setInputRef("phoneType")}
-                            onPress={this.onPressDropDown("personal", "phoneType")}
-                            value={this.state.personal.phoneType}
-                            propInputStyle={styles.customListTxtBox}
-                            placeholder={gblStrings.common.select}
-
-                        />
-                        {this.renderDropDown('phoneTypeDropDown', this.state.personal.phoneTypeDropDown, dummyData)}
-                    
-
+                        {this.renderCustomDropDown({
+                            section: "personal",
+                            stateKey: "phoneType",
+                            dropDownName: "phoneTypeDropDown",
+                            lblDropdownName: gblStrings.accManagement.phoneType,
+                            isOptional:false
+                          })
+                        }
 
 
                         <Text style={styles.lblTxt}>
@@ -3029,24 +3140,25 @@ s
 
                         />
 
-                        <Text>
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.contactMeDuring}
-                            </Text>
-                            <Text style={styles.optionalTxt}>
-                                {" " + gblStrings.accManagement.optional}
-                            </Text>
-                        </Text>
-                        <CustomDropDown
-                            inputref={this.setInputRef("contactDuringMobNo")}
-                            onPress={this.onPressDropDown("personal", "contactDuringMobNoDropDown")}
-                            value={this.state.personal.contactDuringMobNo}
-                            propInputStyle={styles.customListTxtBox}
-                            placeholder={""}
+                       
+                        {this.renderCustomDropDown({
+                            section: "personal",
+                            stateKey: "contactDuringMobNo",
+                            dropDownName: "contactDuringMobNoDropDown",
+                            lblDropdownName: gblStrings.accManagement.contactMeDuring,
+                            isOptional:true
+                          })
+                        }
 
-                        />
-                        {this.renderDropDown('contactDuringMobNoDropDown', this.state.personal.contactDuringMobNoDropDown, dummyData)}
 
+                        {this.renderCustomDropDown({
+                            section: "personal",
+                            stateKey: "phoneType2",
+                            dropDownName: "phoneType2DropDown",
+                            lblDropdownName: gblStrings.accManagement.phoneType,
+                            isOptional: true
+                        })
+                        }
 
                         <Text>
                             <Text style={styles.lblTxt}>
@@ -3067,25 +3179,24 @@ s
 
                         />
 
-                        <Text>
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.contactMeDuring}
-                            </Text>
-                            <Text style={styles.optionalTxt}>
-                                {" " + gblStrings.accManagement.optional}
-                            </Text>
-                        </Text>
-                        <CustomDropDown
-                            inputref={this.setInputRef("contactDuringTelePhone2")}
-                            onPress={this.onPressDropDown("personal", "contactDuringTelePhone2DropDown")}
-                            value={this.state.personal.contactDuringTelePhone2}
-                            propInputStyle={styles.customListTxtBox}
-                            placeholder={""}
-
-                        />
-                        {this.renderDropDown('contactDuringTelePhone2DropDown', this.state.personal.contactDuringTelePhone2DropDown, dummyData)}
+                        {this.renderCustomDropDown({
+                            section: "personal",
+                            stateKey: "contactDuringTelePhone2",
+                            dropDownName: "contactDuringTelePhone2DropDown",
+                            lblDropdownName: gblStrings.accManagement.contactMeDuring,
+                            isOptional:true
+                          })
+                        }
 
 
+                        {this.renderCustomDropDown({
+                            section: "personal",
+                            stateKey: "phoneType3",
+                            dropDownName: "phoneType3DropDown",
+                            lblDropdownName: gblStrings.accManagement.phoneType,
+                            isOptional: true
+                        })
+                        }
                         <View style={{ flexGrow: 1 }}>
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.telePhoneNo3}
@@ -3104,25 +3215,14 @@ s
                             onSubmitEditing={this.onSubmitEditing(this.contactDuringTelePhone3)}
 
                         />
-
-                        <View style={{ flexGrow: 1 }}>
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.contactMeDuring}
-                            </Text>
-                            <Text style={styles.optionalTxt}>
-                                {" " + gblStrings.accManagement.optional}
-                            </Text>
-                        </View>
-                        <CustomDropDown
-                            inputref={this.setInputRef("contactDuringTelePhone3")}
-                            onPress={this.onPressDropDown("personal", "contactDuringTelePhone3DropDown")}
-                            value={this.state.personal.contactDuringTelePhone3}
-                            propInputStyle={styles.customListTxtBox}
-                            placeholder={""}
-
-                        />
-                        {this.renderDropDown('contactDuringTelePhone3DropDown', this.state.personal.contactDuringTelePhone3DropDown, dummyData)}
-
+                         {this.renderCustomDropDown({
+                            section: "personal",
+                            stateKey: "contactDuringTelePhone3",
+                            dropDownName: "contactDuringTelePhone3DropDown",
+                            lblDropdownName: gblStrings.accManagement.contactMeDuring,
+                            isOptional:true
+                          })
+                        }
 
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.emailAddress}

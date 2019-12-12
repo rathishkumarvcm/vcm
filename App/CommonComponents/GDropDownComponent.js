@@ -57,17 +57,25 @@ showDropDownSectionStyle:{
     width:'92%',
     borderColor : "#DEDEDF",
     backgroundColor:'white'
+},
+optionalTxt:{
+    color:'rgba(51, 51, 51, 0.87)',
+    fontSize:scaledHeight(16),
+    fontWeight:'normal',
 }
 });
 
 
 export const GDropDownComponent = props => (
     <>
-    <View style={[styles.dropDownLayout,props.dropDownLayout]}>
-        <Text style={[styles.dropDownTextName,props.dropDownTextName]}>
-            {props.dropDownName}       
-        </Text>
-    </View>
+        <View style={[styles.dropDownLayout, props.dropDownLayout]}>
+            <Text style={[styles.dropDownTextName, props.dropDownTextName]}>
+                <Text style={[props.dropDownTextName]}>
+                    {props.dropDownName}
+                </Text>
+                {props.isOptional && <Text style={styles.optionalTxt}>{" (Optional)"}</Text>}
+            </Text>
+        </View>
 
 
     <GInputComponent 
@@ -105,6 +113,7 @@ keyExtractor={item => item.id}
 GDropDownComponent.propTypes = {
   dropDownName : PropTypes.string,
   showDropDown : PropTypes.bool,
+  isOptional:PropTypes.bool,
   dropDownLayout: PropTypes.instanceOf(Object),
   dropDownTextName: PropTypes.instanceOf(Object),
   textInputStyle: PropTypes.instanceOf(Object),
@@ -120,7 +129,9 @@ GDropDownComponent.propTypes = {
 GDropDownComponent.defaultProps = {
   disabled : false,
   buttonStyle: {},
-  textStyle: {}
+  textStyle: {},
+  isOptional:false
+
 };
 
 export default GDropDownComponent;
