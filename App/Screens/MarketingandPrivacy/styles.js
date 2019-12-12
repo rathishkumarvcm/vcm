@@ -351,4 +351,92 @@ export const styles = StyleSheet.create({
         height:scaledHeight(70),
         marginTop:scaledHeight(20)
     },
+    marketingContentHolder: {
+        borderWidth :1,
+        borderColor:'#D4D4D4',
+        backgroundColor:'#FFFFFF',
+        marginTop:scaledHeight(16),
+        width:'94%',
+        marginLeft:'3%',
+        marginRight:'3%'
+    },
+    marketingHeaderBackground: {
+        backgroundColor: '#ECECEC',
+        borderColor: '#DCDCDC',
+        borderWidth: 1,
+        width: '100%',
+    },
+    marketingHeaderLabel: {
+        fontSize: scaledHeight(16),
+        color: '#54565B',
+        margin: '3%',
+        padding: '2%'
+    },
+    imageWidthHeight: {
+        width: 40,
+        height: 40,
+        margin: '4%',
+        resizeMode: 'contain'
+    },
+    editFlexDirectionColumn: {
+        flexDirection: 'column',
+        width: '100%',
+        marginTop: scaledHeight(20),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+    },
+    editEmailHolder: {
+        width: '96%', marginLeft: '2%', marginRight: '2%', marginTop: '2%', marginBottom: '2%', borderColor: '#CCCCCC', borderWidth: 1, backgroundColor: '#fff'
+    },
+    editEmailType: {
+        color: '#707070', fontSize: scaledHeight(16), fontWeight: 'bold', marginLeft: '3%', marginBottom: '2%', marginTop: '4%'
+    },
+    editEmailId: {
+        color: '#707070', fontSize: scaledHeight(16), marginLeft: '3%', marginBottom: '2%'
+    },
+    editEmailBorder: { 
+        borderBottomWidth: 1, borderColor: '#B2B2B2', marginTop: '4%', marginBottom: '4%' 
+    },
+    editEmailPrimaryContent: { 
+        marginTop: '2%', marginBottom: '2%', flexDirection: 'row' 
+    },
+    editAddressView: {
+        width: '100%', marginLeft: '3%', marginTop: '2%', marginBottom: '2%', flexDirection: 'row', alignItems: "center", justifyContent: 'center'
+    },
+    editAddressLabel: {
+        width: '70%', color: '#707070', fontSize: scaledHeight(16), marginLeft: '3%', marginBottom: '2%'
+    },
+    editSwitchButton: {
+        width: '30%', marginTop: '2%', marginBottom: '2%'
+    },
+    profileDivideIcon: { 
+        width: '100%', margin: '3%', flexDirection: 'row'
+    },
+    profileDivideIconOne: { 
+        width: '80%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' 
+    },
+    profileDivideIconTwo: { 
+        width: '20%', color: '#0000FF', fontSize: scaledHeight(14) 
+    },
+    marketingHeadQues: { 
+        paddingLeft: '4%', paddingRight: '4%', width: '92%', marginTop: scaledHeight(15) 
+    },
+    marketingHeadLabel: { 
+        fontSize: scaledHeight(18), color: '#56565A' 
+    },
+    marketingPadding: {
+        padding: '4%'
+    },
+    marketingHomeBold: {
+        color: '#56565A', fontSize: scaledHeight(16), width: '92%', marginRight: '4%', marginLeft: '4%', marginTop: '4%', marginBottom: '2%', fontWeight: 'bold'
+    },
+    marketingHomeNormal: {
+        color: '#56565A', fontSize: scaledHeight(16), width: '92%', marginRight: '4%', marginLeft: '4%', marginTop: '4%', marginBottom: '2%'
+    },
+    marketingNotes: {
+        color: '#56565A', fontSize: scaledHeight(16), width: '100%', marginTop: '4%', marginBottom: '2%', lineHeight: 30, textAlign: 'justify'
+    },
+    marketingNotesLink: {
+        color: '#0000FF', fontSize: scaledHeight(16), width: '100%', lineHeight: 30
+    }
 });

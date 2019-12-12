@@ -1152,5 +1152,31 @@ export default {
         militaryDateFrom: 'From',
         militaryDateTo: 'To',
         militaryCommissionSource: 'Commission Source'
+    },
+    marketingPrivacyLabel: {
+        marketingMobileLabel: " -  Mobile",
+        marketingContactLabel: "Contact",
+        marketingHomeLabel: " -  Home",
+        marketingEmailLabel: " -  Email",
+        marketingAddressLabel: " -  Address",
+        marketingNoneLabel: "None on file",
+        marketingNoneMessageLabel: "Please go to basic information page to Add home number",
+        marketingProductServiceLabel: "Products & Services",
+        marketingExpandLabel: "Expand All",
+        marketingInvestmentLabel: "Investments",
+        marketingFinancialLabel: "Financial Planning",
+        marketingMobilePhoneLabel: "Mobile Phone",
+        marketingHomePhoneLabel: "Home Phone",
+        marketingMailingLabel: "Mailing Address",
+        marketingHeadingLabel: "Settings > Marketing & Privacy",
+        marketingPrivacyTitle: "Marketing & Privacy",
+        marketingOfferLabel: "How Should We Contact You About Offers?",
+        marketingMeetLabel: "To meet your needs better, we 'd like to reach out to you from time to time to let you know about the products and services we have to offer",
+        marketingContactUsLabel: "Contact us",
+        marketingNoteOne: "We show you gave VCM permission to make marketing calls to you using an automated dialing system or pre recorded voice message. If you want to change you preference.",
+        marketingNoteTwo: "What Types of Offers Are You Interested in?",
+        marketingNoteThree: "You can tailor the VCM offers you receive and how you like to get them",
+        marketingNoteFour: "Please note that your selections do not apply to pre-screened offers of credit. To opt-out of pre-screened offers of credit please visit https://www.optoutprescreen.com or call to free Phone Number. The phone number and website are operated by the major consumer reporting companies",
+        
     }
 };

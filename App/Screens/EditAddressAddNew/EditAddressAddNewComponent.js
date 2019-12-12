@@ -123,28 +123,24 @@ class editAddressAddNewComponent extends Component {
             this.setState({
                 radioButtonValue: 'U.S. or U.S. Territories'
             });
-            console.log("Radio Button Clicked 0", this.state.radioButtonValue);
         }
 
         if (this.state.radioButtonIndex == 2) {
             this.setState({
                 radioButtonValue: 'APO (Army or Air Force Post Office)'
             });
-            console.log("Radio Button Clicked 1", this.state.radioButtonValue);
         }
 
         if (this.state.radioButtonIndex == 3) {
             this.setState({
                 radioButtonValue: 'FPO (Fleet Post Office)'
             });
-            console.log("Radio Button Clicked 2", this.state.radioButtonValue);
         }
 
         if (this.state.radioButtonIndex == 4) {
             this.setState({
                 radioButtonValue: 'DPO (Diplomatic Post Office)'
             });
-            console.log("Radio Button Clicked 3", this.state.radioButtonValue);
         }
     }
 
@@ -223,14 +219,14 @@ class editAddressAddNewComponent extends Component {
     manageContactInformations = () => {
         const payloadData = this.getContactPayloadData();
         this.props.saveProfileData("editContactInformation", payloadData);
-        this.props.navigation.goBack();
+        this.props.navigation.navigate('editAddressSettings');
     }
 
     getContactPayloadData = () => {
         let contactPayload = {};
         if (this.props && this.props.profileState) {
             const newContactInformation = {
-                "addressType": this.state.radioButtonValue,
+                "addressType": 'U.S. or U.S. Territories',
                 "addressLineOne": this.state.addressOne,
                 "addressCity": this.state.userCity,
                 "addressState": this.state.userState,

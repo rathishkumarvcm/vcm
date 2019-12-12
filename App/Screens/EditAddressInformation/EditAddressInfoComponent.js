@@ -122,14 +122,9 @@ class editAddressInfoComponent extends Component {
             this.props.profileState.profileUserAddressInformation) {
             profileAddressData = this.props.profileState.profileUserAddressInformation;
         }
-
-        console.log("Updated Address Info ::: 001", profileAddressData);
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log("Address Value :: 00", this.props);
-        console.log("Address Value :: 01", prevProps);
-
         if (this.props != prevProps) {
             if (this.props && 
                 this.props.profileState &&
