@@ -126,16 +126,11 @@ class editAddressInfoComponent extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props != prevProps) {
-            if (this.props && 
+            if (this.props &&
                 this.props.profileState &&
                 this.props.profileState.profileUserAddressInformation) {
-                const tempAddress = this.props.profileState.profileUserAddressInformation;
-                console.log("Address Value 02:: ", tempAddress);
-                if (tempAddress) {
-                    profileAddressData = this.props.profileState.profileUserAddressInformation;
-                }
-            } else {
-                profileAddressData = tempUserAddress;
+                profileAddressData = this.props.profileState.profileUserAddressInformation;
+                console.log("@@@@@@@@@@@@@@ Dip update", profileAddressData);
             }
         }
     }
@@ -145,8 +140,6 @@ class editAddressInfoComponent extends Component {
     editAddressOnCancel = () => this.props.navigation.navigate('profileSettings');
 
     render() {
-
-        console.log("Updated Address Info ::: 002", this.props);
 
         if (this.props &&
             this.props.profileState &&

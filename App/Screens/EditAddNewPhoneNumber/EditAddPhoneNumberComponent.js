@@ -17,10 +17,6 @@ const phoneTypeData = [
     {
         "key": "work",
         "value": "Work"
-    },
-    {
-        "key": "fax",
-        "value": "Fax"
     }
 ];
 
@@ -48,7 +44,9 @@ class editAddPhoneNumberComponent extends Component {
             enableBiometric: false,
             faceIdEnrolled: false,
             touchIdEnrolled: false,
-            
+            contactNumber: '',
+            isValidContact: false,
+
             dropDownPhoneState: false,
             dropDownPhoneValue: '',
             dropDownPhoneFlag: false,
@@ -108,9 +106,67 @@ class editAddPhoneNumberComponent extends Component {
         });
     }
 
+    setContactNumber = (text) => {
+        this.setState({
+            contactNumber: text
+        })
+    }
+
     componentDidMount() { }
 
     phoneAddNewNumberOnCancel = () => this.props.navigation.navigate('editPhoneInformation');
+
+    managePhoneInformations = () => {
+        const payloadData = this.getPhonePayloadData();
+        this.props.saveProfileData("editPhoneInformation", payloadData);
+        this.props.navigation.navigate('editPhoneInformation');
+    }
+
+    getPhonePayloadData = () => {
+        let phonePayload = {};
+        let payloadUserPhone = [];
+        if (this.props && this.props.profileState) {
+            const newPhoneInformation = {
+                "mobileNumberType": this.state.dropDownPhoneValue,
+                "mobileNumber": '+1' + ' ' + this.state.contactNumber,
+                "mobilePreferredTime": this.state.dropDownContactValue,
+                "isPrimaryMobile": false
+            };
+
+            console.log("@@@@@@@@@@@@@@@@ Type", this.state.dropDownPhoneValue);
+
+            if (this.state.dropDownPhoneValue === 'Home') {
+                payloadUserPhone = this.props.profileState.profileUserHomeNumber;
+                payloadUserPhone.push(newPhoneInformation);
+                phonePayload = {
+                    ...this.props.profileState,
+                    profileUserHomeNumber: [newPhoneInformation],
+                };
+                console.log("############# Home", phonePayload);
+            }
+
+            if (this.state.dropDownPhoneValue === 'Mobile') {
+                payloadUserPhone = this.props.profileState.profileUserMobileNumber;
+                payloadUserPhone.push(newPhoneInformation);
+                phonePayload = {
+                    ...this.props.profileState,
+                    profileUserMobileNumber: [newPhoneInformation],
+                };
+                console.log("$$$$$$$$$$$$$$ Mobile", phonePayload);
+            }
+
+            if (this.state.dropDownPhoneValue === 'Work') {
+                payloadUserPhone = this.props.profileState.profileUserWorkNumber;
+                payloadUserPhone.push(newPhoneInformation);
+                phonePayload = {
+                    ...this.props.profileState,
+                    profileUserWorkNumber: [newPhoneInformation],
+                };
+                console.log("%%%%%%%%%%%%%% Work", phonePayload);
+            }
+        }
+        return phonePayload;
+    }
 
     render() {
 
@@ -199,7 +255,7 @@ class editAddPhoneNumberComponent extends Component {
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
                             textStyle={styles.saveButtonText}
-                        />
+                            onPress={this.managePhoneInformations} />
                     </View>
 
                     <View style={styles.newVictorySection}>

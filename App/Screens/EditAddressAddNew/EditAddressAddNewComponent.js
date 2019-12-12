@@ -53,52 +53,43 @@ class editAddressAddNewComponent extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         const stateCityResponseData = ActionTypes.GET_STATECITY;
+        const addressResponseData = ActionTypes.GET_ADDRESSFORMAT;
+
         if (this.props != prevProps) {
             if (this.props && this.props.stateCityData[stateCityResponseData]) {
                 const tempResponse = this.props.stateCityData[stateCityResponseData];
-                console.log("Error Update 001", tempResponse);
+                console.log("@@@@@@@@@@@@@@@ Success Update", tempResponse);
                 if (tempResponse && tempResponse.City) {
                     this.setState({
                         userCity: tempResponse.City,
-                        userState: tempResponse.State
+                        userState: tempResponse.State,
+                        isZipCodeValid: true
                     });
-                }
-            } else {
-                if (this.props && this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR]) {
-                    const tempErrorResponse = this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR];
-                    console.log("Error", tempErrorResponse);
-                    if (tempErrorResponse) {
-                        this.setState({
-                            isZipCodeValid: false
-                        })
-                    }
+                } else {
+                    this.setState({
+                        isZipCodeValid: false
+                    });
                 }
             }
         }
 
-        const addressResponseData = ActionTypes.GET_ADDRESSFORMAT;
         if (this.props != prevProps) {
             if (this.props && this.props.stateCityData[addressResponseData]) {
                 const tempAddressResponse = this.props.stateCityData[addressResponseData];
-                console.log("Address Response Data ::", tempAddressResponse);
-                if (tempAddressResponse) {
+                console.log("@@@@@@@@@@@@@@@@@@@@ Success Address", tempAddressResponse);
+                if (tempAddressResponse && tempAddressResponse.Address2) {
                     this.setState({
                         addressOne: tempAddressResponse.Address2,
                         addressTwo: tempAddressResponse.Address2,
                         zipCodeValue: tempAddressResponse.Zip,
                         userCity: tempAddressResponse.City,
-                        userState: tempAddressResponse.State
+                        userState: tempAddressResponse.State,
+                        validationAddressOne: true
                     });
-                }
-            } else {
-                if (this.props && this.props.stateCityData[ActionTypes.GET_ADDRESSFORMAT_ERROR]) {
-                    const tempErrorAddress = this.props.stateCityData[ActionTypes.GET_ADDRESSFORMAT_ERROR];
-                    console.log("Error Update 001", tempErrorAddress);
-                    if (tempErrorAddress) {
-                        this.setState({
-                            validationAddressOne: false
-                        });
-                    }
+                } else {
+                    this.setState({
+                        validationAddressOne: false
+                    });
                 }
             }
         }
@@ -110,7 +101,6 @@ class editAddressAddNewComponent extends Component {
                 radioButtonIndex: index,
                 radioButton: false
             });
-            console.log("Radio Button Clicked :: ", index + ' ::: ' + this.state.radioButtonIndex);
         }
         else {
             this.setState({
@@ -187,6 +177,9 @@ class editAddressAddNewComponent extends Component {
             const payload = {
                 'Zip': this.state.zipCodeValue
             };
+            this.setState({
+                isZipCodeValid: true
+            });
             this.props.getStateCity(payload);
         } else {
             this.setState({
@@ -224,6 +217,7 @@ class editAddressAddNewComponent extends Component {
 
     getContactPayloadData = () => {
         let contactPayload = {};
+        let payloadUserAddress = [];
         if (this.props && this.props.profileState) {
             const newContactInformation = {
                 "addressType": 'U.S. or U.S. Territories',
@@ -234,6 +228,9 @@ class editAddressAddNewComponent extends Component {
                 "isMailingAddress": false,
                 "isPhysicalAddress": false
             };
+
+            payloadUserAddress = this.props.profileState.profileUserAddressInformation;
+            payloadUserAddress.push(newContactInformation);
 
             contactPayload = {
                 ...this.props.profileState,
@@ -291,13 +288,13 @@ class editAddressAddNewComponent extends Component {
                             {profileAddNewAddress.map((item, index) =>
                                 index == this.state.radioButtonIndex ?
                                     <GRadioButtonComponent
-                                        questionsStyle={{justifyContent: 'center'}}
+                                        questionsStyle={{ justifyContent: 'center' }}
                                         onPress={() => this.radioButtonClicked(index)}
                                         selected
                                         questions={item.question} />
                                     :
                                     <GRadioButtonComponent
-                                        questionsStyle={{justifyContent: 'center'}}
+                                        questionsStyle={{ justifyContent: 'center' }}
                                         onPress={() => this.radioButtonClicked(index)}
                                         selected={false}
                                         questions={item.question} />)}
@@ -366,14 +363,6 @@ class editAddressAddNewComponent extends Component {
                             <Text style={styles.editAddressCityValue}>
                                 {this.state.userState}
                             </Text>
-                        </View>
-
-                        <View style={[styles.editFlexDirectionColumn, { marginBottom: '3%' }]}>
-                            <GButtonComponent
-                                buttonStyle={styles.cancelButtonStyle}
-                                buttonText={'Validate Zip Code'}
-                                textStyle={styles.cancelButtonText}
-                                onPress={this.validateZipCodeValue} />
                         </View>
                     </View>
 

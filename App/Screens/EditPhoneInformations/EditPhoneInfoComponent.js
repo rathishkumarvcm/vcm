@@ -33,6 +33,10 @@ const tempUserWork = [
     }
 ];
 
+let userMobileNumber = [];
+let userHomeNumber = [];
+let userWorkNumber = [];
+
 const UserPhoneInformation = (props) => {
     return (
         <View style={styles.editEmailHolder}>
@@ -106,15 +110,33 @@ class editPhoneInfoComponent extends Component {
 
     componentDidMount() { }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props != prevProps) {
+            if (this.props &&
+                this.props.profileState &&
+                this.props.profileState.profileUserMobileNumber) {
+                userMobileNumber = this.props.profileState.profileUserMobileNumber;
+            }
+    
+            if (this.props &&
+                this.props.profileState &&
+                this.props.profileState.profileUserHomeNumber) {
+                userHomeNumber = this.props.profileState.profileUserHomeNumber;
+            }
+    
+            if (this.props &&
+                this.props.profileState &&
+                this.props.profileState.profileUserWorkNumber) {
+                userWorkNumber = this.props.profileState.profileUserWorkNumber;
+            }
+        }
+    }
+
     phoneInformationOnAdd = () => this.props.navigation.navigate('editAddPhoneNumber');
 
     phoneInformationOnCancel = () => this.props.navigation.navigate('profileSettings');
 
     render() {
-
-        let userMobileNumber = tempUserMobile;
-        let userHomeNumber = tempUserHome;
-        let userWorkNumber = tempUserWork;
 
         if (this.props &&
             this.props.profileState &&
