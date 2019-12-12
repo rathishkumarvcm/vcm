@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     /*----------- Wizard grid rendering -------------------*/
     var pages = [];
     let currentPage = props.currentPage;
-    let totalCount = 4;
+    let totalCount = props.totalCount;
     var tempViewSkin = styles.wizardGrid;
     var tempTxtSkin = styles.wizardPageTxt;
 
@@ -161,12 +161,14 @@ const styles = StyleSheet.create({
 
 PageNumber.propTypes = {
     currentPage: PropTypes.number,
+    totalCount:PropTypes.number,
     pageName:PropTypes.string,
 };
 
 PageNumber.defaultProps = {
     currentPage: 1,
     pageName:"",
+    totalCount:4,
 
 };
 

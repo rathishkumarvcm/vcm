@@ -229,6 +229,7 @@ class LiquidationPageThreeComponent extends Component {
         console.log("amountBeforeTaxes : " + this.state.taxAccountingMethodData.amountBeforeTaxes);
         console.log("totalTaxToBeWithhold :" + this.state.taxAccountingMethodData.totalTaxToBeWithhold);
         let currentPage = 3;
+        let totalCount = 4;
         let pageName = gblStrings.liquidation.fundWithdrawalHeading;
         return (
             <View style={styles.container} >
@@ -243,7 +244,7 @@ class LiquidationPageThreeComponent extends Component {
                         />
                     </TouchableOpacity>
 
-                    <PageNumber currentPage={currentPage} pageName={pageName} />
+                    <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount}/>
                     <View style={styles.flex2}>
                         <View style={styles.accountFlex}>
                             <Text style={styles.accountNumberText}>Account Name 1</Text>

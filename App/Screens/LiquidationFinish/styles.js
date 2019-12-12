@@ -23,10 +23,19 @@ export const styles = StyleSheet.create({
         borderWidth:scaledHeight(1),
         marginTop:scaledHeight(30)
     },
-    transactionStatusText:{
+    transactionStatusMessageFlex:{
+        flexDirection: 'row', 
+        flexWrap: 'wrap',
         margin: "4%",
+    },
+    transactionStatusText:{
         color:'#56565A',
         fontSize:scaledHeight(15)
+    },
+    transactionStatusTextBold:{
+        color:'#56565A',
+        fontSize:scaledHeight(15),
+        fontWeight:'bold'
     },
     targetPageText:{
         height: scaledHeight(58),

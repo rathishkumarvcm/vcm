@@ -27,6 +27,7 @@ class LiquidationPageFourComponent extends Component {
 
     render() {
         let currentPage = 4;
+        let totalCount = 4;
         let pageName = gblStrings.liquidation.reviewNConfirmHeading;
         let fundingSourceData = this.props.navigation.getParam('fundingSource');
         let taxAccountingMethodData = this.props.navigation.getParam('taxAccountingMethodData');
@@ -52,7 +53,7 @@ class LiquidationPageFourComponent extends Component {
                             color="#707070"
                         />
                     </TouchableOpacity>
-                    <PageNumber currentPage={currentPage} pageName={pageName} />
+                    <PageNumber currentPage={currentPage} pageName={pageName} totalCount = {totalCount}/>
 
                     <View style={styles.flex1}>
                         <Text style={styles.subHeading}>{gblStrings.liquidation.tradeType}</Text>

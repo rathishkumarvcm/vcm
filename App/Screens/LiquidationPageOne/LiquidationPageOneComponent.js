@@ -64,6 +64,7 @@ class LiquidationPageOneComponent extends Component {
 
     render() {
         let currentPage = 1;
+        let totalCount = 4;
         let pageName = '1 - Account Selection';
         return (
             <View style={styles.container} >
@@ -78,7 +79,7 @@ class LiquidationPageOneComponent extends Component {
                         />
                     </TouchableOpacity>
 
-                    <PageNumber currentPage={currentPage} pageName={pageName} />
+                    <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount}/>
                     <View style={styles.flex1}>
 
                         <Text style={styles.greyText16px}>{gblStrings.liquidation.accountSelectionContent}</Text>
