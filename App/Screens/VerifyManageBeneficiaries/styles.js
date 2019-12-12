@@ -20,14 +20,6 @@ export const styles = StyleSheet.create({
     marginTop: scaledHeight(20),
     lineHeight: scaledHeight(29)
   },
-  settingsBorder: {
-    marginTop: scaledHeight(10),
-    marginBottom: scaledHeight(10),
-    width: "92%",
-    alignSelf: "center",
-    borderBottomWidth: 1,
-    borderColor: "#E2E4E5"
-  },
   contentViewInternal: {
     marginTop: scaledHeight(20),
     marginBottom: scaledHeight(20),
@@ -159,5 +151,27 @@ export const styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: scaledHeight(15),
     lineHeight: 24
+  },
+  distributionViewStyle:{
+    marginTop:scaledHeight(30),
+    width:'90%',
+    alignSelf:'center',
+    backgroundColor:'#EEEEEE',
+    borderColor:'#EEEEEE',
+    borderWidth:scaledHeight(1)
+  },
+  todBeneDistributionTxt:{
+    margin:scaledHeight(15),
+    color: "#56565A",
+    fontWeight: "600",
+    fontSize: scaledHeight(22),
+    lineHeight: 27
+  },
+  otherBeneDistributionTxt:{
+    margin:scaledHeight(15),
+    color: "#56565A",
+    fontWeight: "600",
+    fontSize: scaledHeight(17),
+    lineHeight: 20
   }
 });

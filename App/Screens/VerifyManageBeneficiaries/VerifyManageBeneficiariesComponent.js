@@ -15,7 +15,11 @@ class VerifyManageBenificiariesComponent extends Component {
     super(props);
     this.state = {
       isLoading: false,
-      bene_Data:{}
+      bene_Data:{},
+      totalDistribution:0,
+      totalPrimaryDistribution:0,
+      totalContingentDistribution:0,
+      totalTodDistribution:0
     };
   }
 
@@ -25,7 +29,30 @@ class VerifyManageBenificiariesComponent extends Component {
   }
 
   updateInitialData=()=>{
-    this.setState({bene_Data:this.props.navigation.getParam('mBData')});
+    let data=this.props.navigation.getParam('mBData');
+    this.setState({bene_Data:data});
+    if(data.transfer_on_Death_Bene){
+      let dist=0;
+      for(let item of data.transfer_on_Death_Bene){
+        dist=dist+parseInt(item.distribution_Per);
+      }
+      this.setState({totalTodDistribution:dist});
+    }
+    if(data.primary_Bene){
+      let dist=0;
+      for(let item of data.primary_Bene){
+        dist=dist+parseInt(item.distribution_Per);
+      }
+      this.setState({totalPrimaryDistribution:dist});
+    }
+    if(data.contingent_Bene){
+      let dist=0;
+      for(let item of data.contingent_Bene){
+        dist=dist+parseInt(item.distribution_Per);
+      }
+      this.setState({totalContingentDistribution:dist});
+    }
+    this.setState({totalDistribution:this.state.totalPrimaryDistribution+this.state.totalContingentDistribution+this.state.totalTodDistribution});
   }
 
   onClickEdit=()=>{
@@ -55,7 +82,6 @@ class VerifyManageBenificiariesComponent extends Component {
         });
     return list;
   }
-
 
   renderContingentBeneficiary=({item})=>{
     return(
@@ -94,7 +120,7 @@ class VerifyManageBenificiariesComponent extends Component {
           </View>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.distributionPercentage}</Text>
-            <Text style={styles.shortContentValueText}>{"$ "+item.distribution_Per}</Text>
+            <Text style={styles.shortContentValueText}>{item.distribution_Per+"%"}</Text>
           </View>
         </View>
       </View>
@@ -138,7 +164,7 @@ class VerifyManageBenificiariesComponent extends Component {
           </View>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.distributionPercentage}</Text>
-            <Text style={styles.shortContentValueText}>{"$ "+item.distribution_Per}</Text>
+            <Text style={styles.shortContentValueText}>{item.distribution_Per+"%"}</Text>
           </View>
         </View>
       </View>
@@ -182,7 +208,7 @@ class VerifyManageBenificiariesComponent extends Component {
           </View>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.distributionPercentage}</Text>
-            <Text style={styles.shortContentValueText}>{"$ "+item.distribution_Per}</Text>
+            <Text style={styles.shortContentValueText}>{item.distribution_Per+"%"}</Text>
           </View>
         </View>
       </View>
@@ -244,6 +270,16 @@ class VerifyManageBenificiariesComponent extends Component {
             />
           }
 
+          {/*--------------------------- Distribution Percentage View --------------------------------*/}
+
+          <View style={styles.distributionViewStyle}>
+                  {this.state.bene_Data.transfer_on_Death_Bene ? 
+                    <Text style={styles.todBeneDistributionTxt}>{"Total Distribution Percentage"}</Text>:
+                    <Text style={styles.otherBeneDistributionTxt}>{"Total Distribution Percentage of Primary ("+this.state.totalPrimaryDistribution+"%) + Contingent ("+this.state.totalContingentDistribution +"%)"}</Text>
+                  }
+                  <Text style={styles.todBeneDistributionTxt}>{"= "+this.state.totalDistribution + "%"}</Text>
+          </View>
+
           {/*--------------------------- Button View --------------------------------*/}
 
           <View style={styles.btnGrp}>
@@ -271,9 +307,10 @@ class VerifyManageBenificiariesComponent extends Component {
               onPress={this.onClickSubmit}
             />
           </View>
+
           {/*--------------------------- Footer View --------------------------------*/}
           <View style={styles.footerView} />
-          <View style={styles.settingsBorder} />
+          <View style={styles.line} />
           <View style={styles.blockMarginTop} />
           <View style={styles.mainHeadingView}>
             <Text style={styles.disclaimerTextHeading}>
