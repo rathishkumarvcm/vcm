@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { styles } from './styles';
-import { View, ScrollView, Text, FlatList, Switch, TouchableOpacity } from 'react-native';
-import { GHeaderComponent, GInputComponent, GSwitchComponent, GFooterComponent, GButtonComponent, GIcon } from '../../CommonComponents';
+import { View, ScrollView, Text, FlatList, TouchableOpacity } from 'react-native';
+import { GHeaderComponent, GFooterComponent, GIcon } from '../../CommonComponents';
 import PropTypes from "prop-types";
 import gblStrings from '../../Constants/GlobalStrings';
 
-const data = 
-    {    
+const data = {    
         PopularAccount: [
             "Discover",
             "Bank of America",
@@ -16,10 +15,7 @@ const data =
             "Bank Name 2",
             "Bank Name 3",
             "Others"
-        ]
-    }
-
-;
+        ]};
 
 class AddBankAccountComponent extends Component {
     constructor(props) {
@@ -31,10 +27,20 @@ class AddBankAccountComponent extends Component {
         };
     }
 
+    navigateAddOtherBank = function () {
+        this.props.navigation.navigate('addOtherBankAccountComponent');
+    }
+
     setExpandInstruction = () => {
         this.setState({
             expand: !this.state.expand,
         });
+    }
+
+    openAddBankOption = (bankName) => () => {
+        if(bankName == "Others") {
+            this.props.navigation.navigate('addOtherBankAccountComponent');
+        }
     }
 
     render() {
@@ -63,9 +69,11 @@ class AddBankAccountComponent extends Component {
 
                     <FlatList
                         data={this.state.popularAccountsList}
-                        renderItem={({ item }) => (<ViewAccountItem
+                        renderItem={({ item }) => (
+                        <ViewAccountItem
                             item={item}
-                                                   />)}
+                            openAddBankOption = {this.openAddBankOption}
+                        />)}
                         keyExtractor={(item) => this.state.popularAccountsList.indexOf(item)}
                     />
 
@@ -111,21 +119,18 @@ class AddBankAccountComponent extends Component {
 const ViewAccountItem = (props) => {
     item = props.item;
     return (
-        <>
-            <View style={styles.accountView}>
-                <GIcon 
+        <TouchableOpacity style={styles.accountView} onPress={props.openAddBankOption(item)}>
+            <GIcon 
                 name="closesquareo"
-                    type="antdesign"
-                    size={11.43}
-                    color="#56565A"
-                />
-                
-                <Text style={styles.accountText}>
-                    {`${item}`}
-                </Text>
-            </View>
-
-        </>
+                type="antdesign"
+                size={11.43}
+                color="#56565A"
+            />
+            
+            <Text style={styles.accountText}>
+                {`${item}`}
+            </Text>
+        </TouchableOpacity>
     );
 };
 
