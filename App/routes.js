@@ -847,8 +847,10 @@ const AppNavigator = createStackNavigator({
             screen:ReviewConfirmComponent,
             navigationOptions:{
                 header:null, 
-           },
-    },{
+           }
+        }
+    },
+    {
         initialRouteName: 'login'
     });
 
