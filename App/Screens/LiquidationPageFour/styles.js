@@ -41,8 +41,6 @@ export const styles = StyleSheet.create({
         width: "92%",
         marginTop: '4%',
         marginBottom:"4%",
-        marginLeft: '4%',
-        marginRight: '4%',
     },
     section:{
         marginLeft: '4%',
@@ -82,6 +80,7 @@ export const styles = StyleSheet.create({
     },
     govtSecuritiesFund:{
         height:scaledHeight(184),
+        marginTop:"4%"
     },
     blackTextBold22px:{
         color:'#333333DE',
@@ -98,6 +97,7 @@ export const styles = StyleSheet.create({
     },
     flex3b:{
         height:scaledHeight(142),
+        marginTop:"4%",
     },
     flex4:{
         //height:scaledHeight(565),
@@ -109,6 +109,7 @@ export const styles = StyleSheet.create({
     },
     flex4b:{
         height:scaledHeight(504),
+        marginTop:"8%",
     },
     flex5:{
         height:scaledHeight(206),

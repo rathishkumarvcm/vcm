@@ -14,8 +14,8 @@ class LiquidationPageFourComponent extends Component {
         this.amount = '';
     }
 
-    formatAmount=(amount)=>{
-        var amt = parseInt(this.amount).toLocaleString();
+    formatAmount = (amount) => {
+        var amt = parseInt(amount).toLocaleString();
         return amt;
     }
 
@@ -31,16 +31,16 @@ class LiquidationPageFourComponent extends Component {
         let pageName = gblStrings.liquidation.reviewNConfirmHeading;
         let fundingSourceData = this.props.navigation.getParam('fundingSource');
         let taxAccountingMethodData = this.props.navigation.getParam('taxAccountingMethodData');
-        console.log("fundingSourceData------> ",fundingSourceData);
-        console.log("taxAccountingMethodData------> ",taxAccountingMethodData);
-        console.log("requestedAmountType------> ",taxAccountingMethodData.requestedAmountType);
-        if(taxAccountingMethodData.requestedAmountType == "Before Taxes"){
+        console.log("fundingSourceData------> ", fundingSourceData);
+        console.log("taxAccountingMethodData------> ", taxAccountingMethodData);
+        console.log("requestedAmountType------> ", taxAccountingMethodData.requestedAmountType);
+        if (taxAccountingMethodData.requestedAmountType == "Before Taxes") {
             this.amount = taxAccountingMethodData.amountBeforeTaxes;
-        }else{
+        } else {
             this.amount = taxAccountingMethodData.amountAfterTaxes;
         }
-        console.log("this.amount------> ",this.amount);
-        console.log("formatted amount------> ",parseInt(this.amount).toLocaleString());
+        console.log("this.amount------> ", this.amount);
+        console.log("formatted amount------> ", parseInt(this.amount).toLocaleString());
         return (
             <View style={styles.container} >
                 <GHeaderComponent navigation={this.props.navigation} />
@@ -53,7 +53,7 @@ class LiquidationPageFourComponent extends Component {
                             color="#707070"
                         />
                     </TouchableOpacity>
-                    <PageNumber currentPage={currentPage} pageName={pageName} totalCount = {totalCount}/>
+                    <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
 
                     <View style={styles.flex1}>
                         <Text style={styles.subHeading}>{gblStrings.liquidation.tradeType}</Text>
@@ -64,6 +64,27 @@ class LiquidationPageFourComponent extends Component {
                         </View>
 
 
+                    </View>
+
+                    <View style={styles.flex3}>
+                        <View style={styles.selectedMutualFunds}>
+                            <View style={styles.horizontalFlex}>
+                                <Text style={styles.subHeading}>{gblStrings.liquidation.accountSelection}</Text>
+                                <Text style={styles.edit}>{gblStrings.common.edit}</Text>
+                            </View>
+                            <View style={styles.line} />
+                        </View>
+
+                        <View style={styles.flex3b}>
+                            <View style={styles.section}>
+                                <Text style={styles.greyTextBold16px}>Account Name</Text>
+                                <Text style={styles.greyText16px}>Account Name 1</Text>
+                            </View>
+                            <View style={styles.section}>
+                                <Text style={styles.greyTextBold16px}>Account Number</Text>
+                                <Text style={styles.greyText16px}>XXXX-XXXX-XXXX</Text>
+                            </View>
+                        </View>
                     </View>
 
                     {/*selected mutual funds*/}
@@ -110,7 +131,6 @@ class LiquidationPageFourComponent extends Component {
                                 <Text style={styles.greyText16px}>{fundingSourceData.selectedBankAccountNo}</Text>
                             </View>
                         </View>
-
                     </View>
 
                     <View style={styles.flex4}>
@@ -128,7 +148,7 @@ class LiquidationPageFourComponent extends Component {
                                 <Text style={styles.greyText16px}>{taxAccountingMethodData.requestedAmountType}</Text>
                             </View>
                             <View style={styles.section}>
-                                <Text style={styles.greyTextBold16px}>Amount {taxAccountingMethodData.requestedAmountType}</Text>
+                                <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.amountAfterTaxes}{taxAccountingMethodData.requestedAmountType}</Text>
                                 <Text style={styles.greyText16px}>$ {this.formatAmount(this.amount)}</Text>
                             </View>
                             <View style={styles.section}>

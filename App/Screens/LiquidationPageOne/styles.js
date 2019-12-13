@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
+import { scaledHeight } from '../../Utils/Resolution';
 
 
 export const styles = StyleSheet.create({
@@ -116,12 +116,22 @@ export const styles = StyleSheet.create({
     },
     submitFlex: {
         height: scaledHeight(50),
-        borderColor: '#61285F45',
+        borderColor: '#544A54',
         borderWidth: scaledHeight(1),
         backgroundColor:'#544A54',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop:scaledHeight(19)
+    },
+    submitFlexDisabled: {
+        height: scaledHeight(50),
+        borderColor: '#544A54',
+        borderWidth: scaledHeight(1),
+        backgroundColor:'#544A54',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop:scaledHeight(19),
+        opacity:0.5
     },
     submitText: {
         color: '#FFFFFF',

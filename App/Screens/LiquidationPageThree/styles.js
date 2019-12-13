@@ -86,6 +86,14 @@ export const styles = StyleSheet.create({
         height: scaledHeight(80), 
         marginBottom: scaledHeight(24)
     },
+    addBankAccountFlex:{
+        flexDirection: 'row', 
+        borderWidth: scaledHeight(1), 
+        borderColor: '#5D83AE99', 
+        marginLeft: '4%', marginRight: '4%', 
+        height: scaledHeight(80), 
+        marginTop: scaledHeight(24)
+    },
     selectedBankAccountFlex:{
         flexDirection: 'row', 
         borderWidth: scaledHeight(4), 

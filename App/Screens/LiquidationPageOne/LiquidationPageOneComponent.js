@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity ,FlatList} from 'react-native';
-import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import { styles } from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
 import PropTypes from 'prop-types';
-import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
+import { scaledHeight } from '../../Utils/Resolution';
 import Collapsible from 'react-native-collapsible';
 
 const accSelectionData = [
@@ -37,27 +37,47 @@ class LiquidationPageOneComponent extends Component {
             collapseGeneralAccount: true,
             collapseIRAAccount: true,
             collapseUTMAAccount: true,
-            selectedAccountIndex:0
+            selectedAccountIndex: null,
+            disableNextButton: true,
         };
     }
 
     onClickExpandGeneralAccount = () => {
         this.setState({ collapseGeneralAccount: !this.state.collapseGeneralAccount });
-        (this.state.collapseGeneralAccount ? this.setState({ generalAccountIcon: "-    " }) : this.setState({ generalAccountIcon: "+   " }))
+        (this.state.collapseGeneralAccount ? this.setState({ generalAccountIcon: "-    " }) : this.setState({ generalAccountIcon: "+   " }));
     }
     onClickExpandIRAAccount = () => {
         this.setState({ collapseIRAAccount: !this.state.collapseIRAAccount });
-        (this.state.collapseIRAAccount ? this.setState({ IRAAccountIcon: "-    " }) : this.setState({ IRAAccountIcon: "+   " }))
+        (this.state.collapseIRAAccount ? this.setState({ IRAAccountIcon: "-    " }) : this.setState({ IRAAccountIcon: "+   " }));
     }
     onClickExpandUTMAAccount = () => {
         this.setState({ collapseUTMAAccount: !this.state.collapseUTMAAccount });
-        (this.state.collapseUTMAAccount ? this.setState({ UTMAAccountIcon: "-    " }) : this.setState({ UTMAAccountIcon: "+   " }))
+        (this.state.collapseUTMAAccount ? this.setState({ UTMAAccountIcon: "-    " }) : this.setState({ UTMAAccountIcon: "+   " }));
     }
 
     onClickSelectAccount = (item, index) => {
         this.setState({
-            selectedAccountIndex: index
-        })
+            selectedAccountIndex: index,
+            disableNextButton: false,
+        });
+    }
+
+    switchOnFlex = () => {
+        return (
+            <View style={{ backgroundColor: 'white', width: "15%", marginTop: "1%", alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'row', marginRight: "6%" }} onTouchStart={() => this.onClickSelectAccount(item, index)}>
+                <View style={{ backgroundColor: '#444444', borderColor: '#707070', borderWidth: scaledHeight(1), width: "100%", height: scaledHeight(25), borderRadius: 15, marginTop: scaledHeight(2) }} />
+                <View style={{ backgroundColor: '#FFFFFF', width: scaledHeight(30), borderColor: '#707070', borderWidth: scaledHeight(1), height: scaledHeight(30), borderRadius: scaledHeight(15), zIndex: 3, marginLeft: scaledHeight(-30) }} />
+            </View>
+        )
+    }
+
+    switchOffFlex = () => {
+        return (
+            <View style={{ backgroundColor: 'white', width: "15%", marginTop: "1%", alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'row', marginRight: "6%" }} onTouchStart={() => this.onClickSelectAccount(item, index)}>
+                <View style={{ backgroundColor: '#DBDBDB', borderColor: '#707070', borderWidth: scaledHeight(1), width: "100%", height: scaledHeight(25), borderRadius: 15, marginTop: scaledHeight(2) }} />
+                <View style={{ width: scaledHeight(30), height: scaledHeight(30), borderRadius: scaledHeight(15), borderColor: '#707070', borderWidth: scaledHeight(1), backgroundColor: '#FFFFFF', position: 'absolute', zIndex: 3 }} />
+            </View>
+        )
     }
 
     navigateLiquidationPageTwo = () => this.props.navigation.navigate('LiquidationPageTwo');
@@ -65,7 +85,7 @@ class LiquidationPageOneComponent extends Component {
     render() {
         let currentPage = 1;
         let totalCount = 4;
-        let pageName = '1 - Account Selection';
+        let pageName = gblStrings.liquidation.accountSelectionScreenName;
         return (
             <View style={styles.container} >
                 <GHeaderComponent navigation={this.props.navigation} />
@@ -79,7 +99,7 @@ class LiquidationPageOneComponent extends Component {
                         />
                     </TouchableOpacity>
 
-                    <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount}/>
+                    <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.flex1}>
 
                         <Text style={styles.greyText16px}>{gblStrings.liquidation.accountSelectionContent}</Text>
@@ -89,7 +109,7 @@ class LiquidationPageOneComponent extends Component {
                                 <Text style={styles.headerText} onPress={this.onClickExpandGeneralAccount}>{this.state.generalAccountIcon}</Text>
                                 <Text style={styles.headerText}>{gblStrings.liquidation.generalAccountHeading}</Text>
                             </View>
-                            <View style={styles.line}></View>
+                            <View style={styles.line} />
                         </View>
                         <Collapsible collapsed={this.state.collapseGeneralAccount} align="center">
                             <FlatList
@@ -97,27 +117,29 @@ class LiquidationPageOneComponent extends Component {
                                 renderItem={({ item, index }) => {
                                     return (
                                         <View style={styles.accountDetailsFlex}>
-
                                             <View style={styles.flexAccDetails1}>
                                                 <View style={styles.accountNumberFlex}>
                                                     <Text style={styles.blackTextBold18px}>Account Name {item.accName}</Text>
                                                     <Text style={styles.blackTextBold18px}>Account Number</Text>
                                                     <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
                                                 </View>
-                                                {this.state.selectedAccountIndex == index ?<View style={{ backgroundColor: 'white', width: "15%", marginTop: "1%", alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'row', marginRight: "6%" }} onTouchStart={() => this.onClickSelectAccount(item, index)}>
-                                                    <View style={{ backgroundColor: '#444444', borderColor: '#707070', borderWidth: scaledHeight(1), width: scaledHeight(45), height: scaledHeight(25), borderRadius: 15, marginTop: scaledHeight(2) }} />
-                                                    <View style={{ backgroundColor: '#FFFFFF', width: scaledHeight(30), borderColor: '#707070', borderWidth: scaledHeight(1), height: scaledHeight(30), borderRadius: scaledHeight(15), marginLeft: "-60%" }} />
-                                                </View>:<View style={{backgroundColor: 'white', width: "15%", marginTop: "1%",alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'row', marginRight: "6%" }} onTouchStart={() => this.onClickSelectAccount(item, index)}>
-                                                    <View style={{ width: scaledHeight(30), height: scaledHeight(30),borderRadius: scaledHeight(15), borderColor: '#707070', borderWidth: scaledHeight(1), backgroundColor: '#FFFFFF', marginLeft: "0%", zIndex: 3 }}></View>
-                                                    <View style={{ backgroundColor: '#DBDBDB', borderColor: '#707070', borderWidth: scaledHeight(1), width: scaledHeight(45), height: scaledHeight(25),  marginTop: scaledHeight(2),borderRadius: 15, marginLeft: "-60%" }} />
+                                                {(this.state.selectedAccountIndex == index) ?
+                                                    <View style={{ backgroundColor: 'white', width: "15%", marginTop: "1%", alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'row', marginRight: "6%" }} onTouchStart={() => this.onClickSelectAccount(item, index)}>
+                                                        <View style={{ backgroundColor: '#444444', borderColor: '#707070', borderWidth: scaledHeight(1), width: "100%", height: scaledHeight(25), borderRadius: 15, marginTop: scaledHeight(2) }} />
+                                                        <View style={{ backgroundColor: '#FFFFFF', width: scaledHeight(30), borderColor: '#707070', borderWidth: scaledHeight(1), height: scaledHeight(30), borderRadius: scaledHeight(15), zIndex: 3, marginLeft: scaledHeight(-30) }} />
+                                                    </View>
+                                                    :
+                                                    <View style={{ backgroundColor: 'white', width: "15%", marginTop: "1%", alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'row', marginRight: "6%" }} onTouchStart={() => this.onClickSelectAccount(item, index)}>
+                                                        <View style={{ backgroundColor: '#DBDBDB', borderColor: '#707070', borderWidth: scaledHeight(1), width: "100%", height: scaledHeight(25), borderRadius: 15, marginTop: scaledHeight(2) }} />
+                                                        <View style={{ width: scaledHeight(30), height: scaledHeight(30), borderRadius: scaledHeight(15), borderColor: '#707070', borderWidth: scaledHeight(1), backgroundColor: '#FFFFFF', position: 'absolute', zIndex: 3 }} />
+                                                    </View>
+                                                }
 
-                                                </View>}
 
-                                                
 
                                             </View>
 
-                                            <View style={styles.line}></View>
+                                            <View style={styles.line} />
 
 
                                             <View style={styles.flexAccDetails2}>
@@ -136,10 +158,11 @@ class LiquidationPageOneComponent extends Component {
                                             </View>
                                         </View>
 
-                                    )
+                                    );
                                 }}
                                 keyExtractor={x => x.accNumber}
-                                extraData={this.state} />
+                                extraData={this.state}
+                            />
                         </Collapsible>
 
 
@@ -148,7 +171,7 @@ class LiquidationPageOneComponent extends Component {
                                 <Text style={styles.headerText} onPress={this.onClickExpandIRAAccount}>{this.state.IRAAccountIcon}</Text>
                                 <Text style={styles.headerText}>{gblStrings.liquidation.iraAccountHeading}</Text>
                             </View>
-                            <View style={styles.line}></View>
+                            <View style={styles.line} />
                         </View>
 
                         <View style={styles.accountTypeFlex}>
@@ -156,7 +179,7 @@ class LiquidationPageOneComponent extends Component {
                                 <Text style={styles.headerText} onPress={this.onClickExpandUTMAAccount}>{this.state.UTMAAccountIcon}</Text>
                                 <Text style={styles.headerText}>{gblStrings.liquidation.utmaAccountHeading}</Text>
                             </View>
-                            <View style={styles.line}></View>
+                            <View style={styles.line} />
                         </View>
 
                     </View>
@@ -165,7 +188,7 @@ class LiquidationPageOneComponent extends Component {
                         <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateLiquidationPageOne}>
                             <Text style={styles.backButtonText}>{gblStrings.common.cancel}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.submitFlex} onPress={this.navigateLiquidationPageTwo}>
+                        <TouchableOpacity style={this.state.disableNextButton ? styles.submitFlexDisabled : styles.submitFlex} onPress={this.navigateLiquidationPageTwo} disabled={this.state.disableNextButton}>
                             <Text style={styles.submitText}>{gblStrings.common.next}</Text>
                         </TouchableOpacity>
                     </View>

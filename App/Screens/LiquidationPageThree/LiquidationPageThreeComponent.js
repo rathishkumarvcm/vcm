@@ -219,6 +219,10 @@ class LiquidationPageThreeComponent extends Component {
         })
     }
 
+    onClickAddBankAccount=()=>{
+        this.props.navigation.navigate('bankAccount');
+    }
+
     navigateLiquidationPageOne = () => this.props.navigation.navigate('LiquidationPageOne');
     navigateLiquidationPageTwo = () => this.props.navigation.navigate('LiquidationPageTwo');
     navigateLiquidationPageFour = () => this.props.navigation.navigate('LiquidationPageFour', { taxAccountingMethodData: this.state.taxAccountingMethodData, fundingSource: this.state.fundingSource });
@@ -298,6 +302,7 @@ class LiquidationPageThreeComponent extends Component {
                                 keyExtractor={a => a.bankAccountNo}
                                 extraData = {this.state}
                             />
+                            <this.addaccount accountName={gblStrings.accManagement.addBankAccount} Image={require("../../Images/addaccount.png")} flexStyle={styles.addBankAccountFlex} onClickCheck={this.onClickAddBankAccount} />
                         </View>
 
                     </Collapsible>
@@ -311,7 +316,42 @@ class LiquidationPageThreeComponent extends Component {
                     }
 
 
+<View style={styles.flex5}>
+                        <View style={styles.headerFlex} onTouchStart={this.onClickExpandDeliveryAddress}>
+                            <Text style={styles.headerText}>{this.state.collpaseDAIcon}</Text>
+                            <Text style={styles.headerText}>Delivery Address</Text>
+                        </View>
+                        <View style={styles.line} />
+                        <Collapsible collapsed={this.state.collapseDeliveryAddress} align="center">
+                            <View style={styles.flexGreyBG}>
+                                <Text style={styles.greyText14pxRegular}>If Mailing Address on file was changed within the last 14 days an additional validation with third party service is done.</Text>
+                            </View>
+                            <Text style={styles.cityHeading}>Address</Text>
+                            <GInputComponent
+                                propInputStyle={styles.addressBox}
+                                inputStyle={styles.inputStyle} />
+                            <GInputComponent
+                                propInputStyle={styles.addressBox}
+                                inputStyle={styles.inputStyle} />
+                            <Text style={styles.cityHeading}>ZIP Code</Text>
+                            <GInputComponent
+                                propInputStyle={styles.addressBox}
+                                inputStyle={styles.inputStyle} />
+                            <Text style={styles.cityHeading}>City & State</Text>
+                            <View style={styles.flexCityNState}>
+                                <GInputComponent
+                                    propInputStyle={styles.city}
+                                    inputStyle={styles.inputStyle} />
+                                <GInputComponent
+                                    propInputStyle={styles.city}
+                                    inputStyle={styles.inputStyle} />
+                            </View>
+                        </Collapsible>
+                    </View>
 
+
+
+                    
                     <View style={this.state.collapseTaxAccounting ? styles.flexTaxAccounting : null}>
                         <View style={this.state.switchOff ? styles.flex4 : styles.flex4Hide}>
                             <View style={styles.headerFlex} onTouchStart={this.onClickExpandTaxAccounting}>
@@ -466,38 +506,7 @@ class LiquidationPageThreeComponent extends Component {
 
 
 
-                    <View style={styles.flex5}>
-                        <View style={styles.headerFlex} onTouchStart={this.onClickExpandDeliveryAddress}>
-                            <Text style={styles.headerText}>{this.state.collpaseDAIcon}</Text>
-                            <Text style={styles.headerText}>Delivery Address</Text>
-                        </View>
-                        <View style={styles.line} />
-                        <Collapsible collapsed={this.state.collapseDeliveryAddress} align="center">
-                            <View style={styles.flexGreyBG}>
-                                <Text style={styles.greyText14pxRegular}>If Mailing Address on file was changed within the last 14 days an additional validation with third party service is done.</Text>
-                            </View>
-                            <Text style={styles.cityHeading}>Address</Text>
-                            <GInputComponent
-                                propInputStyle={styles.addressBox}
-                                inputStyle={styles.inputStyle} />
-                            <GInputComponent
-                                propInputStyle={styles.addressBox}
-                                inputStyle={styles.inputStyle} />
-                            <Text style={styles.cityHeading}>ZIP Code</Text>
-                            <GInputComponent
-                                propInputStyle={styles.addressBox}
-                                inputStyle={styles.inputStyle} />
-                            <Text style={styles.cityHeading}>City & State</Text>
-                            <View style={styles.flexCityNState}>
-                                <GInputComponent
-                                    propInputStyle={styles.city}
-                                    inputStyle={styles.inputStyle} />
-                                <GInputComponent
-                                    propInputStyle={styles.city}
-                                    inputStyle={styles.inputStyle} />
-                            </View>
-                        </Collapsible>
-                    </View>
+                    
 
 
 
