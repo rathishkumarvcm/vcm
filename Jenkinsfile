@@ -52,7 +52,7 @@ pipeline {
                 dir('android')
                 {
                     sh '/usr/local/bin/bundle install'
-                    sh '/usr/local/bin/bundle exec fastlane beta'
+                    sh '/usr/local/bin/bundle exec /usr/local/bin/fastlane beta'
                 }
             }
         }
