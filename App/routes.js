@@ -123,6 +123,7 @@ import DividentsAndCapitalGainsPrefComponent from './Screens/Dividents';
 import CheckBookComponent from './Screens/OrderCheckBook';
 import BankAccountsComponent from './Screens/BankAccounts';
 import AddBankAccountComponent from './Screens/AddBankAccount';
+import AddOtherBankAccountComponent from './Screens/AddOtherBankAccount'
 
 //Systematic Withdrawal plan
 import systematicWithdrawal from './Screens/SystematicWithdrawalPlan';
@@ -854,6 +855,12 @@ const AppNavigator = createStackNavigator({
             screen:AddNewIntrestedPartiesComponent,
             navigationOptions:{
                 header:null,
+            }
+        },
+        addOtherBankAccountComponent: {
+            screen: AddOtherBankAccountComponent,
+            navigationOptions: {
+                header: null,
             }
         }
     },

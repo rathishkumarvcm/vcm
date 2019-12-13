@@ -24,6 +24,7 @@ import GFooterSettingsComponent from './GFooterSettingsComponent';
 import GDropDownComponent from './GDropDownComponent';
 import GDateComponent from './GDateComponent';
 import GModalComponent from './GModalComponent';
+import GCollapseComponent from './GCollapseComponent';
 
 import {
     SetKeyValueToStore,
@@ -61,5 +62,6 @@ export {
     GFooterSettingsComponent,
     GDropDownComponent,
     GDateComponent,
-    GModalComponent
+    GModalComponent,
+    GCollapseComponent
 };
