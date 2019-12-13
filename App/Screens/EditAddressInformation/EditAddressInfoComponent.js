@@ -41,7 +41,7 @@ const UserAddressInformation = (props) => {
 
                 <View style={styles.editSwitchButton}>
                     <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={this.toggleSwitchMailing}
+                        onValueChange={props.onMailingSwitchToggle}
                         value={props.isMailingAddress} />
                 </View>
             </View>
@@ -67,7 +67,8 @@ UserAddressInformation.propTypes = {
     addressState: PropTypes.string,
     addressZipcode: PropTypes.string,
     isMailingAddress: PropTypes.bool,
-    isPhysicalAddress: PropTypes.bool
+    isPhysicalAddress: PropTypes.bool,
+    onMailingSwitchToggle: PropTypes.func
 };
 
 class editAddressInfoComponent extends Component {
@@ -80,7 +81,6 @@ class editAddressInfoComponent extends Component {
             faceIdEnrolled: false,
             touchIdEnrolled: false,
             refreshAddressData: false,
-
             profileUserAddressValue: [],
 
             isAddressTypeMailing: false,
@@ -88,25 +88,31 @@ class editAddressInfoComponent extends Component {
         };
     }
 
-    toggleSwitchMailing = (value) => {
-        this.props.isMailingAddress = value
+    onMailingSwitchToggle = (item, index) => () => {
+        var array = [...this.state.profileUserAddressValue];
+        if (index !== -1) {
+            let switchVal = array[index].isMailingAddress;
+            array[index].isMailingAddress = !switchVal;
+            this.setState({
+                profileUserAddressValue: array,
+                refreshAddressData: !this.state.refreshAddressData
+            });
+        }
     }
 
     toggleSwitchPhysical = (value) => {
         this.props.isPhysicalAddress = value
     }
 
-    renderAddressInformation = (dataLength) => ({ item, index }) => {
-        console.log("$$$$$$$$$$$$$$$"+dataLength.length);
-        console.log("item"+JSON.stringify(item));
-
+    renderAddressInformation = () => ({ item, index }) => {
         return (<UserAddressInformation
             addressType={item.addressType}
             addressLineOne={item.addressLineOne}
             addressCity={item.addressCity}
             addressState={item.addressState + ' ' + item.addressZipcode}
             isMailingAddress={item.isMailingAddress}
-            isPhysicalAddress={item.isPhysicalAddress} />);
+            isPhysicalAddress={item.isPhysicalAddress}
+            onMailingSwitchToggle={this.onMailingSwitchToggle(item, index)} />);
     }
 
     componentDidMount() {
@@ -173,7 +179,7 @@ class editAddressInfoComponent extends Component {
                         data={this.state.profileUserAddressValue}
                         keyExtractor={this.generateKeyExtractor}
                         extraData={this.state.refreshAddressData}
-                        renderItem={this.renderAddressInformation(this.state.profileUserAddressValue)} />
+                        renderItem={this.renderAddressInformation()} />
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
