@@ -473,7 +473,7 @@ export default {
         emptyPrefixMsg: "Please select Prefix of your name",
         emptyFirstNameMsg: "Please enter First name",
         emptyLastNameMsg: "Please enter Last name",
-        emptyDOBMsg: "Please enter valid Date of Birth",
+        emptyDOBMsg: "Please enter Date of Birth",
         emptyGenderMsg: "Please select Gender",
         emptyMaritalMsg: "Please select Marital Status",
         emptyCitizenshipMsg: "Please select Citizenship ",
