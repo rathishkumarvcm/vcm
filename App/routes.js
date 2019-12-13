@@ -94,6 +94,7 @@ import QuickSigninComponent from './Screens/QuickSignIn';
 
 import ManageIntrestedPartiesComponent from './Screens/ManageIntrestedParties';
 import AddNewIntrestedPartiesComponent from './Screens/AddNewIntrestedParties';
+import VerifyIntrestedPartiesComponent from './Screens/VerifyIntrestedParties';
 import ManageBeneficiariesComponent from './Screens/ManageBeneficiaries';
 import EditManageBeneficiariesComponent from './Screens/EditManageBeneficiaries';
 import VerifyManageBenificiariesComponent from './Screens/VerifyManageBeneficiaries';
@@ -861,6 +862,12 @@ const AppNavigator = createStackNavigator({
             screen: AddOtherBankAccountComponent,
             navigationOptions: {
                 header: null,
+            }
+        },
+        verifyIntrestedParties:{
+            screen:VerifyIntrestedPartiesComponent,
+            navigationOptions:{
+                header:null,
             }
         }
     },

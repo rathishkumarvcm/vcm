@@ -306,6 +306,27 @@ class addNewIntrestedPartiesComponent extends Component {
     
     onClickSave=()=>{
         console.log("in save function");
+        let data=this.state.personal,key=parseInt(this.state.account_Data.intrestedParty.length)+1;
+        let obj={
+            "key":key,
+            "fname":data.firstName,
+            "mname":data.middleName,
+            "lname":data.lastName,
+            "contract_Number":"123456789",
+            "relationship_To_Account_holder":data.relation,
+            "email":data.email,
+            "company":data.company,
+            "address":data.addressLine1+","+data.addressLine2,
+            "zipCode":data.zipCode,
+            "city":data.city,
+            "stateValue":data.stateValue,
+            "startDate":data.startDate,
+            "endDate":data.endDate,
+            "accounts_Tagged":'1'    
+        };
+        console.log("Added Data:::::",obj);
+        
+        this.props.navigation.navigate("verifyIntrestedParties",{acc_Data:this.state.account_Data, added_obj:obj });
     }
 
     generateKeyExtractor = (item) => item.key;

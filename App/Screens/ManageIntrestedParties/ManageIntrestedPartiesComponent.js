@@ -75,6 +75,7 @@ class manageIntrestedPartiesComponent extends Component {
                 {item.intrestedParty &&
                   <FlatList
                     data={item.intrestedParty}
+                    extraData={this.props}
                     keyExtractor={this.generateKeyExtractor}
                     renderItem={this.renderIntrestedParties} 
                   />
