@@ -63,7 +63,6 @@ class editAddressAddNewComponent extends Component {
             if (this.props != prevProps) {
                 if (this.props && this.props.stateCityData[stateCityResponseData]) {
                     const tempResponse = this.props.stateCityData[stateCityResponseData];
-                    console.log("@@@@@@@@@@@@@@@ Success Update", tempResponse);
                     if (tempResponse && tempResponse.City) {
                         this.setState({
                             userCity: tempResponse.City,
@@ -85,7 +84,6 @@ class editAddressAddNewComponent extends Component {
             if (this.props != prevProps) {
                 if (this.props && this.props.stateCityData[addressResponseData]) {
                     const tempAddressResponse = this.props.stateCityData[addressResponseData];
-                    console.log("@@@@@@@@@@@@@@@@@@@@ Success Address", tempAddressResponse);
                     if (tempAddressResponse && tempAddressResponse.Address2) {
                         this.setState({
                             addressOne: tempAddressResponse.Address1 || "",
