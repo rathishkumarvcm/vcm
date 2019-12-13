@@ -17,26 +17,53 @@ class QuickSignInComponent extends Component {
         
        
       }
-      goBack = () => {
-        
-            
+      goBack = () => {   
+        let payloadData = {};
+        payloadData = { 
+            quickSignIn:this.state.switchOn
+        };
+        this.props.signInMethods("signInMethodsData", payloadData);   
+        console.log("payloadquicksignin",payloadData)
         this.props.navigation.goBack();
     }
 
+    componentDidMount()
+    {
+        if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.quickSignIn)
+        {
+            console.log("quicksignincomponentDidMount",this.props.signInMethodsData.quickSignIn);
+            this.setState({switchOn:this.props.signInMethodsData.quickSignIn,
+            switchOff:!this.props.signInMethodsData.quickSignIn});
+        }
+    }
+    componentDidUpdate(prevProps, prevState)
+    {
+        console.log("componentDidUpdate::::> "+this.props.signInMethodsData);
+        if (this.props !== prevProps) {
+            if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.quickSignIn)
+        {
+            console.log("quicksignincomponentDidUpdate",this.props.signInMethodsData.quickSignIn);
+           this.setState({switchOn:this.props.signInMethodsData.quickSignIn,
+            switchOff:!this.props.signInMethodsData.quickSignIn});
+        }
+        }
+        
+    }
+   
+    
+
 
       switchOnMethod = () => {
-        /*let payloadData = {};
-        payloadData = { 
-            quickSignIn:true
-        };
-        this.props.signInMethods("signInMethodsData", payloadData);*/
         this.setState({
             switchOff: !this.state.switchOff,
             switchOn: !this.state.switchOn,
         });
+        
+       
     }
 
       render() {
+          console.log("switch" ,this.state.switchOn);
         return(
             <View style={styles.container} >
                 <GHeaderComponent navigation={this.props.navigation} />

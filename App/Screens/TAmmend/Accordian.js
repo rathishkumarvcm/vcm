@@ -3,7 +3,7 @@ import { View, TouchableOpacity, Text, StyleSheet,Modal } from "react-native";
 import { styles } from './styles';
 import {GIcon,GButtonComponent} from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-
+import PropTypes from 'prop-types';
 
 export default class Accordian extends Component {
 
@@ -36,7 +36,19 @@ export default class Accordian extends Component {
     hideAmmend = () => {
         this.setState({
             ammend:false,
+        })
+    }
+    moveToFundSelection = () => {
+        
+        this.setState({
+            modalVisible: false,   
         });
+        this.setState({
+            ammend:false,
+        })
+        //this.props.navigation.navigate('fundSelectionComponent');
+        this.props.navigate();
+       
     }
 
     render() {
@@ -102,14 +114,12 @@ export default class Accordian extends Component {
                 }
                 { this.state.modalVisible ?
             (<Modal
-            transparent
-            visible={this.state.modalVisible}
-            >
+            transparent={true}
+            visible={this.state.modalVisible}>
             <View style={styles.modalView}>
               <View style={styles.modalInsideView}>
                 <Text style={styles.modalText}>Are you Sure you want to Amend {this.props.selectedTitle}
-                (Purchase of {this.props.selectedValue} of UAUX fund)
-                </Text>
+                (Purchase of {this.props.selectedValue} of UAUX fund)</Text>
                 <View style={{flexDirection:'row',marginTop:"5%"}}>
             <GButtonComponent
                                 buttonStyle={styles.cancelButton}
@@ -121,9 +131,8 @@ export default class Accordian extends Component {
                                 buttonStyle={styles.saveButton}
                                 buttonText="Proceed"
                                 textStyle={styles.saveButtonText}
-                            //onPress={()=>this.props.navigation.navigate('registerPassword')}
-                            />
-                </View>
+                                onPress={this.moveToFundSelection}
+                            /></View>
               </View>
             </View>
             
@@ -144,4 +153,12 @@ export default class Accordian extends Component {
         this.props.selectDataIndex(this.props.data, this.props.title);
     }
 }
+
+Accordian.propTypes = {
+    navigation: PropTypes.instanceOf(Object),
+    initialState: PropTypes.instanceOf(Object)
+};
+
+
+
 

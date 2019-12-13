@@ -21,15 +21,6 @@ export const styles = StyleSheet.create({
         color: '#535353',
         flexWrap: 'wrap',
     },
-    sorttext:{
-        textAlign: 'right',
-        color:'rgba(51, 51, 51, 0.87)',
-        fontSize:scaledHeight(14),
-        color: '#535353',
-        flexWrap: 'wrap',
-        marginTop:scaledHeight(6),
-        marginLeft:scaledHeight(70)
-    },
     lblLine: {
         // width:"100%",
         flexGrow: 1,
@@ -37,6 +28,20 @@ export const styles = StyleSheet.create({
         height: scaledHeight(1),
         backgroundColor: '#707070',
         opacity: .25
+    },
+    accountNumberText:{
+        color:'#54565B',
+        fontSize:scaledHeight(18),
+        fontWeight:'bold',
+        marginTop:scaledHeight(10),
+        marginLeft:scaledHeight(10)
+    },
+    accountFlex:{
+        height:scaledHeight(82),
+        flexDirection:'column',
+        borderWidth:scaledHeight(1),
+        borderColor:'#9DB4CE',
+        marginBottom:"6%"
     },
     lblTxt:{
         color:'rgba(51, 51, 51, 0.87)',
@@ -48,19 +53,13 @@ export const styles = StyleSheet.create({
         fontSize:scaledHeight(14),
         fontWeight:'bold',
         marginTop: scaledHeight(25),
-        marginLeft:"2%",
+        marginLeft:"3%",
         marginRight:"2%",
         marginTop:"4%"     
     },
-     
-bottomView:{
-    backgroundColor:"#EEEEEE",
-    marginTop:"10%",
-    paddingBottom:"5%"
-},
 lblTxtSmall:{
-    fontSize:scaledHeight(10),
-    marginTop: scaledHeight(10),
+    fontSize:scaledHeight(14),
+    marginTop: scaledHeight(5),
     color:'#333333DE', 
     marginLeft:"2%",  
 },
@@ -76,37 +75,14 @@ row: {
     height: 50,
     alignItems: 'center',
     backgroundColor:"#EEEEEE"
-
-},modalView: {
-    //justifyContent: 'center',
-    //alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.1)',
-    height:"100%",
-    marginTop:scaledHeight(10)
-  },
-  modalInsideView: {
-    //justifyContent: 'center',
-    //alignItems: 'center',
-    backgroundColor: '#ffffff',
-    height:"20%",
-    width:"100%",
-    marginTop:scaledHeight(52)
-  },
-  modalText:{
-    textAlign: 'left',
-    fontSize: scaledHeight(18),
-    color: '#535353',
-    flexWrap: 'wrap',
-    marginLeft:scaledHeight(15),
-    marginTop:scaledHeight(5)
-},
+}, 
 cancelButton:{
     borderColor:'#61285F45',
     borderWidth:1,
-    width:'35%',
-    marginLeft:scaledHeight(15),
-    //marginRight:'10%',
-    marginTop:scaledHeight(10),
+    width:'80%',
+    marginLeft:'12%',
+    marginRight:'10%',
+    marginTop:scaledHeight(25),
     //borderRadius:scaledHeight(25),
     height:scaledHeight(50),
     backgroundColor:'#FFFFFF',
@@ -121,10 +97,10 @@ cancelButton:{
 saveButton:{
     borderColor:'#56565A',
     borderWidth:1,
-    width:'35%',
-    marginLeft:'5%',
-    //marginRight:'10%',
-    marginTop:scaledHeight(10),
+    width:'80%',
+    marginLeft:'12%',
+    marginRight:'10%',
+    marginTop:scaledHeight(12),
     //borderRadius:scaledHeight(25),
     height:scaledHeight(50),
     backgroundColor:'#56565A',
@@ -136,36 +112,49 @@ saveButton:{
     color:'#FFFFFF',
     fontWeight:'bold'
 },
-expandImage:{
-    marginLeft:"3%",marginRight:"5%"
-},
-ellipseImage:{
-    flexDirection:"column",
-    marginLeft:"25%",
-    justifyContent:"center"
-},
-shadowView:{
-    flexDirection:'column',
-    backgroundColor:"white",
-    shadowColor: "#000",
-    shadowOffset: {
-                width: 0,
-                height: 1,
-            },
-    shadowOpacity: 0.20,
-    shadowRadius: 1.41,
-    elevation: 5
-},
+
 viewColum:{
     flexDirection:'column'
 },
 viewRow:{
     flexDirection:'row'
 },
-dropdownTextInput:{
-    width:"50%",
-    height:"30%"
-}
+radioButtonLayout : {
+    width : '92%', 
+    marginTop : '4%',
+   flexDirection: "row",
+   marginBottom : '2%',
+   marginLeft:"3%"
+},
+outerCircle : {
+    height: scaledHeight(32),
+    width: scaledHeight(32),
+    borderRadius: scaledHeight(16),
+    borderWidth: scaledHeight(2),
+    borderColor: '#707070',
+    alignItems: 'center',
+    justifyContent: 'center',
+},
+innerCircle : {
+    height: scaledHeight(12),
+    width: scaledHeight(12),
+    borderRadius: scaledHeight(6),
+    backgroundColor: '#707070'
+},
+questionsSection : {
+    height:scaledHeight(40), 
+    //alignItems:'center',
+    //justifyContent:'center',
+    marginLeft : '3%', 
+    flexDirection:'column',
+    marginTop: '2%'
+},
+
+questionsText : {
+    fontSize : scaledHeight(16),
+    color : '#333333DE'
+},
+
 
 
 });
