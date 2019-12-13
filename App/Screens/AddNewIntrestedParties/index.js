@@ -1,0 +1,2 @@
+import addNewIntrestedPartiesComponent from './AddNewIntrestedPartiesContainer';
+export default addNewIntrestedPartiesComponent;

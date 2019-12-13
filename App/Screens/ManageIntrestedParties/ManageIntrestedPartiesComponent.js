@@ -20,8 +20,9 @@ class manageIntrestedPartiesComponent extends Component {
        
     }
 
-    addIntrestedParty=()=>{
+    addIntrestedParty=(data)=>{
         console.log("add clicked");
+        this.props.navigation.navigate("addIntrestedParties",{acc_Data:data});
     }
 
     renderIntrestedParties=({item})=>{
@@ -66,7 +67,7 @@ class manageIntrestedPartiesComponent extends Component {
                 <View style={styles.containerHeaderView}>
                   <Text style={styles.containerHeaderText}>{" - Acc Name - " + item.account_Name + " | " + "Acc Number - " + item.account_Number}</Text>
                   <View style={styles.addBtn}>
-                    <TouchableOpacity onPress={this.addIntrestedParty}>
+                    <TouchableOpacity onPress={()=>this.addIntrestedParty(item)}>
                       <Text style={styles.editBtnText}>{gblStrings.accManagement.addNew}</Text>
                     </TouchableOpacity>
                   </View>

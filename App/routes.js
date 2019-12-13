@@ -93,6 +93,7 @@ import QuickSigninComponent from './Screens/QuickSignIn';
 
 
 import ManageIntrestedPartiesComponent from './Screens/ManageIntrestedParties';
+import AddNewIntrestedPartiesComponent from './Screens/AddNewIntrestedParties';
 import ManageBeneficiariesComponent from './Screens/ManageBeneficiaries';
 import EditManageBeneficiariesComponent from './Screens/EditManageBeneficiaries';
 import VerifyManageBenificiariesComponent from './Screens/VerifyManageBeneficiaries';
@@ -848,6 +849,12 @@ const AppNavigator = createStackNavigator({
             navigationOptions:{
                 header:null, 
            }
+        },
+        addIntrestedParties:{
+            screen:AddNewIntrestedPartiesComponent,
+            navigationOptions:{
+                header:null,
+            }
         }
     },
     {

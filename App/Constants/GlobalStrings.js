@@ -183,9 +183,12 @@ export default {
         manageIntrestedParties: "Manage Interested Parties",
         addNew: "Add",
         statements: "Statements",
+        addNewIntParty:"Add - New Intrested Party -",
         intrestedPartiesAddedSuccessMeg:"Interested Party Added Successfully",
-        relationToAccountHolder:"Relation To Account Holder",
+        relationToAccountHolder:"Relationship To Account Holder",
         noOfAccTagged:"Number of Accounts Tagged",
+        preferredTimePeriod:"Preferred Time Period",
+        validDateSelect:"Please Select Proper Date",
 
 
         personalInformation: "Personal Information",
