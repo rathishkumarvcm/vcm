@@ -51,7 +51,7 @@ pipeline {
                 sh 'echo Deploying'
                 dir('android')
                 {
-                    sh 'bundle exec fastlane beta'
+                    sh '/usr/local/bin/bundle exec fastlane beta'
                 }
             }
         }
