@@ -23,6 +23,10 @@ class editAddressAddNewComponent extends Component {
             enableBiometric: false,
             faceIdEnrolled: false,
             touchIdEnrolled: false,
+
+            isZipApiCalling: false,
+            isAddressApiCalling: false,
+
             radioButton: false,
             radioButtonIndex: 0,
             radioButtonValue: 'U.S. or U.S. Territories',
@@ -55,58 +59,46 @@ class editAddressAddNewComponent extends Component {
         const stateCityResponseData = ActionTypes.GET_STATECITY;
         const addressResponseData = ActionTypes.GET_ADDRESSFORMAT;
 
-        if (this.props != prevProps) {
-            if (this.props && this.props.stateCityData[stateCityResponseData]) {
-                const tempResponse = this.props.stateCityData[stateCityResponseData];
-                console.log("@@@@@@@@@@@@@@@ Success Update", tempResponse);
-                if (tempResponse && tempResponse.City) {
-                    this.setState({
-                        userCity: '',
-                        userState: ''
-                    });
-                    this.setState({
-                        userCity: tempResponse.City,
-                        userState: tempResponse.State,
-                        isZipCodeValid: true
-                    });
-                } else {
-                    this.setState({
-                        userCity: ' - ',
-                        userState: ' - ',
-                        isZipCodeValid: false
-                    });
+        if (this.state.isZipApiCalling) {
+            if (this.props != prevProps) {
+                if (this.props && this.props.stateCityData[stateCityResponseData]) {
+                    const tempResponse = this.props.stateCityData[stateCityResponseData];
+                    console.log("@@@@@@@@@@@@@@@ Success Update", tempResponse);
+                    if (tempResponse && tempResponse.City) {
+                        this.setState({
+                            userCity: tempResponse.City,
+                            userState: tempResponse.State,
+                            isZipCodeValid: true
+                        });
+                    } else {
+                        this.setState({
+                            userCity: ' - ',
+                            userState: ' - ',
+                            isZipCodeValid: false
+                        });
+                    }
                 }
             }
         }
 
-        if (this.props != prevProps) {
-            if (this.props && this.props.stateCityData[addressResponseData]) {
-                const tempAddressResponse = this.props.stateCityData[addressResponseData];
-                console.log("@@@@@@@@@@@@@@@@@@@@ Success Address", tempAddressResponse);
-                if (tempAddressResponse && tempAddressResponse.Address2) {
-                    this.setState({
-                        addressOne: '',
-                        addressTwo: '',
-                        zipCodeValue: '',
-                        userCity: '',
-                        userState: ''
-                    })
-                    this.setState({
-                        addressOne: tempAddressResponse.Address2,
-                        addressTwo: tempAddressResponse.Address2,
-                        zipCodeValue: tempAddressResponse.Zip,
-                        userCity: tempAddressResponse.City,
-                        userState: tempAddressResponse.State,
-                        validationAddressOne: true
-                    });
-                } else {
-                    this.setState({
-                        addressOne: '',
-                        addressTwo: '',zipCodeValue: '',
-                        userCity: '',
-                        userState: '',
-                        validationAddressOne: false
-                    });
+        if (this.state.isAddressApiCalling) {
+            if (this.props != prevProps) {
+                if (this.props && this.props.stateCityData[addressResponseData]) {
+                    const tempAddressResponse = this.props.stateCityData[addressResponseData];
+                    console.log("@@@@@@@@@@@@@@@@@@@@ Success Address", tempAddressResponse);
+                    if (tempAddressResponse && tempAddressResponse.Address2) {
+                        this.setState({
+                            addressOne: tempAddressResponse.Address1 || "",
+                            addressTwo: tempAddressResponse.Address2 || "",
+                            validationAddressOne: true
+                        });
+                    } else {
+                        this.setState({
+                            addressOne: '',
+                            addressTwo: '',
+                            validationAddressOne: false
+                        });
+                    }
                 }
             }
         }
@@ -118,8 +110,7 @@ class editAddressAddNewComponent extends Component {
                 radioButtonIndex: index,
                 radioButton: false
             });
-        }
-        else {
+        } else {
             this.setState({
                 radioButton: false,
                 radioButtonValue: 'U.S. or U.S. Territories'
@@ -155,6 +146,12 @@ class editAddressAddNewComponent extends Component {
         this.setState({
             addressOne: text,
             validationAddressOne: true
+        });
+    }
+
+    setAddressTwo = (text) => {
+        this.setState({
+            addressTwo: text
         });
     }
 
@@ -194,8 +191,10 @@ class editAddressAddNewComponent extends Component {
             const payload = {
                 'Zip': this.state.zipCodeValue
             };
+
             this.setState({
-                isZipCodeValid: true
+                isZipCodeValid: true,
+                isZipApiCalling: true
             });
             this.props.getStateCity(payload);
         } else {
@@ -223,6 +222,9 @@ class editAddressAddNewComponent extends Component {
                 "State": this.state.userState,
             };
         }
+        this.setState({
+            isAddressApiCalling: true
+        })
         this.props.getAddressFormat(addNewAddressPayload);
     }
 
@@ -238,7 +240,7 @@ class editAddressAddNewComponent extends Component {
         if (this.props && this.props.profileState) {
             const newContactInformation = {
                 "addressType": this.state.radioButtonValue,
-                "addressLineOne": this.state.addressOne,
+                "addressLineOne": this.state.addressOne === "" ? this.state.addressTwo : "",
                 "addressCity": this.state.userCity,
                 "addressState": this.state.userState,
                 "addressZipcode": this.state.zipCodeValue,
@@ -250,7 +252,7 @@ class editAddressAddNewComponent extends Component {
             payloadUserAddress.push(newContactInformation);
             contactPayload = {
                 ...this.props.profileState,
-                profileUserAddressInformation: [newContactInformation],
+                profileUserAddressInformation: payloadUserAddress,
             };
         }
         return contactPayload;
@@ -341,7 +343,9 @@ class editAddressAddNewComponent extends Component {
                         <View style={styles.editAddressInput}>
                             <GInputComponent
                                 propInputStyle={styles.editAddressInput}
-                                placeholder={globalString.addAddressInfo.addressLineTwo} />
+                                placeholder={globalString.addAddressInfo.addressLineTwo}
+                                value={this.state.addressTwo}
+                                onChangeText={this.setAddressTwo} />
                         </View>
 
                         <View style={styles.settingsView1}>

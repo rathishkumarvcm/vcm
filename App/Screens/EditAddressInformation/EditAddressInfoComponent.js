@@ -7,20 +7,6 @@ import globalString from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
-const tempUserAddress = [
-    {
-        "addressType": 'Diplomatic Post Office',
-        "addressLineOne": '5400 N Black Lake Oak Rd',
-        "addressCity": 'San Diego',
-        "addressState": 'California',
-        "addressZipcode": '90001',
-        "isMailingAddress": true,
-        "isPhysicalAddress": false
-    }
-];
-
-let profileAddressData = [];
-
 const UserAddressInformation = (props) => {
     return (
         <View style={styles.editEmailHolder}>
@@ -93,9 +79,12 @@ class editAddressInfoComponent extends Component {
             enableBiometric: false,
             faceIdEnrolled: false,
             touchIdEnrolled: false,
+            refreshAddressData: false,
+
+            profileUserAddressValue: [],
 
             isAddressTypeMailing: false,
-            isAddressTypePhysical: false
+            isAddressTypePhysical: false,
         };
     }
 
@@ -107,20 +96,28 @@ class editAddressInfoComponent extends Component {
         this.props.isPhysicalAddress = value
     }
 
-    renderAddressInformation = (dataLength) => ({ item, index }) =>
-        (<UserAddressInformation
+    renderAddressInformation = (dataLength) => ({ item, index }) => {
+        console.log("$$$$$$$$$$$$$$$"+dataLength.length);
+        console.log("item"+JSON.stringify(item));
+
+        return (<UserAddressInformation
             addressType={item.addressType}
             addressLineOne={item.addressLineOne}
             addressCity={item.addressCity}
             addressState={item.addressState + ' ' + item.addressZipcode}
             isMailingAddress={item.isMailingAddress}
             isPhysicalAddress={item.isPhysicalAddress} />);
+    }
 
     componentDidMount() {
         if (this.props &&
             this.props.profileState &&
             this.props.profileState.profileUserAddressInformation) {
-            profileAddressData = this.props.profileState.profileUserAddressInformation;
+            this.setState({
+                profileUserAddressValue: this.props.profileState.profileUserAddressInformation,
+                refreshAddressData: !this.state.refreshAddressData
+            });
+            console.log("############# Dip Render", this.state.profileUserAddressValue);
         }
     }
 
@@ -129,8 +126,11 @@ class editAddressInfoComponent extends Component {
             if (this.props &&
                 this.props.profileState &&
                 this.props.profileState.profileUserAddressInformation) {
-                profileAddressData = this.props.profileState.profileUserAddressInformation;
-                console.log("@@@@@@@@@@@@@@ Dip update", profileAddressData);
+                this.setState({
+                    profileUserAddressValue: this.props.profileState.profileUserAddressInformation,
+                    refreshAddressData: !this.state.refreshAddressData
+                });
+                console.log("@@@@@@@@@@@@@@ Dip Update", this.state.profileUserAddressValue);
             }
         }
     }
@@ -140,13 +140,6 @@ class editAddressInfoComponent extends Component {
     editAddressOnCancel = () => this.props.navigation.navigate('profileSettings');
 
     render() {
-
-        if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileUserAddressInformation) {
-            profileAddressData = this.props.profileState.profileUserAddressInformation;
-        }
-
         return (
             <View style={styles.container}>
                 <GHeaderComponent
@@ -177,9 +170,10 @@ class editAddressInfoComponent extends Component {
                     <View style={styles.settingsBorder} />
 
                     <FlatList
-                        data={profileAddressData}
+                        data={this.state.profileUserAddressValue}
                         keyExtractor={this.generateKeyExtractor}
-                        renderItem={this.renderAddressInformation(profileAddressData.length)} />
+                        extraData={this.state.refreshAddressData}
+                        renderItem={this.renderAddressInformation(this.state.profileUserAddressValue)} />
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
