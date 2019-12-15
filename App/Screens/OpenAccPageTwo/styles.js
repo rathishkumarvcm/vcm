@@ -442,6 +442,12 @@ export const styles = StyleSheet.create({
         //position: 'absolute',
         //left: 0
     },
+    errMsg: {
+        color: 'red',
+        fontSize: scaledHeight(12),
+        marginVertical: scaledHeight(12),
+
+    }
    
 
 

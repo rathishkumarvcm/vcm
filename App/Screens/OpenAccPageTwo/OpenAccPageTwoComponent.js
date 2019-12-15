@@ -106,7 +106,7 @@ class OpenAccPageTwoComponent extends Component {
                 telePhoneNo3: "",
                 contactDuringTelePhone3: "",
                 contactDuringTelePhone3DropDown: false,
-                emailAddress: "",
+                emailAddress: this.props.initialState.email || "",
                 socialSecurityNo: "",
                 phoneType: "",
                 phoneTypeDropDown: false,
@@ -143,7 +143,7 @@ class OpenAccPageTwoComponent extends Component {
                 city_PhyValidation: true,
                 stateCity_PhyValidation: true,
                 state_PhyValidation: true,
-                isYourPhysicalAddresSameValidation: false,
+                isYourPhysicalAddresSameValidation: true,
                 mobileNoValidation: true,
                 workPhoneNoValidation: true,
                 emailAddressValidation: true,
@@ -168,7 +168,7 @@ class OpenAccPageTwoComponent extends Component {
 
                 empStatusValidation: true,
                 seniorPoliticalNameValidation: true,
-
+                isSeniorPoliticalFigureValidation:true,
 
 
                 // Financial Info
@@ -197,6 +197,7 @@ class OpenAccPageTwoComponent extends Component {
                 toDateMilitary: "",
                 commissionSource: "",
 
+                isMilitaryHistoryValidation:true,
                 militaryStatusValidation: true,
 
 
@@ -284,7 +285,7 @@ class OpenAccPageTwoComponent extends Component {
                 city_PhyValidation: true,
                 stateCity_PhyValidation: true,
                 state_PhyValidation: true,
-                isYourPhysicalAddresSameValidation: false,
+                isYourPhysicalAddresSameValidation: true,
                 mobileNoValidation: true,
                 workPhoneNoValidation: true,
                 emailAddressValidation: true,
@@ -309,6 +310,7 @@ class OpenAccPageTwoComponent extends Component {
 
                 empStatusValidation: true,
                 seniorPoliticalNameValidation: true,
+                isSeniorPoliticalFigureValidation:true,
 
                 // Employer Info
                 annualIncome: "",
@@ -337,6 +339,7 @@ class OpenAccPageTwoComponent extends Component {
                 commissionSource: "",
 
                 militaryStatusValidation: true,
+                isMilitaryHistoryValidation:true,
 
                 isPersonalInfoExpanded: true,
                 isEmploymentInfoExpanded: true,
@@ -1211,12 +1214,16 @@ class OpenAccPageTwoComponent extends Component {
         }
     }));
 
-    onPressRadio = (stateKey, keyName, text) => () => this.setState(prevState => ({
-        [stateKey]: {
-            ...prevState[stateKey],
-            [keyName]: text
-        }
-    }));
+    onPressRadio = (stateKey, keyName, text) => () => {
+
+
+        this.setState(prevState => ({
+            [stateKey]: {
+                ...prevState[stateKey],
+                [keyName]: text
+            }
+        }));
+    }
 
     setInputRef = (inputComp) => (ref) => {
         this[inputComp] = ref;
@@ -1242,6 +1249,7 @@ class OpenAccPageTwoComponent extends Component {
             input = 'dob';
         } else if (this.isEmpty(this.state.personal.gender)) {
             errMsg = gblStrings.accManagement.emptyGenderMsg;
+            input = 'gender';
         } else if (this.isEmpty(this.state.personal.maritalStatus)) {
             errMsg = gblStrings.accManagement.emptyMaritalMsg;
             input = 'maritalStatus';
@@ -1249,6 +1257,7 @@ class OpenAccPageTwoComponent extends Component {
             errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
         } else if (this.isEmpty(this.state.personal.mailingAddressType)) {
             errMsg = gblStrings.accManagement.emptyAddressTypeMsg;
+            input = 'mailingAddressType';
         } else if (this.isEmpty(this.state.personal.addrLine1)) {
             errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
             input = 'addrLine1';
@@ -1258,7 +1267,7 @@ class OpenAccPageTwoComponent extends Component {
         } else if (this.isEmpty(this.state.personal.zipcode)) {
             errMsg = gblStrings.accManagement.emptyZipCodeMsg;
             input = 'zipcode';
-        }else if (this.state.personal.zipcode.length < gblStrings.maxLength.zipCode) {
+        } else if (this.state.personal.zipcode.length < gblStrings.maxLength.zipCode) {
             errMsg = gblStrings.accManagement.invalidZipCodeMsg;
             input = 'zipcode';
         } else if (this.isEmpty(this.state.personal.city)) {
@@ -1269,8 +1278,39 @@ class OpenAccPageTwoComponent extends Component {
             input = 'stateCity';
         } else if (this.isEmpty(this.state.personal.isYourPhysicalAddresSame)) {
             errMsg = gblStrings.accManagement.confirmPhysicalAddressSame;
+            input = 'isYourPhysicalAddresSame';
+        } else if (this.state.personal.isYourPhysicalAddresSame =="No" && this.isEmpty(this.state.personal.addrLine1_Phy)) {
+            errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
+            input = 'addrLine1_Phy';
+        } else if (this.state.personal.isYourPhysicalAddresSame =="No" && this.isEmpty(this.state.personal.addrLine2_Phy)) {
+            errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
+            input = 'addrLine2_Phy';
+        } else if (this.state.personal.isYourPhysicalAddresSame =="No" &&this.isEmpty(this.state.personal.zipcode_Phy)) {
+            errMsg = gblStrings.accManagement.emptyZipCodeMsg;
+            input = 'zipcode_Phy';
+        }else if (this.state.personal.isYourPhysicalAddresSame =="No" && this.state.personal.zipcode_Phy.length < gblStrings.maxLength.zipCode) {
+            errMsg = gblStrings.accManagement.invalidZipCodeMsg;
+            input = 'zipcode_Phy';
+        } else if (this.state.personal.isYourPhysicalAddresSame =="No" &&this.isEmpty(this.state.personal.city_Phy)) {
+            errMsg = gblStrings.accManagement.emptyCityMsg;
+            input = 'city_Phy';
+        } else if (this.state.personal.isYourPhysicalAddresSame =="No" && this.isEmpty(this.state.personal.stateCity_Phy)) {
+            errMsg = gblStrings.accManagement.emptyStateMsg;
+            input = 'stateCity_Phy';
+        } else if (this.isEmpty(this.state.personal.phoneType)) {
+            errMsg = gblStrings.accManagement.emptyPhonetypeMsg;
+            input = 'phoneType';
         } else if (this.isEmpty(this.state.personal.mobileNo)) {
             errMsg = gblStrings.accManagement.emptyMobileNoMsg;
+            input = 'mobileNo';
+        } else if (this.state.personal.mobileNo.length < gblStrings.maxLength.mobileNo && this.state.personal.phoneType == "Mobile") {
+            errMsg = gblStrings.accManagement.invalidMobileNoMsg;
+            input = 'mobileNo';
+        } else if (this.state.personal.mobileNo.length < gblStrings.maxLength.phoneNo && this.state.personal.phoneType == "Home") {
+            errMsg = gblStrings.accManagement.invalidPhoneNoMsg;
+            input = 'mobileNo';
+        } else if (this.state.personal.mobileNo.length < gblStrings.maxLength.workPhone && this.state.personal.phoneType == "Work") {
+            errMsg = gblStrings.accManagement.invalidWorkPhoneNoMsg;
             input = 'mobileNo';
         } else if (this.isEmpty(this.state.personal.emailAddress)) {
             errMsg = gblStrings.accManagement.emptyEmailAddressMsg;
@@ -1289,8 +1329,10 @@ class OpenAccPageTwoComponent extends Component {
             input = 'empStatus';
         } else if (this.isEmpty(this.state.personal.isMilitaryHistory)) {
             errMsg = gblStrings.accManagement.emptymilitaryServingStatus;
+            input = 'isMilitaryHistory';
         } else if (this.isEmpty(this.state.personal.isSeniorPoliticalFigure)) {
             errMsg = gblStrings.accManagement.emptyIsSeniorPoliticalFigureMsg;
+            input = 'isSeniorPoliticalFigure';
         } else if (this.state.personal.isSeniorPoliticalFigure == true && this.isEmpty(this.state.personal.seniorPoliticalName)) {
             errMsg = gblStrings.accManagement.emptySeniorPoliticalNameMsg;
             input = 'seniorPoliticalName';
@@ -1359,6 +1401,7 @@ class OpenAccPageTwoComponent extends Component {
             input = 'dob';
         } else if (this.isEmpty(this.state.jointOwner.gender)) {
             errMsg = gblStrings.accManagement.emptyGenderMsg;
+            input = 'gender';
         } else if (this.isEmpty(this.state.jointOwner.maritalStatus)) {
             errMsg = gblStrings.accManagement.emptyMaritalMsg;
             input = 'maritalStatus';
@@ -1366,6 +1409,7 @@ class OpenAccPageTwoComponent extends Component {
             errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
         } else if (this.isEmpty(this.state.jointOwner.mailingAddressType)) {
             errMsg = gblStrings.accManagement.emptyAddressTypeMsg;
+            input = 'mailingAddressType';
         } else if (this.isEmpty(this.state.jointOwner.addrLine1)) {
             errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
             input = 'addrLine1';
@@ -1386,8 +1430,38 @@ class OpenAccPageTwoComponent extends Component {
             input = 'stateCity';
         } else if (this.isEmpty(this.state.jointOwner.isYourPhysicalAddresSame)) {
             errMsg = gblStrings.accManagement.confirmPhysicalAddressSame;
+            input = 'isYourPhysicalAddresSame';
+        }else if (this.state.jointOwner.isYourPhysicalAddresSame =="No" && this.isEmpty(this.state.jointOwner.addrLine1_Phy)) {
+            errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
+            input = 'addrLine1_Phy';
+        } else if (this.state.jointOwner.isYourPhysicalAddresSame =="No" && this.isEmpty(this.state.jointOwner.addrLine2_Phy)) {
+            errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
+            input = 'addrLine2_Phy';
+        } else if (this.state.jointOwner.isYourPhysicalAddresSame =="No" &&this.isEmpty(this.state.jointOwner.zipcode_Phy)) {
+            errMsg = gblStrings.accManagement.emptyZipCodeMsg;
+            input = 'zipcode_Phy';
+        }else if (this.state.jointOwner.isYourPhysicalAddresSame =="No" && this.state.jointOwner.zipcode_Phy.length < gblStrings.maxLength.zipCode) {
+            errMsg = gblStrings.accManagement.invalidZipCodeMsg;
+            input = 'zipcode_Phy';
+        } else if (this.state.jointOwner.isYourPhysicalAddresSame =="No" &&this.isEmpty(this.state.jointOwner.city_Phy)) {
+            errMsg = gblStrings.accManagement.emptyCityMsg;
+            input = 'city_Phy';
+        } else if (this.state.jointOwner.isYourPhysicalAddresSame =="No" && this.isEmpty(this.state.jointOwner.stateCity_Phy)) {
+            errMsg = gblStrings.accManagement.emptyStateMsg;
+        } else if (this.isEmpty(this.state.jointOwner.phoneType)) {
+            errMsg = gblStrings.accManagement.emptyPhonetypeMsg;
+            input = 'phoneType';
         } else if (this.isEmpty(this.state.jointOwner.mobileNo)) {
             errMsg = gblStrings.accManagement.emptyMobileNoMsg;
+            input = 'mobileNo';
+        } else if (this.state.jointOwner.mobileNo.length < gblStrings.maxLength.mobileNo && this.state.jointOwner.phoneType == "Mobile") {
+            errMsg = gblStrings.accManagement.invalidMobileNoMsg;
+            input = 'mobileNo';
+        } else if (this.state.jointOwner.mobileNo.length < gblStrings.maxLength.phoneNo && this.state.jointOwner.phoneType == "Home") {
+            errMsg = gblStrings.accManagement.invalidPhoneNoMsg;
+            input = 'mobileNo';
+        } else if (this.state.jointOwner.mobileNo.length < gblStrings.maxLength.workPhone && this.state.jointOwner.phoneType == "Work") {
+            errMsg = gblStrings.accManagement.invalidWorkPhoneNoMsg;
             input = 'mobileNo';
         } else if (this.isEmpty(this.state.jointOwner.emailAddress)) {
             errMsg = gblStrings.accManagement.emptyEmailAddressMsg;
@@ -1406,8 +1480,10 @@ class OpenAccPageTwoComponent extends Component {
             input = 'empStatus';
         } else if (this.isEmpty(this.state.jointOwner.isMilitaryHistory)) {
             errMsg = gblStrings.accManagement.emptymilitaryServingStatus;
+            input = 'isMilitaryHistory';
         } else if (this.isEmpty(this.state.jointOwner.isSeniorPoliticalFigure)) {
             errMsg = gblStrings.accManagement.emptyIsSeniorPoliticalFigureMsg;
+            input = 'isSeniorPoliticalFigure';
         } else if (this.state.jointOwner.isSeniorPoliticalFigure && this.isEmpty(this.state.jointOwner.seniorPoliticalName)) {
             errMsg = gblStrings.accManagement.emptySeniorPoliticalNameMsg;
             input = 'seniorPoliticalName';
@@ -1523,6 +1599,11 @@ class OpenAccPageTwoComponent extends Component {
             this.setState(prevState => ({
                 personal: {
                     ...prevState.personal,
+                    primarySourceIncomeValidation: true,
+                    phoneTypeValidation: true,
+                    phoneType2Validation: true,
+                    phoneType3Validation: true,
+                    contactDuringMobNoValidation: true,
                     prefixValidation: true,
                     firstNameValidation: true,
                     lastNameValidation: true,
@@ -1531,13 +1612,20 @@ class OpenAccPageTwoComponent extends Component {
                     maritalStatusValidation: true,
                     citizenshipValidation: true,
                     addressTypeValidation: true,
+                    mailingAddressTypeValidation: true,
                     addrLine1Validation: true,
                     addrLine2Validation: true,
                     zipcodeValidation: true,
                     cityValidation: true,
                     stateCityValidation: true,
                     stateValidation: true,
-                    isYourPhysicalAddresSameValidation: false,
+                    addrLine1_PhyValidation: true,
+                    addrLine2_PhyValidation: true,
+                    zipcode_PhyValidation: true,
+                    city_PhyValidation: true,
+                    stateCity_PhyValidation: true,
+                    state_PhyValidation: true,
+                    isYourPhysicalAddresSameValidation: true,
                     mobileNoValidation: true,
                     workPhoneNoValidation: true,
                     emailAddressValidation: true,
@@ -1545,13 +1633,20 @@ class OpenAccPageTwoComponent extends Component {
 
                     empStatusValidation: true,
                     seniorPoliticalNameValidation: true,
+                    isSeniorPoliticalFigureValidation:true,
 
                     militaryStatusValidation: true,
+                    isMilitaryHistoryValidation:true,
 
 
                 },
                 jointOwner: {
                     ...prevState.jointOwner,
+                    primarySourceIncomeValidation: true,
+                    phoneTypeValidation: true,
+                    phoneType2Validation: true,
+                    phoneType3Validation: true,
+                    contactDuringMobNoValidation: true,
                     prefixValidation: true,
                     firstNameValidation: true,
                     lastNameValidation: true,
@@ -1560,22 +1655,30 @@ class OpenAccPageTwoComponent extends Component {
                     maritalStatusValidation: true,
                     citizenshipValidation: true,
                     addressTypeValidation: true,
+                    mailingAddressTypeValidation: true,
                     addrLine1Validation: true,
                     addrLine2Validation: true,
                     zipcodeValidation: true,
                     cityValidation: true,
                     stateCityValidation: true,
                     stateValidation: true,
-                    isYourPhysicalAddresSameValidation: false,
+                    addrLine1_PhyValidation: true,
+                    addrLine2_PhyValidation: true,
+                    zipcode_PhyValidation: true,
+                    city_PhyValidation: true,
+                    stateCity_PhyValidation: true,
+                    state_PhyValidation: true,
+                    isYourPhysicalAddresSameValidation: true,
                     mobileNoValidation: true,
                     workPhoneNoValidation: true,
                     emailAddressValidation: true,
                     socialSecurityNoValidation: true,
-
                     empStatusValidation: true,
                     seniorPoliticalNameValidation: true,
+                    isSeniorPoliticalFigureValidation:true,
 
                     militaryStatusValidation: true,
+                    isMilitaryHistoryValidation:true,
 
 
                 },
@@ -2185,7 +2288,11 @@ class OpenAccPageTwoComponent extends Component {
                             {gblStrings.accManagement.gender}
                         </Text>
                         {this.renderRadio("personal", "gender", 30, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
-
+                        {!this.state.personal.genderValidation &&
+                                    <Text style={styles.errMsg}>
+                                        {this.state.errMsg}
+                                    </Text>
+                                }
 
 
                         {this.renderCustomDropDown({
@@ -2230,7 +2337,11 @@ class OpenAccPageTwoComponent extends Component {
                             {gblStrings.accManagement.addressType}
                         </Text>
                         {this.renderRadio("personal", "mailingAddressType", 30, { marginBottom: scaledHeight(13) }, styles.radioBtnColGrp)}
-
+                        {!this.state.personal.mailingAddressTypeValidation &&
+                                    <Text style={styles.errMsg}>
+                                        {this.state.errMsg}
+                                    </Text>
+                                }
 
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.address}
@@ -2290,8 +2401,9 @@ class OpenAccPageTwoComponent extends Component {
                             onSubmitEditing={this.onSubmitEditing(this.stateCity)}
                             errorFlag={!this.state.personal.cityValidation}
                             errorText={this.state.errMsg}
+                            editable = {this.state.personal.citizenship != "U.S"? true:false}
 
-                        />
+                        /> 
                         <GInputComponent
                             inputref={this.setInputRef("stateCity")}
                             propInputStyle={this.state.personal.stateCityValidation ? styles.customTxtBox : styles.customTxtBoxError}
@@ -2303,6 +2415,8 @@ class OpenAccPageTwoComponent extends Component {
                             onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
                             errorFlag={!this.state.personal.stateCityValidation}
                             errorText={this.state.errMsg}
+                            editable = {this.state.personal.citizenship != "U.S"? true:false}
+
                         />
 
                         <Text style={styles.lblTxt}>
@@ -2335,6 +2449,11 @@ class OpenAccPageTwoComponent extends Component {
 
                             />
                         </View>
+                        {!this.state.personal.isYourPhysicalAddresSameValidation &&
+                                    <Text style={styles.errMsg}>
+                                        {this.state.errMsg}
+                                    </Text>
+                                }
 
                         {
                             this.state.personal.isYourPhysicalAddresSame == "No" &&
@@ -2397,6 +2516,8 @@ class OpenAccPageTwoComponent extends Component {
                                     onSubmitEditing={this.onSubmitEditing(this.stateCity_Phy)}
                                     errorFlag={!this.state.personal.city_PhyValidation}
                                     errorText={this.state.errMsg}
+                                    editable = {this.state.personal.citizenship != "U.S"? true:false}
+
 
                                 />
                                 <GInputComponent
@@ -2410,6 +2531,8 @@ class OpenAccPageTwoComponent extends Component {
                                     onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
                                     errorFlag={!this.state.personal.stateCity_PhyValidation}
                                     errorText={this.state.errMsg}
+                                    editable = {this.state.personal.citizenship != "U.S"? true:false}
+
                                 />
 
                             </View>
@@ -2434,6 +2557,7 @@ class OpenAccPageTwoComponent extends Component {
                             placeholder={gblStrings.accManagement.phoneNoFormat}
                             maxLength={gblStrings.maxLength.mobileNo}
                             keyboardType="phone-pad"
+                            value = {this.state.personal.mobileNo.replace(/\d(?=\d{4})/g, "*")}
                             onChangeText={this.onChangeText("personal", "mobileNo")}
                             onSubmitEditing={this.onSubmitEditing(this.contactDuringMobNo)}
                             errorFlag={!this.state.personal.mobileNoValidation}
@@ -2537,6 +2661,7 @@ class OpenAccPageTwoComponent extends Component {
                             onSubmitEditing={this.onSubmitEditing(this.socialSecurityNo)}
                             errorFlag={!this.state.personal.emailAddressValidation}
                             errorText={this.state.errMsg}
+                            value = {this.state.personal.emailAddress}
 
                         />
 
@@ -2553,6 +2678,8 @@ class OpenAccPageTwoComponent extends Component {
                             onChangeText={this.onChangeText("personal", "socialSecurityNo")}
                             errorFlag={!this.state.personal.socialSecurityNoValidation}
                             errorText={this.state.errMsg}
+                            secureTextEntry
+
                         />
                     </View>
                 }
@@ -2818,6 +2945,11 @@ class OpenAccPageTwoComponent extends Component {
                                 onPress={this.onPressRadio("personal", "isMilitaryHistory", "No")}
                             />
                         </View>
+                        {!this.state.personal.isMilitaryHistoryValidation &&
+                            <Text style={styles.errMsg}>
+                                {this.state.errMsg}
+                            </Text>
+                        }
 
 
                         {
@@ -3054,6 +3186,11 @@ class OpenAccPageTwoComponent extends Component {
 
                             />
                         </View>
+                        {!this.state.personal.isSeniorPoliticalFigureValidation &&
+                            <Text style={styles.errMsg}>
+                                {this.state.errMsg}
+                            </Text>
+                        }
                         {this.state.personal.isSeniorPoliticalFigure == "Yes" &&
 
                             <View style={{ flexGrow: 1 }}>
@@ -3219,6 +3356,11 @@ class OpenAccPageTwoComponent extends Component {
                             {gblStrings.accManagement.gender}
                         </Text>
                         {this.renderRadio("jointOwner", "gender", 30, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
+                        {!this.state.jointOwner.genderValidation &&
+                            <Text style={styles.errMsg}>
+                                {this.state.errMsg}
+                            </Text>
+                        }
 
                         {this.renderCustomDropDown({
                             section: "jointOwner",
@@ -3261,7 +3403,11 @@ class OpenAccPageTwoComponent extends Component {
                             {gblStrings.accManagement.mailingAddressType}
                         </Text>
                         {this.renderRadio("jointOwner", "mailingAddressType", 30, { marginBottom: scaledHeight(13) }, styles.radioBtnColGrp)}
-
+                        {!this.state.jointOwner.mailingAddressTypeValidation &&
+                            <Text style={styles.errMsg}>
+                                {this.state.errMsg}
+                            </Text>
+                        }
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.address}
                         </Text>
@@ -3319,6 +3465,8 @@ class OpenAccPageTwoComponent extends Component {
                             onSubmitEditing={this.onSubmitEditing(this.stateCity_joint)}
                             errorFlag={!this.state.jointOwner.cityValidation}
                             errorText={this.state.errMsg}
+                            editable = {this.state.jointOwner.citizenship != "U.S"? true:false}
+
 
 
                         />
@@ -3333,6 +3481,8 @@ class OpenAccPageTwoComponent extends Component {
                             onSubmitEditing={this.onSubmitEditing(this.mobileNo_joint)}
                             errorFlag={!this.state.jointOwner.stateCityValidation}
                             errorText={this.state.errMsg}
+                            editable = {this.state.jointOwner.citizenship != "U.S"? true:false}
+
                         />
 
                         <Text style={styles.lblTxt}>
@@ -3400,6 +3550,8 @@ class OpenAccPageTwoComponent extends Component {
                                     onSubmitEditing={this.onSubmitEditing(this.stateCity_Phy)}
                                     errorFlag={!this.state.jointOwner.city_PhyValidation}
                                     errorText={this.state.errMsg}
+                                    editable = {this.state.jointOwner.citizenship != "U.S"? true:false}
+
 
                                 />
                                 <GInputComponent
@@ -3413,6 +3565,8 @@ class OpenAccPageTwoComponent extends Component {
                                     onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
                                     errorFlag={!this.state.jointOwners.stateCity_PhyValidation}
                                     errorText={this.state.errMsg}
+                                    editable = {this.state.jointOwner.citizenship != "U.S"? true:false}
+
                                 />
 
                             </View>
@@ -3443,7 +3597,11 @@ class OpenAccPageTwoComponent extends Component {
                                 onPress={this.onPressRadio("jointOwner", "isYourPhysicalAddresSame", "No")}
                             />
                         </View>
-
+                        {!this.state.jointOwner.isYourPhysicalAddresSameValidation &&
+                            <Text style={styles.errMsg}>
+                                {this.state.errMsg}
+                            </Text>
+                        }
 
 
                         {this.renderCustomDropDown({
@@ -3584,6 +3742,8 @@ class OpenAccPageTwoComponent extends Component {
                             onChangeText={this.onChangeText("jointOwner", "socialSecurityNo")}
                             errorFlag={!this.state.jointOwner.socialSecurityNoValidation}
                             errorText={this.state.errMsg}
+                            secureTextEntry
+
                         />
                     </View>
                 }
@@ -3849,6 +4009,11 @@ class OpenAccPageTwoComponent extends Component {
                                 onPress={this.onPressRadio("jointOwner", "isMilitaryHistory", "No")}
                             />
                         </View>
+                        {!this.state.jointOwner.isMilitaryHistoryValidation &&
+                            <Text style={styles.errMsg}>
+                                {this.state.errMsg}
+                            </Text>
+                        }
 
 
                         {
@@ -4084,6 +4249,11 @@ class OpenAccPageTwoComponent extends Component {
 
                         />
                     </View>
+                    {!this.state.jointOwner.isSeniorPoliticalFigureValidation &&
+                            <Text style={styles.errMsg}>
+                                {this.state.errMsg}
+                            </Text>
+                        }
                     {this.state.jointOwner.isSeniorPoliticalFigure &&
 
                         <View style={{ flexGrow: 1 }}>

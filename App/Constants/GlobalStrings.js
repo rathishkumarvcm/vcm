@@ -495,6 +495,7 @@ export default {
         emptyMobileNoMsg: "Mobile Number is required",
         invalidMobileNoMsg: "Invalid Mobile Number",
         emptyPhonenoMsg: "Home Telephone is required",
+        emptyPhonetypeMsg: "Phone Type is required",
         invalidPhoneNoMsg: "Invalid Home Telephone",
 
         emptyEmailAddressMsg: "Email Address is required",
