@@ -506,6 +506,8 @@ export default {
         invalidVCMNoMsg: "VCM Number is invalid",
 
         emptyEmploymentStatusMsg: "Please Select Employment Status",
+        emptyEmploymentStatusOthersMsg: "Please enter Employment Status",
+
         emptyOccupationMsg: "Please enter Occupation",
         emptyEmployerNameMsg: "Please enter Employer's Name",
         emptyEmployerAddressLine1Msg: "Please enter Employer Address Line 1",

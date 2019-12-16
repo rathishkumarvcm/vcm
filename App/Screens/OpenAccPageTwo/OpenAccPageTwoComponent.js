@@ -165,10 +165,15 @@ class OpenAccPageTwoComponent extends Component {
                 empStateCityDropDown: false,
                 isSeniorPoliticalFigure: null,
                 seniorPoliticalName: "",
+                empStatusForOther: "",
+                empIndustryForOther: "",
+
 
                 empStatusValidation: true,
                 seniorPoliticalNameValidation: true,
                 isSeniorPoliticalFigureValidation:true,
+                empStatusForOtherValidation: true,
+                empIndustryForOtherValidation: true,
 
 
                 // Financial Info
@@ -307,10 +312,14 @@ class OpenAccPageTwoComponent extends Component {
                 empStateCityDropDown: false,
                 isSeniorPoliticalFigure: null,
                 seniorPoliticalName: "",
+                empStatusForOther: "",
+                empIndustryForOther: "",
 
                 empStatusValidation: true,
                 seniorPoliticalNameValidation: true,
                 isSeniorPoliticalFigureValidation:true,
+                empStatusForOtherValidation: true,
+                empIndustryForOtherValidation: true,
 
                 // Employer Info
                 annualIncome: "",
@@ -1327,13 +1336,16 @@ class OpenAccPageTwoComponent extends Component {
         } else if (this.isEmpty(this.state.personal.empStatus)) {
             errMsg = gblStrings.accManagement.emptyEmploymentStatusMsg;
             input = 'empStatus';
+        } else if (this.state.personal.empStatus == "Others" && this.isEmpty(this.state.personal.empStatusForOther)) {
+            errMsg = gblStrings.accManagement.emptyEmploymentStatusOthersMsg;
+            input = 'empStatusForOther';
         } else if (this.isEmpty(this.state.personal.isMilitaryHistory)) {
             errMsg = gblStrings.accManagement.emptymilitaryServingStatus;
             input = 'isMilitaryHistory';
         } else if (this.isEmpty(this.state.personal.isSeniorPoliticalFigure)) {
             errMsg = gblStrings.accManagement.emptyIsSeniorPoliticalFigureMsg;
             input = 'isSeniorPoliticalFigure';
-        } else if (this.state.personal.isSeniorPoliticalFigure == true && this.isEmpty(this.state.personal.seniorPoliticalName)) {
+        } else if (this.state.personal.isSeniorPoliticalFigure == "Yes" && this.isEmpty(this.state.personal.seniorPoliticalName)) {
             errMsg = gblStrings.accManagement.emptySeniorPoliticalNameMsg;
             input = 'seniorPoliticalName';
         } else {
@@ -1478,13 +1490,16 @@ class OpenAccPageTwoComponent extends Component {
         } else if (this.isEmpty(this.state.jointOwner.empStatus)) {
             errMsg = gblStrings.accManagement.emptyEmploymentStatusMsg;
             input = 'empStatus';
+        } else if (this.state.jointOwner.empStatus == "Others" && this.isEmpty(this.state.jointOwner.empStatusForOther)) {
+            errMsg = gblStrings.accManagement.emptyEmploymentStatusOthersMsg;
+            input = 'empStatusForOther';
         } else if (this.isEmpty(this.state.jointOwner.isMilitaryHistory)) {
             errMsg = gblStrings.accManagement.emptymilitaryServingStatus;
             input = 'isMilitaryHistory';
         } else if (this.isEmpty(this.state.jointOwner.isSeniorPoliticalFigure)) {
             errMsg = gblStrings.accManagement.emptyIsSeniorPoliticalFigureMsg;
             input = 'isSeniorPoliticalFigure';
-        } else if (this.state.jointOwner.isSeniorPoliticalFigure && this.isEmpty(this.state.jointOwner.seniorPoliticalName)) {
+        } else if (this.state.jointOwner.isSeniorPoliticalFigure  == "Yes" && this.isEmpty(this.state.jointOwner.seniorPoliticalName)) {
             errMsg = gblStrings.accManagement.emptySeniorPoliticalNameMsg;
             input = 'seniorPoliticalName';
         } else {
@@ -1547,7 +1562,7 @@ class OpenAccPageTwoComponent extends Component {
             input = 'empStatus';
         } else if (this.isEmpty(this.state.childBeneficiary.isSeniorPoliticalFigure)) {
             errMsg = gblStrings.accManagement.emptyIsSeniorPoliticalFigureMsg;
-        } else if (this.state.childBeneficiary.isSeniorPoliticalFigure == true && this.isEmpty(this.state.childBeneficiary.seniorPoliticalName)) {
+        } else if (this.state.childBeneficiary.isSeniorPoliticalFigure == "Yes" && this.isEmpty(this.state.childBeneficiary.seniorPoliticalName)) {
             errMsg = gblStrings.accManagement.emptySeniorPoliticalNameMsg;
             input = 'seniorPoliticalName';
         } else {
@@ -2723,13 +2738,14 @@ class OpenAccPageTwoComponent extends Component {
                         }
                         {this.state.personal.empStatus === "Others" &&
                             <GInputComponent
-                                inputref={this.setInputRef("empStatus")}
+                                inputref={this.setInputRef("empStatusForOther")}
                                 propInputStyle={styles.customTxtBox}
                                 placeholder={"Enter Employment status"}
                                 maxLength={gblStrings.maxLength.common}
-                                onChangeText={this.onChangeText("personal", "empStatus")}
+                                onChangeText={this.onChangeText("personal", "empStatusForOther")}
                                 onSubmitEditing={this.onSubmitEditing(this.empIndustry)}
-
+                                errorFlag={!this.state.personal.empStatusForOtherValidation}
+                                errorText={this.state.errMsg}
                             />
                         }
 
@@ -2750,13 +2766,14 @@ class OpenAccPageTwoComponent extends Component {
                                 }
                                 {this.state.personal.empIndustry === "Other Industry" &&
                                     <GInputComponent
-                                        inputref={this.setInputRef("empIndustry")}
+                                        inputref={this.setInputRef("empIndustryForOther")}
                                         propInputStyle={styles.customTxtBox}
                                         placeholder={"Enter Industry"}
                                         maxLength={gblStrings.maxLength.common}
-                                        onChangeText={this.onChangeText("personal", "empIndustry")}
+                                        onChangeText={this.onChangeText("personal", "empIndustryForOther")}
                                         onSubmitEditing={this.onSubmitEditing(this.empOccupation)}
-
+                                    errorFlag={!this.state.personal.empIndustryForOtherValidation}
+                                    errorText={this.state.errMsg}
                                     />
                                 }
 
