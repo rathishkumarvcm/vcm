@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     circle_connect:{
         borderTopWidth:1,
         borderTopColor:'#C1C1C1',
-        width:scaledWidth(60),
+        width:scaledWidth(40),
         alignSelf:'center'
     },
     circle_view:{

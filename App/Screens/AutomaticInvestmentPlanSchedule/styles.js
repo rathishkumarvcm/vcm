@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     circle_connect:{
         borderTopWidth:1,
         borderTopColor:'#C1C1C1',
-        width:scaledWidth(60),
+        width:scaledWidth(40),
         alignSelf:'center'
     },
     circle_view:{
@@ -106,7 +106,7 @@ export const styles = StyleSheet.create({
        
     },
     financialTextLabel: {
-        color: '#333333DE', fontSize: scaledHeight(18), fontWeight: 'bold', marginTop: '4%', marginBottom: '4%'
+        color: '#333333DE', fontSize: scaledHeight(18), fontWeight: 'bold',  marginBottom: '4%'
     },
     view_row:{
         flexDirection:'row',

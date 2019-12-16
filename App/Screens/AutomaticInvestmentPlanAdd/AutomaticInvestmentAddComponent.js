@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, FlatList, Switch } from 'react-native';
+import { View, ScrollView, Text, FlatList, Switch,TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import {
     GHeaderComponent,
@@ -8,11 +8,12 @@ import {
     GInputComponent,
 
 } from '../../CommonComponents';
-import {CustomRadio} from '../../AppComponents';
+import { CustomRadio } from '../../AppComponents';
 import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
 import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
 import * as regEx from '../../Constants/RegexConstants';
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 const autoInvestmentAddBankJson = [
 
@@ -30,72 +31,152 @@ const autoInvestmentAddBankJson = [
     }
 ];
 
-const autoInvestmentAddAmountJson = [
-    {
-        accountName: 'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES',
-        switchOnOff:false
-    },
-    {
-        accountName: 'LOREM 2 USSPX VCM 500INDEX FUND MEMBER CLASS SHARES',
-        switchOnOff:false
-    },
-    {
-        accountName: 'LOREM 3 USSPX VCM 500INDEX FUND MEMBER CLASS SHARES',
-        switchOnOff:false
-    }
-];
+
 
 
 
 class AutomaticInvestmentAddComponent extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
-            switch1Value: false,
+
             selectedItemID: "",
             selectedItemName: "",
+            //autoInvestmentAddAmountJson: {},
+            fundList: [],
+            ItemToEdit: this.props.navigation.getParam('ItemToEdit', -1),
+            selectedBank:-1,
+            fundRemaining:0,
+            totalFund:0,
         };
-    }//test
+    }
+
+    componentDidMount() {
+        if (this.state && this.state.fundList && !this.state.fundList.length > 0) {
+            const fundListPayload = {};
+            this.props.getFundListData(fundListPayload);
+        }
+        // if (this.props && this.props.automaticInvestmentState) {
+
+        //     this.setState({
+        //         autoInvestmentAddAmountJson: this.props.automaticInvestmentState,
+        //     });
+        // }
+    }
+    componentDidUpdate(prevProps, prevState) {
+        //console.log("componentDidUpdate::::> "+prevState);
+
+
+        if (this.props !== prevProps) {
+            let tempFundListData = [];
+            let tempFundAmount=[];
+                if (this.props.fundListState[ActionTypes.GET_FUNDLIST] != undefined && this.props.fundListState[ActionTypes.GET_FUNDLIST].Items != null) {
+                    tempFundListData = this.props.fundListState[ActionTypes.GET_FUNDLIST].Items;
+                    
+                    this.setState({
+                        fundList: [...tempFundListData.map(v => ({ ...v, isActive: false,fundAmount:0 }))],
+                        
+                        //isFilterApplied: false
+                    });
+                }
+                
+            }
+        }
     onSelected = (item) => () => {
-        console.log("item: " + item.id);
+        //console.log("item: " + item.id);
         this.setState({ selectedItemID: item.id });
         this.setState({ selectedItemName: item.name });
     }
-    navigationNext = () => this.props.navigation.navigate('automaticInvestmentSchedule');
-    generateKeyExtractor = (item) => item.account;
-    renderInvestment = () => ({ item }) =>
-        (
+    navigationNext = () => this.props.navigation.navigate('automaticInvestmentSchedule', { ItemToEdit: this.state.ItemToEdit });
+    navigationBack = () => this.props.navigation.goBack();
+    navigationCancel = () => this.props.navigation.navigate('automaticInvestment');
 
-            <View style={{ borderWidth: 1, borderColor: '#5D83AE99', padding: '5%', alignItems: 'center' }}>
-                <Text style={{ color: '#56565A', fontSize: scaledHeight(20), fontWeight: 'bold' }}>{item.account}</Text>
-                <Text style={{ color: '#56565A', fontSize: scaledHeight(14) }}>{item.accountNumber}</Text>
+    generateKeyExtractor = (item) => item.account;
+    renderInvestment = () => ({ item,index }) =>
+        (
+            <TouchableOpacity onPress={this.selectedBank(index)}>
+            
+            <View style={this.state.selectedBank===index?styles.bankViewSelected:styles.bankView}>
+                <View style={{width:scaledWidth(66),margin:scaledWidth(5),backgroundColor:'#E9E9E9'}}></View>
+                <View style={{  justifyContent: 'center',marginLeft:scaledWidth(20)}}>
+                    <Text style={{ color: '#56565A', fontSize: scaledHeight(20), fontWeight: 'bold' }}>{item.account}</Text>
+                    <Text style={{ color: '#56565A', fontSize: scaledHeight(14) }}>{item.accountNumber}</Text>
+                </View>
             </View>
+            </TouchableOpacity>
         )
-    toggleSwitch1 = (value) => {
-        this.setState({ switch1Value: value });
-        console.log('Switch 1 is: ' + value);
+    toggleSwitch = index => e => {
+        //this.setState({ switch1Value: value });
+        //console.log('Switch 1 is: ' + index);
+
+        var array = [...this.state.fundList]; // make a separate copy of the array
+        //var indexChange = this.state.selectedIndex
+        if (index !== -1) {
+            
+            let switchVal = array[index].isActive;
+            array[index].isActive = !switchVal;
+            if(!array[index].isActive)
+            {
+                array[index].fundAmount=0;
+            }
+            this.setState({ fundList: array });
+        }
     }
 
-    generateAmountKeyExtractor = (item) => item.accountName;
-    renderAmount = () => ({ item }) =>
+    selectedBank=index=>e=>{
+        
+        this.setState({selectedBank:index})
+    }
+
+    getFundAmount=(value,index)=>{
+        var array = [...this.state.fundList]; // make a separate copy of the array
+        var indexChange = this.state.selectedIndex
+        if (index !== -1) {
+            array[index].fundAmount = value;
+            //let remaining=this.state.totalFund-value;
+            //this.setState({ fundList: array,fundRemaining:remaining});
+            this.setState({ fundList: array});
+        }
+    }
+
+    changeRemaining=e=>{
+        let remaining=this.state.fundRemaining-e.nativeEvent.text;
+        this.setState({ fundRemaining:remaining});
+    }
+    
+    setTotalFund=(value)=>{
+        
+        this.setState({totalFund:Number(value),fundRemaining:Number(value)})
+    }
+
+    generateAmountKeyExtractor = (item) => item.fundNumber.toString()
+    renderAmount = () => ({ item, index }) =>
         (
+            
             <View style={{ borderWidth: 1, borderColor: '#5D83AE99', marginTop: scaledHeight(10) }}>
                 <View style={{ flexDirection: 'row', flex: 1, justifyContent: "center", alignItems: 'center', borderBottomColor: '#61285F45', borderBottomWidth: 1, padding: scaledHeight(20) }}>
                     <View style={{ flex: 0.7 }}>
-                        <Text style={{ color: '#544A54', fontSize: scaledHeight(13), fontWeight: 'bold' }}>{item.accountName}</Text>
+                        <Text style={{ color: '#544A54', fontSize: scaledHeight(13), fontWeight: 'bold' }}>{item.fundName}</Text>
                     </View>
                     <View style={{ flex: 0.3, alignItems: 'flex-end', marginRight: '4%' }}>
-                        <Switch trackColor={{flase:'#DBDBDB',true:'#444444'}}
-                            onValueChange={this.toggleSwitch1}
-                            value={this.state.switch1Value}
+                        <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                            onValueChange={this.toggleSwitch(index)}
+                            value={item.isActive}
                         />
                     </View>
                 </View>
-                <View style={styles.auto_invest_to_flat}>
+                <View style={styles.auto_invest_to_flat} pointerEvents={item.isActive?'auto':'none'}>
                     <Text style={styles.auto_invest_to_top}>{'Amount'}</Text>
                     <View style={styles.auto_invest_to_top_view}>
                         <Text style={styles.auto_invest_to_top}>{'$'}</Text>
-                        <GInputComponent style={{ marginLeft: scaledWidth(10) }} />
+                        {
+                            index === this.state.ItemToEdit ?
+                                <GInputComponent style={styles.leftSpace} value={item.monthlyInvestment} />
+                                :
+                                <GInputComponent style={styles.leftSpace} onChangeText={(value)=>this.getFundAmount(value,index)}  onEndEditing={this.changeRemaining} value={item.fundAmount.toString()}/>
+                        }
+
                     </View>
                     <Text style={styles.auto_invest_flat_min}>{'Min $50'}</Text>
                 </View>
@@ -114,11 +195,11 @@ class AutomaticInvestmentAddComponent extends Component {
                         <Text style={styles.autoInvestHead}>{'Create Automatic Investment Plan'}</Text>
                         <View style={styles.seperator_line} />
                         <View style={styles.circle_view}>
-                            <View style={styles.circle_Inprogress}>
+                            <View style={styles.circle_Completed}>
                                 <Text style={styles.circleTextNew}>{'1'}</Text>
                             </View>
                             <View style={styles.circle_connect} />
-                            <View style={styles.circle_NotStarted}>
+                            <View style={styles.circle_Inprogress}>
                                 <Text style={styles.circleText}>{'2'}</Text>
                             </View>
                             <View style={styles.circle_connect} />
@@ -129,11 +210,24 @@ class AutomaticInvestmentAddComponent extends Component {
                             <View style={styles.circle_NotStarted}>
                                 <Text style={styles.circleText}>{'4'}</Text>
                             </View>
+                            <View style={styles.circle_connect} />
+                            <View style={styles.circle_NotStarted}>
+                                <Text style={styles.circleText}>{'5'}</Text>
+                            </View>
+                            
                         </View>
                         <View style={styles.autoInvest_title_view}>
-                            <Text style={styles.autoInvest_title_text}>{'1 - Plan Details'}</Text>
+                            <Text style={styles.autoInvest_title_text}>{'2 - Plan Details'}</Text>
                         </View>
                         <View style={styles.body}>
+
+                            <View style={{ flexDirection: 'column', justifyContent: "center",  borderColor: '#9DB4CE', borderWidth: 1, padding: scaledHeight(20),marginTop:scaledHeight(20) }}>
+
+                                <Text style={{ color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' }}>{'Account Name 1'}</Text>
+                                <Text style={{ color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' }}>{'Account Number xxxx-xxxx-xxxx'}</Text>
+
+
+                            </View>
 
                             <Text style={styles.autoInvest_sub_title_text}>{'- Fund To'}</Text>
 
@@ -144,7 +238,7 @@ class AutomaticInvestmentAddComponent extends Component {
                                 data={autoInvestmentAddBankJson}
                                 renderItem={this.renderInvestment()}
                                 keyExtractor={this.generateKeyExtractor}
-
+                                
                             />
                             <Text style={styles.autoInvest_sub_title_text}>{'- Invest To'}</Text>
                             <View style={styles.seperator_line} />
@@ -153,40 +247,40 @@ class AutomaticInvestmentAddComponent extends Component {
                                 <Text style={styles.auto_invest_to_top}>{'Total Amount'}</Text>
                                 <View style={styles.auto_invest_to_top_view}>
                                     <Text style={styles.auto_invest_to_top}>{'$'}</Text>
-                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} />
+                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} onChangeText={this.setTotalFund}/>
                                 </View>
                             </View>
 
                             <View style={styles.auto_invest_to}>
                                 <Text style={styles.auto_invest_to_top}>{'In'}</Text>
                                 <View style={styles.auto_invest_to_top_view}>
-                                <View style={styles.radioBtnGrp}>
-                                <CustomRadio
-                                    componentStyle={{ width: "30%", marginBottom: scaledHeight(0), marginTop: scaledHeight(24) }}
-                                    size={30}
-                                    outerCicleColor={"#DEDEDF"}
-                                    innerCicleColor={"#61285F"}
-                                    labelStyle={styles.lblRadioBtnTxt}
-                                    label={"$"}
-                                    descLabelStyle={styles.lblRadioDescTxt}
-                                    descLabel={""}
-                                    selected={(this.state.selectedItemID !== "" && "Y" == this.state.selectedItemID) ? true : false}
-                                    onPress={this.onSelected({ name: 'Yes', id: 'Y' })}
-                                />
-                                <CustomRadio
+                                    <View style={styles.radioBtnGrp}>
+                                        <CustomRadio
+                                            componentStyle={{ width: "30%", marginBottom: scaledHeight(0), marginTop: scaledHeight(24) }}
+                                            size={30}
+                                            outerCicleColor={"#DEDEDF"}
+                                            innerCicleColor={"#61285F"}
+                                            labelStyle={styles.lblRadioBtnTxt}
+                                            label={"$"}
+                                            descLabelStyle={styles.lblRadioDescTxt}
+                                            descLabel={""}
+                                            selected={(this.state.selectedItemID !== "" && "Y" == this.state.selectedItemID) ? true : false}
+                                            onPress={this.onSelected({ name: 'Yes', id: 'Y' })}
+                                        />
+                                        <CustomRadio
 
-                                    size={30}
-                                    componentStyle={{ width: "30%", marginBottom: scaledHeight(0), marginTop: scaledHeight(24) }}
-                                    outerCicleColor={"#DEDEDF"}
-                                    innerCicleColor={"#61285F"}
-                                    labelStyle={styles.lblRadioBtnTxt}
-                                    label={"%"}
-                                    descLabelStyle={styles.lblRadioDescTxt}
-                                    descLabel={""}
-                                    selected={(this.state.selectedItemID !== "" && "N" == this.state.selectedItemID) ? true : false}
-                                    onPress={this.onSelected({ name: 'No', id: 'N' })}
-                                />
-                                </View>
+                                            size={30}
+                                            componentStyle={{ width: "30%", marginBottom: scaledHeight(0), marginTop: scaledHeight(24) }}
+                                            outerCicleColor={"#DEDEDF"}
+                                            innerCicleColor={"#61285F"}
+                                            labelStyle={styles.lblRadioBtnTxt}
+                                            label={"%"}
+                                            descLabelStyle={styles.lblRadioDescTxt}
+                                            descLabel={""}
+                                            selected={(this.state.selectedItemID !== "" && "N" == this.state.selectedItemID) ? true : false}
+                                            onPress={this.onSelected({ name: 'No', id: 'N' })}
+                                        />
+                                    </View>
                                 </View>
                             </View>
 
@@ -199,39 +293,34 @@ class AutomaticInvestmentAddComponent extends Component {
                             </View>
 
                             <View style={styles.auto_invest_to}>
-                                <Text style={styles.auto_invest_to_top}>{'Amount'}</Text>
+                                <Text style={styles.auto_invest_to_top}>{'Amount Remaining'}</Text>
                                 <View style={styles.auto_invest_to_top_view}>
                                     <Text style={styles.auto_invest_to_top}>{'$'}</Text>
-                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} />
+                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} value={this.state.fundRemaining.toString()}/>
                                 </View>
                             </View>
 
 
                             <FlatList style={{ marginTop: scaledHeight(20) }}
-                                data={autoInvestmentAddAmountJson}
+                                data={this.state.fundList}
                                 renderItem={this.renderAmount()}
                                 keyExtractor={this.generateAmountKeyExtractor}
-
+                                extraData={this.state.fundList}
                             />
                         </View>
                     </View>
-                    <GButtonComponent
-                        buttonStyle={styles.cancelButton}
-                        buttonText={globalString.common.save}
-                        textStyle={styles.cancelButtonText}
-                        onPress={this.navigationLogin}
-                    />
+                    
                     <GButtonComponent
                         buttonStyle={styles.cancelButton}
                         buttonText={globalString.common.cancel}
                         textStyle={styles.cancelButtonText}
-                        onPress={this.navigationLogin}
+                        onPress={this.navigationCancel}
                     />
                     <GButtonComponent
                         buttonStyle={styles.cancelButton}
                         buttonText={globalString.common.back}
                         textStyle={styles.cancelButtonText}
-                        onPress={this.navigationLogin}
+                        onPress={this.navigationBack}
                     />
                     <GButtonComponent
                         buttonStyle={styles.continueButton}

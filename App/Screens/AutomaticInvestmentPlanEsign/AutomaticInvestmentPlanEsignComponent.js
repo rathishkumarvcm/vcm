@@ -24,6 +24,10 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
         this.setState({ saveCurrentDevice: !this.state.saveCurrentDevice });
     }
 
+    navigationSubmit = () => this.props.navigation.navigate('automaticInvestment');
+    navigationCancel=()=>this.props.navigation.navigate('automaticInvestment');
+    navigationBack = () => this.props.navigation.goBack();
+
     render() {
         return (
             <View style={styles.container}>
@@ -44,13 +48,17 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
                             <Text style={styles.circleTextNew}>{'3'}</Text>
                         </View>
                         <View style={styles.circle_connect} />
-                        <View style={styles.circle_Inprogress}>
+                        <View style={styles.circle_Completed}>
                             <Text style={styles.circleText}>{'4'}</Text>
+                        </View>
+                        <View style={styles.circle_connect} />
+                        <View style={styles.circle_Inprogress}>
+                            <Text style={styles.circleText}>{'5'}</Text>
                         </View>
                     </View>
 
                     <View style={styles.autoInvest_title_view}>
-                        <Text style={styles.autoInvest_title_text}>{'4 - E-sign'}</Text>
+                        <Text style={styles.autoInvest_title_text}>{'5 - E-sign'}</Text>
                     </View>
                     <View style={styles.body}>
                         <View style={styles.autoInvest_sub_title_view}>
@@ -83,27 +91,21 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
                         </View>
                         <GButtonComponent
                             buttonStyle={styles.cancelButton}
-                            buttonText={globalString.common.save}
-                            textStyle={styles.cancelButtonText}
-                            onPress={this.navigationLogin}
-                        />
-                        <GButtonComponent
-                            buttonStyle={styles.cancelButton}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.navigationLogin}
+                            onPress={this.navigationCancel}
                         />
                         <GButtonComponent
                             buttonStyle={styles.cancelButton}
                             buttonText={globalString.common.back}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.navigationLogin}
+                            onPress={this.navigationBack}
                         />
                         <GButtonComponent
                             buttonStyle={styles.continueButton}
                             buttonText={globalString.common.submit}
                             textStyle={styles.continueButtonText}
-                            onPress={this.navigationNext}
+                            onPress={this.navigationSubmit}
                         />
                         <GFooterComponent />
                     </View>

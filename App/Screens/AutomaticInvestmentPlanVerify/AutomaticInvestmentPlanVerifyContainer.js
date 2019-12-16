@@ -3,9 +3,8 @@ import AutomaticInvestmentPlanVerifyComponent from './AutomaticInvestmentPlanVer
 
 
 
-const mapStateToProps = (state /* , props */) => (
-    {
-      
+const mapStateToProps = (state) => ({
+    automaticInvestmentState:state.automaticInvestmentData,
     }
   );
 

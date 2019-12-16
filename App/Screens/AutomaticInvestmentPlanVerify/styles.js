@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     circle_connect:{
         borderTopWidth:1,
         borderTopColor:'#C1C1C1',
-        width:scaledWidth(60),
+        width:scaledWidth(40),
         alignSelf:'center'
     },
     circle_view:{
@@ -72,6 +72,10 @@ export const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:'center'
     },
+    autoInvestTitleBody:{
+        marginTop:scaledHeight(20),
+        marginBottom:scaledHeight(10)
+    },
     autoInvest_title_text:
     {
         fontSize:scaledHeight(20),
@@ -80,9 +84,7 @@ export const styles = StyleSheet.create({
     autoInvest_sub_title_view:{
         flex:1,
         flexDirection:'row',
-        marginTop:scaledHeight(20),
         height:scaledHeight(27),
-        marginBottom:scaledHeight(10)
     },
     autoInvest_sub_title_text:{
         flex:0.9,
@@ -163,25 +165,32 @@ export const styles = StyleSheet.create({
         color:'#FFFFFF',
         fontWeight:'bold'
     },
+    verifyContentMain:{
+         flexDirection: "column", 
+         marginTop: scaledHeight(20) 
+    },
     verifyContentView:{
         flexDirection:'column',
         borderWidth:1,
         borderColor:'#D6D8DC',
         paddingLeft:scaledWidth(20),
-        paddingTop:scaledHeight(20),
-        paddingBottom:scaledHeight(20),
+        paddingTop:scaledHeight(10),
+        paddingBottom:scaledHeight(10), 
     },
-    verifyConentTitle1:
+    verifyConent1:
     {
         color:'#333333DE',
         fontSize:scaledHeight(16),
-        fontWeight:'bold'
+        fontWeight:'bold',
+        marginTop: scaledHeight(10), 
+        marginBottom: scaledHeight(10)
     },
-    verifyConentTitle2:
+    
+    verifyConent2:
     {
         color:'#333333DE',
         fontSize:scaledHeight(16),
-        marginTop:scaledHeight(10)
+        
     },
     verifyBottomView:{
         backgroundColor:'#E8ECEE',
@@ -195,5 +204,23 @@ export const styles = StyleSheet.create({
         fontWeight:'bold',
         paddingLeft:scaledWidth(20),
         paddingRight:scaledWidth(10)
-    }
+    },
+    autoInvest_sub_title_skip:{
+        flex:0.9,
+        fontSize:scaledHeight(20),
+        color:'#56565A',
+        fontWeight:'bold',
+        marginTop:scaledHeight(30),
+        marginBottom:scaledHeight(10)
+    },
+    skipConentTitle:
+    {
+        color:'#333333DE',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold',
+        marginTop:scaledHeight(20)
+    },
+    financialTextLabel: {
+        color: '#333333DE', fontSize: scaledHeight(18), fontWeight: 'bold',  marginBottom: '4%'
+    },
 });

@@ -95,7 +95,7 @@ export const styles = StyleSheet.create({
     },
     
     autoInvest_sub_title_text:{
-        fontSize:scaledHeight(20),
+        fontSize:scaledHeight(22),
         color:'#56565A',
         fontWeight:'bold',
         marginTop:scaledHeight(20),
@@ -128,8 +128,8 @@ export const styles = StyleSheet.create({
     {
         color:'#333333DE',
         fontSize:scaledHeight(13),
-        marginTop:scaledHeight(20),
-        marginBottom:scaledHeight(20)
+        marginTop:scaledHeight(5),
+        marginBottom:scaledHeight(10)
     },
     auto_invest_to_top:
     {
@@ -200,16 +200,8 @@ export const styles = StyleSheet.create({
         color:'#FFFFFF',
         fontWeight:'bold'
     },
-    bankView:
-    {
-        flexDirection:'row',borderWidth: 1, borderColor: '#5D83AE99', height:scaledHeight(80),marginBottom:scaledHeight(20) 
-    },
-    bankViewSelected:
-    {
-        flexDirection:'row',borderWidth: 5, borderColor: '#B5E198', height:scaledHeight(80),marginBottom:scaledHeight(20) 
-    },
-    leftSpace:{ 
-        marginLeft: scaledWidth(10)
-     }
-    
+    accountList:
+    { borderWidth: 1, borderColor: '#5D83AE99', marginTop: scaledHeight(10) },
+    selectedAccount:
+    { borderWidth: 5, borderColor: '#B5E198', marginTop: scaledHeight(10) },
 });

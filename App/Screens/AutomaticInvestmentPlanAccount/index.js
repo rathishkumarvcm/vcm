@@ -1,0 +1,3 @@
+import autoInvestmentAccountComponent from './AutomaticInvestmentAccountContainer';
+
+export default autoInvestmentAccountComponent;

@@ -3,11 +3,9 @@ import autoInvestmentComponent from './AutomaticInvestmentComponent';
 
 
 
-const mapStateToProps = (state /* , props */) => (
-    {
-      
-    }
-  );
+const mapStateToProps = (state) => ({
+      automaticInvestmentState:state.automaticInvestmentData,
+  });
 
 const mapDispatchToProps = {
     

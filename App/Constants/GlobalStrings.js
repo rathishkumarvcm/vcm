@@ -942,7 +942,7 @@ export default {
         autoInves_Title: 'Automatic Investment Plan',
         autoInves_current: 'Current Automatic Investment Plans',
         autoInves_current_content: 'There are two parts for an automatic investment within an IRA. The first is the contribution to the account and sencond is the purchase of the mutual fund(s). if you\'re making a change, be sure adjust both parts',
-        acc_Name: 'Account Name',
+        acc_Name: 'Account',
         skip: 'Skip',
     },
     profileSettingsPage: {

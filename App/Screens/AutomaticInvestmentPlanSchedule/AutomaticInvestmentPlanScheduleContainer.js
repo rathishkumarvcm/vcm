@@ -3,11 +3,9 @@ import AutomaticInvestmentPlanScheduleComponent from './AutomaticInvestmentPlanS
 
 
 
-const mapStateToProps = (state /* , props */) => (
-    {
-      
-    }
-  );
+const mapStateToProps = (state) => ({
+      automaticInvestmentState:state.automaticInvestmentData,
+    });
 
 const mapDispatchToProps = {
     

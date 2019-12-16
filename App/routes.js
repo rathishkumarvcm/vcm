@@ -140,6 +140,8 @@ import automaticInvestmentAdd from './Screens/AutomaticInvestmentPlanAdd';
 import automaticInvestmentSchedule from './Screens/AutomaticInvestmentPlanSchedule';
 import automaticInvestmentVerify from './Screens/AutomaticInvestmentPlanVerify';
 import automaticInvestmentEsign from './Screens/AutomaticInvestmentPlanEsign';
+import automaticInvestmentAccount from './Screens/AutomaticInvestmentPlanAccount';
+
 import ImageUpload from './Screens/First';
 
 // Special MFA Requirements
@@ -708,11 +710,17 @@ const AppNavigator = createStackNavigator({
                 header:null,
             }
         },
-            automaticInvestmentSchedule:{
-                screen:automaticInvestmentSchedule,
-                navigationOptions:{
-                    header:null,
-                }  
+        automaticInvestmentSchedule:{
+            screen:automaticInvestmentSchedule,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        automaticInvestmentAccount:{
+            screen:automaticInvestmentAccount,
+            navigationOptions:{
+                header:null,
+            }  
         },
         systematicWithdrawal:{
             screen:systematicWithdrawal,
