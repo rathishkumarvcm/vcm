@@ -140,7 +140,7 @@ class editAddPhoneNumberComponent extends Component {
                 payloadUserPhone.push(newPhoneInformation);
                 phonePayload = {
                     ...this.props.profileState,
-                    profileUserHomeNumber: [newPhoneInformation],
+                    profileUserHomeNumber: payloadUserPhone,
                 };
                 console.log("############# Home", phonePayload);
             }
@@ -150,7 +150,7 @@ class editAddPhoneNumberComponent extends Component {
                 payloadUserPhone.push(newPhoneInformation);
                 phonePayload = {
                     ...this.props.profileState,
-                    profileUserMobileNumber: [newPhoneInformation],
+                    profileUserMobileNumber: payloadUserPhone,
                 };
                 console.log("$$$$$$$$$$$$$$ Mobile", phonePayload);
             }
@@ -160,7 +160,7 @@ class editAddPhoneNumberComponent extends Component {
                 payloadUserPhone.push(newPhoneInformation);
                 phonePayload = {
                     ...this.props.profileState,
-                    profileUserWorkNumber: [newPhoneInformation],
+                    profileUserWorkNumber: payloadUserPhone,
                 };
                 console.log("%%%%%%%%%%%%%% Work", phonePayload);
             }
@@ -226,7 +226,7 @@ class editAddPhoneNumberComponent extends Component {
                         <GInputComponent
                             propInputStyle={styles.editAddressInput}
                             placeholder={""}
-                            editable={false} />
+                            onChangeText={this.setContactNumber} />
                     </View>
 
                     <GDropDownComponent

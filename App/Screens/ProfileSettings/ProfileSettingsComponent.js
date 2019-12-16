@@ -321,6 +321,7 @@ class ProfileSettingsComponent extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props !== prevProps) {
+            console.log("####################### Financial Update", this.props.profileState);
             if (this.props && this.props.profileState) {
                 this.setState({
                     profilePrefix: this.props.profileState.profilePrefix,
@@ -341,6 +342,7 @@ class ProfileSettingsComponent extends Component {
                 });
 
                 if (this.props && this.props.profileState && this.props.profileState.financialInformations) {
+                    console.log("@@@@@@@@@@@@@@@@@@@@@ Financial Update", this.props.profileState.financialInformations);
                     this.setState({
                         profileAnnualIncome: '$ ' + this.props.profileState.financialInformations.profileAnnualIncome,
                         profileTaxBracket: this.props.profileState.financialInformations.profileTaxBracket + ' %',

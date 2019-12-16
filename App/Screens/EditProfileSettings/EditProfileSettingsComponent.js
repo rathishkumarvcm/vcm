@@ -303,7 +303,7 @@ class editProfileSettingsComponent extends Component {
     manageProfileInformations = () => {
         const payloadData = this.getProfilePayloadData();
         this.props.saveProfileData("editProfileManage", payloadData);
-        this.props.navigation.goBack();
+        this.props.navigation.navigate('profileSettings');
     }
 
     getProfilePayloadData = () => {

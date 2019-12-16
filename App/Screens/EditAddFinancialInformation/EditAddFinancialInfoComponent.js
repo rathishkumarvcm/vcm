@@ -217,8 +217,8 @@ class editAddFinancialInfoComponent extends Component {
 
     manageFinancialInformations = () => {
         const payloadData = this.getProfilePayloadData();
-        this.props.saveProfileData("editFinancialInformatios", payloadData);
-        this.props.navigation.goBack();
+        this.props.saveProfileData("editFinancialInformations", payloadData);
+        this.props.navigation.navigate('profileSettings');
     }
 
     getProfilePayloadData = () => {
@@ -338,8 +338,7 @@ class editAddFinancialInfoComponent extends Component {
                         itemToDisplay={"value"}
                         errorFlag={this.state.dropDownTaxFillFlag}
                         errorText={this.dropDownTaxFillMsg}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(500) }}
-                    />
+                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(500) }} />
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
@@ -355,8 +354,7 @@ class editAddFinancialInfoComponent extends Component {
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalStrings.common.save}
                             onPress={this.navigationSuccess}
-                            textStyle={styles.saveButtonText}
-                        />
+                            textStyle={styles.saveButtonText} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>

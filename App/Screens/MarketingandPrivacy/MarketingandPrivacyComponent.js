@@ -6,21 +6,6 @@ import { scaledHeight } from '../../Utils/Resolution';
 import PropTypes from "prop-types";
 import globalString from '../../Constants/GlobalStrings';
 
-const tempUserMobile = [
-    {
-        "mobileNumberType": 'Primary Mobile',
-        "mobileNumber": '+1(xxx) xxx-7890',
-        "mobilePreferredTime": 'Morning',
-        "isPrimaryMobile": true
-    },
-    {
-        "mobileNumberType": 'Secondary Mobile',
-        "mobileNumber": '+1(xxx) xxx-7890',
-        "mobilePreferredTime": 'Morning',
-        "isPrimaryMobile": false
-    }
-];
-
 const UserPhoneInformation = (props) => {
     return (
         <View style={styles.editEmailHolder}>
@@ -50,7 +35,7 @@ const UserPhoneInformation = (props) => {
                 </Text>
                 <View style={styles.editSwitchButton}>
                     <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={this.toggleSwitchMailing}
+                        onValueChange={props.onMobileToggle}
                         value={props.isPrimaryMobile} />
                 </View>
             </View>
@@ -62,23 +47,11 @@ UserPhoneInformation.propTypes = {
     mobileNumberType: PropTypes.string,
     mobileNumber: PropTypes.string,
     mobilePreferredTime: PropTypes.string,
-    isPrimaryMobile: PropTypes.bool
+    isPrimaryMobile: PropTypes.bool,
+    onMobileToggle: PropTypes.func
 };
 
 // Email Information's Data
-
-const tempUserEmail = [
-    {
-        "emailType": 'Primary Email',
-        "emailId": 'abc@gmail.com',
-        "isPrimaryEmail": true
-    },
-    {
-        "emailType": 'Secondary Email',
-        "emailId": 'abc@gmail.com',
-        "isPrimaryEmail": false
-    }
-];
 
 const UserEmailInformation = (props) => {
     return (
@@ -108,7 +81,7 @@ const UserEmailInformation = (props) => {
 
                 <View style={styles.editSwitchButton}>
                     <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={this.toggleSwitchPrimaryMail}
+                        onValueChange={props.onEmailToggle}
                         value={props.isPrimaryEmail} />
                 </View>
             </View>
@@ -119,42 +92,11 @@ const UserEmailInformation = (props) => {
 UserEmailInformation.propTypes = {
     emailType: PropTypes.string,
     emailId: PropTypes.string,
-    isPrimaryEmail: PropTypes.bool
+    isPrimaryEmail: PropTypes.bool,
+    onEmailToggle: PropTypes.func
 };
 
 // Address Informations Data
-
-const tempUserAddress = [
-    {
-        "addressType": 'Diplomatic Post Office',
-        "addressLineOne": '5400 N Black Lake Oak Rd',
-        "addressCity": 'San Diego',
-        "addressState": 'California',
-        "addressZipcode": '90001',
-        "isMailingAddress": true,
-        "isPhysicalAddress": false
-    },
-    {
-        "addressType": 'Diplomatic Post Office',
-        "addressLineOne": '5400 N Black Lake Oak Rd',
-        "addressCity": 'San Diego',
-        "addressState": 'California',
-        "addressZipcode": '90001',
-        "isMailingAddress": false,
-        "isPhysicalAddress": false
-    },
-    {
-        "addressType": 'Diplomatic Post Office',
-        "addressLineOne": '5400 N Black Lake Oak Rd',
-        "addressCity": 'San Diego',
-        "addressState": 'California',
-        "addressZipcode": '90001',
-        "isMailingAddress": false,
-        "isPhysicalAddress": false
-    }
-];
-
-let profileAddressData = [];
 
 const UserAddressInformation = (props) => {
     return (
@@ -216,32 +158,146 @@ class MarketingandPrivacyComponent extends Component {
             isLoading: false,
             enableBiometric: false,
             faceIdEnrolled: false,
-            touchIdEnrolled: false
+            touchIdEnrolled: false,
+
+            isMobileRefreshed: false,
+            isEmailRefreshed: false,
+            isAddressRefreshed: false,
+
+            mobileNumberData: [],
+            emailData: [],
+            addressData: []
         };
     }
 
-    renderPhoneInformation = (dataLength) => ({ item, index }) =>
-        (<UserPhoneInformation
+    componentDidMount() {
+        if (this.props &&
+            this.props.profileState &&
+            this.props.profileState.profileUserMobileNumber) {
+            this.setState({
+                mobileNumberData: this.props.profileState.profileUserMobileNumber,
+                isMobileRefreshed: !this.state.isMobileRefreshed
+            });
+        }
+
+        if (this.props &&
+            this.props.profileState &&
+            this.props.profileState.profileUserMailInformation) {
+            this.setState({
+                emailData: this.props.profileState.profileUserMailInformation,
+                isEmailRefreshed: !this.state.isEmailRefreshed
+            });
+        }
+
+        if (this.props &&
+            this.props.profileState &&
+            this.props.profileState.profileUserAddressInformation) {
+            this.setState({
+                addressData: this.props.profileState.profileUserAddressInformation,
+                isAddressRefreshed: !this.state.isAddressRefreshed
+            });
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props != prevProps) {
+            if (this.props &&
+                this.props.profileState &&
+                this.props.profileState.profileUserMobileNumber) {
+                this.setState({
+                    mobileNumberData: this.props.profileState.profileUserMobileNumber,
+                    isMobileRefreshed: !this.state.isMobileRefreshed
+                });
+            }
+
+            if (this.props &&
+                this.props.profileState &&
+                this.props.profileState.profileUserMailInformation) {
+                this.setState({
+                    emailData: this.props.profileState.profileUserMailInformation,
+                    isEmailRefreshed: !this.state.isEmailRefreshed
+                });
+            }
+
+            if (this.props &&
+                this.props.profileState &&
+                this.props.profileState.profileUserAddressInformation) {
+                this.setState({
+                    addressData: this.props.profileState.profileUserAddressInformation,
+                    isAddressRefreshed: !this.state.isAddressRefreshed
+                });
+            }
+        }
+    }
+
+    // Mobile Toggle and Information 
+
+    onMobileToggle = (item, index) => () => {
+        var array = [...this.state.mobileNumberData];
+        if (index !== -1) {
+            let switchVal = array[index].isPrimaryMobile;
+            array[index].isPrimaryMobile = !switchVal;
+            this.setState({
+                mobileNumberData: array,
+                isMobileRefreshed: !this.state.isMobileRefreshed
+            });
+        }
+    }
+
+    renderPhoneInformation = () => ({ item, index }) => {
+        return (<UserPhoneInformation
             mobileNumberType={item.mobileNumberType}
             mobileNumber={item.mobileNumber}
             mobilePreferredTime={item.mobilePreferredTime}
-            isPrimaryMobile={item.isPrimaryMobile} />);
+            isPrimaryMobile={item.isPrimaryMobile}
+            onMobileToggle={this.onMobileToggle(item, index)} />)
+    };
 
-    renderEmailInformation = (dataLength) => ({ item, index }) =>
-        (<UserEmailInformation
+    // Email Toggle and Information
+
+    onEmailToggle = (item, index) => () => {
+        var array = [...this.state.emailData];
+        if (index !== -1) {
+            let switchVal = array[index].isPrimaryEmail;
+            array[index].isPrimaryEmail = !switchVal;
+            this.setState({
+                emailData: array,
+                isEmailRefreshed: !this.state.isEmailRefreshed
+            });
+        }
+    }
+
+    renderEmailInformation = () => ({ item, index }) => {
+        return (<UserEmailInformation
             emailType={item.emailType}
             emailId={item.emailId}
-            isPrimaryEmail={item.isPrimaryEmail} />);
+            isPrimaryEmail={item.isPrimaryEmail}
+            onEmailToggle={this.onEmailToggle(item, index)} />)
+    };
 
-            renderAddressInformation = (dataLength) => ({ item, index }) =>
-        (<UserAddressInformation
+    // Address Toggle and Information
+
+    onAddressToggle = (item, index) => () => {
+        var array = [...this.state.addressData];
+        if (index !== -1) {
+            let switchVal = array[index].isMailingAddress;
+            array[index].isMailingAddress = !switchVal;
+            this.setState({
+                addressData: array,
+                isAddressRefreshed: !this.state.isAddressRefreshed
+            });
+        }
+    }
+
+    renderAddressInformation = () => ({ item, index }) => {
+        return (<UserAddressInformation
             addressType={item.addressType}
             addressLineOne={item.addressLineOne}
             addressCity={item.addressCity}
             addressState={item.addressState + ' ' + item.addressZipcode}
-            isMailingAddress={item.isMailingAddress}/>);
-    
-    componentDidMount() { }
+            isMailingAddress={item.isMailingAddress}
+            onAddressToggle={this.onAddressToggle(item, index)} />)
+    };
 
     render() {
         return (
@@ -286,9 +342,10 @@ class MarketingandPrivacyComponent extends Component {
                         </View>
 
                         <FlatList
-                            data={tempUserMobile}
+                            data={this.state.mobileNumberData}
                             keyExtractor={this.generateKeyExtractor}
-                            renderItem={this.renderPhoneInformation(tempUserMobile.length)} />
+                            extraData={this.state.isMobileRefreshed}
+                            renderItem={this.renderPhoneInformation()} />
                     </View>
 
                     {/* Home Data */}
@@ -320,9 +377,10 @@ class MarketingandPrivacyComponent extends Component {
                         </View>
 
                         <FlatList
-                            data={tempUserEmail}
+                            data={this.state.emailData}
                             keyExtractor={this.generateKeyExtractor}
-                            renderItem={this.renderEmailInformation(tempUserEmail.length)} />
+                            extraData={this.state.isEmailRefreshed}
+                            renderItem={this.renderEmailInformation()} />
                     </View>
 
                     {/* Address Data */}
@@ -335,9 +393,10 @@ class MarketingandPrivacyComponent extends Component {
                         </View>
 
                         <FlatList
-                            data={tempUserAddress}
+                            data={this.state.addressData}
                             keyExtractor={this.generateKeyExtractor}
-                            renderItem={this.renderAddressInformation(tempUserAddress.length)} />
+                            extraData={this.state.isAddressRefreshed}
+                            renderItem={this.renderAddressInformation()} />
                     </View>
 
                     {/* Marketing Note Section */}
@@ -346,7 +405,7 @@ class MarketingandPrivacyComponent extends Component {
                         <Text style={styles.marketingNotes}>
                             {globalString.marketingPrivacyLabel.marketingNoteOne}
                         </Text>
-                        
+
                         <Text style={styles.marketingNotesLink}>
                             {globalString.marketingPrivacyLabel.marketingContactUsLabel}
                         </Text>
@@ -728,6 +787,6 @@ MarketingandPrivacyComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object)
 };
 
-MarketingandPrivacyComponent.defaultProps = { };
+MarketingandPrivacyComponent.defaultProps = {};
 
 export default MarketingandPrivacyComponent;

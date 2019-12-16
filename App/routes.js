@@ -21,7 +21,7 @@ import AccountInquiry from './Screens/AccountInquiry/AccountInquiryComponent';
 import GeneralSettings from './Screens/GeneralSettings/';
 import ProfileSettings from './Screens/ProfileSettings/';
 import DeliverySettings from './Screens/DeliverySettings';
-import MarketingandPrivacySettings from './Screens/MarketingandPrivacy/MarketingandPrivacyComponent';
+import MarketingandPrivacySettings from './Screens/MarketingandPrivacy/';
 import ChangeLogonCredentialsComponent from './Screens/ChangeLogonCredentials/ChangeLogonCredentialsComponent';
 import CurrentPasswordComponent from './Screens/CurrentPassword';
 import ResetPasswordComponent from './Screens/ResetPassword';

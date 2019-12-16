@@ -1,20 +1,18 @@
 import { connect } from "react-redux";
 import MarketingandPrivacyComponent from './MarketingandPrivacyComponent';
-import { getLogin } from "../../Shared/Reducers";
-import { loginActions } from "../../Shared/Actions";
-
+import { profileSettingsAction } from "../../Shared/Actions";
 
 const mapStateToProps = (state /* , props */) => (
-    {
-      loginData: getLogin(state)
-    }
-  );
+  {
+    profileState: state.profileInformationData
+  }
+);
 
 const mapDispatchToProps = {
-    ...loginActions
-  };
+  ...profileSettingsAction
+};
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(MarketingandPrivacyComponent);
+  mapStateToProps,
+  mapDispatchToProps
+)(MarketingandPrivacyComponent);

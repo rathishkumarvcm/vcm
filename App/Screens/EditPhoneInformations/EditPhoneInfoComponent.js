@@ -6,37 +6,6 @@ import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
 
-const tempUserMobile = [
-    {
-        "mobileNumberType": 'Primary Mobile',
-        "mobileNumber": '+1(xxx) xxx-7890',
-        "mobilePreferredTime": 'Morning',
-        "isPrimaryMobile": true
-    }
-];
-
-const tempUserHome = [
-    {
-        "mobileNumberType": 'Primary Mobile',
-        "mobileNumber": '+1(xxx) xxx-7890',
-        "mobilePreferredTime": 'Morning',
-        "isPrimaryMobile": true
-    }
-];
-
-const tempUserWork = [
-    {
-        "mobileNumberType": 'Primary Mobile',
-        "mobileNumber": '+1(xxx) xxx-7890',
-        "mobilePreferredTime": 'Morning',
-        "isPrimaryMobile": true
-    }
-];
-
-let userMobileNumber = [];
-let userHomeNumber = [];
-let userWorkNumber = [];
-
 const UserPhoneInformation = (props) => {
     return (
         <View style={styles.editEmailHolder}>
@@ -69,7 +38,7 @@ const UserPhoneInformation = (props) => {
 
                 <View style={styles.editSwitchButton}>
                     <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={this.toggleSwitchMailing}
+                        onValueChange={props.onMobileToggle}
                         value={props.isPrimaryMobile} />
                 </View>
             </View>
@@ -82,7 +51,8 @@ UserPhoneInformation.propTypes = {
     mobileNumberType: PropTypes.string,
     mobileNumber: PropTypes.string,
     mobilePreferredTime: PropTypes.string,
-    isPrimaryMobile: PropTypes.bool
+    isPrimaryMobile: PropTypes.bool,
+    onMobileToggle: PropTypes.func
 };
 
 class editPhoneInfoComponent extends Component {
@@ -93,41 +63,111 @@ class editPhoneInfoComponent extends Component {
             isLoading: false,
             enableBiometric: false,
             faceIdEnrolled: false,
-            touchIdEnrolled: false
+            touchIdEnrolled: false,
+
+            isMobileRefreshed: false,
+
+            userMobileNumber: [],
+            userHomeNumber: [],
+            userWorkNumber: []
         };
     }
 
-    renderPhoneInformation = (dataLength) => ({ item, index }) =>
-        (<UserPhoneInformation
+    onMobileToggle = (item, index) => () => {
+        var array = [...this.state.userMobileNumber];
+        if (index !== -1) {
+            let switchVal = array[index].isPrimaryMobile;
+            array[index].isPrimaryMobile = !switchVal;
+            this.setState({
+                userMobileNumber: array,
+                isMobileRefreshed: !this.state.isMobileRefreshed
+            });
+        }
+    }
+
+    renderPhoneInformation = () => ({ item, index }) => {
+        return (<UserPhoneInformation
             mobileNumberType={item.mobileNumberType}
             mobileNumber={item.mobileNumber}
             mobilePreferredTime={item.mobilePreferredTime}
-            isPrimaryMobile={item.isPrimaryMobile} />);
+            isPrimaryMobile={item.isPrimaryMobile}
+            onMobileToggle={this.onMobileToggle(item, index)} />)
+    };
 
-    toggleSwitchMailing = (value) => {
-        this.props.isMailingAddress = value
+    renderHomeNumberInformation = () => ({ item, index }) => {
+        return (<UserPhoneInformation
+            mobileNumberType={item.mobileNumberType}
+            mobileNumber={item.mobileNumber}
+            mobilePreferredTime={item.mobilePreferredTime}
+            isPrimaryMobile={item.isPrimaryMobile}
+            onMobileToggle={this.onMobileToggle(item, index)} />)
+    };
+
+    renderWorkNumberInformation = () => ({ item, index }) => {
+        return (<UserPhoneInformation
+            mobileNumberType={item.mobileNumberType}
+            mobileNumber={item.mobileNumber}
+            mobilePreferredTime={item.mobilePreferredTime}
+            isPrimaryMobile={item.isPrimaryMobile}
+            onMobileToggle={this.onMobileToggle(item, index)} />)
+    };
+
+    componentDidMount() {
+        if (this.props &&
+            this.props.profileState &&
+            this.props.profileState.profileUserMobileNumber) {
+            this.setState({
+                userMobileNumber: this.props.profileState.profileUserMobileNumber,
+                isMobileRefreshed: !this.state.isMobileRefreshed
+            });
+        }
+
+        if (this.props &&
+            this.props.profileState &&
+            this.props.profileState.profileUserHomeNumber) {
+            this.setState({
+                userHomeNumber: this.props.profileState.profileUserHomeNumber,
+                isMobileRefreshed: !this.state.isMobileRefreshed
+            });
+        }
+
+        if (this.props &&
+            this.props.profileState &&
+            this.props.profileState.profileUserWorkNumber) {
+            this.setState({
+                userWorkNumber: this.props.profileState.profileUserWorkNumber,
+                isMobileRefreshed: !this.state.isMobileRefreshed
+            });
+        }
     }
-
-    componentDidMount() { }
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props != prevProps) {
             if (this.props &&
                 this.props.profileState &&
                 this.props.profileState.profileUserMobileNumber) {
-                userMobileNumber = this.props.profileState.profileUserMobileNumber;
+                this.setState({
+                    userMobileNumber: this.props.profileState.profileUserMobileNumber,
+                    isMobileRefreshed: !this.state.isMobileRefreshed
+                });
             }
     
             if (this.props &&
                 this.props.profileState &&
                 this.props.profileState.profileUserHomeNumber) {
-                userHomeNumber = this.props.profileState.profileUserHomeNumber;
+                this.setState({
+                    userHomeNumber: this.props.profileState.profileUserHomeNumber,
+                    isMobileRefreshed: !this.state.isMobileRefreshed
+                });
             }
     
             if (this.props &&
                 this.props.profileState &&
                 this.props.profileState.profileUserWorkNumber) {
-                userWorkNumber = this.props.profileState.profileUserWorkNumber;
+                this.setState({
+                    userWorkNumber: this.props.profileState.profileUserWorkNumber,
+                    isMobileRefreshed: !this.state.isMobileRefreshed
+                });
             }
         }
     }
@@ -137,25 +177,6 @@ class editPhoneInfoComponent extends Component {
     phoneInformationOnCancel = () => this.props.navigation.navigate('profileSettings');
 
     render() {
-
-        if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileUserMobileNumber) {
-            userMobileNumber = this.props.profileState.profileUserMobileNumber;
-        }
-
-        if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileUserHomeNumber) {
-            userHomeNumber = this.props.profileState.profileUserHomeNumber;
-        }
-
-        if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileUserWorkNumber) {
-            userWorkNumber = this.props.profileState.profileUserWorkNumber;
-        }
-
         return (
             <View style={styles.container}>
                 <GHeaderComponent
@@ -193,9 +214,10 @@ class editPhoneInfoComponent extends Component {
                         </View>
 
                         <FlatList
-                            data={userMobileNumber}
+                            data={this.state.userMobileNumber}
                             keyExtractor={this.generateKeyExtractor}
-                            renderItem={this.renderPhoneInformation(userMobileNumber.length)} />
+                            extraData={this.state.isMobileRefreshed}
+                            renderItem={this.renderPhoneInformation()} />
 
                     </View>
 
@@ -205,9 +227,10 @@ class editPhoneInfoComponent extends Component {
                         </View>
 
                         <FlatList
-                            data={userHomeNumber}
+                            data={this.state.userHomeNumber}
                             keyExtractor={this.generateKeyExtractor}
-                            renderItem={this.renderPhoneInformation(userHomeNumber.length)} />
+                            extraData={this.state.isMobileRefreshed}
+                            renderItem={this.renderHomeNumberInformation()} />
 
                     </View>
 
@@ -217,9 +240,10 @@ class editPhoneInfoComponent extends Component {
                         </View>
 
                         <FlatList
-                            data={userWorkNumber}
+                            data={this.state.userWorkNumber}
                             keyExtractor={this.generateKeyExtractor}
-                            renderItem={this.renderPhoneInformation(userWorkNumber.length)} />
+                            extraData={this.state.isMobileRefreshed}
+                            renderItem={this.renderWorkNumberInformation()} />
                     </View>
 
                     <View style={styles.settingsView}>

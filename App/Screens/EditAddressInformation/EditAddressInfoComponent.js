@@ -52,7 +52,7 @@ const UserAddressInformation = (props) => {
                 </Text>
                 <View style={styles.editSwitchButton}>
                     <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={this.toggleSwitchPhysical}
+                        onValueChange={props.onPhysicalSwitchToggle}
                         value={props.isPhysicalAddress} />
                 </View>
             </View>
@@ -68,7 +68,8 @@ UserAddressInformation.propTypes = {
     addressZipcode: PropTypes.string,
     isMailingAddress: PropTypes.bool,
     isPhysicalAddress: PropTypes.bool,
-    onMailingSwitchToggle: PropTypes.func
+    onMailingSwitchToggle: PropTypes.func,
+    onPhysicalSwitchToggle: PropTypes.func
 };
 
 class editAddressInfoComponent extends Component {
@@ -100,8 +101,16 @@ class editAddressInfoComponent extends Component {
         }
     }
 
-    toggleSwitchPhysical = (value) => {
-        this.props.isPhysicalAddress = value
+    onPhysicalSwitchToggle = (item, index) => () => {
+        var array = [...this.state.profileUserAddressValue];
+        if (index !== -1) {
+            let switchVal = array[index].isPhysicalAddress;
+            array[index].isPhysicalAddress = !switchVal;
+            this.setState({
+                profileUserAddressValue: array,
+                refreshAddressData: !this.state.refreshAddressData
+            });
+        }
     }
 
     renderAddressInformation = () => ({ item, index }) => {
@@ -135,7 +144,6 @@ class editAddressInfoComponent extends Component {
                     profileUserAddressValue: this.props.profileState.profileUserAddressInformation,
                     refreshAddressData: !this.state.refreshAddressData
                 });
-                console.log("@@@@@@@@@@@@@@ Dip Update", this.state.profileUserAddressValue);
             }
         }
     }
