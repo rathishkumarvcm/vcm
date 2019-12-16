@@ -116,7 +116,7 @@ export const styles = StyleSheet.create({
   innerHeaderView: {
     paddingVertical: "4%",
     paddingLeft: "4%",
-    paddingRight: "2%",
+    paddingRight: "4%",
     flexDirection: "row",
     borderBottomWidth: scaledHeight(1),
     borderBottomColor: "#5D83AE99",
@@ -171,5 +171,37 @@ export const styles = StyleSheet.create({
   },
   sideBtn: {
     width: scaledHeight(20)
+  },
+  lblLine: {
+    flexGrow: 1,
+    height: scaledHeight(1),
+    backgroundColor: "#707070",
+    opacity: 0.25
+  },
+  lblTxt: {
+    color: "rgba(51, 51, 51, 0.87)",
+    fontSize: scaledHeight(16),
+    fontWeight: "bold"
+  },
+  lblTxtInner: {
+    color: "rgba(51, 51, 51, 0.87)",
+    fontSize: scaledHeight(14),
+    fontWeight: "bold",
+    margin: scaledHeight(10)
+  },
+  shadowView: {
+    backgroundColor: "white",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+    position:'absolute',
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 5,
+    width:"40%",
+    marginTop:scaledHeight(38),
+    alignSelf:'flex-end'
   }
 });

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { styles } from './styles';
-import { GIcon, GHeaderComponent, GFooterComponent, GInputComponent, GDateComponent, GDropDownComponent, GButtonComponent } from '../../CommonComponents';
+import { GIcon, GHeaderComponent, GLoadingSpinner, GFooterComponent, GInputComponent, GDateComponent, GDropDownComponent, GButtonComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
 import {nameRegex, emailRegex, zipCodeRegex } from '../../Constants/RegexConstants';
@@ -21,6 +21,8 @@ class addNewIntrestedPartiesComponent extends Component {
             isCollapsable:false,
             collapseIcon:"-",
             account_Data:{},
+            isZipApiCalling: false,
+            isAddressApiCalling: false,
             personal:{
                 firstName:"",
                 middleName:"",
@@ -46,6 +48,7 @@ class addNewIntrestedPartiesComponent extends Component {
                 companyValidation:true,
                 addressLine1Validation:true,
                 addressLine2Validation:true,
+                addValidation:true,
                 addressValiMsg:"",
                 zipCodeValidation:true,
                 zipCodeValiMsg:"",
@@ -77,21 +80,42 @@ class addNewIntrestedPartiesComponent extends Component {
     componentDidUpdate(prevProps) {
         console.log("didUpdate::");
         const stateCityResponseData = ActionTypes.GET_STATECITY;
-        if (this.props != prevProps) {
-            if (this.props && this.props.stateCityData[stateCityResponseData]) {
-                const tempResponse = this.props.stateCityData[stateCityResponseData];
-                console.log("state city response:::::", tempResponse);
-                if (tempResponse && tempResponse.City) {
-                    this.onUpdateField("personal","city",tempResponse.City);
-                    this.onUpdateField("personal","stateValue",tempResponse.State);
+        const addressResponseData = ActionTypes.GET_ADDRESSFORMAT;
+
+        if (this.state.isZipApiCalling) {
+            if (this.props != prevProps) {
+                if (this.props && this.props.stateCityData[stateCityResponseData]) {
+                    const tempResponse = this.props.stateCityData[stateCityResponseData];
+                    console.log("@@@@@@@@@@@@@@@ Success Update", tempResponse);
+                    if (tempResponse && tempResponse.City) {
+                        this.onUpdateField("personal","city",tempResponse.City);
+                        this.onUpdateField("personal","stateValue",tempResponse.State);
+                        this.onUpdateField("personal","zipCodeValidation",true);
+                    } else {
+                        this.onUpdateField("personal","city", ' - ');
+                        this.onUpdateField("personal","stateValue",' - ');
+                        this.onUpdateField("personal","zipCodeValidation",false);
+                        this.onUpdateField("personal","zipCodeValiMsg","Please enter valid ZipCode");
+                    } 
                 }
-            } else {
-                if (this.props && this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR]) {
-                    const tempErrorResponse = this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR];
-                    console.log("Error", tempErrorResponse);
-                    this.onUpdateField("personal","addressValidateFlag",true);
-                    this.onUpdateField("personal","addressValidateMsg",this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR]);
-                    console.log("error",this.state.personal.addressValidateMsg) ;
+            }
+        }
+
+        if (this.state.isAddressApiCalling) {
+            if (this.props != prevProps) {
+                if (this.props && this.props.stateCityData[addressResponseData]) {
+                    const tempAddressResponse = this.props.stateCityData[addressResponseData];
+                    console.log("@@@@@@@@@@@@@@@@@@@@ Success Address", tempAddressResponse);
+                    if (tempAddressResponse && tempAddressResponse.Address2) {
+                        this.onUpdateField("personal","addressLine1",tempAddressResponse.Address1 || "");
+                        this.onUpdateField("personal","addressLine2",tempAddressResponse.Address2 || "");
+                        this.onUpdateField("personal","addValidation",true);
+                    } else {
+                        this.onUpdateField("personal","addressLine1",'');
+                        this.onUpdateField("personal","addressLine2",'');
+                        this.onUpdateField("personal","addressLine1Validation",false);
+                        this.onUpdateField("personal","addValidation",false);
+                    }
                 }
             }
         }
@@ -106,13 +130,24 @@ class addNewIntrestedPartiesComponent extends Component {
         const payload = {
             'Zip': this.state.personal.zipCode
         };
-        const addressPayload = {
-            ...payload,
-            "Address1": this.state.personal.addressLine1,
-            "Address2": this.state.personal.addressLine2,
-            "City":this.state.personal.city,
-            "State": this.state.personal.stateValue
-        };
+        let addressPayload={};
+        if(this.state.personal.zipCode != ''){
+            addressPayload = {
+                ...payload,
+                "Address1": this.state.personal.addressLine1,
+                "Address2": this.state.personal.addressLine2,
+                "City":this.state.personal.city,
+                "State": this.state.personal.stateValue
+            };
+        } else {
+            addressPayload = {
+                "Address1": this.state.personal.addressLine1,
+                "Address2": this.state.personal.addressLine2,
+                "City":this.state.personal.city,
+                "State": this.state.personal.stateValue
+            }; 
+        }
+        
         this.props.getStateCity(payload);
         this.props.getAddressFormat(addressPayload);
     }
@@ -332,11 +367,15 @@ class addNewIntrestedPartiesComponent extends Component {
     generateKeyExtractor = (item) => item.key;
 
     render() {
+        console.log("addValidate",this.state.personal.addValidation);
         if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.relationship && this.props.masterLookupStateData.relationship.value) {
             relationData=this.props.masterLookupStateData.relationship.value;
         }
         return (
             <View style={styles.container} >
+                {
+                    this.props.stateCityData.isLoading && <GLoadingSpinner />
+                }
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.flexMainView} keyboardShouldPersistTaps="always" ref={this.setScrollViewRef}>
                 <View style={styles.mainHeadingView}>
@@ -476,6 +515,7 @@ class addNewIntrestedPartiesComponent extends Component {
                             placeholder={""}
                             maxLength={gblStrings.maxLength.zipCode}
                             onBlur={this.validateZipCode}
+                            keyboardType="number-pad"
                             onChangeText={this.onChangeText("personal","zipCode")}
                             errorFlag={!this.state.personal.zipCodeValidation}
                             errorText={this.state.personal.zipCodeValiMsg}
@@ -558,7 +598,8 @@ addNewIntrestedPartiesComponent.propTypes = {
     masterLookupStateData: PropTypes.instanceOf(Object).isRequired,
     stateCityData: PropTypes.instanceOf(Object).isRequired,
     getCompositeLookUpData: PropTypes.func,
-    getStateCity: PropTypes.func
+    getStateCity: PropTypes.func,
+    getAddress: PropTypes.func
 };
 
 export default addNewIntrestedPartiesComponent;

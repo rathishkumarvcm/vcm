@@ -189,10 +189,11 @@ export default {
         noOfAccTagged:"Number of Accounts Tagged",
         preferredTimePeriod:"Preferred Time Period",
         validDateSelect:"Please Select Proper Date",
-        verifyIntrestedPartyInfo:"Verify - Intrested Parties Information",
+        verifyIntrestedPartyInfo:"Verify - Intrested Party Information",
         effStartDate:"Effective Start Date",
         effEndDate:"Effective End Date",
         mailingAdd:"Mailing Address",
+        editIntrestedParty:"Edit-Intrested Party of",
 
         personalInformation: "Personal Information",
         employmentInformation: "Employment Information",

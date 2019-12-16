@@ -372,6 +372,7 @@ export const styles = StyleSheet.create({
     lineHeight: 24
   },
   distributionView:{
+    width:'90%',
     
   },
 });

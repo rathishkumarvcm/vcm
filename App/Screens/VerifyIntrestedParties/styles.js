@@ -104,6 +104,8 @@ export const styles = StyleSheet.create({
   },
   flexStyle: {
     flexDirection: "row",
+    width: "90%",
+    paddingRight: "4%",
     justifyContent: "space-between"
   },
   footerView: {
@@ -117,6 +119,7 @@ export const styles = StyleSheet.create({
     color: "#151516",
     fontSize: scaledHeight(18),
     fontWeight: "bold",
+    width:'75%',
     marginBottom: scaledHeight(5)
   },
   containerView: {
@@ -157,7 +160,8 @@ export const styles = StyleSheet.create({
     color: "#5D83AE",
     fontSize: scaledHeight(15),
     fontWeight: "400",
-    paddingLeft: "4%"
+    paddingLeft: "4%",
+    paddingTop:scaledHeight(30)
   },
   shortContentText: {
     color: "#56565A",

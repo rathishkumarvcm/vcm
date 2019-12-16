@@ -4,6 +4,7 @@ import {styles} from './styles';
 import { GHeaderComponent, GIcon, GFooterComponent} from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from 'prop-types';
+import CardHeader from './CardHeader';
 
 
 class ManageBenificiariesComponent extends Component {
@@ -22,24 +23,22 @@ class ManageBenificiariesComponent extends Component {
    
   }
 
-  handleEdit=(data)=>{
+  handleEdit=(data)=>()=>{
+    console.log("Data:::::",data);
     this.props.navigation.navigate("editManageBeneficiaries",{ acc_Data:data });
+  }
+
+  onDelete=(data)=>()=>{
+    console.log("onDelete Data",data);
   }
 
   generateKeyExtractor = (item) => item.key;
 
-  renderContingentBeneficiary=({item})=>{
+  renderContingentBeneficiary=({item,key})=>{
+    console.log("in renderConBeneficiary::",item.key);
     return(
       <View style={styles.innerContainerView}>
-        <View style={styles.innerHeaderView}>
-          <View style={styles.flexDirectionStyle}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.contractNumber}</Text>
-            <Text style={[styles.shortContentValueText,styles.paddingStyleLeft]}>{item.contract_Number}</Text>
-          </View>
-          <TouchableOpacity style={styles.sideBtn}>
-            <GIcon name="ellipsis-v" type="font-awesome" size={30} color="black" />
-          </TouchableOpacity>
-        </View>
+        <CardHeader item={item} onPressDelete={this.onDelete(item,key)}/>
         <View style={[styles.paddingStyleLeft,styles.marginBottomStyle]}>
           <View style={styles.marginTopStyle}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.contingentBeneficiary}</Text>
@@ -66,17 +65,10 @@ class ManageBenificiariesComponent extends Component {
   }
 
   renderTransferOnDeathBeneficiary = ({item}) => {
+    console.log("in renderTODBeneficiary::",item.key);
     return(
       <View style={styles.innerContainerView}>
-        <View style={styles.innerHeaderView}>
-          <View style={styles.flexDirectionStyle}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.contractNumber}</Text>
-            <Text style={[styles.shortContentValueText,styles.paddingStyleLeft]}>{item.contract_Number}</Text>
-          </View>
-          <TouchableOpacity style={styles.sideBtn}>
-            <GIcon name="ellipsis-v" type="font-awesome" size={30} color="black" />
-          </TouchableOpacity>
-        </View>
+        <CardHeader item={item} onPressDelete={this.onDelete(item)}/>
         <View style={[styles.paddingStyleLeft,styles.marginBottomStyle]}>
           <View style={styles.marginTopStyle}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.primaryBeneficiary}</Text>
@@ -103,17 +95,10 @@ class ManageBenificiariesComponent extends Component {
   }
 
   renderPrimaryBeneficiary=({item})=>{
+    console.log("in renderPRiBeneficiary::",item);
     return(
       <View style={styles.innerContainerView}>
-        <View style={styles.innerHeaderView}>
-          <View style={styles.flexDirectionStyle}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.contractNumber}</Text>
-            <Text style={[styles.shortContentValueText,styles.paddingStyleLeft]}>{item.contract_Number}</Text>
-          </View>
-          <TouchableOpacity style={styles.sideBtn}>
-            <GIcon name="ellipsis-v" type="font-awesome" size={30} color="black" />
-          </TouchableOpacity>
-        </View>
+        <CardHeader item={item} onPressDelete={this.onDelete(item)}/>
         <View style={[styles.paddingStyleLeft,styles.marginBottomStyle]}>
           <View style={styles.marginTopStyle}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.primaryBeneficiary}</Text>
@@ -140,6 +125,7 @@ class ManageBenificiariesComponent extends Component {
   }
 
   renderBeneficiaryData=({item})=>{
+    console.log("in renderBeneficiary::",item.key);
     return(
       <View style={styles.blockMarginTop}>
         <View style={styles.titleHeadingView}>
@@ -152,7 +138,7 @@ class ManageBenificiariesComponent extends Component {
             <Text style={styles.containerHeaderText}>{" - Acc Name - " + item.account_Name + " | " + "Acc Number - " + item.account_Number}</Text>
             <View style={styles.flexDirectionStyle}>
               <Text style={styles.containerHeaderText}>{"  Value - $" + item.accumulated_Value + " | " + gblStrings.accManagement.distributionPercentage + " - " + item.distribution_Per +"%"}</Text>
-              <TouchableOpacity onPress={()=>this.handleEdit(item)}>
+              <TouchableOpacity onPress={this.handleEdit(item)}>
                 <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
               </TouchableOpacity>
             </View>
@@ -160,6 +146,7 @@ class ManageBenificiariesComponent extends Component {
           {item.primary_Bene &&
             <FlatList
               data={item.primary_Bene}
+              extraData={this.props}
               keyExtractor={this.generateKeyExtractor}
               renderItem={this.renderPrimaryBeneficiary} 
             />
@@ -167,6 +154,7 @@ class ManageBenificiariesComponent extends Component {
           {item.contingent_Bene &&
             <FlatList
               data={item.contingent_Bene}
+              extraData={this.props}
               keyExtractor={this.generateKeyExtractor}
               renderItem={this.renderContingentBeneficiary} 
             />
@@ -174,6 +162,7 @@ class ManageBenificiariesComponent extends Component {
           {item.transfer_on_Death_Bene &&
             <FlatList
               data={item.transfer_on_Death_Bene}
+              extraData={this.props}
               keyExtractor={this.generateKeyExtractor}
               renderItem={this.renderTransferOnDeathBeneficiary} 
             />

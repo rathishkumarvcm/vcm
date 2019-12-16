@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView ,TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
-import { GIcon,  GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
+import CardHeader from './CardHeader';
 
 
 class manageIntrestedPartiesComponent extends Component {
@@ -13,6 +14,7 @@ class manageIntrestedPartiesComponent extends Component {
             isSavedSuccess:false,
             isCollapsable:false,
             collapseIcon:"-",
+            showModal:true
         };
     }
    
@@ -20,36 +22,32 @@ class manageIntrestedPartiesComponent extends Component {
        
     }
 
-    addIntrestedParty=(data)=>{
-        console.log("add clicked");
+    addIntrestedParty=(data)=>()=>{
         this.props.navigation.navigate("addIntrestedParties",{acc_Data:data});
+    }
+
+    onClickEdit=(data,key)=>()=>()=>{
+        console.log("edit Data::::",data,key);
+       // this.props.navigation.navigate("editIntrestedParty",{acc_Data:data, acc_Data_key:key});
     }
 
     renderIntrestedParties=({item})=>{
         return(
             <View style={styles.innerContainerView}>
-                <View style={styles.innerHeaderView}>
-                <View style={styles.flexDirectionStyle}>
-                    <Text style={styles.shortContentText}>{gblStrings.accManagement.contractNumber}</Text>
-                    <Text style={[styles.shortContentValueText,styles.paddingStyleLeft]}>{item.contract_Number}</Text>
-                </View>
-                <TouchableOpacity style={styles.sideBtn}>
-                    <GIcon name="ellipsis-v" type="font-awesome" size={30} color="black" />
-                </TouchableOpacity>
-                </View>
+                <CardHeader item={item} navigate={this.onClickEdit(item.key)} />
                 <View style={[styles.paddingStyleLeft,styles.marginBottomStyle]}>
-                <View style={styles.marginTopStyle}>
-                    <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
-                    <Text style={styles.beneNameStyle}>{item.fname+" "+item.mname+" "+item.lname}</Text>
-                </View>
-                <View style={styles.marginTopStyle}>
-                    <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToAccountHolder}</Text>
-                    <Text style={styles.shortContentValueText}>{item.relationship_To_Account_holder}</Text>
-                </View>
-                <View style={styles.marginTopStyle}>
-                <Text style={styles.shortContentText}>{gblStrings.accManagement.noOfAccTagged}</Text>
-                    <Text style={styles.shortContentValueText}>{"#"+item.accounts_Tagged}</Text>
-                </View>
+                    <View style={styles.marginTopStyle}>
+                        <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
+                        <Text style={styles.beneNameStyle}>{item.fname+" "+item.mname+" "+item.lname}</Text>
+                    </View>
+                    <View style={styles.marginTopStyle}>
+                        <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToAccountHolder}</Text>
+                        <Text style={styles.shortContentValueText}>{item.relationship_To_Account_holder}</Text>
+                    </View>
+                    <View style={styles.marginTopStyle}>
+                    <Text style={styles.shortContentText}>{gblStrings.accManagement.noOfAccTagged}</Text>
+                        <Text style={styles.shortContentValueText}>{"#"+item.accounts_Tagged}</Text>
+                    </View>
                 </View>
             </View>
         );
@@ -67,7 +65,7 @@ class manageIntrestedPartiesComponent extends Component {
                 <View style={styles.containerHeaderView}>
                   <Text style={styles.containerHeaderText}>{" - Acc Name - " + item.account_Name + " | " + "Acc Number - " + item.account_Number}</Text>
                   <View style={styles.addBtn}>
-                    <TouchableOpacity onPress={()=>this.addIntrestedParty(item)}>
+                    <TouchableOpacity onPress={this.addIntrestedParty(item)}>
                       <Text style={styles.editBtnText}>{gblStrings.accManagement.addNew}</Text>
                     </TouchableOpacity>
                   </View>

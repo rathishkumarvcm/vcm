@@ -107,6 +107,14 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: scaledHeight(15)
   },
+  containerHeaderView: {
+    backgroundColor: "#ECECEC",
+    borderBottomColor: "#5D83AE99",
+    borderBottomWidth: scaledHeight(1),
+    paddingTop: "2%",
+    paddingLeft:'4%',
+    marginBottom: scaledHeight(5)
+  },
   containerHeaderText: {
     color: "#54565B",
     fontSize: scaledHeight(12),
@@ -299,5 +307,5 @@ export const styles = StyleSheet.create({
   dropDownLayout:{
     marginTop:scaledHeight(18),
     paddingLeft:0
-},
+  },
 });

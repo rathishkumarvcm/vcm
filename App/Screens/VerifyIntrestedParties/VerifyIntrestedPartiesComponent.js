@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, ScrollView, TouchableOpacity, FlatList} from 'react-native';
+import {Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import {styles} from './styles';
 import {
   GHeaderComponent,
