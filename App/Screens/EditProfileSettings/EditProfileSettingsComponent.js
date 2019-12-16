@@ -320,9 +320,9 @@ class editProfileSettingsComponent extends Component {
         return profilePayload;
     }
 
-    editProfileBack = () => { this.props.navigation.navigate('profileSettings'); };
+    editProfileBack = () => {this.props.navigation.navigate('profileSettings')};
 
-    editProfileOnCancel = () => { this.props.navigation.navigate('profileSettings'); }
+    editProfileOnCancel = () => {this.props.navigation.navigate('profileSettings')};
 
     render() {
 
@@ -358,8 +358,7 @@ class editProfileSettingsComponent extends Component {
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation}
-                />
+                    navigation={this.props.navigation} />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -460,8 +459,7 @@ class editProfileSettingsComponent extends Component {
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownPrefixFlag}
                             errorText={this.dropDownPrefixMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(492) }}
-                        />
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(492) }} />
 
                         {/* Suffix Data */}
 
@@ -493,8 +491,7 @@ class editProfileSettingsComponent extends Component {
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownGenderFlag}
                             errorText={this.dropDownGenderMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(670) }}
-                        />
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(670) }} />
 
                         {/* Marital Status Data */}
 
@@ -510,8 +507,7 @@ class editProfileSettingsComponent extends Component {
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownStatusFlag}
                             errorText={this.dropDownStatusMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(760) }}
-                        />
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(760) }} />
 
                         {/* Citizenship */}
 
@@ -526,14 +522,12 @@ class editProfileSettingsComponent extends Component {
                                         <GRadioButtonComponent
                                             onPress={() => this.radioButtonClicked(index)}
                                             selected
-                                            questions={item.question}
-                                        />
+                                            questions={item.question} />
                                         :
                                         <GRadioButtonComponent
                                             onPress={() => this.radioButtonClicked(index)}
                                             selected={false}
-                                            questions={item.question}
-                                        />
+                                            questions={item.question} />
                                 )}
                             </View>
                         </View>
@@ -551,16 +545,14 @@ class editProfileSettingsComponent extends Component {
                                 itemToDisplay={"value"}
                                 errorFlag={this.state.dropDownCountryFlag}
                                 errorText={this.dropDownCountryMsg}
-                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(950) }}
-                            />) : null}
+                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(950) }} />) : null}
 
                         <View style={styles.editFlexDirectionColumn}>
                             <GButtonComponent
                                 buttonStyle={styles.cancelButtonStyle}
                                 buttonText={globalString.common.cancel}
                                 textStyle={styles.cancelButtonText}
-                                onPress={this.editProfileOnCancel}
-                            />
+                                onPress={this.editProfileOnCancel} />
                         </View>
 
                         <View style={styles.editFlexDirectionColumn}>
