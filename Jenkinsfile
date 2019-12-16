@@ -49,6 +49,7 @@ pipeline {
         stage('Deploy') { 
             steps {
                 sh 'echo Deploying'
+                sh 'npm install'
                 dir('android')
                 {
                     sh '/usr/local/bin/bundle install'

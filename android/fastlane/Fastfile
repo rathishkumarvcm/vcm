@@ -34,7 +34,8 @@ platform :android do
         app: "1:777050578604:android:f0c7e2168093a5fc730909",
         testers: "shamshudein.syedkareem@cognizant.com, shamshudein@gmail.com",
         release_notes: "VCM Member Services Android App New Release",
-        firebase_cli_path: "/usr/local/bin/firebase"
+        firebase_cli_path: "/usr/local/bin/firebase",
+        firebase_cli_token: "1//0gZoiIQ7Fx3LACgYIARAAGBASNwF-L9IrzzrV4B8Dw_BFL7NByOqErkCfg0tzS5F3RchhgGxGCyIjcErCrUzsQQFu4SCFm5cpKYU"
     )
 
     # sh "your_script.sh"
