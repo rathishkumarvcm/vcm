@@ -117,8 +117,7 @@ export const styles = StyleSheet.create({
     },
 
     accountDetailsFlex:{
-        height:scaledHeight(246),
-        marginTop:scaledHeight(20),
+        height:"100%",
         flexDirection:'column',
         borderColor:'#9DB4CE',
         borderWidth:scaledHeight(1),
@@ -129,6 +128,14 @@ export const styles = StyleSheet.create({
         marginTop:scaledHeight(20),
         flexDirection:'column',
         borderColor:'#B5E198',
+        borderWidth:scaledHeight(3),
+        backgroundColor:'#FFFFFF',
+    },
+    accountDetailsFlexUnSelected:{
+        height:scaledHeight(246),
+        marginTop:scaledHeight(20),
+        flexDirection:'column',
+        borderColor:'#FFFFFF',
         borderWidth:scaledHeight(3),
         backgroundColor:'#FFFFFF',
     },
