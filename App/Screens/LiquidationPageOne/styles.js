@@ -20,6 +20,62 @@ export const styles = StyleSheet.create({
         fontSize:scaledHeight(22),
         fontWeight:'bold',
     },
+    toggleOnFlex:{
+        backgroundColor: 'white', 
+        width: "15%", 
+        marginTop: "1%", 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start', 
+        flexDirection: 'row', 
+        marginRight: "6%" 
+    },
+    toggleOnGreyBg:{
+        backgroundColor: '#444444', 
+        borderColor: '#707070', 
+        borderWidth: scaledHeight(1), 
+        width: "100%", 
+        height: scaledHeight(25), 
+        borderRadius: 15, 
+        marginTop: scaledHeight(2)
+    },
+    toggleOnCircle:{
+        backgroundColor: '#FFFFFF', 
+        width: scaledHeight(30),
+        height: scaledHeight(30),  
+        borderRadius: scaledHeight(15), 
+        borderColor: '#707070', 
+        borderWidth: scaledHeight(1), 
+        zIndex: 3, 
+        marginLeft: scaledHeight(-30)
+    },
+    toggleOffFlex:{
+        backgroundColor: 'white', 
+        width: "15%", 
+        marginTop: "1%", 
+        alignItems: 'flex-start', 
+        justifyContent: 'flex-start', 
+        flexDirection: 'row', 
+        marginRight: "6%"
+    },
+    toggleOffGreyBg:{
+        backgroundColor: '#DBDBDB', 
+        borderColor: '#707070', 
+        borderWidth: scaledHeight(1), 
+        width: "100%", 
+        height: scaledHeight(25), 
+        borderRadius: 15,
+        marginTop: scaledHeight(2)
+    },
+    toggleOffCircle:{
+        width: scaledHeight(30), 
+        height: scaledHeight(30), 
+        borderRadius: scaledHeight(15), 
+        borderColor: '#707070', 
+        borderWidth: scaledHeight(1), 
+        backgroundColor: '#FFFFFF', 
+        position: 'absolute', 
+        zIndex: 3
+    },
     flex1:{
         marginLeft: "4%",
         marginRight: "4%"
