@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { styles } from './styles';
-import { View, ScrollView, Text, FlatList, Switch, TouchableOpacity } from 'react-native';
-import { GHeaderComponent, GInputComponent, GSwitchComponent, GFooterComponent, GButtonComponent, GIcon } from '../../CommonComponents';
+import { View, ScrollView, Text, FlatList, TouchableOpacity } from 'react-native';
+import { GHeaderComponent, GFooterComponent, GIcon, GButtonComponent} from '../../CommonComponents';
 import PropTypes from "prop-types";
 import gblStrings from '../../Constants/GlobalStrings';
 
@@ -10,6 +10,8 @@ class BankAccountsComponent extends Component {
         super(props);
         this.state = {
             isLoading: false,
+            showDeleteOption: false,
+            currentSecuritiesChanged: false,
             bankAccountInfo: [
                 {
                     Id: "1",
@@ -17,7 +19,10 @@ class BankAccountsComponent extends Component {
                     accountType: "Checking Account",
                     accountNumber: "0012556968666",
                     transitRoutingNumber: "569933659",
-                    dateAdded: "20/11/2019"
+                    dateAdded: "20/11/2019",
+                    isSystematicWithdrawalPlan: "Yes",
+                    isAutomaticInvestmentPlan: "No",
+                    showDeleteOption: false,
                 },
                 {
                     Id: "2",
@@ -25,7 +30,10 @@ class BankAccountsComponent extends Component {
                     accountType: "Checking Account",
                     accountNumber: "0012556968666",
                     transitRoutingNumber: "569933659",
-                    dateAdded: "20/11/2019"
+                    dateAdded: "20/11/2019",
+                    isSystematicWithdrawalPlan: "Yes",
+                    isAutomaticInvestmentPlan: "No",
+                    showDeleteOption: false,
                 },
                 {
                     Id: "3",
@@ -33,7 +41,10 @@ class BankAccountsComponent extends Component {
                     accountType: "Checking Account",
                     accountNumber: "0012556968666",
                     transitRoutingNumber: "569933659",
-                    dateAdded: "20/11/2019"
+                    dateAdded: "20/11/2019",
+                    isSystematicWithdrawalPlan: "Yes",
+                    isAutomaticInvestmentPlan: "No",
+                    showDeleteOption: false,
                 },
             ]
         };
@@ -52,7 +63,55 @@ class BankAccountsComponent extends Component {
         }
     }
 
-    navigateAddBankAccount = () => this.props.navigation.navigate('addBankAccount')
+    navigateAddBankAccount = () => this.props.navigation.navigate('addBankAccount');
+    
+    navigateBack = () => this.props.navigation.goBack();
+
+    updateCurrentSecurityChanged = () => this.setState({ currentSecuritiesChanged: !this.state.currentSecuritiesChanged });
+
+    updateShowDeleteOption = (fromView, showDeleteOption, itemId) => {
+        console.log("updateShowDeleteOption:::: ", fromView, showDeleteOption, itemId);
+        switch (fromView) {
+
+            case 'showDelete':
+                if (showDeleteOption) {
+                    tmpData = this.state.bankAccountInfo;
+                    tmpData.map((item) => {
+                        if (item.Id == itemId) {
+                            item.showDeleteOption = showDeleteOption;
+                        } else {
+                            item.showDeleteOption = !showDeleteOption;
+                        }
+                    });
+                    this.updateCurrentSecurityChanged();
+
+                    this.setState({ bankAccountInfo: tmpData });
+                    console.log("updateShowDeleteOption:::: ", this.state.bankAccountInfo);
+                }
+                break;
+
+        }
+    }
+
+    deleteBankAccount = (itemId) => {
+        let tmpData = [];
+        let index = -1;
+        tmpData = this.state.bankAccountInfo;
+        tmpData.map((item) => {
+            if (item.Id == itemId) {
+                index = tmpData.indexOf(item);
+            } 
+        });
+        if(index != -1) {
+            tmpData.splice(index, 1);
+        }
+
+        this.updateCurrentSecurityChanged();
+
+        this.setState({ bankAccountInfo: tmpData });
+    }
+
+
 
     render() {
         return (
@@ -63,14 +122,6 @@ class BankAccountsComponent extends Component {
                     <View style={styles.header}>
                         <Text style={styles.headerText}>
                             {gblStrings.bankAccounts.bank_account_header}
-                        </Text>
-                    </View>
-
-                    <View style={styles.linkBreak1} />
-
-                    <View style={styles.subHeader}>
-                        <Text style={styles.subHeaderText}>
-                            {gblStrings.bankAccounts.current_bank_accounts}
                         </Text>
 
                         <TouchableOpacity style={styles.addBtn} onPress={this.navigateAddBankAccount}>
@@ -86,14 +137,85 @@ class BankAccountsComponent extends Component {
                         {gblStrings.bankAccounts.lorem_bank_account}
                     </Text>
 
+                    
+
                     {this.props && this.props.bankAccountInfo &&
+
                         <FlatList
                             data={this.state.bankAccountInfo}
+                            extraData={this.state.currentSecuritiesChanged}
                             keyExtractor={(item) => item.Id}
-                            renderItem={({ item, i }) => (<ViewAccountItem
-                                item={item} />)}
+                            renderItem={({ item, i }) => (
+                                <View style={styles.bankInfoContainer}>
+                                    <View style={styles.bankNameHeader}>
+                                        <Text style={styles.accountTypeText}>
+                                            {`${item.bankName}`}
+                                        </Text>
+
+                                        <TouchableOpacity style={styles.editBankInfo} key={item.Id} onPress={() => this.updateShowDeleteOption('showDelete', true, item.Id)}>
+                                            <GIcon
+                                                name="dots-vertical"
+                                                type="material-community"
+                                                size={30}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+
+                                    {item.showDeleteOption && <GButtonComponent
+                                        buttonStyle={styles.deleteBtn}
+                                        buttonText={gblStrings.common.delete}
+                                        textStyle={styles.backButtonText}
+                                        onPress={() => this.deleteBankAccount(item.Id)}
+                                    />}
+
+                                    <View style={styles.linkBreak2} />
+
+                                    <Text style={styles.accountNameHeaderText}>
+                                        {gblStrings.bankAccounts.account_number}
+                                    </Text>
+
+                                    <Text style={styles.accountNameSubHeaderText}>
+                                        {`${item.accountNumber}`}
+                                    </Text>
+
+                                    <Text style={styles.accountNameHeaderText}>
+                                        {gblStrings.bankAccounts.transit_routing_number}
+                                    </Text>
+
+                                    <Text style={styles.accountNameSubHeaderText}>
+                                        {`${item.transitRoutingNumber}`}
+                                    </Text>
+
+                                    <Text style={styles.accountNameHeaderText}>
+                                        {gblStrings.bankAccounts.systematic_withdrawal_plan_bank_account}
+                                    </Text>
+
+                                    <Text style={styles.accountNameSubHeaderText}>
+                                        {`${item.isSystematicWithdrawalPlan}`}
+                                    </Text>
+
+                                    <Text style={styles.accountNameHeaderText}>
+                                        {gblStrings.bankAccounts.automatic_investment_plan_bank_account}
+                                    </Text>
+
+                                    <Text style={styles.accountNameSubHeaderText}>
+                                        {`${item.isAutomaticInvestmentPlan}`}
+                                    </Text>
+
+
+                                </View>
+
+                            )}
                         />}
 
+                    <GButtonComponent
+                        buttonStyle={styles.backBtn}
+                        buttonText={gblStrings.common.back}
+                        textStyle={styles.backButtonText}
+                        onPress={this.navigateBack}
+                    />
+                    
+                       
                     <View style={styles.fullLine} />
 
                     <View style={styles.tNCFlex}>
@@ -111,24 +233,34 @@ class BankAccountsComponent extends Component {
 
 const ViewAccountItem = (props) => {
     item = props.item;
+    isCollapsed = false;
+    console.log("ViewAccountItem:::: ",item);
     return (
-        <>
-            <View style={styles.accountView}>
-                <Text style={styles.accountText}>
+
+        <View style={styles.bankInfoContainer}>
+            <View style={styles.bankNameHeader}>
+                <Text style={styles.accountTypeText}>
                     {`${item.bankName}`}
                 </Text>
+
+                <TouchableOpacity style={styles.editBankInfo} key={item.Id} onPress={() => props.updateShowDeleteOption('showDelete', true, item.Id)}>
+                    <GIcon
+                        name="dots-vertical"
+                        type="material-community"
+                        size={30}
+                    />
+                </TouchableOpacity>
             </View>
 
-            <Text style={styles.accountTypeText}>
-                {`${item.accountType}`}
-            </Text>
+            {item.showDeleteOption && <GButtonComponent
+                buttonStyle={styles.deleteBtn}
+                buttonText={gblStrings.common.delete}
+                textStyle={styles.backButtonText}
+                onPress={this.navigateBack}
+            />}
 
-            <Text style={styles.dateAddedText}>
-                {gblStrings.bankAccounts.date_added + ` : ${item.dateAdded}`}
-            </Text>
-
-            <View style={styles.linkBreak2} />
-
+            <View style={styles.linkBreak2}/>
+            
             <Text style={styles.accountNameHeaderText}>
                 {gblStrings.bankAccounts.account_number}
             </Text>
@@ -145,7 +277,25 @@ const ViewAccountItem = (props) => {
                 {`${item.transitRoutingNumber}`}
             </Text>
 
-        </>
+            <Text style={styles.accountNameHeaderText}>
+                {gblStrings.bankAccounts.systematic_withdrawal_plan_bank_account}
+            </Text>
+
+            <Text style={styles.accountNameSubHeaderText}>
+                {`${item.isSystematicWithdrawalPlan}`}
+            </Text>
+
+            <Text style={styles.accountNameHeaderText}>
+                {gblStrings.bankAccounts.automatic_investment_plan_bank_account}
+            </Text>
+
+            <Text style={styles.accountNameSubHeaderText}>
+                {`${item.isAutomaticInvestmentPlan}`}
+            </Text>
+
+
+        </View>
+
     );
 };
 

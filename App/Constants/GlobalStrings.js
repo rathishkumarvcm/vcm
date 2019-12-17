@@ -1106,7 +1106,9 @@ export default {
         account_number: 'Account Number',
         transit_routing_number: 'Transit Routing Number',
         date_added: 'Date added',
-        add: 'Add'
+        add: 'Add',
+        systematic_withdrawal_plan_bank_account: 'Systematic Withdrawal Plan',
+        automatic_investment_plan_bank_account: 'Automatic Investment Plan'
     },
     addPopularBankAccount: {
         add_bank_account: 'Add Bank Account',

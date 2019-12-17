@@ -99,4 +99,21 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flex: 1,
     },
+    backBtn: {
+        borderColor: '#61285F45',
+        borderWidth: 1,
+        width: '78.6%',
+        marginLeft: '10.7%',
+        marginRight: '10.7%',
+        marginTop: scaledHeight(62),
+        borderRadius: scaledHeight(1),
+        height: scaledHeight(50),
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    backButtonText: {
+        fontSize: scaledHeight(16),
+        color: '#544A54'
+    },
 });

@@ -1,35 +1,34 @@
 import React, { Component } from 'react';
 import { styles } from './styles';
 import { View, ScrollView, Text, FlatList, TouchableOpacity } from 'react-native';
-import { GHeaderComponent, GFooterComponent, GIcon } from '../../CommonComponents';
+import { GHeaderComponent, GFooterComponent, GIcon, GButtonComponent } from '../../CommonComponents';
 import PropTypes from "prop-types";
 import gblStrings from '../../Constants/GlobalStrings';
-
-const data = {    
-        PopularAccount: [
-            "Discover",
-            "Bank of America",
-            "Wells Fargo",
-            "Chase",
-            "Bank Name 1",
-            "Bank Name 2",
-            "Bank Name 3",
-            "Others"
-        ]};
 
 class AddBankAccountComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isLoading: false,
-            popularAccountsList: data.PopularAccount,
             expand: false,
+            popularAccount: [
+                "Discover",
+                "Bank of America",
+                "Wells Fargo",
+                "Chase",
+                "Bank Name 1",
+                "Bank Name 2",
+                "Bank Name 3",
+                "Others"
+            ]
         };
     }
 
     navigateAddOtherBank = function () {
         this.props.navigation.navigate('addOtherBankAccountComponent');
     }
+
+    navigateBack = () => this.props.navigation.goBack();
 
     setExpandInstruction = () => {
         this.setState({
@@ -40,6 +39,19 @@ class AddBankAccountComponent extends Component {
     openAddBankOption = (bankName) => () => {
         if(bankName == "Others") {
             this.props.navigation.navigate('addOtherBankAccountComponent');
+        }
+    }
+
+    componentDidMount() {
+        let payload = [];
+
+        payload.push(JSON.stringify(this.state.popularAccount));
+        this.props.getPopularBankNames(payload);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props && this.props.popularBankInfo && this.props.popularBankInfo != prevProps.popularBankInfo) {
+            this.setState({ popularAccount: JSON.parse(this.props.popularBankInfo)});
         }
     }
 
@@ -67,39 +79,24 @@ class AddBankAccountComponent extends Component {
                         {gblStrings.addPopularBankAccount.popular_account}
                     </Text>
 
-                    <FlatList
-                        data={this.state.popularAccountsList}
-                        renderItem={({ item }) => (
-                        <ViewAccountItem
-                            item={item}
-                            openAddBankOption = {this.openAddBankOption}
-                        />)}
-                        keyExtractor={(item) => this.state.popularAccountsList.indexOf(item)}
+                    {this.props && this.props.popularBankInfo &&
+                        <FlatList
+                            data={this.state.popularAccount}
+                            renderItem={({ item }) => (
+                                <ViewAccountItem
+                                    item={item}
+                                    openAddBankOption={this.openAddBankOption}
+                                />)}
+                            keyExtractor={(item) => this.state.popularAccount.indexOf(item)}
+                        />
+                    }
+
+                    <GButtonComponent
+                        buttonStyle={styles.backBtn}
+                        buttonText={gblStrings.common.cancel}
+                        textStyle={styles.backButtonText}
+                        onPress={this.navigateBack}
                     />
-
-                    <View style={styles.instructionsView}>
-                        <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setExpandInstruction}>
-                            <View style={{ flex: 0.1, alignSelf: 'center'}}>
-                                {this.state.expand ?
-                                    <GIcon
-                                        name="minus"
-                                        type="antdesign"
-                                        size={30}
-                                    /> :
-                                    <GIcon
-                                        name="plus"
-                                        type="antdesign"
-                                        size={30}
-                                    />
-                                }
-                            </View>
-                            <Text style={styles.instructionText}>{gblStrings.addPopularBankAccount.instruction_add_account}</Text>
-                        </TouchableOpacity>
-                        {this.state.expand ?
-                            <View />
-                            : null}
-                    </View>
-
 
                     <View style={styles.fullLine} />
 

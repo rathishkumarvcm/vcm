@@ -1,3 +1,3 @@
-import AddBankAccountComponent from './AddBankAccountComponent';
+import AddBankAccountComponent from './AddBankAccountContainer';
 
 export default AddBankAccountComponent;
