@@ -216,6 +216,10 @@ class OpenAccPageTwoComponent extends Component {
             },
 
             jointOwner: {
+                relationshipToAcc:"",
+                relationshipToAccDropDown: false,
+                relationshipToAccValidation: true,
+
                 prefix: "",
                 prefixDropDown: false,
                 firstName: "",
@@ -1373,16 +1377,13 @@ class OpenAccPageTwoComponent extends Component {
 
 
             if (input !== "" && input !== null && input !== undefined) {
-                if (this[input] !== null && input !== undefined) {
+                if (this[input] !== null && this[input] !== undefined) {
                     if (typeof this[input].focus === 'function') {
                         this[input].focus();
                     }
                 }
             }
             alert(errMsg);
-            this.setState({
-
-            });
         }
 
         return isValidationSuccess;
@@ -1393,15 +1394,10 @@ class OpenAccPageTwoComponent extends Component {
         let errMsg = "";
         let isValidationSuccess = false;
         let input = "";
-        //var employmentInfoVisible = false;
 
-        if (this.isEmpty(this.state.jointOwner.empStatus) && this.state.jointOwner.empStatus !== "Not Employed" && this.state.jointOwner.empStatus !== "Homemaker" && this.state.jointOwner.empStatus !== "Others" && this.state.jointOwner.empStatus !== "Self-Employed") {
-            //employmentInfoVisible = true;
-        }
-
-        if (this.isEmpty(this.state.jointOwner.prefix)) {
+        if (this.isEmpty(this.state.jointOwner.relationshipToAcc)) {
             errMsg = gblStrings.accManagement.emptyPrefixMsg;
-            input = 'prefix';
+            input = 'relationshipToAcc';
         } else if (this.isEmpty(this.state.jointOwner.firstName)) {
             errMsg = gblStrings.accManagement.emptyFirstNameMsg;
             input = 'firstName';
@@ -1514,12 +1510,19 @@ class OpenAccPageTwoComponent extends Component {
             this.setState(prevState => ({
                 jointOwner: {
                     ...prevState.jointOwner,
-                    [input + 'Validation']: false
-                }
+                    [input + 'Validation']: false,
+                    isPersonalInfoExpanded: true,
+                    isEmploymentInfoExpanded: true,
+                    isFinancialInfoExpanded: true,
+                    isMilitaryInfoExpanded: true,
+                    isRegulatoryInfoExpanded: true,
+                },
+                isValidationSuccess: isValidationSuccess,
+                errMsg: isValidationSuccess == false ? errMsg : ""
             }));
 
             if (input !== "" && input !== null && input !== undefined) {
-                if (this[input] !== null && input !== undefined) {
+                if (this[input] !== null && this[input] !== undefined) {
                     if (typeof this[input].focus === 'function') {
                         this[input].focus();
                     }
@@ -3580,7 +3583,7 @@ class OpenAccPageTwoComponent extends Component {
                                     value={this.state.jointOwner.stateCity_Phy}
                                     onChangeText={this.onChangeText("jointOwner", "stateCity_Phy")}
                                     onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
-                                    errorFlag={!this.state.jointOwners.stateCity_PhyValidation}
+                                    errorFlag={!this.state.jointOwner.stateCity_PhyValidation}
                                     errorText={this.state.errMsg}
                                     editable = {this.state.jointOwner.citizenship != "U.S"? true:false}
 
