@@ -91,7 +91,10 @@ class editOccupationInfoComponent extends Component {
             isValidName: true,
             isValidLineOne: true,
             isValidLineTwo: true,
-            isValidZipCode: true
+            isValidZipCode: true,
+
+            isZipApiCalling: false,
+            isAddressApiCalling: false
         };
     }
 
@@ -141,24 +144,45 @@ class editOccupationInfoComponent extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         const stateCityResponseData = ActionTypes.GET_STATECITY;
-        if (this.props != prevProps) {
-            if (this.props && this.props.stateCityData[stateCityResponseData]) {
-                const tempResponse = this.props.stateCityData[stateCityResponseData];
-                console.log("Error Update 001", tempResponse);
-                if (tempResponse && tempResponse.City) {
-                    this.setState({
-                        employeeCityValue: tempResponse.City,
-                        employeeStateValue: tempResponse.State
-                    });
-                }
-            } else {
-                if (this.props && this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR]) {
-                    const tempErrorResponse = this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR];
-                    console.log("Error", tempErrorResponse);
-                    if (tempErrorResponse) {
+        const addressResponseData = ActionTypes.GET_ADDRESSFORMAT;
+
+        if (this.state.isZipApiCalling) {
+            if (this.props != prevProps) {
+                if (this.props && this.props.stateCityData[stateCityResponseData]) {
+                    const tempResponse = this.props.stateCityData[stateCityResponseData];
+                    if (tempResponse && tempResponse.City) {
                         this.setState({
+                            employeeCityValue: tempResponse.City,
+                            employeeStateValue: tempResponse.State,
+                            isValidZipCode: true
+                        });
+                    } else {
+                        this.setState({
+                            employeeCityValue: ' - ',
+                            employeeStateValue: ' - ',
                             isValidZipCode: false
-                        })
+                        });
+                    }
+                }
+            }
+        }
+
+        if (this.state.isAddressApiCalling) {
+            if (this.props != prevProps) {
+                if (this.props && this.props.stateCityData[addressResponseData]) {
+                    const tempAddressResponse = this.props.stateCityData[addressResponseData];
+                    if (tempAddressResponse && tempAddressResponse.Address2) {
+                        this.setState({
+                            employeeLineOneValue: tempAddressResponse.Address1 || "",
+                            employeeLineTwoValue: tempAddressResponse.Address2 || "",
+                            isValidLineOne: true
+                        });
+                    } else {
+                        this.setState({
+                            addressOne: '',
+                            addressTwo: '',
+                            isValidLineOne: false
+                        });
                     }
                 }
             }
@@ -259,15 +283,44 @@ class editOccupationInfoComponent extends Component {
             const payload = {
                 'Zip': this.state.employeeZipCodeValue
             };
+
+            this.setState({
+                isZipCodeValid: true,
+                isZipApiCalling: true
+            });
             this.props.getStateCity(payload);
         } else {
             this.setState({
                 isValidZipCode: false
-            })
+            });
         }
     }
 
-    validateEmployementValues = () => {
+    validateZipAddress = () => {
+        if (this.state.employeeZipCodeValue != '') {
+            this.addNewAddress();
+        } else {
+            this.setState({
+                isValidZipCode: false
+            });
+        }
+    }
+
+    addNewAddress = () => {
+        var addNewAddressPayload = {
+            "Address1": this.state.employeeLineOneValue,
+            "Address2": this.state.employeeLineTwoValue,
+            "City": this.state.employeeCityValue,
+            "State": this.state.employeeStateValue,
+            "Zip": this.state.employeeZipCodeValue
+        };
+        this.setState({
+            isAddressApiCalling: true
+        });
+        this.props.getAddressFormat(addNewAddressPayload);
+    }
+
+    validateEmploymentValues = () => {
         if (this.state.dropDownEmployeeValue === '') {
             this.setState({
                 dropDownEmployeeFlag: true,
@@ -310,7 +363,7 @@ class editOccupationInfoComponent extends Component {
             this.state.dropDownIndustryValue != '' &&
             this.state.employeeOccupationValue != '' &&
             this.state.employeeNameValue != '' &&
-            this.state.employeeLineOneValue != '' &&
+            this.state.employeeLineOneValue &&
             this.state.employeeZipCodeValue != '') {
             this.manageEmployeeInformations();
         }
@@ -318,8 +371,9 @@ class editOccupationInfoComponent extends Component {
 
     manageEmployeeInformations = () => {
         const payloadData = this.getProfilePayloadData();
-        this.props.saveProfileData("editEmploymentInformatios", payloadData);
-        this.props.navigation.goBack();
+        console.log("&&&&&&&&&&&&&&&&&&&& Employment Manage ::: ", payloadData);
+        this.props.saveProfileData("editEmploymentInformations", payloadData);
+        this.props.navigation.navigate('profileSettings');
     }
 
     getProfilePayloadData = () => {
@@ -332,6 +386,11 @@ class editOccupationInfoComponent extends Component {
                     profileEmpIndustry: this.state.dropDownIndustryValue,
                     profileEmpOccupation: this.state.employeeOccupationValue,
                     profileEmpEmployer: this.state.employeeNameValue,
+                    profileEmpLineOne: this.state.employeeLineOneValue,
+                    profileEmpLineTwo: this.state.employeeLineTwoValue,
+                    profileEmpZipCode: this.state.employeeZipCodeValue,
+                    profileEmpCityValue: this.state.employeeCityValue,
+                    profileEmpStateValue: this.state.employeeStateValue
                 }
             };
         }
@@ -473,6 +532,7 @@ class editOccupationInfoComponent extends Component {
                                         placeholder={""}
                                         onChangeText={this.setValidEmpZipcode}
                                         value={this.state.employeeZipCodeValue}
+                                        onBlur={this.validateZipCodeValue}
                                         errorFlag={!this.state.isValidZipCode}
                                         errorText={globalString.profileValidationMessages.validateZipcode} />
                                 </View>
@@ -498,11 +558,6 @@ class editOccupationInfoComponent extends Component {
                                 </Text>
                             </View>
 
-                            <GButtonComponent
-                                buttonStyle={styles.cancelButtonStyle}
-                                buttonText={globalString.common.validate}
-                                textStyle={styles.cancelButtonText}
-                                onPress={this.validateZipCodeValue} />
                         </View>
                     ) : null}
 
@@ -531,7 +586,7 @@ class editOccupationInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.editOccupationOnCancel} />
+                            onPress={this.validateEmploymentValues} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -539,8 +594,7 @@ class editOccupationInfoComponent extends Component {
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
                             textStyle={styles.saveButtonText}
-                            onPress={this.validateEmployementValues}
-                        />
+                            onPress={this.validateZipAddress} />
                     </View>
 
                     <View style={styles.newVictorySection}>

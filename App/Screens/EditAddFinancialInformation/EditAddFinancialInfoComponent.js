@@ -217,6 +217,7 @@ class editAddFinancialInfoComponent extends Component {
 
     manageFinancialInformations = () => {
         const payloadData = this.getProfilePayloadData();
+        console.log("&&&&&&&&&&&&&&&&&&&& Financial Manage ::: ", payloadData);
         this.props.saveProfileData("editFinancialInformations", payloadData);
         this.props.navigation.navigate('profileSettings');
     }
@@ -268,8 +269,7 @@ class editAddFinancialInfoComponent extends Component {
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation}
-                />
+                    navigation={this.props.navigation} />
 
                 <ScrollView style={{ flex: 0.85 }}>
 

@@ -33,8 +33,10 @@ class editAddressAddNewComponent extends Component {
 
             validationAddressOne: true,
             addressOne: '',
+            
             isZipCodeValid: true,
             zipCodeValue: '',
+            
             addressTwo: '',
             userCity: '',
             userState: ''

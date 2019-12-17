@@ -232,12 +232,6 @@ class ProfileSettingsComponent extends Component {
             });
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.profilePrimaryMobile) {
-            this.setState({
-                profilePrimaryMobile: this.props.profileState.profilePrimaryMobile
-            });
-        }
-
         // Financial Informations 
 
         if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileAnnualIncome) {
@@ -334,7 +328,6 @@ class ProfileSettingsComponent extends Component {
                     profileCitizenship: this.props.profileState.profileCitizenship,
                     profileMailingAddress: this.props.profileState.profileMailingAddress,
                     profilePhysicalAddress: this.props.profileState.profilePhysicalAddress,
-                    profilePrimaryMobile: this.props.profileState.profilePrimaryMobile,
 
                     profileRelationGender: this.props.profileState.profileRelationGender,
                     profileRelationMail: this.props.profileState.profileRelationMail,
@@ -342,14 +335,12 @@ class ProfileSettingsComponent extends Component {
                 });
 
                 if (this.props && this.props.profileState && this.props.profileState.financialInformations) {
-                    console.log("@@@@@@@@@@@@@@@@@@@@@ Financial Update", this.props.profileState.financialInformations);
                     this.setState({
                         profileAnnualIncome: '$ ' + this.props.profileState.financialInformations.profileAnnualIncome,
                         profileTaxBracket: this.props.profileState.financialInformations.profileTaxBracket + ' %',
                         profileNetWorth: '$ ' + this.props.profileState.financialInformations.profileNetWorth,
                         profileTaxFilling: this.props.profileState.financialInformations.profileTaxFilling,
                     });
-
                 }
 
                 if (this.props && this.props.profileState && this.props.profileState.employmentInformations) {
