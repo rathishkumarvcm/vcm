@@ -35,7 +35,7 @@ class VerifyMobileComponent extends Component {
     }
 
     onClickNext = () =>{        
-       if(this.isEmpty(this.state.mobileNumber) || this.state.mobileNumber.length<10){
+       if(this.isEmpty(this.state.mobileNumber) || this.state.mobileNumber.length<gblStrings.maxLength.mobileNo){
             this.setState({ validateMobile : true });
        }else{
             this.setState({ validateMobile : false });
@@ -74,7 +74,7 @@ class VerifyMobileComponent extends Component {
                             propInputStyle={styles.mobileNumberInputText} 
                             placeholder={""}
                             keyboardType={'numeric'}
-                            maxLength={gblStrings.maxLength.mobile}                            
+                            maxLength={gblStrings.maxLength.mobileNo}                            
                             onChangeText={this.setMobileNumber}                         
                             value={this.state.mobileNumber}
                             errorFlag={this.state.validateMobile}

@@ -101,13 +101,22 @@ class LoginComponent extends Component {
 
     componentDidUpdate(){
         let emailVerify = this.props.navigation.getParam('emailVerified');
-        let onlineID = this.props.navigation.getParam('emailVerifiedData');
+        let onlineID = this.props.navigation.getParam('emailVerifiedData','');
         if(emailVerify !== undefined && !this.state.registeredSuccess){
             this.setState({
                 registeredSuccess : true,
                 registeredOnlineID : onlineID.emailID
             });
         }
+
+        // Special MFA Requirements
+        let onlineIdVerify = this.props.navigation.getParam('onlineIdCreated'); 
+        if(onlineIdVerify!==undefined){
+            this.setState({
+                registeredSuccess : true               
+            });
+        }
+
         console.log('componentDidUpdate',emailVerify);
        
         let validEmail = 'vcm.com';

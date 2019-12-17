@@ -35,7 +35,7 @@ class VerifySSNComponent extends Component {
     }
 
     onClickNext = () =>{        
-       if(this.isEmpty(this.state.socialSecurityNumber) || this.state.socialSecurityNumber.length<9){
+       if(this.isEmpty(this.state.socialSecurityNumber) || this.state.socialSecurityNumber.length<gblStrings.maxLength.ssnNo){
             this.setState({ validateSSN : true });
        }else{
             this.setState({ validateSSN : false });

@@ -102,6 +102,10 @@ componentDidMount(){
     }
   }
   navigationPasswordOtp = () => this.props.navigation.goBack();
+  resendOtp = ()=>{
+    console.log('Resend Otp');    
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -149,13 +153,13 @@ componentDidMount(){
           </View>
 
           <GInputComponent propInputStyle={this.state.boo_otp ? styles.userIDTextBoxError : styles.userIDTextBox}
-            placeholder={globalStrings.recoverPassword.passwordPlaceHolder} onChangeText={this.setOtp}
+            onChangeText={this.setOtp}
             value={this.state.str_otp} maxLength={globalStrings.maxLength.otp} secureTextEntry keyboardType={'numeric'}
           />
           <Text style={styles.errorMessage}>{this.state.err_otp}</Text>
 
           <View style={styles.refreshOtpView}>
-            <Text style={styles.refreshOtp}>{globalStrings.recoverPassword.otp_reset}</Text>
+            <Text style={styles.refreshOtp} onPress={this.resendOtp}>{globalStrings.recoverPassword.otp_reset}</Text>
           </View>
 
           <GButtonComponent

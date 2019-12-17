@@ -47,6 +47,7 @@ export const styles = StyleSheet.create({
         marginTop:scaledHeight(18),
         paddingLeft:'4%',
         paddingRight:'4%',
+        flexDirection:'row'
     },
     passwordView:{
         paddingLeft:'4%',
@@ -54,10 +55,10 @@ export const styles = StyleSheet.create({
     },
     signIntext:{
         color:'#56565A',
-        fontSize:scaledHeight(24)
+        fontSize:scaledHeight(32)
     },
     userIDText:{
-        color:'#000000',
+        color:'#333333',
         fontSize:scaledHeight(16),
         fontWeight:'bold',
         marginBottom:scaledHeight(8)
@@ -170,7 +171,7 @@ export const styles = StyleSheet.create({
     },
     openInvestment:{
         fontSize:scaledHeight(14),
-        color:'#56565A'
+        color:'#A7A7A7'
     },
     lineBorder:{
         marginTop:scaledHeight(15),
@@ -243,5 +244,59 @@ export const styles = StyleSheet.create({
         justifyContent:'center',
         marginTop:scaledHeight(15),
         flexDirection:'row'
-    }
+    },
+    pagerContainer:{
+        flexDirection:'row',   
+        marginTop:scaledHeight(30),     
+        marginBottom:scaledHeight(10),         
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: '4%',
+        marginRight: '4%',
+    },
+    pagerOne:{
+        flex:0.4,
+        height:scaledHeight(8),
+        backgroundColor:'#56565A',       
+        marginRight:'1%'
+    },
+    passwordStrengthFlex: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop:scaledHeight(10)
+    },
+    passwordStrongFlex: {
+        flexDirection: 'column',
+        flex: 0.3,
+        marginRight: '2%'
+    },
+    default:{
+        backgroundColor:'#544A54',
+        height: scaledHeight(3),
+    },
+    strong: {
+        backgroundColor: 'green',
+        height: scaledHeight(3),
+    },
+    strongText: {
+        fontSize: scaledHeight(12),
+        color: '#56565A',
+        marginTop: scaledHeight(3)
+    },
+    good: {
+        backgroundColor: 'orange',
+        height: scaledHeight(3),
+    },
+    weak: {
+        backgroundColor: 'red',
+        height: scaledHeight(3),
+    },
+    explainText:{
+        color:'#333333',
+        fontSize:scaledHeight(14),       
+        marginBottom:scaledHeight(8),
+        marginLeft:'2%',
+        textDecorationLine:'underline',    
+    },
 });
