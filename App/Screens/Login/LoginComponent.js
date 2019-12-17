@@ -131,10 +131,23 @@ class LoginComponent extends Component {
       }, (err) => {
           console.log(err);
       });
-
-        if(this.props && this.props.loginState && this.props.loginState.emailCheck && this.props.loginState.data && this.props.loginState.data.response && this.props.loginState.data.response.status === 200){
+     
+        // Special MFA Requirements
+        if(this.props && this.props.loginState && this.props.loginState.emailCheck && this.props.loginState.data && this.props.loginState.data.response && this.props.loginState.data.response.status === 200 && (this.props.navigation.getParam('SpecialMFA')=="GuestUser"))
+        {
+            this.props.navigation.navigate('openAccPageSix',{SpecialMFA:'GuestUser'});
+        }
+        else if(this.props && this.props.loginState && this.props.loginState.emailCheck && this.props.loginState.data && this.props.loginState.data.response && this.props.loginState.data.response.status === 200 && (this.props.navigation.getParam('SpecialMFA')=="NewUser"))
+        {
+            this.props.navigation.navigate('openAccPageFive',{SpecialMFA:'NewUser'});
+        }
+        else if(this.props && this.props.loginState && this.props.loginState.emailCheck && this.props.loginState.data && this.props.loginState.data.response && this.props.loginState.data.response.status === 200 && (this.props.navigation.getParam('SpecialMFA')=="UserForm"))
+        {
+            this.props.navigation.navigate('verifySSN',{SpecialMFA:'UserForm'});
+        }
+        else if(this.props && this.props.loginState && this.props.loginState.emailCheck && this.props.loginState.data && this.props.loginState.data.response && this.props.loginState.data.response.status === 200){
             this.navigateDashboard();
-        }       
+        }        
     }
 }
 

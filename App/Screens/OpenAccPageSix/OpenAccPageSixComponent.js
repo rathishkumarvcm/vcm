@@ -307,8 +307,13 @@ class OpenAccPageSixComponent extends Component {
     }
     onClickSubmit = () => {
         if (this.validateFields()) {
-            const payload = this.getPayload();
-            this.props.submitAccountOpening(payload);
+            const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));
+            if(specialMFAUserType=="GuestUser" || specialMFAUserType=="NewUser"){
+               this.props.navigation.navigate('dashboard');
+            }else{
+                const payload = this.getPayload();
+                this.props.submitAccountOpening(payload);
+            }
         }
     }
     onClickSave = () => {
@@ -453,6 +458,7 @@ class OpenAccPageSixComponent extends Component {
             tempSignPdfList = this.props.masterLookupStateData["docs_to_sign"].value;
         }
         let currentPage = 6;
+        const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));
         return (
             <View style={styles.container}>
                  {
@@ -491,7 +497,7 @@ class OpenAccPageSixComponent extends Component {
 
 
                     { /*-----------Document View -------------------*/}
-                    <View style={[styles.sectionGrp]}>
+                    <View style={styles.sectionGrp}>
                         <View style={styles.accTypeSelectSection} >
                             <Text style={styles.headings}>
                                 {gblStrings.accManagement.docToView}
@@ -511,7 +517,7 @@ class OpenAccPageSixComponent extends Component {
                     </View>
 
                     { /*-----------Documents to Sign -------------------*/}
-                    <View style={[styles.sectionGrp]}>
+                    <View style={styles.sectionGrp}>
                         <View style={styles.accTypeSelectSection} >
                             <Text style={styles.headings}>
                                 {gblStrings.accManagement.docToSign}
@@ -570,13 +576,16 @@ class OpenAccPageSixComponent extends Component {
                     { /*----------- Buttons Group -------------------*/}
 
                     <View style={styles.btnGrp}>
-
-                        <GButtonComponent
-                            buttonStyle={styles.normalWhiteBtn}
-                            buttonText={gblStrings.common.save}
-                            textStyle={styles.normalWhiteBtnTxt}
-                            onPress={this.onClickSave}
-                        />
+                    { 
+                        (specialMFAUserType!="" && specialMFAUserType!="GuestUser" && specialMFAUserType!="NewUser")?
+                            <GButtonComponent
+                                buttonStyle={styles.normalWhiteBtn}
+                                buttonText={gblStrings.common.save}
+                                textStyle={styles.normalWhiteBtnTxt}
+                                onPress={this.onClickSave}
+                            />
+                        :null
+                    }
                         <GButtonComponent
                             buttonStyle={styles.normalWhiteBtn}
                             buttonText={gblStrings.common.cancel}

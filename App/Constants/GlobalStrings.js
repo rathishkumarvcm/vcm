@@ -47,7 +47,8 @@ export default {
         validPincode: "Enter Valid 6 Digit Pin",
         dollar:"$",
         validate:"Validate",
-        upload:"Upload"
+        upload:"Upload",
+        verifySign:"Verify & Signin"
     },
     login: {
         imageRequest: "imageRequest",
@@ -1126,7 +1127,7 @@ export default {
         totalYouWillReceive:"Total you will receive",
         totalWithdrawal: "Total Withdrawal",
         taxAccountingMethod: "Tax Accounting Method",
-        taxAccountingMethodContext: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        taxAccountingMethodContext: "By default, the value is ‘Average Cost Basis’ when original account is created. User will have to call the MSR for any change to the method If the user has set up alternate method through MSR, display that method.",
         doNotWithholdTaxes: "Do not withhold Taxes",
         withholdTaxes:"Withhold Taxes",
         onlineMethod:"Online Method",
@@ -1158,7 +1159,7 @@ export default {
         totalShares:"Total Shares",
         worth:"Worth",
         approx:"(Approx.)",
-        sellAllShares:"Sell all Shares",
+        allShares:"All Shares",
         accountSelection:"Account Selection",
         amount:"Amount ",
     },

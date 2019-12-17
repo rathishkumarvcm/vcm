@@ -77,9 +77,9 @@ class LiquidationPageOneComponent extends Component {
             selectedAccountData: {
                 selectedAccountName: '',
                 selectedAccountNumber: '',
-                currentValue:'',
-                holdingValue:'',
-                AutoInvPlan:'',
+                currentValue: '',
+                holdingValue: '',
+                AutoInvPlan: '',
                 accType: '',
             }
         };
@@ -123,9 +123,9 @@ class LiquidationPageOneComponent extends Component {
             selectedAccountData: {
                 selectedAccountName: item.accName,
                 selectedAccountNumber: item.accNumber,
-                currentValue:item.currentValue,
-                holdingValue:item.holdingValue,
-                AutoInvPlan:item.AutomaticInvestmentPlan,
+                currentValue: item.currentValue,
+                holdingValue: item.holdingValue,
+                AutoInvPlan: item.AutomaticInvestmentPlan,
                 accType: 'General'
             }
         });
@@ -141,9 +141,9 @@ class LiquidationPageOneComponent extends Component {
             selectedAccountData: {
                 selectedAccountName: item.accName,
                 selectedAccountNumber: item.accNumber,
-                currentValue:item.currentValue,
-                holdingValue:item.holdingValue,
-                AutoInvPlan:item.AutomaticInvestmentPlan,
+                currentValue: item.currentValue,
+                holdingValue: item.holdingValue,
+                AutoInvPlan: item.AutomaticInvestmentPlan,
                 accType: 'IRA'
             }
         });
@@ -158,36 +158,36 @@ class LiquidationPageOneComponent extends Component {
             selectedAccountData: {
                 selectedAccountName: item.accName,
                 selectedAccountNumber: item.accNumber,
-                currentValue:item.currentValue,
-                holdingValue:item.holdingValue,
-                AutoInvPlan:item.AutomaticInvestmentPlan,
+                currentValue: item.currentValue,
+                holdingValue: item.holdingValue,
+                AutoInvPlan: item.AutomaticInvestmentPlan,
                 accType: 'UTMA'
             }
         });
     }
 
-    nextButtonAction = () => {        
-        console.log('On Click Next Account Selection...');       
+    nextButtonAction = () => {
+        console.log('On Click Next Account Selection...');
         const payloadData = {
             selectedAccountName: this.state.selectedAccountData.selectedAccountName,
             selectedAccountNumber: this.state.selectedAccountData.selectedAccountNumber,
-            currentValue:this.state.selectedAccountData.currentValue,
-            holdingValue:this.state.selectedAccountData.holdingValue,
-            AutoInvPlan:this.state.selectedAccountData.AutoInvPlan,
+            currentValue: this.state.selectedAccountData.currentValue,
+            holdingValue: this.state.selectedAccountData.holdingValue,
+            AutoInvPlan: this.state.selectedAccountData.AutoInvPlan,
             accType: this.state.selectedAccountData.accType
         };
-        this.props.saveData(payloadData);    
-        console.log("payloadData---> "+JSON.stringify(payloadData));            
+        this.props.saveData(payloadData);
+        console.log("payloadData---> " + JSON.stringify(payloadData));
         this.props.navigation.navigate('LiquidationPageTwo', { accSelectionScreenData: this.state.selectedAccountData });
     }
 
     componentDidMount() {
-       console.log("Page One Compoennt componentDidMount --> "+JSON.stringify(this.props));
-       if (this.props && this.props.liquidationPageOneInitialState){
-            this.setState({ 
+        console.log("Page One Compoennt componentDidMount --> " + JSON.stringify(this.props));
+        if (this.props && this.props.liquidationPageOneInitialState) {
+            this.setState({
                 selectedAccountData: this.props.liquidationPageOneInitialState
-             });
-        }          
+            });
+        }
     }
 
     render() {
@@ -224,33 +224,34 @@ class LiquidationPageOneComponent extends Component {
                                 data={accSelectionData.General_Account}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={(this.state.selectedGeneralAccIndex==index)?styles.accountDetailsFlexSelected:styles.accountDetailsFlex} onTouchStart = {this.onClickSelectGeneralAccount(item,index)}>
-                                           
-                                            <View style={styles.flexAccDetails1}>
-                                                <View style={styles.accountNumberFlex}>
-                                                    <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
-                                                    <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
-                                                    <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
+                                        <View style={(this.state.selectedGeneralAccIndex == index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectGeneralAccount(item, index)}>
+                                            <View style={styles.accountDetailsFlex} >
+                                                <View style={styles.flexAccDetails1}>
+                                                    <View style={styles.accountNumberFlex}>
+                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
+                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
+                                                        <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
+                                                    </View>
                                                 </View>
-                                            </View>
 
-                                            <View style={styles.line} />
+                                                <View style={styles.line} />
 
 
-                                            <View style={styles.flexAccDetails2}>
-                                                <View style={styles.currentValueflex}>
-                                                    <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.currentValue}</Text>
-                                                    <Text style={styles.blackText14px}>{item.currentValue}</Text>
+                                                <View style={styles.flexAccDetails2}>
+                                                    <View style={styles.currentValueflex}>
+                                                        <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.currentValue}</Text>
+                                                        <Text style={styles.blackText14px}>{item.currentValue}</Text>
+                                                    </View>
+                                                    <View style={styles.currentValueflex}>
+                                                        <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.holding}</Text>
+                                                        <Text style={styles.blackText14px}>{item.holdingValue}</Text>
+                                                    </View>
                                                 </View>
-                                                <View style={styles.currentValueflex}>
-                                                    <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.holding}</Text>
-                                                    <Text style={styles.blackText14px}>{item.holdingValue}</Text>
-                                                </View>
-                                            </View>
 
-                                            <View style={styles.flexAccDetails3}>
-                                                <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.automaticInvestmentPlan}</Text>
-                                                <Text style={styles.blackText14px}>{item.AutomaticInvestmentPlan}</Text>
+                                                <View style={styles.flexAccDetails3}>
+                                                    <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.automaticInvestmentPlan}</Text>
+                                                    <Text style={styles.blackText14px}>{item.AutomaticInvestmentPlan}</Text>
+                                                </View>
                                             </View>
                                         </View>
 
@@ -274,38 +275,39 @@ class LiquidationPageOneComponent extends Component {
                                 data={accSelectionData.IRA_Account}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={(this.state.selectedIRAAccIndex == index)?styles.accountDetailsFlexSelected:styles.accountDetailsFlex} onTouchStart={this.onClickSelectIRAAccount(item, index)}>
-                                            
-                                            <View style={styles.flexAccDetails1}>
-                                                <View style={styles.accountNumberFlex}>
-                                                    <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
-                                                    <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
-                                                    <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
+                                        <View style={(this.state.selectedIRAAccIndex == index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectIRAAccount(item, index)}>
+                                            <View style={styles.accountDetailsFlex}>
+                                                <View style={styles.flexAccDetails1}>
+                                                    <View style={styles.accountNumberFlex}>
+                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
+                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
+                                                        <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
+                                                    </View>
                                                 </View>
-                                            </View>
 
-                                            <View style={styles.line} />
+                                                <View style={styles.line} />
 
 
-                                            <View style={styles.flexAccDetails2}>
-                                                <View style={styles.currentValueflex}>
-                                                    <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.currentValue}</Text>
-                                                    <Text style={styles.blackText14px}>{item.currentValue}</Text>
+                                                <View style={styles.flexAccDetails2}>
+                                                    <View style={styles.currentValueflex}>
+                                                        <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.currentValue}</Text>
+                                                        <Text style={styles.blackText14px}>{item.currentValue}</Text>
+                                                    </View>
+                                                    <View style={styles.currentValueflex}>
+                                                        <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.holding}</Text>
+                                                        <Text style={styles.blackText14px}>{item.holdingValue}</Text>
+                                                    </View>
                                                 </View>
-                                                <View style={styles.currentValueflex}>
-                                                    <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.holding}</Text>
-                                                    <Text style={styles.blackText14px}>{item.holdingValue}</Text>
+                                                <View style={styles.flexAccDetails3}>
+                                                    <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.automaticInvestmentPlan}</Text>
+                                                    <Text style={styles.blackText14px}>{item.AutomaticInvestmentPlan}</Text>
                                                 </View>
-                                            </View>
-                                            <View style={styles.flexAccDetails3}>
-                                                <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.automaticInvestmentPlan}</Text>
-                                                <Text style={styles.blackText14px}>{item.AutomaticInvestmentPlan}</Text>
                                             </View>
                                         </View>
 
                                     );
                                 }}
-                                keyExtractor={x=> x.accNumber}
+                                keyExtractor={x => x.accNumber}
                                 extraData={this.state}
                             />
                         </Collapsible>
@@ -324,32 +326,34 @@ class LiquidationPageOneComponent extends Component {
                                 data={accSelectionData.UTMA_Account}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={(this.state.selectedUTMAAccIndex == index)?styles.accountDetailsFlexSelected:styles.accountDetailsFlex} onTouchStart={this.onClickSelectUTMAAccount(item, index)}>
-                                            
-                                            <View style={styles.flexAccDetails1}>
-                                                <View style={styles.accountNumberFlex}>
-                                                    <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
-                                                    <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
-                                                    <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
-                                                </View>                   
-                                            </View>
+                                        <View style={(this.state.selectedUTMAAccIndex == index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectUTMAAccount(item, index)}>
+                                            <View style={styles.accountDetailsFlex}>
 
-                                            <View style={styles.line} />
-
-
-                                            <View style={styles.flexAccDetails2}>
-                                                <View style={styles.currentValueflex}>
-                                                    <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.currentValue}</Text>
-                                                    <Text style={styles.blackText14px}>{item.currentValue}</Text>
+                                                <View style={styles.flexAccDetails1}>
+                                                    <View style={styles.accountNumberFlex}>
+                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
+                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
+                                                        <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
+                                                    </View>
                                                 </View>
-                                                <View style={styles.currentValueflex}>
-                                                    <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.holding}</Text>
-                                                    <Text style={styles.blackText14px}>{item.holdingValue}</Text>
+
+                                                <View style={styles.line} />
+
+
+                                                <View style={styles.flexAccDetails2}>
+                                                    <View style={styles.currentValueflex}>
+                                                        <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.currentValue}</Text>
+                                                        <Text style={styles.blackText14px}>{item.currentValue}</Text>
+                                                    </View>
+                                                    <View style={styles.currentValueflex}>
+                                                        <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.holding}</Text>
+                                                        <Text style={styles.blackText14px}>{item.holdingValue}</Text>
+                                                    </View>
                                                 </View>
-                                            </View>
-                                            <View style={styles.flexAccDetails3}>
-                                                <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.automaticInvestmentPlan}</Text>
-                                                <Text style={styles.blackText14px}>{item.AutomaticInvestmentPlan}</Text>
+                                                <View style={styles.flexAccDetails3}>
+                                                    <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.automaticInvestmentPlan}</Text>
+                                                    <Text style={styles.blackText14px}>{item.AutomaticInvestmentPlan}</Text>
+                                                </View>
                                             </View>
                                         </View>
 
@@ -395,7 +399,7 @@ class LiquidationPageOneComponent extends Component {
 LiquidationPageOneComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     liquidationPageOneInitialState: PropTypes.instanceOf(Object),
-    saveData:PropTypes.func,
+    saveData: PropTypes.func,
 };
 
 LiquidationPageOneComponent.defaultProps = {

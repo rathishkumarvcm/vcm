@@ -54,8 +54,28 @@ class editRelationshipComponent extends Component {
             dropDownStatusState: false,
             dropDownStatusValue: '',
             dropDownStatusFlag: false,
-            dropDownStatusMsg: ''
+            dropDownStatusMsg: '',
         };
+    }
+
+    componentDidMount() {
+        let payload = [];
+
+        const compositePayloadData = [
+            "prefix",
+            "suffix",
+            "gender",
+            "marital_status"
+        ];
+
+        for (let i = 0; i < compositePayloadData.length; i++) {
+            let tempkey = compositePayloadData[i];
+            if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
+                payload.push(tempkey);
+            }
+        }
+
+        this.props.getProfileCompositeData(payload);
     }
 
     dropDownRelationOnClick = () => {
@@ -126,26 +146,6 @@ class editRelationshipComponent extends Component {
             dropDownStatusState: false,
             dropDownStatusFlag: false
         });
-    }
-
-    componentDidMount() {
-        let payload = [];
-
-        const compositePayloadData = [
-            "prefix",
-            "suffix",
-            "gender",
-            "marital_status"
-        ];
-
-        for (let i = 0; i < compositePayloadData.length; i++) {
-            let tempkey = compositePayloadData[i];
-            if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
-                payload.push(tempkey);
-            }
-        }
-
-        this.props.getProfileCompositeData(payload);
     }
 
     onChangeDateValue = (date) => {

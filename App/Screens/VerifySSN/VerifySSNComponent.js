@@ -20,7 +20,11 @@ class VerifySSNComponent extends Component {
         this.props.navigation.goBack();
     }
 
-    navigateVerifyMobileNumber = () => this.props.navigation.navigate('verifyMobileNumber');   
+    navigateVerifyMobileNumber = () =>{
+        // Joint Account , New User
+        const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));   
+        this.props.navigation.navigate('verifyMobileNumber',{SpecialMFA:specialMFAUserType});    
+    } 
 
     isEmpty = (str) => {
         if (str == "" || str == undefined || str == "null" || str == "undefined") {
@@ -43,7 +47,9 @@ class VerifySSNComponent extends Component {
        }
     }
     
-    render(){
+    render(){            
+        const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));      
+        console.log("UserType-----"+specialMFAUserType);
         return(
             <View style={styles.container}>
             {/* {
@@ -51,15 +57,17 @@ class VerifySSNComponent extends Component {
             } */}
                 <GHeaderComponent navigation={this.props.navigation} />                    
                 <ScrollView style={{ flex: 0.85 }}>
-                    <View style={styles.headContainer}>        
-                                
-                        <View style={styles.pagerContainer}>
-                            <View style={styles.pagerOne} />    
-                            <View style={styles.pagerTwo} />    
-                            <View style={styles.pagerTwo} />    
-                            <View style={styles.pagerTwo} />                                
-                        </View>
-
+                    <View style={styles.headContainer}>                                        
+                    {
+                        (specialMFAUserType!="" && specialMFAUserType!="UserForm")?
+                            <View style={styles.pagerContainer}>
+                                <View style={styles.pagerOne} />    
+                                <View style={styles.pagerTwo} />    
+                                <View style={styles.pagerTwo} />    
+                                <View style={styles.pagerTwo} />                                
+                            </View>
+                        :null
+                    }
                         <Text style={styles.headTitle}>
                             {gblStrings.userManagement.verification} 
                         </Text>

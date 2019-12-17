@@ -5,23 +5,14 @@ import { GHeaderComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
 
-const tempRelationShipDetails = [
-    {
-        "relationShipName": 'Anna',
-        "relationShipType": 'Wife',
-        "relationShipGender": 'Female',
-        "relationShipEmail": 'xyz@abc.com',
-        "relationShipStatus": 'Married',
-    }
-];
-
 const UserRelationShipInformation = (props) => {
     return (
         <View style={styles.editEmailHolder}>
 
             <View style={[styles.profileDivideIcon]}>
                 <View style={styles.profileDivideIconOne}>
-                    <Text style={styles.editEmailType}>
+                    <Text style={styles.editEmailType}
+                        onPress={props.relationShipOnPressed}>
                         {props.relationShipName}
                     </Text>
                 </View>
@@ -83,7 +74,8 @@ UserRelationShipInformation.propTypes = {
     relationShipType: PropTypes.string,
     relationShipGender: PropTypes.string,
     relationShipEmail: PropTypes.string,
-    relationShipStatus: PropTypes.string
+    relationShipStatus: PropTypes.string,
+    relationShipOnPressed: PropTypes.func
 };
 
 class ProfileSettingsComponent extends Component {
@@ -95,6 +87,8 @@ class ProfileSettingsComponent extends Component {
             faceIdEnrolled: false,
             touchIdEnrolled: false,
             show: false,
+            profileRelationShipData: [],
+            isRelationRefreshed: false,
 
             // Profile Information
             profileName: '',
@@ -137,13 +131,21 @@ class ProfileSettingsComponent extends Component {
         };
     }
 
-    renderRelationShipInformation = (dataLength) => ({ item, index }) =>
-        (<UserRelationShipInformation
+    relationShipOnPressed = (item, index) => () => {
+        if (index !== -1) {
+            this.props.navigation.navigate('editFamilyMemberInfo', { pressedPosition: index, isRelation: true })
+        }
+    }
+
+    renderRelationShipInformation = () => ({ item, index }) => {
+        return (<UserRelationShipInformation
             relationShipName={item.relationShipName}
             relationShipType={item.relationShipType}
             relationShipGender={item.relationShipGender}
             relationShipEmail={item.relationShipEmail}
-            relationShipStatus={item.relationShipStatus} />);
+            relationShipStatus={item.relationShipStatus}
+            relationShipOnPressed={this.relationShipOnPressed(item, index)} />)
+    };
 
     ShowHideComponent = () => {
         if (this.state.show == true) {
@@ -311,11 +313,21 @@ class ProfileSettingsComponent extends Component {
                 profileRelationMarital: this.props.profileState.profileRelationMarital
             });
         }
+
+        // Relationship Details
+
+        if (this.props &&
+            this.props.profileState &&
+            this.props.profileState.profileRelationShipDetails) {
+            this.setState({
+                profileRelationShipData: this.props.profileState.profileRelationShipDetails,
+                isRelationRefreshed: !this.state.isRelationRefreshed
+            });
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props !== prevProps) {
-            console.log("####################### Financial Update", this.props.profileState);
             if (this.props && this.props.profileState) {
                 this.setState({
                     profilePrefix: this.props.profileState.profilePrefix,
@@ -376,15 +388,6 @@ class ProfileSettingsComponent extends Component {
     profileSettingFamilyManage = () => this.props.navigation.navigate('editFamilyMemberInfo');
 
     render() {
-
-        let profileRelationShipData = tempRelationShipDetails;
-
-        if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileRelationShipDetails) {
-            profileRelationShipData = this.props.profileState.profileRelationShipDetails;
-        }
-
         return (
             <View style={styles.container}>
                 <GHeaderComponent
@@ -833,9 +836,10 @@ class ProfileSettingsComponent extends Component {
                         <View style={styles.settingsBorder} />
 
                         <FlatList
-                            data={profileRelationShipData}
+                            data={this.state.profileRelationShipData}
                             keyExtractor={this.generateKeyExtractor}
-                            renderItem={this.renderRelationShipInformation(profileRelationShipData.length)} />
+                            extraData={this.isRelationRefreshed}
+                            renderItem={this.renderRelationShipInformation()} />
 
                     </View>
 
