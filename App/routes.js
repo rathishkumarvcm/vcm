@@ -95,6 +95,7 @@ import QuickSigninComponent from './Screens/QuickSignIn';
 import ManageIntrestedPartiesComponent from './Screens/ManageIntrestedParties';
 import AddNewIntrestedPartiesComponent from './Screens/AddNewIntrestedParties';
 import VerifyIntrestedPartiesComponent from './Screens/VerifyIntrestedParties';
+import EditManageIntrestedPartiesComponent from './Screens/EditManageIntrestedParties';
 import ManageBeneficiariesComponent from './Screens/ManageBeneficiaries';
 import EditManageBeneficiariesComponent from './Screens/EditManageBeneficiaries';
 import VerifyManageBenificiariesComponent from './Screens/VerifyManageBeneficiaries';
@@ -877,10 +878,16 @@ const AppNavigator = createStackNavigator({
             navigationOptions:{
                 header:null,
             }
+        },
+        editIntrestedParty:{
+            screen:EditManageIntrestedPartiesComponent,
+            navigationOptions:{
+                header:null,
+            }
         }
     },
     {
-        initialRouteName: 'login'
+        initialRouteName: "manageIntrestedParties"
     });
 
 export default createAppContainer(AppNavigator);

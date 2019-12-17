@@ -39,7 +39,7 @@ class VerifyIntrestedPartiesComponent extends Component {
 
   onClickSubmit=()=>{
    const payloadData=this.getData();
-   this.props.saveIntrestedParties("verifyBeneficiary",payloadData);
+   this.props.saveIntrestedParties("verifyIntrestedParty",payloadData);
    this.props.navigation.navigate("manageIntrestedParties",{showMsg:true,successMsg:"Data has been added successfully"});
   }
 

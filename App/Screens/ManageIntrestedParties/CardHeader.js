@@ -14,6 +14,9 @@ class CardHeader extends Component{
         this.setState({showModal:!this.state.showModal});
     }
 
+    edit=()=>{
+        this.props.navigate();
+    }
     render(){
         return(
             <View >
@@ -28,7 +31,7 @@ class CardHeader extends Component{
                 </View>
                 {this.state.showModal?
                 <View style={styles.shadowView}>
-                    <TouchableOpacity onPress={this.props.navigate()}>
+                    <TouchableOpacity onPress={this.edit}>
                         <Text style={styles.lblTxtInner} >{gblStrings.common.edit}</Text>
                     </TouchableOpacity>
                     <Text style={styles.lblLine} />

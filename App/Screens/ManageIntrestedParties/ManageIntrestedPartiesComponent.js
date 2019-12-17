@@ -6,7 +6,7 @@ import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
 import CardHeader from './CardHeader';
 
-
+let intrestedParties = [];
 class manageIntrestedPartiesComponent extends Component {
     constructor(props) {
         super(props);
@@ -26,32 +26,11 @@ class manageIntrestedPartiesComponent extends Component {
         this.props.navigation.navigate("addIntrestedParties",{acc_Data:data});
     }
 
-    onClickEdit=(data,key)=>()=>()=>{
-        console.log("edit Data::::",data,key);
-       // this.props.navigation.navigate("editIntrestedParty",{acc_Data:data, acc_Data_key:key});
+    onClickEdit=(pObj,pKey,data)=>()=>{
+        this.props.navigation.navigate("editIntrestedParty",{acc_Data:data, parent_Obj:pObj, parent_Key:pKey});
     }
 
-    renderIntrestedParties=({item})=>{
-        return(
-            <View style={styles.innerContainerView}>
-                <CardHeader item={item} navigate={this.onClickEdit(item.key)} />
-                <View style={[styles.paddingStyleLeft,styles.marginBottomStyle]}>
-                    <View style={styles.marginTopStyle}>
-                        <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
-                        <Text style={styles.beneNameStyle}>{item.fname+" "+item.mname+" "+item.lname}</Text>
-                    </View>
-                    <View style={styles.marginTopStyle}>
-                        <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToAccountHolder}</Text>
-                        <Text style={styles.shortContentValueText}>{item.relationship_To_Account_holder}</Text>
-                    </View>
-                    <View style={styles.marginTopStyle}>
-                    <Text style={styles.shortContentText}>{gblStrings.accManagement.noOfAccTagged}</Text>
-                        <Text style={styles.shortContentValueText}>{"#"+item.accounts_Tagged}</Text>
-                    </View>
-                </View>
-            </View>
-        );
-    }
+
 
     renderData=({item})=>{
         return(
@@ -70,13 +49,27 @@ class manageIntrestedPartiesComponent extends Component {
                     </TouchableOpacity>
                   </View>
                 </View>
-                {item.intrestedParty &&
-                  <FlatList
-                    data={item.intrestedParty}
-                    extraData={this.props}
-                    keyExtractor={this.generateKeyExtractor}
-                    renderItem={this.renderIntrestedParties} 
-                  />
+                {item.intrestedParty && item.intrestedParty.map((data,k)=>{
+                    return(
+                        <View key={k} style={styles.innerContainerView}>
+                            <CardHeader item={data} navigate={this.onClickEdit(item,k,data)} />
+                            <View style={[styles.paddingStyleLeft,styles.marginBottomStyle]}>
+                                <View style={styles.marginTopStyle}>
+                                    <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
+                                    <Text style={styles.beneNameStyle}>{data.fname+" "+data.mname+" "+data.lname}</Text>
+                                </View>
+                                <View style={styles.marginTopStyle}>
+                                    <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToAccountHolder}</Text>
+                                    <Text style={styles.shortContentValueText}>{data.relationship_To_Account_holder}</Text>
+                                </View>
+                                <View style={styles.marginTopStyle}>
+                                <Text style={styles.shortContentText}>{gblStrings.accManagement.noOfAccTagged}</Text>
+                                    <Text style={styles.shortContentValueText}>{"#"+data.accounts_Tagged}</Text>
+                                </View>
+                            </View>
+                        </View>
+                    );
+                })
                 }
               </View>
             </View>
@@ -86,7 +79,6 @@ class manageIntrestedPartiesComponent extends Component {
     generateKeyExtractor = (item) => item.key;
 
     render() {
-        let intrestedParties = [];
         if(this.props.manageIntrestedPartiesData && this.props.manageIntrestedPartiesData.list_manage_intrested_parties ){
             intrestedParties = this.props.manageIntrestedPartiesData.list_manage_intrested_parties;
         }
