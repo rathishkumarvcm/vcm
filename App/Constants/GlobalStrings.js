@@ -47,7 +47,8 @@ export default {
         validPincode: "Enter Valid 6 Digit Pin",
         dollar:"$",
         validate:"Validate",
-        upload:"Upload"
+        upload:"Upload",
+        verifySign:"Verify & Signin"
     },
     login: {
         imageRequest: "imageRequest",

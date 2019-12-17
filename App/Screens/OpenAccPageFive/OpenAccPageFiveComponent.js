@@ -48,9 +48,17 @@ class OpenAccPageFiveComponent extends Component {
         this.validateFields();
     }
 
-    validateFields = () => {
-        this.props.navigation.navigate({ routeName: 'openAccPageSix', key: 'openAccPageSix' });
-
+    validateFields = () => {    
+        const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));
+        if(specialMFAUserType=="GuestUser"){
+            this.props.navigation.push('login',{SpecialMFA:'GuestUser'});   
+        }  
+        else if(specialMFAUserType=="NewUser"){
+            this.props.navigation.push('openAccPageSix',{SpecialMFA:'NewUser'});   
+        }          
+        else{
+            this.props.navigation.navigate({ routeName: 'openAccPageSix', key: 'openAccPageSix' });
+        }  
     }
 
     getFieldValue = () => {
@@ -695,6 +703,7 @@ class OpenAccPageFiveComponent extends Component {
         let tempInfoData = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
 
         let currentPage = 5;
+        const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA', ''));
         return (
             <View style={styles.container}>
                 {
@@ -715,28 +724,35 @@ class OpenAccPageFiveComponent extends Component {
                     { /*----------- Buttons Group -------------------*/}
 
                     <View style={styles.btnGrp}>
-
+                        {
+                            (specialMFAUserType!="" && specialMFAUserType!="GuestUser" && specialMFAUserType!="NewUser")?
+                            <GButtonComponent
+                                buttonStyle={styles.normalWhiteBtn}
+                                buttonText={gblStrings.common.save}
+                                textStyle={styles.normalWhiteBtnTxt}
+                                onPress={this.onClickSave}
+                            />
+                            :null
+                        }
+                        {
+                            (specialMFAUserType!="" && specialMFAUserType!="GuestUser" && specialMFAUserType!="NewUser")?
+                            <GButtonComponent
+                                buttonStyle={styles.normalWhiteBtn}
+                                buttonText={gblStrings.common.cancel}
+                                textStyle={styles.normalWhiteBtnTxt}
+                                onPress={this.onClickCancel}
+                            />
+                            :null
+                        }
                         <GButtonComponent
                             buttonStyle={styles.normalWhiteBtn}
-                            buttonText={gblStrings.common.save}
-                            textStyle={styles.normalWhiteBtnTxt}
-                            onPress={this.onClickSave}
-                        />
-                        <GButtonComponent
-                            buttonStyle={styles.normalWhiteBtn}
-                            buttonText={gblStrings.common.cancel}
-                            textStyle={styles.normalWhiteBtnTxt}
-                            onPress={this.onClickCancel}
-                        />
-                        <GButtonComponent
-                            buttonStyle={styles.normalWhiteBtn}
-                            buttonText={gblStrings.common.back}
+                            buttonText={(specialMFAUserType!="" && (specialMFAUserType=="GuestUser" || specialMFAUserType=="NewUser"))?gblStrings.common.cancel:gblStrings.common.back}
                             textStyle={styles.normalWhiteBtnTxt}
                             onPress={this.goBack}
-                        />
+                        />                            
                         <GButtonComponent
                             buttonStyle={styles.normalBlackBtn}
-                            buttonText={gblStrings.common.next}
+                            buttonText={specialMFAUserType=="GuestUser" ? gblStrings.common.verifySign:gblStrings.common.next}
                             textStyle={styles.normalBlackBtnTxt}
                             onPress={this.onClickNext}
 

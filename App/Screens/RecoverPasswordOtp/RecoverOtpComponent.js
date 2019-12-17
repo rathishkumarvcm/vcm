@@ -21,8 +21,7 @@ class RecoveryOtpComponent extends Component {
       str_otp: '',
       style_otp: styles.userIDTextBox,
       err_otp: '',
-      phoneNo:'',
-      pageSpecialMFA : false
+      phoneNo:'',     
     };
     //set true to isLoading if data for this screen yet to be received and wanted to show loader.    
   }
@@ -51,18 +50,7 @@ isEmpty = (str) => {
   }
 }
 
-componentDidMount(){
-  //if(props.initialState)
- 
-   // Special MFA Requirements Scenario
-  if(this.props){
-    let fromPage = this.props.navigation.getParam('fromPage', '');
-    console.log('FromPage : '+fromPage);
-    if(!this.isEmpty(fromPage) && fromPage=='SpecialMFA'){
-      this.setState({pageSpecialMFA : true});
-    }
-  }  
-
+componentDidMount(){ 
   if(this.props && this.props.initialState && this.props.initialState.phone){
     this.setState({
       phoneNo : this.protect_phone(this.props.initialState.phone)
@@ -94,8 +82,9 @@ componentDidMount(){
         otp:this.state.str_otp,
       };
       console.log(recoveryJson);
-      if(this.state.pageSpecialMFA){
-        this.props.navigation.navigate('registerPassword',{fromPage:'SpecialMFA'}); 
+      const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));   
+      if(specialMFAUserType=="JointAcc" || specialMFAUserType=="NewUser" || specialMFAUserType=="UserForm"){
+        this.props.navigation.navigate('registerPassword',{SpecialMFA:specialMFAUserType}); 
       }else{
         this.props.navigation.navigate('passwordReset');
       }
@@ -107,6 +96,9 @@ componentDidMount(){
   }
 
   render() {
+
+    const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));   
+
     return (
       <View style={styles.container}>
         <GHeaderComponent register
@@ -114,7 +106,7 @@ componentDidMount(){
         />
         <ScrollView style={{ flex: 0.85 }}>
         {
-          (!this.state.pageSpecialMFA)?
+           (specialMFAUserType!="" && !(specialMFAUserType=="JointAcc" || specialMFAUserType=="NewUser" || specialMFAUserType=="UserForm"))?
               <View style={styles.notifOuter}>         
                 <View style={styles.notifInner}>
                   <Text style={styles.notifInnerText}>{globalStrings.recoverPassword.otp_notify}</Text>
@@ -126,7 +118,7 @@ componentDidMount(){
           :null
         }
         {
-          (this.state.pageSpecialMFA)?
+          (specialMFAUserType!="" && (specialMFAUserType=="JointAcc" || specialMFAUserType=="NewUser") && specialMFAUserType!="UserForm")?
           <View style={styles.pagerContainer}>
             <View style={styles.pagerOne}/>    
             <View style={styles.pagerOne}/>    
@@ -176,7 +168,7 @@ componentDidMount(){
           />
           <GButtonComponent
             buttonStyle={styles.continueButton}
-            buttonText={this.state.pageSpecialMFA ? globalStrings.common.next : globalStrings.common.submit}
+            buttonText={(specialMFAUserType=="JointAcc" || specialMFAUserType=="NewUser" || specialMFAUserType=="UserForm")  ? globalStrings.common.next : globalStrings.common.submit}
             textStyle={styles.continueButtonText}
             onPress={this.navigationPasswordNew}
           />

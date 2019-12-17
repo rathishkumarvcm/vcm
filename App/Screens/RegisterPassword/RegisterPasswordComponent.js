@@ -26,31 +26,25 @@ class RegisterPasswordComponent extends Component {
             confirmPassword: '',
             name: '',
             phone: '',
-            email: '',
-            pageSpecialMFA: false,
+            email: '',    
         };
     }
 
-    componentDidMount() {
-        // Special MFA Requirements Scenario       
-        let fromPage = this.props.navigation.getParam('fromPage', '');
-        console.log('FromPage : ' + fromPage);
-        if (!this.isEmpty(fromPage) && fromPage == 'SpecialMFA') {
-            this.setState({ pageSpecialMFA: true });
-        }
-
+    componentDidMount() {       
         let registerSelfData = this.props.navigation.getParam('selfData', '');
         if (!this.isEmpty(registerSelfData) && !this.isEmpty(registerSelfData.emailID)) {
             this.setState({ email: registerSelfData.emailID });
         }
-
     }
 
     goBack = () => {
         this.props.navigation.goBack();
     }
 
-    navigateLogin = () => this.props.navigation.push('login',{emailVerified:'',emailVerifiedData:''});    
+    navigateLogin = () => {
+        const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));  
+        this.props.navigation.push('login',{emailVerified:'',emailVerifiedData:'',SpecialMFA:specialMFAUserType});    
+    }
 
     isEmpty = (str) => {
         if (str == "" || str == undefined || str == "null" || str == "undefined") {
@@ -138,7 +132,7 @@ class RegisterPasswordComponent extends Component {
     }
 
     render() {
-
+        const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));   
         return (
             <View style={styles.container}>
 
@@ -149,7 +143,7 @@ class RegisterPasswordComponent extends Component {
 
                 <ScrollView style={{ flex: 0.85 }}>
                     {
-                        (!this.state.pageSpecialMFA) ?
+                        (specialMFAUserType!="" && !(specialMFAUserType=="JointAcc" || specialMFAUserType=="NewUser" || specialMFAUserType=="UserForm"))?
                             <View style={styles.stepsOuter}>
                                 <View style={styles.stepsInner} />
                                 <View style={styles.stepsInner} />
@@ -158,7 +152,7 @@ class RegisterPasswordComponent extends Component {
                     }
                     {/* Special MFA Requirements Scenario */}
                     {
-                        (this.state.pageSpecialMFA) ?
+                        (specialMFAUserType!="" && (specialMFAUserType=="JointAcc" || specialMFAUserType=="NewUser") && specialMFAUserType!="UserForm")?
                             <View style={styles.pagerContainer}>
                                 <View style={styles.pagerOne} />
                                 <View style={styles.pagerOne} />
@@ -217,31 +211,28 @@ class RegisterPasswordComponent extends Component {
                         errorFlag={!this.state.validationPassword}
                         errorText={globalStrings.recoverPassword.validPassword}
                     />
-
-                    {
-                        this.state.pageSpecialMFA ?
-                            <View style={styles.passwordStrengthFlex}>
-                                <View style={styles.passwordStrongFlex}>
-                                    <View style={(ValidatePassword(this.state.password) == globalStrings.userManagement.strong) ? styles.strong : styles.default} />
-                                    <Text style={styles.strongText}>
-                                        {globalStrings.userManagement.strong}
-                                    </Text>
-                                </View>
-                                <View style={styles.passwordStrongFlex}>
-                                    <View style={(ValidatePassword(this.state.password) == globalStrings.userManagement.good) ? styles.good : styles.default} />
-                                    <Text style={styles.strongText}>
-                                        {globalStrings.userManagement.good}
-                                    </Text>
-                                </View>
-                                <View style={styles.passwordStrongFlex}>
-                                    <View style={(this.state.password.length > 0) && (ValidatePassword(this.state.password) == globalStrings.userManagement.weak) ? styles.weak : styles.default} />
-                                    <Text style={styles.strongText}>
-                                        {globalStrings.userManagement.weak}
-                                    </Text>
-                                </View>
-                            </View>
-                        : null
-                    }
+                    
+                    <View style={styles.passwordStrengthFlex}>
+                        <View style={styles.passwordStrongFlex}>
+                            <View style={(ValidatePassword(this.state.password) == globalStrings.userManagement.strong) ? styles.strong : styles.default} />
+                            <Text style={styles.strongText}>
+                                {globalStrings.userManagement.strong}
+                            </Text>
+                        </View>
+                        <View style={styles.passwordStrongFlex}>
+                            <View style={(ValidatePassword(this.state.password) == globalStrings.userManagement.good) ? styles.good : styles.default} />
+                            <Text style={styles.strongText}>
+                                {globalStrings.userManagement.good}
+                            </Text>
+                        </View>
+                        <View style={styles.passwordStrongFlex}>
+                            <View style={(this.state.password.length > 0) && (ValidatePassword(this.state.password) == globalStrings.userManagement.weak) ? styles.weak : styles.default} />
+                            <Text style={styles.strongText}>
+                                {globalStrings.userManagement.weak}
+                            </Text>
+                        </View>
+                    </View>
+                       
 
                     <View style={styles.signInView}>
                         <Text style={styles.userIDText}>
@@ -278,7 +269,7 @@ class RegisterPasswordComponent extends Component {
                         buttonStyle={styles.signInButton}
                         buttonText={globalStrings.common.submit}
                         textStyle={styles.signInButtonText}
-                        onPress={this.state.pageSpecialMFA ? this.navigateLogin : this.navigateSelf}
+                        onPress={(specialMFAUserType!="" && (specialMFAUserType=="JointAcc" || specialMFAUserType=="NewUser" || specialMFAUserType=="UserForm")) ? this.navigateLogin : this.navigateSelf}
                         disabled={this.state.password === '' || this.state.confirmPassword === '' || !this.state.validationPassword || !this.state.validationConfirmPassword || !this.state.validationOnlineId}
                     />
 
