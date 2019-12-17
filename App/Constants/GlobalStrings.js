@@ -1212,6 +1212,11 @@ export default {
         marketingNoteTwo: "What Types of Offers Are You Interested in?",
         marketingNoteThree: "You can tailor the VCM offers you receive and how you like to get them",
         marketingNoteFour: "Please note that your selections do not apply to pre-screened offers of credit. To opt-out of pre-screened offers of credit please visit https://www.optoutprescreen.com or call to free Phone Number. The phone number and website are operated by the major consumer reporting companies",
-        
+        marketingProductLabl: "Products & Services",
+        marketingExpandAll: "Expand All",
+        marketingInvestments: " -  Investments",
+        marketingProductEmail: "Email",
+        marketingPrivacyOne: "Your marketing and privacy preferences will also apply to your spouse and children.",
+        marketingPrivacyContent: "Investing involves risk including loss of principal. Victory Mutual Funds and USAA Mutual Funds are distributed by Victory Capital Advisers, Inc. (VCA). VictoryShares ETFs and VictoryShares USAA ETFs are distributed by Foreside Fund Services, LLC (Foreside). VCA and Foreside are members of FINRA and SIPC. Victory Capital Management Inc. (VCM) is the investment adviser to the Victory Mutual Funds, USAA Mutual Funds, VictoryShares ETFs and VictoryShares USAA ETFs. VCA and VCM are not affiliated with Foreside. USAA is not affiliated with Foreside, VCM, or VCA. USAA and the USAA logos are registered trademarks and the USAA Mutual Funds and USAA Investments logos are trademarks of United Services Automobile Association and are being used by Victory Capital and its affiliates under license. Victory Capital means Victory Capital Management Inc., the investment manager of the USAA 529 College Savings Plan (Plan). The Plan is distributed by Victory Capital Advisers, Inc., a broker dealer registered with FINRA and an affiliate of Victory Capital. Victory Capital and its affiliates are not affiliated with United Services Automobile Association or its affiliates. USAA and the USAA logo are registered trademarks and the USAA 529 College Savings Plan logo is a trademark of United Services Automobile Association and are being used by Victory Capital and its affiliates under license."
     }
 };

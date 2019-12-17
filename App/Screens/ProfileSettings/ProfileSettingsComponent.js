@@ -426,8 +426,7 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingPersonalManage}
-                            >
+                                onPress={this.profileSettingPersonalManage} >
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>

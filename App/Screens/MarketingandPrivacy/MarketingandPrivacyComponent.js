@@ -414,369 +414,136 @@ class MarketingandPrivacyComponent extends Component {
                             {globalString.marketingPrivacyLabel.marketingNoteTwo}
                         </Text>
 
+                        <Text style={styles.marketingNotes}>
+                            {globalString.marketingPrivacyLabel.marketingNoteThree}
+                        </Text>
+
+                        <Text style={styles.marketingNotes}>
+                            {globalString.marketingPrivacyLabel.marketingNoteFour}
+                        </Text>
+
                     </View>
 
-                    {/* <View>
-                        <View style={styles.listContainer}>
-                            <View style={styles.settingsMobile}>
-                                <View style={{ width: '15%' }}>
-                                    <GIcon
-                                        name="ios-square-outline"
-                                        type="ionicon"
-                                        size={40}
-                                        color="black"
-                                    />
-                                </View>
+                    {/* Products and Services */}
 
-                                <Text style={{ width: '80%', color: '#56565A', alignItems: 'center', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Mobile Phone"}
-                                </Text>
+                    <View>
+                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                            <Text style={styles.profileSettingViewOne}>
+                                {globalString.marketingPrivacyLabel.marketingProductLabl}
+                            </Text>
 
-                                <Text style={{ color: '#5D83AE', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: scaledHeight(3) }}>
-                                    {"Edit"}
-                                </Text>
-                            </View>
-
-                            <View style={styles.settingsMobileText}>
-                                <Text style={{ width: '15%' }}>
-                                    {""}
-                                </Text>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(14), marginTop: scaledHeight(3) }}>
-                                    {"+1 (123) 456 - 7890"}
-                                </Text>
-                            </View>
-
-                            <View style={styles.settingsMobile}>
-                                <View style={{ width: '15%' }}>
-                                    <Text style={{ fontSize: scaledHeight(16), color: '#56565A' }}>
-                                        {"NA"}
-                                    </Text>
-                                </View>
-
-                                <Text style={{ width: '80%', color: '#56565A', alignItems: 'center', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Home Phone"}
-                                </Text>
-
-                                <Text style={{ color: '#5D83AE', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: scaledHeight(3) }}>
-                                    {"Edit"}
-                                </Text>
-                            </View>
-
-                            <View style={styles.settingsMobileText}>
-                                <Text style={{ width: '15%' }}>
-                                    {""}
-                                </Text>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(14), marginTop: scaledHeight(3) }}>
-                                    {"None On File"}
-                                </Text>
-                            </View>
-
-                            <View style={styles.settingsMobile}>
-                                <View style={{ width: '15%' }}>
-                                    <GIcon
-                                        name="ios-square-outline"
-                                        type="ionicon"
-                                        size={40}
-                                        color="black"
-                                    />
-                                </View>
-
-                                <Text style={{ width: '80%', color: '#56565A', alignItems: 'center', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Primary Email"}
-                                </Text>
-
-                                <Text style={{ color: '#5D83AE', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: scaledHeight(3) }}>
-                                    {"Edit"}
-                                </Text>
-                            </View>
-
-                            <View style={styles.settingsMobileText}>
-                                <Text style={{ width: '15%' }}>
-                                    {""}
-                                </Text>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(14), marginTop: scaledHeight(3) }}>
-                                    {"abcd@gmail.com"}
-                                </Text>
-                            </View>
-
-
-                            <View style={styles.settingsMobile}>
-                                <View style={{ width: '15%' }}>
-                                    <Text style={{ fontSize: scaledHeight(16), color: '#56565A' }}>
-                                        {"NA"}
-                                    </Text>
-                                </View>
-
-                                <Text style={{ width: '80%', color: '#56565A', alignItems: 'center', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Secondary Email"}
-                                </Text>
-
-                                <Text style={{ color: '#5D83AE', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: scaledHeight(3) }}>
-                                    {"Edit"}
-                                </Text>
-                            </View>
-
-                            <View style={styles.settingsMobileText}>
-                                <Text style={{ width: '15%' }}>
-                                    {""}
-                                </Text>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(14), marginTop: scaledHeight(3) }}>
-                                    {"None On File"}
-                                </Text>
-                            </View>
-
-
-                            <View style={styles.settingsMobile}>
-                                <View style={{ width: '15%' }}>
-                                    <GIcon
-                                        name="ios-square-outline"
-                                        type="ionicon"
-                                        size={40}
-                                        color="black"
-                                    />
-                                </View>
-
-                                <Text style={{ width: '80%', color: '#56565A', alignItems: 'center', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Mailing Address"}
-                                </Text>
-
-                                <Text style={{ color: '#5D83AE', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: scaledHeight(3) }}>
-                                    {"Edit"}
-                                </Text>
-                            </View>
-
-                            <View style={styles.settingsMobileText}>
-                                <Text style={{ width: '15%' }}>
-                                    {""}
-                                </Text>
-                                <Text style={{ color: '#56565A', fontSize: scaledHeight(14), marginTop: scaledHeight(3) }}>
-                                    {"Address 1 Address 2 City State Zip"}
-                                </Text>
-                            </View>
-                        </View>
-
-                        <View style={{ flexDirection: 'row', paddingLeft: '4%', paddingRight: '4%', width: '92%', marginTop: scaledHeight(15) }}>
-                            <Text style={{ fontSize: scaledHeight(16), color: '#56565A' }}>
-                                {"We show you gave VCM permission to make marketing calls to you using an automated dialing system or pre recorded voice message. If you want to change you preference."}
-                                <Text style={{ fontSize: scaledHeight(16), color: '#5D83AE', fontWeight: 'bold' }}>
-                                    {"Contact us"}
-                                </Text>
+                            <Text style={styles.profileSettingViewTwo}>
+                                {globalString.marketingPrivacyLabel.marketingExpandAll}
                             </Text>
                         </View>
 
-                        <View style={{ paddingLeft: '4%', paddingRight: '4%', width: '92%', marginTop: scaledHeight(15) }}>
-                            <Text style={{ fontSize: scaledHeight(16), color: '#56565A' }}>
-                                {"What Types of Offers Are You Interested in?"}
-                            </Text>
-                        </View>
+                        {/* Product and Services content */}
 
-                        <View style={{ paddingLeft: '4%', paddingRight: '4%', width: '92%', marginTop: scaledHeight(15) }}>
-                            <Text style={{ fontSize: scaledHeight(16), color: '#56565A' }}>
-                                {"You can tailor the VCM offers you receive and how you like to get them"}
-                            </Text>
-                        </View>
-
-                        <View style={{ flexDirection: 'row', height: scaledHeight(160), paddingLeft: '4%', paddingRight: '4%', width: '92%', marginTop: scaledHeight(15) }}>
-                            <Text style={{ fontSize: scaledHeight(16), color: '#56565A' }}>
-                                {"Please note that your selections do not apply to pre-screened offers of credit. To opt-out of pre-screened offers of credit please visit"}
-                                <Text style={{ color: '#5D83AE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {" https://www.optoutprescreen.com"}
-                                </Text>
-                                <Text>
-                                    {" or call to free"}
-                                </Text>
-
-                                <Text style={{ color: '#5D83AE', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {" Phone Number"}
-                                </Text>
-                                <Text>
-                                    {". The phone number and website are operated by the major consumer reporting companies"}
-                                </Text>
-                            </Text>
-                        </View>
-
-                        <View style={styles.settingsMobile}>
-                            <Text style={{ width: '80%', color: '#56565A', alignItems: 'center', fontSize: scaledHeight(22), fontWeight: 'bold' }}>
-                                {"Products & Services"}
+                        <View style={styles.marketingContentHolder}>
+                            <Text style={[styles.profileSettingViewOne, styles.editFlexDirectionColumn]}>
+                                {globalString.marketingPrivacyLabel.marketingInvestments}
                             </Text>
 
-                            <Text style={{ color: '#5D83AE', fontSize: scaledHeight(16), fontWeight: 'bold', marginTop: scaledHeight(3) }}>
-                                {"Expand All"}
+                            <Text style={[styles.profileSettingViewOne, styles.editFlexDirectionColumn]}>
+                                {globalString.marketingPrivacyLabel.marketingFinancialLabel}
                             </Text>
-                        </View>
 
-                        <View style={styles.listContainerb}>
-                            <View style={styles.settingsMobile}>
-                                <Text style={{ width: '90%', color: '#56565A', alignItems: 'center', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Mobile Phone"}
+                            <View style={styles.editAddressView}>
+                                <Text style={styles.editAddressLabel}>
+                                    {globalString.marketingPrivacyLabel.marketingMobilePhoneLabel}
                                 </Text>
-
-                                <View style={{ width: '5%' }}>
-                                    <GIcon
-                                        name="ios-square-outline"
-                                        type="ionicon"
-                                        size={40}
-                                        color="black" />
+                                <View style={styles.editSwitchButton}>
+                                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                                        onValueChange={this.props.onMobileToggle} />
                                 </View>
                             </View>
 
-                            <View style={styles.settingsMobile}>
-                                <Text style={{ width: '90%', color: '#56565A', alignItems: 'center', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Home Phone"}
+                            <View style={styles.editAddressView}>
+                                <Text style={styles.editAddressLabel}>
+                                    {globalString.marketingPrivacyLabel.marketingHomePhoneLabel}
                                 </Text>
-
-                                <View style={{ width: '5%' }}>
-                                    <GIcon
-                                        name="ios-square-outline"
-                                        type="ionicon"
-                                        size={40}
-                                        color="black"
-                                    />
+                                <View style={styles.editSwitchButton}>
+                                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                                        onValueChange={this.props.onMobileToggle} />
                                 </View>
                             </View>
 
-                            <View style={styles.settingsMobile}>
-                                <Text style={{ width: '90%', color: '#56565A', alignItems: 'center', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Primary Email"}
+                            <View style={styles.editAddressView}>
+                                <Text style={styles.editAddressLabel}>
+                                    {globalString.marketingPrivacyLabel.marketingProductEmail}
                                 </Text>
-
-                                <View style={{ width: '5%' }}>
-                                    <GIcon
-                                        name="ios-square-outline"
-                                        type="ionicon"
-                                        size={40}
-                                        color="black"
-                                    />
+                                <View style={styles.editSwitchButton}>
+                                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                                        onValueChange={this.props.onMobileToggle} />
                                 </View>
                             </View>
 
-                            <View style={styles.settingsMobile}>
-                                <Text style={{ width: '90%', color: '#56565A', alignItems: 'center', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Secondary Email"}
+                            <View style={styles.editAddressView}>
+                                <Text style={styles.editAddressLabel}>
+                                    {globalString.marketingPrivacyLabel.marketingMailingLabel}
                                 </Text>
-
-                                <View style={{ width: '5%' }}>
-                                    <GIcon
-                                        name="ios-square-outline"
-                                        type="ionicon"
-                                        size={40}
-                                        color="black"
-                                    />
-                                </View>
-                            </View>
-
-                            <View style={styles.settingsMobile}>
-                                <Text style={{ width: '90%', color: '#56565A', alignItems: 'center', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                    {"Mailing Address"}
-                                </Text>
-
-                                <View style={{ width: '5%' }}>
-                                    <GIcon
-                                        name="ios-square-outline"
-                                        type="ionicon"
-                                        size={40}
-                                        color="black"
-                                    />
+                                <View style={styles.editSwitchButton}>
+                                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                                        onValueChange={this.props.onMobileToggle} />
                                 </View>
                             </View>
                         </View>
 
-                        <View style={{ paddingLeft: '4%', paddingRight: '4%', width: '92%', marginTop: scaledHeight(15) }}>
-                            <Text style={{ fontSize: scaledHeight(16), color: '#56565A' }}>
-                                {"Your marketing and privacy preferences will also apply to your spouse and children."}
+                        <Text style={[styles.marketingNotes, styles.editFlexDirectionColumn]}>
+                            {globalString.marketingPrivacyLabel.marketingPrivacyOne}
+                        </Text>
+
+                    </View>
+
+                    {/* Footer Section - Privacy and User Agreements */}
+
+                    <View>
+                        <View style={styles.settingsFooter}>
+                            <Text style={styles.profileSettingInvestLabel}>
+                                {globalString.profileSettingsPage.profileInvest}
                             </Text>
-                        </View>
 
-                        <View style={{ paddingLeft: '4%', paddingRight: '4%', width: '92%', marginTop: scaledHeight(15) }}>
-                            <Text style={{ fontSize: scaledHeight(20), color: '#56565A' }}>
-                                {"Can We Share Your Information Inside VCM?"}
+                            <Image style={styles.profileSettingSocialIcon}
+                                source={require("../../Images/logo.png")} />
+
+                            <Text style={styles.profileSettingConnectLabel}>
+                                {globalString.common.connectWithUs}
                             </Text>
-                        </View>
 
-                        <View style={{ paddingLeft: '4%', paddingRight: '4%', width: '92%', marginTop: scaledHeight(15) }}>
-                            <Text style={{ fontSize: scaledHeight(16), color: '#56565A' }}>
-                                {"There are times we want to share your personal information inside the VCM family of companies so that we can provide you with the best customer service possible. At the same time, you have the following choices about how wee share and use your information inside VCM."}
-                            </Text>
-                        </View>
-
-                        <View style={styles.completeBorder}>
-
-                            <View style={styles.radioSection}>
-                                <Text style={{ marginTop: scaledHeight(20), paddingLeft: '2%', paddingRight: '2%', fontSize: scaledHeight(16), color: '#333333DE', fontWeight: 'bold', opacity: 100 }}>
-                                    {"Can we share your credit and insurance information inside VCM?"}
-                                </Text>
-
-                                <View style={{ flexDirection: 'row', marginLeft: '2%' }}>
-                                    <GRadioButtonComponent radioButtonStyle={{ width: '40%' }} selected questions={"Yes"} />
-
-                                    <GRadioButtonComponent radioButtonStyle={{ width: '40%' }} questions={"No"} />
-                                </View>
-
-                                <Text style={{ paddingLeft: '2%', paddingRight: '2%', fontSize: scaledHeight(14) }}>
-                                    {"This will help us serve you better and provide you with the most efficient service."}
-                                </Text>
-
+                            <View style={styles.whiteBackground}>
+                                <Image style={styles.imageWidthHeight}
+                                    source={require("../../Images/twitterlogo.png")} />
+                                <Image style={styles.imageWidthHeight}
+                                    source={require("../../Images/linkedinlogo.png")} />
                             </View>
 
-                            <View style={styles.radioSection}>
-                                <Text style={{ paddingLeft: '2%', paddingRight: '2%', fontSize: scaledHeight(16), color: '#333333DE', fontWeight: 'bold', opacity: 100 }}>
-                                    {"Can we also share your personal information to market other VCM products to you?"}
+                            <View style={styles.privacyAgreement}>
+                                <Text style={styles.privacyText}>
+                                    {globalString.common.privacyPolicy}
                                 </Text>
 
-                                <View style={{ flexDirection: 'row', marginLeft: '4%' }}>
-                                    <GRadioButtonComponent selected radioButtonStyle={{ width: '40%' }} questions={"Yes"} />
-
-                                    <GRadioButtonComponent radioButtonStyle={{ width: '40%' }} questions={"No"} />
-                                </View>
-                                <Text style={{ paddingLeft: '2%', paddingRight: '2%', fontSize: scaledHeight(14) }}>
-                                    {"This will help us serve you better and provide you with the most efficient service."}
+                                <Text style={styles.privacyText}>
+                                    {globalString.common.fundDocuments}
                                 </Text>
                             </View>
 
-                        </View>
+                            <View style={styles.privacyAgreement}>
+                                <Text style={styles.privacyText}>
+                                    {globalString.common.userAgreement}
+                                </Text>
 
-                        <View style={{ paddingLeft: '4%', paddingRight: '4%', width: '92%', marginTop: scaledHeight(15) }}>
-                            <Text style={{ fontSize: scaledHeight(16), color: '#56565A' }}>
-                                {"Your privacy preferences will also apply to everyone on your account. Find out more information in our Privacy Promise and Online Information Practices."}
-                            </Text>
-                        </View>
-
-                        <View style={styles.newVictorySection}>
-                            <Text style={styles.termsofuseText1}>
-                                {"Investing involves risk including loss of principal."}
-                            </Text>
-                            <Text style={styles.openInvestment}>
-                                {"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet dictum orci et faucibus. Suspendisse non malesuada enim. Aliquam fringilla lectus ut massa convallis."}
-                            </Text>
-                        </View>
-
-                        <View style={styles.privacyAgreement}>
-                            <Text style={styles.privacyText}>
-                                {"Privacy Policy"}
-                            </Text>
-
-                            <Text style={styles.privacyText}>
-                                {"User Agreements"}
-                            </Text>
-                        </View>
-
-                        <View style={styles.fundAgreement}>
-                            <Text style={styles.privacyText}>
-                                {"Fund Documents"}
-                            </Text>
-
-                            <Text style={styles.privacyText}>
-                                {"Support"}
-                            </Text>
+                                <Text style={styles.privacyText}>
+                                    {globalString.common.support}
+                                </Text>
+                            </View>
                         </View>
 
                         <View style={styles.copyRightSection}>
                             <Text style={styles.copyRightText}>
-                                {"Copyright Victory Capital Management Inc. ©2020"}
+                                {globalString.common.copyRights}
                             </Text>
                         </View>
-                    </View> */}
-
+                    </View>
                 </ScrollView>
             </View>
         );

@@ -289,15 +289,6 @@ export const styles = StyleSheet.create({
         flexDirection:'row',
         marginTop:scaledHeight(15)
     },
-    privacyAgreement:{
-        marginTop:scaledHeight(15),
-        alignItems:'center',
-        justifyContent:'center',
-        width:'100%',
-        backgroundColor:'white',
-        height:scaledHeight(50),
-        flexDirection:'row'
-    },
     fundAgreement:{
         alignItems:'center',
         justifyContent:'center',
@@ -306,21 +297,29 @@ export const styles = StyleSheet.create({
         height:scaledHeight(50),
         flexDirection:'row'
     },
-    privacyText:{
-        width:'50%',
-        paddingLeft:'4%',
-        color:'#61285F',
-        fontWeight:'bold',
-        fontSize:scaledHeight(16)
+    privacyAgreement: {
+        marginTop: scaledHeight(8),
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        backgroundColor: 'white',
+        height: scaledHeight(50),
+        flexDirection: 'row'
     },
-    copyRightSection:{
-        height:scaledHeight(50),
-        backgroundColor:'#56565A',
-        alignItems:'center',
-        justifyContent:'center'
+    privacyText: {
+        width: '50%',
+        paddingLeft: '4%',
+        color: '#5D83AE',
+        fontSize: scaledHeight(16)
     },
-    copyRightText:{
-        color:'#FFFFFF'
+    copyRightSection: {
+        height: scaledHeight(50),
+        backgroundColor: '#56565A',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    copyRightText: {
+        color: '#FFFFFF'
     },
     faceIDlogo:{
         marginTop:'5%',
@@ -385,6 +384,24 @@ export const styles = StyleSheet.create({
         paddingLeft: '4%',
         paddingRight: '4%',
     },
+    settingsFooter: {
+        flexDirection: 'column',
+        width: '100%',
+        backgroundColor: '#FFFFFF',
+        padding: '4%'
+    },
+    whiteBackground: {
+        flexDirection: 'row',
+        backgroundColor: 'white',
+        paddingLeft: '5%',
+        paddingRight: '5%'
+    },
+    connectWithUs: {
+        backgroundColor: 'white',
+        flexDirection: 'column',
+        paddingLeft: '5%',
+        paddingBottom: '5%'
+    },
     editEmailHolder: {
         width: '96%', marginLeft: '2%', marginRight: '2%', marginTop: '2%', marginBottom: '2%', borderColor: '#CCCCCC', borderWidth: 1, backgroundColor: '#fff'
     },
@@ -438,5 +455,21 @@ export const styles = StyleSheet.create({
     },
     marketingNotesLink: {
         color: '#0000FF', fontSize: scaledHeight(16), width: '100%', lineHeight: 30
-    }
+    },
+    profileSettingView: { 
+        justifyContent: 'center', alignItems: 'center' 
+    },
+    profileSettingViewOne: { 
+        width: '70%', color: '#6F7072', fontSize: scaledHeight(18), fontWeight: 'bold' 
+    },
+    profileSettingViewTwo: { 
+        width: '30%', color: '#0000FF', fontSize: scaledHeight(16), textAlign: 'right' 
+    },
+    profileSettingFooterView: { flexDirection: 'column', width: '92%', margin: '4%' },
+    profileSettingInvestLabel: { flexWrap: 'wrap', color: '#56565A', fontSize: scaledHeight(16), lineHeight: 24, textAlign: 'justify', marginBottom: '3%' },
+    profileSettingSecurityLabel: { color: '#56565A', lineHeight: 24, textAlign: 'justify', fontSize: scaledHeight(16), marginTop: '4%' },
+    profileSettingShareLabel: { color: '#56565A', fontSize: scaledHeight(16), lineHeight: 24, textAlign: 'justify' },
+    profileSettingSocialView: { width: '70%', color: '#707070', fontSize: scaledHeight(18), fontWeight: 'bold' },
+    profileSettingSocialLabel: { color: '#0000FF', fontSize: scaledHeight(16), marginTop: scaledHeight(3) },
+    profileSettingConnectLabel: { color: '#56565A', fontSize: scaledHeight(18), marginTop: '4%' },
 });
