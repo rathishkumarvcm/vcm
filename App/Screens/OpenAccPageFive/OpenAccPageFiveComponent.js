@@ -9,7 +9,6 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 
 
-
 class OpenAccPageFiveComponent extends Component {
     constructor(props) {
         super(props);
@@ -60,7 +59,6 @@ class OpenAccPageFiveComponent extends Component {
 
     navigateToScreen = (routeName) =>()=>{
         this.props.navigation.navigate({ routeName: routeName, key: routeName });
-
     }
 
     generateKeyExtractor = (item) => item.fundNumber.toString();

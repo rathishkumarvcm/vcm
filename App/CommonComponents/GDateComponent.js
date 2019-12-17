@@ -9,37 +9,47 @@ import DatePicker from 'react-native-datepicker';
 
 const styles = StyleSheet.create({
     componentStyle: {
-        height: scaledHeight(48),
         backgroundColor: "#FFFFFF",
-        //marginTop: scaledHeight(9),
+        borderColor: "#DEDEDF",
+        borderRadius: scaledHeight(4),
+        borderWidth: 1,
+        height: scaledHeight(48),
+        justifyContent: "center",
         marginLeft: '4%',
         marginRight: '4%',
-        width: '92%',
-        borderRadius: scaledHeight(4),
-        justifyContent: "center",
-        borderWidth: 1,
-        borderColor: "#DEDEDF"
-    },
-    dateTextStyle: {
-        fontSize: scaledHeight(16),
-        marginLeft: scaledHeight(14),
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: '#B5B5B5',
-        textAlign: 'left'
-    },
-    dateInputStyle: {
-        marginLeft: 0,
-        borderWidth: 0,
-        borderColor: "transparent",
-        alignItems: 'flex-start',
-        justifyContent: 'center'
+        width: '92%'
     },
     dateIconStyle: {
-        position: 'absolute',
         left: 0,
-        top: 4,
+        marginLeft: 0,
+        position: 'absolute',
+        top: 4
+    },
+    dateInputStyle: {
+        alignItems: 'flex-start',
+        borderColor: "transparent",
+        borderWidth: 0,
+        justifyContent: 'center',
         marginLeft: 0
+    },
+    dateTextLayout: {
+        marginTop: scaledHeight(18),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+    },
+    dateTextStyle: {
+        alignItems: 'center',
+        color: '#B5B5B5',
+        fontSize: scaledHeight(16),
+        justifyContent: 'center',
+        marginLeft: scaledHeight(14),
+        textAlign: 'left'
+    },
+    dateTitleName: {
+        color: '#000000',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginBottom: scaledHeight(8)
     },
     dateTouchBodyStyle: {
 
@@ -53,20 +63,9 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(12)
     },
     errorView: {
+        borderColor: 'red',
         marginLeft: '4%',
-        marginRight: '4%',
-        borderColor: 'red'
-    },
-    dateTextLayout: {
-        marginTop: scaledHeight(18),
-        paddingLeft: '4%',
-        paddingRight: '4%',
-    },
-    dateTitleName: {
-        color: '#000000',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold',
-        marginBottom: scaledHeight(8)
+        marginRight: '4%'
     },
 });
 
@@ -104,7 +103,7 @@ export const GDateComponent = props => (
             <Text style={styles.errorSectionText}>
                 {props.errorMsg}
             </Text>
-        </View> : null}
+                           </View> : null}
     </View>
 
 );
@@ -161,7 +160,7 @@ GDateComponent.defaultProps = {
         type="font-awesome"
         size={20}
         color="#B5B5B5"
-    />,
+                   />,
     confirmBtnText: "Confirm",
     cancelBtnText: "Cancel",
     errorFlag: false,

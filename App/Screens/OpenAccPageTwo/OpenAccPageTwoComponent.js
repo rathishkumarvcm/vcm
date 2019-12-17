@@ -1499,7 +1499,7 @@ class OpenAccPageTwoComponent extends Component {
         } else if (this.isEmpty(this.state.jointOwner.isSeniorPoliticalFigure)) {
             errMsg = gblStrings.accManagement.emptyIsSeniorPoliticalFigureMsg;
             input = 'isSeniorPoliticalFigure';
-        } else if (this.state.jointOwner.isSeniorPoliticalFigure  == "Yes" && this.isEmpty(this.state.jointOwner.seniorPoliticalName)) {
+        } else if (this.state.jointOwner.isSeniorPoliticalFigure == "Yes" && this.isEmpty(this.state.jointOwner.seniorPoliticalName)) {
             errMsg = gblStrings.accManagement.emptySeniorPoliticalNameMsg;
             input = 'seniorPoliticalName';
         } else {

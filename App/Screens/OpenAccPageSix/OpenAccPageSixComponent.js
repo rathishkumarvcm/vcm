@@ -491,7 +491,7 @@ class OpenAccPageSixComponent extends Component {
 
 
                     { /*-----------Document View -------------------*/}
-                    <View style={[styles.sectionGrp]}>
+                    <View style={styles.sectionGrp}>
                         <View style={styles.accTypeSelectSection} >
                             <Text style={styles.headings}>
                                 {gblStrings.accManagement.docToView}
@@ -511,7 +511,7 @@ class OpenAccPageSixComponent extends Component {
                     </View>
 
                     { /*-----------Documents to Sign -------------------*/}
-                    <View style={[styles.sectionGrp]}>
+                    <View style={styles.sectionGrp}>
                         <View style={styles.accTypeSelectSection} >
                             <Text style={styles.headings}>
                                 {gblStrings.accManagement.docToSign}
