@@ -27,10 +27,10 @@ let relationData=[
   {"key": "bro_sis", "value": "Brother/Sister"}
 ];
 
-let suffixData=[
-  {"key": "ii", "value": "II"},
-  {"key": "iii", "value": "III"}
-];
+// let suffixData=[
+//   {"key": "ii", "value": "II"},
+//   {"key": "iii", "value": "III"}
+// ];
 
 
 class EditManageBenificiariesComponent extends Component {
@@ -55,12 +55,29 @@ class EditManageBenificiariesComponent extends Component {
       validationTodArray:[],
       todValidationArray:[],
       addContingentText:'',
+      todayDate:'',
+      prevDate:'',
+      addedBene:[],
+      isAddTodBene:false,
+      validationAddedTodArray:[]
     };
   }
 
   componentDidMount() {
     this.updateInitialDataToState();
     this.getDropDownData();
+    this.getTodayDateFunc();
+  }
+
+  getTodayDateFunc=()=>{
+      var date = new Date().getDate(); //Current Date
+      var prevDate=date-1;
+      var month = new Date().getMonth() + 1; //Current Month
+      var year = new Date().getFullYear(); //Current Year
+      let today= month + "-" + date + "-" + year;
+      let prev=month + "-" + prevDate +"-" +year;
+      this.setState({todayDate:today});
+      this.setState({prevDate:prev});
   }
 
   getDropDownData=()=>{
@@ -97,7 +114,7 @@ class EditManageBenificiariesComponent extends Component {
     tempData.ssnValidation=true;
     tempData.ssnValidationMsg='';
     tempData.ssnValidation=true;
-    tempData.dobValidationFlag=false;
+    tempData.dobValidationFlag=true;
     tempData.dobValidationMsg='' ;
     tempData.emailValidation=true;
     tempData.emailValidationMsg='';
@@ -112,10 +129,10 @@ class EditManageBenificiariesComponent extends Component {
     let tempPriArrayLength=pri && pri.length,tempPriArray=[];
     let tempConArrayLength=con && con.length,tempConArray=[];
     let tempTodArrayLength=tod && tod.length,tempTodArray=[];
-    for(var i=0;i<tempPriArrayLength;i++){
+    for(let i=0;i<tempPriArrayLength;i++){
       tempPriArray.push(tempData);
     }
-    for(var i=0;i<tempConArrayLength;i++){
+    for(let i=0;i<tempConArrayLength;i++){
       tempConArray.push(tempData);
     }
     for(var i=0;i<tempTodArrayLength;i++){
@@ -124,15 +141,6 @@ class EditManageBenificiariesComponent extends Component {
     this.setState({validationPrimaryArray:tempPriArray, validationContingentArray:tempConArray, validationTodArray:tempTodArray});
   }
   
-  onUpdateField = (stateKey, index, keyName, val) => {
-    this.setState(prevState => ({
-      [stateKey[index]]: {
-        ...prevState[stateKey[index]],
-        [keyName]: val,
-      },
-    }));
-  };
-
   onClickCancel=()=>{
     this.props.navigation.navigate("manageBeneficiaries");
   }
@@ -182,7 +190,7 @@ class EditManageBenificiariesComponent extends Component {
       beneficiaryType:"",
       last_modified:"",
       social_security_number:""
-    }
+    };
     array.push(obj);
     this.setState({contingentBeneficiaryData:array});
     
@@ -193,87 +201,129 @@ class EditManageBenificiariesComponent extends Component {
       input.focus();
   }
 
-  selectPriBeneType=(index)=>{
+  selectPriBeneType=(index)=>()=>{
     this.onPrimaryValidationText(index,"beneTypeDropDown",!this.state.validationPrimaryArray.beneTypeDropDown);
   }
 
-  selectedPriBeneTypeDropDownValue=(index,value,keyName)=>{
+  selectedPriBeneTypeDropDownValue=(index,keyName)=>text=>{
     this.onPrimaryValidationText(index,"beneTypeDropDown",false);
     this.onPrimaryValidationText(index,"beneTypeFlag",false);
     let newItems=[...this.state.primaryBeneficiaryData];
-    newItems[index][keyName]=value.title;
+    newItems[index][keyName]=text.title;
     this.setState({
       primaryBeneficiaryData:newItems
     });
   }
 
-  selectPriRelation=(index)=>{
+  selectPriRelation=(index)=>()=>{
     this.onPrimaryValidationText(index,"relationToAccOwnerDropDown",!this.state.validationPrimaryArray.relationToAccOwnerDropDown);
   }
 
-  selectedPriRelationDropDownValue=(index,value,keyName)=>{
+  selectedPriRelationDropDownValue=(index,keyName)=>text=>{
     this.onPrimaryValidationText(index,"relationToAccOwnerDropDown",false);
     this.onPrimaryValidationText(index,"relationToAccOwnerFlag",false);
     let newItems=[...this.state.primaryBeneficiaryData];
-    newItems[index][keyName]=value.value;
+    newItems[index][keyName]=text.value;
     this.setState({
       primaryBeneficiaryData:newItems
     });
   }
 
-  selectConBeneType=(index)=>{
+  selectConBeneType=(index)=>()=>{
     this.onContingentValidationText(index,"beneTypeDropDown",!this.state.validationContingentArray.beneTypeDropDown);
   }
 
-  selectedConBeneTypeDropDownValue=(index,value,keyName)=>{
+  selectedConBeneTypeDropDownValue=(index,keyName)=>text=>{
     this.onContingentValidationText(index,"beneTypeDropDown",false);
     this.onContingentValidationText(index,"beneTypeFlag",false);
     let newItems=[...this.state.contingentBeneficiaryData];
-    newItems[index][keyName]=value.title;
+    newItems[index][keyName]=text.title;
     this.setState({
       contingentBeneficiaryData:newItems
     });
   }
 
-  selectConRelation=(index)=>{
+  selectConRelation=(index)=>()=>{
     this.onContingentValidationText(index,"relationToAccOwnerDropDown",!this.state.validationContingentArray.relationToAccOwnerDropDown);
   }
 
-  selectedConRelationDropDownValue=(index,value,keyName)=>{
+  selectedConRelationDropDownValue=(index,keyName)=>text=>{
     this.onContingentValidationText(index,"relationToAccOwnerDropDown",false);
     this.onContingentValidationText(index,"relationToAccOwnerFlag",false);
     let newItems=[...this.state.contingentBeneficiaryData];
-    newItems[index][keyName]=value.value;
+    newItems[index][keyName]=text.value;
     this.setState({
       contingentBeneficiaryData:newItems
     });
   }
 
-  selectTodBeneType=(index)=>{
+  selectTodBeneType=(index)=>()=>{
     this.onTodValidationText(index,"beneTypeDropDown",!this.state.validationTodArray.beneTypeDropDown);
   }
 
-  selectedTodBeneTypeDropDownValue=(index,value,keyName)=>{
+  selectedTodBeneTypeDropDownValue=(index,keyName)=>text=>{
     this.onTodValidationText(index,"beneTypeDropDown",false);
     this.onTodValidationText(index,"beneTypeFlag",false);
     let newItems=[...this.state.todBeneficiaryData];
-    newItems[index][keyName]=value.title;
+    newItems[index][keyName]=text.title;
     this.setState({
       todBeneficiaryData:newItems
     });
   }
 
-  selectTodRelation=(index)=>{
+  selectTodRelation=(index)=>()=>{
     this.onTodValidationText(index,"relationToAccOwnerDropDown",!this.state.validationTodArray.relationToAccOwnerDropDown);
   }
 
-  selectedTodRelationDropDownValue=(index,value,keyName)=>{
+  selectedTodRelationDropDownValue=(index,keyName)=>text=>{
     this.onTodValidationText(index,"relationToAccOwnerDropDown",false);
     this.onTodValidationText(index,"relationToAccOwnerFlag",false);
     let newItems=[...this.state.todBeneficiaryData];
-    newItems[index][keyName]=value.value;
+    newItems[index][keyName]=text.value;
     this.setState({
       todBeneficiaryData:newItems
+    });
+  }
+
+  selectAddedTodSuffix=(index)=>{
+    this.onAddedTodValidationText(index,"suffixAddedTodDropDown",!this.state.addedBene.suffixAddedTodDropDown);
+  }
+
+  selectedAddedTodSuffixDropDownValue=(index,keyName)=>text=>{
+    this.onAddedTodValidationText(index,"suffixAddedTodDropDown",false);
+    this.onAddedTodValidationText(index,"suffixFlag",false);
+    let newItems=[...this.state.addedBene];
+    newItems[index][keyName]=text.title;
+    this.setState({
+      addedBene:newItems
+    });
+  }
+
+  selectAddedTodBeneType=(index)=>()=>{
+    this.onAddedTodValidationText(index,"beneTypeDropDown",!this.state.addedBene.beneTypeDropDown);
+  }
+
+  selectedTodAddedBeneTypeDropDownValue=(index,keyName)=>text=>{
+    this.onAddedTodValidationText(index,"beneTypeDropDown",false);
+    this.onAddedTodValidationText(index,"beneTypeFlag",false);
+    let newItems=[...this.state.addedBene];
+    newItems[index][keyName]=text.title;
+    this.setState({
+      addedBene:newItems
+    });
+  }
+
+  selectAddedTodRelation=(index)=>()=>{
+    this.onAddedTodValidationText(index,"relationToAccOwnerDropDown",!this.state.addedBene.relationToAccOwnerDropDown);
+  }
+
+  selectedAddedRelationDropDownValue=(index,value,keyName)=>text=>{
+    this.onAddedTodValidationText(index,"relationToAccOwnerDropDown",false);
+    this.onAddedTodValidationText(index,"relationToAccOwnerFlag",false);
+    let newItems=[...this.state.addedBene];
+    newItems[index][keyName]=text.value;
+    this.setState({
+      addedBene:newItems
     });
   }
 
@@ -332,6 +382,25 @@ class EditManageBenificiariesComponent extends Component {
     newItems[index][keyName]=value;
     this.setState({
       validationTodArray:newItems
+    });
+  }
+
+  onAddedTodChangeText=(index, keyName)=>text =>{
+    let newItems=[...this.state.addedBene],value=text;
+    if(keyName === "distribution_Per"){
+      value=(text*100).toFixed(2).toString();
+    }
+    newItems[index][keyName]=value;
+    this.setState({
+      addedBene:newItems
+    });
+  }
+
+  onAddedTodValidationText=(index, keyName,value) =>{
+    let newItems=[...this.state.addedBene];
+    newItems[index][keyName]=value;
+    this.setState({
+      addedBene:newItems
     });
   }
 
@@ -401,7 +470,18 @@ class EditManageBenificiariesComponent extends Component {
         this.onPrimaryValidationText(i,"beneTypeFlag",true);
         this.onPrimaryValidationText(i,"beneTypeValidationMsg",gblStrings.accManagement.emptyBeneficiaryType);
         isErrMsg=true;
-      } 
+      }
+      // if (this.state.primaryBeneficiaryData[i].dob === '') {
+      //   this.onPrimaryValidationText(i,dobValidationFlag,false);
+      //   this.onPrimaryValidationText(i,dobValidationFlag,gblStrings.accManagement.emptyDateOfBirth);
+      //   isErrMsg=true;
+      // } else {
+      //   if(this.state.primaryBeneficiaryData[i].dob >= this.state.todayDate){
+      //     this.onPrimaryValidationText(i,dobValidationFlag,false);
+      //     this.onPrimaryValidationText(i,dobValidationFlag,gblStrings.accManagement.validDateOfBirthMsg);
+      //     isErrMsg=true;
+      //   }
+      // } 
     }
     if (!isErrMsg) {
       isValidationSuccess = true;
@@ -491,14 +571,58 @@ class EditManageBenificiariesComponent extends Component {
     return isValidationSuccess;
   }
 
+  onClickAddTodBene=()=>{
+    let array=this.state.addedBene;
+    let obj={
+      key:"key"+parseInt(this.state.todBeneficiaryData.length)+1,
+      fname:"",
+      mname:"",
+      lname:"",
+      suffix:"",
+      contract_Number:"123456789",
+      relationship_To_Insured:"",
+      accumulated_Value:"6322",
+      distribution_Per:"",
+      dob:"",
+      email:"",
+      beneficiaryType:"",
+      last_modified:this.state.todayDate,
+      social_security_number:"",
+      fnameValidation:true,
+      fnameValidationMsg:'',
+      lnameValidation:true,
+      lnameValidationMsg:"",
+      suffixDropDown:false,
+      suffixFlag:false,
+      suffixValidationMsg:'',
+      ssnValidation:true,
+      ssnValidationMsg:'',
+      dobValidationFlag:true,
+      dobValidationMsg:'',
+      emailValidation:true,
+      emailValidationMsg:'',
+      beneTypeDropDown:false,
+      beneTypeFlag:false,
+      beneTypeValidationMsg:'',
+      relationToAccOwnerDropDown:false,
+      relationToAccOwnerFlag:false,
+      relationToAccOwnerValidationMsg:'',
+      distributionVlaidation:true,
+      distributionValidationMsg:'',
+    };
+    array.push(obj);
+    console.log("added array",array);
+    this.setState({addedBene:array});
+    this.setState({isAddTodBene:true});
+  }
 
   generateEditPrimaryBeneficiaryKeyExtractor = (item) => { return (""+item.key); };
   generateContingentBeneficiaryKeyExtractor = (item) => { return (""+item.key); };
 
   render() {
-    if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.suffix && this.props.masterLookupStateData.suffix.value) {
-      suffixData=this.props.masterLookupStateData.suffix.value;
-    }
+    // if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.suffix && this.props.masterLookupStateData.suffix.value) {
+    //   suffixData=this.props.masterLookupStateData.suffix.value;
+    // }
     if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.relationship && this.props.masterLookupStateData.relationship.value) {
       relationData=this.props.masterLookupStateData.relationship.value;
     }
@@ -537,7 +661,7 @@ class EditManageBenificiariesComponent extends Component {
           {this.state.primaryBeneficiaryData && this.state.primaryBeneficiaryData.map((item,index)=>{
             return(
               <View key={this.generateEditPrimaryBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
-                <View style={styles.titleHeadingView} onTouchStart={this.onClickPrimaryToggle}>
+                  <View style={styles.titleHeadingView}>
                       <Text style={styles.titleHeaderText}>{this.state.editPrimaryIcon}</Text>
                       <Text style={styles.titleHeaderText}>{gblStrings.accManagement.editPrimaryBene}</Text>
                   </View>
@@ -565,9 +689,7 @@ class EditManageBenificiariesComponent extends Component {
                           inputref={this.setInputRef("dateofBirth"+index)}
                           date={item.dob}
                           placeholder="MM/DD/YYYY"
-                          minDate="01-01-2016"
-                          maxDate="01-01-2019"
-                          errorFlag={this.state.validationPrimaryArray[index].dobValidationFlag}
+                          errorFlag={!this.state.validationPrimaryArray[index].dobValidationFlag}
                           errMsg={this.state.validationPrimaryArray[index].dobValidationMsg}
                           onDateChange={this.onPrimaryChangeText(index,"dob")}
                         />
@@ -587,10 +709,10 @@ class EditManageBenificiariesComponent extends Component {
                           dropDownTextName={styles.lblTxt} 
                           data={beneficiary_type_data}
                           itemToDisplay={"title"}
-                          changeState={()=>this.selectPriBeneType(index)}
+                          changeState={this.selectPriBeneType(index)}
                           showDropDown={this.state.validationPrimaryArray[index].beneTypeDropDown}
                           dropDownValue={item.beneficiaryType}
-                          selectedDropDownValue={(value)=>this.selectedPriBeneTypeDropDownValue(index,value,"beneficiaryType")}
+                          selectedDropDownValue={this.selectedPriBeneTypeDropDownValue(index,"beneficiaryType")}
                           errorFlag={this.state.validationPrimaryArray[index].beneTypeFlag}
                           errorText={this.state.validationPrimaryArray[index].beneTypeValidationMsg}
                         />
@@ -599,10 +721,10 @@ class EditManageBenificiariesComponent extends Component {
                           dropDownTextName={styles.lblTxt} 
                           data={relationData}
                           itemToDisplay={"value"}
-                          changeState={()=>this.selectPriRelation(index)}
+                          changeState={this.selectPriRelation(index)}
                           showDropDown={this.state.validationPrimaryArray[index].relationToAccOwnerDropDown}
                           dropDownValue={item.relationship_To_Insured}
-                          selectedDropDownValue={(value)=>this.selectedPriRelationDropDownValue(index,value,"relationship_To_Insured")}
+                          selectedDropDownValue={this.selectedPriRelationDropDownValue(index,"relationship_To_Insured")}
                           errorFlag={this.state.validationPrimaryArray[index].relationToAccOwnerFlag}
                           errorText={this.state.validationPrimaryArray[index].relationToAccOwnerValidationMsg}
                         />
@@ -613,6 +735,7 @@ class EditManageBenificiariesComponent extends Component {
                               onValueChange={this.onPrimaryChangeText(index, 'distribution_Per')}
                           />
                         </View>
+                      
                       </View>
                   </Collapsible>
               </View>
@@ -673,10 +796,10 @@ class EditManageBenificiariesComponent extends Component {
                       dropDownTextName={styles.lblTxt} 
                       data={beneficiary_type_data}
                       itemToDisplay={"title"}
-                      changeState={()=>this.selectConBeneType(index)}
+                      changeState={this.selectConBeneType(index)}
                       showDropDown={this.state.validationContingentArray[index].beneTypeDropDown}
                       dropDownValue={item.beneficiaryType}
-                      selectedDropDownValue={(value)=>this.selectedConBeneTypeDropDownValue(index,value,"beneficiaryType")}
+                      selectedDropDownValue={this.selectedConBeneTypeDropDownValue(index,"beneficiaryType")}
                       errorFlag={this.state.validationContingentArray[index].beneTypeFlag}
                       errorText={this.state.validationContingentArray[index].beneTypeValidationMsg}
                     />
@@ -685,10 +808,10 @@ class EditManageBenificiariesComponent extends Component {
                       dropDownTextName={styles.lblTxt} 
                       data={relationData}
                       itemToDisplay={"value"}
-                      changeState={()=>this.selectConRelation(index)}
+                      changeState={this.selectConRelation(index)}
                       showDropDown={this.state.validationPrimaryArray[index].relationToAccOwnerDropDown}
                       dropDownValue={item.relationship_To_Insured}
-                      selectedDropDownValue={(value)=>this.selectedConRelationDropDownValue(index,value,"relationship_To_Insured")}
+                      selectedDropDownValue={this.selectedConRelationDropDownValue(index,"relationship_To_Insured")}
                       errorFlag={this.state.validationContingentArray[index].relationToAccOwnerFlag}
                       errorText={this.state.validationContingentArray[index].relationToAccOwnerValidationMsg}
                     />
@@ -705,11 +828,13 @@ class EditManageBenificiariesComponent extends Component {
             );
           })}
 
-          {!this.state.todBeneficiaryData && <TouchableOpacity style={styles.paddingStyleLeft} onPress={this.onClickADDContingentBene}>
-            <Text style={styles.addPrimaryLink}>
-              {' + ' + this.state.addContingentText}
-            </Text>
-          </TouchableOpacity>}
+          {!this.state.todBeneficiaryData && 
+            <TouchableOpacity style={styles.paddingStyleLeft} onPress={this.onClickADDContingentBene}>
+              <Text style={styles.addPrimaryLink}>
+                {' + ' + this.state.addContingentText}
+              </Text>
+            </TouchableOpacity>
+          }
 
           {/*-----------------Edit Transfer On Death Beneficiary---------------------------*/}
 
@@ -765,10 +890,10 @@ class EditManageBenificiariesComponent extends Component {
                       dropDownTextName={styles.lblTxt} 
                       data={beneficiary_type_data}
                       itemToDisplay={"title"}
-                      changeState={()=>this.selectTodBeneType(index)}
+                      changeState={this.selectTodBeneType(index)}
                       showDropDown={this.state.validationTodArray[index].beneTypeDropDown}
                       dropDownValue={item.beneficiaryType}
-                      selectedDropDownValue={(value)=>this.selectedTodBeneTypeDropDownValue(index,value,"beneficiaryType")}
+                      selectedDropDownValue={this.selectedTodBeneTypeDropDownValue(index,"beneficiaryType")}
                       errorFlag={this.state.validationTodArray[index].beneTypeFlag}
                       errorText={this.state.validationTodArray[index].beneTypeValidationMsg}
                     />
@@ -777,10 +902,10 @@ class EditManageBenificiariesComponent extends Component {
                       dropDownTextName={styles.lblTxt} 
                       data={relationData}
                       itemToDisplay={"value"}
-                      changeState={()=>this.selectTodRelation(index)}
+                      changeState={this.selectTodRelation(index)}
                       showDropDown={this.state.validationTodArray[index].relationToAccOwnerDropDown}
                       dropDownValue={item.relationship_To_Insured}
-                      selectedDropDownValue={(value)=>this.selectedRelationDropDownValue(index,value,"relationship_To_Insured")}
+                      selectedDropDownValue={this.selectedRelationDropDownValue(index,"relationship_To_Insured")}
                       errorFlag={this.state.validationTodArray[index].relationToAccOwnerFlag}
                       errorText={this.state.validationTodArray[index].relationToAccOwnerValidationMsg}
                     />
@@ -796,6 +921,123 @@ class EditManageBenificiariesComponent extends Component {
               </View>
             );
           })}
+
+
+          {/*-----------------Add Transfer On Death Beneficiary---------------------------*/}
+
+          {/* {this.state.addedBene && this.state.addedBene.map((item,index)=>{
+            console.log("in added array view",item,index)
+            return(
+              <View key={this.generateContingentBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
+                <View style={styles.titleHeadingView} >
+                  <Text style={styles.titleHeaderText}>{this.state.editPrimaryIcon}</Text>
+                  <Text style={styles.titleHeaderText}>{gblStrings.accManagement.addPrimaryBeneficiary}</Text>
+                </View>
+                <View style={styles.line} /> 
+                  <View style={styles.paddingHorizontalStyle}>
+                    
+                    <Text style={styles.lblTxt}>{gblStrings.accManagement.firstName}</Text>
+                    <GInputComponent
+                      inputref={this.setInputRef("todFirst"+index)}
+                      propInputStyle={styles.customTxtBox}
+                      value={item.fname}
+                      maxLength={gblStrings.maxLength.firstName}
+                      onChangeText={this.onAddedTodChangeText(index, 'fname')}
+                      errorFlag={!item.fnameValidation}
+                      errorText={item.fnameValidationMsg}
+                    />
+                    <Text style={styles.lblTxt}>{gblStrings.accManagement.middleInitial}</Text>
+                    <GInputComponent
+                      inputref={this.setInputRef("todMiddle"+index)}
+                      propInputStyle={styles.customTxtBox}
+                      value={item.mname}
+                      maxLength={gblStrings.maxLength.middleInitial}
+                      onChangeText={this.onAddedTodChangeText(index, 'mname')}
+                    />
+                    <Text style={styles.lblTxt}>{gblStrings.accManagement.lastName}</Text>
+                    <GInputComponent
+                      inputref={this.setInputRef("todLast"+index)}
+                      propInputStyle={styles.customTxtBox}
+                      value={item.lname}
+                      maxLength={gblStrings.maxLength.lastName}
+                      onChangeText={this.onAddedTodChangeText(index, 'lname')}
+                      errorFlag={!item.lnameValidation}
+                      errorText={item.lnameValidationMsg}
+                    />
+                    <GDropDownComponent 
+                      dropDownName={gblStrings.accManagement.suffixOptional}
+                      dropDownTextName={styles.lblTxt} 
+                      data={suffixData}
+                      itemToDisplay={"value"}
+                      changeState={this.selectAddedTodSuffix(index)}
+                      showDropDown={item.suffixAddedTodDropDown}
+                      dropDownValue={item.suffix}
+                      selectedDropDownValue={(value)=>this.selectedAddedTodSuffixDropDownValue(index,"suffix")}
+                    />
+                    <Text style={styles.lblTxt}>{gblStrings.accManagement.dob}</Text>
+                    <GDateComponent 
+                      inputref={this.setInputRef("todAddedDateofBirth"+index)}
+                      date={item.dob}
+                      placeholder="MM/DD/YYYY"
+                      errorFlag={item.dobValidation}
+                      errMsg={item.dobValidationMsg}
+                      onDateChange={this.onAddedTodChangeText(index,"dob")}
+                    />
+                    <Text style={styles.lblTxt}>{gblStrings.accManagement.emailAddress}</Text>
+                    <GInputComponent
+                      inputref={this.setInputRef("todAddedemail"+index)}
+                      propInputStyle={styles.customTxtBox}
+                      placeholder={'abc@gmail.com'}
+                      keyboardType={'email-address'}
+                      value={item.email}
+                      onChangeText={this.onAddedTodChangeText(index, 'email')}
+                      errorFlag={!item.emailValidation}
+                      errorText={item.emailValidationMsg}
+                    />
+                    <GDropDownComponent 
+                      dropDownName={gblStrings.accManagement.beneficiary_type}
+                      dropDownTextName={styles.lblTxt} 
+                      data={beneficiary_type_data}
+                      itemToDisplay={"title"}
+                      changeState={this.selectAddedTodBeneType(index)}
+                      showDropDown={item.beneTypeDropDown}
+                      dropDownValue={item.beneficiaryType}
+                      selectedDropDownValue={this.selectedTodAddedBeneTypeDropDownValue(index,"beneficiaryType")}
+                      errorFlag={item.beneTypeFlag}
+                      errorText={item.beneTypeValidationMsg}
+                    />
+                    <GDropDownComponent 
+                      dropDownName={gblStrings.accManagement.relationToOwner}
+                      dropDownTextName={styles.lblTxt} 
+                      data={relationData}
+                      itemToDisplay={"value"}
+                      changeState={this.selectAddedTodRelation(index)}
+                      showDropDown={item.relationToAccOwnerDropDown}
+                      dropDownValue={item.relationship_To_Insured}
+                      selectedDropDownValue={this.selectedAddedRelationDropDownValue(index,"relationship_To_Insured")}
+                      errorFlag={item.relationToAccOwnerFlag}
+                      errorText={item.relationToAccOwnerValidationMsg}
+                    />
+                    <Text style={styles.lblTxt}>{gblStrings.accManagement.distributionPercentage}</Text>
+                    <View style={styles.distributionView}>
+                      <Slider
+                        value={parseInt(item.distribution_Per)/100}
+                        onValueChange={this.onAddedTodChangeText(index, "distribution_Per")}
+                      />
+                    </View>
+                  </View>
+              </View>
+            );
+          })} */}
+
+
+          {this.state.todBeneficiaryData && 
+            <TouchableOpacity style={styles.paddingStyleLeft} >
+              <Text style={styles.addPrimaryLink}>
+                {' + ' + gblStrings.accManagement.addPrimaryBeneficiary}
+              </Text>
+            </TouchableOpacity>
+          }
 
           {/*----------------- Buttons Group---------------------------*/}
           <View style={styles.btnGrp}>
