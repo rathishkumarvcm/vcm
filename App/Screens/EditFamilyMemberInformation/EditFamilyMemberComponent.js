@@ -17,18 +17,7 @@ class editFamilyMemberComponent extends Component {
 
             pressedPosition: this.props.navigation.getParam('pressedPosition'),
             isRelation: this.props.navigation.getParam('isRelation'),
-            profileInformationValues: {},
-
-            // Profile Information
-            profileName: '',
-            profilePrefix: '',
-            profileSuffix: '',
-            profileVcmID: '',
-            profileSsnNumber: '',
-            profileDob: '',
-            profileGender: '',
-            profileMaritalStatus: '',
-            profileCitizenship: '',
+            profileInformationValues: {}
         };
     }
 
