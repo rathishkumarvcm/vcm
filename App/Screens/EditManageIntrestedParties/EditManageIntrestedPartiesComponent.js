@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent,GDateComponent, GIcon, GDropDownComponent, GInputComponent, GHeaderComponent, GFooterComponent,GCheckBoxComponent, GLoadingSpinner } from '../../CommonComponents';
+import { GButtonComponent,GDateComponent, GIcon, GDropDownComponent, GInputComponent, GHeaderComponent, GFooterComponent} from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import { zipCodeRegex,emailRegex } from '../../Constants/RegexConstants';
 import PropTypes from "prop-types";
@@ -119,7 +119,6 @@ class editManageIntrestedPartiesComponent extends Component {
                 email:data.email?data.email:"",
                 addressLine1:data.address?data.address:"",
                 company:data.company?data.company:"",
-                addressLine1:data.address?data.address:"",
                 zipCode:data.zipCode?data.zipCode:"",
                 city:data.city?data.city:"",
                 stateValue:data.state?data.state:"",
@@ -367,7 +366,7 @@ class editManageIntrestedPartiesComponent extends Component {
 
                      {/*-------------------------- Add Intrested Parties ---------------------------------*/}
 
-                     <View style={styles.paddingHorizontalStyle}>
+                    <View style={styles.paddingHorizontalStyle}>
                         <View style={styles.flexDirectionStyle}>
                           <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
                           <Text style={[styles.shortContentValueText, styles.paddingStyleLeft]}>{this.state.personal.fname+" "+this.state.personal.mname+" "+this.state.personal.lname}</Text>
@@ -534,6 +533,7 @@ editManageIntrestedPartiesComponent.propTypes = {
     stateCityData: PropTypes.instanceOf(Object).isRequired,
     getStateCity: PropTypes.func,
     getAddressFormat: PropTypes.func,
+    getCompositeLookUpData: PropTypes.func,
     manageIntrestedPartiesData :PropTypes.instanceOf(Object).isRequired
 
 };

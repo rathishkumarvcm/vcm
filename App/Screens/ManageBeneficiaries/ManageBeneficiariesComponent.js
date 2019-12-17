@@ -38,7 +38,7 @@ class ManageBenificiariesComponent extends Component {
     console.log("in renderConBeneficiary::",item.key);
     return(
       <View style={styles.innerContainerView}>
-        <CardHeader item={item} onPressDelete={this.onDelete(item,key)}/>
+        <CardHeader item={item} onPressDelete={this.onDelete(item,key)} />
         <View style={[styles.paddingStyleLeft,styles.marginBottomStyle]}>
           <View style={styles.marginTopStyle}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.contingentBeneficiary}</Text>
@@ -68,7 +68,7 @@ class ManageBenificiariesComponent extends Component {
     console.log("in renderTODBeneficiary::",item.key);
     return(
       <View style={styles.innerContainerView}>
-        <CardHeader item={item} onPressDelete={this.onDelete(item)}/>
+        <CardHeader item={item} onPressDelete={this.onDelete(item)} />
         <View style={[styles.paddingStyleLeft,styles.marginBottomStyle]}>
           <View style={styles.marginTopStyle}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.primaryBeneficiary}</Text>
@@ -98,7 +98,7 @@ class ManageBenificiariesComponent extends Component {
     console.log("in renderPRiBeneficiary::",item);
     return(
       <View style={styles.innerContainerView}>
-        <CardHeader item={item} onPressDelete={this.onDelete(item)}/>
+        <CardHeader item={item} onPressDelete={this.onDelete(item)} />
         <View style={[styles.paddingStyleLeft,styles.marginBottomStyle]}>
           <View style={styles.marginTopStyle}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.primaryBeneficiary}</Text>

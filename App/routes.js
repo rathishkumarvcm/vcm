@@ -887,7 +887,7 @@ const AppNavigator = createStackNavigator({
         }
     },
     {
-        initialRouteName: "manageIntrestedParties"
+        initialRouteName: "login"
     });
 
 export default createAppContainer(AppNavigator);

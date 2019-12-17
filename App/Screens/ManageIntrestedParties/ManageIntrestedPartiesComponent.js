@@ -51,7 +51,7 @@ class manageIntrestedPartiesComponent extends Component {
                 </View>
                 {item.intrestedParty && item.intrestedParty.map((data,k)=>{
                     return(
-                        <View key={k} style={styles.innerContainerView}>
+                        <View key={data.key} style={styles.innerContainerView}>
                             <CardHeader item={data} navigate={this.onClickEdit(item,k,data)} />
                             <View style={[styles.paddingStyleLeft,styles.marginBottomStyle]}>
                                 <View style={styles.marginTopStyle}>
