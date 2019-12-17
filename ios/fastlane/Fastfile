@@ -25,12 +25,42 @@ platform :ios do
   desc "Submit a new Beta Build to Firebase App Distribution Beta"
   lane :beta do
     # sh "pod install"
-    # get_certificates           # invokes cert
-    # get_provisioning_profile   # invokes sigh
+
+    # invokes cert
+    get_certificates(
+      username: "shamshudein@gmail.com"
+    )
+
+    # invokes sigh
+    get_provisioning_profile(
+        adhoc: true,
+        # force: true,
+        username: "shamshudein@gmail.com",
+        app_identifier: "com.vcm.app.memberservices"
+    )
+
 
     # sync_code_signing
     # disable_automatic_code_signing(path: "my_project.xcodeproj")
-    build_app(scheme: "MemberServices", export_xcargs: "-allowProvisioningUpdates")
+   build_app(
+      scheme: "MemberServices", 
+      clean: true,
+      #export_xcargs: "-allowProvisioningUpdates",
+      #export_options: {
+      #  method: "ad-hoc",
+      #  provisioningProfiles: { 
+      #    "com.vcm.app.memberservices" => "com.vcm.app.memberservices AdHoc"
+      #  }
+      #}
+    )
+
+    firebase_app_distribution(
+        app: "1:777050578604:ios:8ba8d9881e2f57a0730909",
+        testers: "shamshudein.syedkareem@cognizant.com, shamshudein@gmail.com",
+        release_notes: "VCM Member Services IOS App New Release",
+        firebase_cli_path: "/usr/local/bin/firebase",
+        firebase_cli_token: "1//0gZoiIQ7Fx3LACgYIARAAGBASNwF-L9IrzzrV4B8Dw_BFL7NByOqErkCfg0tzS5F3RchhgGxGCyIjcErCrUzsQQFu4SCFm5cpKYU"
+    )
     # enable_automatic_code_signing(path: "my_project.xcodeproj")
 
     # sh "your_script.sh"

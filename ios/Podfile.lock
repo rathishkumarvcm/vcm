@@ -11,6 +11,7 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
+  - JKBigInteger2 (0.0.5)
   - React (0.60.5):
     - React-Core (= 0.60.5)
     - React-DevSupport (= 0.60.5)
@@ -60,8 +61,6 @@ PODS:
     - React
   - react-native-image-picker (1.1.0):
     - React
-  - react-native-maps (0.25.0):
-    - React
   - react-native-pdf (5.1.5):
     - React
   - react-native-webview (7.0.5):
@@ -93,6 +92,9 @@ PODS:
     - React
   - rn-fetch-blob (0.10.16):
     - React-Core
+  - RNAWSCognito (3.2.0):
+    - JKBigInteger2 (= 0.0.5)
+    - React
   - RNGestureHandler (1.4.1):
     - React
   - RNSecureKeyStore (1.0.0):
@@ -120,7 +122,6 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-html-to-pdf (from `../node_modules/react-native-html-to-pdf`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
-  - react-native-maps (from `../node_modules/react-native-maps`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -135,6 +136,7 @@ DEPENDENCIES:
   - React-RCTWebSocket (from `../node_modules/react-native/Libraries/WebSocket`)
   - ReactNativeExceptionHandler (from `../node_modules/react-native-exception-handler`)
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
+  - RNAWSCognito (from `../node_modules/amazon-cognito-identity-js`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNSecureKeyStore (from `../node_modules/react-native-secure-key-store/ios`)
   - RNShare (from `../node_modules/react-native-share`)
@@ -146,6 +148,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - boost-for-react-native
+    - JKBigInteger2
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -172,8 +175,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-html-to-pdf"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
-  react-native-maps:
-    :path: "../node_modules/react-native-maps"
   react-native-pdf:
     :path: "../node_modules/react-native-pdf"
   react-native-webview:
@@ -202,6 +203,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-exception-handler"
   rn-fetch-blob:
     :path: "../node_modules/rn-fetch-blob"
+  RNAWSCognito:
+    :path: "../node_modules/amazon-cognito-identity-js"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNSecureKeyStore:
@@ -222,6 +225,7 @@ SPEC CHECKSUMS:
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
+  JKBigInteger2: e91672035c42328c48b7dd015b66812ddf40ca9b
   React: 53c53c4d99097af47cf60594b8706b4e3321e722
   React-Core: ba421f6b4f4cbe2fb17c0b6fc675f87622e78a64
   React-cxxreact: 8384287780c4999351ad9b6e7a149d9ed10a2395
@@ -231,7 +235,6 @@ SPEC CHECKSUMS:
   React-jsinspector: e08662d1bf5b129a3d556eb9ea343a3f40353ae4
   react-native-html-to-pdf: be2f7a88b33a12b481b771d1bf172dca5968ef50
   react-native-image-picker: 3637d63fef7e32a230141ab4660d3ceb773c824f
-  react-native-maps: 190c02ca533fddac5bb49cf17bdece3644612107
   react-native-pdf: 34ac241e3a373da9d69a414fedfca58ec54dd9bc
   react-native-webview: d244f4de65c152a003de41630ffbc82c40e6b40a
   React-RCTActionSheet: b0f1ea83f4bf75fb966eae9bfc47b78c8d3efd90
@@ -246,6 +249,7 @@ SPEC CHECKSUMS:
   React-RCTWebSocket: cd932a16b7214898b6b7f788c8bddb3637246ac4
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
   rn-fetch-blob: 651b8d076b43d0d7aa294a3d9ec16c00aab8bef9
+  RNAWSCognito: 8cdb673873f82dc770c769b87c336eb4b67b8ae0
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
   RNSecureKeyStore: f1ad870e53806453039f650720d2845c678d89c8
   RNShare: 8b171d4b43c1d886917fdd303bf7a4b87167b05c
