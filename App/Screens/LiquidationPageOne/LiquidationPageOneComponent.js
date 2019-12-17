@@ -166,24 +166,6 @@ class LiquidationPageOneComponent extends Component {
         });
     }
 
-    switchOnFlex = () => {
-        return (
-            <View style={{ backgroundColor: 'white', width: "15%", marginTop: "1%", alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'row', marginRight: "6%" }} >
-                <View style={{ backgroundColor: '#444444', borderColor: '#707070', borderWidth: scaledHeight(1), width: "100%", height: scaledHeight(25), borderRadius: 15, marginTop: scaledHeight(2) }} />
-                <View style={{ backgroundColor: '#FFFFFF', width: scaledHeight(30), borderColor: '#707070', borderWidth: scaledHeight(1), height: scaledHeight(30), borderRadius: scaledHeight(15), zIndex: 3, marginLeft: scaledHeight(-30) }} />
-            </View>
-        );
-    }
-
-    switchOffFlex = () => {
-        return (
-            <View style={{ backgroundColor: 'white', width: "15%", marginTop: "1%", alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'row', marginRight: "6%" }} >
-                <View style={{ backgroundColor: '#DBDBDB', borderColor: '#707070', borderWidth: scaledHeight(1), width: "100%", height: scaledHeight(25), borderRadius: 15, marginTop: scaledHeight(2) }} />
-                <View style={{ width: scaledHeight(30), height: scaledHeight(30), borderRadius: scaledHeight(15), borderColor: '#707070', borderWidth: scaledHeight(1), backgroundColor: '#FFFFFF', position: 'absolute', zIndex: 3 }} />
-            </View>
-        );
-    }
-
     nextButtonAction = () => {        
         console.log('On Click Next Account Selection...');       
         const payloadData = {
@@ -242,27 +224,14 @@ class LiquidationPageOneComponent extends Component {
                                 data={accSelectionData.General_Account}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={styles.accountDetailsFlex}>
+                                        <View style={(this.state.selectedGeneralAccIndex==index)?styles.accountDetailsFlexSelected:styles.accountDetailsFlex} onTouchStart = {this.onClickSelectGeneralAccount(item,index)}>
+                                           
                                             <View style={styles.flexAccDetails1}>
                                                 <View style={styles.accountNumberFlex}>
                                                     <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
                                                     <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
                                                     <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
                                                 </View>
-                                                {(this.state.selectedGeneralAccIndex == index) ?
-                                                    <View style={styles.toggleOnFlex} onTouchStart={this.onClickSelectGeneralAccount(item, index)}>
-                                                        <View style={styles.toggleOnGreyBg} />
-                                                        <View style={styles.toggleOnCircle} />
-                                                    </View>
-                                                    :
-                                                    <View style={styles.toggleOffFlex} onTouchStart={this.onClickSelectGeneralAccount(item, index)}>
-                                                        <View style={styles.toggleOffGreyBg} />
-                                                        <View style={styles.toggleOffCircle} />
-                                                    </View>
-                                                }
-
-
-
                                             </View>
 
                                             <View style={styles.line} />
@@ -278,6 +247,7 @@ class LiquidationPageOneComponent extends Component {
                                                     <Text style={styles.blackText14px}>{item.holdingValue}</Text>
                                                 </View>
                                             </View>
+
                                             <View style={styles.flexAccDetails3}>
                                                 <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.automaticInvestmentPlan}</Text>
                                                 <Text style={styles.blackText14px}>{item.AutomaticInvestmentPlan}</Text>
@@ -304,27 +274,14 @@ class LiquidationPageOneComponent extends Component {
                                 data={accSelectionData.IRA_Account}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={styles.accountDetailsFlex}>
+                                        <View style={(this.state.selectedIRAAccIndex == index)?styles.accountDetailsFlexSelected:styles.accountDetailsFlex} onTouchStart={this.onClickSelectIRAAccount(item, index)}>
+                                            
                                             <View style={styles.flexAccDetails1}>
                                                 <View style={styles.accountNumberFlex}>
                                                     <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
                                                     <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
                                                     <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
                                                 </View>
-                                                {(this.state.selectedIRAAccIndex == index) ?
-                                                    <View style={styles.toggleOnFlex} onTouchStart={this.onClickSelectIRAAccount(item, index)}>
-                                                        <View style={styles.toggleOnGreyBg} />
-                                                        <View style={styles.toggleOnCircle} />
-                                                    </View>
-                                                    :
-                                                    <View style={styles.toggleOffFlex} onTouchStart={this.onClickSelectIRAAccount(item, index)}>
-                                                        <View style={styles.toggleOffGreyBg} />
-                                                        <View style={styles.toggleOffCircle} />
-                                                    </View>
-                                                }
-
-
-
                                             </View>
 
                                             <View style={styles.line} />
@@ -367,27 +324,14 @@ class LiquidationPageOneComponent extends Component {
                                 data={accSelectionData.UTMA_Account}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={styles.accountDetailsFlex}>
+                                        <View style={(this.state.selectedUTMAAccIndex == index)?styles.accountDetailsFlexSelected:styles.accountDetailsFlex} onTouchStart={this.onClickSelectUTMAAccount(item, index)}>
+                                            
                                             <View style={styles.flexAccDetails1}>
                                                 <View style={styles.accountNumberFlex}>
                                                     <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
                                                     <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
                                                     <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
-                                                </View>
-                                                {(this.state.selectedUTMAAccIndex == index) ?
-                                                    <View style={styles.toggleOnFlex} onTouchStart={this.onClickSelectUTMAAccount(item, index)}>
-                                                        <View style={styles.toggleOnGreyBg} />
-                                                        <View style={styles.toggleOnCircle} />
-                                                    </View>
-                                                    :
-                                                    <View style={styles.toggleOffFlex} onTouchStart={this.onClickSelectUTMAAccount(item, index)}>
-                                                        <View style={styles.toggleOffGreyBg} />
-                                                        <View style={styles.toggleOffCircle} />
-                                                    </View>
-                                                }
-
-
-
+                                                </View>                   
                                             </View>
 
                                             <View style={styles.line} />

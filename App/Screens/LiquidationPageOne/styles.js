@@ -124,6 +124,15 @@ export const styles = StyleSheet.create({
         borderWidth:scaledHeight(1),
         backgroundColor:'#FFFFFF',
     },
+    accountDetailsFlexSelected:{
+        height:scaledHeight(246),
+        marginTop:scaledHeight(20),
+        flexDirection:'column',
+        borderColor:'#B5E198',
+        borderWidth:scaledHeight(3),
+        backgroundColor:'#FFFFFF',
+    },
+
     flexAccDetails1:{
         height:scaledHeight(73),
         marginLeft: '4%',
