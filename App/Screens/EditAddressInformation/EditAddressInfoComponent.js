@@ -175,7 +175,13 @@ class editAddressInfoComponent extends Component {
             isRelationShipScreen: this.state.isRelation
         });
 
-    editAddressOnCancel = () => this.props.navigation.navigate('profileSettings');
+    editAddressOnCancel = () => {
+        if (!this.state.isRelation) {
+            this.props.navigation.navigate('profileSettings');
+        } else {
+            this.props.navigation.navigate('editFamilyMemberInfo');
+        }  
+    }
 
     render() {
         return (
