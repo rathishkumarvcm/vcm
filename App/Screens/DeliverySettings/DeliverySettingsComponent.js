@@ -522,7 +522,7 @@ class DeliverySettingsComponent extends Component {
 
                     <View style={styles.pushNotificationDeviceContainer}>
                         <Text style={styles.pushNotificationDeviceText}>
-                            {'iphone1'}
+                            {'iphone XR'}
                         </Text>
                         <Text style={styles.emailEditText} onPress={this.navigateEditNotification}>
                             {gblStrings.common.edit}
