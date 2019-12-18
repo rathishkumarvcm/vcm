@@ -387,11 +387,12 @@ export const styles = StyleSheet.create({
     editAddressSecurity: {
         color: '#56565A', fontSize: scaledHeight(18)
     },
+    editProfileLabel: { color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginBottom: scaledHeight(3) },
     editFamilyDetailView: { color: '#0000FF', fontSize: scaledHeight(14) },
     editFamilyDetailOne: { color: '#56565A', fontSize: scaledHeight(14) },
     editFamilyDetailTwo: { color: '#56565A', fontSize: scaledHeight(14), fontWeight: 'bold' },
     editFamilyHeadView: { width: '100%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },
-    editFamilyDetailHeader: { flexDirection: 'column', width: '90%', margin: '4%', alignSelf: 'center' },
+    editFamilyDetailHeader: { flexDirection: 'column', width: '96%', marginRight: '4%' },
     editFamilyDetailLabel: { color: '#333333DE', fontSize: scaledHeight(14), fontWeight: 'bold', marginBottom: '4%' },
     editProfileValueView: { color: '#56565A', fontSize: scaledHeight(16), marginTop: scaledHeight(3), marginBottom: '2%' },
     editFamilyDetailDropDown: { flexDirection: 'row', marginTop: scaledHeight(3) },

@@ -81,6 +81,11 @@ class editAddressInfoComponent extends Component {
             enableBiometric: false,
             faceIdEnrolled: false,
             touchIdEnrolled: false,
+
+            contactPosition: this.props.navigation.getParam('contactPosition'),
+            isRelation: this.props.navigation.getParam('isRelation'),
+            relationContactInfo: {},
+
             refreshAddressData: false,
             profileUserAddressValue: [],
 
@@ -125,18 +130,7 @@ class editAddressInfoComponent extends Component {
     }
 
     componentDidMount() {
-        if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileUserAddressInformation) {
-            this.setState({
-                profileUserAddressValue: this.props.profileState.profileUserAddressInformation,
-                refreshAddressData: !this.state.refreshAddressData
-            });
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props != prevProps) {
+        if (!this.state.isRelation) {
             if (this.props &&
                 this.props.profileState &&
                 this.props.profileState.profileUserAddressInformation) {
@@ -145,10 +139,41 @@ class editAddressInfoComponent extends Component {
                     refreshAddressData: !this.state.refreshAddressData
                 });
             }
+        } else {
+            let relationshipContacts = [];
+            if (this.props &&
+                this.props.profileState &&
+                this.props.profileState.profileRelationShipDetails) {
+                relationshipContacts = [...this.props.profileState.profileRelationShipDetails];
+                this.setState({
+                    relationContactInfo: relationshipContacts[this.state.contactPosition],
+                    profileUserAddressValue: relationshipContacts[this.state.contactPosition].relationAddress,
+                    refreshAddressData: !this.state.refreshAddressData
+                });
+            }
         }
     }
 
-    editAddressInfoAddNew = () => this.props.navigation.navigate('editAddressAddNew');
+    componentDidUpdate(prevProps, prevState) {
+        if (!this.state.isRelation) {
+            if (this.props != prevProps) {
+                if (this.props &&
+                    this.props.profileState &&
+                    this.props.profileState.profileUserAddressInformation) {
+                    this.setState({
+                        profileUserAddressValue: this.props.profileState.profileUserAddressInformation,
+                        refreshAddressData: !this.state.refreshAddressData
+                    });
+                }
+            }
+        }
+    }
+
+    editAddressInfoAddNew = () => this.props.navigation.navigate('editAddressAddNew',
+        {
+            relationShipPosition: this.state.contactPosition,
+            isRelationShipScreen: this.state.isRelation
+        });
 
     editAddressOnCancel = () => this.props.navigation.navigate('profileSettings');
 

@@ -15,8 +15,8 @@ class editFamilyMemberComponent extends Component {
             faceIdEnrolled: false,
             touchIdEnrolled: false,
 
-            pressedPosition: this.props.navigation.getParam('pressedPosition'),
-            isRelation: this.props.navigation.getParam('isRelation'),
+            pressedPosition: this.props.navigation.getParam('pressedPosition', -1),
+            isRelation: this.props.navigation.getParam('isRelation', false),
             profileInformationValues: {}
         };
     }
@@ -31,12 +31,23 @@ class editFamilyMemberComponent extends Component {
                 profileInformationValues: familyMembersData[this.state.pressedPosition]
             });
         }
-        console.log("@@@@@@@@@@@@@@@@ Data Values ::", familyMembersData);
     }
 
     editFamilyDetailManage = () => this.props.navigation.navigate('editFamilyDetail');
 
     editFamilyDetailOnCancel = () => this.props.navigation.navigate('profileSettings');
+
+    editFamilyContactDetail = () => this.props.navigation.navigate('editAddressSettings',
+        {
+            contactPosition: this.state.pressedPosition,
+            isRelation: true
+        });
+
+    editFamilyPhoneDetails = () => this.props.navigation.navigate('editPhoneInformation',
+        {
+            contactPosition: this.state.pressedPosition,
+            isRelation: true
+        });
 
     render() {
         return (
@@ -73,7 +84,7 @@ class editFamilyMemberComponent extends Component {
                     {/* Manage Regulagtory Section */}
 
                     <View>
-                        
+
                         <View style={[styles.settingsView, styles.editFamilyMemberDivideOne]}>
                             <Text style={styles.editFamilyDivideTwo}>
                                 {globalString.profileSettingsPage.profileRelationInfoLabel}
@@ -209,7 +220,8 @@ class editFamilyMemberComponent extends Component {
                                     {globalString.profileSettingsPage.profileContactLabel}
                                 </Text>
 
-                                <Text style={styles.editFamilyDivideThree}>
+                                <Text style={styles.editFamilyDivideThree}
+                                    onPress={this.editFamilyContactDetail}>
                                     {globalString.profileSettingsPage.profileManage}
                                 </Text>
                             </View>
@@ -251,7 +263,8 @@ class editFamilyMemberComponent extends Component {
                                     {globalString.profileSettingsPage.profilePhoneInfoLabel}
                                 </Text>
 
-                                <Text style={styles.editFamilyDivideThree}>
+                                <Text style={styles.editFamilyDivideThree}
+                                    onPress={this.editFamilyPhoneDetails}>
                                     {globalString.profileSettingsPage.profileManage}
                                 </Text>
                             </View>

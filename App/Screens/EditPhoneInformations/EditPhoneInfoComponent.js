@@ -69,8 +69,88 @@ class editPhoneInfoComponent extends Component {
 
             userMobileNumber: [],
             userHomeNumber: [],
-            userWorkNumber: []
+            userWorkNumber: [],
+
+            contactPosition: this.props.navigation.getParam('contactPosition'),
+            isRelation: this.props.navigation.getParam('isRelation'),
+            relationPhoneInfo: {}
         };
+    }
+
+    componentDidMount() {
+        if (!this.state.isRelation) {
+            if (this.props &&
+                this.props.profileState &&
+                this.props.profileState.profileUserMobileNumber) {
+                this.setState({
+                    userMobileNumber: this.props.profileState.profileUserMobileNumber,
+                    isMobileRefreshed: !this.state.isMobileRefreshed
+                });
+            }
+
+            if (this.props &&
+                this.props.profileState &&
+                this.props.profileState.profileUserHomeNumber) {
+                this.setState({
+                    userHomeNumber: this.props.profileState.profileUserHomeNumber,
+                    isMobileRefreshed: !this.state.isMobileRefreshed
+                });
+            }
+
+            if (this.props &&
+                this.props.profileState &&
+                this.props.profileState.profileUserWorkNumber) {
+                this.setState({
+                    userWorkNumber: this.props.profileState.profileUserWorkNumber,
+                    isMobileRefreshed: !this.state.isMobileRefreshed
+                });
+            }
+        } else {
+            let relationshipContacts = [];
+            if (this.props &&
+                this.props.profileState &&
+                this.props.profileState.profileRelationShipDetails) {
+                relationshipContacts = [...this.props.profileState.profileRelationShipDetails];
+                this.setState({
+                    relationPhoneInfo: relationshipContacts[this.state.contactPosition],
+                    userMobileNumber: relationshipContacts[this.state.contactPosition].relationPhoneNumber,
+                    isMobileRefreshed: !this.state.isMobileRefreshed
+                });
+            }
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (!this.state.isRelation) {
+            if (this.props != prevProps) {
+                if (this.props &&
+                    this.props.profileState &&
+                    this.props.profileState.profileUserMobileNumber) {
+                    this.setState({
+                        userMobileNumber: this.props.profileState.profileUserMobileNumber,
+                        isMobileRefreshed: !this.state.isMobileRefreshed
+                    });
+                }
+    
+                if (this.props &&
+                    this.props.profileState &&
+                    this.props.profileState.profileUserHomeNumber) {
+                    this.setState({
+                        userHomeNumber: this.props.profileState.profileUserHomeNumber,
+                        isMobileRefreshed: !this.state.isMobileRefreshed
+                    });
+                }
+    
+                if (this.props &&
+                    this.props.profileState &&
+                    this.props.profileState.profileUserWorkNumber) {
+                    this.setState({
+                        userWorkNumber: this.props.profileState.profileUserWorkNumber,
+                        isMobileRefreshed: !this.state.isMobileRefreshed
+                    });
+                }
+            }
+        }
     }
 
     onMobileToggle = (item, index) => () => {
@@ -112,69 +192,15 @@ class editPhoneInfoComponent extends Component {
             onMobileToggle={this.onMobileToggle(item, index)} />)
     };
 
-    componentDidMount() {
-        if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileUserMobileNumber) {
-            this.setState({
-                userMobileNumber: this.props.profileState.profileUserMobileNumber,
-                isMobileRefreshed: !this.state.isMobileRefreshed
-            });
-        }
-
-        if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileUserHomeNumber) {
-            this.setState({
-                userHomeNumber: this.props.profileState.profileUserHomeNumber,
-                isMobileRefreshed: !this.state.isMobileRefreshed
-            });
-        }
-
-        if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileUserWorkNumber) {
-            this.setState({
-                userWorkNumber: this.props.profileState.profileUserWorkNumber,
-                isMobileRefreshed: !this.state.isMobileRefreshed
-            });
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props != prevProps) {
-            if (this.props &&
-                this.props.profileState &&
-                this.props.profileState.profileUserMobileNumber) {
-                this.setState({
-                    userMobileNumber: this.props.profileState.profileUserMobileNumber,
-                    isMobileRefreshed: !this.state.isMobileRefreshed
-                });
-            }
-    
-            if (this.props &&
-                this.props.profileState &&
-                this.props.profileState.profileUserHomeNumber) {
-                this.setState({
-                    userHomeNumber: this.props.profileState.profileUserHomeNumber,
-                    isMobileRefreshed: !this.state.isMobileRefreshed
-                });
-            }
-    
-            if (this.props &&
-                this.props.profileState &&
-                this.props.profileState.profileUserWorkNumber) {
-                this.setState({
-                    userWorkNumber: this.props.profileState.profileUserWorkNumber,
-                    isMobileRefreshed: !this.state.isMobileRefreshed
-                });
-            }
-        }
-    }
-
     phoneInformationOnAdd = () => this.props.navigation.navigate('editAddPhoneNumber');
 
-    phoneInformationOnCancel = () => this.props.navigation.navigate('profileSettings');
+    phoneInformationOnCancel = () => {
+        if (!this.state.isRelation) {
+            this.props.navigation.navigate('profileSettings');
+        } else {
+            this.props.navigation.navigate('editFamilyMemberInfo');
+        }
+    };
 
     render() {
         return (
@@ -206,56 +232,87 @@ class editPhoneInfoComponent extends Component {
 
                     <View style={styles.settingsBorder} />
 
-                    <View>
+                    {!this.state.isRelation ? (<View>
+
+                        {/* User Mobile Number */}
+
+                        <View>
+                            <View style={styles.settingsView}>
+                                <Text style={styles.phoneMobileView}>
+                                    {globalString.editPhoneInformations.phoneMobileLabel}
+                                </Text>
+                            </View>
+
+                            <FlatList
+                                data={this.state.userMobileNumber}
+                                keyExtractor={this.generateKeyExtractor}
+                                extraData={this.state.isMobileRefreshed}
+                                renderItem={this.renderPhoneInformation()} />
+
+                        </View>
+
+                        {/* User Home Number */}
+
+                        <View>
+                            <View style={styles.settingsView}>
+                                <Text style={styles.phoneMobileView}>{"Home"}</Text>
+                            </View>
+
+                            <FlatList
+                                data={this.state.userHomeNumber}
+                                keyExtractor={this.generateKeyExtractor}
+                                extraData={this.state.isMobileRefreshed}
+                                renderItem={this.renderHomeNumberInformation()} />
+
+                        </View>
+
+                        {/* User Work Number */}
+
+                        <View>
+                            <View style={styles.settingsView}>
+                                <Text style={styles.phoneMobileView}>{"Work"}</Text>
+                            </View>
+
+                            <FlatList
+                                data={this.state.userWorkNumber}
+                                keyExtractor={this.generateKeyExtractor}
+                                extraData={this.state.isMobileRefreshed}
+                                renderItem={this.renderWorkNumberInformation()} />
+                        </View>
+
+                        {/* User Fax Number */}
+
                         <View style={styles.settingsView}>
-                            <Text style={styles.phoneMobileView}>
-                                {globalString.editPhoneInformations.phoneMobileLabel}
+                            <Text style={styles.phoneAddFaxLabel}>
+                                {globalString.editPhoneInformations.phoneFax}
                             </Text>
                         </View>
 
-                        <FlatList
-                            data={this.state.userMobileNumber}
-                            keyExtractor={this.generateKeyExtractor}
-                            extraData={this.state.isMobileRefreshed}
-                            renderItem={this.renderPhoneInformation()} />
-
-                    </View>
-
-                    <View>
-                        <View style={styles.settingsView}>
-                            <Text style={styles.phoneMobileView}>{"Home"}</Text>
+                        <View style={styles.phoneFaxView}>
+                            <GInputComponent
+                                placeholder={globalString.editPhoneInformations.phoneFaxLabel} />
                         </View>
 
-                        <FlatList
-                            data={this.state.userHomeNumber}
-                            keyExtractor={this.generateKeyExtractor}
-                            extraData={this.state.isMobileRefreshed}
-                            renderItem={this.renderHomeNumberInformation()} />
+                    </View>) : null}
 
-                    </View>
+                    {this.state.isRelation ? (
+                        <View>
+                            <View>
+                                <View style={styles.settingsView}>
+                                    <Text style={styles.phoneMobileView}>
+                                        {globalString.editPhoneInformations.phoneMobileLabel}
+                                    </Text>
+                                </View>
 
-                    <View>
-                        <View style={styles.settingsView}>
-                            <Text style={styles.phoneMobileView}>{"Work"}</Text>
+                                <FlatList
+                                    data={this.state.userMobileNumber}
+                                    keyExtractor={this.generateKeyExtractor}
+                                    extraData={this.state.isMobileRefreshed}
+                                    renderItem={this.renderPhoneInformation()} />
+
+                            </View>
                         </View>
-
-                        <FlatList
-                            data={this.state.userWorkNumber}
-                            keyExtractor={this.generateKeyExtractor}
-                            extraData={this.state.isMobileRefreshed}
-                            renderItem={this.renderWorkNumberInformation()} />
-                    </View>
-
-                    <View style={styles.settingsView}>
-                        <Text style={styles.phoneAddFaxLabel}>
-                            {globalString.editPhoneInformations.phoneFax}
-                        </Text>
-                    </View>
-
-                    <View style={styles.phoneFaxView}>
-                        <GInputComponent
-                            placeholder={globalString.editPhoneInformations.phoneFaxLabel} />
-                    </View>
+                    ) : null}
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent

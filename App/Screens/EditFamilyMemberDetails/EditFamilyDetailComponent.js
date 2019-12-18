@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GSwitchComponent } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GSwitchComponent, GDropDownComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 
@@ -40,19 +40,42 @@ class editFamilyDetailComponent extends Component {
             enableBiometric: false,
             faceIdEnrolled: false,
             touchIdEnrolled: false,
+
+            profileRelationName: '',
             profileName: '',
             profileCountryUS: false,
             profileCountryNonUS: true,
             showCountryNonUs: false,
             profileSocialSecurity: true,
+            profileRelationPrefix: '',
+            profileRelationSuffix: '',
+            profileRelationMarital: '',
+            profileRelationResidency: '',
+
             dropDownState: false,
             dropDownValue: '',
+            dropDownFlag: false,
+            dropDownMsg: '',
+
+            dropDownPrefixState: false,
+            dropDownPrefixValue: '',
+            dropDownPrefixFlag: false,
+            dropDownPrefixMsg: '',
+
             dropDownSuffixState: false,
             dropDownSuffixValue: '',
+            dropDownSuffixFlag: false,
+            dropDownSuffixMsg: '',
+
             dropDownStatusState: false,
             dropDownStatusValue: '',
+            dropDownStatusFlag: false,
+            dropDownStatusMsg: '',
+
             dropDownProofState: false,
-            dropDownProofValue: ''
+            dropDownProofValue: '',
+            dropDownProofFlag: false,
+            dropDownProofMsg: ''
         };
     }
 
@@ -62,10 +85,23 @@ class editFamilyDetailComponent extends Component {
         });
     }
 
-    dropDownOnSelect = (value) => {
+    dropDownOnSelect = (valueRelation) => {
         this.setState({
-            dropDownValue: value,
+            dropDownValue: valueRelation.value,
             dropDownState: false
+        });
+    }
+
+    dropDownPrefixClick = () => {
+        this.setState({
+            dropDownPrefixState: !this.state.dropDownPrefixState
+        });
+    }
+
+    dropDownPrefixSelect = (valuePrefix) => {
+        this.setState({
+            dropDownPrefixValue: valuePrefix.value,
+            dropDownPrefixState: false
         });
     }
 
@@ -77,7 +113,7 @@ class editFamilyDetailComponent extends Component {
 
     dropDownSuffixSelect = (valueSuffix) => {
         this.setState({
-            dropDownSuffixValue: valueSuffix,
+            dropDownSuffixValue: valueSuffix.value,
             dropDownSuffixState: false
         });
     }
@@ -90,7 +126,7 @@ class editFamilyDetailComponent extends Component {
 
     dropDownStatusSelect = (valueStatus) => {
         this.setState({
-            dropDownStatusValue: valueStatus,
+            dropDownStatusValue: valueStatus.value,
             dropDownStatusState: false
         });
     }
@@ -101,9 +137,9 @@ class editFamilyDetailComponent extends Component {
         });
     }
 
-    dropDownProofSelect = (valueStatus) => {
+    dropDownProofSelect = (valueProof) => {
         this.setState({
-            dropDownProofValue: valueStatus,
+            dropDownProofValue: valueProof.value,
             dropDownProofState: false
         });
     }
@@ -184,8 +220,7 @@ class editFamilyDetailComponent extends Component {
 
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation}
-                />
+                    navigation={this.props.navigation} />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -227,197 +262,116 @@ class editFamilyDetailComponent extends Component {
 
                         <View style={styles.settingsView}>
                             <Text style={styles.editFamilyHeadView}>
-                                {"Manage Relationship Information"}
+                                {globalString.editRelationShipInformation.relationShipHeadLabel}
                             </Text>
                         </View>
 
                         <View style={styles.settingsBorder} />
 
-                        <View style={styles.editFamilyDetailHeader}>
-                            <View>
-                                <Text style={styles.editFamilyDetailLabel}>
-                                    {"Family Member's relationship to you"}
-                                </Text>
+                        {/* Family Relationship Type */}
 
-                                <TouchableOpacity style={styles.editFamilyDetailDropDown} onPress={this.selectTheState}>
-                                    <GInputComponent
-                                        propInputStyle={styles.userIDTextBox1}
-                                        placeholder={""}
-                                        editable={false}
-                                        value={this.state.valueDropDown}
-                                    />
+                        <GDropDownComponent
+                            placeholder={this.state.profileRelationName}
+                            dropDownTextName={styles.editProfileLabel}
+                            dropDownName={globalString.editRelationShipInformation.relationShipFamilyLabel}
+                            data={profileSettingsTempData}
+                            changeState={this.dropDownOnClick}
+                            showDropDown={this.state.dropDownState}
+                            dropDownValue={this.state.dropDownValue}
+                            selectedDropDownValue={this.dropDownOnSelect}
+                            itemToDisplay={"value"}
+                            errorFlag={this.state.dropDownFlag}
+                            errorText={this.dropDownMsg}
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(90) }} />
 
-                                    <TouchableOpacity style={styles.editFamilyDetailDropIcon} onPress={this.selectTheState}>
-                                        <GIcon
-                                            name="md-arrow-dropdown"
-                                            type="ionicon"
-                                            size={20}
-                                            color="black"
-                                        />
-                                    </TouchableOpacity>
-                                </TouchableOpacity>
-                            </View>
+                        {/* Relationship Name */}
 
-                            <View>
-                                <Text style={styles.editFamilyDetailValueLabel}>
-                                    {globalString.editRelationShipInformation.relationFirstName}
-                                </Text>
+                        <View style={styles.editFlexDirectionColumn}>
+                            <Text style={styles.editFamilyDetailValueLabel}>
+                                {globalString.editRelationShipInformation.relationFirstName}
+                            </Text>
 
-                                <Text style={styles.profileSettingsNameView}>
-                                    {this.state.profileName}
-                                </Text>
-                            </View>
+                            <Text style={styles.profileSettingsNameView}>
+                                {this.state.profileName}
+                            </Text>
+                        </View>
 
-                            <View>
-                                <Text style={styles.editFamilyDetailValueLabel}>
-                                    {globalString.profileSettingsPage.profilePrefixLabel}
-                                </Text>
+                        {/* Relationship Prefix */}
 
-                                <TouchableOpacity style={styles.editFamilyDetailDropDown}
-                                    onPress={this.dropDownOnClick}
-                                >
-                                    <GInputComponent
-                                        propInputStyle={styles.userIDTextBox1}
-                                        placeholder={""}
-                                        editable={false}
-                                        value={this.state.dropDownValue}
-                                    />
+                        <GDropDownComponent
+                            placeholder={this.state.profileRelationPrefix}
+                            dropDownTextName={styles.editProfileLabel}
+                            dropDownName={globalString.editRelationShipInformation.relationPrefix}
+                            data={profilePrefixData}
+                            changeState={this.dropDownPrefixClick}
+                            showDropDown={this.state.dropDownPrefixState}
+                            dropDownValue={this.state.dropDownPrefixValue}
+                            selectedDropDownValue={this.dropDownPrefixSelect}
+                            itemToDisplay={"value"}
+                            errorFlag={this.state.dropDownPrefixFlag}
+                            errorText={this.dropDownPrefixMsg}
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(265) }} />
 
-                                    <TouchableOpacity style={styles.editFamilyDetailDropIcon}
-                                        onPress={this.dropDownOnClick}
-                                    >
-                                        <GIcon
-                                            name="md-arrow-dropdown"
-                                            type="ionicon"
-                                            size={20}
-                                            color="black"
-                                        />
-                                    </TouchableOpacity>
-                                </TouchableOpacity>
+                        {/* Relationship Suffix */}
 
-                                {this.state.dropDownState &&
-                                    <View style={styles.editDropDownSelect} >
-                                        <FlatList
-                                            data={profilePrefixData}
-                                            renderItem={({ item }) =>
-                                                (<TouchableOpacity style={{ height: 33 }}
-                                                    onPress={() => this.dropDownOnSelect(item.value)}
-                                                >
-                                                    <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                                 </TouchableOpacity>)
-                                            }
-                                            keyExtractor={item => item.key}
-                                        />
-                                    </View>}
-                            </View>
+                        <GDropDownComponent
+                            placeholder={this.state.profileRelationSuffix}
+                            dropDownTextName={styles.editProfileLabel}
+                            dropDownName={globalString.editRelationShipInformation.relationSuffix}
+                            data={profileSuffixData}
+                            changeState={this.dropDownSuffixClick}
+                            showDropDown={this.state.dropDownSuffixState}
+                            dropDownValue={this.state.dropDownSuffixValue}
+                            selectedDropDownValue={this.dropDownSuffixSelect}
+                            itemToDisplay={"value"}
+                            errorFlag={this.state.dropDownSuffixFlag}
+                            errorText={this.dropDownSuffixMsg}
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(345) }} />
 
-                            <View>
-                                <Text style={styles.editFamilyDetailValueLabel}>
-                                    {globalString.profileSettingsPage.profileSuffixLabel}
-                                </Text>
+                        {/* Relationship Date of Birth */}
 
-                                <TouchableOpacity style={styles.editFamilyDetailDropDown}
-                                    onPress={this.dropDownSuffixClick}
-                                >
-                                    <GInputComponent
-                                        propInputStyle={styles.userIDTextBox1}
-                                        placeholder={""}
-                                        editable={false}
-                                        value={this.state.dropDownSuffixValue}
-                                    />
+                        <View style={styles.editFlexDirectionColumn}>
+                            <Text style={styles.editFamilyDetailValueLabel}>
+                                {globalString.profileSettingsPage.profileDobLabel}
+                            </Text>
 
-                                    <TouchableOpacity style={styles.editFamilyDetailDropIcon}
-                                        onPress={this.dropDownSuffixClick}
-                                    >
-                                        <GIcon
-                                            name="md-arrow-dropdown"
-                                            type="ionicon"
-                                            size={20}
-                                            color="black"
-                                        />
-                                    </TouchableOpacity>
-                                </TouchableOpacity>
+                            <Text style={styles.editProfileValueView}>
+                                {"MM-DD-YY"}
+                            </Text>
+                        </View>
 
-                                {this.state.dropDownSuffixState &&
-                                    <View style={styles.editDropDownSelect} >
-                                        <FlatList
-                                            data={profileSuffixData}
-                                            renderItem={({ item }) =>
-                                                (<TouchableOpacity style={{ height: 33 }}
-                                                    onPress={() => this.dropDownSuffixSelect(item.value)}
-                                                >
-                                                    <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                                 </TouchableOpacity>)
-                                            }
-                                            keyExtractor={item => item.key}
-                                        />
-                                    </View>}
-                            </View>
+                        {/* Relationship Gender */}
 
-                            <View>
-                                <Text style={styles.editFamilyDetailValueLabel}>
-                                    {globalString.profileSettingsPage.profileDobLabel}
-                                </Text>
+                        <View style={styles.editFlexDirectionColumn}>
+                            <Text style={styles.editFamilyDetailValueLabel}>
+                                {globalString.profileSettingsPage.profileGenderLabel}
+                            </Text>
 
-                                <Text style={styles.editProfileValueView}>
-                                    {"MM-DD-YY"}
-                                </Text>
-                            </View>
+                            <Text style={styles.editProfileValueView}>
+                                {"Male"}
+                            </Text>
+                        </View>
 
-                            <View>
-                                <Text style={styles.editFamilyDetailValueLabel}>
-                                    {globalString.profileSettingsPage.profileGenderLabel}
-                                </Text>
+                        {/* Relationship Marital Status */}
 
-                                <Text style={styles.editProfileValueView}>
-                                    {"Male"}
-                                </Text>
-                            </View>
+                        <GDropDownComponent
+                            placeholder={this.state.profileRelationMarital}
+                            dropDownTextName={styles.editProfileLabel}
+                            dropDownName={globalString.editRelationShipInformation.relationStatus}
+                            data={profileStatusData}
+                            changeState={this.dropDownStatusClick}
+                            showDropDown={this.state.dropDownStatusState}
+                            dropDownValue={this.state.dropDownStatusValue}
+                            selectedDropDownValue={this.dropDownStatusSelect}
+                            itemToDisplay={"value"}
+                            errorFlag={this.state.dropDownStatusFlag}
+                            errorText={this.dropDownStatusMsg}
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(620) }} />
 
-                            <View>
-                                <Text style={styles.editFamilyDetailValueLabel}>
-                                    {globalString.profileSettingsPage.profileStatusLabel}
-                                </Text>
+                        {/* Relationship Citizenship */}
 
-                                <TouchableOpacity style={styles.editFamilyDetailDropDown}
-                                    onPress={this.dropDownStatusClick}
-                                >
-                                    <GInputComponent
-                                        propInputStyle={styles.userIDTextBox1}
-                                        placeholder={""}
-                                        editable={false}
-                                        value={this.state.dropDownStatusValue}
-                                    />
-
-                                    <TouchableOpacity style={styles.editFamilyDetailDropIcon}
-                                        onPress={this.dropDownStatusClick}
-                                    >
-                                        <GIcon
-                                            name="md-arrow-dropdown"
-                                            type="ionicon"
-                                            size={20}
-                                            color="black"
-                                        />
-                                    </TouchableOpacity>
-                                </TouchableOpacity>
-
-                                {this.state.dropDownStatusState &&
-                                    <View style={styles.editDropDownSelect} >
-                                        <FlatList
-                                            data={profileStatusData}
-                                            renderItem={({ item }) =>
-                                                (<TouchableOpacity style={{ height: 33 }}
-                                                    onPress={() => this.dropDownStatusSelect(item.value)}
-                                                >
-                                                    <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                                 </TouchableOpacity>)
-                                            }
-                                            keyExtractor={item => item.key}
-                                        />
-                                    </View>}
-                            </View>
-
-                            <View>
+                        <View>
+                            <View style={styles.editFlexDirectionColumn}>
                                 <Text style={styles.editFamilyDetailValueLabel}>
                                     {globalString.profileSettingsPage.profileUSCitizenLabel}
                                 </Text>
@@ -429,91 +383,59 @@ class editFamilyDetailComponent extends Component {
                                         switchOn={this.state.profileCountryNonUS}
                                         switchOff={this.state.profileCountryUS}
                                         switchOnText={globalString.common.no}
-                                        switchOffText={globalString.common.yes}
-                                    />
+                                        switchOffText={globalString.common.yes} />
                                 </View>
+                            </View>
 
-                                {this.state.showCountryNonUs ? (
-                                    <View>
+                            {this.state.showCountryNonUs ? (
+                                <View>
+                                    <View style={styles.editFlexDirectionColumn}>
                                         <Text style={styles.editFamilyDetailValueLabel}>
                                             {globalString.profileSettingsPage.profileCountryOfCitizen}
                                         </Text>
 
                                         <GInputComponent style={styles.editFamilyDetailDropDown} />
-
-                                        <Text style={styles.editFamilyDetailValueLabel}>
-                                            {globalString.profileSettingsPage.profileCitizenProof}
-                                        </Text>
-
-                                        <TouchableOpacity style={styles.editFamilyDetailDropDown}
-                                            onPress={this.dropDownProofClick}
-                                        >
-                                            <GInputComponent
-                                                propInputStyle={styles.userIDTextBox1}
-                                                placeholder={""}
-                                                editable={false}
-                                                value={this.state.dropDownProofValue}
-                                            />
-
-                                            <TouchableOpacity style={styles.editFamilyDetailDropIcon}
-                                                onPress={this.dropDownProofClick}
-                                            >
-                                                <GIcon
-                                                    name="md-arrow-dropdown"
-                                                    type="ionicon"
-                                                    size={20}
-                                                    color="black"
-                                                />
-                                            </TouchableOpacity>
-                                        </TouchableOpacity>
-
-                                        {this.state.dropDownProofState &&
-                                            <View style={styles.editDropDownSelect} >
-                                                <FlatList
-                                                    data={profileProofData}
-                                                    renderItem={({ item }) =>
-                                                        (<TouchableOpacity style={{ height: 33 }}
-                                                            onPress={() => this.dropDownProofSelect(item.value)}
-                                                        >
-                                                            <Text style={{ fontSize: scaledHeight(16) }}> {item.value} </Text>
-                                                         </TouchableOpacity>)
-                                                    }
-                                                    keyExtractor={item => item.key}
-                                                />
-                                            </View>}
                                     </View>
-                                ) : null}
-                            </View>
+
+                                    <GDropDownComponent
+                                        placeholder={this.state.profileRelationResidency}
+                                        dropDownTextName={styles.editProfileLabel}
+                                        dropDownName={globalString.profileSettingsPage.profileCitizenProof}
+                                        data={profileProofData}
+                                        changeState={this.dropDownProofClick}
+                                        showDropDown={this.state.dropDownProofState}
+                                        dropDownValue={this.state.dropDownProofValue}
+                                        selectedDropDownValue={this.dropDownProofSelect}
+                                        itemToDisplay={"value"}
+                                        errorFlag={this.state.dropDownProofFlag}
+                                        errorText={this.dropDownProofMsg}
+                                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(620) }} />
+                                </View>) : null}
 
                             {this.state.profileSocialSecurity ? (
-                                <View>
+                                <View style={styles.editFlexDirectionColumn}>
                                     <Text style={styles.editFamilyDetailValueLabel}>
                                         {globalString.profileSettingsPage.profileSsnLabel}
                                     </Text>
 
                                     <GInputComponent style={styles.editFamilyDetailMargin}
-                                        placeholder=""
-                                    />
-                                </View>
-                            ) : null}
+                                        placeholder="" />
+                                </View>) : null}
+                        </View>
 
-                            <View style={styles.editFlexDirectionColumn}>
-                                <GButtonComponent
-                                    buttonStyle={styles.cancelButtonStyle}
-                                    buttonText={globalString.common.cancel}
-                                    textStyle={styles.cancelButtonText}
-                                    onPress={this.editFamilyOnCancel}
-                                />
-                            </View>
+                        <View style={styles.editFlexDirectionColumn}>
+                            <GButtonComponent
+                                buttonStyle={styles.cancelButtonStyle}
+                                buttonText={globalString.common.cancel}
+                                textStyle={styles.cancelButtonText}
+                                onPress={this.editFamilyOnCancel} />
+                        </View>
 
-                            <View style={styles.editFlexDirectionColumn}>
-                                <GButtonComponent
-                                    buttonStyle={styles.saveButtonStyle}
-                                    buttonText={globalString.common.save}
-                                    textStyle={styles.saveButtonText}
-                                />
-                            </View>
-
+                        <View style={styles.editFlexDirectionColumn}>
+                            <GButtonComponent
+                                buttonStyle={styles.saveButtonStyle}
+                                buttonText={globalString.common.save}
+                                textStyle={styles.saveButtonText} />
                         </View>
 
                     </View>

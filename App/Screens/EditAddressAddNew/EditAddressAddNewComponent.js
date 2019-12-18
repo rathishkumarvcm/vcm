@@ -24,6 +24,10 @@ class editAddressAddNewComponent extends Component {
             faceIdEnrolled: false,
             touchIdEnrolled: false,
 
+            isRelationShipScreen: this.props.navigation.getParam('isRelationShipScreen'),
+            relationShipPosition: this.props.navigation.getParam('relationShipPosition'),
+            relationShipContactData: [],
+
             isZipApiCalling: false,
             isAddressApiCalling: false,
 
@@ -33,10 +37,10 @@ class editAddressAddNewComponent extends Component {
 
             validationAddressOne: true,
             addressOne: '',
-            
+
             isZipCodeValid: true,
             zipCodeValue: '',
-            
+
             addressTwo: '',
             userCity: '',
             userState: ''
@@ -54,6 +58,20 @@ class editAddressAddNewComponent extends Component {
             this.setState({
                 userState: this.props.profileState.profileUserState
             });
+        }
+
+        if (this.state.isRelationShipScreen) {
+            let relationshipContacts = [];
+            if (this.props &&
+                this.props.profileState &&
+                this.props.profileState.profileRelationShipDetails) {
+                relationshipContacts = [...this.props.profileState.profileRelationShipDetails];
+                this.setState({
+                    relationShipContactData: relationshipContacts[this.state.relationShipPosition]
+                });
+            }
+            console.log("@@@@ Ralation Ship Contact Info 001", relationshipContacts);
+            console.log("@@@@ Ralation Ship Contact Info 002", this.state.relationShipContactData);
         }
     }
 
@@ -258,7 +276,17 @@ class editAddressAddNewComponent extends Component {
         return contactPayload;
     }
 
-    editAddressAddNewOnCancel = () => this.props.navigation.navigate('editAddressSettings');
+    editAddressAddNewOnCancel = () => {
+        if (!this.state.isRelationShipScreen) {
+            this.props.navigation.navigate('editAddressSettings');
+        } else {
+            this.props.navigation.navigate('editAddressSettings',
+                {
+                    contactPosition: this.state.relationShipPosition,
+                    isRelation: this.state.isRelationShipScreen
+                });
+        }
+    }
 
     render() {
         return (
@@ -391,7 +419,7 @@ class editAddressAddNewComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.manageContactInformations} />
+                            onPress={this.editAddressAddNewOnCancel} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>

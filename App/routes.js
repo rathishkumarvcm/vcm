@@ -103,7 +103,7 @@ import VerifyManageBenificiariesComponent from './Screens/VerifyManageBeneficiar
 import EditRelationshipInfo from './Screens/EditRelationshipInformation/';
 import EditRegulatoryInfo from './Screens/EditRegulatoryInformations/EditRegulatoryComponent';
 import EditFamilyMemberInfo from './Screens/EditFamilyMemberInformation/';
-import EditFamilyDetail from './Screens/EditFamilyMemberDetails/EditFamilyDetailComponent';
+import EditFamilyDetail from './Screens/EditFamilyMemberDetails/';
 
 //Password Recovery
 import PasswordRecovery from './Screens/RecoverPassword/';

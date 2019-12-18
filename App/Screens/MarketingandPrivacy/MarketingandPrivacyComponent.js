@@ -21,10 +21,10 @@ const UserPhoneInformation = (props) => {
                         {props.mobilePreferredTime}
                     </Text>
                 </View>
-                <View style={styles.profileDivideIconTwo}>
+                {/* <View style={styles.profileDivideIconTwo}>
                     <Image style={styles.imageWidthHeight}
                         source={require("../../Images/menu_icon.png")} />
-                </View>
+                </View> */}
             </View>
 
             <View style={styles.editEmailBorder} />
@@ -66,10 +66,10 @@ const UserEmailInformation = (props) => {
                     </Text>
                 </View>
 
-                <View style={styles.profileDivideIconTwo}>
+                {/* <View style={styles.profileDivideIconTwo}>
                     <Image style={styles.imageWidthHeight}
                         source={require("../../Images/menu_icon.png")} />
-                </View>
+                </View> */}
             </View>
 
             <View style={styles.editEmailBorder} />
@@ -117,10 +117,10 @@ const UserAddressInformation = (props) => {
                     </Text>
                 </View>
 
-                <View style={styles.profileDivideIconTwo}>
+                {/* <View style={styles.profileDivideIconTwo}>
                     <Image style={styles.imageWidthHeight}
                         source={require("../../Images/menu_icon.png")} />
-                </View>
+                </View> */}
             </View>
 
             <View style={styles.editEmailBorder} />
