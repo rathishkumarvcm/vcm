@@ -41,22 +41,34 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
     },
     linkBreak1: {
-        backgroundColor: '#7B8288',
-        opacity: 0.4,
+        backgroundColor: '#707070',
+        opacity: 0.25,
         height: scaledHeight(1),
-        marginTop: scaledHeight(5),
+        marginTop: scaledHeight(13),
+        marginBottom: scaledHeight(15),
         marginHorizontal: '4%',
         alignSelf:'stretch'
     },
-    linkBreak2: {
-        backgroundColor: '#707070',
-        opacity: 0.5,
-        height: scaledHeight(1),
-        alignSelf: 'stretch'
+    submitButtonText: {
+        fontSize: scaledHeight(16),
+        color: '#FFFFFF'
     },
     backButtonText: {
         fontSize: scaledHeight(16),
         color: '#544A54'
+    },
+    submitBtn: {
+        borderColor: '#61285F45',
+        borderWidth: 1,
+        width: '78.6%',
+        marginLeft: '10.7%',
+        marginRight: '10.7%',
+        marginTop: scaledHeight(19),
+        borderRadius: scaledHeight(1),
+        height: scaledHeight(50),
+        backgroundColor: '#544A54',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     backBtn: {
         borderColor: '#61285F45',
@@ -73,31 +85,24 @@ export const styles = StyleSheet.create({
     },
     infoContainer: {
         borderWidth: 1,
-        borderColor: '#B5B5B6',
+        borderColor: '#D6D8DC',
         backgroundColor: '#FFFFFF',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        paddingTop: scaledHeight(15),
-        marginTop: scaledHeight(20),
         marginHorizontal: '4%',
-        paddingBottom: scaledHeight(15)
-    },
-    accountName: {
-        marginHorizontal: '4%',
-        marginBottom: scaledHeight(15),
-        flexDirection: 'row'
+        paddingVertical: scaledHeight(15),
+        paddingHorizontal: '4%'
     },
     accountNameText: {
-        fontSize: scaledHeight(18),
-        color: '#54565B',
+        fontSize: scaledHeight(16),
+        color: '#333333DE',
         alignSelf: 'flex-start',
-        flex: 0.9,
         fontWeight: 'bold',
     },
-    editInfo: {
-        justifyContent: 'flex-end',
-        alignSelf: 'flex-end',
-        flex: 0.1
+    accountNumberText: {
+        fontSize: scaledHeight(16),
+        color: '#56565A',
+        alignSelf: 'flex-start',
     },
     deleteBtn: {
         position: 'absolute',
@@ -114,40 +119,16 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         zIndex: 5
     },
-    requestBtn: {
-        position: 'absolute',
-        borderColor: '#FFFFFF',
-        borderWidth: 1,
-        marginLeft: '4%',
-        marginRight: '4%',
-        marginTop: scaledHeight(45),
-        borderRadius: scaledHeight(1),
-        height: scaledHeight(50),
-        backgroundColor: '#FFFFFF',        
-        zIndex: 5
-    },
     backButtonText: {
         fontSize: scaledHeight(16),
-        color: '#544A54'
+        color: '#56565A'
     },
-    requestButtonText: {
-        fontSize: scaledHeight(16),
-        color: '#56565A',
-        fontWeight: 'bold',
-        alignSelf: 'flex-start'
-
-    },
-    lastRequestedText: {
+    accountNameHeaderText: {
         fontSize: scaledHeight(14),
         color: '#56565A',
         alignSelf: 'flex-start',
-        marginTop: scaledHeight(15),
+        marginTop: scaledHeight(20),
         marginHorizontal: '4%',
         fontWeight: 'bold'
-    },
-    linkBreak2: {
-        backgroundColor: '#9DB4CE',
-        alignSelf: "stretch",
-        height: scaledHeight(1),
     },
 });

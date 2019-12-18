@@ -126,6 +126,7 @@ import CheckBookComponent from './Screens/OrderCheckBook';
 import BankAccountsComponent from './Screens/BankAccounts';
 import AddBankAccountComponent from './Screens/AddBankAccount';
 import AddOtherBankAccountComponent from './Screens/AddOtherBankAccount'
+import CheckBookPlaceOrder from './Screens/CheckBookPlaceOrder'
 
 //Systematic Withdrawal plan
 import systematicWithdrawal from './Screens/SystematicWithdrawalPlan';
@@ -883,6 +884,12 @@ const AppNavigator = createStackNavigator({
             screen:EditManageIntrestedPartiesComponent,
             navigationOptions:{
                 header:null,
+            }
+        },
+        checkBookPlaceOrder: {
+            screen: CheckBookPlaceOrder,
+            navigationOptions: {
+                header: null,
             }
         }
     },
