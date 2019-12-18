@@ -49,7 +49,8 @@ export default {
         validate:"Validate",
         upload:"Upload",
         verifySign:"Verify & Signin",
-        supportVCMPhoneNumber: "1-216-898-2400"
+        supportVCMPhoneNumber: "1-216-898-2400",
+        skip:"Skip"
     },
     login: {
         imageRequest: "imageRequest",

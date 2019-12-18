@@ -169,7 +169,7 @@ class SystematicWithdrawalComponent extends Component {
 
         return (
             <View style={styles.container}>
-                <GHeaderComponent register navigation={this.props.navigation} />
+                <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
                     <View style={{ marginLeft: scaledHeight(10), marginRight: scaledHeight(10) }}>
                         <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>

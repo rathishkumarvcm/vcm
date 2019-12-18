@@ -21,6 +21,10 @@ class AccountServicesComponent extends Component {
 
     navigateBankAccount = () => this.props.navigation.navigate('bankAccount')
 
+    navigateAutomatic = () => this.props.navigation.navigate('automaticInvestment')
+
+    navigateSystamatic = () => this.props.navigation.navigate('systematicWithdrawal')
+
     render() {
         return (
             <View style={styles.container}>
@@ -58,51 +62,52 @@ class AccountServicesComponent extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <View style={styles.optionContainer}>
-                        <View style={styles.optionIcon}>
-                            <GIcon
-                                name="view-grid"
-                                type="material-community"
-                                size={30}
-                                color="black"
-                            />
+                    <TouchableOpacity onPress={this.navigateAutomatic}>
+                        <View style={styles.optionContainer}>
+                            <View style={styles.optionIcon}>
+                                <GIcon
+                                    name="view-grid"
+                                    type="material-community"
+                                    size={30}
+                                    color="black"
+                                />
 
-                            <Text style={styles.optionHeaderText}>
-                                {gblStrings.accountServices.automatic_investment_plan}
-                            </Text>
+                                <Text style={styles.optionHeaderText}>
+                                    {gblStrings.accountServices.automatic_investment_plan}
+                                </Text>
+                            </View>
+
+                            <View style={styles.optionSubHeaderView}>
+                                <Text style={styles.optionSubHeaderText}>
+                                    {gblStrings.userManagement.loremSecurityPref}
+                                </Text>
+                            </View>
+
                         </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this.navigateSystamatic}>
+                        <View style={styles.optionContainer}>
+                            <View style={styles.optionIcon}>
+                                <GIcon
+                                    name="view-grid"
+                                    type="material-community"
+                                    size={30}
+                                    color="black"
+                                />
 
-                        <View style={styles.optionSubHeaderView}>
-                            <Text style={styles.optionSubHeaderText}>
-                                {gblStrings.userManagement.loremSecurityPref}
-                            </Text>
+                                <Text style={styles.optionHeaderText}>
+                                    {gblStrings.accountServices.systematic_withdrawal_plan}
+                                </Text>
+                            </View>
+
+                            <View style={styles.optionSubHeaderView}>
+                                <Text style={styles.optionSubHeaderText}>
+                                    {gblStrings.userManagement.loremSecurityPref}
+                                </Text>
+                            </View>
+
                         </View>
-
-                    </View>
-
-
-                    <View style={styles.optionContainer}>
-                        <View style={styles.optionIcon}>
-                            <GIcon
-                                name="view-grid"
-                                type="material-community"
-                                size={30}
-                                color="black"
-                            />
-
-                            <Text style={styles.optionHeaderText}>
-                                {gblStrings.accountServices.systematic_withdrawal_plan}
-                            </Text>
-                        </View>
-
-                        <View style={styles.optionSubHeaderView}>
-                            <Text style={styles.optionSubHeaderText}>
-                                {gblStrings.userManagement.loremSecurityPref}
-                            </Text>
-                        </View>
-
-                    </View>
-
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={this.navigateOrderCheckBook}>
                         <View style={styles.optionContainer}>
                             <View style={styles.optionIcon}>

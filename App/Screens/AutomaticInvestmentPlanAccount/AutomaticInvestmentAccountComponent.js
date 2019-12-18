@@ -196,7 +196,7 @@ class AutomaticInvestmentAccountComponent extends Component {
 
         return (
             <View style={styles.container}>
-                <GHeaderComponent register navigation={this.props.navigation} />
+                <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
                     <View>
                         <Text style={styles.autoInvestHead}>{globalString.automaticInvestment.create_invest_plan}</Text>

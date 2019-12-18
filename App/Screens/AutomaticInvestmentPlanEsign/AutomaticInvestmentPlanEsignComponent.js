@@ -55,7 +55,7 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <GHeaderComponent register navigation={this.props.navigation} />
+                <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
                     <Text style={styles.autoInvestHead}>{'Create Automatic Investment Plan'}</Text>
                     <View style={styles.seperator_line} />

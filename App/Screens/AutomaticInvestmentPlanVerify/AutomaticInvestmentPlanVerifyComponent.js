@@ -18,43 +18,40 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
 
         this.state = {
             skip: this.props.navigation.getParam('skip', false),
+            indexSelected: this.props.navigation.getParam('indexSelected'),
             autoInvestmentJson: {},
+            dateFromValue: '',
+            dateToValue: '',
             //this.props.navigation.getParam('skip', false),
         };
     }
     componentDidMount() {
 
-        // if (this.props && this.props.automaticInvestmentState) {
-        //     this.setState({
-        //         autoInvestmentJson: this.props.automaticInvestmentState[0],
-        //     });
-        // }
-        let payload={};
-        if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
-            payload = {
-                //...payload,
-                ...this.props.automaticInvestmentState.savedAccData
-            };
-            this.setState({autoInvestmentJson:payload})
+        let payload = {};
+        if (this.state.skip) {
+            if (this.props && this.props.automaticInvestmentState) {
+                payload = {
+                    //...payload,
+                    ...this.props.automaticInvestmentState.general
+                };
+                this.setState({
+                    autoInvestmentJson: payload[this.state.indexSelected],
+                });
+            }
+        }
+        else {
+
+            if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+                payload = {
+                    //...payload,
+                    ...this.props.automaticInvestmentState.savedAccData
+                };
+                this.setState({ autoInvestmentJson: payload })
+            }
         }
 
-
     }
 
-    onChangeDateForInvestment = (keyName, index) => date => {
-        console.log("onChangeDateForInvestment:::>");
-        //     let newItems = [...this.state.selectedFundInvestmentsData];
-        //     newItems[index][keyName] = date;
-        //    // newItems[index][keyName+"Validation"] = false;
-        //    newItems[index].fundingOptionValidation = true;
-        //    newItems[index].initialInvestmentValidation = true;
-        //    newItems[index].monthlyInvestmentValidation = true;
-        //    newItems[index].startDateValidation = true;
-
-        //     this.setState({
-        //         selectedFundInvestmentsData: newItems,
-        //     });
-    }
 
     generateKeyExtractor = (item) => item.id;
     renderInvestment = () => ({ item }) =>
@@ -65,51 +62,62 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                 <Text style={styles.verifyConent2}>{item.content}</Text>
             </View>
 
-            
+
 
         )
 
-        getPayload = () => {
+    getPayload = () => {
 
 
-            let payload = {
-                // totalAmount: '$500',  
-                // fundFrom: 'Bank 1',
-                // investedIn: 'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES',
-                // invest: 'Quarterly',
-                // dateToInvest: '15th',
-                // dateAdded: '09/02/2019',
-                // endDate: '15/12/2025',
-                // nextInvestementDate: '15/11/2019',
+        let payload = {
+            // totalAmount: '$500',  
+            // fundFrom: 'Bank 1',
+            // investedIn: 'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES',
+            // invest: 'Quarterly',
+            // dateToInvest: '15th',
+            // dateAdded: '09/02/2019',
+            // endDate: '15/12/2025',
+            // nextInvestementDate: '15/11/2019',
+        };
+        if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+            payload = {
+                //...payload,
+                ...this.props.automaticInvestmentState.savedAccData
             };
-            if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
-                payload = {
-                    //...payload,
-                    ...this.props.automaticInvestmentState.savedAccData
-                };
-            }
-            return payload;
-    
         }
-    
-        navigationNext = () => {
-            //const payload = this.getPayload();
-            //this.props.saveData("automaticInvestmentVerify", payload);
-            this.props.navigation.navigate('automaticInvestmentEsign');
-        }
+        return payload;
+
+    }
+    onChangeFromDateValue = (date) => {
+        this.setState({
+            dateFromValue: date
+        });
+    }
+
+    onChangeToDateValue = (date) => {
+        this.setState({
+            dateToValue: date
+        });
+    }
+
+    navigationNext = () => {
+        //const payload = this.getPayload();
+        //this.props.saveData("automaticInvestmentVerify", payload);
+        this.props.navigation.navigate('automaticInvestmentEsign');
+    }
     //navigationNext = () => this.props.navigation.navigate('automaticInvestmentEsign');
 
     navigationSubmit = () => this.props.navigation.navigate('automaticInvestment');
     navigationBack = () => this.props.navigation.goBack();
     navigationCancel = () => this.props.navigation.navigate('automaticInvestment');
 
-    
+
     render() {
         const date = new Date().getDate(); //Current Date
         const month = new Date().getMonth() + 1; //Current Month
         const year = new Date().getFullYear(); //Current Year
         const currentdate = month + "-" + date + "-" + year;
-        var item=this.state.autoInvestmentJson;
+        var item = this.state.autoInvestmentJson;
         { console.log('this.state.skip.........', item) }
         return (
             <View style={styles.container}>
@@ -152,7 +160,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                                 this.state.skip ?
                                     <Text style={styles.autoInvest_sub_title_text}>{'Skip the Investment Plan'}</Text>
                                     :
-                                    <View  style={styles.autoInvest_sub_title_view}>
+                                    <View style={styles.autoInvest_sub_title_view}>
                                         <Text style={styles.autoInvest_sub_title_text}>{'Verify the Investment Plan'}</Text>
                                         <Text style={styles.autoInvest_sub_edit}>{'Edit'}</Text>
                                     </View>
@@ -167,7 +175,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                             renderItem={this.renderInvestment()}
                             keyExtractor={this.generateKeyExtractor}
                         /> */}
-                        
+
                         <View style={styles.verifyContentMain}>
 
                             <View style={styles.verifyContentView}>
@@ -186,7 +194,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                                 <Text style={styles.verifyConent1}>{"Fund From"}</Text>
                                 <Text style={styles.verifyConent2}>{item.fundFrom}</Text>
                             </View>
-                            
+
                             <View style={styles.verifyContentView}>
                                 <Text style={styles.verifyConent1}>{"Invest"}</Text>
                                 <Text style={styles.verifyConent2}>{item.invest}</Text>
@@ -204,7 +212,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                                 <Text style={styles.verifyConent2}>{item.nextInvestementDate}</Text>
                             </View>
                         </View>
-                        
+
                         <View style={styles.verifyBottomView}>
                             <Text style={styles.verifyBottomText}>
                                 {'Note : If the day you selected falls on a weekend or holiday, your draft will occur the next business day'}
@@ -214,50 +222,24 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                             <View>
                                 <Text style={styles.autoInvest_sub_title_skip}>{'Skip the Investment'}</Text>
                                 <View style={styles.seperator_line} />
-                                {/*<Text style={styles.skipConentTitle}>{'Skip from date'}</Text>
-                                 <GDateComponent
-                                    //inputref={this.setInputRef("startDate" + index)}
-                                    //date={this.state.selectedFundInvestmentsData[index].startDate}
-                                    minDate={currentdate}
-                                    placeholder="MM/DD/YYYY"
-                                    //errorFlag={!this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                    //errMsg={this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                    onDateChange={this.onChangeDateForInvestment("startDate", 0)}
-                                />
-                                <Text style={styles.skipConentTitle}>{'Skip to date'}</Text>
+
                                 <GDateComponent
-                                    //inputref={this.setInputRef("startDate" + index)}
-                                    //date={this.state.selectedFundInvestmentsData[index].startDate}
-                                    minDate={currentdate}
-                                    placeholder="MM/DD/YYYY"
-                                    //errorFlag={!this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                    //errMsg={this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                    onDateChange={this.onChangeDateForInvestment("startDate", 0)}
-                                /> */}
-                            <GDateComponent
-                                    
-                                    //inputref={this.setInputRef("startDate" + index)}
-                                    //date={this.state.selectedFundInvestmentsData[index].startDate}
                                     dateTitleName={styles.financialTextLabel}
                                     dateTextName="Skip from date"
                                     minDate={currentdate}
                                     placeholder="MM/DD/YYYY"
-                                    //errorFlag={!this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                    //errMsg={this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                    onDateChange={this.onChangeDateForInvestment("startDate", 0)}
-                                />
+                                    date={this.state.dateFromValue}
+                                    onDateChange={this.onChangeFromDateValue} />
+
                                 <GDateComponent
-                                    
-                                    //inputref={this.setInputRef("startDate" + index)}
-                                    //date={this.state.selectedFundInvestmentsData[index].startDate}
                                     dateTitleName={styles.financialTextLabel}
                                     dateTextName="Skip to date"
                                     minDate={currentdate}
                                     placeholder="MM/DD/YYYY"
-                                    //errorFlag={!this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                    //errMsg={this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                    onDateChange={this.onChangeDateForInvestment("startDate", 0)}
-                                />
+                                    date={this.state.dateToValue}
+                                    onDateChange={this.onChangeToDateValue} />
+
+
                             </View>
                             : null
                         }
