@@ -1604,8 +1604,105 @@ class OpenAccPageTwoComponent extends Component {
 
     validateIRABeneficiaryInfoFields = () => {
 
+        let errMsg = "";
         let isValidationSuccess = false;
+        let errMsgCount = 0;
+        let input = "";
+
+        if (this.state.retirementBeneficiaryData.length > 0) {
+            let inputField = "";
+
+            for (let i = 0; i < this.state.retirementBeneficiaryData.length; i++) {
+                var tempErrMsg = "";
+                let tempObj = this.state.retirementBeneficiaryData[i];
+                console.log("tempObj::" + JSON.stringify(tempObj));
+               
+
+                let tempValidation = false;
+                if (this.isEmpty(tempObj.beneficiaryType)) {
+                    tempErrMsg = gblStrings.accManagement.emptyBeneficiaryType;
+                    inputField = "beneficiaryType";
+
+                } else if (this.isEmpty(tempObj.relationshipToAcc)) {
+                    tempErrMsg = gblStrings.accManagement.emptyRelationShipMsg;
+                    inputField = "relationshipToAcc";
+
+                } else if (parseFloat(tempObj.beneficiaryDistPercent)) {
+                    tempErrMsg = gblStrings.accManagement.emptyDistributionMsg;
+                    inputField = "beneficiaryDistPercent";
+
+                } else if (this.isEmpty(tempObj.socialSecurityNo)) {
+                    tempErrMsg = gblStrings.accManagement.emptySSNMsg;
+                    inputField = 'socialSecurityNo';
+                } else if (tempObj.socialSecurityNo.length < gblStrings.maxLength.ssnNo) {
+                    tempErrMsg = gblStrings.accManagement.invalidSSNMsg;
+                    inputField = 'socialSecurityNo';
+                } else if (this.isEmpty(tempObj.firstName)) {
+                    tempErrMsg = gblStrings.accManagement.emptyFirstNameMsg;
+                    inputField = 'firstName';
+                } else if (this.isEmpty(tempObj.lastName)) {
+                    tempErrMsg = gblStrings.accManagement.emptyLastNameMsg;
+                    inputField = 'lastName';
+                } else if (this.isEmpty(tempObj.dob)) {
+                    tempErrMsg = gblStrings.accManagement.emptyDOBMsg;
+                    inputField = 'dob';
+                }else if (this.isEmpty(tempObj.emailAddress)) {
+                    tempErrMsg = gblStrings.accManagement.emptyEmailAddressMsg;
+                    inputField = 'emailAddress';
+                } else if (!emailRegex.test(tempObj.emailAddress)) {
+                    tempErrMsg = gblStrings.accManagement.invalidEmailMasg;
+                    inputField = 'emailAddress';
+                }  else {
+                    tempValidation = true;
+                }
+
+                console.log("tempErrMsg: " + tempErrMsg);
+
+                if (!tempValidation) {
+                    errMsg = tempErrMsg;
+                    ++errMsgCount;
+                    let newItems = [...this.state.retirementBeneficiaryData];
+                    newItems[i][inputField + "Validation"] = false;
+                    this.setState({
+                        retirementBeneficiaryData: newItems,
+                        isValidationSuccess: isValidationSuccess,
+                        errMsg: isValidationSuccess == false ? errMsg : ""
+                    });
+
+                    if (inputField !== "" && inputField !== null && inputField !== undefined) {
+                        if (this[inputField + i] !== null && this[inputField + i] !== undefined) {
+                            if (typeof this[inputField + i].focus === 'function') {
+                                this[inputField + i].focus();
+                            }
+                        }
+                    }
+
+                    break;
+                }
+            }
+
+            if (errMsgCount == 0) {
+                isValidationSuccess = true;
+                
+            }
+
+
+
+        } else {
+            isValidationSuccess = true;
+        }
+
+        if (!isValidationSuccess) {
+            this.setState({
+                [input+"Validation"]: false
+            });
+           // alert(errMsg);
+        }
+
+        
+
         return isValidationSuccess;
+
     }
 
 
@@ -1730,10 +1827,12 @@ class OpenAccPageTwoComponent extends Component {
                 isValidationSuccess = false;
             } else if (accType == "UGMA/UTMA Account" && !this.validateChildBeneficiaryInfoFields()) {
                 isValidationSuccess = false;
+            } else if (accType == "Retirement Account" && !this.validateIRABeneficiaryInfoFields()) {
+                isValidationSuccess = false;
             } else {
                 isValidationSuccess = true;
             }
-
+            
 
             return isValidationSuccess;
         } catch (err) {
@@ -2025,6 +2124,14 @@ class OpenAccPageTwoComponent extends Component {
         console.log("onPressDropDownForIRABeneficiary::: " + keyName);
         let newItems = [...this.state.retirementBeneficiaryData];
         newItems[index][keyName] = !newItems[index][keyName];
+        newItems[index].firstNameValidation = true;
+        newItems[index].lastNameValidation = true;
+        newItems[index].dobValidation = true;
+        newItems[index].emailAddressValidation = true;
+        newItems[index].socialSecurityNoValidation = true; 
+        newItems[index].beneficiaryTypeValidation = true;
+        newItems[index].relationshipToAccValidation = true;
+        newItems[index].beneficiaryDistPercentValidation = true;
 
         this.setState({
             retirementBeneficiaryData: newItems
@@ -2035,6 +2142,16 @@ class OpenAccPageTwoComponent extends Component {
         console.log("onChangeTextForIRABeneficiary:::>");
         let newItems = [...this.state.retirementBeneficiaryData];
         newItems[index][keyName] = text;
+  
+        newItems[index].firstNameValidation = true;
+        newItems[index].lastNameValidation = true;
+        newItems[index].dobValidation = true;
+        newItems[index].emailAddressValidation = true;
+        newItems[index].socialSecurityNoValidation = true; 
+        newItems[index].beneficiaryTypeValidation = true;
+        newItems[index].relationshipToAccValidation = true;
+        newItems[index].beneficiaryDistPercentValidation = true;
+
 
         this.setState({
             retirementBeneficiaryData: newItems,
@@ -2047,7 +2164,14 @@ class OpenAccPageTwoComponent extends Component {
         console.log("onChangeDateForIRABeneficiary:::>");
         let newItems = [...this.state.retirementBeneficiaryData];
         newItems[index][keyName] = date;
-
+        newItems[index].firstNameValidation = true;
+        newItems[index].lastNameValidation = true;
+        newItems[index].dobValidation = true;
+        newItems[index].emailAddressValidation = true;
+        newItems[index].socialSecurityNoValidation = true; 
+        newItems[index].beneficiaryTypeValidation = true;
+        newItems[index].relationshipToAccValidation = true;
+        newItems[index].beneficiaryDistPercentValidation = true;
         this.setState({
             retirementBeneficiaryData: newItems,
         });
@@ -4670,10 +4794,11 @@ class OpenAccPageTwoComponent extends Component {
                                             propInputStyle={styles.customTxtBox}
                                             placeholder={""}
                                             maxLength={gblStrings.maxLength.distributionPercentage}
+                                            keyboardType="decimal-pad"
                                             onChangeText={this.onChangeTextForIRABeneficiary("beneficiaryDistPercent", index)}
                                             onSubmitEditing={this.onSubmitEditing(this["beneficiaryDistPercent" + index])}
                                             errorFlag={!this.state.retirementBeneficiaryData[index].beneficiaryDistPercentValidation}
-                                            errorText={""}
+                                            errorText={this.state.errMsg}
 
                                         />
                                     </View>
@@ -4699,7 +4824,7 @@ class OpenAccPageTwoComponent extends Component {
                                     onChangeText={this.onChangeTextForIRABeneficiary("socialSecurityNo", index)}
                                     onSubmitEditing={this.onSubmitEditing(this["firstName" + index])}
                                     errorFlag={!this.state.retirementBeneficiaryData[index].socialSecurityNoValidation}
-                                    errorText={""}
+                                    errorText={this.state.errMsg}
 
                                 />
 
@@ -4715,7 +4840,7 @@ class OpenAccPageTwoComponent extends Component {
                                     onChangeText={this.onChangeTextForIRABeneficiary("firstName", index)}
                                     onSubmitEditing={this.onSubmitEditing(this["middleInitial" + index])}
                                     errorFlag={!this.state.retirementBeneficiaryData[index].firstNameValidation}
-                                    errorText={""}
+                                    errorText={this.state.errMsg}
 
                                 />
 
@@ -4752,7 +4877,7 @@ class OpenAccPageTwoComponent extends Component {
                                     onChangeText={this.onChangeTextForIRABeneficiary("lastName", index)}
                                     onSubmitEditing={this.onSubmitEditing(this["dob" + index])}
                                     errorFlag={!this.state.retirementBeneficiaryData[index].lastNameValidation}
-                                    errorText={""}
+                                    errorText={this.state.errMsg}
 
                                 />
 
@@ -4785,7 +4910,7 @@ class OpenAccPageTwoComponent extends Component {
                                     maxLength={gblStrings.maxLength.emailID}
                                     onChangeText={this.onChangeTextForIRABeneficiary("emailAddress", index)}
                                     errorFlag={!this.state.retirementBeneficiaryData[index].emailAddressValidation}
-                                    errorText={""}
+                                    errorText={this.state.errMsg}
 
                                 />
 

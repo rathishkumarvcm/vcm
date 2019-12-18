@@ -172,7 +172,7 @@ export default {
         enterDetailsIfNoBene:"If no beneficiary designation has been received and accepted by the custodian prior to your account (Account Owner) death, or if all of your designated beneficiaries have predeceased you, then your beneficiary sahll be your surviving spouse or, if there is no surviving spouse, then the account owner's estate. See the custodial agreement and disclosure statement applicable to your Victory Capital retirement plan for complete information.",
         enterDetailsAdditionalAdvisor:"Additionally, you should contact your legal advisor regarding your specific situation.",
         pleaseProvideCorrectAdd:"Please provide full address. If you do not know the address, please remove and submit without address",
-        emptyDistributionMsg:"Please Enter Distribution %",
+        emptyDistributionMsg:"Please Enter a valid value",
         distributionValidationExceed:"Distribution should not exceed 100",
         firstNameFormat:"Please Enter Valid First Name",
         lastNameFormat:"Please Enter Valid Last Name",
