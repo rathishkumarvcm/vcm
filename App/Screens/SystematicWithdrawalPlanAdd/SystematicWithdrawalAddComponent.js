@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, FlatList, Switch } from 'react-native';
+import { View, ScrollView, Text, FlatList, Switch, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import {
     GHeaderComponent,
     GFooterComponent,
     GButtonComponent,
     GInputComponent,
+    GDropDownComponent
 
 } from '../../CommonComponents';
 import { CustomRadio } from '../../AppComponents';
@@ -13,6 +14,17 @@ import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
 import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
 import * as regEx from '../../Constants/RegexConstants';
+
+const deliveryAddressJson = [
+    {
+        "id": '1',
+        "title": 'Current mailing address',
+    },
+    {
+        "id": '2',
+        "title": 'Payee and address',
+    },
+];
 
 const autoInvestmentAddBankJson = [
 
@@ -44,35 +56,151 @@ const autoInvestmentAddAmountJson = [
         switchOnOff: false
     }
 ];
+const dummyTypeJson = [
+    {
+        "id": '1',
+        "title": 'Monthly',
+    },
+    {
+        "id": '2',
+        "title": 'Quaterly',
+    },
+];
 
 class SystematicWithdrawalComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            switch1Value: false,
             selectedItemID: "",
             selectedItemName: "",
+            //autoInvestmentAddAmountJson: {},
+            fundList: [],
+            ItemToEdit: this.props.navigation.getParam('ItemToEdit', -1),
+            onlineMethod: -1,
+            offlineMethod:-1,
+            fundRemaining: 0,
+            totalFund: 0,
+            addressDropDown: false,
+            valueaddressDropDown: '',
+            
         };
-    }//test
+    }
+    componentDidMount() {
+        // if (this.state && this.state.fundList && !this.state.fundList.length > 0) {
+        //     const fundListPayload = {};
+        //     this.props.getFundListData(fundListPayload);
+        // }
+        // if (this.props && this.props.automaticInvestmentState) {
+
+        //     this.setState({
+        //         autoInvestmentAddAmountJson: this.props.automaticInvestmentState,
+        //     });
+        // }
+    }
+
+    getPayload = () => {
+
+
+        let payload = {
+            totalAmount: '$500',
+            fundFrom: 'Bank 1',
+            investedIn: 'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES',
+        };
+        if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+            payload = {
+                ...payload,
+                ...this.props.automaticInvestmentState.savedAccData
+            };
+        }
+        return payload;
+
+    }
+
+    navigationNext = () => {
+        //const payload = this.getPayload();
+        //this.props.saveData("systematicWithdrawalAdd", payload); 
+        this.props.navigation.navigate('systematicWithdrawalSchedule', { ItemToEdit: this.state.ItemToEdit });
+    }
+    componentDidUpdate(prevProps, prevState) {
+        //console.log("componentDidUpdate::::> "+prevState);
+
+
+        if (this.props !== prevProps) {
+            let tempFundListData = [];
+            let tempFundAmount = [];
+            if (this.props.fundListState[ActionTypes.GET_FUNDLIST] != undefined && this.props.fundListState[ActionTypes.GET_FUNDLIST].Items != null) {
+                tempFundListData = this.props.fundListState[ActionTypes.GET_FUNDLIST].Items;
+
+                this.setState({
+                    fundList: [...tempFundListData.map(v => ({ ...v, isActive: false, fundAmount: 0 }))],
+
+                    //isFilterApplied: false
+                });
+            }
+
+        }
+    }
     onSelected = (item) => () => {
         console.log("item: " + item.id);
         this.setState({ selectedItemID: item.id });
         this.setState({ selectedItemName: item.name });
     }
-    navigationNext = () => this.props.navigation.navigate('systematicWithdrawalSchedule');
+    onlineMethodFuc=index=>e=>{
+        
+        this.setState({onlineMethod:index,offlineMethod:-1})
+    }
+    offlineMethodFuc=index=>e=>{
+        
+        this.setState({offlineMethod:index,onlineMethod:-1})
+    }
+    // navigationNext = () => this.props.navigation.navigate('systematicWithdrawalSchedule');
     generateKeyExtractor = (item) => item.account;
-    renderInvestment = () => ({ item }) =>
+    renderInvestment = () => ({ item,index }) =>
         (
 
-            <View style={{ borderWidth: 1, borderColor: '#5D83AE99', padding: '5%', alignItems: 'center' }}>
-                <Text style={{ color: '#56565A', fontSize: scaledHeight(20), fontWeight: 'bold' }}>{item.account}</Text>
-                <Text style={{ color: '#56565A', fontSize: scaledHeight(14) }}>{item.accountNumber}</Text>
-            </View>
+            <TouchableOpacity onPress={this.onlineMethodFuc(index)}>
+
+                <View style={this.state.onlineMethod === index ? styles.bankViewSelected : styles.bankView}>
+                    <View style={{ width: scaledWidth(66), margin: scaledWidth(5), backgroundColor: '#E9E9E9' }}></View>
+                    <View style={{ justifyContent: 'center', marginLeft: scaledWidth(20) }}>
+                        <Text style={{ color: '#56565A', fontSize: scaledHeight(20), fontWeight: 'bold' }}>{item.account}</Text>
+                        <Text style={{ color: '#56565A', fontSize: scaledHeight(14) }}>{item.accountNumber}</Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
         )
-    toggleSwitch1 = (value) => {
-        this.setState({ switch1Value: value });
-        console.log('Switch 1 is: ' + value);
+    toggleSwitch = index => e => {
+        //this.setState({ switch1Value: value });
+        //console.log('Switch 1 is: ' + index);
+
+        var array = [...this.state.fundList]; // make a separate copy of the array
+        //var indexChange = this.state.selectedIndex
+        if (index !== -1) {
+
+            let switchVal = array[index].isActive;
+            array[index].isActive = !switchVal;
+            if (!array[index].isActive) {
+                array[index].fundAmount = 0;
+            }
+            this.setState({ fundList: array });
+        }
     }
+
+    selectAddress = () => {
+        this.setState({
+            addressDropDown: !this.state.addressDropDown
+        });
+    }
+
+    selectedDropDownAddressValue = (valueAddress) => {
+        this.setState({
+            valueaddressDropDown: valueAddress.title,
+            addressDropDown: false
+        });
+    }
+
+    navigationBack = () => this.props.navigation.goBack();
+    navigationCancel = () => this.props.navigation.navigate('systematicWithdrawal');
 
     generateAmountKeyExtractor = (item) => item.accountName;
     renderAmount = () => ({ item }) =>
@@ -112,11 +240,11 @@ class SystematicWithdrawalComponent extends Component {
                         <Text style={styles.autoInvestHead}>{'Create Systematic Withdrawal Plan'}</Text>
                         <View style={styles.seperator_line} />
                         <View style={styles.circle_view}>
-                            <View style={styles.circle_Inprogress}>
+                            <View style={styles.circle_Completed}>
                                 <Text style={styles.circleTextNew}>{'1'}</Text>
                             </View>
                             <View style={styles.circle_connect} />
-                            <View style={styles.circle_NotStarted}>
+                            <View style={styles.circle_Inprogress}>
                                 <Text style={styles.circleText}>{'2'}</Text>
                             </View>
                             <View style={styles.circle_connect} />
@@ -127,9 +255,13 @@ class SystematicWithdrawalComponent extends Component {
                             <View style={styles.circle_NotStarted}>
                                 <Text style={styles.circleText}>{'4'}</Text>
                             </View>
+                            <View style={styles.circle_connect} />
+                            <View style={styles.circle_NotStarted}>
+                                <Text style={styles.circleText}>{'5'}</Text>
+                            </View>
                         </View>
                         <View style={styles.autoInvest_title_view}>
-                            <Text style={styles.autoInvest_title_text}>{'1 - Plan Details'}</Text>
+                            <Text style={styles.autoInvest_title_text}>{'2 - Plan Details'}</Text>
                         </View>
                         <View style={styles.body}>
 
@@ -202,7 +334,7 @@ class SystematicWithdrawalComponent extends Component {
 
                             />
 
-                            <View>
+                            {/* <View>
                                 <Text style={styles.autoInvest_sub_title_text}>{'- Contingent Funding Options'}</Text>
                                 <Text style={styles.sysWith_sub_text}>{'– Investment Only'}</Text>
                                 <Text style={styles.sysWith_sub_text}>{'(Optional Selection)'}</Text>
@@ -253,37 +385,92 @@ class SystematicWithdrawalComponent extends Component {
                                 </View>
                                 <Text style={styles.lblRadioDescTxt1}>{'NOTE: Withdrawals will be made from other eligible mutual funds positions, the fund with the lowest balance will be liquidated first.'}</Text>
 
-                            </View>
+                            </View> */}
 
                             <Text style={styles.autoInvest_sub_title_text}>{'- Fund To'}</Text>
-
-
                             <View style={styles.seperator_line} />
                             <Text style={styles.autoInvestCont}>{'Choose how you will fund your account and indicate your initial investment amount.'}</Text>
+                            <Text style={styles.autoInvest_sub_title_text}>{'Offline Method'}</Text>
+                            <Text style={styles.autoInvestCont}>{'Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcittet'}</Text>
+
+                            <TouchableOpacity onPress={this.offlineMethodFuc(1)}>
+
+                                <View style={this.state.offlineMethod === 1 ? styles.bankViewSelected : styles.bankView}>
+                                    <View style={{ width: scaledWidth(66), margin: scaledWidth(5), backgroundColor: '#E9E9E9', justifyContent: 'center',  }}></View>
+                                    <View style={{ justifyContent: 'center', marginLeft: scaledWidth(20) }}>
+                                        <Text style={{ color: '#56565A', fontSize: scaledHeight(20), fontWeight: 'bold' }}>{'Check Order'}</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={this.offlineMethodFuc(2)}>
+
+                                <View style={this.state.offlineMethod === 2 ? styles.bankViewSelected : styles.bankView}>
+                                    <View style={{ width: scaledWidth(66), margin: scaledWidth(5), backgroundColor: '#E9E9E9', justifyContent: 'center' }}></View>
+                                    <View style={{ justifyContent: 'center', marginLeft: scaledWidth(20) }}>
+                                        <Text style={{ color: '#56565A', fontSize: scaledHeight(20), fontWeight: 'bold',alignItems:'center',justifyContent:'center' }}>{'Directed SWPs'}</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+
+                            <View style={{alignItems:"center"}}><Text style={styles.autoInvest_sub_title_text}>{'Or'}</Text></View>
+                            <Text style={styles.autoInvest_sub_title_text}>{'Online Method'}</Text>
                             <FlatList style={{ marginTop: scaledHeight(20) }}
                                 data={autoInvestmentAddBankJson}
                                 renderItem={this.renderInvestment()}
                                 keyExtractor={this.generateKeyExtractor}
 
                             />
+
+
+                            <Text style={styles.autoInvest_sub_title_text}>{'- Delivery Address'}</Text>
+                            <View style={styles.seperator_line} />
+                            <Text style={styles.autoInvestCont}>{'Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcittet'}</Text>
+                            <GDropDownComponent
+                                dropDownTextName={styles.financialTextLabel}
+                                dropDownName="Delivery Address"
+                                data={deliveryAddressJson}
+                                changeState={this.selectAddress}
+                                showDropDown={this.state.addressDropDown}
+                                dropDownValue={this.state.valueaddressDropDown}
+                                selectedDropDownValue={this.selectedDropDownAddressValue}
+                                itemToDisplay={"title"}
+                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(263) }}
+                            />
+                            <View style={{flexDirection:'column',marginLeft:scaledWidth(15),marginTop:scaledHeight(15),width:'100%'}}>
+                                <Text style={styles.financialTextLabel}>{'Address'}</Text>
+                                <GInputComponent value={""} />
+                                <GInputComponent value={""} propInputStyle={{marginTop:scaledHeight(10)}} />
+                            </View>
+
+                            <View style={{flexDirection:'column',marginLeft:scaledWidth(15),marginTop:scaledHeight(15),width:'100%'}}>
+                                <Text style={styles.financialTextLabel}>{'ZIP Code'}</Text>
+                                <GInputComponent value={""} />
+                                
+                            </View>
+
+                            <View style={{flexDirection:'column',marginLeft:scaledWidth(15),marginTop:scaledHeight(15),width:'100%'}}>
+                                <Text style={styles.financialTextLabel}>{'City & State'}</Text>
+                                <View style={{flexDirection:'row',flex:1,marginBottom:scaledHeight(20)}}>
+                                    <GInputComponent value={""} propInputStyle={{flex:0.5,marginRight:scaledWidth(30)}} />
+                                    <GInputComponent value={""} propInputStyle={{flex:0.5,marginRight:scaledWidth(30)}}/>
+                                </View>
+                                
+                            </View>
+                       
                         </View>
                     </View>
-                    <GButtonComponent
-                        buttonStyle={styles.cancelButton}
-                        buttonText={globalString.common.save}
-                        textStyle={styles.cancelButtonText}
-                        onPress={this.navigationLogin}
-                    />
+                    
                     <GButtonComponent
                         buttonStyle={styles.cancelButton}
                         buttonText={globalString.common.cancel}
                         textStyle={styles.cancelButtonText}
-                        onPress={this.navigationLogin}
+                        onPress={this.navigationCancel}
                     />
                     <GButtonComponent
                         buttonStyle={styles.cancelButton}
                         buttonText={globalString.common.back}
-                        textStyle={styles.cancelButtonText}
+                        textStyle={styles.navigationBack}
                         onPress={this.navigationLogin}
                     />
                     <GButtonComponent

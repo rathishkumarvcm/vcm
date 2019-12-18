@@ -1,8 +1,6 @@
 import { StyleSheet,Dimensions } from "react-native";
-import { scaledHeight,scaledWidth} from '../../Utils/Resolution';
-//import { Colors } from "react-native/Libraries/NewAppScreen";
+import { scaledHeight, scaledWidth} from '../../Utils/Resolution';
 
-const {width} = Dimensions.get('window');
 
 
 export const styles = StyleSheet.create({
@@ -20,13 +18,22 @@ export const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center'
     },
+    autoInvestHead:{
+        marginTop:scaledHeight(10),
+        fontSize:scaledHeight(18),
+        fontWeight:'bold',
+        marginBottom:scaledWidth(10),
+        color:'#56565A',
+        marginLeft:'4%',
+        marginRight:'4%'
+    },
     circle_Completed: {
         width: scaledWidth(35),
         height: scaledHeight(35),
         borderRadius: scaledHeight(35)/2,
         backgroundColor: '#A7E993',
-        justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent:'center'
     },
     circle_Inprogress: {
         width: scaledWidth(35),
@@ -34,24 +41,26 @@ export const styles = StyleSheet.create({
         borderRadius: scaledHeight(35)/2,
         backgroundColor: '#CDDBFC',
         borderColor:'#9DB6F1',
-        justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent:'center'
     },
     circle_NotStarted: {
+        
         width: scaledWidth(35),
         height: scaledHeight(35),
         borderRadius: scaledHeight(35)/2,
         backgroundColor: '#C1C1C1',
-        justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        justifyContent:'center'
+        
     },
     circleTextNew:{      
-        fontSize:scaledHeight(15),
-         fontWeight:'bold'
-     },
-     circleText:{      
-         fontSize:scaledHeight(15)
-     },
+       fontSize:scaledHeight(15),
+        fontWeight:'bold'
+    },
+    circleText:{      
+        fontSize:scaledHeight(15)
+    },
     circle_connect:{
         borderTopWidth:1,
         borderTopColor:'#C1C1C1',
@@ -62,6 +71,13 @@ export const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:"center",
         marginTop:scaledHeight(30),
+    },
+    autoInvestCont:
+    {
+        color:'#56565A',
+        fontSize:scaledHeight(16),
+        marginTop:scaledHeight(10),
+        marginTop:scaledHeight(10),
     },
     autoInvest_title_view:{
         marginTop:scaledHeight(20),
@@ -78,36 +94,16 @@ export const styles = StyleSheet.create({
         color:'#4D79F6',
         fontWeight:'bold'
     },
-    autoInvest_sub_title_view:{
-        flex:1,
-        flexDirection:'row',
-        marginTop:scaledHeight(20),
-        height:scaledHeight(27),
-        marginBottom:scaledHeight(10)
-    },
+    
     autoInvest_sub_title_text:{
-        flex:0.9,
-        fontSize:scaledHeight(20),
+        fontSize:scaledHeight(22),
         color:'#56565A',
-        fontWeight:'bold'
-    },
-    autoInvest_sub_edit:{
-        flex:0.1,
-        color:'#5D83AE',
-        fontSize:scaledHeight(15),
-        textAlign:'right'
+        fontWeight:'bold',
+        marginTop:scaledHeight(20),
+        marginBottom:scaledHeight(10)
     },
     body:
     {
-        marginLeft:'4%',
-        marginRight:'4%'
-    },
-    autoInvestHead:{
-        marginTop:scaledHeight(10),
-        fontSize:scaledHeight(18),
-        fontWeight:'bold',
-        marginBottom:scaledWidth(10),
-        color:'#56565A',
         marginLeft:'4%',
         marginRight:'4%'
     },
@@ -116,17 +112,58 @@ export const styles = StyleSheet.create({
         borderTopColor:'#C1C1C1',
        
     },
-    view_row:{
-        flexDirection:'row',
+    auto_invest_to:
+    {
+        flexDirection: 'column',  
+        borderColor: '#DCDCDC', 
+        borderWidth: 1,
+        backgroundColor:'#EFECEC',
+        padding:20,
     },
-    dropdownWidth:{
-        width:scaledWidth(80)
+    auto_invest_to_flat:
+    {
+        flexDirection: 'column',   
+        padding:20,
     },
-    scheduleContent:{
-        fontSize:scaledHeight(14),
+    auto_invest_flat_min:
+    {
         color:'#333333DE',
-        marginTop:scaledHeight(20),
-        marginBottom:scaledHeight(20)
+        fontSize:scaledHeight(13),
+        marginTop:scaledHeight(5),
+        marginBottom:scaledHeight(10)
+    },
+    auto_invest_to_top:
+    {
+        color:'#333333DE',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold',
+        marginBottom:scaledHeight(10),
+        marginRight:scaledWidth(15),
+    },
+    auto_invest_to_top_view:
+    {
+        flexDirection: 'row',
+        height:scaledHeight(45),
+        alignItems:'center',
+    },
+    radioBtnGrp:{
+        flexGrow:1,
+        marginTop:scaledHeight(0),
+        flexDirection:'row'
+    },
+    lblRadioBtnTxt:{
+        color:'#333333DE',
+        fontSize:scaledHeight(16),
+        lineHeight:28,
+        flexWrap:'wrap'
+    },
+    lblRadioDescTxt:{
+        marginTop:scaledHeight(14),
+        color:'#333333DE',
+        fontSize:scaledHeight(14),
+        lineHeight:22,
+        flexWrap:'wrap',
+        opacity:.75
     },
     cancelButton:{
         borderColor:'#61285F45',
@@ -164,37 +201,8 @@ export const styles = StyleSheet.create({
         color:'#FFFFFF',
         fontWeight:'bold'
     },
-    verifyContentView:{
-        flexDirection:'column',
-        borderWidth:1,
-        borderColor:'#D6D8DC',
-        paddingLeft:scaledWidth(20),
-        paddingTop:scaledHeight(20),
-        paddingBottom:scaledHeight(20),
-    },
-    verifyConentTitle1:
-    {
-        color:'#333333DE',
-        fontSize:scaledHeight(16),
-        fontWeight:'bold'
-    },
-    verifyConentTitle2:
-    {
-        color:'#333333DE',
-        fontSize:scaledHeight(16),
-        marginTop:scaledHeight(10)
-    },
-    verifyBottomView:{
-        backgroundColor:'#E8ECEE',
-        justifyContent:"center",
-        alignItems:'center',
-        height:scaledHeight(120)
-    },
-    verifyBottomText:{
-        color:'#544A54',
-        fontSize:scaledHeight(16),
-        fontWeight:'bold',
-        paddingLeft:scaledWidth(20),
-        paddingRight:scaledWidth(10)
-    }
+    accountList:
+    { borderWidth: 1, borderColor: '#5D83AE99', marginTop: scaledHeight(10) },
+    selectedAccount:
+    { borderWidth: 5, borderColor: '#B5E198', marginTop: scaledHeight(10) },
 });

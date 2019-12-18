@@ -30,18 +30,42 @@ class AutomaticInvestmentComponent extends Component {
         this.state = {
             expand: false,
             selectedIndex: -1,
-            autoInvestmentJson: {},
+            generalAutoInvestment: {},
+            iraAutoInvestment: {},
+            utmaAutoInvest:{},
+            arr_expand: [true, false, false],
+            expandIndex: 0,
         };
     }
 
     componentDidMount() {
         if (this.props && this.props.automaticInvestmentState) {
+            //console.log("++++++++++++++++++++++++++++++++++++++",this.props.automaticInvestmentState.general)
             this.setState({
-                autoInvestmentJson: this.props.automaticInvestmentState,
+                generalAutoInvestment: this.props.automaticInvestmentState.general,
+                iraAutoInvestment: this.props.automaticInvestmentState.ira,
+                utmaAutoInvest:this.props.automaticInvestmentState.utmaAutoInvest
             });
         }
     }
-    generateKeyExtractor = (item) => item.id;
+    setCollapsableUpdates = index => e => {
+
+        var array = [...this.state.arr_expand]; // make a separate copy of the array
+        let IndexExpand = this.state.expandIndex;
+
+
+        if (index !== IndexExpand) {
+
+            array[IndexExpand] = false;
+
+        }
+        array[index] = !array[index];
+
+        this.setState({ arr_expand: array, expandIndex: index, selectedAccount: -1 });
+
+
+    }
+    generateKeyExtractor = item=> item.id;
     renderInvestment = () => ({ item, index }) =>
         (
 
@@ -101,7 +125,7 @@ class AutomaticInvestmentComponent extends Component {
                             </View>
                             <GButtonComponent
                                 buttonStyle={styles.skipButton}
-                                buttonText={globalString.automaticInvestment.skip}
+                                buttonText={globalString.common.skip}
                                 textStyle={styles.skipButtonText}
                                 onPress={this.navigationInvestmentVerify}
                             />
@@ -126,7 +150,7 @@ class AutomaticInvestmentComponent extends Component {
 
     }
 
-    setStateUpdates = () => {
+    setStateUpdates = ()=>e => {
 
         this.setState({
             expand: !this.state.expand,
@@ -145,11 +169,11 @@ class AutomaticInvestmentComponent extends Component {
                 this.props.navigation.navigate('automaticInvestmentAdd', { option: index, ItemToEdit: this.state.selectedIndex });
                 break;
             case 1:
-                var array = [...this.state.autoInvestmentJson]; // make a separate copy of the array
+                var array = [...this.state.generalAutoInvestment]; // make a separate copy of the array
                 var indexDelete = this.state.selectedIndex
                 if (indexDelete !== -1) {
                     array.splice(indexDelete, 1);
-                    this.setState({ autoInvestmentJson: array, selectedIndex: -1 });
+                    this.setState({ generalAutoInvestment: array, selectedIndex: -1 });
                 }
 
                 break;
@@ -162,6 +186,7 @@ class AutomaticInvestmentComponent extends Component {
 
         return (
             <View style={styles.container}>
+                
                 <GHeaderComponent register navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
                     <View style={{ marginLeft: scaledHeight(10), marginRight: scaledHeight(10) }}>
@@ -171,21 +196,95 @@ class AutomaticInvestmentComponent extends Component {
                         </View>
 
                         <View style={styles.seperator_line} />
-                        <Text style={styles.addInvestTitle}>{globalString.automaticInvestment.autoInves_current}</Text>
+                        {/* <Text style={styles.addInvestTitle}>{globalString.automaticInvestment.autoInves_current}</Text> */}
                         {/* <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
                             <Text style={styles.addInvestTitle}>{globalString.automaticInvestment.autoInves_current}</Text>
                             <Text style={styles.addInvest} onPress={this.navigationInvestmentAdd}>{'Add'}</Text>
                         </View> */}
-                        <View style={styles.seperator_line} />
-                        <Text style={styles.conentMarginTop}>{globalString.automaticInvestment.autoInves_current_content}</Text>
-
+                        {/* <View style={styles.seperator_line} /> */}
+                        {/* <Text style={styles.conentMarginTop}>{globalString.automaticInvestment.autoInves_current_content}</Text> */}
+                        <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(0)}>
+                            <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>
+                                {this.state.arr_expand[0] ?
+                                    <GIcon
+                                        name="minus"
+                                        type="antdesign"
+                                        size={30}
+                                        color="#088ACC"
+                                    /> :
+                                    <GIcon
+                                        name="plus"
+                                        type="antdesign"
+                                        size={30}
+                                        color="#088ACC"
+                                    />
+                                }
+                                <Text style={styles.autoInvest_sub_title_text}>{'General Account'}</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <View style={styles.seperator_line} /> 
+                        {this.state.arr_expand[0] ?
                         <FlatList
-                            data={this.state.autoInvestmentJson}
+                            data={this.state.generalAutoInvestment}
                             renderItem={this.renderInvestment()}
                             keyExtractor={this.generateKeyExtractor}
                             extraData={this.state.selectedIndex}
-                        />
+                        />:null} 
 
+                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(1)}>
+                            <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>
+                                {this.state.arr_expand[1] ?
+                                    <GIcon
+                                        name="minus"
+                                        type="antdesign"
+                                        size={30}
+                                        color="#088ACC"
+                                    /> :
+                                    <GIcon
+                                        name="plus"
+                                        type="antdesign"
+                                        size={30}
+                                        color="#088ACC"
+                                    />
+                                }
+                                <Text style={styles.autoInvest_sub_title_text}>{'IRA Account'}</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <View style={styles.seperator_line} />
+                        {this.state.arr_expand[1] ?
+                        <FlatList
+                            data={this.state.iraAutoInvestment}
+                            renderItem={this.renderInvestment()}
+                            keyExtractor={this.generateKeyExtractor}
+                            extraData={this.state.selectedIndex}
+                        />:null} 
+
+                        
+                        {this.state.utmaAutoInvest==="undefined"?null:<View>
+                        <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(2)}>
+                            <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>
+                                {this.state.arr_expand[2] ?
+                                    <GIcon
+                                        name="minus"
+                                        type="antdesign"
+                                        size={30}
+                                        color="#088ACC"
+                                    /> :
+                                    <GIcon
+                                        name="plus"
+                                        type="antdesign"
+                                        size={30}
+                                        color="#088ACC"
+                                    />
+                                }
+                                <Text style={styles.autoInvest_sub_title_text}>{'UTMA Account'}</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <View style={styles.seperator_line} />
+                        </View>}
+                        
+                        
+                        
                         <View style={{ borderColor: '#C7C7C7', borderWidth: 1, backgroundColor: '#F2F2F2', paddingLeft: scaledWidth(10), paddingRight: scaledWidth(10) }}>
                             <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setStateUpdates}>
                                 <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>

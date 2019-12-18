@@ -1,0 +1,3 @@
+import systematicWithdrawalAccountComponent from './SystematicWithdrawalAccountContainer';
+
+export default systematicWithdrawalAccountComponent;

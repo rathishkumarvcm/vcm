@@ -5,15 +5,10 @@ import {
     GHeaderComponent,
     GFooterComponent,
     GButtonComponent,
-    GInputComponent,
     GDateComponent,
 } from '../../CommonComponents';
 import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
-
-import * as regEx from '../../Constants/RegexConstants';
-import { FlatList } from 'react-native-gesture-handler';
-import { scaledHeight } from '../../Utils/Resolution';
 
 
 class AutomaticInvestmentPlanVerifyComponent extends Component {
@@ -29,11 +24,21 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
     }
     componentDidMount() {
 
-        if (this.props && this.props.automaticInvestmentState) {
-            this.setState({
-                autoInvestmentJson: this.props.automaticInvestmentState[0],
-            });
+        // if (this.props && this.props.automaticInvestmentState) {
+        //     this.setState({
+        //         autoInvestmentJson: this.props.automaticInvestmentState[0],
+        //     });
+        // }
+        let payload={};
+        if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+            payload = {
+                //...payload,
+                ...this.props.automaticInvestmentState.savedAccData
+            };
+            this.setState({autoInvestmentJson:payload})
         }
+
+
     }
 
     onChangeDateForInvestment = (keyName, index) => date => {
@@ -63,7 +68,36 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
             
 
         )
-    navigationNext = () => this.props.navigation.navigate('automaticInvestmentEsign');
+
+        getPayload = () => {
+
+
+            let payload = {
+                // totalAmount: '$500',  
+                // fundFrom: 'Bank 1',
+                // investedIn: 'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES',
+                // invest: 'Quarterly',
+                // dateToInvest: '15th',
+                // dateAdded: '09/02/2019',
+                // endDate: '15/12/2025',
+                // nextInvestementDate: '15/11/2019',
+            };
+            if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+                payload = {
+                    //...payload,
+                    ...this.props.automaticInvestmentState.savedAccData
+                };
+            }
+            return payload;
+    
+        }
+    
+        navigationNext = () => {
+            //const payload = this.getPayload();
+            //this.props.saveData("automaticInvestmentVerify", payload);
+            this.props.navigation.navigate('automaticInvestmentEsign');
+        }
+    //navigationNext = () => this.props.navigation.navigate('automaticInvestmentEsign');
 
     navigationSubmit = () => this.props.navigation.navigate('automaticInvestment');
     navigationBack = () => this.props.navigation.goBack();

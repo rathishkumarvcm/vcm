@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     circle_connect:{
         borderTopWidth:1,
         borderTopColor:'#C1C1C1',
-        width:scaledWidth(60),
+        width:scaledWidth(40),
         alignSelf:'center'
     },
     circle_view:{
@@ -76,6 +76,7 @@ export const styles = StyleSheet.create({
     {
         fontSize:scaledHeight(20),
         color:'#4D79F6',
+        fontWeight:'bold'
     },
     autoInvest_sub_title_view:{
         marginTop:scaledHeight(20),
@@ -106,10 +107,32 @@ export const styles = StyleSheet.create({
        
     },
     financialTextLabel: {
-        color: '#333333DE', fontSize: scaledHeight(18), fontWeight: 'bold', marginTop: '4%', marginBottom: '4%'
+        color: '#333333DE', 
+        fontSize: scaledHeight(18), 
+        fontWeight: 'bold', 
+        marginBottom: '4%'
+    },
+    dropdownTextInput:{
+        width:'100%',
+        marginLeft:0
+      },
+      dropDownLayout:{
+        marginTop:scaledHeight(18),
+        paddingLeft:0
+    },
+    showDropDownSectionStyle:{
+        height: 100,
+        zIndex:1,
+        borderWidth:1,
+        marginLeft:0,
+        marginRight:0,
+        width:'100%',
+        borderColor : "#DEDEDF",
+        backgroundColor:'white'
     },
     view_row:{
         flexDirection:'row',
+        
     },
     dropdownWidth:{
         width:scaledWidth(80)

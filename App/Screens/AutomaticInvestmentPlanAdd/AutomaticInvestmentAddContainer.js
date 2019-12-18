@@ -6,7 +6,8 @@ import { accOpeningActions,addAutomaticInvestmentActions } from "../../Shared/Ac
 
 const mapStateToProps = (state) => ({
       //automaticInvestmentState:state.automaticInvestmentData,
-      fundListState:state.accOpeningReducerData
+      fundListState:state.accOpeningReducerData,
+      automaticInvestmentState:state.automaticInvestmentData,
 
   });
 

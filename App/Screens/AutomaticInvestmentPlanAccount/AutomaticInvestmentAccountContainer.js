@@ -6,6 +6,7 @@ import { addAutomaticInvestmentActions } from "../../Shared/Actions";
 
 const mapStateToProps = (state) => ({
       accountState:state.accountData,
+      automaticInvestmentState:state.automaticInvestmentData,
   });
 
 const mapDispatchToProps = {

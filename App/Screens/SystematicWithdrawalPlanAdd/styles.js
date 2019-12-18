@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
     circle_connect:{
         borderTopWidth:1,
         borderTopColor:'#C1C1C1',
-        width:scaledWidth(60),
+        width:scaledWidth(40),
         alignSelf:'center'
     },
     circle_view:{
@@ -77,7 +77,7 @@ export const styles = StyleSheet.create({
         color:'#56565A',
         fontSize:scaledHeight(16),
         marginTop:scaledHeight(10),
-        marginTop:scaledHeight(10),
+        
     },
     autoInvest_title_view:{
         marginTop:scaledHeight(20),
@@ -92,6 +92,7 @@ export const styles = StyleSheet.create({
     {
         fontSize:scaledHeight(20),
         color:'#4D79F6',
+        fontWeight:'bold'
     },
     
     autoInvest_sub_title_text:{
@@ -234,5 +235,27 @@ export const styles = StyleSheet.create({
         fontWeight:'bold'
     },
     
-    
+    bankView:
+    {
+        flexDirection:'row',
+        borderWidth: 1, 
+        borderColor: '#5D83AE99', 
+        height:scaledHeight(80),
+        marginBottom:scaledHeight(20),
+        
+    },
+    bankViewSelected:
+    {
+        flexDirection:'row',
+        borderWidth: 5, 
+        borderColor: '#B5E198', 
+        height:scaledHeight(80),
+        marginBottom:scaledHeight(20),
+        
+    },
+    financialTextLabel: {
+        color: '#333333DE', fontSize: scaledHeight(18), fontWeight: 'bold',  marginBottom: '4%'
+    },
+
+   
 });

@@ -23,6 +23,8 @@ class SystematicWithdrawalPlanEsignComponent extends Component {
     onCheckBoxCheck = () => {
         this.setState({ saveCurrentDevice: !this.state.saveCurrentDevice });
     }
+    navigationBack = () => this.props.navigation.goBack();
+    navigationCancel = () => this.props.navigation.navigate('systematicWithdrawal');
 
     render() {
         return (
@@ -44,17 +46,21 @@ class SystematicWithdrawalPlanEsignComponent extends Component {
                             <Text style={styles.circleTextNew}>{'3'}</Text>
                         </View>
                         <View style={styles.circle_connect} />
-                        <View style={styles.circle_Inprogress}>
+                        <View style={styles.circle_Completed}>
                             <Text style={styles.circleText}>{'4'}</Text>
+                        </View>
+                        <View style={styles.circle_connect} />
+                        <View style={styles.circle_Inprogress}>
+                            <Text style={styles.circleText}>{'5'}</Text>
                         </View>
                     </View>
 
                     <View style={styles.autoInvest_title_view}>
-                        <Text style={styles.autoInvest_title_text}>{'4 - E-sign'}</Text>
+                        <Text style={styles.autoInvest_title_text}>{'5 - E-Consent'}</Text>
                     </View>
                     <View style={styles.body}>
                         <View style={styles.autoInvest_sub_title_view}>
-                            <Text style={styles.autoInvest_sub_title_text}>{'- E-Signature'}</Text>
+                            <Text style={styles.autoInvest_sub_title_text}>{'- E-Consent'}</Text>
 
                         </View>
                         <View style={styles.seperator_line} />
@@ -81,23 +87,18 @@ class SystematicWithdrawalPlanEsignComponent extends Component {
                                 />
                             </View>
                         </View>
-                        <GButtonComponent
-                            buttonStyle={styles.cancelButton}
-                            buttonText={globalString.common.save}
-                            textStyle={styles.cancelButtonText}
-                            onPress={this.navigationLogin}
-                        />
+                       
                         <GButtonComponent
                             buttonStyle={styles.cancelButton}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.navigationLogin}
+                            onPress={this.navigationCancel}
                         />
                         <GButtonComponent
                             buttonStyle={styles.cancelButton}
                             buttonText={globalString.common.back}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.navigationLogin}
+                            onPress={this.navigationBack}
                         />
                         <GButtonComponent
                             buttonStyle={styles.continueButton}

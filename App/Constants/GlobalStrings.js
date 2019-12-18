@@ -940,13 +940,24 @@ export default {
         password_success_footer1: 'Neque porro quisquam est qui dolorem',
         password_success_footer2: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet dictum orci et faucibus. Suspendisse non malesuada enim. Aliquam fringilla lectus ut massa convallis gravida. Integer condimentum mollis velit, nec porta diam mattis sit amet. Quisque sodales, enim quis laoreet aliquet, mauris nisi condimentum libero, a viverra ligula libero sed sem. Pellentesque sed mollis tortor, vitae finibus metus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus blandit consequat arcu nec iaculis. Aenean at pharetra nisl. Sed eget turpis sit amet'
     },
-    //Automatic Investment Plan
-    automaticInvestment: {
-        autoInves_Title: 'Automatic Investment Plan',
-        autoInves_current: 'Current Automatic Investment Plans',
-        autoInves_current_content: 'There are two parts for an automatic investment within an IRA. The first is the contribution to the account and sencond is the purchase of the mutual fund(s). if you\'re making a change, be sure adjust both parts',
-        acc_Name: 'Account',
-        skip: 'Skip',
+   //Automatic Investment Plan
+   automaticInvestment: {
+    autoInves_Title: 'Automatic Investment Plan',
+    autoInves_current: 'Current Automatic Investment Plans',
+    autoInves_current_content: 'There are two parts for an automatic investment within an IRA. The first is the contribution to the account and sencond is the purchase of the mutual fund(s). if you\'re making a change, be sure adjust both parts',
+    acc_Name: 'Account',
+    create_invest_plan:'Create Automatic Investment Plan',
+    acc_title:'1 - Account Selection',
+    acc_content:'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text.',
+    
+    },
+    //Systematic Investment Plan
+    systematicWithdrawal: {
+        sysWith_Title: 'Systematic Withdrawal Plan',
+        sysWith_current: 'Current Systematic Withdrawal Plans',
+        sysWith_current_content: 'There are two parts for an systematic withdrawal within an IRA. The first is the contribution to the account and sencond is the purchase of the mutual fund(s). if you\'re making a change, be sure adjust both parts',
+        acc_Name: 'Account Name',
+        
     },
     profileSettingsPage: {
         profileDummyValue: " ",
@@ -1069,14 +1080,6 @@ export default {
         lorem_divident_header: "Lorem Ipsum Learn more about Dividends adn Capital Gains",
         lorem_divident_subheader: "Lorem Ipsum Lorem Ipsum Loremm Learn more about Dividends adn Capital Gains",
         dividents_faq: "FAQs",
-    },
-    //Systematic Investment Plan
-    systematicWithdrawal: {
-        sysWith_Title: 'Systematic Withdrawal Plan',
-        sysWith_current: 'Current Systematic Withdrawal Plans',
-        sysWith_current_content: 'There are two parts for an systematic withdrawal within an IRA. The first is the contribution to the account and sencond is the purchase of the mutual fund(s). if you\'re making a change, be sure adjust both parts',
-        acc_Name: 'Account Name',
-        skip: 'Skip',
     },
     orderCheckBook: {
         order_checkbook: 'Order Checkbook',

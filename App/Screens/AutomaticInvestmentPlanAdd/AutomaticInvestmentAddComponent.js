@@ -46,6 +46,8 @@ class AutomaticInvestmentAddComponent extends Component {
             //autoInvestmentAddAmountJson: {},
             fundList: [],
             ItemToEdit: this.props.navigation.getParam('ItemToEdit', -1),
+            acc_name:this.props.navigation.getParam('acc_name'),
+            acc_no:this.props.navigation.getParam('acc_no'),
             selectedBank:-1,
             fundRemaining:0,
             totalFund:0,
@@ -63,6 +65,30 @@ class AutomaticInvestmentAddComponent extends Component {
         //         autoInvestmentAddAmountJson: this.props.automaticInvestmentState,
         //     });
         // }
+    }
+
+    getPayload = () => {
+        
+
+        let payload = {
+            totalAmount: '$500',  
+            fundFrom: 'Bank 1',
+            investedIn: 'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES',
+        };
+        if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+            payload = {
+                ...payload,
+                ...this.props.automaticInvestmentState.savedAccData
+            };
+        }
+        return payload;
+
+    }
+
+    navigationNext = () => {
+            const payload = this.getPayload();
+            this.props.saveData("automaticInvestmentAdd", payload); 
+            this.props.navigation.navigate('automaticInvestmentSchedule', { ItemToEdit: this.state.ItemToEdit });
     }
     componentDidUpdate(prevProps, prevState) {
         //console.log("componentDidUpdate::::> "+prevState);
@@ -88,7 +114,7 @@ class AutomaticInvestmentAddComponent extends Component {
         this.setState({ selectedItemID: item.id });
         this.setState({ selectedItemName: item.name });
     }
-    navigationNext = () => this.props.navigation.navigate('automaticInvestmentSchedule', { ItemToEdit: this.state.ItemToEdit });
+    //navigationNext = () => this.props.navigation.navigate('automaticInvestmentSchedule', { ItemToEdit: this.state.ItemToEdit });
     navigationBack = () => this.props.navigation.goBack();
     navigationCancel = () => this.props.navigation.navigate('automaticInvestment');
 
@@ -223,8 +249,8 @@ class AutomaticInvestmentAddComponent extends Component {
 
                             <View style={{ flexDirection: 'column', justifyContent: "center",  borderColor: '#9DB4CE', borderWidth: 1, padding: scaledHeight(20),marginTop:scaledHeight(20) }}>
 
-                                <Text style={{ color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' }}>{'Account Name 1'}</Text>
-                                <Text style={{ color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' }}>{'Account Number xxxx-xxxx-xxxx'}</Text>
+                                <Text style={{ color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' }}>{this.state.acc_name}</Text>
+                                <Text style={{ color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' }}>{'Account Number '+this.state.acc_no}</Text>
 
 
                             </View>

@@ -156,5 +156,8 @@ export const styles = StyleSheet.create({
         color:'#FFFFFF',
         fontWeight:'bold'
     },
-    
+    account_txt:
+    { color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' },
+    account_view:
+    { flexDirection: 'column', justifyContent: "center", borderColor: '#9DB4CE', borderWidth: 1, padding: scaledHeight(20), marginTop: scaledHeight(20) },
 });

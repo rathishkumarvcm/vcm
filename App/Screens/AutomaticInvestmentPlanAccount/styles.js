@@ -92,6 +92,7 @@ export const styles = StyleSheet.create({
     {
         fontSize:scaledHeight(20),
         color:'#4D79F6',
+        fontWeight:'bold'
     },
     
     autoInvest_sub_title_text:{
@@ -183,13 +184,25 @@ export const styles = StyleSheet.create({
         fontWeight:'bold'
     },
     continueButton:{
-        borderColor:'#56565A',
+        borderColor:'#61285F45',
         borderWidth:1,
         width:'80%',
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
        // borderRadius:scaledHeight(25),
+        height:scaledHeight(50),
+        backgroundColor:"rgba(84,74,84,0.5)",
+        alignItems:'center',
+        justifyContent:'center',
+     },
+     continueButtonSelected:{
+        borderColor:'#61285F45',
+        borderWidth:1,
+        width:'80%',
+        marginLeft:'10%',
+        marginRight:'10%',
+        marginTop:scaledHeight(15),
         height:scaledHeight(50),
         backgroundColor:'#56565A',
         alignItems:'center',
@@ -204,4 +217,10 @@ export const styles = StyleSheet.create({
     { borderWidth: 1, borderColor: '#5D83AE99', marginTop: scaledHeight(10) },
     selectedAccount:
     { borderWidth: 5, borderColor: '#B5E198', marginTop: scaledHeight(10) },
+    displayAcc:
+    {color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' },
+    displayAccView:
+    { flexDirection: 'column', justifyContent: 'center', borderBottomColor: '#61285F45', borderBottomWidth: 1, padding: scaledHeight(20) },
+    topSpace:
+    { marginTop: scaledHeight(20) }
 });

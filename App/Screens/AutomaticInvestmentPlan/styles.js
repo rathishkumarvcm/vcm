@@ -233,6 +233,13 @@ export const styles = StyleSheet.create({
         backgroundColor: '#fff', 
         paddingBottom: scaledHeight(10), 
         
-    }
+    },
+    autoInvest_sub_title_text:{
+        fontSize:scaledHeight(22),
+        color:'#56565A',
+        fontWeight:'bold',
+        marginTop:scaledHeight(20),
+        marginBottom:scaledHeight(10)
+    },
 
 });

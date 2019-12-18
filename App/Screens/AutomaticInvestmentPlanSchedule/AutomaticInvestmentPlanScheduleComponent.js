@@ -10,9 +10,7 @@ import {
 } from '../../CommonComponents';
 import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
-
-import * as regEx from '../../Constants/RegexConstants';
-import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
+import { scaledHeight } from '../../Utils/Resolution';
 
 
 const dummyTypeJson = [
@@ -103,13 +101,14 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
             valueDateDropDown: '',
             endDropDown: false,
             valueEndDropDown: '',
-            
+
             // dateBeginDropDown: false,
             // valueDateBeginDropDown: '',
             // yearDropDown: false,
             // valueYearDropDown: '',
             autoInvestmentAddAmountJson: {},
             itemToEdit: this.props.navigation.getParam('ItemToEdit', -1),
+            
         };
     }
 
@@ -144,6 +143,35 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
         //     });
     }
 
+    getPayload = () => {
+
+
+        let payload = {
+            // totalAmount: '$500',  
+            // fundFrom: 'Bank 1',
+            // investedIn: 'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES',
+            invest: 'Quarterly',
+            dateToInvest: '15th',
+            dateAdded: '09/02/2019',
+            endDate: '15/12/2025',
+            nextInvestementDate: '15/11/2019',
+        };
+        if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+            payload = {
+                ...payload,
+                ...this.props.automaticInvestmentState.savedAccData
+            };
+        }
+        return payload;
+
+    }
+
+    navigationNext = () => {
+        const payload = this.getPayload();
+        this.props.saveData("automaticInvestmentSchedule", payload);
+        this.props.navigation.navigate('automaticInvestmentVerify', { skip: false });
+    }
+
     selectTheType = () => {
         this.setState({
             typeDropDown: !this.state.typeDropDown
@@ -166,7 +194,7 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
     selectEnding = () => {
         this.setState({
             endDropDown: !this.state.endDropDown,
-            
+
         });
     }
 
@@ -181,7 +209,7 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
         this.setState({
             valueEndDropDown: valueEnd.title,
             endDropDown: false,
-            
+
         });
     }
 
@@ -211,10 +239,10 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
     //     });
     // }
 
-    navigationNext = () => this.props.navigation.navigate('automaticInvestmentVerify', { skip: false });
+   //navigationNext = () => this.props.navigation.navigate('automaticInvestmentVerify', { skip: false });
     navigationBack = () => this.props.navigation.goBack();
     navigationCancel = () => this.props.navigation.navigate('automaticInvestment');
-    
+
     render() {
         const date = new Date().getDate(); //Current Date
         const month = new Date().getMonth() + 1; //Current Month
@@ -252,10 +280,10 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                         <Text style={styles.autoInvest_title_text}>{'3 - Schedule'}</Text>
                     </View>
                     <View style={styles.body}>
-                        <View style={{ flexDirection: 'column', justifyContent: "center", borderColor: '#9DB4CE', borderWidth: 1, padding: scaledHeight(20), marginTop: scaledHeight(20) }}>
+                        <View style={styles.account_view}>
 
-                            <Text style={{ color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' }}>{'Account Name 1'}</Text>
-                            <Text style={{ color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' }}>{'Account Number xxxx-xxxx-xxxx'}</Text>
+                            <Text style={styles.account_txt}>{'Account Name 1'}</Text>
+                            <Text style={styles.account_txt}>{'Account Number xxxx-xxxx-xxxx'}</Text>
 
 
                         </View>
@@ -326,20 +354,20 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                                 />
                             </View>
                         </View> */}
-                        {this.state.valueEndDropDown.toLowerCase()==="custom"?
-                        <GDateComponent
-                                    
-                                    //inputref={this.setInputRef("startDate" + index)}
-                                    //date={this.state.selectedFundInvestmentsData[index].startDate}
-                                    dateTitleName={styles.financialTextLabel}
-                                    dateTextName="End Date"
-                                    minDate={currentdate}
-                                    placeholder="MM/DD/YYYY"
-                                    //errorFlag={!this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                    //errMsg={this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                    onDateChange={this.onChangeDateForInvestment("startDate", 0)}
-                                />
-                                :null}
+                        {this.state.valueEndDropDown.toLowerCase() === "custom" ?
+                            <GDateComponent
+
+                                //inputref={this.setInputRef("startDate" + index)}
+                                //date={this.state.selectedFundInvestmentsData[index].startDate}
+                                dateTitleName={styles.financialTextLabel}
+                                dateTextName="End Date"
+                                minDate={currentdate}
+                                placeholder="MM/DD/YYYY"
+                                //errorFlag={!this.state.selectedFundInvestmentsData[index].startDateValidation}
+                                //errMsg={this.state.selectedFundInvestmentsData[index].startDateValidation}
+                                onDateChange={this.onChangeDateForInvestment("startDate", 0)}
+                            />
+                            : null}
                         <Text style={styles.scheduleContent}>
                             {'NOTE: If draft day is not specified (1st-31st), the account will be debited on the 15th of each month. Draft date will be the prior business day depending on market availability (when stock market is open).'}
                         </Text>

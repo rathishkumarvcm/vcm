@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
         width: '30%',
         justifyContent: "center",
         alignItems: 'center',
-        borderRadius: scaledHeight(20),
+       // borderRadius: scaledHeight(20),
         backgroundColor: "#FFFFFF",
         marginTop: '2%'
     },
@@ -33,6 +33,7 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#544A54',
         alignItems: "center",
+        fontWeight:'500'
     },
     conentMarginTop: {
         marginTop: scaledHeight(10),
@@ -40,30 +41,27 @@ export const styles = StyleSheet.create({
         fontSize:scaledHeight(15),
         marginBottom:scaledHeight(25),
     },
-    touchOpacityPosition: {
-        position: 'relative',
-    },
     autoInvestHead: {
         marginTop: scaledHeight(15),
         marginBottom: scaledHeight(15),
         fontSize: scaledHeight(20),
-        fontWeight: '500',
-        color:'#707070'
+        fontWeight: 'bold',
+        color:'#707070',
+        width: '80%',
     },
     addInvestTitle: {
         marginTop: scaledHeight(20),
         marginBottom: scaledHeight(10),
-        width: '65%',
-        fontSize: scaledHeight(18),
-        fontWeight: '400',
+        fontSize: scaledHeight(22),
+        fontWeight: 'bold',
         color:'#56565A',
     },
     addInvest: {
         marginTop: scaledHeight(10),
-        width: '35%',
+        width: '20%',
         color: '#0000FF',
         fontSize: scaledHeight(16),
-        fontWeight: '400',
+        fontWeight: '500',
         textAlign:'right',
         marginBottom: scaledHeight(10),
     },
@@ -71,6 +69,9 @@ export const styles = StyleSheet.create({
         borderTopWidth:1,
         borderTopColor:'#C1C1C1',
        
+    },
+    touchOpacityPosition: {
+        position: 'relative',
     },
     addInvestFooterTitle:{
         color:'#54565B',
@@ -103,5 +104,135 @@ export const styles = StyleSheet.create({
         color:'#544A54',
         fontWeight:'bold'
     },
+    editDropdown:{
+        height:scaledHeight(60),
+        backgroundColor:'#FFFFFF',
+        //backgroundColor:'red',
+        borderColor:'#00000029',
+        borderBottomWidth:1,
+        justifyContent:'center',
+ },
+    editDropdownText:{
+        fontSize:scaledHeight(16),
+        color:'#56565A',
+        fontWeight:'bold',
+        marginLeft:scaledWidth(20)
+    },
+    verifyContentMain:{
+        flexDirection: "column", 
+        marginTop: scaledHeight(10),
+        marginBottom:scaledHeight(10),
+        paddingLeft: scaledWidth(10) 
+   },
+   verifyContentView:{
+       flexDirection:'column',
+       borderWidth:1,
+       borderColor:'#D6D8DC',
+       
+       paddingTop:scaledHeight(10),
+       paddingBottom:scaledHeight(10), 
+   },
+   verifyConent1:
+   {
+       color:'#333333DE',
+       fontSize:scaledHeight(16),
+       fontWeight:'bold',
+       marginTop: scaledHeight(5), 
+       marginBottom: scaledHeight(10)
+   },
+   
+   verifyConent2:
+   {
+       color:'#333333DE',
+       fontSize:scaledHeight(16),
+       
+   },
+   flatHeader:{ 
+       borderColor: '#E9E9E9', 
+       borderWidth: 1, 
+       marginTop: scaledHeight(10), 
+       marginBottom: scaledHeight(10) 
+    },
+    flatHeaderView:{ 
+        flexDirection: "row", 
+        flex: 1, 
+        backgroundColor: "#E9E9E9", 
+        height: scaledHeight(50), 
+        alignItems: 'center' 
+    },
+    flatHeaderContent:{ 
+        flexDirection: "row", 
+        flex: 0.6, 
+        paddingLeft: scaledWidth(10), 
+        paddingTop: scaledHeight(10), 
+        paddingBottom: scaledHeight(10) 
+    },
+    flatHeaderTitle:{ 
+        color: '#54565B', 
+        fontSize: scaledWidth(18) 
+    },
+    flatHeaderValue:{ 
+        marginLeft: scaledHeight(10), 
+        color: '#54565B', 
+        fontSize: scaledWidth(18) 
+    },
+    editMenu:
+    {
+         flexDirection: "row", 
+         flex: 0.4, 
+         justifyContent: 'flex-end', 
+         paddingRight: scaledWidth(10) 
+    },
+    editFlatList:{ 
+        position: 'absolute', 
+        zIndex: 5, 
+        top: 55, 
+        width: '100%', 
+        shadowColor: "#000", 
+        shadowOffset: { width: 0, height: 1, }, 
+        shadowOpacity: 0.23, 
+        shadowRadius: 2.62, 
+        elevation: 4, 
+    },
+    flatBodyTitle:{ 
+        flexDirection: "row", 
+        flex: 1, 
+        marginBottom: scaledHeight(15), 
+        marginTop: scaledHeight(15),
+        paddingLeft: scaledWidth(20)  
+    },
+    flatBodyTitleValue:{ 
+        flex: 0.7, 
+        fontSize: scaledWidth(15) 
+    },
+    flatBodyTitleLink:{ 
+        marginLeft: scaledHeight(10), 
+        flex: 0.3, 
+        textAlign: 'center', 
+        fontSize: scaledWidth(14), 
+        color: '#0000FF', 
+        textDecorationLine: 'underline' 
+    },
+    flatBodyDate:{ 
+        fontSize: scaledHeight(13), 
+        color: '#9B9B9BDE',
+        marginBottom:scaledHeight(20),
+        paddingLeft: scaledWidth(20) 
+    },
+    flatBodyNextDate:{ 
+        flexDirection: "row", 
+        alignItems: 'center', 
+        marginRight: scaledWidth(10),
+        paddingLeft: scaledWidth(10) 
+    },
+    flatBodySkip:{ 
+        flexDirection: "column", 
+        width: '70%' 
+    },
+    flatBody:{ 
+        backgroundColor: '#fff', 
+        paddingBottom: scaledHeight(10), 
+        
+    }
 
 });

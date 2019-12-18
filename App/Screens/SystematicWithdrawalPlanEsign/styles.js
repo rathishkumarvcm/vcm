@@ -55,7 +55,7 @@ export const styles = StyleSheet.create({
     circle_connect:{
         borderTopWidth:1,
         borderTopColor:'#C1C1C1',
-        width:scaledWidth(60),
+        width:scaledWidth(40),
         alignSelf:'center'
     },
     circle_view:{
@@ -76,6 +76,7 @@ export const styles = StyleSheet.create({
     {
         fontSize:scaledHeight(20),
         color:'#4D79F6',
+        fontWeight:'bold'
     },
     autoInvest_sub_title_view:{
         marginTop:scaledHeight(20),
@@ -85,6 +86,7 @@ export const styles = StyleSheet.create({
     autoInvest_sub_title_text:{
         fontSize:scaledHeight(20),
         color:'#56565A',
+        fontWeight:'bold'
     },
     body:
     {
@@ -156,7 +158,7 @@ export const styles = StyleSheet.create({
     esignBody:{
             borderColor:'#61285F45',
             borderWidth:1,
-            
+            marginTop:scaledHeight(20)
     },
     esignBody1:
     {

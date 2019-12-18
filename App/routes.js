@@ -134,6 +134,7 @@ import systematicWithdrawalAdd from './Screens/SystematicWithdrawalPlanAdd';
 import systematicWithdrawalSchedule from './Screens/SystematicWithdrawalPlanSchedule';
 import systematicWithdrawalVerify from './Screens/SystematicWithdrawalPlanVerify';
 import systematicWithdrawalEsign from './Screens/SystematicWithdrawalPlanEsign';
+import systematicWithdrawalAccount from './Screens/SystematicWithdrawalPlanAccount';
 
 
 //Automatic Investment Plan
@@ -750,6 +751,12 @@ const AppNavigator = createStackNavigator({
         },
         systematicWithdrawalEsign:{
             screen:systematicWithdrawalEsign,
+            navigationOptions:{
+                header:null,
+            }  
+        },
+        systematicWithdrawalAccount:{
+            screen:systematicWithdrawalAccount,
             navigationOptions:{
                 header:null,
             }  

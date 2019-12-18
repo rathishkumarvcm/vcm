@@ -24,7 +24,31 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
         this.setState({ saveCurrentDevice: !this.state.saveCurrentDevice });
     }
 
-    navigationSubmit = () => this.props.navigation.navigate('automaticInvestment');
+    getPayload = () => {
+        
+
+        let payload = {
+            // totalAmount: '$500',  
+            // fundFrom: 'Bank 1',
+            // investedIn: 'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES',
+        };
+        if (this.props && this.props.accountState && this.props.accountState.savedAccData) {
+            payload = {
+                ...payload,
+                ...this.props.accountState.savedAccData
+            };
+        }
+        return payload;
+
+    }
+
+    navigationSubmit = () => {
+            const payload = this.getPayload();
+            this.props.saveData("automaticInvestmentEsign", payload); 
+            this.props.navigation.navigate('automaticInvestment');
+    }
+
+    //navigationSubmit = () => this.props.navigation.navigate('automaticInvestment');
     navigationCancel=()=>this.props.navigation.navigate('automaticInvestment');
     navigationBack = () => this.props.navigation.goBack();
 
