@@ -1,6 +1,6 @@
 /* eslint-disable react/no-multi-comp */
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity,Image,KeyboardAvoidingView } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity,Image,KeyboardAvoidingView ,Platform} from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GIcon, GDateComponent, GDropDownComponent } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio } from '../../AppComponents';
@@ -9,6 +9,7 @@ import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import ImagePicker from 'react-native-image-picker';
+import { Header } from 'react-navigation';
 
 let imagePickerOptions = {
     title: 'Select Image',
@@ -60,6 +61,7 @@ class OpenAccPageTwoComponent extends Component {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
+            enableScrollViewScroll:true,
             isValidationSuccess: true,
             errMsg: "",
             itemID: "",
@@ -1224,7 +1226,8 @@ class OpenAccPageTwoComponent extends Component {
         [stateKey]: {
             ...prevState[stateKey],
             [keyName]: !this.state[stateKey][keyName]
-        }
+        },
+        enableScrollViewScroll:false
     }));
 
     onPressRadio = (stateKey, keyName, text) => () => {
@@ -1983,7 +1986,8 @@ class OpenAccPageTwoComponent extends Component {
                     ...prevState[section],
                     [stateKey]: item.value,
                     [dropDownName]: false
-                }
+                },
+                enableScrollViewScroll:true
             }));
         }
 
@@ -4848,7 +4852,13 @@ class OpenAccPageTwoComponent extends Component {
         let currentPage = 2;
         return (
            
-            <KeyboardAvoidingView style={styles.container} behavior="padding">
+            <KeyboardAvoidingView 
+            style={styles.container} 
+             //keyboardVerticalOffset = { Header.HEIGHT + 20 }  
+            //behavior="padding"
+             behavior= {(Platform.OS === 'ios')? "padding" : null}
+             keyboardVerticalOffset={Platform.select({ios:20, android: 500})}
+             >
                 {
                     (this.props.accOpeningData.isLoading || this.props.masterLookupStateData.isLoading) && <GLoadingSpinner />
                 }
@@ -4856,7 +4866,9 @@ class OpenAccPageTwoComponent extends Component {
                     navigation={this.props.navigation}
                     onPress={this.onClickHeader}
                 />
-                <ScrollView style={{ flex: .85 }} keyboardShouldPersistTaps="always" ref={this.setScrollViewRef}>
+                <ScrollView style={{ flex: .85 }} keyboardShouldPersistTaps="always" ref={this.setScrollViewRef}
+                scrollEnabled={this.state.enableScrollViewScroll}
+                >
                     <View style={styles.accSelection}>
                         <Text style={styles.accSelectionTxt}>
                             {tempAccTypeCAPS}
