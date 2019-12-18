@@ -1396,7 +1396,7 @@ class OpenAccPageTwoComponent extends Component {
         let input = "";
 
         if (this.isEmpty(this.state.jointOwner.relationshipToAcc)) {
-            errMsg = gblStrings.accManagement.emptyPrefixMsg;
+            errMsg = gblStrings.accManagement.emptyRelationToAccMsg;
             input = 'relationshipToAcc';
         } else if (this.isEmpty(this.state.jointOwner.firstName)) {
             errMsg = gblStrings.accManagement.emptyFirstNameMsg;
@@ -3481,6 +3481,7 @@ class OpenAccPageTwoComponent extends Component {
                             placeholder={gblStrings.accManagement.enterCity}
                             returnKeyType={"done"}
                             maxLength={gblStrings.maxLength.city}
+                            value={this.state.jointOwner.city}
                             onChangeText={this.onChangeText("jointOwner", "city")}
                             onSubmitEditing={this.onSubmitEditing(this.stateCity_joint)}
                             errorFlag={!this.state.jointOwner.cityValidation}
@@ -3508,89 +3509,6 @@ class OpenAccPageTwoComponent extends Component {
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.isYourPhysicalAddressSame}
                         </Text>
-
-                        {
-                            this.state.jointOwner.isYourPhysicalAddresSame == "No" &&
-                            <View>
-                                <Text style={styles.lblTxt}>
-                                    {gblStrings.accManagement.address}
-                                </Text>
-                                <GInputComponent
-                                    inputref={this.setInputRef("addrLine1_Phy")}
-                                    propInputStyle={this.state.jointOwner.addrLine1_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                    placeholder={gblStrings.accManagement.empAddrLine1}
-                                    maxLength={gblStrings.maxLength.emplAddress1}
-                                    value={this.state.jointOwner.addrLine1_Phy}
-                                    onChangeText={this.onChangeText("jointOwner", "addrLine1_Phy_joint")}
-                                    onSubmitEditing={this.onSubmitEditing(this.addrLine2_Phy)}
-                                    errorFlag={!this.state.jointOwner.addrLine1_PhyValidation}
-                                    errorText={this.state.errMsg}
-                                />
-                                <GInputComponent
-                                    inputref={this.setInputRef("addrLine2_Phy")}
-                                    propInputStyle={this.state.jointOwner.addrLine2_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                    placeholder={gblStrings.accManagement.empAddrLine2}
-                                    maxLength={gblStrings.maxLength.addressLine2}
-                                    value={this.state.jointOwner.addrLine2_Phy}
-                                    onChangeText={this.onChangeText("jointOwner", "addrLine2_Phy")}
-                                    onSubmitEditing={this.onSubmitEditing(this.zipcode_Phy)}
-                                    errorFlag={!this.state.jointOwner.addrLine2_PhyValidation}
-                                    errorText={this.state.errMsg}
-
-
-                                />
-
-
-                                <Text style={styles.lblTxt}>
-                                    {gblStrings.accManagement.zipcode}
-                                </Text>
-                                <GInputComponent
-                                    inputref={this.setInputRef("zipcode_Phy")}
-                                    propInputStyle={this.state.jointOwner.zipcode_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                    placeholder={gblStrings.accManagement.enterZip}
-                                    maxLength={gblStrings.maxLength.zipCode}
-                                    returnKeyType={"done"}
-                                    onChangeText={this.onChangeText("jointOwner", "zipcode_Phy")}
-                                    keyboardType="number-pad"
-                                    onSubmitEditing={this.onSubmitZipEditing("jointOwner", "zipcode_Phy", this.city_Phy)}
-                                    errorFlag={!this.state.jointOwner.zipcode_PhyValidation}
-                                    errorText={this.state.errMsg}
-                                />
-
-                                <Text style={styles.lblTxt}>
-                                    {gblStrings.accManagement.cityAndState}
-                                </Text>
-                                <GInputComponent
-                                    inputref={this.setInputRef("city_Phy")}
-                                    propInputStyle={this.state.jointOwner.city_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                    placeholder={gblStrings.accManagement.enterCity}
-                                    maxLength={gblStrings.maxLength.city}
-                                    value={this.state.jointOwner.city_Phy}
-                                    onChangeText={this.onChangeText("jointOwner", "city_Phy")}
-                                    onSubmitEditing={this.onSubmitEditing(this.stateCity_Phy)}
-                                    errorFlag={!this.state.jointOwner.city_PhyValidation}
-                                    errorText={this.state.errMsg}
-                                    editable = {this.state.jointOwner.citizenship != "U.S"? true:false}
-
-
-                                />
-                                <GInputComponent
-                                    inputref={this.setInputRef("stateCity_Phy")}
-                                    propInputStyle={this.state.jointOwner.stateCity_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                    placeholder={gblStrings.accManagement.enterState}
-                                    returnKeyType={"done"}
-                                    maxLength={gblStrings.maxLength.state}
-                                    value={this.state.jointOwner.stateCity_Phy}
-                                    onChangeText={this.onChangeText("jointOwner", "stateCity_Phy")}
-                                    onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
-                                    errorFlag={!this.state.jointOwner.stateCity_PhyValidation}
-                                    errorText={this.state.errMsg}
-                                    editable = {this.state.jointOwner.citizenship != "U.S"? true:false}
-
-                                />
-
-                            </View>
-                        }
                         <View style={styles.radioBtnGrp}>
                             <CustomRadio
                                 componentStyle={{ width: "30%", marginBottom: scaledHeight(0) }}
@@ -3623,6 +3541,91 @@ class OpenAccPageTwoComponent extends Component {
                             </Text>
                         }
 
+                        {
+                            this.state.jointOwner.isYourPhysicalAddresSame == "No" &&
+                            <View>
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.address}
+                                </Text>
+                                <GInputComponent
+                                    inputref={this.setInputRef("addrLine1_Phy_joint")}
+                                    propInputStyle={this.state.jointOwner.addrLine1_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder={gblStrings.accManagement.empAddrLine1}
+                                    maxLength={gblStrings.maxLength.emplAddress1}
+                                    value={this.state.jointOwner.addrLine1_Phy}
+                                    onChangeText={this.onChangeText("jointOwner", "addrLine1_Phy")}
+                                    onSubmitEditing={this.onSubmitEditing(this.addrLine2_Phy)}
+                                    errorFlag={!this.state.jointOwner.addrLine1_PhyValidation}
+                                    errorText={this.state.errMsg}
+                                />
+                                <GInputComponent
+                                    inputref={this.setInputRef("addrLine2_Phy_joint")}
+                                    propInputStyle={this.state.jointOwner.addrLine2_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder={gblStrings.accManagement.empAddrLine2}
+                                    maxLength={gblStrings.maxLength.addressLine2}
+                                    value={this.state.jointOwner.addrLine2_Phy}
+                                    onChangeText={this.onChangeText("jointOwner", "addrLine2_Phy")}
+                                    onSubmitEditing={this.onSubmitEditing(this.zipcode_Phy_joint)}
+                                    errorFlag={!this.state.jointOwner.addrLine2_PhyValidation}
+                                    errorText={this.state.errMsg}
+
+
+                                />
+
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.zipcode}
+                                </Text>
+                                <GInputComponent
+                                    inputref={this.setInputRef("zipcode_Phy_joint")}
+                                    propInputStyle={this.state.jointOwner.zipcode_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder={gblStrings.accManagement.enterZip}
+                                    maxLength={gblStrings.maxLength.zipCode}
+                                    returnKeyType={"done"}
+                                    onChangeText={this.onChangeText("jointOwner", "zipcode_Phy")}
+                                    keyboardType="number-pad"
+                                    onSubmitEditing={this.onSubmitZipEditing("jointOwner", "zipcode_Phy", this.city_Phy_joint)}
+                                    errorFlag={!this.state.jointOwner.zipcode_PhyValidation}
+                                    errorText={this.state.errMsg}
+                                />
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.cityAndState}
+                                </Text>
+                                <GInputComponent
+                                    inputref={this.setInputRef("city_Phy_joint")}
+                                    propInputStyle={this.state.jointOwner.city_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder={gblStrings.accManagement.enterCity}
+                                    maxLength={gblStrings.maxLength.city}
+                                    value={this.state.jointOwner.city_Phy}
+                                    onChangeText={this.onChangeText("jointOwner", "city_Phy")}
+                                    onSubmitEditing={this.onSubmitEditing(this.stateCity_Phy_joint)}
+                                    errorFlag={!this.state.jointOwner.city_PhyValidation}
+                                    errorText={this.state.errMsg}
+                                    editable = {this.state.jointOwner.citizenship != "U.S"? true:false}
+
+
+                                />
+                                <GInputComponent
+                                    inputref={this.setInputRef("stateCity_Phy_joint")}
+                                    propInputStyle={this.state.jointOwner.stateCity_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder={gblStrings.accManagement.enterState}
+                                    returnKeyType={"done"}
+                                    maxLength={gblStrings.maxLength.state}
+                                    value={this.state.jointOwner.stateCity_Phy}
+                                    onChangeText={this.onChangeText("jointOwner", "stateCity_Phy")}
+                                    onSubmitEditing={this.onSubmitEditing(this.mobileNo_joint)}
+                                    errorFlag={!this.state.jointOwner.stateCity_PhyValidation}
+                                    errorText={this.state.errMsg}
+                                    editable = {this.state.jointOwner.citizenship != "U.S"? true:false}
+
+                                />
+
+                            </View>
+                        }
+                 
+                      
+
 
                         {this.renderCustomDropDown({
                             section: "jointOwner",
@@ -3644,6 +3647,7 @@ class OpenAccPageTwoComponent extends Component {
                             maxLength={gblStrings.maxLength.mobileNo}
                             keyboardType="phone-pad"
                             onChangeText={this.onChangeText("jointOwner", "mobileNo")}
+                            value = {this.state.jointOwner.mobileNo.replace(/\d(?=\d{4})/g, "*")}
                             onSubmitEditing={this.onSubmitEditing(this.telePhoneNo2_joint)}
                             errorFlag={!this.state.jointOwner.mobileNoValidation}
                             errorText={this.state.errMsg}
@@ -3803,17 +3807,20 @@ class OpenAccPageTwoComponent extends Component {
                             isOptional: false
                         })
                         }
-                        {this.state.jointOwner.empStatus === "Others" &&
+                       
+                         {this.state.jointOwner.empStatus === "Others" &&
                             <GInputComponent
-                                inputref={this.setInputRef("empStatus_joint")}
+                                inputref={this.setInputRef("empStatusForOther_joint")}
                                 propInputStyle={styles.customTxtBox}
                                 placeholder={"Enter Employment status"}
                                 maxLength={gblStrings.maxLength.common}
-                                onChangeText={this.onChangeText("jointOwner", "empStatus")}
+                                onChangeText={this.onChangeText("jointOwner", "empStatusForOther")}
                                 onSubmitEditing={this.onSubmitEditing(this.empIndustry)}
-
+                                errorFlag={!this.state.jointOwner.empStatusForOtherValidation}
+                                errorText={this.state.errMsg}
                             />
                         }
+
 
 
                         {
@@ -3832,16 +3839,16 @@ class OpenAccPageTwoComponent extends Component {
                                 }
                                 {this.state.jointOwner.empIndustry === "Other Industry" &&
                                     <GInputComponent
-                                        inputref={this.setInputRef("empIndustry_joint")}
+                                        inputref={this.setInputRef("empIndustryForOther_joint")}
                                         propInputStyle={styles.customTxtBox}
                                         placeholder={"Enter Industry"}
                                         maxLength={gblStrings.maxLength.common}
-                                        onChangeText={this.onChangeText("jointOwner", "empIndustry")}
-                                        onSubmitEditing={this.onSubmitEditing(this.empOccupation_joint)}
-
+                                        onChangeText={this.onChangeText("jointOwner", "empIndustryForOther")}
+                                        onSubmitEditing={this.onSubmitEditing(this.empOccupation)}
+                                    errorFlag={!this.state.jointOwner.empIndustryForOtherValidation}
+                                    errorText={this.state.errMsg}
                                     />
                                 }
-
                                 <Text style={styles.lblTxt}>
                                     {gblStrings.accManagement.occupation}
                                 </Text>
@@ -4274,7 +4281,7 @@ class OpenAccPageTwoComponent extends Component {
                                 {this.state.errMsg}
                             </Text>
                         }
-                    {this.state.jointOwner.isSeniorPoliticalFigure &&
+                    {this.state.jointOwner.isSeniorPoliticalFigure == "Yes" &&
 
                         <View style={{ flexGrow: 1 }}>
                             <Text style={styles.lblTxt}>

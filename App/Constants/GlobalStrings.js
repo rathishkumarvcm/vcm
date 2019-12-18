@@ -521,6 +521,7 @@ export default {
         emptyIsSeniorPoliticalFigureMsg: "Please indicate whether you are a senior foreign political figure or not.",
         emptySeniorPoliticalNameMsg: "Please enter Senior Foreign Political Figure Name",
         emptyRelationTypeMsg: "Please select a relationship to custodian",
+        emptyRelationToAccMsg: "Please select a relationship to account holder",
         emptySeletedFundMsg: "Atleast one fund should be selected",
         maximumSeletedFundMsg: "Maximm 10 funds only allowed",
         emptyFundingSourceMsg: "Atleast one funding source should be selected",
