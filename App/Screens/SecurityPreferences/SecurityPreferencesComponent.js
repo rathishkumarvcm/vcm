@@ -25,6 +25,8 @@ class SecurityPreferences extends Component {
 
     navigateChooseSignIn = () => this.props.navigation.navigate('ChangeSignInMethod');
 
+    navigateQuickSignIn = () => this.props.navigation.navigate('QuickSigninComponent');
+
     render() {
         return (
             <View style={styles.container}>
@@ -135,26 +137,28 @@ class SecurityPreferences extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <View style={styles.optionContainer}>
-                        <View style={styles.optionIcon}>
-                            <GIcon
-                                name="view-grid"
-                                type="material-community"
-                                size={30}
-                                color="black"
-                            />
+                    <TouchableOpacity onPress={this.navigateQuickSignIn}>
+                        <View style={styles.optionContainer}>
+                            <View style={styles.optionIcon}>
+                                <GIcon
+                                    name="view-grid"
+                                    type="material-community"
+                                    size={30}
+                                    color="black"
+                                />
 
-                            <Text style={styles.optionHeaderText}>
-                                {gblStrings.userManagement.mobileQuickSignIn}
-                            </Text>
-                        </View>
+                                <Text style={styles.optionHeaderText}>
+                                    {gblStrings.userManagement.mobileQuickSignIn}
+                                </Text>
+                            </View>
 
-                        <View style={styles.optionSubHeaderView}>
-                            <Text style={styles.optionSubHeaderText}>
-                                {gblStrings.userManagement.loremSecurityPref}
-                            </Text>
+                            <View style={styles.optionSubHeaderView}>
+                                <Text style={styles.optionSubHeaderText}>
+                                    {gblStrings.userManagement.loremSecurityPref}
+                                </Text>
+                            </View>
                         </View>
-                    </View>
+                    </TouchableOpacity>
 
                     <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateBack}>
                         <Text style={styles.backButtonText}>{gblStrings.userManagement.back}</Text>
