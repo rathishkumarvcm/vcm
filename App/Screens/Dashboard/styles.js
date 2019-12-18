@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import {scaledHeight } from '../../Utils/Resolution';
+import {scaledHeight,scaledWidth } from '../../Utils/Resolution';
 
 
 
@@ -128,6 +128,49 @@ export const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: scaledHeight(12)
 
+    },
+    buttonGoActionStyle: {        
+        width: scaledWidth(100),      
+        height: scaledHeight(50),
+        backgroundColor: '#544A54',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',       
+        marginLeft:'2%',   
+        marginRight:'2%',       
+    },   
+    buttonGoTextStyle: {
+        fontSize: scaledHeight(16),
+        color: '#544A54',      
+        width: '100%',
+        textAlign: 'center',        
+    },
+    buttonCancelActionStyle:{
+        width: scaledWidth(100),      
+        height: scaledHeight(50),
+        borderColor:'#544A54',
+        borderWidth:1,
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        marginLeft:'2%',   
+        marginRight:'2%',
+    },
+    modalContainerStyle: {
+        backgroundColor: '#FFFFFF',       
+        paddingRight: '4%',
+        paddingLeft: '4%',
+        paddingTop: scaledHeight(15),
+        paddingBottom: scaledHeight(15), 
+        marginTop:scaledHeight(80), 
+
+    },
+    buttonCancelTextStyle: {
+        fontSize: scaledHeight(16),
+        color: '#FFFFFF',      
+        width: '100%',
+        textAlign: 'center',       
     },
 
 });

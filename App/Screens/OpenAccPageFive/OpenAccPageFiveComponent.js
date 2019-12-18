@@ -55,7 +55,10 @@ class OpenAccPageFiveComponent extends Component {
         }  
         else if(specialMFAUserType=="NewUser"){
             this.props.navigation.push('openAccPageSix',{SpecialMFA:'NewUser'});   
-        }          
+        }  
+        else if(specialMFAUserType=="UserForm"){
+            this.props.navigation.push('openAccPageSix',{SpecialMFA:'UserForm'});   
+        }         
         else{
             this.props.navigation.navigate({ routeName: 'openAccPageSix', key: 'openAccPageSix' });
         }  
@@ -725,7 +728,7 @@ class OpenAccPageFiveComponent extends Component {
 
                     <View style={styles.btnGrp}>
                         {
-                            (specialMFAUserType!="" && specialMFAUserType!="GuestUser" && specialMFAUserType!="NewUser")?
+                            (specialMFAUserType!="" && specialMFAUserType!="GuestUser" && specialMFAUserType!="NewUser" && specialMFAUserType!="UserForm")?
                             <GButtonComponent
                                 buttonStyle={styles.normalWhiteBtn}
                                 buttonText={gblStrings.common.save}
@@ -735,7 +738,7 @@ class OpenAccPageFiveComponent extends Component {
                             :null
                         }
                         {
-                            (specialMFAUserType!="" && specialMFAUserType!="GuestUser" && specialMFAUserType!="NewUser")?
+                            (specialMFAUserType!="" && specialMFAUserType!="GuestUser" && specialMFAUserType!="NewUser" && specialMFAUserType!="UserForm")?
                             <GButtonComponent
                                 buttonStyle={styles.normalWhiteBtn}
                                 buttonText={gblStrings.common.cancel}
@@ -746,7 +749,7 @@ class OpenAccPageFiveComponent extends Component {
                         }
                         <GButtonComponent
                             buttonStyle={styles.normalWhiteBtn}
-                            buttonText={(specialMFAUserType!="" && (specialMFAUserType=="GuestUser" || specialMFAUserType=="NewUser"))?gblStrings.common.cancel:gblStrings.common.back}
+                            buttonText={(specialMFAUserType!="" && (specialMFAUserType=="GuestUser" || specialMFAUserType=="NewUser" || specialMFAUserType=="UserForm"))?gblStrings.common.cancel:gblStrings.common.back}
                             textStyle={styles.normalWhiteBtnTxt}
                             onPress={this.goBack}
                         />                            

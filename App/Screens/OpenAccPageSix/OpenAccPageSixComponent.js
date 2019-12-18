@@ -308,9 +308,10 @@ class OpenAccPageSixComponent extends Component {
     onClickSubmit = () => {
         if (this.validateFields()) {
             const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));
-            if(specialMFAUserType=="GuestUser" || specialMFAUserType=="NewUser"){
+            if(specialMFAUserType=="GuestUser" || specialMFAUserType=="NewUser" || specialMFAUserType=="UserForm"){
                this.props.navigation.navigate('dashboard');
-            }else{
+            }           
+            else{
                 const payload = this.getPayload();
                 this.props.submitAccountOpening(payload);
             }
@@ -577,7 +578,7 @@ class OpenAccPageSixComponent extends Component {
 
                     <View style={styles.btnGrp}>
                     { 
-                        (specialMFAUserType!="" && specialMFAUserType!="GuestUser" && specialMFAUserType!="NewUser")?
+                        (specialMFAUserType!="" && specialMFAUserType!="GuestUser" && specialMFAUserType!="NewUser" && specialMFAUserType!="UserForm")?
                             <GButtonComponent
                                 buttonStyle={styles.normalWhiteBtn}
                                 buttonText={gblStrings.common.save}

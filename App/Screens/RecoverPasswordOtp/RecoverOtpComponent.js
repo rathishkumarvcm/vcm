@@ -83,9 +83,12 @@ componentDidMount(){
       };
       console.log(recoveryJson);
       const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));   
-      if(specialMFAUserType=="JointAcc" || specialMFAUserType=="NewUser" || specialMFAUserType=="UserForm"){
+      if(specialMFAUserType=="JointAcc" || specialMFAUserType=="NewUser"){
         this.props.navigation.navigate('registerPassword',{SpecialMFA:specialMFAUserType}); 
-      }else{
+      }else if(specialMFAUserType=="UserForm"){
+        this.props.navigation.navigate('dashboard',{SpecialMFA:specialMFAUserType});
+      }
+      else{
         this.props.navigation.navigate('passwordReset');
       }
     }

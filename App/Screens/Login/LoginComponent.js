@@ -139,14 +139,12 @@ class LoginComponent extends Component {
         }
         else if(this.props && this.props.loginState && this.props.loginState.emailCheck && this.props.loginState.data && this.props.loginState.data.response && this.props.loginState.data.response.status === 200 && (this.props.navigation.getParam('SpecialMFA')=="NewUser"))
         {
-            this.props.navigation.navigate('openAccPageFive',{SpecialMFA:'NewUser'});
-        }
-        else if(this.props && this.props.loginState && this.props.loginState.emailCheck && this.props.loginState.data && this.props.loginState.data.response && this.props.loginState.data.response.status === 200 && (this.props.navigation.getParam('SpecialMFA')=="UserForm"))
-        {
-            this.props.navigation.navigate('verifySSN',{SpecialMFA:'UserForm'});
-        }
+            this.props.navigation.navigate('dashboard',{SpecialMFA:'NewUser'});
+        }        
         else if(this.props && this.props.loginState && this.props.loginState.emailCheck && this.props.loginState.data && this.props.loginState.data.response && this.props.loginState.data.response.status === 200){
+           this.navigateDashboard();           
             this.navigateDashboard();
+           this.navigateDashboard();           
         }        
     }
 }

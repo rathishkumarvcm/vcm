@@ -1,84 +1,77 @@
 import React from "react";
 import { View, StyleSheet, Modal, Text } from 'react-native';
+import PropTypes from "prop-types";
 import { scaledHeight,scaledWidth } from '../Utils/Resolution';
 import { GButtonComponent } from './GButtonComponent';
-import PropTypes from "prop-types";
-
 
 const styles = StyleSheet.create({
+    buttonGoActionStyle: {            
+        alignContent: 'center',      
+        alignItems: 'center', 
+        backgroundColor: '#5D83AE',        
+        height: scaledHeight(50),   
+        justifyContent: 'center',         
+        marginLeft:'2%',   
+        marginRight:'2%',    
+        marginTop: scaledHeight(20),
+        width: scaledWidth(140),           
+    },   
+    buttonGoTextStyle: {
+        color: '#FFFFFF',  
+        fontSize: scaledHeight(16),          
+        textAlign: 'center',  
+        width: '100%',      
+    }, 
+    modalActionContainer:{
+        flexDirection:'row',
+        marginBottom:scaledHeight(10),
+        marginTop:scaledHeight(10)      
+    },  
     modalBackgroundView: {
         backgroundColor: 'rgba(0,0,0,0.5)',
         height: '100%',
-    },
+    },    
     modalContainer: {
-        backgroundColor: '#FFFFFF',
-        marginLeft: '4%',
-        marginRight: '4%',
-        paddingRight: '4%',
-        paddingLeft: '4%',
+        backgroundColor: '#FFFFFF',             
+        paddingBottom: scaledHeight(15), 
+        paddingLeft: '4%',       
+        paddingRight: '4%',              
         paddingTop: scaledHeight(15),
-        paddingBottom: scaledHeight(15),
-        marginTop:scaledHeight(120),
-    },
-    titleText: {
-        color: '#000000',
-        fontSize: scaledHeight(26),        
-        marginLeft: '4%',
-        marginRight: '4%',
-        marginTop:scaledHeight(10),
-        marginBottom:scaledHeight(10),
-    },
+    },    
     modalContentText: {
         color: '#56565A',
-        fontSize: scaledHeight(13),      
-        marginLeft: '4%',
-        marginRight: '4%',
-        marginTop:scaledHeight(10),
-        marginBottom:scaledHeight(10),
-    },
-    modalActionContainer:{
-        flexDirection:'row',
-        marginTop:scaledHeight(10),
-        marginBottom:scaledHeight(10)
+        fontSize: scaledHeight(14),  
+        marginBottom:scaledHeight(10),   
+        marginTop:scaledHeight(10),        
     },   
-    buttonGoActionStyle: {        
-        width: scaledWidth(140),      
-        height: scaledHeight(50),
-        backgroundColor: '#5D83AE',
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
-        marginTop: scaledHeight(20),
-        marginLeft:'2%',   
-        marginRight:'2%',       
+    titleText: {
+        color: '#000000',
+        fontSize: scaledHeight(24), 
+        marginBottom:scaledHeight(10),      
+        marginTop:scaledHeight(10)        
     },   
-    buttonGoTextStyle: {
-        fontSize: scaledHeight(16),
-        color: '#FFFFFF',      
-        width: '100%',
-        textAlign: 'center',
-        textTransform:'uppercase'
-    },
 });
-
-const GModalComponent = props => (
+const GModalComponent = props => (      
     <Modal
         transparent
         visible={props.modalVisible}
         onRequestClose={!props.modalVisible}
     >
         <View style={styles.modalBackgroundView}>                           
-            <View style={styles.modalContainer}>
+            <View style={[styles.modalContainer, props.modalContainerStyle]}>
                 <Text style={styles.titleText}>
                     {props.titleContent}
                 </Text>
                 <Text style={styles.modalContentText}>
                     {props.descContent1}
                 </Text>
-                <Text style={styles.modalContentText}>
-                    {props.descContent2}
-                </Text>
-
+                {
+                    (props.descContent2!=="")?
+                    <Text style={styles.modalContentText}>
+                        {props.descContent2}
+                    </Text>
+                    :null
+                }            
                 <View style={styles.modalActionContainer}>
                     <GButtonComponent
                         buttonStyle={[styles.buttonGoActionStyle, props.buttonGoActionStyle]}
@@ -99,10 +92,11 @@ const GModalComponent = props => (
 );
 
 GModalComponent.propTypes = {
-    modalVisible : PropTypes.bool.isRequired,
+    modalVisible : PropTypes.bool.isRequired,   
+    modalContainerStyle : PropTypes.instanceOf(Object),
     titleContent : PropTypes.string,
     descContent1 : PropTypes.string,
-    descContent2 : PropTypes.string,      
+    descContent2 : PropTypes.string,           
     buttonGoActionStyle: PropTypes.instanceOf(Object),
     buttonCancelActionStyle: PropTypes.instanceOf(Object),
     buttonGoText : PropTypes.string, 
@@ -110,10 +104,13 @@ GModalComponent.propTypes = {
     buttonGoTextStyle: PropTypes.instanceOf(Object),
     buttonCancelTextStyle: PropTypes.instanceOf(Object),
     buttonGoOnPress : PropTypes.func,
-    buttonGoCancelPress : PropTypes.func   
+    buttonGoCancelPress : PropTypes.func,     
 };
 
-GModalComponent.defaultProps = {
+GModalComponent.defaultProps = {   
+    titleContent:"",
+    descContent1:"",
+    descContent2:"",
     buttonGoActionStyle: {},
     buttonCancelActionStyle: {},
     buttonGoText:"",

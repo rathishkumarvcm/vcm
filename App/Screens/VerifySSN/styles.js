@@ -12,6 +12,9 @@ export const styles = StyleSheet.create({
         marginLeft:'4%',
         marginRight:'4%'
     },
+    scrollViewFlex:{
+        flex: 0.85
+    },
     pagerContainer:{
         flexDirection:'row',   
         marginTop:scaledHeight(10),
