@@ -17,9 +17,9 @@ class BankAccountsComponent extends Component {
                     Id: "1",
                     bankName: "Wells Fargo",
                     accountType: "Checking Account",
-                    accountNumber: "0012556968666",
+                    accountNumber: "0078256409872",
                     transitRoutingNumber: "569933659",
-                    dateAdded: "20/11/2019",
+                    dateAdded: "21/11/2019",
                     isSystematicWithdrawalPlan: "Yes",
                     isAutomaticInvestmentPlan: "No",
                     showDeleteOption: false,
@@ -28,21 +28,21 @@ class BankAccountsComponent extends Component {
                     Id: "2",
                     bankName: "Bank Of America",
                     accountType: "Checking Account",
-                    accountNumber: "0012556968666",
-                    transitRoutingNumber: "569933659",
-                    dateAdded: "20/11/2019",
-                    isSystematicWithdrawalPlan: "Yes",
-                    isAutomaticInvestmentPlan: "No",
+                    accountNumber: "0043589649087",
+                    transitRoutingNumber: "123678987",
+                    dateAdded: "16/10/2019",
+                    isSystematicWithdrawalPlan: "No",
+                    isAutomaticInvestmentPlan: "Yes",
                     showDeleteOption: false,
                 },
                 {
                     Id: "3",
-                    bankName: "Wells Fargo",
+                    bankName: "Chase",
                     accountType: "Checking Account",
-                    accountNumber: "0012556968666",
-                    transitRoutingNumber: "569933659",
-                    dateAdded: "20/11/2019",
-                    isSystematicWithdrawalPlan: "Yes",
+                    accountNumber: "0012347896754",
+                    transitRoutingNumber: "987678567",
+                    dateAdded: "20/09/2019",
+                    isSystematicWithdrawalPlan: "No",
                     isAutomaticInvestmentPlan: "No",
                     showDeleteOption: false,
                 },
@@ -152,13 +152,15 @@ class BankAccountsComponent extends Component {
                                             {`${item.bankName}`}
                                         </Text>
 
-                                        <TouchableOpacity style={styles.editBankInfo} key={item.Id} onPress={() => this.updateShowDeleteOption('showDelete', true, item.Id)}>
-                                            <GIcon
-                                                name="dots-vertical"
-                                                type="material-community"
-                                                size={30}
-                                            />
-                                        </TouchableOpacity>
+                                        {item.isSystematicWithdrawalPlan == "No" && item.isAutomaticInvestmentPlan == "No" &&
+                                            <TouchableOpacity style={styles.editBankInfo} key={item.Id} onPress={() => this.updateShowDeleteOption('showDelete', true, item.Id)}>
+                                                <GIcon
+                                                    name="dots-vertical"
+                                                    type="material-community"
+                                                    size={30}
+                                                />
+                                            </TouchableOpacity>
+                                        }
                                     </View>
 
                                     {item.showDeleteOption && <GButtonComponent
@@ -230,74 +232,6 @@ class BankAccountsComponent extends Component {
         );
     }
 }
-
-const ViewAccountItem = (props) => {
-    item = props.item;
-    isCollapsed = false;
-    console.log("ViewAccountItem:::: ",item);
-    return (
-
-        <View style={styles.bankInfoContainer}>
-            <View style={styles.bankNameHeader}>
-                <Text style={styles.accountTypeText}>
-                    {`${item.bankName}`}
-                </Text>
-
-                <TouchableOpacity style={styles.editBankInfo} key={item.Id} onPress={() => props.updateShowDeleteOption('showDelete', true, item.Id)}>
-                    <GIcon
-                        name="dots-vertical"
-                        type="material-community"
-                        size={30}
-                    />
-                </TouchableOpacity>
-            </View>
-
-            {item.showDeleteOption && <GButtonComponent
-                buttonStyle={styles.deleteBtn}
-                buttonText={gblStrings.common.delete}
-                textStyle={styles.backButtonText}
-                onPress={this.navigateBack}
-            />}
-
-            <View style={styles.linkBreak2}/>
-            
-            <Text style={styles.accountNameHeaderText}>
-                {gblStrings.bankAccounts.account_number}
-            </Text>
-
-            <Text style={styles.accountNameSubHeaderText}>
-                {`${item.accountNumber}`}
-            </Text>
-
-            <Text style={styles.accountNameHeaderText}>
-                {gblStrings.bankAccounts.transit_routing_number}
-            </Text>
-
-            <Text style={styles.accountNameSubHeaderText}>
-                {`${item.transitRoutingNumber}`}
-            </Text>
-
-            <Text style={styles.accountNameHeaderText}>
-                {gblStrings.bankAccounts.systematic_withdrawal_plan_bank_account}
-            </Text>
-
-            <Text style={styles.accountNameSubHeaderText}>
-                {`${item.isSystematicWithdrawalPlan}`}
-            </Text>
-
-            <Text style={styles.accountNameHeaderText}>
-                {gblStrings.bankAccounts.automatic_investment_plan_bank_account}
-            </Text>
-
-            <Text style={styles.accountNameSubHeaderText}>
-                {`${item.isAutomaticInvestmentPlan}`}
-            </Text>
-
-
-        </View>
-
-    );
-};
 
 BankAccountsComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object)

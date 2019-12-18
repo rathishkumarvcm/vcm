@@ -150,27 +150,6 @@ class AccountServicesComponent extends Component {
                         </View>
                     </TouchableOpacity>
 
-                    <View style={styles.optionContainer}>
-                        <View style={styles.optionIcon}>
-                            <GIcon
-                                name="view-grid"
-                                type="material-community"
-                                size={30}
-                                color="black"
-                            />
-
-                            <Text style={styles.optionHeaderText}>
-                                {gblStrings.accountServices.failed_email}
-                            </Text>
-                        </View>
-
-                        <View style={styles.optionSubHeaderView}>
-                            <Text style={styles.optionSubHeaderText}>
-                                {gblStrings.userManagement.loremSecurityPref}
-                            </Text>
-                        </View>
-                    </View>
-
                     <View style={styles.fullLine} />
 
                     <View style={styles.tNCFlex}>
