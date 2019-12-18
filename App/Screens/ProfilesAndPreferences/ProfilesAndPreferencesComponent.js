@@ -187,7 +187,10 @@ class ProfilesAndPreferences extends Component {
 
                     <View style={styles.securityContainer}>
                         <Text style={styles.securityContainerText}>
-                            {gblStrings.userManagement.securityText}                           
+                            {gblStrings.userManagement.securityText} 
+                            <Text style={styles.securityContainerPhoneText}>
+                            {gblStrings.common.supportVCMPhoneNumber} 
+                            </Text>                          
                         </Text>
                     </View>
                    

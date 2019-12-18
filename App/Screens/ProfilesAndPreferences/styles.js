@@ -117,4 +117,8 @@ export const styles = StyleSheet.create({
         color: '#56565A',
         fontSize: scaledHeight(16),
     },
+    securityContainerPhoneText: {      
+        color: '#30ACF3',
+        fontSize: scaledHeight(16),
+    },
 });

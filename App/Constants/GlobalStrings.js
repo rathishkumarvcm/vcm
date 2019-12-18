@@ -48,7 +48,8 @@ export default {
         dollar:"$",
         validate:"Validate",
         upload:"Upload",
-        verifySign:"Verify & Signin"
+        verifySign:"Verify & Signin",
+        supportVCMPhoneNumber: "1-216-898-2400"
     },
     login: {
         imageRequest: "imageRequest",
@@ -651,7 +652,7 @@ export default {
         inputError: "Please Enter your Answer",
         emailError: "Please Enter Valid Email",
         loremSecurityPref: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s",
-        securityText:"For security reasons, not all information can be updated online. Please call us if you need assistance with link to VCM support number <Phone Number>",
+        securityText:"For security reasons, not all information can be updated online. Please call us if you need assistance with link to VCM support number ",
         manageDeliverySettings: "Manage your delivery settings",
         manageAccountMessaging: "Manage your account messaging",
         manageSecurityDetails: "Manage your security details",
