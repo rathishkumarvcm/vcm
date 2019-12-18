@@ -52,6 +52,14 @@ pipeline {
                 sh 'npm install'
                 dir('android')
                 {
+                    sh 'echo AndroidBuild'
+                    sh '/usr/local/bin/bundle install'
+                    sh '/usr/local/bin/bundle exec /usr/local/bin/fastlane beta'
+                }
+                dir('ios')
+                {
+                    sh 'echo iOSBuild'
+                    sh '/usr/local/bin/pod install'
                     sh '/usr/local/bin/bundle install'
                     sh '/usr/local/bin/bundle exec /usr/local/bin/fastlane beta'
                 }
