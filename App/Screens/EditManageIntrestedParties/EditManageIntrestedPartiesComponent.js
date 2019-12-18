@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent,GDateComponent, GIcon, GDropDownComponent, GInputComponent, GHeaderComponent, GFooterComponent} from '../../CommonComponents';
+import { GButtonComponent,GDateComponent, GIcon, GDropDownComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner} from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import { zipCodeRegex,emailRegex } from '../../Constants/RegexConstants';
 import PropTypes from "prop-types";
@@ -11,16 +11,13 @@ let relationData=[
     {"key": "child", "value": "Child"},
     {"key": "fiance", "value": "Fiancé"},
     {"key": "spouse", "value": "Spouse"}
- ];
- let intrestedParties = [];
+];
+let listIntrestedParties = [];
 
 class editManageIntrestedPartiesComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isSavedSuccess:false,
-            isCollapsable:false,
-            collapseIcon:"-",
             account_Data:{},
             intrstedPartyObj:{},
             account_Key:'',
@@ -45,19 +42,17 @@ class editManageIntrestedPartiesComponent extends Component {
                 companyValidation:true,
                 addressLine1Validation:true,
                 addressLine2Validation:true,
+                addValidation:true,
                 addressValiMsg:"",
                 zipCodeValidation:true,
                 zipCodeValiMsg:"",
                 startDateValidation:true,
                 startDateValiMsg:"",
                 endDateValidation:true,
-                endDateValiMsg:"",
-                addressValidateFlag:false,
-                addressValidateMsg:""
+                endDateValiMsg:""
             }
         };
     }
-
 
     componentDidMount() {
         this.updateState();
@@ -82,21 +77,40 @@ class editManageIntrestedPartiesComponent extends Component {
     componentDidUpdate(prevProps) {
         console.log("didUpdate::");
         const stateCityResponseData = ActionTypes.GET_STATECITY;
-        if (this.props != prevProps) {
-            if (this.props && this.props.stateCityData[stateCityResponseData]) {
-                const tempResponse = this.props.stateCityData[stateCityResponseData];
-                console.log("state city response:::::", tempResponse);
-                if (tempResponse && tempResponse.City) {
-                    this.onUpdateField("personal","city",tempResponse.City);
-                    this.onUpdateField("personal","stateValue",tempResponse.State);
+        const addressResponseData = ActionTypes.GET_ADDRESSFORMAT;
+
+        if (this.state.isZipApiCalling) {
+            if (this.props != prevProps) {
+                if (this.props && this.props.stateCityData[stateCityResponseData]) {
+                    const tempResponse = this.props.stateCityData[stateCityResponseData];
+                    console.log("@@@@@@@@@@@@@@@ Success Update", tempResponse);
+                    if (tempResponse && tempResponse.City) {
+                        this.onUpdateField("personal","city",tempResponse.City);
+                        this.onUpdateField("personal","stateValue",tempResponse.State);
+                        this.onUpdateField("personal","zipCodeValidation",true);
+                    } else {
+                        this.onUpdateField("personal","city", ' - ');
+                        this.onUpdateField("personal","stateValue",' - ');
+                        this.onUpdateField("personal","zipCodeValidation",false);
+                        this.onUpdateField("personal","zipCodeValiMsg","Please enter valid ZipCode");
+                    } 
                 }
-            } else {
-                if (this.props && this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR]) {
-                    const tempErrorResponse = this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR];
-                    console.log("Error", tempErrorResponse);
-                    this.onUpdateField("personal","addressValidateFlag",true);
-                    this.onUpdateField("personal","addressValidateMsg",this.props.stateCityData[ActionTypes.GET_STATECITY_ERROR]);
-                    console.log("error",this.state.personal.addressValidateMsg) ;
+            }
+        }
+
+        if (this.state.isAddressApiCalling) {
+            if (this.props != prevProps) {
+                if (this.props && this.props.stateCityData[addressResponseData]) {
+                    const tempAddressResponse = this.props.stateCityData[addressResponseData];
+                    console.log("@@@@@@@@@@@@@@@@@@@@ Success Address", tempAddressResponse);
+                    if (tempAddressResponse && tempAddressResponse.Address2) {
+                        this.onUpdateField("personal","addressLine1",tempAddressResponse.Address1 || "");
+                        this.onUpdateField("personal","addressLine2",tempAddressResponse.Address2 || "");
+                        this.onUpdateField("personal","addValidation",true);
+                    } else {
+                        this.onUpdateField("personal","addValidation",false);
+                        this.onUpdateField("personal","addressValiMsg","Invalid Address");
+                    }
                 }
             }
         }
@@ -129,18 +143,36 @@ class editManageIntrestedPartiesComponent extends Component {
     }
 
     getZipCodeValue = () => {
-        const payload = {
-            'Zip': this.state.personal.zipCode
-        };
-        const addressPayload = {
-            ...payload,
-            "Address1": this.state.personal.addressLine1,
-            "Address2": this.state.personal.addressLine2,
-            "City":this.state.personal.city,
-            "State": this.state.personal.stateValue
-        };
-        this.props.getStateCity(payload);
-        this.props.getAddressFormat(addressPayload);
+        if(this.state.personal.zipCode != ''){
+            const payload = {
+                'Zip': this.state.personal.zipCode
+            };
+            this.setState({isZipApiCalling: true});
+            this.props.getStateCity(payload);
+        }
+    }
+
+    getAddressValid=()=>{
+        console.log("Get address valid:::");
+        let addAddressPayload = {};
+        if (this.state.personal.zipCode != '') {
+            addAddressPayload = {
+                "Address1": this.state.personal.addressLine1,
+                "Address2": this.state.personal.addressLine2,
+                "City":this.state.personal.city,
+                "State": this.state.personal.stateValue,
+                "Zip": this.state.personal.zipCode
+            };
+        } else {
+            addAddressPayload = {
+                "Address1": this.state.personal.addressLine1,
+                "Address2": this.state.personal.addressLine2,
+                "City":this.state.personal.city,
+                "State": this.state.personal.stateValue
+            };
+        }
+        this.setState({isAddressApiCalling: true});
+        this.props.getAddressFormat(addAddressPayload);
     }
 
     setScrollViewRef = (element) => {
@@ -214,7 +246,8 @@ class editManageIntrestedPartiesComponent extends Component {
                     zipCodeValidation: true,
                     relationValidation:false,
                     startDateValidation:true,
-                    endDateValidation:true
+                    endDateValidation:true,
+                    addValidation:true
                 }
             }));
             if (!this.validateEachFields()) {
@@ -257,6 +290,10 @@ class editManageIntrestedPartiesComponent extends Component {
             this.onUpdateField("personal","addressLine2Validation",true);
         }
 
+        if(!this.isEmpty(this.state.personal.addressLine1) && !this.isEmpty(this.state.personal.addressLine2)){
+            this.getAddressValid();
+        }
+
         if (this.isEmpty(this.state.personal.zipCode)) {
             this.onUpdateField("personal","zipCodeValidation",false);
             this.onUpdateField("personal","zipCodeValiMsg",gblStrings.accManagement.emptyZipCodeMsg);
@@ -270,7 +307,7 @@ class editManageIntrestedPartiesComponent extends Component {
         }
 
         if (!this.isEmpty(this.state.personal.startDate) && !this.isEmpty(this.state.personal.endDate)) {
-            if(this.state.personal.startDate > this.state.personal.endDate){
+            if(new Date(this.state.personal.startDate) > new Date(this.state.personal.endDate)){
                 this.onUpdateField("personal","startDateValidation",false);
                 this.onUpdateField("personal","endDateValidation",false);
                 isErrMsg=true;
@@ -292,41 +329,38 @@ class editManageIntrestedPartiesComponent extends Component {
 
     getPayloadData=()=>{
         let data=this.state.personal;
-        this.setState(prevState=>({
-            intrstedPartyObj:{
-                ...prevState.intrstedPartyObj,
-                relationship_To_Account_holder:data.relation,
-                email:data.email,
-                company:data.company,
-                address:data.addressLine1+","+data.addressLine2,
-                zipCode:data.zipCode,
-                city:data.city,
-                state:data.stateValue,
-                startDate:data.startDate,
-                endDate:data.endDate,
-            }
-        }));
-        return this.state.intrstedPartyObj;
+        let updatedObj=this.state.intrstedPartyObj;
+        updatedObj.relationship_To_Account_holder=data.relation;
+        updatedObj.email=data.email;
+        updatedObj.company=data.company;
+        updatedObj.address=data.addressLine1+","+data.addressLine2;
+        updatedObj.zipCode=data.zipCode;
+        updatedObj.city=data.city;
+        updatedObj.state=data.stateValue;
+        updatedObj.startDate=data.startDate;
+        updatedObj.endDate=data.endDate;
+
+        let modObj=this.state.account_Data;
+
+        const pIndex=listIntrestedParties.findIndex((data)=>data.key===this.state.account_Data.key);
+        const cIndex=this.state.account_Data.intrestedParty.findIndex((data)=>data.key===this.state.intrstedPartyObj.key);
+
+        const arr=[...listIntrestedParties[pIndex].intrestedParty];
+        arr.splice(cIndex,1,updatedObj);
+
+        modObj.intrestedParty=arr;
+
+        const newArr=[...listIntrestedParties];
+        newArr.splice(pIndex,1,modObj);
+
+        return newArr;
     }
     
     onClickSave=()=>{
-        console.log("in save function:::");
         const payloadData=this.getPayloadData();
-        console.log("payload data::::",payloadData);
-        let list=[];
-        intrestedParties.map((m,n)=>{
-            if(this.state.account_Key===n){
-                list=m.intrestedParty;
-                list.map((a,b)=>{
-                    if(this.state.intrstedPartyObj.key===b){
-                        list.splice(b,1,payloadData);
-                    }
-                });
-                console.log("list::",list);
-            }
-        });
-        console.log("new updated Data:::",list,intrestedParties);
-        
+        this.props.editIntrestedParties("editIntrestedParty",payloadData);
+        let notificationMsg=this.state.account_Data.account_Name +"'s data has been Updated Successfully";
+        this.props.navigation.navigate("manageIntrestedParties",{showMsg:true,msg:notificationMsg});
     }
 
 
@@ -337,11 +371,13 @@ class editManageIntrestedPartiesComponent extends Component {
             relationData=this.props.masterLookupStateData.relationship.value;
         }
         if(this.props.manageIntrestedPartiesData && this.props.manageIntrestedPartiesData.list_manage_intrested_parties ){
-            intrestedParties = this.props.manageIntrestedPartiesData.list_manage_intrested_parties;
+            listIntrestedParties = this.props.manageIntrestedPartiesData.list_manage_intrested_parties;
         }
-        console.log("accData",this.state.account_Data);
         return (
             <View style={styles.container} >
+                {
+                    this.props.stateCityData.isLoading && <GLoadingSpinner />
+                }
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.flexMainView} keyboardShouldPersistTaps="always" ref={this.setScrollViewRef}>
                 <View style={styles.mainHeadingView}>
@@ -364,7 +400,7 @@ class editManageIntrestedPartiesComponent extends Component {
                     <View style={styles.line} />
 
 
-                     {/*-------------------------- Add Intrested Parties ---------------------------------*/}
+                     {/*-------------------------- Edit Intrested Parties ---------------------------------*/}
 
                     <View style={styles.paddingHorizontalStyle}>
                         <View style={styles.flexDirectionStyle}>
@@ -428,6 +464,7 @@ class editManageIntrestedPartiesComponent extends Component {
                             propInputStyle={styles.customTxtBox}
                             placeholder={gblStrings.accManagement.empAddrLine1}
                             maxLength={gblStrings.maxLength.emplAddress1}
+                            value={this.state.personal.addressLine1}
                             onChangeText={this.onChangeText("personal","addressLine1")}
                             errorFlag={!this.state.personal.addressLine1Validation}
                             errorText={gblStrings.accManagement.emptyAddressLine1Msg}
@@ -437,10 +474,12 @@ class editManageIntrestedPartiesComponent extends Component {
                             propInputStyle={styles.customTxtBox}
                             placeholder={gblStrings.accManagement.empAddrLine2}
                             maxLength={gblStrings.maxLength.addressLine2}
+                            value={this.state.personal.addressLine2}
                             onChangeText={this.onChangeText("personal","addressLine2")}
                             errorFlag={!this.state.personal.addressLine2Validation}
                             errorText={gblStrings.accManagement.emptyAddressLine2Msg}
                         />
+                        {!this.state.personal.addValidation && <Text style={styles.errMsg}>{this.state.personal.addressValiMsg}</Text>}
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.zipcode}
                         </Text>
@@ -448,13 +487,15 @@ class editManageIntrestedPartiesComponent extends Component {
                             inputref={this.setInputRef("zipCode")}
                             propInputStyle={styles.customTxtBox}
                             placeholder={""}
+                            keyboardType="number-pad"
                             value={this.state.personal.zipCode}
                             maxLength={gblStrings.maxLength.zipCode}
                             onBlur={this.validateZipCode}
+                            returnKeyType={"done"}
                             onChangeText={this.onChangeText("personal","zipCode")}
                             errorFlag={!this.state.personal.zipCodeValidation}
                             errorText={this.state.personal.zipCodeValiMsg}
-                            onSubmitEditing={this.getZipCodeValue}
+                            onSubmitEditing={this.validateZipCode}
                         />
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.cityAndState}

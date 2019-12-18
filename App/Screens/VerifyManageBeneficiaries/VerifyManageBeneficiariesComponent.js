@@ -16,7 +16,6 @@ class VerifyManageBenificiariesComponent extends Component {
     this.state = {
       isLoading: false,
       bene_Data:{},
-      totalDistribution:0,
       totalPrimaryDistribution:0,
       totalContingentDistribution:0,
       totalTodDistribution:0
@@ -52,7 +51,6 @@ class VerifyManageBenificiariesComponent extends Component {
       }
       this.setState({totalContingentDistribution:dist});
     }
-    this.setState({totalDistribution:this.state.totalPrimaryDistribution+this.state.totalContingentDistribution+this.state.totalTodDistribution});
   }
 
   onClickEdit=()=>{
@@ -66,7 +64,7 @@ class VerifyManageBenificiariesComponent extends Component {
   onClickSubmit=()=>{
     const payloadData=this.getData();
     this.props.saveBeneficiaryData("verifyBeneficiary",payloadData);
-    this.props.navigation.navigate("manageBeneficiaries",{showMsg:true,successMsg:"Data has been added successfully"});
+    this.props.navigation.navigate("manageBeneficiaries",{showMsg:true,successMsg:"Data has been added Successfully"});
   }
 
   getData = () => {
@@ -108,7 +106,7 @@ class VerifyManageBenificiariesComponent extends Component {
           </View>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.emailAddress}</Text>
-            <Text style={styles.shortContentValueText}>{"$ "+item.email}</Text>
+            <Text style={styles.shortContentValueText}>{item.email}</Text>
           </View>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.beneficiary_type}</Text>
@@ -152,7 +150,7 @@ class VerifyManageBenificiariesComponent extends Component {
           </View>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.emailAddress}</Text>
-            <Text style={styles.shortContentValueText}>{"$ "+item.email}</Text>
+            <Text style={styles.shortContentValueText}>{item.email}</Text>
           </View>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.beneficiary_type}</Text>
@@ -196,7 +194,7 @@ class VerifyManageBenificiariesComponent extends Component {
           </View>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.emailAddress}</Text>
-            <Text style={styles.shortContentValueText}>{"$ "+item.email}</Text>
+            <Text style={styles.shortContentValueText}>{item.email}</Text>
           </View>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.beneficiary_type}</Text>
@@ -277,7 +275,7 @@ class VerifyManageBenificiariesComponent extends Component {
                     <Text style={styles.todBeneDistributionTxt}>{"Total Distribution Percentage"}</Text>:
                     <Text style={styles.otherBeneDistributionTxt}>{"Total Distribution Percentage of Primary ("+this.state.totalPrimaryDistribution+"%) + Contingent ("+this.state.totalContingentDistribution +"%)"}</Text>
                   }
-                  <Text style={styles.todBeneDistributionTxt}>{"= "+this.state.totalDistribution + "%"}</Text>
+                  <Text style={styles.todBeneDistributionTxt}>{"= "+ parseInt(this.state.totalPrimaryDistribution+this.state.totalContingentDistribution+this.state.totalTodDistribution)+ "%"}</Text>
           </View>
 
           {/*--------------------------- Button View --------------------------------*/}

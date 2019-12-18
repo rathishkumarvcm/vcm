@@ -245,6 +245,7 @@ export const styles = StyleSheet.create({
   },
   errMsg:{
     color:'red',
+    paddingLeft:'4%',
     fontSize:scaledHeight(12)
   },
   dropdownTextInput:{

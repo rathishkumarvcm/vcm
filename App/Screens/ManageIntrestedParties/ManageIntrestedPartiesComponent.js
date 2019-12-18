@@ -12,6 +12,7 @@ class manageIntrestedPartiesComponent extends Component {
         super(props);
         this.state = {
             isSavedSuccess:false,
+            successMsg:"",
             isCollapsable:false,
             collapseIcon:"-",
             showModal:true
@@ -19,7 +20,13 @@ class manageIntrestedPartiesComponent extends Component {
     }
    
     componentDidMount() {
-       
+       this.updateNaviProps();
+    }
+
+    updateNaviProps=()=>{
+        let ismsg=this.props.navigation.getParam("showMsg");
+        let msg=this.props.navigation.getParam("msg");
+        this.setState({isSavedSuccess:ismsg,successMsg:msg});
     }
 
     addIntrestedParty=(data)=>()=>{
@@ -30,7 +37,26 @@ class manageIntrestedPartiesComponent extends Component {
         this.props.navigation.navigate("editIntrestedParty",{acc_Data:data, parent_Obj:pObj, parent_Key:pKey});
     }
 
+    getDeleteData=(item,obj)=>{
+        let modObj=item;
+        const pIndex=intrestedParties.findIndex((data)=>data.key===item.key);
+        const cIndex=intrestedParties[pIndex].intrestedParty.findIndex((data)=>data.key===obj.key);
 
+        const arr=[...intrestedParties[pIndex].intrestedParty];
+        arr.splice(cIndex,1);
+
+        modObj.intrestedParty=arr;
+
+        const newArr=[...intrestedParties];
+        newArr.splice(pIndex,1,modObj);
+
+        return newArr;
+    }
+
+    onDeleteFunc=(item,data)=>()=>{
+        const payloadData=this.getDeleteData(item,data);
+        this.props.deleteIntrestedParties("deleteIntrestedParty",payloadData);
+    }
 
     renderData=({item})=>{
         return(
@@ -52,7 +78,7 @@ class manageIntrestedPartiesComponent extends Component {
                 {item.intrestedParty && item.intrestedParty.map((data,k)=>{
                     return(
                         <View key={data.key} style={styles.innerContainerView}>
-                            <CardHeader item={data} navigate={this.onClickEdit(item,k,data)} />
+                            <CardHeader item={data} navigate={this.onClickEdit(item,k,data)} onDelete={this.onDeleteFunc(item,data)}/>
                             <View style={[styles.paddingStyleLeft,styles.marginBottomStyle]}>
                                 <View style={styles.marginTopStyle}>
                                     <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
@@ -98,9 +124,9 @@ class manageIntrestedPartiesComponent extends Component {
                                 />
                             </TouchableOpacity>
                             <View style={styles.saveSuccessMsgTxt}>
-                                <Text style={styles.notificationTxt}>{gblStrings.accManagement.intrestedPartiesAddedSuccessMeg}</Text>
+                                <Text style={styles.notificationTxt}>{this.state.successMsg}</Text>
                             </View>
-                            <TouchableOpacity style={styles.flexSmall} onPress={this.updateNotificationMsgState}>
+                            <TouchableOpacity style={styles.flexSmall}>
                                 <GIcon 
                                     name="close"
                                     type="EvilIcons"
@@ -135,7 +161,8 @@ class manageIntrestedPartiesComponent extends Component {
 
 manageIntrestedPartiesComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
-    manageIntrestedPartiesData: PropTypes.instanceOf(Object).isRequired
+    manageIntrestedPartiesData: PropTypes.instanceOf(Object).isRequired,
+    deleteIntrestedParties: PropTypes.func
 };
 
 export default manageIntrestedPartiesComponent;

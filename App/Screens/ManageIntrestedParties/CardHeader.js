@@ -15,8 +15,15 @@ class CardHeader extends Component{
     }
 
     edit=()=>{
+        this.setState({showModal:false});
         this.props.navigate();
     }
+
+    delete=()=>{
+        this.setState({showModal:false});
+        this.props.onDelete();
+    }
+
     render(){
         return(
             <View >
@@ -35,7 +42,7 @@ class CardHeader extends Component{
                         <Text style={styles.lblTxtInner} >{gblStrings.common.edit}</Text>
                     </TouchableOpacity>
                     <Text style={styles.lblLine} />
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={this.delete}>
                         <Text style={styles.lblTxtInner} >{gblStrings.common.delete}</Text>
                     </TouchableOpacity>
                 </View>:null
@@ -47,7 +54,8 @@ class CardHeader extends Component{
 
 CardHeader.propTypes = {
     item: PropTypes.instanceOf(Object).isRequired,
-    navigate: PropTypes.func
+    navigate: PropTypes.func,
+    onDelete: PropTypes.func
 };
 
 export default CardHeader;
