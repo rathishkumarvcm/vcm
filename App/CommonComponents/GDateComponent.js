@@ -152,8 +152,6 @@ GDateComponent.defaultProps = {
     date: "",
     format: "MM-DD-YYYY",
     mode: "date",
-    minDate: "",
-    maxDate: "",
     placeholder: "Select Date",
     iconComponent: <GIcon
         name="calendar"
