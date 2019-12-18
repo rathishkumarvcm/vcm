@@ -130,28 +130,29 @@ class CheckBookComponent extends Component {
 
     getKey = (item) => item.Id
 
-    updateShowDeleteOption = (fromView, showRequestOption, itemId) => {
-        console.log("updateShowDeleteOption:::: ", fromView, showRequestOption, itemId);
+    updateShowRequestOption = (fromView, showRequestOption, itemId) => {
         switch (fromView) {
-
-            case 'showDelete':
-                if (showRequestOption) {
-                    tmpData = this.state.generalAccount;
-                    tmpData.map((item) => {
-                        if (item.Id == itemId) {
-                            item.showRequestOption = showRequestOption;
-                        } else {
-                            item.showRequestOption = !showRequestOption;
-                        }
-                    });
-                    this.updateStateChanged();
-
-                    this.setState({ generalAccount: tmpData });
-                    console.log("updateShowDeleteOption:::: ", this.state.generalAccount);
-                }
+            case 'showRequest':
+                tmpData = this.state.generalAccount;
+                tmpData.map((item) => {
+                    if (item.Id == itemId) {
+                        item.showRequestOption = showRequestOption;
+                    }
+                });
+                this.updateStateChanged();
+                this.setState({ generalAccount: tmpData });
                 break;
-
         }
+    }
+
+    navigatePlaceCheckBookOrder = (item) => {
+        this.updateShowRequestOption('showRequest', false, item.Id);
+        this.props.navigation.navigate('checkBookPlaceOrder', {
+            accountName: item.AccountName,
+            accountNumber: item.AccountNumber,
+            noOfCheckLeaves: item.NoOfCheckLeaves,
+            deliveryAddress: item.DeliveryAddress,
+        });
     }
 
     render() {
@@ -180,7 +181,7 @@ class CheckBookComponent extends Component {
                                             {`${item.AccountName}`}
                                         </Text>
 
-                                        <TouchableOpacity style={styles.editInfo} key={item.Id} onPress={() => this.updateShowDeleteOption('showDelete', true, item.Id)}>
+                                        <TouchableOpacity style={styles.editInfo} key={item.Id} onPress={() => this.updateShowRequestOption('showRequest', true, item.Id)}>
                                             <GIcon
                                                 name="dots-vertical"
                                                 type="material-community"
@@ -200,13 +201,7 @@ class CheckBookComponent extends Component {
                                         buttonText={"Checkbook Request"}
                                         textStyle={styles.requestButtonText}
                                         onPress={() =>
-                                            this.props.navigation.navigate('checkBookPlaceOrder', {
-                                                accountName: item.AccountName,
-                                                accountNumber: item.AccountNumber,
-                                                noOfCheckLeaves: item.NoOfCheckLeaves,
-                                                deliveryAddress: item.DeliveryAddress,
-                                            })}
-
+                                            this.navigatePlaceCheckBookOrder(item)}
                                     />}
 
 
