@@ -6,6 +6,7 @@ import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from 'prop-types';
 import CardHeader from './CardHeader';
 
+let beneficiary_Data = [];
 
 class ManageBenificiariesComponent extends Component {
   constructor(props) {
@@ -28,17 +29,54 @@ class ManageBenificiariesComponent extends Component {
     this.props.navigation.navigate("editManageBeneficiaries",{ acc_Data:data });
   }
 
-  onDelete=(data)=>()=>{
-    console.log("onDelete Data",data);
+  getDeleteData=(item)=>{
+    let keyArr=item.key.split("_");
+    let pName=keyArr[0];
+    let pKey=keyArr[1];
+    let cKey=keyArr[2];
+
+    const pIndex=beneficiary_Data.findIndex((data)=>data.key===pKey);
+    let modObj=beneficiary_Data[pIndex];
+    let cIndex, arr;
+    switch(pName){
+      case "pri":
+        cIndex=beneficiary_Data[pIndex].primary_Bene.findIndex((data)=>data.key===cKey);
+        arr=[...beneficiary_Data[pIndex].primary_Bene];
+        arr.splice(cIndex,1);
+        modObj.primary_Bene=arr;
+        break;
+      case "con":
+        cIndex=beneficiary_Data[pIndex].contingent_Bene.findIndex((data)=>data.key===cKey);
+        arr=[...beneficiary_Data[pIndex].contingent_Bene];
+        arr.splice(cIndex,1);
+        modObj.contingent_Bene=arr;
+        break;
+      case "tod":
+        cIndex=beneficiary_Data[pIndex].transfer_on_Death_Bene.findIndex((data)=>data.key===cKey);
+        arr=[...beneficiary_Data[pIndex].transfer_on_Death_Bene];
+        arr.splice(cIndex,1);
+        modObj.transfer_on_Death_Bene=arr;
+      default:
+        break;
+    }
+
+    const newArr=[...beneficiary_Data];
+    newArr.splice(pIndex,1,modObj);
+
+    return newArr;
+  }
+
+  deleteBene=(item)=>()=>{
+    const payloadData=this.getDeleteData(item);
+    this.props.deleteBeneficiaryData("deleteBeneficiary",payloadData);
   }
 
   generateKeyExtractor = (item) => item.key;
 
-  renderContingentBeneficiary=({item,key})=>{
-    console.log("in renderConBeneficiary::",item.key);
+  renderContingentBeneficiary=({item})=>{
     return(
       <View style={styles.innerContainerView}>
-        <CardHeader item={item} onPressDelete={this.onDelete(item,key)} />
+        <CardHeader item={item} onPressDelete={this.deleteBene(item)} />
         <View style={[styles.paddingStyleLeft,styles.marginBottomStyle]}>
           <View style={styles.marginTopStyle}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.contingentBeneficiary}</Text>
@@ -65,10 +103,9 @@ class ManageBenificiariesComponent extends Component {
   }
 
   renderTransferOnDeathBeneficiary = ({item}) => {
-    console.log("in renderTODBeneficiary::",item.key);
     return(
       <View style={styles.innerContainerView}>
-        <CardHeader item={item} onPressDelete={this.onDelete(item)} />
+        <CardHeader item={item} onPressDelete={this.deleteBene(item)} />
         <View style={[styles.paddingStyleLeft,styles.marginBottomStyle]}>
           <View style={styles.marginTopStyle}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.primaryBeneficiary}</Text>
@@ -95,10 +132,9 @@ class ManageBenificiariesComponent extends Component {
   }
 
   renderPrimaryBeneficiary=({item})=>{
-    console.log("in renderPRiBeneficiary::",item);
     return(
       <View style={styles.innerContainerView}>
-        <CardHeader item={item} onPressDelete={this.onDelete(item)} />
+        <CardHeader item={item} onPressDelete={this.deleteBene(item)} />
         <View style={[styles.paddingStyleLeft,styles.marginBottomStyle]}>
           <View style={styles.marginTopStyle}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.primaryBeneficiary}</Text>
@@ -125,7 +161,6 @@ class ManageBenificiariesComponent extends Component {
   }
 
   renderBeneficiaryData=({item})=>{
-    console.log("in renderBeneficiary::",item.key);
     return(
       <View style={styles.blockMarginTop}>
         <View style={styles.titleHeadingView}>
@@ -173,7 +208,7 @@ class ManageBenificiariesComponent extends Component {
   }
 
   render() {
-    let beneficiary_Data = [];
+
     if(this.props.manageBeneficiaryData && this.props.manageBeneficiaryData.manage_beneficiary && this.props.manageBeneficiaryData.manage_beneficiary){
       beneficiary_Data = this.props.manageBeneficiaryData.manage_beneficiary;
     }

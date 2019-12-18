@@ -15,6 +15,11 @@ class CardHeader extends Component{
         this.setState({showModal:!this.state.showModal});
     }
 
+    onDelete=()=>{
+        this.setState({showModal:false});
+        this.props.onPressDelete();
+    }
+
     render(){
         return(
             <View >
@@ -29,7 +34,7 @@ class CardHeader extends Component{
                 </View>
                 {this.state.showModal?
                 <View style={styles.shadowView}>
-                    <TouchableOpacity onPress={this.props.onPressDelete()}>
+                    <TouchableOpacity onPress={this.onDelete}>
                         <Text style={styles.lblTxtInner} >{gblStrings.common.delete}</Text>
                     </TouchableOpacity>
                 </View>:null
