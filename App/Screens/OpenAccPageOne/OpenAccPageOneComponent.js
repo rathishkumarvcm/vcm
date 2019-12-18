@@ -67,6 +67,8 @@ class OpenAccPageOneComponent extends Component {
             selectedItemName: "",
             accType: "",
             isValidationSuccess: true,
+            isNextBtnDisabled: true,
+
             errMsg:""
 
         };
@@ -127,6 +129,7 @@ class OpenAccPageOneComponent extends Component {
                 selectedItemName: item.value,
                 accType: item.value,
                 isValidationSuccess: true,
+                isNextBtnDisabled:false,
                 errMsg:""
 
             }
@@ -220,6 +223,7 @@ class OpenAccPageOneComponent extends Component {
 
         this.setState({
             isValidationSuccess: isValidationSuccess,
+            isNextBtnDisabled:false,
             errMsg:isValidationSuccess == false ? errMsg:""
          });
 
@@ -321,7 +325,7 @@ class OpenAccPageOneComponent extends Component {
 
         const type = selectedAccount.key || "";
         let currentPage = 1;
-        var nextBtnstyle = this.state.isValidationSuccess ? styles.normalBlackBtn : [styles.normalBlackBtn, { opacity: .45 }];
+        var nextBtnstyle = !this.state.isNextBtnDisabled ? styles.normalBlackBtn : [styles.normalBlackBtn, { opacity: .45 }];
         return (
             <View style={styles.container}>
                 {
@@ -369,7 +373,7 @@ class OpenAccPageOneComponent extends Component {
                             buttonText="Next"
                             textStyle={styles.normalBlackBtnTxt}
                             onPress={this.onClickNext}
-                            disabled={!this.state.isValidationSuccess}
+                            disabled={this.state.isNextBtnDisabled}
                         />
                     </View>
 

@@ -137,7 +137,7 @@ class OpenAccPageFourComponent extends Component {
         }
 
         if (!isValidationSuccess) {
-            alert(errMsg);
+           // alert(errMsg);
         }
         this.setState({
             isValidationSuccess: isValidationSuccess,

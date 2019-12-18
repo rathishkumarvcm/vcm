@@ -206,7 +206,12 @@ export const styles = StyleSheet.create({
 
     },
 
+    errMsg: {
+        color: 'red',
+        fontSize: scaledHeight(12),
+        marginVertical: scaledHeight(12),
 
+    }
 
 
 });

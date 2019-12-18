@@ -15,9 +15,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         height: scaledHeight(48),
         justifyContent: "center",
-        marginLeft: '4%',
-        marginRight: '4%',
-        width: '92%'
+        marginTop:scaledHeight(9),
+        width: '100%'
     },
     dateIconStyle: {
         left: 0,
@@ -63,21 +62,22 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(12)
     },
     errorView: {
-        borderColor: 'red',
-        marginLeft: '4%',
-        marginRight: '4%'
+        borderColor: 'red'
     },
 });
 
 
 export const GDateComponent = props => (
     <View>
-
-        <View style={[styles.dateTextLayout, props.dateTextLayout]}>
-            <Text style={[styles.dateTitleName, props.dateTitleName]}>
-                {props.dateTextName}
-            </Text>
-        </View>
+       {
+           (props.dateTextName && props.dateTextName!="") &&
+           <View style={[styles.dateTextLayout, props.dateTextLayout]}>
+           <Text style={[styles.dateTitleName, props.dateTitleName]}>
+               {props.dateTextName}
+           </Text>
+       </View>
+       }
+       
         <DatePicker
             ref={props.inputref}
             style={props.errorFlag ? [styles.componentStyle, props.componentStyle, styles.errorView] : [styles.componentStyle, props.componentStyle]}

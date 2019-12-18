@@ -209,11 +209,11 @@ class OpenAccPageTwoComponent extends Component {
 
 
                 //ExpandCollapse
-                isPersonalInfoExpanded: true,
-                isEmploymentInfoExpanded: true,
-                isFinancialInfoExpanded: true,
-                isMilitaryInfoExpanded: true,
-                isRegulatoryInfoExpanded: true,
+                isPersonalInfoExpanded: false,
+                isEmploymentInfoExpanded: false,
+                isFinancialInfoExpanded: false,
+                isMilitaryInfoExpanded: false,
+                isRegulatoryInfoExpanded: false,
 
             },
 
@@ -404,11 +404,11 @@ class OpenAccPageTwoComponent extends Component {
 
                 seniorPoliticalNameValidation: true,
 
-                isPersonalInfoExpanded: true,
-                isEmploymentInfoExpanded: true,
-                isFinancialInfoExpanded: true,
-                isMilitaryInfoExpanded: true,
-                isRegulatoryInfoExpanded: true,
+                isPersonalInfoExpanded: false,
+                isEmploymentInfoExpanded: false,
+                isFinancialInfoExpanded: false,
+                isMilitaryInfoExpanded: false,
+                isRegulatoryInfoExpanded: false,
 
             },
 
@@ -447,11 +447,11 @@ class OpenAccPageTwoComponent extends Component {
                 beneficiaryDistPercentValidation: true,
 
 
-                isPersonalInfoExpanded: true,
-                isEmploymentInfoExpanded: true,
-                isFinancialInfoExpanded: true,
-                isMilitaryInfoExpanded: true,
-                isRegulatoryInfoExpanded: true,
+                isPersonalInfoExpanded: false,
+                isEmploymentInfoExpanded: false,
+                isFinancialInfoExpanded: false,
+                isMilitaryInfoExpanded: false,
+                isRegulatoryInfoExpanded: false,
 
 
             },
@@ -1034,6 +1034,8 @@ class OpenAccPageTwoComponent extends Component {
                 console.log('User cancelled image picker');
             } else if (response.error) {
                 console.log('ImagePicker Error: ', response.error);
+                alert('Error: ', response.error);
+
             } else if (response.customButton) {
                 console.log('User tapped custom button: ', response.customButton);
                 alert(response.customButton);
@@ -1386,7 +1388,7 @@ class OpenAccPageTwoComponent extends Component {
                     }
                 }
             }
-            alert(errMsg);
+           // alert(errMsg);
         }
 
         return isValidationSuccess;
@@ -1531,7 +1533,7 @@ class OpenAccPageTwoComponent extends Component {
                     }
                 }
             }
-            alert(errMsg);
+           // alert(errMsg);
         }
 
         return isValidationSuccess;

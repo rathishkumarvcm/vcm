@@ -373,7 +373,7 @@ class OpenAccPageSixComponent extends Component {
         }
 
         if (!isValidationSuccess) {
-            alert(errMsg);
+           // alert(errMsg);
 
         }
         this.setState({

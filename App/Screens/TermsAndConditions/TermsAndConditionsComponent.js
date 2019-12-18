@@ -113,6 +113,8 @@ class TermsAndConditionsComponent extends Component {
                                  Render Methods
                                                                  -------------------------- */
     render() {
+        const nextBtnstyle = this.state.agreeConditions ? styles.normalBlackBtn : [styles.normalBlackBtn, { opacity: .45 }];
+
         return (
             <View style={styles.container}>
                 <GHeaderComponent
@@ -203,10 +205,12 @@ class TermsAndConditionsComponent extends Component {
                         />
 
                         <GButtonComponent
-                            buttonStyle={styles.normalBlackBtn}
+                            buttonStyle={nextBtnstyle}
                             buttonText={gblStrings.common.next}
                             textStyle={styles.normalBlackBtnTxt}
                             onPress={this.onClickNext}
+                            disabled={!this.state.agreeConditions}
+
                         />
                     </View>
 

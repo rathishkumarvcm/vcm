@@ -277,7 +277,7 @@ class OpenAccPageThreeComponent extends Component {
                 }
             }
             
-            alert(errMsg);
+          //  alert(errMsg);
         }else{
             return this.callValidateBankAccount();
         }
@@ -945,7 +945,7 @@ class OpenAccPageThreeComponent extends Component {
             this.setState({
                 [input+"Validation"]: false
             });
-            alert(errMsg);
+           // alert(errMsg);
         }
 
         /* if(errMsgArray.length>0){
