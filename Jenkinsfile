@@ -3,6 +3,9 @@ pipeline {
     options {
         skipStagesAfterUnstable()
     }
+    environment {
+        PATH = "/usr/local/bin:$PATH"
+    }
     tools {nodejs "node"}
     stages {
         stage('Checkout Shared Repo') {
