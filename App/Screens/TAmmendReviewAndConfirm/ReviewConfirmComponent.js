@@ -117,7 +117,7 @@ class LiquidationPageFourComponent extends Component {
 
                     {/*selected mutual funds*/}
                     <View style={styles.flex2}>
-                        <View style={styles.selectedMutualFunds}>
+                        <View >
                             <View style={styles.horizontalFlex}>
                                 <Text style={styles.subHeading}>{gblStrings.accManagement.selectedMutualFunds}</Text>
                                 <Text style={styles.edit}>{gblStrings.common.edit}</Text>

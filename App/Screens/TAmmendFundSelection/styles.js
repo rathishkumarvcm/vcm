@@ -147,13 +147,22 @@ questionsSection : {
     //justifyContent:'center',
     marginLeft : '3%', 
     flexDirection:'column',
-    marginTop: '2%'
+    marginTop: '2%',
+    flexDirection:'row'
 },
 
 questionsText : {
     fontSize : scaledHeight(16),
     color : '#333333DE'
 },
+userIDTextBox:{
+    marginLeft:'2%',
+    marginRight:'2%',
+    
+    width:'85%',
+    marginTop:scaledHeight(-10),
+    marginLeft:scaledHeight(10)
+}
 
 
 

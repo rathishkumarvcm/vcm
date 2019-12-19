@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {  View, ScrollView,Text,FlatList,TouchableOpacity,Switch} from 'react-native';
-import { GButtonComponent, GHeaderComponent, GFooterComponent,GIcon} from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent,GIcon,GInputComponent} from '../../CommonComponents';
 import { PageNumber } from '../../AppComponents';
 import { styles } from './styles';
 import PropTypes from 'prop-types';
 import gblStrings from '../../Constants/GlobalStrings';
 import { scaledHeight } from '../../Utils/Resolution';
-
+let fundList=[]
 export default class FundSelectionComponent extends Component {
     constructor(props) {
         super(props);
@@ -18,6 +18,11 @@ export default class FundSelectionComponent extends Component {
             selectedIndex: 0,
             selectedIndexSwitch: 0,
             switchValue:false,
+            dollarVal:true,
+            dollar:"",
+            percentageVal:true,
+            percentage:"",
+
             menu: [
                 {
                     title: 'Order ID - PUR201820112',
@@ -66,26 +71,33 @@ export default class FundSelectionComponent extends Component {
         };
     }
 
+
      onClickSell = (item,index) =>
-    {
+    {          
         this.setState({
             selectedIndex: index
         })
+       
        this.setState({selectedPercentage:false,selected$:false,selectedShare:true})
     }
+    
     onClick$ = (item,index) =>
     {   
         this.setState({
             selectedIndex: index
         })
+       
         this.setState({selectedPercentage:false,selectedShare:false,selected$:true})
+   
     }
     onClickPercentage = (item,index) =>
     { 
         this.setState({
             selectedIndex: index
         })
+        //if(this.props.navigation.getParam('index') === index)
         this.setState({selectedShare:false,selected$:false,selectedPercentage:true})
+    
     }
 
     navigateAmmendPageTwo = () => this.props.navigation.navigate('FundWithdrawlComponent');
@@ -208,6 +220,14 @@ renderFundList= () => ({ item }) =>{
         );
     }
 
+    onChangeText = (stateKey, val) => text => {
+        console.log("onChangeText:::>");
+        this.setState({
+            [stateKey]: text,
+            [val]: (!this.isEmpty(text)),
+        });
+    }
+
 
     render() {
         let currentPage = 1;
@@ -241,27 +261,28 @@ renderFundList= () => ({ item }) =>{
                 <PageNumber currentPage={currentPage} pageName={pageName} totalCount={3}/>
                 <View style={{}}>
                         <View style={styles.accountFlex}>
-                            <Text style={styles.accountNumberText}>Account Name 1</Text>
-                            <Text style={styles.accountNumberText}>Account Number xxx-xxx-xxxx</Text>
+                            <Text style={styles.accountNumberText}>Account Name: {this.props.navigation.getParam('data').accountName}</Text>
+                            <Text style={styles.accountNumberText}>Account Number: {this.props.navigation.getParam('data').accountNumber}</Text>
                         </View>
                 </View>
             <Text style={styles.signIntext}>
                 List of Funds 
                 </Text>
                 <Text style={styles.lblLine} />
-                { console.log("data---funds",this.props.navigation.getParam('data'))}
+                { console.log("data---funds",this.props.navigation.getParam('fundsList'))}
                 <FlatList
-                                data={this.props.navigation.getParam('data')}
+                                //data={this.props.navigation.getParam('data')}
                                 //renderItem={this.renderFundItem({item,index})}
+                                data={this.props.navigation.getParam('data').funds}
                                 renderItem={({ item, index }) => {
                                     return(
                                         <View style={{borderWidth:0.5,borderColor:"#5D83AE99"}}>
         <View style={[styles.viewRow]}>
-        <Text style={[styles.lblTxtInner,{width:"60%"}]}>{item.data.USS}</Text>
+        <Text style={[styles.lblTxtInner,{width:"60%"}]}>{item.name}</Text>
         {/*<Switch
           style={{marginLeft:"20%",marginTop:"3%"}}
           onValueChange = {this.toggleSwitch}
-          value = {this.state.switchValue}/>*/}
+          value = {this.state.switchValue}/>
           {this.state.selectedIndexSwitch == index ?<View style={{ backgroundColor: 'white', width: "15%", marginTop: "5%", alignItems: 'flex-start', justifyContent: 'flex-end', flexDirection: 'row', marginRight: "6%" }} onTouchStart={() => this.onClickSelectAccount(item, index)}>
                                                     <View style={{ backgroundColor: '#444444', borderColor: '#707070', borderWidth: scaledHeight(1), width: scaledHeight(45), height: scaledHeight(25), borderRadius: 15, marginTop: scaledHeight(2) }} />
                                                     <View style={{ backgroundColor: '#FFFFFF', width: scaledHeight(30), borderColor: '#707070', borderWidth: scaledHeight(1), height: scaledHeight(30), borderRadius: scaledHeight(15), marginLeft: "-60%" }} />
@@ -269,18 +290,18 @@ renderFundList= () => ({ item }) =>{
                                                     <View style={{ width: scaledHeight(30), height: scaledHeight(30),borderRadius: scaledHeight(15), borderColor: '#707070', borderWidth: scaledHeight(1), backgroundColor: '#FFFFFF', marginLeft: "0%", zIndex: 3 }}></View>
                                                     <View style={{ backgroundColor: '#DBDBDB', borderColor: '#707070', borderWidth: scaledHeight(1), width: scaledHeight(45), height: scaledHeight(25),  marginTop: scaledHeight(2),borderRadius: 15, marginLeft: "-60%" }} />
 
-                                                </View>}
+        </View>}*/}
         </View>
         
         <Text style={styles.lblLine} />
         <View style={[styles.viewRow,{backgroundColor:"#EFECEC",padding:"3%"}]}>
         <View>
         <Text style={[styles.lblTxtInner]}>Total Shares</Text>
-        <Text style={[styles.lblTxtSmall]}>{item.data.totalSHares}</Text>
+        <Text style={[styles.lblTxtSmall]}>{item.totalShares}</Text>
         </View>
         <View style={{marginLeft:"15%"}}>
         <Text style={[styles.lblTxtInner]}>Worth</Text>
-        <Text style={[styles.lblTxtSmall]}>$ {item.data.worth} (Approx). </Text>
+        <Text style={[styles.lblTxtSmall]}>{item.worth}</Text>
         </View>
         </View>
         <TouchableOpacity style={[styles.radioButtonLayout]} onPress={() => this.onClickSell(item, index)}>
@@ -314,6 +335,13 @@ renderFundList= () => ({ item }) =>{
             <Text style={styles.questionsText}>
              $
             </Text>
+            <GInputComponent
+                               propInputStyle={styles.userIDTextBox}
+                               value={this.state.dollar}
+                               onChangeText={this.onChangeText("dollar", "dollarVal")}
+                               errorFlag={!this.state.dollarVal}
+                               errorText={gblStrings.userManagement.inputError}
+            />
         </View>
        </TouchableOpacity>
        <TouchableOpacity style={[styles.radioButtonLayout]} onPress={() => this.onClickPercentage(item, index)}>
@@ -330,6 +358,13 @@ renderFundList= () => ({ item }) =>{
             <Text style={styles.questionsText}>
               %
             </Text>
+            <GInputComponent
+                               propInputStyle={styles.userIDTextBox}
+                               value={this.state.percentage}
+                               onChangeText={this.onChangeText("percentage", "percentageVal")}
+                               errorFlag={!this.state.dollarVal}
+                               errorText={gblStrings.userManagement.inputError}
+            />
         </View>
         </TouchableOpacity>
         

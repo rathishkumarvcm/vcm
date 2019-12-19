@@ -52,6 +52,14 @@ export const styles = StyleSheet.create({
         marginRight:"2%",
         marginTop:"4%"     
     },
+    lblCountText:{
+   color:"#0000FF",
+   fontSize:scaledHeight(18),
+        fontWeight:'bold',
+        marginTop: scaledHeight(15),
+        marginLeft:"10%",
+           
+    },
      
 bottomView:{
     backgroundColor:"#EEEEEE",
@@ -160,7 +168,8 @@ viewColum:{
     flexDirection:'column'
 },
 viewRow:{
-    flexDirection:'row'
+    flexDirection:'row',
+    width:"90%"
 },
 dropdownTextInput:{
     width:"50%",

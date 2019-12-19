@@ -5,7 +5,8 @@ import Accordian from './Accordian';
 import { styles } from './styles';
 import PropTypes from 'prop-types';
 
-
+let menuList=[]
+//let selectedFunds =[]
 let statusData = [
     {
         id: '1',
@@ -27,101 +28,26 @@ export default class TAmmendComponent extends Component {
             dropDown:false,
             dropDownValue:'All',
             pendingItems:[],
-            menu: [
-                {   key:'1',
-                    title: 'Order ID - PUR201820112',
-                    data: { USS: 'USSPX VCM 501 INDEX FUND MEMBER CLASS SHARES.',
-                            count:5,
-                            Dateadded : '29/11/2019',
-                            CurrentValue: '$1300',
-                            TransactionType : 'Purchase',
-                            PaymentMode:'NetBanking',           
-                            OrderStatus:'Pending',
-                            totalSHares:"2452",
-                            worth:"5400"
-
-                     
-                    }
-
-                },
-                {
-                    key:'2',
-                    title: 'Order ID - PUR201820113',
-                    data: { USS: 'USSPX VCM 502 INDEX FUND MEMBER CLASS SHARES.',
-                            count:5,
-                            Dateadded : '28/11/2019',
-                            CurrentValue: '$5602',
-                            TransactionType : 'Liquidation',
-                            PaymentMode:'Wire Transfer',           
-                            OrderStatus:'Pending',
-                            totalSHares:"2452",
-                            worth:"5400"
-
-                     
-                    }
-                },
-                {  key:'3',
-                    title: 'Order ID - PUR201820114',
-                    data: { USS: 'USSPX VCM 503 INDEX FUND MEMBER CLASS SHARES.',
-                            count:5,
-                            Dateadded : '27/11/2019',
-                            CurrentValue: '$2062',
-                            TransactionType : 'Exchange',
-                            PaymentMode:'In Order',           
-                            OrderStatus:'Pending',
-                            totalSHares:"2452",
-                            worth:"5400"
-
-                     
-                    }
-                },
-                { 
-                    key:'4',
-                    title: 'Order ID - PUR201820115',
-                    data: { USS: 'USSPX VCM 504 INDEX FUND MEMBER CLASS SHARES.',
-                            count:5,
-                            Dateadded : '27/11/2019',
-                            CurrentValue: '$2062',
-                            TransactionType : 'Exchange',
-                            PaymentMode:'In Order',           
-                            OrderStatus:'Completed',
-                            totalSHares:"2452",
-                            worth:"5400"
-
-                     
-                    }
-                },
-                {
-                    key:'5',
-                    title: 'Order ID - PUR201820116',
-                    data: { USS: 'USSPX VCM 505 INDEX FUND MEMBER CLASS SHARES.',
-                            count:5,
-                            Dateadded : '27/11/2019',
-                            CurrentValue: '$2064',
-                            TransactionType : 'Exchange',
-                            PaymentMode:'In Order',           
-                            OrderStatus:'Pending',
-                            totalSHares:"2456",
-                            worth:"5400"
-
-                     
-                    }
-                }
-                
-                
-                
-            ]
+            data:{}
         };
     }
 
     componentDidMount()
     {
+        
+        if(this.props && this.props.amendReducerData && this.props.amendReducerData.menu)
+        {
+            console.log("---->menu",this.props.amendReducerData.menu)
+           //this.setState({ menu : this.props.amendReducerData.menu}) ;
+           menuList = this.props.amendReducerData.menu;
+        }
+        console.log("state menu",this.state.menuList);
         this.filterPendingItems();
     }
 
     filterPendingItems = () => {
         const items = [];
-        for (item of this.state.menu) {
+        for (item of menuList) {
             if(item.data.OrderStatus === "Pending")
             {
             items.push(item);
@@ -135,8 +61,12 @@ export default class TAmmendComponent extends Component {
         this.setState({
             selectedTitle: title,
             selectedValue: item.CurrentValue,
-            selectedIndex: index
+            selectedIndex: index,
+            data:item
+            
         });
+        //selectedFunds= item.funds;
+        
     }
 
     selectDropdown = () => {
@@ -206,7 +136,8 @@ export default class TAmmendComponent extends Component {
     navigatetoFundSelection = () =>
     {
        // this.props.navigation.navigate('FundSelectionComponent');
-       this.props.navigation.navigate('FundSelectionComponent',{index:this.state.selectedIndex,data:this.state.pendingItems});
+       this.props.navigation.navigate('FundSelectionComponent',
+       {index:this.state.selectedIndex,data:this.state.data});
     }
     renderAccordians = () => {
         const items = [];

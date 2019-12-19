@@ -86,7 +86,7 @@ export default class Accordian extends Component {
                                                     </View>):null}
                                 <View style={styles.viewRow}>
                                         <Text style={styles.lblTxtInner} >{this.props.data.USS}</Text>
-                                        <Text style={styles.lblTxtInner} >{this.props.data.count}</Text>
+                                        <Text style={styles.lblCountText} >{this.props.data.count}</Text>
                                 </View>
 
                                 <View style={styles.viewRow}>
@@ -150,7 +150,7 @@ export default class Accordian extends Component {
 
     toggleExpand = () => {
         this.setState({ expanded: !this.state.expanded });
-        this.props.selectDataIndex(this.props.data, this.props.title);
+        this.props.selectDataIndex(this.props.data, this.props.title,this.props.index);
     }
 }
 

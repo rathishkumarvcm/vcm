@@ -29,7 +29,7 @@ class QuickSignInComponent extends Component {
 
     componentDidMount()
     {
-        if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.quickSignIn)
+        if(this.props && this.props.signInMethodsData )
         {
             console.log("quicksignincomponentDidMount",this.props.signInMethodsData.quickSignIn);
             this.setState({switchOn:this.props.signInMethodsData.quickSignIn,
@@ -40,7 +40,7 @@ class QuickSignInComponent extends Component {
     {
         console.log("componentDidUpdate::::> "+this.props.signInMethodsData);
         if (this.props !== prevProps) {
-            if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.quickSignIn)
+            if(this.props && this.props.signInMethodsData )
         {
             console.log("quicksignincomponentDidUpdate",this.props.signInMethodsData.quickSignIn);
            this.setState({switchOn:this.props.signInMethodsData.quickSignIn,

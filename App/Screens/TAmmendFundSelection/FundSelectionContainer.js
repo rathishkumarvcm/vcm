@@ -1,17 +1,19 @@
 import { connect } from "react-redux";
 import FundSelectionComponent from './FundSelectionComponent';
-import {loginActions} from "../../Shared/Actions";
+import {loginActions,ammendActions} from "../../Shared/Actions";
 
 
 const mapStateToProps = (state) => (
   {
     loginState: state.loginData,
-    initialState :state.initialAppData
+    initialState :state.initialAppData,
+    amendReducerData:state.amendReducerData
   }
 );
 
 const mapDispatchToProps = {
-  ...loginActions
+  ...loginActions,
+  ...ammendActions
 };
 
 export default connect(

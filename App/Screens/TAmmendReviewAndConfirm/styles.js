@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     },
     headerFlex:{
         backgroundColor:'#E4EBFE',
-        height:scaledHeight(46),
+        //height:scaledHeight(46),
         justifyContent:'center',
         alignItems:'center'
     },
@@ -50,7 +50,7 @@ lblTxtSmall:{
         fontWeight:'bold',
     },
     flex1:{
-        height:scaledHeight(138),
+        //height:scaledHeight(138),
         marginLeft: "4%",
         marginRight: "4%",
         marginTop:"4%",
@@ -88,16 +88,16 @@ lblTxtSmall:{
         fontSize:scaledHeight(16),
     },
     flex2:{
-        height:scaledHeight(244),
+       // height:scaledHeight(244),
         marginLeft: "4%",
         marginRight: "4%",
         marginTop:"10%",
     },
     selectedMutualFunds:{
-        height:scaledHeight(60), 
+        //height:scaledHeight(60), 
     },
     horizontalFlex:{
-        height:scaledHeight(29),
+        //height:scaledHeight(29),
         flexDirection: 'row',
         justifyContent:'space-between',
         marginRight: '4%',
@@ -118,27 +118,27 @@ lblTxtSmall:{
         marginLeft: '4%',
     },
     flex3:{
-        height:scaledHeight(202),
+        //height:scaledHeight(202),
         marginLeft: "4%",
         marginRight: "4%",
-        marginTop:"10%",
+        //marginTop:"10%",
     },
     flex3b:{
-        height:scaledHeight(142),
+        //height:scaledHeight(142),
     },
     flex4:{
         //height:scaledHeight(565),
-        height:scaledHeight(643),
+        //height:scaledHeight(643),
         marginLeft: "4%",
         marginRight: "4%",
         marginTop:"10%",
         marginBottom:"10%",
     },
     flex4b:{
-        height:scaledHeight(504),
+        //height:scaledHeight(504),
     },
     flex5:{
-        height:scaledHeight(206),
+        //height:scaledHeight(206),
         marginLeft: "4%",
         marginRight: "4%",
         backgroundColor:'#F8F6DE',
@@ -152,7 +152,7 @@ lblTxtSmall:{
         margin:"4%"
     },
     flex6:{
-        height:scaledHeight(205),
+        //height:scaledHeight(205),
         flexDirection: 'column',
         marginLeft: "10%",
         marginRight: "10%",
