@@ -255,10 +255,10 @@ export default {
         address: "Address",
         phoneType: "Phone Type",
         phoneNo: "Phone Number",
-        phoneNoFormat: "XXX-XXX-XXXX",
+        phoneNoFormat: "***-***-1234",
         emailAddress: "Email Address",
         socialSecurityNo: "Social Security Number",
-        ssnNoFormat: "XXX-XXX-XXXX",
+        ssnNoFormat: "**********",
         citizenship: "Citizenship",
 
         empStatus: "Employment Status",
