@@ -203,5 +203,39 @@ export const styles = StyleSheet.create({
         marginHorizontal: '4%',
         paddingVertical: scaledHeight(15),
         paddingHorizontal: '4%'
-    }
+    },
+    confirmDeleteView: {
+        flexDirection: 'row',
+    },
+    cancelBtn: {
+        borderColor: '#707070',
+        borderWidth: 1,
+        width: '40%',
+        marginHorizontal: '4%',
+        borderRadius: scaledHeight(1),
+        height: scaledHeight(44),
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 0.5
+    },
+    deleteBtn1: {
+        borderWidth: 1,
+        width: '40%',
+        marginHorizontal: '4%',
+        borderRadius: scaledHeight(1),
+        height: scaledHeight(44),
+        backgroundColor: '#544A54',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 0.5
+    },
+    cencelButtonText: {
+        fontSize: scaledHeight(14),
+        color: '#544A54'
+    },
+    deleteButtonText: {
+        fontSize: scaledHeight(14),
+        color: '#FFFFFF'
+    },
 });

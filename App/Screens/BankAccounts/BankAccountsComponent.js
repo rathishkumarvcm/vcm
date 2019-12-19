@@ -10,6 +10,9 @@ class BankAccountsComponent extends Component {
         super(props);
         this.updateBankDetails = true;
         this.showAlert = true;
+        this.confirmDelete = false;
+        this.deleteId = "";
+        this.bankName = "";
         this.state = {
             isLoading: false,
             showDeleteOption: false,
@@ -98,22 +101,31 @@ class BankAccountsComponent extends Component {
         }
     }
 
-    deleteBankAccount = (itemId) => {
-        let tmpData = [];
-        let index = -1;
-        tmpData = this.state.bankAccountInfo;
-        tmpData.map((item) => {
-            if (item.Id == itemId) {
-                index = tmpData.indexOf(item);
+    deleteBankAccount = (shouldDelete) => {
+        this.confirmDelete = false;
+        if (shouldDelete) {
+            let tmpData = [];
+            let index = -1;
+            tmpData = this.state.bankAccountInfo;
+            tmpData.map((item) => {
+                if (item.Id == this.deleteId) {
+                    index = tmpData.indexOf(item);
+                }
+            });
+            if (index != -1) {
+                tmpData.splice(index, 1);
             }
-        });
-        if (index != -1) {
-            tmpData.splice(index, 1);
+            this.setState({ bankAccountInfo: tmpData });
+        } else {
+            let tmpData = [];
+            tmpData = this.state.bankAccountInfo;
+            tmpData.map((item) => {
+                if (item.Id == this.deleteId) {
+                    item.showDeleteOption = false;
+                }
+            });
+            this.setState({ bankAccountInfo: tmpData });
         }
-
-        this.updateView();
-
-        this.setState({ bankAccountInfo: tmpData });
     }
 
     addBankAccount = (item) => {
@@ -126,6 +138,13 @@ class BankAccountsComponent extends Component {
 
     updateIsScuccess = (showAlert) => {
         this.showAlert = showAlert;
+        this.updateView();
+    }
+
+    updateConfirmDelete = (confirmDelete, itemId, bankName) => {
+        this.confirmDelete = confirmDelete;
+        this.deleteId = itemId;
+        this.bankName = bankName;
         this.updateView();
     }
 
@@ -161,37 +180,64 @@ class BankAccountsComponent extends Component {
                 <GHeaderComponent navigation={this.props.navigation} />
 
                 <ScrollView style={styles.scrollviewStyle} contentContainerStyle={{ justifyContent: 'center' }}>
-
-                    {isSuccess && this.showAlert &&
-                        <TouchableOpacity style={styles.alertBox} onPress={() => this.updateIsScuccess(false)}>
-                            <Text style={styles.alertText}>
-                                {gblStrings.bankAccounts.success_add_bank_account}
+                    {this.confirmDelete &&
+                        <View style={styles.bankInfoContainer}>
+                            <Text style={styles.accountNameHeaderText}>
+                                {`Delete ${this.bankName}`}
                             </Text>
-                        </TouchableOpacity>
+
+                            <Text style={styles.accountNameSubHeaderText}>
+                                {`Are you sure you want to delete ${this.bankName}`}
+                            </Text>
+
+                            <View style={styles.confirmDeleteView}>
+                                <GButtonComponent
+                                    buttonStyle={styles.cancelBtn}
+                                    buttonText={gblStrings.common.cancel}
+                                    textStyle={styles.cencelButtonText}
+                                    onPress={() => this.deleteBankAccount(false)}
+                                />
+                                <GButtonComponent
+                                    buttonStyle={styles.deleteBtn1}
+                                    buttonText={gblStrings.common.delete}
+                                    textStyle={styles.deleteButtonText}
+                                    onPress={() => this.deleteBankAccount(true)}
+                                />
+                            </View>
+                        </View>
                     }
 
-                    <View style={styles.header}>
-                        <Text style={styles.headerText}>
-                            {gblStrings.bankAccounts.bank_account_header}
-                        </Text>
+                    {!this.confirmDelete &&
+                        <>
+                            {isSuccess && this.showAlert &&
+                                <TouchableOpacity style={styles.alertBox} onPress={() => this.updateIsScuccess(false)}>
+                                    <Text style={styles.alertText}>
+                                        {gblStrings.bankAccounts.success_add_bank_account}
+                                    </Text>
+                                </TouchableOpacity>
+                            }
 
-                        <TouchableOpacity style={styles.addBtn} onPress={() => this.navigateAddBankAccount()}>
-                            <Text style={styles.subTextAdd}>
-                                {gblStrings.bankAccounts.add}
+                            <View style={styles.header}>
+                                <Text style={styles.headerText}>
+                                    {gblStrings.bankAccounts.bank_account_header}
+                                </Text>
+
+                                <TouchableOpacity style={styles.addBtn} onPress={() => this.navigateAddBankAccount()}>
+                                    <Text style={styles.subTextAdd}>
+                                        {gblStrings.bankAccounts.add}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+
+                            <View style={styles.linkBreak1} />
+
+                            <Text style={styles.instructionText}>
+                                {gblStrings.bankAccounts.lorem_bank_account}
                             </Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    <View style={styles.linkBreak1} />
-
-                    <Text style={styles.instructionText}>
-                        {gblStrings.bankAccounts.lorem_bank_account}
-                    </Text>
-
-
+                        </>
+                    }
 
                     {this.props && this.props.bankAccountInfo &&
-
                         <FlatList
                             data={this.state.bankAccountInfo}
                             extraData={this.state.stateUpdated}
@@ -218,7 +264,7 @@ class BankAccountsComponent extends Component {
                                         buttonStyle={styles.deleteBtn}
                                         buttonText={gblStrings.common.delete}
                                         textStyle={styles.backButtonText}
-                                        onPress={() => this.deleteBankAccount(item.Id)}
+                                        onPress={() => this.updateConfirmDelete(true, item.Id, item.bankName)}
                                     />}
 
                                     <View style={styles.linkBreak2} />
