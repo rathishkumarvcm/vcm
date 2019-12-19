@@ -1,16 +1,15 @@
-/* eslint-disable react/no-multi-comp */
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity,Image,KeyboardAvoidingView ,Platform} from 'react-native';
 import PropTypes from "prop-types";
 import ImagePicker from 'react-native-image-picker';
 import { styles } from './styles';
-import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GIcon, GDateComponent, GDropDownComponent } from '../../CommonComponents';
+import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GDateComponent, GDropDownComponent } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
-// import { Header } from 'react-navigation';
 import AppUtils from '../../Utils/AppUtils';
+// import { Header } from 'react-navigation';
 
 const imagePickerOptions = {
     title: 'Select Image',
@@ -39,26 +38,6 @@ const dummyData = [
     { "key": "key2", "value": "Option2" }
 ];
 
-
-const DropDownListItem = (props) => {
-    AppUtils.Dlog("DropDownListItem:: ");
-    return (
-        <TouchableOpacity
-            style={{ height: 33 }}
-            onPress={props.onSelectedItem}
-        >
-            <Text> {props.value} </Text>
-        </TouchableOpacity>
-    );
-};
-DropDownListItem.propTypes = {
-    onSelectedItem: PropTypes.func,
-    value: PropTypes.string
-};
-DropDownListItem.defaultProps = {
-    onSelectedItem: null,
-    value: ""
-};
 
 
 class OpenAccPageTwoComponent extends Component {
@@ -1132,41 +1111,12 @@ class OpenAccPageTwoComponent extends Component {
         // alert("onSubmitEmpZipEditing::"+JSON.stringify(newItems));
         this.setState({ currentZipCodeRef: newItems });
 
-       /*
-        if (this.state[stateKey].citizenship === "U.S") {
-            const payload = {
-                "Zip": this.state[stateKey][keyName]
-            };
-            const addressPayload = {
-                ...payload,
-                "Address1": this.state[stateKey]["empAddrLine1"],
-                "Address2": this.state[stateKey]["empAddrLine2"],
-                "City": this.state[stateKey]["empCity"],
-                "State": this.state[stateKey]["empStateCity"]
-            };
-
-
-            this.props.getStateCity(payload);
-            this.props.getAddressFormat(addressPayload);
-        }
-        */
-     
         // nextInputFocus.focus();
     }
 
     onSubmitEditing = (input) => text => {
 
         AppUtils.Dlog(`onSubmitEditing:::>${ text}`);
-        /* 
-       
-         if (input !== "" && input !== null && input !== undefined) {
-             if (this[input] !== null && input !== undefined) {
-                 if (typeof this[input].focus === 'function') {
-                   //  this[input].focus();
-                 }
-             }
-         }  
-         */
 
         input.focus();
     }
@@ -1322,22 +1272,22 @@ class OpenAccPageTwoComponent extends Component {
         } else if (this.isEmpty(this.state.personal.isYourPhysicalAddresSame)) {
             errMsg = gblStrings.accManagement.confirmPhysicalAddressSame;
             input = 'isYourPhysicalAddresSame';
-        } else if (this.state.personal.isYourPhysicalAddresSame =="No" && this.isEmpty(this.state.personal.addrLine1_Phy)) {
+        } else if (this.state.personal.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.personal.addrLine1_Phy)) {
             errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
             input = 'addrLine1_Phy';
-        } else if (this.state.personal.isYourPhysicalAddresSame =="No" && this.isEmpty(this.state.personal.addrLine2_Phy)) {
+        } else if (this.state.personal.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.personal.addrLine2_Phy)) {
             errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
             input = 'addrLine2_Phy';
-        } else if (this.state.personal.isYourPhysicalAddresSame =="No" &&this.isEmpty(this.state.personal.zipcode_Phy)) {
+        } else if (this.state.personal.isYourPhysicalAddresSame === "No" &&this.isEmpty(this.state.personal.zipcode_Phy)) {
             errMsg = gblStrings.accManagement.emptyZipCodeMsg;
             input = 'zipcode_Phy';
-        }else if (this.state.personal.isYourPhysicalAddresSame =="No" && this.state.personal.zipcode_Phy.length < gblStrings.maxLength.zipCode) {
+        }else if (this.state.personal.isYourPhysicalAddresSame === "No" && this.state.personal.zipcode_Phy.length < gblStrings.maxLength.zipCode) {
             errMsg = gblStrings.accManagement.invalidZipCodeMsg;
             input = 'zipcode_Phy';
-        } else if (this.state.personal.isYourPhysicalAddresSame =="No" &&this.isEmpty(this.state.personal.city_Phy)) {
+        } else if (this.state.personal.isYourPhysicalAddresSame === "No" &&this.isEmpty(this.state.personal.city_Phy)) {
             errMsg = gblStrings.accManagement.emptyCityMsg;
             input = 'city_Phy';
-        } else if (this.state.personal.isYourPhysicalAddresSame =="No" && this.isEmpty(this.state.personal.stateCity_Phy)) {
+        } else if (this.state.personal.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.personal.stateCity_Phy)) {
             errMsg = gblStrings.accManagement.emptyStateMsg;
             input = 'stateCity_Phy';
         } else if (this.isEmpty(this.state.personal.phoneType)) {
@@ -1469,22 +1419,22 @@ class OpenAccPageTwoComponent extends Component {
         } else if (this.isEmpty(this.state.jointOwner.isYourPhysicalAddresSame)) {
             errMsg = gblStrings.accManagement.confirmPhysicalAddressSame;
             input = 'isYourPhysicalAddresSame';
-        }else if (this.state.jointOwner.isYourPhysicalAddresSame =="No" && this.isEmpty(this.state.jointOwner.addrLine1_Phy)) {
+        }else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.jointOwner.addrLine1_Phy)) {
             errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
             input = 'addrLine1_Phy';
-        } else if (this.state.jointOwner.isYourPhysicalAddresSame =="No" && this.isEmpty(this.state.jointOwner.addrLine2_Phy)) {
+        } else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.jointOwner.addrLine2_Phy)) {
             errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
             input = 'addrLine2_Phy';
-        } else if (this.state.jointOwner.isYourPhysicalAddresSame =="No" &&this.isEmpty(this.state.jointOwner.zipcode_Phy)) {
+        } else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" &&this.isEmpty(this.state.jointOwner.zipcode_Phy)) {
             errMsg = gblStrings.accManagement.emptyZipCodeMsg;
             input = 'zipcode_Phy';
-        }else if (this.state.jointOwner.isYourPhysicalAddresSame =="No" && this.state.jointOwner.zipcode_Phy.length < gblStrings.maxLength.zipCode) {
+        }else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" && this.state.jointOwner.zipcode_Phy.length < gblStrings.maxLength.zipCode) {
             errMsg = gblStrings.accManagement.invalidZipCodeMsg;
             input = 'zipcode_Phy';
-        } else if (this.state.jointOwner.isYourPhysicalAddresSame =="No" &&this.isEmpty(this.state.jointOwner.city_Phy)) {
+        } else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" &&this.isEmpty(this.state.jointOwner.city_Phy)) {
             errMsg = gblStrings.accManagement.emptyCityMsg;
             input = 'city_Phy';
-        } else if (this.state.jointOwner.isYourPhysicalAddresSame =="No" && this.isEmpty(this.state.jointOwner.stateCity_Phy)) {
+        } else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.jointOwner.stateCity_Phy)) {
             errMsg = gblStrings.accManagement.emptyStateMsg;
         } else if (this.isEmpty(this.state.jointOwner.phoneType)) {
             errMsg = gblStrings.accManagement.emptyPhonetypeMsg;
@@ -1883,13 +1833,6 @@ class OpenAccPageTwoComponent extends Component {
 
     generateKeyExtractor = (item) => item.key;
 
-    renderDropDownListItem = (dropDownName) => ({ item }) =>
-        (<DropDownListItem
-            value={item.value}
-            onSelectedItem={this.selectedDropDownValue(dropDownName, item, item.key)}
-        />
-        );
-
     renderCalender = (sectionName, calendarName) => {
         AppUtils.Dlog(`renderCalender::: ${ calendarName}`);
         return (
@@ -2094,7 +2037,7 @@ class OpenAccPageTwoComponent extends Component {
                 changeState={(stateKey !== "taxBracket") ? this.onPressDropDown(section, dropDownName) : null}
                 selectedDropDownValue={this.onSelectedDropDownValue(section, stateKey, dropDownName)}
                 itemToDisplay="value"
-                dropDownPostition={{ ...styles.dropDownPostition }}
+                dropDownPostition={styles.dropDownPostition}
                 errorFlag={isOptional ? false : validationKeyValue}
                 errorText={this.state.errMsg}
                 isOptional={isOptional}
@@ -2386,7 +2329,7 @@ class OpenAccPageTwoComponent extends Component {
                 {
                     this.state.personal.isPersonalInfoExpanded &&
                     <View style={styles.childSectionGrp}>
-                        <View style={{ flexGrow: 1, width: "40%" }}>
+                        <View style={styles.dropDownViewPrefix}>
                             {this.renderCustomDropDown({
                                 section: "personal",
                                 stateKey: "prefix",
@@ -2455,7 +2398,7 @@ class OpenAccPageTwoComponent extends Component {
 
                         />
 
-                        <View style={{ flexGrow: 1, width: "40%" }}>
+                        <View style={styles.dropDownViewPrefix}>
                             {this.renderCustomDropDown({
                                 section: "personal",
                                 stateKey: "suffix",
@@ -2506,7 +2449,7 @@ class OpenAccPageTwoComponent extends Component {
                        
                         {
                             this.state.personal.citizenship !== "U.S" &&
-                            <View style={{ flexGrow: 1, marginTop: scaledHeight(25) }}>
+                            <View style={styles.uploadW8View}>
                                 <Text>
                                     <Text style={styles.lblTxt}>
                                         {gblStrings.accManagement.uploadW8Form}
@@ -2619,7 +2562,7 @@ class OpenAccPageTwoComponent extends Component {
                         </Text>
                         <View style={styles.radioBtnGrp}>
                             <CustomRadio
-                                componentStyle={{ width: "30%", marginBottom: scaledHeight(0) }}
+                                componentStyle={styles.radioCol1}
                                 size={30}
                                 outerCicleColor="#DEDEDF"
                                 innerCicleColor="#61285F"
@@ -2631,7 +2574,7 @@ class OpenAccPageTwoComponent extends Component {
                                 onPress={this.onPressRadio("personal", "isYourPhysicalAddresSame", "Yes")}
                             />
                             <CustomRadio
-                                componentStyle={{ marginBottom: scaledHeight(0) }}
+                                componentStyle={styles.radioCol2}
                                 size={30}
                                 outerCicleColor="#DEDEDF"
                                 innerCicleColor="#61285F"
@@ -3117,7 +3060,7 @@ class OpenAccPageTwoComponent extends Component {
                         </Text>
                         <View style={styles.radioBtnGrp}>
                             <CustomRadio
-                                componentStyle={{ width: "30%", marginBottom: scaledHeight(0) }}
+                                componentStyle={styles.radioCol1}
                                 size={30}
                                 outerCicleColor="#DEDEDF"
                                 innerCicleColor="#61285F"
@@ -3130,7 +3073,7 @@ class OpenAccPageTwoComponent extends Component {
 
                             />
                             <CustomRadio
-                                componentStyle={{ marginBottom: scaledHeight(0) }}
+                                componentStyle={styles.radioCol2}
                                 size={30}
                                 outerCicleColor="#DEDEDF"
                                 innerCicleColor="#61285F"
@@ -3187,11 +3130,11 @@ class OpenAccPageTwoComponent extends Component {
                                 <Text style={styles.lblTxt}>
                                     {gblStrings.accManagement.datesOfService}
                                 </Text>
-                                <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                                    <Text style={[styles.optionalTxt, { width: '20%' }]}>
+                                <View style={styles.militaryServiceView}>
+                                    <Text style={styles.militaryLblDate1}>
                                         {gblStrings.accManagement.from}
                                     </Text>
-                                    <View style={{ width: '80%', marginLeft: '0%' }}>
+                                    <View style={styles.militaryLblDate2}>
                                         <GDateComponent
                                             date={this.state.personal.fromDateMilitary}
                                             placeholder="Select Date"
@@ -3201,11 +3144,11 @@ class OpenAccPageTwoComponent extends Component {
                                         />
                                     </View>
                                 </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                                    <Text style={[styles.optionalTxt, { width: '20%' }]}>
+                                <View style={styles.militaryServiceView}>
+                                    <Text style={styles.militaryLblDate1}>
                                         {gblStrings.accManagement.to}
                                     </Text>
-                                    <View style={{ width: '80%', marginLeft: '0%' }}>
+                                    <View style={styles.militaryLblDate2}>
                                         <GDateComponent
                                             date={this.state.personal.toDateMilitary}
                                             placeholder="Select Date"

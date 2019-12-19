@@ -447,7 +447,38 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(12),
         marginVertical: scaledHeight(12),
 
+    },
+    dropDownViewPrefix:{
+        flexGrow: 1, 
+        width: "40%" 
+    },
+    uploadW8View:{
+        flexGrow: 1,
+        marginTop: scaledHeight(25) 
+    },
+    radioCol1:{ 
+        width: "30%", 
+        marginBottom: scaledHeight(0) 
+    },
+    radioCol2:{ 
+        marginBottom: scaledHeight(0) 
+    },
+    militaryServiceView:{
+        flexDirection: 'row',
+         justifyContent: 'flex-start',
+          alignItems: 'center' 
+    },
+    militaryLblDate1:{
+        color:'rgba(51, 51, 51, 0.87)',
+        fontSize:scaledHeight(16),
+        fontWeight:'normal',
+        width: '20%'
+    },
+    militaryLblDate2:{
+        width: '80%',
+        marginLeft: '0%'
     }
+
    
 
 
