@@ -13,7 +13,7 @@ class CheckBookPlaceOrder extends Component {
         };
     }
 
-    navigateBack = () => this.props.navigation.goBack();
+    navigateBack = (isSuccess) => this.props.navigation.navigate('orderCheckBook', { isSuccess: isSuccess});
 
     render() {
         const { navigation } = this.props;
@@ -70,14 +70,14 @@ class CheckBookPlaceOrder extends Component {
                         buttonStyle={styles.backBtn}
                         buttonText={gblStrings.common.cancel}
                         textStyle={styles.backButtonText}
-                        onPress={this.navigateBack}
+                        onPress={() => this.navigateBack(false)}
                     />
 
                     <GButtonComponent
                         buttonStyle={styles.submitBtn}
                         buttonText={gblStrings.common.submit}
                         textStyle={styles.submitButtonText}
-                        onPress={this.navigateBack}
+                        onPress={() => this.navigateBack(true)}
                     />
 
                     <View style={styles.fullLine} />

@@ -4,7 +4,7 @@ import { View, ScrollView, Text, Image } from 'react-native';
 import { GHeaderComponent, GInputComponent, GFooterComponent, GButtonComponent } from '../../CommonComponents';
 import PropTypes from "prop-types";
 import gblStrings from '../../Constants/GlobalStrings';
-
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import { CustomRadio } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 
@@ -82,11 +82,17 @@ class AddOtherBankAccountComponent extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props && this.props.addBankAccount && this.props.addBankAccount != prevProps.addBankAccount) {
-            //this.setState({ bankAccountInfo: JSON.parse(JSON.parse(this.props.bankAccountInfo)[0]) });
-            console.log("componentDidUpdate ::: > addBankAccount " + JSON.stringify(this.props.addBankAccount));
-            if (this.props.addBankAccount.type == "ADD_BANK_ACCOUNT_SUCCESS") {
-                this.navigateBankAccount(true);
+        console.log("componentDidUpdate ::: > addBankAccount " + JSON.stringify(this.props.addBankAccount));
+        const addBankAccKey = ActionTypes.ADD_BANK_ACCOUNT;
+        if (this.props.addBankAccount[addBankAccKey]) {
+            if (this.props.addBankAccount[addBankAccKey] !== prevProps.addBankAccount[addBankAccKey]) {
+                console.log("componentDidUpdate ::: > addBankAccount " + JSON.stringify(this.props.addBankAccount));
+                const tempResponse = this.props.addBankAccount[addBankAccKey];
+                if (tempResponse.statusCode == 200 && tempResponse.statusType == "S") {
+                    this.navigateBankAccount(true);
+                } else {
+                    this.navigateBankAccount(false);
+                }
             }
         }
     }

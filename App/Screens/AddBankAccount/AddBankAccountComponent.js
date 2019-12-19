@@ -28,7 +28,7 @@ class AddBankAccountComponent extends Component {
         this.props.navigation.navigate('addOtherBankAccountComponent');
     }
 
-    navigateBack = () => this.props.navigation.goBack();
+    navigateBankAccount = (isSuccess) => this.props.navigation.navigate('bankAccount', {isSuccess: isSuccess});
 
     setExpandInstruction = () => {
         this.setState({
@@ -95,7 +95,7 @@ class AddBankAccountComponent extends Component {
                         buttonStyle={styles.backBtn}
                         buttonText={gblStrings.common.cancel}
                         textStyle={styles.backButtonText}
-                        onPress={this.navigateBack}
+                        onPress={() => this.navigateBankAccount(false)}
                     />
 
                     <View style={styles.fullLine} />

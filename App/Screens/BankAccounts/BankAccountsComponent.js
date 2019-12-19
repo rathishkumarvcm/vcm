@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
 import { styles } from './styles';
 import { View, ScrollView, Text, FlatList, TouchableOpacity } from 'react-native';
-import { GHeaderComponent, GFooterComponent, GIcon, GButtonComponent} from '../../CommonComponents';
+import { GHeaderComponent, GFooterComponent, GIcon, GButtonComponent } from '../../CommonComponents';
 import PropTypes from "prop-types";
 import gblStrings from '../../Constants/GlobalStrings';
 
 class BankAccountsComponent extends Component {
     constructor(props) {
         super(props);
+        this.updateBankDetails = true;
+        this.showAlert = true;
         this.state = {
             isLoading: false,
             showDeleteOption: false,
-            currentSecuritiesChanged: false,
-            updateBankDetails: true,
-            showAlert: true,
-
+            stateUpdated: false,
             bankAccountInfo: [
                 {
                     Id: "1",
@@ -58,24 +57,23 @@ class BankAccountsComponent extends Component {
 
         payload.push(JSON.stringify(this.state.bankAccountInfo));
         this.props.getBankAccountInfo(JSON.stringify(payload));
-        console.log("componentDidMount isSuccess:::: ", this.state.isSuccess);
-
-        
     }
 
     componentDidUpdate(prevProps) {
         if (this.props && this.props.bankAccountInfo && this.props.bankAccountInfo != prevProps.bankAccountInfo) {
             this.setState({ bankAccountInfo: JSON.parse(JSON.parse(this.props.bankAccountInfo)[0]) });
         }
-        
-        
     }
 
-    navigateAddBankAccount = () => this.props.navigation.navigate('addBankAccount');
-    
+    navigateAddBankAccount = () => {
+        this.updateBankDetails = true;
+        this.showAlert = true;
+        this.props.navigation.navigate('addBankAccount');
+    }
+
     navigateBack = () => this.props.navigation.goBack();
 
-    updateCurrentSecurityChanged = () => this.setState({ currentSecuritiesChanged: !this.state.currentSecuritiesChanged });
+    updateView = () => this.setState({ stateUpdated: !this.state.stateUpdated });
 
     updateShowDeleteOption = (fromView, showDeleteOption, itemId) => {
         console.log("updateShowDeleteOption:::: ", fromView, showDeleteOption, itemId);
@@ -91,10 +89,9 @@ class BankAccountsComponent extends Component {
                             item.showDeleteOption = !showDeleteOption;
                         }
                     });
-                    this.updateCurrentSecurityChanged();
+                    this.updateView();
 
                     this.setState({ bankAccountInfo: tmpData });
-                    console.log("updateShowDeleteOption:::: ", this.state.bankAccountInfo);
                 }
                 break;
 
@@ -108,13 +105,13 @@ class BankAccountsComponent extends Component {
         tmpData.map((item) => {
             if (item.Id == itemId) {
                 index = tmpData.indexOf(item);
-            } 
+            }
         });
-        if(index != -1) {
+        if (index != -1) {
             tmpData.splice(index, 1);
         }
 
-        this.updateCurrentSecurityChanged();
+        this.updateView();
 
         this.setState({ bankAccountInfo: tmpData });
     }
@@ -123,40 +120,39 @@ class BankAccountsComponent extends Component {
         tmpData = this.state.bankAccountInfo;
         tmpData.push(item);
         this.setState({ bankAccountInfo: tmpData });
-        this.setState({ updateBankDetails: false});
-        console.log("BankAccount info ::: " + this.state.bankAccountInfo);
+        this.updateBankDetails = false;
+        this.updateView();
     }
 
     updateIsScuccess = (showAlert) => {
-        this.setState({ showAlert: showAlert});
-
-}
+        this.showAlert = showAlert;
+        this.updateView();
+    }
 
     render() {
-        const { navigation } = this.props;        
+        const { navigation } = this.props;
         const isSuccess = navigation.getParam('isSuccess', false);
-        const accountType = navigation.getParam('accountType', false);
-        const financialInstitutionName = navigation.getParam('financialInstitutionName', false);
-        const accountOwnerNames = navigation.getParam('accountOwnerNames', false);
-        const transitRoutingNumber = navigation.getParam('transitRoutingNumber', false);
-        const accountNumber = navigation.getParam('accountNumber', false);
 
-        let tmpData = { "Id": (this.state.bankAccountInfo.length + 1).toString(),
-            "bankName": financialInstitutionName,
-            "accountType": accountType,
-            "accountNumber": accountNumber,
-            "transitRoutingNumber": transitRoutingNumber,
-            "dateAdded": "20/09/2019",
-            "isSystematicWithdrawalPlan": "No",
-            "isAutomaticInvestmentPlan": "No",
-            "showDeleteOption": false};
-        
+        const accountType = navigation.getParam('accountType', "");
+        const financialInstitutionName = navigation.getParam('financialInstitutionName', "");
+        const accountOwnerNames = navigation.getParam('accountOwnerNames', "");
+        const transitRoutingNumber = navigation.getParam('transitRoutingNumber', "");
+        const accountNumber = navigation.getParam('accountNumber', "");
 
-        //this.updateIsScuccess(isSuccess);
-        
+        let tmpData = {};
+        if (isSuccess) {
+            tmpData["Id"] = (this.state.bankAccountInfo.length + 1).toString();
+            tmpData["bankName"] = financialInstitutionName;
+            tmpData["accountType"] = accountType;
+            tmpData["accountNumber"] = accountNumber;
+            tmpData["transitRoutingNumber"] = transitRoutingNumber;
+            tmpData["dateAdded"] = "20/09/2019";
+            tmpData["isSystematicWithdrawalPlan"] = "No";
+            tmpData["isAutomaticInvestmentPlan"] = "No";
+            tmpData["showDeleteOption"] = false;
+        }
 
-        if (this.state.updateBankDetails && isSuccess) {     
-            console.log("render isSuccess:::: ", tmpData);       
+        if (isSuccess && this.updateBankDetails) {
             this.addBankAccount(tmpData);
         }
 
@@ -166,7 +162,7 @@ class BankAccountsComponent extends Component {
 
                 <ScrollView style={styles.scrollviewStyle} contentContainerStyle={{ justifyContent: 'center' }}>
 
-                    {isSuccess && this.state.showAlert &&
+                    {isSuccess && this.showAlert &&
                         <TouchableOpacity style={styles.alertBox} onPress={() => this.updateIsScuccess(false)}>
                             <Text style={styles.alertText}>
                                 {gblStrings.bankAccounts.success_add_bank_account}
@@ -179,7 +175,7 @@ class BankAccountsComponent extends Component {
                             {gblStrings.bankAccounts.bank_account_header}
                         </Text>
 
-                        <TouchableOpacity style={styles.addBtn} onPress={this.navigateAddBankAccount}>
+                        <TouchableOpacity style={styles.addBtn} onPress={() => this.navigateAddBankAccount()}>
                             <Text style={styles.subTextAdd}>
                                 {gblStrings.bankAccounts.add}
                             </Text>
@@ -192,13 +188,13 @@ class BankAccountsComponent extends Component {
                         {gblStrings.bankAccounts.lorem_bank_account}
                     </Text>
 
-                    
+
 
                     {this.props && this.props.bankAccountInfo &&
 
                         <FlatList
                             data={this.state.bankAccountInfo}
-                            extraData={this.state.currentSecuritiesChanged}
+                            extraData={this.state.stateUpdated}
                             keyExtractor={(item) => item.Id}
                             renderItem={({ item, i }) => (
                                 <View style={styles.bankInfoContainer}>
@@ -258,10 +254,7 @@ class BankAccountsComponent extends Component {
                                     <Text style={styles.accountNameSubHeaderText}>
                                         {`${item.isAutomaticInvestmentPlan}`}
                                     </Text>
-
-
                                 </View>
-
                             )}
                         />}
 
@@ -269,10 +262,9 @@ class BankAccountsComponent extends Component {
                         buttonStyle={styles.backBtn}
                         buttonText={gblStrings.common.back}
                         textStyle={styles.backButtonText}
-                        onPress={this.navigateBack}
+                        onPress={() => this.navigateBack()}
                     />
-                    
-                       
+
                     <View style={styles.fullLine} />
 
                     <View style={styles.tNCFlex}>
