@@ -134,6 +134,12 @@ agreeTermsTxt: {
     //marginTop:scaledHeight(5)
 
 },
+userIDTextBox:{
+   
+    marginBottom:scaledHeight(18),
+    width:'60%',
+    marginTop:scaledHeight(15)
+}
 
 
 });
