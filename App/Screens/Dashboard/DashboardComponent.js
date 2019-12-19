@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterComponent, GModalComponent } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterSettingsComponent, GModalComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import RNSecureKeyStore from 'react-native-secure-key-store';
 import PropTypes from "prop-types";
@@ -65,12 +65,8 @@ class DashboardComponent extends Component {
 
             <View style={styles.container} >
                 <GHeaderComponent navigation={this.props.navigation} />
-                <ScrollView style={{ flex: .85 }}
-                    contentContainerStyle={{
-                        flex: 1,
-                       // justifyContent: 'space-between'
-                    }}
-                >
+                <ScrollView style={{ flex: .85 }}>          
+                
                     <View style={styles.dashboardSection}>
                         <Text>{`welcome ${this.state.memberId}`}</Text>
                         <Text style={styles.dashboardText}>
@@ -82,19 +78,7 @@ class DashboardComponent extends Component {
                             textStyle={styles.openAccBtnTxt}
                             onPress={this.onClickOpenAnAccount}
                         />
-                    </View>
-
-                    <View style={styles.newVictorySection}>
-                        <Text style={styles.disclaimerTitleTxt}>
-                            {gblStrings.accManagement.VCDiscalimerTitle}
-                        </Text>
-                        <Text style={styles.disclaimerTxt}>
-                            {gblStrings.accManagement.VCDiscalimerDesc}
-                        </Text>
-                        <Text style={styles.moreTxt}>
-                            {gblStrings.common.more}
-                        </Text>
-                    </View>
+                    </View>                  
 
                     {(specialMFAUserType!="" && (specialMFAUserType=="UserForm" || specialMFAUserType=="NewUser"))?
                         <GModalComponent 
@@ -114,8 +98,9 @@ class DashboardComponent extends Component {
                     :null
                     }
 
-                    <GFooterComponent />
+                    <GFooterSettingsComponent />
                 </ScrollView>
+                
             </View>
 
         );

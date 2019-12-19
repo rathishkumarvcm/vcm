@@ -106,7 +106,7 @@ export const styles = StyleSheet.create({
         marginHorizontal: '4%'
     },
     securityContainer: {      
-        backgroundColor: '#FFFFFF',            
+        backgroundColor: '#F7FAFF',            
         marginTop: scaledHeight(30),
         paddingTop:scaledHeight(15),    
         paddingBottom:scaledHeight(15),  
