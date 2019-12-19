@@ -14,8 +14,8 @@ import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-native-collapsible';
 import Slider from 'react-native-slider';
-import {allow_Nine_Numeric, emailRegex} from '../../Constants/RegexConstants';
-
+import {emailRegex} from '../../Constants/RegexConstants';
+const ssnRegex=/^\d{9}$/;
 let contingentCount=0;
 const beneficiary_type_data=[
   { "key": "key1", "title": "Individuals" },
@@ -27,10 +27,10 @@ let relationData=[
   {"key": "bro_sis", "value": "Brother/Sister"}
 ];
 
-// let suffixData=[
-//   {"key": "ii", "value": "II"},
-//   {"key": "iii", "value": "III"}
-// ];
+let suffixData=[
+  {"key": "ii", "value": "II"},
+  {"key": "iii", "value": "III"}
+];
 
 
 class EditManageBenificiariesComponent extends Component {
@@ -46,20 +46,22 @@ class EditManageBenificiariesComponent extends Component {
       isPrimaryCollapse:false,
       collapseIcon:"-",
       isContingentBene:false,
-      distributionValue:0.2,
       primaryBeneficiaryData:[],
       contingentBeneficiaryData:[],
       todBeneficiaryData:[],
       validationPrimaryArray:[],
       validationContingentArray:[],
       validationTodArray:[],
-      todValidationArray:[],
       addContingentText:'',
       todayDate:'',
       prevDate:'',
       addedBene:[],
+      totalDistribution:0,
+      totalPrimary:0,
+      totalContingent:0,
       isAddTodBene:false,
-      validationAddedTodArray:[]
+      validationAddedTodArray:[],
+      isDistHigh:false
     };
   }
 
@@ -113,7 +115,6 @@ class EditManageBenificiariesComponent extends Component {
     let tempData={};
     tempData.ssnValidation=true;
     tempData.ssnValidationMsg='';
-    tempData.ssnValidation=true;
     tempData.dobValidationFlag=true;
     tempData.dobValidationMsg='' ;
     tempData.emailValidation=true;
@@ -146,8 +147,39 @@ class EditManageBenificiariesComponent extends Component {
   }
 
   onClickNext=()=>{
-    console.log("onCLickNext:::");
-    this.props.navigation.navigate("verifyManageBeneficiaries",{mBData:this.state.bene_Data});
+    console.log("in next click");
+    let totTod=0,totalPri=0,totalCon=0,total=0;
+    if(this.state.bene_Data.transfer_on_Death_Bene){
+      let dist=0;
+      for(let item of this.state.bene_Data.transfer_on_Death_Bene){
+        dist=dist+parseInt(item.distribution_Per);
+      }
+      totTod=dist;
+    }
+    if(this.state.bene_Data.primary_Bene){
+      let dist=0;
+      for(let item of this.state.bene_Data.primary_Bene){
+        dist=dist+parseInt(item.distribution_Per);
+      }
+      totalPri=dist;
+    }
+    if(this.state.bene_Data.contingent_Bene){
+      let dist=0;
+      for(let item of this.state.bene_Data.contingent_Bene){
+        dist=dist+parseInt(item.distribution_Per);
+      }
+      totalCon=dist;
+    }
+    console.log("total for all",totTod,totalPri,totalCon)
+    total=totTod+totalPri+totalCon;
+
+    this.setState({totalPrimary:totalPri,totalContingent:totalCon,totalDistribution:total});
+    if(total===100){
+      this.props.navigation.navigate("verifyManageBeneficiaries",{mBData:this.state.bene_Data});
+    } else {
+      this.setState({isDistHigh:true});
+    }
+    
   }
 
   goBack = () => {
@@ -317,7 +349,7 @@ class EditManageBenificiariesComponent extends Component {
     this.onAddedTodValidationText(index,"relationToAccOwnerDropDown",!this.state.addedBene.relationToAccOwnerDropDown);
   }
 
-  selectedAddedRelationDropDownValue=(index,value,keyName)=>text=>{
+  selectedAddedRelationDropDownValue=(index,keyName)=>text=>{
     this.onAddedTodValidationText(index,"relationToAccOwnerDropDown",false);
     this.onAddedTodValidationText(index,"relationToAccOwnerFlag",false);
     let newItems=[...this.state.addedBene];
@@ -339,8 +371,10 @@ class EditManageBenificiariesComponent extends Component {
   }
 
   onPrimaryValidationText=(index, keyName, value) =>{
+    console.log("on primary vali text::",index,keyName, value);
     let newItems=[...this.state.validationPrimaryArray];
     newItems[index][keyName]=value;
+    console.log("newArray in PrimaryValidatio",newItems[index][keyName]);
     this.setState({
       validationPrimaryArray:newItems
     });
@@ -359,6 +393,7 @@ class EditManageBenificiariesComponent extends Component {
   }
 
   onContingentValidationText=(index, keyName,value) =>{
+    console.log("on contingent vali text::",index,keyName, value);
     let newItems=[...this.state.validationContingentArray];
     newItems[index][keyName]=value;
     this.setState({
@@ -443,11 +478,12 @@ class EditManageBenificiariesComponent extends Component {
     let isValidationSuccess = false;
 
     for(let i=0;i<this.state.primaryBeneficiaryData.length;i++){
+      this.onPrimaryChangeText(i,"last_modified",this.state.todayDate);
       if (!this.isEmpty(this.state.primaryBeneficiaryData[i].social_security_number)) {
-        let validate = allow_Nine_Numeric.test(this.state.primaryBeneficiaryData[i].social_security_number);
+        let validate = ssnRegex.test(this.state.primaryBeneficiaryData[i].social_security_number);
         this.onPrimaryValidationText(i,"ssnValidation",validate);
         this.onPrimaryValidationText(i,"ssnValidationMsg",gblStrings.accManagement.ssnNoFormat);
-        isErrMsg = !validate;
+        isErrMsg = (!validate);
       } else {
         this.onPrimaryValidationText(i,"ssnValidation",true);
         isErrMsg = false;
@@ -455,8 +491,8 @@ class EditManageBenificiariesComponent extends Component {
       if (!this.isEmpty(this.state.primaryBeneficiaryData[i].email)) {
         let validate = emailRegex.test(this.state.primaryBeneficiaryData[i].email);
         this.onPrimaryValidationText(i,"emailValidation",validate);
-        this.onPrimaryValidationText(i,"emailValidation",gblStrings.accManagement.emailformat);
-        isErrMsg = !validate;
+        this.onPrimaryValidationText(i,"emailValidationMsg",gblStrings.accManagement.emailformat);
+        isErrMsg = (!validate);
       } else {
         this.onPrimaryValidationText(i,"emailValidation",true);
         isErrMsg = false;
@@ -471,18 +507,13 @@ class EditManageBenificiariesComponent extends Component {
         this.onPrimaryValidationText(i,"beneTypeValidationMsg",gblStrings.accManagement.emptyBeneficiaryType);
         isErrMsg=true;
       }
-      // if (this.state.primaryBeneficiaryData[i].dob === '') {
-      //   this.onPrimaryValidationText(i,dobValidationFlag,false);
-      //   this.onPrimaryValidationText(i,dobValidationFlag,gblStrings.accManagement.emptyDateOfBirth);
-      //   isErrMsg=true;
-      // } else {
-      //   if(this.state.primaryBeneficiaryData[i].dob >= this.state.todayDate){
-      //     this.onPrimaryValidationText(i,dobValidationFlag,false);
-      //     this.onPrimaryValidationText(i,dobValidationFlag,gblStrings.accManagement.validDateOfBirthMsg);
-      //     isErrMsg=true;
-      //   }
-      // } 
+      if (this.state.primaryBeneficiaryData[i].dob === '') {
+        this.onPrimaryValidationText(i,"dobValidationFlag",false);
+        this.onPrimaryValidationText(i,"dobValidationMsg",gblStrings.accManagement.emptyDateOfBirth);
+        isErrMsg=true;
+      }
     }
+    console.log("isErrMsg",isErrMsg);
     if (!isErrMsg) {
       isValidationSuccess = true;
     } 
@@ -494,8 +525,9 @@ class EditManageBenificiariesComponent extends Component {
     let isErrMsg = false;
     let isValidationSuccess = false;
     for(let i=0;i<this.state.todBeneficiaryData.length;i++){
+      this.onTodChangeText(i,"last_modified",this.state.todayDate);
       if (!this.isEmpty(this.state.todBeneficiaryData[i].social_security_number)) {
-        let validate = allow_Nine_Numeric.test(this.state.todBeneficiaryData[i].social_security_number);
+        let validate = ssnRegex.test(this.state.todBeneficiaryData[i].social_security_number);
         this.onTodValidationText(i,"ssnValidation",validate);
         this.onTodValidationText(i,"ssnValidationMsg",gblStrings.accManagement.ssnNoFormat);
         isErrMsg = !validate;
@@ -506,7 +538,7 @@ class EditManageBenificiariesComponent extends Component {
       if (!this.isEmpty(this.state.todBeneficiaryData[i].email)) {
         let validate = emailRegex.test(this.state.todBeneficiaryData[i].email);
         this.onTodValidationText(i,"emailValidation",validate);
-        this.onTodValidationText(i,"emailValidation",gblStrings.accManagement.emailformat);
+        this.onTodValidationText(i,"emailValidationMsg",gblStrings.accManagement.emailformat);
         isErrMsg = !validate;
       } else {
         this.onTodValidationText(i,"emailValidation",true);
@@ -521,7 +553,12 @@ class EditManageBenificiariesComponent extends Component {
         this.onTodValidationText(i,"beneTypeFlag",true);
         this.onTodValidationText(i,"beneTypeValidationMsg",gblStrings.accManagement.emptyBeneficiaryType);
         isErrMsg=true;
-      } 
+      }
+      if (this.state.primaryBeneficiaryData[i].dob === '') {
+        this.onTodValidationText(i,"dobValidationFlag",false);
+        this.onTodValidationText(i,"dobValidationMsg",gblStrings.accManagement.emptyDateOfBirth);
+        isErrMsg=true;
+      }
     }
     if (!isErrMsg) {
       isValidationSuccess = true;
@@ -535,8 +572,9 @@ class EditManageBenificiariesComponent extends Component {
     let isValidationSuccess = false;
 
     for(let i=0;i<this.state.contingentBeneficiaryData.length;i++){
+      this.onContingentChangeText(i,"last_modified",this.state.todayDate);
       if (!this.isEmpty(this.state.contingentBeneficiaryData[i].social_security_number)) {
-        let validate = allow_Nine_Numeric.test(this.state.contingentBeneficiaryData[i].social_security_number);
+        let validate = ssnRegex.test(this.state.contingentBeneficiaryData[i].social_security_number);
         this.onContingentValidationText(i,"ssnValidation",validate);
         this.onContingentValidationText(i,"ssnValidationMsg",gblStrings.accManagement.ssnNoFormat);
         isErrMsg = !validate;
@@ -547,7 +585,7 @@ class EditManageBenificiariesComponent extends Component {
       if (!this.isEmpty(this.state.contingentBeneficiaryData[i].email)) {
         let validate = emailRegex.test(this.state.contingentBeneficiaryData[i].email);
         this.onContingentValidationText(i,"emailValidation",validate);
-        this.onContingentValidationText(i,"emailValidation",gblStrings.accManagement.emailformat);
+        this.onContingentValidationText(i,"emailValidationMsg",gblStrings.accManagement.emailformat);
         isErrMsg = !validate;
       } else {
         this.onContingentValidationText(i,"emailValidation",true);
@@ -562,7 +600,12 @@ class EditManageBenificiariesComponent extends Component {
         this.onContingentValidationText(i,"beneTypeFlag",true);
         this.onContingentValidationText(i,"beneTypeValidationMsg",gblStrings.accManagement.emptyBeneficiaryType);
         isErrMsg=true;
-      } 
+      }
+      if (this.state.contingentBeneficiaryData[i].dob === '') {
+        this.onContingentValidationText(i,"dobValidationFlag",false);
+        this.onContingentValidationText(i,"dobValidationMsg",gblStrings.accManagement.emptyDateOfBirth);
+        isErrMsg=true;
+      }
     }
     if (!isErrMsg) {
       isValidationSuccess = true;
@@ -620,12 +663,13 @@ class EditManageBenificiariesComponent extends Component {
   generateContingentBeneficiaryKeyExtractor = (item) => { return (""+item.key); };
 
   render() {
-    // if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.suffix && this.props.masterLookupStateData.suffix.value) {
-    //   suffixData=this.props.masterLookupStateData.suffix.value;
-    // }
+    if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.suffix && this.props.masterLookupStateData.suffix.value) {
+      suffixData=this.props.masterLookupStateData.suffix.value;
+    }
     if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.relationship && this.props.masterLookupStateData.relationship.value) {
       relationData=this.props.masterLookupStateData.relationship.value;
     }
+    console.log("vali array:::",this.state.validationPrimaryArray,this.state.validationContingentArray);
     return (
       <View style={styles.container}>
         <GHeaderComponent navigation={this.props.navigation} />
@@ -665,8 +709,7 @@ class EditManageBenificiariesComponent extends Component {
                       <Text style={styles.titleHeaderText}>{this.state.editPrimaryIcon}</Text>
                       <Text style={styles.titleHeaderText}>{gblStrings.accManagement.editPrimaryBene}</Text>
                   </View>
-                  <View style={styles.line} /> 
-                  <Collapsible collapsed={this.state.isPrimaryCollapse} align="center">
+                  <View style={styles.line} />
                       <View style={styles.paddingHorizontalStyle}>
                         <View style={[styles.flexDirectionRowStyle, styles.marginStyle]}>
                           <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
@@ -689,6 +732,7 @@ class EditManageBenificiariesComponent extends Component {
                           inputref={this.setInputRef("dateofBirth"+index)}
                           date={item.dob}
                           placeholder="MM/DD/YYYY"
+                          maxDate={this.state.prevDate}
                           errorFlag={!this.state.validationPrimaryArray[index].dobValidationFlag}
                           errMsg={this.state.validationPrimaryArray[index].dobValidationMsg}
                           onDateChange={this.onPrimaryChangeText(index,"dob")}
@@ -708,6 +752,8 @@ class EditManageBenificiariesComponent extends Component {
                           dropDownName={gblStrings.accManagement.beneficiary_type}
                           dropDownTextName={styles.lblTxt} 
                           data={beneficiary_type_data}
+                          textInputStyle={styles.dropdownTextInput}
+                          dropDownLayout={styles.dropDownLayout}
                           itemToDisplay={"title"}
                           changeState={this.selectPriBeneType(index)}
                           showDropDown={this.state.validationPrimaryArray[index].beneTypeDropDown}
@@ -720,6 +766,8 @@ class EditManageBenificiariesComponent extends Component {
                           dropDownName={gblStrings.accManagement.relationToOwner}
                           dropDownTextName={styles.lblTxt} 
                           data={relationData}
+                          textInputStyle={styles.dropdownTextInput}
+                          dropDownLayout={styles.dropDownLayout}
                           itemToDisplay={"value"}
                           changeState={this.selectPriRelation(index)}
                           showDropDown={this.state.validationPrimaryArray[index].relationToAccOwnerDropDown}
@@ -729,15 +777,17 @@ class EditManageBenificiariesComponent extends Component {
                           errorText={this.state.validationPrimaryArray[index].relationToAccOwnerValidationMsg}
                         />
                         <Text style={styles.lblTxt}>{gblStrings.accManagement.distributionPercentage}</Text>
-                        <View style={styles.distributionView}>
-                          <Slider
-                              value={parseInt(item.distribution_Per)/100}
-                              onValueChange={this.onPrimaryChangeText(index, 'distribution_Per')}
-                          />
+                        <View style={[styles.distributionView,styles.flexDirectionRowStyle]}>
+                          <View style={styles.sliderView}>
+                            <Slider
+                                value={parseInt(item.distribution_Per)/100}
+                                onValueChange={this.onPrimaryChangeText(index, 'distribution_Per')}
+                            />
+                          </View>
+                          <Text style={styles.distributionValueTxt}>{item.distribution_Per+"%"}</Text>
                         </View>
                       
                       </View>
-                  </Collapsible>
               </View>
             );
           })}
@@ -752,8 +802,7 @@ class EditManageBenificiariesComponent extends Component {
                   <Text style={styles.titleHeaderText}>{this.state.editPrimaryIcon}</Text>
                   <Text style={styles.titleHeaderText}>{gblStrings.accManagement.editContingentBene}</Text>
                 </View>
-                <View style={styles.line} /> 
-                <Collapsible collapsed={this.state.isPrimaryCollapse} align="center">
+                <View style={styles.line} />
                   <View style={styles.paddingHorizontalStyle}>
                     <View style={[styles.flexDirectionRowStyle, styles.marginStyle]}>
                       <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
@@ -776,6 +825,7 @@ class EditManageBenificiariesComponent extends Component {
                       inputref={this.setInputRef("conDateofBirth"+index)}
                       date={item.dob}
                       placeholder="MM/DD/YYYY"
+                      maxDate={this.state.prevDate}
                       errorFlag={this.state.validationContingentArray[index].dobValidation}
                       errMsg={this.state.validationContingentArray[index].dobValidationMsg}
                       onDateChange={this.onContingentChangeText(index,"dob")}
@@ -795,6 +845,8 @@ class EditManageBenificiariesComponent extends Component {
                       dropDownName={gblStrings.accManagement.beneficiary_type}
                       dropDownTextName={styles.lblTxt} 
                       data={beneficiary_type_data}
+                      textInputStyle={styles.dropdownTextInput}
+                      dropDownLayout={styles.dropDownLayout}
                       itemToDisplay={"title"}
                       changeState={this.selectConBeneType(index)}
                       showDropDown={this.state.validationContingentArray[index].beneTypeDropDown}
@@ -805,7 +857,9 @@ class EditManageBenificiariesComponent extends Component {
                     />
                     <GDropDownComponent 
                       dropDownName={gblStrings.accManagement.relationToOwner}
-                      dropDownTextName={styles.lblTxt} 
+                      dropDownTextName={styles.lblTxt}
+                      textInputStyle={styles.dropdownTextInput}
+                      dropDownLayout={styles.dropDownLayout}
                       data={relationData}
                       itemToDisplay={"value"}
                       changeState={this.selectConRelation(index)}
@@ -816,20 +870,29 @@ class EditManageBenificiariesComponent extends Component {
                       errorText={this.state.validationContingentArray[index].relationToAccOwnerValidationMsg}
                     />
                     <Text style={styles.lblTxt}>{gblStrings.accManagement.distributionPercentage}</Text>
-                    <View style={styles.distributionView}>
-                      <Slider
-                        value={parseInt(item.distribution_Per)/100}
-                        onValueChange={this.onContingentChangeText(index, "distribution_Per")}
-                      />
+                    <View style={[styles.distributionView,styles.flexDirectionRowStyle]}>
+                      <View style={styles.sliderView}>
+                        <Slider
+                          value={parseInt(item.distribution_Per)/100}
+                          onValueChange={this.onPrimaryChangeText(index, 'distribution_Per')}
+                        />
+                      </View>
+                      <Text style={styles.distributionValueTxt}>{item.distribution_Per+"%"}</Text>
                     </View>
                   </View>
-                </Collapsible>
               </View>
             );
           })}
 
           {!this.state.todBeneficiaryData && 
-            <TouchableOpacity style={styles.paddingStyleLeft} onPress={this.onClickADDContingentBene}>
+            <View style={styles.totalDisView}>
+              <Text style={styles.disTxtStr}>{"Total Distribution Percentage of Primary ("+this.state.totalPrimary+"%) + Contingent("+this.state.totalContingent+")"}</Text>
+              <Text style={styles.totalDistributionTxt}>{"= "+this.state.totalDistribution + "%"}</Text>
+            </View>
+          }
+
+          {!this.state.todBeneficiaryData && 
+            <TouchableOpacity style={styles.paddingStyleLeft}>
               <Text style={styles.addPrimaryLink}>
                 {' + ' + this.state.addContingentText}
               </Text>
@@ -846,8 +909,7 @@ class EditManageBenificiariesComponent extends Component {
                   <Text style={styles.titleHeaderText}>{this.state.editPrimaryIcon}</Text>
                   <Text style={styles.titleHeaderText}>{gblStrings.accManagement.editTodBene}</Text>
                 </View>
-                <View style={styles.line} /> 
-                <Collapsible collapsed={this.state.isPrimaryCollapse} align="center">
+                <View style={styles.line} />
                   <View style={styles.paddingHorizontalStyle}>
                     <View style={[styles.flexDirectionRowStyle, styles.marginStyle]}>
                       <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
@@ -870,6 +932,7 @@ class EditManageBenificiariesComponent extends Component {
                       inputref={this.setInputRef("todDateofBirth"+index)}
                       date={item.dob}
                       placeholder="MM/DD/YYYY"
+                      maxDate={this.state.prevDate}
                       errorFlag={this.state.validationTodArray[index].dobValidation}
                       errMsg={this.state.validationTodArray[index].dobValidationMsg}
                       onDateChange={this.onTodChangeText(index,"dob")}
@@ -889,6 +952,8 @@ class EditManageBenificiariesComponent extends Component {
                       dropDownName={gblStrings.accManagement.beneficiary_type}
                       dropDownTextName={styles.lblTxt} 
                       data={beneficiary_type_data}
+                      textInputStyle={styles.dropdownTextInput}
+                      dropDownLayout={styles.dropDownLayout}
                       itemToDisplay={"title"}
                       changeState={this.selectTodBeneType(index)}
                       showDropDown={this.state.validationTodArray[index].beneTypeDropDown}
@@ -901,23 +966,27 @@ class EditManageBenificiariesComponent extends Component {
                       dropDownName={gblStrings.accManagement.relationToOwner}
                       dropDownTextName={styles.lblTxt} 
                       data={relationData}
+                      textInputStyle={styles.dropdownTextInput}
+                      dropDownLayout={styles.dropDownLayout}
                       itemToDisplay={"value"}
                       changeState={this.selectTodRelation(index)}
                       showDropDown={this.state.validationTodArray[index].relationToAccOwnerDropDown}
                       dropDownValue={item.relationship_To_Insured}
-                      selectedDropDownValue={this.selectedRelationDropDownValue(index,"relationship_To_Insured")}
+                      selectedDropDownValue={this.selectedTodRelationDropDownValue(index,"relationship_To_Insured")}
                       errorFlag={this.state.validationTodArray[index].relationToAccOwnerFlag}
                       errorText={this.state.validationTodArray[index].relationToAccOwnerValidationMsg}
                     />
                     <Text style={styles.lblTxt}>{gblStrings.accManagement.distributionPercentage}</Text>
-                    <View style={styles.distributionView}>
-                      <Slider
-                        value={parseInt(item.distribution_Per)/100}
-                        onValueChange={this.onTodChangeText(index, "distribution_Per")}
-                      />
+                    <View style={[styles.distributionView,styles.flexDirectionRowStyle]}>
+                      <View style={styles.sliderView}>
+                        <Slider
+                          value={parseInt(item.distribution_Per)/100}
+                          onValueChange={this.onTodChangeText(index, 'distribution_Per')}
+                        />
+                        </View>
+                        <Text style={styles.distributionValueTxt}>{item.distribution_Per+"%"}</Text>
                     </View>
                   </View>
-                </Collapsible>
               </View>
             );
           })}
@@ -947,6 +1016,14 @@ class EditManageBenificiariesComponent extends Component {
                       errorText={item.fnameValidationMsg}
                     />
                     <Text style={styles.lblTxt}>{gblStrings.accManagement.middleInitial}</Text>
+                    <Text style={styles.lblTxt}>
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.accManagement.middleInitial}
+                            </Text>
+                            <Text style={styles.optionalTxt}>
+                                {" " + gblStrings.accManagement.optional}
+                            </Text>
+                        </Text>
                     <GInputComponent
                       inputref={this.setInputRef("todMiddle"+index)}
                       propInputStyle={styles.customTxtBox}
@@ -968,6 +1045,8 @@ class EditManageBenificiariesComponent extends Component {
                       dropDownName={gblStrings.accManagement.suffixOptional}
                       dropDownTextName={styles.lblTxt} 
                       data={suffixData}
+                      textInputStyle={styles.dropdownTextInput}
+                      dropDownLayout={styles.dropDownLayout}
                       itemToDisplay={"value"}
                       changeState={this.selectAddedTodSuffix(index)}
                       showDropDown={item.suffixAddedTodDropDown}
@@ -998,6 +1077,8 @@ class EditManageBenificiariesComponent extends Component {
                       dropDownName={gblStrings.accManagement.beneficiary_type}
                       dropDownTextName={styles.lblTxt} 
                       data={beneficiary_type_data}
+                      textInputStyle={styles.dropdownTextInput}
+                      dropDownLayout={styles.dropDownLayout}
                       itemToDisplay={"title"}
                       changeState={this.selectAddedTodBeneType(index)}
                       showDropDown={item.beneTypeDropDown}
@@ -1010,6 +1091,8 @@ class EditManageBenificiariesComponent extends Component {
                       dropDownName={gblStrings.accManagement.relationToOwner}
                       dropDownTextName={styles.lblTxt} 
                       data={relationData}
+                      textInputStyle={styles.dropdownTextInput}
+                      dropDownLayout={styles.dropDownLayout}
                       itemToDisplay={"value"}
                       changeState={this.selectAddedTodRelation(index)}
                       showDropDown={item.relationToAccOwnerDropDown}
@@ -1019,12 +1102,15 @@ class EditManageBenificiariesComponent extends Component {
                       errorText={item.relationToAccOwnerValidationMsg}
                     />
                     <Text style={styles.lblTxt}>{gblStrings.accManagement.distributionPercentage}</Text>
-                    <View style={styles.distributionView}>
-                      <Slider
-                        value={parseInt(item.distribution_Per)/100}
-                        onValueChange={this.onAddedTodChangeText(index, "distribution_Per")}
-                      />
-                    </View>
+                    <View style={[styles.distributionView,styles.flexDirectionRowStyle]}>
+                          <View style={styles.sliderView}>
+                            <Slider
+                                value={parseInt(item.distribution_Per)/100}
+                                onValueChange={this.onPrimaryChangeText(index, 'distribution_Per')}
+                            />
+                          </View>
+                          <Text style={styles.distributionValueTxt}>{item.distribution_Per+"%"}</Text>
+                        </View>
                   </View>
               </View>
             );
@@ -1038,6 +1124,8 @@ class EditManageBenificiariesComponent extends Component {
               </Text>
             </TouchableOpacity>
           }
+
+          {this.state.isDistHigh?<Text style={styles.errorMsg}>{"Total Distribution Percentage should be 100"}</Text>:null}
 
           {/*----------------- Buttons Group---------------------------*/}
           <View style={styles.btnGrp}>
@@ -1129,7 +1217,7 @@ class EditManageBenificiariesComponent extends Component {
 
           {/*--------------------------- Footer View --------------------------------*/}
           <View style={styles.footerView} />
-          <View style={styles.settingsBorder} />
+          <View style={styles.borderInternal} />
           <View style={styles.blockMarginTop} />
           <View style={styles.mainHeadingView}>
             <Text style={styles.disclaimerTextHeading}>

@@ -20,42 +20,11 @@ export const styles = StyleSheet.create({
     marginTop: scaledHeight(20),
     lineHeight: scaledHeight(29)
   },
-
-  settingsBorder: {
-    marginTop: scaledHeight(10),
-    marginBottom: scaledHeight(10),
-    width: "92%",
-    alignSelf: "center",
-    borderBottomWidth: 1,
-    borderColor: "#E2E4E5"
-  },
   borderInternal: {
     marginTop: scaledHeight(10),
     marginBottom: scaledHeight(10),
     borderBottomWidth: 1,
     borderColor: "#E2E4E5"
-  },
-  contactUsLink: {
-    color: "#0000FF",
-    fontSize: scaledHeight(15),
-    textDecorationLine: "underline",
-    textAlign:'right',
-  },
-  userIDText: {
-    color: "#333333DE",
-    fontSize: scaledHeight(20),
-    fontWeight: "bold",
-    marginBottom: scaledHeight(8)
-  },
-  contentText: {
-    color: "#56565A",
-    fontSize: scaledHeight(15)
-  },
-  contactUsInternalLink: {
-    color: "#56565A",
-    fontWeight: "bold",
-    textDecorationLine: "underline",
-    fontSize: scaledHeight(15)
   },
   contentViewInternal: {
     marginTop: scaledHeight(20),
@@ -77,7 +46,8 @@ export const styles = StyleSheet.create({
     alignSelf:'center'
   },
   paddingHorizontalView: {
-    paddingHorizontal: "4%"
+    paddingLeft: "4%",
+    paddingRight:'4%'
   },
   dataAccountBeneficiary: {
     marginTop: scaledHeight(20),
@@ -140,24 +110,9 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     marginTop: scaledHeight(25)
   },
-  lblLargeTxt: {
-    color: "#333333DE",
-    fontSize: scaledHeight(18),
-    fontWeight: "bold",
-    marginTop: scaledHeight(25)
-  },
-  customTxtBoxError: {
-    marginTop: scaledHeight(9),
-    width: "100%",
-    borderColor: "red"
-  },
   customTxtBox: {
     marginTop: scaledHeight(9),
     width: "100%"
-  },
-  customDistributionTxtBox: {
-    marginTop: scaledHeight(9),
-    width: "80%"
   },
   optionalTxt: {
     color: "rgba(51, 51, 51, 0.87)",
@@ -226,15 +181,13 @@ export const styles = StyleSheet.create({
     color: "red",
     textAlignVertical: "top"
   },
-  customDateTxtBox: {
-    width: "90%"
-  },
   paddingStyleLeft: {
     paddingLeft: "4%"
   },
   paddingHorizontalStyle: {
     paddingLeft: "4%",
-    width:'90%'
+    paddingRight: "4%",
+    width:'100%'
   },
   marginStyle: {
     marginTop: scaledHeight(10)
@@ -242,64 +195,10 @@ export const styles = StyleSheet.create({
   flexMainView: {
     flex: 0.85
   },
-  flexStyle: {
-    flexDirection: "row",
-    justifyContent: "space-between"
-  },
-  deleteLink: {
-    lineHeight: scaledHeight(18),
-    marginTop: scaledHeight(26),
-    alignSelf: "center"
-  },
-  distributionFieldInput: {
-    marginTop: scaledHeight(18),
-    fontWeight: "600",
-    lineHeight: scaledHeight(18)
-  },
-  contingentView: {
-    paddingLeft: "4%",
-    marginTop: scaledHeight(15)
-  },
-  contractNumberSize: {
-    fontSize: scaledHeight(37)
-  },
   footerView: {
     marginTop: scaledHeight(15),
     marginBottom: scaledHeight(15)
   },
-  addBeneficiaryLink: {
-    color: "#5D83AE",
-    marginTop: scaledHeight(30),
-    alignSelf: "center",
-    fontWeight: "600",
-    fontSize: scaledHeight(16),
-    lineHeight: scaledHeight(22)
-  },
-  topContentText: {
-    width: "90%",
-    paddingHorizontal: "4%",
-    color: "#7D7D7D",
-    fontSize: scaledHeight(16),
-    lineHeight: scaledHeight(23),
-    marginTop: scaledHeight(10)
-  },
-  dateDropDownWidth: {
-    width: "32%"
-  },
-  helpTextStyle: {
-    color: "#CFCFCF",
-    fontSize: scaledHeight(16)
-  },
-  titleAlignStyle: {
-    paddingLeft: "4%",
-    marginTop: scaledHeight(10)
-  },
-  dropdownTextInput: {
-    width: "95%",
-    paddingLeft: "4%",
-    paddingRight: "4%"
-  },
-
   titleHeadingView: {
     flexDirection: "row",
     paddingLeft: "4%"
@@ -319,45 +218,6 @@ export const styles = StyleSheet.create({
     marginTop: scaledHeight(10),
     marginBottom:scaledHeight(10)
   },
-  containerView: {
-    width: "90%",
-    borderColor: "#5D83AE99",
-    borderWidth: scaledHeight(1),
-    alignSelf: "center",
-    marginBottom:scaledHeight(15)
-  },
-  containerHeaderView: {
-    backgroundColor: "#ECECEC",
-    borderBottomColor: "#5D83AE99",
-    borderBottomWidth: scaledHeight(1),
-    paddingTop:'2%',
-    paddingBottom:'2%'
-  },
-  containerHeaderText: {
-    color: "#54565B",
-    fontSize: scaledHeight(12),
-    fontWeight: "400"
-  },
-  editBtnText: {
-    color: "#5D83AE",
-    fontSize: scaledHeight(15),
-    fontWeight: "400",
-    paddingTop:'4%'
-  },
-  innerContainerView: {
-    borderColor: "#5D83AE99",
-    borderWidth: scaledHeight(1),
-    alignSelf: "center",
-    width:'95%',
-    marginTop: scaledHeight(10),
-    marginBottom: scaledHeight(10)
-  },
-  innerHeaderView:{
-    padding:'4%',
-    flexDirection:'row',
-    borderBottomWidth:scaledHeight(1),
-    borderBottomColor:'#5D83AE99'
-  },
   shortContentText: {
     color: "#56565A",
     fontSize: scaledHeight(16),
@@ -372,7 +232,47 @@ export const styles = StyleSheet.create({
     lineHeight: 24
   },
   distributionView:{
-    width:'90%',
-    
+    width:'100%',
+    justifyContent:'space-between'
   },
+  dropdownTextInput:{
+    width:'100%',
+    marginLeft:0
+  },
+  dropDownLayout:{
+    marginTop:scaledHeight(18),
+    paddingLeft:0
+  },
+  distributionValueTxt:{
+    color:'#B5B5B5',
+    fontSize:scaledHeight(10),
+    borderColor:'#B5B5B5',
+    borderWidth:scaledHeight(1),
+    padding:'4%'
+  },
+  sliderView:{
+    width:'80%'
+  },
+  totalDisView:{
+    marginTop:scaledHeight(30),
+    width:'90%',
+    alignSelf:'center',
+    backgroundColor:'#EEEEEE',
+    borderColor:'#EEEEEE',
+    borderWidth:scaledHeight(1)
+  },
+  disTxtStr:{
+    margin:scaledHeight(15),
+    color: "#56565A",
+    fontWeight: "600",
+    fontSize: scaledHeight(17),
+    lineHeight: 20
+  },
+  totalDistributionTxt:{
+    margin:scaledHeight(15),
+    color: "#56565A",
+    fontWeight: "600",
+    fontSize: scaledHeight(22),
+    lineHeight: 27
+  }
 });
