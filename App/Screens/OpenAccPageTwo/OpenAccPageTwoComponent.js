@@ -3287,7 +3287,7 @@ class OpenAccPageTwoComponent extends Component {
                             {gblStrings.accManagement.regulatoryQuestTxt}
                         </Text>
 
-                        <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "flex-start" }}>
+                        <View style={styles.explainView}>
                             <Text style={styles.explainTxt}>
                                 {"Explain - "}
                             </Text>
@@ -3300,7 +3300,7 @@ class OpenAccPageTwoComponent extends Component {
 
                         <View style={styles.radioBtnGrp}>
                             <CustomRadio
-                                componentStyle={{ width: "30%", marginBottom: scaledHeight(0) }}
+                                componentStyle={styles.radioCol1}
                                 size={30}
                                 outerCicleColor="#DEDEDF"
                                 innerCicleColor="#61285F"
@@ -3313,7 +3313,7 @@ class OpenAccPageTwoComponent extends Component {
 
                             />
                             <CustomRadio
-                                componentStyle={{ marginBottom: scaledHeight(0) }}
+                                componentStyle={styles.radioCol2}
                                 size={30}
                                 outerCicleColor="#DEDEDF"
                                 innerCicleColor="#61285F"
@@ -3333,7 +3333,7 @@ class OpenAccPageTwoComponent extends Component {
                         }
                         {this.state.personal.isSeniorPoliticalFigure === "Yes" &&
 
-                            <View style={{ flexGrow: 1 }}>
+                            <View>
                                 <Text style={styles.lblTxt}>
                                     {gblStrings.accManagement.seniorPoliticalName}
                                 </Text>
@@ -3407,7 +3407,7 @@ class OpenAccPageTwoComponent extends Component {
                         })
                         }
 
-                        <View style={{ flexGrow: 1, width: "40%" }}>
+                        <View style={styles.dropDownViewPrefix}>
                             {this.renderCustomDropDown({
                                 section: "jointOwner",
                                 stateKey: "prefix",
@@ -3467,7 +3467,7 @@ class OpenAccPageTwoComponent extends Component {
                         />
 
                      
-                        <View style={{ flexGrow: 1, width: "40%" }}>
+                        <View style={styles.dropDownViewPrefix}>
                             {this.renderCustomDropDown({
                                 section: "jointOwner",
                                 stateKey: "suffix",
@@ -3516,8 +3516,8 @@ class OpenAccPageTwoComponent extends Component {
                         </Text>
                         {this.renderRadio("jointOwner", "citizenship", 30, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
                         {
-                            this.state.personal.citizenship != "U.S" &&
-                            <View style={{ flexGrow: 1, marginTop: scaledHeight(25) }}>
+                            this.state.personal.citizenship !== "U.S" &&
+                            <View style={styles.uploadW8View}>
                                 <Text>
                                     <Text style={styles.lblTxt}>
                                         {gblStrings.accManagement.uploadW8Form}
@@ -3622,7 +3622,7 @@ class OpenAccPageTwoComponent extends Component {
                             onSubmitEditing={this.onSubmitEditing(this.mobileNo_joint)}
                             errorFlag={!this.state.jointOwner.stateCityValidation}
                             errorText={this.state.errMsg}
-                            editable = {this.state.jointOwner.citizenship != "U.S"}
+                            editable = {this.state.jointOwner.citizenship !== "U.S"}
 
                         />
 
@@ -3631,7 +3631,7 @@ class OpenAccPageTwoComponent extends Component {
                         </Text>
                         <View style={styles.radioBtnGrp}>
                             <CustomRadio
-                                componentStyle={{ width: "30%", marginBottom: scaledHeight(0) }}
+                                componentStyle={styles.radioCol1}
                                 size={30}
                                 outerCicleColor="#DEDEDF"
                                 innerCicleColor="#61285F"
@@ -3644,7 +3644,7 @@ class OpenAccPageTwoComponent extends Component {
                             />
                             <CustomRadio
                                 size={30}
-                                componentStyle={{ marginBottom: scaledHeight(0) }}
+                                componentStyle={styles.radioCol2}
                                 outerCicleColor="#DEDEDF"
                                 innerCicleColor="#61285F"
                                 labelStyle={styles.lblRadioBtnTxt}
@@ -4131,7 +4131,7 @@ class OpenAccPageTwoComponent extends Component {
                         </Text>
                         <View style={styles.radioBtnGrp}>
                             <CustomRadio
-                                componentStyle={{ width: "30%", marginBottom: scaledHeight(0) }}
+                                componentStyle={styles.radioCol1}
                                 size={30}
                                 outerCicleColor="#DEDEDF"
                                 innerCicleColor="#61285F"
@@ -4144,7 +4144,7 @@ class OpenAccPageTwoComponent extends Component {
 
                             />
                             <CustomRadio
-                                componentStyle={{ marginBottom: scaledHeight(0) }}
+                                componentStyle={styles.radioCol2}
                                 size={30}
                                 outerCicleColor="#DEDEDF"
                                 innerCicleColor="#61285F"
@@ -4201,11 +4201,11 @@ class OpenAccPageTwoComponent extends Component {
                                 <Text style={styles.lblTxt}>
                                     {gblStrings.accManagement.datesOfService}
                                 </Text>
-                                <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                                    <Text style={[styles.optionalTxt, { width: '20%' }]}>
+                                <View style={styles.militaryServiceView}>
+                                    <Text style={styles.militaryLblDate1}>
                                         {gblStrings.accManagement.from}
                                     </Text>
-                                    <View style={{ width: '80%', marginLeft: '0%' }}>
+                                    <View style={styles.militaryLblDate2}>
                                         <GDateComponent
                                             date={this.state.jointOwner.fromDateMilitary}
                                             placeholder="Select Date"
@@ -4215,11 +4215,11 @@ class OpenAccPageTwoComponent extends Component {
                                         />
                                     </View>
                                 </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                                    <Text style={[styles.optionalTxt, { width: '20%' }]}>
+                                <View style={styles.militaryServiceView}>
+                                    <Text style={styles.militaryLblDate1}>
                                         {gblStrings.accManagement.to}
                                     </Text>
-                                    <View style={{ width: '80%', marginLeft: '0%' }}>
+                                    <View style={styles.militaryLblDate2}>
                                         <GDateComponent
                                             date={this.state.jointOwner.toDateMilitary}
                                             placeholder="Select Date"
@@ -4594,7 +4594,7 @@ class OpenAccPageTwoComponent extends Component {
                         {gblStrings.accManagement.regulatoryQuestTxt}
                     </Text>
 
-                    <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "flex-start" }}>
+                    <View style={styles.explainView}>
                         <Text style={styles.explainTxt}>
                             {"Explain - "}
                         </Text>
@@ -4607,7 +4607,7 @@ class OpenAccPageTwoComponent extends Component {
 
                     <View style={styles.radioBtnGrp}>
                         <CustomRadio
-                            componentStyle={{ width: "30%", marginBottom: scaledHeight(0) }}
+                            componentStyle={styles.radioCol1}
                             size={30}
                             outerCicleColor="#DEDEDF"
                             innerCicleColor="#61285F"
@@ -4622,7 +4622,7 @@ class OpenAccPageTwoComponent extends Component {
                         <CustomRadio
 
                             size={30}
-                            componentStyle={{ marginBottom: scaledHeight(0) }}
+                            componentStyle={styles.radioCol2}
                             outerCicleColor="#DEDEDF"
                             innerCicleColor="#61285F"
                             labelStyle={styles.lblRadioBtnTxt}

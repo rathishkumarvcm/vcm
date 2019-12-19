@@ -477,7 +477,12 @@ export const styles = StyleSheet.create({
     militaryLblDate2:{
         width: '80%',
         marginLeft: '0%'
-    }
+    },
+    explainView:{
+        flexDirection: 'row',
+         justifyContent: 'flex-start',
+          alignItems: 'center' 
+    },
 
    
 
