@@ -76,6 +76,7 @@ export const styles = StyleSheet.create({
     {
         fontSize:scaledHeight(20),
         color:'#4D79F6',
+        fontWeight:'bold'
     },
     autoInvest_sub_title_view:{
         marginTop:scaledHeight(20),

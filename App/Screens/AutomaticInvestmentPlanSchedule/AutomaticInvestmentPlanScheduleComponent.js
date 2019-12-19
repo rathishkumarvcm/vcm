@@ -13,7 +13,7 @@ import globalString from '../../Constants/GlobalStrings';
 import { scaledHeight } from '../../Utils/Resolution';
 
 
-const dummyTypeJson = [
+const typeJson = [
     {
         "id": '1',
         "title": 'Monthly',
@@ -24,7 +24,7 @@ const dummyTypeJson = [
     },
 ];
 
-const dummyEndingJson = [
+const endingJson = [
     {
         "id": '1',
         "title": 'Never',
@@ -35,51 +35,8 @@ const dummyEndingJson = [
     },
 ];
 
-const dummyDateJson = [
-    {
-        "id": '1',
-        "title": '1',
-    },
-    {
-        "id": '2',
-        "title": '2',
-    },
-    {
-        "id": '3',
-        "title": '3',
-    },
-    {
-        "id": '4',
-        "title": '4',
-    },
-    {
-        "id": '5',
-        "title": '5',
-    },
-];
+const dateJson = [];
 
-// const dummyMonthJson = [
-//     {
-//         id: '1',
-//         title: 'Jan',
-//     },
-//     {
-//         id: '2',
-//         title: 'Feb',
-//     },
-//     {
-//         id: '3',
-//         title: 'Mar',
-//     },
-//     {
-//         id: '4',
-//         title: 'Apr',
-//     },
-//     {
-//         id: '5',
-//         title: 'May',
-//     },
-// ];
 // const dummyYearJson = [
 //     {
 //         id: '1',
@@ -101,19 +58,24 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
             valueDateDropDown: '',
             endDropDown: false,
             valueEndDropDown: '',
-
+            customDateValue: '',
             // dateBeginDropDown: false,
             // valueDateBeginDropDown: '',
             // yearDropDown: false,
             // valueYearDropDown: '',
             autoInvestmentAddAmountJson: {},
             itemToEdit: this.props.navigation.getParam('ItemToEdit', -1),
-            
+            acc_name:this.props.navigation.getParam('acc_name'),
+            acc_no:this.props.navigation.getParam('acc_no'),
+            accountType:this.props.navigation.getParam('accountType'),
         };
     }
 
     componentDidMount() {
-
+        for(var i=1; i<=30; i++) {
+            dateJson.push({["id"]:i.toString(),["date"]: i.toString()});
+         }
+         
         let itemToEdit = this.state.itemToEdit;
         if (itemToEdit > -1) {
             if (this.props && this.props.automaticInvestmentState) {
@@ -128,33 +90,30 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
         }
     }
 
-    onChangeDateForInvestment = (keyName, index) => date => {
-        console.log("onChangeDateForInvestment:::>");
-        //     let newItems = [...this.state.selectedFundInvestmentsData];
-        //     newItems[index][keyName] = date;
-        //    // newItems[index][keyName+"Validation"] = false;
-        //    newItems[index].fundingOptionValidation = true;
-        //    newItems[index].initialInvestmentValidation = true;
-        //    newItems[index].monthlyInvestmentValidation = true;
-        //    newItems[index].startDateValidation = true;
-
-        //     this.setState({
-        //         selectedFundInvestmentsData: newItems,
-        //     });
-    }
-
     getPayload = () => {
 
+        const date = new Date().getDate(); //Current Date
+        const month = new Date().getMonth() + 1; //Current Month
+        const year = new Date().getFullYear(); //Current Year
+        const currentdate = month + "/" + date + "/" + year;
+        
+        /*Calculate Next Month */
+        const nextMonth = new Date();
+        nextMonth.setMonth(nextMonth.getMonth() + 1);
+        const nextMonthDate = (nextMonth.getMonth()+1) + "/" + nextMonth.getDate() + "/" + nextMonth.getFullYear();
+        
+        /* Calculate quarter */
+        const today = new Date();
+        const quarter = Math.floor((today.getMonth() / 3));
+        const startFullQuarter = new Date(today.getFullYear(), quarter * 3 + 3, 1);
+        const endFullQuarter = new Date(startFullQuarter.getFullYear(), startFullQuarter.getMonth() + 3, 0);
 
         let payload = {
-            // totalAmount: '$500',  
-            // fundFrom: 'Bank 1',
-            // investedIn: 'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES',
-            invest: 'Quarterly',
-            dateToInvest: '15th',
-            dateAdded: '09/02/2019',
-            endDate: '15/12/2025',
-            nextInvestementDate: '15/11/2019',
+            invest: this.state.valueTypeDropDown,
+            dateToInvest: this.state.valueDateDropDown,
+            dateAdded: currentdate,
+            endDate: this.state.valueEndDropDown.toLowerCase()==="custom"?this.state.customDateValue:"Never",
+            nextInvestementDate: nextMonthDate,
         };
         if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
             payload = {
@@ -169,7 +128,7 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
     navigationNext = () => {
         const payload = this.getPayload();
         this.props.saveData("automaticInvestmentSchedule", payload);
-        this.props.navigation.navigate('automaticInvestmentVerify', { skip: false });
+        this.props.navigation.navigate('automaticInvestmentVerify', { skip: false ,accountType:this.state.accountType});
     }
 
     selectTheType = () => {
@@ -200,7 +159,7 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
 
     selectedDropDownDateValue = (valueDate) => {
         this.setState({
-            valueDateDropDown: valueDate.title,
+            valueDateDropDown: valueDate.date,
             dateDropDown: false
         });
     }
@@ -210,6 +169,12 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
             valueEndDropDown: valueEnd.title,
             endDropDown: false,
 
+        });
+    }
+
+    onChangeDateValue = (date) => {
+        this.setState({
+            customDateValue: date
         });
     }
 
@@ -282,8 +247,8 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                     <View style={styles.body}>
                         <View style={styles.account_view}>
 
-                            <Text style={styles.account_txt}>{'Account Name 1'}</Text>
-                            <Text style={styles.account_txt}>{'Account Number xxxx-xxxx-xxxx'}</Text>
+                            <Text style={styles.account_txt}>{this.state.acc_name}</Text>
+                            <Text style={styles.account_txt}>{'Account Number '+this.state.acc_no}</Text>
 
 
                         </View>
@@ -295,7 +260,7 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                         <GDropDownComponent
                             dropDownTextName={styles.financialTextLabel}
                             dropDownName="Invest"
-                            data={dummyTypeJson}
+                            data={typeJson}
                             changeState={this.selectTheType}
                             showDropDown={this.state.typeDropDown}
                             dropDownValue={this.state.valueTypeDropDown}
@@ -306,19 +271,19 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                         <GDropDownComponent
                             dropDownTextName={styles.financialTextLabel}
                             dropDownName="On the Day"
-                            data={dummyDateJson}
+                            data={dateJson}
                             changeState={this.selectTheDate}
                             showDropDown={this.state.dateDropDown}
                             dropDownValue={this.state.valueDateDropDown}
                             selectedDropDownValue={this.selectedDropDownDateValue}
-                            itemToDisplay={"title"}
+                            itemToDisplay={"date"}
                             dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(364) }}
                         />
 
                         <GDropDownComponent
                             dropDownTextName={styles.financialTextLabel}
                             dropDownName="Ending"
-                            data={dummyEndingJson}
+                            data={endingJson}
                             changeState={this.selectEnding}
                             showDropDown={this.state.endDropDown}
                             dropDownValue={this.state.valueEndDropDown}
@@ -355,18 +320,15 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                             </View>
                         </View> */}
                         {this.state.valueEndDropDown.toLowerCase() === "custom" ?
-                            <GDateComponent
 
-                                //inputref={this.setInputRef("startDate" + index)}
-                                //date={this.state.selectedFundInvestmentsData[index].startDate}
-                                dateTitleName={styles.financialTextLabel}
-                                dateTextName="End Date"
-                                minDate={currentdate}
-                                placeholder="MM/DD/YYYY"
-                                //errorFlag={!this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                //errMsg={this.state.selectedFundInvestmentsData[index].startDateValidation}
-                                onDateChange={this.onChangeDateForInvestment("startDate", 0)}
-                            />
+                            <GDateComponent
+                            dateTitleName={styles.financialTextLabel}
+                            dateTextName="End Date"
+                            minDate={currentdate}
+                            placeholder="MM/DD/YYYY"
+                            date={this.state.customDateValue}
+                            onDateChange={this.onChangeDateValue} />
+                            
                             : null}
                         <Text style={styles.scheduleContent}>
                             {'NOTE: If draft day is not specified (1st-31st), the account will be debited on the 15th of each month. Draft date will be the prior business day depending on market availability (when stock market is open).'}

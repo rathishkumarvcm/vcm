@@ -24,26 +24,32 @@ class AutomaticInvestmentAccountComponent extends Component {
             selectedAccount: -1,
             expand: [true, false, false],
             expandIndex: 0,
+            accountType:"",
+            newItemId:"",
         };
 
     }
     selectedAccount = (index,type) => e => {
         let json={};
+        let id=0;
         switch (type) {
             case "general":
                 json=this.state.generalAccountJson[index];
+                id=this.props.automaticInvestmentState.general?this.props.automaticInvestmentState.general.length+1:0;
                 break;
             case "ira":
                 json=this.state.iraAccountJson[index];
+                id=this.props.automaticInvestmentState.ira?this.props.automaticInvestmentState.ira.length+1:0;
                 break;
             case "utma":
                 json=this.state.utmaAccountJson[index];
+                id=this.props.automaticInvestmentState.utma?this.props.automaticInvestmentState.utma.length+1:0;
                 break;
             default:
                 break;
         }
         
-        this.setState({ selectedAccount: index ,selectedAccountJson:json})
+        this.setState({ selectedAccount: index ,selectedAccountJson:json,accountType:type,newItemId:id.toString()})
     }
     setStateUpdates = index => e => {
 
@@ -80,6 +86,7 @@ class AutomaticInvestmentAccountComponent extends Component {
         
 
         let payload = {
+            id:this.state.newItemId,
             account: this.state.selectedAccountJson.accountName+'|'+this.state.selectedAccountJson.accountNumber,
         };
         if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
@@ -88,6 +95,7 @@ class AutomaticInvestmentAccountComponent extends Component {
                 ...this.props.automaticInvestmentState.savedAccData
             };
         }
+        
         return payload;
 
     }
@@ -98,14 +106,15 @@ class AutomaticInvestmentAccountComponent extends Component {
             this.props.navigation.navigate('automaticInvestmentAdd', 
                         { ItemToEdit: -1,
                         acc_name:this.state.selectedAccountJson.accountName,
-                        acc_no:this.state.selectedAccountJson.accountNumber});
+                        acc_no:this.state.selectedAccountJson.accountNumber,
+                        accountType:this.state.accountType});
     }
     generateGeneralKeyExtractor = (item) => item.accountName;
     renderGeneralAccount = () => ({ item, index }) =>
         (
             
             <TouchableOpacity onPress={this.selectedAccount(index,"general")}>
-                {console.log('##############################renderGeneralAccount')}
+                
                 <View style={this.state.selectedAccount === index ? styles.selectedAccount : styles.accountList}>
                     <View style={styles.displayAccView}>
                         <Text style={styles.displayAcc}>{item.accountName}</Text>
@@ -165,29 +174,29 @@ class AutomaticInvestmentAccountComponent extends Component {
         renderUtmaAccount = () => ({ item, index }) =>
             (
                 <TouchableOpacity onPress={this.selectedAccount(index,"utma")}>
-                    <View style={this.state.selectedAccount === index ? styles.selectedAccount : styles.accountList}>
-                        <View style={styles.displayAccView}>
-                            <Text style={styles.displayAcc}>{item.accountName}</Text>
-                            <Text style={styles.displayAcc}>{item.accountNumber}</Text>
-                        </View>
-                        <View style={{ flexDirection: 'row' }}>
-                            <View style={styles.auto_invest_to_flat}>
-                                <Text style={styles.auto_invest_to_top}>{'Current Value'}</Text>
-                                <Text style={styles.auto_invest_flat_min}>{item.currentValue}</Text>
-                            </View>
-    
-                            <View style={styles.auto_invest_to_flat}>
-                                <Text style={styles.auto_invest_to_top}>{'Holding'}</Text>
-                                <Text style={styles.auto_invest_flat_min}>{item.holding}</Text>
-                            </View>
-                        </View>
-                        <View style={styles.auto_invest_to_flat}>
-                            <Text style={styles.auto_invest_to_top}>{'Automatic Investment Plan'}</Text>
-                            <Text style={styles.auto_invest_flat_min}>{item.automaticInvestmentPlan}</Text>
-                        </View>
-    
+                <View style={this.state.selectedAccount === index ? styles.selectedAccount : styles.accountList}>
+                    <View style={styles.displayAccView}>
+                        <Text style={styles.displayAcc}>{item.accountName}</Text>
+                        <Text style={styles.displayAcc}>{item.accountNumber}</Text>
                     </View>
-                </TouchableOpacity>
+                    <View style={{ flexDirection: 'row' }}>
+                        <View style={styles.auto_invest_to_flat}>
+                            <Text style={styles.auto_invest_to_top}>{'Current Value'}</Text>
+                            <Text style={styles.auto_invest_flat_min}>{item.currentValue}</Text>
+                        </View>
+
+                        <View style={styles.auto_invest_to_flat}>
+                            <Text style={styles.auto_invest_to_top}>{'Holding'}</Text>
+                            <Text style={styles.auto_invest_flat_min}>{item.holding}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.auto_invest_to_flat}>
+                        <Text style={styles.auto_invest_to_top}>{'Automatic Investment Plan'}</Text>
+                        <Text style={styles.auto_invest_flat_min}>{item.automaticInvestmentPlan}</Text>
+                    </View>
+
+                </View>
+            </TouchableOpacity>
             )
 
 

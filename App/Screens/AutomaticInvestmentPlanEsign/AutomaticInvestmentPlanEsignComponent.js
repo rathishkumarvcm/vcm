@@ -16,7 +16,8 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            saveCurrentDevice: false
+            saveCurrentDevice: false,
+            accountType:this.props.navigation.getParam('accountType'),
         };
     }
 
@@ -26,17 +27,75 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
 
     getPayload = () => {
         
-
-        let payload = {
-            // totalAmount: '$500',  
-            // fundFrom: 'Bank 1',
-            // investedIn: 'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES',
-        };
-        if (this.props && this.props.accountState && this.props.accountState.savedAccData) {
-            payload = {
-                ...payload,
-                ...this.props.accountState.savedAccData
-            };
+        // let planJson=[];
+        let payload = {};
+        
+        // switch ((this.state.accountType)) {
+        //     case "general":
+        //         planJson=this.props.automaticInvestmentState.general?this.props.automaticInvestmentState.general:[];
+        //         break;
+        //     case "ira":
+        //         planJson=this.props.automaticInvestmentState.ira?this.props.automaticInvestmentState.ira:[];
+        //         break;
+        //     case "utma":
+        //         planJson=this.props.automaticInvestmentState.utma?this.props.automaticInvestmentState.utma:[];
+        //         break;
+        //     default:
+        //         break;
+        // }
+        
+        if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+            
+            //planJson.push(this.props.automaticInvestmentState.savedAccData)
+            let planJson={};
+            switch ((this.state.accountType)) {
+                case "general":
+                    if(this.props.automaticInvestmentState.general){
+                        planJson=this.props.automaticInvestmentState.general;
+                        planJson.push(this.props.automaticInvestmentState.savedAccData);//=this.props.automaticInvestmentState.general.
+                        payload = {
+                            ...this.props.automaticInvestmentState,
+                            general: planJson,
+                        };
+                    }
+                    else{
+                        let newObj = { "general" : [this.props.automaticInvestmentState.savedAccData]}
+                        Object.assign(this.props.automaticInvestmentState,newObj)
+                    }
+                    break;
+                case "ira":
+                    if(this.props.automaticInvestmentState.ira){
+                        planJson.push(this.props.automaticInvestmentState.savedAccData);//=this.props.automaticInvestmentState.ira
+                        payload = {
+                            ...this.props.automaticInvestmentState,
+                            ira: planJson,
+                        };
+                    }
+                    else{
+                        let newObj = { "ira" : [this.props.automaticInvestmentState.savedAccData]}
+                        Object.assign(this.props.automaticInvestmentState,newObj)
+                    }
+                    break;
+                case "utma":
+                    if(this.props.automaticInvestmentState.utma){
+                        planJson.push(this.props.automaticInvestmentState.savedAccData);//=this.props.automaticInvestmentState.utma
+                        payload = {
+                            ...this.props.automaticInvestmentState,
+                            utma: planJson,
+                        };
+                    }
+                    else{
+                        let newObj = { "utma" : [this.props.automaticInvestmentState.savedAccData]}
+                        Object.assign(this.props.automaticInvestmentState,newObj)
+                        // payload = {
+                        //     ...this.props.automaticInvestmentState,
+                        //     utma:[this.props.automaticInvestmentState.savedAccData],
+                        // };
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
         return payload;
 

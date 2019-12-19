@@ -22,6 +22,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
             autoInvestmentJson: {},
             dateFromValue: '',
             dateToValue: '',
+            accountType: this.props.navigation.getParam('accountType'),
             //this.props.navigation.getParam('skip', false),
         };
     }
@@ -103,7 +104,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
     navigationNext = () => {
         //const payload = this.getPayload();
         //this.props.saveData("automaticInvestmentVerify", payload);
-        this.props.navigation.navigate('automaticInvestmentEsign');
+        this.props.navigation.navigate('automaticInvestmentEsign',{accountType:this.state.accountType});
     }
     //navigationNext = () => this.props.navigation.navigate('automaticInvestmentEsign');
 
@@ -118,7 +119,6 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
         const year = new Date().getFullYear(); //Current Year
         const currentdate = month + "-" + date + "-" + year;
         var item = this.state.autoInvestmentJson;
-        { console.log('this.state.skip.........', item) }
         return (
             <View style={styles.container}>
                 <GHeaderComponent register navigation={this.props.navigation} />

@@ -35,6 +35,7 @@ class AutomaticInvestmentComponent extends Component {
             utmaAutoInvest:{},
             arr_expand: [true, false, false],
             expandIndex: 0,
+            refresh: false,
         };
     }
 
@@ -46,6 +47,23 @@ class AutomaticInvestmentComponent extends Component {
                 utmaAutoInvest:this.props.automaticInvestmentState.utmaAutoInvest
             });
         }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+       
+        if (this.props != prevProps) {
+            if (this.props &&
+                this.props.automaticInvestmentState) {
+                this.setState({
+                    generalAutoInvestment: this.props.automaticInvestmentState.general,
+                    iraAutoInvestment: this.props.automaticInvestmentState.ira,
+                    utmaAutoInvest:this.props.automaticInvestmentState.utma,
+                    refresh: !this.state.refresh
+                });
+                
+            }
+        }
+        
     }
     setCollapsableUpdates = index => e => {
 
@@ -69,6 +87,7 @@ class AutomaticInvestmentComponent extends Component {
         (
 
             <View style={styles.flatHeader}>
+                
                 <View style={styles.flatHeaderView}>
                     <View style={styles.flatHeaderContent}>
                         {/* <Text style={styles.flatHeaderTitle}>{globalString.automaticInvestment.acc_Name}</Text> */}
@@ -140,11 +159,13 @@ class AutomaticInvestmentComponent extends Component {
     editDelete = index => e => {
         index === this.state.selectedIndex ?
             this.setState({
-                selectedIndex: -1
+                selectedIndex: -1,
+                refresh: !this.state.refresh
             })
             :
             this.setState({
-                selectedIndex: index
+                selectedIndex: index,
+                refresh: !this.state.refresh
             });
 
     }
@@ -187,6 +208,7 @@ class AutomaticInvestmentComponent extends Component {
             <View style={styles.container}>
                 
                 <GHeaderComponent navigation={this.props.navigation} />
+                
                 <ScrollView style={{ flex: 0.85 }}>
                     <View style={{ marginLeft: scaledHeight(10), marginRight: scaledHeight(10) }}>
                         <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
@@ -221,13 +243,14 @@ class AutomaticInvestmentComponent extends Component {
                                 <Text style={styles.autoInvest_sub_title_text}>{'General Account'}</Text>
                             </View>
                         </TouchableOpacity>
+                        
                         <View style={styles.seperator_line} /> 
                         {this.state.arr_expand[0] ?
                         <FlatList
                             data={this.state.generalAutoInvestment}
                             renderItem={this.renderInvestment()}
                             keyExtractor={this.generateKeyExtractor}
-                            extraData={this.state.selectedIndex}
+                            extraData={this.state.refresh}
                         />:null} 
 
                          <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(1)}>
@@ -255,10 +278,9 @@ class AutomaticInvestmentComponent extends Component {
                             data={this.state.iraAutoInvestment}
                             renderItem={this.renderInvestment()}
                             keyExtractor={this.generateKeyExtractor}
-                            extraData={this.state.selectedIndex}
+                            extraData={this.state.refresh}
                         />:null} 
-
-                        
+                
                         {this.state.utmaAutoInvest==="undefined"?null:<View>
                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(2)}>
                             <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>
@@ -280,6 +302,13 @@ class AutomaticInvestmentComponent extends Component {
                             </View>
                         </TouchableOpacity>
                         <View style={styles.seperator_line} />
+                        {this.state.arr_expand[2] ?
+                        <FlatList
+                            data={this.state.utmaAutoInvest}
+                            renderItem={this.renderInvestment()}
+                            keyExtractor={this.generateKeyExtractor}
+                            extraData={this.state.refresh}
+                        />:null} 
                         </View>}
                         
                         
