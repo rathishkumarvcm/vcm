@@ -100,6 +100,9 @@ import ManageBeneficiariesComponent from './Screens/ManageBeneficiaries';
 import EditManageBeneficiariesComponent from './Screens/EditManageBeneficiaries';
 import VerifyManageBenificiariesComponent from './Screens/VerifyManageBeneficiaries';
 
+
+import PurchaseScreenOneComponent from './Screens/PurchaseScreenOne';
+
 import EditRelationshipInfo from './Screens/EditRelationshipInformation/';
 import EditRegulatoryInfo from './Screens/EditRegulatoryInformations/EditRegulatoryComponent';
 import EditFamilyMemberInfo from './Screens/EditFamilyMemberInformation/';
@@ -897,6 +900,12 @@ const AppNavigator = createStackNavigator({
             screen: CheckBookPlaceOrder,
             navigationOptions: {
                 header: null,
+            }
+        },
+        purchaseScreenOne:{
+            screen:PurchaseScreenOneComponent,
+            navigationOptions:{
+                header:null,
             }
         }
     },

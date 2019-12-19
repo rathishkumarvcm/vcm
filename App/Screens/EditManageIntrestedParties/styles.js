@@ -13,6 +13,13 @@ export const styles = StyleSheet.create({
     paddingLeft: "4%",
     paddingRight: "4%"
   },
+  mainHeadlineText: {
+    color: '#54565B',
+    fontWeight: 'bold',
+    fontSize: scaledHeight(22),
+    lineHeight: 27,
+    textTransform: 'uppercase',
+  },
   manageBenificiariesHeadline: {
     color: "#54565B",
     fontWeight: "bold",

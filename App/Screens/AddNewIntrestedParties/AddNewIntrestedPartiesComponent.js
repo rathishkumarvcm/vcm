@@ -137,24 +137,27 @@ class addNewIntrestedPartiesComponent extends Component {
     getAddressValid=()=>{
         console.log("Get address valid:::");
         let addAddressPayload = {};
-        if (this.state.personal.zipCode != '') {
-            addAddressPayload = {
-                "Address1": this.state.personal.addressLine1,
-                "Address2": this.state.personal.addressLine2,
-                "City":this.state.personal.city,
-                "State": this.state.personal.stateValue,
-                "Zip": this.state.personal.zipCode
-            };
-        } else {
-            addAddressPayload = {
-                "Address1": this.state.personal.addressLine1,
-                "Address2": this.state.personal.addressLine2,
-                "City":this.state.personal.city,
-                "State": this.state.personal.stateValue
-            };
+        if(this.state.personal.addressLine1!="" && this.state.personal.addressLine2!=""){
+            if (this.state.personal.zipCode != '') {
+                addAddressPayload = {
+                    "Address1": this.state.personal.addressLine1,
+                    "Address2": this.state.personal.addressLine2,
+                    "City":this.state.personal.city,
+                    "State": this.state.personal.stateValue,
+                    "Zip": this.state.personal.zipCode
+                };
+            } else {
+                addAddressPayload = {
+                    "Address1": this.state.personal.addressLine1,
+                    "Address2": this.state.personal.addressLine2,
+                    "City":this.state.personal.city,
+                    "State": this.state.personal.stateValue
+                };
+            }
+            this.setState({isAddressApiCalling: true});
+            this.props.getAddressFormat(addAddressPayload);
         }
-        this.setState({isAddressApiCalling: true});
-        this.props.getAddressFormat(addAddressPayload);
+        
     }
 
     setScrollViewRef = (element) => {
@@ -223,12 +226,22 @@ class addNewIntrestedPartiesComponent extends Component {
 
     validateZipCode = () => {
         if(!this.isEmpty(this.state.personal.zipCode)){
+           // this.validateAddress();
             let validate = zipCodeRegex.test(this.state.personal.zipCode);
             this.onUpdateField("personal","zipCodeValidation",validate);
             this.onUpdateField("personal","zipCodeValiMsg",gblStrings.accManagement.zipCodeFormat);
             if(validate){
                 this.getZipCodeValue();
             }
+        }
+    }
+
+    validateAddress = () => {
+        if(!this.isEmpty(this.state.personal.addressLine1) && !this.state.isEmpty(this.state.personal.addressLine2)){
+            this.getAddressValid();
+        } else {
+            this.onUpdateField("personal","addressLine1Validation",false);
+            this.onUpdateField("personal","addressLine2Validation",false);
         }
     }
 
@@ -370,7 +383,7 @@ class addNewIntrestedPartiesComponent extends Component {
             "accounts_Tagged":'1'    
         };
         console.log("Added Data:::::",obj);
-        if(this.state.personal.addValidation){
+        if(this.state.personal.addValidation && this.state.personal.addressLine1 && this.state.personal.addressLine2){
           this.props.navigation.navigate("verifyIntrestedParties",{acc_Data:this.state.account_Data, added_obj:obj });
         }
         
@@ -505,9 +518,10 @@ class addNewIntrestedPartiesComponent extends Component {
                             placeholder={gblStrings.accManagement.empAddrLine1}
                             maxLength={gblStrings.maxLength.emplAddress1}
                             value={this.state.personal.addressLine1}
+                            onSubmitEditing={this.validateAddress}
                             onChangeText={this.onChangeText("personal","addressLine1")}
                             errorFlag={!this.state.personal.addressLine1Validation}
-                            errorText={gblStrings.accManagement.emptyAddressLine1Msg}
+                            errorText={this.state.personal.addValidation ?gblStrings.accManagement.emptyAddressLine1Msg:""}
                         />
                         <GInputComponent
                             inputref={this.setInputRef("addrLine2")}
@@ -515,9 +529,10 @@ class addNewIntrestedPartiesComponent extends Component {
                             placeholder={gblStrings.accManagement.empAddrLine2}
                             maxLength={gblStrings.maxLength.addressLine2}
                             value={this.state.personal.addressLine2}
+                            onSubmitEditing={this.validateAddress}
                             onChangeText={this.onChangeText("personal","addressLine2")}
                             errorFlag={!this.state.personal.addressLine2Validation}
-                            errorText={gblStrings.accManagement.emptyAddressLine2Msg}
+                            errorText={this.state.personal.addValidation ?gblStrings.accManagement.emptyAddressLine2Msg:""}
                         />
                         {!this.state.personal.addValidation && <Text style={styles.errMsg}>{this.state.personal.addressValiMsg}</Text>}
                         <Text style={styles.lblTxt}>
@@ -564,6 +579,9 @@ class addNewIntrestedPartiesComponent extends Component {
                                 inputref={this.setInputRef("startDate")}
                                 date={this.state.personal.startDate}
                                 placeholder="MM/DD/YYYY"
+                                dateTextLayout={{marginTop:0}}
+                                componentStyle={{width:'100%',marginLeft:0,marginRight:0}}
+                                maxDate={this.state.personal.endDate?this.state.personal.endDate:""}
                                 errorFlag={!this.state.personal.startDateValidation}
                                 onDateChange={this.onChangeText("personal","startDate")}
                             />
@@ -572,7 +590,9 @@ class addNewIntrestedPartiesComponent extends Component {
                                inputref={this.setInputRef("endDate")}
                                date={this.state.personal.endDate}
                                placeholder="MM/DD/YYYY"
-                               maxDate={this.state.personal.startDate?this.state.personal.startDate:''}
+                               dateTextLayout={{marginTop:0}}
+                                componentStyle={{width:'100%',marginLeft:0,marginRight:0}}
+                               minDate={this.state.personal.startDate?this.state.personal.startDate:""}
                                errorFlag={!this.state.personal.endDateValidation}
                                onDateChange={this.onChangeText("personal","endDate")}
                             />
