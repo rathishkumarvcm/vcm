@@ -1115,7 +1115,8 @@ export default {
         date_added: 'Date added',
         add: 'Add',
         systematic_withdrawal_plan_bank_account: 'Systematic Withdrawal Plan',
-        automatic_investment_plan_bank_account: 'Automatic Investment Plan'
+        automatic_investment_plan_bank_account: 'Automatic Investment Plan',
+        success_add_bank_account: 'We have successfully gathered your account details.'
     },
     addPopularBankAccount: {
         add_bank_account: 'Add Bank Account',
