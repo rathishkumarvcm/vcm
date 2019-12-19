@@ -11,6 +11,20 @@ export const styles = StyleSheet.create({
     mainFlex:{
         flex: 0.85
     },
+    paddingRightStyle:{
+        paddingRight:'2%'
+    },
+    generalAccHeaderView:{
+        justifyContent:'space-between',
+        flexDirection:'row'
+    },
+    openAccStyle:{
+        color:'#5D83AE',
+        fontSize:scaledHeight(15),
+        fontWeight:'600',
+        opacity:1,
+        paddingTop:'2%'
+    },
     headerFlex:{
         height:scaledHeight(29),
         flexDirection:'row'
@@ -76,7 +90,7 @@ export const styles = StyleSheet.create({
         position: 'absolute', 
         zIndex: 3
     },
-    flex1:{
+    mainContainer:{
         marginLeft: "4%",
         marginRight: "4%"
     },

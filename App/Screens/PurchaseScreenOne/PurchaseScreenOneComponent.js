@@ -7,65 +7,14 @@ import { PageNumber } from '../../AppComponents';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-native-collapsible';
 
-
-const accSelectionData = {
-    "General_Account": [
-        {
-            "accName": "1",
-            "accNumber": "xxxx-xxxx-xxxx",
-            "currentValue": "$6000",
-            "holdingValue": "$7000",
-            "AutomaticInvestmentPlan": "Yes"
-        },
-        {
-            "accName": "2",
-            "accNumber": "xxxx-xxx-xxxx",
-            "currentValue": "$4500",
-            "holdingValue": "$9000",
-            "AutomaticInvestmentPlan": "Yes"
-        }
-    ],
-    "IRA_Account": [
-        {
-            "accName": "5",
-            "accNumber": "xxxx-xxx-xxxx",
-            "currentValue": "$9000",
-            "holdingValue": "$3000",
-            "AutomaticInvestmentPlan": "Yes"
-        },
-        {
-            "accName": "6",
-            "accNumber": "xxxx-xxxx-xxxx",
-            "currentValue": "$5500",
-            "holdingValue": "$8000",
-            "AutomaticInvestmentPlan": "Yes"
-        }
-    ],
-    "UTMA_Account": [
-        {
-            "accName": "3",
-            "accNumber": "xxxx-xxx-xxxx",
-            "currentValue": "$3500",
-            "holdingValue": "$7000",
-            "AutomaticInvestmentPlan": "Yes"
-        },
-        {
-            "accName": "4",
-            "accNumber": "xxxx-xxxx-xxxx",
-            "currentValue": "$6700",
-            "holdingValue": "$7600",
-            "AutomaticInvestmentPlan": "Yes"
-        }
-    ]
-};
-
+let accSelectionData={};
 class PurchaseScreenOneComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            generalAccountIcon: '+   ',
-            IRAAccountIcon: '+   ',
-            UTMAAccountIcon: '+   ',
+            generalAccountIcon: '+',
+            IRAAccountIcon: '+',
+            UTMAAccountIcon: '+',
             collapseGeneralAccount: true,
             collapseIRAAccount: true,
             collapseUTMAAccount: true,
@@ -85,10 +34,10 @@ class PurchaseScreenOneComponent extends Component {
     }
 
     componentDidMount() {
-        console.log("Page One Compoennt componentDidMount --> " + JSON.stringify(this.props));
-        if (this.props && this.props.liquidationPageOneInitialState) {
+        console.log("componentDidMount --> " + JSON.stringify(this.props));
+        if (this.props && this.props.purchaseData) {
             this.setState({
-                selectedAccountData: this.props.liquidationPageOneInitialState
+                selectedAccountData: this.props.purchaseData
             });
         }
     }
@@ -102,6 +51,7 @@ class PurchaseScreenOneComponent extends Component {
         (this.state.collapseGeneralAccount ?
             this.setState({ generalAccountIcon: "-    ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }) : this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
     }
+
     onClickExpandIRAAccount = () => {
         this.setState({
             collapseIRAAccount: !this.state.collapseIRAAccount,
@@ -111,6 +61,7 @@ class PurchaseScreenOneComponent extends Component {
         (this.state.collapseIRAAccount ?
             this.setState({ IRAAccountIcon: "-    ", generalAccountIcon: "+   ", UTMAAccountIcon: "+   " }) : this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
     }
+
     onClickExpandUTMAAccount = () => {
         this.setState({
             collapseUTMAAccount: !this.state.collapseUTMAAccount,
@@ -156,6 +107,7 @@ class PurchaseScreenOneComponent extends Component {
             }
         });
     }
+
     onClickSelectUTMAAccount = (item, index) => () => {
         console.log("onClickSelectUTMAAccount-->" + JSON.stringify(item));
         this.setState({
@@ -184,7 +136,7 @@ class PurchaseScreenOneComponent extends Component {
             AutoInvPlan: this.state.selectedAccountData.AutoInvPlan,
             accType: this.state.selectedAccountData.accType
         };
-        this.props.saveData(payloadData);
+        //this.props.saveData(payloadData);
         console.log("payloadData---> " + JSON.stringify(payloadData));
         //this.props.navigation.navigate('purchaseScreenTwo', { accSelectionScreenData: this.state.selectedAccountData });
     }
@@ -193,28 +145,24 @@ class PurchaseScreenOneComponent extends Component {
         let currentPage = 1;
         let totalCount = 4;
         let pageName = gblStrings.liquidation.accountSelectionScreenName;
+        if(this.props.purchaseData && this.props.purchaseData.accSelectionData ){
+            accSelectionData = this.props.purchaseData.accSelectionData;
+        }
         return (
             <View style={styles.container} >
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.mainFlex}>
-                    <TouchableOpacity onPress={this.goBack}>
-                        <GIcon
-                            name="left"
-                            type="antdesign"
-                            size={25}
-                            color="#707070"
-                        />
-                    </TouchableOpacity>
-
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
-                    <View style={styles.flex1}>
-
-                        <Text style={styles.greyText16px}>{gblStrings.liquidation.accountSelectionContent}</Text>
+                    <View style={styles.mainContainer}>
+                        <Text style={styles.greyText16px}>{gblStrings.purchase.accountSelection}</Text>
 
                         <View style={styles.accountTypeFlex}>
-                            <View style={styles.headerFlex}>
-                                <Text style={styles.headerText} onPress={this.onClickExpandGeneralAccount}>{this.state.generalAccountIcon}</Text>
+                        <View style={styles.generalAccHeaderView}>
+                            <View style={styles.headerFlex} onTouchStart={this.onClickExpandGeneralAccount}>
+                                <Text style={[styles.headerText,styles.paddingRightStyle]} >{this.state.generalAccountIcon}</Text>
                                 <Text style={styles.headerText}>{gblStrings.liquidation.generalAccountHeading}</Text>
+                            </View>
+                            <Text style={styles.openAccStyle}>{gblStrings.purchase.openAccount}</Text>
                             </View>
                             <View style={styles.line} />
                         </View>
@@ -232,10 +180,7 @@ class PurchaseScreenOneComponent extends Component {
                                                         <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
                                                     </View>
                                                 </View>
-
                                                 <View style={styles.line} />
-
-
                                                 <View style={styles.flexAccDetails2}>
                                                     <View style={styles.currentValueflex}>
                                                         <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.currentValue}</Text>
@@ -246,14 +191,12 @@ class PurchaseScreenOneComponent extends Component {
                                                         <Text style={styles.blackText14px}>{item.holdingValue}</Text>
                                                     </View>
                                                 </View>
-
                                                 <View style={styles.flexAccDetails3}>
                                                     <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.automaticInvestmentPlan}</Text>
                                                     <Text style={styles.blackText14px}>{item.AutomaticInvestmentPlan}</Text>
                                                 </View>
                                             </View>
                                         </View>
-
                                     );
                                 }}
                                 keyExtractor={x => x.accNumber}
@@ -263,8 +206,8 @@ class PurchaseScreenOneComponent extends Component {
 
 
                         <View style={styles.accountTypeFlex}>
-                            <View style={styles.headerFlex}>
-                                <Text style={styles.headerText} onPress={this.onClickExpandIRAAccount}>{this.state.IRAAccountIcon}</Text>
+                            <View style={styles.headerFlex} onTouchStart={this.onClickExpandIRAAccount}>
+                                <Text style={[styles.headerText,styles.paddingRightStyle]}>{this.state.IRAAccountIcon}</Text>
                                 <Text style={styles.headerText}>{gblStrings.liquidation.iraAccountHeading}</Text>
                             </View>
                             <View style={styles.line} />
@@ -313,8 +256,8 @@ class PurchaseScreenOneComponent extends Component {
 
 
                         <View style={styles.accountTypeFlex}>
-                            <View style={styles.headerFlex}>
-                                <Text style={styles.headerText} onPress={this.onClickExpandUTMAAccount}>{this.state.UTMAAccountIcon}</Text>
+                            <View style={styles.headerFlex} onTouchStart={this.onClickExpandUTMAAccount}>
+                                <Text style={[styles.headerText,styles.paddingRightStyle]} >{this.state.UTMAAccountIcon}</Text>
                                 <Text style={styles.headerText}>{gblStrings.liquidation.utmaAccountHeading}</Text>
                             </View>
                             <View style={styles.line} />
@@ -366,7 +309,7 @@ class PurchaseScreenOneComponent extends Component {
                     </View>
 
                     <View style={styles.flex6}>
-                        <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateLiquidationPageOne}>
+                        <TouchableOpacity style={styles.backButtonFlex} >
                             <Text style={styles.backButtonText}>{gblStrings.common.cancel}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={this.state.disableNextButton ? styles.submitFlexDisabled : styles.submitFlex} onPress={this.nextButtonAction} disabled={this.state.disableNextButton}>
@@ -392,11 +335,12 @@ class PurchaseScreenOneComponent extends Component {
 
 PurchaseScreenOneComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    liquidationPageOneInitialState: PropTypes.instanceOf(Object),
+    purchaseData: PropTypes.instanceOf(Object),
     saveData: PropTypes.func,
 };
 
 PurchaseScreenOneComponent.defaultProps = {
 
 };
+
 export default PurchaseScreenOneComponent;
