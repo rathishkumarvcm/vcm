@@ -281,7 +281,7 @@ class AutomaticInvestmentComponent extends Component {
                             extraData={this.state.refresh}
                         />:null} 
                 
-                        {this.state.utmaAutoInvest==="undefined"?null:<View>
+                        {this.props.automaticInvestmentState.utma?<View>
                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(2)}>
                             <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>
                                 {this.state.arr_expand[2] ?
@@ -309,7 +309,7 @@ class AutomaticInvestmentComponent extends Component {
                             keyExtractor={this.generateKeyExtractor}
                             extraData={this.state.refresh}
                         />:null} 
-                        </View>}
+                        </View>:null}
                         
                         
                         
