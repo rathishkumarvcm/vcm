@@ -24,9 +24,9 @@ let imagePickerOptions = {
 };
 
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
-const date = new Date().getDate(); //Current Date
-const month = new Date().getMonth() + 1; //Current Month
-const year = new Date().getFullYear(); //Current Year
+const date = new Date().getDate(); // Current Date
+const month = new Date().getMonth() + 1; // Current Month
+const year = new Date().getFullYear(); // Current Year
 const currentdate = month + "-" + date + "-" + year;
 
 const tempDate = new Date();
@@ -1627,11 +1627,14 @@ class OpenAccPageTwoComponent extends Component {
                     tempErrMsg = gblStrings.accManagement.emptyRelationShipMsg;
                     inputField = "relationshipToAcc";
 
-                } else if (parseFloat(tempObj.beneficiaryDistPercent)) {
+                } else if (this.isEmpty(tempObj.beneficiaryDistPercent)) {
                     tempErrMsg = gblStrings.accManagement.emptyDistributionMsg;
                     inputField = "beneficiaryDistPercent";
+                } else if (parseFloat(tempObj.beneficiaryDistPercent) > parseFloat("100")) {
+                    tempErrMsg = gblStrings.accManagement.distributionValidationExceed;
+                    inputField = "beneficiaryDistPercent";
 
-                } else if (this.isEmpty(tempObj.socialSecurityNo)) {
+                }else if (this.isEmpty(tempObj.socialSecurityNo)) {
                     tempErrMsg = gblStrings.accManagement.emptySSNMsg;
                     inputField = 'socialSecurityNo';
                 } else if (tempObj.socialSecurityNo.length < gblStrings.maxLength.ssnNo) {
@@ -4818,14 +4821,14 @@ class OpenAccPageTwoComponent extends Component {
                                 <GInputComponent
                                     inputref={this.setInputRef("socialSecurityNo" + index)}
                                     propInputStyle={styles.customTxtBox}
-                                    placeholder={""}
+                                    placeholder={gblStrings.accManagement.ssnNoFormat}
                                     keyboardType="number-pad"
                                     maxLength={gblStrings.maxLength.ssnNo}
                                     onChangeText={this.onChangeTextForIRABeneficiary("socialSecurityNo", index)}
                                     onSubmitEditing={this.onSubmitEditing(this["firstName" + index])}
                                     errorFlag={!this.state.retirementBeneficiaryData[index].socialSecurityNoValidation}
                                     errorText={this.state.errMsg}
-
+                                    secureTextEntry
                                 />
 
                                 <Text style={styles.lblTxt}>
