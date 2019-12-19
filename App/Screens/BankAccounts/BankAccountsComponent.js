@@ -12,6 +12,9 @@ class BankAccountsComponent extends Component {
             isLoading: false,
             showDeleteOption: false,
             currentSecuritiesChanged: false,
+            updateBankDetails: true,
+            showAlert: true,
+
             bankAccountInfo: [
                 {
                     Id: "1",
@@ -55,12 +58,17 @@ class BankAccountsComponent extends Component {
 
         payload.push(JSON.stringify(this.state.bankAccountInfo));
         this.props.getBankAccountInfo(JSON.stringify(payload));
+        console.log("componentDidMount isSuccess:::: ", this.state.isSuccess);
+
+        
     }
 
     componentDidUpdate(prevProps) {
         if (this.props && this.props.bankAccountInfo && this.props.bankAccountInfo != prevProps.bankAccountInfo) {
             this.setState({ bankAccountInfo: JSON.parse(JSON.parse(this.props.bankAccountInfo)[0]) });
         }
+        
+        
     }
 
     navigateAddBankAccount = () => this.props.navigation.navigate('addBankAccount');
@@ -111,14 +119,61 @@ class BankAccountsComponent extends Component {
         this.setState({ bankAccountInfo: tmpData });
     }
 
+    addBankAccount = (item) => {
+        tmpData = this.state.bankAccountInfo;
+        tmpData.push(item);
+        this.setState({ bankAccountInfo: tmpData });
+        this.setState({ updateBankDetails: false});
+        console.log("BankAccount info ::: " + this.state.bankAccountInfo);
+    }
 
+    updateIsScuccess = (showAlert) => {
+        this.setState({ showAlert: showAlert});
+
+}
 
     render() {
+        const { navigation } = this.props;        
+        const isSuccess = navigation.getParam('isSuccess', false);
+        const accountType = navigation.getParam('accountType', false);
+        const financialInstitutionName = navigation.getParam('financialInstitutionName', false);
+        const accountOwnerNames = navigation.getParam('accountOwnerNames', false);
+        const transitRoutingNumber = navigation.getParam('transitRoutingNumber', false);
+        const accountNumber = navigation.getParam('accountNumber', false);
+
+        let tmpData = { "Id": (this.state.bankAccountInfo.length + 1).toString(),
+            "bankName": financialInstitutionName,
+            "accountType": accountType,
+            "accountNumber": accountNumber,
+            "transitRoutingNumber": transitRoutingNumber,
+            "dateAdded": "20/09/2019",
+            "isSystematicWithdrawalPlan": "No",
+            "isAutomaticInvestmentPlan": "No",
+            "showDeleteOption": false};
+        
+
+        //this.updateIsScuccess(isSuccess);
+        
+
+        if (this.state.updateBankDetails && isSuccess) {     
+            console.log("render isSuccess:::: ", tmpData);       
+            this.addBankAccount(tmpData);
+        }
+
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
 
                 <ScrollView style={styles.scrollviewStyle} contentContainerStyle={{ justifyContent: 'center' }}>
+
+                    {isSuccess && this.state.showAlert &&
+                        <TouchableOpacity style={styles.alertBox} onPress={() => this.updateIsScuccess(false)}>
+                            <Text style={styles.alertText}>
+                                {gblStrings.bankAccounts.success_add_bank_account}
+                            </Text>
+                        </TouchableOpacity>
+                    }
+
                     <View style={styles.header}>
                         <Text style={styles.headerText}>
                             {gblStrings.bankAccounts.bank_account_header}

@@ -342,7 +342,7 @@ export default {
         savings: "Savings",
         checking: "Checking",
         financialInstitution: "Name of Financial Institution",
-        accountOwner: "Name of Accouner Owner(s)",
+        accountOwner: "Name of Account Owner(s)",
         transitRoutingNo: "Transit Routing Number",
         accountNumber: "Account Number",
         specimen: "SPECIMEN",
@@ -1061,7 +1061,7 @@ export default {
         automatic_investment_plan: 'AUTOMATIC INVESTMENT PLAN',
         systematic_withdrawal_plan: 'SYSTEMATIC WITHDRAWAL PLAN',
         checkbook: 'ORDER CHECKBOOK',
-        dividents: 'DIVIDENTS',
+        dividents: 'DIVIDENTS AND CAPITAL GAINS PREFERENCES',
         failed_email: 'Failed Email - Member Update'
     },
     dividents: {

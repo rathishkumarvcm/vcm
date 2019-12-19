@@ -124,7 +124,7 @@ export const styles = StyleSheet.create({
         opacity: 0.4,
         height: scaledHeight(1),
         marginTop: scaledHeight(10),
-        marginHorizontal: '4%'
+        marginHorizontal: '4%',
     },
     linkBreak2: {
         backgroundColor: '#9DB4CE',
@@ -189,4 +189,19 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#56565A'
     },
+    alertText: {
+        color: '#54565B',
+        fontSize:  scaledHeight(15),
+    },
+    alertBox: {
+        borderWidth: 1,
+        borderColor: '#C7C7C7',
+        backgroundColor: '#F2F2F2',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: scaledHeight(20),
+        marginHorizontal: '4%',
+        paddingVertical: scaledHeight(15),
+        paddingHorizontal: '4%'
+    }
 });

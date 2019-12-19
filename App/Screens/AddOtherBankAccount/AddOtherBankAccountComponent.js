@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { styles } from './styles';
-import { View, ScrollView, Text, Image, FlatList, Switch, TouchableOpacity } from 'react-native';
-import { GHeaderComponent, GInputComponent, GSwitchComponent, GFooterComponent, GButtonComponent, GIcon } from '../../CommonComponents';
+import { View, ScrollView, Text, Image } from 'react-native';
+import { GHeaderComponent, GInputComponent, GFooterComponent, GButtonComponent } from '../../CommonComponents';
 import PropTypes from "prop-types";
 import gblStrings from '../../Constants/GlobalStrings';
 
-import { CustomPageWizard, CustomRadio, CustomCheckBox } from '../../AppComponents';
+import { CustomRadio } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 
 
@@ -32,8 +32,13 @@ class AddOtherBankAccountComponent extends Component {
 
     navigateBack = () => this.props.navigation.goBack();
 
-    navigateBankAccount = () => this.props.navigation.navigate('bankAccount')
-
+    navigateBankAccount = (isSuccess) => this.props.navigation.navigate('bankAccount', { isSuccess: isSuccess,
+        accountType : this.state.accountType || "-",
+        financialInstitutionName: this.state.financialInstitutionName || "-",
+        accountOwnerNames: this.state.accountOwner || "-",
+        transitRoutingNumber: this.state.transitRoutingNumber || "-",
+        accountNumber: this.state.accountNumber || "-"})
+    
     onPressRadio = (keyName, text) => () => this.setState({
         [keyName]: text,
         accountTypeValidation: true,
@@ -74,6 +79,16 @@ class AddOtherBankAccountComponent extends Component {
             transitRoutingNumberValidation: true,
             accountNumberValidation: true
         });
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props && this.props.addBankAccount && this.props.addBankAccount != prevProps.addBankAccount) {
+            //this.setState({ bankAccountInfo: JSON.parse(JSON.parse(this.props.bankAccountInfo)[0]) });
+            console.log("componentDidUpdate ::: > addBankAccount " + JSON.stringify(this.props.addBankAccount));
+            if (this.props.addBankAccount.type == "ADD_BANK_ACCOUNT_SUCCESS") {
+                this.navigateBankAccount(true);
+            }
+        }
     }
 
     validateBankAccount = () => {
@@ -152,7 +167,6 @@ class AddOtherBankAccountComponent extends Component {
                     </View>
 
                     <View style={styles.linkBreak1} />
-
 
                     <View style={styles.childSectionGrp}>
                         <Text style={styles.lblTxt}>
@@ -278,7 +292,7 @@ class AddOtherBankAccountComponent extends Component {
                             buttonStyle={styles.backBtn}
                             buttonText={gblStrings.common.cancel}
                             textStyle={styles.backButtonText}
-                            onPress={this.navigateBankAccount}
+                            onPress={() => this.navigateBankAccount(false)}
                         />
 
                         <GButtonComponent
