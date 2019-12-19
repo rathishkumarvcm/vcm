@@ -150,4 +150,19 @@ export const styles = StyleSheet.create({
         alignSelf: "stretch",
         height: scaledHeight(1),
     },
+    alertText: {
+        color: '#54565B',
+        fontSize: scaledHeight(15),
+    },
+    alertBox: {
+        borderWidth: 1,
+        borderColor: '#C7C7C7',
+        backgroundColor: '#F2F2F2',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: scaledHeight(20),
+        marginHorizontal: '4%',
+        paddingVertical: scaledHeight(15),
+        paddingHorizontal: '4%'
+    }
 });

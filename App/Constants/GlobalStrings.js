@@ -1088,7 +1088,8 @@ export default {
         checkbook_requested_on: 'Checkbook requested on',
         number_of_checkleaves: 'Number of Check Leaves',
         verify_your_account: 'Verify your account information below',
-        request_submit_checkbook: 'You have successfully Submitted the Checkbook request'
+        request_submit_checkbook: 'You have successfully Submitted the Checkbook request',
+        request_received :'Your request for Checkbook Order is received'
     },
     addBankAccount: {
         addBankAccountHypen: " - ",

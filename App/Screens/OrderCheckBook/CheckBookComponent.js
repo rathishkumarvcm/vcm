@@ -13,6 +13,7 @@ class CheckBookComponent extends Component {
             stateChanged: false,
             reinvestChanged: false,
             showRequestOption: false,
+            showAlert: true,
             checkBookDetails: [
                 {
                     Id: "1",
@@ -100,6 +101,7 @@ class CheckBookComponent extends Component {
     }
 
     componentDidUpdate(prevProps) {
+        console.log('componentDidUpdate called.');
         if (this.props && this.props.checkBookInfo && this.props.checkBookInfo != prevProps.checkBookInfo) {
             this.setState({ checkBookDetails: JSON.parse(JSON.parse(this.props.checkBookInfo)[0]) });
 
@@ -146,6 +148,7 @@ class CheckBookComponent extends Component {
     }
 
     navigatePlaceCheckBookOrder = (item) => {
+        this.updateIsScuccess(true);
         this.updateShowRequestOption('showRequest', false, item.Id);
         this.props.navigation.navigate('checkBookPlaceOrder', {
             accountName: item.AccountName,
@@ -155,12 +158,28 @@ class CheckBookComponent extends Component {
         });
     }
 
+    updateIsScuccess = (showAlert) => {
+        this.setState({ showAlert: showAlert });
+    }
+
     render() {
+        console.log('render called.');
+        const { navigation } = this.props;
+        const isSuccess = navigation.getParam('isSuccess', false);
+
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
 
                 <ScrollView style={styles.scrollviewStyle} contentContainerStyle={{ justifyContent: 'center' }}>
+                    {isSuccess && this.state.showAlert &&
+                        <TouchableOpacity style={styles.alertBox} onPress={() => this.updateIsScuccess(false)}>
+                            <Text style={styles.alertText}>
+                                {gblStrings.orderCheckBook.request_received}
+                            </Text>
+                        </TouchableOpacity>
+                    }
+
                     <View style={styles.header}>
                         <Text style={styles.headerText}>
                             {gblStrings.orderCheckBook.order_checkbook}
