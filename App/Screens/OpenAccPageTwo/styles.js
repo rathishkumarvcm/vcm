@@ -4,22 +4,22 @@ import {scaledHeight } from '../../Utils/Resolution';
 
 export const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#F7FAFF',
+        flex: 1,
         width: '100%'
     },
    
     sectionGrp: {
-        overflow: 'hidden',
+        flexGrow: 1,
         marginHorizontal: scaledHeight(12),
         marginTop: scaledHeight(31),
-        flexGrow: 1
+        overflow: 'hidden'
     },
     sectionDescTxt: {
-        marginTop:scaledHeight(19.5),
-        fontSize: scaledHeight(18),
         color: 'rgba(51, 51, 51, 0.87)',
-        lineHeight: 22
+        fontSize: scaledHeight(18),
+        lineHeight: 22,
+        marginTop:scaledHeight(19.5)
 
     },
     childSectionGrp:{
@@ -37,22 +37,22 @@ export const styles = StyleSheet.create({
     },
     accSelection:{
         flexGrow: 1, 
-        paddingTop: scaledHeight(4), 
+        marginHorizontal: scaledHeight(12), 
         marginTop: scaledHeight(38), 
-        marginHorizontal: scaledHeight(12) 
+        paddingTop: scaledHeight(4) 
     },
     accSelectionTxt:{
-        fontSize: scaledHeight(22), 
         color: "#56565A", 
+        fontSize: scaledHeight(22), 
         fontWeight: 'bold' 
     },
     headings: {
-        width: '80%',
-        textAlign:'left',
+        color: '#000000',
         fontSize: scaledHeight(20),
         fontWeight: 'bold',
-        color: '#000000',
-        lineHeight: 35
+        lineHeight: 35,
+        textAlign:'left',
+        width: '80%'
     },
     lblLine: {
         // width:"100%",
@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
     },
     
     lblLine1:{
-         //width:"100%",
+         // width:"100%",
         
          height:scaledHeight(1),
          backgroundColor:'#696069'
@@ -89,8 +89,8 @@ export const styles = StyleSheet.create({
     hintLabelTxt:{
         color:'#000000DE',
         fontSize:scaledHeight(15),
-        marginTop: scaledHeight(5),
         lineHeight: 22,
+        marginTop: scaledHeight(5),
         opacity:.65
     },
 
@@ -98,80 +98,80 @@ export const styles = StyleSheet.create({
         color:'#333333DE',
         fontSize:scaledHeight(18),
         fontWeight:'bold',
-        marginTop: scaledHeight(15),
-        lineHeight: 22
+        lineHeight: 22,
+        marginTop: scaledHeight(15)
     },
     regulatoryQuestTxt: {
-        marginTop:scaledHeight(23),
-        fontSize: scaledHeight(18),
         color: '#333333DE',
-        lineHeight: 28
+        fontSize: scaledHeight(18),
+        lineHeight: 28,
+        marginTop:scaledHeight(23)
 
     },
     explainTxt:{
 
-        marginTop:scaledHeight(10),
-        fontSize: scaledHeight(18),
         color: '#000000DE',
-        lineHeight: 28
+        fontSize: scaledHeight(18),
+        lineHeight: 28,
+        marginTop:scaledHeight(10)
     },
 
     explainDottedBorder:{
-        flexDirection:'row',
         alignItems:"center",
-        justifyContent:"flex-start",
+        borderBottomColor:'#56565A',
         borderBottomWidth:1,
-        borderBottomColor:'#56565A'
+        flexDirection:'row',
+        justifyContent:"flex-start"
        
     },
     explainDotteBorderTxt: {
 
-        marginTop:scaledHeight(10),
-        fontSize: scaledHeight(18),
         color: '#333333DE',
-        lineHeight: 28
+        fontSize: scaledHeight(18),
+        lineHeight: 28,
+        marginTop:scaledHeight(10)
 
     },
     explainUnderline:{
-        flexDirection:'row',
         alignItems:"center",
-        justifyContent:"flex-start",
+        borderBottomColor:'#56565A',
         borderBottomWidth:1,
-        borderBottomColor:'#56565A'
+        flexDirection:'row',
+        justifyContent:"flex-start"
        
     },
     explainUnderlineTxt: {
 
-        marginTop:scaledHeight(10),
-        fontSize: scaledHeight(16),
         color: '#56565A',
-        lineHeight: 25
+        fontSize: scaledHeight(16),
+        lineHeight: 25,
+        marginTop:scaledHeight(10)
 
     },
 
     privacySection:{
+     backgroundColor:"#FFFFFF",
+     borderColor : "#FFFFFF",
+     borderRadius:scaledHeight(5),
+     borderWidth : 1,
      flexGrow:1,
      marginBottom:scaledHeight(50),
      marginHorizontal:scaledHeight(12),
      padding:scaledHeight(32),
-     backgroundColor:"#FFFFFF",
-     borderWidth : 1,
-     borderColor : "#FFFFFF",
-     borderRadius:scaledHeight(5),
      shadowColor:"#56565A",
-     shadowOpacity:0.3,
-     shadowOffset:{width:0,height:2}
+     shadowOffset:{width:0,height:2},
+     shadowOpacity:0.3
     },
     privacyNoticeTitleTxt:{
-        fontSize: scaledHeight(26),
         color: '#486D89',
+        fontSize: scaledHeight(26),
         lineHeight:35
     },
     privacyNoticeTxt:{
-        marginTop: scaledHeight(16),
-        fontSize: scaledHeight(16),
         color: '#56565A',
-        lineHeight: 22
+        fontSize: scaledHeight(16),
+        lineHeight: 22,
+        marginTop: scaledHeight(16)
     },
     
     expandCollpaseTxt:{
@@ -181,9 +181,9 @@ export const styles = StyleSheet.create({
     },
     
     radioBtnGrp:{
+        flexDirection:'row',
         flexGrow:1,
-        marginTop:scaledHeight(19),
-        flexDirection:'row'
+        marginTop:scaledHeight(19)
     },
     radioBtnColGrp:{
         flexGrow:1,
@@ -191,30 +191,30 @@ export const styles = StyleSheet.create({
     },
     lblRadioBtnTxt:{
         color:'#333333DE',
+        flexWrap:'wrap',
         fontSize:scaledHeight(16),
-        lineHeight:28,
-        flexWrap:'wrap'
+        lineHeight:28
     },
     lblRadioDescTxt:{
-        marginTop:scaledHeight(14),
         color:'#333333DE',
+        flexWrap:'wrap',
         fontSize:scaledHeight(14),
         lineHeight:22,
-        flexWrap:'wrap',
+        marginTop:scaledHeight(14),
         opacity:.75
     },
     customTxtBoxError:{
+        borderColor : 'red',
         marginTop: scaledHeight(9),
-        width : '100%',
-        borderColor : 'red'
+        width : '100%'
     },
     customTxtBox:{
         marginTop: scaledHeight(9),
         width : '100%'
     },
     splitDateGrp:{
-        flexDirection:'row',
         alignItems:"flex-start",
+        flexDirection:'row',
         justifyContent:"flex-start",
         marginTop: scaledHeight(9)
     },
@@ -230,17 +230,17 @@ export const styles = StyleSheet.create({
         width : '100%'
     },
     customListTxtBoxError:{
-        width : '100%',
-        borderColor : 'red'
+        borderColor : 'red',
+        width : '100%'
     },
    
     btnGrp:{
-        marginHorizontal: scaledHeight(12),
-        marginVertical: scaledHeight(50),
-        flexGrow: 1,
         alignContent: 'center',
+        alignItems: 'center',
+        flexGrow: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        marginHorizontal: scaledHeight(12),
+        marginVertical: scaledHeight(50)
     },
     normalWhiteBtn: {
       //  width: '90%',
@@ -256,11 +256,11 @@ export const styles = StyleSheet.create({
 
     },
     normalWhiteBtnTxt: {
-        fontSize: scaledHeight(16),
         color:'#544A54',
-        width: '100%',
+        fontSize: scaledHeight(16),
+        lineHeight:22,
         textAlign: 'center',
-        lineHeight:22
+        width: '100%'
     },
     normalBlackBtn: {
          //  width: '90%',
@@ -277,10 +277,10 @@ export const styles = StyleSheet.create({
 
     },
     normalBlackBtnTxt: {
-        fontSize: scaledHeight(16),
         color:'#fff',
-        width: '100%',
-        textAlign: 'center'
+        fontSize: scaledHeight(16),
+        textAlign: 'center',
+        width: '100%'
     },
 
     normalBlackDisabledBtn: {
@@ -299,10 +299,10 @@ export const styles = StyleSheet.create({
 
    },
    normalBlackBtnDisabledTxt: {
-       fontSize: scaledHeight(16),
        color:'#fff',
-       width: '100%',
-       textAlign: 'center'
+       fontSize: scaledHeight(16),
+       textAlign: 'center',
+       width: '100%'
    },
 
    browseBtn: {
@@ -323,16 +323,16 @@ export const styles = StyleSheet.create({
 
 
     removeWhiteBtn: {
-        width: '45%',
-        borderWidth : 1,
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
         borderColor : "#DEDEDF",
         borderRadius: scaledHeight(24),
+        borderWidth : 1,
         height: scaledHeight(50),
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        alignContent: 'center',
         justifyContent: 'center',
-        marginVertical:scaledHeight(5)
+        marginVertical:scaledHeight(5),
+        width: '45%'
 
     },
     removeWhiteBtnTxt: {
@@ -340,7 +340,7 @@ export const styles = StyleSheet.create({
         color:'#000000',
         fontWeight: 'bold',
         width: '100%',
-        //height:'100%',
+        // height:'100%',
         textAlign: 'center',
         marginTop: scaledHeight(10),
 
@@ -348,18 +348,18 @@ export const styles = StyleSheet.create({
     },
 
     addBeneficiaryBtn:{
-        backgroundColor: '#F7FAFF',
-        width: '90%',
         alignItems: 'center',
-        justifyContent: 'flex-start',
-        marginTop:scaledHeight(25),
+        backgroundColor: '#F7FAFF',
         flexWrap:'wrap',
         height: scaledHeight(50),
+        justifyContent: 'flex-start',
+        marginTop:scaledHeight(25),
+        width: '90%',
 
     },
     addBeneficiaryBtnTxt:{
-        fontSize: scaledHeight(16),
         color:'#784978',
+        fontSize: scaledHeight(16),
         fontWeight: 'bold',
       
     },
@@ -375,12 +375,12 @@ export const styles = StyleSheet.create({
 
     },
     moreTxt: {
-        fontSize: scaledHeight(16),
         color: '#61285F',
+        fontSize: scaledHeight(16),
         fontWeight: 'bold'
     },
    
-    disclaimerTitleTxt: { //termsofuseText
+    disclaimerTitleTxt: { // termsofuseText
         fontSize: scaledHeight(16),
         marginBottom: scaledHeight(10),
         fontWeight: 'bold',
@@ -388,8 +388,8 @@ export const styles = StyleSheet.create({
         lineHeight: 25
     },
     disclaimerTxt: {
-        fontSize: scaledHeight(16),
         color: '#56565A',
+        fontSize: scaledHeight(16),
         lineHeight: 25
 
     },
@@ -399,32 +399,32 @@ export const styles = StyleSheet.create({
         width: scaledHeight(100)
     },
     dropDownLayout: {
-        width: '100%',
-        justifyContent: "flex-start",
         alignItems: "flex-start",
-        paddingLeft: '0%',
-        paddingRight: '0%',
+        justifyContent: "flex-start",
         marginLeft: '0%',
         marginRight: '0%',
-        marginTop: scaledHeight(25)
+        marginTop: scaledHeight(25),
+        paddingLeft: '0%',
+        paddingRight: '0%',
+        width: '100%'
     },
     dropDownTextName: {
-        width: '100%',
-        paddingLeft: '0%',
-        paddingRight: '0%',
-        marginLeft: '0%',
-        marginRight: '0%',
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
-        marginTop: scaledHeight(0)
-
-    },
-    textInputStyle: {
-        width: '100%',
         marginLeft: '0%',
         marginRight: '0%',
         marginTop: scaledHeight(0),
+        paddingLeft: '0%',
+        paddingRight: '0%',
+        width: '100%'
+
+    },
+    textInputStyle: {
+        marginLeft: '0%',
+        marginRight: '0%',
+        marginTop: scaledHeight(0),
+        width: '100%',
     },
    /* dropDownPostition: {
         width: "100%",
@@ -439,8 +439,8 @@ export const styles = StyleSheet.create({
         marginLeft: scaledHeight(0),
         marginRight: scaledHeight(0),
         width:'100%',
-        //position: 'absolute',
-        //left: 0
+        // position: 'absolute',
+        // left: 0
     },
     errMsg: {
         color: 'red',
