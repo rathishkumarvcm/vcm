@@ -67,10 +67,10 @@ import CollegePlanPersonal from './Screens/CollegePlanPersonal/CollegePlanPerson
 import CollegePlanBeneficiary from './Screens/CollegePlanBeneficiary/CollegePlanBeneficiaryComponent';
 import InvestmentPlanInfo from './Screens/InvestmentPlanInfo';
 import LiquidationPageOneComponent from './Screens/LiquidationPageOne';
-import LiquidationPageTwoComponent from './Screens/LiquidationPageTwo/LiquidationPageTwoComponent';
-import LiquidationPageThreeComponent from './Screens/LiquidationPageThree/LiquidationPageThreeComponent';
+import LiquidationPageTwoComponent from './Screens/LiquidationPageTwo';
+import LiquidationPageThreeComponent from './Screens/LiquidationPageThree';
 import LiquidationFinishComponent from './Screens/LiquidationFinish/LiquidationFinishComponent';
-import LiquidationPageFourComponent from './Screens/LiquidationPageFour/LiquidationPageFourComponent';
+import LiquidationPageFourComponent from './Screens/LiquidationPageFour';
 import CompareFunds from './Screens/CompareFunds';
 // Done By 806048
 

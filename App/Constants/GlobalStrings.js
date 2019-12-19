@@ -1170,6 +1170,12 @@ export default {
         allShares:"All Shares",
         accountSelection:"Account Selection",
         amount:"Amount ",
+        deliveryAddress:"Delivery Address",
+        taxWithHoldingOptions:"Tax Withholding Options",
+        taxWithHoldingOptionsContent:"Current method will be displayed. User will have to call MSR if change is desired and the trade cannot be processed online.",
+        totalInvestment:"Total Investment",
+        dollarSymbol:"$ ",
+        check:"Check"
     },
     compareFunds:{
         fundComparison:"Fund Comparison",

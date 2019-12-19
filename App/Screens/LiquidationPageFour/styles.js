@@ -11,6 +11,10 @@ export const styles = StyleSheet.create({
     mainFlex:{
          flex: 0.85 
     },
+    flexContainer:{
+        marginLeft: "4%",
+        marginRight: "4%",
+    },
     headerFlex:{
         backgroundColor:'#E4EBFE',
         height:scaledHeight(46),
@@ -23,7 +27,6 @@ export const styles = StyleSheet.create({
         fontWeight:'bold',
     },
     flex1:{
-        height:scaledHeight(138),
         marginLeft: "4%",
         marginRight: "4%",
         marginTop:"4%",
@@ -31,90 +34,51 @@ export const styles = StyleSheet.create({
     subHeading:{
         color:'#56565A',
         fontSize:scaledHeight(22),
-        height:scaledHeight(29),
         fontWeight:'bold',
     },
     line: {
         backgroundColor: '#535353',
         opacity: 0.25,
         height: scaledHeight(1),
-        width: "92%",
         marginTop: '4%',
         marginBottom:"4%",
     },
     section:{
         marginLeft: '4%',
         marginRight: '4%',
-        height:scaledHeight(78),
         flexDirection:'column',
-        justifyContent: 'space-evenly'
+        marginTop:scaledHeight(15),
+        justifyContent: 'space-around',
     },
     greyTextBold16px:{
         color:'#333333DE',
         fontSize:scaledHeight(16),
         fontWeight:'bold',
+        paddingVertical:scaledHeight(3)
     },
     greyText16px:{
         color:'#56565A',
         fontSize:scaledHeight(16),
-    },
-    flex2:{
-        height:scaledHeight(244),
-        marginLeft: "4%",
-        marginRight: "4%",
-        marginTop:"10%",
-    },
-    selectedMutualFunds:{
-        height:scaledHeight(60), 
+        paddingVertical:scaledHeight(3)
     },
     horizontalFlex:{
-        height:scaledHeight(29),
         flexDirection: 'row',
         justifyContent:'space-between',
-        marginRight: '4%',
-        alignItems:'center'
+        alignItems:'center',
+        marginTop:scaledHeight(52)
     },
     edit:{
         color:'#5D83AE',
         fontSize:scaledHeight(15),
     },
-    govtSecuritiesFund:{
-        height:scaledHeight(184),
-        marginTop:"4%"
-    },
     blackTextBold22px:{
         color:'#333333DE',
         fontSize:scaledHeight(22),
-        height:scaledHeight(27),
-        fontWeight:'bold',
         marginLeft: '4%',
-    },
-    flex3:{
-        height:scaledHeight(202),
-        marginLeft: "4%",
-        marginRight: "4%",
-        marginTop:"10%",
-    },
-    flex3b:{
-        height:scaledHeight(142),
-        marginTop:"4%",
-    },
-    flex4:{
-        //height:scaledHeight(565),
-        height:scaledHeight(643),
-        marginLeft: "4%",
-        marginRight: "4%",
-        marginTop:"10%",
-        marginBottom:"10%",
-    },
-    flex4b:{
-        height:scaledHeight(504),
-        marginTop:"8%",
+        fontWeight:'bold',
     },
     flex5:{
-        height:scaledHeight(206),
-        marginLeft: "4%",
-        marginRight: "4%",
+        marginTop:scaledHeight(55),
         backgroundColor:'#F8F6DE',
         borderColor:'#61285F45',
         borderWidth:scaledHeight(1),

@@ -19,9 +19,9 @@ class LiquidationFinishComponent extends Component {
                     <View style={styles.backgroundFlex}>
                         <View style={styles.transactionStatusFlex}>
                         <View style={styles.transactionStatusMessageFlex}>
-                            <Text style={styles.transactionStatusText}>{'The Liquidation Transaction Order ID '}</Text>
-                            <Text style={styles.transactionStatusTextBold}>{'XXXXXX1234'}</Text>
-                            <Text style={styles.transactionStatusText}>{' is been successfully Submitted.'}</Text>
+                            <Text style={styles.transactionStatusText}>{"The Liquidation Transaction Order ID" }</Text>
+                            <Text style={styles.transactionStatusTextBold}>{"XXXXXX1234"}</Text>
+                            <Text style={styles.transactionStatusText}>{"is been successfully Submitted."}</Text>
                         </View>
                         </View>
                         <Text style = {styles.targetPageText}>{gblStrings.liquidation.targetPage}</Text>

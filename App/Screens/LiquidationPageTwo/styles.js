@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
+import { scaledHeight } from '../../Utils/Resolution';
 
 
 export const styles = StyleSheet.create({
@@ -11,24 +11,38 @@ export const styles = StyleSheet.create({
     mainFlex:{
         flex: 0.85
     },
+    accountFlex:{
+        height:scaledHeight(82),
+        flexDirection:'column',
+        borderWidth:scaledHeight(1),
+        borderColor:'#9DB4CE',
+        marginBottom:"6%"
+    },
+    accountNumberText:{
+        color:'#54565B',
+        fontSize:scaledHeight(18),
+        fontWeight:'bold',
+        marginTop:scaledHeight(10),
+        marginLeft:scaledHeight(10)
+    },
     headerFlex:{
         height:scaledHeight(29),
-        marginLeft:"4%",
-        flexDirection:'row'
+        flexDirection:'row',
     },
     headerText:{
         color:'#56565A',
         fontSize:scaledHeight(22),
         fontWeight:'bold',
     },
+    flexHead:{
+        marginLeft: "4%",
+        marginRight:"4%",
+    },
     line: {
         backgroundColor: '#535353',
         opacity: 0.25,
         height: scaledHeight(1),
-        width: "92%",
         marginTop: '3%',
-        marginLeft: "4%",
-        marginRight: "4%"
     },
     fundSourceContent:{
         color:'#56565A',
@@ -41,12 +55,23 @@ export const styles = StyleSheet.create({
     },
     sharesFlex:{
         height:scaledHeight(347),
-        marginLeft:"4%",
-        marginRight:"4%",
-        marginTop:"5%",
         borderWidth:scaledHeight(1),
         borderColor:'#5D83AE99',
         flexDirection:'column'
+    },
+    fundsFlex:{
+        borderWidth:scaledHeight(3),
+        borderColor:'#FFFFFF',
+        marginLeft:"4%",
+        marginRight:"4%",
+        marginTop:"5%",
+    },
+    fundsFlexSelected:{
+        borderWidth:scaledHeight(3),
+        borderColor:'#B5E198',
+        marginLeft:"4%",
+        marginRight:"4%",
+        marginTop:"5%",
     },
     flex1:{
         flexDirection:'row',
@@ -66,7 +91,7 @@ export const styles = StyleSheet.create({
         flexDirection:'row',
         height:scaledHeight(82),
         backgroundColor:'#EFECEC',
-        opacity:0.5,
+        //opacity:0.5,
         justifyContent:'space-between'
     },
     totalSharesFlex:{
@@ -78,7 +103,8 @@ export const styles = StyleSheet.create({
     totalSharesText:{
         color:'#56565A',
         fontSize:scaledHeight(14),
-        fontWeight:'bold'
+        fontWeight:'bold',
+        opacity:1
     },
     totalSharesValue:{
         color:'#56565A',
@@ -87,10 +113,8 @@ export const styles = StyleSheet.create({
     flex3:{
         flexDirection:'column',
         height:scaledHeight(189),
-        //borderColor: 'blue',
-       // borderWidth: scaledHeight(1),
     },
-    sellAllShares:{
+    allShares:{
         flexDirection:'row',
         marginLeft:"4%",
         marginRight:"4%",
@@ -120,7 +144,7 @@ export const styles = StyleSheet.create({
         backgroundColor: '#56565A',
         //paddingTop:scaledHeight(2)
     },
-    sellAllSharesText:{
+    allSharesText:{
         color:'#56565A',
         fontSize:scaledHeight(16),
         marginLeft:"3%",
@@ -133,17 +157,16 @@ export const styles = StyleSheet.create({
         marginLeft:"3%",
         paddingTop:scaledHeight(11),
     },
-    value:{
+    amountTextBox:{
+        borderColor:'#DEDEDF',
+        borderWidth:scaledHeight(1),
         height:scaledHeight(40),
-        width:"74%",
+        width:"76%",
         marginLeft: "8%",
-        borderWidth: scaledHeight(1),
-        borderColor: '#DEDEDF',
+    },
+    inputStyle:{
         color:'#56565A',
         fontSize:scaledHeight(16),
-        paddingLeft:scaledHeight(15),
-        paddingTop:scaledHeight(10),
-       alignContent:'center'
     },
     flex6:{
         height:scaledHeight(205),
@@ -174,6 +197,16 @@ export const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop:scaledHeight(19)
+    },
+    submitFlexDisabled: {
+        height: scaledHeight(50),
+        borderColor: '#544A54',
+        borderWidth: scaledHeight(1),
+        backgroundColor:'#544A54',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop:scaledHeight(19),
+        opacity:0.5
     },
     submitText: {
         color: '#FFFFFF',

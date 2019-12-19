@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
         marginLeft:scaledHeight(10)
     },
     emptyFlex:{
-        height:scaledHeight(30)
+        height:scaledHeight(50)
     },
     headerFlex:{
         height:scaledHeight(29),
@@ -50,63 +50,75 @@ export const styles = StyleSheet.create({
     fundSourceContent:{
         color:'#54565B',
         fontSize:scaledHeight(14),
+        marginTop:scaledHeight(21),
+    },
+    subHeadingText:{
+        color:'#56565A',
+        fontWeight:'bold',
+        fontSize:scaledHeight(18),
         marginTop:"3%",
-        marginBottom:"5%"
+    },
+    offlineMethodContent:{
+        color:'#333333DE',
+        fontSize:scaledHeight(14),
+        marginTop:"3%",
+    },
+    selectedBankAccountFlex:{
+        borderWidth: scaledHeight(4), 
+        borderColor: '#B5E198', 
+        height: scaledHeight(89), 
+        marginTop: scaledHeight(24) 
+    },
+    unSelectedBankAccountFlex:{
+        borderWidth: scaledHeight(4), 
+        borderColor: '#FFFFFF', 
+        height: scaledHeight(89), 
+        marginTop: scaledHeight(24)
+    },
+    or:{
+        color:'#333333DE',
+        fontSize:scaledHeight(18),
+        marginTop:scaledHeight(34),
+        marginBottom:scaledHeight(15),
+        textAlign:'center'
+    },
+    messageFlex:{
+        backgroundColor:'#F8F6DE',
+        borderColor:'#61285F45',
+        borderWidth:scaledHeight(1),
+        marginTop: scaledHeight(25),
+        marginLeft: "4%",
+        marginRight:"4%",
+    },
+    messageText:{
+        color:'#333333DE',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold',
+        padding:"4%"
     },
     offlineMethodFlex:{
         justifyContent:'space-between',
         marginBottom:"4%"
     },
-    subHeadingText:{
-        marginLeft:"4%",
-        marginBottom:"4%",
-        color:'#56565A',
-        fontWeight:'bold',
-        fontSize:scaledHeight(18)
-    },
-    offlineMethodContent:{
-        color:'#333333DE',
-        marginLeft:"4%",
-        marginBottom:"4%",
-        fontSize:scaledHeight(14)
-    },
-    or:{
-        color:'#333333DE',
-        fontSize:scaledHeight(18),
-        height:scaledHeight(22),
-        marginTop:scaledHeight(10),
-        marginBottom:scaledHeight(30),
-        textAlign:'center'
-    },
+   
     bankAccountFlex:{
         flexDirection: 'row', 
         borderWidth: scaledHeight(1), 
-        borderColor: '#5D83AE99', 
-        marginLeft: '4%', marginRight: '4%', 
-        height: scaledHeight(80), 
-        marginBottom: scaledHeight(24)
+        borderColor: '#5D83AE99',  
     },
     addBankAccountFlex:{
         flexDirection: 'row', 
         borderWidth: scaledHeight(1), 
         borderColor: '#5D83AE99', 
-        marginLeft: '4%', marginRight: '4%', 
+        marginLeft: '4%', 
+        marginRight: '4%', 
         height: scaledHeight(80), 
         marginTop: scaledHeight(24)
-    },
-    selectedBankAccountFlex:{
-        flexDirection: 'row', 
-        borderWidth: scaledHeight(4), 
-        borderColor: '#B5E198', 
-        marginLeft: '4%', marginRight: '4%', 
-        height: scaledHeight(80), 
-        marginBottom: scaledHeight(24)
     },
     bankIconFlex:{
         justifyContent: 'center', 
         alignItems: 'center', 
-        marginLeft: scaledHeight(7), 
-        marginTop: scaledHeight(7), 
+        margin: scaledHeight(7), 
         width: scaledHeight(76), 
         height: scaledHeight(66), 
         backgroundColor: '#E9E9E9'
@@ -126,12 +138,22 @@ export const styles = StyleSheet.create({
         color: '#56565A', 
         fontSize: scaledHeight(16), 
         fontWeight: 'bold', 
-        height: scaledHeight(19)
+        height: scaledHeight(19),
+        paddingTop:scaledHeight(1),
+        paddingBottom:scaledHeight(2)
     },
     bankAccountNo:{
         color: '#56565A', 
         fontSize: scaledHeight(14), 
-        height: scaledHeight(17)
+        height: scaledHeight(17),
+        paddingTop:scaledHeight(1),
+        paddingBottom:scaledHeight(2)
+    },
+    statusText:{
+        color:'#EE3F5D',
+        fontSize: scaledHeight(12), 
+        paddingTop:scaledHeight(1),
+        paddingBottom:scaledHeight(1)
     },
     switchFlex:{
         height: scaledHeight(54),
@@ -263,9 +285,9 @@ export const styles = StyleSheet.create({
         borderRadius: 30,
         height: scaledHeight(61),
         borderWidth: scaledHeight(1),
-        width: '60%',
-        marginLeft:"-4%",
+       width:"55%",
         backgroundColor: '#B7B7B7',
+        position:'absolute'
     },
     onButtonStyleDisable: {
         borderColor: '#56565A',
@@ -273,26 +295,27 @@ export const styles = StyleSheet.create({
         height: scaledHeight(61),
         borderWidth: 1,
         marginLeft:"10%",
-        width: '72%',
+        width:"67%",
         backgroundColor: '#FFFFFF',
     },
     offButtonStyleDisable: {
         borderColor:'#56565A',
         borderRadius: 30,
         height: scaledHeight(61),
-        borderWidth: 1,
-        width: '60%',
-        marginLeft:"-4%",
+        borderWidth: scaledHeight(1),
+        width:"60%",
+        marginLeft:"0%",
         backgroundColor: '#FFFFFF',
     },
     onButtonStyle: {
         borderColor: '#56565A',
         borderRadius: 30,
-        height: scaledHeight(61),
-        borderWidth: 1,
+        height:scaledHeight(61),
+        borderWidth:scaledHeight(1),
+        width:"40%",
         marginLeft:"30%",
-        width: '48%',
         backgroundColor: '#B7B7B7',
+        position:'absolute'
     },
     TextOnStyle: {
         color:'#56565A',
@@ -317,19 +340,6 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign:'right',
         marginLeft:"38%"
-    },
-    messageFlex:{
-        backgroundColor:'#F8F6DE',
-        borderColor:'#61285F45',
-        borderWidth:scaledHeight(1),
-        marginLeft:"4%",
-        marginRight:"4%",
-    },
-    messageText:{
-        color:'#333333DE',
-        fontSize:scaledHeight(16),
-        fontWeight:'bold',
-        padding:"4%"
     },
     flex2:{
         marginLeft: "4%",
@@ -366,7 +376,6 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16), 
         fontWeight: 'bold', 
         color: '#333333DE', 
-        height: scaledHeight(19) ,
         marginTop:scaledHeight(20)
     },
     greyText14pxRegular:{
