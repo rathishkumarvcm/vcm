@@ -108,7 +108,36 @@ class ModifySecQuesComponent extends Component {
         this.props.getPersonalCompositeData(payload);
         console.log("------>emailllllllll", this.props);
         console.log("payload", payload);
-
+        if(this.props && this.props.saveQuestionsData&&this.props.saveQuestionsData.list_security_questions)
+        {
+            this.setState({
+                question1:this.props.saveQuestionsData.list_security_questions[0].question1,
+                q1Ans:this.props.saveQuestionsData.list_security_questions[0].answer1,
+                question2:this.props.saveQuestionsData.list_security_questions[1].question2,
+                q2Ans:this.props.saveQuestionsData.list_security_questions[1].answer2,
+                question3:this.props.saveQuestionsData.list_security_questions[2].question3,
+                q3Ans:this.props.saveQuestionsData.list_security_questions[2].answer3,
+                primaryEmail:this.props.saveQuestionsData.primaryEmail,
+                additionalEmail:this.props.saveQuestionsData.additonalEmail
+            });
+            if(this.props.saveQuestionsData.documentDeliveryPreference === "Deliver All my documents online at vcm.com")
+            {
+                this.setState({
+                    radioButtonIndex:0
+                })
+            }
+            else{
+                this.setState({
+                    radioButtonIndex:1
+                })
+            }
+            if(!this.isEmpty(this.props.saveQuestionsData.additonalEmail))
+            {
+                this.setState({
+                    additionalEmailFlag:true
+                })
+            }
+        }
 
         //console.log("questions",this.props.masterLookupStateData.security_ques.value);
     }
@@ -344,10 +373,13 @@ class ModifySecQuesComponent extends Component {
 
     
     render() {
+
         if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.security_ques && this.props.masterLookupStateData.security_ques.value) {
             quesData = this.props.masterLookupStateData.security_ques.value;
         }
         console.log("props", this.props.masterLookupStateData);
+        console.log("security questions render",this.props.saveQuestionsData);
+        
         return (
 
             <View style={styles.container} >
@@ -475,7 +507,7 @@ class ModifySecQuesComponent extends Component {
                                 keyboardType="email-address"
                                 value={this.state.primaryEmail}
                                 maxLength={gblStrings.maxLength.emailID}
-                                onChangeText={this.onChangeText("primaryEmail", "")}
+                                onChangeText={this.onChangeText("primaryEmail")}
                                 onBlur={this.validatePrimaryEmail}
                                 errorFlag={!this.state.validationPrimaryEmail}
                                 errorText={gblStrings.userManagement.emailError}
@@ -489,12 +521,13 @@ class ModifySecQuesComponent extends Component {
                             {(this.state.additionalEmailFlag) ?
                                 (
                                     <GInputComponent
-                                        propInputStyle={!this.state.validationAdditionalEmail ? styles.userIDTextBoxError : styles.userIDTextBox}
+                                        propInputStyle={styles.userIDTextBox}
                                         placeholder={gblStrings.accManagement.emailformat}
                                         keyboardType="email-address"
                                         maxLength={gblStrings.maxLength.emailID}
                                         onChangeText={this.onChangeText("additionalEmail")}
                                         onBlur={this.validateAdditionalEmail}
+                                        value={this.state.additionalEmail}
                                     />
                                 ) : null
 
