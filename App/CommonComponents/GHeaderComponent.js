@@ -54,6 +54,14 @@ const newData = [
     title:"Purchase"
   },
   {
+    naviagteTo: "LiquidationPageOne",
+    title:"Liquidation"
+  },
+  {
+    naviagteTo: "tAmmendComponent",
+    title:"Amend"
+  },
+  {
     //navigateTo:'Logout'
     title: "Sign Out"
   }
