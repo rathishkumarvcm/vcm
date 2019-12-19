@@ -131,7 +131,8 @@ class editManageIntrestedPartiesComponent extends Component {
                 lname:data.lname?data.lname:"",
                 relation:data.relationship_To_Account_holder?data.relationship_To_Account_holder:"",
                 email:data.email?data.email:"",
-                addressLine1:data.address?data.address:"",
+                addressLine1:data.addressLine1?data.addressLine1:"",
+                addressLine2:data.addressLine2?data.addressLine2:"",
                 company:data.company?data.company:"",
                 zipCode:data.zipCode?data.zipCode:"",
                 city:data.city?data.city:"",
@@ -226,10 +227,9 @@ class editManageIntrestedPartiesComponent extends Component {
 
     validateZipCode = () => {
         if(!this.isEmpty(this.state.personal.zipCode)){
-            
             let validate = zipCodeRegex.test(this.state.personal.zipCode);
             this.onUpdateField("personal","zipCodeValidation",validate);
-            this.onUpdateField("personal","zipCodeValiMsg",gblStrings.accManagement.zipCodeFormat);
+            this.onUpdateField("personal","zipCodeValiMsg","Please enter valid ZipCode");
             if(validate){
                 this.getZipCodeValue();
             }
@@ -237,12 +237,7 @@ class editManageIntrestedPartiesComponent extends Component {
     }
 
     validateAddress = () => {
-        if(!this.isEmpty(this.state.personal.addressLine1) && !this.state.isEmpty(this.state.personal.addressLine2)){
-            this.getAddressValid();
-        } else {
-            this.onUpdateField("personal","addressLine1Validation",false);
-            this.onUpdateField("personal","addressLine2Validation",false);
-        }
+        this.getAddressValid();
     }
 
     validateFields=()=>{
@@ -313,7 +308,7 @@ class editManageIntrestedPartiesComponent extends Component {
         }else{
             let validate = zipCodeRegex.test(this.state.personal.zipCode);
             this.onUpdateField("personal","zipCodeValidation",validate);
-            this.onUpdateField("personal","zipCodeValiMsg",gblStrings.accManagement.zipCodeFormat);
+            this.onUpdateField("personal","zipCodeValiMsg","Please enter valid ZipCode");
             this.getZipCodeValue();
             isErrMsg=!validate;
         }
@@ -345,7 +340,8 @@ class editManageIntrestedPartiesComponent extends Component {
         updatedObj.relationship_To_Account_holder=data.relation;
         updatedObj.email=data.email;
         updatedObj.company=data.company;
-        updatedObj.address=data.addressLine1+","+data.addressLine2;
+        updatedObj.addressLine1=data.addressLine1;
+        updatedObj.addressLine2=data.addressLine2;
         updatedObj.zipCode=data.zipCode;
         updatedObj.city=data.city;
         updatedObj.state=data.stateValue;
@@ -540,7 +536,7 @@ class editManageIntrestedPartiesComponent extends Component {
                             <GDateComponent 
                                 inputref={this.setInputRef("startDate")}
                                 date={this.state.personal.startDate}
-                                placeholder="MM/DD/YYYY"
+                                placeholder="MM-DD-YYYY"
                                 dateTextLayout={{marginTop:0}}
                                 componentStyle={{width:'100%',marginLeft:0,marginRight:0}}
                                 maxDate={this.state.personal.endDate?this.state.personal.endDate:""}
@@ -551,7 +547,7 @@ class editManageIntrestedPartiesComponent extends Component {
                             <GDateComponent 
                                inputref={this.setInputRef("endDate")}
                                date={this.state.personal.endDate}
-                               placeholder="MM/DD/YYYY"
+                               placeholder="MM-DD-YYYY"
                                dateTextLayout={{marginTop:0}}
                                 componentStyle={{width:'100%',marginLeft:0,marginRight:0}}
                                minDate={this.state.personal.startDate?this.state.personal.startDate:""}

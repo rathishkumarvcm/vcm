@@ -91,7 +91,7 @@ class VerifyIntrestedPartiesComponent extends Component {
             <View style={styles.paddingHorizontalStyle}>
               <View style={styles.contentViewBlock}>
                 <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
-                <Text style={styles.shortContentValueText}>{this.state.newAddedIntrestedParty.fname + this.state.newAddedIntrestedParty.mname +this.state.newAddedIntrestedParty.lname}</Text>
+                <Text style={styles.shortContentValueText}>{this.state.newAddedIntrestedParty.fname + " " + this.state.newAddedIntrestedParty.mname + " " + this.state.newAddedIntrestedParty.lname}</Text>
               </View>
               <View style={styles.contentViewBlock}>
                 <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToAccountHolder}</Text>
@@ -107,15 +107,15 @@ class VerifyIntrestedPartiesComponent extends Component {
               </View>
               <View style={styles.contentViewBlock}>
                 <Text style={styles.shortContentText}>{gblStrings.accManagement.mailingAdd}</Text>
-                <Text style={styles.shortContentValueText}>{this.state.newAddedIntrestedParty.address+","+this.state.newAddedIntrestedParty.state+","+this.state.newAddedIntrestedParty.city+"-"+this.state.newAddedIntrestedParty.zipCode}</Text>
+                <Text style={styles.shortContentValueText}>{this.state.newAddedIntrestedParty.addressLine1+", "+this.state.newAddedIntrestedParty.addressLine2+", "+this.state.newAddedIntrestedParty.state+", "+this.state.newAddedIntrestedParty.city+" - "+this.state.newAddedIntrestedParty.zipCode}</Text>
               </View>
               <View style={styles.contentViewBlock}>
                 <Text style={styles.shortContentText}>{gblStrings.accManagement.effStartDate}</Text>
-                <Text style={styles.shortContentValueText}>{this.state.newAddedIntrestedParty.startDate?this.state.newAddedIntrestedParty.startDate:"MM/DD/YYYY"}</Text>
+                <Text style={styles.shortContentValueText}>{this.state.newAddedIntrestedParty.startDate}</Text>
               </View>
               <View style={styles.contentViewBlock}>
                 <Text style={styles.shortContentText}>{gblStrings.accManagement.effEndDate}</Text>
-                <Text style={styles.shortContentValueText}>{this.state.newAddedIntrestedParty.endDate?this.state.newAddedIntrestedParty.endDate:"MM/DD/YYYY"}</Text>
+                <Text style={styles.shortContentValueText}>{this.state.newAddedIntrestedParty.endDate}</Text>
               </View>
             </View>
           </View>

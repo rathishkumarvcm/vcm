@@ -229,7 +229,7 @@ class addNewIntrestedPartiesComponent extends Component {
            // this.validateAddress();
             let validate = zipCodeRegex.test(this.state.personal.zipCode);
             this.onUpdateField("personal","zipCodeValidation",validate);
-            this.onUpdateField("personal","zipCodeValiMsg",gblStrings.accManagement.zipCodeFormat);
+            this.onUpdateField("personal","zipCodeValiMsg","Please enter valid ZipCode");
             if(validate){
                 this.getZipCodeValue();
             }
@@ -237,12 +237,7 @@ class addNewIntrestedPartiesComponent extends Component {
     }
 
     validateAddress = () => {
-        if(!this.isEmpty(this.state.personal.addressLine1) && !this.state.isEmpty(this.state.personal.addressLine2)){
-            this.getAddressValid();
-        } else {
-            this.onUpdateField("personal","addressLine1Validation",false);
-            this.onUpdateField("personal","addressLine2Validation",false);
-        }
+        this.getAddressValid(); 
     }
 
     validateFields=()=>{
@@ -336,7 +331,7 @@ class addNewIntrestedPartiesComponent extends Component {
         }else{
             let validate = zipCodeRegex.test(this.state.personal.zipCode);
             this.onUpdateField("personal","zipCodeValidation",validate);
-            this.onUpdateField("personal","zipCodeValiMsg",gblStrings.accManagement.zipCodeFormat);
+            this.onUpdateField("personal","zipCodeValiMsg","Please enter valid ZipCode");
             this.getZipCodeValue();
             isErrMsg=!validate;
         }
@@ -373,8 +368,9 @@ class addNewIntrestedPartiesComponent extends Component {
             "contract_Number":"123456789",
             "relationship_To_Account_holder":data.relation,
             "email":data.email,
+            "addressLine1":data.addressLine1,
+            "addressLine2":data.addressLine2,
             "company":data.company,
-            "address":data.addressLine1+","+data.addressLine2,
             "zipCode":data.zipCode,
             "city":data.city,
             "state":data.stateValue,
@@ -578,7 +574,7 @@ class addNewIntrestedPartiesComponent extends Component {
                             <GDateComponent 
                                 inputref={this.setInputRef("startDate")}
                                 date={this.state.personal.startDate}
-                                placeholder="MM/DD/YYYY"
+                                placeholder="MM-DD-YYYY"
                                 dateTextLayout={{marginTop:0}}
                                 componentStyle={{width:'100%',marginLeft:0,marginRight:0}}
                                 maxDate={this.state.personal.endDate?this.state.personal.endDate:""}
@@ -589,7 +585,7 @@ class addNewIntrestedPartiesComponent extends Component {
                             <GDateComponent 
                                inputref={this.setInputRef("endDate")}
                                date={this.state.personal.endDate}
-                               placeholder="MM/DD/YYYY"
+                               placeholder="MM-DD-YYYY"
                                dateTextLayout={{marginTop:0}}
                                 componentStyle={{width:'100%',marginLeft:0,marginRight:0}}
                                minDate={this.state.personal.startDate?this.state.personal.startDate:""}
