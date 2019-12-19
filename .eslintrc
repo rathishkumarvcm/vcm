@@ -80,7 +80,11 @@
       {
         "noStrings": true
       }
-    ]
+    ],
+    "react/destructuring-assignment": 0,
+    "react/no-did-update-set-state":0,
+    "no-alert":0
+
   },
   "globals": {
     "GLOBAL": false,
