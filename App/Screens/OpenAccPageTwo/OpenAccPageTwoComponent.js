@@ -408,6 +408,8 @@ class OpenAccPageTwoComponent extends Component {
                 seniorPoliticalName: "",
 
                 seniorPoliticalNameValidation: true,
+                isSeniorPoliticalFigureValidation:true,
+
 
                 isPersonalInfoExpanded: false,
                 isEmploymentInfoExpanded: false,
@@ -1570,10 +1572,14 @@ class OpenAccPageTwoComponent extends Component {
         // var employmentInfoVisible = false;
 
 
+        /*
         if (this.isEmpty(this.state.childBeneficiary.vcmNo)) {
             errMsg = gblStrings.accManagement.emptyVCMNoMsg;
-            input = 'prefix';
-        } else if (this.isEmpty(this.state.childBeneficiary.firstName)) {
+            input = 'vcmNo';
+        } else
+         */
+
+        if (this.isEmpty(this.state.childBeneficiary.firstName)) {
             errMsg = gblStrings.accManagement.emptyFirstNameMsg;
             input = 'firstName';
         } else if (this.isEmpty(this.state.childBeneficiary.lastName)) {
@@ -1585,7 +1591,7 @@ class OpenAccPageTwoComponent extends Component {
         } else if (this.isEmpty(this.state.childBeneficiary.socialSecurityNo)) {
             errMsg = gblStrings.accManagement.emptySSNMsg;
             input = 'socialSecurityNo';
-        } else if (this.state.personal.socialSecurityNo.length < gblStrings.maxLength.ssnNo) {
+        } else if (this.state.childBeneficiary.socialSecurityNo.length < gblStrings.maxLength.ssnNo) {
             errMsg = gblStrings.accManagement.invalidSSNMsg;
             input = 'socialSecurityNo';
         } else if (this.isEmpty(this.state.childBeneficiary.relationshipToAcc)) {
@@ -1593,6 +1599,7 @@ class OpenAccPageTwoComponent extends Component {
             input = 'empStatus';
         } else if (this.isEmpty(this.state.childBeneficiary.isSeniorPoliticalFigure)) {
             errMsg = gblStrings.accManagement.emptyIsSeniorPoliticalFigureMsg;
+            input = 'isSeniorPoliticalFigure';
         } else if (this.state.childBeneficiary.isSeniorPoliticalFigure === "Yes" && this.isEmpty(this.state.childBeneficiary.seniorPoliticalName)) {
             errMsg = gblStrings.accManagement.emptySeniorPoliticalNameMsg;
             input = 'seniorPoliticalName';
@@ -1603,23 +1610,26 @@ class OpenAccPageTwoComponent extends Component {
 
 
         if (!isValidationSuccess) {
-            AppUtils.Dlog(`Personal Info errMsg:: ${ errMsg}`);
+            AppUtils.Dlog(`childBeneficiary Info errMsg:: ${ errMsg}`);
 
             this.setState(prevState => ({
                 childBeneficiary: {
                     ...prevState.childBeneficiary,
                     [`${input }Validation`]: false
-                }
+                   
+                },
+                isValidationSuccess,
+                errMsg: isValidationSuccess === false ? errMsg : ""
             }));
 
             if (input !== "" && input !== null && input !== undefined) {
-                if (this[input] !== null && input !== undefined) {
+                if (this[input] !== null && this[input] !== undefined) {
                     if (typeof this[input].focus === 'function') {
                         this[input].focus();
                     }
                 }
             }
-            alert(errMsg);
+           // alert(errMsg);
         }
 
         return isValidationSuccess;
@@ -1635,7 +1645,7 @@ class OpenAccPageTwoComponent extends Component {
         if (this.state.retirementBeneficiaryData.length > 0) {
             let inputField = "";
 
-            for (let i = 0; i < this.state.retirementBeneficiaryData.length; i++) {
+            for (let i = 0; i < this.state.retirementBeneficiaryData.length; i += 1) {
                 let tempErrMsg = "";
                 const tempObj = this.state.retirementBeneficiaryData[i];
                 AppUtils.Dlog(`tempObj::${ JSON.stringify(tempObj)}`);
@@ -1734,13 +1744,13 @@ class OpenAccPageTwoComponent extends Component {
 
     validateFields = () => {
         // return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
+        let isValidationSuccess = false;
         try {
 
 
             const accType = this.props.navigation.getParam('accType', '');
             AppUtils.Dlog(`validateFields::: ${ accType}`);
 
-            let isValidationSuccess = false;
 
             this.setState(prevState => ({
                 personal: {
@@ -1842,6 +1852,7 @@ class OpenAccPageTwoComponent extends Component {
                     socialSecurityNoValidation: true,
                     relationshipToAccValidation: true,
                     seniorPoliticalNameValidation: true,
+                    isSeniorPoliticalFigureValidation:true,
 
                 }
             }));
@@ -1860,10 +1871,11 @@ class OpenAccPageTwoComponent extends Component {
             }
             
 
-            return isValidationSuccess;
         } catch (err) {
             AppUtils.Dlog(`Error:::${ JSON.stringify(err)}`);
         }
+        return isValidationSuccess;
+
 
     }
 
@@ -3407,10 +3419,10 @@ class OpenAccPageTwoComponent extends Component {
     renderJointOwnerSection = () => {
         return (
             <View>
-                <this.renderPersonalInfo_JointOwner />
-                <this.renderEmploymentInfo_JointOwner />
-                <this.renderFinancialInfo_JointOwner />
-                <this.renderMilitaryInfo_JointOwner />
+                <this.renderPersonalInfoJointOwner />
+                <this.renderEmploymentInfoJointOwner />
+                <this.renderFinancialInfoJointOwner />
+                <this.renderMilitaryInfoJointOwner />
                 {
                     (this.state.jointOwner.empStatus !== "Not Employed" && this.state.jointOwner.empStatus !== "") && <this.renderRegulatoryInfo_JointOwner />
                 }
@@ -3420,7 +3432,7 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
-    renderPersonalInfo_JointOwner = () => {
+    renderPersonalInfoJointOwner = () => {
 
         return (
             <View style={styles.sectionGrp}>
@@ -3941,7 +3953,7 @@ class OpenAccPageTwoComponent extends Component {
         );
     }
 
-    renderEmploymentInfo_JointOwner = () => {
+    renderEmploymentInfoJointOwner = () => {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
@@ -4144,7 +4156,7 @@ class OpenAccPageTwoComponent extends Component {
         );
     }
 
-    renderMilitaryInfo_JointOwner = () => {
+    renderMilitaryInfoJointOwner = () => {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
@@ -4300,7 +4312,7 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
-    renderFinancialInfo_JointOwner = () => {
+    renderFinancialInfoJointOwner = () => {
         return (
 
 
@@ -4371,7 +4383,7 @@ class OpenAccPageTwoComponent extends Component {
         );
     }
 
-    renderRegulatoryInfo_JointOwner = () => {
+    renderRegulatoryInfoJointOwner = () => {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
@@ -4476,8 +4488,8 @@ class OpenAccPageTwoComponent extends Component {
     renderChildBeneficiarySection = () => {
         return (
             <View>
-                <this.renderPersonalInfo_Child />
-                <this.renderRegulatoryInfo_Child />
+                <this.renderPersonalInfoChild />
+                <this.renderRegulatoryInfoChild />
             </View>
         );
 
@@ -4485,7 +4497,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
 
-    renderPersonalInfo_Child = () => {
+    renderPersonalInfoChild = () => {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
@@ -4510,19 +4522,6 @@ class OpenAccPageTwoComponent extends Component {
                         {gblStrings.accManagement.childBeneficiaryNote}
                     </Text>
 
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.accManagement.vcmNo}
-                    </Text>
-                    <GInputComponent
-                        inputref={this.setInputRef("vcmNo_childben")}
-                        propInputStyle={this.state.childBeneficiary.vcmNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                        placeholder={gblStrings.accManagement.ssnNoFormat}
-                        maxLength={gblStrings.maxLength.usaaNo}
-                        onChangeText={this.onChangeText("childBeneficiary", "vcmNo")}
-                        onSubmitEditing={this.onSubmitEditing(this.firstName_childben)}
-                        errorFlag={!this.state.childBeneficiary.vcmNoValidation}
-                        errorText={this.state.errMsg}
-                    />
 
                     <Text style={styles.lblTxt}>
                         {gblStrings.accManagement.firstName}
@@ -4621,7 +4620,7 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
-    renderRegulatoryInfo_Child = () => {
+    renderRegulatoryInfoChild = () => {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
@@ -4687,14 +4686,19 @@ class OpenAccPageTwoComponent extends Component {
                             label="No"
                             descLabelStyle={styles.lblRadioDescTxt}
                             descLabel=""
-                            selected={!!((this.state.childBeneficiary.isSeniorPoliticalFigure !== null && this.state.childBeneficiary.isSeniorPoliticalFigure))}
+                            selected={!!((this.state.childBeneficiary.isSeniorPoliticalFigure !== null && this.state.childBeneficiary.isSeniorPoliticalFigure === "No"))}
                             onPress={this.onPressRadio("childBeneficiary", "isSeniorPoliticalFigure", "No")}
 
                         />
                     </View>
-                    {this.state.childBeneficiary.isSeniorPoliticalFigure &&
+                    {!this.state.childBeneficiary.isSeniorPoliticalFigureValidation &&
+                            <Text style={styles.errMsg}>
+                                {this.state.errMsg}
+                            </Text>
+                        }
+                    {this.state.childBeneficiary.isSeniorPoliticalFigure === "Yes" &&
 
-                        <View style={{ flexGrow: 1 }}>
+                        <View>
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.seniorPoliticalName}
                             </Text>
@@ -4719,7 +4723,7 @@ class OpenAccPageTwoComponent extends Component {
         );
     }
 
-    renderBeneficiary_Retirement = () => {
+    renderBeneficiaryRetirement = () => {
 
         let tempBeneficiaryData = dummyData;
         let tempRelationShipData = dummyData;
@@ -5109,7 +5113,7 @@ class OpenAccPageTwoComponent extends Component {
 
                     { /* ----------- Beneficiaries (optional) -------------------*/
                         accType === "Retirement Account" &&
-                        <this.renderBeneficiary_Retirement />
+                        <this.renderBeneficiaryRetirement />
                     }
 
                     { /* ----------- Buttons Group -------------------*/}
