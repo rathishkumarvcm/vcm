@@ -741,7 +741,7 @@ class OpenAccPageTwoComponent extends Component {
                 "citizenship": this.state.personal.citizenship || "-",
                 "ssnTin": this.state.personal.socialSecurityNo || "-",
                 "mailingAddress": {
-                    "addressType": this.state.personal.citizenship || "-",
+                    "addressType": this.state.personal.addressType || "-",
                     "streetNbr": this.state.personal.addrLine1 || "-",
                     "streetName": this.state.personal.addrLine2 || "-",
                     "zip": this.state.personal.zipcode || "-",
@@ -750,12 +750,12 @@ class OpenAccPageTwoComponent extends Component {
                 },
                 "isPhysAddrSameAsMailAddr": this.state.personal.isYourPhysicalAddresSame || "-",
                 "physicalAddress": {
-                    "addressType": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.citizenship || "-" : "-",
-                    "streetNbr": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.addrLine1 || "-" : "-",
-                    "streetName": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.addrLine2 || "-" : "-",
-                    "zip": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.zipcode || "-" : "-",
-                    "city": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.city || "-" : "-",
-                    "state": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.stateCity || "-" : "-",
+                    "addressType": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.addressType || "-" : this.state.personal.addressType,
+                    "streetNbr": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.addrLine1 || "-" : this.state.personal.addrLine1_Phy,
+                    "streetName": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.addrLine2 || "-" : this.state.personal.addrLine2_Phy,
+                    "zip": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.zipcode || "-" : this.state.personal.zipcode_Phy,
+                    "city": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.city || "-" : this.state.personal.city_Phy,
+                    "state": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.stateCity || "-" : this.state.personal.stateCity_Phy,
                 },
                 "contactDetails": {
                     "phoneNumber1": {
@@ -833,12 +833,12 @@ class OpenAccPageTwoComponent extends Component {
                     },
                     "isPhysAddrSameAsMailAddr": this.state.jointOwner.isYourPhysicalAddresSame || "-",
                     "physicalAddress": {
-                        "addressType": "U.S or U.S Territories",
-                        "streetNbr": "4900",
-                        "streetName": "Tiedeman Rd",
-                        "zip": "44144",
-                        "city": "Brooklyn",
-                        "state": "OH"
+                        "addressType": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.addressType || "-" : this.state.jointOwner.addressType,
+                        "streetNbr": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.addrLine1 || "-" : this.state.jointOwner.addrLine1_Phy,
+                        "streetName": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.addrLine2 || "-" : this.state.jointOwner.addrLine2_Phy,
+                        "zip": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.zipcode || "-" : this.state.jointOwner.zipcode_Phy,
+                        "city": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.city || "-" : this.state.jointOwner.city_Phy,
+                        "state": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.stateCity || "-" : this.state.jointOwner.stateCity_Phy,
                     },
                     "contactDetails": {
                         "phoneNumber1": {
@@ -962,6 +962,11 @@ class OpenAccPageTwoComponent extends Component {
                 };
                 break;
             case "UGMA/UTMA Account":
+                    payload = {
+                        ...payload,
+                        ...individualAccPayload
+                        
+                    };
                 break;
             default:
                 break;
@@ -1058,6 +1063,8 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.Dlog(`onSubmitZipEditing:::>${ nextInputFocus } ${ text}`);
 
         const newItems = { ...this.state.currentZipCodeRef };
+      //  const newItems = { ...this.state.currentZipCodeRef };
+
         newItems.keyName = keyName;
         newItems.stateKey = stateKey;
         // alert("onSubmitZipEditing::"+JSON.stringify(newItems));
@@ -2211,11 +2218,15 @@ class OpenAccPageTwoComponent extends Component {
             beneficiaryDistPercentValidation: true,
 
         };
-        const newItems = [...this.state.retirementBeneficiaryData,tempBeneficiaryObj];
-        this.setState({
-            retirementBeneficiaryData: newItems
-        });
+
+        if (this.state.retirementBeneficiaryData.length< 3) {
+            const newItems = [...this.state.retirementBeneficiaryData, tempBeneficiaryObj];
+            this.setState({
+                retirementBeneficiaryData: newItems
+            });
+        }
     }
+       
 
 
 
@@ -3606,7 +3617,7 @@ class OpenAccPageTwoComponent extends Component {
                             onSubmitEditing={this.onSubmitEditing(this.stateCity_joint)}
                             errorFlag={!this.state.jointOwner.cityValidation}
                             errorText={this.state.errMsg}
-                            editable = {this.state.jointOwner.citizenship != "U.S"}
+                            editable = {this.state.jointOwner.citizenship !== "U.S"}
 
 
 
@@ -3722,7 +3733,7 @@ class OpenAccPageTwoComponent extends Component {
                                     onSubmitEditing={this.onSubmitEditing(this.stateCity_Phy_joint)}
                                     errorFlag={!this.state.jointOwner.city_PhyValidation}
                                     errorText={this.state.errMsg}
-                                    editable = {this.state.jointOwner.citizenship != "U.S"}
+                                    editable = {this.state.jointOwner.citizenship !== "U.S"}
 
 
                                 />
@@ -3737,7 +3748,7 @@ class OpenAccPageTwoComponent extends Component {
                                     onSubmitEditing={this.onSubmitEditing(this.mobileNo_joint)}
                                     errorFlag={!this.state.jointOwner.stateCity_PhyValidation}
                                     errorText={this.state.errMsg}
-                                    editable = {this.state.jointOwner.citizenship != "U.S"}
+                                    editable = {this.state.jointOwner.citizenship !== "U.S"}
 
                                 />
 
@@ -4357,7 +4368,7 @@ class OpenAccPageTwoComponent extends Component {
                         {gblStrings.accManagement.regulatoryQuestTxt}
                     </Text>
 
-                    <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "flex-start" }}>
+                    <View style={styles.explainView}>
                         <Text style={styles.explainTxt}>
                             {"Explain - "}
                         </Text>
@@ -4370,7 +4381,7 @@ class OpenAccPageTwoComponent extends Component {
 
                     <View style={styles.radioBtnGrp}>
                         <CustomRadio
-                            componentStyle={{ width: "30%", marginBottom: scaledHeight(0) }}
+                            componentStyle={styles.radioCol1}
                             size={30}
                             outerCicleColor="#DEDEDF"
                             innerCicleColor="#61285F"
@@ -4384,7 +4395,7 @@ class OpenAccPageTwoComponent extends Component {
                         />
                         <CustomRadio
                             size={30}
-                            componentStyle={{ marginBottom: scaledHeight(0) }}
+                            componentStyle={styles.radioCol2}
                             outerCicleColor="#DEDEDF"
                             innerCicleColor="#61285F"
                             labelStyle={styles.lblRadioBtnTxt}
@@ -4403,7 +4414,7 @@ class OpenAccPageTwoComponent extends Component {
                         }
                     {this.state.jointOwner.isSeniorPoliticalFigure === "Yes" &&
 
-                        <View style={{ flexGrow: 1 }}>
+                        <View>
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.seniorPoliticalName}
                             </Text>
@@ -4706,24 +4717,19 @@ class OpenAccPageTwoComponent extends Component {
                 <Text style={styles.lblLine} />
 
                 <View style={styles.childSectionGrp}>
+                    <Text style={styles.regulatoryNoteTxt}>
+                        {gblStrings.accManagement.beneficiariesNote}
+                    </Text>
 
+                    <Text style={styles.regulatoryQuestTxt}>
+                        {gblStrings.accManagement.beneficiariesCond}
+                    </Text>
                     {this.state.retirementBeneficiaryData.map((item, index) => {
                         const key = `benificairy${ index}`;
                         return (
                             <View
                                 key={key}
                             >
-
-
-                                <Text style={styles.regulatoryNoteTxt}>
-                                    {gblStrings.accManagement.beneficiariesNote}
-                                </Text>
-
-                                <Text style={styles.regulatoryQuestTxt}>
-                                    {gblStrings.accManagement.beneficiariesCond}
-                                </Text>
-
-
 
                                 <GDropDownComponent
                                     inputref={this.setInputRef(`beneficiaryType${ index}`)}
@@ -4737,7 +4743,7 @@ class OpenAccPageTwoComponent extends Component {
                                     dropDownValue={this.state.retirementBeneficiaryData[index].beneficiaryType}
                                     selectedDropDownValue={this.onSelectedIRABeneficiaryDropDownValue("beneficiaryTypeDropDown", index)}
                                     itemToDisplay="value"
-                                    dropDownPostition={{ ...styles.dropDownPostition }}
+                                    dropDownPostition={styles.dropDownPostition}
                                     errorFlag={!this.state.retirementBeneficiaryData[index].beneficiaryTypeValidation}
                                     errorText={gblStrings.accManagement.emptyBeneficiaryType}
                                 />
@@ -4757,20 +4763,20 @@ class OpenAccPageTwoComponent extends Component {
                                     dropDownValue={this.state.retirementBeneficiaryData[index].relationshipToAcc}
                                     selectedDropDownValue={this.onSelectedIRABeneficiaryDropDownValue("relationshipToAccDropDown", index)}
                                     itemToDisplay="value"
-                                    dropDownPostition={{ ...styles.dropDownPostition }}
+                                    dropDownPostition={styles.dropDownPostition}
                                     errorFlag={!this.state.retirementBeneficiaryData[index].relationshipToAccValidation}
                                     errorText={gblStrings.accManagement.emptyRelationTypeMsg}
                                 />
 
 
 
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: scaledHeight(25), }}>
-                                    <View style={{ width: '60%' }}>
+                                <View style={styles.distributionView}>
+                                    <View style={styles.distributionCol1}>
                                         <Text style={styles.lblRowTxt}>
                                             {gblStrings.accManagement.distributionPercentage}
                                         </Text>
                                     </View>
-                                    <View style={{ width: '30%' }}>
+                                    <View style={styles.distributionCol2}>
 
                                         <GInputComponent
                                             inputref={this.setInputRef(`beneficiaryDistPercent${ index}`)}
@@ -4785,7 +4791,7 @@ class OpenAccPageTwoComponent extends Component {
 
                                         />
                                     </View>
-                                    <View style={{ width: '10%' }}>
+                                    <View style={styles.distributionCol3}>
 
                                         <Text style={styles.lblRowTxt}>
                                             %
@@ -4976,7 +4982,7 @@ class OpenAccPageTwoComponent extends Component {
                     navigation={this.props.navigation}
                     onPress={this.onClickHeader}
                 />
-                <ScrollView style={{ flex: .85 }} keyboardShouldPersistTaps="always" ref={this.setScrollViewRef}
+                <ScrollView style={styles.scrollView} keyboardShouldPersistTaps="always" ref={this.setScrollViewRef}
                 scrollEnabled={this.state.enableScrollViewScroll}
                 >
                     <View style={styles.accSelection}>
@@ -5013,8 +5019,8 @@ class OpenAccPageTwoComponent extends Component {
                             onChangeText={this.onChangeNickName()}
                             secureTextEntry={false}
                         />
-                        <View style={{ flexGrow: 1, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                            <View style={{ flexGrow: 1 }}>
+                        <View style={styles.uploadImgView}>
+                            <View>
                                 <Text style={styles.lblTxt}>
                                     {gblStrings.accManagement.uploadImage}
                                 </Text>
@@ -5032,7 +5038,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
                             {
-                                this.state.userAvatar != "" && <Image source={this.state.userAvatar} style={styles.userAvatar} />
+                                this.state.userAvatar !== "" && <Image source={this.state.userAvatar} style={styles.userAvatar} />
                             }
                         </View>
                     </View>
