@@ -33,15 +33,30 @@ class editFamilyMemberComponent extends Component {
         }
     }
 
-    editFamilyDetailManage = () => this.props.navigation.navigate('editFamilyDetail');
+    // Go Back to Profile Home Screen
 
-    editFamilyDetailOnCancel = () => this.props.navigation.navigate('profileSettings');
+    editFamilyDetailOnCancel = () => {
+        this.props.navigation.navigate('profileSettings');
+    }
+
+    // Edit Relationship Personal Details
+
+    editFamilyDetailManage = () => this.props.navigation.navigate('editFamilyDetail',
+        {
+            contactPosition: this.state.pressedPosition,
+            isRelation: true
+        });
+
+
+    // Edit Relationship Contact Details
 
     editFamilyContactDetail = () => this.props.navigation.navigate('editAddressSettings',
         {
             contactPosition: this.state.pressedPosition,
             isRelation: true
         });
+
+    // Edit Relationship Phone Details
 
     editFamilyPhoneDetails = () => this.props.navigation.navigate('editPhoneInformation',
         {

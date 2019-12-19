@@ -41,6 +41,10 @@ class editFamilyDetailComponent extends Component {
             faceIdEnrolled: false,
             touchIdEnrolled: false,
 
+            contactPosition: this.props.navigation.getParam('contactPosition'),
+            isRelation: this.props.navigation.getParam('isRelation'),
+            relationShipDetails: {},
+
             profileRelationName: '',
             profileName: '',
             profileCountryUS: false,
@@ -77,6 +81,43 @@ class editFamilyDetailComponent extends Component {
             dropDownProofFlag: false,
             dropDownProofMsg: ''
         };
+    }
+
+    componentDidMount() {
+        if (this.state.isRelation) {
+            let familyMembersData = [];
+            if (this.props &&
+                this.props.profileState &&
+                this.props.profileState.profileRelationShipDetails) {
+                familyMembersData = [...this.props.profileState.profileRelationShipDetails];
+                this.setState({
+                    relationShipDetails: familyMembersData[this.state.contactPosition]
+                });
+            }
+        }
+
+        // if (this.props && this.props.initialState && this.props.initialState.firstName) {
+        //     this.setState({
+        //         profileName: this.props.initialState.firstName
+        //     });
+        // }
+
+        let payload = [];
+
+        const compositePayloadData = [
+            "prefix",
+            "suffix",
+            "marital_status"
+        ];
+
+        for (let i = 0; i < compositePayloadData.length; i++) {
+            let tempkey = compositePayloadData[i];
+            if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
+                payload.push(tempkey);
+            }
+        }
+
+        this.props.getProfileCompositeData(payload);
     }
 
     dropDownOnClick = () => {
@@ -162,31 +203,6 @@ class editFamilyDetailComponent extends Component {
                 }
                 break;
         }
-    }
-
-    componentDidMount() {
-        if (this.props && this.props.initialState && this.props.initialState.firstName) {
-            this.setState({
-                profileName: this.props.initialState.firstName
-            });
-        }
-
-        let payload = [];
-
-        const compositePayloadData = [
-            "prefix",
-            "suffix",
-            "marital_status"
-        ];
-
-        for (let i = 0; i < compositePayloadData.length; i++) {
-            let tempkey = compositePayloadData[i];
-            if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
-                payload.push(tempkey);
-            }
-        }
-
-        this.props.getProfileCompositeData(payload);
     }
 
     editFamilyOnCancel = () => this.props.navigation.navigate('editFamilyMemberInfo');
@@ -277,12 +293,12 @@ class editFamilyDetailComponent extends Component {
                             data={profileSettingsTempData}
                             changeState={this.dropDownOnClick}
                             showDropDown={this.state.dropDownState}
-                            dropDownValue={this.state.dropDownValue}
+                            dropDownValue={this.state.dropDownValue || this.state.relationShipDetails.relationShipType}
                             selectedDropDownValue={this.dropDownOnSelect}
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownFlag}
                             errorText={this.dropDownMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(90) }} />
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(140) }} />
 
                         {/* Relationship Name */}
 
@@ -292,7 +308,7 @@ class editFamilyDetailComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingsNameView}>
-                                {this.state.profileName}
+                                {this.state.relationShipDetails.relationShipName}
                             </Text>
                         </View>
 
@@ -305,12 +321,12 @@ class editFamilyDetailComponent extends Component {
                             data={profilePrefixData}
                             changeState={this.dropDownPrefixClick}
                             showDropDown={this.state.dropDownPrefixState}
-                            dropDownValue={this.state.dropDownPrefixValue}
+                            dropDownValue={this.state.dropDownPrefixValue || this.state.relationShipDetails.relationPrefix}
                             selectedDropDownValue={this.dropDownPrefixSelect}
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownPrefixFlag}
                             errorText={this.dropDownPrefixMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(265) }} />
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(320) }} />
 
                         {/* Relationship Suffix */}
 
@@ -321,12 +337,12 @@ class editFamilyDetailComponent extends Component {
                             data={profileSuffixData}
                             changeState={this.dropDownSuffixClick}
                             showDropDown={this.state.dropDownSuffixState}
-                            dropDownValue={this.state.dropDownSuffixValue}
+                            dropDownValue={this.state.dropDownSuffixValue || this.state.relationShipDetails.relationSuffix}
                             selectedDropDownValue={this.dropDownSuffixSelect}
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownSuffixFlag}
                             errorText={this.dropDownSuffixMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(345) }} />
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(405) }} />
 
                         {/* Relationship Date of Birth */}
 
@@ -336,7 +352,7 @@ class editFamilyDetailComponent extends Component {
                             </Text>
 
                             <Text style={styles.editProfileValueView}>
-                                {"MM-DD-YY"}
+                                {this.state.relationShipDetails.relationDob}
                             </Text>
                         </View>
 
@@ -348,7 +364,7 @@ class editFamilyDetailComponent extends Component {
                             </Text>
 
                             <Text style={styles.editProfileValueView}>
-                                {"Male"}
+                                {this.state.relationShipDetails.relationShipGender}
                             </Text>
                         </View>
 
@@ -361,12 +377,12 @@ class editFamilyDetailComponent extends Component {
                             data={profileStatusData}
                             changeState={this.dropDownStatusClick}
                             showDropDown={this.state.dropDownStatusState}
-                            dropDownValue={this.state.dropDownStatusValue}
+                            dropDownValue={this.state.dropDownStatusValue || this.state.relationShipDetails.relationShipStatus}
                             selectedDropDownValue={this.dropDownStatusSelect}
                             itemToDisplay={"value"}
                             errorFlag={this.state.dropDownStatusFlag}
                             errorText={this.dropDownStatusMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(620) }} />
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(680) }} />
 
                         {/* Relationship Citizenship */}
 
@@ -404,12 +420,12 @@ class editFamilyDetailComponent extends Component {
                                         data={profileProofData}
                                         changeState={this.dropDownProofClick}
                                         showDropDown={this.state.dropDownProofState}
-                                        dropDownValue={this.state.dropDownProofValue}
+                                        dropDownValue={this.state.dropDownProofValue || this.state.relationShipDetails.relationCitizenship}
                                         selectedDropDownValue={this.dropDownProofSelect}
                                         itemToDisplay={"value"}
                                         errorFlag={this.state.dropDownProofFlag}
                                         errorText={this.dropDownProofMsg}
-                                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(620) }} />
+                                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(640) }} />
                                 </View>) : null}
 
                             {this.state.profileSocialSecurity ? (
@@ -419,7 +435,8 @@ class editFamilyDetailComponent extends Component {
                                     </Text>
 
                                     <GInputComponent style={styles.editFamilyDetailMargin}
-                                        placeholder="" />
+                                        placeholder={this.state.relationShipDetails.relationSecurityNumber}
+                                        editable={false} />
                                 </View>) : null}
                         </View>
 

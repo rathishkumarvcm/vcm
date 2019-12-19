@@ -29,7 +29,21 @@ class editRelationshipComponent extends Component {
             enableBiometric: false,
             faceIdEnrolled: false,
             touchIdEnrolled: false,
+
             dateOfBirthValue: '',
+            isValidDateOfBirth: false,
+            dateOfBirthFlag: false,
+            dateOfBirthMsg: '',
+
+            relationFirstNameValue: '',
+            isValidRelationFirstName: false,
+            relationFirstNameFlag: false,
+            relationFirstNameMsg: '',
+
+            relationSecurityValue: '',
+            isValidRelationSecurity: false,
+            relationSecurityFlag: false,
+            relationSecurityMsg: '',
 
             dropDownRelationState: false,
             dropDownRelationValue: '',
@@ -150,11 +164,137 @@ class editRelationshipComponent extends Component {
 
     onChangeDateValue = (date) => {
         this.setState({
-            dateOfBirthValue: date
+            dateOfBirthValue: date,
+            isValidDateOfBirth: false,
+            dateOfBirthFlag: false
         });
     }
 
+    setRelationshipFirstName = (text) => {
+        this.setState({
+            relationFirstNameValue: text,
+            isValidRelationFirstName: false,
+            relationFirstNameFlag: false
+        });
+    }
+
+    setRelationSecurity = (text) => {
+        this.setState({
+            relationSecurityValue: text,
+            isValidRelationSecurity: false,
+            relationSecurityFlag: false
+        })
+    }
+
     relationCancelOnClick = () => this.props.navigation.navigate('profileSettings');
+
+    relationShipOnSave = () => {
+        if (this.state.dropDownRelationValue === '') {
+            this.setState({
+                dropDownRelationFlag: !this.state.dropDownRelationFlag,
+                dropDownRelationMsg: 'Select Valid Relationship Type'
+            });
+        }
+
+        if (this.state.relationFirstNameValue === '') {
+            this.setState({
+                relationFirstNameFlag: !this.state.relationFirstNameFlag,
+                relationFirstNameMsg: 'Enter Valid First Name'
+            })
+        }
+
+        if (this.state.dropDownValue === '') {
+            this.setState({
+                dropDownFlag: !this.state.dropDownFlag,
+                dropDownMsg: 'Select Valid Prefix'
+            })
+        }
+
+        if (this.state.dropDownSuffixValue === '') {
+            this.setState({
+                dropDownSuffixFlag: !this.state.dropDownSuffixFlag,
+                dropDownSuffixMsg: 'Select Valid Suffix'
+            })
+        }
+
+        if (this.state.dropDownGenderValue === '') {
+            this.setState({
+                dropDownGenderFlag: !this.state.dropDownGenderFlag,
+                dropDownGenderMsg: 'Select Valid Gender'
+            })
+        }
+
+        if (this.state.dropDownStatusValue === '') {
+            this.setState({
+                dropDownStatusFlag: !this.state.dropDownStatusFlag,
+                dropDownStatusMsg: 'Select Valid Marital Status'
+            })
+        }
+
+        if (this.state.dateOfBirthValue === '') {
+            this.setState({
+                dateOfBirthFlag: !this.state.dateOfBirthFlag,
+                dateOfBirthMsg: 'Select Valid DOB'
+            })
+        }
+
+        if (this.state.relationSecurityValue === '') {
+            this.setState({
+                relationSecurityFlag: !this.state.relationSecurityFlag,
+                relationSecurityMsg: 'Enter Valid Social Security Number'
+            })
+        }
+
+        if (this.state.dropDownRelationValue != '' &&
+            this.state.relationFirstNameValue != '' &&
+            this.state.dropDownValue != '' &&
+            this.state.dropDownSuffixValue != '' &&
+            this.state.dropDownGenderValue != '' &&
+            this.state.dropDownStatusValue != '' &&
+            this.state.dateOfBirthValue != '' &&
+            this.state.relationSecurityValue != '') {
+            this.addNewRelationShipDetails();
+        } else {
+            console.log("&&&&&&&&&&&&&&& Error in Validation");
+        }
+    }
+
+    addNewRelationShipDetails = () => {
+        const payloadData = this.getRelationShipPayload();
+        this.props.saveProfileData("addRelationShipInformation", payloadData);
+        this.props.navigation.navigate('profileSettings');
+    }
+
+    getRelationShipPayload = () => {
+        console.log("$$$$$$$$$$$$$$$$$$");
+        let relationShipPayload = {};
+        let relationShipDetails = [];
+        if (this.props && this.props.profileState) {
+            const addRelationShipDetails = {
+                "relationShipName": this.state.relationFirstNameValue,
+                "relationShipType": this.state.dropDownRelationValue,
+                "relationShipGender": this.state.dropDownGenderValue,
+                "relationShipEmail": '',
+                "relationShipStatus": this.state.dropDownStatusValue,
+                "relationSecurityNumber": this.state.relationSecurityValue,
+                "relationPrefix": this.state.dropDownValue,
+                "relationSuffix": this.state.dropDownSuffixValue,
+                "relationDob": this.state.dateOfBirthValue,
+                "relationCitizenship": '',
+                "relationAddress": [],
+                "relationPhoneNumber": [],
+                "relationEmailId": []
+            };
+            relationShipDetails = this.props.profileState.profileRelationShipDetails;
+            relationShipDetails.push(addRelationShipDetails);
+            relationShipPayload = {
+                ...this.props.profileState,
+                profileRelationShipDetails: relationShipDetails,
+            };
+        }
+        console.log('@@@@@@@@@@@@@@@@@@@@ New Relationship Details', relationShipPayload);
+        return relationShipPayload;
+    }
 
     render() {
 
@@ -255,7 +395,7 @@ class editRelationshipComponent extends Component {
                                 selectedDropDownValue={this.dropDownRelationOnSelect}
                                 itemToDisplay={"value"}
                                 errorFlag={this.state.dropDownRelationFlag}
-                                errorText={this.dropDownRelationMsg}
+                                errorText={this.state.dropDownRelationMsg}
                                 dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(90) }} />
 
                             {/* First Name */}
@@ -267,7 +407,12 @@ class editRelationshipComponent extends Component {
 
                                 <GInputComponent
                                     propInputStyle={styles.editAddressInput}
-                                    placeholder="" />
+                                    placeholder=""
+                                    onChangeText={this.setRelationshipFirstName}
+                                    maxLength={50}
+                                    value={this.state.relationFirstNameValue}
+                                    errorFlag={this.state.relationFirstNameFlag}
+                                    errorText={this.state.relationFirstNameMsg} />
                             </View>
 
                             {/* Prefix */}
@@ -282,7 +427,7 @@ class editRelationshipComponent extends Component {
                                 selectedDropDownValue={this.dropDownOnSelect}
                                 itemToDisplay={"value"}
                                 errorFlag={this.state.dropDownFlag}
-                                errorText={this.dropDownMsg}
+                                errorText={this.state.dropDownMsg}
                                 dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(310) }} />
 
                             {/* Suffix */}
@@ -297,7 +442,7 @@ class editRelationshipComponent extends Component {
                                 selectedDropDownValue={this.dropDownSuffixSelect}
                                 itemToDisplay={"value"}
                                 errorFlag={this.state.dropDownSuffixFlag}
-                                errorText={this.dropDownSuffixMsg}
+                                errorText={this.state.dropDownSuffixMsg}
                                 dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(400) }} />
 
                             {/* Date of Birth */}
@@ -311,7 +456,9 @@ class editRelationshipComponent extends Component {
                                     minDate={currentdate}
                                     placeholder="MM/DD/YYYY"
                                     date={this.state.dateOfBirthValue}
-                                    onDateChange={this.onChangeDateValue} />
+                                    onDateChange={this.onChangeDateValue}
+                                    errorFlag={this.state.dateOfBirthFlag}
+                                    errorMsg={this.state.dateOfBirthMsg} />
                             </View>
 
                             {/* Gender */}
@@ -326,7 +473,7 @@ class editRelationshipComponent extends Component {
                                 selectedDropDownValue={this.dropDownGenderSelect}
                                 itemToDisplay={"value"}
                                 errorFlag={this.state.dropDownGenderFlag}
-                                errorText={this.dropDownGenderMsg}
+                                errorText={this.state.dropDownGenderMsg}
                                 dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(620) }} />
 
                             {/* Marital Status */}
@@ -341,7 +488,7 @@ class editRelationshipComponent extends Component {
                                 selectedDropDownValue={this.dropDownStatusSelect}
                                 itemToDisplay={"value"}
                                 errorFlag={this.state.dropDownStatusFlag}
-                                errorText={this.dropDownStatusMsg}
+                                errorText={this.state.dropDownStatusMsg}
                                 dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(710) }} />
 
                             {/* Social Security Number */}
@@ -353,7 +500,12 @@ class editRelationshipComponent extends Component {
 
                                 <GInputComponent
                                     propInputStyle={styles.editAddressInput}
-                                    placeholder="" />
+                                    placeholder=""
+                                    onChangeText={this.setRelationSecurity}
+                                    value={this.state.relationSecurityValue}
+                                    maxLength={10}
+                                    errorFlag={this.state.relationSecurityFlag}
+                                    errorText={this.state.relationSecurityMsg} />
                             </View>
 
                             <View style={styles.editFlexDirectionColumn}>
@@ -368,7 +520,8 @@ class editRelationshipComponent extends Component {
                                 <GButtonComponent
                                     buttonStyle={styles.saveButtonStyle}
                                     buttonText={globalString.common.save}
-                                    textStyle={styles.saveButtonText} />
+                                    textStyle={styles.saveButtonText}
+                                    onPress={this.relationShipOnSave} />
                             </View>
                         </View>
                     </View>

@@ -131,30 +131,6 @@ class ProfileSettingsComponent extends Component {
         };
     }
 
-    relationShipOnPressed = (item, index) => () => {
-        if (index !== -1) {
-            this.props.navigation.navigate('editFamilyMemberInfo', { pressedPosition: index, isRelation: true })
-        }
-    }
-
-    renderRelationShipInformation = () => ({ item, index }) => {
-        return (<UserRelationShipInformation
-            relationShipName={item.relationShipName}
-            relationShipType={item.relationShipType}
-            relationShipGender={item.relationShipGender}
-            relationShipEmail={item.relationShipEmail}
-            relationShipStatus={item.relationShipStatus}
-            relationShipOnPressed={this.relationShipOnPressed(item, index)} />)
-    };
-
-    ShowHideComponent = () => {
-        if (this.state.show == true) {
-            this.setState({ show: false });
-        } else {
-            this.setState({ show: true });
-        }
-    };
-
     componentDidMount() {
         if (this.props && this.props.initialState && this.props.initialState.firstName) {
             this.setState({
@@ -363,6 +339,17 @@ class ProfileSettingsComponent extends Component {
                         profileRelationToOwner: this.props.profileState.employmentInformations.profileRelationToOwner
                     });
                 }
+
+                // Relationship Details
+
+                if (this.props &&
+                    this.props.profileState &&
+                    this.props.profileState.profileRelationShipDetails) {
+                    this.setState({
+                        profileRelationShipData: this.props.profileState.profileRelationShipDetails,
+                        isRelationRefreshed: !this.state.isRelationRefreshed
+                    });
+                }
             }
         }
     }
@@ -383,9 +370,39 @@ class ProfileSettingsComponent extends Component {
 
     profileSettingRegulatoryManage = () => this.props.navigation.navigate('editRegulatoryInfo');
 
+    // Add Relationship Details
+
     profileSettingAddRelation = () => this.props.navigation.navigate('editRelationshipInfo');
 
-    profileSettingFamilyManage = () => this.props.navigation.navigate('editFamilyMemberInfo');
+    // Manage Relationship Details
+
+    relationShipOnPressed = (item, index) => () => {
+        if (index !== -1) {
+            this.props.navigation.navigate('editFamilyMemberInfo',
+                {
+                    pressedPosition: index,
+                    isRelation: true
+                });
+        }
+    }
+
+    renderRelationShipInformation = () => ({ item, index }) => {
+        return (<UserRelationShipInformation
+            relationShipName={item.relationShipName}
+            relationShipType={item.relationShipType}
+            relationShipGender={item.relationShipGender}
+            relationShipEmail={item.relationShipEmail}
+            relationShipStatus={item.relationShipStatus}
+            relationShipOnPressed={this.relationShipOnPressed(item, index)} />)
+    };
+
+    ShowHideComponent = () => {
+        if (this.state.show == true) {
+            this.setState({ show: false });
+        } else {
+            this.setState({ show: true });
+        }
+    };
 
     render() {
         return (
