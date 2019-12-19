@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 import { styles } from './styles';
 import { GHeaderComponent, GFooterSettingsComponent, GIcon, GButtonComponent, GSwitchComponent } from '../../CommonComponents';
-import PropTypes from 'prop-types';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class AccountMessagingAdviceComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
 
@@ -87,13 +87,7 @@ class AccountMessagingAdviceComponent extends Component {
             leaveMilitarySwitchOn: false,
             leaveMilitarySwitchOff: true,
         };
-    }
-
-    goBack = () => {
-        this.props.navigation.goBack();
-    }
-
-    navigategeneralSettings = () => this.props.navigation.navigate('generalSettings');
+    }      
 
     componentDidMount() {     
         if (this.props && this.props.accMessageAdviceinitialState){
@@ -204,6 +198,12 @@ class AccountMessagingAdviceComponent extends Component {
                 });
         }                 
     }
+
+    goBack = () => {
+        this.props.navigation.goBack();
+    }
+
+    navigategeneralSettings = () => this.props.navigation.navigate('generalSettings');
 
     setStateUpdates = (fromlist) => () => {
         switch (fromlist) {
@@ -500,7 +500,7 @@ class AccountMessagingAdviceComponent extends Component {
                 <GHeaderComponent
                     navigation={this.props.navigation}
                 />
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.settingsView}>
                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.navigategeneralSettings}>
                             <Text style={styles.settingsInfo}>

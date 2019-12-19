@@ -2,333 +2,339 @@ import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
 export const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F7FAFF',
-        width: '100%'
-    },
-    scrollviewcontainer:{
-         flex: .85 
-    },
-    sectionGrp: {
-        overflow: 'hidden',
-        marginHorizontal: scaledHeight(12),
-        marginTop: scaledHeight(25),
-        flexGrow: 1
-    },
-    touchStyle:{
-        flexDirection: 'row',
-        alignItems: 'center', 
-        justifyContent: 'space-between' 
+    backToInvestpage: {
+        color: '#0D7CB5',
+        fontSize: scaledHeight(16),
+        marginBottom: scaledHeight(25),
+        marginTop: scaledHeight(25),        
     },
     backtoInvestContainer:{ 
-        flexDirection: 'row', 
         alignItems: 'center', 
+        flexDirection: 'row', 
         justifyContent: 'flex-start' 
     },
-    backToInvestpage: {
-        marginTop: scaledHeight(25),
-        marginBottom: scaledHeight(25),
-        color: '#0D7CB5',
-        fontSize: scaledHeight(16),        
+    btnGrp: {
+        alignContent: 'center',
+        alignItems: 'center',
+        flexGrow: 1,
+        justifyContent: 'center',
+        marginHorizontal: scaledHeight(12),
+        marginVertical: scaledHeight(50)
     },
-    fundCompareTextContainer:{
-        marginTop:scaledHeight(20),
-        marginLeft:'4%',   
-        marginRight:'4%'    
+    container: {
+        backgroundColor: '#F7FAFF',
+        flex: 1,
+        width: '100%'
     },
-    fundCompareText:{
-        color:'#141516',
-        fontWeight:'bold',
-        fontSize: scaledHeight(20),   
+    fundCategoryView:{
+        flexDirection:'row'
     },
-    lineBorder: {
-        borderWidth: 0.6,
-        borderColor: '#EBEDEF',
-        marginTop: scaledHeight(10),
-    },
-    fundComparePerformanceHeadContainer:{       
-        borderRightWidth:1,
-        borderLeftWidth:0.2,
-        borderTopWidth:0.2,
-        borderBottomWidth:0.8,
-        borderColor:'#7B8288',
-        backgroundColor:'#E9E9E9',       
-        marginLeft:'6%',  
-        marginTop: scaledHeight(30),
-    },
-    fundCompareHeadContents:{       
-        alignContent:'flex-end',
-        justifyContent:'flex-end',
-        alignItems:'flex-end',
-        backgroundColor:'#E9E9E9' 
-    },
-    fundComparePriceContents:{
-        marginLeft:'2%',
-        marginRight:'8%',
-        marginTop: scaledHeight(10),
-        marginBottom: scaledHeight(40),
-        alignContent:'flex-end',
-        justifyContent:'flex-end',
-        alignItems:'flex-end' 
-    },
-    fundComparePerformanceTitle:{
-        height:scaledHeight(60),
+    fundCompareCategoryTitle:{
         color:'#56565A',
+        fontSize: scaledHeight(14),
         fontWeight:'bold',
-        fontSize: scaledHeight(18),          
-        textAlign:'right',   
-        marginRight:'8%',            
-    },
-    fundCompareTitle:{
-        height:scaledHeight(60),
-        color:'#56565A',     
-        fontWeight:'bold',  
-        fontSize: scaledHeight(14),         
-        textAlign:'right', 
-        marginRight:'8%'    
-    },
-    fundDetailsContents:{
-        height:scaledHeight(60),
-        color:'#56565A',            
-        fontSize: scaledHeight(14),         
-        textAlign:'right', 
-        marginRight:'8%'    
-    },
-    fundDetailsPerformanceYearContents:{
-        height:scaledHeight(60),
-        color:'#DE3C3C',            
-        fontSize: scaledHeight(14),         
-        textAlign:'right', 
-        marginRight:'8%'    
-    },
-    fundDetailsContents1:{
-        height:scaledHeight(50),
-        color:'#56565A',      
-        fontSize: scaledHeight(14), 
-        marginTop:scaledHeight(10),    
-        textAlign:'right',           
-    },
-    fundComparePriceHeadContainer:{       
-        borderRightWidth:1,
-        borderLeftWidth:0.2,      
-        borderBottomWidth:1,
-        borderColor:'#7B8288',
-        backgroundColor:'#E9E9E9',       
-        marginLeft:'6%',         
-    },
-    fundComparePriceTitle:{
-        height:scaledHeight(50),
-        color:'#56565A',
-        fontWeight:'bold',
-        fontSize: scaledHeight(14), 
-        marginTop:scaledHeight(10),    
-        textAlign:'right',           
-    },
-    fundComparePriceHeadTitle:{
-        height:scaledHeight(50),
-        color:'#56565A',
-        fontWeight:'bold',
-        fontSize: scaledHeight(18), 
-        marginTop:scaledHeight(10),    
-        textAlign:'right',           
-    },
-    fundComparePriceWaiversTitle:{
-        height:scaledHeight(50),
-        color:'#0D7CB5DE',
-        fontWeight:'bold',
-        fontSize: scaledHeight(14), 
+        height:scaledHeight(60), 
         marginTop:scaledHeight(10),    
         textAlign:'right',           
     },
     fundCompareColumnContainer:{       
-        flexDirection:'row',
-        borderRightWidth:1,
-        borderLeftWidth:0.2,
-        borderTopWidth:0.2,
+        backgroundColor:'#E9E9E9',
         borderBottomWidth:1,
         borderColor:'#7B8288',
-        backgroundColor:'#E9E9E9',
+        borderLeftWidth:0.2,
+        borderRightWidth:1,
+        borderTopWidth:0.2,
+        flexDirection:'row',
+        marginLeft:'6%',
+        marginTop: scaledHeight(30),  
         width:'40%',
-        marginLeft:'6%',  
-        marginTop: scaledHeight(30),
-    },    
+    },
     fundCompareContainer:{
         flexDirection:'column',
         width:scaledHeight(190),      
     },
-    fundDetailsHeadContainer:{       
-        borderRightWidth:0.8,       
-        borderTopWidth:0.2,
-        borderLeftWidth:0.2,
+    fundCompareExpenseRatioContents:{
+        alignContent:'flex-end',
+        alignItems:'flex-end',
+        justifyContent:'flex-end',
+        marginBottom: scaledHeight(10),
+        marginLeft:'2%',
+        marginRight:'8%',
+        marginTop: scaledHeight(20) 
+    },
+    fundCompareExpenseRatioTitle:{
+        color:'#56565A',
+        fontSize: scaledHeight(14),
+        fontWeight:'bold',
+        height:scaledHeight(20),  
+        marginTop: scaledHeight(10),      
+        textAlign:'right',           
+    },
+    fundCompareHeadContents:{       
+        alignContent:'flex-end',
+        alignItems:'flex-end',
+        backgroundColor:'#E9E9E9',
+        justifyContent:'flex-end' 
+    },
+    fundCompareImburseTitle:{
+        color:'#0D7CB5',
+        fontSize: scaledHeight(14),       
+        height:scaledHeight(60),        
+        textAlign:'right',           
+    },
+    fundComparePerformanceHeadContainer:{       
+        backgroundColor:'#E9E9E9',
         borderBottomWidth:0.8,
-        borderColor:'#7B8288',        
+        borderColor:'#7B8288',
+        borderLeftWidth:0.2,
+        borderRightWidth:1,
+        borderTopWidth:0.2,       
+        marginLeft:'6%',  
         marginTop: scaledHeight(30),
     },
-    fundDetailsPriceHeadContainer:{       
-        borderRightWidth:0.8,      
-        borderTopWidth:0.2,
+    fundComparePerformanceTitle:{
+        color:'#56565A',
+        fontSize: scaledHeight(18),
+        fontWeight:'bold',
+        height:scaledHeight(60),          
+        marginRight:'8%',   
+        textAlign:'right',            
+    },
+    fundComparePriceContents:{
+        alignContent:'flex-end',
+        alignItems:'flex-end',
+        justifyContent:'flex-end',
+        marginBottom: scaledHeight(40),
+        marginLeft:'2%',
+        marginRight:'8%',
+        marginTop: scaledHeight(10) 
+    },
+    fundComparePriceHeadContainer:{       
+        backgroundColor:'#E9E9E9',
+        borderBottomWidth:1,      
+        borderColor:'#7B8288',
         borderLeftWidth:0.2,
-        borderBottomWidth:0.8,
-        borderColor:'#7B8288',       
+        borderRightWidth:1,       
+        marginLeft:'6%',         
+    },
+    fundComparePriceHeadTitle:{
+        color:'#56565A',
+        fontSize: scaledHeight(18),
+        fontWeight:'bold',
+        height:scaledHeight(50), 
+        marginTop:scaledHeight(10),    
+        textAlign:'right',           
+    },
+    fundComparePriceTitle:{
+        color:'#56565A',
+        fontSize: scaledHeight(14),
+        fontWeight:'bold',
+        height:scaledHeight(50), 
+        marginTop:scaledHeight(10),    
+        textAlign:'right',           
+    },
+    fundComparePriceWaiversTitle:{
+        color:'#0D7CB5DE',
+        fontSize: scaledHeight(14),
+        fontWeight:'bold',
+        height:scaledHeight(50), 
+        marginTop:scaledHeight(10),    
+        textAlign:'right',           
+    },
+    fundCompareRatingsContents:{
+        alignContent:'flex-end',
+        alignItems:'flex-end',
+        justifyContent:'flex-end',
+        marginBottom: scaledHeight(20),
+        marginLeft:'2%',
+        marginRight:'8%',
+        marginTop: scaledHeight(15) 
+    },
+    fundCompareRatingsHeadTitle:{
+        color:'#56565A',
+        fontSize: scaledHeight(18),
+        fontWeight:'bold',
+        height:scaledHeight(60), 
+        marginBottom:scaledHeight(10),  
+        marginTop:scaledHeight(10),   
+        textAlign:'right',           
+    },
+    fundCompareSECContents:{
+        alignContent:'flex-end',
+        alignItems:'flex-end',
+        justifyContent:'flex-end',
+        marginBottom: scaledHeight(18),
+        marginLeft:'2%',
+        marginRight:'8%',
+        marginTop: scaledHeight(30) 
+    },
+    fundCompareText:{
+        color:'#141516',
+        fontSize: scaledHeight(20),
+        fontWeight:'bold',   
+    },    
+    fundCompareTextContainer:{
+        marginLeft:'4%',
+        marginRight:'4%',   
+        marginTop:scaledHeight(20)    
+    },
+    fundCompareTitle:{
+        color:'#56565A',
+        fontSize: scaledHeight(14),     
+        fontWeight:'bold',  
+        height:scaledHeight(60),         
+        marginRight:'8%', 
+        textAlign:'right'    
+    },
+    fundDetailsCategoryTitle:{
+        color:'#56565A',
+        fontSize: scaledHeight(14),      
+        height:scaledHeight(60), 
+        marginTop:scaledHeight(10),    
+        textAlign:'right',           
+    },
+    fundDetailsContents:{
+        color:'#56565A',
+        fontSize: scaledHeight(14),            
+        height:scaledHeight(60),         
+        marginRight:'8%', 
+        textAlign:'right'    
+    },
+    fundDetailsContents1:{
+        color:'#56565A',
+        fontSize: scaledHeight(14),      
+        height:scaledHeight(50), 
+        marginTop:scaledHeight(10),    
+        textAlign:'right',           
+    },
+    fundDetailsExpenseRatioContents:{
+        alignContent:'center',
+        alignItems:'center',
+        justifyContent:'center',
+        marginBottom: scaledHeight(10),
+        marginLeft:'2%',
+        marginRight:'8%',
+        marginTop: scaledHeight(20),  
+    },
+    fundDetailsHeadContainer:{       
+        borderBottomWidth:0.8,       
+        borderColor:'#7B8288',
+        borderLeftWidth:0.2,
+        borderRightWidth:0.8,
+        borderTopWidth:0.2,        
+        marginTop: scaledHeight(30),
     },
     fundDetailsHeadContents:{             
-        justifyContent: 'center', 
         alignItems: 'center', 
-        backgroundColor:'#E9E9E9',  
-        height:scaledHeight(84),          
+        backgroundColor:'#E9E9E9', 
+        height:scaledHeight(84),  
+        justifyContent: 'center',          
     },
     fundDetailsHeadContentsDesc:{             
         alignContent:'center',
-        justifyContent:'center',
         alignItems:'center',
         backgroundColor:'#FFFFFF',
+        justifyContent:'center',
         marginTop:scaledHeight(36),    
     },
     fundDetailsHeadTitle:{
         color:'#56565A',
-        fontWeight:'bold',
-        fontSize: scaledHeight(18),       
-        textAlign:'center',       
+        fontSize: scaledHeight(18),
+        fontWeight:'bold',       
+        marginLeft:'4%',       
         marginRight:'4%',
-        marginLeft:'4%'        
-    },
-    fundDetailsPriceContents:{      
-        marginLeft:'2%',
-        marginRight:'8%',
-        marginTop: scaledHeight(10),
-        marginBottom: scaledHeight(40),
-        alignContent:'center',
-        justifyContent:'center',
-        alignItems:'center', 
-    },
-    fundCompareSECContents:{
-        marginLeft:'2%',
-        marginRight:'8%',
-        marginTop: scaledHeight(30),
-        marginBottom: scaledHeight(18),
-        alignContent:'flex-end',
-        justifyContent:'flex-end',
-        alignItems:'flex-end' 
-    },
-    fundDetailsSECContents:{
-        marginLeft:'2%',
-        marginRight:'8%',
-        marginTop: scaledHeight(30),
-        marginBottom: scaledHeight(18),
-        alignContent:'center',
-        justifyContent:'center',
-        alignItems:'center',  
-    },
-    fundCompareExpenseRatioContents:{
-        marginLeft:'2%',
-        marginRight:'8%',
-        marginTop: scaledHeight(20),
-        marginBottom: scaledHeight(10),
-        alignContent:'flex-end',
-        justifyContent:'flex-end',
-        alignItems:'flex-end' 
-    },
-    fundCompareExpenseRatioTitle:{
-        height:scaledHeight(20),
-        color:'#56565A',
-        fontWeight:'bold',
-        fontSize: scaledHeight(14),  
-        marginTop: scaledHeight(10),      
-        textAlign:'right',           
-    },
-    fundCompareImburseTitle:{
-        height:scaledHeight(60),
-        color:'#0D7CB5',       
-        fontSize: scaledHeight(14),        
-        textAlign:'right',           
+        textAlign:'center'        
     },
     fundDetailsImburseTitle:{
-        height:scaledHeight(60),
-        color:'#56565A',       
-        fontSize: scaledHeight(14),        
-        textAlign:'right',           
-    },
-    fundDetailsExpenseRatioContents:{
-        marginLeft:'2%',
-        marginRight:'8%',
-        marginTop: scaledHeight(20),
-        marginBottom: scaledHeight(10),
-        alignContent:'center',
-        justifyContent:'center',
-        alignItems:'center',  
-    },
-    fundCompareRatingsContents:{
-        marginLeft:'2%',
-        marginRight:'8%',
-        marginTop: scaledHeight(15),
-        marginBottom: scaledHeight(20),
-        alignContent:'flex-end',
-        justifyContent:'flex-end',
-        alignItems:'flex-end' 
-    },
-    fundCompareRatingsHeadTitle:{
-        height:scaledHeight(60),
         color:'#56565A',
-        fontWeight:'bold',
-        fontSize: scaledHeight(18), 
-        marginTop:scaledHeight(10),  
-        marginBottom:scaledHeight(10),   
+        fontSize: scaledHeight(14),       
+        height:scaledHeight(60),        
         textAlign:'right',           
+    },
+    fundDetailsPerformanceYearContents:{
+        color:'#DE3C3C',
+        fontSize: scaledHeight(14),            
+        height:scaledHeight(60),         
+        marginRight:'8%', 
+        textAlign:'right'    
+    },
+    fundDetailsPriceContents:{      
+        alignContent:'center',
+        alignItems:'center',
+        justifyContent:'center',
+        marginBottom: scaledHeight(40),
+        marginLeft:'2%',
+        marginRight:'8%',
+        marginTop: scaledHeight(10), 
+    },
+    fundDetailsPriceHeadContainer:{       
+        borderBottomWidth:0.8,      
+        borderColor:'#7B8288',
+        borderLeftWidth:0.2,
+        borderRightWidth:0.8,
+        borderTopWidth:0.2,       
     },
     fundDetailsRatingsContents:{
+        alignContent:'center',
+        alignItems:'center',
+        justifyContent:'center',
+        marginBottom: scaledHeight(20),
         marginLeft:'2%',
         marginRight:'8%',
-        marginTop: scaledHeight(15),
-        marginBottom: scaledHeight(20),
+        marginTop: scaledHeight(15),  
+    },
+    fundDetailsSECContents:{
         alignContent:'center',
+        alignItems:'center',
         justifyContent:'center',
-        alignItems:'center',  
+        marginBottom: scaledHeight(18),
+        marginLeft:'2%',
+        marginRight:'8%',
+        marginTop: scaledHeight(30),  
     },
-    fundCompareCategoryTitle:{
-        height:scaledHeight(60),
-        color:'#56565A',
+    lineBorder: {
+        borderColor: '#EBEDEF',
+        borderWidth: 0.6,
+        marginTop: scaledHeight(10),
+    },
+    normalWhiteBtn: {       
+        alignContent: 'center',
+        alignItems: 'center',        
+        backgroundColor: '#fff',
+        borderColor: "#61285F45",
+        borderWidth: 1,
+        height: scaledHeight(60),
+        justifyContent: 'center',
+        marginHorizontal: scaledHeight(37),
+        marginVertical: scaledHeight(7.5)
+    },
+    normalWhiteBtnTxt: {
+        color: '#544A54',
+        fontSize: scaledHeight(16),
         fontWeight:'bold',
-        fontSize: scaledHeight(14), 
-        marginTop:scaledHeight(10),    
-        textAlign:'right',           
-    },
-    fundDetailsCategoryTitle:{
-        height:scaledHeight(60),
-        color:'#56565A',      
-        fontSize: scaledHeight(14), 
-        marginTop:scaledHeight(10),    
-        textAlign:'right',           
+        lineHeight: 22,
+        textAlign: 'center',
+        width: '100%'
     },
     ratingStar:{
         height:scaledHeight(50),
         marginTop:scaledHeight(10),           
     },
-    btnGrp: {
-        marginHorizontal: scaledHeight(12),
-        marginVertical: scaledHeight(50),
+    scrollviewcontainer:{
+         flex: .85 
+    },
+    scrollViewFlex:{
+        flexDirection: 'row',flexGrow: 1
+    },
+    sectionGrp: {
         flexGrow: 1,
-        alignContent: 'center',
-        justifyContent: 'center',
-        alignItems: 'center'
+        marginHorizontal: scaledHeight(12),
+        marginTop: scaledHeight(25),
+        overflow: 'hidden'
     },
-    normalWhiteBtn: {       
-        borderWidth: 1,
-        borderColor: "#61285F45",        
-        height: scaledHeight(60),
-        backgroundColor: '#fff',
+    touchStyle:{
         alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
-        marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
-    },
-    normalWhiteBtnTxt: {
-        fontSize: scaledHeight(16),
-        color: '#544A54',
-        width: '100%',
-        textAlign: 'center',
-        lineHeight: 22,
-        fontWeight:'bold'
+        flexDirection: 'row', 
+        justifyContent: 'space-between' 
     },    
 });

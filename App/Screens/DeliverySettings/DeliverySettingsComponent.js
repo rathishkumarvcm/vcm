@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Modal } from 'react-native';
+import PropTypes from "prop-types";
 import { styles } from './styles';
 import { GHeaderComponent, GIcon, GFooterSettingsComponent, GSwitchComponent, GButtonComponent, GInputComponent } from '../../CommonComponents';
-import PropTypes from "prop-types";
 import { CustomCheckBox } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class DeliverySettingsComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
 
@@ -59,6 +59,7 @@ class DeliverySettingsComponent extends Component {
             phoneno: '',
         };
     }
+
     componentDidMount() {
         if (this.props && this.props.initialState && this.props.initialState.email) {
             this.setState({ email: this.props.initialState.email});
@@ -149,7 +150,7 @@ class DeliverySettingsComponent extends Component {
     }
 
     validateInputData = () => {
-        if (this.state.resendPinCode == '') {
+        if (this.state.resendPinCode === '') {
             this.setState({ enterCorrectCode: true, resendSuccessVisible: false });
         } else {
             this.setState({ enterCorrectCode: false, resendSuccessVisible: false });
@@ -201,6 +202,8 @@ class DeliverySettingsComponent extends Component {
                 if (flag) this.setState({ textGuidanceSwitchOn: true, textGuidanceSwitchOff: false });
                 else this.setState({ textGuidanceSwitchOn: false, textGuidanceSwitchOff: true });
                 break;
+            default:
+                break;    
         }
     }
 
@@ -269,6 +272,8 @@ class DeliverySettingsComponent extends Component {
                     textReadMoreGuidance: true,
                 });
                 break;
+            default:
+                break;     
         }
     }
 
@@ -306,6 +311,8 @@ class DeliverySettingsComponent extends Component {
                     preferenceNight: !this.state.preferenceNight,
                 });
                 break;
+            default:
+                break; 
         }
     }
 
@@ -355,7 +362,7 @@ class DeliverySettingsComponent extends Component {
             <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
 
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.scrollViewFlex}>
 
                     <View style={styles.settingsView}>
                         <TouchableOpacity
@@ -518,11 +525,11 @@ class DeliverySettingsComponent extends Component {
                             {gblStrings.settingsDeliveryPreference.deliveryPreferencePushNotification}
                         </Text>
                     </View>
-                    <Text style={styles.explainPushNotification}>{'Explain Push notifications'}</Text>
+                    <Text style={styles.explainPushNotification}>Explain Push notifications</Text>
 
                     <View style={styles.pushNotificationDeviceContainer}>
                         <Text style={styles.pushNotificationDeviceText}>
-                            {'iphone XR'}
+                            iphone XR
                         </Text>
                         <Text style={styles.emailEditText} onPress={this.navigateEditNotification}>
                             {gblStrings.common.edit}
@@ -642,7 +649,7 @@ class DeliverySettingsComponent extends Component {
                             {gblStrings.common.edit}
                         </Text>
                     </View>
-                    <Text style={styles.explainTextMessage}>{'Explain Text Message'}</Text>
+                    <Text style={styles.explainTextMessage}>Explain Text Message</Text>
                     <Text style={styles.userRegisterNumberText}>{this.state.phoneno}</Text>
                     <View style={styles.registerNumberContainer}>
                         <GIcon
@@ -651,7 +658,7 @@ class DeliverySettingsComponent extends Component {
                             size={20}
                             color="#56565A"
                         />
-                        <Text style={styles.registerNumberText} onPress={this.setModalVisible(true)}>{'Register this number'}</Text>
+                        <Text style={styles.registerNumberText} onPress={this.setModalVisible(true)}>Register this number</Text>
                     </View>
 
                     <View style={styles.emailPreferenceContainer}>
@@ -766,54 +773,54 @@ class DeliverySettingsComponent extends Component {
                             {gblStrings.settingsDeliveryPreference.deliveryPreferenceAvailabilityDescPref}
                         </Text>
 
-                        <View style={styles.preferenceSectionGrp} >
+                        <View style={styles.preferenceSectionGrp}>
                             <CustomCheckBox
                                 size={20}
                                 itemBottom={0}
                                 itemTop={0}
-                                outerCicleColor={"#4D4D4D"}
-                                innerCicleColor={"#61285F"}
+                                outerCicleColor="#4D4D4D"
+                                innerCicleColor="#61285F"
                                 labelStyle={styles.preferenceSectionTxt}
-                                label={'Morning 8:00 AM - 10:00 AM'}
+                                label="Morning 8:00 AM - 10:00 AM"
                                 selected={this.state.preferenceMorning}
                                 onPress={this.setPreferenceUpdates('morning')}
                             />
                         </View>
-                        <View style={styles.preferenceSectionGrp} >
+                        <View style={styles.preferenceSectionGrp}>
                             <CustomCheckBox
                                 size={20}
                                 itemBottom={0}
                                 itemTop={0}
-                                outerCicleColor={"#4D4D4D"}
-                                innerCicleColor={"#61285F"}
+                                outerCicleColor="#4D4D4D"
+                                innerCicleColor="#61285F"
                                 labelStyle={styles.preferenceSectionTxt}
-                                label={'Mid-Day 10:00 AM - 04:00 PM'}
+                                label="Mid-Day 10:00 AM - 04:00 PM"
                                 selected={this.state.preferenceMidDay}
                                 onPress={this.setPreferenceUpdates('midDay')}
                             />
                         </View>
-                        <View style={styles.preferenceSectionGrp} >
+                        <View style={styles.preferenceSectionGrp}>
                             <CustomCheckBox
                                 size={20}
                                 itemBottom={0}
                                 itemTop={0}
-                                outerCicleColor={"#4D4D4D"}
-                                innerCicleColor={"#61285F"}
+                                outerCicleColor="#4D4D4D"
+                                innerCicleColor="#61285F"
                                 labelStyle={styles.preferenceSectionTxt}
-                                label={'Early Evening 04:00 PM - 06:00 PM'}
+                                label="Early Evening 04:00 PM - 06:00 PM"
                                 selected={this.state.preferenceEarlyEvening}
                                 onPress={this.setPreferenceUpdates('earlyEvening')}
                             />
                         </View>
-                        <View style={styles.preferenceSectionGrp} >
+                        <View style={styles.preferenceSectionGrp}>
                             <CustomCheckBox
                                 size={20}
                                 itemBottom={0}
                                 itemTop={0}
-                                outerCicleColor={"#4D4D4D"}
-                                innerCicleColor={"#61285F"}
+                                outerCicleColor="#4D4D4D"
+                                innerCicleColor="#61285F"
                                 labelStyle={styles.preferenceSectionTxt}
-                                label={'Night 06:00 PM - 09:00 PM'}
+                                label="Night 06:00 PM - 09:00 PM"
                                 selected={this.state.preferenceNight}
                                 onPress={this.setPreferenceUpdates('night')}
                             />
@@ -887,7 +894,7 @@ class DeliverySettingsComponent extends Component {
                     <Text style={styles.priorityTextContent}>
                         {gblStrings.settingsDeliveryPreference.priorityTextContentVcm}
                         <Text style={styles.priorityTextContentBold}>
-                            {'1-877-632-3002.'}
+                            1-877-632-3002.
                         </Text>
                     </Text>
                     <Text style={styles.priorityTextContent}>
@@ -904,7 +911,7 @@ class DeliverySettingsComponent extends Component {
                     >
 
                         <View style={styles.modalBackgroundView}>
-                            <View style={styles.modalCloseIcon} >
+                            <View style={styles.modalCloseIcon}>
                                 <TouchableOpacity onPress={this.setModalVisible(!this.state.modalVisible)}>
                                     <GIcon
                                         name="closecircle"
@@ -929,7 +936,7 @@ class DeliverySettingsComponent extends Component {
 
                                 <GInputComponent
                                     propInputStyle={styles.modalEnterCodeInput}
-                                    placeholder={"XXXX"}
+                                    placeholder="XXXX"
                                     onChangeText={this.setResendCode}
                                     value={this.state.resendPinCode}
                                 />
@@ -966,7 +973,7 @@ class DeliverySettingsComponent extends Component {
                                     onPress={this.setModalVisible(!this.state.modalVisible)}
                                 />
                                 <GButtonComponent
-                                    buttonStyle={this.state.resendPinCode != '' ? styles.modalSaveButton : styles.modalSaveButtonDim}
+                                    buttonStyle={this.state.resendPinCode !== '' ? styles.modalSaveButton : styles.modalSaveButtonDim}
                                     buttonText={gblStrings.common.save}
                                     textStyle={styles.saveButtonText}
                                     onPress={this.validateInputData}

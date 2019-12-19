@@ -1,24 +1,33 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 import { styles } from './styles';
 import { GHeaderComponent, GFooterSettingsComponent, GIcon, GButtonComponent } from '../../CommonComponents';
-import PropTypes from 'prop-types';
 import { CustomCheckBox } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class AccountMessagingDeviceManagementComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             deviceSelected: false
         };
     }
 
+    componentDidMount() {
+        if (this.props && this.props.accMessageDeviceinitialState){
+            if(this.props.accMessageDeviceinitialState.deviceSelected)
+                this.setState({ deviceSelected : this.props.accMessageDeviceinitialState.deviceSelected });
+        }        
+    }
+
     goBack = () => {
         this.props.navigation.goBack();
     }
+
+    navigategeneralSettings = () => this.props.navigation.navigate('generalSettings');
 
     saveButtonAction = () => {        
         console.log('Save Button Clicked...');       
@@ -32,16 +41,7 @@ class AccountMessagingDeviceManagementComponent extends Component {
 
     setDeviceState = () => {     
         this.setState({deviceSelected : !this.state.deviceSelected });
-    }
-
-    navigategeneralSettings = () => this.props.navigation.navigate('generalSettings');
-
-    componentDidMount() {
-        if (this.props && this.props.accMessageDeviceinitialState){
-            (this.props.accMessageDeviceinitialState.deviceSelected);
-                this.setState({ deviceSelected : this.props.accMessageDeviceinitialState.deviceSelected });
-        }        
-    }
+    }   
    
     render() {
         return (
@@ -49,7 +49,7 @@ class AccountMessagingDeviceManagementComponent extends Component {
                 <GHeaderComponent
                     navigation={this.props.navigation}
                 />
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.settingsView}>
                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.navigategeneralSettings}>
                             <Text style={styles.settingsInfo}>
@@ -96,15 +96,15 @@ class AccountMessagingDeviceManagementComponent extends Component {
                             {gblStrings.settingAccountMessaging.accountMessagingDeviceManageDeviceRemove}
                         </Text>
 
-                        <View style={styles.deviceSectionGrp} >
+                        <View style={styles.deviceSectionGrp}>
                             <CustomCheckBox
                                 size={20}
                                 itemBottom={0}
                                 itemTop={0}
-                                outerCicleColor={"#707070"}
-                                innerCicleColor={"#61285F"}
+                                outerCicleColor="#707070"
+                                innerCicleColor="#61285F"
                                 labelStyle={styles.deviceSectionTxt}
-                                label={'iPhone XR'}
+                                label="iPhone XR"
                                 selected={this.state.deviceSelected}
                                 onPress={this.setDeviceState}
                             />                            

@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, } from 'react-native';
+import PropTypes from 'prop-types';
 import { styles } from './styles';
 import { GHeaderComponent, GFooterSettingsComponent, GIcon } from '../../CommonComponents';
-import PropTypes from 'prop-types';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class AccountMessagingSecurityAndFraud extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
         };
+    }
+
+    componentDidMount() {
     }
 
     goBack = () => {
@@ -20,12 +23,9 @@ class AccountMessagingSecurityAndFraud extends Component {
 
     navigategeneralSettings = () => this.props.navigation.navigate('generalSettings');
 
-    navigateSecurityPage() {
+    navigateSecurityPage=()=> {
         alert('Navigate to Security Page');
-    }
-
-    componentDidMount() {
-    }
+    }   
 
     render() {
         return (
@@ -33,7 +33,7 @@ class AccountMessagingSecurityAndFraud extends Component {
                 <GHeaderComponent
                     navigation={this.props.navigation}
                 />
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.settingsView}>
                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.navigategeneralSettings}>
                             <Text style={styles.settingsInfo}>

@@ -1,25 +1,24 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 import { styles } from './styles';
 import {
     GHeaderComponent,
     GIcon,
     GFooterSettingsComponent,
 } from '../../CommonComponents';
-import PropTypes from 'prop-types';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class AccountMessagingSettingsComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
         };
-    }
-    goBack = () => {
-        this.props.navigation.goBack();
-    };
+    }   
+
+    componentDidMount() { }
 
     navigateaccountMessagingGoals = () =>
         this.props.navigation.navigate('accountMessagingGoals');
@@ -34,15 +33,17 @@ class AccountMessagingSettingsComponent extends Component {
         this.props.navigation.navigate('AccountMessagingSecurityAndFraud');
 
     navigateaccountMessagingDeviceManagement = () =>
-        this.props.navigation.navigate('accountMessagingDeviceManagement');
+        this.props.navigation.navigate('accountMessagingDeviceManagement');   
 
-    componentDidMount() { }
+    goBack = () => {
+        this.props.navigation.goBack();
+    };
 
     render() {
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.settingsView}>
                         <TouchableOpacity
                             style={styles.touchOpacityPosition}

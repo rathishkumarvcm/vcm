@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView} from 'react-native';
+import PropTypes from 'prop-types';
 import { styles } from './styles';
 import { GInputComponent,GButtonComponent, GHeaderComponent, GFooterSettingsComponent } from '../../CommonComponents';
-import PropTypes from 'prop-types';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class VerifyMobileComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             validateMobile : false,
@@ -22,16 +22,15 @@ class VerifyMobileComponent extends Component {
 
     navigateVerifyOTP = () =>{
         // Joint Account , New User
-        const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));   
+        const specialMFAUserType = (this.props && this.props.navigation.getParam('SpecialMFA',''));   
         this.props.navigation.navigate('passwordRecoveryOtp',{fromPage:'SpecialMFA',SpecialMFA:specialMFAUserType});   
     }
 
     isEmpty = (str) => {
-        if (str == "" || str == undefined || str == "null" || str == "undefined") {
+        if (str === "" || str === undefined || str === "null" || str === "undefined") {
             return true;
-        } else {
-            return false;
-        }
+        } 
+        return false;        
     }
 
     setMobileNumber = text => {
@@ -48,17 +47,17 @@ class VerifyMobileComponent extends Component {
     }
     
     render(){
-        const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));   
+        const specialMFAUserType = (this.props && this.props.navigation.getParam('SpecialMFA',''));         
         return(
             <View style={styles.container}>
             {/* {
                 this.props.stateCityData.isLoading && <GLoadingSpinner />
             } */}
                 <GHeaderComponent navigation={this.props.navigation} />                    
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.headContainer}>        
                     {
-                        (specialMFAUserType!="" && specialMFAUserType!="UserForm")?
+                        (specialMFAUserType!=="" && specialMFAUserType!=="UserForm")?
                         <View style={styles.pagerContainer}>
                             <View style={styles.pagerOne} />    
                             <View style={styles.pagerOne} />    
@@ -80,8 +79,8 @@ class VerifyMobileComponent extends Component {
 
                         <GInputComponent 
                             propInputStyle={styles.mobileNumberInputText} 
-                            placeholder={""}
-                            keyboardType={'numeric'}
+                            placeholder=""
+                            keyboardType="numeric"
                             maxLength={gblStrings.maxLength.mobileNo}                            
                             onChangeText={this.setMobileNumber}                         
                             value={this.state.mobileNumber}

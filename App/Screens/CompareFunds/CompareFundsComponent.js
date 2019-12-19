@@ -1,35 +1,35 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 import { styles } from './styles';
 import { GHeaderComponent, GIcon, GFooterSettingsComponent, GRatingStarsComponent, GLoadingSpinner, GButtonComponent } from '../../CommonComponents';
-import PropTypes from 'prop-types';
 import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 class CompareFundsComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
         };
+    }   
+
+    componentDidMount() {
+        const payload = this.props.navigation.getParam('fundDetails', '');
+        this.props.getFundDetailsData(payload);
+        console.log('Payload:',payload);
     }
 
     goBack = () => {
         this.props.navigation.goBack();
     };
 
-    componentDidMount() {
-        const payload = this.props.navigation.getParam('fundDetails', '');
-        this.props.getFundDetailsData(payload);
-        console.log('Payload:' + payload);
-    }
-
     render() {
-        var compareFundsData = [];
+        let compareFundsData = [];
         if (this.props && this.props.fundDetailsData && this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS] && this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS].result) {
             compareFundsData = this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS].result;
-            console.log('Fund Data : ' + JSON.stringify(compareFundsData));
+            console.log('Fund Data : ' , JSON.stringify(compareFundsData));
         }
         return (
             <View style={styles.container}>
@@ -67,14 +67,13 @@ class CompareFundsComponent extends Component {
                         <View style={styles.lineBorder} />
                     </View>                   
 
-                    <View style={{flexDirection:'row'}}>     
+                    <View style={styles.fundCategoryView}>     
                         {/* Compare Fund Category */}                                                         
                         <View style={styles.fundCompareContainer}>
                             <View style={styles.fundComparePerformanceHeadContainer}>
                                 <View style={styles.fundCompareHeadContents}>
-                                    <Text style={styles.fundComparePerformanceTitle}>
-                                        {''}
-                                    </Text>
+                                    <Text style={styles.fundComparePerformanceTitle} />                                         
+                                   
                                     <Text style={styles.fundComparePerformanceTitle}>
                                         {gblStrings.compareFunds.performance}
                                     </Text>
@@ -148,7 +147,7 @@ class CompareFundsComponent extends Component {
                                         {gblStrings.compareFunds.afterImbursement}
                                     </Text>
                                     <Text style={styles.fundComparePriceTitle}>
-                                        {gblStrings.compareFunds.ytd}
+                                        {gblStrings.accManagement.YTD}
                                     </Text>
                                 </View>
                             </View>
@@ -177,13 +176,12 @@ class CompareFundsComponent extends Component {
                             horizontal
                             sc={false}
                             showsHorizontalScrollIndicator={false}
-                            contentContainerStyle={{ flexDirection: 'row',flexGrow: 1}}
+                            contentContainerStyle={styles.scrollViewFlex}
                         >  
                         {
-                        compareFundsData.map((item,index) => {
-                            //console.log("Item======",item);   
+                        compareFundsData.map((item) => {                            
                             return (                        
-                                <View style={styles.fundCompareContainer} key={index}>
+                                <View style={styles.fundCompareContainer} key={item.fundNumber}>
                                     <View style={styles.fundDetailsHeadContainer}>
                                         <View style={styles.fundDetailsHeadContents}>
                                             <Text style={styles.fundDetailsHeadTitle}>
@@ -201,88 +199,82 @@ class CompareFundsComponent extends Component {
                                                 {item.performanceDetails.totalReturns.monthly["10year"]}
                                             </Text>
                                             <Text style={styles.fundDetailsContents}>
-                                                {item.performanceDetails.totalReturns.monthly["ytd"]}
+                                                {item.performanceDetails.totalReturns.monthly.ytd}
                                             </Text>
                                         </View>
                                     </View>
 
                                     <View style={styles.fundDetailsPriceHeadContainer}>
                                         <View style={styles.fundDetailsPriceContents}>
-                                            <Text style={styles.fundComparePriceTitle}>
-                                                {''}
+                                            <Text style={styles.fundComparePriceTitle} />                                               
+                                           
+                                            <Text style={styles.fundDetailsContents1}>
+                                                {item.performanceDetails.totalReturns.monthly.sinceInception}
                                             </Text>
                                             <Text style={styles.fundDetailsContents1}>
-                                                {item.performanceDetails.totalReturns.monthly["sinceInception"]}
+                                                {item.performanceDetails.totalReturns.monthly.asOfDate}
                                             </Text>
                                             <Text style={styles.fundDetailsContents1}>
-                                                {item.performanceDetails.totalReturns.monthly["asOfDate"]}
-                                            </Text>
-                                            <Text style={styles.fundDetailsContents1}>
-                                                {gblStrings.common.dollar}{item.nav["value"]}
+                                                {gblStrings.common.dollar}{item.nav.value}
                                             </Text>
                                         </View>
                                     </View>
 
                                     <View style={styles.fundDetailsPriceHeadContainer}>
                                         <View style={styles.fundDetailsSECContents}>
+                                            <Text style={styles.fundDetailsContents1} />                                                
+                                           
                                             <Text style={styles.fundDetailsContents1}>
-                                                {''}
+                                                {item.SecYields.SecYields_30}
                                             </Text>
                                             <Text style={styles.fundDetailsContents1}>
-                                                {item.SecYields["SecYields_30"]}
+                                                {item.SecYields.SecYields_7}
                                             </Text>
                                             <Text style={styles.fundDetailsContents1}>
-                                                {item.SecYields["SecYields_7"]}
-                                            </Text>
-                                            <Text style={styles.fundDetailsContents1}>
-                                                {item.SecYields["SecYields_WoWaivers"]}
+                                                {item.SecYields.SecYields_WoWaivers}
                                             </Text>
                                         </View>
                                     </View>
 
                                     <View style={styles.fundDetailsPriceHeadContainer}>
                                         <View style={styles.fundDetailsExpenseRatioContents}>
-                                            <Text style={styles.fundComparePriceHeadTitle}>
-                                                {''}
+                                            <Text style={styles.fundComparePriceHeadTitle} />                                                
+                                           
+                                            <Text style={styles.fundDetailsContents1}>
+                                                {item.expenseRatio.expenseRatio}
+                                            </Text>
+                                            <Text style={styles.fundCompareExpenseRatioTitle} />                                               
+                                            
+                                            <Text style={styles.fundDetailsImburseTitle}>
+                                                {item.expenseRatio.expenseRatio_BR}
+                                            </Text>
+                                            <Text style={styles.fundCompareExpenseRatioTitle} />                                               
+                                          
+                                            <Text style={styles.fundDetailsImburseTitle}>
+                                                {item.expenseRatio.expenseRatio_AR}
                                             </Text>
                                             <Text style={styles.fundDetailsContents1}>
-                                                {item.expenseRatio["expenseRatio"]}
-                                            </Text>
-                                            <Text style={styles.fundCompareExpenseRatioTitle}>
-                                                {''}
-                                            </Text>
-                                            <Text style={styles.fundDetailsImburseTitle}>
-                                                {item.expenseRatio["expenseRatio_BR"]}
-                                            </Text>
-                                            <Text style={styles.fundCompareExpenseRatioTitle}>
-                                                {''}
-                                            </Text>
-                                            <Text style={styles.fundDetailsImburseTitle}>
-                                                {item.expenseRatio["expenseRatio_AR"]}
-                                            </Text>
-                                            <Text style={styles.fundDetailsContents1}>
-                                                {'-'}
+                                                -
                                             </Text>
                                         </View>
                                     </View>
 
                                     <View style={styles.fundDetailsPriceHeadContainer}>
                                         <View style={styles.fundDetailsRatingsContents}>
-                                            <Text style={styles.fundCompareRatingsHeadTitle}>
-                                                {''}
-                                            </Text>                                                
+                                            <Text style={styles.fundCompareRatingsHeadTitle} />                                               
+                                                                                        
                                             <View style={styles.ratingStar}>
-                                                <GRatingStarsComponent rating={parseInt(item.morningstarRating["value"])}
+                                                <GRatingStarsComponent rating={parseInt(item.morningstarRating.value,10)}
                                                     ratedStarColor="#393535"
                                                     unRatedStarColor="#DCDCDC"
-                                                    size={20}
+                                                    size={15}
                                                 />
                                             </View>
                                             <Text style={styles.fundDetailsCategoryTitle}>
-                                                {item["morningstarCategory"]}
+                                                {item.morningstarCategory}
                                             </Text>
                                             <Text style={styles.fundDetailsContents1}>
-                                                {item["categoryFunds"]}
+                                                {item.categoryFunds}
                                             </Text>
                                         </View>
                                     </View>

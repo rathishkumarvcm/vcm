@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, } from 'react-native';
+import PropTypes from 'prop-types';
 import { styles } from './styles';
 import { GHeaderComponent, GFooterSettingsComponent, GIcon, GButtonComponent } from '../../CommonComponents';
 import { CustomRadio } from '../../AppComponents';
-import PropTypes from 'prop-types';
 import gblStrings from '../../Constants/GlobalStrings';
 
 const documentsTypes = [
@@ -22,7 +22,7 @@ const documentsTypesConfirm = [
 class AccountMessagingGeneralDocumentsComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,            
 
@@ -38,17 +38,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
             selectedGeneralDocumentsPrivacyItemID: '1',
             selectedGeneralDocumentsPrivacyItemName: gblStrings.settingAccountMessaging.accountMessagingGeneralPaper
         };
-    }    
-
-    goBack = () => {
-        this.props.navigation.goBack();
-    }
-
-    navigategeneralSettings = () => this.props.navigation.navigate('generalSettings');
-
-    navigateFAQPage(){
-       alert('Navigate to Faq ');     
-    }
+    }        
 
     componentDidMount() {
         if (this.props && this.props.accMessageDocumentinitialState && this.props.accMessageDocumentinitialState.selectedTaxDocumentsItemID) {
@@ -64,6 +54,14 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
             this.setState({ selectedGeneralDocumentsPrivacyItemID: this.props.accMessageDocumentinitialState.selectedGeneralDocumentsPrivacyItemID });
         }
     }
+
+    goBack = () => {
+        this.props.navigation.goBack();
+    }
+
+    navigategeneralSettings = () => this.props.navigation.navigate('generalSettings');
+
+    
 
     onSelected = (item,fromType) =>()=> {        
         switch(fromType){
@@ -88,6 +86,8 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                 }
             );  
             break;
+            default:
+                break;
         }           
     }
 
@@ -100,14 +100,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
     }
 
     saveButtonAction = () => {
-        console.log('Save Button Clicked...');           
-        console.log('---Tax Documents---');
-        console.log(this.state.selectedTaxDocumentsItemName+":",this.state.selectedTaxDocumentsItemID);
-        console.log(this.state.selectedConfirmItemName+":",this.state.selectedConfirmItemID);
-        console.log('---General Documents---');
-        console.log(this.state.selectedGeneralDocumentsAnnualItemName+":",this.state.selectedGeneralDocumentsAnnualItemID);
-        console.log(this.state.selectedGeneralDocumentsPrivacyItemName+":",this.state.selectedGeneralDocumentsPrivacyItemID);  
-
+        console.log('Save Button Clicked...');         
         const payloadData = {
             selectedTaxDocumentsItemID : this.state.selectedTaxDocumentsItemID,
             selectedConfirmItemID:this.state.selectedConfirmItemID,
@@ -118,7 +111,11 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
         this.props.navigation.goBack();        
     }
 
-    renderToolTip(){       
+    navigateFAQPage=()=>{
+        alert('Navigate to Faq ');     
+     }
+
+    renderToolTip=()=>{       
         return(
             <View>                
                 <View style={styles.tooltipContainerIcon}>               
@@ -140,7 +137,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                 <GHeaderComponent
                     navigation={this.props.navigation}
                 />
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.settingsView}>
                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.navigategeneralSettings}>
                             <Text style={styles.settingsInfo}>
@@ -202,7 +199,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                             {gblStrings.settingAccountMessaging.accountMessagingGeneralHowLike}
                         </Text> 
 
-                        <View style={styles.radioBtnGrp} >
+                        <View style={styles.radioBtnGrp}>
                             {
                                 documentsTypes.map((item) => {
                                 return (
@@ -212,17 +209,17 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                             size={30}
                                             itemBottom={10}
                                             itemTop={10}
-                                            outerCicleColor={"#DEDEDF"}
-                                            innerCicleColor={"#61285F"}
+                                            outerCicleColor="#DEDEDF"
+                                            innerCicleColor="#61285F"
                                             labelStyle={styles.lblRadioBtnTxt}
                                             label={item.name}     
                                             descLabelStyle={styles.lblRadioDescTxt}
-                                            descLabel={""}                                                             
-                                            selected={(this.state.selectedTaxDocumentsItemID !== "" && item.key == this.state.selectedTaxDocumentsItemID) ? true : false}
+                                            descLabel=""                                                             
+                                            selected={(this.state.selectedTaxDocumentsItemID !== "" && item.key === this.state.selectedTaxDocumentsItemID) ? true : false}
                                             onPress={this.onSelected(item,'taxDocuments')}
                                         />
                                         {
-                                        (this.state.selectedTaxDocumentsItemID !== "" && (item.key == this.state.selectedTaxDocumentsItemID && item.key == 'online') || (item.key == this.state.selectedTaxDocumentsItemID && item.key == 'braille')) ? 
+                                        (this.state.selectedTaxDocumentsItemID !== "" && (item.key === this.state.selectedTaxDocumentsItemID && item.key === 'online') || (item.key === this.state.selectedTaxDocumentsItemID && item.key === 'braille')) ? 
                                             this.renderToolTip()
                                         : null
                                         }                                 
@@ -235,7 +232,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                             {gblStrings.settingAccountMessaging.accountMessagingGeneralWouldLike}
                         </Text>
                         
-                        <View style={styles.radioBtnGrpConfirm} >
+                        <View style={styles.radioBtnGrpConfirm}>
                             {documentsTypesConfirm.map((item) => {
                                 return (
                                     <CustomRadio
@@ -243,13 +240,13 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                         size={30}
                                         itemBottom={10}
                                         itemTop={10}
-                                        outerCicleColor={"#DEDEDF"}
-                                        innerCicleColor={"#61285F"}
+                                        outerCicleColor="#DEDEDF"
+                                        innerCicleColor="#61285F"
                                         labelStyle={styles.lblRadioBtnTxt}
                                         label={item.name}          
                                         descLabelStyle={styles.lblRadioDescTxt}
-                                        descLabel={""}                                                              
-                                        selected={(this.state.selectedConfirmItemID !== "" && item.key == this.state.selectedConfirmItemID) ? true : false}
+                                        descLabel=""                                                             
+                                        selected={(this.state.selectedConfirmItemID !== "" && item.key === this.state.selectedConfirmItemID) ? true : false}
                                         onPress={this.onSelectedConfirm(item)}
                                     />
                                 );
@@ -278,7 +275,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                         <Text style={styles.taxDocumentAlertsContent}>
                             {gblStrings.settingAccountMessaging.accountMessagingGeneralAnnualReport}  
                         </Text>
-                            <View style={styles.radioBtnGrp} >
+                            <View style={styles.radioBtnGrp}>
                                 {documentsTypes.map((item) => {
                                     return (
                                         <View key={item.key}> 
@@ -287,17 +284,17 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                                 size={30}
                                                 itemBottom={10}
                                                 itemTop={10}
-                                                outerCicleColor={"#DEDEDF"}
-                                                innerCicleColor={"#61285F"}
+                                                outerCicleColor="#DEDEDF"
+                                                innerCicleColor="#61285F"
                                                 labelStyle={styles.lblRadioBtnTxt}
                                                 label={item.name}     
                                                 descLabelStyle={styles.lblRadioDescTxt}
-                                                descLabel={""}                                                                   
-                                                selected={(this.state.selectedGeneralDocumentsAnnualItemID !== "" && item.key == this.state.selectedGeneralDocumentsAnnualItemID) ? true : false}
+                                                descLabel=""                                                                   
+                                                selected={(this.state.selectedGeneralDocumentsAnnualItemID !== "" && item.key === this.state.selectedGeneralDocumentsAnnualItemID) ? true : false}
                                                 onPress={this.onSelected(item,'generalDocumentsAnnual')}
                                             />
                                             {
-                                                (this.state.selectedGeneralDocumentsAnnualItemID !== "" && (item.key == this.state.selectedGeneralDocumentsAnnualItemID && item.key == 'online') || (item.key == this.state.selectedGeneralDocumentsAnnualItemID && item.key == 'braille')) ? 
+                                                (this.state.selectedGeneralDocumentsAnnualItemID !== "" && (item.key === this.state.selectedGeneralDocumentsAnnualItemID && item.key === 'online') || (item.key === this.state.selectedGeneralDocumentsAnnualItemID && item.key === 'braille')) ? 
                                                     this.renderToolTip()
                                                 : null
                                             }    
@@ -311,7 +308,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                             <Text style={styles.taxDocumentAlertsContent}>
                                 {gblStrings.settingAccountMessaging.accountMessagingGeneralPrivacyPromise}  
                             </Text>
-                            <View style={styles.radioBtnGrp} >
+                            <View style={styles.radioBtnGrp}>
                                 {documentsTypes.map((item) => {
                                     return (
                                         <View key={item.key}>
@@ -320,17 +317,17 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                                 size={30}
                                                 itemBottom={10}
                                                 itemTop={10}
-                                                outerCicleColor={"#DEDEDF"}
-                                                innerCicleColor={"#61285F"}
+                                                outerCicleColor="#DEDEDF"
+                                                innerCicleColor="#61285F"
                                                 labelStyle={styles.lblRadioBtnTxt}
                                                 label={item.name}      
                                                 descLabelStyle={styles.lblRadioDescTxt}
-                                                descLabel={""}                                                                  
-                                                selected={(this.state.selectedGeneralDocumentsPrivacyItemID !== "" && item.key == this.state.selectedGeneralDocumentsPrivacyItemID) ? true : false}
+                                                descLabel=""                                                                 
+                                                selected={(this.state.selectedGeneralDocumentsPrivacyItemID !== "" && item.key === this.state.selectedGeneralDocumentsPrivacyItemID) ? true : false}
                                                 onPress={this.onSelected(item,'generalDocumentsPrivacy')}
                                             />
                                             {
-                                                (this.state.selectedGeneralDocumentsPrivacyItemID !== "" && (item.key == this.state.selectedGeneralDocumentsPrivacyItemID && item.key == 'online') || (item.key == this.state.selectedGeneralDocumentsPrivacyItemID && item.key == 'braille')) ? 
+                                                (this.state.selectedGeneralDocumentsPrivacyItemID !== "" && (item.key === this.state.selectedGeneralDocumentsPrivacyItemID && item.key === 'online') || (item.key === this.state.selectedGeneralDocumentsPrivacyItemID && item.key === 'braille')) ? 
                                                     this.renderToolTip()
                                                 : null
                                             }  

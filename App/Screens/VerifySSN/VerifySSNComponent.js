@@ -29,9 +29,8 @@ class VerifySSNComponent extends Component {
     isEmpty = (str) => {
         if (str === "" || str === undefined || str === "null" || str === "undefined") {
             return true;
-        }else {
-            return false;
         }
+        return false;        
     }
 
     setSocialSecurityNumber = text => {
@@ -49,7 +48,7 @@ class VerifySSNComponent extends Component {
     
     render(){                        
         const specialMFAUserType =(this.props.navigation.getParam('SpecialMFA',''));      
-        console.log("UserType-----"+specialMFAUserType);
+        console.log(`UserType-----${specialMFAUserType}`);
         return(
             <View style={styles.container}>
             {/* {

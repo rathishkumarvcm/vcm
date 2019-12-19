@@ -2,19 +2,131 @@ import { StyleSheet } from 'react-native';
 import { scaledHeight } from '../../Utils/Resolution';
 
 export const styles = StyleSheet.create({
+    alertIconText: {
+        color: '#707070',
+        fontSize: scaledHeight(14),
+        marginLeft: '4%',
+        width:'80%',            
+    },
+    alertIconView: {
+        alignItems: 'center',
+        flexDirection: 'row',       
+        marginTop: scaledHeight(10),        
+    },
+    alertsForDocumentTitle:{
+        color: '#707070',
+        fontSize: scaledHeight(16),
+        fontWeight:'bold',
+        textTransform:'uppercase'
+    },
+    alertsForDocumentsContainer:{
+        backgroundColor:'#F5F6F7',
+        borderColor:'#EBEDEF',
+        borderWidth:1,
+        marginLeft:'4%',
+        marginRight:'4%',
+        marginTop:scaledHeight(24),
+        paddingBottom:scaledHeight(15),
+        paddingLeft:'4%',
+        paddingRight:'4%',
+        paddingTop:scaledHeight(15)
+    },
+    cancelButton:{
+        alignItems:'center',
+        backgroundColor:'#FFFFFF',
+        borderColor:'#7B8288',
+        borderWidth:1,
+        height:scaledHeight(55),        
+        justifyContent:'center',       
+        marginLeft:'10%',
+        marginRight:'10%',
+        marginTop:scaledHeight(28),
+        width:'80%',          
+     },
+    cancelButtonText:{
+        color:'#544A54',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold'
+    },
+    confirmationText:{
+        color: '#707070',
+        fontSize: scaledHeight(14),       
+        fontWeight:'bold',
+        marginTop: scaledHeight(12)
+    },      
     container: {
-        flex: 1,
         backgroundColor: '#F7FAFF',
+        flex: 1,
         width: '100%',
     },
-    settingsView: {       
-        flexDirection: 'row',
+    generalDocumentDisclaimerView:{        
+        backgroundColor: '#F1F1F2',
+        marginLeft: '4%',
+        marginRight:'4%',
+        paddingBottom:scaledHeight(14),
+        paddingTop:scaledHeight(14),               
+    },
+    generalDocumentDisclaimerViewFaq: {       
+        color: '#2A92EE',
+        textDecorationLine: 'underline',        
+    },
+    generalDocumentDisclaimerViewTitle:{
+        
+        color: '#707070',
+        fontSize: scaledHeight(14),
+        paddingBottom:scaledHeight(4),
+        paddingLeft:'6%',
+        paddingRight:'6%',
+        paddingTop:scaledHeight(4),            
+    },
+    lblRadioBtnTxt:{
+        color:'#333333DE',
         flexWrap:'wrap',
-        marginTop: scaledHeight(18),
-        paddingLeft: '4%',
-        paddingRight: '4%',           
-        alignContent:'center',
-        alignItems:'center',    
+        fontSize:scaledHeight(16),
+        lineHeight:28,
+        marginLeft:'1%'
+    },
+    lblRadioDescTxt:{
+        color:'#333333DE',
+        flexWrap:'wrap',
+        fontSize:scaledHeight(14),
+        lineHeight:22,
+        marginTop:scaledHeight(5),
+        opacity:.75
+    },
+    lineBorder: {       
+        borderColor: '#EBEDEF',          
+        borderWidth: 0.6,       
+        marginBottom: scaledHeight(18),       
+        marginTop: scaledHeight(18),       
+    },
+    radioBtnGrp:{
+        flexGrow:1,         
+        marginTop:scaledHeight(14)   
+    },
+    radioBtnGrpConfirm:{        
+        flexDirection:"row", 
+        width:'30%',       
+    },
+    saveButton:{
+        alignItems:'center',
+        backgroundColor:'#56565A',
+        borderColor:'#56565A',
+        borderWidth:1,
+        height:scaledHeight(55),        
+        justifyContent:'center',       
+        marginLeft:'10%',
+        marginRight:'10%',
+        marginTop:scaledHeight(25),
+        width:'80%',              
+     },
+    saveButtonText:{
+        color:'#FFFFFF',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold'
+    },
+    scrollViewFlex:{
+        flex: 0.85 
     },
     settingsInfo: {
         color: '#B2B2B2',
@@ -26,195 +138,86 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(14),
         fontWeight: 'bold',        
     },
-    touchOpacityPosition: {
-        position: 'relative',
-    },
     settingsInfoHead: {
-        width: '100%',
         marginTop: scaledHeight(18),
         paddingLeft: '4%',
-        paddingRight: '4%',       
+        paddingRight: '4%',
+        width: '100%',       
     },
     settingsInfoHeadTilte: {
         color: '#56565A',
         fontSize: scaledHeight(20),
         fontWeight: 'bold',
         paddingBottom:scaledHeight(4)
-    },      
-    alertsForDocumentsContainer:{
-        borderWidth:1,
-        borderColor:'#EBEDEF',
-        backgroundColor:'#F5F6F7',
-        marginLeft:'4%',
-        marginRight:'4%',
-        marginTop:scaledHeight(24),
-        paddingLeft:'4%',
-        paddingRight:'4%',
-        paddingTop:scaledHeight(15),
-        paddingBottom:scaledHeight(15)
     },
-    alertsForDocumentTitle:{
+    settingsView: {       
+        alignContent:'center',
+        alignItems:'center',
+        flexDirection: 'row',
+        flexWrap:'wrap',
+        marginTop: scaledHeight(18),           
+        paddingLeft: '4%',
+        paddingRight: '4%',    
+    },
+    taxDocumentAlertsContent: {
         color: '#707070',
-        fontSize: scaledHeight(16),
+        fontSize: scaledHeight(14),       
         fontWeight:'bold',
-        textTransform:'uppercase'
-    },
-    alertIconView: {
-        flexDirection: 'row',
-        marginTop: scaledHeight(10),       
-        alignItems: 'center',        
-    },
-    alertIconText: {
-        width:'80%',
-        fontSize: scaledHeight(14),
-        marginLeft: '4%',
-        color: '#707070',            
-    },
-    taxDocumentcontainer: { 
-        borderWidth: 0.5,
-        borderColor: '#EBEDEF',      
-        backgroundColor: '#FFFFFF',
-        marginTop: scaledHeight(18),       
-        width: '92%',       
-        marginLeft: '4%',
-        marginRight: '4%',
-    },
-    taxDocumentcontainerBottom: {       
-        borderWidth: 1,
-        borderTopWidth:0.5,
-        borderColor: '#EBEDEF',
-        backgroundColor: '#FFFFFF',      
-        width: '92%',       
-        marginLeft: '4%',
-        marginRight: '4%',
-        padding:'4%'
-    },
-    taxDocumentHeaderview: {
-        flexDirection: 'row',
-        width: '100%',
-        paddingLeft: '2%',
-        paddingTop:scaledHeight(14),
-        paddingBottom:scaledHeight(14),
-        backgroundColor: '#F1F1F2',
-        alignItems: 'center',
+        marginTop: scaledHeight(5)
     },
     taxDocumentHeaderViewTitle: {
         color: '#707070',
         fontSize: scaledHeight(16),
         marginLeft: '3%',       
     },
-    lineBorder: {       
-        borderWidth: 0.6,          
-        borderColor: '#EBEDEF',       
-        marginTop: scaledHeight(18),       
-        marginBottom: scaledHeight(18),       
-    },
-    taxDocumentAlertsContent: {
-        color: '#707070',
-        fontSize: scaledHeight(14),       
-        marginTop: scaledHeight(5),
-        fontWeight:'bold'
-    },
-    radioBtnGrp:{
-        flexGrow:1,         
-        marginTop:scaledHeight(14)   
-    },
-    lblRadioBtnTxt:{
-        color:'#333333DE',
-        fontSize:scaledHeight(16),
-        lineHeight:28,
-        flexWrap:'wrap',
-        marginLeft:'1%'
-    },
-    lblRadioDescTxt:{
-        marginTop:scaledHeight(5),
-        color:'#333333DE',
-        fontSize:scaledHeight(14),
-        lineHeight:22,
-        flexWrap:'wrap',
-        opacity:.75
-    },
-    confirmationText:{
-        color: '#707070',
-        fontSize: scaledHeight(14),       
-        marginTop: scaledHeight(12),
-        fontWeight:'bold'
-    },
-    radioBtnGrpConfirm:{        
-        flexDirection:"row", 
-        width:'30%',       
-    },
-    generalDocumentDisclaimerView:{        
-        marginLeft: '4%',
-        marginRight:'4%',
-        paddingTop:scaledHeight(14),
+    taxDocumentHeaderview: {
+        alignItems: 'center',
+        backgroundColor: '#F1F1F2',
+        flexDirection: 'row',
         paddingBottom:scaledHeight(14),
-        backgroundColor: '#F1F1F2',               
+        paddingLeft: '2%',
+        paddingTop:scaledHeight(14),
+        width: '100%',
     },
-    generalDocumentDisclaimerViewTitle:{
-        
-        paddingLeft:'6%',
-        paddingRight:'6%',
-        paddingTop:scaledHeight(4),
-        paddingBottom:scaledHeight(4),
-        color: '#707070',
-        fontSize: scaledHeight(14),            
+     taxDocumentcontainer: { 
+        backgroundColor: '#FFFFFF',
+        borderColor: '#EBEDEF',      
+        borderWidth: 0.5,
+        marginLeft: '4%',       
+        marginRight: '4%',       
+        marginTop: scaledHeight(18),
+        width: '92%',
     },
-    generalDocumentDisclaimerViewFaq: {       
-        color: '#2A92EE',
-        textDecorationLine: 'underline',        
+    taxDocumentcontainerBottom: {       
+        backgroundColor: '#FFFFFF',
+        borderColor: '#EBEDEF',
+        borderTopWidth:0.5,
+        borderWidth: 1,      
+        marginLeft: '4%',       
+        marginRight: '4%',
+        padding:'4%',
+        width: '92%'
     },
-    cancelButton:{
-        borderColor:'#7B8288',
-        borderWidth:1,
-        width:'80%',
-        marginLeft:'10%',
-        marginRight:'10%',        
-        marginTop:scaledHeight(28),       
-        height:scaledHeight(55),
-        backgroundColor:'#FFFFFF',
-        alignItems:'center',
-        justifyContent:'center',          
-     },
-     cancelButtonText:{
-        fontSize:scaledHeight(16),
-        color:'#544A54',
-        fontWeight:'bold'
+     tooltipContainer:{                               
+        marginLeft:'8%', 
+        marginTop:scaledHeight(2)       
     },
-    saveButton:{
-        borderColor:'#56565A',
-        borderWidth:1,
-        width:'80%',
-        marginLeft:'10%',
-        marginRight:'10%',        
-        marginTop:scaledHeight(25),       
-        height:scaledHeight(55),
-        backgroundColor:'#56565A',
-        alignItems:'center',
-        justifyContent:'center',              
-     },
-     saveButtonText:{
-        fontSize:scaledHeight(16),
-        color:'#FFFFFF',
-        fontWeight:'bold'
-    },
-    tooltipContainer:{                               
-        marginTop:scaledHeight(2), 
-        marginLeft:'8%'       
-    },    
     tooltipContainerIcon:{     
-        flexDirection: 'row',        
-        backgroundColor:'#F1F1F2',       
+        backgroundColor:'#F1F1F2',        
+        flexDirection: 'row',       
+        marginBottom:scaledHeight(10),
         marginLeft:'1%',
         marginRight:'1%',
-        marginBottom:scaledHeight(10),
         marginTop:scaledHeight(2),
         padding:'3%'
     },    
     tooltipContainerText:{       
-        fontSize:scaledHeight(16),
-        color:'#56565A', 
+        color:'#56565A',
+        fontSize:scaledHeight(16), 
         marginRight:'10%'               
+    },    
+    touchOpacityPosition: {
+        position: 'relative',
     },
 
 });

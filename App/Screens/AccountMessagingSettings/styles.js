@@ -3,16 +3,45 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 export const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#F7FAFF',
+        flex: 1,
         width: '100%'
-    }, settingsView: {
+    }, listContainer: {
+        backgroundColor: '#FFFFFF',
+        borderColor: '#D4D4D4',
+        borderRadius: scaledHeight(16),
+        borderWidth: 1,
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop: scaledHeight(24),
+        width: '92%',
+    }, listContainerItem: {
+        alignItems: 'center',
         flexDirection: 'row',
-        width: '100%',
-        marginTop: scaledHeight(18),
-        paddingLeft: '4%',
-        paddingRight: '4%',
-    }, settingsInfo: {
+        marginLeft: '3%',
+        marginRight: '2%',
+        marginTop: scaledHeight(24),
+    },
+    listContainerItemTextSubtitle: {
+        color: '#B2B2B2',
+        fontSize: scaledHeight(14),
+        lineHeight: scaledHeight(20),
+        marginBottom: scaledHeight(35),
+        marginLeft: '4%',
+        marginTop: scaledHeight(25),
+        width: '90%'
+    },
+    listContainerItemTextTitle: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginLeft: '2%',
+        textTransform: 'uppercase',
+    },
+    scrollViewFlex:{ 
+        flex: 0.85 
+    },
+    settingsInfo: {
         color: '#B2B2B2',
         fontSize: scaledHeight(13),
         marginRight: '4%',
@@ -22,14 +51,11 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(14),
         fontWeight: 'bold',
     },
-    touchOpacityPosition: {
-        position: 'relative'
-    },
     settingsInfoHead: {
-        width: '100%',
         marginTop: scaledHeight(18),
         paddingLeft: '4%',
         paddingRight: '4%',
+        width: '100%',
     },
     settingsInfoHeadTilte: {
         color: '#56565A',
@@ -37,37 +63,14 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         paddingBottom: scaledHeight(4)
     },
-    listContainer: {
-        borderWidth: 1,
-        borderColor: '#D4D4D4',
-        backgroundColor: '#FFFFFF',
-        marginTop: scaledHeight(24),
-        width: '92%',
-        borderRadius: scaledHeight(16),
-        marginLeft: '4%',
-        marginRight: '4%',
-    },
-    listContainerItem: {
+    settingsView: {
         flexDirection: 'row',
-        marginTop: scaledHeight(24),
-        marginLeft: '3%',
-        marginRight: '2%',
-        alignItems: 'center',
+        marginTop: scaledHeight(18),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+        width: '100%',
     },
-    listContainerItemTextTitle: {
-        marginLeft: '2%',
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold',
-        textTransform: 'uppercase',
-    },
-    listContainerItemTextSubtitle: {
-        width: '90%',
-        marginTop: scaledHeight(25),
-        marginBottom: scaledHeight(35),
-        marginLeft: '4%',
-        color: '#B2B2B2',
-        fontSize: scaledHeight(14),
-        lineHeight: scaledHeight(20)
+    touchOpacityPosition: {
+        position: 'relative'
     },
 });
