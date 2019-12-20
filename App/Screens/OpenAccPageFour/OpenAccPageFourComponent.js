@@ -82,16 +82,15 @@ class OpenAccPageFourComponent extends Component {
         alert("#TODO : Download");
     }
     getPayload = () => {
-        let payload ={};
-        if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
-            payload = {
-                ...this.props.accOpeningData.savedAccData,
-                "accountPreferences": {
-                    "dividendCapitalGain": this.state.selectedDividendCapitalGains,
-                    "documentDeliveryFormat": this.state.selectedProspectusReportsRef
-                },
-            };
-        }
+        const savedAccData = myInstance.getSavedAccData();
+        const payload = {
+            ...savedAccData,
+            "accountPreferences": {
+                "dividendCapitalGain": this.state.selectedDividendCapitalGains,
+                "documentDeliveryFormat": this.state.selectedProspectusReportsRef
+            },
+        };
+        
         return payload;
 
     }
@@ -99,7 +98,8 @@ class OpenAccPageFourComponent extends Component {
     onClickNext = () => {
         if (this.validateFields()) {
             const payload = this.getPayload();
-            this.props.saveData("OpenAccPageFour", payload);  
+           // this.props.saveData("OpenAccPageFour", payload);
+            myInstance.setSavedAccData(payload);
             this.props.navigation.navigate({ routeName: 'openAccPageFive', key: 'openAccPageFive' });
           }
         }

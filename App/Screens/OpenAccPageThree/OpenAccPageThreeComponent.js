@@ -446,7 +446,8 @@ class OpenAccPageThreeComponent extends Component {
     onClickNext = () => {
         if (this.validateFields()) {
             const payload = this.getPayload();
-            this.props.saveData("OpenAccPageThree", payload);
+           // this.props.saveData("OpenAccPageThree", payload);
+            myInstance.setSavedAccData(payload);
             this.props.navigation.navigate({ routeName: 'openAccPageFour', key: 'openAccPageFour' });
         }
     }
@@ -471,10 +472,9 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     getPayload = () => {
-        let payload = {};
-        if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
-            payload = {
-                ...this.props.accOpeningData.savedAccData,
+        const savedAccData = myInstance.getSavedAccData();
+        const  payload = {
+                ...savedAccData,
                 "investmentInfo": {
                     "fundingSource": {
                         "method": this.state.method || "-",
@@ -490,9 +490,8 @@ class OpenAccPageThreeComponent extends Component {
                     "fundDataList": this.state.selectedFundInvestmentsData
                 },
             };
-        }
+        
         return payload;
-
     }
 
     onSubmitEditing = (input) => text => {

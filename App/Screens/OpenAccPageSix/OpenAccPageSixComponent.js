@@ -322,21 +322,21 @@ class OpenAccPageSixComponent extends Component {
     onClickSave = () => {
         if (this.validateFields()) {
             const payload = this.getPayload();
+            myInstance.setSavedAccData(payload);
             this.props.saveAccountOpening("OpenAccPageSix", payload);
         }
     }
 
     getPayload = () => {
-        let payload ={};
-        if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
-            payload = {
-                ...this.props.accOpeningData.savedAccData,
+        const savedAccData = myInstance.getSavedAccData();
+        const payload = {
+                ...savedAccData,
                 "userConsent":{
                     "backupCertFlag":this.state.confirmTINType || "-",
                     "certifiedYN":this.state.agreeConditions || "-"
                   }
             };
-        }
+        
         return payload;
 
     }
