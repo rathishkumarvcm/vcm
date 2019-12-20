@@ -43,7 +43,7 @@ class AutomaticInvestmentAddComponent extends Component {
 
             selectedItemID: "",
             selectedItemName: "",
-            //autoInvestmentAddAmountJson: {},
+            autoInvestmentAddAmountJson: {},
             fundList: [],
             ItemToEdit: this.props.navigation.getParam('ItemToEdit', -1),
             acc_name:this.props.navigation.getParam('acc_name'),
@@ -52,6 +52,8 @@ class AutomaticInvestmentAddComponent extends Component {
             selectedBank:-1,
             fundRemaining:0,
             totalFund:0,
+            investedIn:[],
+            fundConsumed:0,
         };
     }
 
@@ -61,25 +63,45 @@ class AutomaticInvestmentAddComponent extends Component {
             const fundListPayload = {};
             this.props.getFundListData(fundListPayload);
         }
-        // if (this.props && this.props.automaticInvestmentState) {
-
-        //     this.setState({
-        //         autoInvestmentAddAmountJson: this.props.automaticInvestmentState,
-        //     });
-        // }
+        if(this.state.ItemToEdit>-1){
+            if (this.props && this.props.automaticInvestmentState) {
+                let valueToEdit=this.props.automaticInvestmentState.general[this.state.ItemToEdit];
+                let strTotal=valueToEdit.totalAmount.replace('$','').trim();
+                this.setState({
+                    autoInvestmentAddAmountJson: valueToEdit,
+                    acc_name:valueToEdit.account.split('|')[0],
+                    acc_no:valueToEdit.account.split('|')[1],
+                    totalFund:Number(strTotal),
+                    investedIn:valueToEdit.investedIn,
+                    fundConsumed:Number(strTotal),
+                    fundRemaining:0
+                });
+            }
+        }
     }
 
     getPayload = () => {
-        let selectedValue="";
+       
+        
+        let selected=[];
         this.state.fundList.map((item) => {
-            if(item.isActive)
-            selectedValue=item.fundName+","+selectedValue.trim();
+            if(item.isActive){
+                //console.log('---------------------',item.fundName,item.fundAmount)
+                selected.push({name:item.fundName,amount:item.fundAmount})
+            }
         })
-        selectedValue=selectedValue.substring(0, selectedValue.length-1)
+        // let newObj = { "investedIn" : [selectedValue]}
+        // Object.assign(this.props.automaticInvestmentState,newObj)
+        // let selectedValue="";
+        // this.state.fundList.map((item) => {
+        //     if(item.isActive)
+        //     selectedValue=item.fundName+","+selectedValue.trim();
+        // })
+        // selectedValue=selectedValue.substring(0, selectedValue.length-1)
         let payload = {
             totalAmount: '$'+this.state.totalFund,  
             fundFrom: autoInvestmentAddBankJson[this.state.selectedBank].account,
-            investedIn: selectedValue,
+            investedIn: selected,
             switchOnOff:true
         };
         if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
@@ -94,12 +116,13 @@ class AutomaticInvestmentAddComponent extends Component {
     }
 
     navigationNext = () => {
-            const payload = this.getPayload();
-            this.props.saveData("automaticInvestmentAdd", payload); 
-            this.props.navigation.navigate('automaticInvestmentSchedule', { ItemToEdit: this.state.ItemToEdit, 
-                acc_name:this.state.acc_name,
-                acc_no:this.state.acc_no,
-                accountType:this.state.accountType});
+        
+        const payload = this.getPayload();
+        this.props.saveData("automaticInvestmentAdd", payload); 
+        this.props.navigation.navigate('automaticInvestmentSchedule', { ItemToEdit: this.state.ItemToEdit, 
+            acc_name:this.state.acc_name,
+            acc_no:this.state.acc_no,
+            accountType:this.state.accountType});
     }
     componentDidUpdate(prevProps, prevState) {
        
@@ -180,10 +203,14 @@ class AutomaticInvestmentAddComponent extends Component {
     changeRemaining=e=>{
         let remaining=0;
         this.state.fundList.map((item) => {
-            remaining=remaining+Number(item.fundAmount);
+            //if(Number(item.fundAmount)<=remaining)
+                remaining=remaining+Number(item.fundAmount);
+            //else
+                //item.fundAmount=0;
         })
-        remaining=this.state.totalFund-remaining;
-        this.setState({ fundRemaining:remaining});
+        //remaining=this.state.totalFund-remaining;
+        
+        this.setState({ fundRemaining:this.state.totalFund-remaining,fundConsumed:remaining});
     }
 
 
@@ -198,6 +225,17 @@ class AutomaticInvestmentAddComponent extends Component {
         (
             
             <View style={{ borderWidth: 1, borderColor: '#5D83AE99', marginTop: scaledHeight(10) }}>
+                {/* {(this.state.autoInvestmentAddAmountJson.investedIn.includes(item.fundName))?item.isActive=true:null} */}
+                {/* {console.log("----------------",this.state.autoInvestmentAddAmountJson.investedIn)} */}
+                {this.state.investedIn.map((fund) => {
+                   
+                        if(fund.name===item.fundName)
+                        {
+                            item.isActive=true;
+                            item.fundAmount=fund.amount.replace('$','');
+                            return;
+                        }
+                    })}
                 <View style={{ flexDirection: 'row', flex: 1, justifyContent: "center", alignItems: 'center', borderBottomColor: '#61285F45', borderBottomWidth: 1, padding: scaledHeight(20) }}>
                     <View style={{ flex: 0.7 }}>
                         <Text style={{ color: '#544A54', fontSize: scaledHeight(13), fontWeight: 'bold' }}>{item.fundName}</Text>
@@ -214,11 +252,8 @@ class AutomaticInvestmentAddComponent extends Component {
                     <View style={styles.auto_invest_to_top_view}>
                         <Text style={styles.auto_invest_to_top}>{'$'}</Text>
                         {
-                            index === this.state.ItemToEdit ?
-                                <GInputComponent style={styles.leftSpace} value={item.monthlyInvestment} keyboardType="number-pad"/>
-                                :
                                 <GInputComponent style={styles.leftSpace} onChangeText={(value)=>this.getFundAmount(value,index)}  onEndEditing={this.changeRemaining}
-                                 value={item.fundAmount.toString()} keyboardType="number-pad"/>
+                                 value={item.fundAmount.toString()} />
                         }
 
                     </View>
@@ -291,7 +326,7 @@ class AutomaticInvestmentAddComponent extends Component {
                                 <Text style={styles.auto_invest_to_top}>{'Total Amount'}</Text>
                                 <View style={styles.auto_invest_to_top_view}>
                                     <Text style={styles.auto_invest_to_top}>{'$'}</Text>
-                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} onChangeText={this.setTotalFund} keyboardType={'numeric'}/>
+                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} onChangeText={this.setTotalFund}  value={this.state.totalFund.toString()}/>
                                 </View>
                             </View>
 
@@ -332,7 +367,7 @@ class AutomaticInvestmentAddComponent extends Component {
                                 <Text style={styles.auto_invest_to_top}>{'Amount Consumed'}</Text>
                                 <View style={styles.auto_invest_to_top_view}>
                                     <Text style={styles.auto_invest_to_top}>{'$'}</Text>
-                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} keyboardType={'numeric'}/>
+                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }}  value={this.state.fundConsumed.toString()}/>
                                 </View>
                             </View>
 
@@ -340,7 +375,7 @@ class AutomaticInvestmentAddComponent extends Component {
                                 <Text style={styles.auto_invest_to_top}>{'Amount Remaining'}</Text>
                                 <View style={styles.auto_invest_to_top_view}>
                                     <Text style={styles.auto_invest_to_top}>{'$'}</Text>
-                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} value={this.state.fundRemaining.toString()} keyboardType={'numeric'}/>
+                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} value={this.state.fundRemaining.toString()} />
                                 </View>
                             </View>
 
@@ -350,7 +385,7 @@ class AutomaticInvestmentAddComponent extends Component {
                                 renderItem={this.renderAmount()}
                                 keyExtractor={this.generateAmountKeyExtractor}
                                 extraData={this.state.fundList}
-                            />
+                            /> 
                         </View>
                     </View>
                     

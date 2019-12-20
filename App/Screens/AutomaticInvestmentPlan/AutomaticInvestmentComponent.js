@@ -111,10 +111,10 @@ class AutomaticInvestmentComponent extends Component {
                         /> : null}
 
                 <View style={styles.flatBody}>
-
+                
                     <View style={styles.flatBodyTitle}>
-                        <Text style={styles.flatBodyTitleValue}>{item.investedIn}</Text>
-                        <Text style={styles.flatBodyTitleLink}>{"5"}</Text>
+                        <Text style={styles.flatBodyTitleValue}>{item.investedIn[0].name}</Text>
+                        <Text style={styles.flatBodyTitleLink}>{item.investedIn.length}</Text>
                     </View>
 
                     <Text style={styles.flatBodyDate}>{"Date added " + item.dateAdded}</Text>

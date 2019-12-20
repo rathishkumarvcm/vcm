@@ -112,6 +112,16 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
     navigationBack = () => this.props.navigation.goBack();
     navigationCancel = () => this.props.navigation.navigate('automaticInvestment');
 
+    parsingInvestIn = (item) =>
+    {
+        console.log('item--------))))))))---------',item)
+        let fundlist="";
+        let array=item.investedIn;
+        {array.map((fund) => {
+            fundlist=fund.name+","+fundlist;
+        })}
+        return(<Text style={styles.verifyConent2}>{fundlist.replace(',','').trim()}</Text>)
+    }
 
     render() {
         const date = new Date().getDate(); //Current Date
@@ -119,8 +129,16 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
         const year = new Date().getFullYear(); //Current Year
         const currentdate = month + "-" + date + "-" + year;
         var item = this.state.autoInvestmentJson;
+        let fundlist="";
+        if(this.state.autoInvestmentJson.account)
+        {
+            this.state.autoInvestmentJson.investedIn.map((fund)=>{
+                fundlist=fund.name+","+fundlist;
+            })
+        }
         return (
             <View style={styles.container}>
+                {/* {this.parsingInvestIn(this.state.autoInvestmentJson)} */}
                 <GHeaderComponent register navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
                     {this.state.skip ? null :
@@ -184,7 +202,9 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                             </View>
                             <View style={styles.verifyContentView}>
                                 <Text style={styles.verifyConent1}>{"Invested In"}</Text>
-                                <Text style={styles.verifyConent2}>{item.investedIn}</Text>
+                            
+                                <Text style={styles.verifyConent2}>{fundlist.replace(',','').trim()}</Text>
+                                
                             </View>
                             <View style={styles.verifyContentView}>
                                 <Text style={styles.verifyConent1}>{"Total Amount"}</Text>
