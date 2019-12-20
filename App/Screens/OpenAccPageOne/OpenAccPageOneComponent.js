@@ -69,7 +69,6 @@ class OpenAccPageOneComponent extends Component {
             accType: "",
             isValidationSuccess: true,
             isNextBtnDisabled: true,
-
             errMsg:""
 
         };
