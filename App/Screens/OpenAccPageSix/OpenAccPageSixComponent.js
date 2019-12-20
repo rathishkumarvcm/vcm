@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner,GSingletonClass} from '../../CommonComponents';
 import { CustomRadio, CustomCheckBox, CustomPageWizard } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
@@ -90,6 +90,8 @@ SignPDFItem.propTypes = {
 
 
 };
+
+const myInstance = GSingletonClass.getInstance();
 
 class OpenAccPageSixComponent extends Component {
     constructor(props) {

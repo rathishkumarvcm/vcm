@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity,FlatList } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent,GSingletonClass } from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
 import { scaledHeight } from '../../Utils/Resolution';
 
 
+
+const myInstance = GSingletonClass.getInstance();
 
 class OpenAccPageFiveComponent extends Component {
     constructor(props) {
@@ -24,7 +26,6 @@ class OpenAccPageFiveComponent extends Component {
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
     componentDidMount() {
-
     }
     /*----------------------
                                  Button Events 
@@ -69,6 +70,7 @@ class OpenAccPageFiveComponent extends Component {
     }
 
     navigateToScreen = (routeName) =>()=>{
+        myInstance.setAccOpeningEditMode(true);
         this.props.navigation.navigate({ routeName: routeName, key: routeName });
     }
 

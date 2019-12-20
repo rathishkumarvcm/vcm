@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import PropTypes from "prop-types";
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner,GSingletonClass } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
@@ -56,6 +56,7 @@ const pageOne = {
 
 
 
+const myInstance = GSingletonClass.getInstance();
 
 class OpenAccPageOneComponent extends Component {
     constructor(props) {
@@ -85,6 +86,8 @@ class OpenAccPageOneComponent extends Component {
 
     componentDidMount() {
         AppUtils.Dlog("componentDidMount::::> ");
+       // alert("getAccOpeningEditMode::"+ myInstance.getAccOpeningEditMode());
+
         const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
         AppUtils.Dlog(`selectedAccount::::> ${ selectedAccount}`);
 
@@ -176,8 +179,8 @@ class OpenAccPageOneComponent extends Component {
         if (this.validateFields()) {
 
             const payload = this.getPayload();
-            this.props.saveData("OpenAccPageOne", payload);             
-
+           // this.props.saveData("OpenAccPageOne", payload);             
+            myInstance.setSavedAccData(payload);
             if (selectedAccount.key === "spec_acct") {
                 this.props.navigation.navigate({ routeName: 'specialtyAccPage', key: 'specialtyAccPage', params: { pageNo: 2, accType: "Specialty Account" } });
             } else if (selectedAccount.key === "inv_child") {

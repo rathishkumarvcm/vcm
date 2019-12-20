@@ -25,6 +25,7 @@ import GDropDownComponent from './GDropDownComponent';
 import GDateComponent from './GDateComponent';
 import GModalComponent from './GModalComponent';
 import GCollapseComponent from './GCollapseComponent';
+import GSingletonClass from './GSingletonClass';
 
 import {
     SetKeyValueToStore,
@@ -63,5 +64,6 @@ export {
     GDropDownComponent,
     GDateComponent,
     GModalComponent,
-    GCollapseComponent
+    GCollapseComponent,
+    GSingletonClass
 };

@@ -3,7 +3,7 @@ import { Text, View, ScrollView, TouchableOpacity,Image,KeyboardAvoidingView ,Pl
 import PropTypes from "prop-types";
 import ImagePicker from 'react-native-image-picker';
 import { styles } from './styles';
-import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GDateComponent, GDropDownComponent } from '../../CommonComponents';
+import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GDateComponent, GDropDownComponent,GSingletonClass } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
@@ -39,6 +39,7 @@ const dummyData = [
 ];
 
 
+const myInstance = GSingletonClass.getInstance();
 
 class OpenAccPageTwoComponent extends Component {
     constructor(props) {
@@ -721,7 +722,8 @@ class OpenAccPageTwoComponent extends Component {
 
         if (this.validateFields()) {
             const payload = this.getPayload();
-            this.props.saveData("OpenAccPageTwo", payload);
+            //this.props.saveData("OpenAccPageTwo", payload);
+            myInstance.setSavedAccData(payload);
             this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
         }
     }
@@ -931,14 +933,11 @@ class OpenAccPageTwoComponent extends Component {
 
 
         let payload = {};
-        if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
-            payload = {
-                ...this.props.accOpeningData.savedAccData,
-                "accountNickName": this.state.nickname || "-"
-            };
-        }
-
-
+        const savedAccData = myInstance.getSavedAccData();
+        payload = {
+            ...savedAccData,
+            "accountNickName": this.state.nickname || "-"
+        };
 
         switch (accType) {
             case "Individual Account":
@@ -971,6 +970,7 @@ class OpenAccPageTwoComponent extends Component {
             default:
                 break;
         };
+        AppUtils.Dlog(`payload:: ${JSON.stringify(payload)}`);
 
         return payload;
     }
@@ -1700,7 +1700,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
     validateFields = () => {
-        // return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
+       // return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
         let isValidationSuccess = false;
         try {
 

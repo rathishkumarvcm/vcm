@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterComponent ,GLoadingSpinner} from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent ,GLoadingSpinner,GSingletonClass} from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
@@ -13,6 +13,7 @@ const dummyData = [
     { "key": "key2", "value": "Option2" }
 ];
 
+const myInstance = GSingletonClass.getInstance();
 
 class OpenAccPageFourComponent extends Component {
     constructor(props) {

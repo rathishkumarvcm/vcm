@@ -3,7 +3,7 @@ export default class CommonDataManager {
 
   canGoBack = false;
 
-  baseURL = "";
+  baseURL = "test";
 
   IsLoginWithBioMetric = false;
 
@@ -17,6 +17,8 @@ export default class CommonDataManager {
 
   isLaunched = false;
 
+  accOpeningEditModeEnabled = false;
+  savedAccData = {};
   /* **************************\
   Method: getInstance
   Explanation:
@@ -105,4 +107,18 @@ export default class CommonDataManager {
   setIsLaunched() {
     this.isLaunched = true;
   }
+
+  getAccOpeningEditMode(){
+    return this.accOpeningEditModeEnabled;
+  }
+  setAccOpeningEditMode(value){
+    this.accOpeningEditModeEnabled = value;
+  }
+  getSavedAccData(){
+    return this.savedAccData;
+  }
+  setSavedAccData(value){
+    this.savedAccData = value;
+  }
+
 }
