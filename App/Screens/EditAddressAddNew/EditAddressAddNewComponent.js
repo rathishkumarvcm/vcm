@@ -69,9 +69,10 @@ class editAddressAddNewComponent extends Component {
                 this.setState({
                     relationShipContactData: relationshipContacts[this.state.relationShipPosition]
                 });
+                console.log("@@@@ Ralation Ship Contact Info 003", relationshipContacts[0]);
+                console.log("@@@@ Ralation Ship Contact Info 002", this.state.relationShipContactData);
             }
             console.log("@@@@ Ralation Ship Contact Info 001", relationshipContacts);
-            console.log("@@@@ Ralation Ship Contact Info 002", this.state.relationShipContactData);
         }
     }
 
@@ -247,9 +248,17 @@ class editAddressAddNewComponent extends Component {
     }
 
     manageContactInformations = () => {
-        const payloadData = this.getContactPayloadData();
+        let payloadData;
+        if (this.state.isRelationShipScreen) {
+            payloadData = this.getRelationContactPayload();
+        } else {
+            payloadData = this.getContactPayloadData();
+        }
         this.props.saveProfileData("editContactInformation", payloadData);
-        this.props.navigation.navigate('editAddressSettings');
+        this.props.navigation.navigate('editAddressSettings', {
+            contactPosition: this.state.relationShipPosition,
+            isRelation: this.state.isRelationShipScreen
+        });
     }
 
     getContactPayloadData = () => {
@@ -274,6 +283,34 @@ class editAddressAddNewComponent extends Component {
             };
         }
         return contactPayload;
+    }
+
+    getRelationContactPayload = () => {
+        let relationContactPayload = {};
+        let relationAddressPayload = [];
+        if (this.props && this.props.profileState) {
+            const addContactInformation = {
+                "addressType": this.state.radioButtonValue,
+                "addressLineOne": this.state.addressOne === "" ? this.state.addressTwo : "",
+                "addressCity": this.state.userCity,
+                "addressState": this.state.userState,
+                "addressZipcode": this.state.zipCodeValue,
+                "isMailingAddress": false,
+                "isPhysicalAddress": false
+            };
+
+            relationAddressPayload = this.props.profileState.profileRelationShipDetails[this.state.relationShipPosition].relationAddress;
+            relationAddressPayload.push(addContactInformation);
+            console.log("@@@@@@@@@@@@@@@@@@@ Relation Address", relationAddressPayload);
+            const relationAddressUpdated = [this.props.profileState.profileRelationShipDetails[this.state.relationShipPosition]]
+            console.log("################## Relation Updated", relationAddressUpdated);
+            relationContactPayload = {
+                ...this.props.profileState,
+                profileRelationShipDetails: relationAddressUpdated
+            }
+            console.log('%%%%%%%%%%%%%%%%%%%%%%%% Payload Data', relationContactPayload);
+        }
+        return relationContactPayload;
     }
 
     editAddressAddNewOnCancel = () => {
@@ -419,7 +456,7 @@ class editAddressAddNewComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.editAddressAddNewOnCancel} />
+                            onPress={this.manageContactInformations} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>

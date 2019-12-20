@@ -166,6 +166,20 @@ class editAddressInfoComponent extends Component {
                     });
                 }
             }
+        } else {
+            if (this.props != prevProps) {
+                let relationshipContacts = [];
+                if (this.props &&
+                    this.props.profileState &&
+                    this.props.profileState.profileRelationShipDetails) {
+                    relationshipContacts = [...this.props.profileState.profileRelationShipDetails];
+                    this.setState({
+                        relationContactInfo: relationshipContacts[this.state.contactPosition],
+                        profileUserAddressValue: relationshipContacts[this.state.contactPosition].relationAddress,
+                        refreshAddressData: !this.state.refreshAddressData
+                    });
+                }
+            }
         }
     }
 
@@ -180,7 +194,7 @@ class editAddressInfoComponent extends Component {
             this.props.navigation.navigate('profileSettings');
         } else {
             this.props.navigation.navigate('editFamilyMemberInfo');
-        }  
+        }
     }
 
     render() {

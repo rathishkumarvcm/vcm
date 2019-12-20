@@ -6,6 +6,17 @@ import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
 
+let editDeleteMenuOption = [
+    {
+        name: 'Edit',
+        id: '1'
+    },
+    {
+        name: 'Delete',
+        id: '2'
+    },
+];
+
 const UserPhoneInformation = (props) => {
     return (
         <View style={styles.editEmailHolder}>
@@ -24,9 +35,25 @@ const UserPhoneInformation = (props) => {
                 </View>
 
                 <View style={styles.profileDivideIconTwo}>
-                    <Image style={styles.imageWidthHeight}
-                        source={require("../../Images/menu_icon.png")} />
+                    <TouchableOpacity
+                        onPress={props.onMenuOptionClicked}>
+                        <Image style={styles.imageWidthHeight}
+                            source={require("../../Images/menu_icon.png")} />
+                    </TouchableOpacity>
                 </View>
+
+                {props.selectedMenuOption ?
+                    <FlatList style={styles.editFlatList}
+                        data={editDeleteMenuOption}
+                        renderItem={({ item, index }) =>
+                            (<TouchableOpacity style={styles.editDropdown}>
+                                <Text style={styles.editDropdownText}>
+                                    {item.name}
+                                </Text>
+                            </TouchableOpacity>)}
+                        keyExtractor={item => item.id}
+                    /> : null}
+
             </View>
 
             <View style={styles.editEmailBorder} />
@@ -44,7 +71,7 @@ const UserPhoneInformation = (props) => {
             </View>
 
         </View>
-    );
+    )
 };
 
 UserPhoneInformation.propTypes = {
@@ -52,7 +79,9 @@ UserPhoneInformation.propTypes = {
     mobileNumber: PropTypes.string,
     mobilePreferredTime: PropTypes.string,
     isPrimaryMobile: PropTypes.bool,
-    onMobileToggle: PropTypes.func
+    onMobileToggle: PropTypes.func,
+    onMenuOptionClicked: PropTypes.func,
+    selectedMenuOption: PropTypes.bool
 };
 
 class editPhoneInfoComponent extends Component {
@@ -73,7 +102,10 @@ class editPhoneInfoComponent extends Component {
 
             contactPosition: this.props.navigation.getParam('contactPosition'),
             isRelation: this.props.navigation.getParam('isRelation'),
-            relationPhoneInfo: {}
+            relationPhoneInfo: {},
+
+            selectedIndex: -1,
+            refreshMenuOption: false
         };
     }
 
@@ -131,7 +163,7 @@ class editPhoneInfoComponent extends Component {
                         isMobileRefreshed: !this.state.isMobileRefreshed
                     });
                 }
-    
+
                 if (this.props &&
                     this.props.profileState &&
                     this.props.profileState.profileUserHomeNumber) {
@@ -140,7 +172,7 @@ class editPhoneInfoComponent extends Component {
                         isMobileRefreshed: !this.state.isMobileRefreshed
                     });
                 }
-    
+
                 if (this.props &&
                     this.props.profileState &&
                     this.props.profileState.profileUserWorkNumber) {
@@ -151,6 +183,18 @@ class editPhoneInfoComponent extends Component {
                 }
             }
         }
+    }
+
+    editDelete = (index) => () => {
+        var array = [...this.state.userMobileNumber];
+        if (index !== -1) {
+            let switchVal = array[index].selectedMenuOption;
+            array[index].selectedMenuOption = !switchVal;
+            this.setState({
+                refreshMenuOption: !this.state.refreshMenuOption
+            });
+        }
+        console.log("@@@@@@@@@ Values 001 ::", index + ' ' + this.state.refreshMenuOption);
     }
 
     onMobileToggle = (item, index) => () => {
@@ -171,7 +215,8 @@ class editPhoneInfoComponent extends Component {
             mobileNumber={item.mobileNumber}
             mobilePreferredTime={item.mobilePreferredTime}
             isPrimaryMobile={item.isPrimaryMobile}
-            onMobileToggle={this.onMobileToggle(item, index)} />)
+            onMobileToggle={this.onMobileToggle(item, index)}
+            onMenuOptionClicked={this.editDelete(index)} />)
     };
 
     renderHomeNumberInformation = () => ({ item, index }) => {

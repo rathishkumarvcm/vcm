@@ -447,5 +447,30 @@ export const styles = StyleSheet.create({
     },
     profileDivideIcon: { width: '100%', margin: '3%', flexDirection: 'row'},
     profileDivideIconOne: { width: '80%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },
-    profileDivideIconTwo: { width: '20%', color: '#0000FF', fontSize: scaledHeight(14) }
+    profileDivideIconTwo: { width: '20%', color: '#0000FF', fontSize: scaledHeight(14) },
+    editFlatList:{ 
+        position: 'absolute', 
+        zIndex: 5, 
+        top: 55, 
+        width: '100%', 
+        shadowColor: "#000", 
+        shadowOffset: { width: 0, height: 1, }, 
+        shadowOpacity: 0.23, 
+        shadowRadius: 2.62, 
+        elevation: 4, 
+    },
+    editDropdown:{
+        height:scaledHeight(60),
+        backgroundColor:'#FFFFFF',
+        //backgroundColor:'red',
+        borderColor:'#00000029',
+        borderBottomWidth:1,
+        justifyContent:'center',
+ },
+ editDropdownText:{
+    fontSize:scaledHeight(16),
+    color:'#56565A',
+    fontWeight:'bold',
+    marginLeft:scaledWidth(20)
+}
 });

@@ -386,7 +386,7 @@ export const styles = StyleSheet.create({
     editAddressSecurity: {
         color: '#56565A', fontSize: scaledHeight(18)
     },
-    editAddressInput: { flexDirection: 'column', width: '100%', paddingLeft: '4%', paddingRight: '4%', marginBottom: '2%' },
+    editAddressInput: { flexDirection: 'column', width: '100%', paddingLeft: '2%', paddingRight: '2%', marginBottom: '2%' },
     relationHeadView: { color: '#0000FF', fontSize: scaledHeight(14) },
     relationHeadOne: { color: '#56565A', fontSize: scaledHeight(14) },
     relationHeadTwo: { color: '#56565A', fontSize: scaledHeight(14), fontWeight: 'bold' },
