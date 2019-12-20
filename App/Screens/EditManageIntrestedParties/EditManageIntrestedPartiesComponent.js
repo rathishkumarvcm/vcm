@@ -237,6 +237,17 @@ class editManageIntrestedPartiesComponent extends Component {
     }
 
     validateAddress = () => {
+        if (this.isEmpty(this.state.personal.addressLine1)) {
+            this.onUpdateField("personal","addressLine1Validation",false);
+        }else{
+            this.onUpdateField("personal","addressLine1Validation",true);
+        }
+
+        if (this.isEmpty(this.state.personal.addressLine2)) {
+            this.onUpdateField("personal","addressLine2Validation",false);
+        }else{
+            this.onUpdateField("personal","addressLine2Validation",true);
+        }
         this.getAddressValid();
     }
 
@@ -475,7 +486,7 @@ class editManageIntrestedPartiesComponent extends Component {
                             placeholder={gblStrings.accManagement.empAddrLine1}
                             maxLength={gblStrings.maxLength.emplAddress1}
                             value={this.state.personal.addressLine1}
-                            onSubmitEditing={this.validateAddress}
+                            //onSubmitEditing={this.validateAddress}
                             onChangeText={this.onChangeText("personal","addressLine1")}
                             errorFlag={!this.state.personal.addressLine1Validation}
                             errorText={this.state.personal.addValidation ? gblStrings.accManagement.emptyAddressLine1Msg:""}
@@ -486,12 +497,18 @@ class editManageIntrestedPartiesComponent extends Component {
                             placeholder={gblStrings.accManagement.empAddrLine2}
                             maxLength={gblStrings.maxLength.addressLine2}
                             value={this.state.personal.addressLine2}
-                            onSubmitEditing={this.validateAddress}
+                            //onSubmitEditing={this.validateAddress}
                             onChangeText={this.onChangeText("personal","addressLine2")}
                             errorFlag={!this.state.personal.addressLine2Validation}
                             errorText={this.state.personal.addValidation ? gblStrings.accManagement.emptyAddressLine2Msg:""}
                         />
                         {!this.state.personal.addValidation && <Text style={styles.errMsg}>{this.state.personal.addressValiMsg}</Text>}
+                        <GButtonComponent
+                            buttonStyle={styles.validateBtn}
+                            buttonText={"Verify"}
+                            textStyle={styles.validateBtnTxt}
+                            onPress={this.validateAddress}
+                        />
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.zipcode}
                         </Text>
