@@ -203,10 +203,13 @@ class AutomaticInvestmentAddComponent extends Component {
     changeRemaining=e=>{
         let remaining=0;
         this.state.fundList.map((item) => {
-            //if(Number(item.fundAmount)<=remaining)
+            if(Number(item.fundAmount)<=this.state.fundRemaining)
                 remaining=remaining+Number(item.fundAmount);
-            //else
-                //item.fundAmount=0;
+            else
+            {
+                item.isActive=false;
+                item.fundAmount=0;
+            }
         })
         //remaining=this.state.totalFund-remaining;
         
@@ -363,7 +366,7 @@ class AutomaticInvestmentAddComponent extends Component {
                                 </View>
                             </View>
 
-                            <View style={styles.auto_invest_to}>
+                            <View style={styles.auto_invest_to} pointerEvents="none">
                                 <Text style={styles.auto_invest_to_top}>{'Amount Consumed'}</Text>
                                 <View style={styles.auto_invest_to_top_view}>
                                     <Text style={styles.auto_invest_to_top}>{'$'}</Text>
@@ -371,7 +374,7 @@ class AutomaticInvestmentAddComponent extends Component {
                                 </View>
                             </View>
 
-                            <View style={styles.auto_invest_to}>
+                            <View style={styles.auto_invest_to} pointerEvents="none">
                                 <Text style={styles.auto_invest_to_top}>{'Amount Remaining'}</Text>
                                 <View style={styles.auto_invest_to_top_view}>
                                     <Text style={styles.auto_invest_to_top}>{'$'}</Text>
