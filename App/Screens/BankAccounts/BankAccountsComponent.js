@@ -17,55 +17,12 @@ class BankAccountsComponent extends Component {
             isLoading: false,
             showDeleteOption: false,
             stateUpdated: false,
-            bankAccountInfo: [
-                {
-                    Id: "1",
-                    bankName: "Wells Fargo",
-                    accountType: "Checking Account",
-                    accountNumber: "0078256409872",
-                    transitRoutingNumber: "569933659",
-                    dateAdded: "21/11/2019",
-                    isSystematicWithdrawalPlan: "Yes",
-                    isAutomaticInvestmentPlan: "No",
-                    showDeleteOption: false,
-                },
-                {
-                    Id: "2",
-                    bankName: "Bank Of America",
-                    accountType: "Checking Account",
-                    accountNumber: "0043589649087",
-                    transitRoutingNumber: "123678987",
-                    dateAdded: "16/10/2019",
-                    isSystematicWithdrawalPlan: "No",
-                    isAutomaticInvestmentPlan: "Yes",
-                    showDeleteOption: false,
-                },
-                {
-                    Id: "3",
-                    bankName: "Chase",
-                    accountType: "Checking Account",
-                    accountNumber: "0012347896754",
-                    transitRoutingNumber: "987678567",
-                    dateAdded: "20/09/2019",
-                    isSystematicWithdrawalPlan: "No",
-                    isAutomaticInvestmentPlan: "No",
-                    showDeleteOption: false,
-                },
-            ]
+            bankAccountInfo: []
         };
     }
 
     componentDidMount() {
-        let payload = [];
-
-        payload.push(JSON.stringify(this.state.bankAccountInfo));
-        this.props.getBankAccountInfo(JSON.stringify(payload));
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props && this.props.bankAccountInfo && this.props.bankAccountInfo != prevProps.bankAccountInfo) {
-            this.setState({ bankAccountInfo: JSON.parse(JSON.parse(this.props.bankAccountInfo)[0]) });
-        }
+        this.props.getBankAccountInfo();
     }
 
     navigateAddBankAccount = () => {
@@ -149,6 +106,9 @@ class BankAccountsComponent extends Component {
     }
 
     render() {
+        if (this.props && this.props.bankAccountInfo && this.props.bankAccountInfo != this.state.bankAccountInfo) {
+            this.setState({ bankAccountInfo: this.props.bankAccountInfo});
+        }
         const { navigation } = this.props;
         const isSuccess = navigation.getParam('isSuccess', false);
 
