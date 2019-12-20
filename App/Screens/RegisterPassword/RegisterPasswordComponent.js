@@ -1,37 +1,31 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
-import { styles } from './styles';
-import { GButtonComponent, GInputComponent, GFooterSettingsComponent, GHeaderComponent } from '../../CommonComponents';
-
 import PropTypes from 'prop-types';
 import { Auth } from "aws-amplify";
+import { styles } from './styles';
+import { GButtonComponent, GInputComponent, GFooterSettingsComponent, GHeaderComponent } from '../../CommonComponents';
 import globalStrings from '../../Constants/GlobalStrings';
 import { ValidatePassword } from '../../Utils/ValidatePassword';
 
-//const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+// const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 
 class RegisterPasswordComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
-            enableBiometric: false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false,
+            isLoading: false,           
             validationOnlineId: true,
             validationPassword: true,
             validationConfirmPassword: true,
             password: '',
-            confirmPassword: '',
-            name: '',
-            phone: '',
+            confirmPassword: '',          
             email: '',    
         };
     }
 
     componentDidMount() {       
-        let registerSelfData = this.props.navigation.getParam('selfData', '');
+        const registerSelfData = this.props.navigation.getParam('selfData', '');
         if (!this.isEmpty(registerSelfData) && !this.isEmpty(registerSelfData.emailID)) {
             this.setState({ email: registerSelfData.emailID });
         }
@@ -42,37 +36,37 @@ class RegisterPasswordComponent extends Component {
     }
 
     navigateLogin = () => {
-        const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));  
+        const specialMFAUserType = (this.props && this.props.navigation.getParam('SpecialMFA',''));  
         this.props.navigation.push('login',{emailVerified:'',emailVerifiedData:'',SpecialMFA:specialMFAUserType});    
     }
 
     isEmpty = (str) => {
-        if (str == "" || str == undefined || str == "null" || str == "undefined") {
+        if (str === "" || str === undefined || str === "null" || str === "undefined") {
             return true;
-        } else {
-            return false;
-        }
+        }            
+        return false;
+        
     }
 
     navigateSelf = () => {
-        let registerSelfData = this.props.navigation.getParam('selfData');
-        let username = registerSelfData.emailID;
-        let password = this.state.password;
-        let email = registerSelfData.emailID;
-        let phone_number = registerSelfData.phone;
-        let firstName = registerSelfData.firstName;
-        let lastName = registerSelfData.lastName;
-        let middleName = registerSelfData.middleName;
+        const registerSelfData = this.props.navigation.getParam('selfData');
+        const username = registerSelfData.emailID;
+        const password = this.state.password;
+        const email = registerSelfData.emailID;
+        const phoneNumber = registerSelfData.phone;
+        const firstName = registerSelfData.firstName;
+        const lastName = registerSelfData.lastName;
+        const middleName = registerSelfData.middleName;
         Auth.signUp({
             username,
             password,
-            //phone_number,
+            // phoneNumber,
             attributes: {
-                email: email,
+                email,
                 given_name: firstName,
                 family_name: lastName,
                 middle_name: middleName,
-                phone_number: phone_number,
+                phone_number: phoneNumber,
                 'custom:prefix': 'Mr',
                 'custom:suffix': 'Jr'
             },
@@ -82,7 +76,7 @@ class RegisterPasswordComponent extends Component {
             alert("Signed Up Successfully. OTP received.");
             this.props.navigation.navigate('emailVerify', { passwordData: registerSelfData });
         });
-        //this.props.navigation.navigate('emailVerify');   
+        // this.props.navigation.navigate('emailVerify');   
     }
 
     validatePassword = () => {
@@ -125,6 +119,7 @@ class RegisterPasswordComponent extends Component {
             password: text
         });
     }
+
     setOnlineId = text => {
         this.setState({
             email: text
@@ -132,7 +127,7 @@ class RegisterPasswordComponent extends Component {
     }
 
     render() {
-        const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));   
+        const specialMFAUserType =(this.props && this.props.navigation.getParam('SpecialMFA',''));   
         return (
             <View style={styles.container}>
 
@@ -141,9 +136,9 @@ class RegisterPasswordComponent extends Component {
                     register
                 />
 
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.scrollViewFlex}>
                     {
-                        (specialMFAUserType!="" && !(specialMFAUserType=="JointAcc" || specialMFAUserType=="NewUser" || specialMFAUserType=="UserForm"))?
+                        (specialMFAUserType!=="" && !(specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser" || specialMFAUserType==="UserForm"))?
                             <View style={styles.stepsOuter}>
                                 <View style={styles.stepsInner} />
                                 <View style={styles.stepsInner} />
@@ -152,7 +147,7 @@ class RegisterPasswordComponent extends Component {
                     }
                     {/* Special MFA Requirements Scenario */}
                     {
-                        (specialMFAUserType!="" && (specialMFAUserType=="JointAcc" || specialMFAUserType=="NewUser") && specialMFAUserType!="UserForm")?
+                        (specialMFAUserType!=="" && (specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser") && specialMFAUserType!=="UserForm")?
                             <View style={styles.pagerContainer}>
                                 <View style={styles.pagerOne} />
                                 <View style={styles.pagerOne} />
@@ -178,18 +173,18 @@ class RegisterPasswordComponent extends Component {
                             {globalStrings.userManagement.preferredOnlineId}
                         </Text>
                         <Text style={styles.explainText}>
-                            {'Explain'}
+                            Explain
                         </Text>
                     </View>
 
                     <GInputComponent
                         propInputStyle={styles.userIDTextBox}
-                        //placeholder={"Online ID"}
+                        // placeholder={"Online ID"}
                         value={this.state.email}
                         onChangeText={this.setOnlineId}
                         onBlur={this.validateOnlineId}
                         errorFlag={!this.state.validationOnlineId}
-                        errorText={"Enter a valid Online ID"}
+                        errorText="Enter a valid Online ID"
                     />
 
                     <View style={styles.signInView}>
@@ -197,13 +192,13 @@ class RegisterPasswordComponent extends Component {
                             {globalStrings.userManagement.password}
                         </Text>
                         <Text style={styles.explainText}>
-                            {'Explain'}
+                            Explain
                         </Text>
                     </View>
 
                     <GInputComponent
                         propInputStyle={styles.userIDTextBox}
-                        //placeholder={"Password"}
+                        // placeholder={"Password"}
                         onChangeText={this.setPassword}
                         secureTextEntry
                         onBlur={this.validatePassword}
@@ -214,19 +209,19 @@ class RegisterPasswordComponent extends Component {
                     
                     <View style={styles.passwordStrengthFlex}>
                         <View style={styles.passwordStrongFlex}>
-                            <View style={(ValidatePassword(this.state.password) == globalStrings.userManagement.strong) ? styles.strong : styles.default} />
+                            <View style={(ValidatePassword(this.state.password) === globalStrings.userManagement.strong) ? styles.strong : styles.default} />
                             <Text style={styles.strongText}>
                                 {globalStrings.userManagement.strong}
                             </Text>
                         </View>
                         <View style={styles.passwordStrongFlex}>
-                            <View style={(ValidatePassword(this.state.password) == globalStrings.userManagement.good) ? styles.good : styles.default} />
+                            <View style={(ValidatePassword(this.state.password) === globalStrings.userManagement.good) ? styles.good : styles.default} />
                             <Text style={styles.strongText}>
                                 {globalStrings.userManagement.good}
                             </Text>
                         </View>
                         <View style={styles.passwordStrongFlex}>
-                            <View style={(this.state.password.length > 0) && (ValidatePassword(this.state.password) == globalStrings.userManagement.weak) ? styles.weak : styles.default} />
+                            <View style={(this.state.password.length > 0) && (ValidatePassword(this.state.password) === globalStrings.userManagement.weak) ? styles.weak : styles.default} />
                             <Text style={styles.strongText}>
                                 {globalStrings.userManagement.weak}
                             </Text>
@@ -242,7 +237,7 @@ class RegisterPasswordComponent extends Component {
 
                     <GInputComponent
                         propInputStyle={styles.userIDTextBox}
-                        //placeholder={"Confirm Password"}
+                        // placeholder={"Confirm Password"}
                         onChangeText={this.setConfirmPassword}
                         secureTextEntry
                         onBlur={this.validateConfirmPassword}
@@ -269,7 +264,7 @@ class RegisterPasswordComponent extends Component {
                         buttonStyle={styles.signInButton}
                         buttonText={globalStrings.common.submit}
                         textStyle={styles.signInButtonText}
-                        onPress={(specialMFAUserType!="" && (specialMFAUserType=="JointAcc" || specialMFAUserType=="NewUser" || specialMFAUserType=="UserForm")) ? this.navigateLogin : this.navigateSelf}
+                        onPress={(specialMFAUserType!=="" && (specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser" || specialMFAUserType==="UserForm")) ? this.navigateLogin : this.navigateSelf}
                         disabled={this.state.password === '' || this.state.confirmPassword === '' || !this.state.validationPassword || !this.state.validationConfirmPassword || !this.state.validationOnlineId}
                     />
 
@@ -285,7 +280,7 @@ RegisterPasswordComponent.propTypes = {
 };
 
 RegisterPasswordComponent.defaultProps = {
-
+    navigation:{}
 };
 
 export default RegisterPasswordComponent;

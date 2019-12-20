@@ -333,5 +333,8 @@ export const styles = StyleSheet.create({
         flex:0.4,
         marginRight:'1%'
     },
+    scrollViewFlex:{
+        flex:0.85
+    }
     
 });

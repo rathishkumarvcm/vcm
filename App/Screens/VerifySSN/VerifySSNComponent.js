@@ -47,7 +47,7 @@ class VerifySSNComponent extends Component {
     }
     
     render(){                        
-        const specialMFAUserType =(this.props.navigation.getParam('SpecialMFA',''));      
+        const specialMFAUserType =(this.props && this.props.navigation && this.props.navigation.getParam('SpecialMFA',''));      
         console.log(`UserType-----${specialMFAUserType}`);
         return(
             <View style={styles.container}>

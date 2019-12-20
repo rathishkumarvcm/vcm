@@ -117,6 +117,9 @@ GModalComponent.defaultProps = {
     buttonCancelText:"",
     buttonGoTextStyle:{},
     buttonCancelTextStyle:{},  
+    modalContainerStyle:{},
+    buttonGoOnPress :() => null,
+    buttonGoCancelPress:()=>null
 };
 
 export default GModalComponent;

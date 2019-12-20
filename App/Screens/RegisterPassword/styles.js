@@ -216,6 +216,9 @@ export const styles = StyleSheet.create({
         height:scaledHeight(20),
         alignItems:'center'
     }, 
+    scrollViewFlex:{ 
+        flex: 0.85 
+    },
     stepsOuter :{
         height: scaledHeight(8),
         width: '92%',
