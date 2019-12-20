@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
+import PropTypes from "prop-types";
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-import PropTypes from "prop-types";
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
-import { scaledHeight } from '../../Utils/Resolution';
+import AppUtils from '../../Utils/AppUtils';
 
 const pageOne = {
     "gen_inv_acct": {
@@ -60,7 +60,7 @@ const pageOne = {
 class OpenAccPageOneComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             selectedItemID: "",
@@ -73,32 +73,35 @@ class OpenAccPageOneComponent extends Component {
 
         };
     }
+
     /*----------------------
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
+    // eslint-disable-next-line camelcase
     UNSAFE_componentWillMount() {
-        //alert("get paramsrrrrr:"+JSON.stringify(this.props.navigation.state.params.accType))
+        // alert("get paramsrrrrr:"+JSON.stringify(this.props.navigation.state.params.accType))
 
     }
 
     componentDidMount() {
-        console.log("componentDidMount::::> ");
+        AppUtils.Dlog("componentDidMount::::> ");
         const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
-        console.log("selectedAccount::::> " + selectedAccount);
+        AppUtils.Dlog(`selectedAccount::::> ${ selectedAccount}`);
 
         const payload = selectedAccount.key;
         this.props.getAccountSubTypes(payload);
     }
+
     componentDidUpdate(prevProps, prevState) {
-        console.log("componentDidUpdate::::> "+prevState);
+        AppUtils.Dlog(`componentDidUpdate::::> ${prevState}`);
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.ACCT_TYPE_SAVE_OPENING_ACCT;
             if (this.props.accOpeningData[responseKey]) {
                 if (this.props.accOpeningData[responseKey]!== prevProps.accOpeningData[responseKey]) {
                     const tempResponse = this.props.accOpeningData[responseKey];
-                    if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
-                        let msg = tempResponse.message;
-                        console.log("Account Type Saved ::: :: " + msg);
+                    if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
+                        const msg = tempResponse.message;
+                        AppUtils.Dlog(`Account Type Saved ::: :: ${ msg}`);
                         alert(tempResponse.result);
                     } else {
                         alert(tempResponse.message);
@@ -113,16 +116,19 @@ class OpenAccPageOneComponent extends Component {
                                  Button Events 
                                                                  -------------------------- */
     onClickHeader = () => {
-        console.log("#TODO : onClickHeader");
+        AppUtils.Dlog("#TODO : onClickHeader");
     }
+
     goBack = () => {
         this.props.navigation.goBack();
     }
+
     onClickCancel = () => {
         this.props.navigation.goBack('termsAndConditions');
     }
+
     onSelected = (item) => () => {
-        console.log("item: " + item.key);
+        AppUtils.Dlog(`item: ${ item.key}`);
         this.setState(
             {
                 selectedItemID: item.key,
@@ -138,13 +144,14 @@ class OpenAccPageOneComponent extends Component {
         this.props.selectAccTypes({ accountSubType: item });
 
     }
+
     onChangeNickname = (event) => {
-        console.log("onChangeNickname: " + event);
+        AppUtils.Dlog(`onChangeNickname: ${ event}`);
     }
 
     getPayload = () => {
         const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
-        console.log("selectedAccount::::> " + selectedAccount);
+        AppUtils.Dlog(`selectedAccount::::> ${ selectedAccount}`);
 
         let payload = {
             "onlineId": "arumugamt",
@@ -171,45 +178,48 @@ class OpenAccPageOneComponent extends Component {
             const payload = this.getPayload();
             this.props.saveData("OpenAccPageOne", payload);             
 
-            if (selectedAccount.key == "spec_acct") {
+            if (selectedAccount.key === "spec_acct") {
                 this.props.navigation.navigate({ routeName: 'specialtyAccPage', key: 'specialtyAccPage', params: { pageNo: 2, accType: "Specialty Account" } });
-            } else if (selectedAccount.key == "inv_child") {
+            } else if (selectedAccount.key === "inv_child") {
                 if (this.state.selectedItemName === "529 College Saving Plan" || this.state.selectedItemID === "colleg") {
                     this.props.navigation.navigate({ routeName: 'collegePlanESA', key: 'collegePlanESA', params: { accType: this.state.accType } });
                 } else {
                     this.props.navigation.navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "UGMA/UTMA Account" } });
                 }
-            } else if (selectedAccount.key == "gen_inv_acct") {
+            } else if (selectedAccount.key === "gen_inv_acct") {
                 if (this.state.selectedItemID.startsWith("joint")) {
                     this.props.navigation.navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Joint Account" } });
                 } else {
                     this.props.navigation.navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Individual Account" } });
                 }
-            } else if (selectedAccount.key == "ira") {
+            } else if (selectedAccount.key === "ira") {
                 this.props.navigation.navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Retirement Account" } });
             }
         }
     }
+
     onClickSave = () => {
         if (this.validateFields()) {
             const payload = this.getPayload();
             this.props.saveAccountOpening("OpenAccPageOne", payload);
         }
     }
-    isEmpty = (str) => {
-        if (str == "" || str == undefined || str == null || str == "null" || str == "undefined") {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    validateFields = () => {
-        console.log("validateFields:::> " + JSON.stringify(this.state));
-        const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
-        console.log("selectedAccount:::> " + selectedAccount);
 
-        var errMsg = "";
-        var isValidationSuccess = false;
+    isEmpty = (str) => {
+        if (str === "" || str === undefined || str === null || str === "null" || str === "undefined") {
+            return true;
+        } 
+            return false;
+        
+    }
+
+    validateFields = () => {
+        AppUtils.Dlog(`validateFields:::> ${ JSON.stringify(this.state)}`);
+        const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
+        AppUtils.Dlog(`selectedAccount:::> ${ selectedAccount}`);
+
+        let errMsg = "";
+        let isValidationSuccess = false;
         if (this.isEmpty(this.state.accType)) {
             errMsg = 'Please select an account';
         } else {
@@ -222,9 +232,9 @@ class OpenAccPageOneComponent extends Component {
         }
 
         this.setState({
-            isValidationSuccess: isValidationSuccess,
+            isValidationSuccess,
             isNextBtnDisabled:false,
-            errMsg:isValidationSuccess == false ? errMsg:""
+            errMsg:isValidationSuccess === false ? errMsg:""
          });
 
         return isValidationSuccess;
@@ -239,9 +249,9 @@ class OpenAccPageOneComponent extends Component {
         let sectionData = [];
         let result = [];
         let accSubTypes = [];
-        if (this.props.accOpeningData[ActionTypes.GET_ACCOUNT_SUBTYPES] != undefined && this.props.accOpeningData[ActionTypes.GET_ACCOUNT_SUBTYPES] != null) {
+        if (this.props.accOpeningData[ActionTypes.GET_ACCOUNT_SUBTYPES] !== undefined && this.props.accOpeningData[ActionTypes.GET_ACCOUNT_SUBTYPES] !== null) {
             result = this.props.accOpeningData[ActionTypes.GET_ACCOUNT_SUBTYPES].result;
-            if (result.subtypes != undefined && result.subtypes != null) {
+            if (result.subtypes !== undefined && result.subtypes !== null) {
                 accSubTypes = result.subtypes;
             } else {
                 sectionData = result.value;
@@ -251,7 +261,7 @@ class OpenAccPageOneComponent extends Component {
 
         if (isSectionAvailable) {
             return (
-                <View style={{ flexGrow: 1 }}>
+                <View>
                     {sectionData.map((item) => {
                         return (
                             <View
@@ -260,21 +270,21 @@ class OpenAccPageOneComponent extends Component {
                                 <Text style={styles.lblTxt}>
                                     {item.value}
                                 </Text>
-                                <View style={styles.radioBtnGrp} >
-                                    {item.subtypes.map((item) => {
+                                <View style={styles.radioBtnGrp}>
+                                    {item.subtypes.map((subItem) => {
                                         return (
                                             <CustomRadio
-                                                key={item.key}
+                                                key={subItem.key}
                                                 size={36}
-                                                componentStyle={{ marginBottom: scaledHeight(24), marginTop: scaledHeight(24) }}
-                                                outerCicleColor={"#DEDEDF"}
-                                                innerCicleColor={"#61285F"}
+                                                componentStyle={styles.radioRow}
+                                                outerCicleColor="#DEDEDF"
+                                                innerCicleColor="#61285F"
                                                 labelStyle={styles.lblRadioBtnTxt}
-                                                label={item.value}
+                                                label={subItem.value}
                                                 descLabelStyle={styles.lblRadioDescTxt}
-                                                descLabel={item.description}
-                                                selected={(this.state.selectedItemID !== "" && item.key == this.state.selectedItemID) ? true : false}
-                                                onPress={this.onSelected(item)}
+                                                descLabel={subItem.description}
+                                                selected={!!((this.state.selectedItemID !== "" && subItem.key === this.state.selectedItemID))}
+                                                onPress={this.onSelected(subItem)}
                                             />
                                         );
                                     })}
@@ -286,26 +296,26 @@ class OpenAccPageOneComponent extends Component {
                 </View>
             );
 
-        } else {
+        } 
             return (
-                <View style={{ flexGrow: 1 }}>
+                <View>
                     <Text style={styles.lblTxt}>
                         {result.value}
                     </Text>
-                    <View style={styles.radioBtnGrp} >
+                    <View style={styles.radioBtnGrp}>
                         {accSubTypes.map((item) => {
                             return (
                                 <CustomRadio
                                     key={item.key}
                                     size={36}
-                                    componentStyle={{ marginBottom: scaledHeight(24), marginTop: scaledHeight(24) }}
-                                    outerCicleColor={"#DEDEDF"}
-                                    innerCicleColor={"#61285F"}
+                                    componentStyle={styles.radioRow}
+                                    outerCicleColor="#DEDEDF"
+                                    innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
                                     label={item.value}
                                     descLabelStyle={styles.lblRadioDescTxt}
                                     descLabel={item.description}
-                                    selected={(this.state.selectedItemID !== "" && item.key == this.state.selectedItemID) ? true : false}
+                                    selected={!!((this.state.selectedItemID !== "" && item.key === this.state.selectedItemID))}
                                     onPress={this.onSelected(item)}
                                 />
                             );
@@ -313,19 +323,19 @@ class OpenAccPageOneComponent extends Component {
                     </View>
                 </View>
             );
-        }
+        
 
 
     }
 
     render() {
-        console.log("RENDER::: OpenAccPageOne ::>>> ", this.props);
+        AppUtils.Dlog("RENDER::: OpenAccPageOne ::>>> ", this.props);
         const { navigation } = this.props;
         const selectedAccount = navigation.getParam('selectedAccount', {});
 
         const type = selectedAccount.key || "";
-        let currentPage = 1;
-        var nextBtnstyle = !this.state.isNextBtnDisabled ? styles.normalBlackBtn : [styles.normalBlackBtn, { opacity: .45 }];
+        const currentPage = 1;
+        const nextBtnstyle = !this.state.isNextBtnDisabled ? styles.normalBlackBtn : [styles.normalBlackBtn, { opacity: .45 }];
         return (
             <View style={styles.container}>
                 {
@@ -335,8 +345,8 @@ class OpenAccPageOneComponent extends Component {
                     navigation={this.props.navigation}
                     onPress={this.onClickHeader}
                 />
-                <ScrollView style={{ flex: .85 }}>
-                    <CustomPageWizard currentPage={currentPage} pageName={(currentPage) + " " + gblStrings.accManagement.accType} />
+                <ScrollView style={styles.scrollView}>
+                    <CustomPageWizard currentPage={currentPage} pageName={`${currentPage } ${ gblStrings.accManagement.accType}`} />
                     <View style={styles.sectionGrp}>
                         <View style={styles.accTypeSelectSection}>
                             <Text style={styles.headings}>
@@ -378,7 +388,7 @@ class OpenAccPageOneComponent extends Component {
                     </View>
 
 
-                    { /*----------- Disclaimer -------------------*/}
+                    { /* ----------- Disclaimer -------------------*/}
 
                     <View style={styles.newVictorySection}>
                         <Text style={styles.disclaimerTitleTxt}>
@@ -408,5 +418,14 @@ OpenAccPageOneComponent.propTypes = {
     saveData:PropTypes.func,
     saveAccountOpening:PropTypes.func,
     selectAccTypes:PropTypes.func
+};
+OpenAccPageOneComponent.defaultProps = {
+    navigation:{},
+    getAccountSubTypes: {},
+    accOpeningData: {},
+    saveData: null,
+    selectAccTypes: null ,
+    saveAccountOpening: null 
+
 };
 export default OpenAccPageOneComponent;

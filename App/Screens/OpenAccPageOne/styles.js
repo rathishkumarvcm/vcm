@@ -1,3 +1,4 @@
+/* eslint-disable import/prefer-default-export */
 import { StyleSheet, Dimensions } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
@@ -168,7 +169,7 @@ export const styles = StyleSheet.create({
         opacity:0.5
     },
     lblLine1:{
-         //width:"100%",
+         // width:"100%",
         
          height:scaledHeight(1),
          backgroundColor:'#696069'
@@ -279,10 +280,10 @@ export const styles = StyleSheet.create({
         flexGrow: 1,
         backgroundColor: '#FFFFFF',
 
-        //backgroundColor:'yellow',
+        // backgroundColor:'yellow',
 
     },
-    disclaimerTitleTxt: { //termsofuseText
+    disclaimerTitleTxt: { // termsofuseText
         fontSize: scaledHeight(16),
         marginBottom: scaledHeight(10),
         fontWeight: 'bold',
@@ -296,7 +297,7 @@ export const styles = StyleSheet.create({
 
     },
     privacyAgreement: {
-        //marginTop:convertToDeviceResolution(4),
+        // marginTop:convertToDeviceResolution(4),
         marginVertical: scaledHeight(19),
         padding: scaledHeight(12),
         alignItems: 'center',
@@ -309,7 +310,7 @@ export const styles = StyleSheet.create({
     },
     privacyText: {
         width: '50%',
-        //paddingLeft:'4%',
+        // paddingLeft:'4%',
         marginVertical: '2%',
         color: '#61285F',
         fontWeight: 'bold',
@@ -351,6 +352,13 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(20),
         textAlign: 'center',
         lineHeight: scaledHeight(35)
+    },
+    scrollView: {
+        flex: .85
+    },
+    radioRow:{
+        marginBottom: scaledHeight(24),
+        marginTop: scaledHeight(24)
     }
 
 });
