@@ -51,12 +51,12 @@ class RegisterPasswordComponent extends Component {
     navigateSelf = () => {
         const registerSelfData = this.props.navigation.getParam('selfData');
         const username = registerSelfData.emailID;
-        const password = this.state.password;
+        const {password} = this.state;
         const email = registerSelfData.emailID;
         const phoneNumber = registerSelfData.phone;
-        const firstName = registerSelfData.firstName;
-        const lastName = registerSelfData.lastName;
-        const middleName = registerSelfData.middleName;
+        const {firstName} = registerSelfData;
+        const {lastName} = registerSelfData;
+        const {middleName} = registerSelfData;
         Auth.signUp({
             username,
             password,
