@@ -5,7 +5,6 @@ import { styles } from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
 import PropTypes from 'prop-types';
-import { scaledHeight } from '../../Utils/Resolution';
 import Collapsible from 'react-native-collapsible';
 
 
@@ -96,25 +95,35 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     onClickAmountinDollar = () => {
-        this.setState({
+        this.setState(prevState => ({
+            selectedFundData: {
+                ...prevState.selectedFundData,
+                percentageValue:'',
+                allSharesSelected:false,
+            },
             allSharesSelected: false,
             dollarSelected: !this.state.dollarSelected,
             percSelected: false,
             disableNextButton: false,
             percentageValue: [],
             minHoldingPercentage:[],
-        });
+        }));
     }
 
     onClickAmountInPerc = () => {
-        this.setState({
+        this.setState(prevState => ({
+            selectedFundData: {
+                ...prevState.selectedFundData,
+                dollarValue:'',
+                allSharesSelected:false,
+            },
             allSharesSelected: false,
             dollarSelected: false,
             percSelected: !this.state.percSelected,
             disableNextButton: false,
             dollarValue: [],
             minHoldingDollar:[],
-        });
+        }));
     }
 
     onChangeDollarVal = (text) => {
@@ -185,7 +194,6 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     render() {
-        console.log("this.state.minHoldingDollar---> ",this.state.minHoldingDollar);
         let currentPage = 2;
         let totalCount = 4;
         let pageName = gblStrings.liquidation.fundSelectionScreenName;

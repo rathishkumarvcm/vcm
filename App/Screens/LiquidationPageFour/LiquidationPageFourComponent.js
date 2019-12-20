@@ -57,6 +57,14 @@ class LiquidationPageFourComponent extends Component {
         this.props.navigation.navigate('LiquidationPageThree');
     }
 
+    isEmpty = (str) => {
+        if (str == "" || str == undefined || str == null || str == "null" || str == "undefined") {
+            return true;
+        } else {
+            return false;
+        }
+      }
+
     submitButtonAction = () => {
         console.log('On Click Submit Liquidation ...');
         const payloadData = this.state.reviewConfirmLiquidationData;
@@ -71,6 +79,14 @@ class LiquidationPageFourComponent extends Component {
         let taxAccountingMethodData = this.props.navigation.getParam('taxAccountingMethodData');
         let tradeType = "Liquidation";
         let fundSource = '';
+        let sellingAmount = '';
+        if(this.props.liquidationPageTwoInitialState.allSharesSelected){
+            sellingAmount = gblStrings.liquidation.dollarSymbol+this.formatAmount(this.props.liquidationPageTwoInitialState.worthAmount);
+        }else if(this.isEmpty(this.props.liquidationPageTwoInitialState.percentageValue)){
+            sellingAmount = gblStrings.liquidation.dollarSymbol+this.formatAmount(this.props.liquidationPageTwoInitialState.dollarValue);
+        }else{
+            sellingAmount = gblStrings.liquidation.dollarSymbol+this.formatAmount((this.props.liquidationPageTwoInitialState.percentageValue/100)*this.props.liquidationPageTwoInitialState.worthAmount);
+        }
         console.log("componentDidMount fundingSourceData------> ", fundingSourceData);
         console.log("componentDidMount taxAccountingMethodData------> ", taxAccountingMethodData);
         if (taxAccountingMethodData.requestedAmountType == "Before Taxes") {
@@ -90,7 +106,7 @@ class LiquidationPageFourComponent extends Component {
                 selectedAccountName: this.props.liquidationPageOneInitialState.selectedAccountName,
                 selectedAccountNo: this.props.liquidationPageOneInitialState.selectedAccountNumber,
                 worthAmount: this.formatAmount(this.props.liquidationPageTwoInitialState.worthAmount),
-                sellingAmount: "$ 5,500",
+                sellingAmount:sellingAmount,
                 fundingSource: fundSource,
                 fundingSourceAccountNo: fundingSourceData.selectedBankAccountNo,
                 totalInvestment: '$ 5,500',
