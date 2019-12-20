@@ -142,7 +142,7 @@ export const styles = StyleSheet.create({
 
     flexAccDetails1:{
         height:scaledHeight(73),
-        marginLeft: '4%',
+        marginLeft: '2%',
         marginRight:"4%",
         marginTop:"4%",
         flexDirection:'row',
@@ -164,6 +164,15 @@ export const styles = StyleSheet.create({
         marginLeft: "4%",
         marginRight: "4%",
         justifyContent:'space-between'
+    },
+    noRecordsFlex:{
+        marginLeft:"8%",
+        marginTop:"2%"
+    },
+    iconStyle:{
+        justifyContent: 'flex-start', 
+        alignItems: 'flex-start',
+        width:"20%"
     },
     flex6:{
         height:scaledHeight(140),

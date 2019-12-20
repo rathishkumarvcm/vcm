@@ -66,9 +66,20 @@ class LiquidationPageThreeComponent extends Component {
     }
 
     formatAmount = (amount) => {
+        if(this.isEmpty(amount)){
+            return "";
+        }
         var amt = parseInt(amount).toLocaleString();
         return amt;
     }
+
+    isEmpty = (str) => {
+        if (str == "" || str == undefined || str == null || str == "null" || str == "undefined") {
+            return true;
+        } else {
+            return false;
+        }
+      }
 
     onClickExpandFundSource = () => {
         this.setState({ collapseFundSource: !this.state.collapseFundSource });
