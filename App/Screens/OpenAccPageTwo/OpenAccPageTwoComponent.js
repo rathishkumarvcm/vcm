@@ -1211,7 +1211,7 @@ class OpenAccPageTwoComponent extends Component {
             ...prevState[stateKey],
             [keyName]: !prevState[stateKey][keyName]
         },
-        enableScrollViewScroll:false
+        enableScrollViewScroll:gblStrings.isIOSPlatform
     }));
 
     onPressRadio = (stateKey, keyName, text) => () => {

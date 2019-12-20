@@ -4,9 +4,11 @@ Explanation:
 Global constants to be shared all over the app
 
 \*************************** */
+import {Platform} from 'react-native';
 
 
 export default {
+    isIOSPlatform: Platform.OS === 'ios',
     common: {
         cancel: "Cancel",
         ok: "Okay",

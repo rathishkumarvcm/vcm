@@ -84,7 +84,8 @@
     "react/destructuring-assignment": 0,
     "react/no-did-update-set-state":0,
     "no-alert":0,
-    "react-native/sort-styles":0
+    "react-native/sort-styles":0,
+    "react/sort-comp":0
 
   },
   "globals": {
