@@ -192,56 +192,56 @@ class editRelationshipComponent extends Component {
         if (this.state.dropDownRelationValue === '') {
             this.setState({
                 dropDownRelationFlag: !this.state.dropDownRelationFlag,
-                dropDownRelationMsg: 'Select Valid Relationship Type'
+                dropDownRelationMsg: globalString.editRelationShipInformation.validRelationType
             });
         }
 
         if (this.state.relationFirstNameValue === '') {
             this.setState({
                 relationFirstNameFlag: !this.state.relationFirstNameFlag,
-                relationFirstNameMsg: 'Enter Valid First Name'
+                relationFirstNameMsg: globalString.editRelationShipInformation.validRelationFirstName
             })
         }
 
         if (this.state.dropDownValue === '') {
             this.setState({
                 dropDownFlag: !this.state.dropDownFlag,
-                dropDownMsg: 'Select Valid Prefix'
+                dropDownMsg: globalString.editRelationShipInformation.validRelationPrefix
             })
         }
 
         if (this.state.dropDownSuffixValue === '') {
             this.setState({
                 dropDownSuffixFlag: !this.state.dropDownSuffixFlag,
-                dropDownSuffixMsg: 'Select Valid Suffix'
+                dropDownSuffixMsg: globalString.editRelationShipInformation.validRelationSuffix
             })
         }
 
         if (this.state.dropDownGenderValue === '') {
             this.setState({
                 dropDownGenderFlag: !this.state.dropDownGenderFlag,
-                dropDownGenderMsg: 'Select Valid Gender'
+                dropDownGenderMsg: globalString.editRelationShipInformation.validRelationGender
             })
         }
 
         if (this.state.dropDownStatusValue === '') {
             this.setState({
                 dropDownStatusFlag: !this.state.dropDownStatusFlag,
-                dropDownStatusMsg: 'Select Valid Marital Status'
+                dropDownStatusMsg: globalString.editRelationShipInformation.validRelationMarital
             })
         }
 
         if (this.state.dateOfBirthValue === '') {
             this.setState({
                 dateOfBirthFlag: !this.state.dateOfBirthFlag,
-                dateOfBirthMsg: 'Select Valid DOB'
+                dateOfBirthMsg: globalString.editRelationShipInformation.validRelationDOB
             })
         }
 
         if (this.state.relationSecurityValue === '') {
             this.setState({
                 relationSecurityFlag: !this.state.relationSecurityFlag,
-                relationSecurityMsg: 'Enter Valid Social Security Number'
+                relationSecurityMsg: globalString.editRelationShipInformation.validRelationSecurity
             })
         }
 
@@ -254,8 +254,6 @@ class editRelationshipComponent extends Component {
             this.state.dateOfBirthValue != '' &&
             this.state.relationSecurityValue != '') {
             this.addNewRelationShipDetails();
-        } else {
-            console.log("&&&&&&&&&&&&&&& Error in Validation");
         }
     }
 
@@ -266,7 +264,6 @@ class editRelationshipComponent extends Component {
     }
 
     getRelationShipPayload = () => {
-        console.log("$$$$$$$$$$$$$$$$$$");
         let relationShipPayload = {};
         let relationShipDetails = [];
         if (this.props && this.props.profileState) {
@@ -292,7 +289,6 @@ class editRelationshipComponent extends Component {
                 profileRelationShipDetails: relationShipDetails,
             };
         }
-        console.log('@@@@@@@@@@@@@@@@@@@@ New Relationship Details', relationShipPayload);
         return relationShipPayload;
     }
 

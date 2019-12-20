@@ -1039,7 +1039,15 @@ export default {
         relationInstOne: "Please provide the details to add your family member.",
         relationInstTwo: "Select Next and we will search our records for a possible match.",
         relationInstThree: "If a match is not found, continue to provide information to add your family member to your personal profile",
-        relationInstContent: "To help the government fight the funding of terrorism and money laundering activities, federal law requires all financai institutions to obtain, verify and record information that identifies each person who open an account. what this means for you: when open an account, we will ask for your name, address, date of birth and other information that will allow us to identify you. We may also ask to see your driver's license or other identifying documents."
+        relationInstContent: "To help the government fight the funding of terrorism and money laundering activities, federal law requires all financai institutions to obtain, verify and record information that identifies each person who open an account. what this means for you: when open an account, we will ask for your name, address, date of birth and other information that will allow us to identify you. We may also ask to see your driver's license or other identifying documents.",
+        validRelationType: "Select Valid Relationship Type",
+        validRelationFirstName: "Enter Valid First Name",
+        validRelationPrefix: "Select Valid Prefix",
+        validRelationSuffix: "Select Valid Suffix",
+        validRelationGender: "Select Valid Gender",
+        validRelationMarital: "Select Valid Marital Status",
+        validRelationDOB: "Select Valid DOB",
+        validRelationSecurity: "Enter Valid Social Security Number"
     },
     profileValidationMessages: {
         validateAddressLineOne: "Enter a valid Address.",
