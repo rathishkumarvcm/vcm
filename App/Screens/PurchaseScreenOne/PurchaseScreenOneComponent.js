@@ -138,7 +138,7 @@ class PurchaseScreenOneComponent extends Component {
         };
         //this.props.saveData(payloadData);
         console.log("payloadData---> " + JSON.stringify(payloadData));
-        //this.props.navigation.navigate('purchaseScreenTwo', { accSelectionScreenData: this.state.selectedAccountData });
+        this.props.navigation.navigate('purchaseScreenTwo', { accSelectionScreenData: this.state.selectedAccountData });
     }
 
     render() {

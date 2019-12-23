@@ -102,6 +102,7 @@ import VerifyManageBenificiariesComponent from './Screens/VerifyManageBeneficiar
 
 
 import PurchaseScreenOneComponent from './Screens/PurchaseScreenOne';
+import PurchaseScreenTwoComponent from './Screens/PurchaseScreenTwo';
 
 import EditRelationshipInfo from './Screens/EditRelationshipInformation/';
 import EditRegulatoryInfo from './Screens/EditRegulatoryInformations/EditRegulatoryComponent';
@@ -904,6 +905,12 @@ const AppNavigator = createStackNavigator({
         },
         purchaseScreenOne:{
             screen:PurchaseScreenOneComponent,
+            navigationOptions:{
+                header:null,
+            }
+        },
+        purchaseScreenTwo:{
+            screen:PurchaseScreenTwoComponent,
             navigationOptions:{
                 header:null,
             }
