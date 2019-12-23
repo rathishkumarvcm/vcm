@@ -16,13 +16,15 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            saveCurrentDevice: false,
+            acceptPolicy: false,
             accountType:this.props.navigation.getParam('accountType'),
+            errorTextMsg:''
         };
     }
 
     onCheckBoxCheck = () => {
-        this.setState({ saveCurrentDevice: !this.state.saveCurrentDevice });
+        
+        this.setState({ acceptPolicy: !this.state.acceptPolicy });
     }
 
     getPayload = () => {
@@ -51,10 +53,10 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
             switch ((this.state.accountType)) {
                 case "general":
                     if(this.props.automaticInvestmentState.general){
-                        
+                        //Add
                         // planJson=this.props.automaticInvestmentState.general;
                         // planJson.push(this.props.automaticInvestmentState.savedAccData);
-                        //planJson=this.props.automaticInvestmentState.general;
+                        //Edit
                         var array = this.props.automaticInvestmentState.general; // make a separate copy of the array
                         var indexDelete = 0
                         if (indexDelete !== -1) {
@@ -111,9 +113,14 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
     }
 
     navigationSubmit = () => {
+        if(this.state.acceptPolicy){
+            this.setState({errorTextMsg:''})
             const payload = this.getPayload();
             this.props.saveData("automaticInvestmentEsign", payload); 
             this.props.navigation.navigate('automaticInvestment');
+        }
+        else
+        this.setState({errorTextMsg:'Please select the above checkbox'})
     }
 
     //navigationSubmit = () => this.props.navigation.navigate('automaticInvestment');
@@ -166,7 +173,7 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
                                 <Text style={styles.esignContent1}>{'This document contains the information provided by you as part of your automatic investment plan, including Terms and Conditions.'}</Text>
                                 <Text style={styles.esignContent2}>{'By selecting "Submit", I agree to the documents and terms above and certify that any information I provided is accurate, up-to-date and complete.'}</Text>
                             </View>
-
+                            
                             <View style={styles.esignBottomView}>
                                 <CustomCheckBox
                                     size={24}
@@ -176,9 +183,10 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
                                     innerCicleColor={"#2C8DBF"}
                                     labelStyle={styles.agreeTermsTxt}
                                     label={'I, Agree that i have received, read, understood, and agree to the documents linked above.'}
-                                    selected={this.state.saveCurrentDevice}
+                                    selected={this.state.acceptPolicy}
                                     onPress={this.onCheckBoxCheck}
                                 />
+                               <Text style={styles.errorText}>{this.state.errorTextMsg}</Text>
                             </View>
                         </View>
                         <GButtonComponent

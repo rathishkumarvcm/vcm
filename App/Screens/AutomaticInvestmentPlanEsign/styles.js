@@ -187,7 +187,7 @@ export const styles = StyleSheet.create({
         fontSize:scaledHeight(15),
     },
     esignBottomView:{
-        flexDirection:'row',
+        flexDirection:'column',
         backgroundColor:'#F3F3F3',
         paddingLeft:scaledWidth(15),
         paddingRight:scaledWidth(15),
@@ -200,5 +200,9 @@ export const styles = StyleSheet.create({
         color: '#333333DE',
         //marginTop:scaledHeight(5)
     },
+    errorText:{
+        marginTop:scaledHeight(10),
+        color:'red'
+    }
     
 });

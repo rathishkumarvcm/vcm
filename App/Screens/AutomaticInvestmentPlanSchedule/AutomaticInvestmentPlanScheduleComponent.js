@@ -15,23 +15,23 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 const typeJson = [
     {
-        "id": '1',
-        "title": 'Monthly',
+        id: '1',
+        value: 'Monthly',
     },
     {
-        "id": '2',
-        "title": 'Quaterly',
+        id: '2',
+        value: 'Quaterly',
     },
 ];
 
 const endingJson = [
     {
-        "id": '1',
-        "title": 'Never',
+        id: '1',
+        value: 'Never',
     },
     {
-        "id": '2',
-        "title": 'Custom',
+        id: '2',
+        value: 'Custom',
     },
 ];
 
@@ -73,7 +73,7 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
 
     componentDidMount() {
         for(var i=1; i<=30; i++) {
-            dateJson.push({["id"]:i.toString(),["date"]: i.toString()});
+            dateJson.push({["id"]:i.toString(),["value"]: i.toString()});
          }
          
         let itemToEdit = this.state.itemToEdit;
@@ -140,7 +140,7 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
 
     selectedDropDownTypeValue = (valueType) => {
         this.setState({
-            valueTypeDropDown: valueType.title,
+            valueTypeDropDown: valueType,
             typeDropDown: false
         });
     }
@@ -160,14 +160,14 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
 
     selectedDropDownDateValue = (valueDate) => {
         this.setState({
-            valueDateDropDown: valueDate.date,
+            valueDateDropDown: valueDate,
             dateDropDown: false
         });
     }
 
     selectedDropDownEndValue = (valueEnd) => {
         this.setState({
-            valueEndDropDown: valueEnd.title,
+            valueEndDropDown: valueEnd,
             endDropDown: false,
 
         });
@@ -260,38 +260,47 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                         <View style={styles.seperator_line} />
 
                         <GDropDownComponent
-                            dropDownTextName={styles.financialTextLabel}
                             dropDownName="Invest"
+                            dropDownTextName={styles.financialTextLabel}
                             data={typeJson}
+                            textInputStyle={styles.dropdownTextInput}
+                            itemToDisplay={"value"}
+                            dropDownLayout={styles.dropDownLayout}
                             changeState={this.selectTheType}
+                            // errorFlag={this.state.dropDownTypeFlag}
+                            // errorText={this.state.dropDownTypeMsg}
                             showDropDown={this.state.typeDropDown}
                             dropDownValue={this.state.valueTypeDropDown}
                             selectedDropDownValue={this.selectedDropDownTypeValue}
-                            itemToDisplay={"title"}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(263) }}
+                            dropdownOffset={{ 'top': 5,'left':0 }}
                         />
                         <GDropDownComponent
                             dropDownTextName={styles.financialTextLabel}
                             dropDownName="On the Day"
                             data={dateJson}
+                            textInputStyle={styles.dropdownTextInput}
                             changeState={this.selectTheDate}
                             showDropDown={this.state.dateDropDown}
+                            dropDownLayout={styles.dropDownLayout}
                             dropDownValue={this.state.valueDateDropDown}
                             selectedDropDownValue={this.selectedDropDownDateValue}
-                            itemToDisplay={"date"}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(364) }}
+                            itemToDisplay={"value"}
+                            dropdownOffset={{ 'top': 5,'left':0  }}
+                            
                         />
 
                         <GDropDownComponent
                             dropDownTextName={styles.financialTextLabel}
                             dropDownName="Ending"
                             data={endingJson}
+                            textInputStyle={styles.dropdownTextInput}
+                            dropDownLayout={styles.dropDownLayout}
                             changeState={this.selectEnding}
                             showDropDown={this.state.endDropDown}
                             dropDownValue={this.state.valueEndDropDown}
                             selectedDropDownValue={this.selectedDropDownEndValue}
-                            itemToDisplay={"title"}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(464) }}
+                            itemToDisplay={"value"}
+                            dropdownOffset={{ 'top': 5,'left':0  }}
                         />
 
                         {/* <View style={styles.view_row}>

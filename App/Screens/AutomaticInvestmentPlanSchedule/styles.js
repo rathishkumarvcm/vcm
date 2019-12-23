@@ -109,6 +109,14 @@ export const styles = StyleSheet.create({
     financialTextLabel: {
         color: '#333333DE', fontSize: scaledHeight(18), fontWeight: 'bold',  marginBottom: '4%'
     },
+    dropdownTextInput:{
+        width:'100%',
+        marginLeft:0
+      },
+      dropDownLayout:{
+        marginTop:scaledHeight(18),
+        paddingLeft:0
+      },
     view_row:{
         flexDirection:'row',
     },
