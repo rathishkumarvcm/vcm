@@ -19,6 +19,7 @@ export default class CommonDataManager {
 
   accOpeningEditModeEnabled = false;
   savedAccData = {};
+  screenStateData = {};
   /* **************************\
   Method: getInstance
   Explanation:
@@ -119,6 +120,13 @@ export default class CommonDataManager {
   }
   setSavedAccData(value){
     this.savedAccData = value;
+  }
+  getScreenStateData(){
+    return this.screenStateData;
+  }
+  setScreenStateData(value){
+    this.screenStateData = value;
+    console.log("this.screenStateData"+JSON.stringify(this.screenStateData));
   }
 
 }

@@ -40,11 +40,11 @@ const dummyData = [
 
 
 const myInstance = GSingletonClass.getInstance();
-
 class OpenAccPageTwoComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        const openAccPageTwo =  myInstance.getAccOpeningEditMode()? (myInstance.getScreenStateData().openAccPageTwo || {}):{};
         this.state = {
             enableScrollViewScroll:true,
             isValidationSuccess: true,
@@ -484,10 +484,13 @@ class OpenAccPageTwoComponent extends Component {
             currentZipCodeRef: {
                 stateKey: "",
                 keyName: ""
-            }
+            },
             // others
+            ...openAccPageTwo
+
+
         };
-        // this.onChangeText = this.onChangeText.bind(this);
+        AppUtils.Dlog("Constructor 2::"+ JSON.stringify(this.state))
 
     }
 
@@ -497,6 +500,7 @@ class OpenAccPageTwoComponent extends Component {
     componentDidMount() {
 
         AppUtils.Dlog(`componentDidMount::::> ${ this.props}`);
+
         const payload = [
         ];
         const compositePayloadData = [
@@ -723,7 +727,14 @@ class OpenAccPageTwoComponent extends Component {
         if (this.validateFields()) {
             const payload = this.getPayload();
             //this.props.saveData("OpenAccPageTwo", payload);
+            const stateData = myInstance.getScreenStateData();
             myInstance.setSavedAccData(payload);
+            const screenState = {
+                ...stateData,
+                "openAccPageTwo":{...this.state}
+            }
+            myInstance.setScreenStateData(screenState);
+
             this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
         }
     }
@@ -2528,6 +2539,7 @@ class OpenAccPageTwoComponent extends Component {
                             inputref={this.setInputRef("zipcode")}
                             propInputStyle={this.state.personal.zipcodeValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder={gblStrings.accManagement.enterZip}
+                            value={this.state.personal.zipcode}
                             maxLength={gblStrings.maxLength.zipCode}
                             returnKeyType="done"
                             onChangeText={this.onChangeText("personal", "zipcode")}
@@ -2643,6 +2655,7 @@ class OpenAccPageTwoComponent extends Component {
                                     inputref={this.setInputRef("zipcode_Phy")}
                                     propInputStyle={this.state.personal.zipcode_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
                                     placeholder={gblStrings.accManagement.enterZip}
+                                    value={this.state.personal.zipcode_Phy}
                                     maxLength={gblStrings.maxLength.zipCode}
                                     returnKeyType="done"
                                     onChangeText={this.onChangeText("personal", "zipcode_Phy")}
@@ -2745,6 +2758,7 @@ class OpenAccPageTwoComponent extends Component {
                             inputref={this.setInputRef("telePhoneNo2")}
                             propInputStyle={styles.customTxtBox}
                             placeholder={gblStrings.accManagement.phoneNoFormat}
+                            value={this.state.personal.telePhoneNo2}
                             maxLength={gblStrings.maxLength.telePhoneNo2}
                             keyboardType="phone-pad"
                             onChangeText={this.onChangeText("personal", "telePhoneNo2")}
@@ -2782,6 +2796,7 @@ class OpenAccPageTwoComponent extends Component {
                             inputref={this.setInputRef("telePhoneNo3")}
                             propInputStyle={styles.customTxtBox}
                             placeholder=""
+                            value={this.state.personal.telePhoneNo3}
                             maxLength={gblStrings.maxLength.telePhoneNo3}
                             keyboardType="phone-pad"
                             onChangeText={this.onChangeText("personal", "telePhoneNo3")}
@@ -2821,6 +2836,7 @@ class OpenAccPageTwoComponent extends Component {
                             inputref={this.setInputRef("socialSecurityNo")}
                             propInputStyle={this.state.personal.socialSecurityNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder={gblStrings.accManagement.ssnNoFormat}
+                            value={this.state.personal.socialSecurityNo}
                             keyboardType="number-pad"
                             returnKeyType="done"
                             maxLength={gblStrings.maxLength.ssnNo}
@@ -2875,6 +2891,7 @@ class OpenAccPageTwoComponent extends Component {
                                 inputref={this.setInputRef("empStatusForOther")}
                                 propInputStyle={styles.customTxtBox}
                                 placeholder="Enter Employment status"
+                                value={this.state.personal.empStatusForOther}
                                 maxLength={gblStrings.maxLength.common}
                                 onChangeText={this.onChangeText("personal", "empStatusForOther")}
                                 onSubmitEditing={this.onSubmitEditing(this.empIndustry)}
@@ -2903,6 +2920,7 @@ class OpenAccPageTwoComponent extends Component {
                                         inputref={this.setInputRef("empIndustryForOther")}
                                         propInputStyle={styles.customTxtBox}
                                         placeholder="Enter Industry"
+                                        value={this.state.personal.empIndustryForOther}
                                         maxLength={gblStrings.maxLength.common}
                                         onChangeText={this.onChangeText("personal", "empIndustryForOther")}
                                         onSubmitEditing={this.onSubmitEditing(this.empOccupation)}
@@ -2917,6 +2935,8 @@ class OpenAccPageTwoComponent extends Component {
                                 <GInputComponent
                                     inputref={this.setInputRef("empOccupation")}
                                     propInputStyle={styles.customTxtBox}
+                                    value={this.state.personal.occupation}
+
                                     placeholder=""
                                     maxLength={gblStrings.maxLength.occupation}
                                     onChangeText={this.onChangeText("personal", "empOccupation")}
@@ -2972,6 +2992,7 @@ class OpenAccPageTwoComponent extends Component {
                                     propInputStyle={styles.customTxtBox}
                                     placeholder={gblStrings.accManagement.enterZip}
                                     maxLength={gblStrings.maxLength.zipCode}
+                                    value={this.state.personal.empZipcode}
                                     keyboardType="number-pad"
                                     onChangeText={this.onChangeText("personal", "empZipcode")}
                                     onSubmitEditing={this.onSubmitEmpZipEditing("personal", "empZipcode", this.empCity)}
@@ -3012,6 +3033,7 @@ class OpenAccPageTwoComponent extends Component {
                                     propInputStyle={styles.customTxtBox}
                                     placeholder={gblStrings.accManagement.phoneNoFormat}
                                     maxLength={gblStrings.maxLength.workPhone}
+                                    value={this.state.personal.empWorkPhoneNo}
                                     keyboardType="phone-pad"
                                     onChangeText={this.onChangeText("personal", "empWorkPhoneNo")}
 
@@ -3180,6 +3202,7 @@ class OpenAccPageTwoComponent extends Component {
                                     inputref={this.setInputRef("commissionSource")}
                                     propInputStyle={styles.customTxtBox}
                                     placeholder=""
+                                    value={this.state.personal.commissionSource}
                                     maxLength={60}
                                     onChangeText={this.onChangeText("personal", "commissionSource")}
                                 />
@@ -3352,6 +3375,7 @@ class OpenAccPageTwoComponent extends Component {
                                     inputref={this.setInputRef("seniorPoliticalName")}
                                     propInputStyle={this.state.personal.seniorPoliticalNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
                                     placeholder={gblStrings.accManagement.enterSeniorName}
+                                    value={this.state.personal.seniorPoliticalName}
                                     returnKeyType="done"
                                     maxLength={gblStrings.maxLength.seniorPoliticalMaxLength}
                                     onChangeText={this.onChangeText("personal", "seniorPoliticalName")}
@@ -3437,6 +3461,7 @@ class OpenAccPageTwoComponent extends Component {
                             inputref={this.setInputRef("firstName_joint")}
                             propInputStyle={this.state.jointOwner.firstNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder=""
+                            value={this.state.jointOwner.firstName}
                             maxLength={gblStrings.maxLength.firstName}
                             onChangeText={this.onChangeText("jointOwner", "firstName")}
                             onSubmitEditing={this.onSubmitEditing(this.middleInitial_joint)}
@@ -3455,6 +3480,7 @@ class OpenAccPageTwoComponent extends Component {
                         <GInputComponent
                             inputref={this.setInputRef("middleInitial_joint")}
                             propInputStyle={styles.customTxtBox}
+                            value={this.state.jointOwner.middleInitial}
                             placeholder=""
                             maxLength={gblStrings.maxLength.middleInitial}
                             onChangeText={this.onChangeText("jointOwner", "middleInitial")}
@@ -3469,6 +3495,7 @@ class OpenAccPageTwoComponent extends Component {
                             inputref={this.setInputRef("lastName_joint")}
                             propInputStyle={this.state.jointOwner.lastNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder=""
+                            value={this.state.jointOwner.lastName}
                             maxLength={gblStrings.maxLength.lastName}
                             returnKeyType="done"
                             onChangeText={this.onChangeText("jointOwner", "lastName")}
@@ -3566,6 +3593,7 @@ class OpenAccPageTwoComponent extends Component {
                             inputref={this.setInputRef("addrLine1_joint")}
                             propInputStyle={this.state.jointOwner.addrLine1Validation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder={gblStrings.accManagement.empAddrLine1}
+                            value={this.state.jointOwner.addrLine1}
                             maxLength={gblStrings.maxLength.emplAddress1}
                             onChangeText={this.onChangeText("jointOwner", "addrLine1")}
                             onSubmitEditing={this.onSubmitEditing(this.addrLine2_joint)}
@@ -3578,6 +3606,7 @@ class OpenAccPageTwoComponent extends Component {
                             propInputStyle={this.state.jointOwner.addrLine2Validation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder={gblStrings.accManagement.empAddrLine2}
                             maxLength={gblStrings.maxLength.addressLine2}
+                            value={this.state.jointOwner.addrLine2}
                             onChangeText={this.onChangeText("jointOwner", "addrLine2")}
                             onSubmitEditing={this.onSubmitEditing(this.zipcode_joint)}
                             errorFlag={!this.state.jointOwner.addrLine2Validation}
@@ -3593,6 +3622,7 @@ class OpenAccPageTwoComponent extends Component {
                             propInputStyle={this.state.jointOwner.zipcodeValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder={gblStrings.accManagement.enterZip}
                             maxLength={gblStrings.maxLength.zipCode}
+                            value={this.state.jointOwner.zipCode}
                             keyboardType="number-pad"
                             returnKeyType="done"
                             onChangeText={this.onChangeText("jointOwner", "zipcode")}
@@ -3712,6 +3742,7 @@ class OpenAccPageTwoComponent extends Component {
                                     propInputStyle={this.state.jointOwner.zipcode_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
                                     placeholder={gblStrings.accManagement.enterZip}
                                     maxLength={gblStrings.maxLength.zipCode}
+                                    value={this.state.jointOwner.zipcode_Phy}
                                     returnKeyType="done"
                                     onChangeText={this.onChangeText("jointOwner", "zipcode_Phy")}
                                     keyboardType="number-pad"
@@ -3818,6 +3849,7 @@ class OpenAccPageTwoComponent extends Component {
                             propInputStyle={styles.customTxtBox}
                             placeholder={gblStrings.accManagement.phoneNoFormat}
                             maxLength={gblStrings.maxLength.telePhoneNo2}
+                            value={this.state.jointOwner.telePhoneNo2}
                             keyboardType="phone-pad"
                             onChangeText={this.onChangeText("jointOwner", "telePhoneNo2")}
                             onSubmitEditing={this.onSubmitEditing(this.telePhoneNo3_joint)}
@@ -3854,6 +3886,7 @@ class OpenAccPageTwoComponent extends Component {
                             inputref={this.setInputRef("telePhoneNo3")}
                             propInputStyle={styles.customTxtBox}
                             placeholder=""
+                            value={this.state.jointOwner.telePhoneNo3}
                             maxLength={gblStrings.maxLength.telePhoneNo3}
                             keyboardType="phone-pad"
                             onChangeText={this.onChangeText("jointOwner", "telePhoneNo3")}
@@ -3877,6 +3910,7 @@ class OpenAccPageTwoComponent extends Component {
                             placeholder={gblStrings.accManagement.emailformat}
                             keyboardType="email-address"
                             maxLength={gblStrings.maxLength.emailID}
+                            value={this.state.jointOwner.emailAddress}
                             onChangeText={this.onChangeText("jointOwner", "emailAddress")}
                             onSubmitEditing={this.onSubmitEditing(this.socialSecurityNo_joint)}
                             errorFlag={!this.state.jointOwner.emailAddressValidation}
@@ -3891,6 +3925,7 @@ class OpenAccPageTwoComponent extends Component {
                             inputref={this.setInputRef("socialSecurityNo_joint")}
                             propInputStyle={this.state.jointOwner.socialSecurityNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder={gblStrings.accManagement.ssnNoFormat}
+                            value={this.state.jointOwner.socialSecurityNo}
                             keyboardType="number-pad"
                             returnKeyType="done"
                             maxLength={gblStrings.maxLength.ssnNo}
@@ -3944,6 +3979,7 @@ class OpenAccPageTwoComponent extends Component {
                                 inputref={this.setInputRef("empStatusForOther_joint")}
                                 propInputStyle={styles.customTxtBox}
                                 placeholder="Enter Employment status"
+                                value={this.state.jointOwner.empStatusForOther}
                                 maxLength={gblStrings.maxLength.common}
                                 onChangeText={this.onChangeText("jointOwner", "empStatusForOther")}
                                 onSubmitEditing={this.onSubmitEditing(this.empIndustry)}
@@ -3974,6 +4010,8 @@ class OpenAccPageTwoComponent extends Component {
                                         propInputStyle={styles.customTxtBox}
                                         placeholder="Enter Industry"
                                         maxLength={gblStrings.maxLength.common}
+                                        value={this.state.jointOwner.empIndustryForOther}
+
                                         onChangeText={this.onChangeText("jointOwner", "empIndustryForOther")}
                                         onSubmitEditing={this.onSubmitEditing(this.empOccupation)}
                                     errorFlag={!this.state.jointOwner.empIndustryForOtherValidation}
@@ -3987,6 +4025,7 @@ class OpenAccPageTwoComponent extends Component {
                                     inputref={this.setInputRef("empOccupation_joint")}
                                     propInputStyle={styles.customTxtBox}
                                     placeholder=""
+                                    value={this.state.jointOwner.empOccupation}
                                     maxLength={gblStrings.maxLength.occupation}
                                     onChangeText={this.onChangeText("jointOwner", "empOccupation")}
                                     onSubmitEditing={this.onSubmitEditing(this.empName_joint)}
@@ -4003,6 +4042,7 @@ class OpenAccPageTwoComponent extends Component {
                                     propInputStyle={styles.customTxtBox}
                                     placeholder={gblStrings.accManagement.name}
                                     maxLength={gblStrings.maxLength.employerName}
+                                    value={this.state.jointOwner.empName}
                                     onChangeText={this.onChangeText("jointOwner", "empName")}
                                     onSubmitEditing={this.onSubmitEditing(this.empAddrLine1_joint)}
 
@@ -4041,6 +4081,7 @@ class OpenAccPageTwoComponent extends Component {
                                     propInputStyle={styles.customTxtBox}
                                     placeholder={gblStrings.accManagement.enterZip}
                                     maxLength={gblStrings.maxLength.zipCode}
+                                    value={this.state.jointOwner.empZipcode}
                                     keyboardType="number-pad"
                                     onChangeText={this.onChangeText("jointOwner", "empZipcode")}
                                     onSubmitEditing={this.onSubmitEmpZipEditing("jointOwner", "empZipcode", this.empCity_joint)}
@@ -4080,6 +4121,7 @@ class OpenAccPageTwoComponent extends Component {
                                     inputref={this.setInputRef("empWorkPhoneNo_joint")}
                                     propInputStyle={styles.customTxtBox}
                                     placeholder={gblStrings.accManagement.phoneNoFormat}
+                                    value={this.state.jointOwner.empWorkPhoneNo}
                                     maxLength={gblStrings.maxLength.workPhone}
                                     keyboardType="phone-pad"
                                     onChangeText={this.onChangeText("jointOwner", "empWorkPhoneNo")}
@@ -4250,6 +4292,7 @@ class OpenAccPageTwoComponent extends Component {
                                 <GInputComponent
                                     inputref={this.setInputRef("commissionSource")}
                                     propInputStyle={styles.customTxtBox}
+                                    value={this.state.jointOwner.commissionSource}
                                     placeholder=""
                                     maxLength={60}
                                     onChangeText={this.onChangeText("personal", "commissionSource")}
@@ -4422,6 +4465,7 @@ class OpenAccPageTwoComponent extends Component {
                                 inputref={this.setInputRef("seniorPoliticalName_joint")}
                                 propInputStyle={this.state.jointOwner.seniorPoliticalNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
                                 placeholder={gblStrings.accManagement.enterSeniorName}
+                                value={this.state.jointOwner.seniorPoliticalName}
                                 returnKeyType="done"
                                 maxLength={gblStrings.maxLength.seniorPoliticalMaxLength}
                                 onChangeText={this.onChangeText("jointOwner", "seniorPoliticalName")}
@@ -4485,6 +4529,7 @@ class OpenAccPageTwoComponent extends Component {
                         propInputStyle={this.state.childBeneficiary.firstNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
                         placeholder=""
                         maxLength={gblStrings.maxLength.firstName}
+                        value={this.state.childBeneficiary.firstName}
                         onChangeText={this.onChangeText("childBeneficiary", "firstName")}
                         onSubmitEditing={this.onSubmitEditing(this.middleInitial_childben)}
                         errorFlag={!this.state.childBeneficiary.firstNameValidation}
@@ -4502,6 +4547,7 @@ class OpenAccPageTwoComponent extends Component {
                     <GInputComponent
                         inputref={this.setInputRef("middleInitial_childben")}
                         propInputStyle={styles.customTxtBox}
+                        value={this.state.childBeneficiary.middleInitial}
                         placeholder=""
                         maxLength={gblStrings.maxLength.middleInitial}
                         onChangeText={this.onChangeText("childBeneficiary", "middleInitial")}
@@ -4517,6 +4563,7 @@ class OpenAccPageTwoComponent extends Component {
                         inputref={this.setInputRef("lastName_childben")}
                         propInputStyle={this.state.childBeneficiary.lastNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
                         placeholder=""
+                        value={this.state.childBeneficiary.lastName}
                         maxLength={gblStrings.maxLength.lastName}
                         returnKeyType="done"
                         onChangeText={this.onChangeText("childBeneficiary", "lastName")}
@@ -4534,6 +4581,7 @@ class OpenAccPageTwoComponent extends Component {
                         inputref={this.setInputRef("socialSecurityNo_childben")}
                         propInputStyle={this.state.childBeneficiary.socialSecurityNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
                         placeholder={gblStrings.accManagement.ssnNoFormat}
+                        value={this.state.childBeneficiary.socialSecurityNo}
                         keyboardType="number-pad"
                         returnKeyType="done"
                         maxLength={gblStrings.maxLength.ssnNo}
@@ -4660,6 +4708,7 @@ class OpenAccPageTwoComponent extends Component {
                                 inputref={this.setInputRef("seniorPoliticalName_childben")}
                                 propInputStyle={this.state.childBeneficiary.seniorPoliticalNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
                                 placeholder={gblStrings.accManagement.enterSeniorName}
+                                value={this.state.childBeneficiary.seniorPoliticalName}
                                 returnKeyType="done"
                                 maxLength={gblStrings.maxLength.seniorPoliticalMaxLength}
                                 onChangeText={this.onChangeText("childBeneficiary", "seniorPoliticalName")}
@@ -4782,6 +4831,7 @@ class OpenAccPageTwoComponent extends Component {
                                             inputref={this.setInputRef(`beneficiaryDistPercent${ index}`)}
                                             propInputStyle={styles.customTxtBox}
                                             placeholder=""
+                                            value={this.state.retirementBeneficiaryData[index].beneficiaryDistPercent}
                                             maxLength={gblStrings.maxLength.distributionPercentage}
                                             keyboardType="decimal-pad"
                                             onChangeText={this.onChangeTextForIRABeneficiary("beneficiaryDistPercent", index)}
@@ -4808,6 +4858,7 @@ class OpenAccPageTwoComponent extends Component {
                                     inputref={this.setInputRef(`socialSecurityNo${ index}`)}
                                     propInputStyle={styles.customTxtBox}
                                     placeholder={gblStrings.accManagement.ssnNoFormat}
+                                    value={this.state.retirementBeneficiaryData[index].socialSecurityNo}
                                     keyboardType="number-pad"
                                     maxLength={gblStrings.maxLength.ssnNo}
                                     onChangeText={this.onChangeTextForIRABeneficiary("socialSecurityNo", index)}
@@ -4824,6 +4875,7 @@ class OpenAccPageTwoComponent extends Component {
                                 <GInputComponent
                                     inputref={this.setInputRef(`firstName${ index}`)}
                                     propInputStyle={styles.customTxtBox}
+                                    value={this.state.retirementBeneficiaryData[index].firstName}
                                     placeholder=""
                                     maxLength={gblStrings.maxLength.firstName}
                                     onChangeText={this.onChangeTextForIRABeneficiary("firstName", index)}
@@ -4845,6 +4897,7 @@ class OpenAccPageTwoComponent extends Component {
                                 <GInputComponent
                                     inputref={this.setInputRef(`middleInitial${ index}`)}
                                     propInputStyle={styles.customTxtBox}
+                                    value={this.state.retirementBeneficiaryData[index].middleInitial}
                                     placeholder=""
                                     maxLength={gblStrings.maxLength.middleInitial}
                                     onChangeText={this.onChangeTextForIRABeneficiary("middleInitial", index)}
@@ -4861,6 +4914,7 @@ class OpenAccPageTwoComponent extends Component {
                                 <GInputComponent
                                     inputref={this.setInputRef(`lastName${ index}`)}
                                     propInputStyle={styles.customTxtBox}
+                                    value={this.state.retirementBeneficiaryData[index].lastName}
                                     placeholder=""
                                     maxLength={gblStrings.maxLength.lastName}
                                     onChangeText={this.onChangeTextForIRABeneficiary("lastName", index)}
@@ -4878,6 +4932,7 @@ class OpenAccPageTwoComponent extends Component {
                                 <GDateComponent
                                     inputref={this.setInputRef(`dob${ index}`)}
                                     date={this.state.retirementBeneficiaryData[index].dob}
+                                    value={this.state.retirementBeneficiaryData[index].dob}
                                     placeholder="Select Date"
                                     errorFlag={!this.state.retirementBeneficiaryData[index].dobValidation}
                                     errorMsg={this.state.errMsg}
@@ -4895,6 +4950,7 @@ class OpenAccPageTwoComponent extends Component {
                                 <GInputComponent
                                     inputref={this.setInputRef(`emailAddress${ index}`)}
                                     propInputStyle={styles.customTxtBox}
+                                    value={this.state.retirementBeneficiaryData[index].emailAddress}
                                     placeholder=""
                                     maxLength={gblStrings.maxLength.emailID}
                                     onChangeText={this.onChangeTextForIRABeneficiary("emailAddress", index)}

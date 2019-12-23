@@ -19,13 +19,16 @@ class OpenAccPageFourComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        const openAccPageFour =  myInstance.getAccOpeningEditMode() ? (myInstance.getScreenStateData().openAccPageFour || {}):{};
+
         this.state = {
             selectedDividendCapitalGains: "",
             selectedProspectusReportsRef: "",
             dividendCapitalGainsValidation:true,
             ProspectusReportsRefValidation:true,
             isValidationSuccess: true,
-            errMsg:""
+            errMsg:"",
+            ...openAccPageFour
 
         };
     }
@@ -100,6 +103,12 @@ class OpenAccPageFourComponent extends Component {
             const payload = this.getPayload();
            // this.props.saveData("OpenAccPageFour", payload);
             myInstance.setSavedAccData(payload);
+            const stateData = myInstance.getScreenStateData();
+            const screenState = {
+                ...stateData,
+                "openAccPageFour":{...this.state}
+              }; 
+            myInstance.setScreenStateData(screenState);
             this.props.navigation.navigate({ routeName: 'openAccPageFive', key: 'openAccPageFive' });
           }
         }

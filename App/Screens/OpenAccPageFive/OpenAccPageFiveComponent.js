@@ -705,7 +705,8 @@ class OpenAccPageFiveComponent extends Component {
                                  Render Methods
                                                                  -------------------------- */
     render() {
-        let tempInfoData = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
+        // let tempInfoData = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
+        let tempInfoData = myInstance.getSavedAccData();
 
         let currentPage = 5;
         const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA', ''));

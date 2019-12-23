@@ -191,6 +191,7 @@ SourceListItem.propTypes = {
 const myInstance = GSingletonClass.getInstance();
 class OpenAccPageThreeComponent extends Component {
     constructor(props) {
+        const openAccPageThree =  myInstance.getAccOpeningEditMode() ? (myInstance.getScreenStateData().openAccPageThree || {}):{};
 
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -249,7 +250,8 @@ class OpenAccPageThreeComponent extends Component {
             isAddBankAccount: false,
             isValidBankAccount: true,
             validBankAccountMsg: '',
-
+            // others
+            ...openAccPageThree
         };
     }
 
@@ -447,7 +449,14 @@ class OpenAccPageThreeComponent extends Component {
         if (this.validateFields()) {
             const payload = this.getPayload();
            // this.props.saveData("OpenAccPageThree", payload);
+        
             myInstance.setSavedAccData(payload);
+            const stateData = myInstance.getScreenStateData();
+            const screenState = {
+                ...stateData,
+                "openAccPageThree":{...this.state}
+              }; 
+            myInstance.setScreenStateData(screenState);
             this.props.navigation.navigate({ routeName: 'openAccPageFour', key: 'openAccPageFour' });
         }
     }
@@ -1601,6 +1610,7 @@ class OpenAccPageThreeComponent extends Component {
                                                         maxLength={gblStrings.maxLength.initInvestment}
                                                         placeholder="Initial Investment"
                                                         keyboardType="decimal-pad"
+                                                        value={this.state.selectedFundInvestmentsData[index].initialInvestment}
                                                         onChangeText={this.onChangeTextForInvestment("initialInvestment", index)}
                                                         errorFlag={!this.state.selectedFundInvestmentsData[index].initialInvestmentValidation}
                                                         errorText=""

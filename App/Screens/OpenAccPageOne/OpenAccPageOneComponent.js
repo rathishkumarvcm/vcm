@@ -62,6 +62,8 @@ class OpenAccPageOneComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        const openAccPageOne =  myInstance.getAccOpeningEditMode()? (myInstance.getScreenStateData().openAccPageOne || {}):{};
+
         this.state = {
             isLoading: false,
             selectedItemID: "",
@@ -69,19 +71,14 @@ class OpenAccPageOneComponent extends Component {
             accType: "",
             isValidationSuccess: true,
             isNextBtnDisabled: true,
-            errMsg:""
-
+            errMsg:"",
+            ...openAccPageOne
         };
     }
 
     /*----------------------
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
-    // eslint-disable-next-line camelcase
-    UNSAFE_componentWillMount() {
-        // alert("get paramsrrrrr:"+JSON.stringify(this.props.navigation.state.params.accType))
-
-    }
 
     componentDidMount() {
         AppUtils.Dlog("componentDidMount::::> ");
@@ -180,6 +177,13 @@ class OpenAccPageOneComponent extends Component {
             const payload = this.getPayload();
            // this.props.saveData("OpenAccPageOne", payload);             
             myInstance.setSavedAccData(payload);
+            const stateData = myInstance.getScreenStateData();
+            myInstance.setSavedAccData(payload);
+            const screenState = {
+                ...stateData,
+                "openAccPageOne":{...this.state}
+            }
+            myInstance.setScreenStateData(screenState);
             if (selectedAccount.key === "spec_acct") {
                 this.props.navigation.navigate({ routeName: 'specialtyAccPage', key: 'specialtyAccPage', params: { pageNo: 2, accType: "Specialty Account" } });
             } else if (selectedAccount.key === "inv_child") {
