@@ -101,7 +101,7 @@ class LoginComponent extends Component {
 
     componentDidUpdate(){
         let emailVerify = this.props.navigation.getParam('emailVerified');
-        let onlineID = this.props.navigation.getParam('emailVerifiedData','');
+        let onlineID = this.props.navigation.getParam('emailVerifiedData');
         if(emailVerify !== undefined && !this.state.registeredSuccess){
             this.setState({
                 registeredSuccess : true,
@@ -109,14 +109,14 @@ class LoginComponent extends Component {
             });
         }
 
-        // Special MFA Requirements
-        let onlineIdVerify = this.props.navigation.getParam('onlineIdCreated'); 
-        if(onlineIdVerify!==undefined){
-            this.setState({
-                registeredSuccess : true               
-            });
-        }
-
+         // Special MFA Requirements
+         let onlineIdVerify = this.props.navigation.getParam('onlineIdCreated'); 
+         if(onlineIdVerify!==undefined){
+             this.setState({
+                 registeredSuccess : true               
+             });
+         }
+         
         console.log('componentDidUpdate',emailVerify);
        
         let validEmail = 'vcm.com';
@@ -131,21 +131,10 @@ class LoginComponent extends Component {
       }, (err) => {
           console.log(err);
       });
-     
-        // Special MFA Requirements
-        if(this.props && this.props.loginState && this.props.loginState.emailCheck && this.props.loginState.data && this.props.loginState.data.response && this.props.loginState.data.response.status === 200 && (this.props.navigation.getParam('SpecialMFA')=="GuestUser"))
-        {
-            this.props.navigation.navigate('openAccPageSix',{SpecialMFA:'GuestUser'});
-        }
-        else if(this.props && this.props.loginState && this.props.loginState.emailCheck && this.props.loginState.data && this.props.loginState.data.response && this.props.loginState.data.response.status === 200 && (this.props.navigation.getParam('SpecialMFA')=="NewUser"))
-        {
-            this.props.navigation.navigate('dashboard',{SpecialMFA:'NewUser'});
-        }        
-        else if(this.props && this.props.loginState && this.props.loginState.emailCheck && this.props.loginState.data && this.props.loginState.data.response && this.props.loginState.data.response.status === 200){
-           this.navigateDashboard();           
+
+        if(this.props && this.props.loginState && this.props.loginState.emailCheck && this.props.loginState.data && this.props.loginState.data.response && this.props.loginState.data.response.status === 200){
             this.navigateDashboard();
-           this.navigateDashboard();           
-        }        
+        }       
     }
 }
 
@@ -160,7 +149,7 @@ class LoginComponent extends Component {
     }
 
     onAuthenticate = result => {
-        console.log(result);
+     
         if(result){
             alert("Authentication Successfull");
             this.setState({
@@ -204,17 +193,34 @@ class LoginComponent extends Component {
 
     signIn = () => {
         console.log("test");
-        let username = this.state.name;
+        let username = this.state.email;
         let password = this.state.password;
         let email = this.state.email;
-        let phone_number = this.state.phone;
+        let phone_number = "+918754499334";
         Auth.signIn({
             username,
             password,
             email,
-            //phone_number
+            phone_number
         }).then(data => {
-            console.log("Data",data);
+            console.log("Data",JSON.stringify(data.signInUserSession.idToken.jwtToken));
+
+            RNSecureKeyStore.set("jwtToken",data.signInUserSession.idToken.jwtToken,{accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY}).then((res) => {
+                console.log("token saved suuccessfully",res)
+            }, (err) => {
+                console.log("Error",err);
+            })
+
+            let currentSessionTime = new Date();
+
+            RNSecureKeyStore.set("currentSession",currentSessionTime.getTime(), {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+              .then((res) => {
+                  console.log("*****currentSession******",res);
+              }, (err) => {
+                  console.log(err);
+              });
+              
+
             alert("Signed In Successfully.");
             RNSecureKeyStore.set("EmailAddress",username, {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
       .then((res) => {
@@ -231,7 +237,7 @@ class LoginComponent extends Component {
 
 
     callSignIn = () => {
-        const payload = {
+       const payload = {
             "companyNumber": 591,
             "fundNumber": 30,
             "accountNumber": 30900780183,
@@ -239,7 +245,9 @@ class LoginComponent extends Component {
             password: this.state.password
           };
 
-        this.props.signInAction(payload);
+        this.props.signInAction(payload,"Mobile"); 
+          
+    
     }
 
 
@@ -271,7 +279,6 @@ class LoginComponent extends Component {
   
 
     render(){
-        console.log("this.props----",this.props);
 
 
         return (
@@ -338,6 +345,7 @@ class LoginComponent extends Component {
                 errorFlag={!this.state.validationPassword}
                 errorText={"Enter a valid password."}
             />
+            
 
             <View style={styles.forgotLineText}>
                 <Text style={styles.termsofuseText}>

@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, StyleSheet,View, FlatList } from "react-native"
 import PropTypes from "prop-types";
 import {GInputComponent} from './GInputComponent';
 import {GIcon} from './GIcon';
+import { Dropdown } from 'react-native-material-dropdown';
 import { scaledHeight } from '../Utils/Resolution';
 
 
@@ -29,14 +30,14 @@ buttonTextStyle:{
 },
 dropDownLayout:{
     marginTop:scaledHeight(18),
-    paddingLeft:'4%',
-    paddingRight:'4%',
+    marginLeft:'4%',
+    marginRight:'4%',
 },
 dropDownTextName:{
-    color:'#000000',
+    color:"#333333DE",
     fontSize:scaledHeight(16),
     fontWeight:'bold',
-    marginBottom:scaledHeight(8)
+    //marginBottom:scaledHeight(8)
 },
 textInputStyle:{
     marginLeft:'4%',
@@ -58,62 +59,62 @@ showDropDownSectionStyle:{
     borderColor : "#DEDEDF",
     backgroundColor:'white'
 },
-optionalTxt:{
-    color:'rgba(51, 51, 51, 0.87)',
-    fontSize:scaledHeight(16),
-    fontWeight:'normal',
-}
+pickerStyle : {
+    borderColor:"#DEDEDF",
+    borderWidth:1,
+    width:'92%',
+    marginLeft:'2%'
+},
+inputStyle : {
+    height:scaledHeight(50),
+    borderBottomWidth:1,
+    borderWidth:1,
+    borderColor:'#DEDEDF',
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor: '#FFFFFF',
+    paddingLeft:'4%'
+},
+errorInputStyle : {
+    height:scaledHeight(50),
+    borderBottomWidth:1,
+    borderWidth:1,
+    borderColor:'red',
+    borderBottomColor:'red',
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor: '#FFFFFF',
+    paddingLeft:'4%'
+ }
 });
 
 
 export const GDropDownComponent = props => (
-    <>
-        <View style={[styles.dropDownLayout, props.dropDownLayout]}>
-            <Text style={[styles.dropDownTextName, props.dropDownTextName]}>
-                <Text style={[props.dropDownTextName]}>
-                    {props.dropDownName}
-                </Text>
-                {props.isOptional && <Text style={styles.optionalTxt}>{" (Optional)"}</Text>}
+
+    <View style={[styles.dropDownLayout,props.dropDownLayout]}>
+            <Text style={[styles.dropDownTextName,props.dropDownTextName]}>
+                {props.dropDownName}
             </Text>
+            <Dropdown
+                    data={props.data}
+                    dropdownOffset={{ 'top': 5 }}
+                    baseColor={"#DEDEDF"}
+                    //dropdownPosition={-5.75}
+                    pickerStyle={styles.pickerStyle}
+                    inputContainerStyle={!props.errorFlag ? styles.inputStyle : styles.errorInputStyle
+                   }
+                   value={props.dropDownValue}
+                   onChangeText={props.selectedDropDownValue}
+                   error={props.errorFlag ? props.errorText : null}
+                   itemCount={props.itemCount}
+                />
         </View>
-
-
-    <GInputComponent 
-        inputref={props.inputref}
-        propInputStyle={[styles.textInputStyle,props.textInputStyle]} 
-        placeholder={""}
-        editable={false}
-        value={props.dropDownValue}
-        errorFlag={props.errorFlag}
-        errorText={props.errorText}
-        dropDownBox
-        dropDownClick={props.changeState}
-    />
-
-    
-
-
-
-{props.showDropDown && 
-<View style={[styles.showDropDownSectionStyle,props.dropDownPostition]}>
-<FlatList
-    data={props.data}
-    renderItem={({ item }) => 
-    (<TouchableOpacity style={{ height: 33 }} onPress={() => props.selectedDropDownValue(item)}>
-        <Text> {item[props.itemToDisplay]} </Text>
-     </TouchableOpacity>)
-    }
-keyExtractor={item => item.id}
-/>
-</View> }
-    </>
 
 );
 
 GDropDownComponent.propTypes = {
   dropDownName : PropTypes.string,
   showDropDown : PropTypes.bool,
-  isOptional:PropTypes.bool,
   dropDownLayout: PropTypes.instanceOf(Object),
   dropDownTextName: PropTypes.instanceOf(Object),
   textInputStyle: PropTypes.instanceOf(Object),
@@ -129,9 +130,7 @@ GDropDownComponent.propTypes = {
 GDropDownComponent.defaultProps = {
   disabled : false,
   buttonStyle: {},
-  textStyle: {},
-  isOptional:false
-
+  textStyle: {}
 };
 
 export default GDropDownComponent;
