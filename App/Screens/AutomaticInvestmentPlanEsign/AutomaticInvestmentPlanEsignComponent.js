@@ -51,11 +51,20 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
             switch ((this.state.accountType)) {
                 case "general":
                     if(this.props.automaticInvestmentState.general){
-                        planJson=this.props.automaticInvestmentState.general;
-                        planJson.push(this.props.automaticInvestmentState.savedAccData);//=this.props.automaticInvestmentState.general.
+                        
+                        // planJson=this.props.automaticInvestmentState.general;
+                        // planJson.push(this.props.automaticInvestmentState.savedAccData);
+                        //planJson=this.props.automaticInvestmentState.general;
+                        var array = this.props.automaticInvestmentState.general; // make a separate copy of the array
+                        var indexDelete = 0
+                        if (indexDelete !== -1) {
+                            array[0]=this.props.automaticInvestmentState.savedAccData
+                            //planJson=array
+                        }
+                        
                         payload = {
                             ...this.props.automaticInvestmentState,
-                            general: planJson,
+                            general: array,
                         };
                     }
                     else{

@@ -184,9 +184,13 @@ class AutomaticInvestmentComponent extends Component {
     navigationInvestmentVerify = index =>e=> this.props.navigation.navigate('automaticInvestmentVerify', { skip: true,indexSelected:index });
 
     navigationInvestmentEdit = index => e => {
+        let id;
+    this.state.arr_expand.map(()=>{
+
+    })
         switch ((index)) {
             case 0:
-                this.props.navigation.navigate('automaticInvestmentAdd', { option: index, ItemToEdit: this.state.selectedIndex });
+                this.props.navigation.navigate('automaticInvestmentAdd', { option: index, ItemToEdit: this.state.selectedIndex ,accountType:'general'});
                 break;
             case 1:
                 var array = [...this.state.generalAutoInvestment]; // make a separate copy of the array

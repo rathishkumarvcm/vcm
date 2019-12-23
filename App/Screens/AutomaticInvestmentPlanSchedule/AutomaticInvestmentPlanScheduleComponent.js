@@ -79,12 +79,13 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
         let itemToEdit = this.state.itemToEdit;
         if (itemToEdit > -1) {
             if (this.props && this.props.automaticInvestmentState) {
-
                 this.setState({
-                    autoInvestmentAddAmountJson: this.props.automaticInvestmentState[itemToEdit],
-                    valueTypeDropDown: this.props.automaticInvestmentState[itemToEdit].schedule,
-                    valueDateDropDown: this.props.automaticInvestmentState[itemToEdit].onTheDate.replace('th', '').trim(),
-                    //valueEndDropDown: this.props.automaticInvestmentState[itemToEdit].ending,
+                    autoInvestmentAddAmountJson: this.props.automaticInvestmentState.general[itemToEdit],
+                    valueTypeDropDown: this.props.automaticInvestmentState.general[itemToEdit].invest,
+                    valueDateDropDown: this.props.automaticInvestmentState.general[itemToEdit].dateToInvest.replace('th', '').trim(),
+                    valueEndDropDown: this.props.automaticInvestmentState.general[itemToEdit].ending,
+                    customDateValue:this.props.automaticInvestmentState.general[itemToEdit].ending==='Custom'?
+                                    this.props.automaticInvestmentState.general[itemToEdit].endDate:null
                 });
             }
         }
@@ -96,7 +97,7 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
         const month = new Date().getMonth() + 1; //Current Month
         const year = new Date().getFullYear(); //Current Year
         const currentdate = month + "/" + date + "/" + year;
-        
+
         /*Calculate Next Month */
         const nextMonth = new Date();
         nextMonth.setMonth(nextMonth.getMonth() + 1);
@@ -107,7 +108,7 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
         const quarter = Math.floor((today.getMonth() / 3));
         const startFullQuarter = new Date(today.getFullYear(), quarter * 3 + 3, 1);
         const endFullQuarter = new Date(startFullQuarter.getFullYear(), startFullQuarter.getMonth() + 3, 0);
-
+        //console.log('----------------------------',this.state.valueEndDropDown.toLowerCase())
         let payload = {
             invest: this.state.valueTypeDropDown,
             dateToInvest: this.state.valueDateDropDown,
@@ -215,6 +216,7 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
         const currentdate = month + "-" + date + "-" + year;
         return (
             <View style={styles.container}>
+                {console.log('======================================',this.state.autoInvestmentAddAmountJson)}
                 <GHeaderComponent register navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
                     <Text style={styles.autoInvestHead}>{'Create Automatic Investment Plan'}</Text>

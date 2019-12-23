@@ -92,11 +92,15 @@ class AutomaticInvestmentAddComponent extends Component {
 
         let selected = [];
         this.state.fundList.map((item) => {
-            if (item.isActive) {
+            console.log('outside if',item.fundAmount)
+            if (item.fundAmount>50) {
+                
                 selected.push({ name: item.fundName, amount: item.fundAmount })
             }
         })
+        console.log('selected',selected)
         let payload = {
+            account: this.state.acc_name+'|'+this.state.acc_no,
             totalAmount: '$' + this.state.totalFund,
             fundFrom: autoInvestmentAddBankJson[this.state.selectedBank].account,
             investedIn: selected,
@@ -210,8 +214,10 @@ class AutomaticInvestmentAddComponent extends Component {
 
 
     setTotalFund = (value) => {
-
-        this.setState({ totalFund: Number(value), fundRemaining: Number(value) })
+        let remaining
+        if(value>this.state.fundConsumed)
+            remaining=value-this.state.fundConsumed;
+        this.setState({ totalFund: Number(value), fundRemaining: Number(remaining) })
     }
 
     generateAmountKeyExtractor = (item) => item.fundNumber.toString()

@@ -87,7 +87,7 @@ class AutomaticInvestmentAccountComponent extends Component {
 
         let payload = {
             id:this.state.newItemId,
-            account: this.state.selectedAccountJson.accountName+'|'+this.state.selectedAccountJson.accountNumber,
+            //account: this.state.selectedAccountJson.accountName+'|'+this.state.selectedAccountJson.accountNumber,
         };
         if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
             payload = {

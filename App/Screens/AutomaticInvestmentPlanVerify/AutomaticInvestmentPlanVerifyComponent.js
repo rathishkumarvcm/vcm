@@ -18,6 +18,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
 
         this.state = {
             skip: this.props.navigation.getParam('skip', false),
+            //edit:this.props.navigation.getParam('edit', false),
             indexSelected: this.props.navigation.getParam('indexSelected'),
             autoInvestmentJson: {},
             dateFromValue: '',
@@ -130,10 +131,12 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
         const currentdate = month + "-" + date + "-" + year;
         var item = this.state.autoInvestmentJson;
         let fundlist="";
+        
         if(this.state.autoInvestmentJson.account)
         {
+            console.log('this.state.autoInvestmentJson',this.state.autoInvestmentJson)
             this.state.autoInvestmentJson.investedIn.map((fund)=>{
-                fundlist=fund.name+","+fundlist;
+                fundlist=fund.name+','+fundlist;
             })
         }
         return (
@@ -203,7 +206,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                             <View style={styles.verifyContentView}>
                                 <Text style={styles.verifyConent1}>{"Invested In"}</Text>
                             
-                                <Text style={styles.verifyConent2}>{fundlist.replace(',','').trim()}</Text>
+                                <Text style={styles.verifyConent2}>{fundlist.replace(/,$/," ").trim()}</Text>
                                 
                             </View>
                             <View style={styles.verifyContentView}>
