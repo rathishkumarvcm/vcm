@@ -83,7 +83,7 @@ class OpenAccPageFiveComponent extends Component {
                 </Text>
                 <View style={{flexGrow: 1,backgroundColor: '#FFFFFF',paddingHorizontal: scaledHeight(15),paddingTop: scaledHeight(16),paddingBottom: scaledHeight(10)}} >
                 <TouchableOpacity
-                        // onPress={() => { alert("#TODO:: Edit") }}
+                        onPress={this.navigateToScreen("openAccPageThree")}
                         activeOpacity={0.8}
                         accessibilityRole={'button'}
                         style={styles.editBtn}

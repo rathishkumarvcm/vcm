@@ -402,7 +402,9 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(25),
         paddingLeft: '0%',
         paddingRight: '0%',
-        width: '100%'
+        width: '100%',
+        borderColor:'green',
+        borderWidth:1
     },
     dropDownTextName: {
         color: 'rgba(51, 51, 51, 0.87)',
@@ -413,7 +415,8 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(0),
         paddingLeft: '0%',
         paddingRight: '0%',
-        width: '100%'
+        width: '100%',
+        borderColor:'blue'
 
     },
     textInputStyle: {

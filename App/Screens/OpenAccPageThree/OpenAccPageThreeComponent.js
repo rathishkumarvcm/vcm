@@ -755,17 +755,18 @@ class OpenAccPageThreeComponent extends Component {
 
     }
 
-    onSelectedDropDownValue = (dropDownName, index) => (item) => {
+    onSelectedDropDownValue = (dropDownName, objIndex) => (value, index,data) => {
         AppUtils.Dlog(`onSelectedDropDownValue:: ${ dropDownName}`);
+        let item = data[index];
         const newItems = [...this.state.selectedFundInvestmentsData];
 
         switch (dropDownName) {
             case "fundingOptionDropDown":
-                newItems[index].fundingOptionDropDown = false;
-                newItems[index].fundingOption = item.value;
+                newItems[objIndex].fundingOptionDropDown = false;
+                newItems[objIndex].fundingOption = item.value;
 
                 AppUtils.Dlog(`item.value:: ${ item.value}`);
-                AppUtils.Dlog(`newItems[index]:: ${ newItems[index]}`);
+                AppUtils.Dlog(`newItems[objIndex]:: ${ newItems[objIndex]}`);
 
                 this.setState({
                     selectedFundInvestmentsData: newItems

@@ -153,9 +153,11 @@ class OpenAccPageSixComponent extends Component {
                         let msg = tempResponse.message;
                         console.log("Account Created ::: :: " + msg);
                         alert(msg+"  :"+ tempResponse.accountId);
+                        myInstance.setAccOpeningEditMode(false);
                         this.props.navigation.goBack('termsAndConditions');
                     } else {
                         alert(tempResponse.message);
+                        myInstance.setAccOpeningEditMode(false);
                     }
                 }
             }

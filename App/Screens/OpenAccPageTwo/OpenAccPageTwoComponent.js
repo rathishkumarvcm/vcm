@@ -2047,7 +2047,7 @@ class OpenAccPageTwoComponent extends Component {
                 inputref={this.setInputRef(`${stateKey }${ inputRefKey}`)}
                 dropDownLayout={styles.dropDownLayout}
                 dropDownTextName={styles.dropDownTextName}
-                textInputStyle={styles.textInputStyle}
+                pickerStyle={styles.textInputStyle}
                 dropDownName={lblDropdownName}
                 data={dropDownData}
                 dropDownValue={this.state[section][stateKey]}
@@ -2064,8 +2064,10 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
-    onSelectedDropDownValue = (section, stateKey, dropDownName) => (item) => {
+    onSelectedDropDownValue = (section, stateKey, dropDownName) => (value, index,data) => {
         AppUtils.Dlog("onSelectedDropDownValue:");
+
+        let item = data[index];
         const tempRankKey = `mil_rank_${ item.key}`;
         let payload = "";
 
@@ -2083,6 +2085,16 @@ class OpenAccPageTwoComponent extends Component {
                 payload = tempRankKey;
                 this.props.getRankData(payload);
             }
+
+        }else if (dropDownName === "annualIncomeDropDown") {
+            this.setState(prevState => ({
+                [section]: {
+                    ...prevState[section],
+                    [stateKey]: item.value,
+                    [dropDownName]: false,
+                    taxBracket: item.taxbracket
+                }
+            }));
 
         } else {
             this.setState(prevState => ({

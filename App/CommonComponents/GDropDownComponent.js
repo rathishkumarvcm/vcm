@@ -100,7 +100,7 @@ export const GDropDownComponent = props => (
                     dropdownOffset={{ 'top': 5 }}
                     baseColor={"#DEDEDF"}
                     //dropdownPosition={-5.75}
-                    pickerStyle={styles.pickerStyle}
+                    pickerStyle={[styles.pickerStyle,props.pickerStyle]}
                     inputContainerStyle={!props.errorFlag ? styles.inputStyle : styles.errorInputStyle
                    }
                    value={props.dropDownValue}
@@ -116,6 +116,7 @@ GDropDownComponent.propTypes = {
   dropDownName : PropTypes.string,
   showDropDown : PropTypes.bool,
   dropDownLayout: PropTypes.instanceOf(Object),
+  pickerStyle: PropTypes.instanceOf(Object),
   dropDownTextName: PropTypes.instanceOf(Object),
   textInputStyle: PropTypes.instanceOf(Object),
   dropDownPostition : PropTypes.instanceOf(Object),
