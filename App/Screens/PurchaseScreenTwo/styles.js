@@ -47,7 +47,6 @@ export const styles = StyleSheet.create({
     fontSize: scaledHeight(16),
     color: "#5D83AE",
     fontWeight: "bold",
-    //width: '80%',
     textAlign: "center"
   },
   compareFundsBtn: {
@@ -66,11 +65,9 @@ export const styles = StyleSheet.create({
     fontSize: scaledHeight(16),
     color: "#5D83AE",
     fontWeight: "bold",
-    // width: '80%',
     textAlign: "center"
   },
   fundListGrp: {
-    // flexGrow: 1,
     marginTop: scaledHeight(27)
   },
   fundItemStyle: {
@@ -162,9 +159,8 @@ export const styles = StyleSheet.create({
     fontWeight: "400"
   },
   totalView: {
-    justifyContent: "space-between",
-    marginHorizontal: "4%",
-    marginVertical: "6%"
+    flexDirection: 'row',
+    justifyContent: "space-between"
   },
   topContainer: {
     marginLeft: "4%",
@@ -192,7 +188,6 @@ export const styles = StyleSheet.create({
     marginLeft: "4%",
     marginRight: "4%",
     marginTop: "4%"
-    // marginBottom:"5%"
   },
   btnGrp: {
     marginHorizontal: scaledHeight(12),
@@ -201,9 +196,8 @@ export const styles = StyleSheet.create({
     alignContent: 'center',
     justifyContent: 'center',
     alignItems: 'center'
-},
-normalWhiteBtn: {
-    //  width: '90%',
+  },
+  normalWhiteBtn: {
     borderWidth: 1,
     borderColor: "#61285F45",
     height: scaledHeight(50),
@@ -214,16 +208,15 @@ normalWhiteBtn: {
     marginVertical: scaledHeight(7.5),
     marginHorizontal: scaledHeight(37)
 
-},
-normalWhiteBtnTxt: {
+  },
+  normalWhiteBtnTxt: {
     fontSize: scaledHeight(16),
     color: '#544A54',
     width: '100%',
     textAlign: 'center',
     lineHeight: 22
-},
-normalBlackBtn: {
-    //  width: '90%',
+  },
+  normalBlackBtn: {
     borderWidth: 1,
     borderColor: "#61285F45",
     height: scaledHeight(50),
@@ -235,17 +228,17 @@ normalBlackBtn: {
     marginHorizontal: scaledHeight(37)
 
 
-},
-normalBlackBtnTxt: {
+  },
+  normalBlackBtnTxt: {
     fontSize: scaledHeight(16),
     color: '#fff',
     width: '100%',
     textAlign: 'center'
-},
+  },
 
-normalBlackDisabledBtn: {
-    //  width: '90%',
+  normalBlackDisabledBtn: {
     borderWidth: 1,
+    opacity: 0.5,
     borderColor: "#61285F45",
     height: scaledHeight(50),
     backgroundColor: '#544A54',
@@ -254,13 +247,13 @@ normalBlackDisabledBtn: {
     justifyContent: 'center',
     marginVertical: scaledHeight(7.5),
     marginHorizontal: scaledHeight(37)
-},
-normalBlackBtnDisabledTxt: {
+  },
+  normalBlackBtnDisabledTxt: {
     fontSize: scaledHeight(16),
     color: '#fff',
     width: '100%',
     textAlign: 'center'
-},
+  },
   nextBtn: {
     height: scaledHeight(50),
     borderColor: "#61285F45",
@@ -337,7 +330,6 @@ normalBlackBtnDisabledTxt: {
     marginVertical: scaledHeight(12)
   },
 
-  // modal Styles
   modalBackgroundView: {
     backgroundColor: "rgba(0,0,0,0.5)",
     height: "100%"
@@ -436,5 +428,40 @@ normalBlackBtnDisabledTxt: {
   modalRiskViewContainer: {
     flexDirection: "row",
     width: "80%"
-  }
+  },
+  removeBtnStyle: {
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    marginTop: scaledHeight(22)
+  },
+  removeTxtStyle: {
+    fontSize: scaledHeight(16),
+    color: '#5D83AE',
+    fontWeight: '600',
+    width: '100%',
+    textAlign: 'right',
+    lineHeight: 22
+  },
+  loadMoreStyle: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    margin: scaledHeight(15)
+  },
+  iconFrontStyle: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: scaledHeight(7)
+  },
+  dollerIconTxt:{ 
+    color: '#56565A',
+     fontSize: scaledHeight(16)
+     },
+     helpText:{ 
+       textAlign: 'right',
+        width: '100%',
+         color: '#56565A',
+          fontSize: scaledHeight(12), 
+          marginTop: scaledHeight(12)
+         }
 });

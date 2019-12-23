@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
-import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import PropTypes from 'prop-types';
+import Collapsible from 'react-native-collapsible';
+import { GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import { styles } from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
-import PropTypes from 'prop-types';
-import Collapsible from 'react-native-collapsible';
 
-let accSelectionData={};
+let accSelectionData = {};
 class PurchaseScreenOneComponent extends Component {
     constructor(props) {
         super(props);
@@ -34,46 +34,28 @@ class PurchaseScreenOneComponent extends Component {
     }
 
     componentDidMount() {
-        console.log("componentDidMount --> " + JSON.stringify(this.props));
-        if (this.props && this.props.purchaseData) {
-            this.setState({
-                selectedAccountData: this.props.purchaseData
-            });
+    }
+
+    onClickExpand = (type) => () => {
+        switch (type) {
+            case 'General_Account':
+                this.setState({ collapseGeneralAccount: !this.state.collapseGeneralAccount, collapseUTMAAccount: true, collapseIRAAccount: true });
+                this.state.collapseGeneralAccount ? this.setState({ generalAccountIcon: ' - ', IRAAccountIcon: " + ", UTMAAccountIcon: " + " }) : this.setState({ generalAccountIcon: ' + ', IRAAccountIcon: " + ", UTMAAccountIcon: " + " });
+                break;
+            case 'IRA_Account':
+                this.setState({ collapseIRAAccount: !this.state.collapseIRAAccount, collapseUTMAAccount: true, collapseGeneralAccount: true });
+                this.state.collapseIRAAccount ? this.setState({ IRAAccountIcon: ' - ', generalAccountIcon: " + ", UTMAAccountIcon: " + " }) : this.setState({ IRAAccountIcon: ' + ', generalAccountIcon: " + ", UTMAAccountIcon: " + " });
+                break;
+            case 'UTMA_Account':
+                this.setState({ collapseUTMAAccount: !this.state.collapseUTMAAccount, collapseIRAAccount: true, collapseGeneralAccount: true });
+                this.state.collapseUTMAAccount ? this.setState({ UTMAAccountIcon: ' - ', generalAccountIcon: " + ", IRAAccountIcon: " + " }) : this.setState({ UTMAAccountIcon: ' + ', IRAAccountIcon: " + ", generalAccountIcon: " + " });
+                break;
+            default:
+                break;
         }
     }
 
-    onClickExpandGeneralAccount = () => {
-        this.setState({
-            collapseGeneralAccount: !this.state.collapseGeneralAccount,
-            collapseUTMAAccount: true,
-            collapseIRAAccount: true
-        });
-        (this.state.collapseGeneralAccount ?
-            this.setState({ generalAccountIcon: "-    ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }) : this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
-    }
-
-    onClickExpandIRAAccount = () => {
-        this.setState({
-            collapseIRAAccount: !this.state.collapseIRAAccount,
-            collapseUTMAAccount: true,
-            collapseGeneralAccount: true
-        });
-        (this.state.collapseIRAAccount ?
-            this.setState({ IRAAccountIcon: "-    ", generalAccountIcon: "+   ", UTMAAccountIcon: "+   " }) : this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
-    }
-
-    onClickExpandUTMAAccount = () => {
-        this.setState({
-            collapseUTMAAccount: !this.state.collapseUTMAAccount,
-            collapseIRAAccount: true,
-            collapseGeneralAccount: true
-        });
-        (this.state.collapseUTMAAccount ?
-            this.setState({ UTMAAccountIcon: "-    ", generalAccountIcon: "+   ", IRAAccountIcon: "+   " }) : this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
-    }
-
     onClickSelectGeneralAccount = (item, index) => () => {
-        console.log("onClickSelectGeneralAccount-->" + JSON.stringify(item));
         this.setState({
             selectedGeneralAccIndex: index,
             selectedIRAAccIndex: null,
@@ -91,7 +73,6 @@ class PurchaseScreenOneComponent extends Component {
     }
 
     onClickSelectIRAAccount = (item, index) => () => {
-        console.log("onClickSelectIRAAccount-->" + JSON.stringify(item));
         this.setState({
             selectedGeneralAccIndex: null,
             selectedIRAAccIndex: index,
@@ -109,7 +90,6 @@ class PurchaseScreenOneComponent extends Component {
     }
 
     onClickSelectUTMAAccount = (item, index) => () => {
-        console.log("onClickSelectUTMAAccount-->" + JSON.stringify(item));
         this.setState({
             selectedGeneralAccIndex: null,
             selectedIRAAccIndex: null,
@@ -136,16 +116,16 @@ class PurchaseScreenOneComponent extends Component {
             AutoInvPlan: this.state.selectedAccountData.AutoInvPlan,
             accType: this.state.selectedAccountData.accType
         };
-        //this.props.saveData(payloadData);
+        // this.props.saveData(payloadData);
         console.log("payloadData---> " + JSON.stringify(payloadData));
         this.props.navigation.navigate('purchaseScreenTwo', { accSelectionScreenData: this.state.selectedAccountData });
     }
 
     render() {
-        let currentPage = 1;
-        let totalCount = 4;
-        let pageName = gblStrings.liquidation.accountSelectionScreenName;
-        if(this.props.purchaseData && this.props.purchaseData.accSelectionData ){
+        const currentPage = 1;
+        const totalCount = 4;
+        const pageName = gblStrings.liquidation.accountSelectionScreenName;
+        if (this.props.purchaseData && this.props.purchaseData.accSelectionData) {
             accSelectionData = this.props.purchaseData.accSelectionData;
         }
         return (
@@ -157,12 +137,12 @@ class PurchaseScreenOneComponent extends Component {
                         <Text style={styles.greyText16px}>{gblStrings.purchase.accountSelection}</Text>
 
                         <View style={styles.accountTypeFlex}>
-                        <View style={styles.generalAccHeaderView}>
-                            <View style={styles.headerFlex} onTouchStart={this.onClickExpandGeneralAccount}>
-                                <Text style={[styles.headerText,styles.paddingRightStyle]} >{this.state.generalAccountIcon}</Text>
-                                <Text style={styles.headerText}>{gblStrings.liquidation.generalAccountHeading}</Text>
-                            </View>
-                            <Text style={styles.openAccStyle}>{gblStrings.purchase.openAccount}</Text>
+                            <View style={styles.generalAccHeaderView}>
+                                <View style={styles.headerFlex} onTouchStart={this.onClickExpand("General_Account")}>
+                                    <Text style={[styles.headerText, styles.paddingRightStyle]} >{this.state.generalAccountIcon}</Text>
+                                    <Text style={styles.headerText}>{gblStrings.liquidation.generalAccountHeading}</Text>
+                                </View>
+                                <Text style={styles.openAccStyle}>{gblStrings.purchase.openAccount}</Text>
                             </View>
                             <View style={styles.line} />
                         </View>
@@ -171,7 +151,7 @@ class PurchaseScreenOneComponent extends Component {
                                 data={accSelectionData.General_Account}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={(this.state.selectedGeneralAccIndex == index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectGeneralAccount(item, index)}>
+                                        <View style={(this.state.selectedGeneralAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectGeneralAccount(item, index)}>
                                             <View style={styles.accountDetailsFlex} >
                                                 <View style={styles.flexAccDetails1}>
                                                     <View style={styles.accountNumberFlex}>
@@ -206,8 +186,8 @@ class PurchaseScreenOneComponent extends Component {
 
 
                         <View style={styles.accountTypeFlex}>
-                            <View style={styles.headerFlex} onTouchStart={this.onClickExpandIRAAccount}>
-                                <Text style={[styles.headerText,styles.paddingRightStyle]}>{this.state.IRAAccountIcon}</Text>
+                            <View style={styles.headerFlex} onTouchStart={this.onClickExpand("IRA_Account")}>
+                                <Text style={[styles.headerText, styles.paddingRightStyle]}>{this.state.IRAAccountIcon}</Text>
                                 <Text style={styles.headerText}>{gblStrings.liquidation.iraAccountHeading}</Text>
                             </View>
                             <View style={styles.line} />
@@ -217,7 +197,7 @@ class PurchaseScreenOneComponent extends Component {
                                 data={accSelectionData.IRA_Account}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={(this.state.selectedIRAAccIndex == index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectIRAAccount(item, index)}>
+                                        <View style={(this.state.selectedIRAAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectIRAAccount(item, index)}>
                                             <View style={styles.accountDetailsFlex}>
                                                 <View style={styles.flexAccDetails1}>
                                                     <View style={styles.accountNumberFlex}>
@@ -246,7 +226,6 @@ class PurchaseScreenOneComponent extends Component {
                                                 </View>
                                             </View>
                                         </View>
-
                                     );
                                 }}
                                 keyExtractor={x => x.accNumber}
@@ -256,8 +235,8 @@ class PurchaseScreenOneComponent extends Component {
 
 
                         <View style={styles.accountTypeFlex}>
-                            <View style={styles.headerFlex} onTouchStart={this.onClickExpandUTMAAccount}>
-                                <Text style={[styles.headerText,styles.paddingRightStyle]} >{this.state.UTMAAccountIcon}</Text>
+                            <View style={styles.headerFlex} onTouchStart={this.onClickExpand("UTMA_Account")}>
+                                <Text style={[styles.headerText, styles.paddingRightStyle]} >{this.state.UTMAAccountIcon}</Text>
                                 <Text style={styles.headerText}>{gblStrings.liquidation.utmaAccountHeading}</Text>
                             </View>
                             <View style={styles.line} />
@@ -266,9 +245,10 @@ class PurchaseScreenOneComponent extends Component {
                         <Collapsible collapsed={this.state.collapseUTMAAccount} align="center">
                             <FlatList
                                 data={accSelectionData.UTMA_Account}
+                                renderItem={this.renderUTMADetails}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={(this.state.selectedUTMAAccIndex == index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectUTMAAccount(item, index)}>
+                                        <View style={(this.state.selectedUTMAAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectUTMAAccount(item, index)}>
                                             <View style={styles.accountDetailsFlex}>
 
                                                 <View style={styles.flexAccDetails1}>
@@ -324,8 +304,6 @@ class PurchaseScreenOneComponent extends Component {
                     </View>
                     <GFooterComponent />
                 </ScrollView>
-
-
             </View>
 
         );
@@ -334,13 +312,9 @@ class PurchaseScreenOneComponent extends Component {
 
 
 PurchaseScreenOneComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object),
     purchaseData: PropTypes.instanceOf(Object),
-    saveData: PropTypes.func,
+    navigation: PropTypes.instanceOf(Object),
 };
 
-PurchaseScreenOneComponent.defaultProps = {
-
-};
 
 export default PurchaseScreenOneComponent;
