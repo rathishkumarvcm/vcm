@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView ,TouchableOpacity, FlatList } from 'react-native';
+import PropTypes from "prop-types";
 import { styles } from './styles';
 import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-import PropTypes from "prop-types";
 import CardHeader from './CardHeader';
 
 let intrestedParties = [];
@@ -13,9 +13,7 @@ class manageIntrestedPartiesComponent extends Component {
         this.state = {
             isSavedSuccess:false,
             successMsg:"",
-            isCollapsable:false,
-            collapseIcon:"-",
-            showModal:true
+            collapseIcon:"-"
         };
     }
    
@@ -23,10 +21,19 @@ class manageIntrestedPartiesComponent extends Component {
        this.updateNaviProps();
     }
 
+    componentDidUpdate(prevProps){
+        if (this.props !== prevProps) {
+            const showMsg=this.props.navigation.getParam("showMsg");
+            const successMsg=this.props.navigation.getParam("successMsg");
+            this.setState({isSavedSuccess:showMsg,successMsg:successMsg});
+        }
+
+    }
+
     updateNaviProps=()=>{
-        let ismsg=this.props.navigation.getParam("showMsg");
-        let msg=this.props.navigation.getParam("msg");
-        this.setState({isSavedSuccess:ismsg,successMsg:msg});
+        const showMsg=this.props.navigation.getParam("showMsg");
+        const successMsg=this.props.navigation.getParam("successMsg");
+        this.setState({isSavedSuccess:showMsg,successMsg:successMsg});
     }
 
     addIntrestedParty=(data)=>()=>{
@@ -78,7 +85,7 @@ class manageIntrestedPartiesComponent extends Component {
                 {item.intrestedParty && item.intrestedParty.map((data,k)=>{
                     return(
                         <View key={data.key} style={styles.innerContainerView}>
-                            <CardHeader item={data} navigate={this.onClickEdit(item,k,data)} onDelete={this.onDeleteFunc(item,data)}/>
+                            <CardHeader item={data} navigate={this.onClickEdit(item,k,data)} onDelete={this.onDeleteFunc(item,data)} />
                             <View style={[styles.paddingStyleLeft,styles.marginBottomStyle]}>
                                 <View style={styles.marginTopStyle}>
                                     <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>

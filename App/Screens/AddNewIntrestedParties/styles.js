@@ -294,7 +294,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#61285F45',
     borderRadius: scaledHeight(5),
-    height: scaledHeight(35),
+    height: scaledHeight(40),
     width:'30%',
     backgroundColor: '#fff',
     alignItems: 'flex-end',

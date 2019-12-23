@@ -1,15 +1,18 @@
 import React, { Component } from 'react';
 import { View, Text,TouchableOpacity } from 'react-native';
-import { GIcon } from '../../CommonComponents';
 import PropTypes from "prop-types";
+import { GIcon } from '../../CommonComponents';
 import { styles } from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class CardHeader extends Component{
-
-    state={
-        showModal:false,
+    constructor(props){
+        super(props);
+        this.state={
+            showModal:false,
+        }
     }
+
     updateState=()=>{
         this.setState({showModal:!this.state.showModal});
     }
@@ -39,14 +42,13 @@ class CardHeader extends Component{
                 {this.state.showModal?
                 <View style={styles.shadowView}>
                     <TouchableOpacity onPress={this.edit}>
-                        <Text style={styles.lblTxtInner} >{gblStrings.common.edit}</Text>
+                        <Text style={styles.lblTxtInner}>{gblStrings.common.edit}</Text>
                     </TouchableOpacity>
                     <Text style={styles.lblLine} />
                     <TouchableOpacity onPress={this.delete}>
-                        <Text style={styles.lblTxtInner} >{gblStrings.common.delete}</Text>
+                        <Text style={styles.lblTxtInner}>{gblStrings.common.delete}</Text>
                     </TouchableOpacity>
-                </View>:null
-                }
+                </View>:null}
             </View>        
         );
     }
@@ -54,8 +56,8 @@ class CardHeader extends Component{
 
 CardHeader.propTypes = {
     item: PropTypes.instanceOf(Object).isRequired,
-    navigate: PropTypes.func,
-    onDelete: PropTypes.func
+    // navigate: PropTypes.func,
+    // onDelete: PropTypes.func
 };
 
 export default CardHeader;

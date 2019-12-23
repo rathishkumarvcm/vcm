@@ -390,7 +390,7 @@ class addNewIntrestedPartiesComponent extends Component {
             "accounts_Tagged":'1'    
         };
         console.log("Added Data:::::",obj);
-        if(this.state.personal.addValidation && this.state.personal.addressLine1 && this.state.personal.addressLine2){
+        if(this.state.personal.addValidation && this.state.personal.addressLine1 && this.state.personal.addressLine2m && this.state.isAddressApiCalling){
           this.props.navigation.navigate("verifyIntrestedParties",{acc_Data:this.state.account_Data, added_obj:obj });
         }
         

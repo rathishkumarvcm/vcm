@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
+import PropTypes from "prop-types";
 import { styles } from './styles';
 import { GButtonComponent,GDateComponent, GIcon, GDropDownComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner} from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import { zipCodeRegex,emailRegex } from '../../Constants/RegexConstants';
-import PropTypes from "prop-types";
+
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 let relationData=[
@@ -60,27 +61,13 @@ class editManageIntrestedPartiesComponent extends Component {
        
     }
 
-    setMasterData=()=>{
-        let payload = [];
-         const compositePayloadData = [
-             "relationship"
-         ];
-         for (let i = 0; i < compositePayloadData.length; i++) {
-             let tempkey = compositePayloadData[i];
-             if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempkey]) {
-                 payload.push(tempkey);
-             }
-         }
-         this.props.getCompositeLookUpData(payload);
-    }
-
     componentDidUpdate(prevProps) {
         console.log("didUpdate::");
         const stateCityResponseData = ActionTypes.GET_STATECITY;
         const addressResponseData = ActionTypes.GET_ADDRESSFORMAT;
 
         if (this.state.isZipApiCalling) {
-            if (this.props != prevProps) {
+            if (this.props !== prevProps) {
                 if (this.props && this.props.stateCityData[stateCityResponseData]) {
                     const tempResponse = this.props.stateCityData[stateCityResponseData];
                     console.log("@@@@@@@@@@@@@@@ Success Update", tempResponse);
@@ -99,7 +86,7 @@ class editManageIntrestedPartiesComponent extends Component {
         }
 
         if (this.state.isAddressApiCalling) {
-            if (this.props != prevProps) {
+            if (this.props !== prevProps) {
                 if (this.props && this.props.stateCityData[addressResponseData]) {
                     const tempAddressResponse = this.props.stateCityData[addressResponseData];
                     console.log("@@@@@@@@@@@@@@@@@@@@ Success Address", tempAddressResponse);
@@ -116,10 +103,25 @@ class editManageIntrestedPartiesComponent extends Component {
         }
     }
 
+    setMasterData=()=>{
+        let payload = [];
+         const compositePayloadData = [
+             "relationship"
+         ];
+         for (let i = 0; i < compositePayloadData.length; i=i+1) {
+             const tempkey = compositePayloadData[i];
+             if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempkey]) {
+                 payload.push(tempkey);
+             }
+         }
+         this.props.getCompositeLookUpData(payload);
+    }
+
+
     updateState=()=>{
-        let data=this.props.navigation.getParam('acc_Data');
-        let pData=this.props.navigation.getParam('parent_Obj');
-        let pKey=this.props.navigation.getParam('parent_Key');
+        const data=this.props.navigation.getParam('acc_Data');
+        const pData=this.props.navigation.getParam('parent_Obj');
+        const pKey=this.props.navigation.getParam('parent_Key');
         this.setState(prevState=>({
             account_Data:pData,
             account_Key:pKey,
@@ -156,8 +158,8 @@ class editManageIntrestedPartiesComponent extends Component {
     getAddressValid=()=>{
         console.log("Get address valid:::");
         let addAddressPayload = {};
-        if(this.state.personal.addressLine1!="" && this.state.personal.addressLine2!=""){
-        if (this.state.personal.zipCode != '') {
+        if(this.state.personal.addressLine1!=="" && this.state.personal.addressLine2!==""){
+        if (this.state.personal.zipCode !== '') {
             addAddressPayload = {
                 "Address1": this.state.personal.addressLine1,
                 "Address2": this.state.personal.addressLine2,
@@ -187,7 +189,7 @@ class editManageIntrestedPartiesComponent extends Component {
     }
 
     isEmpty = (str) => {
-        if (str == "" || str == undefined || str == null || str == "null" || str == "undefined") {
+        if (str === "" || str === undefined || str === null || str === "null" || str === "undefined") {
             return true;
         } else {
             return false;
@@ -227,7 +229,7 @@ class editManageIntrestedPartiesComponent extends Component {
 
     validateZipCode = () => {
         if(!this.isEmpty(this.state.personal.zipCode)){
-            let validate = zipCodeRegex.test(this.state.personal.zipCode);
+            const validate = zipCodeRegex.test(this.state.personal.zipCode);
             this.onUpdateField("personal","zipCodeValidation",validate);
             this.onUpdateField("personal","zipCodeValiMsg","Please enter valid ZipCode");
             if(validate){
@@ -252,8 +254,8 @@ class editManageIntrestedPartiesComponent extends Component {
     }
 
     validateFields=()=>{
+        console.log("validateFields:::");
         try {
-            console.log("validateFields:::");
             let isValidationSuccess = false;
             this.setState(prevState => ({
                 personal: {
@@ -278,16 +280,16 @@ class editManageIntrestedPartiesComponent extends Component {
                 this.onClickSave();
             }
         } catch (err) {
-            console.log("Error:::" +err);
+            console.log("Error:::" + err);
         }
     }
 
     validateEachFields=()=>{
-        var isErrMsg = false;
-        var isValidationSuccess = false;
+        let isErrMsg = false;
+        let isValidationSuccess = false;
 
         if (!this.isEmpty(this.state.personal.email)) {
-            let validate = emailRegex.test(this.state.personal.email);
+            const validate = emailRegex.test(this.state.personal.email);
             this.onUpdateField("personal","emailValidation",validate);
             isErrMsg=!validate;
         }else{
@@ -317,7 +319,7 @@ class editManageIntrestedPartiesComponent extends Component {
             this.onUpdateField("personal","zipCodeValiMsg",gblStrings.accManagement.emptyZipCodeMsg);
             isErrMsg=true;
         }else{
-            let validate = zipCodeRegex.test(this.state.personal.zipCode);
+            const validate = zipCodeRegex.test(this.state.personal.zipCode);
             this.onUpdateField("personal","zipCodeValidation",validate);
             this.onUpdateField("personal","zipCodeValiMsg","Please enter valid ZipCode");
             this.getZipCodeValue();
@@ -346,8 +348,8 @@ class editManageIntrestedPartiesComponent extends Component {
     }
 
     getPayloadData=()=>{
-        let data=this.state.personal;
-        let updatedObj=this.state.intrstedPartyObj;
+        const data=this.state.personal;
+        const updatedObj=this.state.intrstedPartyObj;
         updatedObj.relationship_To_Account_holder=data.relation;
         updatedObj.email=data.email;
         updatedObj.company=data.company;
@@ -359,10 +361,10 @@ class editManageIntrestedPartiesComponent extends Component {
         updatedObj.startDate=data.startDate;
         updatedObj.endDate=data.endDate;
 
-        let modObj=this.state.account_Data;
+        const modObj=this.state.account_Data;
 
-        const pIndex=listIntrestedParties.findIndex((data)=>data.key===this.state.account_Data.key);
-        const cIndex=this.state.account_Data.intrestedParty.findIndex((data)=>data.key===this.state.intrstedPartyObj.key);
+        const pIndex=listIntrestedParties.findIndex((item)=>item.key===this.state.account_Data.key);
+        const cIndex=this.state.account_Data.intrestedParty.findIndex((item)=>item.key===this.state.intrstedPartyObj.key);
 
         const arr=[...listIntrestedParties[pIndex].intrestedParty];
         arr.splice(cIndex,1,updatedObj);
@@ -378,9 +380,9 @@ class editManageIntrestedPartiesComponent extends Component {
     onClickSave=()=>{
         const payloadData=this.getPayloadData();
         this.props.editIntrestedParties("editIntrestedParty",payloadData);
-        let notificationMsg=this.state.account_Data.account_Name +"'s data has been Updated Successfully";
-        if(this.state.personal.addValidation && this.state.personal.addressLine1 && this.state.personal.addressLine2){
-            this.props.navigation.navigate("manageIntrestedParties",{showMsg:true,msg:notificationMsg});
+        const notificationMsg=this.state.intrstedPartyObj.fname + " " + this.state.intrstedPartyObj.lname + "'s data has been Updated Successfully";
+        if(this.state.personal.addValidation && this.state.personal.addressLine1 && this.state.personal.addressLine2 && this.state.isAddressApiCalling){
+            this.props.navigation.navigate("manageIntrestedParties",{showMsg:true,successMsg:notificationMsg});
         }
     }
 
@@ -391,7 +393,7 @@ class editManageIntrestedPartiesComponent extends Component {
         if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.relationship && this.props.masterLookupStateData.relationship.value) {
             relationData=this.props.masterLookupStateData.relationship.value;
         }
-        if(this.props.manageIntrestedPartiesData && this.props.manageIntrestedPartiesData.list_manage_intrested_parties ){
+        if(this.props.manageIntrestedPartiesData && this.props.manageIntrestedPartiesData.list_manage_intrested_parties){
             listIntrestedParties = this.props.manageIntrestedPartiesData.list_manage_intrested_parties;
         }
         return (
@@ -421,7 +423,7 @@ class editManageIntrestedPartiesComponent extends Component {
                     <View style={styles.line} />
 
 
-                     {/*-------------------------- Edit Intrested Parties ---------------------------------*/}
+                     {/* -------------------------- Edit Intrested Parties --------------------------------- */}
 
                     <View style={styles.paddingHorizontalStyle}>
                         <View style={styles.flexDirectionStyle}>
@@ -486,7 +488,7 @@ class editManageIntrestedPartiesComponent extends Component {
                             placeholder={gblStrings.accManagement.empAddrLine1}
                             maxLength={gblStrings.maxLength.emplAddress1}
                             value={this.state.personal.addressLine1}
-                            //onSubmitEditing={this.validateAddress}
+                            // onSubmitEditing={this.validateAddress}
                             onChangeText={this.onChangeText("personal","addressLine1")}
                             errorFlag={!this.state.personal.addressLine1Validation}
                             errorText={this.state.personal.addValidation ? gblStrings.accManagement.emptyAddressLine1Msg:""}
@@ -497,7 +499,7 @@ class editManageIntrestedPartiesComponent extends Component {
                             placeholder={gblStrings.accManagement.empAddrLine2}
                             maxLength={gblStrings.maxLength.addressLine2}
                             value={this.state.personal.addressLine2}
-                            //onSubmitEditing={this.validateAddress}
+                            // onSubmitEditing={this.validateAddress}
                             onChangeText={this.onChangeText("personal","addressLine2")}
                             errorFlag={!this.state.personal.addressLine2Validation}
                             errorText={this.state.personal.addValidation ? gblStrings.accManagement.emptyAddressLine2Msg:""}
@@ -555,7 +557,7 @@ class editManageIntrestedPartiesComponent extends Component {
                                 date={this.state.personal.startDate}
                                 placeholder="MM-DD-YYYY"
                                 dateTextLayout={{marginTop:0}}
-                                componentStyle={{width:'100%',marginLeft:0,marginRight:0}}
+                                componentStyle={styles.dateStyle}
                                 maxDate={this.state.personal.endDate?this.state.personal.endDate:""}
                                 errorFlag={!this.state.personal.startDateValidation}
                                 onDateChange={this.onChangeText("personal","startDate")}
@@ -566,7 +568,7 @@ class editManageIntrestedPartiesComponent extends Component {
                                date={this.state.personal.endDate}
                                placeholder="MM-DD-YYYY"
                                dateTextLayout={{marginTop:0}}
-                                componentStyle={{width:'100%',marginLeft:0,marginRight:0}}
+                                componentStyle={styles.dateStyle}
                                minDate={this.state.personal.startDate?this.state.personal.startDate:""}
                                errorFlag={!this.state.personal.endDateValidation}
                                onDateChange={this.onChangeText("personal","endDate")}
@@ -607,9 +609,10 @@ editManageIntrestedPartiesComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
     masterLookupStateData: PropTypes.instanceOf(Object).isRequired,
     stateCityData: PropTypes.instanceOf(Object).isRequired,
-    getStateCity: PropTypes.func,
-    getAddressFormat: PropTypes.func,
-    getCompositeLookUpData: PropTypes.func,
+   // getStateCity: PropTypes.func,
+   // getAddressFormat: PropTypes.func,
+  //  getCompositeLookUpData: PropTypes.func,
+    editIntrestedParties:PropTypes.func,
     manageIntrestedPartiesData :PropTypes.instanceOf(Object).isRequired
 
 };
