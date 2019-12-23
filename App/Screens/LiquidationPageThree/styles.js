@@ -156,7 +156,7 @@ export const styles = StyleSheet.create({
         paddingBottom:scaledHeight(1)
     },
     switchFlex:{
-        height: scaledHeight(54),
+        height: scaledHeight(60),
     },
     dropDownLayout:{
         marginTop:scaledHeight(18),
@@ -441,12 +441,22 @@ export const styles = StyleSheet.create({
     },
     submitFlex: {
         height: scaledHeight(50),
-        borderColor: '#61285F45',
+        borderColor: '#544A54',
         borderWidth: scaledHeight(1),
         backgroundColor:'#544A54',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop:scaledHeight(19)
+    },
+    submitFlexDisabled: {
+        height: scaledHeight(50),
+        borderColor: '#544A54',
+        borderWidth: scaledHeight(1),
+        backgroundColor:'#544A54',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop:scaledHeight(19),
+        opacity:0.5
     },
     submitText: {
         color: '#FFFFFF',

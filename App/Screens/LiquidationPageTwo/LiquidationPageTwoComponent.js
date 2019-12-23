@@ -37,7 +37,6 @@ class LiquidationPageTwoComponent extends Component {
             percentageValue: [],
             disableNextButton: true,
             minHoldingDollar:[],
-            minHoldingPercentage:[],
             selectedFundData: {
                 fundName: '',
                 totalShares: '',
@@ -89,7 +88,6 @@ class LiquidationPageTwoComponent extends Component {
             disableNextButton: this.state.allSharesSelected,
             percentageValue: [],
             dollarValue: [],
-            minHoldingPercentage:[],
             minHoldingDollar:[],
         }));
     }
@@ -104,9 +102,8 @@ class LiquidationPageTwoComponent extends Component {
             allSharesSelected: false,
             dollarSelected: !this.state.dollarSelected,
             percSelected: false,
-            disableNextButton: false,
+            disableNextButton: true,
             percentageValue: [],
-            minHoldingPercentage:[],
         }));
     }
 
@@ -120,7 +117,7 @@ class LiquidationPageTwoComponent extends Component {
             allSharesSelected: false,
             dollarSelected: false,
             percSelected: !this.state.percSelected,
-            disableNextButton: false,
+            disableNextButton: true,
             dollarValue: [],
             minHoldingDollar:[],
         }));
@@ -130,7 +127,7 @@ class LiquidationPageTwoComponent extends Component {
         let a = this.state.dollarValue.slice(); 
         let b = this.state.minHoldingDollar.slice();
         a[this.state.selectedFundIndex] = text;
-        b[this.state.selectedFundIndex] = (a[this.state.selectedFundIndex]<=(0.05*this.state.selectedFundData.worthAmount));
+        b[this.state.selectedFundIndex] = (a[this.state.selectedFundIndex]>(0.95*this.state.selectedFundData.worthAmount));
         this.setState(prevState => ({
             selectedFundData: {
                 ...prevState.selectedFundData,
@@ -147,9 +144,7 @@ class LiquidationPageTwoComponent extends Component {
 
     onChangePercentageVal = (text) => {
         let a = this.state.percentageValue.slice(); 
-        let b = this.state.minHoldingPercentage.slice();
         a[this.state.selectedFundIndex] = text;
-        b[this.state.selectedFundIndex] = (a[this.state.selectedFundIndex]<=(5));
         this.setState(prevState => ({
             selectedFundData: {
                 ...prevState.selectedFundData,
@@ -159,7 +154,6 @@ class LiquidationPageTwoComponent extends Component {
             },
             percentageValue: a,
             disableNextButton:this.isEmpty(text),
-            minHoldingPercentage:b
         }));
     }
 
@@ -176,7 +170,7 @@ class LiquidationPageTwoComponent extends Component {
         const payloadData = this.state.selectedFundData;
         this.props.saveData(payloadData);
         console.log("payloadData---> " + JSON.stringify(payloadData));
-        this.props.navigation.navigate('LiquidationPageThree', { fundSelectionScreenData: this.state.selectedFundData });
+        this.props.navigation.navigate('LiquidationPageThree');
     }
 
     formatAmount = (amount) => {
@@ -186,11 +180,6 @@ class LiquidationPageTwoComponent extends Component {
 
     componentDidMount() {
         console.log("Page Two Compoennt componentDidMount --> " + JSON.stringify(this.props));
-        if (this.props && this.props.liquidationPageTwoInitialState) {
-            this.setState({
-                selectedFundData: this.props.liquidationPageTwoInitialState
-            });
-        }
     }
 
     render() {
@@ -213,8 +202,8 @@ class LiquidationPageTwoComponent extends Component {
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.flexHead}>
                         <View style={styles.accountFlex}>
-                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountName}{this.props.navigation.getParam('accSelectionScreenData').selectedAccountName}</Text>
-                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountNumber}{this.props.navigation.getParam('accSelectionScreenData').selectedAccountNumber}</Text>
+                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountName}{this.props.liquidationInitialState.selectedAccountName}</Text>
+                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountNumber}{this.props.liquidationInitialState.selectedAccountNumber}</Text>
                         </View>
 
                         <View style={styles.headerFlex} onTouchStart={this.onClickExpandLiquidation}>
@@ -293,9 +282,7 @@ class LiquidationPageTwoComponent extends Component {
                                                         onChangeText={this.onChangePercentageVal}
                                                         editable={(this.state.percSelected) && (this.state.selectedFundIndex == index)}
                                                         keyboardType="decimal-pad"
-                                                        errorFlag={(this.state.minHoldingPercentage[index])&& (this.state.selectedFundIndex == index)}
-                                                        errorText="Due to market fluctuations, this trade may fail. We suggest you do an ‘All’ shares liquidations"
-                                                    />
+                                                       />
                                                 </View>
                                             </View>
 
@@ -339,7 +326,7 @@ class LiquidationPageTwoComponent extends Component {
 
 LiquidationPageTwoComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    liquidationPageTwoInitialState: PropTypes.instanceOf(Object),
+    liquidationInitialState: PropTypes.instanceOf(Object),
     saveData: PropTypes.func,
 };
 

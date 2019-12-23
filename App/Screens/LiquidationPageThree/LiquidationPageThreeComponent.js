@@ -10,8 +10,8 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 
 const bankAccounts = [
-    { bankIcon: "", bankAccName: "Bank Account 1", bankAccountNo: "XXX-XXX-3838", status: "To be verified" },
-    { bankIcon: "", bankAccName: "Bank Account 2", bankAccountNo: "XXX-XXX-5247" },
+    { bankIcon: "", bankAccName: "Bank Account 1", bankAccountNo: "XXX-XXX-3838" },
+    { bankIcon: "", bankAccName: "Bank Account 2", bankAccountNo: "XXX-XXX-5247", status: "To be verified" },
     { bankIcon: "", bankAccName: "Bank Account 1", bankAccountNo: "XXX-XXX-3839" },
 ];
 
@@ -38,7 +38,6 @@ class LiquidationPageThreeComponent extends Component {
             collapseDeliveryAddress: false,
             collapseTaxAccounting: false,
             collapseTaxWithHoldingOption: false,
-            checkOrder: false,
             selectedBankAccountIndex: null,
             fundingSource: {
                 selectedBankAccountNo: '',
@@ -62,6 +61,7 @@ class LiquidationPageThreeComponent extends Component {
             switchOff: true,
             switchOn: false,
             showDropDown: false,
+            disableNextButton:true
         }
     }
 
@@ -121,15 +121,15 @@ class LiquidationPageThreeComponent extends Component {
         );
     }
 
-    onCheckOrder = () => {
+    onClickCheckOrder = () => {
         this.setState({
             fundingSource: {
-                checkOrderSelected:true,
+                checkOrderSelected:!this.state.fundingSource.checkOrderSelected,
                 selectedBankAccountNo: '',
                 selectedBankAccountName: '',
             },
-            checkOrder: !this.state.checkOrder,
             selectedBankAccountIndex: null,
+            disableNextButton:false
         
         });
     }
@@ -143,8 +143,8 @@ class LiquidationPageThreeComponent extends Component {
                 checkOrderSelected:false
             },
             selectedBankAccountIndex: index,
-            checkOrder:false,
-            showMessageFlex: item.status
+            showMessageFlex: item.status,
+            disableNextButton:false
         });
     }
 
@@ -160,12 +160,12 @@ class LiquidationPageThreeComponent extends Component {
         this.state.switchOn?this.setState(prevState => ({
             taxAccountingMethodData: {
                 ...prevState.taxAccountingMethodData,
-                taxHoldingOption:gblStrings.liquidation.doNotWithholdTaxes
+                taxHoldingOption:gblStrings.liquidation.withholdTaxes
             }
         })):this.setState(prevState => ({
             taxAccountingMethodData: {
                 ...prevState.taxAccountingMethodData,
-                taxHoldingOption:gblStrings.liquidation.withholdTaxes
+                taxHoldingOption:gblStrings.liquidation.doNotWithholdTaxes
             }
         }));
     }
@@ -177,7 +177,6 @@ class LiquidationPageThreeComponent extends Component {
     }
 
     selectedDropDownValue = (value) => {
-        console.log("value--->" + JSON.stringify(value));
         this.setState(prevState => ({
             taxAccountingMethodData: {
                 ...prevState.taxAccountingMethodData,
@@ -270,7 +269,6 @@ class LiquidationPageThreeComponent extends Component {
                 }
             }))
         }
-
     }
 
     navigateLiquidationPageOne = () => this.props.navigation.navigate('LiquidationPageOne');
@@ -278,12 +276,35 @@ class LiquidationPageThreeComponent extends Component {
     navigateLiquidationPageFour = () => this.props.navigation.navigate('LiquidationPageFour', { taxAccountingMethodData: this.state.taxAccountingMethodData, fundingSource: this.state.fundingSource });
 
 
+    nextButtonAction = () => {
+        console.log('On Click Next Fund Withdrawal ...');
+        const payloadData = {
+            checkSelectedOrder:this.state.fundingSource.checkOrderSelected,
+            bankAccountNo:this.state.fundingSource.selectedBankAccountNo,
+            bankAccountName:this.state.fundingSource.selectedBankAccountName,
+            taxWithHoldingOption:this.state.taxAccountingMethodData.taxHoldingOption,
+            requestedAmountType:this.state.taxAccountingMethodData.requestedAmountType,
+            amountBeforeTaxes:gblStrings.liquidation.dollarSymbol+this.formatAmount(this.state.taxAccountingMethodData.amountBeforeTaxes),
+            amountAfterTaxes:gblStrings.liquidation.dollarSymbol+this.formatAmount(this.state.taxAccountingMethodData.amountAfterTaxes),
+            federalTaxInPerc:this.state.taxAccountingMethodData.federalTax + "%",
+            federalTaxInDollars:gblStrings.liquidation.dollarSymbol+this.formatAmount(this.state.taxAccountingMethodData.federalTaxInDollars),
+            stateTaxInPerc:this.state.taxAccountingMethodData.stateTax + "%",
+            stateTaxInDollars:gblStrings.liquidation.dollarSymbol+this.formatAmount(this.state.taxAccountingMethodData.stateTaxInDollars),
+            totalTaxToBeWithHold:gblStrings.liquidation.dollarSymbol+this.formatAmount(this.state.taxAccountingMethodData.totalTaxToBeWithhold),
+            totalYouWillReceive:gblStrings.liquidation.dollarSymbol+this.formatAmount(this.state.taxAccountingMethodData.totalYouWillReceive),
+            totalWithdrawal:gblStrings.liquidation.dollarSymbol+this.formatAmount(this.state.taxAccountingMethodData.totalWithdrawal),
+        };
+        this.props.saveData(payloadData);
+        console.log("Fund Withdrawal payloadData---> " + JSON.stringify(payloadData));
+        this.props.navigation.navigate('LiquidationPageFour');
+    }
+
+
     componentDidMount() {
-        console.log(" Screen 3 componentdidmount " + JSON.stringify(this.props.liquidationPageOneInitialState));
+        console.log(" Screen 3 componentdidmount " + JSON.stringify(this.props));
     }
 
     render() {
-        console.log("Screen2---selectedFundData---> " + JSON.stringify(this.props.navigation.getParam('fundSelectionScreenData')));
         let currentPage = 3;
         let totalCount = 4;
         let pageName = gblStrings.liquidation.fundWithdrawalHeading;
@@ -305,8 +326,8 @@ class LiquidationPageThreeComponent extends Component {
                     <View style={styles.flex2}>
 
                         <View style={styles.accountFlex}>
-                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountName}{this.props.liquidationPageOneInitialState.selectedAccountName}</Text>
-                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountNumber}{this.props.liquidationPageOneInitialState.selectedAccountNumber}</Text>
+                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountName}{this.props.liquidationInitialState.selectedAccountName}</Text>
+                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountNumber}{this.props.liquidationInitialState.selectedAccountNumber}</Text>
                         </View>
 
                         <View style={styles.headerFlex} onTouchStart={this.onClickExpandFundSource}>
@@ -322,7 +343,7 @@ class LiquidationPageThreeComponent extends Component {
                             <Text style={styles.fundSourceContent}>{gblStrings.liquidation.fundSourceContext}</Text>
                             <Text style={styles.subHeadingText}>{gblStrings.liquidation.offlineMethod}</Text>
                             <Text style={styles.offlineMethodContent}>{gblStrings.liquidation.offlineMethodContext}</Text>
-                            <this.addaccount accountName="Check Order" Image={require("../../Images/checkorder.png")} flexStyle={this.state.checkOrder ? styles.selectedBankAccountFlex : styles.unSelectedBankAccountFlex} onClickCheck={this.onCheckOrder} />
+                            <this.addaccount accountName="Check Order" Image={require("../../Images/checkorder.png")} flexStyle={this.state.fundingSource.checkOrderSelected ? styles.selectedBankAccountFlex : styles.unSelectedBankAccountFlex} onClickCheck={this.onClickCheckOrder} />
                             <Text style={styles.or}>or</Text>
                             <Text style={styles.subHeadingText}>{gblStrings.liquidation.onlineMethod}</Text>
                             <FlatList
@@ -360,7 +381,7 @@ class LiquidationPageThreeComponent extends Component {
                             </View> : null
                     }
                     {/* -----------------------------Delivery Address starts here ------------------------*/}
-                    {(this.state.checkOrder) ? (
+                    {(this.state.fundingSource.checkOrderSelected) ? (
                         <View>
                             <View style={styles.flex2}>
                                 <View style={styles.emptyFlex} />
@@ -420,7 +441,7 @@ class LiquidationPageThreeComponent extends Component {
            {/* -----------------------------Tax Accounting Method ends here ------------------------*/}
 
            {/* -----------------------------Tax Withholding Options starts here ------------------------*/}
-           {(this.props.liquidationPageOneInitialState.accType=="IRA")?
+           {(this.props.liquidationInitialState.accType=="IRA")?
            <View>
            <View style={styles.flex2}>
                <View style={styles.emptyFlex} />
@@ -439,7 +460,7 @@ class LiquidationPageThreeComponent extends Component {
 
                    { /* -----------------------------Tax Withholding Options ends here ------------------------*/}
 
-
+                    <View style = {styles.switchFlex}>
                    <GSwitchComponent
                        switchOffText={gblStrings.liquidation.doNotWithholdTaxes}
                        switchOnText={gblStrings.liquidation.withholdTaxes}
@@ -454,6 +475,7 @@ class LiquidationPageThreeComponent extends Component {
                        textOnStyle={styles.TextOnStyle}
                        textOffStyle={this.state.switchOff ? styles.TextOffStyle : styles.TextOffStyleWithholdtax}
                    />
+                   </View>
 
                    {/* switch on view starts here*/}
                    {this.state.switchOff ?
@@ -581,7 +603,7 @@ class LiquidationPageThreeComponent extends Component {
                         <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateLiquidationPageTwo}>
                             <Text style={styles.backButtonText}>{gblStrings.common.back}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.submitFlex} onPress={this.navigateLiquidationPageFour}>
+                        <TouchableOpacity style={this.state.disableNextButton ? styles.submitFlexDisabled : styles.submitFlex} onPress={this.nextButtonAction} disabled={this.state.disableNextButton}>
                             <Text style={styles.submitText}>{gblStrings.common.next}</Text>
                         </TouchableOpacity>
                     </View>
@@ -602,8 +624,7 @@ class LiquidationPageThreeComponent extends Component {
 
 LiquidationPageThreeComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    liquidationPageThreeInitialState: PropTypes.instanceOf(Object),
-    liquidationPageOneInitialState: PropTypes.instanceOf(Object),
+    liquidationInitialState: PropTypes.instanceOf(Object),
     saveData: PropTypes.func,
 };
 

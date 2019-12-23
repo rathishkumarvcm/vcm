@@ -10,33 +10,14 @@ class LiquidationPageFourComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            reviewConfirmLiquidationData: {
-                tradeType: '',
-                selectedAccountName: '',
-                selectedAccountNo: '',
-                worthAmount: '',
-                sellingAmount: '',
-                fundingSource: '',
-                fundingSourceAccountNo: '',
-                totalInvestment: '',
-                requestedAmountType: '',
-                amount: '',
-                federalTaxInPerc: '',
-                stateTaxInPerc: '',
-                totalTaxesToBeWithhold: '',
-                totalYouWillReceive: '',
-                totalWithdrawal: '',
-                accType: ''
-            },
+            
         };
-        this.amount = '';
     }
 
     formatAmount = (amount) => {
         var amt = parseInt(amount).toLocaleString();
         return amt;
     }
-
 
     navigateLiquidationPageOne = () => this.props.navigation.navigate('LiquidationPageOne');
     navigateLiquidationPageThree = () => this.props.navigation.navigate('LiquidationPageThree');
@@ -67,75 +48,39 @@ class LiquidationPageFourComponent extends Component {
 
     submitButtonAction = () => {
         console.log('On Click Submit Liquidation ...');
-        const payloadData = this.state.reviewConfirmLiquidationData;
-        this.props.saveData(payloadData);
-        console.log("payloadData---> " + JSON.stringify(payloadData));
-        this.props.navigation.navigate('LiquidationFinish', { reviewConfirmLiquidationData: this.state.reviewConfirmLiquidationData });
+        this.props.navigation.navigate('LiquidationFinish');
     }
 
     componentDidMount() {
         console.log(" Screen 4 componentdidmount " + JSON.stringify(this.props));
-        let fundingSourceData = this.props.navigation.getParam('fundingSource');
-        let taxAccountingMethodData = this.props.navigation.getParam('taxAccountingMethodData');
-        let tradeType = "Liquidation";
-        let fundSource = '';
-        let sellingAmount = '';
-        if(this.props.liquidationPageTwoInitialState.allSharesSelected){
-            sellingAmount = gblStrings.liquidation.dollarSymbol+this.formatAmount(this.props.liquidationPageTwoInitialState.worthAmount);
-        }else if(this.isEmpty(this.props.liquidationPageTwoInitialState.percentageValue)){
-            sellingAmount = gblStrings.liquidation.dollarSymbol+this.formatAmount(this.props.liquidationPageTwoInitialState.dollarValue);
-        }else{
-            sellingAmount = gblStrings.liquidation.dollarSymbol+this.formatAmount((this.props.liquidationPageTwoInitialState.percentageValue/100)*this.props.liquidationPageTwoInitialState.worthAmount);
-        }
-        console.log("componentDidMount fundingSourceData------> ", fundingSourceData);
-        console.log("componentDidMount taxAccountingMethodData------> ", taxAccountingMethodData);
-        if (taxAccountingMethodData.requestedAmountType == "Before Taxes") {
-            this.amount = taxAccountingMethodData.amountBeforeTaxes;
-        } else {
-            this.amount = taxAccountingMethodData.amountAfterTaxes;
-        }
-        if (fundingSourceData.checkOrderSelected) {
-            fundSource = gblStrings.liquidation.check;
-        } else {
-            fundSource = fundingSourceData.selectedBankAccountName;
-        }
-        this.setState(prevState => ({
-            reviewConfirmLiquidationData: {
-                ...prevState.reviewConfirmLiquidationData,
-                tradeType: tradeType,
-                selectedAccountName: this.props.liquidationPageOneInitialState.selectedAccountName,
-                selectedAccountNo: this.props.liquidationPageOneInitialState.selectedAccountNumber,
-                worthAmount: this.formatAmount(this.props.liquidationPageTwoInitialState.worthAmount),
-                sellingAmount:sellingAmount,
-                fundingSource: fundSource,
-                fundingSourceAccountNo: fundingSourceData.selectedBankAccountNo,
-                totalInvestment: '$ 5,500',
-                requestedAmountType: taxAccountingMethodData.requestedAmountType,
-                amount: this.formatAmount(this.amount),
-                federalTaxInPerc: taxAccountingMethodData.federalTax + "%",
-                stateTaxInPerc: taxAccountingMethodData.stateTax + "%",
-                stateTaxInDollars:gblStrings.liquidation.dollarSymbol+this.formatAmount(taxAccountingMethodData.stateTaxInDollars),
-                federalTaxInDollars:gblStrings.liquidation.dollarSymbol+this.formatAmount(taxAccountingMethodData.federalTaxInDollars),
-                totalTaxesToBeWithhold: gblStrings.liquidation.dollarSymbol+this.formatAmount(taxAccountingMethodData.totalTaxToBeWithhold),
-                totalYouWillReceive: gblStrings.liquidation.dollarSymbol+this.formatAmount(taxAccountingMethodData.totalYouWillReceive),
-                totalWithdrawal: gblStrings.liquidation.dollarSymbol+this.formatAmount(taxAccountingMethodData.totalWithdrawal),
-                accType: this.props.liquidationPageOneInitialState.accType,
-            },
-        }));
     }
-
 
     render() {
         let currentPage = 4;
         let totalCount = 4;
         let pageName = gblStrings.liquidation.reviewNConfirmHeading;
-        let taxAccountingMethodData = this.props.navigation.getParam('taxAccountingMethodData');
-        if (this.state.reviewConfirmLiquidationData.requestedAmountType == "Before Taxes") {
-            this.amount = taxAccountingMethodData.amountBeforeTaxes;
-        } else {
-            this.amount = taxAccountingMethodData.amountAfterTaxes;
+        let sellingAmount = '';
+        if(this.props.liquidationInitialState.allSharesSelected){
+            sellingAmount = gblStrings.liquidation.dollarSymbol+this.formatAmount(this.props.liquidationInitialState.worthAmount);
+        }else if(this.isEmpty(this.props.liquidationInitialState.percentageValue)){
+            sellingAmount = gblStrings.liquidation.dollarSymbol+this.formatAmount(this.props.liquidationInitialState.dollarValue);
+        }else{
+            sellingAmount = gblStrings.liquidation.dollarSymbol+this.formatAmount((this.props.liquidationInitialState.percentageValue/100)*this.props.liquidationInitialState.worthAmount);
         }
-        return (
+        var fundWithdrawalData = this.props.liquidationInitialState;
+        let amount = "";
+        if (fundWithdrawalData.requestedAmountType == "Before Taxes") {
+            amount = fundWithdrawalData.amountBeforeTaxes;
+        } else {
+            amount = fundWithdrawalData.amountAfterTaxes;
+        }
+        let fundingSource = "";
+        if(fundWithdrawalData.checkSelectedOrder){
+            fundingSource = gblStrings.liquidation.check;
+        }else{
+            fundingSource = fundWithdrawalData.bankAccountName;
+        }
+       return (
             <View style={styles.container} >
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.mainFlex}>
@@ -153,7 +98,7 @@ class LiquidationPageFourComponent extends Component {
                         <View style={styles.line} />
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.tradeType}</Text>
-                            <Text style={styles.greyText16px}>{this.state.reviewConfirmLiquidationData.tradeType}</Text>
+                            <Text style={styles.greyText16px}>{gblStrings.liquidation.liquidation}</Text>
                         </View>
                         <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>{gblStrings.liquidation.accountSelection}</Text>
@@ -162,11 +107,11 @@ class LiquidationPageFourComponent extends Component {
                         <View style={styles.line} />
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountName}</Text>
-                            <Text style={styles.greyText16px}>{gblStrings.liquidation.accountName}{this.props.liquidationPageOneInitialState.selectedAccountName}</Text>
+                            <Text style={styles.greyText16px}>{gblStrings.liquidation.accountName}{this.props.liquidationInitialState.selectedAccountName}</Text>
                         </View>
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountNumber}</Text>
-                            <Text style={styles.greyText16px}>{this.props.liquidationPageOneInitialState.selectedAccountNumber}</Text>
+                            <Text style={styles.greyText16px}>{this.props.liquidationInitialState.selectedAccountNumber}</Text>
                         </View>
                         <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>{gblStrings.accManagement.selectedMutualFunds}</Text>
@@ -178,11 +123,11 @@ class LiquidationPageFourComponent extends Component {
                             <Text style={styles.blackTextBold22px}>{gblStrings.liquidation.govtSecuritiesFund}</Text>
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.worthAmount}</Text>
-                                <Text style={styles.greyText16px}>{gblStrings.liquidation.dollarSymbol}{this.formatAmount(this.props.liquidationPageTwoInitialState.worthAmount)}</Text>
+                                <Text style={styles.greyText16px}>{gblStrings.liquidation.dollarSymbol}{this.formatAmount(this.props.liquidationInitialState.worthAmount)}</Text>
                             </View>
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.sellingAmount}</Text>
-                                <Text style={styles.greyText16px}>{this.state.reviewConfirmLiquidationData.sellingAmount}</Text>
+                                <Text style={styles.greyText16px}>{sellingAmount}</Text>
                             </View>
                         </View>
 
@@ -193,54 +138,54 @@ class LiquidationPageFourComponent extends Component {
                         <View style={styles.line} />
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>{gblStrings.accManagement.fundingSource}</Text>
-                            <Text style={styles.greyText16px}>{this.state.reviewConfirmLiquidationData.fundingSource}</Text>
+                            <Text style={styles.greyText16px}>{fundingSource}</Text>
                         </View>
 
-                        {(this.state.reviewConfirmLiquidationData.fundingSource==gblStrings.liquidation.check) ?
+                        {(fundingSource==gblStrings.liquidation.check) ?
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalInvestment}</Text>
-                                <Text style={styles.greyText16px}>{this.state.reviewConfirmLiquidationData.totalInvestment}</Text>
+                                <Text style={styles.greyText16px}>{fundWithdrawalData.bankAccountNo}</Text>
                             </View> : <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountNumber}</Text>
-                                <Text style={styles.greyText16px}>{this.state.reviewConfirmLiquidationData.fundingSourceAccountNo}</Text>
+                                <Text style={styles.greyText16px}>{fundWithdrawalData.bankAccountNo}</Text>
                             </View>
                         }
                         {/*-----------------------------------Tax Accounting Method starts here-------------------------------- */}
-                        {this.props.liquidationPageOneInitialState.accType == "IRA" ?
+                        {this.props.liquidationInitialState.taxWithHoldingOption == gblStrings.liquidation.withholdTaxes?
                             <View>
                                 <View style={styles.horizontalFlex}>
                                     <Text style={styles.subHeading}>{gblStrings.liquidation.taxAccountingMethod}</Text>
                                     <Text style={styles.edit} onPress={this.onClickEditTaxAccountingmethod}>{gblStrings.common.edit}</Text>
                                 </View>
                                 <View style={styles.line} />
-                                <Text style={styles.blackTextBold22px}>{taxAccountingMethodData.taxHoldingOption}</Text>
+                                <Text style={styles.blackTextBold22px}>{fundWithdrawalData.taxWithHoldingOption}</Text>
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.isTheReqAmount}</Text>
-                                    <Text style={styles.greyText16px}>{this.state.reviewConfirmLiquidationData.requestedAmountType}</Text>
+                                    <Text style={styles.greyText16px}>{fundWithdrawalData.requestedAmountType}</Text>
                                 </View>
                                 <View style={styles.section}>
-                                    <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.amount}{this.state.reviewConfirmLiquidationData.requestedAmountType}</Text>
-                                    <Text style={styles.greyText16px}>{gblStrings.liquidation.dollarSymbol}{this.formatAmount(this.amount)}</Text>
+                                    <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.amount}{fundWithdrawalData.requestedAmountType}</Text>
+                                    <Text style={styles.greyText16px}>{amount}</Text>
                                 </View>
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.federalTax}</Text>
-                                    <Text style={styles.greyText16px}>{this.state.reviewConfirmLiquidationData.federalTaxInPerc}  -  {this.state.reviewConfirmLiquidationData.federalTaxInDollars}</Text>
+                                    <Text style={styles.greyText16px}>{fundWithdrawalData.federalTaxInPerc}  -  {fundWithdrawalData.federalTaxInDollars}</Text>
                                 </View>
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.stateTax}</Text>
-                                    <Text style={styles.greyText16px}>{this.state.reviewConfirmLiquidationData.stateTaxInPerc}  -  {this.state.reviewConfirmLiquidationData.stateTaxInDollars}</Text>
+                                    <Text style={styles.greyText16px}>{fundWithdrawalData.stateTaxInPerc}  -  {fundWithdrawalData.stateTaxInDollars}</Text>
                                 </View>
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalTaxToBeWithhold}</Text>
-                                    <Text style={styles.greyText16px}>{this.state.reviewConfirmLiquidationData.totalTaxesToBeWithhold}</Text>
+                                    <Text style={styles.greyText16px}>{fundWithdrawalData.totalTaxToBeWithHold}</Text>
                                 </View>
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalYouWillReceive}</Text>
-                                    <Text style={styles.greyText16px}>{this.state.reviewConfirmLiquidationData.totalYouWillReceive}</Text>
+                                    <Text style={styles.greyText16px}>{fundWithdrawalData.totalYouWillReceive}</Text>
                                 </View>
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalWithdrawal}</Text>
-                                    <Text style={styles.greyText16px}>{this.state.reviewConfirmLiquidationData.totalWithdrawal}</Text>
+                                    <Text style={styles.greyText16px}>{fundWithdrawalData.totalWithdrawal}</Text>
                                 </View>
                             </View>
                             : null}
@@ -285,8 +230,7 @@ class LiquidationPageFourComponent extends Component {
 
 LiquidationPageFourComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    liquidationPageOneInitialState: PropTypes.instanceOf(Object),
-    liquidationPageTwoInitialState: PropTypes.instanceOf(Object),
+    liquidationInitialState: PropTypes.instanceOf(Object),
 };
 
 LiquidationPageFourComponent.defaultProps = {

@@ -1,17 +1,17 @@
 import { connect } from 'react-redux';
 import LiquidationPageTwoComponent from './LiquidationPageTwoComponent';
-import { liquidationPageTwoActions } from "../../Shared/Actions";
+import { liquidationActions } from "../../Shared/Actions";
 
 /*----------------------
                                   Redux Methods
                                                              -------------------------- */
 
 const mapStateToProps = (state /* , props */) => ({
-    liquidationPageTwoInitialState: state.liquidationPageTwoData,
+    liquidationInitialState: state.liquidationData,
 });
 
 const mapDispatchToProps = {
-  ...liquidationPageTwoActions,
+  ...liquidationActions,
 };
 
 export default connect(

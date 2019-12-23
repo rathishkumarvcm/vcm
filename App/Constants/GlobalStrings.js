@@ -1185,7 +1185,8 @@ export default {
         taxWithHoldingOptionsContent:"Current method will be displayed. User will have to call MSR if change is desired and the trade cannot be processed online.",
         totalInvestment:"Total Investment",
         dollarSymbol:"$ ",
-        check:"Check"
+        check:"Check",
+        liquidation:"Liquidation"
     },
     compareFunds:{
         fundComparison:"Fund Comparison",

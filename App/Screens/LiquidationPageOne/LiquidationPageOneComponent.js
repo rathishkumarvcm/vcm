@@ -179,8 +179,8 @@ class LiquidationPageOneComponent extends Component {
             accType: this.state.selectedAccountData.accType
         };
         this.props.saveData(payloadData);
-        console.log("payloadData---> " + JSON.stringify(payloadData));
-        this.props.navigation.navigate('LiquidationPageTwo', { accSelectionScreenData: this.state.selectedAccountData });
+        console.log("Account Selection payloadData---> " + JSON.stringify(payloadData));
+        this.props.navigation.navigate('LiquidationPageTwo');
     }
 
     noItemDisplay = () => {
@@ -438,7 +438,7 @@ class LiquidationPageOneComponent extends Component {
 
 LiquidationPageOneComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    liquidationPageOneInitialState: PropTypes.instanceOf(Object),
+    liquidationInitialState: PropTypes.instanceOf(Object),
     saveData: PropTypes.func,
 };
 
