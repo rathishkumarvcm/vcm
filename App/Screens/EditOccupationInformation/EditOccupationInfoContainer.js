@@ -6,6 +6,7 @@ import { addressFormatActions } from "../../Shared/Actions";
 const mapStateToProps = (state /* , props */) => (
   {
     profileState: state.profileInformationData,
+    profileSettingsLookup: state.masterLookUpData,
     stateCityData:state.addressFormatData
   }
 );

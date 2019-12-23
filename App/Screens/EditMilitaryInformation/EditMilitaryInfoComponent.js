@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GDropDownComponent, GDateComponent } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GDropDownComponent, GDateComponent, GLoadingSpinner } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 
-const profileMilitaryService = [
+let profileMilitaryService = [
     { index1: 0, question: "Yes" },
     { index2: 1, question: "No" },
 ];
 
-const tempMilitaryStatusData = [
+let tempMilitaryStatusData = [
     {
         key: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
         value: 'Retired from Active Duty',
@@ -25,6 +25,8 @@ const tempMilitaryStatusData = [
     }
 ];
 
+let payloadMilitaryRank;
+
 class editMilitaryInfoComponent extends Component {
     constructor(props) {
         super(props);
@@ -37,7 +39,9 @@ class editMilitaryInfoComponent extends Component {
             radioButton: false,
             radioButtonIndex: 1,
             isMilitaryService: false,
-            
+            dropDownRank: '',
+            dummyMilitaryStatusData: [],
+
             dateFromValue: '',
             dateToValue: '',
 
@@ -63,6 +67,24 @@ class editMilitaryInfoComponent extends Component {
             dropDownMarineFlag: false,
             dropDownMarineMsg: ''
         };
+    }
+
+    componentDidMount() {
+        let payload = [];
+
+        const compositePayloadData = [
+            "mil_status",
+            "mil_serv_branch"
+        ];
+
+        for (let i = 0; i < compositePayloadData.length; i++) {
+            let tempkey = compositePayloadData[i];
+            if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
+                payload.push(tempkey);
+            }
+        }
+
+        this.props.getProfileCompositeData(payload);
     }
 
     radioButtonClicked = (index) => {
@@ -112,9 +134,18 @@ class editMilitaryInfoComponent extends Component {
     dropDownBranchOnSelect = (valueBranch) => {
         this.setState({
             dropDownBranchValue: valueBranch.value,
-            dropDownBranchFlag: false,
-            dropDownBranchMsg: ''
+            dropDownBranchState: false,
+            dropDownBranchMsg: '',
+            dummyMilitaryStatusData: [],
+            dropDownMarineState: false,
+            dropDownMarineValue: ''
         });
+
+        payloadMilitaryRank = `mil_rank_${valueBranch.key}`;
+
+        if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[payloadMilitaryRank]) {
+            this.props.getRankData(payloadMilitaryRank);
+        }
     }
 
     dropDownMarineOnClick = () => {
@@ -126,7 +157,7 @@ class editMilitaryInfoComponent extends Component {
     dropDownMarineOnSelect = (valueMarine) => {
         this.setState({
             dropDownMarineValue: valueMarine.value,
-            dropDownMarineFlag: false,
+            dropDownMarineState: false,
             dropDownMarineMsg: ''
         });
     }
@@ -143,9 +174,31 @@ class editMilitaryInfoComponent extends Component {
         });
     }
 
-    componentDidMount() { }
-
     editMilitaryOnCancel = () => this.props.navigation.navigate('profileSettings');
+
+    renderRankDropDown = () => {
+
+        if (this.props && this.props.profileSettingsLookup &&
+            this.props.profileSettingsLookup[payloadMilitaryRank] &&
+            this.props.profileSettingsLookup[payloadMilitaryRank].value) {
+            this.state.dummyMilitaryStatusData = this.props.profileSettingsLookup[payloadMilitaryRank].value;
+        }
+
+        return (
+            <GDropDownComponent
+                dropDownTextName={styles.editProfileLabel}
+                dropDownName={globalString.militaryInformationLabel.militaryRank}
+                data={this.state.dummyMilitaryStatusData}
+                changeState={this.dropDownMarineOnClick}
+                showDropDown={this.state.dropDownMarineState}
+                dropDownValue={this.state.dropDownMarineValue}
+                selectedDropDownValue={this.dropDownMarineOnSelect}
+                itemToDisplay={"value"}
+                errorFlag={this.state.dropDownMarineFlag}
+                errorText={this.dropDownMarineMsg}
+                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(270) }} />
+        );
+    }
 
     render() {
 
@@ -154,9 +207,27 @@ class editMilitaryInfoComponent extends Component {
         const year = new Date().getFullYear(); //Current Year
         const currentdate = month + "-" + date + "-" + year;
 
+        let userMilitaryStatus = tempMilitaryStatusData;
+        let userBranchOfService = tempMilitaryStatusData;
+
+        if (this.props && this.props.profileSettingsLookup &&
+            this.props.profileSettingsLookup.mil_status &&
+            this.props.profileSettingsLookup.mil_status.value) {
+            userMilitaryStatus = this.props.profileSettingsLookup.mil_status.value;
+        }
+
+        if (this.props && this.props.profileSettingsLookup &&
+            this.props.profileSettingsLookup.mil_serv_branch &&
+            this.props.profileSettingsLookup.mil_serv_branch.value) {
+            userBranchOfService = this.props.profileSettingsLookup.mil_serv_branch.value;
+        }
+
         return (
 
             <View style={styles.container}>
+                {
+                    (this.props.accOpeningData.isLoading || this.props.profileSettingsLookup.isLoading) && <GLoadingSpinner />
+                }
                 <GHeaderComponent
                     navigation={this.props.navigation} />
 
@@ -212,7 +283,7 @@ class editMilitaryInfoComponent extends Component {
                             <GDropDownComponent
                                 dropDownTextName={styles.editProfileLabel}
                                 dropDownName={globalString.militaryInformationLabel.militaryStatus}
-                                data={tempMilitaryStatusData}
+                                data={userMilitaryStatus}
                                 changeState={this.dropDownMilitaryOnClick}
                                 showDropDown={this.state.dropDownMilitaryState}
                                 dropDownValue={this.state.dropDownMilitaryValue}
@@ -225,7 +296,7 @@ class editMilitaryInfoComponent extends Component {
                             <GDropDownComponent
                                 dropDownTextName={styles.editProfileLabel}
                                 dropDownName={globalString.militaryInformationLabel.militaryBranchService}
-                                data={tempMilitaryStatusData}
+                                data={userBranchOfService}
                                 changeState={this.dropDownBranchOnClick}
                                 showDropDown={this.state.dropDownBranchState}
                                 dropDownValue={this.state.dropDownBranchValue}
@@ -235,7 +306,7 @@ class editMilitaryInfoComponent extends Component {
                                 errorText={this.dropDownBranchMsg}
                                 dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(180) }} />
 
-                            <GDropDownComponent
+                            {/* <GDropDownComponent
                                 dropDownTextName={styles.editProfileLabel}
                                 dropDownName={globalString.militaryInformationLabel.militaryRank}
                                 data={tempMilitaryStatusData}
@@ -246,7 +317,9 @@ class editMilitaryInfoComponent extends Component {
                                 itemToDisplay={"value"}
                                 errorFlag={this.state.dropDownMarineFlag}
                                 errorText={this.dropDownMarineMsg}
-                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(270) }} />
+                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(270) }} /> */}
+
+                            {this.renderRankDropDown()}
 
                             <View style={styles.editFlexDirectionColumn}>
                                 <Text style={styles.editProfileLabel}>
@@ -283,7 +356,7 @@ class editMilitaryInfoComponent extends Component {
                                     {globalString.militaryInformationLabel.militaryCommissionSource}
                                 </Text>
                                 <GInputComponent
-                                propInputStyle={styles.editAddressInput}
+                                    propInputStyle={styles.editAddressInput}
                                     placeholder={""} />
                             </View>
 

@@ -89,6 +89,7 @@ class ProfileSettingsComponent extends Component {
             show: false,
             profileRelationShipData: [],
             isRelationRefreshed: false,
+            isProfileRetired: false,
 
             // Profile Information
             profileName: '',
@@ -210,6 +211,12 @@ class ProfileSettingsComponent extends Component {
             });
         }
 
+        if (this.props && this.props.profileState && this.props.profileState.profileIsRetired) {
+            this.setState({
+                isProfileRetired: this.props.profileState.profileIsRetired
+            });
+        }
+
         // Financial Informations 
 
         if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileAnnualIncome) {
@@ -300,6 +307,8 @@ class ProfileSettingsComponent extends Component {
                 isRelationRefreshed: !this.state.isRelationRefreshed
             });
         }
+
+        console.log('&&&&&&&&&&& Profile Status ::', this.state.isProfileRetired);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -320,6 +329,7 @@ class ProfileSettingsComponent extends Component {
                     profileRelationGender: this.props.profileState.profileRelationGender,
                     profileRelationMail: this.props.profileState.profileRelationMail,
                     profileRelationMarital: this.props.profileState.profileRelationMarital,
+                    isProfileRetired: this.props.profileState.profileIsRetired
                 });
 
                 if (this.props && this.props.profileState && this.props.profileState.financialInformations) {
@@ -336,7 +346,7 @@ class ProfileSettingsComponent extends Component {
                         profileEmploymentStatus: this.props.profileState.employmentInformations.profileEmploymentStatus,
                         profileEmpIndustry: this.props.profileState.employmentInformations.profileEmpIndustry,
                         profileEmpOccupation: this.props.profileState.employmentInformations.profileEmpOccupation,
-                        profileRelationToOwner: this.props.profileState.employmentInformations.profileRelationToOwner
+                        profileEmpEmployer: this.props.profileState.employmentInformations.profileEmpEmployer
                     });
                 }
 
@@ -350,6 +360,8 @@ class ProfileSettingsComponent extends Component {
                         isRelationRefreshed: !this.state.isRelationRefreshed
                     });
                 }
+
+                console.log('&&&&&&&&&&& Profile Status ::', this.state.isProfileRetired);
             }
         }
     }
@@ -751,8 +763,7 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingEmployeeManage}
-                            >
+                                onPress={this.profileSettingEmployeeManage}>
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
@@ -760,53 +771,79 @@ class ProfileSettingsComponent extends Component {
                         <View style={styles.settingsBorder} />
 
                         <View style={styles.settingsFinancial}>
-                            <View style={styles.settingsView1}>
-                                <Text style={styles.profileSettingLabel}>
-                                    {globalString.profileSettingsPage.profileEmployeeOne}
-                                </Text>
-                            </View>
 
-                            <View style={styles.signInView}>
-                                <Text style={styles.profileSettingValueLabel}>
-                                    {this.state.profileEmploymentStatus}
-                                </Text>
-                            </View>
+                            {/* User Not Retired */}
 
-                            <View style={styles.settingsView1}>
-                                <Text style={styles.profileSettingLabel}>
-                                    {globalString.profileSettingsPage.profileEmployeeTwo}
-                                </Text>
-                            </View>
+                            {!this.state.isProfileRetired ? (
+                                <View>
+                                    <View style={styles.settingsView1}>
+                                        <Text style={styles.profileSettingLabel}>
+                                            {globalString.profileSettingsPage.profileEmployeeOne}
+                                        </Text>
+                                    </View>
 
-                            <View style={styles.signInView}>
-                                <Text style={styles.profileSettingValueLabel}>
-                                    {this.state.profileEmpIndustry}
-                                </Text>
-                            </View>
+                                    <View style={styles.signInView}>
+                                        <Text style={styles.profileSettingValueLabel}>
+                                            {this.state.profileEmploymentStatus}
+                                        </Text>
+                                    </View>
 
-                            <View style={styles.settingsView1}>
-                                <Text style={styles.profileSettingLabel}>
-                                    {globalString.profileSettingsPage.profileEmployeeThree}
-                                </Text>
-                            </View>
+                                    <View style={styles.settingsView1}>
+                                        <Text style={styles.profileSettingLabel}>
+                                            {globalString.profileSettingsPage.profileEmployeeTwo}
+                                        </Text>
+                                    </View>
 
-                            <View style={styles.signInView}>
-                                <Text style={styles.profileSettingValueLabel}>
-                                    {this.state.profileEmpOccupation}
-                                </Text>
-                            </View>
+                                    <View style={styles.signInView}>
+                                        <Text style={styles.profileSettingValueLabel}>
+                                            {this.state.profileEmpIndustry}
+                                        </Text>
+                                    </View>
 
-                            <View style={styles.settingsView1}>
-                                <Text style={styles.profileSettingLabel}>
-                                    {globalString.profileSettingsPage.profileEmployeeFour}
-                                </Text>
-                            </View>
+                                    <View style={styles.settingsView1}>
+                                        <Text style={styles.profileSettingLabel}>
+                                            {globalString.profileSettingsPage.profileEmployeeThree}
+                                        </Text>
+                                    </View>
 
-                            <View style={styles.signInView}>
-                                <Text style={styles.profileSettingValueLabel}>
-                                    {this.state.profileEmpEmployer}
-                                </Text>
-                            </View>
+                                    <View style={styles.signInView}>
+                                        <Text style={styles.profileSettingValueLabel}>
+                                            {this.state.profileEmpOccupation}
+                                        </Text>
+                                    </View>
+
+                                    <View style={styles.settingsView1}>
+                                        <Text style={styles.profileSettingLabel}>
+                                            {globalString.profileSettingsPage.profileEmployeeFour}
+                                        </Text>
+                                    </View>
+
+                                    <View style={styles.signInView}>
+                                        <Text style={styles.profileSettingValueLabel}>
+                                            {this.state.profileEmpEmployer}
+                                        </Text>
+                                    </View>
+                                </View>
+                            ) : null}
+
+                            {/* User Retired */}
+
+                            {this.state.isProfileRetired ? (
+                                <View>
+                                    <View style={styles.settingsView1}>
+                                        <Text style={styles.profileSettingLabel}>
+                                            {globalString.profileSettingsPage.profileEmployeeOne}
+                                        </Text>
+                                    </View>
+
+                                    <View style={styles.signInView}>
+                                        <Text style={styles.profileSettingValueLabel}>
+                                            {'Retired'}
+                                        </Text>
+                                    </View>
+                                </View>
+                            ) : null} 
+
                         </View>
                     </View>
 
