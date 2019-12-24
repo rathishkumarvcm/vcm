@@ -2364,15 +2364,16 @@ class OpenAccPageTwoComponent extends Component {
                     this.state.personal.isPersonalInfoExpanded &&
                     <View style={styles.childSectionGrp}>
                         <View style={styles.dropDownViewPrefix}>
-                            {this.renderCustomDropDown({
+                        {this.renderCustomDropDown({
                                 section: "personal",
                                 stateKey: "prefix",
                                 dropDownName: "prefixDropDown",
                                 lblDropdownName: gblStrings.accManagement.prefix,
                                 isOptional: true
                             })
-                            }
+                            } 
                         </View>
+                       
 
 
                         <Text style={styles.lblTxt}>

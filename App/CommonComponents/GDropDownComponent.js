@@ -85,16 +85,25 @@ errorInputStyle : {
     justifyContent:'center',
     backgroundColor: '#FFFFFF',
     paddingLeft:'4%'
- }
+ },
+ optionalTxt: {
+  color: 'rgba(51, 51, 51, 0.87)',
+  fontSize: scaledHeight(16),
+  fontWeight: 'normal',
+}
 });
 
 
 export const GDropDownComponent = props => (
 
     <View style={[styles.dropDownLayout,props.dropDownLayout]}>
-            <Text style={[styles.dropDownTextName,props.dropDownTextName]}>
-                {props.dropDownName}
-            </Text>
+    <Text style={[styles.dropDownTextName, props.dropDownTextName]}>
+      <Text>
+        {props.dropDownName}
+      </Text>
+       {props.isOptional && <Text style={styles.optionalTxt}>{" (Optional)"}</Text>}
+    </Text>
+            
     <Dropdown
       data={props.data}
       dropdownOffset={{ 'top': 5 }}
@@ -114,6 +123,7 @@ export const GDropDownComponent = props => (
 GDropDownComponent.propTypes = {
   dropDownName : PropTypes.string,
   showDropDown : PropTypes.bool,
+  isOptional:PropTypes.bool,
   dropDownLayout: PropTypes.instanceOf(Object),
   //pickerStyle: PropTypes.instanceOf(Object),
   dropDownTextName: PropTypes.instanceOf(Object),
@@ -129,6 +139,7 @@ GDropDownComponent.propTypes = {
 
 GDropDownComponent.defaultProps = {
   disabled : false,
+  isOptional:false,
   buttonStyle: {},
   textStyle: {}
 };

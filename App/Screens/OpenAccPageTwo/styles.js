@@ -395,16 +395,12 @@ export const styles = StyleSheet.create({
         width: scaledHeight(100)
     },
     dropDownLayout: {
-        alignItems: "flex-start",
-        justifyContent: "flex-start",
+       // alignItems: "flex-start",
+       // justifyContent: "flex-start",
         marginLeft: '0%',
         marginRight: '0%',
         marginTop: scaledHeight(25),
-        paddingLeft: '0%',
-        paddingRight: '0%',
-        width: '100%',
-        borderColor:'green',
-        borderWidth:1
+        width: '100%'
     },
     dropDownTextName: {
         color: 'rgba(51, 51, 51, 0.87)',
@@ -412,7 +408,7 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: '0%',
         marginRight: '0%',
-        marginTop: scaledHeight(0),
+        marginBottom: scaledHeight(9),
         paddingLeft: '0%',
         paddingRight: '0%',
         width: '100%',
