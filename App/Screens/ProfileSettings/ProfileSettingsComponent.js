@@ -123,6 +123,7 @@ class ProfileSettingsComponent extends Component {
             profileEmpIndustry: '',
             profileEmpOccupation: '',
             profileEmpEmployer: '',
+            profilePrimarySourceIncome: '',
 
             // RelationShip Information
             profileRelationToOwner: '',
@@ -273,6 +274,15 @@ class ProfileSettingsComponent extends Component {
             });
         }
 
+        if (this.props && this.props.profileState && this.props.profileState.employmentInformations
+            && this.props.profileState.employmentInformations.profileSourceOfIncome) {
+            this.setState({
+                profilePrimarySourceIncome: this.props.profileState.employmentInformations.profileSourceOfIncome
+            });
+        }
+
+        // Profile Relationship 
+
         if (this.props && this.props.profileState && this.props.profileState.profileRelationToOwner) {
             this.setState({
                 profileRelationToOwner: this.props.profileState.profileRelationToOwner
@@ -346,7 +356,8 @@ class ProfileSettingsComponent extends Component {
                         profileEmploymentStatus: this.props.profileState.employmentInformations.profileEmploymentStatus,
                         profileEmpIndustry: this.props.profileState.employmentInformations.profileEmpIndustry,
                         profileEmpOccupation: this.props.profileState.employmentInformations.profileEmpOccupation,
-                        profileEmpEmployer: this.props.profileState.employmentInformations.profileEmpEmployer
+                        profileEmpEmployer: this.props.profileState.employmentInformations.profileEmpEmployer,
+                        profilePrimarySourceIncome: this.props.profileState.employmentInformations.profileSourceOfIncome
                     });
                 }
 
@@ -838,7 +849,19 @@ class ProfileSettingsComponent extends Component {
 
                                     <View style={styles.signInView}>
                                         <Text style={styles.profileSettingValueLabel}>
-                                            {'Retired'}
+                                            {this.state.profileEmploymentStatus}
+                                        </Text>
+                                    </View>
+
+                                    <View style={styles.settingsView1}>
+                                        <Text style={styles.profileSettingLabel}>
+                                            {globalString.accManagement.primarySourceIncome}
+                                        </Text>
+                                    </View>
+
+                                    <View style={styles.signInView}>
+                                        <Text style={styles.profileSettingValueLabel}>
+                                            {this.state.profilePrimarySourceIncome}
                                         </Text>
                                     </View>
                                 </View>

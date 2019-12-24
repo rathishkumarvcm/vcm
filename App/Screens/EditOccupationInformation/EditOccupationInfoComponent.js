@@ -94,7 +94,8 @@ class editOccupationInfoComponent extends Component {
 
             isZipApiCalling: false,
             isAddressApiCalling: false,
-            validOccupationMsg: ''
+            validOccupationMsg: '',
+            validNameMsg: ''
         };
     }
 
@@ -228,8 +229,11 @@ class editOccupationInfoComponent extends Component {
         });
     }
 
-    dropDownOccupationSelect = (valueOccupation) => {
-        if (valueOccupation.value === 'Retired') {
+    dropDownOccupationSelect = (value, index, data) => {
+        if (data[index].value === 'Retired' ||
+            data[index].value === 'Not employed' ||
+            data[index].value === 'Homemaker' ||
+            data[index].value === 'Student') {
             this.setState({
                 isOccupationRetired: true
             });
@@ -240,7 +244,7 @@ class editOccupationInfoComponent extends Component {
         }
 
         this.setState({
-            dropDownEmployeeValue: valueOccupation.value,
+            dropDownEmployeeValue: data[index].value,
             dropDownEmployeeState: false,
             dropDownEmployeeFlag: false
         });
@@ -252,9 +256,9 @@ class editOccupationInfoComponent extends Component {
         });
     }
 
-    dropDownSourceSelect = (valuePrimarySource) => {
+    dropDownSourceSelect = (value, index, data) => {
         this.setState({
-            dropDownPrimarySourceValue: valuePrimarySource.value,
+            dropDownPrimarySourceValue: data[index].value,
             dropDownPrimarySourceState: false,
             dropDownPrimarySourceFlag: false
         });
@@ -266,9 +270,9 @@ class editOccupationInfoComponent extends Component {
         });
     }
 
-    dropDownIndustrySelect = (valueIndustry) => {
+    dropDownIndustrySelect = (value, index, data) => {
         this.setState({
-            dropDownIndustryValue: valueIndustry.value,
+            dropDownIndustryValue: data[index].value,
             dropDownIndustryState: false,
         });
     }
@@ -279,7 +283,7 @@ class editOccupationInfoComponent extends Component {
             isValidOccupation: true
         });
 
-        if (this.state.employeeOccupationValue.length.toString() >= 30) {
+        if (this.state.employeeOccupationValue.length.toString() == 29) {
             this.setState({
                 isValidOccupation: false,
                 validOccupationMsg: 'Max. character length exceeded'
@@ -292,6 +296,13 @@ class editOccupationInfoComponent extends Component {
             employeeNameValue: text,
             isValidName: true
         });
+
+        if (this.state.employeeNameValue.length.toString() == 29) {
+            this.setState({
+                isValidName: false,
+                validNameMsg: 'Max. character length exceeded'
+            })
+        }
     }
 
     setValidEmpLineOne = (text) => {
@@ -364,40 +375,41 @@ class editOccupationInfoComponent extends Component {
                     dropDownEmployeeMsg: globalStrings.profileValidationMessages.validateNetWorth
                 });
             }
-    
+
             if (this.state.dropDownIndustryValue === '') {
                 this.setState({
                     dropDownIndustryFlag: true,
                     dropDownIndustryMsg: globalStrings.profileValidationMessages.validateNetWorth
                 });
             }
-    
+
             if (this.state.employeeOccupationValue === '') {
                 this.setState({
                     isValidOccupation: false,
                     validOccupationMsg: globalString.profileValidationMessages.validateEmpOccupation
                 });
             }
-    
+
             if (this.state.employeeNameValue === '') {
                 this.setState({
-                    isValidName: false
+                    isValidName: false,
+                    validNameMsg: globalString.profileValidationMessages.validateEmpName
                 });
             }
-    
+
             if (this.state.employeeLineOneValue === '' || this.state.employeeLineTwoValue === '') {
                 this.setState({
                     isValidLineOne: false,
                     isValidLineTwo: false
                 });
             }
-    
+
             if (this.state.employeeZipCodeValue === '') {
                 this.setState({
                     isValidZipCode: false
                 });
             }
-    
+
             if (this.state.dropDownEmployeeValue != '' &&
                 this.state.dropDownIndustryValue != '' &&
                 this.state.employeeOccupationValue != '' &&
@@ -410,7 +422,7 @@ class editOccupationInfoComponent extends Component {
             if (this.state.dropDownPrimarySourceValue === '') {
                 this.setState({
                     dropDownPrimarySourceFlag: true,
-                    dropDownPrimarySourceMsg: 'Select Valid Source of Income'
+                    dropDownPrimarySourceMsg: 'Please select primary source of income'
                 });
             } else {
                 this.manageEmployeeRetired();
@@ -558,7 +570,7 @@ class editOccupationInfoComponent extends Component {
                                 selectedDropDownValue={this.dropDownIndustrySelect}
                                 itemToDisplay={"value"}
                                 errorFlag={this.state.dropDownIndustryFlag}
-                                errorText={this.state.dropDownIndustryMsg}/>
+                                errorText={this.state.dropDownIndustryMsg} />
 
                             <View style={styles.editFlexDirectionColumn}>
                                 <Text style={styles.occupationIndustryLabel}>
@@ -588,8 +600,9 @@ class editOccupationInfoComponent extends Component {
                                         placeholder={""}
                                         onChangeText={this.setValidEmpName}
                                         value={this.state.employeeNameValue}
+                                        maxLength={30}
                                         errorFlag={!this.state.isValidName}
-                                        errorText={globalString.profileValidationMessages.validateEmpName} />
+                                        errorText={this.state.validNameMsg} />
                                 </View>
                             </View>
 
@@ -675,7 +688,7 @@ class editOccupationInfoComponent extends Component {
                                 selectedDropDownValue={this.dropDownSourceSelect}
                                 itemToDisplay={"value"}
                                 errorFlag={this.state.dropDownPrimarySourceFlag}
-                                errorText={this.state.dropDownPrimarySourceMsg}/>
+                                errorText={this.state.dropDownPrimarySourceMsg} />
                         </View>
                     ) : null}
 

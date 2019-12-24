@@ -5,7 +5,8 @@ import { accOpeningActions, profileSettingsAction } from "../../Shared/Actions";
 const mapStateToProps = (state /* , props */) => (
   {
     accOpeningData: state.accOpeningReducerData,
-    profileSettingsLookup: state.masterLookUpData
+    profileSettingsLookup: state.masterLookUpData,
+    profileState: state.profileInformationData,
   }
 );
 
