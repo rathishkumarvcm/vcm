@@ -481,12 +481,133 @@ class OpenAccPageTwoComponent extends Component {
                 }
             ],
 
+            estate: {
+                name: "",
+                creationDate: "",
+                isFederalLawApplicable:false,
+                mailingAddressType: "",
+                addressType: "",
+                addrLine1: "",
+                addrLine2: "",
+                zipcode: "",
+                city: "",
+                stateCity: "",
+                stateCityDropDown: false,
+                addrLine1_Phy: "",
+                addrLine2_Phy: "",
+                zipcode_Phy: "",
+                city_Phy: "",
+                stateCity_Phy: "",
+                stateCity_PhyDropDown: false,
+                isYourPhysicalAddresSame: false,
+                orgCountry:"",
+                mobileNo: "",
+                emailAddress: "",
+                socialSecurityNo: "",
+
+                nameValidation: true,
+                creationDateValidation: true,
+                isFederalLawApplicableValidation: true,
+                addressTypeValidation: true,
+                mailingAddressTypeValidation: true,
+                addrLine1Validation: true,
+                addrLine2Validation: true,
+                zipcodeValidation: true,
+                cityValidation: true,
+                stateCityValidation: true,
+                stateValidation: true,
+                addrLine1_PhyValidation: true,
+                addrLine2_PhyValidation: true,
+                zipcode_PhyValidation: true,
+                city_PhyValidation: true,
+                stateCity_PhyValidation: true,
+                state_PhyValidation: true,
+                isYourPhysicalAddresSameValidation: true,
+                orgCountryValidation: true,
+                mobileNoValidation: true,
+                emailAddressValidation: true,
+                socialSecurityNoValidation: true,
+                
+                 // ExpandCollapse
+                 isTrustInfoExpanded: false,
+                 isTrusteeInfoExpanded: false,
+               
+                trusteeData: [
+                    {
+                        prefix: "",
+                        prefixDropDown: false,
+                        firstName: "",
+                        middleInitial:  "",
+                        lastName:  "",
+                        suffix: "",
+                        suffixDropDown: false,
+                        dob: "",
+                        gender: "",
+                        maritalStatus: "",
+                        maritalStatusDropDown: false,
+                        citizenship: "U.S",
+
+                        mailingAddressType: "",
+                        addressType: "",
+                        addrLine1: "",
+                        addrLine2: "",
+                        zipcode: "",
+                        city: "",
+                        stateCity: "",
+                        stateCityDropDown: false,
+                        addrLine1_Phy: "",
+                        addrLine2_Phy: "",
+                        zipcode_Phy: "",
+                        city_Phy: "",
+                        stateCity_Phy: "",
+                        stateCity_PhyDropDown: false,
+                        isYourPhysicalAddresSame: false,
+                        mobileNo: "",
+                        memberPhoneNo: "",
+                        busniessPhoneNo: "",
+                        emailAddress: "",
+                        membernumber:"",
+
+                        prefixValidation: true,
+                        firstNameValidation: true,
+                        lastNameValidation: true,
+                        dobValidation: true,
+                        genderValidation: true,
+                        maritalStatusValidation: true,
+                        citizenshipValidation: true,
+                        addressTypeValidation: true,
+                        mailingAddressTypeValidation: true,
+                        addrLine1Validation: true,
+                        addrLine2Validation: true,
+                        zipcodeValidation: true,
+                        cityValidation: true,
+                        stateCityValidation: true,
+                        stateValidation: true,
+                        addrLine1_PhyValidation: true,
+                        addrLine2_PhyValidation: true,
+                        zipcode_PhyValidation: true,
+                        city_PhyValidation: true,
+                        stateCity_PhyValidation: true,
+                        state_PhyValidation: true,
+                        isYourPhysicalAddresSameValidation: true,
+                        mobileNoValidation: true,
+                        emailAddressValidation: true,
+                        socialSecurityNoValidation: true,
+                        memberPhoneNoValidation: true,
+                        busniessPhoneNoValidation: true,
+                        membernumberValidation:true,
+
+
+                    }
+                ]
+
+            },
             currentZipCodeRef: {
                 stateKey: "",
                 keyName: ""
             },
             // others
-            ...openAccPageTwo
+           //  ...openAccPageTwo
 
 
         };
@@ -5029,6 +5150,349 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
+    renderEstateInfoSection = () => {
+        return (
+            <View>
+                <this.renderEstateInfo />
+            </View>
+        );
+    }
+
+    renderEstateInfo = () => {
+
+        return (
+            <View style={styles.sectionGrp}>
+                <View style={styles.accTypeSelectSection}>
+                    <Text style={styles.headings}>
+                        {gblStrings.accManagement.estateInfo}
+                    </Text>
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                        onPress={this.onClickExpandCollpaseEvent("estate", "isTrustInfoExpanded")}
+                    >
+                        <Text style={styles.expandCollpaseTxt}>
+                            {this.state.estate.isTrustInfoExpanded ? "[ - ]" : "[ + ]"}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.lblLine} />
+
+                {
+                    this.state.estate.isTrustInfoExpanded &&
+                    <View style={styles.childSectionGrp}>
+                       
+                       
+
+
+                        <Text style={styles.lblTxt}>
+                            {gblStrings.accManagement.estateName}
+                        </Text>
+                        <GInputComponent
+                            // inputref={(ref)=> this.firstName = ref}
+                            inputref={this.setInputRef("name")}
+                            value={this.state.estate.name}
+                            propInputStyle={this.state.estate.nameValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder=""
+                            maxLength={gblStrings.maxLength.name}
+                            onChangeText={this.onChangeText("estate", "name")}
+                            onSubmitEditing={this.onSubmitEditing(this.creationDate)}
+                            errorFlag={!this.state.estate.nameValidation}
+                            errorText={this.state.errMsg}
+                        />
+
+
+                       
+
+                        <Text style={styles.lblTxt}>
+                            {gblStrings.accManagement.creationDate}
+                        </Text>
+                        <GDateComponent
+                            inputref={this.setInputRef("creationDate")}
+                            date={this.state.estate.creationDate}
+                            placeholder="Select Date"
+                            errorFlag={!this.state.estate.creationDateValidation}
+                            errorMsg={this.state.errMsg}
+                            maxDate={prevDate}
+                            onDateChange={this.onChangeDate("estate", "creationDate")}
+                        />
+
+                        
+                        <Text style={styles.lblTxt}>
+                            {gblStrings.accManagement.socialSecurityNo}
+                        </Text>
+                        <GInputComponent
+                            inputref={this.setInputRef("socialSecurityNo")}
+                            propInputStyle={this.state.estate.socialSecurityNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder={gblStrings.accManagement.ssnNoFormat}
+                            value={this.state.estate.socialSecurityNo}
+                            keyboardType="number-pad"
+                            returnKeyType="done"
+                            maxLength={gblStrings.maxLength.ssnNo}
+                            onChangeText={this.onChangeText("estate", "socialSecurityNo")}
+                            onSubmitEditing={this.onSubmitEditing(this.addrLine1)}
+                            errorFlag={!this.state.estate.socialSecurityNoValidation}
+                            errorText={this.state.errMsg}
+                            secureTextEntry
+
+                        />
+                        
+                       
+
+                        <Text style={styles.lblTxt}>
+                            {gblStrings.accManagement.address}
+                        </Text>
+                        <GInputComponent
+                            inputref={this.setInputRef("addrLine1")}
+                            propInputStyle={this.state.estate.addrLine1Validation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder={gblStrings.accManagement.empAddrLine1}
+                            maxLength={gblStrings.maxLength.emplAddress1}
+                            value={this.state.estate.addrLine1}
+                            onChangeText={this.onChangeText("estate", "addrLine1")}
+                            onSubmitEditing={this.onSubmitEditing(this.addrLine2)}
+                            errorFlag={!this.state.estate.addrLine1Validation}
+                            errorText={this.state.errMsg}
+                        />
+                        <GInputComponent
+                            inputref={this.setInputRef("addrLine2")}
+                            propInputStyle={this.state.estate.addrLine2Validation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder={gblStrings.accManagement.empAddrLine2}
+                            maxLength={gblStrings.maxLength.addressLine2}
+                            value={this.state.estate.addrLine2}
+                            onChangeText={this.onChangeText("estate", "addrLine2")}
+                            onSubmitEditing={this.onSubmitEditing(this.zipcode)}
+                            errorFlag={!this.state.estate.addrLine2Validation}
+                            errorText={this.state.errMsg}
+
+
+                        />
+
+
+                        <Text style={styles.lblTxt}>
+                            {gblStrings.accManagement.zipcode}
+                        </Text>
+                        <GInputComponent
+                            inputref={this.setInputRef("zipcode")}
+                            propInputStyle={this.state.estate.zipcodeValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder={gblStrings.accManagement.enterZip}
+                            value={this.state.estate.zipcode}
+                            maxLength={gblStrings.maxLength.zipCode}
+                            returnKeyType="done"
+                            onChangeText={this.onChangeText("estate", "zipcode")}
+                            keyboardType ="number-pad"
+                            onSubmitEditing = {this.onSubmitZipEditing("estate", "zipcode", this.city)}
+                            errorFlag={!this.state.personal.zipcodeValidation}
+                            errorText={this.state.errMsg}
+                        />
+
+                        <Text style={styles.lblTxt}>
+                            {gblStrings.accManagement.cityAndState}
+                        </Text>
+                        <GInputComponent
+                            inputref={this.setInputRef("city")}
+                            propInputStyle={this.state.estate.cityValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder={gblStrings.accManagement.enterCity}
+                            maxLength={gblStrings.maxLength.city}
+                            value={this.state.estate.city}
+                            onChangeText={this.onChangeText("estate", "city")}
+                            onSubmitEditing={this.onSubmitEditing(this.stateCity)}
+                            errorFlag={!this.state.estate.cityValidation}
+                            errorText={this.state.errMsg}
+                            editable = {false}
+
+                        /> 
+                        <GInputComponent
+                            inputref={this.setInputRef("stateCity")}
+                            propInputStyle={this.state.estate.stateCityValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder={gblStrings.accManagement.enterState}
+                            returnKeyType="done"
+                            maxLength={gblStrings.maxLength.state}
+                            value={this.state.estate.stateCity}
+                            onChangeText={this.onChangeText("estate", "stateCity")}
+                            onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
+                            errorFlag={!this.state.estate.stateCityValidation}
+                            errorText={this.state.errMsg}
+                            editable = {false}
+
+                        />
+
+                        <Text style={styles.lblTxt}>
+                            {gblStrings.accManagement.isYourPhysicalAddressSame}
+                        </Text>
+                        <View style={styles.radioBtnGrp}>
+                            <CustomRadio
+                                componentStyle={styles.radioCol1}
+                                size={30}
+                                outerCicleColor="#DEDEDF"
+                                innerCicleColor="#61285F"
+                                labelStyle={styles.lblRadioBtnTxt}
+                                label="Yes"
+                                descLabelStyle={styles.lblRadioDescTxt}
+                                descLabel=""
+                                selected={!!((this.state.estate.isYourPhysicalAddresSame !== null && this.state.estate.isYourPhysicalAddresSame === "Yes"))}
+                                onPress={this.onPressRadio("estate", "isYourPhysicalAddresSame", "Yes")}
+                            />
+                            <CustomRadio
+                                componentStyle={styles.radioCol2}
+                                size={30}
+                                outerCicleColor="#DEDEDF"
+                                innerCicleColor="#61285F"
+                                labelStyle={styles.lblRadioBtnTxt}
+                                label="No"
+                                descLabelStyle={styles.lblRadioDescTxt}
+                                descLabel=""
+                                selected={!!((this.state.estate.isYourPhysicalAddresSame !== null && this.state.estate.isYourPhysicalAddresSame === "No"))}
+                                onPress={this.onPressRadio("estate", "isYourPhysicalAddresSame", "No")}
+
+                            />
+                        </View>
+                        {!this.state.estate.isYourPhysicalAddresSameValidation &&
+                                    <Text style={styles.errMsg}>
+                                        {this.state.errMsg}
+                                    </Text>
+                                }
+
+                        {
+                            this.state.estate.isYourPhysicalAddresSame === "No" &&
+                            <View>
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.address}
+                                </Text>
+                                <GInputComponent
+                                    inputref={this.setInputRef("addrLine1_Phy")}
+                                    propInputStyle={this.state.estate.addrLine1_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder={gblStrings.accManagement.empAddrLine1}
+                                    maxLength={gblStrings.maxLength.emplAddress1}
+                                    value={this.state.estate.addrLine1_Phy}
+                                    onChangeText={this.onChangeText("estate", "addrLine1_Phy")}
+                                    onSubmitEditing={this.onSubmitEditing(this.addrLine2_Phy)}
+                                    errorFlag={!this.state.estate.addrLine1_PhyValidation}
+                                    errorText={this.state.errMsg}
+                                />
+                                <GInputComponent
+                                    inputref={this.setInputRef("addrLine2_Phy")}
+                                    propInputStyle={this.state.estate.addrLine2_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder={gblStrings.accManagement.empAddrLine2}
+                                    maxLength={gblStrings.maxLength.addressLine2}
+                                    value={this.state.estate.addrLine2_Phy}
+                                    onChangeText={this.onChangeText("estate", "addrLine2_Phy")}
+                                    onSubmitEditing={this.onSubmitEditing(this.zipcode_Phy)}
+                                    errorFlag={!this.state.estate.addrLine2_PhyValidation}
+                                    errorText={this.state.errMsg}
+
+
+                                />
+
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.zipcode}
+                                </Text>
+                                <GInputComponent
+                                    inputref={this.setInputRef("zipcode_Phy")}
+                                    propInputStyle={this.state.estate.zipcode_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder={gblStrings.accManagement.enterZip}
+                                    value={this.state.estate.zipcode_Phy}
+                                    maxLength={gblStrings.maxLength.zipCode}
+                                    returnKeyType="done"
+                                    onChangeText={this.onChangeText("estate", "zipcode_Phy")}
+                                    keyboardType="number-pad"
+                                    onSubmitEditing={this.onSubmitZipEditing("estate", "zipcode_Phy", this.city_Phy)}
+                                    errorFlag={!this.state.estate.zipcode_PhyValidation}
+                                    errorText={this.state.errMsg}
+                                />
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.cityAndState}
+                                </Text>
+                                <GInputComponent
+                                    inputref={this.setInputRef("city_Phy")}
+                                    propInputStyle={this.state.estate.city_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder={gblStrings.accManagement.enterCity}
+                                    maxLength={gblStrings.maxLength.city}
+                                    value={this.state.estate.city_Phy}
+                                    onChangeText={this.onChangeText("estate", "city_Phy")}
+                                    onSubmitEditing={this.onSubmitEditing(this.stateCity_Phy)}
+                                    errorFlag={!this.state.estate.city_PhyValidation}
+                                    errorText={this.state.errMsg}
+                                    editable = {false}
+
+
+                                />
+                                <GInputComponent
+                                    inputref={this.setInputRef("stateCity_Phy")}
+                                    propInputStyle={this.state.estate.stateCity_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder={gblStrings.accManagement.enterState}
+                                    returnKeyType="done"
+                                    maxLength={gblStrings.maxLength.state}
+                                    value={this.state.estate.stateCity_Phy}
+                                    onChangeText={this.onChangeText("estate", "stateCity_Phy")}
+                                    onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
+                                    errorFlag={!this.state.estate.stateCity_PhyValidation}
+                                    errorText={this.state.errMsg}
+                                    editable = {false}
+
+                                />
+
+                            </View>
+                        }
+
+
+                        <Text style={styles.lblTxt}>
+                            {gblStrings.accManagement.federalLawDesc}
+                        </Text>
+                        <View style={styles.radioBtnGrp}>
+                            <CustomRadio
+                                componentStyle={styles.radioCol1}
+                                size={30}
+                                outerCicleColor="#DEDEDF"
+                                innerCicleColor="#61285F"
+                                labelStyle={styles.lblRadioBtnTxt}
+                                label="Yes"
+                                descLabelStyle={styles.lblRadioDescTxt}
+                                descLabel=""
+                                selected={!!((this.state.estate.isFederalLawApplicable !== null && this.state.estate.isFederalLawApplicable === "Yes"))}
+                                onPress={this.onPressRadio("estate", "isFederalLawApplicable", "Yes")}
+                            />
+                            <CustomRadio
+                                componentStyle={styles.radioCol2}
+                                size={30}
+                                outerCicleColor="#DEDEDF"
+                                innerCicleColor="#61285F"
+                                labelStyle={styles.lblRadioBtnTxt}
+                                label="No"
+                                descLabelStyle={styles.lblRadioDescTxt}
+                                descLabel=""
+                                selected={!!((this.state.estate.isFederalLawApplicable !== null && this.state.estate.isFederalLawApplicable === "No"))}
+                                onPress={this.onPressRadio("estate", "isFederalLawApplicable", "No")}
+
+                            />
+                        </View>
+
+                        <Text style={styles.lblTxt}>
+                            {gblStrings.accManagement.orgCountry}
+                        </Text>
+                        <GInputComponent
+                            // inputref={(ref)=> this.firstName = ref}
+                            inputref={this.setInputRef("orgCountry")}
+                            value={this.state.estate.orgCountry}
+                            propInputStyle={this.state.estate.orgCountryValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder=""
+                            returnKeyType="done"
+                            maxLength={gblStrings.maxLength.country}
+                            onChangeText={this.onChangeText("estate", "orgCountry")}
+                            //onSubmitEditing={this.onSubmitEditing(this.middleInitial)}
+                            errorFlag={!this.state.estate.orgCountryValidation}
+                            errorText={this.state.errMsg}
+                        />
+
+                       
+                    </View>
+                }
+            </View>
+
+        );
+    }
+
     setScrollViewRef = (element) => {
         this.scrollViewRef = element;
     };
@@ -5137,9 +5601,15 @@ class OpenAccPageTwoComponent extends Component {
                         </View>
                     </View>
 
-                    { /* ----------- Individual Account Info -------------------*/}
-                    <this.renderIndividualSection />
+                    {
+                     accType === "Trust or Estate Account" &&
+                     <this.renderEstateInfoSection /> 
+                    }
 
+                    { /* ----------- Individual Account Info -------------------*/
+                    accType !== "Trust or Estate Account" && 
+                    <this.renderIndividualSection />
+                    }
 
                     { /* ----------- Joint Account Info -------------------*/
                         accType === "Joint Account" &&
@@ -5158,6 +5628,8 @@ class OpenAccPageTwoComponent extends Component {
                         accType === "Retirement Account" &&
                         <this.renderBeneficiaryRetirement />
                     }
+
+                   
 
                     { /* ----------- Buttons Group -------------------*/}
 

@@ -186,7 +186,11 @@ class OpenAccPageOneComponent extends Component {
             }
             myInstance.setScreenStateData(screenState);
             if (selectedAccount.key === "spec_acct") {
-                this.props.navigation.navigate({ routeName: 'specialtyAccPage', key: 'specialtyAccPage', params: { pageNo: 2, accType: "Specialty Account" } });
+                if (this.state.selectedItemID.startsWith("taeacc")) {
+                    this.props.navigation.navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Trust or Estate Account" } });
+                } else {
+                    this.props.navigation.navigate({ routeName: 'specialtyAccPage', key: 'specialtyAccPage', params: { pageNo: 2, accType: "Specialty Account" } });
+                }
             } else if (selectedAccount.key === "inv_child") {
                 if (this.state.selectedItemName === "529 College Saving Plan" || this.state.selectedItemID === "colleg") {
                     this.props.navigation.navigate({ routeName: 'collegePlanESA', key: 'collegePlanESA', params: { accType: this.state.accType } });

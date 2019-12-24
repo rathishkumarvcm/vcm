@@ -461,6 +461,7 @@ export default {
         successorAccOwnerInfoQuest: "Do you want to name someone who can become the owner or successor of the account if you become unable to continue?",
 
        //Speciality Accounts
+       estateInfo:"Estate Information",
        estateName:"Estate Name",
        creationDate:"Creation Date",
        postBoxAcception:"(P.O. Box cannot be accepted.)",
