@@ -508,6 +508,7 @@ class LiquidationPageThreeComponent extends Component {
                                                inputStyle={styles.inputStyle}
                                                value={this.state.taxAccountingMethodData.amountBeforeTaxes}
                                                onChangeText={this.onChangeAmountBeforeTaxes}
+                                               maxLength = {13}
                                            />
                                        </View>
                                    </View> :
@@ -519,7 +520,8 @@ class LiquidationPageThreeComponent extends Component {
                                                propInputStyle={styles.amountBeforeTaxesVal}
                                                inputStyle={styles.inputStyle}
                                                value={this.state.taxAccountingMethodData.amountAfterTaxes}
-                                               onChangeText={this.onChangeAmountAfterTaxes} />
+                                               onChangeText={this.onChangeAmountAfterTaxes} 
+                                               maxLength = {13}/>
                                        </View>
                                    </View>
                            }
@@ -534,6 +536,7 @@ class LiquidationPageThreeComponent extends Component {
                                        onChangeText={this.onChangeFederalTax}
                                        onSubmitEditing={this.onSubmitEditingStateTax}
                                        onBlur={this.onSubmitEditingStateTax}
+                                       maxLength = {3}
                                    />
                                    <View style={styles.stateTaxToDollarFlex}>
                                        <Text style={styles.dollarSkin}>$</Text>
@@ -551,7 +554,8 @@ class LiquidationPageThreeComponent extends Component {
                                        value={this.state.taxAccountingMethodData.stateTax}
                                        onChangeText={this.onChangeStateTax}
                                        onSubmitEditing={this.onSubmitEditingStateTax}
-                                       onBlur={this.onSubmitEditingStateTax} />
+                                       onBlur={this.onSubmitEditingStateTax}
+                                       maxLength = {3} />
                                    <View style={styles.stateTaxToDollarFlex}>
                                        <Text style={styles.dollarSkin}>$</Text>
                                        <Text style={styles.stateTaxToDollarText}>{this.formatAmount(this.state.taxAccountingMethodData.stateTaxInDollars)}</Text>

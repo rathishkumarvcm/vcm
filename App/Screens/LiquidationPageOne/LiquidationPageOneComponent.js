@@ -421,10 +421,6 @@ class LiquidationPageOneComponent extends Component {
                         <Text style={styles.tNcBody}>{gblStrings.userManagement.VCDiscalimerDesc}{"\n"}{"\n"}{gblStrings.userManagement.VCPrivacyNoticeDesc} </Text>
                     </View>
 
-
-
-
-
                     <GFooterComponent />
                 </ScrollView>
 

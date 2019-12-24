@@ -151,7 +151,7 @@ class LiquidationPageFourComponent extends Component {
                             </View>
                         }
                         {/*-----------------------------------Tax Accounting Method starts here-------------------------------- */}
-                        {this.props.liquidationInitialState.taxWithHoldingOption == gblStrings.liquidation.withholdTaxes?
+                        {(this.props.liquidationInitialState.taxWithHoldingOption == gblStrings.liquidation.withholdTaxes)&&(this.props.liquidationInitialState.accType=="IRA")?
                             <View>
                                 <View style={styles.horizontalFlex}>
                                     <Text style={styles.subHeading}>{gblStrings.liquidation.taxAccountingMethod}</Text>
