@@ -232,8 +232,7 @@ export const styles = StyleSheet.create({
     },
     fundDetailsHeadContentsDesc:{             
         alignContent:'center',
-        alignItems:'center',
-        backgroundColor:'#FFFFFF',
+        alignItems:'center',      
         justifyContent:'center',
         marginTop:scaledHeight(36),    
     },

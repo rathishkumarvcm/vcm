@@ -1,227 +1,226 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
-
-
 export const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F7FAFF',
-        width: '100%'
+    accTypeSelectSection: {
+        alignItems: "center",
+        flexDirection: 'row',       
+        flexGrow: 1,
+        justifyContent: 'space-between',
+        marginTop: scaledHeight(18),      
     },
-
-    sectionGrp: {
-        overflow: 'hidden',
-        marginHorizontal: scaledHeight(12),
-        marginTop: scaledHeight(31),
-        flexGrow: 1
-    },
-    sectionDescTxt: {
-        marginTop: scaledHeight(19.5),
-        fontSize: scaledHeight(18),
-        color: 'rgba(51, 51, 51, 0.87)',
+    addressTitleTxt: {
+        color: '#56565A',
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold',
         lineHeight: 22
-
+    },
+    addressTxt: {       
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        lineHeight: 22,
+        marginTop: scaledHeight(16)
+    },
+    btnGrp: {
+        alignContent: 'center',
+        alignItems: 'center',
+        flexGrow: 1,
+        justifyContent: 'center',
+        marginHorizontal: scaledHeight(12),
+        marginVertical: scaledHeight(50)
     },
     childSectionGrp: {
         flexGrow: 1,
     },
-    accTypeSelectSection: {
-        marginTop: scaledHeight(18),
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        // marginHorizontal: scaledHeight(12),
-        alignItems: "center",
-        flexGrow: 1
+    container: {
+        backgroundColor: '#F7FAFF',
+        flex: 1,
+        width: '100%'
     },
-    headings: {
-        width: '80%',
-        textAlign: 'left',
-        fontSize: scaledHeight(20),
-        fontWeight: 'bold',
-        color: '#5D83AE',
-        lineHeight: 35
+    customRowTxtBox: {
+        width: '30%'
     },
-    lblLine: {
-        // width:"100%",
-        flexGrow: 1,
-        marginTop: scaledHeight(9.5),
-        height: scaledHeight(1),
-        backgroundColor: '#707070',
-        opacity: .25
+    customTxtBox: {
+        marginTop: scaledHeight(9),
+        width: '100%'
     },
-
-
-    lblTxt: {
-        color: 'rgba(51, 51, 51, 0.87)',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold',
-        marginTop: scaledHeight(25)
-
-    },
-    addressTitleTxt: {
-        fontSize: scaledHeight(20),
+    disclaimerTitleTxt: { // termsofuseText
         color: '#56565A',
-        fontWeight: 'bold',
-        lineHeight: 22
-
+        fontSize: scaledHeight(16),       
+        fontWeight: 'bold',        
+        lineHeight: 25,
+        marginBottom: scaledHeight(10),
     },
-    addressTxt: {
-        marginTop: scaledHeight(16),
-        fontSize: scaledHeight(16),
+    disclaimerTxt: {
         color: '#56565A',
-        lineHeight: 22
-
-    },
-    phoneNoTxt: {
-        fontSize: scaledHeight(18),
-        color: '#5196E5',
-        lineHeight: 22
-
+        fontSize: scaledHeight(16),
+        lineHeight: 25
     },
     downloadPDFBtn: {
-        width: '75%',
-        borderWidth: 1,
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
         borderColor: "#61285F",
         borderRadius: scaledHeight(24),
+        borderWidth: 1,
         height: scaledHeight(50),
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        alignContent: 'center',
         justifyContent: 'center',
-        marginTop: scaledHeight(22)
+        marginTop: scaledHeight(22),
+        width: '75%'
     },
     downloadPDFBtnTxt: {
-        fontSize: scaledHeight(16),
         color: '#61285F',
+        fontSize: scaledHeight(16),
         fontWeight: 'bold',
-        width: '100%',
+        lineHeight: 20,
         textAlign: 'center',
-        lineHeight: 20
-
+        width: '100%'
     },
-
-
     expandCollpaseTxt: {
         color: '#56565A',
         fontSize: scaledHeight(15),
         textAlign: 'center'
     },
-
-    customTxtBox: {
-        marginTop: scaledHeight(9),
-        width: '100%'
+    headings: {
+        color: '#56565A',
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold',
+        lineHeight: 35,
+        textAlign: 'left',
+        width: '80%'
     },
-    customRowTxtBox: {
-        width: '30%'
-
-    },
-
-    btnGrp: {
-        marginHorizontal: scaledHeight(12),
-        marginVertical: scaledHeight(50),
+    lblLine: {
+        // width:"100%",
+        backgroundColor: '#707070',
         flexGrow: 1,
-        alignContent: 'center',
-        justifyContent: 'center',
-        alignItems: 'center'
+        height: scaledHeight(1),       
+        marginTop: scaledHeight(9.5), 
+        opacity: .25,
     },
-    normalWhiteBtn: {
-        //  width: '90%',
-        borderWidth: 1,
-        borderColor: "#61285F45",
-        borderRadius: scaledHeight(24),
-        height: scaledHeight(50),
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
-        marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
-
-    },
-    normalWhiteBtnTxt: {
+    lblTxt: {
+        color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
-        color: '#544A54',
-        width: '100%',
-        textAlign: 'center',
-        lineHeight: 22
+        fontWeight: 'bold',
+        marginTop: scaledHeight(25)
+    },
+    mailContainer:{ 
+        flexGrow: 1, 
+        marginTop: scaledHeight(20)
+    },
+    mailingText: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',     
+        marginBottom:scaledHeight(15),
+        marginTop:scaledHeight(10)       
+    },
+    moreTxt: {
+        color: '#61285F',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold'
+    },
+    newVictorySection: {
+        //  marginTop: scaledHeight(150),
+        backgroundColor: '#FFFFFF',
+        flexGrow: 1,        
+        padding: scaledHeight(12),
+        width: '100%',       
     },
     normalBlackBtn: {
         //  width: '90%',
-        borderWidth: 1,
-        borderColor: "#61285F45",
-        borderRadius: scaledHeight(24),
-        height: scaledHeight(50),
-        backgroundColor: '#544A54',
-        alignItems: 'center',
         alignContent: 'center',
-        justifyContent: 'center',
-        marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
-
-
-    },
-    normalBlackBtnTxt: {
-        fontSize: scaledHeight(16),
-        color: '#fff',
-        width: '100%',
-        textAlign: 'center'
-    },
-
-    normalBlackDisabledBtn: {
-        //  width: '90%',
-        borderWidth: 1,
-        borderColor: "#61285F45",
-        borderRadius: scaledHeight(24),
-        height: scaledHeight(50),
+        alignItems: 'center',       
         backgroundColor: '#544A54',
-        alignItems: 'center',
-        alignContent: 'center',
+        borderColor: "#61285F45",
+        borderWidth: 1,
+        // borderRadius: scaledHeight(24),
+        height: scaledHeight(50),     
         justifyContent: 'center',
+        marginHorizontal: scaledHeight(37),
         marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
-
-
-
     },
     normalBlackBtnDisabledTxt: {
-        fontSize: scaledHeight(16),
         color: '#fff',
-        width: '100%',
-        textAlign: 'center'
+        fontSize: scaledHeight(16),
+        textAlign: 'center',
+        width: '100%'
     },
-
-
-
-    newVictorySection: {
-        //  marginTop: scaledHeight(150),
-        padding: scaledHeight(12),
-        width: '100%',
+    normalBlackBtnTxt: {
+        color: '#fff',
+        fontSize: scaledHeight(16),
+        textAlign: 'center',
+        width: '100%'
+    },
+    normalBlackDisabledBtn: {
+        //  width: '90%',        
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#544A54',      
+        borderColor: "#61285F45",
+        borderRadius: scaledHeight(24),
+        borderWidth: 1,
+        height: scaledHeight(50),       
+        justifyContent: 'center',       
+        marginHorizontal: scaledHeight(37),
+        marginVertical: scaledHeight(7.5),
+    },
+    normalWhiteBtn: {
+        //  width: '90%',        
+        alignContent: 'center', 
+        alignItems: 'center', 
+        backgroundColor: '#fff',             
+        borderColor: "#61285F45",
+        borderWidth: 1,
+        // borderRadius: scaledHeight(24),
+        height: scaledHeight(50),        
+        justifyContent: 'center',
+        marginHorizontal: scaledHeight(37),
+        marginVertical: scaledHeight(7.5),       
+    },
+    normalWhiteBtnTxt: {
+        color: '#544A54',
+        fontSize: scaledHeight(16),
+        lineHeight: 22,
+        textAlign: 'center',
+        width: '100%'
+    },
+    orText: {
+        color: '#56565A',
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold',     
+        marginBottom:scaledHeight(10),
+        marginTop:scaledHeight(20)
+    },
+    phoneNoTxt: {
+        color: '#5196E5',
+        fontSize: scaledHeight(18),
+        lineHeight: 22
+    },
+    scrollViewFlex:{ flex: .85 
+    },
+    sectionDescTxt: {
+        color: '#56565A',
+        fontSize: scaledHeight(22),
+        lineHeight: 22,
+        marginTop: scaledHeight(19.5)
+    },
+    sectionGrp: {
         flexGrow: 1,
-        backgroundColor: '#FFFFFF',
-
-
+        marginHorizontal: scaledHeight(12),
+        marginTop: scaledHeight(31),
+        overflow: 'hidden'
     },
-    moreTxt: {
-        fontSize: scaledHeight(16),
-        color: '#61285F',
-        fontWeight: 'bold'
+    uploadFileContainer:{
+        flexDirection:'row',
+        marginTop:scaledHeight(10),
     },
-    disclaimerTitleTxt: { //termsofuseText
-        fontSize: scaledHeight(16),
-        marginBottom: scaledHeight(10),
-        fontWeight: 'bold',
-        color: '#56565A',
-        lineHeight: 25
+    uploadFileDesc:{
+        flex:0.8
     },
-    disclaimerTxt: {
-        fontSize: scaledHeight(16),
-        color: '#56565A',
-        lineHeight: 25
-
+    uploadFileDivider:{
+        flex:0.1
     },
-
-
-
-
+    uploadFileTitle:{
+        flex:0.5
+    }
 });
