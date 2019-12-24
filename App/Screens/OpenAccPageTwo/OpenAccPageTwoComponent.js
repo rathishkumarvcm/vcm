@@ -908,7 +908,7 @@ class OpenAccPageTwoComponent extends Component {
             }
         };
 
-        const retirementAccPayload = {
+       /* const retirementAccPayload = {
             "beneficiaryInfo": {
                 "primaryBeneficiary": {
                     "totalBeneficiary": "1",
@@ -938,6 +938,30 @@ class OpenAccPageTwoComponent extends Component {
                         "emailAddress": this.state.retirement.emailAddress || "-"
                     }
                 }
+            }
+        };
+        */
+       
+        let tempBeneficiaryDetails = [];
+        for (let i = 0; i < this.state.retirementBeneficiaryData.length; i += 1) {
+            const tempObj = {
+                "type": this.state.retirementBeneficiaryData[i].beneficiaryType || "-",
+                "relation": this.state.retirementBeneficiaryData[i].relationshipToAcc || "-",
+                "distributionPercentage": this.state.retirementBeneficiaryData[i].beneficiaryDistPercent || "-",
+                "firstName": this.state.retirementBeneficiaryData[i].firstName || "-",
+                "middleInitial": this.state.retirementBeneficiaryData[i].middleInitial || "-",
+                "lastName": this.state.retirementBeneficiaryData[i].lastName || "-",
+                "ssnTin": this.state.retirementBeneficiaryData[i].socialSecurityNo || "-",
+                "dateOfBirth": this.state.retirementBeneficiaryData[i].dob || "-",
+                "emailAddress": this.state.retirementBeneficiaryData[i].emailAddress || "-",
+                "isPrimaryBeneficiary": "true"
+            }
+            tempBeneficiaryDetails.push(tempObj);
+        }
+        const retirementAccPayload = {
+            "beneficiaryInfo":{
+                "totalBeneficiary": "1",
+                "beneficiaryDetails": tempBeneficiaryDetails
             }
         };
 
@@ -2110,10 +2134,10 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
-    onSelectedIRABeneficiaryDropDownValue = (dropDownName, index) => (item) => {
+    onSelectedIRABeneficiaryDropDownValue = (dropDownName, index) => (value, index,data) => {
         AppUtils.Dlog(`onSelectedIRABeneficiaryDropDownValue:: ${ dropDownName}`);
         const newItems = [...this.state.retirementBeneficiaryData];
-
+        let item = data[index];
         switch (dropDownName) {
 
             case "beneficiaryTypeDropDown":
