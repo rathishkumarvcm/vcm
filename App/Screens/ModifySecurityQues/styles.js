@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
         color:'rgba(51, 51, 51, 0.87)',
         fontSize:scaledHeight(16),
         fontWeight:'bold',
-        marginTop: scaledHeight(25)
+        marginTop: scaledHeight(15)
         
     },customListTxtBox:{
         width : '100%'
@@ -113,6 +113,6 @@ export const styles = StyleSheet.create({
     dropdownTextInput:{
         width:"100%",
         marginLeft:"0%",
-        marginRight:"0%"
+        marginRight:"0%",
     }
 });
