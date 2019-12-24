@@ -102,13 +102,15 @@ class editAddFinancialInfoComponent extends Component {
         });
     }
 
-    dropDownFinancialSelect = (valueFinancial) => {
+    dropDownFinancialSelect = (value, index, data) => {
+        let item = data[index];
         this.setState({
-            dropDownFinancialValue: valueFinancial.value,
+            dropDownFinancialValue: item.key,
             dropDownFinancialState: false,
-            taxBracketValue: valueFinancial.taxbracket,
+            taxBracketValue: item.taxbracket,
             dropDownFinancialFlag: false
         });
+        console.log('@@@@@@ Financial Values ::', this.state.dropDownFinancialValue + ' ' + this.state.taxBracketValue);
     }
 
     dropDownNetClick = () => {
@@ -117,12 +119,13 @@ class editAddFinancialInfoComponent extends Component {
         });
     }
 
-    dropDownNetSelect = (valueNetWorth) => {
+    dropDownNetSelect = (value, index, data) => {
         this.setState({
-            dropDownNetValue: valueNetWorth.value,
+            dropDownNetValue: data[index].value,
             dropDownNetState: false,
             dropDownNetFlag: false
         });
+        console.log('@@@@@@ Financial Values ::', this.state.dropDownNetValue);
     }
 
     dropDownTaxFillClick = () => {
@@ -131,12 +134,13 @@ class editAddFinancialInfoComponent extends Component {
         });
     }
 
-    dropDownTaxFillSelect = (valueTaxFilling) => {
+    dropDownTaxFillSelect = (value, index, data) => {
         this.setState({
-            dropDownTaxFillValue: valueTaxFilling.value,
+            dropDownTaxFillValue: data[index].value,
             dropDownTaxFillState: false,
             dropDownTaxFillFlag: false
         });
+        console.log('@@@@@@ Financial Values ::', this.state.dropDownTaxFillValue);
     }
 
     componentDidMount() {
@@ -301,8 +305,7 @@ class editAddFinancialInfoComponent extends Component {
                         itemToDisplay={"value"}
                         errorFlag={this.state.dropDownFinancialFlag}
                         errorText={this.dropDownFinancialMsg}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(200) }}
-                    />
+                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(200) }} />
 
                     <View style={styles.financialViewNormal}>
                         <Text style={styles.financialTextLabel}>
@@ -324,9 +327,8 @@ class editAddFinancialInfoComponent extends Component {
                         itemToDisplay={"value"}
                         errorFlag={this.state.dropDownNetFlag}
                         errorText={this.dropDownNetMsg}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(380) }}
-                    />
-
+                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(380) }} />
+ 
                     <GDropDownComponent
                         dropDownTextName={styles.financialTextLabel}
                         dropDownName={globalStrings.addFinancialInformations.taxFillingStatus}

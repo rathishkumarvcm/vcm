@@ -85,6 +85,28 @@ class editMilitaryInfoComponent extends Component {
         }
 
         this.props.getProfileCompositeData(payload);
+
+        console.log("@@@@@@@@@@ Military Information 000 ::", this.state.radioButtonIndex + ' ' + this.state.isMilitaryService);
+
+        if (this.props && this.props.profileState && this.props.profileState.profileServingMilitary) {
+            this.setState({
+                isMilitaryService: this.props.profileState.profileServingMilitary
+            });
+        }
+
+        console.log("@@@@@@@@@@ Military Information 001 ::", this.state.radioButtonIndex + ' ' + this.state.isMilitaryService);
+
+        if (!this.state.isMilitaryService) {
+            this.setState({
+                radioButtonIndex: 1
+            });
+        } else {
+            this.setState({
+                radioButtonIndex: 0
+            });
+        }
+
+        console.log("@@@@@@@@@@ Military Information 002 ::", this.state.radioButtonIndex + ' ' + this.state.isMilitaryService);
     }
 
     radioButtonClicked = (index) => {
@@ -131,9 +153,9 @@ class editMilitaryInfoComponent extends Component {
         });
     }
 
-    dropDownBranchOnSelect = (valueBranch) => {
+    dropDownBranchOnSelect = (value, index, data) => {
         this.setState({
-            dropDownBranchValue: valueBranch.value,
+            dropDownBranchValue: data[index].value,
             dropDownBranchState: false,
             dropDownBranchMsg: '',
             dummyMilitaryStatusData: [],
@@ -141,7 +163,7 @@ class editMilitaryInfoComponent extends Component {
             dropDownMarineValue: ''
         });
 
-        payloadMilitaryRank = `mil_rank_${valueBranch.key}`;
+        payloadMilitaryRank = `mil_rank_${data[index].key}`;
 
         if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[payloadMilitaryRank]) {
             this.props.getRankData(payloadMilitaryRank);
