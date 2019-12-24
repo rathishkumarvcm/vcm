@@ -460,7 +460,19 @@ export default {
         successorAccOwnerInfo: "Successor Account Owner Information",
         successorAccOwnerInfoQuest: "Do you want to name someone who can become the owner or successor of the account if you become unable to continue?",
 
-
+       //Speciality Accounts
+       estateName:"Estate Name",
+       creationDate:"Creation Date",
+       postBoxAcception:"(P.O. Box cannot be accepted.)",
+       federalLawDesc:"Is this trust / estate organized under U.S. state or federal law?",
+       orgCountry:"Specify Country of Organization",
+       trusteeOrExector:"Trustee / Executor",
+       addTrusteeOrExector:"Add Co-Trustee / Co-Executor",
+       memberNumber:"Member Number",
+       residencePhoneNo:"Residence Phone Number",
+       areaCode:"(include area code)", 
+       businessPhoneNumber:"Business Phone Number",
+      
 
 
 
