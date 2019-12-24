@@ -115,6 +115,8 @@ export const GDropDownComponent = props => (
       onChangeText={props.selectedDropDownValue}
       error={props.errorFlag ? props.errorText : null}
       itemCount={props.itemCount}
+      disabled={props.disabled}
+
     />
         </View>
 
@@ -124,6 +126,8 @@ GDropDownComponent.propTypes = {
   dropDownName : PropTypes.string,
   showDropDown : PropTypes.bool,
   isOptional:PropTypes.bool,
+  disabled:PropTypes.bool,
+
   dropDownLayout: PropTypes.instanceOf(Object),
   //pickerStyle: PropTypes.instanceOf(Object),
   dropDownTextName: PropTypes.instanceOf(Object),

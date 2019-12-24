@@ -228,27 +228,26 @@ export const styles = StyleSheet.create({
     },
 
     dropDownLayout: {
-        width: '100%',
-        justifyContent: "flex-start",
-        alignItems: "flex-start",
-        paddingLeft: '0%',
-        paddingRight: '0%',
-        marginLeft: '0%',
-        marginRight: '0%',
-        marginTop: scaledHeight(25)
-    },
-    dropDownTextName: {
-        width: '100%',
-        paddingLeft: '0%',
-        paddingRight: '0%',
-        marginLeft: '0%',
-        marginRight: '0%',
-        color: 'rgba(51, 51, 51, 0.87)',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold',
-        marginTop: scaledHeight(0)
-
-    },
+        // alignItems: "flex-start",
+        // justifyContent: "flex-start",
+         marginLeft: '0%',
+         marginRight: '0%',
+         marginTop: scaledHeight(25),
+         width: '100%'
+     },
+     dropDownTextName: {
+         color: 'rgba(51, 51, 51, 0.87)',
+         fontSize: scaledHeight(16),
+         fontWeight: 'bold',
+         marginLeft: '0%',
+         marginRight: '0%',
+         marginBottom: scaledHeight(9),
+         paddingLeft: '0%',
+         paddingRight: '0%',
+         width: '100%',
+         borderColor:'blue'
+ 
+     },
     textInputStyle: {
         width: '100%',
         marginLeft: '0%',

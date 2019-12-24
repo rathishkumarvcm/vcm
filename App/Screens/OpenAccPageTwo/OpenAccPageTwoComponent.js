@@ -2041,24 +2041,24 @@ class OpenAccPageTwoComponent extends Component {
             inputRefKey = "_childben";
         }
 
-
         return (
             <GDropDownComponent
                 inputref={this.setInputRef(`${stateKey }${ inputRefKey}`)}
                 dropDownLayout={styles.dropDownLayout}
                 dropDownTextName={styles.dropDownTextName}
-                pickerStyle={styles.textInputStyle}
+               // pickerStyle={styles.textInputStyle}
                 dropDownName={lblDropdownName}
                 data={dropDownData}
                 dropDownValue={this.state[section][stateKey]}
-                showDropDown={this.state[section][dropDownName]}
-                changeState={(stateKey !== "taxBracket") ? this.onPressDropDown(section, dropDownName) : null}
+               // showDropDown={this.state[section][dropDownName]}
+               // changeState={(stateKey !== "taxBracket") ? this.onPressDropDown(section, dropDownName) : null}
                 selectedDropDownValue={this.onSelectedDropDownValue(section, stateKey, dropDownName)}
-                itemToDisplay="value"
+               // itemToDisplay="value"
                 dropDownPostition={styles.dropDownPostition}
                 errorFlag={isOptional ? false : validationKeyValue}
                 errorText={this.state.errMsg}
                 isOptional={isOptional}
+                disabled={(stateKey !== "taxBracket") ? false : true}
             />
         );
 
