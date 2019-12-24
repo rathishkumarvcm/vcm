@@ -68,8 +68,8 @@ pickerStyle : {
 inputStyle : {
     height:scaledHeight(50),
     borderBottomWidth:1,
+    borderColor:"#DEDEDF",
     borderWidth:1,
-    borderColor:'#DEDEDF',
     alignItems:'center',
     justifyContent:'center',
     backgroundColor: '#FFFFFF',
@@ -95,19 +95,18 @@ export const GDropDownComponent = props => (
             <Text style={[styles.dropDownTextName,props.dropDownTextName]}>
                 {props.dropDownName}
             </Text>
-            <Dropdown
-                    data={props.data}
-                    dropdownOffset={{ 'top': 5 }}
-                    baseColor={"#DEDEDF"}
-                    //dropdownPosition={-5.75}
-                    pickerStyle={[styles.pickerStyle,props.pickerStyle]}
-                    inputContainerStyle={!props.errorFlag ? styles.inputStyle : styles.errorInputStyle
-                   }
-                   value={props.dropDownValue}
-                   onChangeText={props.selectedDropDownValue}
-                   error={props.errorFlag ? props.errorText : null}
-                   itemCount={props.itemCount}
-                />
+    <Dropdown
+      data={props.data}
+      dropdownOffset={{ 'top': 5 }}
+      baseColor={"#DEDEDF"}
+      //dropdownPosition={-5.75}
+      pickerStyle={styles.pickerStyle}
+      inputContainerStyle={!props.errorFlag ? styles.inputStyle : styles.errorInputStyle}
+      value={props.dropDownValue}
+      onChangeText={props.selectedDropDownValue}
+      error={props.errorFlag ? props.errorText : null}
+      itemCount={props.itemCount}
+    />
         </View>
 
 );
@@ -116,7 +115,7 @@ GDropDownComponent.propTypes = {
   dropDownName : PropTypes.string,
   showDropDown : PropTypes.bool,
   dropDownLayout: PropTypes.instanceOf(Object),
-  pickerStyle: PropTypes.instanceOf(Object),
+  //pickerStyle: PropTypes.instanceOf(Object),
   dropDownTextName: PropTypes.instanceOf(Object),
   textInputStyle: PropTypes.instanceOf(Object),
   dropDownPostition : PropTypes.instanceOf(Object),
