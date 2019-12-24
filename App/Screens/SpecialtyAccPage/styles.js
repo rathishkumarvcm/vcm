@@ -13,8 +13,8 @@ export const styles = StyleSheet.create({
         color: '#56565A',
         fontSize: scaledHeight(22),   
         fontWeight:'bold',    
-        marginTop: scaledHeight(16),       
-        marginLeft:'4%',
+        marginLeft:'4%',       
+        marginTop: scaledHeight(16),
         textTransform:'uppercase'        
     },
     btnGrp: {
@@ -176,21 +176,21 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(16)
     },
     pdfSection: {
+        backgroundColor: "#FFFFFF",
+        borderColor: "#FFFFFF",
+        borderRadius: scaledHeight(5),
+        borderWidth: 1,
         flexGrow: 1,
         marginBottom: scaledHeight(22),
         marginHorizontal: scaledHeight(12),
         padding: scaledHeight(32),
-        backgroundColor: "#FFFFFF",
-        borderWidth: 1,
-        borderColor: "#FFFFFF",
-        borderRadius: scaledHeight(5),
         shadowColor: "#56565A",
-        shadowOpacity: 0.3,
-        shadowOffset: { width: 0, height: 2 }
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3
     },
     pdfTitleTxt: {
-        fontSize: scaledHeight(26),
         color: '#486D89',
+        fontSize: scaledHeight(26),
         lineHeight: 35
     },    
     scrollViewFlex:{

@@ -13,8 +13,8 @@ export const styles = StyleSheet.create({
         color: '#56565A',
         fontSize: scaledHeight(22),   
         fontWeight:'bold',    
-        marginTop: scaledHeight(16),       
-        marginLeft:'4%',
+        marginLeft:'4%',       
+        marginTop: scaledHeight(16),
         textTransform:'uppercase'        
     },
     addressTitleTxt: {
@@ -218,6 +218,33 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(31),
         overflow: 'hidden'
     },
+    selectFileContainer:{        
+        alignItems: 'center', 
+        backgroundColor: '#FFFFFF',        
+        flexDirection:'row',
+        justifyContent:'center',
+        marginBottom:scaledHeight(15),
+        marginTop:scaledHeight(10),
+        paddingVertical:scaledHeight(10)        
+    },
+    selectFilesBtn: {                   
+        backgroundColor: '#B2B2B2',             
+        borderColor: "#61285F45",
+        borderRadius: scaledHeight(5),
+        borderWidth: 1, 
+        height:scaledHeight(30),  
+        marginRight:'8%',                   
+        shadowColor: "#56565A",   
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.3,
+        width:'30%'        
+    },
+    selectFilesBtnTxt: {         
+        color: '#FFFFFF',
+        fontSize: scaledHeight(14),     
+        textAlign: 'center',
+        width: '100%'
+    },
     uploadFileContainer:{
         flexDirection:'row',
         marginTop:scaledHeight(10),
@@ -237,39 +264,12 @@ export const styles = StyleSheet.create({
         flex:0.5,
         fontSize: scaledHeight(12),   
     },
-    selectFilesBtn: {                   
-        backgroundColor: '#B2B2B2',             
-        borderColor: "#61285F45",
-        borderWidth: 1,
-        borderRadius: scaledHeight(5), 
-        height:scaledHeight(30),  
-        marginRight:'8%',                   
-        width:'30%',   
-        shadowColor: "#56565A",
-        shadowOpacity: 0.3,
-        shadowOffset: { width: 0, height: 2 }        
-    },
-    selectFilesBtnTxt: {         
-        color: '#FFFFFF',
-        fontSize: scaledHeight(14),     
-        textAlign: 'center',
-        width: '100%'
-    },
-    selectFileContainer:{        
-        alignItems: 'center', 
-        backgroundColor: '#FFFFFF',        
-        flexDirection:'row',
-        justifyContent:'center',
-        marginTop:scaledHeight(10),
-        marginBottom:scaledHeight(15),
-        paddingVertical:scaledHeight(10)        
-    },
     uploadText:{
         color: '#707070',
         fontSize: scaledHeight(20),    
         fontWeight:'bold', 
-        textAlign: 'center', 
-        textDecorationLine:'underline',      
-        marginRight:'4%'       
+        marginRight:'4%', 
+        textAlign: 'center',      
+        textDecorationLine:'underline'       
     }
 });

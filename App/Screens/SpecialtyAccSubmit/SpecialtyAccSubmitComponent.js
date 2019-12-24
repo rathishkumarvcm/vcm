@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View,ScrollView } from 'react-native';
 import PropTypes from "prop-types";
-import { styles } from './styles';
 import ImagePicker from 'react-native-image-picker';
+import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GFooterSettingsComponent, GIcon } from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
@@ -106,7 +106,7 @@ class SpecialtyAccSubmitComponent extends Component {
 
                 const source = { uri: response.uri };
                 const base64source = { uri: `data:image/jpeg;base64,${ response.data}` };
-                //AppUtils.Dlog("base64source", base64source.length);
+                // AppUtils.Dlog("base64source", base64source.length);
                 this.setState({
                     userAvatar: source
                 });
@@ -296,11 +296,11 @@ class SpecialtyAccSubmitComponent extends Component {
 SpecialtyAccSubmitComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
     uploadAavatarImg: PropTypes.func,
+    accOpeningData: PropTypes.instanceOf(Object),
   };
 
-  SpecialtyAccSubmitComponent.defaultProps = {
-    navigation:{},
+  SpecialtyAccSubmitComponent.defaultProps = {  
     uploadAavatarImg: null ,
-}
+};
 
 export default SpecialtyAccSubmitComponent;

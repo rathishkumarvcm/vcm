@@ -265,4 +265,8 @@ class SpecialtyAccPageComponent extends Component {
 SpecialtyAccPageComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
 };
+
+SpecialtyAccPageComponent.defaultProps={
+  
+};
 export default SpecialtyAccPageComponent;
