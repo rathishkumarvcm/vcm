@@ -474,6 +474,20 @@ export default {
        areaCode:"(include area code)", 
        businessPhoneNumber:"Business Phone Number",
       
+       completeApplication:"Complete the entire application",
+       byUploading:"By uploading",
+       attachLimit:"Attachment limit",
+       attachdivider:":",
+       noOfFiles:"10 file",
+       sizeLimitPerFile:"Size limit per file",
+       megaBytes:"30 MB (megabytes)",
+       totalSizeLimit:"Total size limit",
+       fileTypesAllow:"File types allowed",
+       fileFormat:"PDF, JPG, JPEG, GIF, BMP, PNG, XLS, DOC, DOCX",
+       orText:"(or)",
+       byMailing:"By Mailing",
+       youCanAlsoFax:"You can also fax your application to",
+       selectFiles:"Select files",   
 
 
 
@@ -571,22 +585,8 @@ export default {
         emptySuccessOwnerMsg: "Please select Success Owner Infomation",
         emptymilitaryServingStatus: "Please indicate whether you are currently serving, or have you ever served in the US Military?",
 
-        // Specialty Accounts
+        emptyEstateName:""
 
-        completeApplication:"Complete the entire application",
-        byUploading:"By uploading",
-        attachLimit:"Attachment limit",
-        attachdivider:":",
-        noOfFiles:"10 file",
-        sizeLimitPerFile:"Size limit per file",
-        megaBytes:"30 MB (megabytes)",
-        totalSizeLimit:"Total size limit",
-        fileTypesAllow:"File types allowed",
-        fileFormat:"PDF, JPG, JPEG, GIF, BMP, PNG, XLS, DOC, DOCX",
-        orText:"(or)",
-        byMailing:"By Mailing",
-        youCanAlsoFax:"You can also fax your application to",
-        selectFiles:"Select files",   
 
     },
     userManagement: {
