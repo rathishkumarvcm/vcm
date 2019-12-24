@@ -60,7 +60,7 @@ import OpenAccPageFour from './Screens/OpenAccPageFour/';
 import OpenAccPageFive from './Screens/OpenAccPageFive/';
 import OpenAccPageSix from './Screens/OpenAccPageSix/';
 import SpecialtyAccPage from './Screens/SpecialtyAccPage/SpecialtyAccPageComponent';
-import SpecialtyAccSubmit from './Screens/SpecialtyAccSubmit/SpecialtyAccSubmitComponent';
+import SpecialtyAccSubmit from './Screens/SpecialtyAccSubmit/';
 import CollegePlanESA from './Screens/CollegePlanESA/CollegePlanESAComponent';
 import CollegePlanPartOneTwo from './Screens/CollegePlanPartOneTwo/CollegePlanPartOneTwoComponent';
 import CollegePlanPersonal from './Screens/CollegePlanPersonal/CollegePlanPersonalComponent';

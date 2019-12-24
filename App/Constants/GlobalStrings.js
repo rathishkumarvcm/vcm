@@ -571,7 +571,7 @@ export default {
         emptySuccessOwnerMsg: "Please select Success Owner Infomation",
         emptymilitaryServingStatus: "Please indicate whether you are currently serving, or have you ever served in the US Military?",
 
-        // Speciality Accounts
+        // Specialty Accounts
 
         completeApplication:"Complete the entire application",
         byUploading:"By uploading",
@@ -585,7 +585,8 @@ export default {
         fileFormat:"PDF, JPG, JPEG, GIF, BMP, PNG, XLS, DOC, DOCX",
         orText:"(or)",
         byMailing:"By Mailing",
-        youCanAlsoFax:"You can also fax your application to"
+        youCanAlsoFax:"You can also fax your application to",
+        selectFiles:"Select files",   
 
     },
     userManagement: {

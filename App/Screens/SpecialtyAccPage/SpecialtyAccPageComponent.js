@@ -148,14 +148,14 @@ class SpecialtyAccPageComponent extends Component {
         // this.validateFields();
     }
 
-    onClickNext = (currentPage) => () => {
+    onClickNext = (currentPage,accType) => () => {
         // this.validateFields();
         let pageNo = currentPage;
         if (pageNo < 5) {
             ++pageNo;
-            this.props.navigation.push('specialtyAccPage', { pageNo });
+            this.props.navigation.push('specialtyAccPage', { pageNo,accType });
         } else {
-            this.props.navigation.navigate('specialtyAccSubmit', { key: 'specialtyAccSubmit' });
+            this.props.navigation.navigate('specialtyAccSubmit', { key: 'specialtyAccSubmit' ,accType});
         }
     }
 
@@ -183,6 +183,7 @@ class SpecialtyAccPageComponent extends Component {
     render() {
         const { navigation } = this.props;
         const pageNo = navigation.getParam('pageNo', '');
+        const accType = navigation.getParam('accType', '');
         const currentPage = pageNo;
         return (
             <View style={styles.container}>
@@ -190,6 +191,10 @@ class SpecialtyAccPageComponent extends Component {
                     onPress={this.onClickHeader}
                 />
                 <ScrollView style={styles.scrollViewFlex}>
+
+                    <Text style={styles.accTypeTilte}>
+                        {accType}
+                    </Text>
                     <CustomPageWizard currentPage={currentPage} pageName={this.state.pageName || `${currentPage } ${ specaltyAccPages[currentPage].pageName}`} />
 
                     { /*    -----------Page Info -------------------    */}
@@ -243,7 +248,7 @@ class SpecialtyAccPageComponent extends Component {
                             buttonStyle={styles.normalBlackBtn}
                             buttonText={gblStrings.common.next}
                             textStyle={styles.normalBlackBtnTxt}
-                            onPress={this.onClickNext(currentPage)}
+                            onPress={this.onClickNext(currentPage,accType)}
                         />
                     </View>
 

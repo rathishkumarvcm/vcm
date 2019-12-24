@@ -9,6 +9,14 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: scaledHeight(18),      
     },
+    accTypeTilte:{
+        color: '#56565A',
+        fontSize: scaledHeight(22),   
+        fontWeight:'bold',    
+        marginTop: scaledHeight(16),       
+        marginLeft:'4%',
+        textTransform:'uppercase'        
+    },
     addressTitleTxt: {
         color: '#56565A',
         fontSize: scaledHeight(20),
@@ -112,7 +120,7 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         fontWeight: 'bold',     
         marginBottom:scaledHeight(15),
-        marginTop:scaledHeight(10)       
+        marginTop:scaledHeight(30)       
     },
     moreTxt: {
         color: '#61285F',
@@ -215,12 +223,53 @@ export const styles = StyleSheet.create({
         marginTop:scaledHeight(10),
     },
     uploadFileDesc:{
-        flex:0.8
+        color: '#707070',
+        flex:0.8,
+        fontSize: scaledHeight(12),   
     },
     uploadFileDivider:{
-        flex:0.1
+        color: '#707070',
+        flex:0.1,
+        fontSize: scaledHeight(12),   
     },
     uploadFileTitle:{
-        flex:0.5
+        color: '#707070',
+        flex:0.5,
+        fontSize: scaledHeight(12),   
+    },
+    selectFilesBtn: {                   
+        backgroundColor: '#B2B2B2',             
+        borderColor: "#61285F45",
+        borderWidth: 1,
+        borderRadius: scaledHeight(5), 
+        height:scaledHeight(30),  
+        marginRight:'8%',                   
+        width:'30%',   
+        shadowColor: "#56565A",
+        shadowOpacity: 0.3,
+        shadowOffset: { width: 0, height: 2 }        
+    },
+    selectFilesBtnTxt: {         
+        color: '#FFFFFF',
+        fontSize: scaledHeight(14),     
+        textAlign: 'center',
+        width: '100%'
+    },
+    selectFileContainer:{        
+        alignItems: 'center', 
+        backgroundColor: '#FFFFFF',        
+        flexDirection:'row',
+        justifyContent:'center',
+        marginTop:scaledHeight(10),
+        marginBottom:scaledHeight(15),
+        paddingVertical:scaledHeight(10)        
+    },
+    uploadText:{
+        color: '#707070',
+        fontSize: scaledHeight(20),    
+        fontWeight:'bold', 
+        textAlign: 'center', 
+        textDecorationLine:'underline',      
+        marginRight:'4%'       
     }
 });

@@ -9,6 +9,14 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',              
         marginTop: scaledHeight(18),
     },
+    accTypeTilte:{
+        color: '#56565A',
+        fontSize: scaledHeight(22),   
+        fontWeight:'bold',    
+        marginTop: scaledHeight(16),       
+        marginLeft:'4%',
+        textTransform:'uppercase'        
+    },
     btnGrp: {
         alignContent: 'center',
         alignItems: 'center',
@@ -168,16 +176,23 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(16)
     },
     pdfSection: {
-        backgroundColor: "#FFFFFF",
         flexGrow: 1,
-        marginBottom: scaledHeight(22),      
-        marginHorizontal: scaledHeight(8),       
+        marginBottom: scaledHeight(22),
+        marginHorizontal: scaledHeight(12),
+        padding: scaledHeight(32),
+        backgroundColor: "#FFFFFF",
+        borderWidth: 1,
+        borderColor: "#FFFFFF",
+        borderRadius: scaledHeight(5),
+        shadowColor: "#56565A",
+        shadowOpacity: 0.3,
+        shadowOffset: { width: 0, height: 2 }
     },
     pdfTitleTxt: {
-        color: '#56565A',
         fontSize: scaledHeight(26),
+        color: '#486D89',
         lineHeight: 35
-    },
+    },    
     scrollViewFlex:{
          flex: .85 
     },

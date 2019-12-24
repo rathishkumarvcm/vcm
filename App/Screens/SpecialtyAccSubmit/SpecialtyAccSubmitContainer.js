@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
 import SpecialtyAccSubmitComponent from './SpecialtyAccSubmitComponent';
-import { getLogin } from "../../Shared/Reducers";
-import { loginActions } from "../../Shared/Actions";
+import { accOpeningActions } from "../../Shared/Actions";
 
 /*----------------------
                                   Redux Methods
@@ -9,12 +8,12 @@ import { loginActions } from "../../Shared/Actions";
 
 const mapStateToProps = (state /* , props */) => (
     {
-      dashboardData: getLogin(state)
+      accOpeningData: state.accOpeningReducerData,
     }
   );
 
 const mapDispatchToProps = {
-    ...loginActions
+  ...accOpeningActions,
   };
 
 export default connect(

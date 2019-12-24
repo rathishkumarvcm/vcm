@@ -2,9 +2,24 @@ import React, { Component } from 'react';
 import { Text, View,ScrollView } from 'react-native';
 import PropTypes from "prop-types";
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterSettingsComponent } from '../../CommonComponents';
+import ImagePicker from 'react-native-image-picker';
+import { GButtonComponent, GHeaderComponent, GFooterSettingsComponent, GIcon } from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+import AppUtils from '../../Utils/AppUtils';
+
+const imagePickerOptions = {
+    title: 'Select Image',
+    customButtons: [
+        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
+    ],
+    storageOptions: {
+        skipBackup: true,
+        path: 'images',
+        avatarSource: ''
+    },
+};
 
 class SpecialtyAccSubmitComponent extends Component {
     constructor(props) {
@@ -24,6 +39,22 @@ class SpecialtyAccSubmitComponent extends Component {
                                                                  -------------------------- */
     componentDidMount() {
 
+    }
+
+    componentDidUpdate(prevProps) {
+        AppUtils.Dlog("==Did Update Called==");
+        const uploadImgKey = ActionTypes.UPLOAD_AVATAR;
+        if (this.props.accOpeningData[uploadImgKey]) {
+            if (this.props.accOpeningData[uploadImgKey] !== prevProps.accOpeningData[uploadImgKey]) {
+                const tempResponse = this.props.accOpeningData[uploadImgKey];
+               // alert ("Image stautus \n::"+JSON.stringify(tempResponse));
+                if (tempResponse && tempResponse.b) {
+                    if (tempResponse.b.Location) {
+                        alert(`Image Uploaded Successfully \n::${ tempResponse.b.Location}`);
+                    }
+                }
+            }
+        }
     }
 
     /*----------------------
@@ -60,18 +91,55 @@ class SpecialtyAccSubmitComponent extends Component {
         //  alert("You selected :: " + item.name)
     }
 
+    uploadImage = () => {
+        ImagePicker.showImagePicker(imagePickerOptions, (response) => {
+            // AppUtils.Dlog('Response = ', response);
+
+            if (response.didCancel) {
+                AppUtils.Dlog('User cancelled image picker');
+            } else if (response.error) {
+                AppUtils.Dlog('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                AppUtils.Dlog('User tapped custom button: ', response.customButton);
+            } else {
+                AppUtils.Dlog('IMAGE PICKER SUCCESS::> ');
+
+                const source = { uri: response.uri };
+                const base64source = { uri: `data:image/jpeg;base64,${ response.data}` };
+                //AppUtils.Dlog("base64source", base64source.length);
+                this.setState({
+                    userAvatar: source
+                });
+                if (response.data && response.data !== null && response.data !== undefined && response.data.length > 0) {
+                    const payload = {
+                        "Body": `${ response.data}`
+                    };
+                    this.props.uploadAavatarImg(payload);
+                }
+
+            }
+        });
+    }
+
     /*----------------------
                                  Render Methods
                                                                  -------------------------- */
     render() {
 
         const currentPage = 6;
+        const { navigation } = this.props;
+        const accType = navigation.getParam('accType', '');
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation}
                 onPress={this.onClickHeader}
                 />
                 <ScrollView style={styles.scrollViewFlex}>
+
+                    <Text style={styles.accTypeTilte}>
+                        {accType}
+                    </Text>
+
                     <CustomPageWizard currentPage={currentPage} pageName={`${currentPage }  ${gblStrings.common.mail}`} />
 
                     { /* -----------Personal Info -------------------*/}
@@ -90,6 +158,25 @@ class SpecialtyAccSubmitComponent extends Component {
                         <Text style={styles.mailingText}>
                             {gblStrings.accManagement.byUploading}
                         </Text>
+
+                        <View style={styles.selectFileContainer}>                     
+
+                            <GButtonComponent
+                                buttonStyle={styles.selectFilesBtn}
+                                buttonText={gblStrings.accManagement.selectFiles}
+                                textStyle={styles.selectFilesBtnTxt}
+                                onPress={this.uploadImage}
+                            />
+                            <GIcon
+                                name="file-upload"
+                                type="material"
+                                size={30}
+                                color="#E9E4E4"
+                            />
+                            <Text style={styles.uploadText}>
+                                {gblStrings.common.upload}
+                            </Text>
+                        </View>
 
                         <View style={styles.uploadFileContainer}>
                             <Text style={styles.uploadFileTitle}>
@@ -183,7 +270,6 @@ class SpecialtyAccSubmitComponent extends Component {
                             buttonText={gblStrings.common.cancel}
                             textStyle={styles.normalWhiteBtnTxt}
                             onPress={this.onClickCancel}
-
                         />
                         <GButtonComponent
                             buttonStyle={styles.normalWhiteBtn}
@@ -209,5 +295,12 @@ class SpecialtyAccSubmitComponent extends Component {
 
 SpecialtyAccSubmitComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
+    uploadAavatarImg: PropTypes.func,
   };
+
+  SpecialtyAccSubmitComponent.defaultProps = {
+    navigation:{},
+    uploadAavatarImg: null ,
+}
+
 export default SpecialtyAccSubmitComponent;
