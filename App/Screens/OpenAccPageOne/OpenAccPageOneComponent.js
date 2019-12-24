@@ -123,6 +123,7 @@ class OpenAccPageOneComponent extends Component {
     }
 
     onClickCancel = () => {
+        myInstance.setAccOpeningEditMode(false);
         this.props.navigation.goBack('termsAndConditions');
     }
 

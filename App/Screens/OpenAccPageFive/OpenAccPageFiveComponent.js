@@ -37,6 +37,7 @@ class OpenAccPageFiveComponent extends Component {
         this.props.navigation.goBack();
     }
     onClickCancel = () => {
+        myInstance.setAccOpeningEditMode(false);
         this.props.navigation.goBack('termsAndConditions');
     }
     onClickDownloadPDF = () => {

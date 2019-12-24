@@ -76,9 +76,11 @@ class OpenAccPageFourComponent extends Component {
         console.log("#TODO : onClickHeader");
     }
     goBack = () => {
+        myInstance.setAccOpeningEditMode(false);
         this.props.navigation.goBack();
     }
     onClickCancel = () => {
+        myInstance.setAccOpeningEditMode(false);
         this.props.navigation.goBack('termsAndConditions');
     }
     onClickDownloadPDF = () => {
