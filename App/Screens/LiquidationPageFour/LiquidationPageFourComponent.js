@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import { PageNumber } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import { styles } from './styles';
-import PropTypes from 'prop-types';
 
 class LiquidationPageFourComponent extends Component {
     constructor(props) {
@@ -15,7 +15,7 @@ class LiquidationPageFourComponent extends Component {
     }
 
     formatAmount = (amount) => {
-        var amt = parseInt(amount).toLocaleString();
+        const amt = parseInt(amount).toLocaleString();
         return amt;
     }
 
@@ -39,11 +39,11 @@ class LiquidationPageFourComponent extends Component {
     }
 
     isEmpty = (str) => {
-        if (str == "" || str == undefined || str == null || str == "null" || str == "undefined") {
+        if (str === "" || str === undefined || str === null || str === "null" || str === "undefined") {
             return true;
-        } else {
+        } 
             return false;
-        }
+        
       }
 
     submitButtonAction = () => {
@@ -52,13 +52,13 @@ class LiquidationPageFourComponent extends Component {
     }
 
     componentDidMount() {
-        console.log(" Screen 4 componentdidmount " + JSON.stringify(this.props));
+        console.log(" Screen 4 componentdidmount " ,JSON.stringify(this.props));
     }
 
     render() {
-        let currentPage = 4;
-        let totalCount = 4;
-        let pageName = gblStrings.liquidation.reviewNConfirmHeading;
+        const currentPage = 4;
+        const totalCount = 4;
+        const pageName = gblStrings.liquidation.reviewNConfirmHeading;
         let sellingAmount = '';
         if(this.props.liquidationInitialState.allSharesSelected){
             sellingAmount = gblStrings.liquidation.dollarSymbol+this.formatAmount(this.props.liquidationInitialState.worthAmount);
@@ -67,9 +67,9 @@ class LiquidationPageFourComponent extends Component {
         }else{
             sellingAmount = gblStrings.liquidation.dollarSymbol+this.formatAmount((this.props.liquidationInitialState.percentageValue/100)*this.props.liquidationInitialState.worthAmount);
         }
-        var fundWithdrawalData = this.props.liquidationInitialState;
+        const fundWithdrawalData = this.props.liquidationInitialState;
         let amount = "";
-        if (fundWithdrawalData.requestedAmountType == "Before Taxes") {
+        if (fundWithdrawalData.requestedAmountType === "Before Taxes") {
             amount = fundWithdrawalData.amountBeforeTaxes;
         } else {
             amount = fundWithdrawalData.amountAfterTaxes;
@@ -81,7 +81,7 @@ class LiquidationPageFourComponent extends Component {
             fundingSource = fundWithdrawalData.bankAccountName;
         }
        return (
-            <View style={styles.container} >
+            <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <TouchableOpacity>
@@ -102,7 +102,7 @@ class LiquidationPageFourComponent extends Component {
                         </View>
                         <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>{gblStrings.liquidation.accountSelection}</Text>
-                            <Text style={styles.edit} onPress={this.onClickEditAccountSelection} >{gblStrings.common.edit}</Text>
+                            <Text style={styles.edit} onPress={this.onClickEditAccountSelection}>{gblStrings.common.edit}</Text>
                         </View>
                         <View style={styles.line} />
                         <View style={styles.section}>
@@ -141,17 +141,18 @@ class LiquidationPageFourComponent extends Component {
                             <Text style={styles.greyText16px}>{fundingSource}</Text>
                         </View>
 
-                        {(fundingSource==gblStrings.liquidation.check) ?
+                        {(fundingSource===gblStrings.liquidation.check) ?
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalInvestment}</Text>
                                 <Text style={styles.greyText16px}>{fundWithdrawalData.bankAccountNo}</Text>
-                            </View> : <View style={styles.section}>
+                            </View> : 
+                            <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountNumber}</Text>
                                 <Text style={styles.greyText16px}>{fundWithdrawalData.bankAccountNo}</Text>
                             </View>
                         }
-                        {/*-----------------------------------Tax Accounting Method starts here-------------------------------- */}
-                        {(this.props.liquidationInitialState.taxWithHoldingOption == gblStrings.liquidation.withholdTaxes)&&(this.props.liquidationInitialState.accType=="IRA")?
+                        {/* -----------------------------------Tax Accounting Method starts here-------------------------------- */}
+                        {(this.props.liquidationInitialState.taxWithHoldingOption === gblStrings.liquidation.withholdTaxes)&&(this.props.liquidationInitialState.accType==="IRA")?
                             <View>
                                 <View style={styles.horizontalFlex}>
                                     <Text style={styles.subHeading}>{gblStrings.liquidation.taxAccountingMethod}</Text>
@@ -190,7 +191,7 @@ class LiquidationPageFourComponent extends Component {
                             </View>
                             : null}
 
-                        {/*-----------------------------------Tax Accounting Method ends here-------------------------------- */}
+                        {/* -----------------------------------Tax Accounting Method ends here-------------------------------- */}
                         <View style={styles.flex5}>
                             <Text style={styles.text5}>{gblStrings.liquidation.confirmationMsg1}{"\n"}{"\n"}{gblStrings.liquidation.confirmationMsg2}</Text>
 

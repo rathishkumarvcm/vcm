@@ -1,66 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import PropTypes from 'prop-types';
+import Collapsible from 'react-native-collapsible';
 import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import { styles } from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
-import PropTypes from 'prop-types';
-import Collapsible from 'react-native-collapsible';
-
-
-const accSelectionData = {
-    "General_Account": [
-        {
-            "accName": "1",
-            "accNumber": "xxxx-xxxx-xxxx",
-            "currentValue": "$6000",
-            "holdingValue": "$7000",
-            "AutomaticInvestmentPlan": "Yes"
-        },
-        {
-            "accName": "2",
-            "accNumber": "xxxx-xxx-xxxx",
-            "currentValue": "$4500",
-            "holdingValue": "$9000",
-            "AutomaticInvestmentPlan": "Yes"
-        }
-    ],
-    "IRA_Account": [
-        {
-            "accName": "3",
-            "accNumber": "xxxx-xxx-xxxx",
-            "currentValue": "$9000",
-            "holdingValue": "$3000",
-            "AutomaticInvestmentPlan": "Yes"
-        },
-        {
-            "accName": "6",
-            "accNumber": "xxxx-xxxx-xxxx",
-            "currentValue": "$5500",
-            "holdingValue": "$8000",
-            "AutomaticInvestmentPlan": "Yes"
-        }
-    ],
-    "UTMA_Account": [
-        {
-            "accName": "5",
-            "accNumber": "xxxx-xxx-xxxx",
-            "currentValue": "$3500",
-            "holdingValue": "$7000",
-            "AutomaticInvestmentPlan": "Yes"
-        },
-        {
-            "accName": "6",
-            "accNumber": "xxxx-xxxx-xxxx",
-            "currentValue": "$6700",
-            "holdingValue": "$7600",
-            "AutomaticInvestmentPlan": "Yes"
-        }
-
-    ]
-};
-
-
 
 class LiquidationPageOneComponent extends Component {
     constructor(props) {
@@ -123,8 +68,8 @@ class LiquidationPageOneComponent extends Component {
             selectedUTMAAccIndex: null,
             disableNextButton: false,
             selectedAccountData: {
-                selectedAccountName: item.accName,
-                selectedAccountNumber: item.accNumber,
+                selectedAccountName: item.accountName,
+                selectedAccountNumber: item.accountNumber,
                 currentValue: item.currentValue,
                 holdingValue: item.holdingValue,
                 AutoInvPlan: item.AutomaticInvestmentPlan,
@@ -141,8 +86,8 @@ class LiquidationPageOneComponent extends Component {
             selectedUTMAAccIndex: null,
             disableNextButton: false,
             selectedAccountData: {
-                selectedAccountName: item.accName,
-                selectedAccountNumber: item.accNumber,
+                selectedAccountName: item.accountName,
+                selectedAccountNumber: item.accountNumber,
                 currentValue: item.currentValue,
                 holdingValue: item.holdingValue,
                 AutoInvPlan: item.AutomaticInvestmentPlan,
@@ -158,8 +103,8 @@ class LiquidationPageOneComponent extends Component {
             selectedUTMAAccIndex: index,
             disableNextButton: false,
             selectedAccountData: {
-                selectedAccountName: item.accName,
-                selectedAccountNumber: item.accNumber,
+                selectedAccountName: item.accountName,
+                selectedAccountNumber: item.accountNumber,
                 currentValue: item.currentValue,
                 holdingValue: item.holdingValue,
                 AutoInvPlan: item.AutomaticInvestmentPlan,
@@ -193,19 +138,14 @@ class LiquidationPageOneComponent extends Component {
 
     componentDidMount() {
         console.log("Page One Compoennt componentDidMount --> " + JSON.stringify(this.props));
-        if (this.props && this.props.liquidationPageOneInitialState) {
-            this.setState({
-                selectedAccountData: this.props.liquidationPageOneInitialState
-            });
-        }
     }
 
     render() {
-        let currentPage = 1;
-        let totalCount = 4;
-        let pageName = gblStrings.liquidation.accountSelectionScreenName;
+        const currentPage = 1;
+        const totalCount = 4;
+        const pageName = gblStrings.liquidation.accountSelectionScreenName;
         return (
-            <View style={styles.container} >
+            <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <TouchableOpacity onPress={this.goBack}>
@@ -231,11 +171,11 @@ class LiquidationPageOneComponent extends Component {
                         </View>
                         <Collapsible collapsed={this.state.collapseGeneralAccount} align="center">
                             <FlatList
-                                data={accSelectionData.General_Account}
+                                data={this.props.liquidationInitialState.accSelectionData.General_Account}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={(this.state.selectedGeneralAccIndex == index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectGeneralAccount(item, index)}>
-                                            <View style={styles.accountDetailsFlex} >
+                                        <View style={(this.state.selectedGeneralAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectGeneralAccount(item, index)}>
+                                            <View style={styles.accountDetailsFlex}>
                                                 <View style={styles.flexAccDetails1}>
                                                     <View style={styles.iconStyle}>
                                                         <GIcon
@@ -247,9 +187,9 @@ class LiquidationPageOneComponent extends Component {
                                                     </View>
 
                                                     <View style={styles.accountNumberFlex}>
-                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
+                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accountName}</Text>
                                                         <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
-                                                        <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
+                                                        <Text style={styles.blackTextBold18px}>{item.accountNumber}</Text>
                                                     </View>
                                                 </View>
 
@@ -276,7 +216,7 @@ class LiquidationPageOneComponent extends Component {
 
                                     );
                                 }}
-                                keyExtractor={x => x.accNumber}
+                                keyExtractor={x => x.accountNumber}
                                 extraData={this.state}
                                 ListEmptyComponent={this.noItemDisplay}
                             />
@@ -292,13 +232,13 @@ class LiquidationPageOneComponent extends Component {
                         </View>
                         <Collapsible collapsed={this.state.collapseIRAAccount} align="center">
                             <FlatList
-                                data={accSelectionData.IRA_Account}
+                                data={this.props.liquidationInitialState.accSelectionData.IRA_Account}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={(this.state.selectedIRAAccIndex == index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectIRAAccount(item, index)}>
+                                        <View style={(this.state.selectedIRAAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectIRAAccount(item, index)}>
                                             <View style={styles.accountDetailsFlex}>
                                                 <View style={styles.flexAccDetails1}>
-                                                <View style={styles.iconStyle}>
+                                                    <View style={styles.iconStyle}>
                                                         <GIcon
                                                             name="closesquareo"
                                                             type="antdesign"
@@ -308,9 +248,9 @@ class LiquidationPageOneComponent extends Component {
                                                     </View>
 
                                                     <View style={styles.accountNumberFlex}>
-                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
+                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accountName}</Text>
                                                         <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
-                                                        <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
+                                                        <Text style={styles.blackTextBold18px}>{item.accountNumber}</Text>
                                                     </View>
                                                 </View>
 
@@ -336,7 +276,7 @@ class LiquidationPageOneComponent extends Component {
 
                                     );
                                 }}
-                                keyExtractor={x => x.accNumber}
+                                keyExtractor={x => x.accountNumber}
                                 extraData={this.state}
                                 ListEmptyComponent={this.noItemDisplay}
                             />
@@ -353,14 +293,14 @@ class LiquidationPageOneComponent extends Component {
 
                         <Collapsible collapsed={this.state.collapseUTMAAccount} align="center">
                             <FlatList
-                                data={accSelectionData.UTMA_Account}
+                                data={this.props.liquidationInitialState.accSelectionData.UTMA_Account}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={(this.state.selectedUTMAAccIndex == index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectUTMAAccount(item, index)}>
+                                        <View style={(this.state.selectedUTMAAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectUTMAAccount(item, index)}>
                                             <View style={styles.accountDetailsFlex}>
 
                                                 <View style={styles.flexAccDetails1}>
-                                                <View style={styles.iconStyle}>
+                                                    <View style={styles.iconStyle}>
                                                         <GIcon
                                                             name="closesquareo"
                                                             type="antdesign"
@@ -370,9 +310,9 @@ class LiquidationPageOneComponent extends Component {
                                                     </View>
 
                                                     <View style={styles.accountNumberFlex}>
-                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
+                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accountName}</Text>
                                                         <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
-                                                        <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
+                                                        <Text style={styles.blackTextBold18px}>{item.accountNumber}</Text>
                                                     </View>
                                                 </View>
 
@@ -398,7 +338,7 @@ class LiquidationPageOneComponent extends Component {
 
                                     );
                                 }}
-                                keyExtractor={x => x.accNumber}
+                                keyExtractor={x => x.accountNumber}
                                 extraData={this.state}
                                 ListEmptyComponent={this.noItemDisplay}
                             />

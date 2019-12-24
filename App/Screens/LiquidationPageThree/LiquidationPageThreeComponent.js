@@ -73,12 +73,13 @@ class LiquidationPageThreeComponent extends Component {
         return amt;
     }
 
+    navigateBack = () => this.props.navigation.goBack();
+
     isEmpty = (str) => {
-        if (str == "" || str == undefined || str == null || str == "null" || str == "undefined") {
+        if (str === "" || str === undefined || str === null || str === "null" || str === "undefined") {
             return true;
-        } else {
-            return false;
         }
+            return false;
       }
 
     onClickExpandFundSource = () => {
@@ -272,9 +273,6 @@ class LiquidationPageThreeComponent extends Component {
     }
 
     navigateLiquidationPageOne = () => this.props.navigation.navigate('LiquidationPageOne');
-    navigateLiquidationPageTwo = () => this.props.navigation.navigate('LiquidationPageTwo');
-    navigateLiquidationPageFour = () => this.props.navigation.navigate('LiquidationPageFour', { taxAccountingMethodData: this.state.taxAccountingMethodData, fundingSource: this.state.fundingSource });
-
 
     nextButtonAction = () => {
         console.log('On Click Next Fund Withdrawal ...');
@@ -305,11 +303,11 @@ class LiquidationPageThreeComponent extends Component {
     }
 
     render() {
-        let currentPage = 3;
-        let totalCount = 4;
-        let pageName = gblStrings.liquidation.fundWithdrawalHeading;
+        const currentPage = 3;
+        const totalCount = 4;
+        const pageName = gblStrings.liquidation.fundWithdrawalHeading;
         return (
-            <View style={styles.container} >
+            <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <TouchableOpacity>
@@ -604,7 +602,7 @@ class LiquidationPageThreeComponent extends Component {
                         <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateLiquidationPageOne}>
                             <Text style={styles.backButtonText}>{gblStrings.common.cancel}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateLiquidationPageTwo}>
+                        <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateBack}>
                             <Text style={styles.backButtonText}>{gblStrings.common.back}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={this.state.disableNextButton ? styles.submitFlexDisabled : styles.submitFlex} onPress={this.nextButtonAction} disabled={this.state.disableNextButton}>

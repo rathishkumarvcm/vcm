@@ -1,25 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import PropTypes from 'prop-types';
+import Collapsible from 'react-native-collapsible';
 import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import { styles } from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
-import PropTypes from 'prop-types';
-import Collapsible from 'react-native-collapsible';
-
-
-const shares = [
-    {
-        fundName: 'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES',
-        totalShares: '2452',
-        worthAmount: '5400'
-    },
-    {
-        fundName: 'USSPX VCM 600 INDEX FUND MEMBER CLASS SHARES',
-        totalShares: '3452',
-        worthAmount: '2400'
-    },
-];
 
 
 
@@ -49,7 +35,7 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     isEmpty = (str) => {
-        if (str == "" || str == undefined || str == null || str == "null" || str == "undefined") {
+        if (str === "" || str === undefined || str === null || str === "null" || str === "undefined") {
             return true;
         } else {
             return false;
@@ -178,16 +164,51 @@ class LiquidationPageTwoComponent extends Component {
         return amt;
     }
 
+    navigateBack = () => this.props.navigation.goBack();
+
     componentDidMount() {
         console.log("Page Two Compoennt componentDidMount --> " + JSON.stringify(this.props));
+    
+        
+    }
+
+    getFundList = () =>{
+        let selectedIndex = 0;
+        let selectedAccountType = "";
+        let selectedAccountNumber = "";
+        let fundList = [];
+        let accType = '';
+        if(this.props.navigation.getParam('ammend')){
+            accType = this.props.navigation.getParam('ammend').accountType;
+            selectedAccountNumber = this.props.navigation.getParam('ammend').accountNumber;
+        }else{
+            accType = this.props.liquidationInitialState.accType;
+            selectedAccountNumber = this.props.liquidationInitialState.selectedAccountNumber;
+        }
+        if(accType === "General"){
+            selectedAccountType = "General_Account";
+        }else if(accType === "IRA"){
+            selectedAccountType = "IRA_Account";
+        }else{
+            selectedAccountType = "UTMA_Account";
+        }
+
+            for( let i = 0; i<this.props.liquidationInitialState.accSelectionData[selectedAccountType].length;i++){
+                if(selectedAccountNumber===this.props.liquidationInitialState.accSelectionData[selectedAccountType][i].accountNumber){
+                    selectedIndex = i;
+                }
+            }
+            fundList = this.props.liquidationInitialState.accSelectionData[selectedAccountType][selectedIndex].funds;
+            return fundList;
     }
 
     render() {
-        let currentPage = 2;
-        let totalCount = 4;
-        let pageName = gblStrings.liquidation.fundSelectionScreenName;
+        const currentPage = 2;
+        const totalCount = 4;
+        const pageName = gblStrings.liquidation.fundSelectionScreenName;
+       const fundsList = this.getFundList();
         return (
-            <View style={styles.container} >
+            <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <TouchableOpacity onPress={this.goBack}>
@@ -216,10 +237,10 @@ class LiquidationPageTwoComponent extends Component {
                     <Collapsible collapsed={this.state.collapseLiquidation} align="center">
                         <Text style={styles.fundSourceContent}>{gblStrings.liquidation.fundSourceContext}</Text>
                         <FlatList
-                            data={shares}
+                            data={fundsList}
                             renderItem={({ item, index }) => {
                                 return (
-                                    <View style={(this.state.selectedFundIndex == index) ? styles.fundsFlexSelected : styles.fundsFlex} onTouchStart={() => this.onClickSelectFund(item, index)}>
+                                    <View style={(this.state.selectedFundIndex === index) ? styles.fundsFlexSelected : styles.fundsFlex} onTouchStart={() => this.onClickSelectFund(item, index)}>
                                         <View style={styles.sharesFlex}>
 
                                             <View style={styles.flex1}>
@@ -240,18 +261,18 @@ class LiquidationPageTwoComponent extends Component {
                                             <View style={styles.flex3}>
 
                                                 <View style={styles.allShares} >
-                                                    <TouchableOpacity onPress={this.onClickAllShares} disabled={!(this.state.selectedFundIndex == index)}>
+                                                    <TouchableOpacity onPress={this.onClickAllShares} disabled={!(this.state.selectedFundIndex === index)}>
                                                         <View style={styles.radioButtonFlexOff}>
-                                                            {(this.state.allSharesSelected && (this.state.selectedFundIndex == index)) ? <View style={styles.radioButtonFlexOn} /> : null}
+                                                            {(this.state.allSharesSelected && (this.state.selectedFundIndex === index)) ? <View style={styles.radioButtonFlexOn} /> : null}
                                                         </View>
                                                     </TouchableOpacity>
                                                     <Text style={styles.allSharesText}>{gblStrings.liquidation.allShares}</Text>
                                                 </View>
 
                                                 <View style={styles.allShares}>
-                                                    <TouchableOpacity onPress={this.onClickAmountinDollar} disabled={!(this.state.selectedFundIndex == index)}>
+                                                    <TouchableOpacity onPress={this.onClickAmountinDollar} disabled={!(this.state.selectedFundIndex === index)}>
                                                         <View style={styles.radioButtonFlexOff}>
-                                                            {(this.state.dollarSelected && (this.state.selectedFundIndex == index)) ? <View style={styles.radioButtonFlexOn} /> : null}
+                                                            {(this.state.dollarSelected && (this.state.selectedFundIndex === index)) ? <View style={styles.radioButtonFlexOn} /> : null}
                                                         </View>
                                                     </TouchableOpacity>
                                                     <Text style={styles.dollarText}>$</Text>
@@ -260,18 +281,19 @@ class LiquidationPageTwoComponent extends Component {
                                                         inputStyle={styles.inputStyle}
                                                         value={this.state.dollarValue[index]}
                                                         onChangeText={this.onChangeDollarVal}
-                                                        editable={(this.state.dollarSelected && (this.state.selectedFundIndex == index))}
+                                                        editable={(this.state.dollarSelected && (this.state.selectedFundIndex === index))}
                                                         keyboardType="decimal-pad"
-                                                        errorFlag={(this.state.minHoldingDollar[index])&& (this.state.selectedFundIndex == index)}
+                                                        maxLength={13}
+                                                        errorFlag={(this.state.minHoldingDollar[index])&& (this.state.selectedFundIndex === index)}
                                                         errorText="Due to market fluctuations, this trade may fail. We suggest you do an ‘All’ shares liquidations"
                                                     />
                                                 </View>
 
 
                                                 <View style={styles.allShares}>
-                                                    <TouchableOpacity onPress={this.onClickAmountInPerc} disabled={!(this.state.selectedFundIndex == index)}>
+                                                    <TouchableOpacity onPress={this.onClickAmountInPerc} disabled={!(this.state.selectedFundIndex === index)}>
                                                         <View style={styles.radioButtonFlexOff}>
-                                                            {(this.state.percSelected && (this.state.selectedFundIndex == index)) ? <View style={styles.radioButtonFlexOn} /> : null}
+                                                            {(this.state.percSelected && (this.state.selectedFundIndex === index)) ? <View style={styles.radioButtonFlexOn} /> : null}
                                                         </View>
                                                     </TouchableOpacity>
                                                     <Text style={styles.dollarText}>%</Text>
@@ -280,8 +302,9 @@ class LiquidationPageTwoComponent extends Component {
                                                         inputStyle={styles.inputStyle}
                                                         value={this.state.percentageValue[index]}
                                                         onChangeText={this.onChangePercentageVal}
-                                                        editable={(this.state.percSelected) && (this.state.selectedFundIndex == index)}
+                                                        editable={(this.state.percSelected) && (this.state.selectedFundIndex === index)}
                                                         keyboardType="decimal-pad"
+                                                        maxLength = {3}
                                                        />
                                                 </View>
                                             </View>
@@ -297,7 +320,7 @@ class LiquidationPageTwoComponent extends Component {
                     </Collapsible>
 
                     <View style={styles.flex6}>
-                        <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateLiquidationPageOne}>
+                        <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateBack}>
                             <Text style={styles.backButtonText}>{gblStrings.common.cancel}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateLiquidationPageOne}>
