@@ -565,6 +565,7 @@ class OpenAccPageTwoComponent extends Component {
                         mobileNo: "",
                         memberPhoneNo: "",
                         busniessPhoneNo: "",
+                        residencePhoneNo:"",
                         emailAddress: "",
                         memberNumber: "",
 
@@ -595,6 +596,7 @@ class OpenAccPageTwoComponent extends Component {
                         socialSecurityNoValidation: true,
                         memberPhoneNoValidation: true,
                         busniessPhoneNoValidation: true,
+                        residencePhoneNoValidation: true,
                         memberNumberValidation: true,
 
 
@@ -1997,6 +1999,124 @@ class OpenAccPageTwoComponent extends Component {
 
     generateKeyExtractor = (item) => item.key;
 
+
+    renderRadio = (sectionName, radioName, radioSize, componentStyle, layoutStyle) => {
+        AppUtils.Dlog(`renderRadio::: ${radioName}`);
+        let tempkey = "";// "title";
+        let radioData = dummyData;
+        switch (radioName) {
+            case "gender":
+                tempkey = "gender";
+                break;
+            case "citizenship":
+                tempkey = "citizenship";
+                break;
+            case "mailingAddressType":
+                tempkey = "mailing_addr_type";
+                break;
+            default:
+                break;
+
+        }
+
+        AppUtils.Dlog(`tempkey::${tempkey}`);
+
+        if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
+            AppUtils.Dlog(`tempkey inside::${tempkey}`);
+            radioData = this.props.masterLookupStateData[tempkey].value;
+        } else {
+            AppUtils.Dlog(`tempkey not there::${tempkey}`);
+
+        }
+
+        const radioCoponents = [];
+
+
+        for (let i = 0; i < radioData.length; i += 1) {
+            radioCoponents.push(
+                <CustomRadio
+                    key={radioData[i].key}
+                    componentStyle={componentStyle}
+                    size={radioSize}
+                    outerCicleColor="#DEDEDF"
+                    innerCicleColor="#61285F"
+                    labelStyle={styles.lblRadioBtnTxt}
+                    label={radioData[i].value}
+                    descLabelStyle={styles.lblRadioDescTxt}
+                    descLabel=""
+                    selected={!!((this.state[sectionName][radioName] !== null && this.state[sectionName][radioName] === radioData[i].value))}
+                    onPress={this.onPressRadio(sectionName, radioName, radioData[i].value)}
+
+                />
+            );
+        }
+        return (
+            <View style={layoutStyle}>
+                {radioCoponents}
+            </View>
+        );
+
+
+
+
+    }
+    renderRadioForEstateTrust = (radioName, radioSize, componentStyle, layoutStyle,objIndex) => {
+        const sectionName = "estate";
+        AppUtils.Dlog(`renderRadioForEstateTrust::: ${radioName}`);
+        const newItems = [...this.state.estate.trusteeData];
+      
+        let tempkey = "";// "title";
+        let radioData = dummyData;
+        switch (radioName) {
+            case "citizenship":
+                tempkey = "citizenship";
+                break;
+            default:
+                break;
+
+        }
+
+        AppUtils.Dlog(`tempkey::${tempkey}`);
+
+        if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
+            AppUtils.Dlog(`tempkey inside::${tempkey}`);
+            radioData = this.props.masterLookupStateData[tempkey].value;
+        } else {
+            AppUtils.Dlog(`tempkey not there::${tempkey}`);
+
+        }
+
+        const radioCoponents = [];
+
+
+        for (let i = 0; i < radioData.length; i += 1) {
+            radioCoponents.push(
+                <CustomRadio
+                    key={radioData[i].key}
+                    componentStyle={componentStyle}
+                    size={radioSize}
+                    outerCicleColor="#DEDEDF"
+                    innerCicleColor="#61285F"
+                    labelStyle={styles.lblRadioBtnTxt}
+                    label={radioData[i].value}
+                    descLabelStyle={styles.lblRadioDescTxt}
+                    descLabel=""
+                    selected={!!((newItems[objIndex][radioName] !== null && newItems[objIndex][radioName] === radioData[i].value))}
+                    onPress={this.onPressRadioForEstateTrust(radioName, objIndex,radioData[i].value)}
+
+                />
+            );
+        }
+        return (
+            <View style={layoutStyle}>
+                {radioCoponents}
+            </View>
+        );
+
+
+
+
+    }
     renderCalender = (sectionName, calendarName) => {
         AppUtils.Dlog(`renderCalender::: ${calendarName}`);
         return (
@@ -2255,19 +2375,19 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
-    onSelectedIRABeneficiaryDropDownValue = (dropDownName, index) => (value, index, data) => {
+    onSelectedIRABeneficiaryDropDownValue = (dropDownName, objIndex) => (value, index, data) => {
         AppUtils.Dlog(`onSelectedIRABeneficiaryDropDownValue:: ${dropDownName}`);
         const newItems = [...this.state.retirementBeneficiaryData];
         let item = data[index];
         switch (dropDownName) {
 
             case "beneficiaryTypeDropDown":
-                newItems[index].beneficiaryTypeDropDown = false;
-                newItems[index].beneficiaryType = item.value;
+                newItems[objIndex].beneficiaryTypeDropDown = false;
+                newItems[objIndex].beneficiaryType = item.value;
                 break;
             case "relationshipToAccDropDown":
-                newItems[index].relationshipToAccDropDown = false;
-                newItems[index].relationshipToAcc = item.value;
+                newItems[objIndex].relationshipToAccDropDown = false;
+                newItems[objIndex].relationshipToAcc = item.value;
                 break;
 
             default:
@@ -2396,69 +2516,60 @@ class OpenAccPageTwoComponent extends Component {
         }
     }
 
-    onSelectedEstateTrustDropDownValue = (dropDownName, index) => (value, index, data) => {
+    onSelectedEstateTrustDropDownValue = (dropDownName, objIndex) => (value, index, data) => {
         AppUtils.Dlog(`onSelectedEstateTrustDropDownValue:: ${dropDownName}`);
         const newItems = [...this.state.estate.trusteeData];
+        newItems[objIndex].firstNameValidation = true;
+        newItems[objIndex].lastNameValidation = true;
+        newItems[objIndex].dobValidation = true;
+        newItems[objIndex].emailAddressValidation = true;
+        newItems[objIndex].socialSecurityNoValidation = true;
+      
+
+
+     
         let item = data[index];
         switch (dropDownName) {
-
             case "suffixDropDown":
-
+                newItems[objIndex].suffixDropDown = false;
+                newItems[objIndex].suffix = item.value;
                 break;
-            case "relationshipToAccDropDown":
-                newItems[index].relationshipToAccDropDown = false;
-                newItems[index].relationshipToAcc = item.value;
-                break;
-
             default:
                 break;
 
         }
 
-        this.setState({
-            selectedFundInvestmentsData: newItems
-        });
+        this.setState(() => (prevState => ({
+            estate: {
+                ...prevState.estate,
+                trusteeData:newItems
+            }
+        })));
 
-
-    }
-
-    onPressDropDownForEstateTrust = (keyName, index) => () => {
-        AppUtils.Dlog(`onPressDropDownForEstateTrust::: ${keyName}`);
-        const newItems = [...this.state.estate.trusteeData];
-        newItems[index][keyName] = !newItems[index][keyName];
-        newItems[index].firstNameValidation = true;
-        newItems[index].lastNameValidation = true;
-        newItems[index].dobValidation = true;
-        newItems[index].emailAddressValidation = true;
-        newItems[index].socialSecurityNoValidation = true;
-        newItems[index].beneficiaryTypeValidation = true;
-        newItems[index].relationshipToAccValidation = true;
-        newItems[index].beneficiaryDistPercentValidation = true;
-
-        this.setState({
-            retirementBeneficiaryData: newItems
-        });
 
     }
 
     onChangeTextForEstateTrust = (keyName, index) => text => {
         AppUtils.Dlog("onChangeTextForEstateTrust:::>");
+
         const newItems = [...this.state.estate.trusteeData];
         newItems[index][keyName] = text;
-
         newItems[index].firstNameValidation = true;
         newItems[index].lastNameValidation = true;
         newItems[index].dobValidation = true;
         newItems[index].emailAddressValidation = true;
         newItems[index].socialSecurityNoValidation = true;
-        newItems[index].beneficiaryTypeValidation = true;
-        newItems[index].relationshipToAccValidation = true;
-        newItems[index].beneficiaryDistPercentValidation = true;
+      
 
 
-        this.setState({
-            retirementBeneficiaryData: newItems,
-        });
+        this.setState(() => (prevState => ({
+            estate: {
+                ...prevState.estate,
+                trusteeData:newItems
+
+            }
+        })));
+        
 
 
     }
@@ -2472,31 +2583,48 @@ class OpenAccPageTwoComponent extends Component {
         newItems[index].dobValidation = true;
         newItems[index].emailAddressValidation = true;
         newItems[index].socialSecurityNoValidation = true;
-        newItems[index].beneficiaryTypeValidation = true;
-        newItems[index].relationshipToAccValidation = true;
-        newItems[index].beneficiaryDistPercentValidation = true;
-        this.setState({
-            retirementBeneficiaryData: newItems,
-        });
+      
+
+
+        this.setState(() => (prevState => ({
+            estate: {
+                ...prevState.estate,
+                trusteeData:newItems
+
+            }
+        })));
+    }
+
+    onPressRadioForEstateTrust = (keyName,index,text) => () => {
+        AppUtils.Dlog(`onPressRadioForEstateTrust:: ${keyName}`);
+        const newItems = [...this.state.estate.trusteeData];
+        newItems[index][keyName] = text;
+
+        this.setState(() => (prevState => ({
+            estate: {
+                ...prevState.estate,
+                trusteeData:newItems
+            }
+        })));
     }
 
     onPressRemoveEstateTrust = (index) => () => {
         AppUtils.Dlog(`onPressRemoveEstateTrust::: ${index}`);
         const newItems = [...this.state.estate.trusteeData];
         newItems.splice(index, 1);
-        this.setState({
-            retirementBeneficiaryData: newItems
-        });
+        this.setState(() => (prevState => ({
+            estate: {
+                ...prevState.estate,
+                trusteeData:newItems
+
+            }
+        })));
     }
 
     onPressAddIEstateTrust = () => {
         AppUtils.Dlog("onPressAddIEstateTrust::: ");
 
-        const tempBeneficiaryObj = {
-            beneficiaryType: "",
-            beneficiaryTypeDropDown: false,
-            beneficiaryDistPercent: "",
-
+        const tempTrusteeObj = {
             prefix: "",
             prefixDropDown: false,
             firstName: "",
@@ -2506,98 +2634,73 @@ class OpenAccPageTwoComponent extends Component {
             suffixDropDown: false,
             dob: "",
             gender: "",
+            maritalStatus: "",
+            maritalStatusDropDown: false,
+            citizenship: "U.S",
 
+            mailingAddressType: "",
+            addressType: "",
+            addrLine1: "",
+            addrLine2: "",
+            zipcode: "",
+            city: "",
+            stateCity: "",
+            stateCityDropDown: false,
+            addrLine1_Phy: "",
+            addrLine2_Phy: "",
+            zipcode_Phy: "",
+            city_Phy: "",
+            stateCity_Phy: "",
+            stateCity_PhyDropDown: false,
+            isYourPhysicalAddresSame: false,
             mobileNo: "",
+            memberPhoneNo: "",
+            busniessPhoneNo: "",
+            residencePhoneNo:"",
             emailAddress: "",
-            socialSecurityNo: "",
-            relationshipToAcc: "",
-            relationshipToAccDropDown: false,
-            phoneType: "",
-            phoneTypeDropDown: false,
+            memberNumber: "",
 
-
-            phoneTypeValidation: true,
+            prefixValidation: true,
             firstNameValidation: true,
             lastNameValidation: true,
             dobValidation: true,
+            genderValidation: true,
+            maritalStatusValidation: true,
+            citizenshipValidation: true,
+            addressTypeValidation: true,
+            mailingAddressTypeValidation: true,
+            addrLine1Validation: true,
+            addrLine2Validation: true,
+            zipcodeValidation: true,
+            cityValidation: true,
+            stateCityValidation: true,
+            stateValidation: true,
+            addrLine1_PhyValidation: true,
+            addrLine2_PhyValidation: true,
+            zipcode_PhyValidation: true,
+            city_PhyValidation: true,
+            stateCity_PhyValidation: true,
+            state_PhyValidation: true,
+            isYourPhysicalAddresSameValidation: true,
+            mobileNoValidation: true,
             emailAddressValidation: true,
             socialSecurityNoValidation: true,
-            beneficiaryTypeValidation: true,
-            relationshipToAccValidation: true,
-            beneficiaryDistPercentValidation: true,
+            memberPhoneNoValidation: true,
+            busniessPhoneNoValidation: true,
+            residencePhoneNoValidation: true,
+            memberNumberValidation: true,
+
 
         };
 
-        if (this.state.retirementBeneficiaryData.length < 3) {
-            const newItems = [...this.state.retirementBeneficiaryData, tempBeneficiaryObj];
-            this.setState({
-                retirementBeneficiaryData: newItems
-            });
+        if (this.state.estate.trusteeData.length < 3) {
+            this.setState(() => (prevState => ({
+                estate: {
+                    ...prevState.estate,
+                    trusteeData:[...prevState.estate.trusteeData, tempTrusteeObj]
+                }
+            })));
         }
-    }
-
-
-
-
-    renderRadio = (sectionName, radioName, radioSize, componentStyle, layoutStyle) => {
-        AppUtils.Dlog(`renderRadio::: ${radioName}`);
-        let tempkey = "";// "title";
-        let radioData = dummyData;
-        switch (radioName) {
-            case "gender":
-                tempkey = "gender";
-                break;
-            case "citizenship":
-                tempkey = "citizenship";
-                break;
-            case "mailingAddressType":
-                tempkey = "mailing_addr_type";
-                break;
-            default:
-                break;
-
-        }
-
-        AppUtils.Dlog(`tempkey::${tempkey}`);
-
-        if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
-            AppUtils.Dlog(`tempkey inside::${tempkey}`);
-            radioData = this.props.masterLookupStateData[tempkey].value;
-        } else {
-            AppUtils.Dlog(`tempkey not there::${tempkey}`);
-
-        }
-
-        const radioCoponents = [];
-
-
-        for (let i = 0; i < radioData.length; i += 1) {
-            radioCoponents.push(
-                <CustomRadio
-                    key={radioData[i].key}
-                    componentStyle={componentStyle}
-                    size={radioSize}
-                    outerCicleColor="#DEDEDF"
-                    innerCicleColor="#61285F"
-                    labelStyle={styles.lblRadioBtnTxt}
-                    label={radioData[i].value}
-                    descLabelStyle={styles.lblRadioDescTxt}
-                    descLabel=""
-                    selected={!!((this.state[sectionName][radioName] !== null && this.state[sectionName][radioName] === radioData[i].value))}
-                    onPress={this.onPressRadio(sectionName, radioName, radioData[i].value)}
-
-                />
-            );
-        }
-        return (
-            <View style={layoutStyle}>
-                {radioCoponents}
-            </View>
-        );
-
-
-
-
     }
 
 
@@ -5086,7 +5189,7 @@ class OpenAccPageTwoComponent extends Component {
                                     textInputStyle={styles.textInputStyle}
                                     dropDownName={gblStrings.accManagement.beneficiary}
                                     data={tempBeneficiaryData}
-                                    changeState={this.onPressDropDownForIRABeneficiary("beneficiaryTypeDropDown", index)}
+                                   // changeState={this.onPressDropDownForIRABeneficiary("beneficiaryTypeDropDown", index)}
                                     showDropDown={this.state.retirementBeneficiaryData[index].beneficiaryTypeDropDown}
                                     dropDownValue={this.state.retirementBeneficiaryData[index].beneficiaryType}
                                     selectedDropDownValue={this.onSelectedIRABeneficiaryDropDownValue("beneficiaryTypeDropDown", index)}
@@ -5106,7 +5209,7 @@ class OpenAccPageTwoComponent extends Component {
                                     textInputStyle={styles.textInputStyle}
                                     dropDownName={gblStrings.accManagement.relationshipToAccHolder}
                                     data={tempRelationShipData}
-                                    changeState={this.onPressDropDownForIRABeneficiary("relationshipToAccDropDown", index)}
+                                   // changeState={this.onPressDropDownForIRABeneficiary("relationshipToAccDropDown", index)}
                                     showDropDown={this.state.retirementBeneficiaryData[index].relationshipToAccDropDown}
                                     dropDownValue={this.state.retirementBeneficiaryData[index].relationshipToAcc}
                                     selectedDropDownValue={this.onSelectedIRABeneficiaryDropDownValue("relationshipToAccDropDown", index)}
@@ -5628,6 +5731,14 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     renderTrusteeInfo = () => {
+       let dropDownData = [];
+       let tempkey ="suffix";
+       if (tempkey !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
+        dropDownData = this.props.masterLookupStateData[tempkey].value;
+       }
+       const tempSuffixData =dropDownData;
+       AppUtils.Dlog("this.state.estate.trusteeData.length::: "+this.state.estate.trusteeData.length);
+
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
@@ -5647,7 +5758,7 @@ class OpenAccPageTwoComponent extends Component {
                 <TouchableOpacity
                     activeOpacity={0.8}
                     accessibilityRole="button"
-                // onPress={}
+                    onPress={this.onPressAddIEstateTrust}
                 >
                     <Text style={styles.addTrustee}>
                         {gblStrings.accManagement.addTrusteeOrExector}
@@ -5677,7 +5788,7 @@ class OpenAccPageTwoComponent extends Component {
                                         value={this.state.estate.trusteeData[index].firstName}
                                         placeholder=""
                                         maxLength={gblStrings.maxLength.firstName}
-                                        onChangeText={this.onChangeTextForIRABeneficiary("firstName", index)}
+                                        onChangeText={this.onChangeTextForEstateTrust("firstName", index)}
                                         onSubmitEditing={this.onSubmitEditing(this[`middleInitial${index}`])}
                                         errorFlag={!this.state.estate.trusteeData[index].firstNameValidation}
                                         errorText={this.state.errMsg}
@@ -5699,7 +5810,7 @@ class OpenAccPageTwoComponent extends Component {
                                         value={this.state.estate.trusteeData[index].middleInitial}
                                         placeholder=""
                                         maxLength={gblStrings.maxLength.middleInitial}
-                                        onChangeText={this.onChangeTextForIRABeneficiary("middleInitial", index)}
+                                        onChangeText={this.onChangeTextForEstateTrust("middleInitial", index)}
                                         onSubmitEditing={this.onSubmitEditing(this[`lastName${index}`])}
 
 
@@ -5716,7 +5827,7 @@ class OpenAccPageTwoComponent extends Component {
                                         value={this.state.estate.trusteeData[index].lastName}
                                         placeholder=""
                                         maxLength={gblStrings.maxLength.lastName}
-                                        onChangeText={this.onChangeTextForIRABeneficiary("lastName", index)}
+                                        onChangeText={this.onChangeTextForEstateTrust("lastName", index)}
                                         onSubmitEditing={this.onSubmitEditing(this[`suffix${index}`])}
                                         errorFlag={!this.state.estate.trusteeData[index].lastNameValidation}
                                         errorText={this.state.errMsg}
@@ -5724,14 +5835,19 @@ class OpenAccPageTwoComponent extends Component {
                                     />
 
                                     <View style={styles.dropDownViewPrefix}>
-                                        {this.renderCustomDropDown({
-                                            section: "personal",
-                                            stateKey: "suffix",
-                                            dropDownName: "suffixDropDown",
-                                            lblDropdownName: gblStrings.accManagement.suffix,
-                                            isOptional: true
-                                        })
-                                        }
+                                        <GDropDownComponent
+                                            inputref={this.setInputRef(`suffix${index}`)}
+                                            dropDownLayout={styles.dropDownLayout}
+                                            dropDownTextName={styles.dropDownTextName}
+                                            textInputStyle={styles.textInputStyle}
+                                            dropDownName={gblStrings.accManagement.suffix}
+                                            data={tempSuffixData}
+                                            dropDownValue={this.state.estate.trusteeData[index].suffix}
+                                            selectedDropDownValue={this.onSelectedEstateTrustDropDownValue("suffixDropDown", index)}
+                                            //itemToDisplay="value"
+                                            dropDownPostition={{ ...styles.dropDownPostition, top: scaledHeight(160) }}
+                                            isOptional
+                                        />
                                     </View>
 
 
@@ -5781,7 +5897,7 @@ class OpenAccPageTwoComponent extends Component {
                                         errorFlag={!this.state.estate.trusteeData[index].dobValidation}
                                         errorMsg={this.state.errMsg}
                                         maxDate={prevDate}
-                                        onDateChange={this.onChangeDateForIRABeneficiary("dob", index)}
+                                        onDateChange={this.onChangeDateForEstateTrust("dob", index)}
 
                                     />
 
@@ -5790,10 +5906,10 @@ class OpenAccPageTwoComponent extends Component {
                                     <Text style={styles.lblTxt}>
                                         {gblStrings.accManagement.citizenship}
                                     </Text>
-                                    {this.renderRadio("personal", "citizenship", 30, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
+                                    {this.renderRadioForEstateTrust("citizenship", 30, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp,index)}
 
                                     {
-                                        this.state.personal.citizenship !== "U.S" &&
+                                        this.state.estate.trusteeData[index].citizenship !== "U.S" &&
                                         <View style={styles.uploadW8View}>
                                             <Text>
                                                 <Text style={styles.lblTxt}>
@@ -5817,29 +5933,35 @@ class OpenAccPageTwoComponent extends Component {
                                     }
 
 
-                                    <Text style={styles.lblTxt}>
-                                        {gblStrings.accManagement.mailingAddress}
-                                    </Text>
+                                    
+                                    <View>
+                                        <Text style={styles.lblTxt}>
+                                            {gblStrings.accManagement.mailingAddress}
+                                        </Text>
+                                        <Text style={styles.poBoxTxt}>
+                                            {` ${gblStrings.accManagement.postBoxAcception}`}
+                                        </Text>
+                                    </View>
                                     <GInputComponent
                                         inputref={this.setInputRef("addrLine1")}
-                                        propInputStyle={this.state.personal.addrLine1Validation ? styles.customTxtBox : styles.customTxtBoxError}
+                                        propInputStyle={styles.customTxtBox}
                                         placeholder={gblStrings.accManagement.empAddrLine1}
                                         maxLength={gblStrings.maxLength.emplAddress1}
-                                        value={this.state.personal.addrLine1}
-                                        onChangeText={this.onChangeText("personal", "addrLine1")}
-                                        onSubmitEditing={this.onSubmitEditing(this.addrLine2)}
-                                        errorFlag={!this.state.personal.addrLine1Validation}
+                                        value={this.state.estate.trusteeData[index].addrLine1}
+                                        onChangeText={this.onChangeTextForEstateTrust("addrLine1",index)}
+                                        onSubmitEditing={this.onSubmitEditing(this[`addrLine2${index}`])}
+                                        errorFlag={!this.state.estate.trusteeData[index].addrLine1Validation}
                                         errorText={this.state.errMsg}
                                     />
                                     <GInputComponent
                                         inputref={this.setInputRef("addrLine2")}
-                                        propInputStyle={this.state.personal.addrLine2Validation ? styles.customTxtBox : styles.customTxtBoxError}
+                                        propInputStyle={styles.customTxtBox}
                                         placeholder={gblStrings.accManagement.empAddrLine2}
                                         maxLength={gblStrings.maxLength.addressLine2}
-                                        value={this.state.personal.addrLine2}
-                                        onChangeText={this.onChangeText("personal", "addrLine2")}
-                                        onSubmitEditing={this.onSubmitEditing(this.zipcode)}
-                                        errorFlag={!this.state.personal.addrLine2Validation}
+                                        value={this.state.estate.trusteeData[index].addrLine2}
+                                        onChangeText={this.onChangeTextForEstateTrust("addrLine2",index)}
+                                        onSubmitEditing={this.onSubmitEditing(this[`zipcode${index}`])}
+                                        errorFlag={!this.state.estate.trusteeData[index].addrLine2Validation}
                                         errorText={this.state.errMsg}
 
 
@@ -5851,15 +5973,15 @@ class OpenAccPageTwoComponent extends Component {
                                     </Text>
                                     <GInputComponent
                                         inputref={this.setInputRef("zipcode")}
-                                        propInputStyle={this.state.personal.zipcodeValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                        propInputStyle={styles.customTxtBox}
                                         placeholder={gblStrings.accManagement.enterZip}
-                                        value={this.state.personal.zipcode}
+                                        value={this.state.estate.trusteeData[index].zipcode}
                                         maxLength={gblStrings.maxLength.zipCode}
                                         returnKeyType="done"
-                                        onChangeText={this.onChangeText("personal", "zipcode")}
+                                        onChangeText={this.onChangeTextForEstateTrust("zipcode",index)}
                                         keyboardType="number-pad"
-                                        onSubmitEditing={this.onSubmitZipEditing("personal", "zipcode", this.city)}
-                                        errorFlag={!this.state.personal.zipcodeValidation}
+                                        onSubmitEditing={this.onSubmitZipEditing("personal", "zipcode", this[`city${index}`])}
+                                        errorFlag={!this.state.estate.trusteeData[index].zipcodeValidation}
                                         errorText={this.state.errMsg}
                                     />
 
@@ -5868,29 +5990,29 @@ class OpenAccPageTwoComponent extends Component {
                                     </Text>
                                     <GInputComponent
                                         inputref={this.setInputRef("city")}
-                                        propInputStyle={this.state.personal.cityValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                        propInputStyle={styles.customTxtBox}
                                         placeholder={gblStrings.accManagement.enterCity}
                                         maxLength={gblStrings.maxLength.city}
-                                        value={this.state.personal.city}
-                                        onChangeText={this.onChangeText("personal", "city")}
-                                        onSubmitEditing={this.onSubmitEditing(this.stateCity)}
-                                        errorFlag={!this.state.personal.cityValidation}
+                                        value={this.state.estate.trusteeData[index].city}
+                                        onChangeText={this.onChangeTextForEstateTrust("city",index)}
+                                        onSubmitEditing={this.onSubmitEditing(this[`stateCity${index}`])}
+                                        errorFlag={!this.state.estate.trusteeData[index].cityValidation}
                                         errorText={this.state.errMsg}
-                                        editable={this.state.personal.citizenship !== "U.S"}
+                                        editable={this.state.estate.trusteeData[index].citizenship !== "U.S"}
 
                                     />
                                     <GInputComponent
                                         inputref={this.setInputRef("stateCity")}
-                                        propInputStyle={this.state.personal.stateCityValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                        propInputStyle={styles.customTxtBox}
                                         placeholder={gblStrings.accManagement.enterState}
                                         returnKeyType="done"
                                         maxLength={gblStrings.maxLength.state}
-                                        value={this.state.personal.stateCity}
-                                        onChangeText={this.onChangeText("personal", "stateCity")}
-                                        onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
+                                        value={this.state.estate.trusteeData[index].stateCity}
+                                        onChangeText={this.onChangeTextForEstateTrust("stateCity",index)}
+                                        //onSubmitEditing={this.onSubmitEditing(this[`stateCity${index}`])}
                                         errorFlag={!this.state.personal.stateCityValidation}
                                         errorText={this.state.errMsg}
-                                        editable={this.state.personal.citizenship !== "U.S"}
+                                        editable={this.state.estate.trusteeData[index].citizenship !== "U.S"}
 
                                     />
 
@@ -5907,8 +6029,9 @@ class OpenAccPageTwoComponent extends Component {
                                             label="Yes"
                                             descLabelStyle={styles.lblRadioDescTxt}
                                             descLabel=""
-                                            selected={!!((this.state.personal.isYourPhysicalAddresSame !== null && this.state.personal.isYourPhysicalAddresSame === "Yes"))}
-                                            onPress={this.onPressRadio("personal", "isYourPhysicalAddresSame", "Yes")}
+                                            selected={!!((this.state.estate.trusteeData[index].isYourPhysicalAddresSame !== null && this.state.estate.trusteeData[index].isYourPhysicalAddresSame === "Yes"))}
+                                            onPress={this.onPressRadioForEstateTrust("isYourPhysicalAddresSame", index,"Yes")}
+
                                         />
                                         <CustomRadio
                                             componentStyle={styles.radioCol2}
@@ -5919,43 +6042,48 @@ class OpenAccPageTwoComponent extends Component {
                                             label="No"
                                             descLabelStyle={styles.lblRadioDescTxt}
                                             descLabel=""
-                                            selected={!!((this.state.personal.isYourPhysicalAddresSame !== null && this.state.personal.isYourPhysicalAddresSame === "No"))}
-                                            onPress={this.onPressRadio("personal", "isYourPhysicalAddresSame", "No")}
+                                            selected={!!((this.state.estate.trusteeData[index].isYourPhysicalAddresSame !== null && this.state.estate.trusteeData[index].isYourPhysicalAddresSame === "No"))}
+                                            onPress={this.onPressRadioForEstateTrust("isYourPhysicalAddresSame", index,"No")}
 
                                         />
                                     </View>
-                                    {!this.state.personal.isYourPhysicalAddresSameValidation &&
+                                    {!this.state.estate.trusteeData[index].isYourPhysicalAddresSameValidation &&
                                         <Text style={styles.errMsg}>
                                             {this.state.errMsg}
                                         </Text>
                                     }
 
                                     {
-                                        this.state.personal.isYourPhysicalAddresSame === "No" &&
+                                        this.state.estate.trusteeData[index].isYourPhysicalAddresSame === "No" &&
                                         <View>
-                                            <Text style={styles.lblTxt}>
-                                                {gblStrings.accManagement.address}
-                                            </Text>
+                                            <View>
+                                                <Text style={styles.lblTxt}>
+                                                    {gblStrings.accManagement.addressType}
+                                                </Text>
+                                                <Text style={styles.poBoxTxt}>
+                                                    {` ${gblStrings.accManagement.postBoxAcception}`}
+                                                </Text>
+                                            </View>
                                             <GInputComponent
                                                 inputref={this.setInputRef("addrLine1_Phy")}
-                                                propInputStyle={this.state.personal.addrLine1_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                                propInputStyle={styles.customTxtBox}
                                                 placeholder={gblStrings.accManagement.empAddrLine1}
                                                 maxLength={gblStrings.maxLength.emplAddress1}
-                                                value={this.state.personal.addrLine1_Phy}
-                                                onChangeText={this.onChangeText("personal", "addrLine1_Phy")}
-                                                onSubmitEditing={this.onSubmitEditing(this.addrLine2_Phy)}
-                                                errorFlag={!this.state.personal.addrLine1_PhyValidation}
+                                                value={this.state.estate.trusteeData[index].addrLine1_Phy}
+                                                onChangeText={this.onChangeTextForEstateTrust( "addrLine1_Phy",index)}
+                                                onSubmitEditing={this.onSubmitEditing(this[`addrLine2_Phy${index}`])}
+                                                errorFlag={!this.state.estate.trusteeData[index].addrLine1_PhyValidation}
                                                 errorText={this.state.errMsg}
                                             />
                                             <GInputComponent
                                                 inputref={this.setInputRef("addrLine2_Phy")}
-                                                propInputStyle={this.state.personal.addrLine2_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                                propInputStyle={styles.customTxtBox}
                                                 placeholder={gblStrings.accManagement.empAddrLine2}
                                                 maxLength={gblStrings.maxLength.addressLine2}
-                                                value={this.state.personal.addrLine2_Phy}
-                                                onChangeText={this.onChangeText("personal", "addrLine2_Phy")}
-                                                onSubmitEditing={this.onSubmitEditing(this.zipcode_Phy)}
-                                                errorFlag={!this.state.personal.addrLine2_PhyValidation}
+                                                value={this.state.estate.trusteeData[index].addrLine2_Phy}
+                                                onChangeText={this.onChangeTextForEstateTrust("addrLine2_Phy",index)}
+                                                onSubmitEditing={this.onSubmitEditing(this[`zipcode_Phy${index}`])}
+                                                errorFlag={!this.state.estate.trusteeData[index].addrLine2_PhyValidation}
                                                 errorText={this.state.errMsg}
 
 
@@ -5967,15 +6095,15 @@ class OpenAccPageTwoComponent extends Component {
                                             </Text>
                                             <GInputComponent
                                                 inputref={this.setInputRef("zipcode_Phy")}
-                                                propInputStyle={this.state.personal.zipcode_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                                propInputStyle={styles.customTxtBox}
                                                 placeholder={gblStrings.accManagement.enterZip}
-                                                value={this.state.personal.zipcode_Phy}
+                                                value={this.state.estate.trusteeData[index].zipcode_Phy}
                                                 maxLength={gblStrings.maxLength.zipCode}
                                                 returnKeyType="done"
-                                                onChangeText={this.onChangeText("personal", "zipcode_Phy")}
+                                                onChangeText={this.onChangeTextForEstateTrust("zipcode_Phy",index)}
                                                 keyboardType="number-pad"
-                                                onSubmitEditing={this.onSubmitZipEditing("personal", "zipcode_Phy", this.city_Phy)}
-                                                errorFlag={!this.state.personal.zipcode_PhyValidation}
+                                                onSubmitEditing={this.onSubmitZipEditing("personal", "zipcode_Phy", this[`city_Phy${index}`])}
+                                                errorFlag={!this.state.estate.trusteeData[index].zipcode_PhyValidation}
                                                 errorText={this.state.errMsg}
                                             />
 
@@ -5984,30 +6112,30 @@ class OpenAccPageTwoComponent extends Component {
                                             </Text>
                                             <GInputComponent
                                                 inputref={this.setInputRef("city_Phy")}
-                                                propInputStyle={this.state.personal.city_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                                propInputStyle={styles.customTxtBox}
                                                 placeholder={gblStrings.accManagement.enterCity}
                                                 maxLength={gblStrings.maxLength.city}
-                                                value={this.state.personal.city_Phy}
-                                                onChangeText={this.onChangeText("personal", "city_Phy")}
-                                                onSubmitEditing={this.onSubmitEditing(this.stateCity_Phy)}
-                                                errorFlag={!this.state.personal.city_PhyValidation}
+                                                value={this.state.estate.trusteeData[index].city_Phy}
+                                                onChangeText={this.onChangeTextForEstateTrust( "city_Phy",index)}
+                                                onSubmitEditing={this.onSubmitEditing(this[`stateCity_Phy${index}`])}
+                                                errorFlag={!this.state.estate.trusteeData[index].city_PhyValidation}
                                                 errorText={this.state.errMsg}
-                                                editable={this.state.personal.citizenship !== "U.S"}
+                                                editable={this.state.estate.trusteeData[index].citizenship !== "U.S"}
 
 
                                             />
                                             <GInputComponent
                                                 inputref={this.setInputRef("stateCity_Phy")}
-                                                propInputStyle={this.state.personal.stateCity_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                                propInputStyle={styles.customTxtBox}
                                                 placeholder={gblStrings.accManagement.enterState}
                                                 returnKeyType="done"
                                                 maxLength={gblStrings.maxLength.state}
-                                                value={this.state.personal.stateCity_Phy}
-                                                onChangeText={this.onChangeText("personal", "stateCity_Phy")}
-                                                onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
-                                                errorFlag={!this.state.personal.stateCity_PhyValidation}
+                                                value={this.state.estate.trusteeData[index].stateCity_Phy}
+                                                onChangeText={this.onChangeTextForEstateTrust("stateCity_Phy",index)}
+                                               // onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
+                                                errorFlag={!this.state.estate.trusteeData[index].stateCity_PhyValidation}
                                                 errorText={this.state.errMsg}
-                                                editable={this.state.personal.citizenship !== "U.S"}
+                                                editable={this.state.estate.trusteeData[index].citizenship !== "U.S"}
 
                                             />
 
@@ -6019,19 +6147,20 @@ class OpenAccPageTwoComponent extends Component {
                                             {gblStrings.accManagement.residencePhoneNo}
                                         </Text>
                                         <Text style={styles.poBoxTxt}>
-                                            {` ${gblStrings.accManagement.postBoxAcception}`}
+                                            {` ${gblStrings.accManagement.areaCode}`}
                                         </Text>
                                     </View>
                                     <GInputComponent
                                         inputref={this.setInputRef("residencePhoneNo")}
                                         propInputStyle={styles.customTxtBox}
                                         placeholder={gblStrings.accManagement.phoneNoFormat}
-                                        value={this.state.personal.telePhoneNo2}
+                                        value={this.state.estate.trusteeData[index].residencePhoneNo}
                                         maxLength={gblStrings.maxLength.telePhoneNo2}
                                         keyboardType="phone-pad"
-                                        onChangeText={this.onChangeText("personal", "businessPhoneNumber")}
-                                        onSubmitEditing={this.onSubmitEditing(this.contactDuringTelePhone2)}
-
+                                        onChangeText={this.onChangeTextForEstateTrust("residencePhoneNo",index)}
+                                        onSubmitEditing={this.onSubmitEditing(this[`residencePhoneNo${index}`])}
+                                        errorFlag={!this.state.estate.trusteeData[index].residencePhoneNoValidation}
+                                        errorText={this.state.errMsg}
                                     />
 
                                     <View>
@@ -6039,19 +6168,20 @@ class OpenAccPageTwoComponent extends Component {
                                             {gblStrings.accManagement.businessPhoneNumber}
                                         </Text>
                                         <Text style={styles.poBoxTxt}>
-                                            {` ${gblStrings.accManagement.postBoxAcception}`}
+                                            {` ${gblStrings.accManagement.areaCode}`}
                                         </Text>
                                     </View>
                                     <GInputComponent
-                                        inputref={this.setInputRef("businessPhoneNumber")}
+                                        inputref={this.setInputRef("busniessPhoneNo")}
                                         propInputStyle={styles.customTxtBox}
                                         placeholder={gblStrings.accManagement.phoneNoFormat}
-                                        value={this.state.personal.telePhoneNo2}
+                                        value={this.state.estate.trusteeData[index].busniessPhoneNo}
                                         maxLength={gblStrings.maxLength.telePhoneNo2}
                                         keyboardType="phone-pad"
-                                        onChangeText={this.onChangeText("personal", "businessPhoneNumber")}
-                                        onSubmitEditing={this.onSubmitEditing(this.contactDuringTelePhone2)}
-
+                                        onChangeText={this.onChangeTextForEstateTrust("busniessPhoneNo",index)}
+                                        onSubmitEditing={this.onSubmitEditing(this[`emailAddress${index}`])}
+                                        errorFlag={!this.state.estate.trusteeData[index].busniessPhoneNoValidation}
+                                        errorText={this.state.errMsg}
                                     />
 
                                     <Text style={styles.lblTxt}>
@@ -6062,8 +6192,9 @@ class OpenAccPageTwoComponent extends Component {
                                         propInputStyle={styles.customTxtBox}
                                         value={this.state.estate.trusteeData[index].emailAddress}
                                         placeholder=""
+                                        returnKeyType="done"
                                         maxLength={gblStrings.maxLength.emailID}
-                                        onChangeText={this.onChangeTextForIRABeneficiary("emailAddress", index)}
+                                        onChangeText={this.onChangeTextForEstateTrust("emailAddress", index)}
                                         errorFlag={!this.state.estate.trusteeData[index].emailAddressValidation}
                                         errorText={this.state.errMsg}
 
