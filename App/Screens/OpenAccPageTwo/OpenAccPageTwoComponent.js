@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity,Image,KeyboardAvoidingView ,Platform} from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, Image, KeyboardAvoidingView, Platform } from 'react-native';
 import PropTypes from "prop-types";
 import ImagePicker from 'react-native-image-picker';
 import { styles } from './styles';
-import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GDateComponent, GDropDownComponent,GSingletonClass } from '../../CommonComponents';
+import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GDateComponent, GDropDownComponent, GSingletonClass } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
@@ -27,11 +27,11 @@ const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
 const date = new Date().getDate(); // Current Date
 const month = new Date().getMonth() + 1; // Current Month
 const year = new Date().getFullYear(); // Current Year
-const currentdate = `${ month }-${ date }-${ year}`;
+const currentdate = `${month}-${date}-${year}`;
 
 const tempDate = new Date();
 tempDate.setDate(tempDate.getDate() - 1);
-const prevDate = `${tempDate.getMonth() + 1 }-${ tempDate.getDate() }-${ tempDate.getFullYear()}`;
+const prevDate = `${tempDate.getMonth() + 1}-${tempDate.getDate()}-${tempDate.getFullYear()}`;
 
 const dummyData = [
     { "key": "key1", "value": "Option1" },
@@ -44,9 +44,9 @@ class OpenAccPageTwoComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
-        const openAccPageTwo =  myInstance.getAccOpeningEditMode()? (myInstance.getScreenStateData().openAccPageTwo || {}):{};
+        const openAccPageTwo = myInstance.getAccOpeningEditMode() ? (myInstance.getScreenStateData().openAccPageTwo || {}) : {};
         this.state = {
-            enableScrollViewScroll:true,
+            enableScrollViewScroll: true,
             isValidationSuccess: true,
             errMsg: "",
             itemID: "",
@@ -158,7 +158,7 @@ class OpenAccPageTwoComponent extends Component {
 
                 empStatusValidation: true,
                 seniorPoliticalNameValidation: true,
-                isSeniorPoliticalFigureValidation:true,
+                isSeniorPoliticalFigureValidation: true,
                 empStatusForOtherValidation: true,
                 empIndustryForOtherValidation: true,
 
@@ -189,7 +189,7 @@ class OpenAccPageTwoComponent extends Component {
                 toDateMilitary: "",
                 commissionSource: "",
 
-                isMilitaryHistoryValidation:true,
+                isMilitaryHistoryValidation: true,
                 militaryStatusValidation: true,
 
 
@@ -203,7 +203,7 @@ class OpenAccPageTwoComponent extends Component {
             },
 
             jointOwner: {
-                relationshipToAcc:"",
+                relationshipToAcc: "",
                 relationshipToAccDropDown: false,
                 relationshipToAccValidation: true,
 
@@ -308,7 +308,7 @@ class OpenAccPageTwoComponent extends Component {
 
                 empStatusValidation: true,
                 seniorPoliticalNameValidation: true,
-                isSeniorPoliticalFigureValidation:true,
+                isSeniorPoliticalFigureValidation: true,
                 empStatusForOtherValidation: true,
                 empIndustryForOtherValidation: true,
 
@@ -339,7 +339,7 @@ class OpenAccPageTwoComponent extends Component {
                 commissionSource: "",
 
                 militaryStatusValidation: true,
-                isMilitaryHistoryValidation:true,
+                isMilitaryHistoryValidation: true,
 
                 isPersonalInfoExpanded: true,
                 isEmploymentInfoExpanded: true,
@@ -388,7 +388,7 @@ class OpenAccPageTwoComponent extends Component {
                 seniorPoliticalName: "",
 
                 seniorPoliticalNameValidation: true,
-                isSeniorPoliticalFigureValidation:true,
+                isSeniorPoliticalFigureValidation: true,
 
 
                 isPersonalInfoExpanded: false,
@@ -484,7 +484,7 @@ class OpenAccPageTwoComponent extends Component {
             estate: {
                 name: "",
                 creationDate: "",
-                isFederalLawApplicable:false,
+                isFederalLawApplicable: false,
                 mailingAddressType: "",
                 addressType: "",
                 addrLine1: "",
@@ -500,7 +500,7 @@ class OpenAccPageTwoComponent extends Component {
                 stateCity_Phy: "",
                 stateCity_PhyDropDown: false,
                 isYourPhysicalAddresSame: false,
-                orgCountry:"",
+                orgCountry: "",
                 mobileNo: "",
                 emailAddress: "",
                 socialSecurityNo: "",
@@ -527,18 +527,18 @@ class OpenAccPageTwoComponent extends Component {
                 mobileNoValidation: true,
                 emailAddressValidation: true,
                 socialSecurityNoValidation: true,
-                
-                 // ExpandCollapse
-                 isTrustInfoExpanded: false,
-                 isTrusteeInfoExpanded: false,
-               
+
+                // ExpandCollapse
+                isTrustInfoExpanded: false,
+                isTrusteeInfoExpanded: false,
+
                 trusteeData: [
                     {
                         prefix: "",
                         prefixDropDown: false,
                         firstName: "",
-                        middleInitial:  "",
-                        lastName:  "",
+                        middleInitial: "",
+                        lastName: "",
                         suffix: "",
                         suffixDropDown: false,
                         dob: "",
@@ -566,7 +566,7 @@ class OpenAccPageTwoComponent extends Component {
                         memberPhoneNo: "",
                         busniessPhoneNo: "",
                         emailAddress: "",
-                        membernumber:"",
+                        memberNumber: "",
 
                         prefixValidation: true,
                         firstNameValidation: true,
@@ -595,7 +595,7 @@ class OpenAccPageTwoComponent extends Component {
                         socialSecurityNoValidation: true,
                         memberPhoneNoValidation: true,
                         busniessPhoneNoValidation: true,
-                        membernumberValidation:true,
+                        memberNumberValidation: true,
 
 
                     }
@@ -607,11 +607,11 @@ class OpenAccPageTwoComponent extends Component {
                 keyName: ""
             },
             // others
-           //  ...openAccPageTwo
+            //  ...openAccPageTwo
 
 
         };
-        AppUtils.Dlog("Constructor 2::"+ JSON.stringify(this.state))
+        AppUtils.Dlog("Constructor 2::" + JSON.stringify(this.state))
 
     }
 
@@ -620,7 +620,7 @@ class OpenAccPageTwoComponent extends Component {
                                                                  -------------------------- */
     componentDidMount() {
 
-        AppUtils.Dlog(`componentDidMount::::> ${ this.props}`);
+        AppUtils.Dlog(`componentDidMount::::> ${this.props}`);
 
         const payload = [
         ];
@@ -659,7 +659,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        AppUtils.Dlog(`componentDidUpdate::::> ${ prevState}`);
+        AppUtils.Dlog(`componentDidUpdate::::> ${prevState}`);
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.PERSONAL_INFO_SAVE_OPENING_ACCT;
             if (this.props.accOpeningData[responseKey]) {
@@ -667,7 +667,7 @@ class OpenAccPageTwoComponent extends Component {
                     const tempResponse = this.props.accOpeningData[responseKey];
                     if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
                         const msg = tempResponse.message;
-                        AppUtils.Dlog(`Account Type Saved ::: :: ${ msg}`);
+                        AppUtils.Dlog(`Account Type Saved ::: :: ${msg}`);
                         alert(tempResponse.result);
                     } else {
                         alert(tempResponse.message);
@@ -692,7 +692,7 @@ class OpenAccPageTwoComponent extends Component {
 
                                 }
                             }));
-                        }else if (this.state.currentZipCodeRef.keyName === "zipcode_Phy") {
+                        } else if (this.state.currentZipCodeRef.keyName === "zipcode_Phy") {
                             this.setState(() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
@@ -732,7 +732,7 @@ class OpenAccPageTwoComponent extends Component {
 
                                 }
                             }));
-                        }else if (this.state.currentZipCodeRef.keyName === "zipcode_Phy") {
+                        } else if (this.state.currentZipCodeRef.keyName === "zipcode_Phy") {
                             this.setState(() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
@@ -758,7 +758,7 @@ class OpenAccPageTwoComponent extends Component {
                             }));
                         }
 
-                    }else if(tempResponse && tempResponse.ErrorNumber) {
+                    } else if (tempResponse && tempResponse.ErrorNumber) {
                         if (this.state.currentZipCodeRef.keyName === "empZipcode") {
                             this.setState(() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
@@ -768,7 +768,7 @@ class OpenAccPageTwoComponent extends Component {
 
                                 }
                             }));
-                        }else if(this.state.currentZipCodeRef.keyName === "zipcode_Phy") {
+                        } else if (this.state.currentZipCodeRef.keyName === "zipcode_Phy") {
                             this.setState(() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
@@ -777,19 +777,19 @@ class OpenAccPageTwoComponent extends Component {
                                     addrLine1_PhyValidation: false,
                                     addrLine2_PhyValidation: false
                                 },
-                                errMsg:"Invalid address"
+                                errMsg: "Invalid address"
                             }));
                         } else {
                             this.setState(() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    
+
                                     addrLine1: "",
                                     addrLine2: "",
                                     addrLine1Validation: false,
                                     addrLine2Validation: false
                                 },
-                                errMsg:"Invalid address"
+                                errMsg: "Invalid address"
                             }));
                         }
                     }
@@ -803,7 +803,7 @@ class OpenAccPageTwoComponent extends Component {
                     // alert ("Image stautus \n::"+JSON.stringify(tempResponse));
                     if (tempResponse && tempResponse.b) {
                         if (tempResponse.b.Location) {
-                            alert(`Image Uploaded Successfully \n::${ tempResponse.b.Location}`);
+                            alert(`Image Uploaded Successfully \n::${tempResponse.b.Location}`);
                         }
                     }
                 }
@@ -838,7 +838,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onSelected = (item) => {
-        AppUtils.Dlog(`item: ${ item.id}`);
+        AppUtils.Dlog(`item: ${item.id}`);
         this.setState({ selectedItemID: item.id });
         this.setState({ selectedItemName: item.name });
     }
@@ -853,7 +853,7 @@ class OpenAccPageTwoComponent extends Component {
             myInstance.setSavedAccData(payload);
             const screenState = {
                 ...stateData,
-                "openAccPageTwo":{...this.state}
+                "openAccPageTwo": { ...this.state }
             }
             myInstance.setScreenStateData(screenState);
 
@@ -862,7 +862,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     getPayload = () => {
-        const accType = `${ this.props.navigation.getParam('accType', '')}`;
+        const accType = `${this.props.navigation.getParam('accType', '')}`;
 
         const individualAccPayload = {
             "personalInfo": {
@@ -1029,40 +1029,40 @@ class OpenAccPageTwoComponent extends Component {
             }
         };
 
-       /* const retirementAccPayload = {
-            "beneficiaryInfo": {
-                "primaryBeneficiary": {
-                    "totalBeneficiary": "1",
-                    "beneficiary1Details": {
-                        "type": this.state.retirement.beneficiaryType || "-",
-                        "relation": this.state.retirement.relationshipToAcc || "-",
-                        "distributionPercentage": this.state.retirement.beneficiaryDistPercent || "-",
-                        "firstName": this.state.retirement.firstName || "-",
-                        "middleInitial": this.state.retirement.middleInitial || "-",
-                        "lastName": this.state.retirement.lastName || "-",
-                        "ssnTin": this.state.retirement.socialSecurityNo || "-",
-                        "dateOfBirth": this.state.retirement.dob || "-",
-                        "emailAddress": this.state.retirement.emailAddress || "-"
-                    }
-                    // "beneficiary2Details,beneficiary3Details": ""
-                },
-                "secondBeneficiary": { //  #TODO
-                    "beneficiary1Details": {
-                        "type": this.state.retirement.beneficiaryType || "-",
-                        "relation": this.state.retirement.relationshipToAcc || "-",
-                        "distributionPercentage": this.state.retirement.beneficiaryDistPercent || "-",
-                        "firstName": this.state.retirement.firstName || "-",
-                        "middleInitial": this.state.retirement.middleInitial || "-",
-                        "lastName": this.state.retirement.lastName || "-",
-                        "ssnTin": this.state.retirement.socialSecurityNo || "-",
-                        "dateOfBirth": this.state.retirement.dob || "-",
-                        "emailAddress": this.state.retirement.emailAddress || "-"
-                    }
-                }
-            }
-        };
-        */
-       
+        /* const retirementAccPayload = {
+             "beneficiaryInfo": {
+                 "primaryBeneficiary": {
+                     "totalBeneficiary": "1",
+                     "beneficiary1Details": {
+                         "type": this.state.retirement.beneficiaryType || "-",
+                         "relation": this.state.retirement.relationshipToAcc || "-",
+                         "distributionPercentage": this.state.retirement.beneficiaryDistPercent || "-",
+                         "firstName": this.state.retirement.firstName || "-",
+                         "middleInitial": this.state.retirement.middleInitial || "-",
+                         "lastName": this.state.retirement.lastName || "-",
+                         "ssnTin": this.state.retirement.socialSecurityNo || "-",
+                         "dateOfBirth": this.state.retirement.dob || "-",
+                         "emailAddress": this.state.retirement.emailAddress || "-"
+                     }
+                     // "beneficiary2Details,beneficiary3Details": ""
+                 },
+                 "secondBeneficiary": { //  #TODO
+                     "beneficiary1Details": {
+                         "type": this.state.retirement.beneficiaryType || "-",
+                         "relation": this.state.retirement.relationshipToAcc || "-",
+                         "distributionPercentage": this.state.retirement.beneficiaryDistPercent || "-",
+                         "firstName": this.state.retirement.firstName || "-",
+                         "middleInitial": this.state.retirement.middleInitial || "-",
+                         "lastName": this.state.retirement.lastName || "-",
+                         "ssnTin": this.state.retirement.socialSecurityNo || "-",
+                         "dateOfBirth": this.state.retirement.dob || "-",
+                         "emailAddress": this.state.retirement.emailAddress || "-"
+                     }
+                 }
+             }
+         };
+         */
+
         let tempBeneficiaryDetails = [];
         for (let i = 0; i < this.state.retirementBeneficiaryData.length; i += 1) {
             const tempObj = {
@@ -1080,7 +1080,7 @@ class OpenAccPageTwoComponent extends Component {
             tempBeneficiaryDetails.push(tempObj);
         }
         const retirementAccPayload = {
-            "beneficiaryInfo":{
+            "beneficiaryInfo": {
                 "totalBeneficiary": "1",
                 "beneficiaryDetails": tempBeneficiaryDetails
             }
@@ -1118,11 +1118,11 @@ class OpenAccPageTwoComponent extends Component {
                 };
                 break;
             case "UGMA/UTMA Account":
-                    payload = {
-                        ...payload,
-                        ...individualAccPayload
-                        
-                    };
+                payload = {
+                    ...payload,
+                    ...individualAccPayload
+
+                };
                 break;
             default:
                 break;
@@ -1142,11 +1142,11 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     isEmpty = (str) => {
-        if (str === "" || str === undefined || str === null || str === "null" || str === "undefined" || str.replace(/^\s+|\s+$/gm,'') === "" ) {
+        if (str === "" || str === undefined || str === null || str === "null" || str === "undefined" || str.replace(/^\s+|\s+$/gm, '') === "") {
             return true;
-        } 
-            return false;
-        
+        }
+        return false;
+
     }
 
     uploadImage = () => {
@@ -1163,14 +1163,14 @@ class OpenAccPageTwoComponent extends Component {
                 AppUtils.Dlog('IMAGE PICKER SUCCESS::> ');
 
                 const source = { uri: response.uri };
-                const base64source = { uri: `data:image/jpeg;base64,${ response.data}` };
+                const base64source = { uri: `data:image/jpeg;base64,${response.data}` };
                 AppUtils.Dlog("base64source", base64source.length);
                 this.setState({
                     userAvatar: source
                 });
                 if (response.data && response.data !== null && response.data !== undefined && response.data.length > 0) {
                     const payload = {
-                        "Body": `${ response.data}`
+                        "Body": `${response.data}`
                     };
                     this.props.uploadAavatarImg(payload);
                 }
@@ -1217,10 +1217,10 @@ class OpenAccPageTwoComponent extends Component {
 
 
     onSubmitZipEditing = (stateKey, keyName, nextInputFocus) => text => {
-        AppUtils.Dlog(`onSubmitZipEditing:::>${ nextInputFocus } ${ text}`);
+        AppUtils.Dlog(`onSubmitZipEditing:::>${nextInputFocus} ${text}`);
 
         const newItems = { ...this.state.currentZipCodeRef };
-      //  const newItems = { ...this.state.currentZipCodeRef };
+        //  const newItems = { ...this.state.currentZipCodeRef };
 
         newItems.keyName = keyName;
         newItems.stateKey = stateKey;
@@ -1231,22 +1231,22 @@ class OpenAccPageTwoComponent extends Component {
         if (this.state[stateKey].citizenship === "U.S") {
             let payload = {};
             let addressPayload = {};
-            if(keyName === "zipcode_Phy"){
-                 payload = {
+            if (keyName === "zipcode_Phy") {
+                payload = {
                     "Zip": this.state[stateKey][keyName]
                 };
-                 addressPayload = {
+                addressPayload = {
                     ...payload,
                     "Address1": this.state[stateKey].addrLine1_Phy,
                     "Address2": this.state[stateKey].addrLine2_Phy,
                     "City": this.state[stateKey].city_Phy,
                     "State": this.state[stateKey].stateCity_Phy
                 };
-            }else{
-                 payload = {
+            } else {
+                payload = {
                     "Zip": this.state[stateKey][keyName]
                 };
-                 addressPayload = {
+                addressPayload = {
                     ...payload,
                     "Address1": this.state[stateKey].addrLine1,
                     "Address2": this.state[stateKey].addrLine2,
@@ -1254,20 +1254,20 @@ class OpenAccPageTwoComponent extends Component {
                     "State": this.state[stateKey].stateCity
                 };
             }
-            
+
 
 
             this.props.getStateCity(payload);
             this.props.getAddressFormat(addressPayload);
         }
 
-       
+
 
         // nextInputFocus.focus();
     }
 
     onSubmitEmpZipEditing = (stateKey, keyName, nextInputFocus) => text => {
-        AppUtils.Dlog(`onSubmitEmpZipEditing:::>${ nextInputFocus } ${ text}`);
+        AppUtils.Dlog(`onSubmitEmpZipEditing:::>${nextInputFocus} ${text}`);
 
         const newItems = { ...this.state.currentZipCodeRef };
         newItems.keyName = keyName;
@@ -1280,7 +1280,7 @@ class OpenAccPageTwoComponent extends Component {
 
     onSubmitEditing = (input) => text => {
 
-        AppUtils.Dlog(`onSubmitEditing:::>${ text}`);
+        AppUtils.Dlog(`onSubmitEditing:::>${text}`);
 
         input.focus();
     }
@@ -1296,8 +1296,8 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onChangeSpiltDate = (stateKey, keyName, index) => dateStr => {
-        AppUtils.Dlog(`onChangeSpiltDate:::>${ index } ${ dateStr}`);
-        const tempCurrentDate = `${ this.state[stateKey][keyName]}`;
+        AppUtils.Dlog(`onChangeSpiltDate:::>${index} ${dateStr}`);
+        const tempCurrentDate = `${this.state[stateKey][keyName]}`;
 
         const tempCurrentDateComp = tempCurrentDate !== "" ? tempCurrentDate.split('-') : [];
 
@@ -1305,12 +1305,12 @@ class OpenAccPageTwoComponent extends Component {
         if (tempCurrentDateComp.length > 2) {
             tempCurrentDateComp[index] = dateStr;
         } else {
-            AppUtils.Dlog(`index:::>${ index}`);
+            AppUtils.Dlog(`index:::>${index}`);
 
             switch (index) {
 
                 case 0:
-                    AppUtils.Dlog(`0:::>${ index}`);
+                    AppUtils.Dlog(`0:::>${index}`);
 
                     tempCurrentDateComp[index] = dateStr;
                     tempCurrentDateComp[1] = "";
@@ -1318,21 +1318,21 @@ class OpenAccPageTwoComponent extends Component {
 
                     break;
                 case 1:
-                    AppUtils.Dlog(`2:::>${ index}`);
+                    AppUtils.Dlog(`2:::>${index}`);
 
                     tempCurrentDateComp[0] = "";
                     tempCurrentDateComp[index] = dateStr;
                     tempCurrentDateComp[2] = "";
                     break;
                 case 2:
-                    AppUtils.Dlog(`3:::>${ index}`);
+                    AppUtils.Dlog(`3:::>${index}`);
 
                     tempCurrentDateComp[0] = "";
                     tempCurrentDateComp[1] = "";
                     tempCurrentDateComp[index] = dateStr;
                     break;
-            default:
-                break;
+                default:
+                    break;
             }
         }
 
@@ -1368,7 +1368,7 @@ class OpenAccPageTwoComponent extends Component {
             ...prevState[stateKey],
             [keyName]: !prevState[stateKey][keyName]
         },
-        enableScrollViewScroll:gblStrings.isIOSPlatform
+        enableScrollViewScroll: gblStrings.isIOSPlatform
     }));
 
     onPressRadio = (stateKey, keyName, text) => () => {
@@ -1442,13 +1442,13 @@ class OpenAccPageTwoComponent extends Component {
         } else if (this.state.personal.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.personal.addrLine2_Phy)) {
             errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
             input = 'addrLine2_Phy';
-        } else if (this.state.personal.isYourPhysicalAddresSame === "No" &&this.isEmpty(this.state.personal.zipcode_Phy)) {
+        } else if (this.state.personal.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.personal.zipcode_Phy)) {
             errMsg = gblStrings.accManagement.emptyZipCodeMsg;
             input = 'zipcode_Phy';
-        }else if (this.state.personal.isYourPhysicalAddresSame === "No" && this.state.personal.zipcode_Phy.length < gblStrings.maxLength.zipCode) {
+        } else if (this.state.personal.isYourPhysicalAddresSame === "No" && this.state.personal.zipcode_Phy.length < gblStrings.maxLength.zipCode) {
             errMsg = gblStrings.accManagement.invalidZipCodeMsg;
             input = 'zipcode_Phy';
-        } else if (this.state.personal.isYourPhysicalAddresSame === "No" &&this.isEmpty(this.state.personal.city_Phy)) {
+        } else if (this.state.personal.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.personal.city_Phy)) {
             errMsg = gblStrings.accManagement.emptyCityMsg;
             input = 'city_Phy';
         } else if (this.state.personal.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.personal.stateCity_Phy)) {
@@ -1503,12 +1503,12 @@ class OpenAccPageTwoComponent extends Component {
 
 
         if (!isValidationSuccess) {
-            AppUtils.Dlog(`Personal Info errMsg:: ${ errMsg}`);
+            AppUtils.Dlog(`Personal Info errMsg:: ${errMsg}`);
 
             this.setState(prevState => ({
                 personal: {
                     ...prevState.personal,
-                    [`${input }Validation`]: false,
+                    [`${input}Validation`]: false,
                     isPersonalInfoExpanded: true,
                     isEmploymentInfoExpanded: true,
                     isFinancialInfoExpanded: true,
@@ -1527,7 +1527,7 @@ class OpenAccPageTwoComponent extends Component {
                     }
                 }
             }
-           // alert(errMsg);
+            // alert(errMsg);
         }
 
         return isValidationSuccess;
@@ -1571,7 +1571,7 @@ class OpenAccPageTwoComponent extends Component {
         } else if (this.isEmpty(this.state.jointOwner.zipcode)) {
             errMsg = gblStrings.accManagement.emptyZipCodeMsg;
             input = 'zipcode';
-        }else if (this.state.personal.zipcode.length < gblStrings.maxLength.zipCode) {
+        } else if (this.state.personal.zipcode.length < gblStrings.maxLength.zipCode) {
             errMsg = gblStrings.accManagement.invalidZipCodeMsg;
             input = 'zipcode';
         } else if (this.isEmpty(this.state.jointOwner.city)) {
@@ -1583,19 +1583,19 @@ class OpenAccPageTwoComponent extends Component {
         } else if (this.isEmpty(this.state.jointOwner.isYourPhysicalAddresSame)) {
             errMsg = gblStrings.accManagement.confirmPhysicalAddressSame;
             input = 'isYourPhysicalAddresSame';
-        }else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.jointOwner.addrLine1_Phy)) {
+        } else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.jointOwner.addrLine1_Phy)) {
             errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
             input = 'addrLine1_Phy';
         } else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.jointOwner.addrLine2_Phy)) {
             errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
             input = 'addrLine2_Phy';
-        } else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" &&this.isEmpty(this.state.jointOwner.zipcode_Phy)) {
+        } else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.jointOwner.zipcode_Phy)) {
             errMsg = gblStrings.accManagement.emptyZipCodeMsg;
             input = 'zipcode_Phy';
-        }else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" && this.state.jointOwner.zipcode_Phy.length < gblStrings.maxLength.zipCode) {
+        } else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" && this.state.jointOwner.zipcode_Phy.length < gblStrings.maxLength.zipCode) {
             errMsg = gblStrings.accManagement.invalidZipCodeMsg;
             input = 'zipcode_Phy';
-        } else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" &&this.isEmpty(this.state.jointOwner.city_Phy)) {
+        } else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.jointOwner.city_Phy)) {
             errMsg = gblStrings.accManagement.emptyCityMsg;
             input = 'city_Phy';
         } else if (this.state.jointOwner.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.jointOwner.stateCity_Phy)) {
@@ -1624,7 +1624,7 @@ class OpenAccPageTwoComponent extends Component {
         } else if (this.isEmpty(this.state.jointOwner.socialSecurityNo)) {
             errMsg = gblStrings.accManagement.emptySSNMsg;
             input = 'socialSecurityNo';
-        }else if (this.state.personal.socialSecurityNo.length < gblStrings.maxLength.ssnNo) {
+        } else if (this.state.personal.socialSecurityNo.length < gblStrings.maxLength.ssnNo) {
             errMsg = gblStrings.accManagement.invalidSSNMsg;
             input = 'socialSecurityNo';
         } else if (this.isEmpty(this.state.jointOwner.empStatus)) {
@@ -1649,12 +1649,12 @@ class OpenAccPageTwoComponent extends Component {
 
 
         if (!isValidationSuccess) {
-            AppUtils.Dlog(`JointOwner Info errMsg:: ${ errMsg}`);
+            AppUtils.Dlog(`JointOwner Info errMsg:: ${errMsg}`);
 
             this.setState(prevState => ({
                 jointOwner: {
                     ...prevState.jointOwner,
-                    [`${input }Validation`]: false,
+                    [`${input}Validation`]: false,
                     isPersonalInfoExpanded: true,
                     isEmploymentInfoExpanded: true,
                     isFinancialInfoExpanded: true,
@@ -1672,7 +1672,7 @@ class OpenAccPageTwoComponent extends Component {
                     }
                 }
             }
-           // alert(errMsg);
+            // alert(errMsg);
         }
 
         return isValidationSuccess;
@@ -1724,13 +1724,13 @@ class OpenAccPageTwoComponent extends Component {
 
 
         if (!isValidationSuccess) {
-            AppUtils.Dlog(`childBeneficiary Info errMsg:: ${ errMsg}`);
+            AppUtils.Dlog(`childBeneficiary Info errMsg:: ${errMsg}`);
 
             this.setState(prevState => ({
                 childBeneficiary: {
                     ...prevState.childBeneficiary,
-                    [`${input }Validation`]: false
-                   
+                    [`${input}Validation`]: false
+
                 },
                 isValidationSuccess,
                 errMsg: isValidationSuccess === false ? errMsg : ""
@@ -1743,7 +1743,7 @@ class OpenAccPageTwoComponent extends Component {
                     }
                 }
             }
-           // alert(errMsg);
+            // alert(errMsg);
         }
 
         return isValidationSuccess;
@@ -1762,8 +1762,8 @@ class OpenAccPageTwoComponent extends Component {
             for (let i = 0; i < this.state.retirementBeneficiaryData.length; i += 1) {
                 let tempErrMsg = "";
                 const tempObj = this.state.retirementBeneficiaryData[i];
-                AppUtils.Dlog(`tempObj::${ JSON.stringify(tempObj)}`);
-               
+                AppUtils.Dlog(`tempObj::${JSON.stringify(tempObj)}`);
+
 
                 let tempValidation = false;
                 if (this.isEmpty(tempObj.beneficiaryType)) {
@@ -1781,7 +1781,7 @@ class OpenAccPageTwoComponent extends Component {
                     tempErrMsg = gblStrings.accManagement.distributionValidationExceed;
                     inputField = "beneficiaryDistPercent";
 
-                }else if (this.isEmpty(tempObj.socialSecurityNo)) {
+                } else if (this.isEmpty(tempObj.socialSecurityNo)) {
                     tempErrMsg = gblStrings.accManagement.emptySSNMsg;
                     inputField = 'socialSecurityNo';
                 } else if (tempObj.socialSecurityNo.length < gblStrings.maxLength.ssnNo) {
@@ -1796,7 +1796,7 @@ class OpenAccPageTwoComponent extends Component {
                 } else if (this.isEmpty(tempObj.dob)) {
                     tempErrMsg = gblStrings.accManagement.emptyDOBMsg;
                     inputField = 'dob';
-                }else if (this.isEmpty(tempObj.emailAddress)) {
+                } else if (this.isEmpty(tempObj.emailAddress)) {
                     tempErrMsg = gblStrings.accManagement.emptyEmailAddressMsg;
                     inputField = 'emailAddress';
                 } else if (!emailRegex.test(tempObj.emailAddress)) {
@@ -1806,13 +1806,13 @@ class OpenAccPageTwoComponent extends Component {
                     tempValidation = true;
                 }
 
-                AppUtils.Dlog(`tempErrMsg: ${ tempErrMsg}`);
+                AppUtils.Dlog(`tempErrMsg: ${tempErrMsg}`);
 
                 if (!tempValidation) {
                     errMsg = tempErrMsg;
                     errMsgCount += 1;
                     const newItems = [...this.state.retirementBeneficiaryData];
-                    newItems[i][`${inputField }Validation`] = false;
+                    newItems[i][`${inputField}Validation`] = false;
                     this.setState({
                         retirementBeneficiaryData: newItems,
                         isValidationSuccess,
@@ -1833,7 +1833,7 @@ class OpenAccPageTwoComponent extends Component {
 
             if (errMsgCount === 0) {
                 isValidationSuccess = true;
-                
+
             }
 
 
@@ -1846,10 +1846,10 @@ class OpenAccPageTwoComponent extends Component {
             this.setState({
                 [`${input}Validation`]: false
             });
-           // alert(errMsg);
+            // alert(errMsg);
         }
 
-        
+
 
         return isValidationSuccess;
 
@@ -1857,13 +1857,13 @@ class OpenAccPageTwoComponent extends Component {
 
 
     validateFields = () => {
-       // return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
+        // return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
         let isValidationSuccess = false;
         try {
 
 
             const accType = this.props.navigation.getParam('accType', '');
-            AppUtils.Dlog(`validateFields::: ${ accType}`);
+            AppUtils.Dlog(`validateFields::: ${accType}`);
 
 
             this.setState(prevState => ({
@@ -1903,10 +1903,10 @@ class OpenAccPageTwoComponent extends Component {
 
                     empStatusValidation: true,
                     seniorPoliticalNameValidation: true,
-                    isSeniorPoliticalFigureValidation:true,
+                    isSeniorPoliticalFigureValidation: true,
 
                     militaryStatusValidation: true,
-                    isMilitaryHistoryValidation:true,
+                    isMilitaryHistoryValidation: true,
 
 
                 },
@@ -1945,10 +1945,10 @@ class OpenAccPageTwoComponent extends Component {
                     socialSecurityNoValidation: true,
                     empStatusValidation: true,
                     seniorPoliticalNameValidation: true,
-                    isSeniorPoliticalFigureValidation:true,
+                    isSeniorPoliticalFigureValidation: true,
 
                     militaryStatusValidation: true,
-                    isMilitaryHistoryValidation:true,
+                    isMilitaryHistoryValidation: true,
 
 
                 },
@@ -1966,7 +1966,7 @@ class OpenAccPageTwoComponent extends Component {
                     socialSecurityNoValidation: true,
                     relationshipToAccValidation: true,
                     seniorPoliticalNameValidation: true,
-                    isSeniorPoliticalFigureValidation:true,
+                    isSeniorPoliticalFigureValidation: true,
 
                 }
             }));
@@ -1983,10 +1983,10 @@ class OpenAccPageTwoComponent extends Component {
             } else {
                 isValidationSuccess = true;
             }
-            
+
 
         } catch (err) {
-            AppUtils.Dlog(`Error:::${ JSON.stringify(err)}`);
+            AppUtils.Dlog(`Error:::${JSON.stringify(err)}`);
         }
         return isValidationSuccess;
 
@@ -1998,12 +1998,12 @@ class OpenAccPageTwoComponent extends Component {
     generateKeyExtractor = (item) => item.key;
 
     renderCalender = (sectionName, calendarName) => {
-        AppUtils.Dlog(`renderCalender::: ${ calendarName}`);
+        AppUtils.Dlog(`renderCalender::: ${calendarName}`);
         return (
             <GDateComponent
                 date={this.state[sectionName][calendarName]}
                 placeholder="Select Date"
-                errorFlag={this.state[sectionName][`${calendarName }Validation`] !== undefined ? !this.state[sectionName][`${calendarName }Validation`] : false}
+                errorFlag={this.state[sectionName][`${calendarName}Validation`] !== undefined ? !this.state[sectionName][`${calendarName}Validation`] : false}
                 errMsg="Please selectDate"
                 onDateChange={this.onChangeDate(sectionName, calendarName)}
 
@@ -2073,7 +2073,7 @@ class OpenAccPageTwoComponent extends Component {
 
 */
     renderCustomDropDown = ({ section = "", stateKey = "", dropDownName = "", lblDropdownName = "", isOptional = false }) => {
-        const validationKey = `${stateKey }Validation`;
+        const validationKey = `${stateKey}Validation`;
         const validationKeyValue = this.state[section][validationKey] !== undefined ? !this.state[section][validationKey] : false;
 
         let dropDownData = dummyData;
@@ -2189,17 +2189,17 @@ class OpenAccPageTwoComponent extends Component {
 
         return (
             <GDropDownComponent
-                inputref={this.setInputRef(`${stateKey }${ inputRefKey}`)}
+                inputref={this.setInputRef(`${stateKey}${inputRefKey}`)}
                 dropDownLayout={styles.dropDownLayout}
                 dropDownTextName={styles.dropDownTextName}
-               // pickerStyle={styles.textInputStyle}
+                // pickerStyle={styles.textInputStyle}
                 dropDownName={lblDropdownName}
                 data={dropDownData}
                 dropDownValue={this.state[section][stateKey]}
-               // showDropDown={this.state[section][dropDownName]}
-               // changeState={(stateKey !== "taxBracket") ? this.onPressDropDown(section, dropDownName) : null}
+                // showDropDown={this.state[section][dropDownName]}
+                // changeState={(stateKey !== "taxBracket") ? this.onPressDropDown(section, dropDownName) : null}
                 selectedDropDownValue={this.onSelectedDropDownValue(section, stateKey, dropDownName)}
-               // itemToDisplay="value"
+                // itemToDisplay="value"
                 dropDownPostition={styles.dropDownPostition}
                 errorFlag={isOptional ? false : validationKeyValue}
                 errorText={this.state.errMsg}
@@ -2210,11 +2210,11 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
-    onSelectedDropDownValue = (section, stateKey, dropDownName) => (value, index,data) => {
+    onSelectedDropDownValue = (section, stateKey, dropDownName) => (value, index, data) => {
         AppUtils.Dlog("onSelectedDropDownValue:");
 
         let item = data[index];
-        const tempRankKey = `mil_rank_${ item.key}`;
+        const tempRankKey = `mil_rank_${item.key}`;
         let payload = "";
 
         if (dropDownName === "branchOfServiceDropDown") {
@@ -2232,7 +2232,7 @@ class OpenAccPageTwoComponent extends Component {
                 this.props.getRankData(payload);
             }
 
-        }else if (dropDownName === "annualIncomeDropDown") {
+        } else if (dropDownName === "annualIncomeDropDown") {
             this.setState(prevState => ({
                 [section]: {
                     ...prevState[section],
@@ -2249,14 +2249,14 @@ class OpenAccPageTwoComponent extends Component {
                     [stateKey]: item.value,
                     [dropDownName]: false
                 },
-                enableScrollViewScroll:true
+                enableScrollViewScroll: true
             }));
         }
 
     }
 
-    onSelectedIRABeneficiaryDropDownValue = (dropDownName, index) => (value, index,data) => {
-        AppUtils.Dlog(`onSelectedIRABeneficiaryDropDownValue:: ${ dropDownName}`);
+    onSelectedIRABeneficiaryDropDownValue = (dropDownName, index) => (value, index, data) => {
+        AppUtils.Dlog(`onSelectedIRABeneficiaryDropDownValue:: ${dropDownName}`);
         const newItems = [...this.state.retirementBeneficiaryData];
         let item = data[index];
         switch (dropDownName) {
@@ -2283,14 +2283,14 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onPressDropDownForIRABeneficiary = (keyName, index) => () => {
-        AppUtils.Dlog(`onPressDropDownForIRABeneficiary::: ${ keyName}`);
+        AppUtils.Dlog(`onPressDropDownForIRABeneficiary::: ${keyName}`);
         const newItems = [...this.state.retirementBeneficiaryData];
         newItems[index][keyName] = !newItems[index][keyName];
         newItems[index].firstNameValidation = true;
         newItems[index].lastNameValidation = true;
         newItems[index].dobValidation = true;
         newItems[index].emailAddressValidation = true;
-        newItems[index].socialSecurityNoValidation = true; 
+        newItems[index].socialSecurityNoValidation = true;
         newItems[index].beneficiaryTypeValidation = true;
         newItems[index].relationshipToAccValidation = true;
         newItems[index].beneficiaryDistPercentValidation = true;
@@ -2305,12 +2305,12 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.Dlog("onChangeTextForIRABeneficiary:::>");
         const newItems = [...this.state.retirementBeneficiaryData];
         newItems[index][keyName] = text;
-  
+
         newItems[index].firstNameValidation = true;
         newItems[index].lastNameValidation = true;
         newItems[index].dobValidation = true;
         newItems[index].emailAddressValidation = true;
-        newItems[index].socialSecurityNoValidation = true; 
+        newItems[index].socialSecurityNoValidation = true;
         newItems[index].beneficiaryTypeValidation = true;
         newItems[index].relationshipToAccValidation = true;
         newItems[index].beneficiaryDistPercentValidation = true;
@@ -2331,7 +2331,7 @@ class OpenAccPageTwoComponent extends Component {
         newItems[index].lastNameValidation = true;
         newItems[index].dobValidation = true;
         newItems[index].emailAddressValidation = true;
-        newItems[index].socialSecurityNoValidation = true; 
+        newItems[index].socialSecurityNoValidation = true;
         newItems[index].beneficiaryTypeValidation = true;
         newItems[index].relationshipToAccValidation = true;
         newItems[index].beneficiaryDistPercentValidation = true;
@@ -2341,7 +2341,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onPressRemoveIRABeneficiary = (index) => () => {
-        AppUtils.Dlog(`onPressRemoveIRABeneficiary::: ${ index}`);
+        AppUtils.Dlog(`onPressRemoveIRABeneficiary::: ${index}`);
         const newItems = [...this.state.retirementBeneficiaryData];
         newItems.splice(index, 1);
         this.setState({
@@ -2350,9 +2350,9 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onPressAddIRABeneficiary = () => {
-        AppUtils.Dlog("onPressAddIRABeneficiary::: " );
+        AppUtils.Dlog("onPressAddIRABeneficiary::: ");
 
-       const tempBeneficiaryObj = {
+        const tempBeneficiaryObj = {
             beneficiaryType: "",
             beneficiaryTypeDropDown: false,
             beneficiaryDistPercent: "",
@@ -2388,19 +2388,159 @@ class OpenAccPageTwoComponent extends Component {
 
         };
 
-        if (this.state.retirementBeneficiaryData.length< 3) {
+        if (this.state.retirementBeneficiaryData.length < 3) {
             const newItems = [...this.state.retirementBeneficiaryData, tempBeneficiaryObj];
             this.setState({
                 retirementBeneficiaryData: newItems
             });
         }
     }
-       
+
+    onSelectedEstateTrustDropDownValue = (dropDownName, index) => (value, index, data) => {
+        AppUtils.Dlog(`onSelectedEstateTrustDropDownValue:: ${dropDownName}`);
+        const newItems = [...this.state.estate.trusteeData];
+        let item = data[index];
+        switch (dropDownName) {
+
+            case "suffixDropDown":
+
+                break;
+            case "relationshipToAccDropDown":
+                newItems[index].relationshipToAccDropDown = false;
+                newItems[index].relationshipToAcc = item.value;
+                break;
+
+            default:
+                break;
+
+        }
+
+        this.setState({
+            selectedFundInvestmentsData: newItems
+        });
+
+
+    }
+
+    onPressDropDownForEstateTrust = (keyName, index) => () => {
+        AppUtils.Dlog(`onPressDropDownForEstateTrust::: ${keyName}`);
+        const newItems = [...this.state.estate.trusteeData];
+        newItems[index][keyName] = !newItems[index][keyName];
+        newItems[index].firstNameValidation = true;
+        newItems[index].lastNameValidation = true;
+        newItems[index].dobValidation = true;
+        newItems[index].emailAddressValidation = true;
+        newItems[index].socialSecurityNoValidation = true;
+        newItems[index].beneficiaryTypeValidation = true;
+        newItems[index].relationshipToAccValidation = true;
+        newItems[index].beneficiaryDistPercentValidation = true;
+
+        this.setState({
+            retirementBeneficiaryData: newItems
+        });
+
+    }
+
+    onChangeTextForEstateTrust = (keyName, index) => text => {
+        AppUtils.Dlog("onChangeTextForEstateTrust:::>");
+        const newItems = [...this.state.estate.trusteeData];
+        newItems[index][keyName] = text;
+
+        newItems[index].firstNameValidation = true;
+        newItems[index].lastNameValidation = true;
+        newItems[index].dobValidation = true;
+        newItems[index].emailAddressValidation = true;
+        newItems[index].socialSecurityNoValidation = true;
+        newItems[index].beneficiaryTypeValidation = true;
+        newItems[index].relationshipToAccValidation = true;
+        newItems[index].beneficiaryDistPercentValidation = true;
+
+
+        this.setState({
+            retirementBeneficiaryData: newItems,
+        });
+
+
+    }
+
+    onChangeDateForEstateTrust = (keyName, index) => dateStr => {
+        AppUtils.Dlog("onChangeDateForEstateTrust:::>");
+        const newItems = [...this.state.estate.trusteeData];
+        newItems[index][keyName] = dateStr;
+        newItems[index].firstNameValidation = true;
+        newItems[index].lastNameValidation = true;
+        newItems[index].dobValidation = true;
+        newItems[index].emailAddressValidation = true;
+        newItems[index].socialSecurityNoValidation = true;
+        newItems[index].beneficiaryTypeValidation = true;
+        newItems[index].relationshipToAccValidation = true;
+        newItems[index].beneficiaryDistPercentValidation = true;
+        this.setState({
+            retirementBeneficiaryData: newItems,
+        });
+    }
+
+    onPressRemoveEstateTrust = (index) => () => {
+        AppUtils.Dlog(`onPressRemoveEstateTrust::: ${index}`);
+        const newItems = [...this.state.estate.trusteeData];
+        newItems.splice(index, 1);
+        this.setState({
+            retirementBeneficiaryData: newItems
+        });
+    }
+
+    onPressAddIEstateTrust = () => {
+        AppUtils.Dlog("onPressAddIEstateTrust::: ");
+
+        const tempBeneficiaryObj = {
+            beneficiaryType: "",
+            beneficiaryTypeDropDown: false,
+            beneficiaryDistPercent: "",
+
+            prefix: "",
+            prefixDropDown: false,
+            firstName: "",
+            middleInitial: "",
+            lastName: "",
+            suffix: "",
+            suffixDropDown: false,
+            dob: "",
+            gender: "",
+
+            mobileNo: "",
+            emailAddress: "",
+            socialSecurityNo: "",
+            relationshipToAcc: "",
+            relationshipToAccDropDown: false,
+            phoneType: "",
+            phoneTypeDropDown: false,
+
+
+            phoneTypeValidation: true,
+            firstNameValidation: true,
+            lastNameValidation: true,
+            dobValidation: true,
+            emailAddressValidation: true,
+            socialSecurityNoValidation: true,
+            beneficiaryTypeValidation: true,
+            relationshipToAccValidation: true,
+            beneficiaryDistPercentValidation: true,
+
+        };
+
+        if (this.state.retirementBeneficiaryData.length < 3) {
+            const newItems = [...this.state.retirementBeneficiaryData, tempBeneficiaryObj];
+            this.setState({
+                retirementBeneficiaryData: newItems
+            });
+        }
+    }
+
 
 
 
     renderRadio = (sectionName, radioName, radioSize, componentStyle, layoutStyle) => {
-        AppUtils.Dlog(`renderRadio::: ${ radioName}`);
+        AppUtils.Dlog(`renderRadio::: ${radioName}`);
         let tempkey = "";// "title";
         let radioData = dummyData;
         switch (radioName) {
@@ -2418,13 +2558,13 @@ class OpenAccPageTwoComponent extends Component {
 
         }
 
-        AppUtils.Dlog(`tempkey::${ tempkey}`);
+        AppUtils.Dlog(`tempkey::${tempkey}`);
 
         if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
-            AppUtils.Dlog(`tempkey inside::${ tempkey}`);
+            AppUtils.Dlog(`tempkey inside::${tempkey}`);
             radioData = this.props.masterLookupStateData[tempkey].value;
         } else {
-            AppUtils.Dlog(`tempkey not there::${ tempkey}`);
+            AppUtils.Dlog(`tempkey not there::${tempkey}`);
 
         }
 
@@ -2510,16 +2650,16 @@ class OpenAccPageTwoComponent extends Component {
                     this.state.personal.isPersonalInfoExpanded &&
                     <View style={styles.childSectionGrp}>
                         <View style={styles.dropDownViewPrefix}>
-                        {this.renderCustomDropDown({
+                            {this.renderCustomDropDown({
                                 section: "personal",
                                 stateKey: "prefix",
                                 dropDownName: "prefixDropDown",
                                 lblDropdownName: gblStrings.accManagement.prefix,
                                 isOptional: true
                             })
-                            } 
+                            }
                         </View>
-                       
+
 
 
                         <Text style={styles.lblTxt}>
@@ -2529,7 +2669,7 @@ class OpenAccPageTwoComponent extends Component {
                             // inputref={(ref)=> this.firstName = ref}
                             inputref={this.setInputRef("firstName")}
                             value={this.state.personal.firstName}
-                            editable = {this.state.personal.firstName === ""}
+                            editable={this.state.personal.firstName === ""}
                             propInputStyle={this.state.personal.firstNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder=""
                             maxLength={gblStrings.maxLength.firstName}
@@ -2544,14 +2684,14 @@ class OpenAccPageTwoComponent extends Component {
                                 {gblStrings.accManagement.middleInitial}
                             </Text>
                             <Text style={styles.optionalTxt}>
-                                {` ${ gblStrings.accManagement.optional}`}
+                                {` ${gblStrings.accManagement.optional}`}
                             </Text>
                         </Text>
                         <GInputComponent
                             // inputref={(ref)=> this.middleInitial = ref}
                             inputref={this.setInputRef("middleInitial")}
                             value={this.state.personal.middleInitial}
-                            editable = {this.props.initialState.middleInitial === ""}
+                            editable={this.props.initialState.middleInitial === ""}
                             propInputStyle={styles.customTxtBox}
                             placeholder=""
                             maxLength={gblStrings.maxLength.middleInitial}
@@ -2567,7 +2707,7 @@ class OpenAccPageTwoComponent extends Component {
                             // inputref={ref => this.lastName = ref}
                             inputref={this.setInputRef("lastName")}
                             value={this.state.personal.lastName}
-                            editable = {this.state.personal.lastName === ""}
+                            editable={this.state.personal.lastName === ""}
                             propInputStyle={this.state.personal.lastNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder=""
                             maxLength={gblStrings.maxLength.lastName}
@@ -2608,10 +2748,10 @@ class OpenAccPageTwoComponent extends Component {
                         </Text>
                         {this.renderRadio("personal", "gender", 30, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
                         {!this.state.personal.genderValidation &&
-                                    <Text style={styles.errMsg}>
-                                        {this.state.errMsg}
-                                    </Text>
-                                }
+                            <Text style={styles.errMsg}>
+                                {this.state.errMsg}
+                            </Text>
+                        }
 
 
                         {this.renderCustomDropDown({
@@ -2627,7 +2767,7 @@ class OpenAccPageTwoComponent extends Component {
                             {gblStrings.accManagement.citizenship}
                         </Text>
                         {this.renderRadio("personal", "citizenship", 30, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
-                       
+
                         {
                             this.state.personal.citizenship !== "U.S" &&
                             <View style={styles.uploadW8View}>
@@ -2651,16 +2791,16 @@ class OpenAccPageTwoComponent extends Component {
                             </View>
 
                         }
-                        
+
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.addressType}
                         </Text>
                         {this.renderRadio("personal", "mailingAddressType", 30, { marginBottom: scaledHeight(13) }, styles.radioBtnColGrp)}
                         {!this.state.personal.mailingAddressTypeValidation &&
-                                    <Text style={styles.errMsg}>
-                                        {this.state.errMsg}
-                                    </Text>
-                                }
+                            <Text style={styles.errMsg}>
+                                {this.state.errMsg}
+                            </Text>
+                        }
 
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.address}
@@ -2702,8 +2842,8 @@ class OpenAccPageTwoComponent extends Component {
                             maxLength={gblStrings.maxLength.zipCode}
                             returnKeyType="done"
                             onChangeText={this.onChangeText("personal", "zipcode")}
-                            keyboardType ="number-pad"
-                            onSubmitEditing = {this.onSubmitZipEditing("personal", "zipcode", this.city)}
+                            keyboardType="number-pad"
+                            onSubmitEditing={this.onSubmitZipEditing("personal", "zipcode", this.city)}
                             errorFlag={!this.state.personal.zipcodeValidation}
                             errorText={this.state.errMsg}
                         />
@@ -2721,9 +2861,9 @@ class OpenAccPageTwoComponent extends Component {
                             onSubmitEditing={this.onSubmitEditing(this.stateCity)}
                             errorFlag={!this.state.personal.cityValidation}
                             errorText={this.state.errMsg}
-                            editable = {this.state.personal.citizenship !== "U.S"}
+                            editable={this.state.personal.citizenship !== "U.S"}
 
-                        /> 
+                        />
                         <GInputComponent
                             inputref={this.setInputRef("stateCity")}
                             propInputStyle={this.state.personal.stateCityValidation ? styles.customTxtBox : styles.customTxtBoxError}
@@ -2735,7 +2875,7 @@ class OpenAccPageTwoComponent extends Component {
                             onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
                             errorFlag={!this.state.personal.stateCityValidation}
                             errorText={this.state.errMsg}
-                            editable = {this.state.personal.citizenship !== "U.S"}
+                            editable={this.state.personal.citizenship !== "U.S"}
 
                         />
 
@@ -2770,10 +2910,10 @@ class OpenAccPageTwoComponent extends Component {
                             />
                         </View>
                         {!this.state.personal.isYourPhysicalAddresSameValidation &&
-                                    <Text style={styles.errMsg}>
-                                        {this.state.errMsg}
-                                    </Text>
-                                }
+                            <Text style={styles.errMsg}>
+                                {this.state.errMsg}
+                            </Text>
+                        }
 
                         {
                             this.state.personal.isYourPhysicalAddresSame === "No" &&
@@ -2837,7 +2977,7 @@ class OpenAccPageTwoComponent extends Component {
                                     onSubmitEditing={this.onSubmitEditing(this.stateCity_Phy)}
                                     errorFlag={!this.state.personal.city_PhyValidation}
                                     errorText={this.state.errMsg}
-                                    editable = {this.state.personal.citizenship !== "U.S"}
+                                    editable={this.state.personal.citizenship !== "U.S"}
 
 
                                 />
@@ -2852,7 +2992,7 @@ class OpenAccPageTwoComponent extends Component {
                                     onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
                                     errorFlag={!this.state.personal.stateCity_PhyValidation}
                                     errorText={this.state.errMsg}
-                                    editable = {this.state.personal.citizenship !== "U.S"}
+                                    editable={this.state.personal.citizenship !== "U.S"}
 
                                 />
 
@@ -2878,7 +3018,7 @@ class OpenAccPageTwoComponent extends Component {
                             placeholder={gblStrings.accManagement.phoneNoFormat}
                             maxLength={gblStrings.maxLength.mobileNo}
                             keyboardType="phone-pad"
-                            value = {this.state.personal.mobileNo.replace(/\d(?=\d{4})/g, "*")}
+                            value={this.state.personal.mobileNo.replace(/\d(?=\d{4})/g, "*")}
                             onChangeText={this.onChangeText("personal", "mobileNo")}
                             onSubmitEditing={this.onSubmitEditing(this.contactDuringMobNo)}
                             errorFlag={!this.state.personal.mobileNoValidation}
@@ -2910,7 +3050,7 @@ class OpenAccPageTwoComponent extends Component {
                                 {gblStrings.accManagement.telePhoneNo2}
                             </Text>
                             <Text style={styles.optionalTxt}>
-                                {` ${ gblStrings.accManagement.optional}`}
+                                {` ${gblStrings.accManagement.optional}`}
                             </Text>
                         </Text>
                         <GInputComponent
@@ -2948,7 +3088,7 @@ class OpenAccPageTwoComponent extends Component {
                                 {gblStrings.accManagement.telePhoneNo3}
                             </Text>
                             <Text style={styles.optionalTxt}>
-                                {` ${ gblStrings.accManagement.optional}`}
+                                {` ${gblStrings.accManagement.optional}`}
                             </Text>
                         </Text>
                         <GInputComponent
@@ -2984,7 +3124,7 @@ class OpenAccPageTwoComponent extends Component {
                             onSubmitEditing={this.onSubmitEditing(this.socialSecurityNo)}
                             errorFlag={!this.state.personal.emailAddressValidation}
                             errorText={this.state.errMsg}
-                            value = {this.state.personal.emailAddress}
+                            value={this.state.personal.emailAddress}
 
                         />
 
@@ -3083,8 +3223,8 @@ class OpenAccPageTwoComponent extends Component {
                                         maxLength={gblStrings.maxLength.common}
                                         onChangeText={this.onChangeText("personal", "empIndustryForOther")}
                                         onSubmitEditing={this.onSubmitEditing(this.empOccupation)}
-                                    errorFlag={!this.state.personal.empIndustryForOtherValidation}
-                                    errorText={this.state.errMsg}
+                                        errorFlag={!this.state.personal.empIndustryForOtherValidation}
+                                        errorText={this.state.errMsg}
                                     />
                                 }
 
@@ -3633,7 +3773,7 @@ class OpenAccPageTwoComponent extends Component {
                                 {gblStrings.accManagement.middleInitial}
                             </Text>
                             <Text style={styles.optionalTxt}>
-                                {` ${ gblStrings.accManagement.optional}`}
+                                {` ${gblStrings.accManagement.optional}`}
                             </Text>
                         </Text>
                         <GInputComponent
@@ -3663,7 +3803,7 @@ class OpenAccPageTwoComponent extends Component {
                             errorText={this.state.errMsg}
                         />
 
-                     
+
                         <View style={styles.dropDownViewPrefix}>
                             {this.renderCustomDropDown({
                                 section: "jointOwner",
@@ -3806,7 +3946,7 @@ class OpenAccPageTwoComponent extends Component {
                             onSubmitEditing={this.onSubmitEditing(this.stateCity_joint)}
                             errorFlag={!this.state.jointOwner.cityValidation}
                             errorText={this.state.errMsg}
-                            editable = {this.state.jointOwner.citizenship !== "U.S"}
+                            editable={this.state.jointOwner.citizenship !== "U.S"}
 
 
 
@@ -3822,7 +3962,7 @@ class OpenAccPageTwoComponent extends Component {
                             onSubmitEditing={this.onSubmitEditing(this.mobileNo_joint)}
                             errorFlag={!this.state.jointOwner.stateCityValidation}
                             errorText={this.state.errMsg}
-                            editable = {this.state.jointOwner.citizenship !== "U.S"}
+                            editable={this.state.jointOwner.citizenship !== "U.S"}
 
                         />
 
@@ -3923,7 +4063,7 @@ class OpenAccPageTwoComponent extends Component {
                                     onSubmitEditing={this.onSubmitEditing(this.stateCity_Phy_joint)}
                                     errorFlag={!this.state.jointOwner.city_PhyValidation}
                                     errorText={this.state.errMsg}
-                                    editable = {this.state.jointOwner.citizenship !== "U.S"}
+                                    editable={this.state.jointOwner.citizenship !== "U.S"}
 
 
                                 />
@@ -3938,14 +4078,14 @@ class OpenAccPageTwoComponent extends Component {
                                     onSubmitEditing={this.onSubmitEditing(this.mobileNo_joint)}
                                     errorFlag={!this.state.jointOwner.stateCity_PhyValidation}
                                     errorText={this.state.errMsg}
-                                    editable = {this.state.jointOwner.citizenship !== "U.S"}
+                                    editable={this.state.jointOwner.citizenship !== "U.S"}
 
                                 />
 
                             </View>
                         }
-                 
-                      
+
+
 
 
                         {this.renderCustomDropDown({
@@ -3968,7 +4108,7 @@ class OpenAccPageTwoComponent extends Component {
                             maxLength={gblStrings.maxLength.mobileNo}
                             keyboardType="phone-pad"
                             onChangeText={this.onChangeText("jointOwner", "mobileNo")}
-                            value = {this.state.jointOwner.mobileNo.replace(/\d(?=\d{4})/g, "*")}
+                            value={this.state.jointOwner.mobileNo.replace(/\d(?=\d{4})/g, "*")}
                             onSubmitEditing={this.onSubmitEditing(this.telePhoneNo2_joint)}
                             errorFlag={!this.state.jointOwner.mobileNoValidation}
                             errorText={this.state.errMsg}
@@ -4000,7 +4140,7 @@ class OpenAccPageTwoComponent extends Component {
                                 {gblStrings.accManagement.telePhoneNo2}
                             </Text>
                             <Text style={styles.optionalTxt}>
-                                {` ${ gblStrings.accManagement.optional}`}
+                                {` ${gblStrings.accManagement.optional}`}
                             </Text>
                         </Text>
                         <GInputComponent
@@ -4038,7 +4178,7 @@ class OpenAccPageTwoComponent extends Component {
                                 {gblStrings.accManagement.telePhoneNo3}
                             </Text>
                             <Text style={styles.optionalTxt}>
-                                {` ${ gblStrings.accManagement.optional}`}
+                                {` ${gblStrings.accManagement.optional}`}
                             </Text>
                         </Text>
                         <GInputComponent
@@ -4132,8 +4272,8 @@ class OpenAccPageTwoComponent extends Component {
                             isOptional: false
                         })
                         }
-                       
-                         {this.state.jointOwner.empStatus === "Others" &&
+
+                        {this.state.jointOwner.empStatus === "Others" &&
                             <GInputComponent
                                 inputref={this.setInputRef("empStatusForOther_joint")}
                                 propInputStyle={styles.customTxtBox}
@@ -4173,8 +4313,8 @@ class OpenAccPageTwoComponent extends Component {
 
                                         onChangeText={this.onChangeText("jointOwner", "empIndustryForOther")}
                                         onSubmitEditing={this.onSubmitEditing(this.empOccupation)}
-                                    errorFlag={!this.state.jointOwner.empIndustryForOtherValidation}
-                                    errorText={this.state.errMsg}
+                                        errorFlag={!this.state.jointOwner.empIndustryForOtherValidation}
+                                        errorText={this.state.errMsg}
                                     />
                                 }
                                 <Text style={styles.lblTxt}>
@@ -4610,10 +4750,10 @@ class OpenAccPageTwoComponent extends Component {
                         />
                     </View>
                     {!this.state.jointOwner.isSeniorPoliticalFigureValidation &&
-                            <Text style={styles.errMsg}>
-                                {this.state.errMsg}
-                            </Text>
-                        }
+                        <Text style={styles.errMsg}>
+                            {this.state.errMsg}
+                        </Text>
+                    }
                     {this.state.jointOwner.isSeniorPoliticalFigure === "Yes" &&
 
                         <View>
@@ -4700,7 +4840,7 @@ class OpenAccPageTwoComponent extends Component {
                             {gblStrings.accManagement.middleInitial}
                         </Text>
                         <Text style={styles.optionalTxt}>
-                            {` ${ gblStrings.accManagement.optional}`}
+                            {` ${gblStrings.accManagement.optional}`}
                         </Text>
                     </Text>
                     <GInputComponent
@@ -4853,10 +4993,10 @@ class OpenAccPageTwoComponent extends Component {
                         />
                     </View>
                     {!this.state.childBeneficiary.isSeniorPoliticalFigureValidation &&
-                            <Text style={styles.errMsg}>
-                                {this.state.errMsg}
-                            </Text>
-                        }
+                        <Text style={styles.errMsg}>
+                            {this.state.errMsg}
+                        </Text>
+                    }
                     {this.state.childBeneficiary.isSeniorPoliticalFigure === "Yes" &&
 
                         <View>
@@ -4873,7 +5013,7 @@ class OpenAccPageTwoComponent extends Component {
                                 onChangeText={this.onChangeText("childBeneficiary", "seniorPoliticalName")}
                                 errorFlag={!this.state.childBeneficiary.seniorPoliticalNameValidation}
                                 errorText={this.state.errMsg}
-        
+
                             />
                         </View>
 
@@ -4933,14 +5073,14 @@ class OpenAccPageTwoComponent extends Component {
                         {gblStrings.accManagement.beneficiariesCond}
                     </Text>
                     {this.state.retirementBeneficiaryData.map((item, index) => {
-                        const key = `benificairy${ index}`;
+                        const key = `benificairy${index}`;
                         return (
                             <View
                                 key={key}
                             >
 
                                 <GDropDownComponent
-                                    inputref={this.setInputRef(`beneficiaryType${ index}`)}
+                                    inputref={this.setInputRef(`beneficiaryType${index}`)}
                                     dropDownLayout={styles.dropDownLayout}
                                     dropDownTextName={styles.dropDownTextName}
                                     textInputStyle={styles.textInputStyle}
@@ -4960,7 +5100,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
                                 <GDropDownComponent
-                                    inputref={this.setInputRef(`relationshipToAcc${ index}`)}
+                                    inputref={this.setInputRef(`relationshipToAcc${index}`)}
                                     dropDownLayout={styles.dropDownLayout}
                                     dropDownTextName={styles.dropDownTextName}
                                     textInputStyle={styles.textInputStyle}
@@ -4987,14 +5127,14 @@ class OpenAccPageTwoComponent extends Component {
                                     <View style={styles.distributionCol2}>
 
                                         <GInputComponent
-                                            inputref={this.setInputRef(`beneficiaryDistPercent${ index}`)}
+                                            inputref={this.setInputRef(`beneficiaryDistPercent${index}`)}
                                             propInputStyle={styles.customTxtBox}
                                             placeholder=""
                                             value={this.state.retirementBeneficiaryData[index].beneficiaryDistPercent}
                                             maxLength={gblStrings.maxLength.distributionPercentage}
                                             keyboardType="decimal-pad"
                                             onChangeText={this.onChangeTextForIRABeneficiary("beneficiaryDistPercent", index)}
-                                            onSubmitEditing={this.onSubmitEditing(this[`beneficiaryDistPercent${ index}`])}
+                                            onSubmitEditing={this.onSubmitEditing(this[`beneficiaryDistPercent${index}`])}
                                             errorFlag={!this.state.retirementBeneficiaryData[index].beneficiaryDistPercentValidation}
                                             errorText={this.state.errMsg}
 
@@ -5014,14 +5154,14 @@ class OpenAccPageTwoComponent extends Component {
                                 </Text>
 
                                 <GInputComponent
-                                    inputref={this.setInputRef(`socialSecurityNo${ index}`)}
+                                    inputref={this.setInputRef(`socialSecurityNo${index}`)}
                                     propInputStyle={styles.customTxtBox}
                                     placeholder={gblStrings.accManagement.ssnNoFormat}
                                     value={this.state.retirementBeneficiaryData[index].socialSecurityNo}
                                     keyboardType="number-pad"
                                     maxLength={gblStrings.maxLength.ssnNo}
                                     onChangeText={this.onChangeTextForIRABeneficiary("socialSecurityNo", index)}
-                                    onSubmitEditing={this.onSubmitEditing(this[`firstName${ index}`])}
+                                    onSubmitEditing={this.onSubmitEditing(this[`firstName${index}`])}
                                     errorFlag={!this.state.retirementBeneficiaryData[index].socialSecurityNoValidation}
                                     errorText={this.state.errMsg}
                                     secureTextEntry
@@ -5032,13 +5172,13 @@ class OpenAccPageTwoComponent extends Component {
                                 </Text>
 
                                 <GInputComponent
-                                    inputref={this.setInputRef(`firstName${ index}`)}
+                                    inputref={this.setInputRef(`firstName${index}`)}
                                     propInputStyle={styles.customTxtBox}
                                     value={this.state.retirementBeneficiaryData[index].firstName}
                                     placeholder=""
                                     maxLength={gblStrings.maxLength.firstName}
                                     onChangeText={this.onChangeTextForIRABeneficiary("firstName", index)}
-                                    onSubmitEditing={this.onSubmitEditing(this[`middleInitial${ index}`])}
+                                    onSubmitEditing={this.onSubmitEditing(this[`middleInitial${index}`])}
                                     errorFlag={!this.state.retirementBeneficiaryData[index].firstNameValidation}
                                     errorText={this.state.errMsg}
 
@@ -5049,18 +5189,18 @@ class OpenAccPageTwoComponent extends Component {
                                         {gblStrings.accManagement.middleInitial}
                                     </Text>
                                     <Text style={styles.optionalTxt}>
-                                        {` ${ gblStrings.accManagement.optional}`}
+                                        {` ${gblStrings.accManagement.optional}`}
                                     </Text>
                                 </Text>
 
                                 <GInputComponent
-                                    inputref={this.setInputRef(`middleInitial${ index}`)}
+                                    inputref={this.setInputRef(`middleInitial${index}`)}
                                     propInputStyle={styles.customTxtBox}
                                     value={this.state.retirementBeneficiaryData[index].middleInitial}
                                     placeholder=""
                                     maxLength={gblStrings.maxLength.middleInitial}
                                     onChangeText={this.onChangeTextForIRABeneficiary("middleInitial", index)}
-                                    onSubmitEditing={this.onSubmitEditing(this[`lastName${ index}`])}
+                                    onSubmitEditing={this.onSubmitEditing(this[`lastName${index}`])}
 
 
                                 />
@@ -5071,13 +5211,13 @@ class OpenAccPageTwoComponent extends Component {
 
 
                                 <GInputComponent
-                                    inputref={this.setInputRef(`lastName${ index}`)}
+                                    inputref={this.setInputRef(`lastName${index}`)}
                                     propInputStyle={styles.customTxtBox}
                                     value={this.state.retirementBeneficiaryData[index].lastName}
                                     placeholder=""
                                     maxLength={gblStrings.maxLength.lastName}
                                     onChangeText={this.onChangeTextForIRABeneficiary("lastName", index)}
-                                    onSubmitEditing={this.onSubmitEditing(this[`dob${ index}`])}
+                                    onSubmitEditing={this.onSubmitEditing(this[`dob${index}`])}
                                     errorFlag={!this.state.retirementBeneficiaryData[index].lastNameValidation}
                                     errorText={this.state.errMsg}
 
@@ -5089,7 +5229,7 @@ class OpenAccPageTwoComponent extends Component {
                                     {gblStrings.accManagement.dob}
                                 </Text>
                                 <GDateComponent
-                                    inputref={this.setInputRef(`dob${ index}`)}
+                                    inputref={this.setInputRef(`dob${index}`)}
                                     date={this.state.retirementBeneficiaryData[index].dob}
                                     value={this.state.retirementBeneficiaryData[index].dob}
                                     placeholder="Select Date"
@@ -5107,7 +5247,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
                                 <GInputComponent
-                                    inputref={this.setInputRef(`emailAddress${ index}`)}
+                                    inputref={this.setInputRef(`emailAddress${index}`)}
                                     propInputStyle={styles.customTxtBox}
                                     value={this.state.retirementBeneficiaryData[index].emailAddress}
                                     placeholder=""
@@ -5154,6 +5294,7 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View>
                 <this.renderEstateInfo />
+                <this.renderTrusteeInfo />
             </View>
         );
     }
@@ -5181,9 +5322,6 @@ class OpenAccPageTwoComponent extends Component {
                 {
                     this.state.estate.isTrustInfoExpanded &&
                     <View style={styles.childSectionGrp}>
-                       
-                       
-
 
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.estateName}
@@ -5202,8 +5340,6 @@ class OpenAccPageTwoComponent extends Component {
                         />
 
 
-                       
-
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.creationDate}
                         </Text>
@@ -5217,7 +5353,7 @@ class OpenAccPageTwoComponent extends Component {
                             onDateChange={this.onChangeDate("estate", "creationDate")}
                         />
 
-                        
+
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.socialSecurityNo}
                         </Text>
@@ -5227,7 +5363,6 @@ class OpenAccPageTwoComponent extends Component {
                             placeholder={gblStrings.accManagement.ssnNoFormat}
                             value={this.state.estate.socialSecurityNo}
                             keyboardType="number-pad"
-                            returnKeyType="done"
                             maxLength={gblStrings.maxLength.ssnNo}
                             onChangeText={this.onChangeText("estate", "socialSecurityNo")}
                             onSubmitEditing={this.onSubmitEditing(this.addrLine1)}
@@ -5236,8 +5371,8 @@ class OpenAccPageTwoComponent extends Component {
                             secureTextEntry
 
                         />
-                        
-                       
+
+
 
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.address}
@@ -5279,8 +5414,8 @@ class OpenAccPageTwoComponent extends Component {
                             maxLength={gblStrings.maxLength.zipCode}
                             returnKeyType="done"
                             onChangeText={this.onChangeText("estate", "zipcode")}
-                            keyboardType ="number-pad"
-                            onSubmitEditing = {this.onSubmitZipEditing("estate", "zipcode", this.city)}
+                            keyboardType="number-pad"
+                            onSubmitEditing={this.onSubmitZipEditing("estate", "zipcode", this.city)}
                             errorFlag={!this.state.personal.zipcodeValidation}
                             errorText={this.state.errMsg}
                         />
@@ -5298,9 +5433,9 @@ class OpenAccPageTwoComponent extends Component {
                             onSubmitEditing={this.onSubmitEditing(this.stateCity)}
                             errorFlag={!this.state.estate.cityValidation}
                             errorText={this.state.errMsg}
-                            editable = {false}
+                            editable={false}
 
-                        /> 
+                        />
                         <GInputComponent
                             inputref={this.setInputRef("stateCity")}
                             propInputStyle={this.state.estate.stateCityValidation ? styles.customTxtBox : styles.customTxtBoxError}
@@ -5312,7 +5447,7 @@ class OpenAccPageTwoComponent extends Component {
                             onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
                             errorFlag={!this.state.estate.stateCityValidation}
                             errorText={this.state.errMsg}
-                            editable = {false}
+                            editable={false}
 
                         />
 
@@ -5347,10 +5482,10 @@ class OpenAccPageTwoComponent extends Component {
                             />
                         </View>
                         {!this.state.estate.isYourPhysicalAddresSameValidation &&
-                                    <Text style={styles.errMsg}>
-                                        {this.state.errMsg}
-                                    </Text>
-                                }
+                            <Text style={styles.errMsg}>
+                                {this.state.errMsg}
+                            </Text>
+                        }
 
                         {
                             this.state.estate.isYourPhysicalAddresSame === "No" &&
@@ -5414,7 +5549,7 @@ class OpenAccPageTwoComponent extends Component {
                                     onSubmitEditing={this.onSubmitEditing(this.stateCity_Phy)}
                                     errorFlag={!this.state.estate.city_PhyValidation}
                                     errorText={this.state.errMsg}
-                                    editable = {false}
+                                    editable={false}
 
 
                                 />
@@ -5429,7 +5564,7 @@ class OpenAccPageTwoComponent extends Component {
                                     onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
                                     errorFlag={!this.state.estate.stateCity_PhyValidation}
                                     errorText={this.state.errMsg}
-                                    editable = {false}
+                                    editable={false}
 
                                 />
 
@@ -5485,7 +5620,458 @@ class OpenAccPageTwoComponent extends Component {
                             errorText={this.state.errMsg}
                         />
 
-                       
+                    </View>
+                }
+            </View>
+
+        );
+    }
+
+    renderTrusteeInfo = () => {
+        return (
+            <View style={styles.sectionGrp}>
+                <View style={styles.accTypeSelectSection}>
+                    <Text style={styles.headings}>
+                        {gblStrings.accManagement.trusteeOrExector}
+                    </Text>
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                        onPress={this.onClickExpandCollpaseEvent("estate", "isTrusteeInfoExpanded")}
+                    >
+                        <Text style={styles.expandCollpaseTxt}>
+                            {this.state.estate.isTrusteeInfoExpanded ? "[ - ]" : "[ + ]"}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    accessibilityRole="button"
+                // onPress={}
+                >
+                    <Text style={styles.addTrustee}>
+                        {gblStrings.accManagement.addTrusteeOrExector}
+                    </Text>
+                </TouchableOpacity>
+                <Text style={styles.lblLine} />
+
+                {
+                    this.state.estate.isTrusteeInfoExpanded &&
+                    <View style={styles.childSectionGrp}>
+                        {this.state.estate.trusteeData.map((item, index) => {
+                            const key = `trustee${index}`;
+                            return (
+                                <View style={styles.commonColView}
+                                    key={key}
+                                >
+
+
+
+                                    <Text style={styles.lblTxt}>
+                                        {gblStrings.accManagement.firstName}
+                                    </Text>
+
+                                    <GInputComponent
+                                        inputref={this.setInputRef(`firstName${index}`)}
+                                        propInputStyle={styles.customTxtBox}
+                                        value={this.state.estate.trusteeData[index].firstName}
+                                        placeholder=""
+                                        maxLength={gblStrings.maxLength.firstName}
+                                        onChangeText={this.onChangeTextForIRABeneficiary("firstName", index)}
+                                        onSubmitEditing={this.onSubmitEditing(this[`middleInitial${index}`])}
+                                        errorFlag={!this.state.estate.trusteeData[index].firstNameValidation}
+                                        errorText={this.state.errMsg}
+
+                                    />
+
+                                    <Text style={styles.lblTxt}>
+                                        <Text style={styles.lblTxt}>
+                                            {gblStrings.accManagement.middleInitial}
+                                        </Text>
+                                        <Text style={styles.optionalTxt}>
+                                            {` ${gblStrings.accManagement.optional}`}
+                                        </Text>
+                                    </Text>
+
+                                    <GInputComponent
+                                        inputref={this.setInputRef(`middleInitial${index}`)}
+                                        propInputStyle={styles.customTxtBox}
+                                        value={this.state.estate.trusteeData[index].middleInitial}
+                                        placeholder=""
+                                        maxLength={gblStrings.maxLength.middleInitial}
+                                        onChangeText={this.onChangeTextForIRABeneficiary("middleInitial", index)}
+                                        onSubmitEditing={this.onSubmitEditing(this[`lastName${index}`])}
+
+
+                                    />
+
+                                    <Text style={styles.lblTxt}>
+                                        {gblStrings.accManagement.lastName}
+                                    </Text>
+
+
+                                    <GInputComponent
+                                        inputref={this.setInputRef(`lastName${index}`)}
+                                        propInputStyle={styles.customTxtBox}
+                                        value={this.state.estate.trusteeData[index].lastName}
+                                        placeholder=""
+                                        maxLength={gblStrings.maxLength.lastName}
+                                        onChangeText={this.onChangeTextForIRABeneficiary("lastName", index)}
+                                        onSubmitEditing={this.onSubmitEditing(this[`suffix${index}`])}
+                                        errorFlag={!this.state.estate.trusteeData[index].lastNameValidation}
+                                        errorText={this.state.errMsg}
+
+                                    />
+
+                                    <View style={styles.dropDownViewPrefix}>
+                                        {this.renderCustomDropDown({
+                                            section: "personal",
+                                            stateKey: "suffix",
+                                            dropDownName: "suffixDropDown",
+                                            lblDropdownName: gblStrings.accManagement.suffix,
+                                            isOptional: true
+                                        })
+                                        }
+                                    </View>
+
+
+
+
+                                    <Text style={styles.lblTxt}>
+                                        {gblStrings.accManagement.memberNumber}
+                                    </Text>
+                                    <GInputComponent
+                                        inputref={this.setInputRef(`memberNumber${index}`)}
+                                        propInputStyle={styles.customTxtBox}
+                                        placeholder={gblStrings.accManagement.ssnNoFormat}
+                                        value={this.state.estate.trusteeData[index].memberNumber}
+                                        keyboardType="number-pad"
+                                        maxLength={gblStrings.maxLength.ssnNo}
+                                        onChangeText={this.onChangeTextForEstateTrust("memberNumber", index)}
+                                        onSubmitEditing={this.onSubmitEditing(this[`socialSecurityNo${index}`])}
+                                        errorFlag={!this.state.estate.trusteeData[index].memberNumberValidation}
+                                        errorText={this.state.errMsg}
+                                    />
+
+                                    <Text style={styles.lblTxt}>
+                                        {gblStrings.accManagement.socialSecurityNo}
+                                    </Text>
+                                    <GInputComponent
+                                        inputref={this.setInputRef(`socialSecurityNo${index}`)}
+                                        propInputStyle={styles.customTxtBox}
+                                        placeholder={gblStrings.accManagement.ssnNoFormat}
+                                        value={this.state.estate.trusteeData[index].socialSecurityNo}
+                                        keyboardType="number-pad"
+                                        maxLength={gblStrings.maxLength.ssnNo}
+                                        onChangeText={this.onChangeTextForEstateTrust("socialSecurityNo", index)}
+                                        onSubmitEditing={this.onSubmitEditing(this[`dob${index}`])}
+                                        errorFlag={!this.state.estate.trusteeData[index].socialSecurityNoValidation}
+                                        errorText={this.state.errMsg}
+                                        secureTextEntry
+                                    />
+
+                                    <Text style={styles.lblTxt}>
+                                        {gblStrings.accManagement.dob}
+                                    </Text>
+                                    <GDateComponent
+                                        inputref={this.setInputRef(`dob${index}`)}
+                                        date={this.state.estate.trusteeData[index].dob}
+                                        value={this.state.estate.trusteeData[index].dob}
+                                        placeholder="Select Date"
+                                        errorFlag={!this.state.estate.trusteeData[index].dobValidation}
+                                        errorMsg={this.state.errMsg}
+                                        maxDate={prevDate}
+                                        onDateChange={this.onChangeDateForIRABeneficiary("dob", index)}
+
+                                    />
+
+
+
+                                    <Text style={styles.lblTxt}>
+                                        {gblStrings.accManagement.citizenship}
+                                    </Text>
+                                    {this.renderRadio("personal", "citizenship", 30, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
+
+                                    {
+                                        this.state.personal.citizenship !== "U.S" &&
+                                        <View style={styles.uploadW8View}>
+                                            <Text>
+                                                <Text style={styles.lblTxt}>
+                                                    {gblStrings.accManagement.uploadW8Form}
+                                                </Text>
+                                                <Text style={styles.optionalTxt}>
+                                                    {`  ${gblStrings.accManagement.whatISW8Form}`}
+                                                </Text>
+                                            </Text>
+
+
+                                            <GButtonComponent
+                                                buttonStyle={styles.browseBtn}
+                                                buttonText={gblStrings.common.browse}
+                                                textStyle={styles.normalBlackBtnTxt}
+                                                onPress={this.uploadForm}
+
+                                            />
+                                        </View>
+
+                                    }
+
+
+                                    <Text style={styles.lblTxt}>
+                                        {gblStrings.accManagement.mailingAddress}
+                                    </Text>
+                                    <GInputComponent
+                                        inputref={this.setInputRef("addrLine1")}
+                                        propInputStyle={this.state.personal.addrLine1Validation ? styles.customTxtBox : styles.customTxtBoxError}
+                                        placeholder={gblStrings.accManagement.empAddrLine1}
+                                        maxLength={gblStrings.maxLength.emplAddress1}
+                                        value={this.state.personal.addrLine1}
+                                        onChangeText={this.onChangeText("personal", "addrLine1")}
+                                        onSubmitEditing={this.onSubmitEditing(this.addrLine2)}
+                                        errorFlag={!this.state.personal.addrLine1Validation}
+                                        errorText={this.state.errMsg}
+                                    />
+                                    <GInputComponent
+                                        inputref={this.setInputRef("addrLine2")}
+                                        propInputStyle={this.state.personal.addrLine2Validation ? styles.customTxtBox : styles.customTxtBoxError}
+                                        placeholder={gblStrings.accManagement.empAddrLine2}
+                                        maxLength={gblStrings.maxLength.addressLine2}
+                                        value={this.state.personal.addrLine2}
+                                        onChangeText={this.onChangeText("personal", "addrLine2")}
+                                        onSubmitEditing={this.onSubmitEditing(this.zipcode)}
+                                        errorFlag={!this.state.personal.addrLine2Validation}
+                                        errorText={this.state.errMsg}
+
+
+                                    />
+
+
+                                    <Text style={styles.lblTxt}>
+                                        {gblStrings.accManagement.zipcode}
+                                    </Text>
+                                    <GInputComponent
+                                        inputref={this.setInputRef("zipcode")}
+                                        propInputStyle={this.state.personal.zipcodeValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                        placeholder={gblStrings.accManagement.enterZip}
+                                        value={this.state.personal.zipcode}
+                                        maxLength={gblStrings.maxLength.zipCode}
+                                        returnKeyType="done"
+                                        onChangeText={this.onChangeText("personal", "zipcode")}
+                                        keyboardType="number-pad"
+                                        onSubmitEditing={this.onSubmitZipEditing("personal", "zipcode", this.city)}
+                                        errorFlag={!this.state.personal.zipcodeValidation}
+                                        errorText={this.state.errMsg}
+                                    />
+
+                                    <Text style={styles.lblTxt}>
+                                        {gblStrings.accManagement.cityAndState}
+                                    </Text>
+                                    <GInputComponent
+                                        inputref={this.setInputRef("city")}
+                                        propInputStyle={this.state.personal.cityValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                        placeholder={gblStrings.accManagement.enterCity}
+                                        maxLength={gblStrings.maxLength.city}
+                                        value={this.state.personal.city}
+                                        onChangeText={this.onChangeText("personal", "city")}
+                                        onSubmitEditing={this.onSubmitEditing(this.stateCity)}
+                                        errorFlag={!this.state.personal.cityValidation}
+                                        errorText={this.state.errMsg}
+                                        editable={this.state.personal.citizenship !== "U.S"}
+
+                                    />
+                                    <GInputComponent
+                                        inputref={this.setInputRef("stateCity")}
+                                        propInputStyle={this.state.personal.stateCityValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                        placeholder={gblStrings.accManagement.enterState}
+                                        returnKeyType="done"
+                                        maxLength={gblStrings.maxLength.state}
+                                        value={this.state.personal.stateCity}
+                                        onChangeText={this.onChangeText("personal", "stateCity")}
+                                        onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
+                                        errorFlag={!this.state.personal.stateCityValidation}
+                                        errorText={this.state.errMsg}
+                                        editable={this.state.personal.citizenship !== "U.S"}
+
+                                    />
+
+                                    <Text style={styles.lblTxt}>
+                                        {gblStrings.accManagement.isYourPhysicalAddressSame}
+                                    </Text>
+                                    <View style={styles.radioBtnGrp}>
+                                        <CustomRadio
+                                            componentStyle={styles.radioCol1}
+                                            size={30}
+                                            outerCicleColor="#DEDEDF"
+                                            innerCicleColor="#61285F"
+                                            labelStyle={styles.lblRadioBtnTxt}
+                                            label="Yes"
+                                            descLabelStyle={styles.lblRadioDescTxt}
+                                            descLabel=""
+                                            selected={!!((this.state.personal.isYourPhysicalAddresSame !== null && this.state.personal.isYourPhysicalAddresSame === "Yes"))}
+                                            onPress={this.onPressRadio("personal", "isYourPhysicalAddresSame", "Yes")}
+                                        />
+                                        <CustomRadio
+                                            componentStyle={styles.radioCol2}
+                                            size={30}
+                                            outerCicleColor="#DEDEDF"
+                                            innerCicleColor="#61285F"
+                                            labelStyle={styles.lblRadioBtnTxt}
+                                            label="No"
+                                            descLabelStyle={styles.lblRadioDescTxt}
+                                            descLabel=""
+                                            selected={!!((this.state.personal.isYourPhysicalAddresSame !== null && this.state.personal.isYourPhysicalAddresSame === "No"))}
+                                            onPress={this.onPressRadio("personal", "isYourPhysicalAddresSame", "No")}
+
+                                        />
+                                    </View>
+                                    {!this.state.personal.isYourPhysicalAddresSameValidation &&
+                                        <Text style={styles.errMsg}>
+                                            {this.state.errMsg}
+                                        </Text>
+                                    }
+
+                                    {
+                                        this.state.personal.isYourPhysicalAddresSame === "No" &&
+                                        <View>
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.address}
+                                            </Text>
+                                            <GInputComponent
+                                                inputref={this.setInputRef("addrLine1_Phy")}
+                                                propInputStyle={this.state.personal.addrLine1_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                                placeholder={gblStrings.accManagement.empAddrLine1}
+                                                maxLength={gblStrings.maxLength.emplAddress1}
+                                                value={this.state.personal.addrLine1_Phy}
+                                                onChangeText={this.onChangeText("personal", "addrLine1_Phy")}
+                                                onSubmitEditing={this.onSubmitEditing(this.addrLine2_Phy)}
+                                                errorFlag={!this.state.personal.addrLine1_PhyValidation}
+                                                errorText={this.state.errMsg}
+                                            />
+                                            <GInputComponent
+                                                inputref={this.setInputRef("addrLine2_Phy")}
+                                                propInputStyle={this.state.personal.addrLine2_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                                placeholder={gblStrings.accManagement.empAddrLine2}
+                                                maxLength={gblStrings.maxLength.addressLine2}
+                                                value={this.state.personal.addrLine2_Phy}
+                                                onChangeText={this.onChangeText("personal", "addrLine2_Phy")}
+                                                onSubmitEditing={this.onSubmitEditing(this.zipcode_Phy)}
+                                                errorFlag={!this.state.personal.addrLine2_PhyValidation}
+                                                errorText={this.state.errMsg}
+
+
+                                            />
+
+
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.zipcode}
+                                            </Text>
+                                            <GInputComponent
+                                                inputref={this.setInputRef("zipcode_Phy")}
+                                                propInputStyle={this.state.personal.zipcode_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                                placeholder={gblStrings.accManagement.enterZip}
+                                                value={this.state.personal.zipcode_Phy}
+                                                maxLength={gblStrings.maxLength.zipCode}
+                                                returnKeyType="done"
+                                                onChangeText={this.onChangeText("personal", "zipcode_Phy")}
+                                                keyboardType="number-pad"
+                                                onSubmitEditing={this.onSubmitZipEditing("personal", "zipcode_Phy", this.city_Phy)}
+                                                errorFlag={!this.state.personal.zipcode_PhyValidation}
+                                                errorText={this.state.errMsg}
+                                            />
+
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.cityAndState}
+                                            </Text>
+                                            <GInputComponent
+                                                inputref={this.setInputRef("city_Phy")}
+                                                propInputStyle={this.state.personal.city_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                                placeholder={gblStrings.accManagement.enterCity}
+                                                maxLength={gblStrings.maxLength.city}
+                                                value={this.state.personal.city_Phy}
+                                                onChangeText={this.onChangeText("personal", "city_Phy")}
+                                                onSubmitEditing={this.onSubmitEditing(this.stateCity_Phy)}
+                                                errorFlag={!this.state.personal.city_PhyValidation}
+                                                errorText={this.state.errMsg}
+                                                editable={this.state.personal.citizenship !== "U.S"}
+
+
+                                            />
+                                            <GInputComponent
+                                                inputref={this.setInputRef("stateCity_Phy")}
+                                                propInputStyle={this.state.personal.stateCity_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                                placeholder={gblStrings.accManagement.enterState}
+                                                returnKeyType="done"
+                                                maxLength={gblStrings.maxLength.state}
+                                                value={this.state.personal.stateCity_Phy}
+                                                onChangeText={this.onChangeText("personal", "stateCity_Phy")}
+                                                onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
+                                                errorFlag={!this.state.personal.stateCity_PhyValidation}
+                                                errorText={this.state.errMsg}
+                                                editable={this.state.personal.citizenship !== "U.S"}
+
+                                            />
+
+                                        </View>
+                                    }
+
+                                    <View>
+                                        <Text style={styles.lblTxt}>
+                                            {gblStrings.accManagement.residencePhoneNo}
+                                        </Text>
+                                        <Text style={styles.poBoxTxt}>
+                                            {` ${gblStrings.accManagement.postBoxAcception}`}
+                                        </Text>
+                                    </View>
+                                    <GInputComponent
+                                        inputref={this.setInputRef("residencePhoneNo")}
+                                        propInputStyle={styles.customTxtBox}
+                                        placeholder={gblStrings.accManagement.phoneNoFormat}
+                                        value={this.state.personal.telePhoneNo2}
+                                        maxLength={gblStrings.maxLength.telePhoneNo2}
+                                        keyboardType="phone-pad"
+                                        onChangeText={this.onChangeText("personal", "businessPhoneNumber")}
+                                        onSubmitEditing={this.onSubmitEditing(this.contactDuringTelePhone2)}
+
+                                    />
+
+                                    <View>
+                                        <Text style={styles.lblTxt}>
+                                            {gblStrings.accManagement.businessPhoneNumber}
+                                        </Text>
+                                        <Text style={styles.poBoxTxt}>
+                                            {` ${gblStrings.accManagement.postBoxAcception}`}
+                                        </Text>
+                                    </View>
+                                    <GInputComponent
+                                        inputref={this.setInputRef("businessPhoneNumber")}
+                                        propInputStyle={styles.customTxtBox}
+                                        placeholder={gblStrings.accManagement.phoneNoFormat}
+                                        value={this.state.personal.telePhoneNo2}
+                                        maxLength={gblStrings.maxLength.telePhoneNo2}
+                                        keyboardType="phone-pad"
+                                        onChangeText={this.onChangeText("personal", "businessPhoneNumber")}
+                                        onSubmitEditing={this.onSubmitEditing(this.contactDuringTelePhone2)}
+
+                                    />
+
+                                    <Text style={styles.lblTxt}>
+                                        {gblStrings.accManagement.emailAddress}
+                                    </Text>
+                                    <GInputComponent
+                                        inputref={this.setInputRef(`emailAddress${index}`)}
+                                        propInputStyle={styles.customTxtBox}
+                                        value={this.state.estate.trusteeData[index].emailAddress}
+                                        placeholder=""
+                                        maxLength={gblStrings.maxLength.emailID}
+                                        onChangeText={this.onChangeTextForIRABeneficiary("emailAddress", index)}
+                                        errorFlag={!this.state.estate.trusteeData[index].emailAddressValidation}
+                                        errorText={this.state.errMsg}
+
+                                    />
+                                </View>
+                            );
+                        }
+                        )}
                     </View>
                 }
             </View>
@@ -5516,22 +6102,22 @@ class OpenAccPageTwoComponent extends Component {
 
 
     render() {
-        AppUtils.Dlog(`RENDER::: OpenAccPageTwo ::>>>  ::::${ JSON.stringify(this.props)}`);
+        AppUtils.Dlog(`RENDER::: OpenAccPageTwo ::>>>  ::::${JSON.stringify(this.props)}`);
 
-        const accType = `${ this.props.navigation.getParam('accType', '')}`;
+        const accType = `${this.props.navigation.getParam('accType', '')}`;
         const tempAccTypeCAPS = accType.toUpperCase();
-        AppUtils.Dlog(`render accType::::>${ accType}`);
+        AppUtils.Dlog(`render accType::::>${accType}`);
 
 
         const currentPage = 2;
         return (
-           
-            <KeyboardAvoidingView 
-            style={styles.container} 
-             // keyboardVerticalOffset = { Header.HEIGHT + 20 }  
-            // behavior="padding"
-             behavior= {(Platform.OS === 'ios')? "padding" : null}
-             keyboardVerticalOffset={Platform.select({ios:20, android: 500})}
+
+            <KeyboardAvoidingView
+                style={styles.container}
+                // keyboardVerticalOffset = { Header.HEIGHT + 20 }  
+                // behavior="padding"
+                behavior={(Platform.OS === 'ios') ? "padding" : null}
+                keyboardVerticalOffset={Platform.select({ ios: 20, android: 500 })}
             >
                 {
                     (this.props.accOpeningData.isLoading || this.props.masterLookupStateData.isLoading) && <GLoadingSpinner />
@@ -5541,7 +6127,7 @@ class OpenAccPageTwoComponent extends Component {
                     onPress={this.onClickHeader}
                 />
                 <ScrollView style={styles.scrollView} keyboardShouldPersistTaps="always" ref={this.setScrollViewRef}
-                scrollEnabled={this.state.enableScrollViewScroll}
+                    scrollEnabled={this.state.enableScrollViewScroll}
                 >
                     <View style={styles.accSelection}>
                         <Text style={styles.accSelectionTxt}>
@@ -5549,7 +6135,7 @@ class OpenAccPageTwoComponent extends Component {
                         </Text>
                     </View>
 
-                    <CustomPageWizard currentPage={currentPage} pageName={`${currentPage } Personal Info`} />
+                    <CustomPageWizard currentPage={currentPage} pageName={`${currentPage} Personal Info`} />
 
 
 
@@ -5567,7 +6153,7 @@ class OpenAccPageTwoComponent extends Component {
                                 {gblStrings.accManagement.nickname}
                             </Text>
                             <Text style={styles.optionalTxt}>
-                                {` ${ gblStrings.accManagement.optional}`}
+                                {` ${gblStrings.accManagement.optional}`}
                             </Text>
                         </Text>
                         <GInputComponent
@@ -5602,13 +6188,13 @@ class OpenAccPageTwoComponent extends Component {
                     </View>
 
                     {
-                     accType === "Trust or Estate Account" &&
-                     <this.renderEstateInfoSection /> 
+                        accType === "Trust or Estate Account" &&
+                        <this.renderEstateInfoSection />
                     }
 
                     { /* ----------- Individual Account Info -------------------*/
-                    accType !== "Trust or Estate Account" && 
-                    <this.renderIndividualSection />
+                        accType !== "Trust or Estate Account" &&
+                        <this.renderIndividualSection />
                     }
 
                     { /* ----------- Joint Account Info -------------------*/
@@ -5629,7 +6215,7 @@ class OpenAccPageTwoComponent extends Component {
                         <this.renderBeneficiaryRetirement />
                     }
 
-                   
+
 
                     { /* ----------- Buttons Group -------------------*/}
 
@@ -5692,7 +6278,7 @@ OpenAccPageTwoComponent.propTypes = {
     getPersonalCompositeData: PropTypes.instanceOf(Object),
     addressFormatData: PropTypes.instanceOf(Object),
     accOpeningData: PropTypes.instanceOf(Object),
-    initialState:PropTypes.instanceOf(Object),
+    initialState: PropTypes.instanceOf(Object),
     masterLookupStateData: PropTypes.instanceOf(Object),
     saveData: PropTypes.func,
     uploadAavatarImg: PropTypes.func,
@@ -5702,20 +6288,20 @@ OpenAccPageTwoComponent.propTypes = {
     getAddressFormat: PropTypes.func
 };
 OpenAccPageTwoComponent.defaultProps = {
-    navigation:{},
+    navigation: {},
     getPersonalCompositeData: {},
     addressFormatData: {},
     accOpeningData: {},
-    initialState:{},
+    initialState: {},
     masterLookupStateData: {},
     saveData: null,
-    uploadAavatarImg: null ,
-    getStateCity: null ,
-    saveAccountOpening: null ,
-    getRankData:null ,
-    getAddressFormat: null 
+    uploadAavatarImg: null,
+    getStateCity: null,
+    saveAccountOpening: null,
+    getRankData: null,
+    getAddressFormat: null
 
 };
-  
+
 export default OpenAccPageTwoComponent;
 

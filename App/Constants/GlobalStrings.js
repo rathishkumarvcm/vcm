@@ -585,8 +585,12 @@ export default {
         emptySuccessOwnerMsg: "Please select Success Owner Infomation",
         emptymilitaryServingStatus: "Please indicate whether you are currently serving, or have you ever served in the US Military?",
 
-        emptyEstateName:""
-
+        emptyEstateNameMsg:"",
+        emptyCreationDateMsg:"",
+        emptyOrganisationCountryMsg:"",
+        emptyResidentialPhoneMsg:"",
+        emptyBusinessPhoneMsg:"",
+        emptyEstateNameMsg:""
 
     },
     userManagement: {

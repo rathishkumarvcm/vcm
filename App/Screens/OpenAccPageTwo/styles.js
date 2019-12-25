@@ -79,6 +79,14 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         fontWeight: 'normal',
     },
+
+    poBoxTxt: {
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(12),
+        fontWeight: 'normal',
+        lineHeight: 32,
+
+    },
     lblRowTxt: {
         color: '#000000',
         fontSize: scaledHeight(16),
@@ -501,7 +509,17 @@ export const styles = StyleSheet.create({
     },
     scrollView: {
         flex: .85
+    },
+    commonColView:{
+        flexGrow:1
+    },
+    addTrustee:{
+        color: '#0D7CB5',
+        fontSize: scaledHeight(16),
+        fontWeight: 'normal',
+        textDecorationLine:"underline"
     }
+
 
 
 });
