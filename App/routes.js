@@ -924,7 +924,7 @@ const AppNavigator = createStackNavigator({
         }
     },
     {
-        initialRouteName: "purchaseScreenOne"
+        initialRouteName: "login"
     });
 
 export default createAppContainer(AppNavigator);
