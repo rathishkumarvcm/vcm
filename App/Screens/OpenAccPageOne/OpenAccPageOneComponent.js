@@ -158,8 +158,8 @@ class OpenAccPageOneComponent extends Component {
             "customerId": "761735",
             "accountType": this.state.selectedItemID,
             "accountMainCategory":selectedAccount.value,
-            "accountSubType": (this.props.accOpeningData && this.props.accOpeningData.accountSubType) ? this.props.accOpeningData.accountSubType.key : "-",
-            "accountSubCategory": (this.props.accOpeningData && this.props.accOpeningData.accountSubType) ? this.props.accOpeningData.accountSubType.value : "-",
+            "accountSubType": (this.props.accOpeningData && this.props.accOpeningData.accountSubType) ? this.props.accOpeningData.accountSubType.key : "",
+            "accountSubCategory": (this.props.accOpeningData && this.props.accOpeningData.accountSubType) ? this.props.accOpeningData.accountSubType.value : "",
         };
         if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
             payload = {
@@ -167,8 +167,21 @@ class OpenAccPageOneComponent extends Component {
                 ...this.props.accOpeningData.savedAccData
             };
         }
+
+
         return payload;
 
+    }
+    replaceUndefinedOrNull= (key, value) => {
+        if (value === null || value === undefined || value ==='') {
+          return undefined;
+        }
+
+        return value;
+      }
+    getCleanedPayload = (payload) =>{
+        const cleanedObject = JSON.stringify(payload, this.replaceUndefinedOrNull, 4);
+        return JSON.parse(cleanedObject);
     }
 
     onClickNext = () => {

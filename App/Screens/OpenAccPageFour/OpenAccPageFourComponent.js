@@ -91,13 +91,24 @@ class OpenAccPageFourComponent extends Component {
         const payload = {
             ...savedAccData,
             "accountPreferences": {
-                "dividendCapitalGain": this.state.selectedDividendCapitalGains,
-                "documentDeliveryFormat": this.state.selectedProspectusReportsRef
+                "dividendCapitalGain": this.state.selectedDividendCapitalGains || "",
+                "documentDeliveryFormat": this.state.selectedProspectusReportsRef || ""
             },
         };
         
         return payload;
 
+    }
+    replaceUndefinedOrNull= (key, value) => {
+        if (value === null || value === undefined || value ==='') {
+          return undefined;
+        }
+
+        return value;
+      }
+    getCleanedPayload = (payload) =>{
+        const cleanedObject = JSON.stringify(payload, this.replaceUndefinedOrNull, 4);
+        return JSON.parse(cleanedObject);
     }
 
     onClickNext = () => {
@@ -194,8 +205,8 @@ class OpenAccPageFourComponent extends Component {
                     label={radioData[i].value}
                     descLabelStyle={styles.lblRadioDescTxt}
                     descLabel={radioData[i].value}
-                    selected={(this.state[radioName] !== null && this.state[radioName] == radioData[i].value) ? true : false}
-                    onPress={this.onPressRadio(radioName, radioData[i].value)}
+                    selected={(this.state[radioName] !== null && this.state[radioName] == radioData[i].key) ? true : false}
+                    onPress={this.onPressRadio(radioName, radioData[i].key)}
                 />
             );
         }

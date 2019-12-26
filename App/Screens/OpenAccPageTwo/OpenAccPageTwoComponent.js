@@ -97,9 +97,9 @@ class OpenAccPageTwoComponent extends Component {
                 socialSecurityNo: "",
                 phoneType: "",
                 phoneTypeDropDown: false,
-                PhoneType2: "",
+                phoneType2: "",
                 phoneType2DropDown: false,
-                PhoneType3: "",
+                phoneType3: "",
                 phoneType3DropDown: false,
                 primarySourceIncome: "",
                 primarySourceIncomeDropDown: false,
@@ -248,9 +248,9 @@ class OpenAccPageTwoComponent extends Component {
                 socialSecurityNo: "",
                 phoneType: "",
                 phoneTypeDropDown: false,
-                PhoneType2: "",
+                phoneType2: "",
                 phoneType2DropDown: false,
-                PhoneType3: "",
+                phoneType3: "",
                 phoneType3DropDown: false,
                 primarySourceIncome: "",
                 primarySourceIncomeDropDown: false,
@@ -598,8 +598,72 @@ class OpenAccPageTwoComponent extends Component {
                         busniessPhoneNoValidation: true,
                         residencePhoneNoValidation: true,
                         memberNumberValidation: true,
+                    },
+                    {
+                        prefix: "",
+                        prefixDropDown: false,
+                        firstName: "",
+                        middleInitial: "",
+                        lastName: "",
+                        suffix: "",
+                        suffixDropDown: false,
+                        dob: "",
+                        gender: "",
+                        maritalStatus: "",
+                        maritalStatusDropDown: false,
+                        citizenship: "U.S",
 
+                        mailingAddressType: "",
+                        addressType: "",
+                        addrLine1: "",
+                        addrLine2: "",
+                        zipcode: "",
+                        city: "",
+                        stateCity: "",
+                        stateCityDropDown: false,
+                        addrLine1_Phy: "",
+                        addrLine2_Phy: "",
+                        zipcode_Phy: "",
+                        city_Phy: "",
+                        stateCity_Phy: "",
+                        stateCity_PhyDropDown: false,
+                        isYourPhysicalAddresSame: false,
+                        mobileNo: "",
+                        memberPhoneNo: "",
+                        busniessPhoneNo: "",
+                        residencePhoneNo:"",
+                        emailAddress: "",
+                        memberNumber: "",
 
+                        prefixValidation: true,
+                        firstNameValidation: true,
+                        lastNameValidation: true,
+                        dobValidation: true,
+                        genderValidation: true,
+                        maritalStatusValidation: true,
+                        citizenshipValidation: true,
+                        addressTypeValidation: true,
+                        mailingAddressTypeValidation: true,
+                        addrLine1Validation: true,
+                        addrLine2Validation: true,
+                        zipcodeValidation: true,
+                        cityValidation: true,
+                        stateCityValidation: true,
+                        stateValidation: true,
+                        addrLine1_PhyValidation: true,
+                        addrLine2_PhyValidation: true,
+                        zipcode_PhyValidation: true,
+                        city_PhyValidation: true,
+                        stateCity_PhyValidation: true,
+                        state_PhyValidation: true,
+                        isYourPhysicalAddresSameValidation: true,
+                        mobileNoValidation: true,
+                        emailAddressValidation: true,
+                        socialSecurityNoValidation: true,
+                        memberPhoneNoValidation: true,
+                        busniessPhoneNoValidation: true,
+                        residencePhoneNoValidation: true,
+                        memberNumberValidation: true,
                     }
                 ]
 
@@ -609,7 +673,7 @@ class OpenAccPageTwoComponent extends Component {
                 keyName: ""
             },
             // others
-            //  ...openAccPageTwo
+              ...openAccPageTwo
 
 
         };
@@ -868,165 +932,165 @@ class OpenAccPageTwoComponent extends Component {
 
         const individualAccPayload = {
             "personalInfo": {
-                "prefix": this.state.personal.prefix || "-",
-                "firstName": this.state.personal.firstName || "-",
-                "lastName": this.state.personal.lastName || "-",
-                "suffix": this.state.personal.suffix || "-",
-                "dateOfBirth": this.state.personal.dob || "-",
-                "gender": this.state.personal.gender || "-",
-                "maritalStatus": this.state.personal.maritalStatus || "-",
-                "citizenship": this.state.personal.citizenship || "-",
-                "ssnTin": this.state.personal.socialSecurityNo || "-",
+                "prefix": this.state.personal.prefix || "",
+                "firstName": this.state.personal.firstName || "",
+                "lastName": this.state.personal.lastName || "",
+                "suffix": this.state.personal.suffix || "",
+                "dateOfBirth": this.state.personal.dob || "",
+                "gender": this.state.personal.gender || "",
+                "maritalStatus": this.state.personal.maritalStatus || "",
+                "citizenship": this.state.personal.citizenship || "",
+                "ssnTin": this.state.personal.socialSecurityNo || "",
                 "mailingAddress": {
-                    "addressType": this.state.personal.addressType || "-",
-                    "streetNbr": this.state.personal.addrLine1 || "-",
-                    "streetName": this.state.personal.addrLine2 || "-",
-                    "zip": this.state.personal.zipcode || "-",
-                    "city": this.state.personal.city || "-",
-                    "state": this.state.personal.stateCity || "-"
+                    "addressType": this.state.personal.mailingAddressType || "",
+                    "streetNbr": this.state.personal.addrLine1 || "",
+                    "streetName": this.state.personal.addrLine2 || "",
+                    "zip": this.state.personal.zipcode || "",
+                    "city": this.state.personal.city || "",
+                    "state": this.state.personal.stateCity || ""
                 },
-                "isPhysAddrSameAsMailAddr": this.state.personal.isYourPhysicalAddresSame || "-",
+                "isPhysAddrSameAsMailAddr": this.state.personal.isYourPhysicalAddresSame || "",
                 "physicalAddress": {
-                    "addressType": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.addressType || "-" : this.state.personal.addressType,
-                    "streetNbr": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.addrLine1 || "-" : this.state.personal.addrLine1_Phy,
-                    "streetName": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.addrLine2 || "-" : this.state.personal.addrLine2_Phy,
-                    "zip": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.zipcode || "-" : this.state.personal.zipcode_Phy,
-                    "city": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.city || "-" : this.state.personal.city_Phy,
-                    "state": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.stateCity || "-" : this.state.personal.stateCity_Phy,
+                    "addressType": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.mailingAddressType || "" : this.state.personal.mailingAddressType,
+                    "streetNbr": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.addrLine1 || "" : this.state.personal.addrLine1_Phy,
+                    "streetName": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.addrLine2 || "" : this.state.personal.addrLine2_Phy,
+                    "zip": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.zipcode || "" : this.state.personal.zipcode_Phy,
+                    "city": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.city || "" : this.state.personal.city_Phy,
+                    "state": this.state.personal.isYourPhysicalAddresSame ? this.state.personal.stateCity || "" : this.state.personal.stateCity_Phy,
                 },
                 "contactDetails": {
                     "phoneNumber1": {
-                        "phoneNumber": this.state.personal.mobileNo || "-",
-                        "phoneType": "Home",
-                        "contactDuring": this.state.personal.contactDuringMobNo || "-"
+                        "phoneNumber": this.state.personal.mobileNo || "",
+                        "phoneType":this.state.personal.phoneType || "",
+                        "contactDuring": this.state.personal.contactDuringMobNo || "Anytime"
                     },
                     "phoneNumber2": {
-                        "phoneNumber": this.state.personal.telePhoneNo2 || "-",
-                        "phoneType": "Home",
-                        "contactDuring": this.state.personal.contactDuringTelePhone2 || "-"
+                        "phoneNumber": this.state.personal.telePhoneNo2 || "",
+                        "phoneType":this.state.personal.phoneType2 || "",
+                        "contactDuring": this.state.personal.contactDuringTelePhone2 || ""
                     },
                     "phoneNumber3": {
-                        "phoneNumber": this.state.personal.telePhoneNo3 || "-",
-                        "phoneType": "Home",
-                        "contactDuring": this.state.personal.contactDuringTelePhone3 || "-"
+                        "phoneNumber": this.state.personal.telePhoneNo3 || "",
+                        "phoneType":this.state.personal.phoneType3 || "",
+                        "contactDuring": this.state.personal.contactDuringTelePhone3 || ""
                     },
-                    "emailAddress": this.state.personal.emailAddress || "-"
+                    "emailAddress": this.state.personal.emailAddress || ""
                 }
             },
             "employementInfo": {
-                "employmentStatus": this.state.personal.empStatus || "-",
-                "industry": this.state.personal.empIndustry || "-",
-                "occupation": this.state.personal.empOccupation || "-",
-                "employerName": this.state.personal.empName || "-",
+                "employmentStatus": this.state.personal.empStatus || "",
+                "industry": this.state.personal.empIndustry || "",
+                "occupation": this.state.personal.empOccupation || "",
+                "employerName": this.state.personal.empName || "",
                 "employerAddress": {
-                    "addressLine1": this.state.personal.empAddrLine1 || "-",
-                    "addressLine2": this.state.personal.empAddrLine2 || "-",
-                    "city": this.state.personal.empCity || "-",
-                    "state": this.state.personal.empStateCity || "-",
-                    "zip": this.state.personal.empZipcode || "-",
+                    "addressLine1": this.state.personal.empAddrLine1 || "",
+                    "addressLine2": this.state.personal.empAddrLine2 || "",
+                    "city": this.state.personal.empCity || "",
+                    "state": this.state.personal.empStateCity || "",
+                    "zip": this.state.personal.empZipcode || "",
                 }
             },
             "financialInfo": {
-                "annualIncome": this.state.personal.annualIncome || "-",
-                "taxBracket": this.state.personal.taxBracket || "-",
-                "netWorth": this.state.personal.networth || "-",
-                "taxFilingStatus": this.state.personal.taxFilingStatus || "-",
+                "annualIncome": this.state.personal.annualIncome || "",
+                "taxBracket": this.state.personal.taxBracket || "",
+                "netWorth": this.state.personal.networth || "",
+                "taxFilingStatus": this.state.personal.taxFilingStatus || "",
             },
             "militaryInfo": {
-                "servingStatus": this.state.personal.isMilitaryHistory || "-",
-                "militaryStatus": this.state.personal.militaryStatus || "-",
-                "branchOfService": this.state.personal.branchOfService || "-",
-                "rank": this.state.personal.rank || "-",
-                "serviceStartDate": this.state.personal.fromDateMilitary || "-",
-                "serviceToDate": this.state.personal.toDateMilitary || "-",
-                "commissionSource": this.state.personal.commissionSource || "-",
+                "servingStatus": this.state.personal.isMilitaryHistory || "",
+                "militaryStatus": this.state.personal.militaryStatus || "",
+                "branchOfService": this.state.personal.branchOfService || "",
+                "rank": this.state.personal.rank || "",
+                "serviceStartDate": this.state.personal.fromDateMilitary || "",
+                "serviceToDate": this.state.personal.toDateMilitary || "",
+                "commissionSource": this.state.personal.commissionSource || "",
             },
             "regulatoryDetails": {
-                "isPep": this.state.personal.isSeniorPoliticalFigure || "-",
-                "pepName": this.state.personal.seniorPoliticalName || "-",
+                "isPep": this.state.personal.isSeniorPoliticalFigure || "",
+                "pepName": this.state.personal.seniorPoliticalName || "",
             }
         };
 
         const jointAccPayload = {
             "jointOwner": {
-                "relation": "-",
+                "relation": "",
                 "personalInfo": {
-                    "prefix": this.state.jointOwner.prefix || "-",
-                    "firstName": this.state.jointOwner.firstName || "-",
-                    "lastName": this.state.jointOwner.lastName || "-",
-                    "suffix": this.state.jointOwner.suffix || "-",
-                    "dateOfBirth": this.state.jointOwner.dob || "-",
-                    "gender": this.state.jointOwner.gender || "-",
-                    "maritalStatus": this.state.jointOwner.maritalStatus || "-",
-                    "citizenship": this.state.jointOwner.citizenship || "-",
-                    "ssnTin": this.state.jointOwner.socialSecurityNo || "-",
+                    "prefix": this.state.jointOwner.prefix || "",
+                    "firstName": this.state.jointOwner.firstName || "",
+                    "lastName": this.state.jointOwner.lastName || "",
+                    "suffix": this.state.jointOwner.suffix || "",
+                    "dateOfBirth": this.state.jointOwner.dob || "",
+                    "gender": this.state.jointOwner.gender || "",
+                    "maritalStatus": this.state.jointOwner.maritalStatus || "",
+                    "citizenship": this.state.jointOwner.citizenship || "",
+                    "ssnTin": this.state.jointOwner.socialSecurityNo || "",
                     "mailingAddress": {
-                        "addressType": this.state.jointOwner.citizenship || "-",
-                        "streetNbr": "-",
-                        "streetName": "-",
-                        "zip": this.state.jointOwner.zipcode || "-",
-                        "city": this.state.jointOwner.city || "-",
-                        "state": this.state.jointOwner.stateCity || "-"
+                        "addressType": this.state.jointOwner.mailingAddressType || "",
+                        "streetNbr": this.state.jointOwner.addrLine1 || "",
+                        "streetName": this.state.jointOwner.addrLine2 || "",
+                        "zip": this.state.jointOwner.zipcode || "",
+                        "city": this.state.jointOwner.city || "",
+                        "state": this.state.jointOwner.stateCity || ""
                     },
-                    "isPhysAddrSameAsMailAddr": this.state.jointOwner.isYourPhysicalAddresSame || "-",
+                    "isPhysAddrSameAsMailAddr": this.state.jointOwner.isYourPhysicalAddresSame || "",
                     "physicalAddress": {
-                        "addressType": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.addressType || "-" : this.state.jointOwner.addressType,
-                        "streetNbr": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.addrLine1 || "-" : this.state.jointOwner.addrLine1_Phy,
-                        "streetName": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.addrLine2 || "-" : this.state.jointOwner.addrLine2_Phy,
-                        "zip": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.zipcode || "-" : this.state.jointOwner.zipcode_Phy,
-                        "city": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.city || "-" : this.state.jointOwner.city_Phy,
-                        "state": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.stateCity || "-" : this.state.jointOwner.stateCity_Phy,
+                        "addressType": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.mailingAddressType || "" : this.state.jointOwner.mailingAddressType,
+                        "streetNbr": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.addrLine1 || "" : this.state.jointOwner.addrLine1_Phy,
+                        "streetName": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.addrLine2 || "" : this.state.jointOwner.addrLine2_Phy,
+                        "zip": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.zipcode || "" : this.state.jointOwner.zipcode_Phy,
+                        "city": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.city || "" : this.state.jointOwner.city_Phy,
+                        "state": this.state.jointOwner.isYourPhysicalAddresSame ? this.state.jointOwner.stateCity || "" : this.state.jointOwner.stateCity_Phy,
                     },
                     "contactDetails": {
                         "phoneNumber1": {
-                            "phoneNumber": this.state.jointOwner.mobileNo || "-",
+                            "phoneNumber": this.state.jointOwner.mobileNo || "",
                             "phoneType": "Home",
-                            "contactDuring": this.state.jointOwner.contactDuringMobNo || "-"
+                            "contactDuring": this.state.jointOwner.contactDuringMobNo || ""
                         },
                         "phoneNumber2": {
-                            "phoneNumber": this.state.jointOwner.telePhoneNo2 || "-",
+                            "phoneNumber": this.state.jointOwner.telePhoneNo2 || "",
                             "phoneType": "Home",
-                            "contactDuring": this.state.jointOwner.contactDuringTelePhone2 || "-"
+                            "contactDuring": this.state.jointOwner.contactDuringTelePhone2 || ""
                         },
                         "phoneNumber3": {
-                            "phoneNumber": this.state.jointOwner.telePhoneNo3 || "-",
+                            "phoneNumber": this.state.jointOwner.telePhoneNo3 || "",
                             "phoneType": "Home",
-                            "contactDuring": this.state.jointOwner.contactDuringTelePhone3 || "-"
+                            "contactDuring": this.state.jointOwner.contactDuringTelePhone3 || ""
                         },
-                        "emailAddress": this.state.jointOwner.emailAddress || "-"
+                        "emailAddress": this.state.jointOwner.emailAddress || ""
                     }
                 },
                 "employementInfo": {
-                    "employmentStatus": this.state.jointOwner.empStatus || "-",
-                    "industry": this.state.jointOwner.empIndustry || "-",
-                    "occupation": this.state.jointOwner.empOccupation || "-",
-                    "employerName": this.state.jointOwner.empName || "-",
+                    "employmentStatus": this.state.jointOwner.empStatus || "",
+                    "industry": this.state.jointOwner.empIndustry || "",
+                    "occupation": this.state.jointOwner.empOccupation || "",
+                    "employerName": this.state.jointOwner.empName || "",
                     "employerAddress": {
-                        "addressLine1": this.state.jointOwner.empAddrLine1 || "-",
-                        "addressLine2": this.state.jointOwner.empAddrLine2 || "-",
-                        "city": this.state.jointOwner.empCity || "-",
-                        "state": this.state.jointOwner.empStateCity || "-",
-                        "zip": this.state.jointOwner.empZipcode || "-",
+                        "addressLine1": this.state.jointOwner.empAddrLine1 || "",
+                        "addressLine2": this.state.jointOwner.empAddrLine2 || "",
+                        "city": this.state.jointOwner.empCity || "",
+                        "state": this.state.jointOwner.empStateCity || "",
+                        "zip": this.state.jointOwner.empZipcode || "",
                     }
                 },
                 "financialInfo": {
-                    "annualIncome": this.state.jointOwner.annualIncome || "-",
-                    "taxBracket": this.state.jointOwner.taxBracket || "-",
-                    "netWorth": this.state.jointOwner.networth || "-",
-                    "taxFilingStatus": this.state.jointOwner.taxFilingStatus || "-",
+                    "annualIncome": this.state.jointOwner.annualIncome || "",
+                    "taxBracket": this.state.jointOwner.taxBracket || "",
+                    "netWorth": this.state.jointOwner.networth || "",
+                    "taxFilingStatus": this.state.jointOwner.taxFilingStatus || "",
                 },
                 "militaryInfo": {
-                    "servingStatus": this.state.jointOwner.isMilitaryHistory || "-",
-                    "militaryStatus": this.state.jointOwner.militaryStatus || "-",
-                    "branchOfService": this.state.jointOwner.branchOfService || "-",
-                    "rank": this.state.jointOwner.rank || "-",
-                    "serviceStartDate": this.state.jointOwner.fromDateMilitary || "-",
-                    "serviceToDate": this.state.jointOwner.toDateMilitary || "-",
-                    "commissionSource": this.state.jointOwner.commissionSource || "-",
+                    "servingStatus": this.state.jointOwner.isMilitaryHistory || "",
+                    "militaryStatus": this.state.jointOwner.militaryStatus || "",
+                    "branchOfService": this.state.jointOwner.branchOfService || "",
+                    "rank": this.state.jointOwner.rank || "",
+                    "serviceStartDate": this.state.jointOwner.fromDateMilitary || "",
+                    "serviceToDate": this.state.jointOwner.toDateMilitary || "",
+                    "commissionSource": this.state.jointOwner.commissionSource || "",
                 },
                 "regulatoryDetails": {
-                    "isPep": this.state.jointOwner.isSeniorPoliticalFigure || "-",
-                    "pepName": this.state.jointOwner.seniorPoliticalName || "-",
+                    "isPep": this.state.jointOwner.isSeniorPoliticalFigure || "",
+                    "pepName": this.state.jointOwner.seniorPoliticalName || "",
                 }
             }
         };
@@ -1036,47 +1100,49 @@ class OpenAccPageTwoComponent extends Component {
                  "primaryBeneficiary": {
                      "totalBeneficiary": "1",
                      "beneficiary1Details": {
-                         "type": this.state.retirement.beneficiaryType || "-",
-                         "relation": this.state.retirement.relationshipToAcc || "-",
-                         "distributionPercentage": this.state.retirement.beneficiaryDistPercent || "-",
-                         "firstName": this.state.retirement.firstName || "-",
-                         "middleInitial": this.state.retirement.middleInitial || "-",
-                         "lastName": this.state.retirement.lastName || "-",
-                         "ssnTin": this.state.retirement.socialSecurityNo || "-",
-                         "dateOfBirth": this.state.retirement.dob || "-",
-                         "emailAddress": this.state.retirement.emailAddress || "-"
+                         "type": this.state.retirement.beneficiaryType || "",
+                         "relation": this.state.retirement.relationshipToAcc || "",
+                         "distributionPercentage": this.state.retirement.beneficiaryDistPercent || "",
+                         "firstName": this.state.retirement.firstName || "",
+                         "middleInitial": this.state.retirement.middleInitial || "",
+                         "lastName": this.state.retirement.lastName || "",
+                         "ssnTin": this.state.retirement.socialSecurityNo || "",
+                         "dateOfBirth": this.state.retirement.dob || "",
+                         "emailAddress": this.state.retirement.emailAddress || ""
                      }
                      // "beneficiary2Details,beneficiary3Details": ""
                  },
                  "secondBeneficiary": { //  #TODO
                      "beneficiary1Details": {
-                         "type": this.state.retirement.beneficiaryType || "-",
-                         "relation": this.state.retirement.relationshipToAcc || "-",
-                         "distributionPercentage": this.state.retirement.beneficiaryDistPercent || "-",
-                         "firstName": this.state.retirement.firstName || "-",
-                         "middleInitial": this.state.retirement.middleInitial || "-",
-                         "lastName": this.state.retirement.lastName || "-",
-                         "ssnTin": this.state.retirement.socialSecurityNo || "-",
-                         "dateOfBirth": this.state.retirement.dob || "-",
-                         "emailAddress": this.state.retirement.emailAddress || "-"
+                         "type": this.state.retirement.beneficiaryType || "",
+                         "relation": this.state.retirement.relationshipToAcc || "",
+                         "distributionPercentage": this.state.retirement.beneficiaryDistPercent || "",
+                         "firstName": this.state.retirement.firstName || "",
+                         "middleInitial": this.state.retirement.middleInitial || "",
+                         "lastName": this.state.retirement.lastName || "",
+                         "ssnTin": this.state.retirement.socialSecurityNo || "",
+                         "dateOfBirth": this.state.retirement.dob || "",
+                         "emailAddress": this.state.retirement.emailAddress || ""
                      }
                  }
              }
          };
          */
 
+   
+
         let tempBeneficiaryDetails = [];
         for (let i = 0; i < this.state.retirementBeneficiaryData.length; i += 1) {
             const tempObj = {
-                "type": this.state.retirementBeneficiaryData[i].beneficiaryType || "-",
-                "relation": this.state.retirementBeneficiaryData[i].relationshipToAcc || "-",
-                "distributionPercentage": this.state.retirementBeneficiaryData[i].beneficiaryDistPercent || "-",
-                "firstName": this.state.retirementBeneficiaryData[i].firstName || "-",
-                "middleInitial": this.state.retirementBeneficiaryData[i].middleInitial || "-",
-                "lastName": this.state.retirementBeneficiaryData[i].lastName || "-",
-                "ssnTin": this.state.retirementBeneficiaryData[i].socialSecurityNo || "-",
-                "dateOfBirth": this.state.retirementBeneficiaryData[i].dob || "-",
-                "emailAddress": this.state.retirementBeneficiaryData[i].emailAddress || "-",
+                "type": this.state.retirementBeneficiaryData[i].beneficiaryType || "",
+                "relation": this.state.retirementBeneficiaryData[i].relationshipToAcc || "",
+                "distributionPercentage": this.state.retirementBeneficiaryData[i].beneficiaryDistPercent || "",
+                "firstName": this.state.retirementBeneficiaryData[i].firstName || "",
+                "middleInitial": this.state.retirementBeneficiaryData[i].middleInitial || "",
+                "lastName": this.state.retirementBeneficiaryData[i].lastName || "",
+                "ssnTin": this.state.retirementBeneficiaryData[i].socialSecurityNo || "",
+                "dateOfBirth": this.state.retirementBeneficiaryData[i].dob || "",
+                "emailAddress": this.state.retirementBeneficiaryData[i].emailAddress || "",
                 "isPrimaryBeneficiary": "true"
             }
             tempBeneficiaryDetails.push(tempObj);
@@ -1095,7 +1161,7 @@ class OpenAccPageTwoComponent extends Component {
         const savedAccData = myInstance.getSavedAccData();
         payload = {
             ...savedAccData,
-            "accountNickName": this.state.nickname || "-"
+            "accountNickName": this.state.nickname || ""
         };
 
         switch (accType) {
@@ -1131,7 +1197,19 @@ class OpenAccPageTwoComponent extends Component {
         };
         AppUtils.Dlog(`payload:: ${JSON.stringify(payload)}`);
 
+
         return payload;
+    }
+    replaceUndefinedOrNull= (key, value) => {
+        if (value === null || value === undefined || value ==='') {
+          return undefined;
+        }
+
+        return value;
+      }
+    getCleanedPayload = (payload) =>{
+        const cleanedObject = JSON.stringify(payload, this.replaceUndefinedOrNull, 4);
+        return JSON.parse(cleanedObject);
     }
 
     onClickSave = () => {
@@ -1338,7 +1416,7 @@ class OpenAccPageTwoComponent extends Component {
             }
         }
 
-        returnDate = tempCurrentDateComp.join("-");
+        returnDate = tempCurrentDateComp.join("");
 
 
 
@@ -2694,10 +2772,12 @@ class OpenAccPageTwoComponent extends Component {
         };
 
         if (this.state.estate.trusteeData.length < 3) {
+           let newItems = [...this.state.estate.trusteeData];
+            newItems.push(tempTrusteeObj);
             this.setState(() => (prevState => ({
                 estate: {
                     ...prevState.estate,
-                    trusteeData:[...prevState.estate.trusteeData, tempTrusteeObj]
+                    trusteeData:newItems
                 }
             })));
         }
@@ -3121,7 +3201,8 @@ class OpenAccPageTwoComponent extends Component {
                             placeholder={gblStrings.accManagement.phoneNoFormat}
                             maxLength={gblStrings.maxLength.mobileNo}
                             keyboardType="phone-pad"
-                            value={this.state.personal.mobileNo.replace(/\d(?=\d{4})/g, "*")}
+                           // value={this.state.personal.mobileNo.replace(/\d(?=\d{4})/g, "*")}
+                            value={this.state.personal.mobileNo}
                             onChangeText={this.onChangeText("personal", "mobileNo")}
                             onSubmitEditing={this.onSubmitEditing(this.contactDuringMobNo)}
                             errorFlag={!this.state.personal.mobileNoValidation}

@@ -335,13 +335,25 @@ class OpenAccPageSixComponent extends Component {
         const payload = {
                 ...savedAccData,
                 "userConsent":{
-                    "backupCertFlag":this.state.confirmTINType || "-",
-                    "certifiedYN":this.state.agreeConditions || "-"
+                    "backupCertFlag":this.state.confirmTINType || "",
+                    "certifiedYN":this.state.agreeConditions || ""
                   }
             };
         
         return payload;
 
+    }
+
+    replaceUndefinedOrNull= (key, value) => {
+        if (value === null || value === undefined || value ==='') {
+          return undefined;
+        }
+
+        return value;
+      }
+    getCleanedPayload = (payload) =>{
+        const cleanedObject = JSON.stringify(payload, this.replaceUndefinedOrNull, 4);
+        return JSON.parse(cleanedObject);
     }
 
     onPressCheck = (keyName, text) => () => this.setState({
@@ -436,8 +448,8 @@ class OpenAccPageSixComponent extends Component {
                     label={radioData[i].value}
                     descLabelStyle={styles.lblRadioDescTxt}
                     descLabel={""}
-                    selected={(this.state[radioName] !== null && this.state[radioName] == radioData[i].value) ? true : false}
-                    onPress={this.onPressRadio(radioName, radioData[i].value)}
+                    selected={(this.state[radioName] !== null && this.state[radioName] == radioData[i].key) ? true : false}
+                    onPress={this.onPressRadio(radioName, radioData[i].key)}
                 />
             );
         }
@@ -554,7 +566,7 @@ class OpenAccPageSixComponent extends Component {
                                 labelStyle={styles.agreeTermsTxt}
                                 label={gblStrings.accManagement.agreeConditions}
                                 selected={this.state.agreeConditions}
-                                onPress={this.onPressCheck("agreeConditions", !this.state.agreeConditions)}
+                                onPress={this.onPressCheck("agreeConditions", (this.state.agreeConditions ? "Y":"N"))}
 
                             />
 

@@ -169,7 +169,7 @@ class OpenAccPageFiveComponent extends Component {
             physicalAddress: physicAddr_primary = {},
             //isPhysAddrSameAsMailAddr = "",
             contactDetails: contact_primary = {},
-        } = (personalInfo && personalInfo.prefix) ? personalInfo : {};
+        } = (personalInfo && personalInfo.firstName) ? personalInfo : {};
 
         var {
             //addressType = '',
@@ -556,8 +556,8 @@ class OpenAccPageFiveComponent extends Component {
         var {
             //fundingSource = {},
             //totalFunds = '',
-            fundDataList = []
-        } = (investmentInfo && investmentInfo.fundDataList) ? investmentInfo : {};
+            fundListData = []
+        } = (investmentInfo && investmentInfo.fundListData) ? investmentInfo : {};
 
        /*
         var {
@@ -584,14 +584,14 @@ class OpenAccPageFiveComponent extends Component {
                 <Text style={styles.lblLine} />
 
                 <FlatList
-                                data={fundDataList}
+                                data={fundListData}
                                 keyExtractor={this.generateKeyExtractor}
                                 renderItem={this.renderFundItem()}
 
                 />
               
             </View>
-             { fundDataList.length >0 && this.renderInvestmentInfo(data)}
+             { fundListData.length >0 && this.renderInvestmentInfo(data)}
             </>
 
         );
@@ -605,8 +605,8 @@ class OpenAccPageFiveComponent extends Component {
             fundingSource = {},
            // totalFunds = '',
             totalInitialInvestment ='',
-           // fundDataList = []
-        } = (investmentInfo && investmentInfo.fundDataList) ? investmentInfo : {};
+           // fundListData = []
+        } = (investmentInfo && investmentInfo.fundListData) ? investmentInfo : {};
 
 
         var {

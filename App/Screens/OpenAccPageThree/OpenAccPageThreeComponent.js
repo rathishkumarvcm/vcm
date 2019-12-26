@@ -306,11 +306,11 @@ class OpenAccPageThreeComponent extends Component {
 
     callValidateBankAccount = () => {
         const validateBankAccountPayload = {
-            "accountType": this.state.accountType || "-",
-            "financialInstitutionName": this.state.financialInstitutionName || "-",
-            "accountOwnerNames": this.state.accountOwner || "-",
-            "transitRoutingNumber": this.state.transitRoutingNumber || "-",
-            "accountNumber": this.state.accountNumber || "-"
+            "accountType": this.state.accountType || "",
+            "financialInstitutionName": this.state.financialInstitutionName || "",
+            "accountOwnerNames": this.state.accountOwner || "",
+            "transitRoutingNumber": this.state.transitRoutingNumber || "",
+            "accountNumber": this.state.accountNumber || ""
 
         };
 
@@ -487,21 +487,33 @@ class OpenAccPageThreeComponent extends Component {
                 ...savedAccData,
                 "investmentInfo": {
                     "fundingSource": {
-                        "method": this.state.method || "-",
-                        "bankAccount": this.state.fundingSourceName || "-",
-                        "accountType": this.state.accountType || "-",
-                        "financialInstitutionName": this.state.financialInstitutionName || "-",
-                        "accountOwner": this.state.accountOwner || "-",
-                        "transitRoutingNumber": this.state.transitRoutingNumber || "-",
-                        "accountNumber": this.state.accountNumber || "-",
+                        "method": this.state.method || "",
+                        "bankAccount": this.state.fundingSourceName || "",
+                        "accountType": this.state.accountType || "",
+                        "financialInstitutionName": this.state.financialInstitutionName || "",
+                        "accountOwner": this.state.accountOwner || "",
+                        "transitRoutingNumber": this.state.transitRoutingNumber || "",
+                        "accountNumber": this.state.accountNumber || "",
                     },
-                    "totalFunds": `${ this.state.selectedFundInvestmentsData.length}` || "-",
-                    "totalInitialInvestment": this.state.totalInitialInvestment || "-",
-                    "fundDataList": this.state.selectedFundInvestmentsData
+                    "totalFunds": `${ this.state.selectedFundInvestmentsData.length}` || "",
+                    "totalInitialInvestment": this.state.totalInitialInvestment || "",
+                    "fundListData": this.state.selectedFundInvestmentsData
                 },
             };
         
-        return payload;
+            return payload;
+        }
+
+    replaceUndefinedOrNull= (key, value) => {
+        if (value === null || value === undefined || value ==='') {
+          return undefined;
+        }
+
+        return value;
+      }
+    getCleanedPayload = (payload) =>{
+        const cleanedObject = JSON.stringify(payload, this.replaceUndefinedOrNull, 4);
+        return JSON.parse(cleanedObject);
     }
 
     onSubmitEditing = (input) => text => {
@@ -637,7 +649,7 @@ class OpenAccPageThreeComponent extends Component {
         tempData.fundName = item.fundName;
         tempData.fundNumber = item.fundNumber;
         tempData.fundingOption = "";
-        tempData.fundingOptionDropDown = false;
+        tempData.fundingOptionDropDown = "";
         tempData.initialInvestment = "";
         tempData.mininitialInvestment = item.initialInvestment;
         tempData.monthlyInvestment = "0";
@@ -763,8 +775,8 @@ class OpenAccPageThreeComponent extends Component {
 
         switch (dropDownName) {
             case "fundingOptionDropDown":
-                newItems[objIndex].fundingOptionDropDown = false;
-                newItems[objIndex].fundingOption = item.value;
+                newItems[objIndex].fundingOptionDropDown = item.value;
+                newItems[objIndex].fundingOption = item.key;
 
                 AppUtils.Dlog(`item.value:: ${ item.value}`);
                 AppUtils.Dlog(`newItems[objIndex]:: ${ newItems[objIndex]}`);
@@ -939,7 +951,7 @@ class OpenAccPageThreeComponent extends Component {
 
                 }
 
-                else if (tempObj.fundingOption == "Initial and Monthly Investment" && this.isEmpty(tempObj.monthlyInvestment)) {
+                else if (tempObj.fundingOptionDropDown == "Initial and Monthly Investment" && this.isEmpty(tempObj.monthlyInvestment)) {
                     tempErrMsg = gblStrings.accManagement.emptyMonthlyInvestmentMsg;
                     inputField = "monthlyInvestment";
 
@@ -1589,8 +1601,8 @@ class OpenAccPageThreeComponent extends Component {
                                                     dropDownName={gblStrings.accManagement.fundingOptions}
                                                     data={tempFundOptionsData}
                                                     changeState={this.onPressDropDownForInvestment("fundingOptionDropDown", index)}
-                                                    showDropDown={this.state.selectedFundInvestmentsData[index].fundingOptionDropDown}
-                                                    dropDownValue={this.state.selectedFundInvestmentsData[index].fundingOption}
+                                                   // showDropDown={this.state.selectedFundInvestmentsData[index].fundingOptionDropDown}
+                                                    dropDownValue={this.state.selectedFundInvestmentsData[index].fundingOptionDropDown}
                                                     selectedDropDownValue={this.onSelectedDropDownValue("fundingOptionDropDown", index)}
                                                     itemToDisplay="value"
                                                     dropDownPostition={{ ...styles.dropDownPostition, top: scaledHeight(160) }}
