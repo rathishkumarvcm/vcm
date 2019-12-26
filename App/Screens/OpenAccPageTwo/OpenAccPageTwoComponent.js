@@ -1871,6 +1871,7 @@ class OpenAccPageTwoComponent extends Component {
 
     }
     validateEstateTrustInfoFields = () => {
+        AppUtils.Dlog(`validateEstateTrustInfoFields:::`);
 
         let errMsg = "";
         let isValidationSuccess = false;
@@ -1888,52 +1889,78 @@ class OpenAccPageTwoComponent extends Component {
             ++errMsgCount;
 
         } else if (this.isEmpty(this.state.estate.socialSecurityNo)) {
-            errMsg = gblStrings.accManagement.emptyFundingSourceMsg;
+            errMsg = gblStrings.accManagement.emptySSNMsg;
             input = "socialSecurityNo";
             ++errMsgCount;
 
         }else if (this.isEmpty(this.state.estate.addrLine1)) {
             errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
             input = 'addrLine1';
+            ++errMsgCount;
+
         } else if (this.isEmpty(this.state.estate.addrLine2)) {
             errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
             input = 'addrLine2';
+            ++errMsgCount;
+
         } else if (this.isEmpty(this.state.estate.zipcode)) {
             errMsg = gblStrings.accManagement.emptyZipCodeMsg;
             input = 'zipcode';
+            ++errMsgCount;
+
         } else if (this.state.estate.zipcode.length < gblStrings.maxLength.zipCode) {
             errMsg = gblStrings.accManagement.invalidZipCodeMsg;
             input = 'zipcode';
+            ++errMsgCount;
+
         } else if (this.isEmpty(this.state.estate.city)) {
             errMsg = gblStrings.accManagement.emptyCityMsg;
             input = 'city';
+            ++errMsgCount;
+
         } else if (this.isEmpty(this.state.estate.stateCity)) {
             errMsg = gblStrings.accManagement.emptyStateMsg;
             input = 'stateCity';
+            ++errMsgCount;
+
         } else if (this.isEmpty(this.state.estate.isYourPhysicalAddresSame)) {
             errMsg = gblStrings.accManagement.confirmPhysicalAddressSame;
             input = 'isYourPhysicalAddresSame';
+            ++errMsgCount;
+
         } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.estate.addrLine1_Phy)) {
             errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
             input = 'addrLine1_Phy';
+            ++errMsgCount;
+
         } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.estate.addrLine2_Phy)) {
             errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
             input = 'addrLine2_Phy';
         } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.estate.zipcode_Phy)) {
             errMsg = gblStrings.accManagement.emptyZipCodeMsg;
             input = 'zipcode_Phy';
+            ++errMsgCount;
+
         } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.state.estate.zipcode_Phy.length < gblStrings.maxLength.zipCode) {
             errMsg = gblStrings.accManagement.invalidZipCodeMsg;
             input = 'zipcode_Phy';
+            ++errMsgCount;
+
         } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.estate.city_Phy)) {
             errMsg = gblStrings.accManagement.emptyCityMsg;
             input = 'city_Phy';
+            ++errMsgCount;
+
         } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.estate.stateCity_Phy)) {
             errMsg = gblStrings.accManagement.emptyStateMsg;
             input = 'stateCity_Phy';
+            ++errMsgCount;
+
         } else if (this.isEmpty(this.state.estate.orgCountry)) {
             errMsg = gblStrings.accManagement.emptyStateMsg;
             input = 'orgCountry';
+            ++errMsgCount;
+
         } else if (this.state.estate.trusteeData.length > 0) {
             let inputField = "";
             
@@ -2020,6 +2047,12 @@ class OpenAccPageTwoComponent extends Component {
                     tempErrMsg = gblStrings.accManagement.emptyBusinessPhoneMsg;
                     inputField = "busniessPhoneNo";
 
+                } else if (this.isEmpty(tempObj.emailAddress)) {
+                    tempErrMsg = gblStrings.accManagement.emptyEmailAddressMsg;
+                    inputField = 'emailAddress';
+                } else if (!emailRegex.test(tempObj.emailAddress)) {
+                    tempErrMsg = gblStrings.accManagement.invalidEmailMasg;
+                    inputField = 'emailAddress';
                 }  else {
                     tempValidation = true;
                 }
@@ -2029,13 +2062,17 @@ class OpenAccPageTwoComponent extends Component {
                 if (!tempValidation) {
                     errMsg = tempErrMsg;
                     ++errMsgCount;
-                    const newItems = [...this.state.selectedFundInvestmentsData];
+                    const newItems = [...this.state.estate.trusteeData];
                     newItems[i][`${inputField }Validation`] = false;
-                    this.setState({
-                        selectedFundInvestmentsData: newItems,
+                   
+                    this.setState(() => (prevState => ({
+                        estate: {
+                            ...prevState.estate,
+                            trusteeData:newItems
+                        },
                         isValidationSuccess,
                         errMsg: isValidationSuccess === false ? errMsg : ""
-                    });
+                    })));
 
                     if (inputField !== "" && inputField !== null && inputField !== undefined) {
                         if (this[inputField + i] !== null && this[inputField + i] !== undefined) {
@@ -2065,7 +2102,7 @@ class OpenAccPageTwoComponent extends Component {
                 isValidationSuccess,
                 errMsg: isValidationSuccess === false ? errMsg : ""
             });
-           // alert(errMsg);
+           alert(errMsg);
         }
 
 
@@ -2085,7 +2122,7 @@ class OpenAccPageTwoComponent extends Component {
             const accType = this.props.navigation.getParam('accType', '');
             AppUtils.Dlog(`validateFields::: ${accType}`);
          
-            if (accType === "Trust or Estate Account" && !this.validateJointAccInfoFields()) {
+            if (accType === "Trust or Estate Account" && !this.validateEstateTrustInfoFields()) {
                 isValidationSuccess = false;
             }else if(accType !== "Trust or Estate Account"){
                 this.setState(prevState => ({
