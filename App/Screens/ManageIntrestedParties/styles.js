@@ -165,7 +165,8 @@ export const styles = StyleSheet.create({
     color: "#56565A"
   },
   flexDirectionStyle: {
-    flexDirection: "row"
+    flexDirection: "row",
+    paddingLeft:'4%'
   },
   notificationView: {
     width: "100%",

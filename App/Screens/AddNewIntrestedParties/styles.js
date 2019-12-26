@@ -329,4 +329,12 @@ export const styles = StyleSheet.create({
     marginTop:scaledHeight(18),
     paddingLeft:0
   },
+  dateStyle:{
+    width:'100%',
+    marginLeft:0,
+    marginRight:0
+  },
+  dateTextStyle:{
+    marginTop:0
+  }
 });
