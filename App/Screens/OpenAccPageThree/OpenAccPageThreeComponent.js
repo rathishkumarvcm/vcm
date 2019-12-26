@@ -957,7 +957,7 @@ class OpenAccPageThreeComponent extends Component {
 
                 }/* else if ( tempObj.fundingOption == "Initial and Monthly Investment" && tempObj.monthlyInvestment < tempObj.mininitialInvestment) {
                     tempErrMsg = gblStrings.accManagement.minMonthlyInvestmentMsg;
-                } */ else if (tempObj.fundingOption == "Initial and Monthly Investment" && this.isEmpty(tempObj.startDate)) {
+                } */ else if (tempObj.fundingOptionDropDown == "Initial and Monthly Investment" && this.isEmpty(tempObj.startDate)) {
                     tempErrMsg = gblStrings.accManagement.emptyStartDate;
                     inputField = "startDate";
 
@@ -1642,7 +1642,7 @@ class OpenAccPageThreeComponent extends Component {
 
 
                                                 {
-                                                    this.state.selectedFundInvestmentsData[index].fundingOption == "Initial and Monthly Investment" && 
+                                                    this.state.selectedFundInvestmentsData[index].fundingOptionDropDown == "Initial and Monthly Investment" && 
                                                     <View style={{flexGrow:1}}>
                                                         <Text style={styles.lblTxt}>
                                                             {gblStrings.accManagement.monthlyInvestment}

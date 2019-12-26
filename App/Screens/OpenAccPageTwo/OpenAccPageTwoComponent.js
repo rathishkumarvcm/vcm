@@ -568,72 +568,7 @@ class OpenAccPageTwoComponent extends Component {
                         residencePhoneNo:"",
                         emailAddress: "",
                         memberNumber: "",
-
-                        prefixValidation: true,
-                        firstNameValidation: true,
-                        lastNameValidation: true,
-                        dobValidation: true,
-                        genderValidation: true,
-                        maritalStatusValidation: true,
-                        citizenshipValidation: true,
-                        addressTypeValidation: true,
-                        mailingAddressTypeValidation: true,
-                        addrLine1Validation: true,
-                        addrLine2Validation: true,
-                        zipcodeValidation: true,
-                        cityValidation: true,
-                        stateCityValidation: true,
-                        stateValidation: true,
-                        addrLine1_PhyValidation: true,
-                        addrLine2_PhyValidation: true,
-                        zipcode_PhyValidation: true,
-                        city_PhyValidation: true,
-                        stateCity_PhyValidation: true,
-                        state_PhyValidation: true,
-                        isYourPhysicalAddresSameValidation: true,
-                        mobileNoValidation: true,
-                        emailAddressValidation: true,
-                        socialSecurityNoValidation: true,
-                        memberPhoneNoValidation: true,
-                        busniessPhoneNoValidation: true,
-                        residencePhoneNoValidation: true,
-                        memberNumberValidation: true,
-                    },
-                    {
-                        prefix: "",
-                        prefixDropDown: false,
-                        firstName: "",
-                        middleInitial: "",
-                        lastName: "",
-                        suffix: "",
-                        suffixDropDown: false,
-                        dob: "",
-                        gender: "",
-                        maritalStatus: "",
-                        maritalStatusDropDown: false,
-                        citizenship: "U.S",
-
-                        mailingAddressType: "",
-                        addressType: "",
-                        addrLine1: "",
-                        addrLine2: "",
-                        zipcode: "",
-                        city: "",
-                        stateCity: "",
-                        stateCityDropDown: false,
-                        addrLine1_Phy: "",
-                        addrLine2_Phy: "",
-                        zipcode_Phy: "",
-                        city_Phy: "",
-                        stateCity_Phy: "",
-                        stateCity_PhyDropDown: false,
-                        isYourPhysicalAddresSame: false,
-                        mobileNo: "",
-                        memberPhoneNo: "",
-                        busniessPhoneNo: "",
-                        residencePhoneNo:"",
-                        emailAddress: "",
-                        memberNumber: "",
+                        socialSecurityNo:"",
 
                         prefixValidation: true,
                         firstNameValidation: true,
@@ -665,6 +600,7 @@ class OpenAccPageTwoComponent extends Component {
                         residencePhoneNoValidation: true,
                         memberNumberValidation: true,
                     }
+                    
                 ]
 
             },
@@ -673,7 +609,7 @@ class OpenAccPageTwoComponent extends Component {
                 keyName: ""
             },
             // others
-              ...openAccPageTwo
+           //  ...openAccPageTwo
 
 
         };
@@ -1934,6 +1870,210 @@ class OpenAccPageTwoComponent extends Component {
         return isValidationSuccess;
 
     }
+    validateEstateTrustInfoFields = () => {
+
+        let errMsg = "";
+        let isValidationSuccess = false;
+        let errMsgCount = 0;
+        let input = "";
+
+        if (this.isEmpty(this.state.estate.name)) {
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "name";
+            ++errMsgCount;
+
+        } else if (this.isEmpty(this.state.estate.creationDate)) {
+            errMsg = gblStrings.accManagement.emptyCreationDateMsg;
+            input = "creationDate";
+            ++errMsgCount;
+
+        } else if (this.isEmpty(this.state.estate.socialSecurityNo)) {
+            errMsg = gblStrings.accManagement.emptyFundingSourceMsg;
+            input = "socialSecurityNo";
+            ++errMsgCount;
+
+        }else if (this.isEmpty(this.state.estate.addrLine1)) {
+            errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
+            input = 'addrLine1';
+        } else if (this.isEmpty(this.state.estate.addrLine2)) {
+            errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
+            input = 'addrLine2';
+        } else if (this.isEmpty(this.state.estate.zipcode)) {
+            errMsg = gblStrings.accManagement.emptyZipCodeMsg;
+            input = 'zipcode';
+        } else if (this.state.estate.zipcode.length < gblStrings.maxLength.zipCode) {
+            errMsg = gblStrings.accManagement.invalidZipCodeMsg;
+            input = 'zipcode';
+        } else if (this.isEmpty(this.state.estate.city)) {
+            errMsg = gblStrings.accManagement.emptyCityMsg;
+            input = 'city';
+        } else if (this.isEmpty(this.state.estate.stateCity)) {
+            errMsg = gblStrings.accManagement.emptyStateMsg;
+            input = 'stateCity';
+        } else if (this.isEmpty(this.state.estate.isYourPhysicalAddresSame)) {
+            errMsg = gblStrings.accManagement.confirmPhysicalAddressSame;
+            input = 'isYourPhysicalAddresSame';
+        } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.estate.addrLine1_Phy)) {
+            errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
+            input = 'addrLine1_Phy';
+        } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.estate.addrLine2_Phy)) {
+            errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
+            input = 'addrLine2_Phy';
+        } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.estate.zipcode_Phy)) {
+            errMsg = gblStrings.accManagement.emptyZipCodeMsg;
+            input = 'zipcode_Phy';
+        } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.state.estate.zipcode_Phy.length < gblStrings.maxLength.zipCode) {
+            errMsg = gblStrings.accManagement.invalidZipCodeMsg;
+            input = 'zipcode_Phy';
+        } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.estate.city_Phy)) {
+            errMsg = gblStrings.accManagement.emptyCityMsg;
+            input = 'city_Phy';
+        } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.estate.stateCity_Phy)) {
+            errMsg = gblStrings.accManagement.emptyStateMsg;
+            input = 'stateCity_Phy';
+        } else if (this.isEmpty(this.state.estate.orgCountry)) {
+            errMsg = gblStrings.accManagement.emptyStateMsg;
+            input = 'orgCountry';
+        } else if (this.state.estate.trusteeData.length > 0) {
+            let inputField = "";
+            
+
+            for (let i = 0; i < this.state.estate.trusteeData.length; i++) {
+                let tempErrMsg = "";
+                const tempObj = this.state.estate.trusteeData[i];
+                AppUtils.Dlog(`tempObj::${ JSON.stringify(tempObj)}`);
+                
+
+                let tempValidation = false;
+                if (this.isEmpty(tempObj.firstName)) {
+                    tempErrMsg = gblStrings.accManagement.emptyFirstNameMsg;
+                    inputField = "firstName";
+
+                } else if (this.isEmpty(tempObj.lastName)) {
+                    tempErrMsg = gblStrings.accManagement.emptyLastNameMsg;
+                    inputField = "lastName";
+
+                } else if (this.isEmpty(tempObj.memberNumber)) {
+                    tempErrMsg = gblStrings.accManagement.emptyMemberNumberMsg;
+                    inputField = "memberNumber";
+
+                } else if (this.isEmpty(tempObj.socialSecurityNo)) {
+                    tempErrMsg = gblStrings.accManagement.emptyLastNameMsg;
+                    inputField = "socialSecurityNo";
+
+                } else if (this.isEmpty(tempObj.dob)) {
+                    tempErrMsg = gblStrings.accManagement.emptyDateOfBirth;
+                    inputField = "dob";
+
+                } else if (this.isEmpty(tempObj.citizenship)) {
+                    tempErrMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+                    inputField = "citizenship";
+
+                } else if (this.isEmpty(tempObj.mailingAddressType)) {
+                    tempErrMsg = gblStrings.accManagement.emptyMailingAddressTypeMsg;
+                    inputField = "mailingAddressType";
+
+                }else if (this.isEmpty(tempObj.addrLine1)) {
+                    tempErrMsg = gblStrings.accManagement.emptyAddressLine1Msg;
+                    inputField = 'addrLine1';
+                } else if (this.isEmpty(tempObj.addrLine2)) {
+                    tempErrMsg = gblStrings.accManagement.emptyAddressLine2Msg;
+                    inputField = 'addrLine2';
+                } else if (this.isEmpty(tempObj.zipcode)) {
+                    tempErrMsg = gblStrings.accManagement.emptyZipCodeMsg;
+                    inputField = 'zipcode';
+                } else if (tempObj.zipcode.length < gblStrings.maxLength.zipCode) {
+                    tempErrMsg = gblStrings.accManagement.invalidZipCodeMsg;
+                    inputField = 'zipcode';
+                } else if (this.isEmpty(tempObj.city)) {
+                    tempErrMsg = gblStrings.accManagement.emptyCityMsg;
+                    inputField = 'city';
+                } else if (this.isEmpty(tempObj.stateCity)) {
+                    tempErrMsg = gblStrings.accManagement.emptyStateMsg;
+                    inputField = 'stateCity';
+                } else if (this.isEmpty(tempObj.isYourPhysicalAddresSame)) {
+                    tempErrMsg = gblStrings.accManagement.confirmPhysicalAddressSame;
+                    inputField = 'isYourPhysicalAddresSame';
+                } else if (tempObj.isYourPhysicalAddresSame === "No" && this.isEmpty(tempObj.addrLine1_Phy)) {
+                    tempErrMsg = gblStrings.accManagement.emptyAddressLine1Msg;
+                    inputField = 'addrLine1_Phy';
+                } else if (tempObj.isYourPhysicalAddresSame === "No" && this.isEmpty(tempObj.addrLine2_Phy)) {
+                    tempErrMsg = gblStrings.accManagement.emptyAddressLine2Msg;
+                    inputField = 'addrLine2_Phy';
+                } else if (tempObj.isYourPhysicalAddresSame === "No" && this.isEmpty(tempObj.zipcode_Phy)) {
+                    tempErrMsg = gblStrings.accManagement.emptyZipCodeMsg;
+                    inputField = 'zipcode_Phy';
+                } else if (tempObj.isYourPhysicalAddresSame === "No" && tempObj.zipcode_Phy.length < gblStrings.maxLength.zipCode) {
+                    tempErrMsg = gblStrings.accManagement.invalidZipCodeMsg;
+                    inputField = 'zipcode_Phy';
+                } else if (tempObj.isYourPhysicalAddresSame === "No" && this.isEmpty(tempObj.city_Phy)) {
+                    tempErrMsg = gblStrings.accManagement.emptyCityMsg;
+                    inputField = 'city_Phy';
+                } else if (tempObj.isYourPhysicalAddresSame === "No" && this.isEmpty(tempObj.stateCity_Phy)) {
+                    tempErrMsg = gblStrings.accManagement.emptyStateMsg;
+                    inputField = 'stateCity_Phy';
+                } else if (this.isEmpty(tempObj.residencePhoneNo)) {
+                    tempErrMsg = gblStrings.accManagement.emptyResidentialPhoneMsg;
+                    inputField = "residencePhoneNo";
+
+                } else if (this.isEmpty(tempObj.busniessPhoneNo)) {
+                    tempErrMsg = gblStrings.accManagement.emptyBusinessPhoneMsg;
+                    inputField = "busniessPhoneNo";
+
+                }  else {
+                    tempValidation = true;
+                }
+
+                AppUtils.Dlog(`tempErrMsg: ${ tempErrMsg}`);
+
+                if (!tempValidation) {
+                    errMsg = tempErrMsg;
+                    ++errMsgCount;
+                    const newItems = [...this.state.selectedFundInvestmentsData];
+                    newItems[i][`${inputField }Validation`] = false;
+                    this.setState({
+                        selectedFundInvestmentsData: newItems,
+                        isValidationSuccess,
+                        errMsg: isValidationSuccess === false ? errMsg : ""
+                    });
+
+                    if (inputField !== "" && inputField !== null && inputField !== undefined) {
+                        if (this[inputField + i] !== null && this[inputField + i] !== undefined) {
+                            if (typeof this[inputField + i].focus === 'function') {
+                                this[inputField + i].focus();
+                            }
+                        }
+                    }
+
+                    break;
+                }
+            }
+
+            if (errMsgCount == 0) {
+                isValidationSuccess = true;
+            }
+
+
+
+        } else {
+            isValidationSuccess = true;
+        }
+
+        if (!isValidationSuccess) {
+            this.setState({
+                [`${input}Validation`]: false,
+                isValidationSuccess,
+                errMsg: isValidationSuccess === false ? errMsg : ""
+            });
+           // alert(errMsg);
+        }
+
+
+
+        return isValidationSuccess;
+
+    }
+
 
 
     validateFields = () => {
@@ -1944,125 +2084,131 @@ class OpenAccPageTwoComponent extends Component {
 
             const accType = this.props.navigation.getParam('accType', '');
             AppUtils.Dlog(`validateFields::: ${accType}`);
-
-
-            this.setState(prevState => ({
-                personal: {
-                    ...prevState.personal,
-                    primarySourceIncomeValidation: true,
-                    phoneTypeValidation: true,
-                    phoneType2Validation: true,
-                    phoneType3Validation: true,
-                    contactDuringMobNoValidation: true,
-                    prefixValidation: true,
-                    firstNameValidation: true,
-                    lastNameValidation: true,
-                    dobValidation: true,
-                    genderValidation: true,
-                    maritalStatusValidation: true,
-                    citizenshipValidation: true,
-                    addressTypeValidation: true,
-                    mailingAddressTypeValidation: true,
-                    addrLine1Validation: true,
-                    addrLine2Validation: true,
-                    zipcodeValidation: true,
-                    cityValidation: true,
-                    stateCityValidation: true,
-                    stateValidation: true,
-                    addrLine1_PhyValidation: true,
-                    addrLine2_PhyValidation: true,
-                    zipcode_PhyValidation: true,
-                    city_PhyValidation: true,
-                    stateCity_PhyValidation: true,
-                    state_PhyValidation: true,
-                    isYourPhysicalAddresSameValidation: true,
-                    mobileNoValidation: true,
-                    workPhoneNoValidation: true,
-                    emailAddressValidation: true,
-                    socialSecurityNoValidation: true,
-
-                    empStatusValidation: true,
-                    seniorPoliticalNameValidation: true,
-                    isSeniorPoliticalFigureValidation: true,
-
-                    militaryStatusValidation: true,
-                    isMilitaryHistoryValidation: true,
-
-
-                },
-                jointOwner: {
-                    ...prevState.jointOwner,
-                    primarySourceIncomeValidation: true,
-                    phoneTypeValidation: true,
-                    phoneType2Validation: true,
-                    phoneType3Validation: true,
-                    contactDuringMobNoValidation: true,
-                    prefixValidation: true,
-                    firstNameValidation: true,
-                    lastNameValidation: true,
-                    dobValidation: true,
-                    genderValidation: true,
-                    maritalStatusValidation: true,
-                    citizenshipValidation: true,
-                    addressTypeValidation: true,
-                    mailingAddressTypeValidation: true,
-                    addrLine1Validation: true,
-                    addrLine2Validation: true,
-                    zipcodeValidation: true,
-                    cityValidation: true,
-                    stateCityValidation: true,
-                    stateValidation: true,
-                    addrLine1_PhyValidation: true,
-                    addrLine2_PhyValidation: true,
-                    zipcode_PhyValidation: true,
-                    city_PhyValidation: true,
-                    stateCity_PhyValidation: true,
-                    state_PhyValidation: true,
-                    isYourPhysicalAddresSameValidation: true,
-                    mobileNoValidation: true,
-                    workPhoneNoValidation: true,
-                    emailAddressValidation: true,
-                    socialSecurityNoValidation: true,
-                    empStatusValidation: true,
-                    seniorPoliticalNameValidation: true,
-                    isSeniorPoliticalFigureValidation: true,
-
-                    militaryStatusValidation: true,
-                    isMilitaryHistoryValidation: true,
-
-
-                },
-                childBeneficiary: {
-                    ...prevState.childBeneficiary,
-
-                    prefixValidation: true,
-                    firstNameValidation: true,
-                    lastNameValidation: true,
-                    dobValidation: true,
-                    genderValidation: true,
-                    vcmNoValidation: true,
-                    mobileNoValidation: true,
-                    emailAddressValidation: true,
-                    socialSecurityNoValidation: true,
-                    relationshipToAccValidation: true,
-                    seniorPoliticalNameValidation: true,
-                    isSeniorPoliticalFigureValidation: true,
-
+         
+            if (accType === "Trust or Estate Account" && !this.validateJointAccInfoFields()) {
+                isValidationSuccess = false;
+            }else if(accType !== "Trust or Estate Account"){
+                this.setState(prevState => ({
+                    personal: {
+                        ...prevState.personal,
+                        primarySourceIncomeValidation: true,
+                        phoneTypeValidation: true,
+                        phoneType2Validation: true,
+                        phoneType3Validation: true,
+                        contactDuringMobNoValidation: true,
+                        prefixValidation: true,
+                        firstNameValidation: true,
+                        lastNameValidation: true,
+                        dobValidation: true,
+                        genderValidation: true,
+                        maritalStatusValidation: true,
+                        citizenshipValidation: true,
+                        addressTypeValidation: true,
+                        mailingAddressTypeValidation: true,
+                        addrLine1Validation: true,
+                        addrLine2Validation: true,
+                        zipcodeValidation: true,
+                        cityValidation: true,
+                        stateCityValidation: true,
+                        stateValidation: true,
+                        addrLine1_PhyValidation: true,
+                        addrLine2_PhyValidation: true,
+                        zipcode_PhyValidation: true,
+                        city_PhyValidation: true,
+                        stateCity_PhyValidation: true,
+                        state_PhyValidation: true,
+                        isYourPhysicalAddresSameValidation: true,
+                        mobileNoValidation: true,
+                        workPhoneNoValidation: true,
+                        emailAddressValidation: true,
+                        socialSecurityNoValidation: true,
+    
+                        empStatusValidation: true,
+                        seniorPoliticalNameValidation: true,
+                        isSeniorPoliticalFigureValidation: true,
+    
+                        militaryStatusValidation: true,
+                        isMilitaryHistoryValidation: true,
+    
+    
+                    },
+                    jointOwner: {
+                        ...prevState.jointOwner,
+                        primarySourceIncomeValidation: true,
+                        phoneTypeValidation: true,
+                        phoneType2Validation: true,
+                        phoneType3Validation: true,
+                        contactDuringMobNoValidation: true,
+                        prefixValidation: true,
+                        firstNameValidation: true,
+                        lastNameValidation: true,
+                        dobValidation: true,
+                        genderValidation: true,
+                        maritalStatusValidation: true,
+                        citizenshipValidation: true,
+                        addressTypeValidation: true,
+                        mailingAddressTypeValidation: true,
+                        addrLine1Validation: true,
+                        addrLine2Validation: true,
+                        zipcodeValidation: true,
+                        cityValidation: true,
+                        stateCityValidation: true,
+                        stateValidation: true,
+                        addrLine1_PhyValidation: true,
+                        addrLine2_PhyValidation: true,
+                        zipcode_PhyValidation: true,
+                        city_PhyValidation: true,
+                        stateCity_PhyValidation: true,
+                        state_PhyValidation: true,
+                        isYourPhysicalAddresSameValidation: true,
+                        mobileNoValidation: true,
+                        workPhoneNoValidation: true,
+                        emailAddressValidation: true,
+                        socialSecurityNoValidation: true,
+                        empStatusValidation: true,
+                        seniorPoliticalNameValidation: true,
+                        isSeniorPoliticalFigureValidation: true,
+    
+                        militaryStatusValidation: true,
+                        isMilitaryHistoryValidation: true,
+    
+    
+                    },
+                    childBeneficiary: {
+                        ...prevState.childBeneficiary,
+    
+                        prefixValidation: true,
+                        firstNameValidation: true,
+                        lastNameValidation: true,
+                        dobValidation: true,
+                        genderValidation: true,
+                        vcmNoValidation: true,
+                        mobileNoValidation: true,
+                        emailAddressValidation: true,
+                        socialSecurityNoValidation: true,
+                        relationshipToAccValidation: true,
+                        seniorPoliticalNameValidation: true,
+                        isSeniorPoliticalFigureValidation: true,
+    
+                    }
+                }));
+    
+                if (!this.validateIndividualAccInfoFields()) {
+                    isValidationSuccess = false;
+                } else if (accType === "Joint Account" && !this.validateJointAccInfoFields()) {
+                    isValidationSuccess = false;
+                } else if (accType === "UGMA/UTMA Account" && !this.validateChildBeneficiaryInfoFields()) {
+                    isValidationSuccess = false;
+                } else if (accType === "Retirement Account" && !this.validateIRABeneficiaryInfoFields()) {
+                    isValidationSuccess = false;
+                } else {
+                    isValidationSuccess = true;
                 }
-            }));
-
-
-            if (!this.validateIndividualAccInfoFields()) {
-                isValidationSuccess = false;
-            } else if (accType === "Joint Account" && !this.validateJointAccInfoFields()) {
-                isValidationSuccess = false;
-            } else if (accType === "UGMA/UTMA Account" && !this.validateChildBeneficiaryInfoFields()) {
-                isValidationSuccess = false;
-            } else if (accType === "Retirement Account" && !this.validateIRABeneficiaryInfoFields()) {
-                isValidationSuccess = false;
-            } else {
+            }else{
                 isValidationSuccess = true;
             }
+
+           
 
 
         } catch (err) {
