@@ -8,119 +8,125 @@ export const styles = StyleSheet.create({
         backgroundColor: '#F7FAFF',
         width: '100%'
     },
-    mainFlex:{
+    mainFlex: {
         flex: 0.85
     },
-    paddingRightStyle:{
-        paddingRight:'2%'
+    paddingRightStyle: {
+        paddingRight: '2%'
     },
-    generalAccHeaderView:{
-        justifyContent:'space-between',
-        flexDirection:'row'
+    generalAccHeaderView: {
+        justifyContent: 'space-between',
+        flexDirection: 'row'
     },
-    openAccStyle:{
-        color:'#5D83AE',
-        fontSize:scaledHeight(15),
-        fontWeight:'600',
-        opacity:1,
-        paddingTop:'2%'
+    openAccStyle: {
+        color: '#5D83AE',
+        fontSize: scaledHeight(15),
+        fontWeight: '600',
+        opacity: 1,
+        paddingTop: '2%'
     },
-    headerFlex:{
-        height:scaledHeight(29),
-        flexDirection:'row'
+    headerFlex: {
+        height: scaledHeight(29),
+        flexDirection: 'row'
     },
-    headerText:{
-        color:'#56565A',
-        fontSize:scaledHeight(22),
-        fontWeight:'bold',
+    headerText: {
+        color: '#56565A',
+        fontSize: scaledHeight(22),
+        fontWeight: 'bold',
     },
-    toggleOnFlex:{
-        backgroundColor: 'white', 
-        width: "15%", 
-        marginTop: "1%", 
-        alignItems: 'flex-start', 
-        justifyContent: 'flex-start', 
-        flexDirection: 'row', 
-        marginRight: "6%" 
+    headerIconText: {
+        color: '#56565A',
+        fontSize: scaledHeight(22),
+        fontWeight: 'bold',
+        paddingRight: '2%'
     },
-    toggleOnGreyBg:{
-        backgroundColor: '#444444', 
-        borderColor: '#707070', 
-        borderWidth: scaledHeight(1), 
-        width: "100%", 
-        height: scaledHeight(25), 
-        borderRadius: 15, 
-        marginTop: scaledHeight(2)
-    },
-    toggleOnCircle:{
-        backgroundColor: '#FFFFFF', 
-        width: scaledHeight(30),
-        height: scaledHeight(30),  
-        borderRadius: scaledHeight(15), 
-        borderColor: '#707070', 
-        borderWidth: scaledHeight(1), 
-        zIndex: 3, 
-        marginLeft: scaledHeight(-30)
-    },
-    toggleOffFlex:{
-        backgroundColor: 'white', 
-        width: "15%", 
-        marginTop: "1%", 
-        alignItems: 'flex-start', 
-        justifyContent: 'flex-start', 
-        flexDirection: 'row', 
+    toggleOnFlex: {
+        backgroundColor: 'white',
+        width: "15%",
+        marginTop: "1%",
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        flexDirection: 'row',
         marginRight: "6%"
     },
-    toggleOffGreyBg:{
-        backgroundColor: '#DBDBDB', 
-        borderColor: '#707070', 
-        borderWidth: scaledHeight(1), 
-        width: "100%", 
-        height: scaledHeight(25), 
+    toggleOnGreyBg: {
+        backgroundColor: '#444444',
+        borderColor: '#707070',
+        borderWidth: scaledHeight(1),
+        width: "100%",
+        height: scaledHeight(25),
         borderRadius: 15,
         marginTop: scaledHeight(2)
     },
-    toggleOffCircle:{
-        width: scaledHeight(30), 
-        height: scaledHeight(30), 
-        borderRadius: scaledHeight(15), 
-        borderColor: '#707070', 
-        borderWidth: scaledHeight(1), 
-        backgroundColor: '#FFFFFF', 
-        position: 'absolute', 
+    toggleOnCircle: {
+        backgroundColor: '#FFFFFF',
+        width: scaledHeight(30),
+        height: scaledHeight(30),
+        borderRadius: scaledHeight(15),
+        borderColor: '#707070',
+        borderWidth: scaledHeight(1),
+        zIndex: 3,
+        marginLeft: scaledHeight(-30)
+    },
+    toggleOffFlex: {
+        backgroundColor: 'white',
+        width: "15%",
+        marginTop: "1%",
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        marginRight: "6%"
+    },
+    toggleOffGreyBg: {
+        backgroundColor: '#DBDBDB',
+        borderColor: '#707070',
+        borderWidth: scaledHeight(1),
+        width: "100%",
+        height: scaledHeight(25),
+        borderRadius: 15,
+        marginTop: scaledHeight(2)
+    },
+    toggleOffCircle: {
+        width: scaledHeight(30),
+        height: scaledHeight(30),
+        borderRadius: scaledHeight(15),
+        borderColor: '#707070',
+        borderWidth: scaledHeight(1),
+        backgroundColor: '#FFFFFF',
+        position: 'absolute',
         zIndex: 3
     },
-    mainContainer:{
+    mainContainer: {
         marginLeft: "4%",
         marginRight: "4%"
     },
-    greyText16px:{
-        color:'#56565A',
-        fontSize:scaledHeight(16),
+    greyText16px: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
     },
-    blackTextBold18px:{
-        color:'#54565B',
-        fontSize:scaledHeight(18),
-        fontWeight:'bold'
+    blackTextBold18px: {
+        color: '#54565B',
+        fontSize: scaledHeight(18),
+        fontWeight: 'bold'
     },
-    currentValueflex:{
-        flexDirection:'column',
-        width:"50%",
-        justifyContent:'space-between'
+    currentValueflex: {
+        flexDirection: 'column',
+        width: "50%",
+        justifyContent: 'space-between'
     },
-    blackTextBold14px:{
-        color:'#56565A',
-        fontSize:scaledHeight(14),
-        fontWeight:'bold'
+    blackTextBold14px: {
+        color: '#56565A',
+        fontSize: scaledHeight(14),
+        fontWeight: 'bold'
     },
-    blackText14px:{
-        color:'#56565A',
-        fontSize:scaledHeight(14),
+    blackText14px: {
+        color: '#56565A',
+        fontSize: scaledHeight(14),
     },
-    accountTypeFlex:{
-        height:scaledHeight(45),
-        marginTop:scaledHeight(30),
-        flexDirection:'column'
+    accountTypeFlex: {
+        height: scaledHeight(45),
+        marginTop: scaledHeight(30),
+        flexDirection: 'column'
     },
     line: {
         backgroundColor: '#535353',
@@ -130,70 +136,70 @@ export const styles = StyleSheet.create({
         marginTop: '4%',
     },
 
-    accountDetailsFlex:{
-        height:"100%",
-        flexDirection:'column',
-        borderColor:'#9DB4CE',
-        borderWidth:scaledHeight(1),
-        backgroundColor:'#FFFFFF',
+    accountDetailsFlex: {
+        height: "100%",
+        flexDirection: 'column',
+        borderColor: '#9DB4CE',
+        borderWidth: scaledHeight(1),
+        backgroundColor: '#FFFFFF',
     },
-    accountDetailsFlexSelected:{
-        height:scaledHeight(246),
-        marginTop:scaledHeight(20),
-        flexDirection:'column',
-        borderColor:'#B5E198',
-        borderWidth:scaledHeight(3),
-        backgroundColor:'#FFFFFF',
+    accountDetailsFlexSelected: {
+        height: scaledHeight(246),
+        marginTop: scaledHeight(20),
+        flexDirection: 'column',
+        borderColor: '#B5E198',
+        borderWidth: scaledHeight(3),
+        backgroundColor: '#FFFFFF',
     },
-    accountDetailsFlexUnSelected:{
-        height:scaledHeight(246),
-        marginTop:scaledHeight(20),
-        flexDirection:'column',
-        borderColor:'#FFFFFF',
-        borderWidth:scaledHeight(3),
-        backgroundColor:'#FFFFFF',
+    accountDetailsFlexUnSelected: {
+        height: scaledHeight(246),
+        marginTop: scaledHeight(20),
+        flexDirection: 'column',
+        borderColor: '#FFFFFF',
+        borderWidth: scaledHeight(3),
+        backgroundColor: '#FFFFFF',
     },
 
-    flexAccDetails1:{
-        height:scaledHeight(73),
+    flexAccDetails1: {
+        height: scaledHeight(73),
         marginLeft: '4%',
-        marginRight:"4%",
-        marginTop:"4%",
-        flexDirection:'row',
+        marginRight: "4%",
+        marginTop: "4%",
+        flexDirection: 'row',
     },
-    accountNumberFlex:{
-        width:"85%"
+    accountNumberFlex: {
+        width: "85%"
     },
-    flexAccDetails2:{
-        height:scaledHeight(44),
+    flexAccDetails2: {
+        height: scaledHeight(44),
         marginTop: scaledHeight(20),
-        flexDirection:'row',
+        flexDirection: 'row',
         marginLeft: "4%",
         marginRight: "4%"
     },
-    flexAccDetails3:{
-        height:scaledHeight(44),
+    flexAccDetails3: {
+        height: scaledHeight(44),
         marginTop: scaledHeight(20),
-        flexDirection:'column',
+        flexDirection: 'column',
         marginLeft: "4%",
         marginRight: "4%",
-        justifyContent:'space-between'
+        justifyContent: 'space-between'
     },
-    flex6:{
-        height:scaledHeight(140),
+    flex6: {
+        height: scaledHeight(140),
         flexDirection: 'column',
         marginLeft: "10%",
         marginRight: "10%",
-        marginTop:"12%",
+        marginTop: "12%",
     },
     backButtonFlex: {
         height: scaledHeight(50),
         borderColor: '#61285F45',
         borderWidth: scaledHeight(1),
-        backgroundColor:'#FFFFFF',
+        backgroundColor: '#FFFFFF',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop:scaledHeight(18)
+        marginTop: scaledHeight(18)
     },
     backButtonText: {
         color: '#544A54',
@@ -204,20 +210,20 @@ export const styles = StyleSheet.create({
         height: scaledHeight(50),
         borderColor: '#544A54',
         borderWidth: scaledHeight(1),
-        backgroundColor:'#544A54',
+        backgroundColor: '#544A54',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop:scaledHeight(19)
+        marginTop: scaledHeight(19)
     },
     submitFlexDisabled: {
         height: scaledHeight(50),
         borderColor: '#544A54',
         borderWidth: scaledHeight(1),
-        backgroundColor:'#544A54',
+        backgroundColor: '#544A54',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop:scaledHeight(19),
-        opacity:0.5
+        marginTop: scaledHeight(19),
+        opacity: 0.5
     },
     submitText: {
         color: '#FFFFFF',

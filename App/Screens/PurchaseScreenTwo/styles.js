@@ -453,15 +453,15 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: scaledHeight(7)
   },
-  dollerIconTxt:{ 
+  dollerIconTxt: {
     color: '#56565A',
-     fontSize: scaledHeight(16)
-     },
-     helpText:{ 
-       textAlign: 'right',
-        width: '100%',
-         color: '#56565A',
-          fontSize: scaledHeight(12), 
-          marginTop: scaledHeight(12)
-         }
+    fontSize: scaledHeight(16)
+  },
+  helpText: {
+    textAlign: 'right',
+    width: '100%',
+    color: '#56565A',
+    fontSize: scaledHeight(12),
+    marginTop: scaledHeight(12)
+  }
 });

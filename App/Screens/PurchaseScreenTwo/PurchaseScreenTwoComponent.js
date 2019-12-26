@@ -7,7 +7,6 @@ import gblStrings from '../../Constants/GlobalStrings';
 import { CustomCheckBox, PageNumber } from '../../AppComponents';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import InvestmentDetails from "../../Models/InvestmentDetails";
-import { scaledHeight } from '../../Utils/Resolution';
 
 const fundingOptionsData = [
     { "key": "init", "value": "Initial Investment" },
@@ -43,19 +42,13 @@ const filterFundData = [
     { key: 'mon_fun', value: 'Money Market Funds' },
 ];
 
+let savedData = {};
+
 class PurchaseScreenTwoComponent extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            selectedAccountData: {
-                selectedAccountName: '',
-                selectedAccountNumber: '',
-                currentValue: '',
-                holdingValue: '',
-                AutoInvPlan: '',
-                accType: '',
-            },
             selectedFundInvestmentData: {},
             selectedFundIndex: null,
             disableNextButton: true,
@@ -71,7 +64,6 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     componentDidMount() {
-        this.bindReceivedData();
         this.getLookUpData();
     }
 
@@ -104,7 +96,7 @@ class PurchaseScreenTwoComponent extends Component {
             "filter_risk"
         ];
 
-        for (let i = 0; i < compositePayloadData.length; i=i+1) {
+        for (let i = 0; i < compositePayloadData.length; i = i + 1) {
             const tempkey = compositePayloadData[i];
             if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempkey]) {
                 payload.push(tempkey);
@@ -113,27 +105,13 @@ class PurchaseScreenTwoComponent extends Component {
         this.props.getCompositeLookUpData(payload);
     }
 
-    bindReceivedData = () => {
-        const data = this.props.navigation.getParam("accSelectionScreenData");
-        this.setState({
-            selectedAccountData: {
-                selectedAccountName: data.selectedAccountName,
-                selectedAccountNumber: data.selectedAccountNumber,
-                currentValue: data.currentValue,
-                holdingValue: data.holdingValue,
-                AutoInvPlan: data.AutomaticInvestmentPlan,
-                accType: data.accType
-            }
-        });
-    }
-
     /* ---------------Button Events ------------------- */
     goBack = () => {
         this.props.navigation.goBack();
     }
 
     onClickCancel = () => {
-        this.props.navigation.navigate('purchaseScreenOne');
+        this.props.navigation.navigate({ routeName: 'purchaseScreenOne', key: 'purchaseScreenOne' });
     }
 
     // onPressRemoveInvestment = (item, index) => () => {
@@ -158,6 +136,7 @@ class PurchaseScreenTwoComponent extends Component {
 
     //     });
     // }
+
     /* ----------------- Filter Events ------------------ */
     onCheckboxSelect = (type, item, index) => () => {
         let newItm = [];
@@ -180,7 +159,7 @@ class PurchaseScreenTwoComponent extends Component {
                 this.setState({ filterFundData: newItm });
                 break;
             default:
-                    break;
+                break;
         }
         // console.log('New Item:' + JSON.stringify(newItm));
     }
@@ -353,27 +332,26 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     onClickSave = () => {
-        console.log("in Save function::");
-        const savedData = {};
-
-        savedData.fundName = this.state.selectedFundInvestmentData.fundName;
-        savedData.fundingOption = this.state.selectedFundInvestmentData.fundingOption;
-        savedData.initialInvestment = this.state.selectedFundInvestmentData.initialInvestment;
-        savedData.monthlyInvestment = this.state.selectedFundInvestmentData.monthlyInvestment;
-        savedData.startDate = this.state.selectedFundInvestmentData.startDate;
-
-        // this.props.navigation.navigate();
+        const payloadData = {
+            savePurchaseSelectedData: {
+                ...savedData,
+                "selectedFundData": {
+                    "fundName": this.state.selectedFundInvestmentData.fundName,
+                    "fundNumber": this.state.selectedFundInvestmentData.fundNumber,
+                    "fundingOption": this.state.selectedFundInvestmentData.fundingOption,
+                    "initialInvestment": this.state.selectedFundInvestmentData.initialInvestment,
+                    "monthlyInvestment": this.state.selectedFundInvestmentData.monthlyInvestment,
+                    "startDate": this.state.selectedFundInvestmentData.startDate,
+                    "count": '',
+                    "total": this.state.totalInitialInvestment
+                },
+            }
+        };
+        this.props.saveData(payloadData);
+        this.props.navigation.navigate({ routeName: 'purchaseScreenThree', key: 'purchaseScreenThree' });
     }
 
     /* ----------------- Fund List Events -------------------------- */
-    getIndex = (value, arr, prop) => {
-        for (var i = 0; i < arr.length; i=i+1) {
-            if (arr[i][prop] === value) {
-                return i;
-            }
-        }
-        return -1; //to handle the case where the value doesn't exist
-    }
 
     setInputRef = (inputComp) => (ref) => {
         this[inputComp] = ref;
@@ -443,24 +421,29 @@ class PurchaseScreenTwoComponent extends Component {
 
 
     render() {
+
         const currentPage = 2;
-        const pageName = '2 - Investment Selection';
+        const pageName = `${currentPage} - ${gblStrings.purchase.investmentSelection}`;
         const date = new Date().getDate();
         const month = new Date().getMonth() + 1;
         const year = new Date().getFullYear();
-        const currentDate = month + "-" + date + "-" + year;
+        const currentDate = `${month}-${date}-${year}`;
+
+        if (this.props.purchaseData && this.props.purchaseData.savePurchaseSelectedData) {
+            savedData = this.props.purchaseData.savePurchaseSelectedData;
+        }
 
         return (
             <View style={styles.container} >
-
+                {this.props.accOpeningData.isLoading || this.props.masterLookupStateData.isLoading && <GLoadingSpinner />}
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <PageNumber currentPage={currentPage} pageName={pageName} />
                     <View style={styles.topContainer}>
-                        <Text style={styles.topContainerTxtBold}>{gblStrings.liquidation.accountName} {this.state.selectedAccountData.selectedAccountName}</Text>
+                        <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountName} {savedData.selectedAccountData.accountName}</Text>
                         <View style={styles.flexDirectionStyle}>
-                            <Text style={styles.topContainerTxtBold}>{gblStrings.liquidation.accountNumber}</Text>
-                            <Text style={styles.topContainerTxtBold}>{this.state.selectedAccountData.selectedAccountNumber}</Text>
+                            <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountNumber}</Text>
+                            <Text style={styles.topContainerTxtBold}>{savedData.selectedAccountData.accountNumber}</Text>
                         </View>
                     </View>
 
@@ -482,7 +465,7 @@ class PurchaseScreenTwoComponent extends Component {
                                 buttonStyle={styles.compareFundsBtn}
                                 buttonText={gblStrings.purchase.compareFund}
                                 textStyle={styles.compareFundsBtnTxt}
-                                // onPress={this.navigateCompareFunds}
+                            // onPress={this.navigateCompareFunds}
                             />
                             <View style={styles.fundListGrp}>
                                 <FlatList
@@ -585,7 +568,7 @@ class PurchaseScreenTwoComponent extends Component {
                                             <View style={styles.marginBottomStyle}>
                                                 <Text style={styles.fundInvestTitle}>{gblStrings.purchase.monthlyInvestment}</Text>
                                                 <View style={styles.iconFrontStyle}>
-                                                <Text style={styles.dollerIconTxt}>{"$"}</Text>
+                                                    <Text style={styles.dollerIconTxt}>{"$"}</Text>
                                                     <GInputComponent
                                                         inputref={this.setInputRef("monthlyInvestment")}
                                                         propInputStyle={{ width: '90%' }}
@@ -787,12 +770,19 @@ class PurchaseScreenTwoComponent extends Component {
 PurchaseScreenTwoComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     accOpeningData: PropTypes.instanceOf(Object),
-    getFundListData:PropTypes.func,
-    masterLookupStateData:PropTypes.instanceOf(Object),
-    getCompositeLookUpData: PropTypes.func
+    getFundListData: PropTypes.func,
+    masterLookupStateData: PropTypes.instanceOf(Object),
+    getCompositeLookUpData: PropTypes.func,
+    saveData: PropTypes.func
 };
 
 PurchaseScreenTwoComponent.defaultProps = {
-
+    saveData: () => { },
+    getCompositeLookUpData: () => { },
+    masterLookupStateData: {},
+    getFundListData: () => { },
+    accOpeningData: {},
+    navigation: {}
 };
+
 export default PurchaseScreenTwoComponent;
