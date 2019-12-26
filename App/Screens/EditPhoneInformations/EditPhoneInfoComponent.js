@@ -41,20 +41,19 @@ const UserPhoneInformation = (props) => {
                             source={require("../../Images/menu_icon.png")} />
                     </TouchableOpacity>
                 </View>
-
-                {props.selectedMenuOption ?
-                    <FlatList style={styles.editFlatList}
-                        data={editDeleteMenuOption}
-                        renderItem={({ item, index }) =>
-                            (<TouchableOpacity style={styles.editDropdown}>
-                                <Text style={styles.editDropdownText}>
-                                    {item.name}
-                                </Text>
-                            </TouchableOpacity>)}
-                        keyExtractor={item => item.id}
-                    /> : null}
-
             </View>
+
+            {props.selectedMenuIndex == 1 ?
+                (<FlatList style={styles.editFlatList}
+                    data={editDeleteMenuOption}
+                    renderItem={({ item, index }) =>
+                        (<TouchableOpacity style={styles.editDropdown}>
+                            <Text style={styles.editDropdownText}>
+                                {item.name}
+                            </Text>
+                        </TouchableOpacity>)}
+                    keyExtractor={item => item.id} />)
+                : null}
 
             <View style={styles.editEmailBorder} />
 
@@ -69,7 +68,6 @@ const UserPhoneInformation = (props) => {
                         value={props.isPrimaryMobile} />
                 </View>
             </View>
-
         </View>
     )
 };
@@ -81,7 +79,7 @@ UserPhoneInformation.propTypes = {
     isPrimaryMobile: PropTypes.bool,
     onMobileToggle: PropTypes.func,
     onMenuOptionClicked: PropTypes.func,
-    selectedMenuOption: PropTypes.bool
+    selectedMenuIndex: PropTypes.any
 };
 
 class editPhoneInfoComponent extends Component {
@@ -94,6 +92,7 @@ class editPhoneInfoComponent extends Component {
             faceIdEnrolled: false,
             touchIdEnrolled: false,
 
+            selectedIndex: -1,
             isMobileRefreshed: false,
 
             userMobileNumber: [],
@@ -102,10 +101,7 @@ class editPhoneInfoComponent extends Component {
 
             contactPosition: this.props.navigation.getParam('contactPosition'),
             isRelation: this.props.navigation.getParam('isRelation'),
-            relationPhoneInfo: {},
-
-            selectedIndex: -1,
-            refreshMenuOption: false
+            relationPhoneInfo: {}
         };
     }
 
@@ -185,18 +181,6 @@ class editPhoneInfoComponent extends Component {
         }
     }
 
-    editDelete = (index) => () => {
-        var array = [...this.state.userMobileNumber];
-        if (index !== -1) {
-            let switchVal = array[index].selectedMenuOption;
-            array[index].selectedMenuOption = !switchVal;
-            this.setState({
-                refreshMenuOption: !this.state.refreshMenuOption
-            });
-        }
-        console.log("@@@@@@@@@ Values 001 ::", index + ' ' + this.state.refreshMenuOption);
-    }
-
     onMobileToggle = (item, index) => () => {
         var array = [...this.state.userMobileNumber];
         if (index !== -1) {
@@ -209,6 +193,18 @@ class editPhoneInfoComponent extends Component {
         }
     }
 
+    // Mobile Informations 
+
+    onMenuOptionClicked = (item, index) => () => {
+        var array = [...this.state.userMobileNumber];
+        array[index].selectedMenuIndex = index;
+        this.setState({
+            userMobileNumber: array,
+            isMobileRefreshed: !this.state.isMobileRefreshed,
+            selectedIndex: index
+        });
+    }
+
     renderPhoneInformation = () => ({ item, index }) => {
         return (<UserPhoneInformation
             mobileNumberType={item.mobileNumberType}
@@ -216,8 +212,21 @@ class editPhoneInfoComponent extends Component {
             mobilePreferredTime={item.mobilePreferredTime}
             isPrimaryMobile={item.isPrimaryMobile}
             onMobileToggle={this.onMobileToggle(item, index)}
-            onMenuOptionClicked={this.editDelete(index)} />)
+            onMenuOptionClicked={this.onMenuOptionClicked(item, index)}
+            selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0} />)
     };
+
+    // Home Informations
+
+    onMenuOptionClickedHome = (item, index) => () => {
+        var array = [...this.state.userHomeNumber];
+        array[index].selectedMenuIndex = index;
+        this.setState({
+            userHomeNumber: array,
+            isMobileRefreshed: !this.state.isMobileRefreshed,
+            selectedIndex: index
+        });
+    }
 
     renderHomeNumberInformation = () => ({ item, index }) => {
         return (<UserPhoneInformation
@@ -225,8 +234,22 @@ class editPhoneInfoComponent extends Component {
             mobileNumber={item.mobileNumber}
             mobilePreferredTime={item.mobilePreferredTime}
             isPrimaryMobile={item.isPrimaryMobile}
-            onMobileToggle={this.onMobileToggle(item, index)} />)
+            onMobileToggle={this.onMobileToggle(item, index)}
+            onMenuOptionClicked={this.onMenuOptionClickedHome(item, index)}
+            selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0} />)
     };
+
+    // Work Informations
+
+    onMenuOptionClickedWork = (item, index) => () => {
+        var array = [...this.state.userWorkNumber];
+        array[index].selectedMenuIndex = index;
+        this.setState({
+            userWorkNumber: array,
+            isMobileRefreshed: !this.state.isMobileRefreshed,
+            selectedIndex: index
+        });
+    }
 
     renderWorkNumberInformation = () => ({ item, index }) => {
         return (<UserPhoneInformation
@@ -234,7 +257,9 @@ class editPhoneInfoComponent extends Component {
             mobileNumber={item.mobileNumber}
             mobilePreferredTime={item.mobilePreferredTime}
             isPrimaryMobile={item.isPrimaryMobile}
-            onMobileToggle={this.onMobileToggle(item, index)} />)
+            onMobileToggle={this.onMobileToggle(item, index)}
+            onMenuOptionClicked={this.onMenuOptionClickedWork(item, index)}
+            selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0} />)
     };
 
     phoneInformationOnAdd = () => this.props.navigation.navigate('editAddPhoneNumber');
