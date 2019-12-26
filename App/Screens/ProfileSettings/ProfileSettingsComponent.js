@@ -90,6 +90,7 @@ class ProfileSettingsComponent extends Component {
             profileRelationShipData: [],
             isRelationRefreshed: false,
             isProfileRetired: false,
+            isServingMilitary: false,
 
             // Profile Information
             profileName: '',
@@ -129,7 +130,12 @@ class ProfileSettingsComponent extends Component {
             profileRelationToOwner: '',
             profileRelationGender: '',
             profileRelationMail: '',
-            profileRelationMarital: ''
+            profileRelationMarital: '',
+
+            // Military Information
+            profileMilitaryStatus: '',
+            profileMilitaryBranch: '',
+            profileMilitaryRank: '',
         };
     }
 
@@ -215,6 +221,12 @@ class ProfileSettingsComponent extends Component {
         if (this.props && this.props.profileState && this.props.profileState.profileIsRetired) {
             this.setState({
                 isProfileRetired: this.props.profileState.profileIsRetired
+            });
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileServingMilitary) {
+            this.setState({
+                isServingMilitary: this.props.profileState.profileServingMilitary
             });
         }
 
@@ -307,6 +319,29 @@ class ProfileSettingsComponent extends Component {
             });
         }
 
+        // Military Information
+
+        if (this.props && this.props.profileState && this.props.profileState.profileMilitaryInformation &&
+            this.props.profileState.profileMilitaryInformation.profileMilitaryStatus) {
+            this.setState({
+                profileMilitaryStatus: this.props.profileState.profileMilitaryInformation.profileMilitaryStatus
+            });
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileMilitaryInformation &&
+            this.props.profileState.profileMilitaryInformation.profileMilitaryBranch) {
+            this.setState({
+                profileMilitaryBranch: this.props.profileState.profileMilitaryInformation.profileMilitaryBranch
+            });
+        }
+
+        if (this.props && this.props.profileState && this.props.profileState.profileMilitaryInformation &&
+            this.props.profileState.profileMilitaryInformation.profileMilitaryRank) {
+            this.setState({
+                profileMilitaryRank: this.props.profileState.profileMilitaryInformation.profileMilitaryRank
+            });
+        }
+
         // Relationship Details
 
         if (this.props &&
@@ -317,8 +352,6 @@ class ProfileSettingsComponent extends Component {
                 isRelationRefreshed: !this.state.isRelationRefreshed
             });
         }
-
-        console.log('&&&&&&&&&&& Profile Status ::', this.state.isProfileRetired);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -339,8 +372,11 @@ class ProfileSettingsComponent extends Component {
                     profileRelationGender: this.props.profileState.profileRelationGender,
                     profileRelationMail: this.props.profileState.profileRelationMail,
                     profileRelationMarital: this.props.profileState.profileRelationMarital,
-                    isProfileRetired: this.props.profileState.profileIsRetired
+                    isProfileRetired: this.props.profileState.profileIsRetired,
+                    isServingMilitary: this.props.profileState.profileServingMilitary
                 });
+
+                // Financial Information
 
                 if (this.props && this.props.profileState && this.props.profileState.financialInformations) {
                     this.setState({
@@ -351,6 +387,8 @@ class ProfileSettingsComponent extends Component {
                     });
                 }
 
+                // Employment Information
+
                 if (this.props && this.props.profileState && this.props.profileState.employmentInformations) {
                     this.setState({
                         profileEmploymentStatus: this.props.profileState.employmentInformations.profileEmploymentStatus,
@@ -358,6 +396,16 @@ class ProfileSettingsComponent extends Component {
                         profileEmpOccupation: this.props.profileState.employmentInformations.profileEmpOccupation,
                         profileEmpEmployer: this.props.profileState.employmentInformations.profileEmpEmployer,
                         profilePrimarySourceIncome: this.props.profileState.employmentInformations.profileSourceOfIncome
+                    });
+                }
+
+                // Military Information
+
+                if (this.props && this.props.profileState && this.props.profileState.profileMilitaryInformation) {
+                    this.setState({
+                        profileMilitaryStatus: this.props.profileState.profileMilitaryInformation.profileMilitaryStatus,
+                        profileMilitaryBranch: this.props.profileState.profileMilitaryInformation.profileMilitaryBranch,
+                        profileMilitaryRank: this.props.profileState.profileMilitaryInformation.profileMilitaryRank
                     });
                 }
 
@@ -865,9 +913,10 @@ class ProfileSettingsComponent extends Component {
                                         </Text>
                                     </View>
                                 </View>
-                            ) : null} 
+                            ) : null}
 
                         </View>
+
                     </View>
 
                     {/* Military Information with Manage Options */}
@@ -879,21 +928,66 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingMilitaryManage}
-                            >
+                                onPress={this.profileSettingMilitaryManage}>
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
 
                         <View style={styles.settingsBorder} />
 
-                        <View style={styles.settingsMilitary}>
-                            <View style={styles.settingsView1}>
-                                <Text style={styles.profileSettingViewBack}>
-                                    {globalString.profileSettingsPage.profileMilitaryProvideInfo}
-                                </Text>
+                        {/* User Not Serving Military */}
+
+                        {!this.state.isServingMilitary ? (
+                            <View style={styles.settingsMilitary}>
+                                <View style={styles.settingsView1}>
+                                    <Text style={styles.profileSettingViewBack}>
+                                        {globalString.profileSettingsPage.profileMilitaryProvideInfo}
+                                    </Text>
+                                </View>
+                            </View>) : null}
+
+                        {/* User Serving Military */}
+
+                        {this.state.isServingMilitary ? (
+                            <View style={styles.settingsMilitaryServing}>
+                                <View style={styles.settingsView1}>
+                                    <Text style={styles.profileSettingLabel}>
+                                        {globalString.militaryInformationLabel.militaryStatus}
+                                    </Text>
+                                </View>
+
+                                <View style={styles.signInView}>
+                                    <Text style={styles.profileSettingValueLabel}>
+                                        {this.state.profileMaritalStatus}
+                                    </Text>
+                                </View>
+
+                                <View style={styles.settingsView1}>
+                                    <Text style={styles.profileSettingLabel}>
+                                        {globalString.militaryInformationLabel.militaryBranchService}
+                                    </Text>
+                                </View>
+
+                                <View style={styles.signInView}>
+                                    <Text style={styles.profileSettingValueLabel}>
+                                        {this.state.profileMilitaryBranch}
+                                    </Text>
+                                </View>
+
+                                <View style={styles.settingsView1}>
+                                    <Text style={styles.profileSettingLabel}>
+                                        {globalString.militaryInformationLabel.militaryRank}
+                                    </Text>
+                                </View>
+
+                                <View style={styles.signInView}>
+                                    <Text style={styles.profileSettingValueLabel}>
+                                        {this.state.profileMilitaryRank}
+                                    </Text>
+                                </View>
                             </View>
-                        </View>
+                        ) : null}
+
                     </View>
 
                     {/* Manage Relationship with Add Options */}

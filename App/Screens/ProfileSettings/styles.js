@@ -121,6 +121,15 @@ export const styles = StyleSheet.create({
         marginLeft: '4%',
         marginRight: '4%'
     },
+    settingsMilitaryServing: {
+        borderWidth: 1,
+        borderColor: '#D4D4D4',
+        backgroundColor: '#FFFFFF',
+        marginTop: scaledHeight(20),
+        width: '92%',
+        marginLeft: '4%',
+        marginRight: '4%'
+    },
     settingsRelationShip: {
         borderWidth: 1,
         borderColor: '#D4D4D4',

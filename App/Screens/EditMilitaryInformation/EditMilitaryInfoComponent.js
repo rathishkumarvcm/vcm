@@ -70,6 +70,12 @@ class editMilitaryInfoComponent extends Component {
     }
 
     componentDidMount() {
+        if (this.props && this.props.profileState && this.props.profileState.profileServingMilitary) {
+            this.setState({
+                isMilitaryService: this.props.profileState.profileServingMilitary
+            });
+        }
+
         let payload = [];
 
         const compositePayloadData = [
@@ -86,27 +92,17 @@ class editMilitaryInfoComponent extends Component {
 
         this.props.getProfileCompositeData(payload);
 
-        console.log("@@@@@@@@@@ Military Information 000 ::", this.state.radioButtonIndex + ' ' + this.state.isMilitaryService);
-
-        if (this.props && this.props.profileState && this.props.profileState.profileServingMilitary) {
-            this.setState({
-                isMilitaryService: this.props.profileState.profileServingMilitary
-            });
-        }
-
-        console.log("@@@@@@@@@@ Military Information 001 ::", this.state.radioButtonIndex + ' ' + this.state.isMilitaryService);
-
-        if (!this.state.isMilitaryService) {
-            this.setState({
-                radioButtonIndex: 1
-            });
-        } else {
+        if (this.state.isMilitaryService) {
             this.setState({
                 radioButtonIndex: 0
             });
+        } else {
+            this.setState({
+                radioButtonIndex: 1
+            });
         }
 
-        console.log("@@@@@@@@@@ Military Information 002 ::", this.state.radioButtonIndex + ' ' + this.state.isMilitaryService);
+        console.log(" @@@@@@@@@@@@@@ Military Did Mount :: ", this.state.isMilitaryService + ' Index ' + this.state.radioButtonIndex);
     }
 
     radioButtonClicked = (index) => {
@@ -115,22 +111,25 @@ class editMilitaryInfoComponent extends Component {
                 radioButtonIndex: index,
                 radioButton: false
             });
-        }
-        else {
+        } else {
             this.setState({
                 radioButton: false
             });
         }
 
-        if (index == 0) {
+        if (index === 0) {
             this.setState({
-                isMilitaryService: true
-            })
+                isMilitaryService: true,
+                radioButtonIndex: 0
+            });
         } else {
             this.setState({
-                isMilitaryService: false
-            })
+                isMilitaryService: false,
+                radioButtonIndex: 1
+            });
         }
+
+        console.log(" @@@@@@@@@@@@@@ Military On Radio Click :: ", this.state.isMilitaryService + ' Index ' + this.state.radioButtonIndex + ' Clicked ' + index);
     }
 
     dropDownMilitaryOnClick = () => {
@@ -139,9 +138,9 @@ class editMilitaryInfoComponent extends Component {
         });
     }
 
-    dropDownMilitaryOnSelect = (valueMilitaryStatus) => {
+    dropDownMilitaryOnSelect = (value, index, data) => {
         this.setState({
-            dropDownMilitaryValue: valueMilitaryStatus.value,
+            dropDownMilitaryValue: data[index].value,
             dropDownMilitaryState: false,
             dropDownMilitaryMsg: ''
         });
@@ -176,9 +175,9 @@ class editMilitaryInfoComponent extends Component {
         });
     }
 
-    dropDownMarineOnSelect = (valueMarine) => {
+    dropDownMarineOnSelect = (value, index, data) => {
         this.setState({
-            dropDownMarineValue: valueMarine.value,
+            dropDownMarineValue: data[index].value,
             dropDownMarineState: false,
             dropDownMarineMsg: ''
         });
@@ -197,6 +196,67 @@ class editMilitaryInfoComponent extends Component {
     }
 
     editMilitaryOnCancel = () => this.props.navigation.navigate('profileSettings');
+
+    saveMilitaryInformations = () => {
+        if (this.state.isMilitaryService) {
+            console.log(' @@@@@@@@@@@@@@@ Military Service 00 :: ', this.state.isMilitaryService);
+            if (this.state.dropDownMilitaryValue === '') {
+                this.setState({
+                    dropDownMilitaryFlag: false,
+                    dropDownMilitaryMsg: 'Select valid military status'
+                });
+            }
+
+            if (this.state.dropDownBranchValue === '') {
+                this.setState({
+                    dropDownBranchFlag: false,
+                    dropDownBranchMsg: 'Select valid military branch'
+                });
+            }
+
+            if (this.state.dropDownMarineValue === '') {
+                this.setState({
+                    dropDownMarineFlag: false,
+                    dropDownMarineMsg: 'Select valid military rank'
+                });
+            }
+
+            if (this.state.dropDownMilitaryValue != '' &&
+                this.state.dropDownBranchValue != '' &&
+                this.state.dropDownMarineValue != '') {
+                this.manageMilitaryInformations();
+            }
+        } else {
+            console.log(' @@@@@@@@@@@@@@@ Military Service 01 :: ', this.state.isMilitaryService);
+            this.manageMilitaryInformations();
+        }
+    }
+    
+    manageMilitaryInformations = () => {
+        const payloadData = this.getMilitaryData();
+        console.log("@@@@@@@@ Status ::", payloadData);
+        this.props.saveProfileData("addMilitaryInformation", payloadData);
+        this.props.navigation.navigate('profileSettings');
+    }
+
+    getMilitaryData = () => {
+        let profileMilitaryData = {};
+        if (this.props && this.props.profileState) {
+            profileMilitaryData = {
+                ...this.props.profileState,
+                "profileServingMilitary": this.state.isMilitaryService,
+                "profileMilitaryInformation": {
+                    profileMilitaryStatus: this.state.dropDownMilitaryValue,
+                    profileMilitaryBranch: this.state.dropDownBranchValue,
+                    profileMilitaryRank: this.state.dropDownMarineValue,
+                    profileMilitaryFromDate: '',
+                    profileMilitaryToDate: '',
+                    profileMilitrayCommission: ''
+                }
+            };
+        }
+        return profileMilitaryData;
+    }
 
     renderRankDropDown = () => {
 
@@ -217,7 +277,7 @@ class editMilitaryInfoComponent extends Component {
                 selectedDropDownValue={this.dropDownMarineOnSelect}
                 itemToDisplay={"value"}
                 errorFlag={this.state.dropDownMarineFlag}
-                errorText={this.dropDownMarineMsg}
+                errorText={this.state.dropDownMarineMsg}
                 dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(270) }} />
         );
     }
@@ -312,7 +372,7 @@ class editMilitaryInfoComponent extends Component {
                                 selectedDropDownValue={this.dropDownMilitaryOnSelect}
                                 itemToDisplay={"value"}
                                 errorFlag={this.state.dropDownMilitaryFlag}
-                                errorText={this.dropDownMilitaryMsg}
+                                errorText={this.state.dropDownMilitaryMsg}
                                 dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(90) }} />
 
                             <GDropDownComponent
@@ -325,7 +385,7 @@ class editMilitaryInfoComponent extends Component {
                                 selectedDropDownValue={this.dropDownBranchOnSelect}
                                 itemToDisplay={"value"}
                                 errorFlag={this.state.dropDownBranchFlag}
-                                errorText={this.dropDownBranchMsg}
+                                errorText={this.state.dropDownBranchMsg}
                                 dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(180) }} />
 
                             {/* <GDropDownComponent
@@ -397,7 +457,8 @@ class editMilitaryInfoComponent extends Component {
                         <GButtonComponent
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
-                            textStyle={styles.saveButtonText} />
+                            textStyle={styles.saveButtonText}
+                            onPress={this.saveMilitaryInformations} />
                     </View>
 
                     <View style={styles.newVictorySection}>
