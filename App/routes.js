@@ -932,7 +932,7 @@ const AppNavigator = createStackNavigator({
 
     },
     {
-        initialRouteName: "tAmmendComponent"
+        initialRouteName: "login"
     });
 
 export default createAppContainer(AppNavigator);
