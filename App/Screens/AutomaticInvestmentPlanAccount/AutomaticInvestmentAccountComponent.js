@@ -6,16 +6,18 @@ import {
     GFooterComponent,
     GButtonComponent,
     GIcon,
-
+    GSingletonClass
 } from '../../CommonComponents';
 import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings'
 
-
+const myInstance = GSingletonClass.getInstance();
 class AutomaticInvestmentAccountComponent extends Component {
     constructor(props) {
         super(props);
-
+        console.log('AutomaticInvestmentAccountComponent))))))))))))))))))))))))')
+        const automaticAccount =  myInstance.getAutomaticInvestmentEditMode()? (myInstance.getScreenStateData().automaticAccount || {}):{};
+        console.log('constructor))))))))))))))))))))))))')
         this.state = {
             generalAccountJson: {},
             iraAccountJson: {},
@@ -26,6 +28,9 @@ class AutomaticInvestmentAccountComponent extends Component {
             expandIndex: 0,
             accountType:"",
             newItemId:"",
+            newEdit:`${this.props.navigation.getParam('newEdit',false)}`,
+
+            ...automaticAccount
         };
 
     }
@@ -69,6 +74,7 @@ class AutomaticInvestmentAccountComponent extends Component {
 
     }
     componentDidMount() {
+        console.log('componentDidMount))))))))))))))))))))))))')
         if (this.props && this.props.accountState) {
 
             this.setState({
@@ -77,37 +83,70 @@ class AutomaticInvestmentAccountComponent extends Component {
                 utmaAccountJson: this.props.accountState.utma,
 
             });
+            // if(this.state.newEdit)
+            // {
+            //     payload = {
+            //         //...payload,
+            //         ...this.props.automaticInvestmentState.savedAccData
+            //     };
+            //     this.setState({selectedAccount:payload.selectedAccount})
+            // }
         }
+    }
+
+    componentDidUpdate(){
+        console.log('componentDidUpdate))))))))))))))))))))))))')
     }
    
     navigationCancel = () => this.props.navigation.goBack();
 
     getPayload = () => {
         
-
+        const savedAutoData = myInstance.getSavedAutomaticData();
         let payload = {
-            id:this.state.newItemId,
+            ...savedAutoData,
+            generalAccountJson: this.state.generalAccountJson,
+            iraAccountJson: this.state.iraAccountJson,
+            utmaAccountJson: this.state.utmaAccountJson,
+            selectedAccountJson:this.state.selectedAccountJson,
+            selectedAccount: this.state.selectedAccount,
+            expand: this.state.expand,
+            expandIndex: this.state.expandIndex,
+            accountType:this.state.accountType,
+            newItemId:this.state.newItemId,
+            newEdit:this.state.newEdit,
+            // id:this.state.newItemId,
+            //accountType:this.state.accountType,
+            //selectedAccount:this.state.selectedAccount
             //account: this.state.selectedAccountJson.accountName+'|'+this.state.selectedAccountJson.accountNumber,
         };
-        if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
-            payload = {
-                ...payload,
-                ...this.props.automaticInvestmentState.savedAccData
-            };
-        }
-        
+        // if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+        //     payload = {
+        //         ...payload,
+        //         ...this.props.automaticInvestmentState.savedAccData
+        //     };
+        // }
+       // console.log('))))))))))))))))))))))',this.props.automaticInvestmentState.savedAccData)
         return payload;
 
     }
 
     navigationNext = () => {
             const payload = this.getPayload();
-            this.props.saveData("automaticInvestmentAccount", payload); 
-            this.props.navigation.navigate('automaticInvestmentAdd', 
-                        { ItemToEdit: -1,
+            // this.props.saveData("automaticInvestmentAccount", payload); 
+            const stateData = myInstance.getScreenStateData();
+            myInstance.setSavedAutomaticData(payload);
+            const screenState = {
+                ...stateData,
+                "automaticAccount":{...this.state}
+            }
+            myInstance.setScreenStateData(screenState);
+            console.log('screenState))))))))))))))))))))))',screenState)
+            this.props.navigation.navigate({routeName:'automaticInvestmentAdd',key:'automaticInvestmentAdd',  
+                        params:{ ItemToEdit: -1,
                         acc_name:this.state.selectedAccountJson.accountName,
                         acc_no:this.state.selectedAccountJson.accountNumber,
-                        accountType:this.state.accountType});
+                        accountType:this.state.accountType}});
     }
     generateGeneralKeyExtractor = (item) => item.accountName;
     renderGeneralAccount = () => ({ item, index }) =>

@@ -21,7 +21,7 @@ class AccountServicesComponent extends Component {
 
     navigateBankAccount = () => this.props.navigation.navigate('bankAccount')
 
-    navigateAutomatic = () => this.props.navigation.navigate('automaticInvestment')
+    navigateAutomatic = () => this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'})
 
     navigateSystamatic = () => this.props.navigation.navigate('systematicWithdrawal')
 

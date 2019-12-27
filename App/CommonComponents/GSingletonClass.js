@@ -20,6 +20,10 @@ export default class CommonDataManager {
   accOpeningEditModeEnabled = false;
   savedAccData = {};
   screenStateData = {};
+
+  automaticInvestmentEnabled = false;
+  savedAutomaticData = {};
+  
   /* **************************\
   Method: getInstance
   Explanation:
@@ -127,6 +131,19 @@ export default class CommonDataManager {
   setScreenStateData(value){
     this.screenStateData = value;
     console.log("this.screenStateData"+JSON.stringify(this.screenStateData));
+  }
+
+  getAutomaticInvestmentEditMode(){
+    return this.automaticInvestmentEnabled;
+  }
+  setAutomaticInvestmentEditMode(value){
+    this.automaticInvestmentEnabled = value;
+  }
+  getSavedAutomaticData(){
+    return this.savedAutomaticData;
+  }
+  setSavedAutomaticData(value){
+    this.savedAutomaticData = value;
   }
 
 }

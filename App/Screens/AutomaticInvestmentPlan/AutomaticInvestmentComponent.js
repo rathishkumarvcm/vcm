@@ -40,12 +40,14 @@ class AutomaticInvestmentComponent extends Component {
     }
 
     componentDidMount() {
+        
         if (this.props && this.props.automaticInvestmentState) {
             this.setState({
                 generalAutoInvestment: this.props.automaticInvestmentState.general,
                 iraAutoInvestment: this.props.automaticInvestmentState.ira,
-                utmaAutoInvest:this.props.automaticInvestmentState.utmaAutoInvest
+                utmaAutoInvest:this.props.automaticInvestmentState.utma,
             });
+            // console.log('componentDidMount**********',this.props.automaticInvestmentState)
         }
     }
 
@@ -60,6 +62,8 @@ class AutomaticInvestmentComponent extends Component {
                     utmaAutoInvest:this.props.automaticInvestmentState.utma,
                     refresh: !this.state.refresh
                 });
+
+                // console.log('componentDidUpdate**********',this.props.automaticInvestmentState.general.length)
                 
             }
         }
@@ -94,7 +98,14 @@ class AutomaticInvestmentComponent extends Component {
                         <Text style={styles.flatHeaderValue}>{item.account}</Text>
                     </View>
                     <View style={styles.editMenu}>
-                        <Text onPress={this.editDelete(index)}>{":"}</Text>
+                        <TouchableOpacity onPress={this.editDelete(index)}>
+                            <GIcon
+                                name="dots-vertical"
+                                type="material-community"
+                                size={30}
+                            />
+                        </TouchableOpacity>
+                        {/* <Text onPress={}>{":"}</Text> */}
                     </View>
                 </View>
 
@@ -177,20 +188,32 @@ class AutomaticInvestmentComponent extends Component {
         });
     }
 
+    clickOutside=()=>e=>{
+        console.log('selectedIndex--------------------clickOutside')
+        this.setState({
+            selectedIndex: -1,
+        });
+        
+    }
+
     navigationBack = () => this.props.navigation.goBack();
 
-    navigationInvestmentAccount = () => this.props.navigation.navigate('automaticInvestmentAccount');
+    navigationInvestmentAccount = () => 
+    {
+        console.log('navigationInvestmentAccount------------------------')
+        this.props.navigation.navigate({routeName:'automaticInvestmentAccount',key:'automaticInvestmentAccount',params:{newEdit:false}});
+    }
 
-    navigationInvestmentVerify = index =>e=> this.props.navigation.navigate('automaticInvestmentVerify', { skip: true,indexSelected:index });
+    navigationInvestmentVerify = index =>e=> this.props.navigation.navigate({routeName:'automaticInvestmentVerify',key:'automaticInvestmentVerify',params: { skip: true,indexSelected:index }});
 
     navigationInvestmentEdit = index => e => {
-        let id;
-    this.state.arr_expand.map(()=>{
+        // let id;
+        // this.state.arr_expand.map(()=>{
 
-    })
+        // })
         switch ((index)) {
             case 0:
-                this.props.navigation.navigate('automaticInvestmentAdd', { option: index, ItemToEdit: this.state.selectedIndex ,accountType:'general'});
+                this.props.navigation.navigate({routeName:'automaticInvestmentAdd',key:'automaticInvestmentAdd', params:{ option: index, ItemToEdit: this.state.selectedIndex ,accountType:'general'}});
                 break;
             case 1:
                 var array = [...this.state.generalAutoInvestment]; // make a separate copy of the array
@@ -209,7 +232,8 @@ class AutomaticInvestmentComponent extends Component {
     render() {
 
         return (
-            <View style={styles.container}>
+            
+            <View style={styles.container} onPress={this.clickOutside}>
                 
                 <GHeaderComponent navigation={this.props.navigation} />
                 
@@ -247,7 +271,7 @@ class AutomaticInvestmentComponent extends Component {
                                 <Text style={styles.autoInvest_sub_title_text}>{'General Account'}</Text>
                             </View>
                         </TouchableOpacity>
-                        
+                        {console.log('generalAutoInvestment**********',this.state.generalAutoInvestment)}
                         <View style={styles.seperator_line} /> 
                         {this.state.arr_expand[0] ?
                         <FlatList

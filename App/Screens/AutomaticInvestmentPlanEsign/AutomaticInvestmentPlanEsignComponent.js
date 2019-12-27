@@ -5,6 +5,7 @@ import {
     GHeaderComponent,
     GFooterComponent,
     GButtonComponent,
+    GSingletonClass
 } from '../../CommonComponents';
 import { CustomCheckBox } from '../../AppComponents';
 import PropTypes from 'prop-types';
@@ -12,12 +13,14 @@ import globalString from '../../Constants/GlobalStrings';
 
 import * as regEx from '../../Constants/RegexConstants';
 
+const myInstance = GSingletonClass.getInstance();
 class AutomaticInvestmentPlanEsignComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
             acceptPolicy: false,
-            accountType:this.props.navigation.getParam('accountType'),
+            accountType:`${this.props.navigation.getParam('accountType')}`,
+            itemToEdit: `${this.props.navigation.getParam('indexSelected')}`,
             errorTextMsg:''
         };
     }
@@ -46,85 +49,161 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
         //         break;
         // }
         
-        if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+        // if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
             
-            //planJson.push(this.props.automaticInvestmentState.savedAccData)
+        //     //planJson.push(this.props.automaticInvestmentState.savedAccData)
+        //     let planJson={};
+        //     switch ((this.state.accountType)) {
+        //         case "general":
+        //             if(this.props.automaticInvestmentState.general){
+        //                 //Add
+        //                 // planJson=this.props.automaticInvestmentState.general;
+        //                 // planJson.push(this.props.automaticInvestmentState.savedAccData);
+        //                 //Edit
+        //                 var array = this.props.automaticInvestmentState.general; // make a separate copy of the array
+        //                 var indexDelete = 0
+        //                 if (indexDelete !== -1) {
+        //                     array[0]=this.props.automaticInvestmentState.savedAccData
+        //                     //planJson=array
+        //                 }
+                        
+        //                 payload = {
+        //                     ...this.props.automaticInvestmentState,
+        //                     general: array,
+        //                 };
+        //             }
+        //             else{
+        //                 let newObj = { "general" : [this.props.automaticInvestmentState.savedAccData]}
+        //                 Object.assign(this.props.automaticInvestmentState,newObj)
+        //             }
+        //             break;
+        //         case "ira":
+        //             if(this.props.automaticInvestmentState.ira){
+        //                 planJson.push(this.props.automaticInvestmentState.savedAccData);//=this.props.automaticInvestmentState.ira
+        //                 payload = {
+        //                     ...this.props.automaticInvestmentState,
+        //                     ira: planJson,
+        //                 };
+        //             }
+        //             else{
+        //                 let newObj = { "ira" : [this.props.automaticInvestmentState.savedAccData]}
+        //                 Object.assign(this.props.automaticInvestmentState,newObj)
+        //             }
+        //             break;
+        //         case "utma":
+        //             if(this.props.automaticInvestmentState.utma){
+        //                 planJson.push(this.props.automaticInvestmentState.savedAccData);//=this.props.automaticInvestmentState.utma
+        //                 payload = {
+        //                     ...this.props.automaticInvestmentState,
+        //                     utma: planJson,
+        //                 };
+        //             }
+        //             else{
+        //                 let newObj = { "utma" : [this.props.automaticInvestmentState.savedAccData]}
+        //                 Object.assign(this.props.automaticInvestmentState,newObj)
+        //                 // payload = {
+        //                 //     ...this.props.automaticInvestmentState,
+        //                 //     utma:[this.props.automaticInvestmentState.savedAccData],
+        //                 // };
+        //             }
+        //             break;
+        //         default:
+        //             break;
+        //     }
+        // }
+
+        const item=myInstance.getSavedAutomaticData();
+        if (this.props && this.props.automaticInvestmentState && item)
+        {
             let planJson={};
+             let selected={id:this.state.itemToEdit,account:item.acc_name+"|"+item.acc_no ,totalAmount:item.totalFund,
+                            fundFrom:item.fundFrom,investedIn:item.investedIn,
+                            invest:item.valueTypeDropDown,dateToInvest:item.valueDateDropDown,
+                            dateAdded:item.dateAdded,endDate:item.endDate,
+                            nextInvestementDate:item.nextInvestementDate
+                        }
             switch ((this.state.accountType)) {
                 case "general":
                     if(this.props.automaticInvestmentState.general){
-                        //Add
-                        // planJson=this.props.automaticInvestmentState.general;
-                        // planJson.push(this.props.automaticInvestmentState.savedAccData);
-                        //Edit
-                        var array = this.props.automaticInvestmentState.general; // make a separate copy of the array
-                        var indexDelete = 0
-                        if (indexDelete !== -1) {
-                            array[0]=this.props.automaticInvestmentState.savedAccData
-                            //planJson=array
+                            //Add
+                            planJson=this.props.automaticInvestmentState.general;
+                            
+                            
+                            //Edit
+                            //var array = this.props.automaticInvestmentState.general; // make a separate copy of the array
+                            if (this.state.itemToEdit !== -1) {
+                                planJson[this.state.itemToEdit]=selected
+                                //planJson=array
+                                console.log('planJson===================',planJson)
+                            }
+                            else
+                            {
+                                planJson.push(selected);
+                                console.log('planJson**************',planJson)
+                            }
+                            
+                            payload = {
+                                ...planJson
+                            };
+                            
                         }
-                        
-                        payload = {
-                            ...this.props.automaticInvestmentState,
-                            general: array,
-                        };
-                    }
-                    else{
-                        let newObj = { "general" : [this.props.automaticInvestmentState.savedAccData]}
-                        Object.assign(this.props.automaticInvestmentState,newObj)
-                    }
+                        else{
+                            let newObj = { "general" : selected}
+                            Object.assign(this.props.automaticInvestmentState,newObj)
+                        }
+                    
                     break;
                 case "ira":
                     if(this.props.automaticInvestmentState.ira){
-                        planJson.push(this.props.automaticInvestmentState.savedAccData);//=this.props.automaticInvestmentState.ira
+                        //Add
+                        planJson=this.props.automaticInvestmentState.ira;
+                        planJson.push(selected);
                         payload = {
-                            ...this.props.automaticInvestmentState,
-                            ira: planJson,
+                            ...planJson
                         };
+                        
                     }
                     else{
-                        let newObj = { "ira" : [this.props.automaticInvestmentState.savedAccData]}
+                        let newObj = { "ira" : selected}
                         Object.assign(this.props.automaticInvestmentState,newObj)
                     }
                     break;
                 case "utma":
                     if(this.props.automaticInvestmentState.utma){
-                        planJson.push(this.props.automaticInvestmentState.savedAccData);//=this.props.automaticInvestmentState.utma
+                        //Add
+                        planJson=this.props.automaticInvestmentState.utma;
+                        planJson.push(selected);
                         payload = {
-                            ...this.props.automaticInvestmentState,
-                            utma: planJson,
+                            ...planJson
                         };
+                        
                     }
                     else{
-                        let newObj = { "utma" : [this.props.automaticInvestmentState.savedAccData]}
+                        let newObj = { "utma" : [selected]}
                         Object.assign(this.props.automaticInvestmentState,newObj)
-                        // payload = {
-                        //     ...this.props.automaticInvestmentState,
-                        //     utma:[this.props.automaticInvestmentState.savedAccData],
-                        // };
                     }
                     break;
-                default:
-                    break;
-            }
         }
         return payload;
 
     }
+}
 
     navigationSubmit = () => {
         if(this.state.acceptPolicy){
             this.setState({errorTextMsg:''})
             const payload = this.getPayload();
             this.props.saveData("automaticInvestmentEsign", payload); 
-            this.props.navigation.navigate('automaticInvestment');
+            console.log('automaticInvestmentEsign********',payload)
+            myInstance.setAutomaticInvestmentEditMode(false);
+            this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
         }
         else
         this.setState({errorTextMsg:'Please select the above checkbox'})
     }
 
     //navigationSubmit = () => this.props.navigation.navigate('automaticInvestment');
-    navigationCancel=()=>this.props.navigation.navigate('automaticInvestment');
+    navigationCancel=()=>this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
     navigationBack = () => this.props.navigation.goBack();
 
     render() {

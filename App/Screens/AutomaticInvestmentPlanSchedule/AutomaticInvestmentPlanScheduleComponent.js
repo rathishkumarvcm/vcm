@@ -7,6 +7,7 @@ import {
     GDropDownComponent,
     GButtonComponent,
     GDateComponent,
+    GSingletonClass
 } from '../../CommonComponents';
 import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
@@ -48,9 +49,11 @@ const dateJson = [];
 //     },
 
 // ];
+const myInstance = GSingletonClass.getInstance();
 class AutomaticInvestmentPlanScheduleComponent extends Component {
     constructor(props) {
         super(props);
+        const automaticSchedule =  myInstance.getAutomaticInvestmentEditMode()? (myInstance.getScreenStateData().automaticSchedule || {}):{};
         this.state = {
             typeDropDown: false,
             valueTypeDropDown: '',
@@ -59,15 +62,17 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
             endDropDown: false,
             valueEndDropDown: '',
             customDateValue: '',
+            errorDate:false,
             // dateBeginDropDown: false,
             // valueDateBeginDropDown: '',
             // yearDropDown: false,
             // valueYearDropDown: '',
             autoInvestmentAddAmountJson: {},
-            itemToEdit: this.props.navigation.getParam('ItemToEdit', -1),
-            acc_name:this.props.navigation.getParam('acc_name'),
-            acc_no:this.props.navigation.getParam('acc_no'),
-            accountType:this.props.navigation.getParam('accountType'),
+            itemToEdit: `${this.props.navigation.getParam('ItemToEdit', -1)}`,
+            acc_name:`${this.props.navigation.getParam('acc_name')}`,
+            acc_no:`${this.props.navigation.getParam('acc_no')}`,
+            accountType:`${this.props.navigation.getParam('accountType')}`,
+            ...automaticSchedule
         };
     }
 
@@ -109,27 +114,54 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
         const startFullQuarter = new Date(today.getFullYear(), quarter * 3 + 3, 1);
         const endFullQuarter = new Date(startFullQuarter.getFullYear(), startFullQuarter.getMonth() + 3, 0);
         //console.log('----------------------------',this.state.valueEndDropDown.toLowerCase())
+        const savedAutoData = myInstance.getSavedAutomaticData();
         let payload = {
-            invest: this.state.valueTypeDropDown,
-            dateToInvest: this.state.valueDateDropDown,
+            ...savedAutoData,
+            // invest: this.state.valueTypeDropDown,
+            // dateToInvest: this.state.valueDateDropDown,
             dateAdded: currentdate,
             endDate: this.state.valueEndDropDown.toLowerCase()==="custom"?this.state.customDateValue:"Never",
             nextInvestementDate: nextMonthDate,
+            typeDropDown: this.state.typeDropDown,
+            valueTypeDropDown: this.state.valueTypeDropDown,
+            dateDropDown: this.state.dateDropDown,
+            valueDateDropDown: this.state.valueDateDropDown,
+            endDropDown: this.state.endDropDown,
+            valueEndDropDown: this.state.valueEndDropDown,
+            customDateValue: this.state.customDateValue,
+            errorDate:this.state.errorDate,
+            autoInvestmentAddAmountJson: this.state.autoInvestmentAddAmountJson,
+            itemToEdit: this.state.itemToEdit,
+            acc_name:this.state.acc_name,
+            acc_no:this.state.acc_no,
+            accountType:this.state.accountType,
         };
-        if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
-            payload = {
-                ...payload,
-                ...this.props.automaticInvestmentState.savedAccData
-            };
-        }
+        // if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+        //     payload = {
+        //         ...payload,
+        //         ...this.props.automaticInvestmentState.savedAccData
+        //     };
+        // }
         return payload;
 
     }
 
     navigationNext = () => {
-        const payload = this.getPayload();
-        this.props.saveData("automaticInvestmentSchedule", payload);
-        this.props.navigation.navigate('automaticInvestmentVerify', { skip: false ,accountType:this.state.accountType});
+        if(this.state.customDateValue!='' || this.state.valueEndDropDown==='Never')
+        {
+            const payload = this.getPayload();
+            // this.props.saveData("automaticInvestmentSchedule", payload);
+            const stateData = myInstance.getScreenStateData();
+            myInstance.setSavedAutomaticData(payload);
+            const screenState = {
+                ...stateData,
+                "automaticSchedule":{...this.state}
+            }
+            myInstance.setScreenStateData(screenState);
+            this.props.navigation.navigate({routeName:'automaticInvestmentVerify',key:'automaticInvestmentVerify',params: { skip: false ,accountType:this.state.accountType,indexSelected:this.state.itemToEdit}});
+        }
+        else
+            this.setState({errorDate:true})
     }
 
     selectTheType = () => {
@@ -175,7 +207,8 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
 
     onChangeDateValue = (date) => {
         this.setState({
-            customDateValue: date
+            customDateValue: date,
+            errorDate:false
         });
     }
 
@@ -207,16 +240,15 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
 
    //navigationNext = () => this.props.navigation.navigate('automaticInvestmentVerify', { skip: false });
     navigationBack = () => this.props.navigation.goBack();
-    navigationCancel = () => this.props.navigation.navigate('automaticInvestment');
+    navigationCancel = () => this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
 
     render() {
         const date = new Date().getDate(); //Current Date
         const month = new Date().getMonth() + 1; //Current Month
         const year = new Date().getFullYear(); //Current Year
-        const currentdate = month + "-" + date + "-" + year;
+        const currentdate = month + "/" + date + "/" + year;
         return (
             <View style={styles.container}>
-                {console.log('======================================',this.state.autoInvestmentAddAmountJson)}
                 <GHeaderComponent register navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
                     <Text style={styles.autoInvestHead}>{'Create Automatic Investment Plan'}</Text>
@@ -267,8 +299,6 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                             itemToDisplay={"value"}
                             dropDownLayout={styles.dropDownLayout}
                             changeState={this.selectTheType}
-                            // errorFlag={this.state.dropDownTypeFlag}
-                            // errorText={this.state.dropDownTypeMsg}
                             showDropDown={this.state.typeDropDown}
                             dropDownValue={this.state.valueTypeDropDown}
                             selectedDropDownValue={this.selectedDropDownTypeValue}
@@ -338,7 +368,9 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                             minDate={currentdate}
                             placeholder="MM/DD/YYYY"
                             date={this.state.customDateValue}
-                            onDateChange={this.onChangeDateValue} />
+                            onDateChange={this.onChangeDateValue} 
+                            errorFlag={this.state.errorDate}
+                            errorMsg={'Please select a valid date'}/>
                             
                             : null}
                         <Text style={styles.scheduleContent}>
@@ -357,10 +389,10 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                             onPress={this.navigationBack}
                         />
                         <GButtonComponent
-                            buttonStyle={styles.continueButton}
+                            buttonStyle={this.state.valueTypeDropDown!='' && this.state.valueDateDropDown!='' && this.state.valueEndDropDown!='' ?styles.continueButtonSelected:styles.continueButton}
                             buttonText={globalString.common.next}
                             textStyle={styles.continueButtonText}
-                            onPress={this.navigationNext}
+                            onPress={this.state.valueTypeDropDown!='' && this.state.valueDateDropDown!='' && this.state.valueEndDropDown!='' ?this.navigationNext:null}
                         />
                     </View>
                     <GFooterComponent />

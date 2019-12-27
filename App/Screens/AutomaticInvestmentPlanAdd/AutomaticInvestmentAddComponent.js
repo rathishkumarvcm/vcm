@@ -6,7 +6,7 @@ import {
     GFooterComponent,
     GButtonComponent,
     GInputComponent,
-
+    GSingletonClass
 } from '../../CommonComponents';
 import { CustomRadio } from '../../AppComponents';
 import PropTypes from 'prop-types';
@@ -34,31 +34,35 @@ const autoInvestmentAddBankJson = [
 
 
 
-
+const myInstance = GSingletonClass.getInstance();
 class AutomaticInvestmentAddComponent extends Component {
     constructor(props) {
         super(props);
-
+        const automaticAdd =  myInstance.getAutomaticInvestmentEditMode()? (myInstance.getScreenStateData().automaticAdd || {}):{};
         this.state = {
 
-            selectedItemID: "",
-            selectedItemName: "",
+            selectedItemID: "D",
+            selectedItemName: "Doller",
             autoInvestmentAddAmountJson: {},
             fundList: [],
-            ItemToEdit: this.props.navigation.getParam('ItemToEdit', -1),
-            acc_name: this.props.navigation.getParam('acc_name'),
-            acc_no: this.props.navigation.getParam('acc_no'),
-            accountType: this.props.navigation.getParam('accountType'),
+            ItemToEdit: `${this.props.navigation.getParam('ItemToEdit', -1)}`,
+            acc_name: `${this.props.navigation.getParam('acc_name')}`,
+            acc_no: `${this.props.navigation.getParam('acc_no')}`,
+            accountType: `${this.props.navigation.getParam('accountType')}`,
             selectedBank: -1,
             fundRemaining: 0,
             totalFund: 0,
             investedIn: [],
             fundConsumed: 0,
+            refresh:false,
+            errorMsg:'Please enter amount greater than or equal to 50',
+            ...automaticAdd
         };
     }
 
 
     componentDidMount() {
+        console.log('selectedBank****************************',this.state.selectedBank)
         if (this.state && this.state.fundList && !this.state.fundList.length > 0) {
             const fundListPayload = {};
             this.props.getFundListData(fundListPayload);
@@ -93,26 +97,46 @@ class AutomaticInvestmentAddComponent extends Component {
         let selected = [];
         this.state.fundList.map((item) => {
             console.log('outside if',item.fundAmount)
-            if (item.fundAmount>50) {
+            if (item.fundAmount>=50) {
                 
                 selected.push({ name: item.fundName, amount: item.fundAmount })
             }
         })
         console.log('selected',selected)
+
+        const savedAutoData = myInstance.getSavedAutomaticData();
         let payload = {
-            account: this.state.acc_name+'|'+this.state.acc_no,
-            totalAmount: '$' + this.state.totalFund,
+            ...savedAutoData,
+            // account: this.state.acc_name+'|'+this.state.acc_no,
+            // totalAmount: '$' + this.state.totalFund,
+            // fundFrom: autoInvestmentAddBankJson[this.state.selectedBank].account,
+            // investedIn: selected,
+            // switchOnOff: true
+            selectedItemID: "D",
+            selectedItemName: "Doller",
+            autoInvestmentAddAmountJson: this.state.autoInvestmentAddAmountJson,
+            fundList: this.state.fundList,
+            ItemToEdit: this.state.ItemToEdit,
+            acc_name: this.state.acc_name,
+            acc_no: this.state.acc_no,
+            accountType: this.state.accountType,
+            selectedBank: this.state.selectedBank,
+            fundRemaining: this.state.fundRemaining,
+            totalFund: '$' +this.state.totalFund,
+            // investedIn: this.state.investedIn,
             fundFrom: autoInvestmentAddBankJson[this.state.selectedBank].account,
             investedIn: selected,
-            switchOnOff: true
+            fundConsumed: this.state.fundConsumed,
+            refresh:this.state.refresh,
+            errorMsg:this.state.errorMsg,
         };
-        if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
-            payload = {
-                ...payload,
-                ...this.props.automaticInvestmentState.savedAccData
-            };
-        }
-
+        // if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+        //     payload = {
+        //         ...payload,
+        //         ...this.props.automaticInvestmentState.savedAccData
+        //     };
+        // }
+        // console.log('*********************************',payload)
         return payload;
 
     }
@@ -120,13 +144,20 @@ class AutomaticInvestmentAddComponent extends Component {
     navigationNext = () => {
 
         const payload = this.getPayload();
-        this.props.saveData("automaticInvestmentAdd", payload);
-        this.props.navigation.navigate('automaticInvestmentSchedule', {
+        //this.props.saveData("automaticInvestmentAdd", payload);
+        const stateData = myInstance.getScreenStateData();
+            myInstance.setSavedAutomaticData(payload);
+            const screenState = {
+                ...stateData,
+                "automaticAdd":{...this.state}
+            }
+            myInstance.setScreenStateData(screenState);
+        this.props.navigation.navigate({routeName:'automaticInvestmentSchedule',key:'automaticInvestmentSchedule',params: {
             ItemToEdit: this.state.ItemToEdit,
             acc_name: this.state.acc_name,
             acc_no: this.state.acc_no,
             accountType: this.state.accountType
-        });
+        }});
     }
     componentDidUpdate(prevProps, prevState) {
         if (this.props !== prevProps) {
@@ -135,7 +166,7 @@ class AutomaticInvestmentAddComponent extends Component {
             if (this.props.fundListState[ActionTypes.GET_FUNDLIST] != undefined && this.props.fundListState[ActionTypes.GET_FUNDLIST].Items != null) {
                 tempFundListData = this.props.fundListState[ActionTypes.GET_FUNDLIST].Items;
                 this.setState({
-                    fundList: [...tempFundListData.map(v => ({ ...v, isActive: false, fundAmount: 0 }))],
+                    fundList: [...tempFundListData.map(v => ({ ...v, isActive: false, fundAmount: 0,IsNotValidAmount:false }))],
                 });
             }
 
@@ -148,7 +179,7 @@ class AutomaticInvestmentAddComponent extends Component {
     }
     //navigationNext = () => this.props.navigation.navigate('automaticInvestmentSchedule', { ItemToEdit: this.state.ItemToEdit });
     navigationBack = () => this.props.navigation.goBack();
-    navigationCancel = () => this.props.navigation.navigate('automaticInvestment');
+    navigationCancel = () => this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
 
     generateKeyExtractor = (item) => item.account;
     renderInvestment = () => ({ item, index }) =>
@@ -200,12 +231,28 @@ class AutomaticInvestmentAddComponent extends Component {
 
     changeRemaining = e => {
         let remaining = 0;
-        this.state.fundList.map((item) => {
-            if (Number(item.fundAmount) <= this.state.fundRemaining)
-                remaining = remaining + Number(item.fundAmount);
-            else {
-                item.isActive = false;
-                item.fundAmount = 0;
+        this.state.fundList.map((item,index) => {
+            let msg="Please enter amount greater than or equal to 50";
+            
+            var array = [...this.state.fundList];
+            array[index].IsNotValidAmount = false;
+            if(Number(item.fundAmount)>=50)
+            {
+                if (Number(item.fundAmount) <= this.state.fundRemaining)
+                    remaining = remaining + Number(item.fundAmount);
+                else {
+                    msg="Amount is greater than Remining amount"
+                    array[index].IsNotValidAmount = true;
+                }
+                array[index].fundAmount=item.fundAmount;
+                array[index].isActive=true;
+                this.setState({ fundList: array,refresh:!this.state.refresh,errorMsg:msg });
+            }
+            else if(item.isActive){
+                var array = [...this.state.fundList]; // make a separate copy of the array
+                array[index].IsNotValidAmount = true;
+                this.setState({ fundList: array,refresh:!this.state.refresh });
+                // console.log('****************************',this.state.fundList)
             }
         })
         this.setState({ fundRemaining: this.state.totalFund - remaining, fundConsumed: remaining });
@@ -248,11 +295,14 @@ class AutomaticInvestmentAddComponent extends Component {
                     <Text style={styles.auto_invest_to_top}>{'Amount'}</Text>
                     <View style={styles.auto_invest_to_top_view}>
                         <Text style={styles.auto_invest_to_top}>{'$'}</Text>
-                        {
-                            <GInputComponent style={styles.leftSpace} onChangeText={(value) => this.getFundAmount(value, index)} onEndEditing={this.changeRemaining}
-                                value={item.fundAmount.toString()} />
-                        }
-
+                        <View style={{flexDirection:'column',width:'100%'}}>
+                            <GInputComponent style={styles.leftSpace} 
+                            onChangeText={(value) => this.getFundAmount(value, index)} 
+                            onEndEditing={this.changeRemaining}
+                            value={item.fundAmount.toString()} 
+                            errorFlag={item.IsNotValidAmount}
+                            errorText={this.state.errorMsg}/>
+                        </View>
                     </View>
                     <Text style={styles.auto_invest_flat_min}>{'Min $50'}</Text>
                 </View>
@@ -340,8 +390,8 @@ class AutomaticInvestmentAddComponent extends Component {
                                             label={"$"}
                                             descLabelStyle={styles.lblRadioDescTxt}
                                             descLabel={""}
-                                            selected={(this.state.selectedItemID !== "" && "Y" == this.state.selectedItemID) ? true : false}
-                                            onPress={this.onSelected({ name: 'Yes', id: 'Y' })}
+                                            selected={(this.state.selectedItemID !== "" && "D" == this.state.selectedItemID) ? true : false}
+                                            onPress={this.onSelected({ name: 'Doller', id: 'D' })}
                                         />
                                         <CustomRadio
 
@@ -353,8 +403,8 @@ class AutomaticInvestmentAddComponent extends Component {
                                             label={"%"}
                                             descLabelStyle={styles.lblRadioDescTxt}
                                             descLabel={""}
-                                            selected={(this.state.selectedItemID !== "" && "N" == this.state.selectedItemID) ? true : false}
-                                            onPress={this.onSelected({ name: 'No', id: 'N' })}
+                                            selected={(this.state.selectedItemID !== "" && "P" == this.state.selectedItemID) ? true : false}
+                                            onPress={this.onSelected({ name: 'Percentage', id: 'P' })}
                                         />
                                     </View>
                                 </View>
@@ -381,7 +431,7 @@ class AutomaticInvestmentAddComponent extends Component {
                                 data={this.state.fundList}
                                 renderItem={this.renderAmount()}
                                 keyExtractor={this.generateAmountKeyExtractor}
-                                extraData={this.state.fundList}
+                                extraData={this.state.refresh}
                             />
                         </View>
                     </View>
@@ -399,10 +449,10 @@ class AutomaticInvestmentAddComponent extends Component {
                         onPress={this.navigationBack}
                     />
                     <GButtonComponent
-                        buttonStyle={styles.continueButton}
+                        buttonStyle={this.state.selectedBank>-1 && this.state.totalFund>=50 && this.state.fundRemaining===0? styles.continueButtonSelected:styles.continueButton}
                         buttonText={globalString.common.next}
                         textStyle={styles.continueButtonText}
-                        onPress={this.navigationNext}
+                        onPress={this.state.selectedBank>-1 && this.state.totalFund>=50 && this.state.fundRemaining===0?this.navigationNext:null}
                     />
 
 
