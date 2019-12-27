@@ -56,14 +56,14 @@ protect_email(user_email) {
   
   navigationPasswordTemp = () => 
   {
-      let valid_temp=this.state.str_temp == ""?true:false;
+      let valid_temp=this.state.str_temp === ""?true:false;
      this.setState({
        boo_temp: valid_temp,
        err_temp: valid_temp ? globalString.recoverPassword.validPassword : '',
       
    });
       
-      if(!this.state.str_temp == "")        
+      if(this.state.str_temp !== "")        
          this.props.navigation.navigate('passwordReset');
   }
   navigationPasswordOtp = () => this.props.navigation.goBack();

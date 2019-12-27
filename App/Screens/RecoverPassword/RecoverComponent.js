@@ -55,17 +55,17 @@ class RecoveryComponent extends Component {
 
     let validSSn=regEx.allow_Nine_Numeric.test(this.state.ssn);
     this.setState({
-      boo_OnlineId: this.state.onlineId == "" ? true : false,
-      err_onlineId: this.state.onlineId == "" ? globalString.recoverPassword.err_onlineId: '',
+      boo_OnlineId: this.state.onlineId === "" ? true : false,
+      err_onlineId: this.state.onlineId === "" ? globalString.recoverPassword.err_onlineId: '',
       boo_ssn: !validSSn,
       err_ssn: !validSSn ? globalString.recoverPassword.err_ssn : '',
-      boo_security:this.state.str_security==''?true:false,
-      err_security:this.state.str_security==''? globalString.recoverPassword.err_security:''
+      boo_security:this.state.str_security===''?true:false,
+      err_security:this.state.str_security===''? globalString.recoverPassword.err_security:''
     });
 
     if (this.state.isCustomer)
     {
-      if (!this.state.onlineId == "" && validSSn && !this.state.str_security=='')
+      if (!this.state.onlineId === "" && validSSn && !this.state.str_security==='')
       {
         let recoveryJson={
           onlineId:this.state.onlineId,
@@ -78,7 +78,7 @@ class RecoveryComponent extends Component {
     }
     else
     {
-        if (!this.state.onlineId == "")
+        if (!this.state.onlineId === "")
         {
           let recoveryJson={
             onlineId:this.state.onlineId,
