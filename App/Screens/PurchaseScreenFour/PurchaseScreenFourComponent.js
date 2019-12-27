@@ -16,12 +16,13 @@ class PurchaseFourComponent extends Component {
     }
 
     formatAmount = (amount) => {
-        var amt = parseInt(amount).toLocaleString();
+        const amt = parseInt(amount).toLocaleString();
         return amt;
     }
 
     navigatePurchasePageOne = () => 
-    { if(this.state.ammend)
+    { 
+        if(this.state.ammend)
         {
         this.props.navigation.navigate('tAmmendComponent');
         }
@@ -32,7 +33,8 @@ class PurchaseFourComponent extends Component {
     }
 
     navigatePurchasePageThree = () => 
-    { if(this.state.ammend)
+    { 
+        if(this.state.ammend)
         {
         this.props.navigation.navigate('purchaseScreenThree',{ammend:true});
         }
@@ -53,6 +55,7 @@ class PurchaseFourComponent extends Component {
     }
 
     onClickEditSelectedFund = () => {
+        
         if(this.state.ammend)
         {
         this.props.navigation.navigate('purchaseScreenTwo',{ammend:true});
@@ -131,7 +134,7 @@ class PurchaseFourComponent extends Component {
         }
         const fundWithdrawalData = this.props.liquidationInitialState;
         let amount = "";
-        if (fundWithdrawalData.requestedAmountType == "Before Taxes") {
+        if (fundWithdrawalData.requestedAmountType === "Before Taxes") {
             amount = fundWithdrawalData.amountBeforeTaxes;
         } else {
             amount = fundWithdrawalData.amountAfterTaxes;
@@ -160,11 +163,11 @@ class PurchaseFourComponent extends Component {
                         <View style={styles.line} />
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.tradeType}</Text>
-                            <Text style={styles.greyText16px}>"Purchase"</Text>
+                            <Text style={styles.greyText16px}>Purchase</Text>
                         </View>
                         <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>{gblStrings.liquidation.accountSelection}</Text>
-                            <Text style={styles.edit} onPress={this.onClickEditAccountSelection} >{gblStrings.common.edit}</Text>
+                            <Text style={styles.edit} onPress={this.onClickEditAccountSelection}>{gblStrings.common.edit}</Text>
                         </View>
                         <View style={styles.line} />
                         <View style={styles.section}>
@@ -184,15 +187,28 @@ class PurchaseFourComponent extends Component {
                         <View style={styles.govtSecuritiesFund}>
                             <Text style={styles.blackTextBold22px}>{gblStrings.liquidation.govtSecuritiesFund}</Text>
                             <View style={styles.section}>
-                                <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.worthAmount}</Text>
+                                <Text style={styles.greyTextBold16px}>Initial Investment</Text>
                                 <Text style={styles.greyText16px}>{gblStrings.liquidation.dollarSymbol}{this.formatAmount(this.props.liquidationInitialState.worthAmount)}</Text>
                             </View>
                             <View style={styles.section}>
-                                <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.sellingAmount}</Text>
+                                <Text style={styles.greyTextBold16px}>Monthly Investment</Text>
+                                <Text style={styles.greyText16px}>{sellingAmount}</Text>
+                            </View>
+                            <View style={styles.section}>
+                                <Text style={styles.greyTextBold16px}>Start Date</Text>
                                 <Text style={styles.greyText16px}>{sellingAmount}</Text>
                             </View>
                         </View>
 
+                        <View style={styles.horizontalFlex}>
+                            <Text style={styles.subHeading}>Current Securities</Text>
+                            <Text style={styles.edit} onPress={this.onClickEditFundingSource}>{gblStrings.common.edit}</Text>
+                        </View>
+                        <View style={styles.line} />
+                        <View style={styles.section}>
+                            <Text style={styles.greyTextBold16px}>Reinvest Earning,Income and capital Gains</Text>
+                            <Text style={styles.greyText16px}>{fundingSource}</Text>
+                        </View>
                         <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>{gblStrings.accManagement.fundingSource}</Text>
                             <Text style={styles.edit} onPress={this.onClickEditFundingSource}>{gblStrings.common.edit}</Text>
@@ -203,17 +219,17 @@ class PurchaseFourComponent extends Component {
                             <Text style={styles.greyText16px}>{fundingSource}</Text>
                         </View>
 
-                        {(fundingSource==gblStrings.liquidation.check) ?
+                        {(fundingSource === gblStrings.liquidation.check) ?
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalInvestment}</Text>
                                 <Text style={styles.greyText16px}>{fundWithdrawalData.bankAccountNo}</Text>
                             </View> : <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountNumber}</Text>
                                 <Text style={styles.greyText16px}>{fundWithdrawalData.bankAccountNo}</Text>
-                            </View>
+                                      </View>
                         }
-                        {/*-----------------------------------Tax Accounting Method starts here-------------------------------- */}
-                        {(this.props.liquidationInitialState.taxWithHoldingOption == gblStrings.liquidation.withholdTaxes)&&(this.props.liquidationInitialState.accType=="IRA")?
+                        {/* -----------------------------------Tax Accounting Method starts here-------------------------------- */}
+                        {(this.props.liquidationInitialState.taxWithHoldingOption === gblStrings.liquidation.withholdTaxes)&&(this.props.liquidationInitialState.accType=="IRA")?
                             <View>
                                 <View style={styles.horizontalFlex}>
                                     <Text style={styles.subHeading}>{gblStrings.liquidation.taxAccountingMethod}</Text>
@@ -251,8 +267,36 @@ class PurchaseFourComponent extends Component {
                                 </View>
                             </View>
                             : null}
+                          <View style={styles.horizontalFlex}>
+                            <Text style={styles.subHeading}>Contribution</Text>
+                          </View>
+                        <View style={styles.line} />
+                        <View style={styles.section}>
+                            <Text style={styles.greyTextBold16px}>Contribution for IRA account</Text>
+                            <Text style={styles.greyText16px}>{fundingSource}</Text>
+                        </View>  
+                        <View style={styles.horizontalFlex}>
+                            <Text style={styles.subHeading}>Estimated</Text>
+                            <Text style={styles.edit} onPress={this.onClickEditSelectedFund}>{gblStrings.common.edit}</Text>
+                        </View>
+                        <View style={styles.line} />
 
-                        {/*-----------------------------------Tax Accounting Method ends here-------------------------------- */}
+                        <View style={styles.govtSecuritiesFund}>
+                            
+                            <View style={styles.section}>
+                                <Text style={styles.greyTextBold16px}>Estimated Fee</Text>
+                                <Text style={styles.greyText16px}>{gblStrings.liquidation.dollarSymbol}{this.formatAmount(this.props.liquidationInitialState.worthAmount)}</Text>
+                            </View>
+                            <View style={styles.section}>
+                                <Text style={styles.greyTextBold16px}>Estimated Net Trade Amount</Text>
+                                <Text style={styles.greyText16px}>{sellingAmount}</Text>
+                            </View>
+                            <View style={styles.section}>
+                                <Text style={styles.greyTextBold16px}>Effective Date</Text>
+                                <Text style={styles.greyText16px}>{sellingAmount}</Text>
+                            </View>
+                        </View>
+                        {/* -----------------------------------Tax Accounting Method ends here-------------------------------- */}
                         <View style={styles.flex5}>
                             <Text style={styles.text5}>{gblStrings.liquidation.confirmationMsg1}{"\n"}{"\n"}{gblStrings.liquidation.confirmationMsg2}</Text>
 
