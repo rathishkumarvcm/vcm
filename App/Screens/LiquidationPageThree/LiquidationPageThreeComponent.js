@@ -61,7 +61,8 @@ class LiquidationPageThreeComponent extends Component {
             switchOff: true,
             switchOn: false,
             showDropDown: false,
-            disableNextButton:true
+            disableNextButton:true,
+            ammend:false
         }
     }
 
@@ -272,7 +273,39 @@ class LiquidationPageThreeComponent extends Component {
         }
     }
 
-    navigateLiquidationPageOne = () => this.props.navigation.navigate('LiquidationPageOne');
+    navigateLiquidationPageOne = () => 
+    {
+        if(this.state.ammend)
+        {
+        this.props.navigation.navigate('tAmmendComponent',{ammend:true});
+        }
+        else{
+        this.props.navigation.navigate('LiquidationPageOne',{ammend:false});
+        }
+    
+    }
+    navigateLiquidationPageTwo = () => 
+    {
+        if(this.state.ammend)
+        {
+        this.props.navigation.navigate('LiquidationPageTwo',{ammend:true});
+        }
+        else{
+        this.props.navigation.navigate('LiquidationPageTwo',{ammend:false});
+        }
+    }
+    navigateLiquidationPageFour = () => 
+    {
+        if(this.state.ammend)
+        {
+        this.props.navigation.navigate('LiquidationPageFour', 
+        { taxAccountingMethodData: this.state.taxAccountingMethodData, fundingSource: this.state.fundingSource,ammend:true });
+        }
+        else{
+            this.props.navigation.navigate('LiquidationPageFour', 
+            { taxAccountingMethodData: this.state.taxAccountingMethodData, fundingSource: this.state.fundingSource,ammend:false }); 
+        }
+    }
 
     nextButtonAction = () => {
         console.log('On Click Next Fund Withdrawal ...');
@@ -294,18 +327,39 @@ class LiquidationPageThreeComponent extends Component {
         };
         this.props.saveData(payloadData);
         console.log("Fund Withdrawal payloadData---> " + JSON.stringify(payloadData));
-        this.props.navigation.navigate('LiquidationPageFour');
+        //this.props.navigation.navigate('LiquidationPageFour');
+        if(this.state.ammend)
+        {
+        this.props.navigation.navigate('LiquidationPageFour', {ammend:true,transactionType:"liquidation"});
+        }
+        else
+        {
+        this.props.navigation.navigate('LiquidationPageFour', {ammend:false,transactionType:"liquidation"});
+        }
     }
 
 
     componentDidMount() {
         console.log(" Screen 3 componentdidmount " + JSON.stringify(this.props));
+        if(this.props.navigation.getParam('ammend'))
+        {
+            this.setState({ammend:true});
+        }
+        else{
+            this.setState({ammend:false});
+        }
     }
 
     render() {
-        const currentPage = 3;
-        const totalCount = 4;
-        const pageName = gblStrings.liquidation.fundWithdrawalHeading;
+        let currentPage = 3;
+        let totalCount = 4;
+        let pageName = gblStrings.liquidation.fundWithdrawalHeading;
+        if(this.state.ammend)
+        {
+             currentPage = 2;
+             pageName = '2 - Fund Withdrawl';
+             totalCount = 3;
+        }
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
@@ -602,7 +656,7 @@ class LiquidationPageThreeComponent extends Component {
                         <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateLiquidationPageOne}>
                             <Text style={styles.backButtonText}>{gblStrings.common.cancel}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateBack}>
+                        <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateLiquidationPageTwo}>
                             <Text style={styles.backButtonText}>{gblStrings.common.back}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={this.state.disableNextButton ? styles.submitFlexDisabled : styles.submitFlex} onPress={this.nextButtonAction} disabled={this.state.disableNextButton}>

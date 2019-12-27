@@ -114,5 +114,9 @@ export const styles = StyleSheet.create({
         width:"100%",
         marginLeft:"0%",
         marginRight:"0%",
-    }
+    },
+    underlineText: {
+        textDecorationLine: 'underline', color: "#0000FF"
+    },
+    additionaemailView: { alignSelf: 'flex-end' }
 });

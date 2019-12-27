@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {  View, ScrollView,Text ,TouchableOpacity} from 'react-native';
-import {  GHeaderComponent, GFooterComponent ,GIcon,GDropDownComponent} from '../../CommonComponents';
+import {  GHeaderComponent, GFooterComponent ,GIcon,GDropDownComponent,GButtonComponent} from '../../CommonComponents';
 import Accordian from './Accordian';
 import { styles } from './styles';
 import PropTypes from 'prop-types';
@@ -60,7 +60,7 @@ export default class TAmmendComponent extends Component {
         console.log('parent trigger', title,index);
         this.setState({
             selectedTitle: title,
-            selectedValue: item.CurrentValue,
+            selectedValue: item.selectedAccountData.currentValue,
             selectedIndex: index,
             data:item
             
@@ -92,36 +92,23 @@ export default class TAmmendComponent extends Component {
             <Text style={styles.signIntext}>
                 Transactions
             </Text>
-            <Text style={styles.sorttext}>
+           {/* <Text style={styles.sorttext}>
                         Sort By :
-                        </Text>
-            <TouchableOpacity >
-            
-            <View style={{flexDirection:'row',marginTop:"5%",marginLeft:"10%"}}> 
-                        <Text style={{}}>Pending</Text>
+                        </Text>*/}
+                        {/*  <Text style={{}}>Pending</Text>
                     <GIcon
                             name="caretdown"
                             type="antdesign"
                             size={15}
                             color="#707070"
-                        />
-                        
-                       {/* <GDropDownComponent
-                            //propInputStyle={{width:"100%"}}
-                                textInputStyle={styles.dropdownTextInput}
-                                //dropDownName={gblStrings.userManagement.ques3}
-                                data={statusData}
-                                placeholder={gblStrings.common.select}
-                                itemToDisplay={"value"}
-                                changeState={this.selectDropdown}
-                                showDropDown={this.state.dropDown}
-                                dropDownValue={this.state.dropDownValue}
-                                selectedDropDownValue={this.selectedDropDownValue}
-                                dropDownPostition={{ position: 'absolute', top: scaledHeight(500),width:"100%",marginLeft:"0%",marginRight:"0%" }}
-                       />   */} 
-                        
-                        </View>
-            </TouchableOpacity>
+                        />*/}
+                         <GButtonComponent
+                                buttonStyle={styles.filterButton}
+                                buttonText="Filter"
+                                textStyle={styles.filterButtonText}
+                                //onPress={this.hideModal}
+                                />
+                       
             </View>
                 <Text style={styles.lblLine} />
                 <View style={styles.container}>
@@ -135,9 +122,21 @@ export default class TAmmendComponent extends Component {
 
     navigatetoFundSelection = () =>
     {
-       // this.props.navigation.navigate('FundSelectionComponent');
-       this.props.navigation.navigate('FundSelectionComponent',
-       {index:this.state.selectedIndex,data:this.state.data});
+       if(this.state.data.TransactionType=="Liquidation")
+       {
+       this.props.navigation.navigate('LiquidationPageTwo',
+       {index:this.state.selectedIndex,data:this.state.data,ammend:true});
+       }
+       if(this.state.data.TransactionType=="Purchase")
+       {
+       this.props.navigation.navigate('purchaseScreenTwo',
+       {index:this.state.selectedIndex,data:this.state.data,ammend:true});
+       }
+      /*if(this.state.data.TransactionType=="Exchange")
+       {
+       this.props.navigation.navigate('LiquidationPageTwo',
+       {index:this.state.selectedIndex,data:this.state.data,ammend:true});
+       }*/
     }
     renderAccordians = () => {
         const items = [];

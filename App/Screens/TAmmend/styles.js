@@ -126,6 +126,22 @@ cancelButton:{
     color:'#544A54',
     fontWeight:'bold'
 },
+filterButton:{
+    borderColor:'#61285F45',
+    borderWidth:1,
+    width:scaledHeight(120),
+    marginLeft:scaledHeight(100),
+    marginTop:scaledHeight(-5),
+    height:scaledHeight(40),
+    backgroundColor:'#FFFFFF',
+    alignItems:'center',
+    justifyContent:'center'
+ },
+ filterButtonText:{
+    fontSize:scaledHeight(14),
+    color:'#5D83AE',
+    //fontWeight:'bold'
+},
 saveButton:{
     borderColor:'#56565A',
     borderWidth:1,
@@ -174,6 +190,11 @@ viewRow:{
 dropdownTextInput:{
     width:"50%",
     height:"30%"
+},
+flexAccDetails1:{
+    //height:scaledHeight(73),
+    marginTop:"4%",
+    flexDirection:'row',
 }
 
 

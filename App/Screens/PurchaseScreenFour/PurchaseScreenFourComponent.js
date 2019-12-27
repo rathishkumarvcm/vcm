@@ -6,39 +6,39 @@ import { PageNumber } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import { styles } from './styles';
 
-class LiquidationPageFourComponent extends Component {
+
+class PurchaseFourComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            ammend : false,
-            transactionType:'' 
+         ammend : false,   
         };
     }
 
     formatAmount = (amount) => {
-        const amt = parseInt(amount).toLocaleString();
+        var amt = parseInt(amount).toLocaleString();
         return amt;
     }
 
-    navigateLiquidationPageOne = () => 
-    {
-        if(this.state.ammend)
+    navigatePurchasePageOne = () => 
+    { if(this.state.ammend)
         {
         this.props.navigation.navigate('tAmmendComponent');
         }
         else
         {
-            this.props.navigation.navigate('LiquidationPageOne');
+            this.props.navigation.navigate('purchaseScreenOne');
         }
     }
-    navigateLiquidationPageThree = () => 
-    {  if(this.state.ammend)
+
+    navigatePurchasePageThree = () => 
+    { if(this.state.ammend)
         {
-        this.props.navigation.navigate('LiquidationPageThree',{ammend:true});
+        this.props.navigation.navigate('purchaseScreenThree',{ammend:true});
         }
         else
         {
-        this.props.navigation.navigate('LiquidationPageThree',{ammend:false});
+        this.props.navigation.navigate('purchaseScreenThree',{ammend:false});
         }
     }
 
@@ -48,29 +48,29 @@ class LiquidationPageFourComponent extends Component {
         this.props.navigation.navigate('tAmmendComponent',{ammend:true});
         }
         else{
-        this.props.navigation.navigate('LiquidationPageOne',{ammend:false});
+        this.props.navigation.navigate('purchaseScreenOne',{ammend:false});
         }
     }
 
     onClickEditSelectedFund = () => {
         if(this.state.ammend)
         {
-        this.props.navigation.navigate('LiquidationPageTwo',{ammend:true});
+        this.props.navigation.navigate('purchaseScreenTwo',{ammend:true});
         }
         else
         {
-            this.props.navigation.navigate('LiquidationPageTwo',{ammend:false});
+            this.props.navigation.navigate('purchaseScreenTwo',{ammend:false});
         }
     }
 
     onClickEditFundingSource = () => {
         if(this.state.ammend)
         {
-        this.props.navigation.navigate('LiquidationPageThree',{ammend:true});
+        this.props.navigation.navigate('purchaseScreenThree',{ammend:true});
         }
         else
         {
-        this.props.navigation.navigate('LiquidationPageThree',{ammend:false});
+        this.props.navigation.navigate('purchaseScreenThree',{ammend:false});
         }
     }
 
@@ -86,20 +86,22 @@ class LiquidationPageFourComponent extends Component {
     }
 
     isEmpty = (str) => {
-        if (str === "" || str === undefined || str === null || str === "null" || str === "undefined") {
+        if (str === "" || str === undefined || str == null || str === "null" || str === "undefined") {
             return true;
         } 
             return false;
-        
+       
       }
 
     submitButtonAction = () => {
-        console.log('On Click Submit Liquidation ...');
+        
+        // console.log('On Click Submit Liquidation ...');
         this.props.navigation.navigate('LiquidationFinish');
     }
 
     componentDidMount() {
-        console.log(" Screen 4 componentdidmount " + JSON.stringify(this.props));
+        // console.log(" Screen 4 componentdidmount " + JSON.stringify(this.props));
+        this.setState({transactionType:this.props.navigation.getParam('transactionType')});
         if(this.props.navigation.getParam('ammend'))
         {
             this.setState({ammend:true});
@@ -129,7 +131,7 @@ class LiquidationPageFourComponent extends Component {
         }
         const fundWithdrawalData = this.props.liquidationInitialState;
         let amount = "";
-        if (fundWithdrawalData.requestedAmountType === "Before Taxes") {
+        if (fundWithdrawalData.requestedAmountType == "Before Taxes") {
             amount = fundWithdrawalData.amountBeforeTaxes;
         } else {
             amount = fundWithdrawalData.amountAfterTaxes;
@@ -141,7 +143,7 @@ class LiquidationPageFourComponent extends Component {
             fundingSource = fundWithdrawalData.bankAccountName;
         }
        return (
-            <View style={styles.container}>
+           <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <TouchableOpacity>
@@ -158,11 +160,11 @@ class LiquidationPageFourComponent extends Component {
                         <View style={styles.line} />
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.tradeType}</Text>
-                            <Text style={styles.greyText16px}>{gblStrings.liquidation.liquidation}</Text>
+                            <Text style={styles.greyText16px}>"Purchase"</Text>
                         </View>
                         <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>{gblStrings.liquidation.accountSelection}</Text>
-                            <Text style={styles.edit} onPress={this.onClickEditAccountSelection}>{gblStrings.common.edit}</Text>
+                            <Text style={styles.edit} onPress={this.onClickEditAccountSelection} >{gblStrings.common.edit}</Text>
                         </View>
                         <View style={styles.line} />
                         <View style={styles.section}>
@@ -201,18 +203,17 @@ class LiquidationPageFourComponent extends Component {
                             <Text style={styles.greyText16px}>{fundingSource}</Text>
                         </View>
 
-                        {(fundingSource===gblStrings.liquidation.check) ?
+                        {(fundingSource==gblStrings.liquidation.check) ?
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalInvestment}</Text>
                                 <Text style={styles.greyText16px}>{fundWithdrawalData.bankAccountNo}</Text>
-                            </View> : 
-                            <View style={styles.section}>
+                            </View> : <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountNumber}</Text>
                                 <Text style={styles.greyText16px}>{fundWithdrawalData.bankAccountNo}</Text>
                             </View>
                         }
-                        {/* -----------------------------------Tax Accounting Method starts here-------------------------------- */}
-                        {(this.props.liquidationInitialState.taxWithHoldingOption === gblStrings.liquidation.withholdTaxes)&&(this.props.liquidationInitialState.accType==="IRA")?
+                        {/*-----------------------------------Tax Accounting Method starts here-------------------------------- */}
+                        {(this.props.liquidationInitialState.taxWithHoldingOption == gblStrings.liquidation.withholdTaxes)&&(this.props.liquidationInitialState.accType=="IRA")?
                             <View>
                                 <View style={styles.horizontalFlex}>
                                     <Text style={styles.subHeading}>{gblStrings.liquidation.taxAccountingMethod}</Text>
@@ -251,7 +252,7 @@ class LiquidationPageFourComponent extends Component {
                             </View>
                             : null}
 
-                        {/* -----------------------------------Tax Accounting Method ends here-------------------------------- */}
+                        {/*-----------------------------------Tax Accounting Method ends here-------------------------------- */}
                         <View style={styles.flex5}>
                             <Text style={styles.text5}>{gblStrings.liquidation.confirmationMsg1}{"\n"}{"\n"}{gblStrings.liquidation.confirmationMsg2}</Text>
 
@@ -261,10 +262,10 @@ class LiquidationPageFourComponent extends Component {
                     </View>
 
                     <View style={styles.flex6}>
-                        <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateLiquidationPageOne}>
+                        <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigatePurchasePageOne}>
                             <Text style={styles.backButtonText}>{gblStrings.common.cancel}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateLiquidationPageThree}>
+                        <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigatePurchasePageThree}>
                             <Text style={styles.backButtonText}>{gblStrings.common.back}</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.submitFlex} onPress={this.submitButtonAction}>
@@ -289,12 +290,12 @@ class LiquidationPageFourComponent extends Component {
 }
 
 
-LiquidationPageFourComponent.propTypes = {
+PurchaseFourComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     liquidationInitialState: PropTypes.instanceOf(Object),
 };
 
-LiquidationPageFourComponent.defaultProps = {
+PurchaseFourComponent.defaultProps = {
 
 };
-export default LiquidationPageFourComponent;
+export default PurchaseFourComponent;

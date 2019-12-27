@@ -59,12 +59,20 @@ class PurchaseScreenTwoComponent extends Component {
             applyFilterState: false,
             fundList: [],
             totalInitialInvestment: "",
-            isFilterApplied: false
+            isFilterApplied: false,
+            ammend:false,
         };
     }
 
     componentDidMount() {
         this.getLookUpData();
+        if(this.props.navigation.getParam('ammend'))
+        {
+            this.setState({ammend:true});
+        }
+        else{
+            this.setState({ammend:false});
+        }
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -111,7 +119,15 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     onClickCancel = () => {
-        this.props.navigation.navigate({ routeName: 'purchaseScreenOne', key: 'purchaseScreenOne' });
+        if(this.state.ammend)
+        {
+            this.props.navigation.navigate('tAmmendComponent');
+            //this.props.navigation.navigate({ routeName: 'tAmmendComponent', key: 'purchaseScreenOne' });
+        }
+        else{
+            this.props.navigation.navigate('purchaseScreenOne');
+        }
+       
     }
 
     // onPressRemoveInvestment = (item, index) => () => {
@@ -359,7 +375,14 @@ class PurchaseScreenTwoComponent extends Component {
             }
         };
         this.props.saveData(payloadData);
-        this.props.navigation.navigate({ routeName: 'purchaseScreenThree', key: 'purchaseScreenThree' });
+       //this.props.navigation.navigate({ routeName: 'purchaseScreenThree', key: 'purchaseScreenThree' });
+        if(this.state.ammend)
+        {
+        this.props.navigation.navigate('purchaseScreenThree',{ammend:true});
+        }
+        else{
+            this.props.navigation.navigate('purchaseScreenThree',{ammend:false});
+        }
     }
 
     /* ----------------- Fund List Events -------------------------- */
@@ -440,8 +463,15 @@ class PurchaseScreenTwoComponent extends Component {
 
     render() {
 
-        const currentPage = 2;
-        const pageName = `${currentPage} - ${gblStrings.purchase.investmentSelection}`;
+        let currentPage = 2;
+        let pageName = `${currentPage} - ${gblStrings.purchase.investmentSelection}`;
+        if(this.state.ammend)
+        {
+             currentPage = 1;
+             // pageName = `${currentPage} - ${gblStrings.purchase.investmentSelection}`;
+              pageName = `${currentPage} - ${gblStrings.purchase.investmentSelection}`;
+             let totalCount = 3;
+        }
         const date = new Date().getDate();
         const month = new Date().getMonth() + 1;
         const year = new Date().getFullYear();

@@ -84,8 +84,21 @@ export default class Accordian extends Component {
                                 <Text style={[styles.lblTxtInner,{marginBottom:"2%"}]} >Cancel</Text>
                                 </TouchableOpacity>
                                                     </View>):null}
+                                                    <View style={styles.flexAccDetails1}>
+                                                    <GIcon 
+                                                    name="closesquareo"
+                                                    type="antdesign"
+                                                    size={22}
+                                                    color="#BBB3B3"
+                                                    />
+                                                    <View style={{marginTop:"0%"}}>
+                                                        <Text style={styles.lblTxt}>{gblStrings.liquidation.accountName} {this.props.data.selectedAccountData.accountName}</Text>
+                                                        <Text style={styles.lblTxt}>{gblStrings.liquidation.accountNumber}</Text>
+                                                        <Text style={styles.lblTxt}>{this.props.data.selectedAccountData.accountNumber}</Text>
+                                                    </View>
+                                                </View>
                                 <View style={styles.viewRow}>
-                                        <Text style={styles.lblTxtInner} >{this.props.data.USS}</Text>
+                                        <Text style={styles.lblTxtInner} >{this.props.data.selectedFundData.fundName}</Text>
                                         <Text style={styles.lblCountText} >{this.props.data.count}</Text>
                                 </View>
 
@@ -96,7 +109,7 @@ export default class Accordian extends Component {
                                 <Text style={styles.lblLine} />
                                 <View style={styles.viewColum}>
                                         <Text style={styles.lblTxtInner} >CurrentValue</Text>
-                                        <Text style={styles.lblTxtMedium} >{this.props.data.CurrentValue}</Text>
+                                        <Text style={styles.lblTxtMedium} >{this.props.data.selectedAccountData.currentValue}</Text>
                                 </View>
                                 <View style={styles.viewColum}>
                                         <Text style={styles.lblTxtInner} >TransactionType</Text>
@@ -104,7 +117,7 @@ export default class Accordian extends Component {
                                 </View>
                                 <View style={styles.viewColum}>
                                         <Text style={styles.lblTxtInner} >PaymentMode</Text>
-                                        <Text style={styles.lblTxtMedium} >{this.props.data.PaymentMode}</Text>
+                                        <Text style={styles.lblTxtMedium} >{this.props.data.selectedFundSourceData.paymentMode}</Text>
                                 </View>
                                 <View style={styles.viewColum}>
                                         <Text style={styles.lblTxtInner} >OrderStatus</Text>

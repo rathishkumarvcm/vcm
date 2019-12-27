@@ -104,6 +104,7 @@ import VerifyManageBenificiariesComponent from './Screens/VerifyManageBeneficiar
 import PurchaseScreenOneComponent from './Screens/PurchaseScreenOne';
 import PurchaseScreenTwoComponent from './Screens/PurchaseScreenTwo';
 import PurchaseScreenThreeComponent from './Screens/PurchaseScreenThree';
+import PurchaseScreenFourComponent from './Screens/PurchaseScreenFour';
 
 import EditRelationshipInfo from './Screens/EditRelationshipInformation/';
 import EditRegulatoryInfo from './Screens/EditRegulatoryInformations/EditRegulatoryComponent';
@@ -921,10 +922,17 @@ const AppNavigator = createStackNavigator({
             navigationOptions:{
                 header:null,
             }
+        },
+        purchaseScreenFour:{
+            screen:PurchaseScreenFourComponent,
+            navigationOptions:{
+                header:null,
+            } 
         }
+
     },
     {
-        initialRouteName: "login"
+        initialRouteName: "tAmmendComponent"
     });
 
 export default createAppContainer(AppNavigator);

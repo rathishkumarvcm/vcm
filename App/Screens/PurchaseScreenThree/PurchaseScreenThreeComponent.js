@@ -50,12 +50,20 @@ class PurchaseScreenThreeComponent extends Component {
             fundingMethod: "",
             fundingSourceName: "",
             bankAccountNumber: "",
-            bankAccountName: ""
+            bankAccountName: "",
+            ammend:false
 
         };
     }
 
     componentDidMount() {
+        if(this.props.navigation.getParam('ammend'))
+        {
+            this.setState({ammend:true});
+        }
+        else{
+            this.setState({ammend:false});
+        }
     }
 
     /* -------------------------------- Button Events ---------------------------------- */
@@ -65,7 +73,14 @@ class PurchaseScreenThreeComponent extends Component {
     }
 
     onClickCancel = () => {
-        this.props.navigation.navigate({ routeName: 'purchaseScreenOne', key: 'purchaseScreenOne' });
+        //this.props.navigation.navigate({ routeName: 'purchaseScreenOne', key: 'purchaseScreenOne' });
+        if(this.state.ammend)
+        {
+            this.props.navigation.navigate('tAmmendComponent');
+        }
+        else{
+            this.props.navigation.navigate('purchaseScreenOne');
+        }
     }
 
     onClickSave = () => {
@@ -90,6 +105,13 @@ class PurchaseScreenThreeComponent extends Component {
         this.props.saveData(payloadData);
         console.log("savedData:::", payloadData);
         //this.props.navigation.navigate({ routeName: 'purchaseScreenThree', key: 'purchaseScreenThree' });
+        if(this.state.ammend)
+        {
+        this.props.navigation.navigate('purchaseScreenFour',{ammend:true});
+        }
+        else{
+            this.props.navigation.navigate('purchaseScreenFour',{ammend:false});
+        }
     }
 
     onSubmitEditing = (input) => text => {
@@ -218,9 +240,15 @@ class PurchaseScreenThreeComponent extends Component {
     generateFundSourceKeyExtractor = (item) => item.key;
 
     render() {
-        const currentPage = 3;
-        const totalCount = 4;
-        const pageName = `${currentPage} - ${gblStrings.purchase.fundSource}`;
+        let currentPage = 3;
+        let totalCount = 4;
+        let pageName = `${currentPage} - ${gblStrings.purchase.fundSource}`;
+        if(this.state.ammend)
+        {
+             currentPage = 2;
+             pageName = `${currentPage} - ${gblStrings.purchase.fundSource}`;
+             totalCount = 3;
+        }
 
         if (this.props.purchaseData && this.props.purchaseData.savePurchaseSelectedData) {
             savedData = this.props.purchaseData.savePurchaseSelectedData;

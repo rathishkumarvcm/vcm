@@ -30,7 +30,8 @@ class LiquidationPageTwoComponent extends Component {
                 allSharesSelected: false,
                 dollarValue: '',
                 percentageValue: '',
-            }
+            },
+            ammend:false
         };
     }
 
@@ -143,7 +144,17 @@ class LiquidationPageTwoComponent extends Component {
         }));
     }
 
-    navigateLiquidationPageOne = () => this.props.navigation.navigate('LiquidationPageOne');
+    navigateLiquidationPageOne = () => 
+    {
+        if(this.state.ammend)
+        {
+            this.props.navigation.navigate('tAmmendComponent');
+        }
+        else{
+            this.props.navigation.navigate('LiquidationPageOne');
+        }
+        
+    }
     navigateLiquidationPageTwo = () => this.props.navigation.navigate('LiquidationPageTwo');
 
     nextButtonAction = () => {
@@ -156,7 +167,13 @@ class LiquidationPageTwoComponent extends Component {
         const payloadData = this.state.selectedFundData;
         this.props.saveData(payloadData);
         console.log("payloadData---> " + JSON.stringify(payloadData));
-        this.props.navigation.navigate('LiquidationPageThree');
+        if(this.state.ammend)
+        {
+        this.props.navigation.navigate('LiquidationPageThree',{ammend:true});
+        }
+        else{
+            this.props.navigation.navigate('LiquidationPageThree',{ammend:false});
+        }
     }
 
     formatAmount = (amount) => {
@@ -168,7 +185,13 @@ class LiquidationPageTwoComponent extends Component {
 
     componentDidMount() {
         console.log("Page Two Compoennt componentDidMount --> " + JSON.stringify(this.props));
-    
+        if(this.props.navigation.getParam('ammend'))
+        {
+            this.setState({ammend:true});
+        }
+        else{
+            this.setState({ammend:false});
+        }
         
     }
 
@@ -203,10 +226,15 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     render() {
-        const currentPage = 2;
-        const totalCount = 4;
-        const pageName = gblStrings.liquidation.fundSelectionScreenName;
-       const fundsList = this.getFundList();
+        let currentPage = 2;
+        let totalCount = 4;
+        let pageName = gblStrings.liquidation.fundSelectionScreenName;
+        if(this.state.ammend)
+        {
+             currentPage = 1;
+             pageName = '1 - Fund Selection';
+             totalCount = 3;
+        }
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />

@@ -210,7 +210,7 @@ class ModifySecQuesComponent extends Component {
 
     onPressDropDown = (stateKey, keyName) => () => this.setState(prevState => ({
         ...prevState[stateKey],
-        [keyName]: !this.state.keyName
+        [keyName]: !prevState.keyName
 
     }));
 
@@ -403,8 +403,8 @@ class ModifySecQuesComponent extends Component {
                             {gblStrings.userManagement.modifySecurityHeading}
                         </Text>
                         <Text style={styles.lblLine} />
-                        <ScrollView style={{ marginTop: 25 }}>
-                            <View style={{ width: "100%" }}>
+                        <ScrollView >
+                            <View >
                                 <Text style={styles.lblTxt}>
                                     {gblStrings.userManagement.modifySecuritySelect}
                                 </Text>
@@ -486,8 +486,8 @@ class ModifySecQuesComponent extends Component {
                                 errorFlag={!this.state.validationPrimaryEmail}
                                 errorText={gblStrings.userManagement.emailError}
                             />
-                            <TouchableOpacity style={{ alignSelf: 'flex-end' }} onPress={this.additionalEmail}>
-                                <Text style={{ textDecorationLine: 'underline', color: "#0000FF" }}>{gblStrings.userManagement.addAdditionalEmail}</Text>
+                            <TouchableOpacity style={styles.additionaemailView} onPress={this.additionalEmail}>
+                                <Text style={styles.underlineText}>{gblStrings.userManagement.addAdditionalEmail}</Text>
                             </TouchableOpacity>
                             {(this.state.additionalEmailFlag) ?
                                 (
@@ -553,7 +553,7 @@ ModifySecQuesComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     initialState: PropTypes.instanceOf(Object),
     masterLookupStateData: PropTypes.instanceOf(Object),
-    onSelectedItem: PropTypes.func,
+    // onSelectedItem: PropTypes.func,
     value: PropTypes.instanceOf(Object),
     saveQuestions: PropTypes.func,
     saveQuestionsData:PropTypes.instanceOf(Object),
@@ -561,6 +561,13 @@ ModifySecQuesComponent.propTypes = {
 };
 
 ModifySecQuesComponent.defaultProps = {
-
+    navigation: {},
+    initialState: {},
+    masterLookupStateData: {},
+    // onSelectedItem: ()=>{},
+    value: {},
+    saveQuestions: ()=>{},
+    saveQuestionsData:{},
+    getPersonalCompositeData:()=>{}
 };
 export default ModifySecQuesComponent;
