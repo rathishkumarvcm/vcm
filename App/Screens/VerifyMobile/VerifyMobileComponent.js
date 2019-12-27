@@ -22,7 +22,7 @@ class VerifyMobileComponent extends Component {
 
     navigateVerifyOTP = () =>{
         // Joint Account , New User
-        const specialMFAUserType = (this.props && this.props.navigation.getParam('SpecialMFA',''));   
+        const specialMFAUserType = (this.props && this.props.navigation && this.props.navigation.getParam('SpecialMFA',''));   
         this.props.navigation.navigate('passwordRecoveryOtp',{fromPage:'SpecialMFA',SpecialMFA:specialMFAUserType});   
     }
 
@@ -47,7 +47,7 @@ class VerifyMobileComponent extends Component {
     }
     
     render(){
-        const specialMFAUserType = (this.props && this.props.navigation.getParam('SpecialMFA',''));         
+        const specialMFAUserType = (this.props && this.props.navigation && this.props.navigation.getParam('SpecialMFA',''));         
         return(
             <View style={styles.container}>
             {/* {
