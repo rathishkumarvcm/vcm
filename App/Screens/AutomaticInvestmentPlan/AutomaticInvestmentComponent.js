@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, ScrollView, Text, FlatList, TouchableOpacity ,TouchableWithoutFeedback} from 'react-native';
 import { styles } from './styles';
 import {
     GHeaderComponent,
@@ -238,6 +238,8 @@ class AutomaticInvestmentComponent extends Component {
                 <GHeaderComponent navigation={this.props.navigation} />
                 
                 <ScrollView style={{ flex: 0.85 }}>
+                <TouchableWithoutFeedback onPress={this.editDelete(-1)}>
+                    <View>
                     <View style={{ marginLeft: scaledHeight(10), marginRight: scaledHeight(10) }}>
                         <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
                             <Text style={styles.autoInvestHead}>{globalString.automaticInvestment.autoInves_Title}</Text>
@@ -383,8 +385,11 @@ class AutomaticInvestmentComponent extends Component {
                     </View>
 
                     <GFooterComponent />
+                    </View>
+                    </TouchableWithoutFeedback>
                 </ScrollView>
             </View>
+            
         );
     }
 }

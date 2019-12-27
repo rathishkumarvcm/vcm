@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import { Linking,View, ScrollView, Text } from 'react-native';
 import { styles } from './styles';
 import {
     GHeaderComponent,
@@ -11,9 +11,8 @@ import { CustomCheckBox } from '../../AppComponents';
 import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
 
-import * as regEx from '../../Constants/RegexConstants';
-
 const myInstance = GSingletonClass.getInstance();
+const url = 'https://content.usaa.com/mcontent/static_assets/Mstar/Morningstar_FundProfiles_USSPX.pdf';
 class AutomaticInvestmentPlanEsignComponent extends Component {
     constructor(props) {
         super(props);
@@ -248,7 +247,7 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
                             <View style={styles.esignBody1}>
                                 <Text style={styles.esignTitle}>{'Documents to Sign'}</Text>
                                 <View style={styles.seperator_line} />
-                                <Text style={styles.esignHeading}>{'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES'}</Text>
+                                <Text style={styles.esignHeading} onPress={()=>{Linking.openURL(url);}}>{'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES'}</Text>
                                 <Text style={styles.esignContent1}>{'This document contains the information provided by you as part of your automatic investment plan, including Terms and Conditions.'}</Text>
                                 <Text style={styles.esignContent2}>{'By selecting "Submit", I agree to the documents and terms above and certify that any information I provided is accurate, up-to-date and complete.'}</Text>
                             </View>
