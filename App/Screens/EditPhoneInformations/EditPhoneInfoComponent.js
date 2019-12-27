@@ -94,6 +94,8 @@ class editPhoneInfoComponent extends Component {
 
             selectedIndex: -1,
             isMobileRefreshed: false,
+            isWorkRefreshed: false,
+            isHomeRefreshed: false,
 
             userMobileNumber: [],
             userHomeNumber: [],
@@ -121,7 +123,7 @@ class editPhoneInfoComponent extends Component {
                 this.props.profileState.profileUserHomeNumber) {
                 this.setState({
                     userHomeNumber: this.props.profileState.profileUserHomeNumber,
-                    isMobileRefreshed: !this.state.isMobileRefreshed
+                    isHomeRefreshed: !this.state.isHomeRefreshed
                 });
             }
 
@@ -130,7 +132,7 @@ class editPhoneInfoComponent extends Component {
                 this.props.profileState.profileUserWorkNumber) {
                 this.setState({
                     userWorkNumber: this.props.profileState.profileUserWorkNumber,
-                    isMobileRefreshed: !this.state.isMobileRefreshed
+                    isWorkRefreshed: !this.state.isWorkRefreshed
                 });
             }
         } else {
@@ -165,7 +167,7 @@ class editPhoneInfoComponent extends Component {
                     this.props.profileState.profileUserHomeNumber) {
                     this.setState({
                         userHomeNumber: this.props.profileState.profileUserHomeNumber,
-                        isMobileRefreshed: !this.state.isMobileRefreshed
+                        isHomeRefreshed: !this.state.isHomeRefreshed
                     });
                 }
 
@@ -174,26 +176,56 @@ class editPhoneInfoComponent extends Component {
                     this.props.profileState.profileUserWorkNumber) {
                     this.setState({
                         userWorkNumber: this.props.profileState.profileUserWorkNumber,
-                        isMobileRefreshed: !this.state.isMobileRefreshed
+                        isWorkRefreshed: !this.state.isWorkRefreshed
                     });
                 }
             }
         }
     }
 
-    onMobileToggle = (item, index) => () => {
-        var array = [...this.state.userMobileNumber];
-        if (index !== -1) {
-            let switchVal = array[index].isPrimaryMobile;
-            array[index].isPrimaryMobile = !switchVal;
-            this.setState({
-                userMobileNumber: array,
-                isMobileRefreshed: !this.state.isMobileRefreshed
-            });
-        }
-    }
+    // Mobile Informations
 
-    // Mobile Informations 
+    onMobileToggle = (item, index, toggleState) => () => {
+        let array = [];
+        switch (toggleState) {
+            case 'mobile':
+                array = [...this.state.userMobileNumber];
+                if (index !== -1) {
+                    let switchVal = array[index].isPrimaryMobile;
+                    array[index].isPrimaryMobile = !switchVal;
+                    this.setState({
+                        userMobileNumber: array,
+                        isMobileRefreshed: !this.state.isMobileRefreshed
+                    });
+                }
+                break;
+
+            case 'home':
+                array = [...this.state.userHomeNumber];
+                if (index !== -1) {
+                    let switchVal = array[index].isPrimaryMobile;
+                    array[index].isPrimaryMobile = !switchVal;
+                    this.setState({
+                        userHomeNumber: array,
+                        isHomeRefreshed: !this.state.isHomeRefreshed
+                    });
+                }
+                break;
+
+            case 'work':
+                array = [...this.state.userWorkNumber];
+                if (index !== -1) {
+                    let switchVal = array[index].isPrimaryMobile;
+                    array[index].isPrimaryMobile = !switchVal;
+                    this.setState({
+                        userWorkNumber: array,
+                        isWorkRefreshed: !this.state.isWorkRefreshed
+                    });
+                }
+                break
+        }
+
+    }
 
     onMenuOptionClicked = (item, index) => () => {
         var array = [...this.state.userMobileNumber];
@@ -211,7 +243,7 @@ class editPhoneInfoComponent extends Component {
             mobileNumber={item.mobileNumber}
             mobilePreferredTime={item.mobilePreferredTime}
             isPrimaryMobile={item.isPrimaryMobile}
-            onMobileToggle={this.onMobileToggle(item, index)}
+            onMobileToggle={this.onMobileToggle(item, index, 'mobile')}
             onMenuOptionClicked={this.onMenuOptionClicked(item, index)}
             selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0} />)
     };
@@ -223,7 +255,7 @@ class editPhoneInfoComponent extends Component {
         array[index].selectedMenuIndex = index;
         this.setState({
             userHomeNumber: array,
-            isMobileRefreshed: !this.state.isMobileRefreshed,
+            isHomeRefreshed: !this.state.isHomeRefreshed,
             selectedIndex: index
         });
     }
@@ -234,7 +266,7 @@ class editPhoneInfoComponent extends Component {
             mobileNumber={item.mobileNumber}
             mobilePreferredTime={item.mobilePreferredTime}
             isPrimaryMobile={item.isPrimaryMobile}
-            onMobileToggle={this.onMobileToggle(item, index)}
+            onMobileToggle={this.onMobileToggle(item, index, 'home')}
             onMenuOptionClicked={this.onMenuOptionClickedHome(item, index)}
             selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0} />)
     };
@@ -246,7 +278,7 @@ class editPhoneInfoComponent extends Component {
         array[index].selectedMenuIndex = index;
         this.setState({
             userWorkNumber: array,
-            isMobileRefreshed: !this.state.isMobileRefreshed,
+            isWorkRefreshed: !this.state.isWorkRefreshed,
             selectedIndex: index
         });
     }
@@ -257,7 +289,7 @@ class editPhoneInfoComponent extends Component {
             mobileNumber={item.mobileNumber}
             mobilePreferredTime={item.mobilePreferredTime}
             isPrimaryMobile={item.isPrimaryMobile}
-            onMobileToggle={this.onMobileToggle(item, index)}
+            onMobileToggle={this.onMobileToggle(item, index, 'work')}
             onMenuOptionClicked={this.onMenuOptionClickedWork(item, index)}
             selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0} />)
     };
@@ -331,7 +363,7 @@ class editPhoneInfoComponent extends Component {
                             <FlatList
                                 data={this.state.userHomeNumber}
                                 keyExtractor={this.generateKeyExtractor}
-                                extraData={this.state.isMobileRefreshed}
+                                extraData={this.state.isHomeRefreshed}
                                 renderItem={this.renderHomeNumberInformation()} />
 
                         </View>
@@ -346,7 +378,7 @@ class editPhoneInfoComponent extends Component {
                             <FlatList
                                 data={this.state.userWorkNumber}
                                 keyExtractor={this.generateKeyExtractor}
-                                extraData={this.state.isMobileRefreshed}
+                                extraData={this.state.isWorkRefreshed}
                                 renderItem={this.renderWorkNumberInformation()} />
                         </View>
 
