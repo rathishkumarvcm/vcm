@@ -6,12 +6,15 @@ import { scaledHeight } from '../../Utils/Resolution';
 import PropTypes from "prop-types";
 import globalString from '../../Constants/GlobalStrings';
 
-const tempPrimaryMailData = [
+let editDeleteMenuOption = [
     {
-        "emailType": 'Primary Email',
-        "emailId": 'abc@gmail.com',
-        "isPrimaryEmail": false
-    }
+        name: 'Edit',
+        id: '1'
+    },
+    {
+        name: 'Delete',
+        id: '2'
+    },
 ];
 
 const UserEmailInformation = (props) => {
@@ -28,10 +31,25 @@ const UserEmailInformation = (props) => {
                 </View>
 
                 <View style={styles.profileDivideIconTwo}>
-                    <Image style={styles.imageWidthHeight}
-                        source={require("../../Images/menu_icon.png")} />
+                    <TouchableOpacity
+                        onPress={props.onMenuOptionClicked}>
+                        <Image style={styles.imageWidthHeight}
+                            source={require("../../Images/menu_icon.png")} />
+                    </TouchableOpacity>
                 </View>
             </View>
+
+            {props.selectedMenuIndex == 1 ?
+                (<FlatList style={styles.editFlatList}
+                    data={editDeleteMenuOption}
+                    renderItem={({ item, index }) =>
+                        (<TouchableOpacity style={styles.editDropdown}>
+                            <Text style={styles.editDropdownText}>
+                                {item.name}
+                            </Text>
+                        </TouchableOpacity>)}
+                    keyExtractor={item => item.id} />)
+                : null}
 
             <View style={styles.editEmailBorder} />
 
@@ -42,7 +60,7 @@ const UserEmailInformation = (props) => {
 
                 <View style={styles.editSwitchButton}>
                     <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={this.toggleSwitchPrimaryMail}
+                        onValueChange={props.onEmailToggle}
                         value={props.isPrimaryEmail} />
                 </View>
             </View>
@@ -53,7 +71,10 @@ const UserEmailInformation = (props) => {
 UserEmailInformation.propTypes = {
     emailType: PropTypes.string,
     emailId: PropTypes.string,
-    isPrimaryEmail: PropTypes.bool
+    isPrimaryEmail: PropTypes.bool,
+    onEmailToggle: PropTypes.func,
+    onMenuOptionClicked: PropTypes.func,
+    selectedMenuIndex: PropTypes.any
 };
 
 class editEmailInfoComponent extends Component {
@@ -66,15 +87,12 @@ class editEmailInfoComponent extends Component {
             faceIdEnrolled: false,
             touchIdEnrolled: false,
 
-            profilePrimayMail: ''
+            selectedIndex: -1,
+            isEmailRefreshed: false,
+            profilePrimayMail: '',
+            profileEmailData: []
         };
     }
-
-    renderEmailInformation = (dataLength) => ({ item, index }) =>
-        (<UserEmailInformation
-            emailType={item.emailType}
-            emailId={item.emailId}
-            isPrimaryEmail={item.isPrimaryEmail} />);
 
     componentDidMount() {
         if (this.props && this.props.initialState && this.props.initialState.email) {
@@ -82,26 +100,70 @@ class editEmailInfoComponent extends Component {
                 profilePrimayMail: this.props.initialState.email
             });
         }
+
+        if (this.props &&
+            this.props.profileState &&
+            this.props.profileState.profileUserMailInformation) {
+            this.setState({
+                profileEmailData: this.props.profileState.profileUserMailInformation,
+                isEmailRefreshed: !this.state.isEmailRefreshed
+            });
+        }
     }
 
-    toggleSwitchPrimaryMail = (value) => {
-        this.props.isPrimaryEmail = value
+    componentDidUpdate(prevProps, prevState) {
+        if (this.props != prevProps) {
+            if (this.props &&
+                this.props.profileState &&
+                this.props.profileState.profileUserMailInformation) {
+                this.setState({
+                    profileEmailData: this.props.profileState.profileUserMailInformation,
+                    isEmailRefreshed: !this.state.isEmailRefreshed
+                });
+            }
+        }
     }
+
+    onEmailToggle = (item, index) => () => {
+        var array = [...this.state.profileEmailData];
+        if (index !== -1) {
+            let switchVal = array[index].isPrimaryEmail;
+            array[index].isPrimaryEmail = !switchVal;
+            this.setState({
+                profileEmailData: array,
+                isEmailRefreshed: !this.state.isEmailRefreshed
+            });
+        }
+    }
+
+    // Email Informations 
+
+    onMenuOptionClicked = (item, index) => () => {
+        var array = [...this.state.profileEmailData];
+        array[index].selectedMenuIndex = index;
+        this.setState({
+            profileEmailData: array,
+            isEmailRefreshed: !this.state.isMobileRefreshed,
+            selectedIndex: index
+        });
+    }
+
+    renderEmailInformation = () => ({ item, index }) => {
+        return (<UserEmailInformation
+            emailType={item.emailType}
+            emailId={item.emailId}
+            isPrimaryEmail={item.isPrimaryEmail}
+            onMobileToggle={this.onEmailToggle(item, index)}
+            onMenuOptionClicked={this.onMenuOptionClicked(item, index)}
+            selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0} />
+        )
+    };
 
     emailAddNew = () => this.props.navigation.navigate('editEmailAddNew');
 
     emailAddNewOnCancel = () => this.props.navigation.navigate('profileSettings');
 
     render() {
-
-        let profileEmailData = tempPrimaryMailData;
-
-        if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileUserMailInformation) {
-            profileEmailData = this.props.profileState.profileUserMailInformation;
-        }
-
         return (
             <View style={styles.container}>
                 <GHeaderComponent
@@ -132,9 +194,10 @@ class editEmailInfoComponent extends Component {
                     <View style={styles.settingsBorder} />
 
                     <FlatList
-                        data={profileEmailData}
+                        data={this.state.profileEmailData}
+                        extraData={this.state.isEmailRefreshed}
                         keyExtractor={this.generateKeyExtractor}
-                        renderItem={this.renderEmailInformation(profileEmailData.length)} />
+                        renderItem={this.renderEmailInformation()} />
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent

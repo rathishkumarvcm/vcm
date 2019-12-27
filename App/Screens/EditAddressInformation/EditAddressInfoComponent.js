@@ -7,6 +7,17 @@ import globalString from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
+let editDeleteMenuOption = [
+    {
+        name: 'Edit',
+        id: '1'
+    },
+    {
+        name: 'Delete',
+        id: '2'
+    },
+];
+
 const UserAddressInformation = (props) => {
     return (
         <View style={styles.editEmailHolder}>
@@ -27,10 +38,25 @@ const UserAddressInformation = (props) => {
                 </View>
 
                 <View style={styles.profileDivideIconTwo}>
-                    <Image style={styles.imageWidthHeight}
-                        source={require("../../Images/menu_icon.png")} />
+                <TouchableOpacity
+                        onPress={props.onMenuOptionClicked}>
+                        <Image style={styles.imageWidthHeight}
+                            source={require("../../Images/menu_icon.png")} />
+                    </TouchableOpacity>
                 </View>
             </View>
+
+            {props.selectedMenuIndex == 1 ?
+                (<FlatList style={styles.editFlatList}
+                    data={editDeleteMenuOption}
+                    renderItem={({ item, index }) =>
+                        (<TouchableOpacity style={styles.editDropdown}>
+                            <Text style={styles.editDropdownText}>
+                                {item.name}
+                            </Text>
+                        </TouchableOpacity>)}
+                    keyExtractor={item => item.id} />)
+                : null}
 
             <View style={styles.editEmailBorder} />
 
@@ -69,7 +95,9 @@ UserAddressInformation.propTypes = {
     isMailingAddress: PropTypes.bool,
     isPhysicalAddress: PropTypes.bool,
     onMailingSwitchToggle: PropTypes.func,
-    onPhysicalSwitchToggle: PropTypes.func
+    onPhysicalSwitchToggle: PropTypes.func,
+    onMenuOptionClicked: PropTypes.func,
+    selectedMenuIndex: PropTypes.any
 };
 
 class editAddressInfoComponent extends Component {
@@ -81,6 +109,7 @@ class editAddressInfoComponent extends Component {
             enableBiometric: false,
             faceIdEnrolled: false,
             touchIdEnrolled: false,
+            selectedIndex: -1,
 
             contactPosition: this.props.navigation.getParam('contactPosition'),
             isRelation: this.props.navigation.getParam('isRelation'),
@@ -92,41 +121,6 @@ class editAddressInfoComponent extends Component {
             isAddressTypeMailing: false,
             isAddressTypePhysical: false,
         };
-    }
-
-    onMailingSwitchToggle = (item, index) => () => {
-        var array = [...this.state.profileUserAddressValue];
-        if (index !== -1) {
-            let switchVal = array[index].isMailingAddress;
-            array[index].isMailingAddress = !switchVal;
-            this.setState({
-                profileUserAddressValue: array,
-                refreshAddressData: !this.state.refreshAddressData
-            });
-        }
-    }
-
-    onPhysicalSwitchToggle = (item, index) => () => {
-        var array = [...this.state.profileUserAddressValue];
-        if (index !== -1) {
-            let switchVal = array[index].isPhysicalAddress;
-            array[index].isPhysicalAddress = !switchVal;
-            this.setState({
-                profileUserAddressValue: array,
-                refreshAddressData: !this.state.refreshAddressData
-            });
-        }
-    }
-
-    renderAddressInformation = () => ({ item, index }) => {
-        return (<UserAddressInformation
-            addressType={item.addressType}
-            addressLineOne={item.addressLineOne}
-            addressCity={item.addressCity}
-            addressState={item.addressState + ' ' + item.addressZipcode}
-            isMailingAddress={item.isMailingAddress}
-            isPhysicalAddress={item.isPhysicalAddress}
-            onMailingSwitchToggle={this.onMailingSwitchToggle(item, index)} />);
     }
 
     componentDidMount() {
@@ -181,6 +175,55 @@ class editAddressInfoComponent extends Component {
                 }
             }
         }
+    }
+
+    onMailingSwitchToggle = (item, index) => () => {
+        var array = [...this.state.profileUserAddressValue];
+        if (index !== -1) {
+            let switchVal = array[index].isMailingAddress;
+            array[index].isMailingAddress = !switchVal;
+            this.setState({
+                profileUserAddressValue: array,
+                refreshAddressData: !this.state.refreshAddressData
+            });
+        }
+    }
+
+    onPhysicalSwitchToggle = (item, index) => () => {
+        var array = [...this.state.profileUserAddressValue];
+        if (index !== -1) {
+            let switchVal = array[index].isPhysicalAddress;
+            array[index].isPhysicalAddress = !switchVal;
+            this.setState({
+                profileUserAddressValue: array,
+                refreshAddressData: !this.state.refreshAddressData
+            });
+        }
+    }
+
+    // Contact Informations 
+
+    onMenuOptionClicked = (item, index) => () => {
+        var array = [...this.state.profileUserAddressValue];
+        array[index].selectedMenuIndex = index;
+        this.setState({
+            profileUserAddressValue: array,
+            refreshAddressData: !this.state.refreshAddressData,
+            selectedIndex: index
+        });
+    }
+
+    renderAddressInformation = () => ({ item, index }) => {
+        return (<UserAddressInformation
+            addressType={item.addressType}
+            addressLineOne={item.addressLineOne}
+            addressCity={item.addressCity}
+            addressState={item.addressState + ' ' + item.addressZipcode}
+            isMailingAddress={item.isMailingAddress}
+            isPhysicalAddress={item.isPhysicalAddress}
+            onMailingSwitchToggle={this.onMailingSwitchToggle(item, index)} 
+            onMenuOptionClicked={this.onMenuOptionClicked(item, index)}
+            selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0} />);
     }
 
     editAddressInfoAddNew = () => this.props.navigation.navigate('editAddressAddNew',
