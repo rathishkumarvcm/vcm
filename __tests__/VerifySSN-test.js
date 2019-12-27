@@ -5,32 +5,28 @@ import 'react-native';
 import React from 'react';
 import VerifySSN from '../App/Screens/VerifySSN/VerifySSNComponent';
 import renderer from 'react-test-renderer';
-import {Enzyme,mount,configure} from 'enzyme';
+import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-//Enzyme.configure({ adapter: new Adapter() });
-configure({ adapter: new Adapter() });
+Enzyme.configure({ adapter: new Adapter() });
 
-// Snap shot
-// it('renders correctly', () => {  
-//   const tree = renderer.create(<VerifySSN />).toJSON();
-//   expect(tree).toMatchSnapshot();
-// });
 
-// // Screen Render 
-// test('function testing',()=>{
-//   const component = Enzyme.shallow( <VerifySSN /> );
-//   const wrapper = new VerifySSN();
-//   component.render();
-//   expect(wrapper).toBeTruthy();
-// });
+describe('Verify SSN ',()=>{
 
-// test('function testing',()=>{
-//   const component = Enzyme.mount(
-//       <VerifySSN />
-//   );  
-//   component.render();
-// });
+  // Snap shot 
+  it('snap shot', () => {  
+    const tree = renderer.create(<VerifySSN />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
 
+  // Render using mount - mount includes child component also
+  test('function testing',()=>{
+    const component = Enzyme.mount(
+        <VerifySSN />
+    );  
+    component.render();
+  });
+
+// // Render using mount - expects the case to be true of false
 // test('function testing',()=>{
 //   const component = Enzyme.mount(
 //       <VerifySSN />
@@ -40,6 +36,15 @@ configure({ adapter: new Adapter() });
 //   expect(wrapper).toBeTruthy();
 // });
 
+// // Render using shallow - shallow not includes child component
+// test('function testing',()=>{
+//   const component = Enzyme.shallow( <VerifySSN /> );
+//   const wrapper = new VerifySSN();
+//   component.render();
+//   expect(wrapper).toBeTruthy();
+// });
+
+// // Render using shallow - with props value
 // test('function testing',()=>{
 //   const props = {};
 //   const component = Enzyme.shallow(
@@ -50,7 +55,7 @@ configure({ adapter: new Adapter() });
 //   expect(wrapper).toBeTruthy();
 // });
 
-// Input Component 
+// // Input Component 
 // it('Input Text',()=>{
 //     const instanceOf = renderer.create(<VerifySSN />).getInstance();
 //     instanceOf.setSocialSecurityNumber('123456789');
@@ -72,3 +77,4 @@ configure({ adapter: new Adapter() });
 //   expect(props.navigation.navigate).toHaveBeenCalledTimes(1);   // SUCCESS
 // });
 
+});
