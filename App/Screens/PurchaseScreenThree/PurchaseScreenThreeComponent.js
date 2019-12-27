@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity, Image, FlatList } from 'react-native';
-import { GIcon, GHeaderComponent, GFooterComponent, GButtonComponent, GDropDownComponent, GSwitchComponent } from '../../CommonComponents';
-import { styles } from './styles';
+import { Text, View, ScrollView, Image, FlatList } from 'react-native';
+import { GHeaderComponent, GFooterComponent, GButtonComponent, GDropDownComponent, GSwitchComponent } from '../../CommonComponents';
+import  styles  from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
 import PropTypes from 'prop-types';
-import Collapsible from 'react-native-collapsible';
-import { scaledHeight } from '../../Utils/Resolution';
 
 const checkOrder = require("../../Images/offlinemethod1.png");
 const wireTransfer = require("../../Images/offlinemethod2.png");
@@ -40,9 +38,6 @@ class PurchaseScreenThreeComponent extends Component {
             selectedBankAccountIndex: null,
             showCheckMsg: false,
             showWireTransferMsg: false,
-            switchOff: true,
-            switchOn: false,
-            showDropDown: false,
             disableNextButton: true,
 
             switchOff: false,
@@ -52,13 +47,12 @@ class PurchaseScreenThreeComponent extends Component {
             },
             contributionFlag: true,
             contributionErrMsg: "",
-            reinvest: false,
             fundingMethod: "",
             fundingSourceName: "",
             bankAccountNumber: "",
             bankAccountName: ""
 
-        }
+        };
     }
 
     componentDidMount() {
@@ -94,12 +88,12 @@ class PurchaseScreenThreeComponent extends Component {
             }
         };
         this.props.saveData(payloadData);
-        console.log("savedData:::",payloadData);
+        console.log("savedData:::", payloadData);
         //this.props.navigation.navigate({ routeName: 'purchaseScreenThree', key: 'purchaseScreenThree' });
     }
 
     onSubmitEditing = (input) => text => {
-        AppUtils.Dlog(`onSubmitEditing:::>${text}`);
+       // AppUtils.Dlog(`onSubmitEditing:::>${text}`);
         input.focus();
     }
 
@@ -107,7 +101,6 @@ class PurchaseScreenThreeComponent extends Component {
 
     onValidate = () => {
         try {
-            console.log("validateFields:::");
             let isValidationSuccess = false;
             this.setState({
                 contributionFlag: true,
@@ -225,20 +218,20 @@ class PurchaseScreenThreeComponent extends Component {
     generateFundSourceKeyExtractor = (item) => item.key;
 
     render() {
-        let currentPage = 3;
-        let totalCount = 4;
-        let pageName = `${currentPage} - ${gblStrings.purchase.fundSource}`;
+        const currentPage = 3;
+        const totalCount = 4;
+        const pageName = `${currentPage} - ${gblStrings.purchase.fundSource}`;
 
         if (this.props.purchaseData && this.props.purchaseData.savePurchaseSelectedData) {
-            savedData = this.props.purchaseData.savePurchaseSelectedData
+            savedData = this.props.purchaseData.savePurchaseSelectedData;
         }
 
         if (savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountType === 'IRA') {
-            isIRA = true
+            isIRA = true;
         }
 
         return (
-            <View style={styles.container} >
+            <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
@@ -285,7 +278,7 @@ class PurchaseScreenThreeComponent extends Component {
                                 data={bankAccounts}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={(this.state.selectedBankAccountIndex == index) ? styles.boxStyleViewSelected : styles.boxStyleView} onTouchStart={this.onSelectBankAccount(item, index)}>
+                                        <View style={(this.state.selectedBankAccountIndex === index) ? styles.boxStyleViewSelected : styles.boxStyleView} onTouchStart={this.onSelectBankAccount(item, index)}>
                                             <View style={styles.iconContainerView}>
                                                 <Image source={BankAcc} resizeMode="contain" />
                                             </View>
@@ -295,7 +288,7 @@ class PurchaseScreenThreeComponent extends Component {
                                                 {!item.verified ? <Text style={styles.verifiedText}>{"To Be Verified"}</Text> : null}
                                             </View>
                                         </View>
-                                    )
+                                    );
                                 }}
                                 keyExtractor={a => a.bankAccountNo}
                                 extraData={this.state}
@@ -389,7 +382,7 @@ class PurchaseScreenThreeComponent extends Component {
                             errorFlag={!this.state.contributionFlag}
                             errorText={this.state.contributionErrMsg}
                         />
-                    </View> : null}
+                    </View>:null}
 
 
                     {/* ----------------- Button Group -------------------- */}
@@ -435,12 +428,12 @@ class PurchaseScreenThreeComponent extends Component {
 PurchaseScreenThreeComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     purchaseData: PropTypes.instanceOf(Object),
-    saveData:PropTypes.func
+    saveData: PropTypes.func
 };
 
 PurchaseScreenThreeComponent.defaultProps = {
     navigation: {},
     purchaseData: {},
-    saveData:()=>{}
+    saveData: () => { }
 };
 export default PurchaseScreenThreeComponent;

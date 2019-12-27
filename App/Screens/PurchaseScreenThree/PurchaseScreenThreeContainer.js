@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import PurchaseScreenThreeComponent from './PurchaseScreenThreeComponent';
 import { purchaseActions, accOpeningActions } from "../../Shared/Actions";
 
-/*----------------------
+/* ----------------------
                                   Redux Methods
                                                              -------------------------- */
 

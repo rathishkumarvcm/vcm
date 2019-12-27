@@ -60,4 +60,10 @@ CardHeader.propTypes = {
     onDelete: PropTypes.func
 };
 
+CardHeader.defaultProps = {
+    item: {},
+    navigate: () => { },
+    onDelete: () => { }
+};
+
 export default CardHeader;

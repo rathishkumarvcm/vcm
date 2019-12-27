@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from "../../Utils/Resolution";
 
-export const styles = StyleSheet.create({
+export default styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9FBFC",
@@ -152,23 +152,23 @@ export const styles = StyleSheet.create({
     fontSize: scaledHeight(15),
     lineHeight: 24
   },
-  distributionViewStyle:{
-    marginTop:scaledHeight(30),
-    width:'90%',
-    alignSelf:'center',
-    backgroundColor:'#EEEEEE',
-    borderColor:'#EEEEEE',
-    borderWidth:scaledHeight(1)
+  distributionViewStyle: {
+    marginTop: scaledHeight(30),
+    width: '90%',
+    alignSelf: 'center',
+    backgroundColor: '#EEEEEE',
+    borderColor: '#EEEEEE',
+    borderWidth: scaledHeight(1)
   },
-  todBeneDistributionTxt:{
-    margin:scaledHeight(15),
+  todBeneDistributionTxt: {
+    margin: scaledHeight(15),
     color: "#56565A",
     fontWeight: "600",
     fontSize: scaledHeight(22),
     lineHeight: 27
   },
-  otherBeneDistributionTxt:{
-    margin:scaledHeight(15),
+  otherBeneDistributionTxt: {
+    margin: scaledHeight(15),
     color: "#56565A",
     fontWeight: "600",
     fontSize: scaledHeight(17),

@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
-import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
+import { scaledHeight } from '../../Utils/Resolution';
 
 
-export const styles = StyleSheet.create({
+export default styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7FAFF',
@@ -285,14 +285,12 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         lineHeight: scaledHeight(22),
         marginTop: '4%',
-        lineHeight: scaledHeight(22)
     },
     addressText:{
         color: '#707070',
         fontSize: scaledHeight(16),
         lineHeight: scaledHeight(22),
         marginTop: '4%',
-        lineHeight: scaledHeight(22),
         width:'60%'
     },
     btnGrp: {

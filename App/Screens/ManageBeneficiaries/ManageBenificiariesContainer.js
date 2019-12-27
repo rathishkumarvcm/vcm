@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import ManageBenificiariesComponent from "./ManageBeneficiariesComponent";
 import { manageBeneficiaryActions } from "../../Shared/Actions";
 
-/*----------------------
+/* ----------------------
                                   Redux Methods
                                                              -------------------------- */
 

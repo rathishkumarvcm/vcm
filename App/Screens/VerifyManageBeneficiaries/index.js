@@ -1,2 +1,3 @@
 import VerifyManageBenificiariesComponent from './VerifyManageBenificiariesContainer';
+
 export default VerifyManageBenificiariesComponent;

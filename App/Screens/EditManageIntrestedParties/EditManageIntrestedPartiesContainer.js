@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import editManageIntrestedPartiesComponent from "./EditManageIntrestedPartiesComponent";
 import { accOpeningActions, addressFormatActions, manageIntrestedPartiesActions } from "../../Shared/Actions";
 
-/*----------------------
+/* ----------------------
                                   Redux Methods
                                                              -------------------------- */
 

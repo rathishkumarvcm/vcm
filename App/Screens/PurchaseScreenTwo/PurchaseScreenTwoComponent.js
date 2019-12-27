@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList, Modal } from 'react-native';
 import PropTypes from "prop-types";
 import { GIcon, GInputComponent, GHeaderComponent, GDateComponent, GDropDownComponent, GButtonComponent, GFooterComponent } from '../../CommonComponents';
-import { styles } from './styles';
+import styles  from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { CustomCheckBox, PageNumber } from '../../AppComponents';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
@@ -140,8 +140,6 @@ class PurchaseScreenTwoComponent extends Component {
     /* ----------------- Filter Events ------------------ */
     onCheckboxSelect = (type, item, index) => () => {
         let newItm = [];
-        console.log('Index : ', index);
-        console.log('Checkbox Selected : ', item.key + " " + item.value + " " + item.isActive);
         switch (type) {
             case 'minInvest':
                 newItm = [...this.state.filterMinData];
@@ -161,7 +159,6 @@ class PurchaseScreenTwoComponent extends Component {
             default:
                 break;
         }
-        // console.log('New Item:' + JSON.stringify(newItm));
     }
 
     setModalVisible = (visible) => () => {
@@ -254,12 +251,29 @@ class PurchaseScreenTwoComponent extends Component {
                 }
             }
         });
-        console.log("minInvest=", minInvestKey);
-        console.log("risk=", riskKey);
-        console.log("fundData=", fundKey);
 
         const fundListPayload = { 'minInvestment': minInvestKey };
         this.props.getFundListData(fundListPayload);
+    }
+
+    navigateCompareFunds = () => {
+        // AppUtils.Dlog(this.state.selectedFundInvestmentsData);
+        // if (this.state.selectedFundInvestmentsData.length > 1) {
+        //     if (this.state.selectedFundInvestmentsData.length < 5) {
+        //         let fundSelectedCompare = "";
+        //         this.state.selectedFundInvestmentsData.map((item, index) => {
+        //             fundSelectedCompare = `${fundSelectedCompare.concat(`fundNumber${index + 1}=${item.fundNumber}`)}&`;
+        //         });
+        //         // AppUtils.Dlog("Selected Funds:"+fundSelectedCompare);
+        //         if (fundSelectedCompare !== null && fundSelectedCompare !== "") {
+        //             this.props.navigation.push('compareFunds', { fundDetails: fundSelectedCompare });
+        //         }
+        //     } else {
+        //         alert('Please select minimum 2 or maximum 4 funds to compare');
+        //     }
+        // } else {
+        //     alert('Please select minimum 2 or maximum 4 funds to compare');
+        // }
     }
 
     /* -------------------Validation Events ----------------------- */
@@ -267,14 +281,11 @@ class PurchaseScreenTwoComponent extends Component {
     isEmpty = (str) => {
         if (str === "" || str === undefined || str === "null" || str === "undefined") {
             return true;
-        } else {
-            return false;
         }
     }
 
     onValidate = () => {
         try {
-            console.log("validateFields:::");
             let isValidationSuccess = false;
             this.setState(prevState => ({
                 selectedFundInvestmentData: {
@@ -353,6 +364,10 @@ class PurchaseScreenTwoComponent extends Component {
 
     /* ----------------- Fund List Events -------------------------- */
 
+    onPressRemoveInvestment  = () => {
+        this.setState({ selectedFundIndex: null });
+    }
+
     setInputRef = (inputComp) => (ref) => {
         this[inputComp] = ref;
     }
@@ -410,9 +425,12 @@ class PurchaseScreenTwoComponent extends Component {
         if (!isNaN(newData.initialInvestment) && newData.initialInvestment !== "") {
             total = total + parseFloat(newData.initialInvestment);
         }
+        if (!isNaN(newData.monthlyInvestment) && newData.monthlyInvestment !== "") {
+            total = total + parseFloat(newData.monthlyInvestment);
+        }
         console.log("total:::>" + total);
         this.setState({
-            totalInitialInvestment: "$ " + total,
+            totalInitialInvestment: `$ ${total}`,
             selectedFundInvestmentData: newData,
         });
     }
@@ -465,7 +483,7 @@ class PurchaseScreenTwoComponent extends Component {
                                 buttonStyle={styles.compareFundsBtn}
                                 buttonText={gblStrings.purchase.compareFund}
                                 textStyle={styles.compareFundsBtnTxt}
-                            // onPress={this.navigateCompareFunds}
+                                onPress={this.navigateCompareFunds}
                             />
                             <View style={styles.fundListGrp}>
                                 <FlatList
@@ -516,7 +534,7 @@ class PurchaseScreenTwoComponent extends Component {
                             <Text style={styles.stmtTxtStyle}>{gblStrings.purchase.fundAccStmt}</Text>
                             <View>
                                 <TouchableOpacity
-                                    // onPress={this.onPressRemoveInvestment(item,index)}
+                                    onPress={this.onPressRemoveInvestment}
                                     style={styles.removeBtnStyle}
                                 >
                                     <Text style={styles.removeTxtStyle}>
@@ -564,7 +582,7 @@ class PurchaseScreenTwoComponent extends Component {
                                         <Text style={styles.helpText}>
                                             {`Minimum $${this.state.selectedFundInvestmentData.mininitialInvestment}`}
                                         </Text>
-                                        {this.state.selectedFundInvestmentData.fundingOption == "Initial and Monthly Investment" &&
+                                        {this.state.selectedFundInvestmentData.fundingOption === "Initial and Monthly Investment" &&
                                             <View style={styles.marginBottomStyle}>
                                                 <Text style={styles.fundInvestTitle}>{gblStrings.purchase.monthlyInvestment}</Text>
                                                 <View style={styles.iconFrontStyle}>
@@ -773,7 +791,8 @@ PurchaseScreenTwoComponent.propTypes = {
     getFundListData: PropTypes.func,
     masterLookupStateData: PropTypes.instanceOf(Object),
     getCompositeLookUpData: PropTypes.func,
-    saveData: PropTypes.func
+    saveData: PropTypes.func,
+    purchaseData: PropTypes.instanceOf(Object)
 };
 
 PurchaseScreenTwoComponent.defaultProps = {
@@ -782,7 +801,8 @@ PurchaseScreenTwoComponent.defaultProps = {
     masterLookupStateData: {},
     getFundListData: () => { },
     accOpeningData: {},
-    navigation: {}
+    navigation: {},
+    purchaseData: {}
 };
 
 export default PurchaseScreenTwoComponent;

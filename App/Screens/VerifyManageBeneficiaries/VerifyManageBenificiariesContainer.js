@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
 import VerifyManageBenificiariesComponent from './VerifyManageBeneficiariesComponent';
 import { manageBeneficiaryActions } from "../../Shared/Actions";
-/*----------------------
+/* ----------------------
                                   Redux Methods
                                                              -------------------------- */
 
-const mapStateToProps = (state /* , props */) => ({
+const mapStateToProps = (state) => ({
   manageBeneficiaryData: state.manageBeneficiaryData
 });
 

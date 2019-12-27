@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from "../../Utils/Resolution";
 
-export const styles = StyleSheet.create({
+export default styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9FBFC",
@@ -166,11 +166,11 @@ export const styles = StyleSheet.create({
   },
   flexDirectionStyle: {
     flexDirection: "row",
-    paddingLeft:'4%'
+    paddingLeft: '4%'
   },
   notificationView: {
     width: "100%",
-    //height: scaledHeight(60),
+    // height: scaledHeight(60),
     flexDirection: "row",
     marginTop: scaledHeight(10),
     marginBottom: scaledHeight(20),
@@ -188,7 +188,7 @@ export const styles = StyleSheet.create({
   },
   saveSuccessMsgTxt: {
     flex: 0.7,
-   // height: scaledHeight(50)
+    // height: scaledHeight(50)
   },
   sideBtn: {
     width: scaledHeight(20)
@@ -226,7 +226,7 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 5,
-    width:"40%",
-    alignSelf:'flex-end'
+    width: "40%",
+    alignSelf: 'flex-end'
   }
 });

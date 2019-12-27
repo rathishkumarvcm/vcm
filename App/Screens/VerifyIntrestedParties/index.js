@@ -1,2 +1,3 @@
 import VerifyIntrestedPartiesComponent from './VerifyIntrestedPartiesContainer';
+
 export default VerifyIntrestedPartiesComponent;

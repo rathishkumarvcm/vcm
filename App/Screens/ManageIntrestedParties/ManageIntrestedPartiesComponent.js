@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import PropTypes from "prop-types";
-import { styles } from './styles';
+import styles from './styles';
 import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import CardHeader from './CardHeader';
@@ -170,6 +170,11 @@ manageIntrestedPartiesComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
     manageIntrestedPartiesData: PropTypes.instanceOf(Object).isRequired,
     deleteIntrestedParties: PropTypes.func
+};
+manageIntrestedPartiesComponent.defaultProps = {
+    navigation: {},
+    manageIntrestedPartiesData: {},
+    deleteIntrestedParties: () => { }
 };
 
 export default manageIntrestedPartiesComponent;

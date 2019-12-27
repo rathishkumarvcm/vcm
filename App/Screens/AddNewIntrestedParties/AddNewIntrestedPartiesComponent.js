@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import PropTypes from "prop-types";
-import { styles } from './styles';
+import styles from './styles';
 import { GIcon, GHeaderComponent, GLoadingSpinner, GFooterComponent, GInputComponent, GDateComponent, GDropDownComponent, GButtonComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
@@ -646,4 +646,13 @@ addNewIntrestedPartiesComponent.propTypes = {
     getAddress: PropTypes.func
 };
 
+addNewIntrestedPartiesComponent.defaultProps = {
+    navigation: {},
+    masterLookupStateData: {},
+    stateCityData: {},
+    getCompositeLookUpData: () => { },
+    getAddressFormat: () => { },
+    getStateCity: () => { },
+    getAddress: () => { }
+};
 export default addNewIntrestedPartiesComponent;

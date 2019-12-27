@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from "../../Utils/Resolution";
 
-export const styles = StyleSheet.create({
+export default styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9FBFC",
@@ -119,7 +119,7 @@ export const styles = StyleSheet.create({
     color: "#151516",
     fontSize: scaledHeight(18),
     fontWeight: "bold",
-    width:'75%',
+    width: '75%',
     marginBottom: scaledHeight(5)
   },
   containerView: {
@@ -134,9 +134,9 @@ export const styles = StyleSheet.create({
     color: "#54565B",
     fontSize: scaledHeight(12),
     fontWeight: "400",
-    paddingLeft:'4%',
-    marginBottom:scaledHeight(8),
-    marginTop:scaledHeight(8)
+    paddingLeft: '4%',
+    marginBottom: scaledHeight(8),
+    marginTop: scaledHeight(8)
   },
   line: {
     backgroundColor: "#535353",
@@ -161,7 +161,7 @@ export const styles = StyleSheet.create({
     fontSize: scaledHeight(15),
     fontWeight: "400",
     paddingLeft: "4%",
-    paddingTop:scaledHeight(30)
+    paddingTop: scaledHeight(30)
   },
   shortContentText: {
     color: "#56565A",
@@ -175,23 +175,23 @@ export const styles = StyleSheet.create({
     fontSize: scaledHeight(15),
     lineHeight: 24
   },
-  distributionViewStyle:{
-    marginTop:scaledHeight(30),
-    width:'90%',
-    alignSelf:'center',
-    backgroundColor:'#EEEEEE',
-    borderColor:'#EEEEEE',
-    borderWidth:scaledHeight(1)
+  distributionViewStyle: {
+    marginTop: scaledHeight(30),
+    width: '90%',
+    alignSelf: 'center',
+    backgroundColor: '#EEEEEE',
+    borderColor: '#EEEEEE',
+    borderWidth: scaledHeight(1)
   },
-  todBeneDistributionTxt:{
-    margin:scaledHeight(15),
+  todBeneDistributionTxt: {
+    margin: scaledHeight(15),
     color: "#56565A",
     fontWeight: "600",
     fontSize: scaledHeight(22),
     lineHeight: 27
   },
-  otherBeneDistributionTxt:{
-    margin:scaledHeight(15),
+  otherBeneDistributionTxt: {
+    margin: scaledHeight(15),
     color: "#56565A",
     fontWeight: "600",
     fontSize: scaledHeight(17),

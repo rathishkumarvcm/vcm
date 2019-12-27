@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from "../../Utils/Resolution";
 
-export const styles = StyleSheet.create({
+export default styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9FBFC",
@@ -196,12 +196,12 @@ export const styles = StyleSheet.create({
       width: 0,
       height: 1
     },
-    position:'absolute',
+    position: 'absolute',
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 5,
-    width:"40%",
-    marginTop:scaledHeight(38),
-    alignSelf:'flex-end'
+    width: "40%",
+    marginTop: scaledHeight(38),
+    alignSelf: 'flex-end'
   }
 });

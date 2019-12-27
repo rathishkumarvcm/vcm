@@ -1,2 +1,3 @@
 import ManageIntrestedPartiesComponent from './ManageIntrestedPartiesContainer';
+
 export default ManageIntrestedPartiesComponent;

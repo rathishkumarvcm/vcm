@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
 import VerifyIntrestedPartiesComponent from './VerifyIntrestedPartiesComponent';
 import { manageIntrestedPartiesActions } from "../../Shared/Actions";
-/*----------------------
+/* ----------------------
                                   Redux Methods
                                                              -------------------------- */
 
-const mapStateToProps = (state /* , props */) => ({
+const mapStateToProps = (state) => ({
   manageIntrestedPartiesData: state.manageIntrestedPartiesData
 });
 

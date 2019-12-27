@@ -4,11 +4,11 @@ import {
   accOpeningActions,
   manageBeneficiaryActions
 } from "../../Shared/Actions";
-/*----------------------
+/* ----------------------
                                   Redux Methods
                                                              -------------------------- */
 
-const mapStateToProps = (state /* , props */) => ({
+const mapStateToProps = (state ) => ({
   accOpeningData: state.accOpeningReducerData,
   masterLookupStateData: state.masterLookUpData,
   manageBeneficiaryData: state.manageBeneficiaryData
