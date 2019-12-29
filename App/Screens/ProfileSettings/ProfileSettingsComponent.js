@@ -146,15 +146,15 @@ class ProfileSettingsComponent extends Component {
             });
         }
 
-        if (this.props && this.props.initialState && this.props.initialState.phone) {
+        if (this.props && this.props.initialState && this.props.profileState.profilePrimaryMobile) {
             this.setState({
-                profilePrimaryMobile: this.props.initialState.phone
+                profilePrimaryMobile: this.props.profileState.profilePrimaryMobile
             });
         }
 
-        if (this.props && this.props.initialState && this.props.initialState.email) {
+        if (this.props && this.props.initialState && this.props.profileState.profilePrimayMail) {
             this.setState({
-                profilePrimayMail: this.props.initialState.email
+                profilePrimayMail: this.props.profileState.profilePrimayMail
             });
         }
 
@@ -358,6 +358,8 @@ class ProfileSettingsComponent extends Component {
         if (this.props !== prevProps) {
             if (this.props && this.props.profileState) {
                 this.setState({
+                    profilePrimaryMobile: this.props.profileState.profilePrimaryMobile,
+                    profilePrimayMail: this.props.profileState.profilePrimayMail,
                     profilePrefix: this.props.profileState.profilePrefix,
                     profileSuffix: this.props.profileState.profileSuffix,
                     profileVcmID: this.props.profileState.profileVcmID,
@@ -524,8 +526,7 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingNameLabel}
-                                    onPress={this.ShowHideComponent}
-                                >
+                                    onPress={this.ShowHideComponent} >
                                     {this.state.profileName}
                                 </Text>
                             </View>
@@ -689,8 +690,7 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingPhoneManage}
-                            >
+                                onPress={this.profileSettingPhoneManage}>
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>

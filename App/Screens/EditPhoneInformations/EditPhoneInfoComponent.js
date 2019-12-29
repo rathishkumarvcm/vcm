@@ -191,13 +191,20 @@ class editPhoneInfoComponent extends Component {
             case 'mobile':
                 array = [...this.state.userMobileNumber];
                 if (index !== -1) {
-                    let switchVal = array[index].isPrimaryMobile;
-                    array[index].isPrimaryMobile = !switchVal;
+                    for (let input = 0; input < array.length; input++) {
+                        if (input === index) {
+                            let switchVal = array[input].isPrimaryMobile;
+                            array[input].isPrimaryMobile = !switchVal;
+                        } else {
+                            array[input].isPrimaryMobile = false;
+                        }
+                    }
                     this.setState({
                         userMobileNumber: array,
-                        isMobileRefreshed: !this.state.isMobileRefreshed
+                        isMobileRefreshed: !this.state.isMobileRefreshed,
                     });
                 }
+                this.updatePrimaryMobile();
                 break;
 
             case 'home':
@@ -224,7 +231,6 @@ class editPhoneInfoComponent extends Component {
                 }
                 break
         }
-
     }
 
     onMenuOptionClicked = (item, index) => () => {
@@ -235,6 +241,23 @@ class editPhoneInfoComponent extends Component {
             isMobileRefreshed: !this.state.isMobileRefreshed,
             selectedIndex: index
         });
+    }
+
+    updatePrimaryMobile = () => {
+        const updateMobileNumber = this.getUpdateMobile();
+        console.log("@@@@@@@@ Primary Mobile ::", updateMobileNumber);
+        this.props.saveProfileData("updatePrimaryMobile", updateMobileNumber);
+        this.props.navigation.navigate('profileSettings');
+    }
+
+    getUpdateMobile = () => {
+        let updatedMobileNumber = {};
+        if (this.props && this.props.profileState) {
+            updatedMobileNumber = {
+                ...this.props.profileState
+            };
+        }
+        return updatedMobileNumber;
     }
 
     renderPhoneInformation = () => ({ item, index }) => {

@@ -1007,7 +1007,7 @@ export default {
         profileRelationLabel: "Relationship",
         profilePrimaryLabel: "Primary",
         profileRelationInfoLabel: "Relationship Information",
-        profileNameContentMsg: "If you need to change your name, please call us at <Phone Number>. Depending on the product and services you currently have, documentation may be required in order to make your update",
+        profileNameContentMsg: "If you need to change your name, please call us at <1-216-898-2400>. Depending on the product and services you currently have, documentation may be required in order to make your update",
         profilePrefixLabel: "Prefix",
         profileSuffixLabel: "Suffix",
         profileVcmLabel: "VCM ID",
