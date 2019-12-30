@@ -2148,8 +2148,8 @@ class OpenAccPageTwoComponent extends Component {
             input = 'stateCity_Phy';
             errMsgCount +=1;
 
-        }else if(accType === "Trust Account" && his.isEmpty(this.state.estate.specifyState)){
-            errMsg = gblStrings.accManagement.specifyState;
+        }else if(accType === "Trust Account" && this.isEmpty(this.state.estate.specifyState)){
+            errMsg = gblStrings.accManagement.emptySpecifyStateMsg;
             input = "specifyState";
             errMsgCount +=1;
         } else if (this.isEmpty(this.state.estate.orgCountry)) {
@@ -2158,71 +2158,71 @@ class OpenAccPageTwoComponent extends Component {
             errMsgCount +=1;
 
         } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isBusinessTrust)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            errMsg = gblStrings.accManagement.emptyBusinessTrustCondMsg;
             input = "isBusinessTrust";
             errMsgCount +=1;
         }  else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isBrokerOrDealerTrust)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            errMsg = gblStrings.accManagement.emptyBrokerOrDealerTrustMsg;
             input = "isBrokerOrDealerTrust";
             errMsgCount +=1;
         } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.brokerOrDealer)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            errMsg = gblStrings.accManagement.emptyBrokerOrDealerMsg;
             input = "brokerOrDealer";
             errMsgCount +=1;
         } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isBankTrust)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            errMsg = gblStrings.accManagement.emptyBankTrustMsg;
             input = "isBankTrust";
             errMsgCount +=1;
         } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.bankTrustType)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            errMsg = gblStrings.accManagement.emptyBankTrustTypeMsg;
             input = "bankTrustType";
             errMsgCount +=1;
         } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isForeignUSBranchTrust)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            errMsg = gblStrings.accManagement.emptyForeignUSBranchTrustMsg;
             input = "isForeignUSBranchTrust";
             errMsgCount +=1;
         } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.businessTrust)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            errMsg = gblStrings.accManagement.emptyBusinessTrustMsg;
             input = "businessTrust";
             errMsgCount +=1;
         } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isMoneyTranOrCurrencyExchangeOrgnaised)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            errMsg = gblStrings.accManagement.emptyMoneyTranOrCurrencyExchangeOrgnaisedMsg;
             input = "isMoneyTranOrCurrencyExchangeOrgnaised";
             errMsgCount +=1;
         } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isCorrespondentAccountsOffersProvided)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            errMsg = gblStrings.accManagement.emptyCorrespondentAccountsOffersProvidedMsg;
             input = "isCorrespondentAccountsOffersProvided";
             errMsgCount +=1;
-        } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isCorrespondentAccountsForeignOffersProvided)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
-            input = "isCorrespondentAccountsForeignOffersProvided";
-            errMsgCount +=1;
-        } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.typeOfFiniancialInstitution)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+        }else if(accType === "Trust Account" && this.isEmpty(this.state.estate.typeOfFiniancialInstitution)){
+            errMsg = gblStrings.accManagement.emptyTypeOfFiniancialInstitutionMsg;
             input = "typeOfFiniancialInstitution";
             errMsgCount +=1;
+        }  else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isCorrespondentAccountsForeignOffersProvided)){
+            errMsg = gblStrings.accManagement.emptyCorrespondentAccountsForeignOffersProvidedMsg;
+            input = "isCorrespondentAccountsForeignOffersProvided";
+            errMsgCount +=1;
         } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.VCMFundAccountNumbers)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            errMsg = gblStrings.accManagement.emptyVCMFundAccountNumbersMsg;
             input = "VCMFundAccountNumbers";
             errMsgCount +=1;
         } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isFinanacialInstitutionDescribed)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            errMsg = gblStrings.accManagement.emptyFinanacialInstitutionDescribedMsg;
             input = "isFinanacialInstitutionDescribed";
             errMsgCount +=1;
         } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.finanacialInstitutionDesc)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            errMsg = gblStrings.accManagement.emptyFinanacialInstitutionDescMsg;
             input = "finanacialInstitutionDesc";
             errMsgCount +=1;
         } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isPhysicalPresenceMaintained)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            errMsg = gblStrings.accManagement.emptyPhysicalPresenceMaintainedMsg;
             input = "isPhysicalPresenceMaintained";
             errMsgCount +=1;
         } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isIndividualEmploymentThere)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            errMsg = gblStrings.accManagement.emptyIndividualEmploymentThereMsg;
             input = "isIndividualEmploymentThere";
             errMsgCount +=1;
         } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isTrustMaintainRecords)){
-            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            errMsg = gblStrings.accManagement.emptyTrustMaintainRecordsMsg;
             input = "isTrustMaintainRecords";
             errMsgCount +=1;
         }  else if (this.state.estate.trusteeData.length > 0) {
@@ -2355,7 +2355,9 @@ class OpenAccPageTwoComponent extends Component {
         } else {
             isValidationSuccess = true;
         }
-        let check  = `${input}Validation`;
+      //  let check  = `${input}Validation`;
+        AppUtils.Dlog(`errMsg:::${errMsg}`);
+
         if (!isValidationSuccess) {
             this.setState(() => (prevState => ({
                 estate: {
@@ -2618,6 +2620,7 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.Dlog(`renderYesNoRadio::: ${radioName}`);
         
         return(
+            <>
         <View style={styles.radioBtnGrp}>
         <CustomRadio
             componentStyle={styles.radioCol1}
@@ -2645,6 +2648,12 @@ class OpenAccPageTwoComponent extends Component {
 
         />
     </View>
+    {!this.state[sectionName][`${radioName}Validation`] &&
+                            <Text style={styles.errMsg}>
+                                {this.state.errMsg}
+                            </Text>
+                        }
+    </>
         );
 
 
@@ -6391,7 +6400,7 @@ class OpenAccPageTwoComponent extends Component {
                                 </Text>
                                 <GInputComponent
                                     inputref={this.setInputRef("typeOfFiniancialInstitution")}
-                                    value={this.state.estate.VCMFundAccountNumbers}
+                                    value={this.state.estate.typeOfFiniancialInstitution}
                                     propInputStyle={this.state.estate.typeOfFiniancialInstitutionValidation ? styles.customTxtBox : styles.customTxtBoxError}
                                     placeholder=""
                                     maxLength={gblStrings.maxLength.country}

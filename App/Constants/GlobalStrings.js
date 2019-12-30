@@ -618,7 +618,7 @@ export default {
         emptyBusinessPhoneMsg: "Please enter Busniness Phone Number",
         emptyMemberNumberMsg: "Please enter Member Number",
 
-        emptyBusinessTrustMsg: "Please indicate whether the trust is a business trust?",
+        emptyBusinessTrustCondMsg: "Please indicate whether the trust is a business trust?",
         emptyBrokerOrDealerTrustMsg: "Please indicate whether the trust is a broker/dealer?",
         emptyBrokerOrDealerMsg: "Please select a Broker / Dealer?",
         emptyBankTrustMsg: "Please indicate whether the trust is a bank?",
