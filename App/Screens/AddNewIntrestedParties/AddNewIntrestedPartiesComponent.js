@@ -282,8 +282,8 @@ class addNewIntrestedPartiesComponent extends Component {
     }
 
     validateEachFields = () => {
-        var isErrMsg = false;
-        var isValidationSuccess = false;
+        let isErrMsg = false;
+        let isValidationSuccess = false;
 
         if (this.isEmpty(this.state.personal.firstName)) {
             this.onUpdateField("personal", "fnameValidation", false);
@@ -366,7 +366,6 @@ class addNewIntrestedPartiesComponent extends Component {
     }
 
     onClickSave = () => {
-        console.log("in save function");
         const data = this.state.personal, key = parseInt(this.state.account_Data.intrestedParty.length) + 1;
         const obj = {
             "key": key,
@@ -637,9 +636,9 @@ class addNewIntrestedPartiesComponent extends Component {
 }
 
 addNewIntrestedPartiesComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object).isRequired,
-    masterLookupStateData: PropTypes.instanceOf(Object).isRequired,
-    stateCityData: PropTypes.instanceOf(Object).isRequired,
+    navigation: PropTypes.instanceOf(Object),
+    masterLookupStateData: PropTypes.instanceOf(Object),
+    stateCityData: PropTypes.instanceOf(Object),
     getCompositeLookUpData: PropTypes.func,
     getAddressFormat: PropTypes.func,
     getStateCity: PropTypes.func,

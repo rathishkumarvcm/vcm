@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from "../../Utils/Resolution";
 
-export default styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9FBFC",
@@ -230,3 +230,5 @@ export default styles = StyleSheet.create({
     alignSelf: 'flex-end'
   }
 });
+
+export default styles;

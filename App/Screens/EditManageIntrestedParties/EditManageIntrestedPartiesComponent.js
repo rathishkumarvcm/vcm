@@ -101,7 +101,7 @@ class editManageIntrestedPartiesComponent extends Component {
     }
 
     setMasterData = () => {
-        let payload = [];
+        const payload = [];
         const compositePayloadData = [
             "relationship"
         ];
@@ -143,7 +143,7 @@ class editManageIntrestedPartiesComponent extends Component {
     }
 
     getZipCodeValue = () => {
-        if (this.state.personal.zipCode != '') {
+        if (this.state.personal.zipCode !== '') {
             const payload = {
                 'Zip': this.state.personal.zipCode
             };
@@ -153,7 +153,6 @@ class editManageIntrestedPartiesComponent extends Component {
     }
 
     getAddressValid = () => {
-        f
         let addAddressPayload = {};
         if (this.state.personal.addressLine1 !== "" && this.state.personal.addressLine2 !== "") {
             if (this.state.personal.zipCode !== '') {
@@ -188,8 +187,6 @@ class editManageIntrestedPartiesComponent extends Component {
     isEmpty = (str) => {
         if (str === "" || str === undefined || str === null || str === "null" || str === "undefined") {
             return true;
-        } else {
-            return false;
         }
     }
 
@@ -408,11 +405,11 @@ class editManageIntrestedPartiesComponent extends Component {
                         </View>
                         <View style={styles.line} />
                         <View style={styles.containerView}>
-                            <Text style={styles.containerHeaderText}>{" Acc Name - " + this.state.account_Data.account_Name + " | " + "Acc Number - " + this.state.account_Data.account_Number}</Text>
+                            <Text style={styles.containerHeaderText}>{` Acc Name - ${this.state.account_Data.account_Name} | Acc Number - ${this.state.account_Data.account_Number}`}</Text>
                         </View>
                         <View style={styles.blockMarginTop} />
                         <View style={styles.titleHeadingView}>
-                            <Text style={styles.titleHeaderText}>{gblStrings.accManagement.editIntrestedParty + " " + this.state.account_Data.account_Type}</Text>
+                            <Text style={styles.titleHeaderText}>{`${gblStrings.accManagement.editIntrestedParty} ${this.state.account_Data.account_Type}`}</Text>
                         </View>
                         <View style={styles.line} />
 
@@ -422,7 +419,7 @@ class editManageIntrestedPartiesComponent extends Component {
                         <View style={styles.paddingHorizontalStyle}>
                             <View style={styles.flexDirectionStyle}>
                                 <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
-                                <Text style={[styles.shortContentValueText, styles.paddingStyleLeft]}>{this.state.personal.fname + " " + this.state.personal.mname + " " + this.state.personal.lname}</Text>
+                                <Text style={[styles.shortContentValueText, styles.paddingStyleLeft]}>{`${this.state.personal.fname} ${this.state.personal.mname} ${this.state.personal.lname}`}</Text>
                             </View>
                             <GDropDownComponent
                                 dropDownName={gblStrings.accManagement.relationToAccountHolder}
@@ -482,7 +479,6 @@ class editManageIntrestedPartiesComponent extends Component {
                                 placeholder={gblStrings.accManagement.empAddrLine1}
                                 maxLength={gblStrings.maxLength.emplAddress1}
                                 value={this.state.personal.addressLine1}
-                                // onSubmitEditing={this.validateAddress}
                                 onChangeText={this.onChangeText("personal", "addressLine1")}
                                 errorFlag={!this.state.personal.addressLine1Validation}
                                 errorText={this.state.personal.addValidation ? gblStrings.accManagement.emptyAddressLine1Msg : ""}
@@ -493,7 +489,6 @@ class editManageIntrestedPartiesComponent extends Component {
                                 placeholder={gblStrings.accManagement.empAddrLine2}
                                 maxLength={gblStrings.maxLength.addressLine2}
                                 value={this.state.personal.addressLine2}
-                                // onSubmitEditing={this.validateAddress}
                                 onChangeText={this.onChangeText("personal", "addressLine2")}
                                 errorFlag={!this.state.personal.addressLine2Validation}
                                 errorText={this.state.personal.addValidation ? gblStrings.accManagement.emptyAddressLine2Msg : ""}
@@ -600,14 +595,14 @@ class editManageIntrestedPartiesComponent extends Component {
 }
 
 editManageIntrestedPartiesComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object).isRequired,
-    masterLookupStateData: PropTypes.instanceOf(Object).isRequired,
-    stateCityData: PropTypes.instanceOf(Object).isRequired,
+    navigation: PropTypes.instanceOf(Object),
+    masterLookupStateData: PropTypes.instanceOf(Object),
+    stateCityData: PropTypes.instanceOf(Object),
     getStateCity: PropTypes.func,
     getAddressFormat: PropTypes.func,
     getCompositeLookUpData: PropTypes.func,
     editIntrestedParties: PropTypes.func,
-    manageIntrestedPartiesData: PropTypes.instanceOf(Object).isRequired
+    manageIntrestedPartiesData: PropTypes.instanceOf(Object)
 
 };
 

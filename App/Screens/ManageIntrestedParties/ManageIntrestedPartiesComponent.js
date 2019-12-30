@@ -18,7 +18,7 @@ class manageIntrestedPartiesComponent extends Component {
     }
 
     componentDidMount() {
-        this.updateNaviProps();
+        this.updateNavigationProps();
     }
 
     componentDidUpdate(prevProps) {
@@ -30,7 +30,7 @@ class manageIntrestedPartiesComponent extends Component {
 
     }
 
-    updateNaviProps = () => {
+    updateNavigationProps = () => {
         const showMsg = this.props.navigation.getParam("showMsg");
         const successMsg = this.props.navigation.getParam("successMsg");
         this.setState({ isSavedSuccess: showMsg, successMsg: successMsg });
@@ -116,7 +116,7 @@ class manageIntrestedPartiesComponent extends Component {
             intrestedParties = this.props.manageIntrestedPartiesData.list_manage_intrested_parties;
         }
         return (
-            <View style={styles.container} >
+            <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.flexMainView} keyboardShouldPersistTaps="always" ref={this.setScrollViewRef}>
                     <View style={styles.mainHeadingView}>
@@ -167,8 +167,8 @@ class manageIntrestedPartiesComponent extends Component {
 }
 
 manageIntrestedPartiesComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object).isRequired,
-    manageIntrestedPartiesData: PropTypes.instanceOf(Object).isRequired,
+    navigation: PropTypes.instanceOf(Object),
+    manageIntrestedPartiesData: PropTypes.instanceOf(Object),
     deleteIntrestedParties: PropTypes.func
 };
 manageIntrestedPartiesComponent.defaultProps = {

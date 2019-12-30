@@ -3,7 +3,7 @@ import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native
 import PropTypes from 'prop-types';
 import Collapsible from 'react-native-collapsible';
 import { GHeaderComponent, GFooterComponent } from '../../CommonComponents';
-import styles  from './styles';
+import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
 

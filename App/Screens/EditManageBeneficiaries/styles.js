@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from "../../Utils/Resolution";
 
-export default styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9FBFC",
@@ -32,22 +32,22 @@ export default styles = StyleSheet.create({
     paddingBottom: "4%",
     borderRadius: scaledHeight(2),
     borderWidth: 1,
-    marginHorizontal:'4%',
+    marginHorizontal: '4%',
     borderColor: "#E2E4E5",
   },
   blockMarginTop: {
     marginTop: scaledHeight(30)
   },
   enterDetailsView: {
-    width:"80%",
+    width: "80%",
     paddingRight: "4%",
     flexDirection: "row",
     marginTop: scaledHeight(10),
-    alignSelf:'center'
+    alignSelf: 'center'
   },
   paddingHorizontalView: {
     paddingLeft: "4%",
-    paddingRight:'4%'
+    paddingRight: '4%'
   },
   dataAccountBeneficiary: {
     marginTop: scaledHeight(20),
@@ -187,7 +187,7 @@ export default styles = StyleSheet.create({
   paddingHorizontalStyle: {
     paddingLeft: "4%",
     paddingRight: "4%",
-    width:'100%'
+    width: '100%'
   },
   marginStyle: {
     marginTop: scaledHeight(10)
@@ -207,7 +207,7 @@ export default styles = StyleSheet.create({
     color: "#56565A",
     fontSize: scaledHeight(16),
     fontWeight: "bold",
-    paddingRight:'4%'
+    paddingRight: '4%'
   },
   line: {
     backgroundColor: "#535353",
@@ -216,12 +216,12 @@ export default styles = StyleSheet.create({
     width: "90%",
     alignSelf: "center",
     marginTop: scaledHeight(10),
-    marginBottom:scaledHeight(10)
+    marginBottom: scaledHeight(10)
   },
   shortContentText: {
     color: "#56565A",
     fontSize: scaledHeight(16),
-    fontWeight:'bold',
+    fontWeight: 'bold',
     marginTop: scaledHeight(3),
 
   },
@@ -231,48 +231,50 @@ export default styles = StyleSheet.create({
     fontSize: scaledHeight(15),
     lineHeight: 24
   },
-  distributionView:{
-    width:'100%',
-    justifyContent:'space-between'
+  distributionView: {
+    width: '100%',
+    justifyContent: 'space-between'
   },
-  dropdownTextInput:{
-    width:'100%',
-    marginLeft:0
+  dropdownTextInput: {
+    width: '100%',
+    marginLeft: 0
   },
-  dropDownLayout:{
-    marginTop:scaledHeight(18),
-    paddingLeft:0
+  dropDownLayout: {
+    marginTop: scaledHeight(18),
+    paddingLeft: 0
   },
-  distributionValueTxt:{
-    color:'#B5B5B5',
-    fontSize:scaledHeight(10),
-    borderColor:'#B5B5B5',
-    borderWidth:scaledHeight(1),
-    padding:'4%'
+  distributionValueTxt: {
+    color: '#B5B5B5',
+    fontSize: scaledHeight(10),
+    borderColor: '#B5B5B5',
+    borderWidth: scaledHeight(1),
+    padding: '4%'
   },
-  sliderView:{
-    width:'80%'
+  sliderView: {
+    width: '80%'
   },
-  totalDisView:{
-    marginTop:scaledHeight(30),
-    width:'90%',
-    alignSelf:'center',
-    backgroundColor:'#EEEEEE',
-    borderColor:'#EEEEEE',
-    borderWidth:scaledHeight(1)
+  totalDisView: {
+    marginTop: scaledHeight(30),
+    width: '90%',
+    alignSelf: 'center',
+    backgroundColor: '#EEEEEE',
+    borderColor: '#EEEEEE',
+    borderWidth: scaledHeight(1)
   },
-  disTxtStr:{
-    margin:scaledHeight(15),
+  disTxtStr: {
+    margin: scaledHeight(15),
     color: "#56565A",
     fontWeight: "600",
     fontSize: scaledHeight(17),
     lineHeight: 20
   },
-  totalDistributionTxt:{
-    margin:scaledHeight(15),
+  totalDistributionTxt: {
+    margin: scaledHeight(15),
     color: "#56565A",
     fontWeight: "600",
     fontSize: scaledHeight(22),
     lineHeight: 27
   }
 });
+
+export default styles;

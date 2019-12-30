@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
+import styles from './styles';
 import { GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import { PageNumber } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-import { styles } from './styles';
+
 
 let savedData = {};
-let ammendData = {};
-let ammendIndex = null;
 let menuList = [];
 
 class PurchaseFourComponent extends Component {
@@ -16,28 +15,24 @@ class PurchaseFourComponent extends Component {
         super(props);
         this.state = {
             ammend: false,
+            ammendData: {},
+            ammendIndex: null
         };
     }
 
     componentDidMount() {
-        ammendData = this.props.navigation.getParam('data');
-        ammendIndex = this.props.navigation.getParam('index');
-        if (this.props.navigation.getParam('ammend')) {
-            this.setState({ ammend: true });
-        }
-        else {
-            this.setState({ ammend: false });
-        }
+        this.getData();
+    }
 
-
+    getData = () => {
+        this.setState({
+            ammend: this.props.navigation.getParam('ammend'),
+            ammendData: this.props.navigation.getParam('data'),
+            ammendIndex: this.props.navigation.getParam('index')
+        });
         if (this.props && this.props.amendReducerData && this.props.amendReducerData.menu) {
             menuList = this.props.amendReducerData.menu;
         }
-    }
-
-    formatAmount = (amount) => {
-        const amt = parseInt(amount).toLocaleString();
-        return amt;
     }
 
     navigatePurchasePageOne = () => {
@@ -91,29 +86,29 @@ class PurchaseFourComponent extends Component {
         const date = new Date().getDate();
         const month = new Date().getMonth() + 1;
         const year = new Date().getFullYear();
-        const updatedDate = date + '/' + month + '/' + year;
+        const updatedDate = `${date} / ${month} / ${year}`;
         const finalKey = menuList[menuList.length - 1];
 
         if (this.state.ammend) {
-            const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
+            const pIndex = menuList.findIndex((item) => item.key === this.state.ammendIndex);
             const amndObj = menuList[pIndex];
-            const transType = ammendData.TransactionType + ' Amended';
+            const transType = `${this.state.ammendData.TransactionType} Amended `;
             const ammendPayloadData = {
                 "key": amndObj.key,
                 "title": amndObj.title,
                 "data": {
-                    "count": ammendData.count,
+                    "count": this.state.ammendData.count,
                     "Dateadded": updatedDate,
                     "TransactionType": transType,
-                    "OrderStatus": ammendData.OrderStatus,
-                    "totalSHares": ammendData.totalSHares,
-                    "worth": ammendData.worth,
+                    "OrderStatus": this.state.ammendData.OrderStatus,
+                    "totalSHares": this.state.ammendData.totalSHares,
+                    "worth": this.state.ammendData.worth,
                     "selectedAccountData": savedData.selectedAccountData,
                     "selectedFundData": savedData.selectedFundData,
                     "selectedFundSourceData": savedData.selectedFundSourceData,
                     "currentSecurities": savedData.currentSecurities,
                     "contribution": savedData.contribution,
-                    "estimated": ammendData.estimated
+                    "estimated": this.state.ammendData.estimated
                 }
             };
             menuList.splice(pIndex, 1, ammendPayloadData);
@@ -226,16 +221,16 @@ class PurchaseFourComponent extends Component {
                             <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.paymentMode}</Text>
                         </View>
 
-                        {(savedData.selectedFundSourceData.paymentMode === gblStrings.liquidation.check || "Wire Transfer") ?
-                            <View style={styles.section}>
-                                <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalInvestment}</Text>
-                                <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.totalInvestment}</Text>
-                            </View> : <View style={styles.section}>
-                                <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountNumber}</Text>
-                                <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.bankAccountNumber}</Text>
-                            </View>
+                        {
+                            (savedData.selectedFundSourceData.paymentMode === "Check" || "Wire Transfer") ?
+                                <View style={styles.section}>
+                                    <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalInvestment}</Text>
+                                    <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.totalInvestment}</Text>
+                                </View> : <View style={styles.section}>
+                                    <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountNumber}</Text>
+                                    <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.bankAccountNumber}</Text>
+                                </View>
                         }
-                        {/* -----------------------------------Tax Accounting Method starts here-------------------------------- */}
 
                         <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>Contribution</Text>
@@ -271,6 +266,8 @@ class PurchaseFourComponent extends Component {
 
                     </View>
 
+                    {/* ----------------------------------- Button Fields -------------------------------- */}
+
                     <View style={styles.flex6}>
                         <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigatePurchasePageOne}>
                             <Text style={styles.backButtonText}>{gblStrings.common.cancel}</Text>
@@ -282,6 +279,8 @@ class PurchaseFourComponent extends Component {
                             <Text style={styles.submitText}>{gblStrings.common.submit}</Text>
                         </TouchableOpacity>
                     </View>
+
+                    {/* ----------------------------------- Footer View -------------------------------- */}
 
                     <View style={styles.fullLine} />
                     <View style={styles.tNCFlex}>
@@ -302,12 +301,13 @@ PurchaseFourComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     purchaseData: PropTypes.instanceOf(Object),
     amendReducerData: PropTypes.instanceOf(Object),
-
+    ammendActions: PropTypes.func
 };
 
 PurchaseFourComponent.defaultProps = {
     navigation: {},
     purchaseData: {},
     amendReducerData: {},
+    ammendActions: () => { }
 };
 export default PurchaseFourComponent;

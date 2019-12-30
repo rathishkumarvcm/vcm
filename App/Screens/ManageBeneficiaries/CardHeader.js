@@ -1,18 +1,21 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { GIcon } from '../../CommonComponents';
 import PropTypes from "prop-types";
-import { styles } from './styles';
+import styles from './styles';
+import { GIcon } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class CardHeader extends Component {
 
-    state = {
-        showModal: false,
+    constructor(props) {
+        super(props);
+        this.state = {
+            showModal: false
+        }
     }
 
     updateState = () => {
-        this.setState({ showModal: !this.state.showModal });
+        this.setState(prevState => ({ showModal: !prevState.showModal }));
     }
 
     onDelete = () => {
@@ -22,7 +25,7 @@ class CardHeader extends Component {
 
     render() {
         return (
-            <View >
+            <View>
                 <View style={styles.innerHeaderView}>
                     <View style={styles.flexDirectionStyle}>
                         <Text style={styles.shortContentText}>{gblStrings.accManagement.contractNumber}</Text>
@@ -32,12 +35,14 @@ class CardHeader extends Component {
                         <GIcon name="dots-three-vertical" type="entypo" size={30} color="black" />
                     </TouchableOpacity>
                 </View>
-                {this.state.showModal ?
-                    <View style={styles.shadowView}>
-                        <TouchableOpacity onPress={this.onDelete}>
-                            <Text style={styles.lblTxtInner} >{gblStrings.common.delete}</Text>
-                        </TouchableOpacity>
-                    </View> : null
+                {
+                    this.state.showModal ?
+                        <View style={styles.shadowView}>
+                            <TouchableOpacity onPress={this.onDelete}>
+                                <Text style={styles.lblTxtInner} >{gblStrings.common.delete}</Text>
+                            </TouchableOpacity>
+                        </View>
+                        : null
                 }
             </View>
         );
@@ -50,7 +55,6 @@ CardHeader.propTypes = {
 };
 
 CardHeader.defaultProps = {
-    item: {},
     onPressDelete: () => { }
 };
 export default CardHeader;

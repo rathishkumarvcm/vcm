@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
-import { styles } from './styles';
+import styles from './styles';
 import {
   GHeaderComponent,
   GFooterComponent,
@@ -27,7 +27,7 @@ class VerifyManageBenificiariesComponent extends Component {
   }
 
   updateInitialData = () => {
-    let data = this.props.navigation.getParam('mBData');
+    const data = this.props.navigation.getParam('mBData');
     this.setState({ bene_Data: data });
     if (data.transfer_on_Death_Bene) {
       let dist = 0;
@@ -82,137 +82,131 @@ class VerifyManageBenificiariesComponent extends Component {
     return list;
   }
 
-  renderContingentBeneficiary = ({ item }) => {
-    return (
-      <View style={styles.marginStyle}>
-        <View style={[styles.flexStyle, styles.paddingHorizontalStyle]}>
-          <Text style={styles.titleHeaderText}>{gblStrings.accManagement.contingentInfo}</Text>
-          <TouchableOpacity onPress={this.onClickEdit}>
-            <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
-          </TouchableOpacity>
+  renderContingentBeneficiary = ({ item }) => (
+    <View style={styles.marginStyle}>
+      <View style={[styles.flexStyle, styles.paddingHorizontalStyle]}>
+        <Text style={styles.titleHeaderText}>{gblStrings.accManagement.contingentInfo}</Text>
+        <TouchableOpacity onPress={this.onClickEdit}>
+          <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.line} />
+      <View style={styles.paddingHorizontalStyle}>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
+          <Text style={styles.shortContentValueText}>{item.bene_Name}</Text>
         </View>
-        <View style={styles.line} />
-        <View style={styles.paddingHorizontalStyle}>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
-            <Text style={styles.shortContentValueText}>{item.bene_Name}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.socialSecurityNo}</Text>
-            <Text style={styles.shortContentValueText}>{item.social_security_number}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.dob}</Text>
-            <Text style={styles.shortContentValueText}>{item.dob}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.emailAddress}</Text>
-            <Text style={styles.shortContentValueText}>{item.email}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.beneficiary_type}</Text>
-            <Text style={styles.shortContentValueText}>{item.beneficiaryType}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToOwner}</Text>
-            <Text style={styles.shortContentValueText}>{item.relationship_To_Insured}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.distributionPercentage}</Text>
-            <Text style={styles.shortContentValueText}>{`${item.distribution_Per} %`}</Text>
-          </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.socialSecurityNo}</Text>
+          <Text style={styles.shortContentValueText}>{item.social_security_number}</Text>
+        </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.dob}</Text>
+          <Text style={styles.shortContentValueText}>{item.dob}</Text>
+        </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.emailAddress}</Text>
+          <Text style={styles.shortContentValueText}>{item.email}</Text>
+        </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.beneficiary_type}</Text>
+          <Text style={styles.shortContentValueText}>{item.beneficiaryType}</Text>
+        </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToOwner}</Text>
+          <Text style={styles.shortContentValueText}>{item.relationship_To_Insured}</Text>
+        </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.distributionPercentage}</Text>
+          <Text style={styles.shortContentValueText}>{`${item.distribution_Per} %`}</Text>
         </View>
       </View>
-    );
-  }
+    </View>
+  );
 
-  renderTransferOnDeathBeneficiary = ({ item }) => {
-    return (
-      <View style={styles.marginStyle}>
-        <View style={[styles.flexStyle, styles.paddingHorizontalStyle]}>
-          <Text style={styles.titleHeaderText}>{gblStrings.accManagement.verifyTOD}</Text>
-          <TouchableOpacity onPress={this.onClickEdit}>
-            <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
-          </TouchableOpacity>
+  renderTransferOnDeathBeneficiary = ({ item }) => (
+    <View style={styles.marginStyle}>
+      <View style={[styles.flexStyle, styles.paddingHorizontalStyle]}>
+        <Text style={styles.titleHeaderText}>{gblStrings.accManagement.verifyTOD}</Text>
+        <TouchableOpacity onPress={this.onClickEdit}>
+          <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.line} />
+      <View style={styles.paddingHorizontalStyle}>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
+          <Text style={styles.shortContentValueText}>{item.bene_Name}</Text>
         </View>
-        <View style={styles.line} />
-        <View style={styles.paddingHorizontalStyle}>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
-            <Text style={styles.shortContentValueText}>{item.bene_Name}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.socialSecurityNo}</Text>
-            <Text style={styles.shortContentValueText}>{item.social_security_number}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.dob}</Text>
-            <Text style={styles.shortContentValueText}>{item.dob}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.emailAddress}</Text>
-            <Text style={styles.shortContentValueText}>{item.email}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.beneficiary_type}</Text>
-            <Text style={styles.shortContentValueText}>{item.beneficiaryType}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToOwner}</Text>
-            <Text style={styles.shortContentValueText}>{item.relationship_To_Insured}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.distributionPercentage}</Text>
-            <Text style={styles.shortContentValueText}>{`${item.distribution_Per} %`}</Text>
-          </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.socialSecurityNo}</Text>
+          <Text style={styles.shortContentValueText}>{item.social_security_number}</Text>
+        </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.dob}</Text>
+          <Text style={styles.shortContentValueText}>{item.dob}</Text>
+        </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.emailAddress}</Text>
+          <Text style={styles.shortContentValueText}>{item.email}</Text>
+        </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.beneficiary_type}</Text>
+          <Text style={styles.shortContentValueText}>{item.beneficiaryType}</Text>
+        </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToOwner}</Text>
+          <Text style={styles.shortContentValueText}>{item.relationship_To_Insured}</Text>
+        </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.distributionPercentage}</Text>
+          <Text style={styles.shortContentValueText}>{`${item.distribution_Per} %`}</Text>
         </View>
       </View>
-    );
-  }
+    </View>
+  );
 
-  renderPrimaryBeneficiary = ({ item }) => {
-    return (
-      <View style={styles.marginStyle}>
-        <View style={[styles.flexStyle, styles.paddingHorizontalStyle]}>
-          <Text style={styles.titleHeaderText}>{gblStrings.accManagement.primaryInfo}</Text>
-          <TouchableOpacity onPress={this.onClickEdit}>
-            <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
-          </TouchableOpacity>
+  renderPrimaryBeneficiary = ({ item }) => (
+    <View style={styles.marginStyle}>
+      <View style={[styles.flexStyle, styles.paddingHorizontalStyle]}>
+        <Text style={styles.titleHeaderText}>{gblStrings.accManagement.primaryInfo}</Text>
+        <TouchableOpacity onPress={this.onClickEdit}>
+          <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.line} />
+      <View style={styles.paddingHorizontalStyle}>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
+          <Text style={styles.shortContentValueText}>{item.bene_Name}</Text>
         </View>
-        <View style={styles.line} />
-        <View style={styles.paddingHorizontalStyle}>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
-            <Text style={styles.shortContentValueText}>{item.bene_Name}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.socialSecurityNo}</Text>
-            <Text style={styles.shortContentValueText}>{item.social_security_number}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.dob}</Text>
-            <Text style={styles.shortContentValueText}>{item.dob}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.emailAddress}</Text>
-            <Text style={styles.shortContentValueText}>{item.email}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.beneficiary_type}</Text>
-            <Text style={styles.shortContentValueText}>{item.beneficiaryType}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToOwner}</Text>
-            <Text style={styles.shortContentValueText}>{item.relationship_To_Insured}</Text>
-          </View>
-          <View style={styles.contentViewBlock}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.distributionPercentage}</Text>
-            <Text style={styles.shortContentValueText}>{`${item.distribution_Per} %`}</Text>
-          </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.socialSecurityNo}</Text>
+          <Text style={styles.shortContentValueText}>{item.social_security_number}</Text>
+        </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.dob}</Text>
+          <Text style={styles.shortContentValueText}>{item.dob}</Text>
+        </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.emailAddress}</Text>
+          <Text style={styles.shortContentValueText}>{item.email}</Text>
+        </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.beneficiary_type}</Text>
+          <Text style={styles.shortContentValueText}>{item.beneficiaryType}</Text>
+        </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToOwner}</Text>
+          <Text style={styles.shortContentValueText}>{item.relationship_To_Insured}</Text>
+        </View>
+        <View style={styles.contentViewBlock}>
+          <Text style={styles.shortContentText}>{gblStrings.accManagement.distributionPercentage}</Text>
+          <Text style={styles.shortContentValueText}>{`${item.distribution_Per} %`}</Text>
         </View>
       </View>
-    );
-  }
+    </View>
+  );
 
   generateKeyExtractor = (item) => item.key;
 
@@ -273,10 +267,10 @@ class VerifyManageBenificiariesComponent extends Component {
 
           <View style={styles.distributionViewStyle}>
             {this.state.bene_Data.transfer_on_Death_Bene ?
-              <Text style={styles.todBeneDistributionTxt}>{"Total Distribution Percentage"}</Text> :
-              <Text style={styles.otherBeneDistributionTxt}>{"Total Distribution Percentage of Primary (" + this.state.totalPrimaryDistribution + "%) + Contingent (" + this.state.totalContingentDistribution + "%)"}</Text>
+              <Text style={styles.todBeneDistributionTxt}>Total Distribution Percentage</Text> :
+              <Text style={styles.otherBeneDistributionTxt}>{`Total Distribution Percentage of Primary ( ${this.state.totalPrimaryDistribution} %) + Contingent ( ${this.state.totalContingentDistribution} %)`}</Text>
             }
-            <Text style={styles.todBeneDistributionTxt}>{"= " + parseInt(this.state.totalPrimaryDistribution + this.state.totalContingentDistribution + this.state.totalTodDistribution) + "%"}</Text>
+            <Text style={styles.todBeneDistributionTxt}>{`= ${parseInt(this.state.totalPrimaryDistribution + this.state.totalContingentDistribution + this.state.totalTodDistribution)} %`}</Text>
           </View>
 
           {/* --------------------------- Button View -------------------------------- */}

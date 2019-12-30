@@ -69,12 +69,6 @@ class PurchaseScreenTwoComponent extends Component {
         this.getLookUpData();
         ammendData = this.props.navigation.getParam('data');
         ammendIndex = this.props.navigation.getParam('index');
-        if (this.props.navigation.getParam('ammend')) {
-            this.setState({ ammend: true });
-        }
-        else {
-            this.setState({ ammend: false });
-        }
     }
 
     componentDidUpdate(prevProps) {
@@ -91,15 +85,22 @@ class PurchaseScreenTwoComponent extends Component {
                         if (item.fundName === ammendData.selectedFundData.fundName) {
                             this.setState({ selectedFundIndex: k });
                         }
+                        return 0;
                     });
                     this.onAmmendFund();
                 }
-
             }
         }
     }
 
     getLookUpData = () => {
+        if (this.props.navigation.getParam('ammend')) {
+            this.setState({ ammend: true });
+        }
+        else {
+            this.setState({ ammend: false });
+        }
+
         if (this.state && this.state.fundList && !this.state.fundList.length > 0) {
             const fundListPayload = {};
             this.props.getFundListData(fundListPayload);
@@ -228,6 +229,7 @@ class PurchaseScreenTwoComponent extends Component {
                     minInvestKey = item.value;
                 }
             }
+            return 0;
         });
 
         let riskKey = "";
@@ -239,6 +241,7 @@ class PurchaseScreenTwoComponent extends Component {
                     riskKey = item.key;
                 }
             }
+            return 0;
         });
 
         let fundKey = "";
@@ -250,6 +253,7 @@ class PurchaseScreenTwoComponent extends Component {
                     fundKey = item.key;
                 }
             }
+            return 0;
         });
 
         const fundListPayload = { 'minInvestment': minInvestKey };
@@ -343,7 +347,6 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     onClickSave = () => {
-        console.log("in save button:");
         if (this.state.ammend) {
             const ammendPayloadData = {
                 savePurchaseSelectedData: {
@@ -363,7 +366,7 @@ class PurchaseScreenTwoComponent extends Component {
                     "contribution": ammendData.contribution,
                     "estimated": ammendData.estimated
                 }
-            }
+            };
             this.props.saveData(ammendPayloadData);
             this.props.navigation.navigate('purchaseScreenThree', { ammend: true, index: ammendIndex, data: ammendData });
         }
@@ -437,7 +440,11 @@ class PurchaseScreenTwoComponent extends Component {
             tempData.startDateValidation = true;
             tempData.action = "ammend";
 
-            this.setState({ selectedFundInvestmentData: tempData, disableNextButton: false, totalInitialInvestment: ammendData.selectedFundData.total });
+            this.setState({
+                selectedFundInvestmentData: tempData,
+                disableNextButton: false,
+                totalInitialInvestment: ammendData.selectedFundData.total
+            });
         }
 
     }

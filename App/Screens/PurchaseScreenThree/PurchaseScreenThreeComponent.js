@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, Image, FlatList } from 'react-native';
+import PropTypes from 'prop-types';
 import { GHeaderComponent, GFooterComponent, GButtonComponent, GDropDownComponent, GSwitchComponent } from '../../CommonComponents';
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
-import PropTypes from 'prop-types';
+
 
 const checkOrder = require("../../Images/offlinemethod1.png");
 const wireTransfer = require("../../Images/offlinemethod2.png");
@@ -61,11 +62,51 @@ class PurchaseScreenThreeComponent extends Component {
         ammendData = this.props.navigation.getParam('data');
         ammendIndex = this.props.navigation.getParam('index');
         this.updateState();
+    }
+
+    updateState = () => {
         if (this.props.navigation.getParam('ammend')) {
             this.setState({ ammend: true });
         }
         else {
             this.setState({ ammend: false });
+        }
+        if (savedData) {
+            this.setState({ disableNextButton: false });
+            if (savedData.selectedFundSourceData) {
+                this.setState({
+                    fundingSourceName: savedData.selectedFundSourceData.paymentMode,
+                    fundingMethod: savedData.selectedFundSourceData.fundSourceType,
+                    bankAccountName: savedData.selectedFundSourceData.bankAccountName,
+                    bankAccountNumber: savedData.selectedFundSourceData.bankAccountNumber
+                });
+                if (savedData.selectedFundSourceData.paymentMode === 'Check') {
+                    this.setState({ showCheckMsg: true, showWireTransferMsg: false });
+                } else if (savedData.selectedFundSourceData.paymentMode === 'Wire Transfer') {
+                    this.setState({ showWireTransferMsg: true, showCheckMsg: false });
+                } else if (savedData.selectedFundSourceData.paymentMode === 'NetBanking') {
+                    this.setState({ showWireTransferMsg: false, showCheckMsg: false });
+                }
+                if (savedData.selectedFundSourceData.bankAccountName) {
+                    bankAccounts.map((m, n) => {
+                        if (m.bankAccName === savedData.selectedFundSourceData.bankAccountName) {
+                            this.setState({ selectedBankAccountIndex: n });
+                        }
+                        return 0;
+                    });
+                }
+            }
+            if (savedData.currentSecurities) {
+                this.setState({ switchOff: savedData.currentSecurities.reinvest, switchOn: !savedData.currentSecurities.reinvest });
+            }
+
+            if (savedData.contribution) {
+                this.setState({
+                    selectedContributionData: {
+                        contribution: savedData.contribution.contribution,
+                    }
+                });
+            }
         }
     }
 
@@ -76,7 +117,6 @@ class PurchaseScreenThreeComponent extends Component {
     }
 
     onClickCancel = () => {
-        //this.props.navigation.navigate({ routeName: 'purchaseScreenOne', key: 'purchaseScreenOne' });
         if (this.state.ammend) {
             this.props.navigation.navigate('tAmmendComponent');
         }
@@ -106,9 +146,7 @@ class PurchaseScreenThreeComponent extends Component {
         };
         this.props.saveData(payloadData);
         if (this.state.ammend) {
-            console.log("screen3navigation",ammendData)
             this.props.navigation.navigate('purchaseScreenFour', { ammend: true, data: ammendData, index: ammendIndex });
-            
         }
         else {
             this.props.navigation.navigate('purchaseScreenFour', { ammend: false });
@@ -116,6 +154,7 @@ class PurchaseScreenThreeComponent extends Component {
     }
 
     onSubmitEditing = (input) => text => {
+        console.log(text);
         input.focus();
     }
 
@@ -144,7 +183,6 @@ class PurchaseScreenThreeComponent extends Component {
     }
 
     onValidateEach = () => {
-        console.log("Validate Each Field::");
         let isErr = false;
         let isValidationSuccess = false;
 
@@ -174,46 +212,6 @@ class PurchaseScreenThreeComponent extends Component {
     }
 
     /* -------------------------------- Fund Source Events Events ---------------------------------- */
-
-    updateState = () => {
-        if (savedData) {
-            this.setState({ disableNextButton: false });
-            if (savedData.selectedFundSourceData) {
-                this.setState({
-                    fundingSourceName: savedData.selectedFundSourceData.paymentMode,
-                    fundingMethod: savedData.selectedFundSourceData.fundSourceType,
-                    bankAccountName: savedData.selectedFundSourceData.bankAccountName,
-                    bankAccountNumber: savedData.selectedFundSourceData.bankAccountNumber
-                });
-                if (savedData.selectedFundSourceData.paymentMode === 'Check') {
-                    this.setState({ showCheckMsg: true, showWireTransferMsg: false });
-                } else if (savedData.selectedFundSourceData.paymentMode === 'Wire Transfer') {
-                    this.setState({ showWireTransferMsg: true, showCheckMsg: false });
-                } else if (savedData.selectedFundSourceData.paymentMode === 'NetBanking') {
-                    this.setState({ showWireTransferMsg: false, showCheckMsg: false });
-                }
-                if (savedData.selectedFundSourceData.bankAccountName) {
-                    bankAccounts.map((m, n) => {
-                        if (m.bankAccName === savedData.selectedFundSourceData.bankAccountName) {
-                            this.setState({ selectedBankAccountIndex: n });
-                        }
-                    });
-                }
-            }
-            if (savedData.currentSecurities) {
-                this.setState({ switchOff: savedData.currentSecurities.reinvest, switchOn: !savedData.currentSecurities.reinvest });
-            }
-
-            if (savedData.contribution) {
-                this.setState({
-                    selectedContributionData: {
-                        contribution: savedData.contribution.contribution,
-                    }
-                });
-            }
-
-        }
-    }
 
     setInputRef = (inputComp) => (ref) => {
         this[inputComp] = ref;
@@ -261,7 +259,7 @@ class PurchaseScreenThreeComponent extends Component {
     onSelectedDropDownValue = (value) => {
         const selectedData = {};
         selectedData.contribution = value;
-        this.setState({ selectedContributionData: selectedData })
+        this.setState({ selectedContributionData: selectedData });
     }
 
     onSelectBankAccount = (item, index) => () => {
@@ -434,22 +432,24 @@ class PurchaseScreenThreeComponent extends Component {
 
                     {/* ------------------------- Contribution ----------------------------- */}
 
-                    {isIRA ? <View style={styles.innerContainerStyle}>
-                        <Text style={styles.headerText}>{gblStrings.purchase.contribution}</Text>
-                        <View style={styles.line} />
-                        <Text style={styles.stmtSmallTextStyle}>{gblStrings.purchase.contDummyText}</Text>
-                        <GDropDownComponent
-                            dropDownLayout={styles.dropDownLayout}
-                            dropDownTextName={styles.dropDownTextName}
-                            textInputStyle={styles.textInputStyle}
-                            dropDownName={gblStrings.accManagement.contForIRAAccount}
-                            data={contributionData}
-                            dropDownValue={this.state.selectedContributionData.contribution}
-                            selectedDropDownValue={this.onSelectedDropDownValue}
-                            errorFlag={!this.state.contributionFlag}
-                            errorText={this.state.contributionErrMsg}
-                        />
-                    </View> : null}
+                    {isIRA ?
+                        <View style={styles.innerContainerStyle}>
+                            <Text style={styles.headerText}>{gblStrings.purchase.contribution}</Text>
+                            <View style={styles.line} />
+                            <Text style={styles.stmtSmallTextStyle}>{gblStrings.purchase.contDummyText}</Text>
+                            <GDropDownComponent
+                                dropDownLayout={styles.dropDownLayout}
+                                dropDownTextName={styles.dropDownTextName}
+                                textInputStyle={styles.textInputStyle}
+                                dropDownName={gblStrings.accManagement.contForIRAAccount}
+                                data={contributionData}
+                                dropDownValue={this.state.selectedContributionData.contribution}
+                                selectedDropDownValue={this.onSelectedDropDownValue}
+                                errorFlag={!this.state.contributionFlag}
+                                errorText={this.state.contributionErrMsg}
+                            />
+                        </View> : null
+                    }
 
 
                     {/* ----------------- Button Group -------------------- */}

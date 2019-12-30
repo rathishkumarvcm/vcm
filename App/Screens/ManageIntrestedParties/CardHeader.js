@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from "prop-types";
 import { GIcon } from '../../CommonComponents';
-import { styles } from './styles';
+import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class CardHeader extends Component {
@@ -29,7 +29,7 @@ class CardHeader extends Component {
 
     render() {
         return (
-            <View >
+            <View>
                 <View style={styles.innerHeaderView}>
                     <View style={styles.flexDirectionStyle}>
                         <Text style={styles.shortContentText}>{gblStrings.accManagement.contractNumber}</Text>
@@ -61,7 +61,6 @@ CardHeader.propTypes = {
 };
 
 CardHeader.defaultProps = {
-    item: {},
     navigate: () => { },
     onDelete: () => { }
 };

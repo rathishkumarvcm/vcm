@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from "../../Utils/Resolution";
 
-export default styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9FBFC",
@@ -32,11 +32,11 @@ export default styles = StyleSheet.create({
     fontSize: scaledHeight(15),
     textDecorationLine: "underline"
   },
-  addBtn:{
-    alignSelf:'flex-end',
-    paddingRight:'4%',
-    marginTop:scaledHeight(10),
-    marginBottom:scaledHeight(5)
+  addBtn: {
+    alignSelf: 'flex-end',
+    paddingRight: '4%',
+    marginTop: scaledHeight(10),
+    marginBottom: scaledHeight(5)
   },
   contentText: {
     color: "#56565A",
@@ -106,16 +106,16 @@ export default styles = StyleSheet.create({
     borderBottomColor: "#5D83AE99",
     borderBottomWidth: scaledHeight(1),
     paddingTop: "2%",
-    paddingLeft:'4%',
+    paddingLeft: '4%',
     marginBottom: scaledHeight(5)
   },
   containerHeaderText: {
     color: "#54565B",
     fontSize: scaledHeight(12),
     fontWeight: "400",
-    paddingLeft:'4%',
-    marginBottom:scaledHeight(8),
-    marginTop:scaledHeight(8)
+    paddingLeft: '4%',
+    marginBottom: scaledHeight(8),
+    marginTop: scaledHeight(8)
   },
   editBtnText: {
     color: "#5D83AE",
@@ -205,26 +205,26 @@ export default styles = StyleSheet.create({
     marginTop: scaledHeight(9),
     width: '100%',
   },
-  customCompTxtBox:{
+  customCompTxtBox: {
     marginTop: scaledHeight(9),
     width: '85%',
   },
-  circleView:{
-    borderColor:"#DEDEDF",
-    borderWidth:scaledHeight(1),
-    borderRadius:scaledHeight(25),
-    width:scaledHeight(30),
-    height:scaledHeight(30),
-    marginTop:scaledHeight(15),
-    marginLeft:'4%',
-    paddingTop:'1%',
-    alignItems:'center'
+  circleView: {
+    borderColor: "#DEDEDF",
+    borderWidth: scaledHeight(1),
+    borderRadius: scaledHeight(25),
+    width: scaledHeight(30),
+    height: scaledHeight(30),
+    marginTop: scaledHeight(15),
+    marginLeft: '4%',
+    paddingTop: '1%',
+    alignItems: 'center'
   },
   customStateView: {
     marginTop: scaledHeight(9),
     width: '40%',
   },
-  customCityView:{
+  customCityView: {
     marginTop: scaledHeight(9),
     width: '50%',
   },
@@ -236,10 +236,10 @@ export default styles = StyleSheet.create({
   stateCityView: {
     flexDirection: 'row',
     width: '100%',
-    justifyContent:'space-between',
+    justifyContent: 'space-between',
     flex: 1,
   },
-  preferdTimeTxt:{
+  preferdTimeTxt: {
     color: '#333333DE',
     fontSize: scaledHeight(16),
     fontWeight: 'bold'
@@ -250,18 +250,18 @@ export default styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#E2E4E5"
   },
-  errMsg:{
-    color:'red',
-    paddingLeft:'4%',
-    fontSize:scaledHeight(12)
+  errMsg: {
+    color: 'red',
+    paddingLeft: '4%',
+    fontSize: scaledHeight(12)
   },
-  dropdownTextInput:{
-    width:'100%',
-    marginLeft:0
+  dropdownTextInput: {
+    width: '100%',
+    marginLeft: 0
   },
-  dropDownLayout:{
-    marginTop:scaledHeight(18),
-    paddingLeft:0
+  dropDownLayout: {
+    marginTop: scaledHeight(18),
+    paddingLeft: 0
   },
   btnGrp: {
     marginHorizontal: scaledHeight(12),
@@ -283,12 +283,12 @@ export default styles = StyleSheet.create({
     marginVertical: scaledHeight(7.5),
     marginHorizontal: scaledHeight(37),
   },
-  validateBtn:{
+  validateBtn: {
     borderWidth: 1,
     borderColor: '#61285F45',
     borderRadius: scaledHeight(5),
     height: scaledHeight(35),
-    width:'30%',
+    width: '30%',
     backgroundColor: '#fff',
     alignItems: 'flex-end',
     alignContent: 'flex-end',
@@ -328,9 +328,11 @@ export default styles = StyleSheet.create({
     width: '100%',
     textAlign: 'center',
   },
-  dateStyle:{
-    width:'100%',
-    marginLeft:0,
-    marginRight:0
+  dateStyle: {
+    width: '100%',
+    marginLeft: 0,
+    marginRight: 0
   }
 });
+
+export default styles;
