@@ -6,7 +6,7 @@ import { accOpeningActions, addressFormatActions, manageIntrestedPartiesActions 
                                                              -------------------------- */
 
 const mapStateToProps = (state /* , props */) => ({
-  manageIntrestedPartiesData: state.manageIntrestedPartiesData,
+  manageInterestedPartiesData: state.manageInterestedPartiesData,
   accOpeningData: state.accOpeningReducerData,
   masterLookupStateData: state.masterLookUpData,
   stateCityData: state.addressFormatData

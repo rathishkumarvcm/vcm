@@ -9,7 +9,7 @@ import { accOpeningActions, addressFormatActions, manageIntrestedPartiesActions 
 const mapStateToProps = (state /* , props */) => ({
   accOpeningData: state.accOpeningReducerData,
   masterLookupStateData: state.masterLookUpData,
-  manageIntrestedPartiesData: state.manageIntrestedPartiesData,
+  manageInterestedPartiesData: state.manageInterestedPartiesData,
   stateCityData: state.addressFormatData
 });
 

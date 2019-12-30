@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from "../../Utils/Resolution";
 
-export default styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#F9FBFC",
@@ -13,7 +13,7 @@ export default styles = StyleSheet.create({
     paddingLeft: "4%",
     paddingRight: "4%"
   },
-  manageBenificiariesHeadline: {
+  manageHeadline: {
     color: "#54565B",
     fontWeight: "bold",
     fontSize: scaledHeight(22),
@@ -106,6 +106,7 @@ export default styles = StyleSheet.create({
     flexDirection: "row",
     width: "90%",
     paddingRight: "4%",
+    paddingLeft: '4%',
     justifyContent: "space-between"
   },
   footerView: {
@@ -198,3 +199,5 @@ export default styles = StyleSheet.create({
     lineHeight: 20
   }
 });
+
+export default styles;

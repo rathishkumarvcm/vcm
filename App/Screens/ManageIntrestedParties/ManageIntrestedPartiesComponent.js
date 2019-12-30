@@ -6,7 +6,7 @@ import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponent
 import gblStrings from '../../Constants/GlobalStrings';
 import CardHeader from './CardHeader';
 
-let intrestedParties = [];
+let newInterestedParties = [];
 class manageIntrestedPartiesComponent extends Component {
     constructor(props) {
         super(props);
@@ -23,20 +23,15 @@ class manageIntrestedPartiesComponent extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props !== prevProps) {
-            const showMsg = this.props.navigation.getParam("showMsg");
-            const successMsg = this.props.navigation.getParam("successMsg");
-            this.setState({ isSavedSuccess: showMsg, successMsg: successMsg });
+            this.setState({ isSavedSuccess: this.props.navigation.getParam("showMsg"), successMsg: this.props.navigation.getParam("successMsg") });
         }
-
     }
 
     updateNavigationProps = () => {
-        const showMsg = this.props.navigation.getParam("showMsg");
-        const successMsg = this.props.navigation.getParam("successMsg");
-        this.setState({ isSavedSuccess: showMsg, successMsg: successMsg });
+        this.setState({ isSavedSuccess: this.props.navigation.getParam("showMsg"), successMsg: this.props.navigation.getParam("successMsg") });
     }
 
-    addIntrestedParty = (data) => () => {
+    addInterestedParty = (data) => () => {
         this.props.navigation.navigate("addIntrestedParties", { acc_Data: data });
     }
 
@@ -46,15 +41,15 @@ class manageIntrestedPartiesComponent extends Component {
 
     getDeleteData = (item, obj) => {
         const modObj = item;
-        const pIndex = intrestedParties.findIndex((data) => data.key === item.key);
-        const cIndex = intrestedParties[pIndex].intrestedParty.findIndex((data) => data.key === obj.key);
+        const pIndex = newInterestedParties.findIndex((data) => data.key === item.key);
+        const cIndex = newInterestedParties[pIndex].interestedParty.findIndex((data) => data.key === obj.key);
 
-        const arr = [...intrestedParties[pIndex].intrestedParty];
+        const arr = [...newInterestedParties[pIndex].interestedParty];
         arr.splice(cIndex, 1);
 
-        modObj.intrestedParty = arr;
+        modObj.interestedParty = arr;
 
-        const newArr = [...intrestedParties];
+        const newArr = [...newInterestedParties];
         newArr.splice(pIndex, 1, modObj);
 
         return newArr;
@@ -62,7 +57,7 @@ class manageIntrestedPartiesComponent extends Component {
 
     onDeleteFunc = (item, data) => () => {
         const payloadData = this.getDeleteData(item, data);
-        this.props.deleteIntrestedParties("deleteIntrestedParty", payloadData);
+        this.props.deleteInterestedParties(payloadData);
     }
 
     renderData = ({ item }) => {
@@ -77,12 +72,12 @@ class manageIntrestedPartiesComponent extends Component {
                     <View style={styles.containerHeaderView}>
                         <Text style={styles.containerHeaderText}>{` - Acc Name - ${item.account_Name} | Acc Number - ${item.account_Number}`}</Text>
                         <View style={styles.addBtn}>
-                            <TouchableOpacity onPress={this.addIntrestedParty(item)}>
+                            <TouchableOpacity onPress={this.addInterestedParty(item)}>
                                 <Text style={styles.editBtnText}>{gblStrings.accManagement.addNew}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
-                    {item.intrestedParty && item.intrestedParty.map((data, k) => {
+                    {item.interestedParty && item.interestedParty.map((data, k) => {
                         return (
                             <View key={data.key} style={styles.innerContainerView}>
                                 <CardHeader item={data} navigate={this.onClickEdit(item, k, data)} onDelete={this.onDeleteFunc(item, data)} />
@@ -112,8 +107,8 @@ class manageIntrestedPartiesComponent extends Component {
     generateKeyExtractor = (item) => item.key;
 
     render() {
-        if (this.props.manageIntrestedPartiesData && this.props.manageIntrestedPartiesData.list_manage_intrested_parties) {
-            intrestedParties = this.props.manageIntrestedPartiesData.list_manage_intrested_parties;
+        if (this.props.manageInterestedPartiesData && this.props.manageInterestedPartiesData.list_manage_interested_parties) {
+            newInterestedParties = this.props.manageInterestedPartiesData.list_manage_interested_parties;
         }
         return (
             <View style={styles.container}>
@@ -148,7 +143,7 @@ class manageIntrestedPartiesComponent extends Component {
                         </Text>
                     </View>
                     <FlatList
-                        data={intrestedParties}
+                        data={newInterestedParties}
                         extraData={this.props}
                         keyExtractor={this.generateKeyExtractor}
                         renderItem={this.renderData}
@@ -168,12 +163,12 @@ class manageIntrestedPartiesComponent extends Component {
 
 manageIntrestedPartiesComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    manageIntrestedPartiesData: PropTypes.instanceOf(Object),
+    manageInterestedPartiesData: PropTypes.instanceOf(Object),
     deleteIntrestedParties: PropTypes.func
 };
 manageIntrestedPartiesComponent.defaultProps = {
     navigation: {},
-    manageIntrestedPartiesData: {},
+    manageInterestedPartiesData: {},
     deleteIntrestedParties: () => { }
 };
 

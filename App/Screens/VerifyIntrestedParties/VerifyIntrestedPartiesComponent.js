@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-import { styles } from './styles';
+import styles from './styles';
 import {
   GHeaderComponent,
   GFooterComponent,
@@ -40,16 +40,16 @@ class VerifyIntrestedPartiesComponent extends Component {
 
   onClickSubmit = () => {
     const payloadData = this.getData();
-    this.props.saveIntrestedParties("verifyIntrestedParty", payloadData);
-    this.props.navigation.navigate("manageIntrestedParties", { showMsg: true, successMsg: "New Interested Party has been added in " + this.state.account_Data.account_Type + " successfully" });
+    this.props.saveInterestedParties(payloadData);
+    this.props.navigation.navigate("manageIntrestedParties", { showMsg: true, successMsg: `New Interested Party has been added in " ${this.state.account_Data.account_Type} " successfully` });
   }
 
   getData = () => {
     let list = [];
     const completeData = this.state.account_Data;
-    completeData.intrestedParty.push(this.state.newAddedInterestedParty);
-    if (this.props && this.props.manageIntrestedPartiesData && this.props.manageIntrestedPartiesData.list_manage_intrested_parties) {
-      list = this.props.manageIntrestedPartiesData.list_manage_intrested_parties;
+    completeData.interestedParty.push(this.state.newAddedInterestedParty);
+    if (this.props && this.props.manageInterestedPartiesData && this.props.manageInterestedPartiesData.list_manage_interested_parties) {
+      list = this.props.manageInterestedPartiesData.list_manage_interested_parties;
     }
     list.map((m, n) => {
       if (m.key === completeData.key) {
@@ -68,7 +68,7 @@ class VerifyIntrestedPartiesComponent extends Component {
         <GHeaderComponent navigation={this.props.navigation} />
         <ScrollView style={styles.flexMainView}>
           <View style={styles.mainHeadingView}>
-            <Text style={styles.manageBenificiariesHeadline}>
+            <Text style={styles.manageHeadline}>
               {gblStrings.accManagement.manageIntrestedParties}
             </Text>
           </View>
@@ -84,7 +84,7 @@ class VerifyIntrestedPartiesComponent extends Component {
               </Text>
             </View>
             <View style={styles.blockMarginTop} />
-            <View style={[styles.flexStyle, styles.paddingHorizontalStyle]}>
+            <View style={styles.flexStyle}>
               <Text style={styles.titleHeaderText}>{gblStrings.accManagement.verifyIntrestedPartyInfo}</Text>
               <TouchableOpacity onPress={this.onClickEdit}>
                 <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
@@ -110,7 +110,7 @@ class VerifyIntrestedPartiesComponent extends Component {
               </View>
               <View style={styles.contentViewBlock}>
                 <Text style={styles.shortContentText}>{gblStrings.accManagement.mailingAdd}</Text>
-                <Text style={styles.shortContentValueText}>{this.state.newAddedInterestedParty.addressLine1 + ", " + this.state.newAddedInterestedParty.addressLine2 + ", " + this.state.newAddedInterestedParty.state + ", " + this.state.newAddedInterestedParty.city + " - " + this.state.newAddedInterestedParty.zipCode}</Text>
+                <Text style={styles.shortContentValueText}>{`${this.state.newAddedInterestedParty.addressLine1} , ${this.state.newAddedInterestedParty.addressLine2} , ${this.state.newAddedInterestedParty.state} , ${this.state.newAddedInterestedParty.city} - ${this.state.newAddedInterestedParty.zipCode}`}</Text>
               </View>
               <View style={styles.contentViewBlock}>
                 <Text style={styles.shortContentText}>{gblStrings.accManagement.effStartDate}</Text>
@@ -173,13 +173,13 @@ class VerifyIntrestedPartiesComponent extends Component {
 
 VerifyIntrestedPartiesComponent.propTypes = {
   navigation: PropTypes.instanceOf(Object),
-  saveIntrestedParties: PropTypes.func,
-  manageIntrestedPartiesData: PropTypes.instanceOf(Object)
+  saveInterestedParties: PropTypes.func,
+  manageInterestedPartiesData: PropTypes.instanceOf(Object)
 };
 
 VerifyIntrestedPartiesComponent.defaultProps = {
   navigation: {},
-  saveIntrestedParties: () => { },
-  manageIntrestedPartiesData: {}
+  saveInterestedParties: () => { },
+  manageInterestedPartiesData: {}
 };
 export default VerifyIntrestedPartiesComponent;

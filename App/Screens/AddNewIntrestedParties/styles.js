@@ -27,13 +27,6 @@ const styles = StyleSheet.create({
     marginTop: scaledHeight(15),
     lineHeight: 29,
   },
-  manageBenificiariesHeadline: {
-    color: "#54565B",
-    fontWeight: "bold",
-    fontSize: scaledHeight(22),
-    marginTop: scaledHeight(20),
-    lineHeight: scaledHeight(29)
-  },
   contactUsLink: {
     color: "#0000FF",
     fontSize: scaledHeight(15),
@@ -327,7 +320,9 @@ const styles = StyleSheet.create({
   },
   dropDownLayout: {
     marginTop: scaledHeight(18),
-    paddingLeft: 0
+    paddingLeft: 0,
+    marginLeft:0,
+    marginRight:0
   },
   dateStyle: {
     width: '100%',

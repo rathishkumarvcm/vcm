@@ -261,7 +261,9 @@ const styles = StyleSheet.create({
   },
   dropDownLayout: {
     marginTop: scaledHeight(18),
-    paddingLeft: 0
+    paddingLeft: 0,
+    marginLeft: 0,
+    marginRight: 0
   },
   btnGrp: {
     marginHorizontal: scaledHeight(12),

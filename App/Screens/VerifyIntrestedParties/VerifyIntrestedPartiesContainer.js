@@ -6,7 +6,7 @@ import { manageIntrestedPartiesActions } from "../../Shared/Actions";
                                                              -------------------------- */
 
 const mapStateToProps = (state) => ({
-  manageIntrestedPartiesData: state.manageIntrestedPartiesData
+  manageInterestedPartiesData: state.manageInterestedPartiesData
 });
 
 const mapDispatchToProps = {

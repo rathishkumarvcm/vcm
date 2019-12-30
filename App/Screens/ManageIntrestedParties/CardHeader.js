@@ -32,23 +32,25 @@ class CardHeader extends Component {
             <View>
                 <View style={styles.innerHeaderView}>
                     <View style={styles.flexDirectionStyle}>
-                        <Text style={styles.shortContentText}>{gblStrings.accManagement.contractNumber}</Text>
-                        <Text style={styles.shortContentValueText}>{this.props.item.contract_Number}</Text>
+                        <Text style={styles.shortContentText}>{gblStrings.accManagement.contractNumber} <Text style={styles.shortContentValueText}>{this.props.item.contract_Number}</Text></Text>
+                        
                     </View>
                     <TouchableOpacity style={styles.sideBtn} onPress={this.updateState}>
                         <GIcon name="dots-three-vertical" type="entypo" size={30} color="black" />
                     </TouchableOpacity>
                 </View>
-                {this.state.showModal ?
-                    <View style={styles.shadowView}>
-                        <TouchableOpacity onPress={this.edit}>
-                            <Text style={styles.lblTxtInner}>{gblStrings.common.edit}</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.lblLine} />
-                        <TouchableOpacity onPress={this.delete}>
-                            <Text style={styles.lblTxtInner}>{gblStrings.common.delete}</Text>
-                        </TouchableOpacity>
-                    </View> : null}
+                {
+                    this.state.showModal ?
+                        <View style={styles.shadowView}>
+                            <TouchableOpacity onPress={this.edit}>
+                                <Text style={styles.lblTxtInner}>{gblStrings.common.edit}</Text>
+                            </TouchableOpacity>
+                            <Text style={styles.lblLine} />
+                            <TouchableOpacity onPress={this.delete}>
+                                <Text style={styles.lblTxtInner}>{gblStrings.common.delete}</Text>
+                            </TouchableOpacity>
+                        </View> : null
+                }
             </View>
         );
     }

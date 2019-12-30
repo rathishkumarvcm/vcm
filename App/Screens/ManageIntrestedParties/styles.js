@@ -27,13 +27,6 @@ const styles = StyleSheet.create({
     marginTop: scaledHeight(15),
     lineHeight: 29
   },
-  manageBenificiariesHeadline: {
-    color: "#54565B",
-    fontWeight: "bold",
-    fontSize: scaledHeight(22),
-    marginTop: scaledHeight(20),
-    lineHeight: scaledHeight(29)
-  },
   contactUsLink: {
     color: "#0000FF",
     fontSize: scaledHeight(15),
@@ -165,8 +158,7 @@ const styles = StyleSheet.create({
     color: "#56565A"
   },
   flexDirectionStyle: {
-    flexDirection: "row",
-    paddingLeft: '4%'
+    flexDirection: "row"
   },
   notificationView: {
     width: "100%",
@@ -228,6 +220,9 @@ const styles = StyleSheet.create({
     elevation: 5,
     width: "40%",
     alignSelf: 'flex-end'
+  },
+  dateTextLayout:{
+    marginTop: 0 
   }
 });
 

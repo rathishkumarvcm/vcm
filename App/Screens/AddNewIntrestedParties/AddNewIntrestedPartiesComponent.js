@@ -15,6 +15,7 @@ let relationData = [
 ];
 
 class addNewIntrestedPartiesComponent extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -67,9 +68,9 @@ class addNewIntrestedPartiesComponent extends Component {
             "relationship"
         ];
         for (let i = 0; i < compositePayloadData.length; i += 1) {
-            const tempkey = compositePayloadData[i];
-            if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempkey]) {
-                payload.push(tempkey);
+            const tempKey = compositePayloadData[i];
+            if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempKey]) {
+                payload.push(tempKey);
             }
         }
         this.props.getCompositeLookUpData(payload);
@@ -77,7 +78,6 @@ class addNewIntrestedPartiesComponent extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log("didUpdate::");
         const stateCityResponseData = ActionTypes.GET_STATECITY;
         const addressResponseData = ActionTypes.GET_ADDRESSFORMAT;
 
@@ -85,7 +85,6 @@ class addNewIntrestedPartiesComponent extends Component {
             if (this.props !== prevProps) {
                 if (this.props && this.props.stateCityData[stateCityResponseData]) {
                     const tempResponse = this.props.stateCityData[stateCityResponseData];
-                    console.log("@@@@@@@@@@@@@@@ Success Update", tempResponse);
                     if (tempResponse && tempResponse.City) {
                         this.onUpdateField("personal", "city", tempResponse.City);
                         this.onUpdateField("personal", "stateValue", tempResponse.State);
@@ -104,7 +103,6 @@ class addNewIntrestedPartiesComponent extends Component {
             if (this.props !== prevProps) {
                 if (this.props && this.props.stateCityData[addressResponseData]) {
                     const tempAddressResponse = this.props.stateCityData[addressResponseData];
-                    console.log("@@@@@@@@@@@@@@@@@@@@ Success Address", tempAddressResponse);
                     if (tempAddressResponse && tempAddressResponse.Address2) {
                         this.onUpdateField("personal", "addressLine1", tempAddressResponse.Address1 || "");
                         this.onUpdateField("personal", "addressLine2", tempAddressResponse.Address2 || "");
@@ -136,7 +134,6 @@ class addNewIntrestedPartiesComponent extends Component {
     }
 
     getAddressValid = () => {
-        console.log("Get address valid:::");
         let addAddressPayload = {};
         if (this.state.personal.addressLine1 !== "" && this.state.personal.addressLine2 !== "") {
             if (this.state.personal.zipCode !== '') {
@@ -193,13 +190,8 @@ class addNewIntrestedPartiesComponent extends Component {
         }));
     }
 
-    selectRelation = () => {
-        this.onUpdateField("personal", "relationDropDown", !this.state.relationDropDown);
-    }
-
     selectedRelationDropDownValue = (value) => {
-        this.onUpdateField("personal", "relation", value.value);
-        this.onUpdateField("personal", "relationDropDown", false);
+        this.onUpdateField("personal", "relation", value);
     }
 
     onCancelClick = () => {
@@ -251,7 +243,6 @@ class addNewIntrestedPartiesComponent extends Component {
 
     validateFields = () => {
         try {
-            console.log("validateFields:::");
             let isValidationSuccess = false;
             this.setState(prevState => ({
                 personal: {
@@ -277,7 +268,7 @@ class addNewIntrestedPartiesComponent extends Component {
                 this.onClickSave();
             }
         } catch (err) {
-            console.log("Error:::" + err);
+            console.log(`Error::: ${err}`);
         }
     }
 
@@ -290,7 +281,7 @@ class addNewIntrestedPartiesComponent extends Component {
             this.onUpdateField("personal", "fnameValiMsg", gblStrings.accManagement.emptyFirstNameMsg);
             isErrMsg = true;
         } else {
-            let validate = nameRegex.test(this.state.personal.firstName);
+            const validate = nameRegex.test(this.state.personal.firstName);
             this.onUpdateField("personal", "fnameValidation", validate);
             this.onUpdateField("personal", "fnameValiMsg", gblStrings.accManagement.firstNameFormat);
             isErrMsg = !validate;
@@ -301,14 +292,14 @@ class addNewIntrestedPartiesComponent extends Component {
             this.onUpdateField("personal", "lnameValiMsg", gblStrings.accManagement.emptyLastNameMsg);
             isErrMsg = true;
         } else {
-            let validate = nameRegex.test(this.state.personal.lastName);
+            const validate = nameRegex.test(this.state.personal.lastName);
             this.onUpdateField("personal", "lnameValidation", validate);
             this.onUpdateField("personal", "lnameValiMsg", gblStrings.accManagement.lastNameFormat);
             isErrMsg = !validate;
         }
 
         if (!this.isEmpty(this.state.personal.email)) {
-            let validate = emailRegex.test(this.state.personal.email);
+            const validate = emailRegex.test(this.state.personal.email);
             this.onUpdateField("personal", "emailValidation", validate);
             isErrMsg = !validate;
         } else {
@@ -338,7 +329,7 @@ class addNewIntrestedPartiesComponent extends Component {
             this.onUpdateField("personal", "zipCodeValiMsg", gblStrings.accManagement.emptyZipCodeMsg);
             isErrMsg = true;
         } else {
-            let validate = zipCodeRegex.test(this.state.personal.zipCode);
+            const validate = zipCodeRegex.test(this.state.personal.zipCode);
             this.onUpdateField("personal", "zipCodeValidation", validate);
             this.onUpdateField("personal", "zipCodeValiMsg", "Please enter valid ZipCode");
             this.getZipCodeValue();
@@ -366,7 +357,8 @@ class addNewIntrestedPartiesComponent extends Component {
     }
 
     onClickSave = () => {
-        const data = this.state.personal, key = parseInt(this.state.account_Data.intrestedParty.length) + 1;
+        const data = this.state.personal;
+        const key = parseInt(this.state.account_Data.interestedParty.length) + 1;
         const obj = {
             "key": key,
             "fname": data.firstName,
@@ -385,7 +377,8 @@ class addNewIntrestedPartiesComponent extends Component {
             "endDate": data.endDate,
             "accounts_Tagged": '1'
         };
-        if (this.state.personal.addValidation && this.state.personal.addressLine1 && this.state.personal.addressLine2m && this.state.isAddressApiCalling) {
+        // removed isAPi calling from if
+        if (this.state.personal.addValidation && this.state.personal.addressLine1 && this.state.personal.addressLine2) {
             this.props.navigation.navigate("verifyIntrestedParties", { acc_Data: this.state.account_Data, added_obj: obj });
         }
 
@@ -397,8 +390,9 @@ class addNewIntrestedPartiesComponent extends Component {
         if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.relationship && this.props.masterLookupStateData.relationship.value) {
             relationData = this.props.masterLookupStateData.relationship.value;
         }
+
         return (
-            <View style={styles.container} >
+            <View style={styles.container}>
                 {
                     this.props.stateCityData.isLoading && <GLoadingSpinner />
                 }
@@ -415,7 +409,7 @@ class addNewIntrestedPartiesComponent extends Component {
                         </View>
                         <View style={styles.line} />
                         <View style={styles.containerView}>
-                            <Text style={styles.containerHeaderText}>{" Acc Name - " + this.state.account_Data.account_Name + " | " + "Acc Number - " + this.state.account_Data.account_Number}</Text>
+                            <Text style={styles.containerHeaderText}>{`Acc Name - ${this.state.account_Data.account_Name} | Acc Number - ${this.state.account_Data.account_Number}`}</Text>
                         </View>
                         <View style={styles.blockMarginTop} />
                         <View style={styles.titleHeadingView}>
@@ -424,14 +418,14 @@ class addNewIntrestedPartiesComponent extends Component {
                         </View>
                         <View style={styles.line} />
 
-                        {/* -------------------------- Add Intrested Parties --------------------------------- */}
+                        {/* -------------------------- Add Interested Parties --------------------------------- */}
 
                         <View style={styles.paddingHorizontalStyle}>
                             <Text style={styles.lblTxt}>{gblStrings.accManagement.firstName}</Text>
                             <GInputComponent
                                 inputref={this.setInputRef("firstName")}
                                 propInputStyle={styles.customTxtBox}
-                                placeholder={''}
+                                placeholder=""
                                 maxLength={gblStrings.maxLength.firstName}
                                 onChangeText={this.onChangeText("personal", "firstName")}
                                 errorFlag={!this.state.personal.fnameValidation}
@@ -442,13 +436,13 @@ class addNewIntrestedPartiesComponent extends Component {
                                     {gblStrings.accManagement.middleInitial}
                                 </Text>
                                 <Text style={styles.optionalTxt}>
-                                    {" " + gblStrings.accManagement.optional}
+                                    {` ${gblStrings.accManagement.optional}`}
                                 </Text>
                             </Text>
                             <GInputComponent
                                 inputref={this.setInputRef("middleInitial")}
                                 propInputStyle={styles.customTxtBox}
-                                placeholder={""}
+                                placeholder=""
                                 maxLength={gblStrings.maxLength.middleInitial}
                                 onChangeText={this.onChangeText("personal", "middleName")}
                             />
@@ -458,7 +452,7 @@ class addNewIntrestedPartiesComponent extends Component {
                             <GInputComponent
                                 inputref={this.setInputRef("lastName")}
                                 propInputStyle={styles.customTxtBox}
-                                placeholder={""}
+                                placeholder=""
                                 maxLength={gblStrings.maxLength.lastName}
                                 onChangeText={this.onChangeText("personal", "lastName")}
                                 errorFlag={!this.state.personal.lnameValidation}
@@ -469,12 +463,9 @@ class addNewIntrestedPartiesComponent extends Component {
                                 dropDownTextName={styles.lblTxt}
                                 data={relationData}
                                 textInputStyle={styles.dropdownTextInput}
-                                itemToDisplay={"value"}
                                 dropDownLayout={styles.dropDownLayout}
-                                changeState={this.selectRelation}
                                 errorFlag={this.state.personal.relationValidation}
                                 errorText={this.state.personal.relationValiMsg}
-                                showDropDown={this.state.personal.relationDropDown}
                                 dropDownValue={this.state.personal.relation}
                                 selectedDropDownValue={this.selectedRelationDropDownValue}
                             />
@@ -483,7 +474,7 @@ class addNewIntrestedPartiesComponent extends Component {
                                     {gblStrings.accManagement.emailAddress}
                                 </Text>
                                 <Text style={styles.optionalTxt}>
-                                    {" " + gblStrings.accManagement.optional}
+                                    {` ${gblStrings.accManagement.optional}`}
                                 </Text>
                             </Text>
                             <GInputComponent
@@ -503,7 +494,7 @@ class addNewIntrestedPartiesComponent extends Component {
                                 <GInputComponent
                                     inputref={this.setInputRef("company")}
                                     propInputStyle={styles.customCompTxtBox}
-                                    placeholder={""}
+                                    placeholder=""
                                     maxLength={gblStrings.maxLength.company}
                                     onChangeText={this.onChangeText("personal", "company")}
                                 />
@@ -537,7 +528,7 @@ class addNewIntrestedPartiesComponent extends Component {
                             {!this.state.personal.addValidation && <Text style={styles.errMsg}>{this.state.personal.addressValiMsg}</Text>}
                             <GButtonComponent
                                 buttonStyle={styles.validateBtn}
-                                buttonText={"Verify"}
+                                buttonText="Verify"
                                 textStyle={styles.validateBtnTxt}
                                 onPress={this.validateAddress}
                             />
@@ -547,11 +538,11 @@ class addNewIntrestedPartiesComponent extends Component {
                             <GInputComponent
                                 inputref={this.setInputRef("zipCode")}
                                 propInputStyle={styles.customTxtBox}
-                                placeholder={""}
+                                placeholder=""
                                 maxLength={gblStrings.maxLength.zipCode}
                                 onBlur={this.validateZipCode}
                                 keyboardType="number-pad"
-                                returnKeyType={"done"}
+                                returnKeyType="done"
                                 onSubmitEditing={this.validateZipCode}
                                 onChangeText={this.onChangeText("personal", "zipCode")}
                                 errorFlag={!this.state.personal.zipCodeValidation}
@@ -641,8 +632,7 @@ addNewIntrestedPartiesComponent.propTypes = {
     stateCityData: PropTypes.instanceOf(Object),
     getCompositeLookUpData: PropTypes.func,
     getAddressFormat: PropTypes.func,
-    getStateCity: PropTypes.func,
-    getAddress: PropTypes.func
+    getStateCity: PropTypes.func
 };
 
 addNewIntrestedPartiesComponent.defaultProps = {
@@ -651,7 +641,6 @@ addNewIntrestedPartiesComponent.defaultProps = {
     stateCityData: {},
     getCompositeLookUpData: () => { },
     getAddressFormat: () => { },
-    getStateCity: () => { },
-    getAddress: () => { }
+    getStateCity: () => { }
 };
 export default addNewIntrestedPartiesComponent;
