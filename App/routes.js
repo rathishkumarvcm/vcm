@@ -946,7 +946,7 @@ const AppNavigator = createStackNavigator({
 
 },
     {
-        initialRouteName: "dividentsAndCapitalGainsPref"
+        initialRouteName: "login"
     });
 
 export default createAppContainer(AppNavigator);
