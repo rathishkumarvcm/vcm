@@ -504,7 +504,24 @@ class OpenAccPageTwoComponent extends Component {
                 mobileNo: "",
                 emailAddress: "",
                 socialSecurityNo: "",
+                specifyState:"",
+                isBusinessTrust:"",
+                isBrokerOrDealerTrust:"",
+                brokerOrDealer:"",
+                isBankTrust:"",
+                isForeignUSBranchTrust:"",
+                businessTrust:"",
+                isMoneyTranOrCurrencyExchangeOrgnaised:"",
+                isCorrespondentAccountsOffersProvided:"",
+                typeOfFiniancialInstitution:"",
+                VCMFundAccountNumbers:"",
+                isFinanacialInstitutionDescribed:"",
+                finanacialInstitutionDesc:"",
+                isPhysicalPresenceMaintained:"",
+                isIndividualEmploymentThere:"",
+                isTrustMaintainRecords:"",
 
+               
                 nameValidation: true,
                 creationDateValidation: true,
                 isFederalLawApplicableValidation: true,
@@ -527,6 +544,24 @@ class OpenAccPageTwoComponent extends Component {
                 mobileNoValidation: true,
                 emailAddressValidation: true,
                 socialSecurityNoValidation: true,
+
+                specifyStateValidation: true,
+                isBusinessTrustValidation: true,
+                isBrokerOrDealerTrustValidation: true,
+                brokerOrDealerValidation: true,
+                isBankTrustValidation: true,
+                isForeignUSBranchTrustValidation: true,
+                businessTrustValidation: true,
+                isMoneyTranOrCurrencyExchangeOrgnaisedValidation: true,
+                isCorrespondentAccountsOffersProvidedValidation: true,
+                typeOfFiniancialInstitutionValidation: true,
+                VCMFundAccountNumbersValidation: true,
+                isFinanacialInstitutionDescribedValidation: true,
+                finanacialInstitutionDescValidation: true,
+                isPhysicalPresenceMaintainedValidation: true,
+                isIndividualEmploymentThereValidation: true,
+                isTrustMaintainRecordsValidation: true,
+
 
                 // ExpandCollapse
                 isTrustInfoExpanded: false,
@@ -2496,6 +2531,41 @@ class OpenAccPageTwoComponent extends Component {
         );
 
 
+
+
+    }
+    renderYesNoRadio = (sectionName, radioName) => {
+        AppUtils.Dlog(`renderYesNoRadio::: ${radioName}`);
+        
+        return(
+        <View style={styles.radioBtnGrp}>
+        <CustomRadio
+            componentStyle={styles.radioCol1}
+            size={30}
+            outerCicleColor="#DEDEDF"
+            innerCicleColor="#61285F"
+            labelStyle={styles.lblRadioBtnTxt}
+            label="Yes"
+            descLabelStyle={styles.lblRadioDescTxt}
+            descLabel=""
+            selected={!!((this.state[sectionName][radioName] !== null && this.state[sectionName][radioName] === "Yes"))}
+            onPress={this.onPressRadio(sectionName, radioName, "Yes")}
+        />
+        <CustomRadio
+            componentStyle={styles.radioCol2}
+            size={30}
+            outerCicleColor="#DEDEDF"
+            innerCicleColor="#61285F"
+            labelStyle={styles.lblRadioBtnTxt}
+            label="No"
+            descLabelStyle={styles.lblRadioDescTxt}
+            descLabel=""
+            selected={!!((this.state[sectionName][radioName] !== null && this.state[sectionName][radioName] === "No"))}
+            onPress={this.onPressRadio(sectionName,radioName, "No")}
+
+        />
+    </View>
+        );
 
 
     }
@@ -5845,12 +5915,13 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     renderEstateInfo = () => {
+        const accType = `${this.props.navigation.getParam('accType', '')}`;
 
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
-                        {gblStrings.accManagement.estateInfo}
+                        {accType === "Trust Account"? gblStrings.accManagement.trustInfo :gblStrings.accManagement.estateInfo}
                     </Text>
                     <TouchableOpacity
                         activeOpacity={0.8}
@@ -5869,7 +5940,7 @@ class OpenAccPageTwoComponent extends Component {
                     <View style={styles.childSectionGrp}>
 
                         <Text style={styles.lblTxt}>
-                            {gblStrings.accManagement.estateName}
+                            {accType === "Trust Account"?gblStrings.accManagement.trustName :gblStrings.accManagement.estateName}
                         </Text>
                         <GInputComponent
                             // inputref={(ref)=> this.firstName = ref}
@@ -6149,10 +6220,24 @@ class OpenAccPageTwoComponent extends Component {
                         </View>
 
                         <Text style={styles.lblTxt}>
+                            {gblStrings.accManagement.specifyState}
+                        </Text>
+                        <GInputComponent
+                            inputref={this.setInputRef("specifyState")}
+                            value={this.state.estate.specifyState}
+                            propInputStyle={this.state.estate.specifyStateValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder=""
+                            maxLength={gblStrings.maxLength.country}
+                            onChangeText={this.onChangeText("estate", "specifyState")}
+                            onSubmitEditing={this.onSubmitEditing(this.orgCountry)}
+                            errorFlag={!this.state.estate.specifyStateValidation}
+                            errorText={this.state.errMsg}
+                        />
+
+                        <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.orgCountry}
                         </Text>
                         <GInputComponent
-                            // inputref={(ref)=> this.firstName = ref}
                             inputref={this.setInputRef("orgCountry")}
                             value={this.state.estate.orgCountry}
                             propInputStyle={this.state.estate.orgCountryValidation ? styles.customTxtBox : styles.customTxtBoxError}
@@ -6160,10 +6245,141 @@ class OpenAccPageTwoComponent extends Component {
                             returnKeyType="done"
                             maxLength={gblStrings.maxLength.country}
                             onChangeText={this.onChangeText("estate", "orgCountry")}
-                            //onSubmitEditing={this.onSubmitEditing(this.middleInitial)}
                             errorFlag={!this.state.estate.orgCountryValidation}
                             errorText={this.state.errMsg}
                         />
+
+                       {
+                            accType === "Trust Account" &&
+                            <View style={styles.commonColView}>
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.isBusinessTrust}
+                                </Text>
+                                {this.renderYesNoRadio("estate","isBusinessTrust")}
+                                
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.isBrokerDealerTrust}
+                                </Text>
+                                {this.renderYesNoRadio("estate","isBrokerOrDealerTrust")}
+
+                                {this.renderCustomDropDown({
+                                    section: "estate",
+                                    stateKey: "brokerOrDealer",
+                                    dropDownName: "brokerOrDealerDropDown",
+                                    lblDropdownName: gblStrings.accManagement.isBrokerOrDealer,
+                                    isOptional: true
+                                })
+                                }
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.isBankTrust}
+                                </Text>
+                                {this.renderYesNoRadio("estate", "isBankTrust")}
+
+                                {this.renderCustomDropDown({
+                                    section: "estate",
+                                    stateKey: "bankTrustType",
+                                    dropDownName: "bankTrustTypeDropDown",
+                                    lblDropdownName: gblStrings.accManagement.bankTrustType,
+                                    isOptional: true
+                                })
+                                }
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.isForeignUSBranchTrust}
+                                </Text>
+                                {this.renderYesNoRadio("estate", "isForeignUSBranchTrust")}
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.businessTrust}
+                                </Text>
+                                {this.renderYesNoRadio("estate", "businessTrust")}
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.isMoneyTransmitterOrCurrencyExchangeOrgnaised}
+                                </Text>
+                                {this.renderYesNoRadio("estate", "isMoneyTranOrCurrencyExchangeOrgnaised")}
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.isCorrespondentAccountsOffersProvided}
+                                </Text>
+                                {this.renderYesNoRadio("estate", "isCorrespondentAccountsOffersProvided")}
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.typeOfFiniancialInstitution}
+                                </Text>
+                                <GInputComponent
+                                    inputref={this.setInputRef("typeOfFiniancialInstitution")}
+                                    value={this.state.estate.VCMFundAccountNumbers}
+                                    propInputStyle={this.state.estate.typeOfFiniancialInstitution ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder=""
+                                    maxLength={gblStrings.maxLength.country}
+                                    onChangeText={this.onChangeText("estate", "typeOfFiniancialInstitution")}
+                                    errorFlag={!this.state.estate.typeOfFiniancialInstitutionValidation}
+                                    errorText={this.state.errMsg}
+                                />
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.isCorrespondentAccountsForeignOffersProvided}
+                                </Text>
+                                {this.renderYesNoRadio("estate", "isCorrespondentAccountsForeignOffersProvided")}
+                                
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.VCMFundAccountNumbers}
+                                </Text>
+                                <GInputComponent
+                                    inputref={this.setInputRef("VCMFundAccountNumbers")}
+                                    value={this.state.estate.VCMFundAccountNumbers}
+                                    propInputStyle={this.state.estate.VCMFundAccountNumbersValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder=""
+                                    maxLength={gblStrings.maxLength.country}
+                                    onChangeText={this.onChangeText("estate", "VCMFundAccountNumbers")}
+                                    errorFlag={!this.state.estate.VCMFundAccountNumbersValidation}
+                                    errorText={this.state.errMsg}
+                                />
+
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.isFinanacialInstitutionDescribed}
+                                </Text>
+                                {this.renderYesNoRadio("estate", "isFinanacialInstitutionDescribed")}
+    
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.describeFinanacialInstitution}
+                                </Text>
+                                <GInputComponent
+                                    inputref={this.setInputRef("finanacialInstitutionDesc")}
+                                    value={this.state.estate.finanacialInstitutionDesc}
+                                    propInputStyle={this.state.estate.finanacialInstitutionDescValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder=""
+                                    multiline
+                                    numberOfLines = {8}
+                                    maxLength={gblStrings.maxLength.country}
+                                    onChangeText={this.onChangeText("estate", "finanacialInstitutionDesc")}
+                                    errorFlag={!this.state.estate.finanacialInstitutionDescValidation}
+                                    errorText={this.state.errMsg}
+                                />
+
+                                      
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.isPhysicalPresenceMaintained}
+                                </Text>
+                                {this.renderYesNoRadio("estate", "isPhysicalPresenceMaintained")}
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.isIndividualEmploymentThere}
+                                </Text>
+                                {this.renderYesNoRadio("estate", "isIndividualEmploymentThere")}
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.isTrustMaintainRecords}
+                                </Text>
+                                {this.renderYesNoRadio("estate", "isTrustMaintainRecords")}
+    
+
+                            </View>
+                       }
+                        
 
                     </View>
                 }
