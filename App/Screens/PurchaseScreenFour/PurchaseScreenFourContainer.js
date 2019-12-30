@@ -1,17 +1,18 @@
 import { connect } from 'react-redux';
 import PurchaseFourComponent from './PurchaseScreenFourComponent';
-import { liquidationActions } from "../../Shared/Actions";
+import { ammendActions } from "../../Shared/Actions";
 
 /*----------------------
                                   Redux Methods
                                                              -------------------------- */
 
 const mapStateToProps = (state /* , props */) => ({
-  liquidationInitialState: state.liquidationData,
+  purchaseData: state.purchaseData,
+  amendReducerData: state.amendReducerData,
 });
 
 const mapDispatchToProps = {
-  ...liquidationActions,
+  ...ammendActions
 };
 
 export default connect(

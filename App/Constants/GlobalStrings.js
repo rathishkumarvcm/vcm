@@ -1351,7 +1351,8 @@ export default {
         usaaMutualFundAccNumber: "USAA Mutual Fund Account Number",
         mailingToNumber: "Mailing to This Address",
         wireTransferStmt: "The transaction will be processed on confirmation of wire transfer details. Please wait for 3-5 business days for completion of your transaction.",
-        "address": "Mellon Trust of New England 1 Boston Place Boston, Massachusetts 02108 ABA # 011001234"
+        "address": "Mellon Trust of New England 1 Boston Place Boston, Massachusetts 02108 ABA # 011001234",
+        reviewAndConfrm:"Review and Confirm"
     }
 
 };

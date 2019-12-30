@@ -1,18 +1,38 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import { GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import { PageNumber } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import { styles } from './styles';
 
+let savedData = {};
+let ammendData = {};
+let ammendIndex = null;
+let menuList = [];
 
 class PurchaseFourComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-         ammend : false,   
+            ammend: false,
         };
+    }
+
+    componentDidMount() {
+        ammendData = this.props.navigation.getParam('data');
+        ammendIndex = this.props.navigation.getParam('index');
+        if (this.props.navigation.getParam('ammend')) {
+            this.setState({ ammend: true });
+        }
+        else {
+            this.setState({ ammend: false });
+        }
+
+
+        if (this.props && this.props.amendReducerData && this.props.amendReducerData.menu) {
+            menuList = this.props.amendReducerData.menu;
+        }
     }
 
     formatAmount = (amount) => {
@@ -20,143 +40,130 @@ class PurchaseFourComponent extends Component {
         return amt;
     }
 
-    navigatePurchasePageOne = () => 
-    { 
-        if(this.state.ammend)
-        {
-        this.props.navigation.navigate('tAmmendComponent');
+    navigatePurchasePageOne = () => {
+        if (this.state.ammend) {
+            this.props.navigation.navigate('tAmmendComponent');
         }
-        else
-        {
+        else {
             this.props.navigation.navigate('purchaseScreenOne');
         }
     }
 
-    navigatePurchasePageThree = () => 
-    { 
-        if(this.state.ammend)
-        {
-        this.props.navigation.navigate('purchaseScreenThree',{ammend:true});
+    navigatePurchasePageThree = () => {
+        if (this.state.ammend) {
+            this.props.navigation.navigate('purchaseScreenThree', { ammend: true });
         }
-        else
-        {
-        this.props.navigation.navigate('purchaseScreenThree',{ammend:false});
+        else {
+            this.props.navigation.navigate('purchaseScreenThree', { ammend: false });
         }
     }
 
     onClickEditAccountSelection = () => {
-        if(this.state.ammend)
-        {
-        this.props.navigation.navigate('tAmmendComponent',{ammend:true});
+        if (this.state.ammend) {
+            this.props.navigation.navigate('tAmmendComponent', { ammend: true });
         }
-        else{
-        this.props.navigation.navigate('purchaseScreenOne',{ammend:false});
+        else {
+            this.props.navigation.navigate('purchaseScreenOne', { ammend: false });
         }
     }
 
     onClickEditSelectedFund = () => {
-        
-        if(this.state.ammend)
-        {
-        this.props.navigation.navigate('purchaseScreenTwo',{ammend:true});
+
+        if (this.state.ammend) {
+            this.props.navigation.navigate('purchaseScreenTwo', { ammend: true });
         }
-        else
-        {
-            this.props.navigation.navigate('purchaseScreenTwo',{ammend:false});
+        else {
+            this.props.navigation.navigate('purchaseScreenTwo', { ammend: false });
         }
     }
 
     onClickEditFundingSource = () => {
-        if(this.state.ammend)
-        {
-        this.props.navigation.navigate('purchaseScreenThree',{ammend:true});
+        if (this.state.ammend) {
+            this.props.navigation.navigate('purchaseScreenThree', { ammend: true });
         }
-        else
-        {
-        this.props.navigation.navigate('purchaseScreenThree',{ammend:false});
+        else {
+            this.props.navigation.navigate('purchaseScreenThree', { ammend: false });
         }
     }
 
-    onClickEditTaxAccountingmethod = () => {
-        if(this.state.ammend)
-        {
-        this.props.navigation.navigate('LiquidationPageThree',{ammend:true});
-        }
-        else
-        {
-        this.props.navigation.navigate('LiquidationPageThree',{ammend:false});
-        }
-    }
+    onClickSave = () => {
 
-    isEmpty = (str) => {
-        if (str === "" || str === undefined || str == null || str === "null" || str === "undefined") {
-            return true;
-        } 
-            return false;
-       
-      }
+        const date = new Date().getDate();
+        const month = new Date().getMonth() + 1;
+        const year = new Date().getFullYear();
+        const updatedDate = date + '/' + month + '/' + year;
 
-    submitButtonAction = () => {
-        
-        // console.log('On Click Submit Liquidation ...');
-        this.props.navigation.navigate('LiquidationFinish');
-    }
+        const finalKey = menuList[menuList.length - 1];
 
-    componentDidMount() {
-        // console.log(" Screen 4 componentdidmount " + JSON.stringify(this.props));
-        this.setState({transactionType:this.props.navigation.getParam('transactionType')});
-        if(this.props.navigation.getParam('ammend'))
-        {
-            this.setState({ammend:true});
+        if (this.state.ammend) {
+            const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
+            const amndObj = menuList[pIndex];
+            const transType = ammendData.TransactionType + ' Amended';
+            const ammendPayloadData = {
+                "key": amndObj.key,
+                "title": amndObj.title,
+                "data": {
+                    "count": ammendData.count,
+                    "Dateadded": updatedDate,
+                    "TransactionType": transType,
+                    "OrderStatus": ammendData.OrderStatus,
+                    "totalSHares": ammendData.totalSHares,
+                    "worth": ammendData.worth,
+                    "selectedAccountData": savedData.selectedAccountData,
+                    "selectedFundData": savedData.selectedFundData,
+                    "selectedFundSourceData": savedData.selectedFundSourceData,
+                    "currentSecurities": savedData.currentSecurities,
+                    "contribution": savedData.contribution,
+                    "estimated": ammendData.estimated
+                }
+            };
+            menuList.splice(pIndex, 1, ammendPayloadData);
+            this.props.ammendActions(menuList);
+            this.props.navigation.navigate('tAmmendComponent');
         }
-        else{
-            this.setState({ammend:false});
+        else {
+            const payloadData = {
+                "key": finalKey,
+                "title": `Order ID - PUR0${year}${month}${date}`,
+                "data": {
+                    "count": 5,
+                    "Dateadded": updatedDate,
+                    "TransactionType": "Purchase",
+                    "OrderStatus": "Pending",
+                    "totalSHares": "",
+                    "worth": "",
+                    "selectedAccountData": savedData.selectedAccountData,
+                    "selectedFundData": savedData.selectedFundData,
+                    "selectedFundSourceData": savedData.selectedFundSourceData,
+                    "currentSecurities": savedData.currentSecurities,
+                    "contribution": savedData.contribution,
+                    "estimated": {}
+                }
+            };
+            menuList.push(payloadData);
+            this.props.ammendActions(menuList);
+            this.props.navigation.navigate('tAmmendComponent');
         }
     }
 
     render() {
         let currentPage = 4;
+        let pageName = `${currentPage} - ${gblStrings.purchase.reviewAndConfrm}`;
         let totalCount = 4;
-        let pageName = gblStrings.liquidation.reviewNConfirmHeading;
-        if(this.state.ammend)
-        {
-             currentPage = 2;
-             pageName = "3 - Review and Confirm";
-             totalCount = 3;
+        if (this.state.ammend) {
+            currentPage = 3;
+            pageName = `${currentPage} - ${gblStrings.purchase.reviewAndConfrm}`;
+            totalCount = 3;
         }
-        let sellingAmount = '';
-        if(this.props.liquidationInitialState.allSharesSelected){
-            sellingAmount = gblStrings.liquidation.dollarSymbol+this.formatAmount(this.props.liquidationInitialState.worthAmount);
-        }else if(this.isEmpty(this.props.liquidationInitialState.percentageValue)){
-            sellingAmount = gblStrings.liquidation.dollarSymbol+this.formatAmount(this.props.liquidationInitialState.dollarValue);
-        }else{
-            sellingAmount = gblStrings.liquidation.dollarSymbol+this.formatAmount((this.props.liquidationInitialState.percentageValue/100)*this.props.liquidationInitialState.worthAmount);
+
+        if (this.props.purchaseData && this.props.purchaseData.savePurchaseSelectedData) {
+            savedData = this.props.purchaseData.savePurchaseSelectedData;
         }
-        const fundWithdrawalData = this.props.liquidationInitialState;
-        let amount = "";
-        if (fundWithdrawalData.requestedAmountType === "Before Taxes") {
-            amount = fundWithdrawalData.amountBeforeTaxes;
-        } else {
-            amount = fundWithdrawalData.amountAfterTaxes;
-        }
-        let fundingSource = "";
-        if(fundWithdrawalData.checkSelectedOrder){
-            fundingSource = gblStrings.liquidation.check;
-        }else{
-            fundingSource = fundWithdrawalData.bankAccountName;
-        }
-       return (
-           <View style={styles.container}>
+
+        return (
+            <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.mainFlex}>
-                    <TouchableOpacity>
-                        <GIcon
-                            name="left"
-                            type="antdesign"
-                            size={25}
-                            color="#707070"
-                        />
-                    </TouchableOpacity>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.flexContainer}>
                         <Text style={styles.subHeading}>{gblStrings.liquidation.tradeType}</Text>
@@ -172,11 +179,11 @@ class PurchaseFourComponent extends Component {
                         <View style={styles.line} />
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountName}</Text>
-                            <Text style={styles.greyText16px}>{gblStrings.liquidation.accountName}{this.props.liquidationInitialState.selectedAccountName}</Text>
+                            <Text style={styles.greyText16px}>{gblStrings.liquidation.accountName}{savedData.selectedAccountData.accountName}</Text>
                         </View>
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountNumber}</Text>
-                            <Text style={styles.greyText16px}>{this.props.liquidationInitialState.selectedAccountNumber}</Text>
+                            <Text style={styles.greyText16px}>{savedData.selectedAccountData.accountNumber}</Text>
                         </View>
                         <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>{gblStrings.accManagement.selectedMutualFunds}</Text>
@@ -185,18 +192,18 @@ class PurchaseFourComponent extends Component {
                         <View style={styles.line} />
 
                         <View style={styles.govtSecuritiesFund}>
-                            <Text style={styles.blackTextBold22px}>{gblStrings.liquidation.govtSecuritiesFund}</Text>
+                            <Text style={styles.blackTextBold22px}>{savedData.selectedFundData.fundName}</Text>
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>Initial Investment</Text>
-                                <Text style={styles.greyText16px}>{gblStrings.liquidation.dollarSymbol}{this.formatAmount(this.props.liquidationInitialState.worthAmount)}</Text>
+                                <Text style={styles.greyText16px}>{savedData.selectedFundData.initialInvestment}</Text>
                             </View>
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>Monthly Investment</Text>
-                                <Text style={styles.greyText16px}>{sellingAmount}</Text>
+                                <Text style={styles.greyText16px}>{savedData.selectedFundData.monthlyInvestment}</Text>
                             </View>
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>Start Date</Text>
-                                <Text style={styles.greyText16px}>{sellingAmount}</Text>
+                                <Text style={styles.greyText16px}>{savedData.selectedFundData.startDate}</Text>
                             </View>
                         </View>
 
@@ -207,7 +214,7 @@ class PurchaseFourComponent extends Component {
                         <View style={styles.line} />
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>Reinvest Earning,Income and capital Gains</Text>
-                            <Text style={styles.greyText16px}>{fundingSource}</Text>
+                            <Text style={styles.greyText16px}>{savedData.currentSecurities.reinvest ? "I want to Re-Invest" : "No I dont want to Re-Invest"}</Text>
                         </View>
                         <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>{gblStrings.accManagement.fundingSource}</Text>
@@ -216,65 +223,28 @@ class PurchaseFourComponent extends Component {
                         <View style={styles.line} />
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>{gblStrings.accManagement.fundingSource}</Text>
-                            <Text style={styles.greyText16px}>{fundingSource}</Text>
+                            <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.paymentMode}</Text>
                         </View>
 
-                        {(fundingSource === gblStrings.liquidation.check) ?
+                        {(savedData.selectedFundSourceData.paymentMode === gblStrings.liquidation.check || "Wire Transfer") ?
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalInvestment}</Text>
-                                <Text style={styles.greyText16px}>{fundWithdrawalData.bankAccountNo}</Text>
+                                <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.totalInvestment}</Text>
                             </View> : <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountNumber}</Text>
-                                <Text style={styles.greyText16px}>{fundWithdrawalData.bankAccountNo}</Text>
-                                      </View>
+                                <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.bankAccountNumber}</Text>
+                            </View>
                         }
                         {/* -----------------------------------Tax Accounting Method starts here-------------------------------- */}
-                        {(this.props.liquidationInitialState.taxWithHoldingOption === gblStrings.liquidation.withholdTaxes)&&(this.props.liquidationInitialState.accType=="IRA")?
-                            <View>
-                                <View style={styles.horizontalFlex}>
-                                    <Text style={styles.subHeading}>{gblStrings.liquidation.taxAccountingMethod}</Text>
-                                    <Text style={styles.edit} onPress={this.onClickEditTaxAccountingmethod}>{gblStrings.common.edit}</Text>
-                                </View>
-                                <View style={styles.line} />
-                                <Text style={styles.blackTextBold22px}>{fundWithdrawalData.taxWithHoldingOption}</Text>
-                                <View style={styles.section}>
-                                    <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.isTheReqAmount}</Text>
-                                    <Text style={styles.greyText16px}>{fundWithdrawalData.requestedAmountType}</Text>
-                                </View>
-                                <View style={styles.section}>
-                                    <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.amount}{fundWithdrawalData.requestedAmountType}</Text>
-                                    <Text style={styles.greyText16px}>{amount}</Text>
-                                </View>
-                                <View style={styles.section}>
-                                    <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.federalTax}</Text>
-                                    <Text style={styles.greyText16px}>{fundWithdrawalData.federalTaxInPerc}  -  {fundWithdrawalData.federalTaxInDollars}</Text>
-                                </View>
-                                <View style={styles.section}>
-                                    <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.stateTax}</Text>
-                                    <Text style={styles.greyText16px}>{fundWithdrawalData.stateTaxInPerc}  -  {fundWithdrawalData.stateTaxInDollars}</Text>
-                                </View>
-                                <View style={styles.section}>
-                                    <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalTaxToBeWithhold}</Text>
-                                    <Text style={styles.greyText16px}>{fundWithdrawalData.totalTaxToBeWithHold}</Text>
-                                </View>
-                                <View style={styles.section}>
-                                    <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalYouWillReceive}</Text>
-                                    <Text style={styles.greyText16px}>{fundWithdrawalData.totalYouWillReceive}</Text>
-                                </View>
-                                <View style={styles.section}>
-                                    <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalWithdrawal}</Text>
-                                    <Text style={styles.greyText16px}>{fundWithdrawalData.totalWithdrawal}</Text>
-                                </View>
-                            </View>
-                            : null}
-                          <View style={styles.horizontalFlex}>
+
+                        <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>Contribution</Text>
-                          </View>
+                        </View>
                         <View style={styles.line} />
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>Contribution for IRA account</Text>
-                            <Text style={styles.greyText16px}>{fundingSource}</Text>
-                        </View>  
+                            <Text style={styles.greyText16px}>{savedData.contribution.contribution}</Text>
+                        </View>
                         <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>Estimated</Text>
                             <Text style={styles.edit} onPress={this.onClickEditSelectedFund}>{gblStrings.common.edit}</Text>
@@ -282,25 +252,21 @@ class PurchaseFourComponent extends Component {
                         <View style={styles.line} />
 
                         <View style={styles.govtSecuritiesFund}>
-                            
+
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>Estimated Fee</Text>
-                                <Text style={styles.greyText16px}>{gblStrings.liquidation.dollarSymbol}{this.formatAmount(this.props.liquidationInitialState.worthAmount)}</Text>
+                                <Text style={styles.greyText16px}>{}</Text>
                             </View>
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>Estimated Net Trade Amount</Text>
-                                <Text style={styles.greyText16px}>{sellingAmount}</Text>
+                                <Text style={styles.greyText16px}>{}</Text>
                             </View>
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>Effective Date</Text>
-                                <Text style={styles.greyText16px}>{sellingAmount}</Text>
+                                <Text style={styles.greyText16px}>{}</Text>
                             </View>
                         </View>
-                        {/* -----------------------------------Tax Accounting Method ends here-------------------------------- */}
-                        <View style={styles.flex5}>
-                            <Text style={styles.text5}>{gblStrings.liquidation.confirmationMsg1}{"\n"}{"\n"}{gblStrings.liquidation.confirmationMsg2}</Text>
 
-                        </View>
 
 
                     </View>
@@ -312,7 +278,7 @@ class PurchaseFourComponent extends Component {
                         <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigatePurchasePageThree}>
                             <Text style={styles.backButtonText}>{gblStrings.common.back}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.submitFlex} onPress={this.submitButtonAction}>
+                        <TouchableOpacity style={styles.submitFlex} onPress={this.onClickSave}>
                             <Text style={styles.submitText}>{gblStrings.common.submit}</Text>
                         </TouchableOpacity>
                     </View>
@@ -323,8 +289,6 @@ class PurchaseFourComponent extends Component {
                         <Text style={styles.tNcBody}>{gblStrings.userManagement.VCDiscalimerDesc}{"\n"}{"\n"}{gblStrings.userManagement.VCPrivacyNoticeDesc} </Text>
                     </View>
                     <GFooterComponent />
-
-
                 </ScrollView>
 
             </View>
@@ -336,10 +300,14 @@ class PurchaseFourComponent extends Component {
 
 PurchaseFourComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    liquidationInitialState: PropTypes.instanceOf(Object),
+    purchaseData: PropTypes.instanceOf(Object),
+    amendReducerData: PropTypes.instanceOf(Object),
+
 };
 
 PurchaseFourComponent.defaultProps = {
-
+    navigation: {},
+    purchaseData: {},
+    amendReducerData: {},
 };
 export default PurchaseFourComponent;

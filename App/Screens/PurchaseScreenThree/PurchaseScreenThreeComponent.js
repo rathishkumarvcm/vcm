@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, Image, FlatList } from 'react-native';
 import { GHeaderComponent, GFooterComponent, GButtonComponent, GDropDownComponent, GSwitchComponent } from '../../CommonComponents';
-import  styles  from './styles';
+import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
 import PropTypes from 'prop-types';
@@ -11,6 +11,8 @@ const wireTransfer = require("../../Images/offlinemethod2.png");
 const BankAcc = require("../../Images/onlinemethod1.png");
 
 let savedData = {};
+let ammendData = {};
+let ammendIndex = null;
 
 const bankAccounts = [
     { key: "1", bankAccName: "Bank Account 1", bankAccountNo: "XXX-XXX-3838", verified: "true" },
@@ -39,7 +41,6 @@ class PurchaseScreenThreeComponent extends Component {
             showCheckMsg: false,
             showWireTransferMsg: false,
             disableNextButton: true,
-
             switchOff: false,
             switchOn: true,
             selectedContributionData: {
@@ -51,18 +52,20 @@ class PurchaseScreenThreeComponent extends Component {
             fundingSourceName: "",
             bankAccountNumber: "",
             bankAccountName: "",
-            ammend:false
+            ammend: false
 
         };
     }
 
     componentDidMount() {
-        if(this.props.navigation.getParam('ammend'))
-        {
-            this.setState({ammend:true});
+        ammendData = this.props.navigation.getParam('data');
+        ammendIndex = this.props.navigation.getParam('index');
+        this.updateState();
+        if (this.props.navigation.getParam('ammend')) {
+            this.setState({ ammend: true });
         }
-        else{
-            this.setState({ammend:false});
+        else {
+            this.setState({ ammend: false });
         }
     }
 
@@ -74,11 +77,10 @@ class PurchaseScreenThreeComponent extends Component {
 
     onClickCancel = () => {
         //this.props.navigation.navigate({ routeName: 'purchaseScreenOne', key: 'purchaseScreenOne' });
-        if(this.state.ammend)
-        {
+        if (this.state.ammend) {
             this.props.navigation.navigate('tAmmendComponent');
         }
-        else{
+        else {
             this.props.navigation.navigate('purchaseScreenOne');
         }
     }
@@ -89,8 +91,8 @@ class PurchaseScreenThreeComponent extends Component {
                 ...savedData,
                 "selectedFundSourceData": {
                     "paymentMode": this.state.fundingSourceName,
-                    "bankAccountName": this.state.bankAccountName || "-",
-                    "bankAccountNumber": this.state.bankAccountNumber || "-",
+                    "bankAccountName": this.state.bankAccountName,
+                    "bankAccountNumber": this.state.bankAccountNumber,
                     "fundSourceType": this.state.fundingMethod,
                     "totalInvestment": savedData.selectedFundData.total
                 },
@@ -98,24 +100,22 @@ class PurchaseScreenThreeComponent extends Component {
                     "reinvest": this.state.switchOff
                 },
                 "contribution": {
-                    "contribution": this.state.selectedContributionData.contribution || "-"
+                    "contribution": this.state.selectedContributionData.contribution
                 }
             }
         };
         this.props.saveData(payloadData);
-        console.log("savedData:::", payloadData);
-        //this.props.navigation.navigate({ routeName: 'purchaseScreenThree', key: 'purchaseScreenThree' });
-        if(this.state.ammend)
-        {
-        this.props.navigation.navigate('purchaseScreenFour',{ammend:true});
+        if (this.state.ammend) {
+            console.log("screen3navigation",ammendData)
+            this.props.navigation.navigate('purchaseScreenFour', { ammend: true, data: ammendData, index: ammendIndex });
+            
         }
-        else{
-            this.props.navigation.navigate('purchaseScreenFour',{ammend:false});
+        else {
+            this.props.navigation.navigate('purchaseScreenFour', { ammend: false });
         }
     }
 
     onSubmitEditing = (input) => text => {
-       // AppUtils.Dlog(`onSubmitEditing:::>${text}`);
         input.focus();
     }
 
@@ -175,6 +175,46 @@ class PurchaseScreenThreeComponent extends Component {
 
     /* -------------------------------- Fund Source Events Events ---------------------------------- */
 
+    updateState = () => {
+        if (savedData) {
+            this.setState({ disableNextButton: false });
+            if (savedData.selectedFundSourceData) {
+                this.setState({
+                    fundingSourceName: savedData.selectedFundSourceData.paymentMode,
+                    fundingMethod: savedData.selectedFundSourceData.fundSourceType,
+                    bankAccountName: savedData.selectedFundSourceData.bankAccountName,
+                    bankAccountNumber: savedData.selectedFundSourceData.bankAccountNumber
+                });
+                if (savedData.selectedFundSourceData.paymentMode === 'Check') {
+                    this.setState({ showCheckMsg: true, showWireTransferMsg: false });
+                } else if (savedData.selectedFundSourceData.paymentMode === 'Wire Transfer') {
+                    this.setState({ showWireTransferMsg: true, showCheckMsg: false });
+                } else if (savedData.selectedFundSourceData.paymentMode === 'NetBanking') {
+                    this.setState({ showWireTransferMsg: false, showCheckMsg: false });
+                }
+                if (savedData.selectedFundSourceData.bankAccountName) {
+                    bankAccounts.map((m, n) => {
+                        if (m.bankAccName === savedData.selectedFundSourceData.bankAccountName) {
+                            this.setState({ selectedBankAccountIndex: n });
+                        }
+                    });
+                }
+            }
+            if (savedData.currentSecurities) {
+                this.setState({ switchOff: savedData.currentSecurities.reinvest, switchOn: !savedData.currentSecurities.reinvest });
+            }
+
+            if (savedData.contribution) {
+                this.setState({
+                    selectedContributionData: {
+                        contribution: savedData.contribution.contribution,
+                    }
+                });
+            }
+
+        }
+    }
+
     setInputRef = (inputComp) => (ref) => {
         this[inputComp] = ref;
     }
@@ -229,7 +269,7 @@ class PurchaseScreenThreeComponent extends Component {
             showCheckMsg: false,
             showWireTransferMsg: false,
             fundingMethod: "Online",
-            fundingSourceName: "Bank",
+            fundingSourceName: "NetBanking",
             bankAccountNumber: item.bankAccountNo,
             bankAccountName: item.bankAccName,
             selectedBankAccountIndex: index,
@@ -243,11 +283,10 @@ class PurchaseScreenThreeComponent extends Component {
         let currentPage = 3;
         let totalCount = 4;
         let pageName = `${currentPage} - ${gblStrings.purchase.fundSource}`;
-        if(this.state.ammend)
-        {
-             currentPage = 2;
-             pageName = `${currentPage} - ${gblStrings.purchase.fundSource}`;
-             totalCount = 3;
+        if (this.state.ammend) {
+            currentPage = 2;
+            pageName = `${currentPage} - ${gblStrings.purchase.fundSource}`;
+            totalCount = 3;
         }
 
         if (this.props.purchaseData && this.props.purchaseData.savePurchaseSelectedData) {
@@ -410,7 +449,7 @@ class PurchaseScreenThreeComponent extends Component {
                             errorFlag={!this.state.contributionFlag}
                             errorText={this.state.contributionErrMsg}
                         />
-                    </View>:null}
+                    </View> : null}
 
 
                     {/* ----------------- Button Group -------------------- */}
@@ -464,4 +503,5 @@ PurchaseScreenThreeComponent.defaultProps = {
     purchaseData: {},
     saveData: () => { }
 };
+
 export default PurchaseScreenThreeComponent;
