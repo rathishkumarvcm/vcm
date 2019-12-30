@@ -226,7 +226,8 @@ class editAddPhoneNumberComponent extends Component {
                         <GInputComponent
                             propInputStyle={styles.editAddressInput}
                             placeholder={""}
-                            onChangeText={this.setContactNumber} />
+                            onChangeText={this.setContactNumber}
+                            maxLength={10} />
                     </View>
 
                     <GDropDownComponent

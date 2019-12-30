@@ -166,7 +166,11 @@ class MarketingandPrivacyComponent extends Component {
 
             mobileNumberData: [],
             emailData: [],
-            addressData: []
+            addressData: [],
+
+            productMobileToggle: false,
+            productHomeToggle: false,
+            productMailingToggle: false
         };
     }
 
@@ -298,6 +302,24 @@ class MarketingandPrivacyComponent extends Component {
             isMailingAddress={item.isMailingAddress}
             onAddressToggle={this.onAddressToggle(item, index)} />)
     };
+
+    onProductMobileToggle = () => {
+        this.setState({
+            productMobileToggle: !this.state.productMobileToggle
+        });
+    }
+
+    onProductHomeToggle = () => {
+        this.setState({
+            productHomeToggle: !this.state.productHomeToggle
+        });
+    }
+
+    onProductMailingToggle = () => {
+        this.setState({
+            productMailingToggle: !this.state.productMailingToggle
+        })
+    }
 
     render() {
         return (
@@ -454,7 +476,8 @@ class MarketingandPrivacyComponent extends Component {
                                 </Text>
                                 <View style={styles.editSwitchButton}>
                                     <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                                        onValueChange={this.props.onMobileToggle} />
+                                        onValueChange={this.onProductMobileToggle}
+                                        value={this.state.productMobileToggle} />
                                 </View>
                             </View>
 
@@ -464,7 +487,8 @@ class MarketingandPrivacyComponent extends Component {
                                 </Text>
                                 <View style={styles.editSwitchButton}>
                                     <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                                        onValueChange={this.props.onMobileToggle} />
+                                        onValueChange={this.onProductHomeToggle} 
+                                        value={this.state.productHomeToggle}/>
                                 </View>
                             </View>
 
@@ -473,8 +497,9 @@ class MarketingandPrivacyComponent extends Component {
                                     {globalString.marketingPrivacyLabel.marketingProductEmail}
                                 </Text>
                                 <View style={styles.editSwitchButton}>
-                                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                                        onValueChange={this.props.onMobileToggle} />
+                                    <Text style={styles.editAddressLabel}>
+                                        {"N/A"}
+                                    </Text>
                                 </View>
                             </View>
 
@@ -484,7 +509,8 @@ class MarketingandPrivacyComponent extends Component {
                                 </Text>
                                 <View style={styles.editSwitchButton}>
                                     <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                                        onValueChange={this.props.onMobileToggle} />
+                                        onValueChange={this.onProductMailingToggle}
+                                        value={this.state.productMailingToggle} />
                                 </View>
                             </View>
                         </View>
