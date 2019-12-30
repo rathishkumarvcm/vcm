@@ -132,8 +132,9 @@ import DividentsAndCapitalGainsPrefComponent from './Screens/Dividents';
 import CheckBookComponent from './Screens/OrderCheckBook';
 import BankAccountsComponent from './Screens/BankAccounts';
 import AddBankAccountComponent from './Screens/AddBankAccount';
-import AddOtherBankAccountComponent from './Screens/AddOtherBankAccount'
-import CheckBookPlaceOrder from './Screens/CheckBookPlaceOrder'
+import AddOtherBankAccountComponent from './Screens/AddOtherBankAccount';
+import CheckBookPlaceOrder from './Screens/CheckBookPlaceOrder';
+import DividentsForAccount from './Screens/DividentsForAccount';
 
 //Systematic Withdrawal plan
 import systematicWithdrawal from './Screens/SystematicWithdrawalPlan';
@@ -935,11 +936,17 @@ const AppNavigator = createStackNavigator({
         navigationOptions: {
             header: null,
         }
+    },
+    dividentsForAccount: {
+            screen: DividentsForAccount,
+            navigationOptions: {
+                header: null,
+        }
     }
 
 },
     {
-        initialRouteName: "login"
+        initialRouteName: "dividentsAndCapitalGainsPref"
     });
 
 export default createAppContainer(AppNavigator);

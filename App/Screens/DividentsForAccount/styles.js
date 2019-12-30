@@ -16,43 +16,49 @@ export const styles = StyleSheet.create({
         marginHorizontal: '4%'
     },
     optionHeaderView: {
-        marginTop: scaledHeight(56)
+        marginTop: scaledHeight(20),
+        borderWidth: 1,
+        borderColor: '#DDDDDD',
+        backgroundColor: '#FFFFFF',
+        paddingVertical: scaledHeight(15),
+        marginHorizontal: '4%'
     },
     accountView: {
         borderWidth: 1,
-        borderColor: '#ECECEC',
-        backgroundColor: '#ECECEC',
-        height: scaledHeight(64),
+        borderColor: '#DDDDDD',
+        backgroundColor: '#FFFFFF',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        marginTop: scaledHeight(40),
-        marginHorizontal: '4%'
+        marginTop: scaledHeight(21),
+        marginHorizontal: '4%',
+        paddingHorizontal: '4%',
+        paddingVertical: scaledHeight(15)
     },
     reinvestContainer: {
         borderWidth: 1,
         borderColor: '#DCDCDC',
-        backgroundColor: '#FFFFFF',        
+        backgroundColor: '#FFFFFF',
         borderRadius: scaledHeight(10),
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: scaledHeight(25),
         paddingHorizontal: '4%',
-        marginHorizontal:'4%'
+        marginHorizontal: '4%',
+        paddingBottom: scaledHeight(20)
     },
     fundContainer: {
         flexDirection: 'row',
-        width: '84%',
         borderWidth: 1,
         borderColor: '#5D83AE99',
         backgroundColor: '#FFFFFF',
-        height: scaledHeight(105),
         justifyContent: 'center',
         alignItems: 'flex-start',
         marginTop: scaledHeight(20),
         paddingLeft: '4%',
-        paddingRight: '6%'
+        paddingRight: '6%',
+        paddingVertical: scaledHeight(15)
     },
-    fundAmtContainer: {       
+    fundAmtContainer: {
         borderWidth: 1,
         borderColor: '#5D83AE99',
         backgroundColor: '#FFFFFF',
@@ -76,7 +82,7 @@ export const styles = StyleSheet.create({
         paddingVertical: scaledHeight(20)
     },
     fundText: {
-        flex: 0.60,
+        flex: 0.80,
         fontSize: scaledHeight(13),
         color: '#544A54',
         fontWeight: 'bold',
@@ -84,7 +90,7 @@ export const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     amtText: {
-        
+
         fontSize: scaledHeight(16),
         color: '#333333DE',
         fontWeight: 'bold',
@@ -112,7 +118,8 @@ export const styles = StyleSheet.create({
     accountText: {
         fontSize: scaledHeight(18),
         color: '#54565B',
-        marginHorizontal: '4%'
+        fontWeight: 'bold',
+        marginTop: scaledHeight(5)
     },
     subHeaderText: {
         fontSize: scaledHeight(15),
@@ -123,8 +130,15 @@ export const styles = StyleSheet.create({
     optionSubHeaderText: {
         fontSize: scaledHeight(15),
         color: '#54565B',
-        marginHorizontal: '8%',
+        marginHorizontal: '4%',
         marginTop: scaledHeight(23.5)
+    },
+    contactText: {
+        fontSize: scaledHeight(15),
+        color: '#2B8CBE',
+        marginHorizontal: '4%',
+        fontWeight: 'bold',
+        marginTop: scaledHeight(7)
     },
     headerText: {
         color: '#56565A',
@@ -158,25 +172,11 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(10),
         marginHorizontal: '4%'
     },
-    instructionsView: {
-        borderWidth: 1,
-        backgroundColor: '#F2F2F2',
-        borderColor: '#C7C7C7',
-        borderRadius: scaledHeight(4),
-        marginHorizontal: '4%',
-        marginTop: scaledHeight(50),
-        marginBottom: scaledHeight(30),
-        paddingVertical: scaledHeight(15),
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        flex: 1,
-    },
     instructionText: {
         fontSize: scaledHeight(15),
         color: '#54565B',
         marginRight: '4%',
-        flex:0.8,
+        flex: 0.8,
         alignSelf: 'center'
     },
     submitButtonText: {
@@ -206,7 +206,7 @@ export const styles = StyleSheet.create({
         width: '78.6%',
         marginLeft: '10.7%',
         marginRight: '10.7%',
-        marginTop: scaledHeight(40),
+        marginTop: scaledHeight(50),
         borderRadius: scaledHeight(1),
         height: scaledHeight(50),
         backgroundColor: '#FFFFFF',
@@ -214,11 +214,11 @@ export const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     switchContainer: {
-        marginHorizontal: '3%',
-        marginTop: scaledHeight(31)
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(20)
     },
     switchStyle: {
-        flex: 0.40,
+        flex: 0.20,
         marginHorizontal: '3%',
         height: scaledHeight(21),
         alignSelf: 'center',
@@ -288,18 +288,18 @@ export const styles = StyleSheet.create({
     },
     amountTextBox: {
         flex: 0.90,
-        alignSelf:'center'
+        alignSelf: 'center'
     },
     switchFlexView: {
-        flexDirection:'row',
+        flexDirection: 'row',
         marginTop: scaledHeight(14),
         marginHorizontal: '6%'
     },
     switchInlineTex: {
-        flex:0.50,
+        flex: 0.50,
         fontSize: scaledHeight(13),
-        color:'#54565B',
-        textAlign:'center'
+        color: '#54565B',
+        textAlign: 'center'
     },
     touchOpacityPosition: {
         marginVertical: scaledHeight(15),
@@ -308,7 +308,7 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     setupInstructionText: {
-        color: '#54565B', 
+        color: '#54565B',
         fontSize: scaledHeight(14),
         marginHorizontal: '4%',
         marginVertical: scaledHeight(20),
@@ -361,13 +361,13 @@ export const styles = StyleSheet.create({
     requestBtn: {
         position: 'absolute',
         borderColor: '#FFFFFF',
-        marginLeft: '36%',
-        marginRight: '8%',
+        borderWidth: 1,
+        marginLeft: '4%',
+        marginRight: '4%',
         marginTop: scaledHeight(45),
         borderRadius: scaledHeight(1),
         height: scaledHeight(50),
         backgroundColor: '#FFFFFF',
-        paddingHorizontal: '4%',
         zIndex: 5
     },
     linkBreak2: {
@@ -380,21 +380,18 @@ export const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         flex: 0.1
     },
-    confirmationView: {
+    instructionsView: {
         borderWidth: 1,
-        borderColor: '#C7C7C7',
         backgroundColor: '#F2F2F2',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        paddingTop: scaledHeight(15),
-        marginTop: scaledHeight(20),
+        borderColor: '#C7C7C7',
+        borderRadius: scaledHeight(4),
         marginHorizontal: '4%',
-        paddingBottom: scaledHeight(15),
-        paddingHorizontal: '4%',
-        borderRadius: 4
+        marginTop: scaledHeight(50),
+        marginBottom: scaledHeight(30),
+        paddingVertical: scaledHeight(15),
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        flex: 1,
     },
-    confirmationText: {
-        fontSize: scaledHeight(15),
-        color: "#54565B",
-    }
 });

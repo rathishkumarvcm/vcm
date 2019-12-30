@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { styles } from './styles';
-import { View, ScrollView, Text, FlatList, Switch, TouchableOpacity } from 'react-native';
-import { GHeaderComponent, GInputComponent, GSwitchComponent, GFooterComponent, GButtonComponent, GIcon } from '../../CommonComponents';
+import { View, ScrollView, Text, FlatList, TouchableOpacity } from 'react-native';
 import PropTypes from "prop-types";
+import { styles } from './styles';
+import { GHeaderComponent, GFooterComponent, GButtonComponent, GIcon, GCollapseComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 
@@ -10,134 +10,63 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: false,
-            currentSecuritiesChanged: false,
+            stateChanged: false,
             reinvestChanged: false,
             expand: false,
-            dividentsData: [
-                {
-                    Id: "1",
-                    AccountNumber: "56654654",
-                    currentSecuritiesSwitchOn: false,
-                    currentSecuritiesSwitchOff: true,
-                    futureSecuritiesSwitchOn: false,
-                    futureSecuritiesSwitchOff: true,
-                    CurrentSecurities: [
-                        {
-                            FundId: "1",
-                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                            enableReinvest: false,
-                            amountRemaining: '0',
-                        },
-                        {
-                            FundId: "2",
-                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                            enableReinvest: false,
-                            amountRemaining: '0',
-                        },
-                        {
-                            FundId: "3",
-                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                            enableReinvest: false,
-                            amountRemaining: '0',
-                        },
-
-                    ]
-                },
-                {
-                    Id: "2",
-                    AccountNumber: "56654654",
-                    currentSecuritiesSwitchOn: false,
-                    currentSecuritiesSwitchOff: true,
-                    futureSecuritiesSwitchOn: false,
-                    futureSecuritiesSwitchOff: true,
-                    CurrentSecurities: [
-                        {
-                            FundId: "1",
-                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                            enableReinvest: false,
-                            amountRemaining: '0',
-                        },
-                        {
-                            FundId: "2",
-                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                            enableReinvest: false,
-                            amountRemaining: '0',
-                        },
-                        {
-                            FundId: "3",
-                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                            enableReinvest: false,
-                            amountRemaining: '0',
-                        },
-
-                    ]
-                },
-                {
-                    Id: "3",
-                    AccountNumber: "56654654",
-                    currentSecuritiesSwitchOn: false,
-                    currentSecuritiesSwitchOff: true,
-                    futureSecuritiesSwitchOn: false,
-                    futureSecuritiesSwitchOff: true,
-                    CurrentSecurities: [
-                        {
-                            FundId: "1",
-                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                            enableReinvest: false,
-                            amountRemaining: '0',
-                        },
-                        {
-                            FundId: "2",
-                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                            enableReinvest: false,
-                            amountRemaining: '0',
-                        },
-                        {
-                            FundId: "3",
-                            FundName: "USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES",
-                            enableReinvest: false,
-                            amountRemaining: '0',
-                        },
-
-                    ]
-                },
-            ]
+            collapsedState: true,
+            requestSubmited: false,
+            dividentsData: [],
+            generalAccount: [],
+            iraAccount: [],
+            utmaAccount: [],
         };
+        const { navigation } = props;
+        this.focusListener = navigation.addListener(
+            'didFocus',
+            this.componentDidFocus,
+        );
     }
+
+    componentDidFocus = (payload) => {
+        const { navigation } = this.props;
+        this.setState({requestSubmited: navigation.getParam('requestSubmited', false)});
+    };
 
     componentDidMount() {
-
-        let payload = [
-
-        ];
-
-        payload.push(JSON.stringify(this.state.dividentsData));
-        this.props.getDividentsInfo(JSON.stringify(payload));
+        this.props.getDividentsInfo();
     }
 
-
-    componentDidUpdate(prevProps) {
-        if (this.props && this.props.dividentsInfo && this.props.dividentsInfo != prevProps.dividentsInfo) {
-            this.setState({ dividentsData: JSON.parse(JSON.parse(this.props.dividentsInfo)[0]) });
-        }
+    componentWillUnmount() {
+        this.focusListener.remove();
     }
 
     navigateBack = () => this.props.navigation.goBack();
 
-    updateCurrentSecurityChanged = () => this.setState({ currentSecuritiesChanged: !this.state.currentSecuritiesChanged });
+    navigateDividentsForAccount = (item) => {
+        this.updateShowRequestOption('showRequest', false, item.Id);
+        this.props.navigation.navigate('dividentsForAccount', {
+            accountName: item.accountName,
+            accountNumber: item.AccountNumber,
+        });
+    }
+
+    updateCollapsedState = (flag) => () => {
+        this.setState({ collapsedState: flag });
+    }
+
+    updateCurrentSecurityChanged = () => this.setState({ stateChanged: !this.state.stateChanged });
 
     updateReinvestChanged = () => this.setState({ reinvestChanged: !this.state.reinvestChanged });
 
-    setDividentAmount = (text, accountId, fundId) => {
+    setDividentAmount = (text, accountId, fundId) => () => {
         let tmpData = [];
         tmpData = this.state.dividentsData;
-        tmpData.map((item) => {
-            if (item.Id == accountId) {
+        tmpData.map((item) => () => {
+            if (item.Id === accountId) {
                 let tmpCurrentSecurities = [];
                 tmpCurrentSecurities = item.CurrentSecurities;
-                tmpCurrentSecurities.map((fund) => {
-                    if (fund.FundId == fundId) {
+                tmpCurrentSecurities.map((fund) => () => {
+                    if (fund.FundId === fundId) {
                         fund.amountRemaining = text;
                     }
                 });
@@ -153,8 +82,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                 if (flag) {
 
                     tmpData = this.state.dividentsData;
-                    tmpData.map((item) => {
-                        if (item.Id == itemId) {
+                    tmpData.map((item) => () => {
+                        if (item.Id === itemId) {
                             item.currentSecuritiesSwitchOn = true;
                             item.currentSecuritiesSwitchOff = false;
                             this.updateCurrentSecurityChanged();
@@ -165,8 +94,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                 }
                 else {
                     tmpData = this.state.dividentsData;
-                    tmpData.map((item) => {
-                        if (item.Id == itemId) {
+                    tmpData.map((item) => () => {
+                        if (item.Id === itemId) {
                             item.currentSecuritiesSwitchOn = false;
                             item.currentSecuritiesSwitchOff = true;
                             this.updateCurrentSecurityChanged();
@@ -178,8 +107,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
             case 'futureSecurities':
                 if (flag) {
                     tmpData = this.state.dividentsData;
-                    tmpData.map((item) => {
-                        if (item.Id == itemId) {
+                    tmpData.map((item) => () => {
+                        if (item.Id === itemId) {
                             item.futureSecuritiesSwitchOn = true;
                             item.futureSecuritiesSwitchOff = false;
                             this.updateCurrentSecurityChanged();
@@ -189,8 +118,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                 }
                 else {
                     tmpData = this.state.dividentsData;
-                    tmpData.map((item) => {
-                        if (item.Id == itemId) {
+                    tmpData.map((item) => () => {
+                        if (item.Id === itemId) {
                             item.futureSecuritiesSwitchOn = false;
                             item.futureSecuritiesSwitchOff = true;
                             this.updateCurrentSecurityChanged();
@@ -198,6 +127,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                     });
                     this.setState({ dividentsData: tmpData });
                 }
+                break;
+            default:
                 break;
 
         }
@@ -208,12 +139,12 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
         switch (fromView) {
             case 'reinvestFund':
                 tmpData = this.state.dividentsData;
-                tmpData.map((item) => {
-                    if (item.Id == accountId) {
+                tmpData.map((item) => () => {
+                    if (item.Id === accountId) {
                         let tmpCurrentSecurities = [];
                         tmpCurrentSecurities = item.CurrentSecurities;
                         tmpCurrentSecurities.map((fund) => {
-                            if (fund.FundId == fundId) {
+                            if (fund.FundId === fundId) {
                                 if (flag) {
                                     fund.enableReinvest = true;
                                 } else {
@@ -226,8 +157,27 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                 });
                 this.setState({ dividentsData: tmpData });
                 break;
+            default:
+                break;
         }
     }
+
+    updateShowRequestOption = (fromView, showRequestOption, itemId) => {
+        switch (fromView) {
+            case 'showRequest':
+                let tmpData = this.state.generalAccount;
+                tmpData.map((item) => {
+                    if (item.Id === itemId) {
+                        item.showRequestOption = showRequestOption;
+                    }
+                });
+                this.updateStateChanged();
+                this.setState({ generalAccount: tmpData });
+                break;
+        }
+    }
+
+    updateStateChanged = () => this.setState({ stateChanged: !this.state.stateChanged });
 
     setExpandInstruction = () => {
         this.setState({
@@ -235,13 +185,48 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
         });
     }
 
+    getKey(item) {
+        return item.Id;
+    }
 
     render() {
+        console.log("render ::: ");
+        if (this.props && this.props.dividentsInfo && this.props.dividentsInfo !== this.state.dividentsData) {
+            this.setState({ dividentsData: this.props.dividentsInfo });
+
+            const tmpData = this.props.dividentsInfo;
+            let tmpGeneralAccount = [];
+            let tmpIRAAccount = [];
+            let tmpUTMAAccount = [];
+            tmpData.map((item) => {
+                switch (item.accountType) {
+                    case 'General Account':
+                        tmpGeneralAccount.push(item);
+                        break;
+                    case 'IRA Account':
+                        tmpIRAAccount.push(item);
+                        break;
+                    case 'UTMA Account':
+                        tmpUTMAAccount.push(item);
+                        break;
+                }
+            });
+            this.setState({ generalAccount: tmpGeneralAccount, iraAccount: tmpIRAAccount, utmaAccount: tmpUTMAAccount });
+        }
+
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
 
                 <ScrollView style={styles.scrollviewStyle} contentContainerStyle={{ justifyContent: 'center' }}>
+                    {this.state.requestSubmited &&
+                        <TouchableOpacity style={styles.confirmationView} onPress={() => this.setState({requestSubmited: false})}>
+                            <Text style={styles.confirmationText}>
+                                {gblStrings.dividents.request_submit_dividents}
+                            </Text>
+                        </TouchableOpacity>
+                    }
+
                     <View style={styles.header}>
                         <Text style={styles.headerText}>
                             {gblStrings.dividents.dividents_and_capital_gains_preferences}
@@ -250,43 +235,121 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
 
                     <View style={styles.linkBreak1} />
 
-                    {this.props && this.props.dividentsInfo &&
+                    {this.props && this.props.dividentsInfo && this.state.generalAccount.length > 0 &&
                         <FlatList
-                            data={this.state.dividentsData}
-                            extraData={this.state.currentSecuritiesChanged}
-                            currentSecuritiesSwitchOn={this.state.currentSecuritiesSwitchOn}
-                            keyExtractor={(item) => item.Id}
-                            renderItem={({ item }) => (
-                                <ViewAccountItem
-                                    item={item}
-                                    switchOnOffStateUpdates={this.switchOnOffStateUpdates}
-                                    updateCurrentSecurityChanged={this.updateCurrentSecurityChanged}
-                                    switchOnOffReinvest={this.switchOnOffReinvest}
-                                    setDividentAmount={this.setDividentAmount}
-                                />)}
-                        />
-                    }
+                            data={this.state.generalAccount}
+                            extraData={this.state.stateChanged}
+                            keyExtractor={this.getKey}
+                            renderItem={({ item}) => (
+                                <View style={styles.infoContainer}>
+                                    <View style={styles.accountName}>
+                                        <Text style={styles.accountNameText}>
+                                            {`${item.accountName}`}
+                                        </Text>
 
-                    <View style={styles.instructionsView}>
-                        <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setExpandInstruction}>
-                            <View style={{ flex: 0.1, alignSelf: 'center' }}>
-                                {this.state.expand ?
-                                    <GIcon
-                                        name="minus"
-                                        type="antdesign"
-                                        size={30}
-                                    /> :
-                                    <GIcon
-                                        name="plus"
-                                        type="antdesign"
-                                        size={30}
-                                    />
-                                }
+                                        <TouchableOpacity style={styles.editInfo} key={item.Id} onPress={() => this.updateShowRequestOption('showRequest', true, item.Id)}>
+                                            <GIcon
+                                                name="dots-vertical"
+                                                type="material-community"
+                                                size={30}
+                                            />
+                                        </TouchableOpacity>
+                                    </View>
+
+                                    <View style={styles.accountName}>
+                                        <Text style={styles.accountNameText}>
+                                            {gblStrings.dividents.account_number}
+                                        </Text>
+                                        <Text style={styles.accountNameText}>
+                                            {`${item.AccountNumber}`}
+                                        </Text>
+                                    </View>
+
+                                    {item.showRequestOption && <GButtonComponent
+                                        buttonStyle={styles.requestBtn}
+                                        buttonText={gblStrings.common.edit}
+                                        textStyle={styles.requestButtonText}
+                                        onPress={() =>
+                                            this.navigateDividentsForAccount(item)}
+                                    />}
+
+                                    <View style={styles.linkBreak2} />
+
+                                    <Text style={styles.accountNameHeaderText}>
+                                        {gblStrings.dividents.current_value}
+                                    </Text>
+
+                                    <Text style={styles.accountNameSubHeaderText}>
+                                        {`${item.currectValue}`}
+                                    </Text>
+
+                                    <Text style={styles.accountNameHeaderText}>
+                                        {gblStrings.dividents.holding}
+                                    </Text>
+
+                                    <Text style={styles.accountNameSubHeaderText}>
+                                        {`${item.holding}`}
+                                    </Text>
+
+                                    <Text style={styles.accountNameHeaderText}>
+                                        {gblStrings.dividents.current_funds}
+                                    </Text>
+
+                                    <Text style={styles.accountNameSubHeaderText}>
+                                        {item.currentFunds ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
+                                    </Text>
+
+                                    <Text style={styles.accountNameHeaderText}>
+                                        {gblStrings.dividents.future_funds}
+                                    </Text>
+
+                                    <Text style={styles.accountNameSubHeaderText}>
+                                        {item.futureFunds ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
+                                    </Text>
+
+                                    <Text style={styles.accountNameHeaderText}>
+                                        {gblStrings.dividents.directed_dividents}
+                                    </Text>
+
+                                    <Text style={styles.accountNameSubHeaderText}>
+                                        {item.directedDividentsAndCapitalGains ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
+                                    </Text>
+
+                                </View>)}
+                        />}
+
+                    <GButtonComponent
+                        buttonStyle={styles.backBtn}
+                        buttonText={gblStrings.common.back}
+                        textStyle={styles.backButtonText}
+                        onPress={this.navigateBack}
+                    />
+
+
+                    <GCollapseComponent
+                        collapsedState={this.state.collapsedState}
+                        onPressAction={() => this.updateCollapsedState(!this.state.collapsedState)}
+                        headerView={
+                            <View style={styles.instructionsView}>
+                                <View style={{ flex: 0.2, alignSelf: 'center' }}>
+                                    {this.state.collapsedState ?
+                                        <GIcon
+                                            name="plus"
+                                            type="antdesign"
+                                            size={22}
+                                        /> :
+                                        <GIcon
+                                            name="minus"
+                                            type="antdesign"
+                                            size={22}
+                                        />
+                                    }
+                                </View>
+                                <Text style={styles.instructionText}>{gblStrings.dividents.setup_instruction}</Text>
                             </View>
-                            <Text style={styles.instructionText}>{gblStrings.dividents.setup_instruction}</Text>
-                        </TouchableOpacity>
-                        {this.state.expand ?
-                            <View>
+                        }
+                        collapseView={
+                            <>
                                 <Text style={styles.setupInstructionText}>{gblStrings.dividents.dividents_faq}</Text>
                                 <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_header}</Text>
                                 <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_subheader}</Text>
@@ -299,29 +362,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                                 <View style={styles.linkBreak1} />
                                 <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_header}</Text>
                                 <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_subheader}</Text>
-                            </View>
-                            : null}
-                    </View>
-
-                    <GButtonComponent
-                        buttonStyle={styles.backBtn}
-                        buttonText={gblStrings.common.back}
-                        textStyle={styles.backButtonText}
-                        onPress={this.navigateBack}
-                    />
-
-                    <GButtonComponent
-                        buttonStyle={styles.backBtn}
-                        buttonText={gblStrings.common.cancel}
-                        textStyle={styles.backButtonText}
-                        onPress={this.navigateBack}
-                    />
-
-                    <GButtonComponent
-                        buttonStyle={styles.submitBtn}
-                        buttonText={gblStrings.common.submit}
-                        textStyle={styles.submitButtonText}
-                        onPress={() => this.webServiceCall()}
+                            </>
+                        }
                     />
 
                     <View style={styles.fullLine} />
@@ -338,160 +380,6 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
         );
     }
 }
-
-const ViewAccountItem = (props) => {
-    let item = [];
-    let currentSecurities = [];
-    item = props.item;
-    currentSecurities = item.CurrentSecurities;
-    props.updateCurrentSecurityChanged;
-    return (
-        <>
-            <View style={styles.accountView}>
-                <Text style={styles.accountText}>
-                    {gblStrings.dividents.account_name + ` ${item.Id} | ${item.AccountNumber}`}
-                </Text>
-            </View>
-
-            <Text style={styles.subHeaderText}>
-                {gblStrings.dividents.txt_header_dividents}
-            </Text>
-
-            <View style={styles.optionHeaderView}>
-                <Text style={styles.optionHeaderText}>
-                    {gblStrings.dividents.current_securities}
-                </Text>
-
-                <View style={styles.linkBreak1} />
-
-                <Text style={styles.optionSubHeaderText}>
-                    {gblStrings.dividents.reinvest_current_securites}
-                </Text>
-
-                <View style={styles.switchContainer}>
-                    <GSwitchComponent
-                        switchOnMethod={props.switchOnOffStateUpdates('currentSecurities', false, item.Id)}
-                        switchOffMethod={props.switchOnOffStateUpdates('currentSecurities', true, item.Id)}
-                        switchOn={item.currentSecuritiesSwitchOff}
-                        switchOff={item.currentSecuritiesSwitchOn}
-                        switchOnText={gblStrings.common.yes}
-                        switchOffText={gblStrings.common.no}
-                        offStyle={styles.offButtonStyle}
-                        offStyleDisabled={styles.offButtonStyleDisable}
-                        onStyle={styles.onButtonStyle}
-                        onStyleDisabled={styles.onButtonStyleDisable}
-                        textOnStyle={styles.TextOnStyle}
-                        textOffStyle={styles.TextOffStyle}
-                    />
-                    <View style={styles.switchFlexView}>
-                        <Text style={styles.switchInlineTex}>
-                            {gblStrings.dividents.no_do_not_want_to_reinvest}
-                        </Text>
-                        <Text style={styles.switchInlineTex}>
-                            {gblStrings.dividents.yes_want_to_reinvest}
-                        </Text>
-                    </View>
-                </View>
-            </View>
-
-            {item.currentSecuritiesSwitchOn ?
-                <View style={styles.reinvestContainer}>
-                    {currentSecurities.map((fund) =>
-                        <>
-                            <View style={styles.fundContainer}>
-                                <Text style={styles.fundText}>
-                                    {fund.FundName}
-                                </Text>
-                                <Switch style={styles.switchStyle}
-                                    onValueChange={props.switchOnOffReinvest('reinvestFund', !fund.enableReinvest, item.Id, fund.FundId)}
-                                    value={fund.enableReinvest}
-                                    trackColor={{ true: '#000000', false: '#DBDBDB' }}
-                                />
-
-                            </View>
-                            <View style={styles.fundAmtContainer}>
-
-                                <View style={styles.amountHeader}>
-                                    <Text style={styles.amtText}>
-                                        {gblStrings.dividents.amount_remaining}
-                                    </Text>
-                                </View>
-
-                                <View style={styles.ammountView}>
-                                    <Text style={styles.amtText2}>
-                                        {gblStrings.dividents.dollar_sign}
-                                    </Text>
-
-                                    <GInputComponent
-                                        propInputStyle={styles.amountTextBox}
-                                        placeholder={"0"}
-                                        onChangeText={(text) => props.setDividentAmount(text, item.Id, fund.FundId)}
-                                        value={fund.amountRemaining}
-                                    />
-                                </View>
-                                <Text style={styles.minText}>
-                                    {gblStrings.dividents.min_amt}
-                                </Text>
-                            </View>
-                        </>)}
-                </View>
-                : null
-            }
-
-            <View style={styles.optionHeaderView}>
-
-                <Text style={styles.optionHeaderText}>
-                    {gblStrings.dividents.future_securites}
-                </Text>
-
-                <View style={styles.linkBreak1} />
-
-                <Text style={styles.optionSubHeaderText}>
-                    {gblStrings.dividents.reinvest_future_securites}
-                </Text>
-
-                <View style={styles.switchContainer}>
-                    <GSwitchComponent
-                        switchOnMethod={props.switchOnOffStateUpdates('futureSecurities', false)}
-                        switchOffMethod={props.switchOnOffStateUpdates('futureSecurities', true)}
-                        switchOn={item.futureSecuritiesSwitchOff}
-                        switchOff={item.futureSecuritiesSwitchOn}
-                        switchOnText={gblStrings.common.yes}
-                        switchOffText={gblStrings.common.no}
-                        offStyle={styles.offButtonStyle}
-                        offStyleDisabled={styles.offButtonStyleDisable}
-                        onStyle={styles.onButtonStyle}
-                        onStyleDisabled={styles.onButtonStyleDisable}
-                        textOnStyle={styles.TextOnStyle}
-                        textOffStyle={styles.TextOffStyle}
-                    />
-                    <View style={styles.switchFlexView}>
-                        <Text style={styles.switchInlineTex}>
-                            {gblStrings.dividents.no_do_not_want_to_reinvest}
-                        </Text>
-                        <Text style={styles.switchInlineTex}>
-                            {gblStrings.dividents.yes_want_to_reinvest}
-                        </Text>
-                    </View>
-                </View>
-            </View>
-
-
-            {item.futureSecuritiesSwitchOn ?
-                <View style={styles.reinvestContainer} />
-                : null
-            }
-        </>
-    );
-};
-
-ViewAccountItem.propTypes = {
-    item: PropTypes.instanceOf(Object),
-    updateCurrentSecurityChanged: PropTypes.instanceOf(Function),
-    switchOnOffStateUpdates: PropTypes.instanceOf(Function),
-    switchOnOffReinvest: PropTypes.instanceOf(Function),
-    setDividentAmount: PropTypes.instanceOf(Function),
-};
 
 DividentsAndCapitalGainsPrefComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
