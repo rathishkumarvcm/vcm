@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, ScrollView,Text } from 'react-native';
 import PropTypes from 'prop-types';
-import { GHeaderComponent,GIcon,GButtonComponent} from '../../CommonComponents';
+import { GHeaderComponent,GButtonComponent} from '../../CommonComponents';
 import Accordian from './Accordian';
-import { styles } from './styles';
+import styles from './styles';
 
 
 let menuList=[];
@@ -55,7 +55,7 @@ export default class TAmmendComponent extends Component {
     }
 
     selectIndex = (item,title,index) => {
-        console.log('parent trigger', title,index);
+        // console.log('parent trigger', title,index);
         this.setState({
             selectedTitle: title,
             selectedValue: item.selectedAccountData.currentValue,
@@ -71,34 +71,34 @@ export default class TAmmendComponent extends Component {
         return (
             <View style={styles.container}>
             <GHeaderComponent navigation={this.props.navigation} />
-            <ScrollView style={{ flex: 0.85 }}>
-            <View style={styles.signInView} >
-            <View style={{flexDirection:'row'}}> 
+            <ScrollView style={styles.scrollViewFlex}>
+            <View style={styles.signInView}>
+            <View style={styles.rowFlex}> 
             <Text style={styles.signIntext}>
                 Transactions
             </Text>
            { /* <Text style={styles.sorttext}>
                         Sort By :
-                        </Text>*/}
-                        {/*  <Text style={{}}>Pending</Text>
+                        </Text> */}
+                        { /*  <Text style={{}}>Pending</Text>
                     <GIcon
                             name="caretdown"
                             type="antdesign"
                             size={15}
                             color="#707070"
-                        />*/}
+                        /> */}
                          <GButtonComponent
                                 buttonStyle={styles.filterButton}
                                 buttonText="Filter"
                                 textStyle={styles.filterButtonText}
-                                //onPress={this.hideModal}
-                                />
+                                // onPress={this.hideModal}
+                         />
                        
             </View>
                 <Text style={styles.lblLine} />
                 <View style={styles.container}>
                     {this.renderAccordians()}
-              </View>
+                </View>
             </View>
             </ScrollView>
             </View>
@@ -147,9 +147,10 @@ export default class TAmmendComponent extends Component {
 
 TAmmendComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    initialState: PropTypes.instanceOf(Object)
+    amendReducerData:PropTypes.instanceOf(Object),
 };
 
 TAmmendComponent.defaultProps = {
-    
+    navigation:{},
+    amendReducerData:{}
 };
