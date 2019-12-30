@@ -200,7 +200,9 @@ class OpenAccPageOneComponent extends Component {
             myInstance.setScreenStateData(screenState);
             if (selectedAccount.key === "spec_acct") {
                 if (this.state.selectedItemID.startsWith("taeacc")) {
-                    this.props.navigation.navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Trust or Estate Account" } });
+                    this.props.navigation.navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Trust Account" } });
+                } else if (this.state.selectedItemID.startsWith("taeacc1")) {
+                    this.props.navigation.navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Estate Account" } });
                 } else {
                     this.props.navigation.navigate({ routeName: 'specialtyAccPage', key: 'specialtyAccPage', params: { pageNo: 2, accType: "Specialty Account" } });
                 }

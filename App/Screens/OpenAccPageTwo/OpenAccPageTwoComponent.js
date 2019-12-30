@@ -2240,7 +2240,7 @@ class OpenAccPageTwoComponent extends Component {
         } else {
             isValidationSuccess = true;
         }
-
+        let check  = `${input}Validation`;
         if (!isValidationSuccess) {
             this.setState(() => (prevState => ({
                 estate: {
@@ -2262,7 +2262,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
     validateFields = () => {
-        // return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
+       // return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
         let isValidationSuccess = false;
         try {
 
@@ -2270,9 +2270,39 @@ class OpenAccPageTwoComponent extends Component {
             const accType = this.props.navigation.getParam('accType', '');
             AppUtils.Dlog(`validateFields::: ${accType}`);
          
-            if (accType === "Trust or Estate Account" && !this.validateEstateTrustInfoFields()) {
+            if ((accType === "Estate Account" || accType === "Trust Account")  && !this.validateEstateTrustInfoFields()) {
+                this.setState(prevState => ({
+                   
+                    estate: {
+                        ...prevState.estate,
+                        nameValidation: true,
+                        creationDateValidation: true,
+                        isFederalLawApplicableValidation: true,
+                        addressTypeValidation: true,
+                        mailingAddressTypeValidation: true,
+                        addrLine1Validation: true,
+                        addrLine2Validation: true,
+                        zipcodeValidation: true,
+                        cityValidation: true,
+                        stateCityValidation: true,
+                        stateValidation: true,
+                        addrLine1_PhyValidation: true,
+                        addrLine2_PhyValidation: true,
+                        zipcode_PhyValidation: true,
+                        city_PhyValidation: true,
+                        stateCity_PhyValidation: true,
+                        state_PhyValidation: true,
+                        isYourPhysicalAddresSameValidation: true,
+                        orgCountryValidation: true,
+                        mobileNoValidation: true,
+                        emailAddressValidation: true,
+                        socialSecurityNoValidation: true,
+                    }
+                }));
                 isValidationSuccess = false;
-            }else if(accType !== "Trust or Estate Account"){
+               
+
+            }else if(accType !== "Estate Account" && accType !== "Trust Account"){
                 this.setState(prevState => ({
                     personal: {
                         ...prevState.personal,
@@ -5851,7 +5881,7 @@ class OpenAccPageTwoComponent extends Component {
                             onChangeText={this.onChangeText("estate", "name")}
                             onSubmitEditing={this.onSubmitEditing(this.creationDate)}
                             errorFlag={!this.state.estate.nameValidation}
-                            errorText={this.state.errMsg}
+                            errorText={"dd"}
                         />
 
 
@@ -6731,14 +6761,11 @@ class OpenAccPageTwoComponent extends Component {
                     </View>
 
                     {
-                        accType === "Trust or Estate Account" &&
-                        <this.renderEstateInfoSection />
+                        (accType === "Estate Account" ||  accType === "Trust Account") ?
+                        <this.renderEstateInfoSection /> :  <this.renderIndividualSection />
                     }
 
-                    { /* ----------- Individual Account Info -------------------*/
-                        accType !== "Trust or Estate Account" &&
-                        <this.renderIndividualSection />
-                    }
+                    
 
                     { /* ----------- Joint Account Info -------------------*/
                         accType === "Joint Account" &&
