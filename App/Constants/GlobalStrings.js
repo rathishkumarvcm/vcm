@@ -608,11 +608,38 @@ export default {
         emptymilitaryServingStatus: "Please indicate whether you are currently serving, or have you ever served in the US Military?",
 
         emptyEstateNameMsg: "Please enter Estate Name",
+        emptyTrustNameMsg: "Please enter Trust Name",
         emptyCreationDateMsg: "Please select Creation Date",
+        emptySpecifyStateMsg: "Please speacify State of Organization",
+        emptyUSFederalLawCondMsg: "Please indicate whether this trust / estate is organized under U.S. state or federal law?",
+
         emptyOrganisationCountryMsg: "Please specify Country of Organization",
         emptyResidentialPhoneMsg: "Please enter Residential Phone Number",
         emptyBusinessPhoneMsg: "Please enter Busniness Phone Number",
-        emptyMemberNumberMsg: "Please enter Member Number"
+        emptyMemberNumberMsg: "Please enter Member Number",
+
+        emptyBusinessTrustMsg: "Please indicate whether the trust is a business trust?",
+        emptyBrokerOrDealerTrustMsg: "Please indicate whether the trust is a broker/dealer?",
+        emptyBrokerOrDealerMsg: "Please select a Broker / Dealer?",
+        emptyBankTrustMsg: "Please indicate whether the trust is a bank?",
+        emptyBankTrustTypeMsg: "Please indicate whether the trust is a broker/dealer?",
+        emptyForeignUSBranchTrustMsg: "Please indicate whether the trust is a foreign branch of a U.S. financial institution?",
+        emptyBusinessTrustMsg: "Please select Trust a Business",
+        emptyMoneyTranOrCurrencyExchangeOrgnaisedMsg: "Please trust a money transmitter or currency exchanger organized under foreign law?",
+        emptyCorrespondentAccountsOffersProvidedMsg: "Please indicate whether the trust offers correspondent accounts to other financial institutions?",
+        emptyCorrespondentAccountsForeignOffersProvidedMsg: "Please indicate whether the trust provides correspondent accounts to other foreign financial institution?",
+        emptyTypeOfFiniancialInstitutionMsg: "Please select Type of Financial Institution",
+        emptyVCMFundAccountNumbersMsg: "Please enter VCM Mutual Funds Account Number(s) Name",
+
+        emptyFinanacialInstitutionDescribedMsg: "Please indicate whether the trust is a financial institution that is not described above?",
+        emptyFinanacialInstitutionDescMsg: "Please describe the type of Financial Institution",
+
+        emptyPhysicalPresenceMaintainedMsg: "Please indicate whether the trust maintain a Physical Presence?",
+        emptyIndividualEmploymentThereMsg: "Please indicate whether the trust employs individuals on a full-time basis?",
+        emptyTrustMaintainRecordsMsg: "Please indicate whether the trust maintains operating records related to its business activities?",
+
+   
+
 
     },
     userManagement: {

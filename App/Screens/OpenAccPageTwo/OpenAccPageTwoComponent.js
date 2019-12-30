@@ -520,7 +520,8 @@ class OpenAccPageTwoComponent extends Component {
                 isPhysicalPresenceMaintained:"",
                 isIndividualEmploymentThere:"",
                 isTrustMaintainRecords:"",
-
+                isCorrespondentAccountsForeignOffersProvided:"",
+                bankTrustType:"",
                
                 nameValidation: true,
                 creationDateValidation: true,
@@ -561,7 +562,8 @@ class OpenAccPageTwoComponent extends Component {
                 isPhysicalPresenceMaintainedValidation: true,
                 isIndividualEmploymentThereValidation: true,
                 isTrustMaintainRecordsValidation: true,
-
+                isCorrespondentAccountsForeignOffersProvidedValidation:true,
+                bankTrustTypeValidation: true,
 
                 // ExpandCollapse
                 isTrustInfoExpanded: false,
@@ -2056,6 +2058,8 @@ class OpenAccPageTwoComponent extends Component {
     }
     validateEstateTrustInfoFields = () => {
         AppUtils.Dlog(`validateEstateTrustInfoFields:::`);
+        const accType = this.props.navigation.getParam('accType', '');
+     
 
         let errMsg = "";
         let isValidationSuccess = false;
@@ -2065,87 +2069,161 @@ class OpenAccPageTwoComponent extends Component {
         if (this.isEmpty(this.state.estate.name)) {
             errMsg = gblStrings.accManagement.emptyEstateNameMsg;
             input = "name";
-            ++errMsgCount;
+            errMsgCount +=1;
 
         } else if (this.isEmpty(this.state.estate.creationDate)) {
             errMsg = gblStrings.accManagement.emptyCreationDateMsg;
             input = "creationDate";
-            ++errMsgCount;
+            errMsgCount +=1;
 
         } else if (this.isEmpty(this.state.estate.socialSecurityNo)) {
             errMsg = gblStrings.accManagement.emptySSNMsg;
             input = "socialSecurityNo";
-            ++errMsgCount;
+            errMsgCount +=1;
 
         }else if (this.isEmpty(this.state.estate.addrLine1)) {
             errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
             input = 'addrLine1';
-            ++errMsgCount;
+            errMsgCount +=1;
 
         } else if (this.isEmpty(this.state.estate.addrLine2)) {
             errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
             input = 'addrLine2';
-            ++errMsgCount;
+            errMsgCount +=1;
 
         } else if (this.isEmpty(this.state.estate.zipcode)) {
             errMsg = gblStrings.accManagement.emptyZipCodeMsg;
             input = 'zipcode';
-            ++errMsgCount;
+            errMsgCount +=1;
 
         } else if (this.state.estate.zipcode.length < gblStrings.maxLength.zipCode) {
             errMsg = gblStrings.accManagement.invalidZipCodeMsg;
             input = 'zipcode';
-            ++errMsgCount;
+            errMsgCount +=1;
 
         } else if (this.isEmpty(this.state.estate.city)) {
             errMsg = gblStrings.accManagement.emptyCityMsg;
             input = 'city';
-            ++errMsgCount;
+            errMsgCount +=1;
 
         } else if (this.isEmpty(this.state.estate.stateCity)) {
             errMsg = gblStrings.accManagement.emptyStateMsg;
             input = 'stateCity';
-            ++errMsgCount;
+            errMsgCount +=1;
 
         } else if (this.isEmpty(this.state.estate.isYourPhysicalAddresSame)) {
             errMsg = gblStrings.accManagement.confirmPhysicalAddressSame;
             input = 'isYourPhysicalAddresSame';
-            ++errMsgCount;
+            errMsgCount +=1;
 
         } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.estate.addrLine1_Phy)) {
             errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
             input = 'addrLine1_Phy';
-            ++errMsgCount;
+            errMsgCount +=1;
 
         } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.estate.addrLine2_Phy)) {
             errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
             input = 'addrLine2_Phy';
+            errMsgCount +=1;
+
         } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.estate.zipcode_Phy)) {
             errMsg = gblStrings.accManagement.emptyZipCodeMsg;
             input = 'zipcode_Phy';
-            ++errMsgCount;
+            errMsgCount +=1;
 
         } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.state.estate.zipcode_Phy.length < gblStrings.maxLength.zipCode) {
             errMsg = gblStrings.accManagement.invalidZipCodeMsg;
             input = 'zipcode_Phy';
-            ++errMsgCount;
+            errMsgCount +=1;
 
         } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.estate.city_Phy)) {
             errMsg = gblStrings.accManagement.emptyCityMsg;
             input = 'city_Phy';
-            ++errMsgCount;
+            errMsgCount +=1;
 
         } else if (this.state.estate.isYourPhysicalAddresSame === "No" && this.isEmpty(this.state.estate.stateCity_Phy)) {
             errMsg = gblStrings.accManagement.emptyStateMsg;
             input = 'stateCity_Phy';
-            ++errMsgCount;
+            errMsgCount +=1;
 
+        }else if(accType === "Trust Account" && his.isEmpty(this.state.estate.specifyState)){
+            errMsg = gblStrings.accManagement.specifyState;
+            input = "specifyState";
+            errMsgCount +=1;
         } else if (this.isEmpty(this.state.estate.orgCountry)) {
             errMsg = gblStrings.accManagement.emptyOrganisationCountryMsg;
             input = 'orgCountry';
-            ++errMsgCount;
+            errMsgCount +=1;
 
-        } else if (this.state.estate.trusteeData.length > 0) {
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.isBusinessTrust)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "isBusinessTrust";
+            errMsgCount +=1;
+        }  else if(accType === "Trust Account" && his.isEmpty(this.state.estate.isBrokerOrDealerTrust)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "isBrokerOrDealerTrust";
+            errMsgCount +=1;
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.brokerOrDealer)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "brokerOrDealer";
+            errMsgCount +=1;
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.isBankTrust)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "isBankTrust";
+            errMsgCount +=1;
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.bankTrustType)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "bankTrustType";
+            errMsgCount +=1;
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.isForeignUSBranchTrust)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "isForeignUSBranchTrust";
+            errMsgCount +=1;
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.businessTrust)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "businessTrust";
+            errMsgCount +=1;
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.isMoneyTranOrCurrencyExchangeOrgnaised)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "isMoneyTranOrCurrencyExchangeOrgnaised";
+            errMsgCount +=1;
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.isCorrespondentAccountsOffersProvided)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "isCorrespondentAccountsOffersProvided";
+            errMsgCount +=1;
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.isCorrespondentAccountsForeignOffersProvided)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "isCorrespondentAccountsForeignOffersProvided";
+            errMsgCount +=1;
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.typeOfFiniancialInstitution)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "typeOfFiniancialInstitution";
+            errMsgCount +=1;
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.VCMFundAccountNumbers)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "VCMFundAccountNumbers";
+            errMsgCount +=1;
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.isFinanacialInstitutionDescribed)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "isFinanacialInstitutionDescribed";
+            errMsgCount +=1;
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.finanacialInstitutionDesc)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "finanacialInstitutionDesc";
+            errMsgCount +=1;
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.isPhysicalPresenceMaintained)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "isPhysicalPresenceMaintained";
+            errMsgCount +=1;
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.isIndividualEmploymentThere)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "isIndividualEmploymentThere";
+            errMsgCount +=1;
+        } else if(accType === "Trust Account" && his.isEmpty(this.state.estate.isTrustMaintainRecords)){
+            errMsg = gblStrings.accManagement.emptyEstateNameMsg;
+            input = "isTrustMaintainRecords";
+            errMsgCount +=1;
+        }  else if (this.state.estate.trusteeData.length > 0) {
             let inputField = "";
             
 
@@ -6312,7 +6390,7 @@ class OpenAccPageTwoComponent extends Component {
                                 <GInputComponent
                                     inputref={this.setInputRef("typeOfFiniancialInstitution")}
                                     value={this.state.estate.VCMFundAccountNumbers}
-                                    propInputStyle={this.state.estate.typeOfFiniancialInstitution ? styles.customTxtBox : styles.customTxtBoxError}
+                                    propInputStyle={this.state.estate.typeOfFiniancialInstitutionValidation ? styles.customTxtBox : styles.customTxtBoxError}
                                     placeholder=""
                                     maxLength={gblStrings.maxLength.country}
                                     onChangeText={this.onChangeText("estate", "typeOfFiniancialInstitution")}
