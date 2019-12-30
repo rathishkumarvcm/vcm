@@ -92,7 +92,6 @@ class PurchaseFourComponent extends Component {
         const month = new Date().getMonth() + 1;
         const year = new Date().getFullYear();
         const updatedDate = date + '/' + month + '/' + year;
-
         const finalKey = menuList[menuList.length - 1];
 
         if (this.state.ammend) {
@@ -122,9 +121,10 @@ class PurchaseFourComponent extends Component {
             this.props.navigation.navigate('tAmmendComponent');
         }
         else {
+            const orderId = `Order ID - PUR0${year}${month}${date}`;
             const payloadData = {
                 "key": finalKey,
-                "title": `Order ID - PUR0${year}${month}${date}`,
+                "title": orderId,
                 "data": {
                     "count": 5,
                     "Dateadded": updatedDate,
@@ -142,7 +142,7 @@ class PurchaseFourComponent extends Component {
             };
             menuList.push(payloadData);
             this.props.ammendActions(menuList);
-            this.props.navigation.navigate('tAmmendComponent');
+            this.props.navigation.navigate('purchaseFinish', { orderId: orderId });
         }
     }
 

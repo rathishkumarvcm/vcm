@@ -105,6 +105,7 @@ import PurchaseScreenOneComponent from './Screens/PurchaseScreenOne';
 import PurchaseScreenTwoComponent from './Screens/PurchaseScreenTwo';
 import PurchaseScreenThreeComponent from './Screens/PurchaseScreenThree';
 import PurchaseScreenFourComponent from './Screens/PurchaseScreenFour';
+import PurchaseFinishComponent from './Screens/PurchaseFinish';
 
 import EditRelationshipInfo from './Screens/EditRelationshipInformation/';
 import EditRegulatoryInfo from './Screens/EditRegulatoryInformations/EditRegulatoryComponent';
@@ -158,779 +159,785 @@ import VerifySSNComponent from './Screens/VerifySSN/VerifySSNComponent';
 import VerifyMobileComponent from './Screens/VerifyMobile/VerifyMobileComponent';
 
 const AppNavigator = createStackNavigator({
-        login: {
-            screen : LoginComponent,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        Common: {
-            screen : CommonUIComponent,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        listView:{
-            screen : ListView,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        charts:{
-            screen : Charts,
-            navigationOptions: {
-                header: null,
-              }
-        },
-         webView:{
-            screen : WebView,
-            navigationOptions: {
-                header: null,
-              }
-        }, 
-        pagination:{
-            screen : PaginationComp,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        maps:{
-            screen : Maps,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        pdf:{
-            screen : Pdf,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        search:{
-            screen : Search,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        registerEmail:{
-            screen : RegisterEmail,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        registerPassword:{
-            screen : RegisterPassword,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        registerSelf:{
-            screen : RegisterSelf,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        registerAddress:{
-            screen : RegisterAddress,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        pdfFeatures:{
-            screen : PdfFeatures,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        PdfRNFetchblob:{
-            screen : PdfRNFetchblob,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        pdfLinking:{
-            screen : PdfLinking,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        PdfRNFetchblobDownload:{
-            screen : PdfRNFetchblobDownload,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        nativePdf:{
-            screen : NativePdf,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        accountInquiry:{
-            screen : AccountInquiry,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        dashboard:{
-            screen : Dashboard,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        termsAndConditions:{
-            screen : TermsAndConditions,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        dashboardAccounts:{
-            screen : DashboardAccounts,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        openAccPageOne:{
-            screen : OpenAccPageOne,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        openAccPageTwo:{
-            screen : OpenAccPageTwo,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        openAccPageThree:{
-            screen : OpenAccPageThree,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        investmentPlanInfo:{
-            screen : InvestmentPlanInfo,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        openAccPageFour:{
-            screen : OpenAccPageFour,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        openAccPageFive:{
-            screen : OpenAccPageFive,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        openAccPageSix:{
-            screen : OpenAccPageSix,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        specialtyAccPage:{
-            screen : SpecialtyAccPage,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        specialtyAccSubmit:{
-            screen : SpecialtyAccSubmit,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        collegePlanESA:{
-            screen : CollegePlanESA,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        collegePlanPartOneTwo:{
-            screen : CollegePlanPartOneTwo,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        collegePlanPersonal:{
-            screen : CollegePlanPersonal,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        collegePlanBeneficiary:{
-            screen : CollegePlanBeneficiary,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        profileSettings:{
-            screen : ProfileSettings,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        generalSettings:{
-            screen : GeneralSettings,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        deliverySettings:{
-            screen : DeliverySettings,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        marketingandPrivacySettings:{
-            screen : MarketingandPrivacySettings,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        otpAuth:{
-            screen : OtpAuthentication,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        otpConfirm:{
-            screen : OtpConfirm,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        OtpSeurity: {
-            screen : OtpSeurity,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        otpSecurityConfirm:{
-            screen : OtpSecurityConfirm,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        emailVerify:{
-            screen : EmailVerify,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        editProfileSettings:{
-            screen : EditProfileSettings,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        editAddressSettings:{
-            screen : EditAddressSettings,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        editAddressAddNew:{
-            screen : EditAddressAddNew,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        editPhoneInformation:{
-            screen : EditPhoneInformation,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        editEmailInformation: {
-            screen : EditEmailInformation,
-            navigationOptions: {
-                header: null,
-              }
-        }, 
-        editEmailAddNew: {
-            screen : EditEmailAddNew,
-            navigationOptions: {
-                header: null,
-              }
-        }, 
-        editAddFinancialInfo: {
-            screen : EditAddFinancialInfo,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        editAddPhoneNumber: {
-            screen : EditAddPhoneNumber,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        editMilitaryInfo: {
-            screen : EditMilitaryInfo,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        editOccupationInfo: {
-            screen : EditOccupationInfo,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        retrieveOnlineId:{
-            screen : RetrieveOnlineId,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        modifySecurityQues:{
-            screen : ModifySecurityQues,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        ChangeSignInMethod:{
-            screen : ChangeSignInMethod,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        CSMSoftTokenComponent:{
-            screen : CSMSoftTokenComponent,
-            navigationOptions: {
-                header: null,
-              }
-        },
-        CSMPushNotificationComponent:
-        {
-            screen : CSMPushNotificationComponent,
-            navigationOptions: {
-                header: null,  
-            }
-        },
-        CSMOtp:
-        {
-            screen : CSMOtp,
-            navigationOptions: {
-                header: null,  
-            }
-        },
-        profilePreference:
-        {
-            screen: ProfilesAndPreferences,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        securityPreference:
-        {
-            screen: SecurityPreference,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        changeLogonCredentials: {
-            screen: ChangeLogonCredentialsComponent,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        currentPassword:{
-            screen: CurrentPasswordComponent,
-            navigationOptions: {
-                header: null,
-            } 
-        },
-        currentPIN:{
-            screen: CurrentPINComponent,
-            navigationOptions: {
-                header: null,
-            } 
-        },
-        resetPassword: {
-            screen: ResetPasswordComponent,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        resetPIN: {
-            screen: ResetPINComponent,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        accountRecoveryPref: {
-            screen: AccountRecoveryPrefComponent,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        manageIntrestedParties:{
-            screen: ManageIntrestedPartiesComponent,
-            navigationOptions: {
-                header: null,
-            }
-        },
-       accountMessagingSettings:{
-            screen:AccountMessagingSettings,
-            navigationOptions:{
-                header: null
-            }
-        },
-        accountMessagingGoals:{
-            screen:AccountMessagingGoals,
-            navigationOptions:{
-                header: null
-            }
-        },
-        accountMessagingAdvice:{
-            screen:AccountMessagingAdvice,
-            navigationOptions:{
-                header: null
-            }
-        },
-        accountMessagingGeneralDocuments:{
-            screen:AccountMessagingGeneralDocuments,
-            navigationOptions:{
-                header: null
-            }
-        },
-        AccountMessagingSecurityAndFraud:{
-            screen:AccountMessagingSecurityAndFraud,
-            navigationOptions:{
-                header: null
-            }
-        },
-        accountMessagingDeviceManagement:{
-            screen:AccountMessagingDeviceManagement,
-            navigationOptions:{
-                header: null
-            }
-        },
-        manageBeneficiaries:{
-            screen:ManageBeneficiariesComponent,
-            navigationOptions:{
-                header: null
-            }
-        },
-        editRelationshipInfo: {
-            screen: EditRelationshipInfo,
-            navigationOptions: {
-                header: null
-            }
-        },
-        editRegulatoryInfo: {
-            screen: EditRegulatoryInfo,
-            navigationOptions: {
-                header: null
-            }
-        },
-        editFamilyMemberInfo: {
-            screen: EditFamilyMemberInfo,
-            navigationOptions: {
-                header: null
-            }
-        },
-        editFamilyDetail: {
-            screen: EditFamilyDetail,
-            navigationOptions: {
-                header: null
-            }
-        },passwordRecovery:{
-            screen:PasswordRecovery,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        passwordRecoveryOtp:{
-            screen:PasswordRecoveryOtp,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        passwordReset:{
-            screen:PasswordReset,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        passwordSuccess:{
-            screen:PasswordSuccess,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        passwordRecoverTemp:{
-            screen:PasswordRecoverTemp,
-            navigationOptions:{
-                header:null,
-            }  
-        },
-        tAmmendComponent:{
-            screen:TAmmendComponent,
-            navigationOptions:{
-                header:null,
-            }  
-        },
-        accountService: {
-            screen: AccountServicesComponent,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        dividentsAndCapitalGainsPref: {
-            screen: DividentsAndCapitalGainsPrefComponent,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        orderCheckBook: {
-            screen: CheckBookComponent,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        automaticInvestment:{
-            screen:automaticInvestment,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        automaticInvestmentAdd:{
-            screen:automaticInvestmentAdd,
-            navigationOptions:{
-                header:null,
-            }  
-        },
-        automaticInvestmentVerify:{
-            screen:automaticInvestmentVerify,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        automaticInvestmentEsign:{
-            screen:automaticInvestmentEsign,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        automaticInvestmentSchedule:{
-            screen:automaticInvestmentSchedule,
-            navigationOptions:{
-                header:null,
-            }  
-        },
-        automaticInvestmentAccount:{
-            screen:automaticInvestmentAccount,
-            navigationOptions:{
-                header:null,
-            }  
-        },
-        systematicWithdrawal:{
-            screen:systematicWithdrawal,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        systematicWithdrawalAdd:{
-            screen:systematicWithdrawalAdd,
-            navigationOptions:{
-                header:null,
-            }  
-        },
-        systematicWithdrawalVerify:{
-            screen:systematicWithdrawalVerify,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        systematicWithdrawalSchedule:{
-            screen:systematicWithdrawalSchedule,
-            navigationOptions:{
-                header:null,
-            }  
-        },
-        systematicWithdrawalEsign:{
-            screen:systematicWithdrawalEsign,
-            navigationOptions:{
-                header:null,
-            }  
-        },
-        systematicWithdrawalAccount:{
-            screen:systematicWithdrawalAccount,
-            navigationOptions:{
-                header:null,
-            }  
-        },
-        bankAccount: {
-            screen: BankAccountsComponent,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        addBankAccount: {
-            screen: AddBankAccountComponent,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        imageUpload: {
-            screen: ImageUpload,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        LiquidationPageOne:{
-            screen:LiquidationPageOneComponent,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        LiquidationPageTwo:{
-            screen:LiquidationPageTwoComponent,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        LiquidationPageThree:{
-            screen:LiquidationPageThreeComponent,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        LiquidationPageFour:{
-            screen:LiquidationPageFourComponent,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        LiquidationFinish:{
-            screen:LiquidationFinishComponent,
-            navigationOptions:{
-                header:null,
-            }
-        },
-         FundSelectionComponent:{
-             screen:FundSelectionComponent,
-             navigationOptions:{
-                 header:null,
-             }  
-         },
-        compareFunds:{
-            screen:CompareFunds,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        QuickSigninComponent:{
-            screen:QuickSigninComponent,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        onlineIDVerification:{
-            screen:OnlineIDVerification,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        editManageBeneficiaries:{
-            screen:EditManageBeneficiariesComponent,
-            navigationOptions:{
-                header: null
-            }
-        },
-        verifyManageBeneficiaries:{
-            screen:VerifyManageBenificiariesComponent,
-            navigationOptions:{
-                header: null
-            }
-        },
-        verifySSN:{
-            screen : VerifySSNComponent,
-            navigationOptions:{
-                header : null,
-            }
-        },
-        verifyMobileNumber:{
-            screen : VerifyMobileComponent,
-            navigationOptions:{
-                header : null,
-            }
-        },
-        FundWithdrawlComponent:{
-            screen:FundWithdrawlComponent,
-            navigationOptions:{
-                header:null, 
-           }
-        },
-        ReviewConfirmComponent:{
-            screen:ReviewConfirmComponent,
-            navigationOptions:{
-                header:null, 
-           }
-        },
-        addIntrestedParties:{
-            screen:AddNewIntrestedPartiesComponent,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        addOtherBankAccountComponent: {
-            screen: AddOtherBankAccountComponent,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        verifyIntrestedParties:{
-            screen:VerifyIntrestedPartiesComponent,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        editIntrestedParty:{
-            screen:EditManageIntrestedPartiesComponent,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        checkBookPlaceOrder: {
-            screen: CheckBookPlaceOrder,
-            navigationOptions: {
-                header: null,
-            }
-        },
-        purchaseScreenOne:{
-            screen:PurchaseScreenOneComponent,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        purchaseScreenTwo:{
-            screen:PurchaseScreenTwoComponent,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        purchaseScreenThree:{
-            screen:PurchaseScreenThreeComponent,
-            navigationOptions:{
-                header:null,
-            }
-        },
-        purchaseScreenFour:{
-            screen:PurchaseScreenFourComponent,
-            navigationOptions:{
-                header:null,
-            } 
+    login: {
+        screen: LoginComponent,
+        navigationOptions: {
+            header: null,
         }
-
     },
+    Common: {
+        screen: CommonUIComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    listView: {
+        screen: ListView,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    charts: {
+        screen: Charts,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    webView: {
+        screen: WebView,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    pagination: {
+        screen: PaginationComp,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    maps: {
+        screen: Maps,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    pdf: {
+        screen: Pdf,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    search: {
+        screen: Search,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    registerEmail: {
+        screen: RegisterEmail,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    registerPassword: {
+        screen: RegisterPassword,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    registerSelf: {
+        screen: RegisterSelf,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    registerAddress: {
+        screen: RegisterAddress,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    pdfFeatures: {
+        screen: PdfFeatures,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    PdfRNFetchblob: {
+        screen: PdfRNFetchblob,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    pdfLinking: {
+        screen: PdfLinking,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    PdfRNFetchblobDownload: {
+        screen: PdfRNFetchblobDownload,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    nativePdf: {
+        screen: NativePdf,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    accountInquiry: {
+        screen: AccountInquiry,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    dashboard: {
+        screen: Dashboard,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    termsAndConditions: {
+        screen: TermsAndConditions,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    dashboardAccounts: {
+        screen: DashboardAccounts,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    openAccPageOne: {
+        screen: OpenAccPageOne,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    openAccPageTwo: {
+        screen: OpenAccPageTwo,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    openAccPageThree: {
+        screen: OpenAccPageThree,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    investmentPlanInfo: {
+        screen: InvestmentPlanInfo,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    openAccPageFour: {
+        screen: OpenAccPageFour,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    openAccPageFive: {
+        screen: OpenAccPageFive,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    openAccPageSix: {
+        screen: OpenAccPageSix,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    specialtyAccPage: {
+        screen: SpecialtyAccPage,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    specialtyAccSubmit: {
+        screen: SpecialtyAccSubmit,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    collegePlanESA: {
+        screen: CollegePlanESA,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    collegePlanPartOneTwo: {
+        screen: CollegePlanPartOneTwo,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    collegePlanPersonal: {
+        screen: CollegePlanPersonal,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    collegePlanBeneficiary: {
+        screen: CollegePlanBeneficiary,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    profileSettings: {
+        screen: ProfileSettings,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    generalSettings: {
+        screen: GeneralSettings,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    deliverySettings: {
+        screen: DeliverySettings,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    marketingandPrivacySettings: {
+        screen: MarketingandPrivacySettings,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    otpAuth: {
+        screen: OtpAuthentication,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    otpConfirm: {
+        screen: OtpConfirm,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    OtpSeurity: {
+        screen: OtpSeurity,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    otpSecurityConfirm: {
+        screen: OtpSecurityConfirm,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    emailVerify: {
+        screen: EmailVerify,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editProfileSettings: {
+        screen: EditProfileSettings,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editAddressSettings: {
+        screen: EditAddressSettings,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editAddressAddNew: {
+        screen: EditAddressAddNew,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editPhoneInformation: {
+        screen: EditPhoneInformation,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editEmailInformation: {
+        screen: EditEmailInformation,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editEmailAddNew: {
+        screen: EditEmailAddNew,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editAddFinancialInfo: {
+        screen: EditAddFinancialInfo,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editAddPhoneNumber: {
+        screen: EditAddPhoneNumber,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editMilitaryInfo: {
+        screen: EditMilitaryInfo,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editOccupationInfo: {
+        screen: EditOccupationInfo,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    retrieveOnlineId: {
+        screen: RetrieveOnlineId,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    modifySecurityQues: {
+        screen: ModifySecurityQues,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    ChangeSignInMethod: {
+        screen: ChangeSignInMethod,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    CSMSoftTokenComponent: {
+        screen: CSMSoftTokenComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    CSMPushNotificationComponent:
+    {
+        screen: CSMPushNotificationComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    CSMOtp:
+    {
+        screen: CSMOtp,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    profilePreference:
+    {
+        screen: ProfilesAndPreferences,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    securityPreference:
+    {
+        screen: SecurityPreference,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    changeLogonCredentials: {
+        screen: ChangeLogonCredentialsComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    currentPassword: {
+        screen: CurrentPasswordComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    currentPIN: {
+        screen: CurrentPINComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    resetPassword: {
+        screen: ResetPasswordComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    resetPIN: {
+        screen: ResetPINComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    accountRecoveryPref: {
+        screen: AccountRecoveryPrefComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    manageIntrestedParties: {
+        screen: ManageIntrestedPartiesComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    accountMessagingSettings: {
+        screen: AccountMessagingSettings,
+        navigationOptions: {
+            header: null
+        }
+    },
+    accountMessagingGoals: {
+        screen: AccountMessagingGoals,
+        navigationOptions: {
+            header: null
+        }
+    },
+    accountMessagingAdvice: {
+        screen: AccountMessagingAdvice,
+        navigationOptions: {
+            header: null
+        }
+    },
+    accountMessagingGeneralDocuments: {
+        screen: AccountMessagingGeneralDocuments,
+        navigationOptions: {
+            header: null
+        }
+    },
+    AccountMessagingSecurityAndFraud: {
+        screen: AccountMessagingSecurityAndFraud,
+        navigationOptions: {
+            header: null
+        }
+    },
+    accountMessagingDeviceManagement: {
+        screen: AccountMessagingDeviceManagement,
+        navigationOptions: {
+            header: null
+        }
+    },
+    manageBeneficiaries: {
+        screen: ManageBeneficiariesComponent,
+        navigationOptions: {
+            header: null
+        }
+    },
+    editRelationshipInfo: {
+        screen: EditRelationshipInfo,
+        navigationOptions: {
+            header: null
+        }
+    },
+    editRegulatoryInfo: {
+        screen: EditRegulatoryInfo,
+        navigationOptions: {
+            header: null
+        }
+    },
+    editFamilyMemberInfo: {
+        screen: EditFamilyMemberInfo,
+        navigationOptions: {
+            header: null
+        }
+    },
+    editFamilyDetail: {
+        screen: EditFamilyDetail,
+        navigationOptions: {
+            header: null
+        }
+    }, passwordRecovery: {
+        screen: PasswordRecovery,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    passwordRecoveryOtp: {
+        screen: PasswordRecoveryOtp,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    passwordReset: {
+        screen: PasswordReset,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    passwordSuccess: {
+        screen: PasswordSuccess,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    passwordRecoverTemp: {
+        screen: PasswordRecoverTemp,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    tAmmendComponent: {
+        screen: TAmmendComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    accountService: {
+        screen: AccountServicesComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    dividentsAndCapitalGainsPref: {
+        screen: DividentsAndCapitalGainsPrefComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    orderCheckBook: {
+        screen: CheckBookComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    automaticInvestment: {
+        screen: automaticInvestment,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    automaticInvestmentAdd: {
+        screen: automaticInvestmentAdd,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    automaticInvestmentVerify: {
+        screen: automaticInvestmentVerify,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    automaticInvestmentEsign: {
+        screen: automaticInvestmentEsign,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    automaticInvestmentSchedule: {
+        screen: automaticInvestmentSchedule,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    automaticInvestmentAccount: {
+        screen: automaticInvestmentAccount,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    systematicWithdrawal: {
+        screen: systematicWithdrawal,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    systematicWithdrawalAdd: {
+        screen: systematicWithdrawalAdd,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    systematicWithdrawalVerify: {
+        screen: systematicWithdrawalVerify,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    systematicWithdrawalSchedule: {
+        screen: systematicWithdrawalSchedule,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    systematicWithdrawalEsign: {
+        screen: systematicWithdrawalEsign,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    systematicWithdrawalAccount: {
+        screen: systematicWithdrawalAccount,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    bankAccount: {
+        screen: BankAccountsComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    addBankAccount: {
+        screen: AddBankAccountComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    imageUpload: {
+        screen: ImageUpload,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    LiquidationPageOne: {
+        screen: LiquidationPageOneComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    LiquidationPageTwo: {
+        screen: LiquidationPageTwoComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    LiquidationPageThree: {
+        screen: LiquidationPageThreeComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    LiquidationPageFour: {
+        screen: LiquidationPageFourComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    LiquidationFinish: {
+        screen: LiquidationFinishComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    FundSelectionComponent: {
+        screen: FundSelectionComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    compareFunds: {
+        screen: CompareFunds,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    QuickSigninComponent: {
+        screen: QuickSigninComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    onlineIDVerification: {
+        screen: OnlineIDVerification,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editManageBeneficiaries: {
+        screen: EditManageBeneficiariesComponent,
+        navigationOptions: {
+            header: null
+        }
+    },
+    verifyManageBeneficiaries: {
+        screen: VerifyManageBenificiariesComponent,
+        navigationOptions: {
+            header: null
+        }
+    },
+    verifySSN: {
+        screen: VerifySSNComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    verifyMobileNumber: {
+        screen: VerifyMobileComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    FundWithdrawlComponent: {
+        screen: FundWithdrawlComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    ReviewConfirmComponent: {
+        screen: ReviewConfirmComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    addIntrestedParties: {
+        screen: AddNewIntrestedPartiesComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    addOtherBankAccountComponent: {
+        screen: AddOtherBankAccountComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    verifyIntrestedParties: {
+        screen: VerifyIntrestedPartiesComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editIntrestedParty: {
+        screen: EditManageIntrestedPartiesComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    checkBookPlaceOrder: {
+        screen: CheckBookPlaceOrder,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    purchaseScreenOne: {
+        screen: PurchaseScreenOneComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    purchaseScreenTwo: {
+        screen: PurchaseScreenTwoComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    purchaseScreenThree: {
+        screen: PurchaseScreenThreeComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    purchaseScreenFour: {
+        screen: PurchaseScreenFourComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    purchaseFinish: {
+        screen: PurchaseFinishComponent,
+        navigationOptions: {
+            header: null,
+        }
+    }
+
+},
     {
         initialRouteName: "login"
     });
