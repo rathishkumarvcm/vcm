@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList } from 'react-native';
-import { styles } from './styles';
+import PropTypes from "prop-types";
+
 import { GButtonComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import { CustomCheckBox } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-import PropTypes from "prop-types";
-
-
+import StyleSheet from './styles';
 
 
 const basicTermsData = [
@@ -45,13 +44,13 @@ class TermsAndConditionsComponent extends Component {
 
         };
     }
+
     /*----------------------
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
     componentDidMount() {
 
     }
-
     /*----------------------
    
     /*----------------------
@@ -65,12 +64,15 @@ class TermsAndConditionsComponent extends Component {
     goBack = () => {
         this.props.navigation.goBack();
     }
+
     onClickCancel = () => {
         this.props.navigation.goBack('termsAndConditions');
     }
+    
     onClickNext = () => {
         this.validateFields();
     }
+
     onPressCheck = (keyName) => () => this.setState({
         [keyName]: !this.state[keyName]
     });
@@ -78,13 +80,15 @@ class TermsAndConditionsComponent extends Component {
     isEmpty = (str) => {
         if (str == "" || str == undefined || str == "null" || str == "undefined") {
             return true;
-        } else {
+        } 
+        else {
             return false;
         }
     }
+
     validateFields = () => {
-        var errMsg = "";
-        var isValidationSuccess = false;
+        let errMsg = "";
+        let isValidationSuccess = false;
         if (this.state.agreeConditions === false) {
             errMsg = gblStrings.accManagement.confirmAgreeCondMsg;
 
@@ -98,12 +102,14 @@ class TermsAndConditionsComponent extends Component {
             alert(errMsg);
         }
     }
+    
     generateKeyExtractor = (item) => item.id ;
+
     renderBasicTerms = ({ item }) =>
-        (<View style={styles.column}>
-            <View style={styles.row}>
-                <Text style={styles.bullet}>{"" + '\u2022' + ""}</Text>
-                <Text style={styles.bulletText}>{item.title}</Text>
+        (<View style={StyleSheet.column}>
+            <View style={StyleSheet.row}>
+                <Text style={StyleSheet.bullet}>{"" + '\u2022' + ""}</Text>
+                <Text style={StyleSheet.bulletText}>{item.title}</Text>
             </View>
          </View>
         );
@@ -113,10 +119,10 @@ class TermsAndConditionsComponent extends Component {
                                  Render Methods
                                                                  -------------------------- */
     render() {
-        const nextBtnstyle = this.state.agreeConditions ? styles.normalBlackBtn : [styles.normalBlackBtn, { opacity: .45 }];
+        const nextBtnstyle = this.state.agreeConditions ? StyleSheet.normalBlackBtn : [StyleSheet.normalBlackBtn, { opacity: .45 }];
 
         return (
-            <View style={styles.container}>
+            <View style={StyleSheet.container}>
                 <GHeaderComponent
                     navigation={this.props.navigation}
                     onPress={this.onClickHeader}
@@ -124,16 +130,16 @@ class TermsAndConditionsComponent extends Component {
                 <ScrollView style={{ flex: .85 }}>
 
                     { /*-----------Terms and Conditions -------------------*/}
-                    <View style={[styles.sectionGrp]}>
-                        <View style={styles.accTypeSelectSection} >
-                            <Text style={styles.headings}>
+                    <View style={StyleSheet.sectionGrp}>
+                        <View style={StyleSheet.accTypeSelectSection}>
+                            <Text style={StyleSheet.headings}>
                                 {gblStrings.dashBoard.termsAndConditions}
                             </Text>
                         </View>
 
-                        <Text style={styles.lblLine} />
+                        <Text style={StyleSheet.lblLine} />
 
-                        <Text style={styles.sectionDescTxt}>
+                        <Text style={StyleSheet.sectionDescTxt}>
                             {gblStrings.dashBoard.termsAndConditionsNote}
                         </Text>
 
@@ -142,9 +148,9 @@ class TermsAndConditionsComponent extends Component {
 
                     { /*-----------Basic Terms -------------------*/}
 
-                    <View style={[styles.sectionGrp]}>
-                        <View style={styles.accTypeSelectSection} >
-                            <Text style={styles.headings}>
+                    <View style={[StyleSheet.sectionGrp]}>
+                        <View style={StyleSheet.accTypeSelectSection} >
+                            <Text style={StyleSheet.headings}>
                                 {gblStrings.dashBoard.basicTerms}
                             </Text>
                         </View>
@@ -153,10 +159,10 @@ class TermsAndConditionsComponent extends Component {
                             { /* <FlatList
                                 data={basicTermsData}
                                 renderItem={({ item }) =>
-                                    (<View style={styles.column}>
-                                        <View style={styles.row}>
-                                            <Text style={styles.bullet}>{"" + '\u2022' + ""}</Text>
-                                            <Text style={styles.bulletText}>{item.title}</Text>
+                                    (<View style={StyleSheet.column}>
+                                        <View style={StyleSheet.row}>
+                                            <Text style={StyleSheet.bullet}>{"" + '\u2022' + ""}</Text>
+                                            <Text style={StyleSheet.bulletText}>{item.title}</Text>
                                         </View>
                                     </View>
                                     )
@@ -171,14 +177,14 @@ class TermsAndConditionsComponent extends Component {
                             />
                         </View>
 
-                        <View style={styles.agreeSectionGrp} >
+                        <View style={StyleSheet.agreeSectionGrp} >
                             <CustomCheckBox
                                 size={20}
                                 itemBottom={0}
                                 itemTop={0}
                                 outerCicleColor={"#707070"}
                                 innerCicleColor={"#61285F"}
-                                labelStyle={styles.agreeTermsTxt}
+                                labelStyle={StyleSheet.agreeTermsTxt}
                                 label={gblStrings.dashBoard.agreeMsgContent}
                                 selected={this.state.agreeConditions}
                                 onPress={this.onPressCheck("agreeConditions")}
@@ -194,20 +200,20 @@ class TermsAndConditionsComponent extends Component {
 
                     { /*----------- Buttons Group -------------------*/}
 
-                    <View style={styles.btnGrp}>
+                    <View style={StyleSheet.btnGrp}>
 
 
                         <GButtonComponent
-                            buttonStyle={styles.normalWhiteBtn}
+                            buttonStyle={StyleSheet.normalWhiteBtn}
                             buttonText={gblStrings.common.cancel}
-                            textStyle={styles.normalWhiteBtnTxt}
+                            textStyle={StyleSheet.normalWhiteBtnTxt}
                             onPress={this.goBack}
                         />
 
                         <GButtonComponent
                             buttonStyle={nextBtnstyle}
                             buttonText={gblStrings.common.next}
-                            textStyle={styles.normalBlackBtnTxt}
+                            textStyle={StyleSheet.normalBlackBtnTxt}
                             onPress={this.onClickNext}
                             disabled={!this.state.agreeConditions}
 
@@ -216,14 +222,14 @@ class TermsAndConditionsComponent extends Component {
 
                     { /*----------- Disclaimer -------------------*/}
 
-                    <View style={styles.newVictorySection}>
-                        <Text style={styles.disclaimerTitleTxt}>
+                    <View style={StyleSheet.newVictorySection}>
+                        <Text style={StyleSheet.disclaimerTitleTxt}>
                             {gblStrings.accManagement.VCDiscalimerTitle}
                         </Text>
-                        <Text style={styles.disclaimerTxt}>
+                        <Text style={StyleSheet.disclaimerTxt}>
                             {gblStrings.accManagement.VCDiscalimerDesc}
                         </Text>
-                        <Text style={styles.moreTxt}>
+                        <Text style={StyleSheet.moreTxt}>
                             {gblStrings.common.more}
                         </Text>
                     </View>
