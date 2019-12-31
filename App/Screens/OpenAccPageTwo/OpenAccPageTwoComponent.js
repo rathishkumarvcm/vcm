@@ -46,6 +46,7 @@ class OpenAccPageTwoComponent extends Component {
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         const openAccPageTwo = myInstance.getAccOpeningEditMode() ? (myInstance.getScreenStateData().openAccPageTwo || {}) : {};
         this.state = {
+            dummyValidation:true,
             enableScrollViewScroll: true,
             isValidationSuccess: true,
             errMsg: "",
@@ -546,7 +547,6 @@ class OpenAccPageTwoComponent extends Component {
                 mobileNoValidation: true,
                 emailAddressValidation: true,
                 socialSecurityNoValidation: true,
-
                 specifyStateValidation: true,
                 isBusinessTrustValidation: true,
                 isBrokerOrDealerTrustValidation: true,
@@ -702,6 +702,12 @@ class OpenAccPageTwoComponent extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         AppUtils.Dlog(`componentDidUpdate::::> ${prevState}`);
+        const { 
+            stateKey = "",
+            keyName = "",
+            objIndex = -1
+        } = this.state.currentZipCodeRef;
+
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.PERSONAL_INFO_SAVE_OPENING_ACCT;
             if (this.props.accOpeningData[responseKey]) {
@@ -721,12 +727,10 @@ class OpenAccPageTwoComponent extends Component {
             if (this.props.addressFormatData[stateCityKey]) {
                 if (this.props.addressFormatData[stateCityKey] !== prevProps.addressFormatData[stateCityKey]) {
                     const tempResponse = this.props.addressFormatData[stateCityKey];
+                   
+
                     if (tempResponse && tempResponse.City) {
-                        const {objIndex = ""} = this.state.currentZipCodeRef.objIndex;
-
-                        // alert("currentZipCodeRef::"+this.state.currentZipCodeRef.keyName);
-
-                        if (this.state.currentZipCodeRef.keyName === "empZipcode") {
+                        if (keyName === "empZipcode") {
                             this.setState(() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
@@ -735,7 +739,7 @@ class OpenAccPageTwoComponent extends Component {
 
                                 }
                             }));
-                        }else if (this.state.currentZipCodeRef.keyName === "zipcode_Phy" && this.state.currentZipCodeRef.objIndex) {
+                        }else if (keyName === "zipcode_Phy" && objIndex !== -1) {
                             const newItems = [...this.state.estate.trusteeData];
                             newItems[objIndex].city_Phy = tempResponse.City;
                             newItems[objIndex].stateCity_Phy = tempResponse.State;
@@ -748,7 +752,7 @@ class OpenAccPageTwoComponent extends Component {
         
                                 }
                             })));
-                        } else if (this.state.currentZipCodeRef.keyName === "zipcode" && this.state.currentZipCodeRef.objIndex) {
+                        } else if (keyName === "zipcode" && objIndex !== -1) {
                             const newItems = [...this.state.estate.trusteeData];
                             newItems[objIndex].city = tempResponse.City;
                             newItems[objIndex].stateCity = tempResponse.State;
@@ -761,7 +765,7 @@ class OpenAccPageTwoComponent extends Component {
         
                                 }
                             })));
-                        } else if (this.state.currentZipCodeRef.keyName === "zipcode_Phy") {
+                        } else if (keyName === "zipcode_Phy" && objIndex !== -1) {
                             this.setState(() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
@@ -788,9 +792,9 @@ class OpenAccPageTwoComponent extends Component {
             if (this.props.addressFormatData[addressKey]) {
                 if (this.props.addressFormatData[addressKey] !== prevProps.addressFormatData[addressKey]) {
                     const tempResponse = this.props.addressFormatData[addressKey];
+
                     if (tempResponse && tempResponse.City) {
-                        const {objIndex = ""} = this.state.currentZipCodeRef.objIndex;
-                        if (this.state.currentZipCodeRef.keyName === "empZipcode") {
+                        if (keyName === "empZipcode") {
                             this.setState(() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
@@ -801,7 +805,7 @@ class OpenAccPageTwoComponent extends Component {
 
                                 }
                             }));
-                        } else if (this.state.currentZipCodeRef.keyName === "zipcode_Phy" && this.state.currentZipCodeRef.objIndex) {
+                        } else if (keyName === "zipcode_Phy" && objIndex !== -1 ) {
                             const newItems = [...this.state.estate.trusteeData];
                             newItems[objIndex].city_Phy = tempResponse.City;
                             newItems[objIndex].stateCity_Phy = tempResponse.State;
@@ -817,7 +821,7 @@ class OpenAccPageTwoComponent extends Component {
         
                                 }
                             })));
-                        } else if (this.state.currentZipCodeRef.keyName === "zipcode" && this.state.currentZipCodeRef.objIndex) {
+                        } else if (keyName === "zipcode" && objIndex !== -1) {
                             const newItems = [...this.state.estate.trusteeData];
                             newItems[objIndex].city = tempResponse.City;
                             newItems[objIndex].stateCity = tempResponse.State;
@@ -833,7 +837,7 @@ class OpenAccPageTwoComponent extends Component {
         
                                 }
                             })));
-                        } else if (this.state.currentZipCodeRef.keyName === "zipcode_Phy") {
+                        } else if (keyName === "zipcode_Phy") {
                             this.setState(() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
@@ -869,10 +873,8 @@ class OpenAccPageTwoComponent extends Component {
 
                                 }
                             }));
-                        } else if (this.state.currentZipCodeRef.keyName === "zipcode_Phy" && this.state.currentZipCodeRef.objIndex) {
+                        } else if (this.state.currentZipCodeRef.keyName === "zipcode_Phy" &&  objIndex !== -1) {
                             const newItems = [...this.state.estate.trusteeData];
-                            newItems[objIndex].city_Phy = tempResponse.City;
-                            newItems[objIndex].stateCity_Phy = tempResponse.State;
                             newItems[objIndex].addrLine1_Phy= "";
                             newItems[objIndex].addrLine2_Phy = "";
                             newItems[objIndex].addrLine1_PhyValidation = false;
@@ -883,12 +885,12 @@ class OpenAccPageTwoComponent extends Component {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
                                     trusteeData:newItems
         
-                                }
+                                },
+                                errMsg: "Invalid address"
+
                             })));
-                        } else if (this.state.currentZipCodeRef.keyName === "zipcode" && this.state.currentZipCodeRef.objIndex) {
+                        } else if (this.state.currentZipCodeRef.keyName === "zipcode" && objIndex !== -1) {
                             const newItems = [...this.state.estate.trusteeData];
-                            newItems[objIndex].city = tempResponse.City;
-                            newItems[objIndex].stateCity = tempResponse.State;
                             newItems[objIndex].addrLine1= "";
                             newItems[objIndex].addrLine2 = "";
                             newItems[objIndex].addrLine1Validation = false;
@@ -899,7 +901,9 @@ class OpenAccPageTwoComponent extends Component {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
                                     trusteeData:newItems
         
-                                }
+                                },
+                                errMsg: "Invalid address"
+
                             })));
                         } else if (this.state.currentZipCodeRef.keyName === "zipcode_Phy") {
                             this.setState(() => ({
@@ -1373,7 +1377,7 @@ class OpenAccPageTwoComponent extends Component {
 
         newItems.keyName = keyName;
         newItems.stateKey = stateKey;
-        newItems.objIndex = "";
+        newItems.objIndex = -1;
 
         // alert("onSubmitZipEditing::"+JSON.stringify(newItems));
         this.setState({ currentZipCodeRef: newItems });
@@ -1425,7 +1429,7 @@ class OpenAccPageTwoComponent extends Component {
         const newItems = { ...this.state.currentZipCodeRef };
         newItems.keyName = keyName;
         newItems.stateKey = stateKey;
-        newItems.objIndex = "";
+        newItems.objIndex = -1;
 
         // alert("onSubmitEmpZipEditing::"+JSON.stringify(newItems));
         this.setState({ currentZipCodeRef: newItems });
@@ -2070,7 +2074,7 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.Dlog(`validateEstateTrustInfoFields:::`);
         const accType = this.props.navigation.getParam('accType', '');
      
-
+       
         let errMsg = "";
         let isValidationSuccess = false;
         let errMsgCount = 0;
@@ -2237,7 +2241,7 @@ class OpenAccPageTwoComponent extends Component {
             let inputField = "";
             
 
-            for (let i = 0; i < this.state.estate.trusteeData.length; i++) {
+            for (let i = 0; i < this.state.estate.trusteeData.length; i+=1) {
                 let tempErrMsg = "";
                 const tempObj = this.state.estate.trusteeData[i];
                 AppUtils.Dlog(`tempObj::${ JSON.stringify(tempObj)}`);
@@ -2329,18 +2333,18 @@ class OpenAccPageTwoComponent extends Component {
 
                 if (!tempValidation) {
                     errMsg = tempErrMsg;
-                    ++errMsgCount;
+                    errMsgCount +=1;
                     const newItems = [...this.state.estate.trusteeData];
                     newItems[i][`${inputField }Validation`] = false;
-                   
-                    this.setState(() => (prevState => ({
+               
+                    this.setState(prevState => ({
                         estate: {
                             ...prevState.estate,
                             trusteeData:newItems
                         },
                         isValidationSuccess,
                         errMsg: isValidationSuccess === false ? errMsg : ""
-                    })));
+                    }));
 
                     if (inputField !== "" && inputField !== null && inputField !== undefined) {
                         if (this[inputField + i] !== null && this[inputField + i] !== undefined) {
@@ -2354,7 +2358,7 @@ class OpenAccPageTwoComponent extends Component {
                 }
             }
 
-            if (errMsgCount == 0) {
+            if (errMsgCount === 0) {
                 isValidationSuccess = true;
             }
 
@@ -2364,20 +2368,20 @@ class OpenAccPageTwoComponent extends Component {
             isValidationSuccess = true;
         }
         const check = `${input}Validation`;
-        alert(check);
+       // alert(check);
         AppUtils.Dlog(`errMsg:::${errMsg}`);
-
         if (!isValidationSuccess) {
             this.setState(prevState => ({
                 estate: {
                     ...prevState.estate,
                     [`${input}Validation`]: false,
+                    trusteeData:[...prevState.estate.trusteeData]
                 },
                 isValidationSuccess,
                 errMsg: isValidationSuccess === false ? errMsg : ""
             }));
             
-          
+           
            alert(errMsg);
         }
 
@@ -6055,7 +6059,7 @@ class OpenAccPageTwoComponent extends Component {
                             onChangeText={this.onChangeText("estate", "name")}
                             onSubmitEditing={this.onSubmitEditing(this.creationDate)}
                             errorFlag={!this.state.estate.nameValidation}
-                            errorText="dd"
+                            errorText={this.state.errMsg}
                         />
 
 
