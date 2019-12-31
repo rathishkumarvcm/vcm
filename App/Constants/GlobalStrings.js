@@ -471,6 +471,7 @@ export default {
         orgCountry: "Specify Country of Organization",
         trusteeOrExector: "Trustee / Executor",
         addTrusteeOrExector: "Add Co-Trustee / Co-Executor",
+        coTrusteeOrExector: "Co-Trustee / Co-Executor",
         memberNumber: "Member Number",
         residencePhoneNo: "Residence Phone Number",
         areaCode: "(include area code)",
