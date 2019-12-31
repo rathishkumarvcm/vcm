@@ -6,23 +6,23 @@ import {
     GFooterComponent,
     GButtonComponent,
     GInputComponent,
-    GDropDownComponent
-
+    GDropDownComponent,
+    GSingletonClass
 } from '../../CommonComponents';
 import { CustomRadio } from '../../AppComponents';
 import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
 import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
-import * as regEx from '../../Constants/RegexConstants';
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 const deliveryAddressJson = [
     {
         "id": '1',
-        "title": 'Current mailing address',
+        "value": 'Current mailing address',
     },
     {
         "id": '2',
-        "title": 'Payee and address',
+        "value": 'Payee and address',
     },
 ];
 
@@ -42,84 +42,151 @@ const autoInvestmentAddBankJson = [
     }
 ];
 
-const autoInvestmentAddAmountJson = [
-    {
-        accountName: 'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES',
-        switchOnOff: false
-    },
-    {
-        accountName: 'LOREM 2 USSPX VCM 500INDEX FUND MEMBER CLASS SHARES',
-        switchOnOff: false
-    },
-    {
-        accountName: 'LOREM 3 USSPX VCM 500INDEX FUND MEMBER CLASS SHARES',
-        switchOnOff: false
-    }
-];
-const dummyTypeJson = [
-    {
-        "id": '1',
-        "title": 'Monthly',
-    },
-    {
-        "id": '2',
-        "title": 'Quaterly',
-    },
-];
-
+const myInstance = GSingletonClass.getInstance();
 class SystematicWithdrawalComponent extends Component {
     constructor(props) {
         super(props);
+        const systematicAdd =  myInstance.getSystematicWithdrawalEditMode()? (myInstance.getScreenStateData().systematicAdd || {}):{};
+        // this.state = {
+        //     selectedItemID: "",
+        //     selectedItemName: "",
+        //     //sysWithdrawalAmountJson: {},
+        //     fundList: [],
+        //     ItemToEdit: this.props.navigation.getParam('ItemToEdit', -1),
+        //     onlineMethod: -1,
+        //     offlineMethod:-1,
+        //     fundRemaining: 0,
+        //     totalFund: 0,
+        //     addressDropDown: false,
+        //     valueaddressDropDown: '',
+            
+        // };
         this.state = {
-            selectedItemID: "",
-            selectedItemName: "",
-            //autoInvestmentAddAmountJson: {},
+
+            selectedItemID: "D",
+            selectedItemName: "Doller",
+            sysWithdrawalAmountJson: {},
             fundList: [],
-            ItemToEdit: this.props.navigation.getParam('ItemToEdit', -1),
             onlineMethod: -1,
             offlineMethod:-1,
+            ItemToEdit: `${this.props.navigation.getParam('ItemToEdit', -1)}`,
+            acc_name: `${this.props.navigation.getParam('acc_name')}`,
+            acc_no: `${this.props.navigation.getParam('acc_no')}`,
+            accountType: `${this.props.navigation.getParam('accountType')}`,
+            selectedBank: -1,
             fundRemaining: 0,
             totalFund: 0,
-            addressDropDown: false,
-            valueaddressDropDown: '',
-            
+            investedIn: [],
+            fundConsumed: 0,
+            refresh:false,
+            errorMsg:'Please enter amount greater than or equal to 50',
+            ...systematicAdd
         };
     }
     componentDidMount() {
-        // if (this.state && this.state.fundList && !this.state.fundList.length > 0) {
-        //     const fundListPayload = {};
-        //     this.props.getFundListData(fundListPayload);
-        // }
-        // if (this.props && this.props.automaticInvestmentState) {
-
-        //     this.setState({
-        //         autoInvestmentAddAmountJson: this.props.automaticInvestmentState,
-        //     });
-        // }
+        if (this.state && this.state.fundList && !this.state.fundList.length > 0) {
+            const fundListPayload = {};
+            this.props.getFundListData(fundListPayload);
+        }
+        if (this.state.ItemToEdit > -1) {
+            if (this.props && this.props.systematicWithdrawalState) {
+                let valueToEdit = this.props.systematicWithdrawalState.general[this.state.ItemToEdit];
+                let strTotal = valueToEdit.totalAmount.replace('$', '').trim();
+                let bankIndex = 0;
+                autoInvestmentAddBankJson.map((bank, index) => {
+                    if (bank.account === valueToEdit.fundTo) {
+                        bankIndex = index;
+                    }
+                })
+                this.setState({
+                    sysWithdrawalAmountJson: valueToEdit,
+                    acc_name: valueToEdit.account.split('|')[0],
+                    acc_no: valueToEdit.account.split('|')[1],
+                    totalFund: Number(strTotal),
+                    investedIn: valueToEdit.investedIn,
+                    fundConsumed: Number(strTotal),
+                    fundRemaining: 0,
+                    selectedBank: bankIndex,
+                });
+            }
+        }
     }
+
+    // getPayload = () => {
+
+
+    //     let payload = {
+    //         totalAmount: '$500',
+    //         fundTo: 'Bank 1',
+    //         investedIn: 'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES',
+    //     };
+    //     if (this.props && this.props.systematicWithdrawalState && this.props.systematicWithdrawalState.savedAccData) {
+    //         payload = {
+    //             ...payload,
+    //             ...this.props.systematicWithdrawalState.savedAccData
+    //         };
+    //     }
+    //     return payload;
+
+    // }
 
     getPayload = () => {
 
 
+        let selected = [];
+        this.state.fundList.map((item) => {
+            if (item.fundAmount>=50) {
+                
+                selected.push({ name: item.fundName, amount: item.fundAmount })
+            }
+        })
+        console.log('selected',selected)
+
+        const savedAutoData = myInstance.getSavedSystematicData();
         let payload = {
-            totalAmount: '$500',
-            fundFrom: 'Bank 1',
-            investedIn: 'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES',
+            ...savedAutoData,
+            selectedItemID: "D",
+            selectedItemName: "Doller",
+            sysWithdrawalAmountJson: this.state.sysWithdrawalAmountJson,
+            fundList: this.state.fundList,
+            ItemToEdit: this.state.ItemToEdit,
+            acc_name: this.state.acc_name,
+            acc_no: this.state.acc_no,
+            accountType: this.state.accountType,
+            selectedBank: this.state.selectedBank,
+            fundRemaining: this.state.fundRemaining,
+            totalFund: '$' +this.state.totalFund,
+            fundTo: autoInvestmentAddBankJson[this.state.selectedBank].account,
+            investedIn: selected,
+            fundConsumed: this.state.fundConsumed,
+            refresh:this.state.refresh,
+            errorMsg:this.state.errorMsg,
         };
-        if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
-            payload = {
-                ...payload,
-                ...this.props.automaticInvestmentState.savedAccData
-            };
-        }
         return payload;
 
     }
 
+    // navigationNext = () => {
+    //     //const payload = this.getPayload();
+    //     //this.props.saveData("systematicWithdrawalAdd", payload); 
+    //     this.props.navigation.navigate('systematicWithdrawalSchedule', { ItemToEdit: this.state.ItemToEdit });
+    // }
     navigationNext = () => {
-        //const payload = this.getPayload();
-        //this.props.saveData("systematicWithdrawalAdd", payload); 
-        this.props.navigation.navigate('systematicWithdrawalSchedule', { ItemToEdit: this.state.ItemToEdit });
+
+        const payload = this.getPayload();
+        const stateData = myInstance.getScreenStateData();
+            myInstance.setSavedSystematicData(payload);
+            const screenState = {
+                ...stateData,
+                "systematicAdd":{...this.state}
+            }
+            myInstance.setScreenStateData(screenState);
+        this.props.navigation.navigate({routeName:'systematicWithdrawalSchedule',key:'systematicWithdrawalSchedule',params: {
+            ItemToEdit: this.state.ItemToEdit,
+            acc_name: this.state.acc_name,
+            acc_no: this.state.acc_no,
+            accountType: this.state.accountType
+        }});
     }
     componentDidUpdate(prevProps, prevState) {
         //console.log("componentDidUpdate::::> "+prevState);
@@ -132,7 +199,7 @@ class SystematicWithdrawalComponent extends Component {
                 tempFundListData = this.props.fundListState[ActionTypes.GET_FUNDLIST].Items;
 
                 this.setState({
-                    fundList: [...tempFundListData.map(v => ({ ...v, isActive: false, fundAmount: 0 }))],
+                    fundList: [...tempFundListData.map(v => ({ ...v, isActive: false, fundAmount: 0 ,IsNotValidAmount:false }))],
 
                     //isFilterApplied: false
                 });
@@ -141,18 +208,18 @@ class SystematicWithdrawalComponent extends Component {
         }
     }
     onSelected = (item) => () => {
-        console.log("item: " + item.id);
         this.setState({ selectedItemID: item.id });
         this.setState({ selectedItemName: item.name });
     }
     onlineMethodFuc=index=>e=>{
         
-        this.setState({onlineMethod:index,offlineMethod:-1})
+        this.setState({onlineMethod:index,offlineMethod:-1,selectedBank:index})
     }
     offlineMethodFuc=index=>e=>{
         
         this.setState({offlineMethod:index,onlineMethod:-1})
     }
+    
     // navigationNext = () => this.props.navigation.navigate('systematicWithdrawalSchedule');
     generateKeyExtractor = (item) => item.account;
     renderInvestment = () => ({ item,index }) =>
@@ -185,7 +252,54 @@ class SystematicWithdrawalComponent extends Component {
             this.setState({ fundList: array });
         }
     }
+    getFundAmount = (value, index) => {
+        var array = [...this.state.fundList]; // make a separate copy of the array
+        var indexChange = this.state.selectedIndex
+        if (index !== -1) {
+            array[index].fundAmount = value;
+            //let remaining=this.state.totalFund-value;
+            //this.setState({ fundList: array,fundRemaining:remaining});
+            this.setState({ fundList: array });
+        }
+    }
 
+    changeRemaining = e => {
+        let remaining = 0;
+        this.state.fundList.map((item,index) => {
+            let msg="Please enter amount greater than or equal to 50";
+            
+            var array = [...this.state.fundList];
+            array[index].IsNotValidAmount = false;
+            if(Number(item.fundAmount)>=50)
+            {
+                if (Number(item.fundAmount) <= this.state.fundRemaining)
+                    remaining = remaining + Number(item.fundAmount);
+                else {
+                    msg="Amount is greater than Remining amount"
+                    array[index].IsNotValidAmount = true;
+                }
+                array[index].fundAmount=item.fundAmount;
+                array[index].isActive=true;
+                this.setState({ fundList: array,refresh:!this.state.refresh,errorMsg:msg });
+            }
+            else if(item.isActive){
+                var array = [...this.state.fundList]; // make a separate copy of the array
+                array[index].IsNotValidAmount = true;
+                this.setState({ fundList: array,refresh:!this.state.refresh });
+                // console.log('****************************',this.state.fundList)
+            }
+        })
+        this.setState({ fundRemaining: this.state.totalFund - remaining, fundConsumed: remaining });
+    }
+
+
+
+    setTotalFund = (value) => {
+        let remaining
+        if(value>this.state.fundConsumed)
+            remaining=value-this.state.fundConsumed;
+        this.setState({ totalFund: Number(value), fundRemaining: Number(remaining) })
+    }
     selectAddress = () => {
         this.setState({
             addressDropDown: !this.state.addressDropDown
@@ -194,7 +308,7 @@ class SystematicWithdrawalComponent extends Component {
 
     selectedDropDownAddressValue = (valueAddress) => {
         this.setState({
-            valueaddressDropDown: valueAddress.title,
+            valueaddressDropDown: valueAddress,
             addressDropDown: false
         });
     }
@@ -202,26 +316,50 @@ class SystematicWithdrawalComponent extends Component {
     navigationBack = () => this.props.navigation.goBack();
     navigationCancel = () => this.props.navigation.navigate('systematicWithdrawal');
 
-    generateAmountKeyExtractor = (item) => item.accountName;
-    renderAmount = () => ({ item }) =>
+    generateAmountKeyExtractor = (item) => item.fundNumber.toString()
+    renderAmount = () => ({ item,index }) =>
         (
             <View style={{ borderWidth: 1, borderColor: '#5D83AE99', marginTop: scaledHeight(10) }}>
+                {this.state.investedIn.map((fund) => {
+
+                    if (fund.name === item.fundName) {
+                        item.isActive = true;
+                        item.fundAmount = fund.amount.replace('$', '');
+                        return;
+                    }
+                    })}
                 <View style={{ flexDirection: 'row', flex: 1, justifyContent: "center", alignItems: 'center', borderBottomColor: '#61285F45', borderBottomWidth: 1, padding: scaledHeight(20) }}>
                     <View style={{ flex: 0.7 }}>
-                        <Text style={{ color: '#544A54', fontSize: scaledHeight(13), fontWeight: 'bold' }}>{item.accountName}</Text>
+                        <Text style={{ color: '#544A54', fontSize: scaledHeight(13), fontWeight: 'bold' }}>{item.fundName}</Text>
                     </View>
                     <View style={{ flex: 0.3, alignItems: 'flex-end', marginRight: '4%' }}>
                         <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                            onValueChange={this.toggleSwitch1}
-                            value={this.state.switch1Value}
+                            onValueChange={this.toggleSwitch(index)}
+                            value={item.isActive}
                         />
                     </View>
                 </View>
-                <View style={styles.auto_invest_to_flat}>
+                {/* <View style={styles.auto_invest_to_flat}>
                     <Text style={styles.auto_invest_to_top}>{'Amount'}</Text>
                     <View style={styles.auto_invest_to_top_view}>
                         <Text style={styles.auto_invest_to_top}>{'$'}</Text>
                         <GInputComponent style={{ marginLeft: scaledWidth(10) }} />
+                    </View>
+                    <Text style={styles.auto_invest_flat_min}>{'Min $50'}</Text>
+                </View> */}
+
+<View style={styles.auto_invest_to_flat} pointerEvents={item.isActive ? 'auto' : 'none'}>
+                    <Text style={styles.auto_invest_to_top}>{'Amount'}</Text>
+                    <View style={styles.auto_invest_to_top_view}>
+                        <Text style={styles.auto_invest_to_top}>{'$'}</Text>
+                        <View style={{flexDirection:'column',width:'100%'}}>
+                            <GInputComponent style={styles.leftSpace} 
+                            onChangeText={(value) => this.getFundAmount(value, index)} 
+                            onEndEditing={this.changeRemaining}
+                            value={item.fundAmount.toString()} 
+                            errorFlag={item.IsNotValidAmount}
+                            errorText={this.state.errorMsg}/>
+                        </View>
                     </View>
                     <Text style={styles.auto_invest_flat_min}>{'Min $50'}</Text>
                 </View>
@@ -273,7 +411,7 @@ class SystematicWithdrawalComponent extends Component {
                                 <Text style={styles.auto_invest_to_top}>{'Total Amount'}</Text>
                                 <View style={styles.auto_invest_to_top_view}>
                                     <Text style={styles.auto_invest_to_top}>{'$'}</Text>
-                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} />
+                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} onChangeText={this.setTotalFund} value={this.state.totalFund.toString()}/>
                                 </View>
                             </View>
 
@@ -291,7 +429,7 @@ class SystematicWithdrawalComponent extends Component {
                                             descLabelStyle={styles.lblRadioDescTxt}
                                             descLabel={""}
                                             selected={(this.state.selectedItemID !== "" && "Y" == this.state.selectedItemID) ? true : false}
-                                            onPress={this.onSelected({ name: 'Yes', id: 'Y' })}
+                                            onPress={this.onSelected({ name: 'Doller', id: 'D' })}
                                         />
                                         <CustomRadio
 
@@ -304,7 +442,7 @@ class SystematicWithdrawalComponent extends Component {
                                             descLabelStyle={styles.lblRadioDescTxt}
                                             descLabel={""}
                                             selected={(this.state.selectedItemID !== "" && "N" == this.state.selectedItemID) ? true : false}
-                                            onPress={this.onSelected({ name: 'No', id: 'N' })}
+                                            onPress={this.onSelected({ name: 'Percentage', id: 'P' })}
                                         />
                                     </View>
                                 </View>
@@ -314,21 +452,21 @@ class SystematicWithdrawalComponent extends Component {
                                 <Text style={styles.auto_invest_to_top}>{'Amount Consumed'}</Text>
                                 <View style={styles.auto_invest_to_top_view}>
                                     <Text style={styles.auto_invest_to_top}>{'$'}</Text>
-                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} />
+                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} value={this.state.fundConsumed.toString()}/>
                                 </View>
                             </View>
 
                             <View style={styles.auto_invest_to}>
-                                <Text style={styles.auto_invest_to_top}>{'Amount'}</Text>
+                                <Text style={styles.auto_invest_to_top}>{'Amount Remaining'}</Text>
                                 <View style={styles.auto_invest_to_top_view}>
                                     <Text style={styles.auto_invest_to_top}>{'$'}</Text>
-                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} />
+                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} value={this.state.fundRemaining.toString()}/>
                                 </View>
                             </View>
 
 
                             <FlatList style={{ marginTop: scaledHeight(20) }}
-                                data={autoInvestmentAddAmountJson}
+                                data={this.state.fundList}
                                 renderItem={this.renderAmount()}
                                 keyExtractor={this.generateAmountKeyExtractor}
 
@@ -434,7 +572,7 @@ class SystematicWithdrawalComponent extends Component {
                                 showDropDown={this.state.addressDropDown}
                                 dropDownValue={this.state.valueaddressDropDown}
                                 selectedDropDownValue={this.selectedDropDownAddressValue}
-                                itemToDisplay={"title"}
+                                itemToDisplay={"value"}
                                 dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(263) }}
                             />
                             <View style={{flexDirection:'column',marginLeft:scaledWidth(15),marginTop:scaledHeight(15),width:'100%'}}>
@@ -474,10 +612,10 @@ class SystematicWithdrawalComponent extends Component {
                         onPress={this.navigationLogin}
                     />
                     <GButtonComponent
-                        buttonStyle={styles.continueButton}
+                        buttonStyle={this.state.totalFund>=50 && this.state.fundRemaining===0? styles.continueButtonSelected:styles.continueButton}//this.state.selectedBank>-1 && 
                         buttonText={globalString.common.next}
                         textStyle={styles.continueButtonText}
-                        onPress={this.navigationNext}
+                        onPress={this.state.totalFund>=50 && this.state.fundRemaining===0?this.navigationNext:null}//this.state.selectedBank>-1 && 
                     />
 
 

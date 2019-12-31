@@ -5,6 +5,7 @@ import {
     GHeaderComponent,
     GFooterComponent,
     GButtonComponent,
+    GSingletonClass
 } from '../../CommonComponents';
 import { CustomCheckBox } from '../../AppComponents';
 import PropTypes from 'prop-types';
@@ -12,19 +13,121 @@ import globalString from '../../Constants/GlobalStrings';
 
 import * as regEx from '../../Constants/RegexConstants';
 
+const myInstance = GSingletonClass.getInstance();
+const url = 'https://content.usaa.com/mcontent/static_assets/Mstar/Morningstar_FundProfiles_USSPX.pdf';
 class SystematicWithdrawalPlanEsignComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            saveCurrentDevice: false
+            acceptPolicy: false,
+            accountType:`${this.props.navigation.getParam('accountType')}`,
+            itemToEdit: `${this.props.navigation.getParam('indexSelected')}`,
+            errorTextMsg:''
         };
     }
 
     onCheckBoxCheck = () => {
-        this.setState({ saveCurrentDevice: !this.state.saveCurrentDevice });
+        this.setState({ acceptPolicy: !this.state.acceptPolicy });
     }
+    getPayload = () => {
+        let payload = {};
+        const item=myInstance.getSavedSystematicData();
+        console.log('------------------------',item)
+        if (this.props && this.props.systematicWithdrawalState && item)
+        {
+            let planJson={};
+             let selected={id:this.state.itemToEdit,
+                account:item.acc_name+"|"+item.acc_no ,
+                totalAmount:item.totalFund,
+                            fundTo:item.fundTo,
+                            investedIn:item.investedIn,
+                            invest:item.valueTypeDropDown,
+                            dateToInvest:item.valueDateBeginDropDown,
+                            //dateAdded:item.dateAdded,
+                            //endDate:item.endDate,
+                            nextWithdrawalDate:'',//item.nextWithdrawalDate
+                        }
+            switch ((this.state.accountType)) {
+                case "general":
+                    if(this.props.systematicWithdrawalState.general){
+                            //Add
+                            planJson=this.props.systematicWithdrawalState.general;
+                            
+                            
+                            //Edit
+                            //var array = this.props.systematicWithdrawalState.general; // make a separate copy of the array
+                            if (this.state.itemToEdit !== -1) {
+                                planJson[this.state.itemToEdit]=selected
+                                //planJson=array
+                                console.log('planJson===================',planJson)
+                            }
+                            else
+                            {
+                                planJson.push(selected);
+                                console.log('planJson**************',planJson)
+                            }
+                            
+                            payload = {
+                                ...planJson
+                            };
+                            
+                        }
+                        else{
+                            let newObj = { "general" : selected}
+                            Object.assign(this.props.systematicWithdrawalState,newObj)
+                        }
+                    
+                    break;
+                case "ira":
+                    if(this.props.systematicWithdrawalState.ira){
+                        //Add
+                        planJson=this.props.systematicWithdrawalState.ira;
+                        planJson.push(selected);
+                        payload = {
+                            ...planJson
+                        };
+                        
+                    }
+                    else{
+                        let newObj = { "ira" : selected}
+                        Object.assign(this.props.systematicWithdrawalState,newObj)
+                    }
+                    break;
+                case "utma":
+                    if(this.props.systematicWithdrawalState.utma){
+                        //Add
+                        planJson=this.props.systematicWithdrawalState.utma;
+                        planJson.push(selected);
+                        payload = {
+                            ...planJson
+                        };
+                        
+                    }
+                    else{
+                        let newObj = { "utma" : [selected]}
+                        Object.assign(this.props.systematicWithdrawalState,newObj)
+                    }
+                    break;
+        }
+        return payload;
+
+    }
+}
+
+navigationSubmit = () => {
+    if(this.state.acceptPolicy){
+        this.setState({errorTextMsg:''})
+        const payload = this.getPayload();
+        this.props.saveData("systematicWithdrawalEsign", payload); 
+        myInstance.setSystematicWithdrawalEditMode(false);
+        this.props.navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
+    }
+    else
+    this.setState({errorTextMsg:'Please select the above checkbox'})
+}
     navigationBack = () => this.props.navigation.goBack();
-    navigationCancel = () => this.props.navigation.navigate('systematicWithdrawal');
+    navigationCancel = () => this.props.navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
+    // this.props.navigation.navigate('systematicWithdrawal');
 
     render() {
         return (
@@ -82,7 +185,7 @@ class SystematicWithdrawalPlanEsignComponent extends Component {
                                     innerCicleColor={"#2C8DBF"}
                                     labelStyle={styles.agreeTermsTxt}
                                     label={'I, Agree that i have received, read, understood, and agree to the documents linked above.'}
-                                    selected={this.state.saveCurrentDevice}
+                                    selected={this.state.acceptPolicy}
                                     onPress={this.onCheckBoxCheck}
                                 />
                             </View>
@@ -104,7 +207,7 @@ class SystematicWithdrawalPlanEsignComponent extends Component {
                             buttonStyle={styles.continueButton}
                             buttonText={globalString.common.submit}
                             textStyle={styles.continueButtonText}
-                            onPress={this.navigationNext}
+                            onPress={this.navigationSubmit}
                         />
                         <GFooterComponent />
                     </View>

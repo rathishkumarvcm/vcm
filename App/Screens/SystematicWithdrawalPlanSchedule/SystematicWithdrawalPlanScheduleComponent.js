@@ -6,7 +6,7 @@ import {
     GFooterComponent,
     GDropDownComponent,
     GButtonComponent,
-    GInputComponent,
+    GSingletonClass,
 } from '../../CommonComponents';
 import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
@@ -15,99 +15,37 @@ import * as regEx from '../../Constants/RegexConstants';
 import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
 
 
-const dummyTypeJson = [
+const typeJson = [
     {
         'id': '1',
-        'title': 'Twice a Month',
+        'value': 'Twice a Month',
     },
     {
         'id': '2',
-        'title': 'Monthly',
+        'value': 'Monthly',
     },
     {
         'id': '3',
-        'title': 'Quaterly',
+        'value': 'Quaterly',
     },
     {
         'id': '4',
-        'title': 'Semi-Annually',
+        'value': 'Semi-Annually',
     },
     {
         'id': '5',
-        'title': 'Annually',
+        'value': 'Annually',
     },
 ];
 
-const dummyDateJson = [
-    {
-        'id': '1',
-        'title': '1',
-    },
-    {
-        'id': '2',
-        'title': '2',
-    },
-    {
-        'id': '3',
-        'title': '3',
-    },
-    {
-        'id': '4',
-        'title': '4',
-    },
-    {
-        'id': '5',
-        'title': '5',
-    },
-];
+const dateJson = [];
+const yearJson = [];
 
-const dummyBeginJson = [
-    {
-        'id': '1',
-        'title': '1',
-    },
-    {
-        'id': '2',
-        'title': '2',
-    },
-    {
-        'id': '3',
-        'title': '3',
-    },
-    {
-        'id': '4',
-        'title': '4',
-    },
-    {
-        'id': '5',
-        'title': '5',
-    },
-];
-const dummyYearJson = [
-    {
-        'id': '1',
-        'title': '2019'
-    },
-    {
-        'id': '2',
-        'title': '2018'
-    },
-    {
-        'id': '3',
-        'title': '2017'
-    },
-    {
-        'id': '4',
-        'title': '2016'
-    },
-    {
-        'id': '5',
-        'title': '2015'
-    },
-];
+const myInstance = GSingletonClass.getInstance();
 class SystematicWithdrawalPlanScheduleComponent extends Component {
     constructor(props) {
         super(props);
+        const systematicSchedule =  myInstance.getSystematicWithdrawalEditMode()? (myInstance.getScreenStateData().systematicSchedule || {}):{};
         this.state = {
             typeDropDown: false,
             valueTypeDropDown: '',
@@ -115,10 +53,45 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
             valueDateDropDown: '',
             dateBeginDropDown: false,
             valueDateBeginDropDown: '',
-            yearDropDown: false,
-            valueYearDropDown: '',
+            startDateDropDown: false,
+            valueStartDateDropDown: '',
+            startYearDropDown: false,
+            valueStartYearDropDown:'',
             selectedFrequency:-1,
+            systematicWithdrawalJson:{},
+            itemToEdit: `${this.props.navigation.getParam('ItemToEdit', -1)}`,
+            acc_name:`${this.props.navigation.getParam('acc_name')}`,
+            acc_no:`${this.props.navigation.getParam('acc_no')}`,
+            accountType:`${this.props.navigation.getParam('accountType')}`,
+            ...systematicSchedule
         };
+    }
+
+
+    componentDidMount() {
+        for(var i=1; i<=30; i++) {
+            dateJson.push({["id"]:i.toString(),["value"]: i.toString()});
+         }
+         var date=new Date().getFullYear();
+         for(var i=date; i<=(date+30); i++) {
+            yearJson.push({["id"]:i.toString(),["value"]: i.toString()});
+            
+         }
+
+         
+        let itemToEdit = this.state.itemToEdit;
+        if (itemToEdit > -1) {
+            if (this.props && this.props.systematicWithdrawalState) {
+                this.setState({
+                    systematicWithdrawalJson: this.props.systematicWithdrawalState.general[itemToEdit],
+                    valueTypeDropDown: this.props.systematicWithdrawalState.general[itemToEdit].invest,
+                    valueDateDropDown: this.props.systematicWithdrawalState.general[itemToEdit].dateToInvest.replace('th', '').trim(),
+                    valueDateBeginDropDown: this.props.systematicWithdrawalState.general[itemToEdit].dateFromInvest.replace('th', '').trim(),
+                    valueStartYearDropDown: this.props.systematicWithdrawalState.general[itemToEdit].startYear,
+                    valueStartDateDropDown:this.props.systematicWithdrawalState.general[itemToEdit].startDate,
+                });
+            }
+        }
     }
 
     selectTheType = () => {
@@ -132,8 +105,7 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
     navigationCancel = () => this.props.navigation.navigate('systematicWithdrawal');
 
     selectedDropDownTypeValue = (valueType) => {
-        //console.log('.................................',index);
-        let selectedValue=valueType.title;
+        let selectedValue=valueType;
         let index=selectedValue.toLowerCase()==='twice a month'?0:1;
         this.setState({
             
@@ -151,7 +123,7 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
 
     selectedDropDownDateValue = (valueDate) => {
         this.setState({
-            valueDateDropDown: valueDate.title,
+            valueDateDropDown: valueDate,
             dateDropDown: false
         });
     }
@@ -164,25 +136,74 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
 
     selectedDropDownBeginDateValue = (valueBegin) => {
         this.setState({
-            valueDateBeginDropDown: valueBegin.title,
+            valueDateBeginDropDown: valueBegin,
             dateBeginDropDown: false
         });
     }
 
-    selectTheYear = () => {
+    selectStartDate = () => {
         this.setState({
-            yearDropDown: !this.state.yearDropDown
+            startDateDropDown: !this.state.startDateDropDown
         });
     }
 
-    selectedDropDownYearValue = (valueYear) => {
+    selectedDropDownStartDateValue = (valuedate) => {
         this.setState({
-            valueYearDropDown: valueYear.title,
-            yearDropDown: false
+            valueStartDateDropDown: valuedate,
+            startDateDropDown: false
         });
     }
 
-    navigationNext = () => this.props.navigation.navigate('systematicWithdrawalVerify');
+
+    selectStartYear = () => {
+        this.setState({
+            startYearDropDown: !this.state.startYearDropDown
+        });
+    }
+
+    selectedDropDownStartYearValue = (valueYear) => {
+        this.setState({
+            valueStartYearDropDown: valueYear,
+            startYearDropDown: false
+        });
+    }
+
+    getPayload = () => {
+        const savedAutoData = myInstance.getSavedSystematicData();
+        let payload = {
+            ...savedAutoData,
+            typeDropDown: this.state.typeDropDown,
+            valueTypeDropDown: this.state.valueTypeDropDown,
+            dateDropDown: this.state.dateDropDown,
+            valueDateDropDown: this.state.valueDateDropDown,
+            dateBeginDropDown: this.state.dateBeginDropDown,
+            valueDateBeginDropDown: this.state.valueDateBeginDropDown,
+            startDateDropDown: this.state.startDateDropDown,
+            valueStartDateDropDown: this.state.valueStartDateDropDown,
+            startYearDropDown: this.state.startYearDropDown,
+            valueStartYearDropDown:this.state.valueStartYearDropDown,
+            selectedFrequency:this.state.selectedFrequency,
+            systematicWithdrawalJson:this.state.systematicWithdrawalJson,
+            itemToEdit:this.state.itemToEdit ,
+            acc_name:this.state.acc_name,
+            acc_no:this.state.acc_no,
+            accountType:this.state.accountType,
+        };
+        return payload;
+    }
+
+    navigationNext = () => {
+        const payload = this.getPayload();
+        const stateData = myInstance.getScreenStateData();
+        myInstance.setSavedSystematicData(payload);
+        const screenState = {
+            ...stateData,
+            "systematicSchedule":{...this.state}
+        }
+        myInstance.setScreenStateData(screenState);
+        // this.props.navigation.navigate('systematicWithdrawalVerify');
+        this.props.navigation.navigate({routeName:'systematicWithdrawalVerify',key:'systematicWithdrawalVerify',params: { skip: false ,accountType:this.state.accountType,indexSelected:this.state.itemToEdit}});
+    }
 
     render() {
         return (
@@ -217,9 +238,10 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
                         <Text style={styles.autoInvest_title_text}>{'3 - Schedule'}</Text>
                     </View>
                     <View style={styles.body}>
-                        <View style={{ flexDirection: 'column', justifyContent: "center", borderColor: '#9DB4CE', borderWidth: 1, padding: scaledHeight(20), marginTop: scaledHeight(20) }}>
-                            <Text style={{ color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' }}>{'Account Name 1'}</Text>
-                            <Text style={{ color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' }}>{'Account Number xxxx-xxxx-xxxx'}</Text>
+                    <View style={styles.account_view}>
+
+                        <Text style={styles.account_txt}>{this.state.acc_name}</Text>
+                        <Text style={styles.account_txt}>{'Account Number '+this.state.acc_no}</Text>
                         </View>
                         <View style={styles.autoInvest_sub_title_view}>
                             <Text style={styles.autoInvest_sub_title_text}>{'- Withdrawal Frequency'}</Text>
@@ -229,14 +251,14 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
                         <GDropDownComponent
                             dropDownTextName={styles.financialTextLabel}
                             dropDownName="Withdrawal Frequency"
-                            data={dummyTypeJson}
+                            data={typeJson}
                             textInputStyle={styles.dropdownTextInput}
                             dropDownLayout={styles.dropDownLayout}
                             changeState={this.selectTheType}
                             showDropDown={this.state.typeDropDown}
                             dropDownValue={this.state.valueTypeDropDown}
                             selectedDropDownValue={this.selectedDropDownTypeValue}
-                            itemToDisplay={"title"}
+                            itemToDisplay={"value"}
                             
                         />
 
@@ -248,14 +270,14 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
                                 <GDropDownComponent
                                     dropDownTextName={styles.financialTextLabel}
                                     dropDownName="Date"
-                                    data={dummyDateJson}
-                                    changeState={this.selectTheDate}
+                                    data={dateJson}
+                                    changeState={this.selectTheBeginDate}
                                     textInputStyle={styles.dropdownTextInput}
                                     dropDownLayout={styles.dropDownLayout}
-                                    showDropDown={this.state.dateDropDown}
-                                    dropDownValue={this.state.valueDateDropDown}
-                                    selectedDropDownValue={this.selectedDropDownDateValue}
-                                    itemToDisplay={"title"}
+                                    showDropDown={this.state.dateBeginDropDown}
+                                    dropDownValue={this.state.valueDateBeginDropDown}
+                                    selectedDropDownValue={this.selectedDropDownBeginDateValue}
+                                    itemToDisplay={"value"}
                                     
                                 />
                                 </View>
@@ -264,14 +286,14 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
                                 <GDropDownComponent
                                     dropDownTextName={styles.financialTextLabel}
                                     dropDownName=" "
-                                    data={dummyDateJson}
+                                    data={dateJson}
                                     changeState={this.selectTheDate}
                                     showDropDown={this.state.dateDropDown}
                                     textInputStyle={styles.dropdownTextInput}
                                     dropDownLayout={styles.dropDownLayout}
                                     dropDownValue={this.state.valueDateDropDown}
                                     selectedDropDownValue={this.selectedDropDownDateValue}
-                                    itemToDisplay={"title"}
+                                    itemToDisplay={"value"}
                                     
                                 />
                                 </View>
@@ -283,30 +305,29 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
                                         <GDropDownComponent
                                             dropDownTextName={styles.financialTextLabel}
                                             dropDownName="Beginning On"
-                                            data={dummyBeginJson}
-                                            changeState={this.selectTheBeginDate}
+                                            data={dateJson}
                                             textInputStyle={styles.dropdownTextInput}
                                             dropDownLayout={styles.dropDownLayout}
-                                            showDropDown={this.state.dateBeginDropDown}
-                                            dropDownValue={this.state.valueDateBeginDropDown}
-                                            selectedDropDownValue={this.selectedDropDownBeginDateValue}
-                                            itemToDisplay={"title"}
+                                            changeState={this.selectStartDate}
+                                            showDropDown={this.state.startDateDropDown}
+                                            dropDownValue={this.state.valueStartDateDropDown}
+                                            selectedDropDownValue={this.selectedDropDownStartDateValue}
+                                            itemToDisplay={"value"}
                                         />
                                     </View>
                                     <View style={{ width: scaledWidth(150) }}>
                                         <GDropDownComponent
                                             dropDownTextName={styles.financialTextLabel}
                                             dropDownName="    "
-                                            data={dummyYearJson}
+                                            data={yearJson}
+                                            changeState={this.selectStartYear}
                                             textInputStyle={styles.dropdownTextInput}
                                             dropDownLayout={styles.dropDownLayout}
-                                            //showDropDownSectionStyle={styles.showDropDownSectionStyle}
-                                            //dropDownPostition={styles.showDropDownSectionStyle}
-                                            changeState={this.selectTheYear}
-                                            showDropDown={this.state.yearDropDown}
-                                            dropDownValue={this.state.valueYearDropDown}
-                                            selectedDropDownValue={this.selectedDropDownYearValue}
-                                            itemToDisplay={"title"}
+                                            showDropDown={this.state.startYearDropDown}
+                                            dropDownValue={this.state.valueStartYearDropDown}
+                                            selectedDropDownValue={this.selectedDropDownStartYearValue}
+                                            itemToDisplay={"value"}
+                                           
                                         />
                                     </View>
                                 </View>
@@ -330,10 +351,12 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
                             onPress={this.navigationBack}
                         />
                         <GButtonComponent
-                            buttonStyle={styles.continueButton}
+                             buttonStyle={this.state.valueTypeDropDown!='' && this.state.valueDateBeginDropDown!='' && this.state.valueStartDateDropDown!='' &&
+                             this.state.valueStartYearDropDown!='' ?styles.continueButtonSelected:styles.continueButton}
                             buttonText={globalString.common.next}
                             textStyle={styles.continueButtonText}
-                            onPress={this.navigationNext}
+                            onPress={this.state.valueTypeDropDown!='' && this.state.valueDateBeginDropDown!='' && this.state.valueStartDateDropDown!='' &&
+                            this.state.valueStartYearDropDown!='' ?this.navigationNext:null}
                         />
                     </View>
                     <GFooterComponent />

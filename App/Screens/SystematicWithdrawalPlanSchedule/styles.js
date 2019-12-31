@@ -162,13 +162,25 @@ export const styles = StyleSheet.create({
         fontWeight:'bold'
     },
     continueButton:{
-        borderColor:'#56565A',
+        borderColor:'#61285F45',
         borderWidth:1,
         width:'80%',
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
        // borderRadius:scaledHeight(25),
+        height:scaledHeight(50),
+        backgroundColor:"rgba(84,74,84,0.5)",
+        alignItems:'center',
+        justifyContent:'center',
+     },
+     continueButtonSelected:{
+        borderColor:'#61285F45',
+        borderWidth:1,
+        width:'80%',
+        marginLeft:'10%',
+        marginRight:'10%',
+        marginTop:scaledHeight(15),
         height:scaledHeight(50),
         backgroundColor:'#56565A',
         alignItems:'center',
@@ -179,5 +191,9 @@ export const styles = StyleSheet.create({
         color:'#FFFFFF',
         fontWeight:'bold'
     },
+    account_txt:
+    { color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' },
+    account_view:
+    { flexDirection: 'column', justifyContent: "center", borderColor: '#9DB4CE', borderWidth: 1, padding: scaledHeight(20), marginTop: scaledHeight(20) },
     
 });

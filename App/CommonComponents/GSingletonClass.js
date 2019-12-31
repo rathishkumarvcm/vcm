@@ -23,6 +23,9 @@ export default class CommonDataManager {
 
   automaticInvestmentEnabled = false;
   savedAutomaticData = {};
+
+  systematicWithdrawalEnabled = false;
+  savedSystematicData = {};
   
   /* **************************\
   Method: getInstance
@@ -144,6 +147,19 @@ export default class CommonDataManager {
   }
   setSavedAutomaticData(value){
     this.savedAutomaticData = value;
+  }
+
+  getSystematicWithdrawalEditMode(){
+    return this.systematicWithdrawalEnabled;
+  }
+  setSystematicWithdrawalEditMode(value){
+    this.systematicWithdrawalEnabled = value;
+  }
+  getSavedSystematicData(){
+    return this.savedSystematicData;
+  }
+  setSavedSystematicData(value){
+    this.savedSystematicData = value;
   }
 
 }

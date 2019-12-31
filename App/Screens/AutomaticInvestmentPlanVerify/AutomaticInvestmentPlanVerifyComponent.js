@@ -145,15 +145,12 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
         
         if(item)//if(this.state.autoInvestmentJson.account)
         {
-            console.log('this.state.autoInvestmentJson',this.state.autoInvestmentJson)
             item.investedIn.map((fund)=>{
                 fundlist=fund.name+','+fundlist;
             })
         }
         return (
             <View style={styles.container}>
-                {/* {console.log('autoInvestmentJson=====================',this.state.autoInvestmentJson)} */}
-                {console.log('item=====================',item)}
                 {/* {this.parsingInvestIn(this.state.autoInvestmentJson)} */}
                 <GHeaderComponent register navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>

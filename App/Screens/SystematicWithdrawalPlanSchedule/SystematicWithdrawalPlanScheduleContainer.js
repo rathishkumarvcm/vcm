@@ -3,9 +3,8 @@ import SystematicWithdrawalPlanScheduleComponent from './SystematicWithdrawalPla
 
 
 
-const mapStateToProps = (state /* , props */) => (
-    {
-      
+const mapStateToProps = (state) => ({
+      systematicWithdrawalState:state.systematicWithdrawalData,
     }
   );
 

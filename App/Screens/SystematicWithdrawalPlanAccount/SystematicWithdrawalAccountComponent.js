@@ -6,35 +6,70 @@ import {
     GFooterComponent,
     GButtonComponent,
     GIcon,
-
+    GSingletonClass
 } from '../../CommonComponents';
-import { CustomRadio } from '../../AppComponents';
 import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
-import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
-import * as regEx from '../../Constants/RegexConstants';
 
-
+const myInstance = GSingletonClass.getInstance();
 class SystematicWithdrawalAccountComponent extends Component {
     constructor(props) {
         super(props);
+        const systematicAccount =  myInstance.getSystematicWithdrawalEditMode()? (myInstance.getScreenStateData().systematicAccount || {}):{};
+        // this.state = {
 
+        //     selectedItemID: "",
+        //     selectedItemName: "",
+        //     accountJson: {},
+        //     selectedAccount: -1,
+        //     //ItemToEdit: this.props.navigation.getParam('ItemToEdit', -1),
+        //     expand: [true, false, false],
+        //     expandIndex: 0,
+        // };
         this.state = {
-
-            selectedItemID: "",
-            selectedItemName: "",
-            accountJson: {},
+            generalAccountJson: {},
+            iraAccountJson: {},
+            utmaAccountJson: {},
+            selectedAccountJson:{},
             selectedAccount: -1,
-            //ItemToEdit: this.props.navigation.getParam('ItemToEdit', -1),
             expand: [true, false, false],
             expandIndex: 0,
+            accountType:"",
+            newItemId:"",
+            newEdit:`${this.props.navigation.getParam('newEdit',false)}`,
+
+            ...systematicAccount
         };
 
     }
-    selectedAccount = index => e => {
+    // selectedAccount = index => e => {
 
-        this.setState({ selectedAccount: index })
+    //     this.setState({ selectedAccount: index })
+    // }
+
+    selectedAccount = (index,type) => e => {
+        let json={};
+        let id=0;
+        switch (type) {
+            case "general":
+                json=this.state.generalAccountJson[index];
+                id=this.props.systematicWithdrawalState.general?this.props.systematicWithdrawalState.general.length+1:0;
+                break;
+            case "ira":
+                json=this.state.iraAccountJson[index];
+                id=this.props.systematicWithdrawalState.ira?this.props.systematicWithdrawalState.ira.length+1:0;
+                break;
+            case "utma":
+                json=this.state.utmaAccountJson[index];
+                id=this.props.systematicWithdrawalState.utma?this.props.systematicWithdrawalState.utma.length+1:0;
+                break;
+            default:
+                break;
+        }
+        
+        this.setState({ selectedAccount: index ,selectedAccountJson:json,accountType:type,newItemId:id.toString()})
     }
+
     setStateUpdates = index => e => {
 
         var array = [...this.state.expand]; // make a separate copy of the array
@@ -52,53 +87,101 @@ class SystematicWithdrawalAccountComponent extends Component {
 
 
     }
+    // componentDidMount() {
+    //     if (this.props && this.props.accountState) {
+
+    //         this.setState({
+    //             accountJson: this.props.accountState,
+    //         });
+    //     }
+    // }
+
     componentDidMount() {
         if (this.props && this.props.accountState) {
 
             this.setState({
-                accountJson: this.props.accountState,
+                generalAccountJson: this.props.accountState.general,
+                iraAccountJson: this.props.accountState.ira,
+                utmaAccountJson: this.props.accountState.utma,
+
             });
         }
     }
-    onSelected = (item) => () => {
-        console.log("item: " + item.id);
-        this.setState({ selectedItemID: item.id });
-        this.setState({ selectedItemName: item.name });
-    }
+    // onSelected = (item) => () => {
+    //     console.log("item: " + item.id);
+    //     this.setState({ selectedItemID: item.id });
+    //     this.setState({ selectedItemName: item.name });
+    // }
     //navigationNext = () => this.props.navigation.navigate('automaticInvestmentAdd', { ItemToEdit: -1 });
     navigationCancel = () => this.props.navigation.goBack();
 
-    getPayload = () => {
+    // getPayload = () => {
         
 
+    //     let payload = {
+    //         account: "Account 3 / 90989123",
+    //     };
+    //     if (this.props && this.props.systematicWithdrawalState && this.props.systematicWithdrawalState.savedAccData) {
+    //         payload = {
+    //             ...payload,
+    //             ...this.props.systematicWithdrawalState.savedAccData
+    //         };
+    //     }
+    //     return payload;
+
+    // }
+
+    getPayload = () => {
+        
+        const savedAutoData = myInstance.getSavedSystematicData();
         let payload = {
-            account: "Account 3 / 90989123",
+            ...savedAutoData,
+            generalAccountJson: this.state.generalAccountJson,
+            iraAccountJson: this.state.iraAccountJson,
+            utmaAccountJson: this.state.utmaAccountJson,
+            selectedAccountJson:this.state.selectedAccountJson,
+            selectedAccount: this.state.selectedAccount,
+            expand: this.state.expand,
+            expandIndex: this.state.expandIndex,
+            accountType:this.state.accountType,
+            newItemId:this.state.newItemId,
+            newEdit:this.state.newEdit,
         };
-        if (this.props && this.props.systamaticWithdrawalState && this.props.systamaticWithdrawalState.savedAccData) {
-            payload = {
-                ...payload,
-                ...this.props.systamaticWithdrawalState.savedAccData
-            };
-        }
         return payload;
 
     }
     
 
+    // navigationNext = () => {
+    //         //const payload = this.getPayload();
+    //         //this.props.saveData("systematicWithdrawalAccount", payload); 
+    //         this.props.navigation.navigate('systematicWithdrawalAdd', { ItemToEdit: -1});
+    // }
+
     navigationNext = () => {
-            //const payload = this.getPayload();
-            //this.props.saveData("systematicWithdrawalAccount", payload); 
-            this.props.navigation.navigate('systematicWithdrawalAdd', { ItemToEdit: -1});
-    }
-    generateAmountKeyExtractor = (item) => item.accountName;
-    renderAmount = () => ({ item, index }) =>
+        const payload = this.getPayload();
+        const stateData = myInstance.getScreenStateData();
+        myInstance.setSavedSystematicData(payload);
+        const screenState = {
+            ...stateData,
+            "systematicAccount":{...this.state}
+        }
+        myInstance.setScreenStateData(screenState);
+        this.props.navigation.navigate({routeName:'systematicWithdrawalAdd',key:'systematicWithdrawalAdd',  
+                    params:{ ItemToEdit: -1,
+                    acc_name:this.state.selectedAccountJson.accountName,
+                    acc_no:this.state.selectedAccountJson.accountNumber,
+                    accountType:this.state.accountType}});
+}
+generateGeneralKeyExtractor = (item) => item.accountName;
+renderGeneralAccount = () => ({ item, index }) =>
         (
-            <TouchableOpacity onPress={this.selectedAccount(index)}>
+            <TouchableOpacity onPress={this.selectedAccount(index,"general")}>
 
                 <View style={this.state.selectedAccount === index ? styles.selectedAccount : styles.accountList}>
-                    <View style={{ flexDirection: 'column', justifyContent: 'center', borderBottomColor: '#61285F45', borderBottomWidth: 1, padding: scaledHeight(20) }}>
-                        <Text style={{ color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' }}>{item.accountName}</Text>
-                        <Text style={{ color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' }}>{item.accountNumber}</Text>
+                    <View style={styles.displayAccView}>
+                        <Text style={styles.displayAcc}>{item.accountName}</Text>
+                        <Text style={styles.displayAcc}>{item.accountNumber}</Text>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={styles.auto_invest_to_flat}>
@@ -119,6 +202,63 @@ class SystematicWithdrawalAccountComponent extends Component {
                 </View>
             </TouchableOpacity>
         )
+        generateIraKeyExtractor = (item) => item.accountName;
+        renderIraAccount = () => ({ item, index }) =>
+            (
+                <TouchableOpacity onPress={this.selectedAccount(index,"ira")}>
+                    <View style={this.state.selectedAccount === index ? styles.selectedAccount : styles.accountList}>
+                        <View style={styles.displayAccView}>
+                            <Text style={styles.displayAcc}>{item.accountName}</Text>
+                            <Text style={styles.displayAcc}>{item.accountNumber}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
+                            <View style={styles.auto_invest_to_flat}>
+                                <Text style={styles.auto_invest_to_top}>{'Current Value'}</Text>
+                                <Text style={styles.auto_invest_flat_min}>{item.currentValue}</Text>
+                            </View>
+    
+                            <View style={styles.auto_invest_to_flat}>
+                                <Text style={styles.auto_invest_to_top}>{'Holding'}</Text>
+                                <Text style={styles.auto_invest_flat_min}>{item.holding}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.auto_invest_to_flat}>
+                            <Text style={styles.auto_invest_to_top}>{'Automatic Investment Plan'}</Text>
+                            <Text style={styles.auto_invest_flat_min}>{item.automaticInvestmentPlan}</Text>
+                        </View>
+    
+                    </View>
+                </TouchableOpacity>
+            )
+    
+            generateUtmaKeyExtractor = (item) => item.accountName;
+            renderUtmaAccount = () => ({ item, index }) =>
+                (
+                    <TouchableOpacity onPress={this.selectedAccount(index,"utma")}>
+                    <View style={this.state.selectedAccount === index ? styles.selectedAccount : styles.accountList}>
+                        <View style={styles.displayAccView}>
+                            <Text style={styles.displayAcc}>{item.accountName}</Text>
+                            <Text style={styles.displayAcc}>{item.accountNumber}</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row' }}>
+                            <View style={styles.auto_invest_to_flat}>
+                                <Text style={styles.auto_invest_to_top}>{'Current Value'}</Text>
+                                <Text style={styles.auto_invest_flat_min}>{item.currentValue}</Text>
+                            </View>
+    
+                            <View style={styles.auto_invest_to_flat}>
+                                <Text style={styles.auto_invest_to_top}>{'Holding'}</Text>
+                                <Text style={styles.auto_invest_flat_min}>{item.holding}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.auto_invest_to_flat}>
+                            <Text style={styles.auto_invest_to_top}>{'Automatic Investment Plan'}</Text>
+                            <Text style={styles.auto_invest_flat_min}>{item.automaticInvestmentPlan}</Text>
+                        </View>
+    
+                    </View>
+                </TouchableOpacity>
+                )
 
 
 
@@ -184,11 +324,11 @@ class SystematicWithdrawalAccountComponent extends Component {
 
                             <View style={styles.seperator_line} />
                             {this.state.expand[0] ?
-                                <FlatList style={{ marginTop: scaledHeight(20) }}
-                                    data={this.state.accountJson}
-                                    renderItem={this.renderAmount()}
-                                    keyExtractor={this.generateAmountKeyExtractor}
-                                    extraData={this.state.accountJson}
+                                <FlatList style={styles.topSpace}
+                                    data={this.state.generalAccountJson}
+                                    renderItem={this.renderGeneralAccount()}
+                                    keyExtractor={this.generateGeneralKeyExtractor}
+                                    extraData={this.state.selectedAccount}
                                 /> : null}
 
                             <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setStateUpdates(1)}>
@@ -214,7 +354,12 @@ class SystematicWithdrawalAccountComponent extends Component {
 
                             <View style={styles.seperator_line} />
                             {this.state.expand[1] ?
-                                <Text style={styles.autoInvest_sub_title_text}>{'Emty List'}</Text> : null}
+                                <FlatList style={styles.topSpace}
+                                data={this.state.iraAccountJson}
+                                renderItem={this.renderIraAccount()}
+                                keyExtractor={this.generateIraKeyExtractor}
+                                extraData={this.state.selectedAccount}
+                            /> : null} 
 
                             <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setStateUpdates(2)}>
                                 <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>
@@ -239,9 +384,12 @@ class SystematicWithdrawalAccountComponent extends Component {
                             <View style={styles.seperator_line} />
 
                             {this.state.expand[2] ?
-                                <Text style={styles.autoInvest_sub_title_text}>{'Emty List'}</Text> : null}
-
-
+                                 <FlatList style={styles.topSpace}
+                                 data={this.state.utmaAccountJson}
+                                 renderItem={this.renderUtmaAccount()}
+                                 keyExtractor={this.generateUtmaKeyExtractor}
+                                 extraData={this.state.selectedAccount}
+                             /> : null}
 
                         </View>
                     </View>
@@ -252,10 +400,10 @@ class SystematicWithdrawalAccountComponent extends Component {
                         onPress={this.navigationCancel}
                     />
                     <GButtonComponent
-                        buttonStyle={styles.continueButton}
+                       buttonStyle={this.state.selectedAccount>-1?styles.continueButtonSelected:styles.continueButton}
                         buttonText={globalString.common.next}
                         textStyle={styles.continueButtonText}
-                        onPress={this.navigationNext}
+                        onPress={this.state.selectedAccount>-1?this.navigationNext:null}
                     />
 
 

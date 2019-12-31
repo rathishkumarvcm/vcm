@@ -6,7 +6,7 @@ import systematicWithdrawalAccountComponent from './SystematicWithdrawalAccountC
 
 const mapStateToProps = (state) => ({
       accountState:state.accountData,
-      systamaticWithdrawalState:state.systamaticWithdrawalData,
+      systematicWithdrawalState:state.systematicWithdrawalData,
   });
 
 const mapDispatchToProps = {

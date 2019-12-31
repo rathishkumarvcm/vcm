@@ -12,7 +12,6 @@ import { CustomRadio } from '../../AppComponents';
 import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
 import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
-import * as regEx from '../../Constants/RegexConstants';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 const autoInvestmentAddBankJson = [
@@ -30,8 +29,6 @@ const autoInvestmentAddBankJson = [
         accountNumber: 'xxx-xxx-xxxx'
     }
 ];
-
-
 
 
 const myInstance = GSingletonClass.getInstance();
@@ -62,7 +59,6 @@ class AutomaticInvestmentAddComponent extends Component {
 
 
     componentDidMount() {
-        console.log('selectedBank****************************',this.state.selectedBank)
         if (this.state && this.state.fundList && !this.state.fundList.length > 0) {
             const fundListPayload = {};
             this.props.getFundListData(fundListPayload);
@@ -136,7 +132,6 @@ class AutomaticInvestmentAddComponent extends Component {
         //         ...this.props.automaticInvestmentState.savedAccData
         //     };
         // }
-        // console.log('*********************************',payload)
         return payload;
 
     }

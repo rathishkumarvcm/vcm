@@ -72,6 +72,10 @@ export const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:'center'
     },
+    autoInvestTitleBody:{
+        marginTop:scaledHeight(20),
+        marginBottom:scaledHeight(10)
+    },
     autoInvest_title_text:
     {
         fontSize:scaledHeight(20),
@@ -81,9 +85,7 @@ export const styles = StyleSheet.create({
     autoInvest_sub_title_view:{
         flex:1,
         flexDirection:'row',
-        marginTop:scaledHeight(20),
         height:scaledHeight(27),
-        marginBottom:scaledHeight(10)
     },
     autoInvest_sub_title_text:{
         flex:0.9,
@@ -172,17 +174,20 @@ export const styles = StyleSheet.create({
         paddingTop:scaledHeight(20),
         paddingBottom:scaledHeight(20),
     },
-    verifyConentTitle1:
+  
+    verifyConent1:
     {
         color:'#333333DE',
         fontSize:scaledHeight(16),
-        fontWeight:'bold'
+        fontWeight:'bold',
+        marginTop: scaledHeight(10), 
+        marginBottom: scaledHeight(10)
     },
-    verifyConentTitle2:
+    verifyConent2:
     {
         color:'#333333DE',
         fontSize:scaledHeight(16),
-        marginTop:scaledHeight(10)
+        
     },
     verifyBottomView:{
         backgroundColor:'#E8ECEE',

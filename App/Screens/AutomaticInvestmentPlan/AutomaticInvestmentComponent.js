@@ -47,7 +47,6 @@ class AutomaticInvestmentComponent extends Component {
                 iraAutoInvestment: this.props.automaticInvestmentState.ira,
                 utmaAutoInvest:this.props.automaticInvestmentState.utma,
             });
-            // console.log('componentDidMount**********',this.props.automaticInvestmentState)
         }
     }
 
@@ -61,10 +60,7 @@ class AutomaticInvestmentComponent extends Component {
                     iraAutoInvestment: this.props.automaticInvestmentState.ira,
                     utmaAutoInvest:this.props.automaticInvestmentState.utma,
                     refresh: !this.state.refresh
-                });
-
-                // console.log('componentDidUpdate**********',this.props.automaticInvestmentState.general.length)
-                
+                });    
             }
         }
         
@@ -181,7 +177,7 @@ class AutomaticInvestmentComponent extends Component {
 
     }
 
-    setStateUpdates = ()=>e => {
+    setStateUpdates = () => {
 
         this.setState({
             expand: !this.state.expand,
@@ -189,7 +185,6 @@ class AutomaticInvestmentComponent extends Component {
     }
 
     clickOutside=()=>e=>{
-        console.log('selectedIndex--------------------clickOutside')
         this.setState({
             selectedIndex: -1,
         });
@@ -199,10 +194,7 @@ class AutomaticInvestmentComponent extends Component {
     navigationBack = () => this.props.navigation.goBack();
 
     navigationInvestmentAccount = () => 
-    {
-        console.log('navigationInvestmentAccount------------------------')
         this.props.navigation.navigate({routeName:'automaticInvestmentAccount',key:'automaticInvestmentAccount',params:{newEdit:false}});
-    }
 
     navigationInvestmentVerify = index =>e=> this.props.navigation.navigate({routeName:'automaticInvestmentVerify',key:'automaticInvestmentVerify',params: { skip: true,indexSelected:index }});
 
@@ -216,7 +208,7 @@ class AutomaticInvestmentComponent extends Component {
                 this.props.navigation.navigate({routeName:'automaticInvestmentAdd',key:'automaticInvestmentAdd', params:{ option: index, ItemToEdit: this.state.selectedIndex ,accountType:'general'}});
                 break;
             case 1:
-                var array = [...this.state.generalAutoInvestment]; // make a separate copy of the array
+                var array = [...this.state.generalAutoInvestment]; 
                 var indexDelete = this.state.selectedIndex
                 if (indexDelete !== -1) {
                     array.splice(indexDelete, 1);
@@ -273,7 +265,6 @@ class AutomaticInvestmentComponent extends Component {
                                 <Text style={styles.autoInvest_sub_title_text}>{'General Account'}</Text>
                             </View>
                         </TouchableOpacity>
-                        {console.log('generalAutoInvestment**********',this.state.generalAutoInvestment)}
                         <View style={styles.seperator_line} /> 
                         {this.state.arr_expand[0] ?
                         <FlatList

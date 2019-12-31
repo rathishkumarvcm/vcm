@@ -15,9 +15,7 @@ const myInstance = GSingletonClass.getInstance();
 class AutomaticInvestmentAccountComponent extends Component {
     constructor(props) {
         super(props);
-        console.log('AutomaticInvestmentAccountComponent))))))))))))))))))))))))')
         const automaticAccount =  myInstance.getAutomaticInvestmentEditMode()? (myInstance.getScreenStateData().automaticAccount || {}):{};
-        console.log('constructor))))))))))))))))))))))))')
         this.state = {
             generalAccountJson: {},
             iraAccountJson: {},
@@ -69,12 +67,11 @@ class AutomaticInvestmentAccountComponent extends Component {
         }
         array[index] = !array[index];
 
-        this.setState({ expand: array, expandIndex: index,selectedAccount:-1 });
+        this.setState({ expand: array, expandIndex: index });//,selectedAccount:-1
 
 
     }
     componentDidMount() {
-        console.log('componentDidMount))))))))))))))))))))))))')
         if (this.props && this.props.accountState) {
 
             this.setState({
@@ -92,10 +89,6 @@ class AutomaticInvestmentAccountComponent extends Component {
             //     this.setState({selectedAccount:payload.selectedAccount})
             // }
         }
-    }
-
-    componentDidUpdate(){
-        console.log('componentDidUpdate))))))))))))))))))))))))')
     }
    
     navigationCancel = () => this.props.navigation.goBack();
@@ -141,7 +134,6 @@ class AutomaticInvestmentAccountComponent extends Component {
                 "automaticAccount":{...this.state}
             }
             myInstance.setScreenStateData(screenState);
-            console.log('screenState))))))))))))))))))))))',screenState)
             this.props.navigation.navigate({routeName:'automaticInvestmentAdd',key:'automaticInvestmentAdd',  
                         params:{ ItemToEdit: -1,
                         acc_name:this.state.selectedAccountJson.accountName,
