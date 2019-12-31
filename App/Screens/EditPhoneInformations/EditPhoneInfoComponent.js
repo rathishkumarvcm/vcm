@@ -48,7 +48,8 @@ const UserPhoneInformation = (props) => {
                     data={editDeleteMenuOption}
                     renderItem={({ item, index }) =>
                         (<TouchableOpacity style={styles.editDropdown}>
-                            <Text style={styles.editDropdownText}>
+                            <Text style={styles.editDropdownText}
+                                onPress={props.onMenuItemClicked}>
                                 {item.name}
                             </Text>
                         </TouchableOpacity>)}
@@ -79,7 +80,8 @@ UserPhoneInformation.propTypes = {
     isPrimaryMobile: PropTypes.bool,
     onMobileToggle: PropTypes.func,
     onMenuOptionClicked: PropTypes.func,
-    selectedMenuIndex: PropTypes.any
+    selectedMenuIndex: PropTypes.any,
+    onMenuItemClicked: PropTypes.func
 };
 
 class editPhoneInfoComponent extends Component {
@@ -268,8 +270,35 @@ class editPhoneInfoComponent extends Component {
             isPrimaryMobile={item.isPrimaryMobile}
             onMobileToggle={this.onMobileToggle(item, index, 'mobile')}
             onMenuOptionClicked={this.onMenuOptionClicked(item, index)}
-            selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0} />)
+            selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0}
+            onMenuItemClicked={this.onEditAndDeleteItem(index, 'mobile')} />)
     };
+
+    onEditAndDeleteItem = (index, menuType) => {
+        let editDeleteArray;
+        if (menuType === 'mobile') {
+            editDeleteArray = [...this.state.userMobileNumber];
+            switch (index) {
+                case 0:
+                    this.setState({
+                        selectedIndex: -1,
+                        userMobileNumber: editDeleteArray,
+                        isMobileRefreshed: !this.state.isMobileRefreshed,
+                    });
+                    break;
+
+                case 1:
+                    this.setState({
+                        selectedIndex: -1,
+                        userMobileNumber: editDeleteArray,
+                        isMobileRefreshed: !this.state.isMobileRefreshed,
+                    });
+                    break;
+
+
+            }
+        }
+    }
 
     // Home Informations
 

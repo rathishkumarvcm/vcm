@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GDropDownComponent, GDateComponent, GLoadingSpinner } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GDropDownComponent, GDateComponent, GLoadingSpinner, GSwitchComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 
@@ -231,7 +231,7 @@ class editMilitaryInfoComponent extends Component {
             this.manageMilitaryInformations();
         }
     }
-    
+
     manageMilitaryInformations = () => {
         const payloadData = this.getMilitaryData();
         console.log("@@@@@@@@ Status ::", payloadData);
@@ -343,6 +343,24 @@ class editMilitaryInfoComponent extends Component {
                             {globalString.editMilitaryInfo.militaryServing}
                         </Text>
                     </View>
+
+                    {/* <View style={styles.editFlexDirectionColumn}>
+                        <View style={styles.switchContainer}>
+                            <GSwitchComponent
+                                switchOffText={"No"}
+                                switchOnText={"Yes"}
+                                switchOff={this.state.isMilitaryService}
+                                switchOn={this.state.isMilitaryService}
+                                switchOnMethod={this.state.isMilitaryService === true ? this.radioButtonClicked(0) : this.radioButtonClicked(1)}
+                                switchOffMethod={this.state.isMilitaryService === false ? this.radioButtonClicked(1) : this.radioButtonClicked(0)}
+                                onStyle={styles.onButtonStyle}
+                                offStyle={styles.offButtonStyle}
+                                onStyleDisabled={styles.onButtonStyleDisable}
+                                offStyleDisabled={styles.offButtonStyleDisable}
+                                textOnStyle={styles.TextOnStyle}
+                                textOffStyle={this.state.isMilitaryService ? styles.TextOffStyle : styles.TextOffStyleBold} />
+                        </View>
+                    </View> */}
 
                     <View style={styles.editFlexDirectionColumn}>
                         <View style={styles.editMilitaryServingRadio}>
