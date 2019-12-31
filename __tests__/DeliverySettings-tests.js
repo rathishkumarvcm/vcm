@@ -17,4 +17,18 @@ describe('Delivery Settings',()=>{
       component.render();
     });
 
+    // Function testing 
+    test('function testing',()=>{
+      const component = shallow(<DeliverySettings />);
+      const wrapper = new DeliverySettings;
+      component.render();
+      wrapper.setModalVisible(false);
+      wrapper.setResendSuccess(false);
+      wrapper.setResendCode('text');
+      wrapper.validateInputData();
+      wrapper.switchOnOffStateUpdates('view',true);
+      wrapper.setReadMoreStateUpdates('view');
+      wrapper.setPreferenceUpdates('view');
+   });
+
 });

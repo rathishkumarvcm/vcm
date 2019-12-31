@@ -17,4 +17,13 @@ describe('Account Messaging Advice',()=>{
       component.render();
     });
 
+    // Function testing 
+    test('function testing',()=>{
+      const component = shallow(<AccountMessagingAdvice />);
+      const wrapper = new AccountMessagingAdvice;
+      component.render();
+      wrapper.setStateUpdates('list');
+      wrapper.switchOnOffStateUpdates('view',false);
+   });
+
 });

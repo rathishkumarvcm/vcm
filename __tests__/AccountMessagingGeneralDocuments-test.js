@@ -17,4 +17,13 @@ describe('Account Messaging General Documents',()=>{
       component.render();
     });
 
+    // Function testing 
+    test('function testing',()=>{
+      const component = shallow(<AccountMessagingGeneralDocuments />);
+      const wrapper = new AccountMessagingGeneralDocuments;
+      component.render();
+      wrapper.onSelected('item','type');
+      wrapper.onSelectedConfirm('item');
+   });
+
 });

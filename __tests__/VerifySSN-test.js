@@ -2,6 +2,8 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
 import VerifySSN from '../App/Screens/VerifySSN/VerifySSNComponent';
+// import GButtonComponent from '../App/CommonComponents/GButtonComponent';
+// import { GInputComponent } from '../App/CommonComponents';
 
 describe('Verify SSN ',()=>{
 
@@ -17,6 +19,7 @@ describe('Verify SSN ',()=>{
     component.render();
   });
 
+  // Function testing
   test('function testing',()=>{
     const component = shallow(<VerifySSN />);
     const wrapper = new VerifySSN();
@@ -24,5 +27,15 @@ describe('Verify SSN ',()=>{
 
     wrapper.onClickNext();
  });
+
+ // Input Component 
+it('Input Text',()=>{
+    const instanceOf = renderer.create(<VerifySSN />).getInstance();
+    instanceOf.setSocialSecurityNumber('123456789');
+    expect(instanceOf.state.socialSecurityNumber).toEqual('123456789');
+});
+
+
+
 
 });
