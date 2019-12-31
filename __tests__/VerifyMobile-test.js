@@ -4,7 +4,7 @@ import VerifyMobile from '../App/Screens/VerifyMobile/VerifyMobileComponent';
 // import {shallow} from 'enzyme';
 
 // Snap shot
-it('renders correctly', () => {  
+it('Match Snapshot', () => {  
   const tree = renderer.create(<VerifyMobile />).toJSON();
   expect(tree).toMatchSnapshot();
 });

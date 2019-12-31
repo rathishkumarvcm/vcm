@@ -16,8 +16,9 @@ class CompareFundsComponent extends Component {
     }   
 
     componentDidMount() {
-        const payload = this.props.navigation.getParam('fundDetails', '');
-        this.props.getFundDetailsData(payload);
+        const payload = this.props && this.props.navigation && this.props.navigation.getParam('fundDetails', '');
+        if(this.props)
+            this.props.getFundDetailsData(payload);
         console.log('Payload:',payload);
     }
 
@@ -34,7 +35,7 @@ class CompareFundsComponent extends Component {
         return (
             <View style={styles.container}>
                 {
-                    this.props.fundDetailsData.isLoading && <GLoadingSpinner />
+                    this.props && this.props.fundDetailsData && this.props.fundDetailsData.isLoading && <GLoadingSpinner />
                 }
                 <GHeaderComponent
                     navigation={this.props.navigation}

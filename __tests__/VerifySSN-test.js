@@ -11,7 +11,7 @@ describe('Verify SSN ',()=>{
     expect(tree).toMatchSnapshot();
   });
 
-  // Render using mount - mount includes child component also
+  // Render using shallow - shallow not includes child component
   test('function testing',()=>{
     const component = shallow(<VerifySSN />);  
     component.render();
