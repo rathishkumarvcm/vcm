@@ -37,7 +37,7 @@ const basicTermsData = [
 class TermsAndConditionsComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             agreeConditions: false
@@ -78,7 +78,7 @@ class TermsAndConditionsComponent extends Component {
     });
 
     isEmpty = (str) => {
-        if (str == "" || str == undefined || str == "null" || str == "undefined") {
+        if (str === "" || str === undefined || str === "null" || str === "undefined") {
             return true;
         } 
         else {
@@ -129,7 +129,7 @@ class TermsAndConditionsComponent extends Component {
                 />
                 <ScrollView style={{ flex: .85 }}>
 
-                    { /*-----------Terms and Conditions -------------------*/}
+                    { /* -----------Terms and Conditions -------------------*/}
                     <View style={StyleSheet.sectionGrp}>
                         <View style={StyleSheet.accTypeSelectSection}>
                             <Text style={StyleSheet.headings}>
@@ -146,7 +146,7 @@ class TermsAndConditionsComponent extends Component {
                     </View>
 
 
-                    { /*-----------Basic Terms -------------------*/}
+                    { /* -----------Basic Terms -------------------*/}
 
                     <View style={[StyleSheet.sectionGrp]}>
                         <View style={StyleSheet.accTypeSelectSection} >
@@ -198,7 +198,7 @@ class TermsAndConditionsComponent extends Component {
 
 
 
-                    { /*----------- Buttons Group -------------------*/}
+                    { /* ----------- Buttons Group -------------------*/}
 
                     <View style={StyleSheet.btnGrp}>
 
@@ -220,7 +220,7 @@ class TermsAndConditionsComponent extends Component {
                         />
                     </View>
 
-                    { /*----------- Disclaimer -------------------*/}
+                    { /* ----------- Disclaimer -------------------*/}
 
                     <View style={StyleSheet.newVictorySection}>
                         <Text style={StyleSheet.disclaimerTitleTxt}>

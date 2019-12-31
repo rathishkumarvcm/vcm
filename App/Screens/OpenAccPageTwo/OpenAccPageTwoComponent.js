@@ -591,8 +591,8 @@ class OpenAccPageTwoComponent extends Component {
                         addrLine1: "",
                         addrLine2: "",
                         zipcode: "",
-                        city: "Florida",
-                        stateCity: "CA",
+                        city: "",
+                        stateCity: "",
                         stateCityDropDown: false,
                         addrLine1_Phy: "",
                         addrLine2_Phy: "",
@@ -649,11 +649,11 @@ class OpenAccPageTwoComponent extends Component {
                 objIndex:""
             },
             // others
-           //  ...openAccPageTwo
+            ...openAccPageTwo
 
 
         };
-        AppUtils.Dlog("Constructor 2::" + JSON.stringify(this.state))
+        AppUtils.Dlog(`Constructor 2::${ JSON.stringify(this.state)}`);
 
     }
 
@@ -722,6 +722,7 @@ class OpenAccPageTwoComponent extends Component {
                 if (this.props.addressFormatData[stateCityKey] !== prevProps.addressFormatData[stateCityKey]) {
                     const tempResponse = this.props.addressFormatData[stateCityKey];
                     if (tempResponse && tempResponse.City) {
+                        const {objIndex = ""} = this.state.currentZipCodeRef.objIndex;
 
                         // alert("currentZipCodeRef::"+this.state.currentZipCodeRef.keyName);
 
@@ -736,8 +737,8 @@ class OpenAccPageTwoComponent extends Component {
                             }));
                         }else if (this.state.currentZipCodeRef.keyName === "zipcode_Phy" && this.state.currentZipCodeRef.objIndex) {
                             const newItems = [...this.state.estate.trusteeData];
-                            newItems[objIndex].city_Phy = tempResponse.City,
-                            newItems[objIndex].stateCity_Phy = tempResponse.State,
+                            newItems[objIndex].city_Phy = tempResponse.City;
+                            newItems[objIndex].stateCity_Phy = tempResponse.State;
                           
                           
                             this.setState(() => (prevState => ({
@@ -749,8 +750,8 @@ class OpenAccPageTwoComponent extends Component {
                             })));
                         } else if (this.state.currentZipCodeRef.keyName === "zipcode" && this.state.currentZipCodeRef.objIndex) {
                             const newItems = [...this.state.estate.trusteeData];
-                            newItems[objIndex].city = tempResponse.City,
-                            newItems[objIndex].stateCity = tempResponse.State,
+                            newItems[objIndex].city = tempResponse.City;
+                            newItems[objIndex].stateCity = tempResponse.State;
                          
                                               
                             this.setState(() => (prevState => ({
@@ -788,7 +789,7 @@ class OpenAccPageTwoComponent extends Component {
                 if (this.props.addressFormatData[addressKey] !== prevProps.addressFormatData[addressKey]) {
                     const tempResponse = this.props.addressFormatData[addressKey];
                     if (tempResponse && tempResponse.City) {
-                        
+                        const {objIndex = ""} = this.state.currentZipCodeRef.objIndex;
                         if (this.state.currentZipCodeRef.keyName === "empZipcode") {
                             this.setState(() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
@@ -802,12 +803,12 @@ class OpenAccPageTwoComponent extends Component {
                             }));
                         } else if (this.state.currentZipCodeRef.keyName === "zipcode_Phy" && this.state.currentZipCodeRef.objIndex) {
                             const newItems = [...this.state.estate.trusteeData];
-                            newItems[objIndex].city_Phy = tempResponse.City,
-                            newItems[objIndex].stateCity_Phy = tempResponse.State,
-                            newItems[objIndex].addrLine1_Phy = tempResponse.Address1 || "",
-                            newItems[objIndex].addrLine2_Phy = tempResponse.Address2 || "",
-                            newItems[objIndex].addrLine1_PhyValidation = true,
-                            newItems[objIndex].addrLine2_PhyValidation = true
+                            newItems[objIndex].city_Phy = tempResponse.City;
+                            newItems[objIndex].stateCity_Phy = tempResponse.State;
+                            newItems[objIndex].addrLine1_Phy = tempResponse.Address1 || "";
+                            newItems[objIndex].addrLine2_Phy = tempResponse.Address2 || "";
+                            newItems[objIndex].addrLine1_PhyValidation = true;
+                            newItems[objIndex].addrLine2_PhyValidation = true;
                           
                             this.setState(() => (prevState => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
@@ -818,12 +819,12 @@ class OpenAccPageTwoComponent extends Component {
                             })));
                         } else if (this.state.currentZipCodeRef.keyName === "zipcode" && this.state.currentZipCodeRef.objIndex) {
                             const newItems = [...this.state.estate.trusteeData];
-                            newItems[objIndex].city = tempResponse.City,
-                            newItems[objIndex].stateCity = tempResponse.State,
-                            newItems[objIndex].addrLine1= tempResponse.Address1 || "",
-                            newItems[objIndex].addrLine2 = tempResponse.Address2 || "",
-                            newItems[objIndex].addrLine1Validation = true,
-                            newItems[objIndex].addrLine2Validation = true
+                            newItems[objIndex].city = tempResponse.City;
+                            newItems[objIndex].stateCity = tempResponse.State;
+                            newItems[objIndex].addrLine1= tempResponse.Address1 || "";
+                            newItems[objIndex].addrLine2 = tempResponse.Address2 || "";
+                            newItems[objIndex].addrLine1Validation = true;
+                            newItems[objIndex].addrLine2Validation = true;
                                               
                             this.setState(() => (prevState => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
@@ -870,12 +871,12 @@ class OpenAccPageTwoComponent extends Component {
                             }));
                         } else if (this.state.currentZipCodeRef.keyName === "zipcode_Phy" && this.state.currentZipCodeRef.objIndex) {
                             const newItems = [...this.state.estate.trusteeData];
-                            newItems[objIndex].city_Phy = tempResponse.City,
-                            newItems[objIndex].stateCity_Phy = tempResponse.State,
-                            newItems[objIndex].addrLine1_Phy=  "",
-                            newItems[objIndex].addrLine2_Phy = "",
-                            newItems[objIndex].addrLine1_PhyValidation = false,
-                            newItems[objIndex].addrLine2_PhyValidation = false
+                            newItems[objIndex].city_Phy = tempResponse.City;
+                            newItems[objIndex].stateCity_Phy = tempResponse.State;
+                            newItems[objIndex].addrLine1_Phy= "";
+                            newItems[objIndex].addrLine2_Phy = "";
+                            newItems[objIndex].addrLine1_PhyValidation = false;
+                            newItems[objIndex].addrLine2_PhyValidation = false;
                                               
                             this.setState(() => (prevState => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
@@ -886,12 +887,12 @@ class OpenAccPageTwoComponent extends Component {
                             })));
                         } else if (this.state.currentZipCodeRef.keyName === "zipcode" && this.state.currentZipCodeRef.objIndex) {
                             const newItems = [...this.state.estate.trusteeData];
-                            newItems[objIndex].city = tempResponse.City,
-                            newItems[objIndex].stateCity = tempResponse.State,
-                            newItems[objIndex].addrLine1=  "",
-                            newItems[objIndex].addrLine2 = "",
-                            newItems[objIndex].addrLine1Validation = false,
-                            newItems[objIndex].addrLine2Validation = false
+                            newItems[objIndex].city = tempResponse.City;
+                            newItems[objIndex].stateCity = tempResponse.State;
+                            newItems[objIndex].addrLine1= "";
+                            newItems[objIndex].addrLine2 = "";
+                            newItems[objIndex].addrLine1Validation = false;
+                            newItems[objIndex].addrLine2Validation = false;
                                               
                             this.setState(() => (prevState => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
@@ -980,13 +981,13 @@ class OpenAccPageTwoComponent extends Component {
 
         if (this.validateFields()) {
             const payload = this.getPayload();
-            //this.props.saveData("OpenAccPageTwo", payload);
+            // this.props.saveData("OpenAccPageTwo", payload);
             const stateData = myInstance.getScreenStateData();
             myInstance.setSavedAccData(payload);
             const screenState = {
                 ...stateData,
                 "openAccPageTwo": { ...this.state }
-            }
+            };
             myInstance.setScreenStateData(screenState);
 
             this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
@@ -1197,7 +1198,7 @@ class OpenAccPageTwoComponent extends Component {
 
    
 
-        let tempBeneficiaryDetails = [];
+        const tempBeneficiaryDetails = [];
         for (let i = 0; i < this.state.retirementBeneficiaryData.length; i += 1) {
             const tempObj = {
                 "type": this.state.retirementBeneficiaryData[i].beneficiaryType || "",
@@ -1210,7 +1211,7 @@ class OpenAccPageTwoComponent extends Component {
                 "dateOfBirth": this.state.retirementBeneficiaryData[i].dob || "",
                 "emailAddress": this.state.retirementBeneficiaryData[i].emailAddress || "",
                 "isPrimaryBeneficiary": "true"
-            }
+            };
             tempBeneficiaryDetails.push(tempObj);
         }
         const retirementAccPayload = {
@@ -1266,6 +1267,7 @@ class OpenAccPageTwoComponent extends Component {
 
         return payload;
     }
+
     replaceUndefinedOrNull= (key, value) => {
         if (value === null || value === undefined || value ==='') {
           return undefined;
@@ -1273,6 +1275,7 @@ class OpenAccPageTwoComponent extends Component {
 
         return value;
       }
+
     getCleanedPayload = (payload) =>{
         const cleanedObject = JSON.stringify(payload, this.replaceUndefinedOrNull, 4);
         return JSON.parse(cleanedObject);
@@ -1370,6 +1373,8 @@ class OpenAccPageTwoComponent extends Component {
 
         newItems.keyName = keyName;
         newItems.stateKey = stateKey;
+        newItems.objIndex = "";
+
         // alert("onSubmitZipEditing::"+JSON.stringify(newItems));
         this.setState({ currentZipCodeRef: newItems });
 
@@ -1420,6 +1425,8 @@ class OpenAccPageTwoComponent extends Component {
         const newItems = { ...this.state.currentZipCodeRef };
         newItems.keyName = keyName;
         newItems.stateKey = stateKey;
+        newItems.objIndex = "";
+
         // alert("onSubmitEmpZipEditing::"+JSON.stringify(newItems));
         this.setState({ currentZipCodeRef: newItems });
 
@@ -1438,7 +1445,7 @@ class OpenAccPageTwoComponent extends Component {
         // alert("onSubmitZipEditing::"+JSON.stringify(newItems));
         this.setState({ currentZipCodeRef: newItems });
 
-        const newTrusteeItmes = [...this.state.estate.trusteeData]
+        const newTrusteeItmes = [...this.state.estate.trusteeData];
         const tempObj = newTrusteeItmes[objIndex];
 
         let payload = {};
@@ -2058,6 +2065,7 @@ class OpenAccPageTwoComponent extends Component {
         return isValidationSuccess;
 
     }
+
     validateEstateTrustInfoFields = () => {
         AppUtils.Dlog(`validateEstateTrustInfoFields:::`);
         const accType = this.props.navigation.getParam('accType', '');
@@ -2161,7 +2169,7 @@ class OpenAccPageTwoComponent extends Component {
             errMsg = gblStrings.accManagement.emptyBusinessTrustCondMsg;
             input = "isBusinessTrust";
             errMsgCount +=1;
-        }  else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isBrokerOrDealerTrust)){
+        } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isBrokerOrDealerTrust)){
             errMsg = gblStrings.accManagement.emptyBrokerOrDealerTrustMsg;
             input = "isBrokerOrDealerTrust";
             errMsgCount +=1;
@@ -2197,7 +2205,7 @@ class OpenAccPageTwoComponent extends Component {
             errMsg = gblStrings.accManagement.emptyTypeOfFiniancialInstitutionMsg;
             input = "typeOfFiniancialInstitution";
             errMsgCount +=1;
-        }  else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isCorrespondentAccountsForeignOffersProvided)){
+        } else if(accType === "Trust Account" && this.isEmpty(this.state.estate.isCorrespondentAccountsForeignOffersProvided)){
             errMsg = gblStrings.accManagement.emptyCorrespondentAccountsForeignOffersProvidedMsg;
             input = "isCorrespondentAccountsForeignOffersProvided";
             errMsgCount +=1;
@@ -2225,7 +2233,7 @@ class OpenAccPageTwoComponent extends Component {
             errMsg = gblStrings.accManagement.emptyTrustMaintainRecordsMsg;
             input = "isTrustMaintainRecords";
             errMsgCount +=1;
-        }  else if (this.state.estate.trusteeData.length > 0) {
+        } else if (this.state.estate.trusteeData.length > 0) {
             let inputField = "";
             
 
@@ -2313,7 +2321,7 @@ class OpenAccPageTwoComponent extends Component {
                 } else if (!emailRegex.test(tempObj.emailAddress)) {
                     tempErrMsg = gblStrings.accManagement.invalidEmailMasg;
                     inputField = 'emailAddress';
-                }  else {
+                } else {
                     tempValidation = true;
                 }
 
@@ -2355,18 +2363,21 @@ class OpenAccPageTwoComponent extends Component {
         } else {
             isValidationSuccess = true;
         }
-      //  let check  = `${input}Validation`;
+        const check = `${input}Validation`;
+        alert(check);
         AppUtils.Dlog(`errMsg:::${errMsg}`);
 
         if (!isValidationSuccess) {
-            this.setState(() => (prevState => ({
+            this.setState(prevState => ({
                 estate: {
                     ...prevState.estate,
                     [`${input}Validation`]: false,
                 },
                 isValidationSuccess,
                 errMsg: isValidationSuccess === false ? errMsg : ""
-            })));
+            }));
+            
+          
            alert(errMsg);
         }
 
@@ -2387,7 +2398,7 @@ class OpenAccPageTwoComponent extends Component {
             const accType = this.props.navigation.getParam('accType', '');
             AppUtils.Dlog(`validateFields::: ${accType}`);
          
-            if ((accType === "Estate Account" || accType === "Trust Account")  && !this.validateEstateTrustInfoFields()) {
+            if ((accType === "Estate Account" || accType === "Trust Account") && !this.validateEstateTrustInfoFields()) {
                 this.setState(prevState => ({
                    
                     estate: {
@@ -2616,6 +2627,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
     }
+
     renderYesNoRadio = (sectionName, radioName) => {
         AppUtils.Dlog(`renderYesNoRadio::: ${radioName}`);
         
@@ -2647,17 +2659,18 @@ class OpenAccPageTwoComponent extends Component {
             onPress={this.onPressRadio(sectionName,radioName, "No")}
 
         />
-    </View>
+        </View>
     {!this.state[sectionName][`${radioName}Validation`] &&
                             <Text style={styles.errMsg}>
                                 {this.state.errMsg}
                             </Text>
                         }
-    </>
+            </>
         );
 
 
     }
+
     renderRadioForEstateTrust = (radioName, radioSize, componentStyle, layoutStyle,objIndex) => {
         const sectionName = "estate";
         AppUtils.Dlog(`renderRadioForEstateTrust::: ${radioName}`);
@@ -2715,6 +2728,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
     }
+
     renderCalender = (sectionName, calendarName) => {
         AppUtils.Dlog(`renderCalender::: ${calendarName}`);
         return (
@@ -2922,7 +2936,7 @@ class OpenAccPageTwoComponent extends Component {
                 errorFlag={isOptional ? false : validationKeyValue}
                 errorText={this.state.errMsg}
                 isOptional={isOptional}
-                disabled={(stateKey !== "taxBracket") ? false : true}
+                disabled={stateKey === "taxBracket"}
             />
         );
 
@@ -2931,7 +2945,7 @@ class OpenAccPageTwoComponent extends Component {
     onSelectedDropDownValue = (section, stateKey, dropDownName) => (value, index, data) => {
         AppUtils.Dlog("onSelectedDropDownValue:");
 
-        let item = data[index];
+        const item = data[index];
         const tempRankKey = `mil_rank_${item.key}`;
         let payload = "";
 
@@ -2976,7 +2990,7 @@ class OpenAccPageTwoComponent extends Component {
     onSelectedIRABeneficiaryDropDownValue = (dropDownName, objIndex) => (value, index, data) => {
         AppUtils.Dlog(`onSelectedIRABeneficiaryDropDownValue:: ${dropDownName}`);
         const newItems = [...this.state.retirementBeneficiaryData];
-        let item = data[index];
+        const item = data[index];
         switch (dropDownName) {
 
             case "beneficiaryTypeDropDown":
@@ -3126,7 +3140,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
      
-        let item = data[index];
+        const item = data[index];
         switch (dropDownName) {
             case "suffixDropDown":
                 newItems[objIndex].suffixDropDown = false;
@@ -3292,7 +3306,7 @@ class OpenAccPageTwoComponent extends Component {
         };
 
         if (this.state.estate.trusteeData.length < 3) {
-           let newItems = [...this.state.estate.trusteeData];
+           const newItems = [...this.state.estate.trusteeData];
             newItems.push(tempTrusteeObj);
             this.setState(() => (prevState => ({
                 estate: {
@@ -6041,7 +6055,7 @@ class OpenAccPageTwoComponent extends Component {
                             onChangeText={this.onChangeText("estate", "name")}
                             onSubmitEditing={this.onSubmitEditing(this.creationDate)}
                             errorFlag={!this.state.estate.nameValidation}
-                            errorText={"dd"}
+                            errorText="dd"
                         />
 
 
@@ -6479,12 +6493,12 @@ class OpenAccPageTwoComponent extends Component {
 
     renderTrusteeInfo = () => {
        let dropDownData = [];
-       let tempkey ="suffix";
+       const tempkey ="suffix";
        if (tempkey !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
         dropDownData = this.props.masterLookupStateData[tempkey].value;
        }
        const tempSuffixData =dropDownData;
-       AppUtils.Dlog("this.state.estate.trusteeData.length::: "+this.state.estate.trusteeData.length);
+       AppUtils.Dlog(`this.state.estate.trusteeData.length::: ${this.state.estate.trusteeData.length}`);
 
         return (
             <View style={styles.sectionGrp}>
@@ -6591,7 +6605,7 @@ class OpenAccPageTwoComponent extends Component {
                                             data={tempSuffixData}
                                             dropDownValue={this.state.estate.trusteeData[index].suffix}
                                             selectedDropDownValue={this.onSelectedEstateTrustDropDownValue("suffixDropDown", index)}
-                                            //itemToDisplay="value"
+                                            // itemToDisplay="value"
                                             dropDownPostition={{ ...styles.dropDownPostition, top: scaledHeight(160) }}
                                             isOptional
                                         />
@@ -6756,7 +6770,7 @@ class OpenAccPageTwoComponent extends Component {
                                         maxLength={gblStrings.maxLength.state}
                                         value={this.state.estate.trusteeData[index].stateCity}
                                         onChangeText={this.onChangeTextForEstateTrust("stateCity",index)}
-                                        //onSubmitEditing={this.onSubmitEditing(this[`stateCity${index}`])}
+                                        // onSubmitEditing={this.onSubmitEditing(this[`stateCity${index}`])}
                                         errorFlag={!this.state.personal.stateCityValidation}
                                         errorText={this.state.errMsg}
                                         editable={this.state.estate.trusteeData[index].citizenship !== "U.S"}
@@ -7066,8 +7080,8 @@ class OpenAccPageTwoComponent extends Component {
                     </View>
 
                     {
-                        (accType === "Estate Account" ||  accType === "Trust Account") ?
-                        <this.renderEstateInfoSection /> :  <this.renderIndividualSection />
+                        (accType === "Estate Account" || accType === "Trust Account") ?
+                        <this.renderEstateInfoSection /> : <this.renderIndividualSection />
                     }
 
                     
