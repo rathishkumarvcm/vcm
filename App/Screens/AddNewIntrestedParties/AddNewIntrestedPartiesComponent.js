@@ -170,6 +170,7 @@ class addNewIntrestedPartiesComponent extends Component {
         if (str === "" || str === undefined || str === null || str === "null" || str === "undefined") {
             return true;
         }
+        return false;
     }
 
     onChangeText = (stateKey, keyName) => text => {

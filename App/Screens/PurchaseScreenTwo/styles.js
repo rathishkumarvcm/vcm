@@ -463,6 +463,9 @@ const styles = StyleSheet.create({
     color: '#56565A',
     fontSize: scaledHeight(12),
     marginTop: scaledHeight(12)
+  },
+  amountBox: {
+    width: '90%'
   }
 });
 

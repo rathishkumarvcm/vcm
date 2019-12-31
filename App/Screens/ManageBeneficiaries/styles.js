@@ -71,6 +71,13 @@ const styles = StyleSheet.create({
     fontSize: scaledHeight(18),
     fontWeight: "bold"
   },
+  titleWithIconStyle: {
+    color: "#56565A",
+    fontSize: scaledHeight(18),
+    fontWeight: "bold",
+    paddingLeft: '4%',
+    paddingRight: '4%'
+  },
   line: {
     backgroundColor: "#535353",
     opacity: 0.25,
@@ -133,6 +140,17 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: scaledHeight(16),
     lineHeight: 24
+  },
+  marginPaddingStyle: {
+    marginBottom: scaledHeight(20),
+    paddingLeft: '4%'
+  },
+  contractText: {
+    color: "#54565B",
+    fontWeight: "400",
+    fontSize: scaledHeight(16),
+    lineHeight: 24,
+    paddingLeft: '4%'
   },
   marginTopStyle: {
     marginTop: scaledHeight(15)

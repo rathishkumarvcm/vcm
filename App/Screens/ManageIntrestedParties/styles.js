@@ -61,12 +61,9 @@ const styles = StyleSheet.create({
     lineHeight: scaledHeight(23),
     color: "#56565A"
   },
-  paddingStyleLeft: {
-    paddingLeft: "4%"
-  },
-  paddingHorizontalStyle: {
+  contentContainerStyle: {
     paddingLeft: "4%",
-    paddingRight: "4%"
+    marginBottom: scaledHeight(20)
   },
   flexMainView: {
     flex: 0.85
@@ -83,6 +80,13 @@ const styles = StyleSheet.create({
     color: "#56565A",
     fontSize: scaledHeight(18),
     fontWeight: "bold"
+  },
+  titleIconView: {
+    color: "#56565A",
+    fontSize: scaledHeight(18),
+    fontWeight: "bold",
+    paddingLeft: '4%',
+    paddingRight: '4%'
   },
   line: {
     backgroundColor: "#535353",
@@ -149,9 +153,6 @@ const styles = StyleSheet.create({
   },
   marginTopStyle: {
     marginTop: scaledHeight(15)
-  },
-  marginBottomStyle: {
-    marginBottom: scaledHeight(20)
   },
   beneNameStyle: {
     fontSize: scaledHeight(36),
@@ -221,8 +222,8 @@ const styles = StyleSheet.create({
     width: "40%",
     alignSelf: 'flex-end'
   },
-  dateTextLayout:{
-    marginTop: 0 
+  dateTextLayout: {
+    marginTop: 0
   }
 });
 

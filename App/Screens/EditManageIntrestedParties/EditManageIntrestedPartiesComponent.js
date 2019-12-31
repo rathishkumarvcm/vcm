@@ -188,6 +188,7 @@ class editManageIntrestedPartiesComponent extends Component {
         if (str === "" || str === undefined || str === null || str === "null" || str === "undefined") {
             return true;
         }
+        return false;
     }
 
     onChangeText = (stateKey, keyName) => text => {
@@ -383,7 +384,7 @@ class editManageIntrestedPartiesComponent extends Component {
             newInterestedParties = this.props.manageInterestedPartiesData.list_manage_interested_parties;
         }
         return (
-            <View style={styles.container} >
+            <View style={styles.container}>
                 {
                     this.props.stateCityData.isLoading && <GLoadingSpinner />
                 }
@@ -414,7 +415,7 @@ class editManageIntrestedPartiesComponent extends Component {
                         <View style={styles.paddingHorizontalStyle}>
                             <View style={styles.flexDirectionStyle}>
                                 <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
-                                <Text style={[styles.shortContentValueText, styles.paddingStyleLeft]}>{`${this.state.personal.fname} ${this.state.personal.mname} ${this.state.personal.lname}`}</Text>
+                                <Text style={styles.shortContentValueText}>{`${this.state.personal.fname} ${this.state.personal.mname} ${this.state.personal.lname}`}</Text>
                             </View>
                             <GDropDownComponent
                                 dropDownName={gblStrings.accManagement.relationToAccountHolder}

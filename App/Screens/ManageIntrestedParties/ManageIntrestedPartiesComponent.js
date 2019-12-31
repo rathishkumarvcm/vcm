@@ -64,7 +64,7 @@ class manageIntrestedPartiesComponent extends Component {
         return (
             <View style={styles.blockMarginTop}>
                 <View style={styles.titleHeadingView}>
-                    <Text style={[styles.titleHeaderText, styles.paddingHorizontalStyle]}>{this.state.collapseIcon}</Text>
+                    <Text style={styles.titleIconView}>{this.state.collapseIcon}</Text>
                     <Text style={styles.titleHeaderText}>{item.account_Type}</Text>
                 </View>
                 <View style={styles.line} />
@@ -81,7 +81,7 @@ class manageIntrestedPartiesComponent extends Component {
                         return (
                             <View key={data.key} style={styles.innerContainerView}>
                                 <CardHeader item={data} navigate={this.onClickEdit(item, k, data)} onDelete={this.onDeleteFunc(item, data)} />
-                                <View style={[styles.paddingStyleLeft, styles.marginBottomStyle]}>
+                                <View style={styles.contentContainerStyle}>
                                     <View style={styles.marginTopStyle}>
                                         <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
                                         <Text style={styles.beneNameStyle}>{`${data.fname} ${data.mname} ${data.lname}`}</Text>
@@ -164,12 +164,12 @@ class manageIntrestedPartiesComponent extends Component {
 manageIntrestedPartiesComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     manageInterestedPartiesData: PropTypes.instanceOf(Object),
-    deleteIntrestedParties: PropTypes.func
+    deleteInterestedParties: PropTypes.func
 };
 manageIntrestedPartiesComponent.defaultProps = {
     navigation: {},
     manageInterestedPartiesData: {},
-    deleteIntrestedParties: () => { }
+    deleteInterestedParties: () => { }
 };
 
 export default manageIntrestedPartiesComponent;

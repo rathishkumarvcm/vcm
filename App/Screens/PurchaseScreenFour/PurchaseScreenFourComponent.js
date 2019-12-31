@@ -226,7 +226,8 @@ class PurchaseFourComponent extends Component {
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalInvestment}</Text>
                                     <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.totalInvestment}</Text>
-                                </View> : <View style={styles.section}>
+                                </View> :
+                                <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountNumber}</Text>
                                     <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.bankAccountNumber}</Text>
                                 </View>

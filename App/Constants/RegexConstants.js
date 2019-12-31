@@ -11,4 +11,5 @@ export const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
 export const allow_Nine_Numeric = /^[0-9]{9}$/;
 export const allow_Four_Numeric = /^[0-9]{4}$/;
 export const zipCodeRegex = /^[0-9]{5}(?:-[0-9]{4})?$/;
-export const nameRegex= /^[a-zA-Z]+$/;
+export const nameRegex = /^[a-zA-Z]+$/;
+export const ssnRegex = /^\d{9}$/;

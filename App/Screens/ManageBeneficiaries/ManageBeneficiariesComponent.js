@@ -34,7 +34,8 @@ class ManageBenificiariesComponent extends Component {
 
     const pIndex = beneficiaryData.findIndex((data) => data.key === pKey);
     const modObj = beneficiaryData[pIndex];
-    let cIndex, arr;
+    let cIndex;
+    let arr;
     switch (pName) {
       case "pri":
         cIndex = beneficiaryData[pIndex].primary_Bene.findIndex((data) => data.key === cKey);
@@ -66,7 +67,7 @@ class ManageBenificiariesComponent extends Component {
 
   deleteBene = (item) => () => {
     const payloadData = this.getDeleteData(item);
-    this.props.deleteBeneficiaryData("deleteBeneficiary", payloadData);
+    this.props.deleteBeneficiaryData(payloadData);
   }
 
   generateKeyExtractor = (item) => item.key;
@@ -75,7 +76,7 @@ class ManageBenificiariesComponent extends Component {
     return (
       <View style={styles.innerContainerView}>
         <CardHeader item={item} onPressDelete={this.deleteBene(item)} />
-        <View style={[styles.paddingStyleLeft, styles.marginBottomStyle]}>
+        <View style={styles.marginPaddingStyle}>
           <View style={styles.marginTopStyle}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.contingentBeneficiary}</Text>
             <Text style={styles.beneNameStyle}>{item.bene_Name}</Text>
@@ -103,7 +104,7 @@ class ManageBenificiariesComponent extends Component {
   renderTransferOnDeathBeneficiary = ({ item }) => (
     <View style={styles.innerContainerView}>
       <CardHeader item={item} onPressDelete={this.deleteBene(item)} />
-      <View style={[styles.paddingStyleLeft, styles.marginBottomStyle]}>
+      <View style={styles.marginPaddingStyle}>
         <View style={styles.marginTopStyle}>
           <Text style={styles.shortContentText}>{gblStrings.accManagement.primaryBeneficiary}</Text>
           <Text style={styles.beneNameStyle}>{item.bene_Name}</Text>
@@ -130,7 +131,7 @@ class ManageBenificiariesComponent extends Component {
   renderPrimaryBeneficiary = ({ item }) => (
     <View style={styles.innerContainerView}>
       <CardHeader item={item} onPressDelete={this.deleteBene(item)} />
-      <View style={[styles.paddingStyleLeft, styles.marginBottomStyle]}>
+      <View style={styles.marginPaddingStyle}>
         <View style={styles.marginTopStyle}>
           <Text style={styles.shortContentText}>{gblStrings.accManagement.primaryBeneficiary}</Text>
           <Text style={styles.beneNameStyle}>{item.bene_Name}</Text>
@@ -157,7 +158,7 @@ class ManageBenificiariesComponent extends Component {
   renderBeneficiaryData = ({ item }) => (
     <View style={styles.blockMarginTop}>
       <View style={styles.titleHeadingView}>
-        <Text style={[styles.titleHeaderText, styles.paddingHorizontalStyle]}>{this.state.collapseIcon}</Text>
+        <Text style={styles.titleWithIconStyle}>{this.state.collapseIcon}</Text>
         <Text style={styles.titleHeaderText}>{item.account_Type}</Text>
       </View>
       <View style={styles.line} />

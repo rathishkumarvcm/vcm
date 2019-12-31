@@ -289,7 +289,6 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     onValidate = () => {
-        console.log("inValidate::0");
         try {
             let isValidationSuccess = false;
             this.setState(prevState => ({
@@ -310,7 +309,7 @@ class PurchaseScreenTwoComponent extends Component {
                 this.onClickSave();
             }
         } catch (err) {
-            console.log("Error:::" + err);
+            console.log(`Error::: ${err}`);
         }
     }
 
@@ -402,7 +401,7 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     onSelectFund = (item, index) => () => {
-        let tempData = {};
+        const tempData = {};
         if (!this.state.ammend) {
             tempData.fundName = item.fundName;
             tempData.fundNumber = item.fundNumber;
@@ -462,7 +461,7 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     onChangeDateForInvestment = (keyName) => date => {
-        let newData = this.state.selectedFundInvestmentData;
+        const newData = this.state.selectedFundInvestmentData;
         newData[keyName] = date;
         newData.fundingOptionValidation = true;
         newData.initialInvestmentValidation = true;
@@ -515,7 +514,7 @@ class PurchaseScreenTwoComponent extends Component {
         }
 
         return (
-            <View style={styles.container} >
+            <View style={styles.container}>
                 {this.props.accOpeningData.isLoading || this.props.masterLookupStateData.isLoading && <GLoadingSpinner />}
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.mainFlex}>
@@ -627,17 +626,17 @@ class PurchaseScreenTwoComponent extends Component {
                                     <View style={styles.marginBottomStyle}>
                                         <Text style={styles.fundInvestTitle}>{gblStrings.purchase.initialInvestment}</Text>
                                         <View style={styles.iconFrontStyle}>
-                                            <Text style={styles.dollerIconTxt}>{"$"}</Text>
+                                            <Text style={styles.dollerIconTxt}>$</Text>
                                             <GInputComponent
                                                 inputref={this.setInputRef("initialInvestment")}
-                                                propInputStyle={{ width: '90%' }}
+                                                propInputStyle={styles.amountBox}
                                                 value={this.state.selectedFundInvestmentData.initialInvestment}
                                                 maxLength={gblStrings.maxLength.initInvestment}
-                                                placeholder={"Initial Investment"}
+                                                placeholder="Initial Investment"
                                                 keyboardType="decimal-pad"
                                                 onChangeText={this.onChangeTextForInvestment("initialInvestment")}
                                                 errorFlag={!this.state.selectedFundInvestmentData.initialInvestmentValidation}
-                                                errorText={""}
+                                                errorText=""
                                             />
                                         </View>
                                         {!this.state.selectedFundInvestmentData.initialInvestmentValidation &&
@@ -653,14 +652,14 @@ class PurchaseScreenTwoComponent extends Component {
                                                     <Text style={styles.dollerIconTxt}>{"$"}</Text>
                                                     <GInputComponent
                                                         inputref={this.setInputRef("monthlyInvestment")}
-                                                        propInputStyle={{ width: '90%' }}
+                                                        propInputStyle={styles.amountBox}
                                                         maxLength={gblStrings.maxLength.monthlyInvestment}
-                                                        placeholder={"Monthly Investment"}
+                                                        placeholder="Monthly Investment"
                                                         value={this.state.selectedFundInvestmentData.monthlyInvestment}
                                                         keyboardType="decimal-pad"
                                                         onChangeText={this.onChangeTextForInvestment("monthlyInvestment")}
                                                         errorFlag={!this.state.selectedFundInvestmentData.monthlyInvestmentValidation}
-                                                        errorText={""}
+                                                        errorText=""
                                                     />
                                                 </View>
                                                 {!this.state.selectedFundInvestmentData.monthlyInvestmentValidation && <Text style={styles.errMsg}>{gblStrings.accManagement.emptyMonthlyInvestmentMsg}</Text>}
@@ -747,7 +746,7 @@ class PurchaseScreenTwoComponent extends Component {
                                         </Text>
                                         {this.state.filterMinData.map((item, index) => {
                                             let itemvalue = item.value;
-                                            if (item.key == 50) {
+                                            if (item.key === 50) {
                                                 itemvalue = itemvalue.replace(new RegExp('50', 'g'), gblStrings.common.dollar + '50');
                                             } else {
                                                 itemvalue = gblStrings.common.dollar + item.value;
@@ -758,8 +757,8 @@ class PurchaseScreenTwoComponent extends Component {
                                                     size={20}
                                                     itemBottom={0}
                                                     itemTop={0}
-                                                    outerCicleColor={"#DEDEDF"}
-                                                    innerCicleColor={"#61285F"}
+                                                    outerCicleColor="#DEDEDF"
+                                                    innerCicleColor="#61285F"
                                                     labelStyle={styles.modalCheckBoxLabel}
                                                     label={itemvalue}
                                                     selected={item.isActive}
@@ -781,8 +780,8 @@ class PurchaseScreenTwoComponent extends Component {
                                                         size={20}
                                                         itemBottom={0}
                                                         itemTop={0}
-                                                        outerCicleColor={"#DEDEDF"}
-                                                        innerCicleColor={"#61285F"}
+                                                        outerCicleColor="#DEDEDF"
+                                                        innerCicleColor="#61285F"
                                                         labelStyle={styles.modalCheckBoxLabel}
                                                         label={item.value}
                                                         selected={item.isActive}
@@ -808,8 +807,8 @@ class PurchaseScreenTwoComponent extends Component {
                                                     size={20}
                                                     itemBottom={0}
                                                     itemTop={0}
-                                                    outerCicleColor={"#DEDEDF"}
-                                                    innerCicleColor={"#61285F"}
+                                                    outerCicleColor="#DEDEDF"
+                                                    innerCicleColor="#61285F"
                                                     labelStyle={styles.modalCheckBoxLabel}
                                                     label={item.value}
                                                     selected={item.isActive}

@@ -149,7 +149,8 @@ const styles = StyleSheet.create({
     color: "#54565B",
     fontWeight: "400",
     fontSize: scaledHeight(16),
-    lineHeight: 24
+    lineHeight: 24,
+    paddingLeft: '4%'
   },
   marginTopStyle: {
     marginTop: scaledHeight(15)

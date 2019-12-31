@@ -84,7 +84,7 @@ class VerifyManageBenificiariesComponent extends Component {
 
   renderContingentBeneficiary = ({ item }) => (
     <View style={styles.marginStyle}>
-      <View style={[styles.flexStyle, styles.paddingHorizontalStyle]}>
+      <View style={styles.flexStyle}>
         <Text style={styles.titleHeaderText}>{gblStrings.accManagement.contingentInfo}</Text>
         <TouchableOpacity onPress={this.onClickEdit}>
           <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
@@ -126,7 +126,7 @@ class VerifyManageBenificiariesComponent extends Component {
 
   renderTransferOnDeathBeneficiary = ({ item }) => (
     <View style={styles.marginStyle}>
-      <View style={[styles.flexStyle, styles.paddingHorizontalStyle]}>
+      <View style={styles.flexStyle}>
         <Text style={styles.titleHeaderText}>{gblStrings.accManagement.verifyTOD}</Text>
         <TouchableOpacity onPress={this.onClickEdit}>
           <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
@@ -168,7 +168,7 @@ class VerifyManageBenificiariesComponent extends Component {
 
   renderPrimaryBeneficiary = ({ item }) => (
     <View style={styles.marginStyle}>
-      <View style={[styles.flexStyle, styles.paddingHorizontalStyle]}>
+      <View style={styles.flexStyle}>
         <Text style={styles.titleHeaderText}>{gblStrings.accManagement.primaryInfo}</Text>
         <TouchableOpacity onPress={this.onClickEdit}>
           <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
@@ -222,7 +222,7 @@ class VerifyManageBenificiariesComponent extends Component {
           </View>
           <View style={styles.line} />
 
-          <View style={styles.contentViewInternal} >
+          <View style={styles.contentViewInternal}>
             <View style={styles.contentViewBlock}>
               <Text style={styles.shortContentText}>{this.state.bene_Data.account_Type}</Text>
               <Text style={styles.shortContentValueText}>{this.state.bene_Data.account_Name}</Text>

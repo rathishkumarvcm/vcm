@@ -154,7 +154,6 @@ class PurchaseScreenThreeComponent extends Component {
     }
 
     onSubmitEditing = (input) => text => {
-        console.log(text);
         input.focus();
     }
 
@@ -176,7 +175,7 @@ class PurchaseScreenThreeComponent extends Component {
                 this.onClickSave();
             }
         } catch (err) {
-            console.log("Error:::" + err);
+            console.log(`Error::: ${err}`);
         }
 
 
@@ -350,7 +349,7 @@ class PurchaseScreenThreeComponent extends Component {
                                             <View style={styles.titleContainerView}>
                                                 <Text style={styles.bankTitle}>{item.bankAccName}</Text>
                                                 <Text style={styles.bankDisc}>{item.bankAccountNo}</Text>
-                                                {!item.verified ? <Text style={styles.verifiedText}>{"To Be Verified"}</Text> : null}
+                                                {!item.verified ? <Text style={styles.verifiedText}>To Be Verified</Text> : null}
                                             </View>
                                         </View>
                                     );
@@ -389,7 +388,7 @@ class PurchaseScreenThreeComponent extends Component {
                                     <Text style={styles.checkOrderText}>{gblStrings.purchase.usaaAccNum}</Text>
                                     <Text style={styles.wireTransferTxt}>{savedData.selectedAccountData.accountNumber}</Text>
                                     <Text style={styles.checkOrderText}>{gblStrings.purchase.name}</Text>
-                                    <Text style={styles.wireTransferTxt}>{"William"}</Text>
+                                    <Text style={styles.wireTransferTxt}>William</Text>
                                     <Text style={styles.checkOrderText}>{gblStrings.purchase.usaaMutualFundAccNumber}</Text>
                                     <Text style={styles.wireTransferTxt}>{savedData.selectedFundData.fundNumber}</Text>
                                     <Text style={styles.checkOrderText}>{gblStrings.purchase.mailingToNumber}</Text>
@@ -409,8 +408,8 @@ class PurchaseScreenThreeComponent extends Component {
                         <Text style={styles.stmtBoldTxtStyle}>{gblStrings.purchase.cashOrderWireTransferStmt}</Text>
                         <View style={styles.switchContainer}>
                             <GSwitchComponent
-                                switchOffText={"No"}
-                                switchOnText={"Yes"}
+                                switchOffText="No"
+                                switchOnText="Yes"
                                 switchOff={this.state.switchOff}
                                 switchOn={this.state.switchOn}
                                 switchOnMethod={this.switchMethod}

@@ -65,7 +65,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   noteEnterDetail: {
-    marginTop: scaledHeight(10)
+    marginTop: scaledHeight(10),
+    flexDirection: 'row'
   },
   flexDirectionRowStyle: {
     flexDirection: "row"
@@ -237,11 +238,13 @@ const styles = StyleSheet.create({
   },
   dropdownTextInput: {
     width: '100%',
-    marginLeft: 0
+    marginLeft: 0,
   },
   dropDownLayout: {
     marginTop: scaledHeight(18),
-    paddingLeft: 0
+    paddingLeft: 0,
+    marginLeft: 0,
+    marginRight: 0
   },
   distributionValueTxt: {
     color: '#B5B5B5',

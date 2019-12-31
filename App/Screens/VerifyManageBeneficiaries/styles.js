@@ -104,7 +104,9 @@ const styles = StyleSheet.create({
   },
   flexStyle: {
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    paddingLeft: '4%',
+    paddingRight: '4%'
   },
   footerView: {
     marginTop: scaledHeight(15),
