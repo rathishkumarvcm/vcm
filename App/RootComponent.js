@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Provider } from "react-redux";
+import { Text,AppState } from 'react-native';
 import AppNavigator from './routes';
 import store from './Shared/Store/index';
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 import { Auth } from "aws-amplify";
-
+import { scaledHeight } from './Utils/Resolution';
+import { showAlertWithCancelButton} from './CommonComponents'
 import { NavigationActions } from 'react-navigation';
 
 /*
@@ -27,12 +29,21 @@ class RootComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      timeOut : false
+      timeOut : false,
+      appState: AppState.currentState,
     }
+  }
+
+  signOut = () => {
+    this.navigator &&
+                     this.navigator.dispatch(
+                      NavigationActions.navigate({ routeName: 'login' }));
   }
 
   componentDidMount(){
     console.log("sessionId",sessionId);
+    AppState.addEventListener('change', this._handleAppStateChange);
+
     setInterval(() => {
       RNSecureKeyStore.get("jwtToken")
       .then((setValue) => {
@@ -41,6 +52,14 @@ class RootComponent extends Component {
                   if(sessionId == undefined){
                      sessionId  = res;
                   }else if(sessionId == res){   
+                    showAlertWithCancelButton(
+                      "Session Time Out",
+                      "Your session is about to expire. Please click Cancel to avoid being Sign out.",
+                      "Cancel",
+                      "Sign Out",
+                      null,
+                      ()=>this.signOut()
+                      )
                     //alert("TIME OUT IS CALLING");
                     this.setState({
                       timeOut : true
@@ -63,9 +82,6 @@ class RootComponent extends Component {
                     }, (err) => {
                         console.log(err);
                     });
-                    this.navigator &&
-                     this.navigator.dispatch(
-                      NavigationActions.navigate({ routeName: 'login' }));
                   }
               }, (err) => {
                   console.log("err--->",err);
@@ -76,6 +92,21 @@ class RootComponent extends Component {
         });
     }, 30000);
   }
+
+  componentWillMount(){
+    AppState.removeEventListener('change', this._handleAppStateChange);
+  }
+
+  _handleAppStateChange = (nextAppState) => {
+    if (
+      this.state.appState.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      console.log('App has come to the foreground!');
+      this.signOut();
+    }
+    this.setState({appState: nextAppState});
+  };
 
     
     render() {
