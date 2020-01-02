@@ -107,6 +107,8 @@ import PurchaseScreenThreeComponent from './Screens/PurchaseScreenThree';
 import PurchaseScreenFourComponent from './Screens/PurchaseScreenFour';
 import PurchaseFinishComponent from './Screens/PurchaseFinish';
 
+import ExchangeScreenOneComponent from './Screens/ExchangeScreenOne';
+
 import EditRelationshipInfo from './Screens/EditRelationshipInformation/';
 import EditRegulatoryInfo from './Screens/EditRegulatoryInformations/EditRegulatoryComponent';
 import EditFamilyMemberInfo from './Screens/EditFamilyMemberInformation/';
@@ -941,6 +943,12 @@ const AppNavigator = createStackNavigator({
             screen: DividentsForAccount,
             navigationOptions: {
                 header: null,
+        }
+    },
+    exchangeScreenOne: {
+        screen: ExchangeScreenOneComponent,
+        navigationOptions: {
+            header: null,
         }
     }
 

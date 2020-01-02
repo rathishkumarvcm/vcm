@@ -15,7 +15,7 @@ class VerifyManageBenificiariesComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bene_Data: {},
+      beneData: {},
       totalPrimaryDistribution: 0,
       totalContingentDistribution: 0,
       totalTodDistribution: 0
@@ -27,25 +27,30 @@ class VerifyManageBenificiariesComponent extends Component {
   }
 
   updateInitialData = () => {
-    const data = this.props.navigation.getParam('mBData');
-    this.setState({ bene_Data: data });
-    if (data.transfer_on_Death_Bene) {
+    if (this.props && this.props.manageBeneficiaryData && this.props.manageBeneficiaryData.savedBeneficiaryData) {
+      this.setState({ beneData: this.props.manageBeneficiaryData.savedBeneficiaryData }, () => this.setInitialValue());
+    }
+
+  }
+
+  setInitialValue = () => {
+    if (this.state.beneData.transfer_on_Death_Bene) {
       let dist = 0;
-      for (const item of data.transfer_on_Death_Bene) {
+      for (const item of this.state.beneData.transfer_on_Death_Bene) {
         dist = dist + parseInt(item.distribution_Per);
       }
       this.setState({ totalTodDistribution: dist });
     }
-    if (data.primary_Bene) {
+    if (this.state.beneData.primary_Bene) {
       let dist = 0;
-      for (const item of data.primary_Bene) {
+      for (const item of this.state.beneData.primary_Bene) {
         dist = dist + parseInt(item.distribution_Per);
       }
       this.setState({ totalPrimaryDistribution: dist });
     }
-    if (data.contingent_Bene) {
+    if (this.state.beneData.contingent_Bene) {
       let dist = 0;
-      for (const item of data.contingent_Bene) {
+      for (const item of this.state.beneData.contingent_Bene) {
         dist = dist + parseInt(item.distribution_Per);
       }
       this.setState({ totalContingentDistribution: dist });
@@ -69,7 +74,7 @@ class VerifyManageBenificiariesComponent extends Component {
   getData = () => {
     let updateBeneData = {};
     let list = [];
-    updateBeneData = this.state.bene_Data;
+    updateBeneData = this.state.beneData;
     if (this.props && this.props.manageBeneficiaryData && this.props.manageBeneficiaryData.manage_beneficiary) {
       list = this.props.manageBeneficiaryData.manage_beneficiary;
     }
@@ -224,40 +229,40 @@ class VerifyManageBenificiariesComponent extends Component {
 
           <View style={styles.contentViewInternal}>
             <View style={styles.contentViewBlock}>
-              <Text style={styles.shortContentText}>{this.state.bene_Data.account_Type}</Text>
-              <Text style={styles.shortContentValueText}>{this.state.bene_Data.account_Name}</Text>
+              <Text style={styles.shortContentText}>{this.state.beneData.account_Type}</Text>
+              <Text style={styles.shortContentValueText}>{this.state.beneData.account_Name}</Text>
             </View>
             <View style={styles.contentViewBlock}>
               <Text style={styles.shortContentText}>{gblStrings.accManagement.registrationOwner}</Text>
-              <Text style={styles.shortContentValueText}>{this.state.bene_Data.account_Name}</Text>
+              <Text style={styles.shortContentValueText}>{this.state.beneData.account_Name}</Text>
             </View>
             <View style={styles.contentViewBlock}>
               <Text style={styles.shortContentText}>{gblStrings.accManagement.accountNumber}</Text>
-              <Text style={styles.shortContentValueText}>{this.state.bene_Data.account_Number}</Text>
+              <Text style={styles.shortContentValueText}>{this.state.beneData.account_Number}</Text>
             </View>
             <View style={styles.contentViewBlock}>
               <Text style={styles.shortContentText}>{gblStrings.accManagement.balance}</Text>
-              <Text style={styles.shortContentValueText}>{`$ ${this.state.bene_Data.accumulated_Value}`}</Text>
+              <Text style={styles.shortContentValueText}>{`$ ${this.state.beneData.accumulated_Value}`}</Text>
             </View>
           </View>
 
-          {this.state.bene_Data.primary_Bene &&
+          {this.state.beneData.primary_Bene &&
             <FlatList
-              data={this.state.bene_Data.primary_Bene}
+              data={this.state.beneData.primary_Bene}
               keyExtractor={this.generateKeyExtractor}
               renderItem={this.renderPrimaryBeneficiary}
             />
           }
-          {this.state.bene_Data.contingent_Bene &&
+          {this.state.beneData.contingent_Bene &&
             <FlatList
-              data={this.state.bene_Data.contingent_Bene}
+              data={this.state.beneData.contingent_Bene}
               keyExtractor={this.generateKeyExtractor}
               renderItem={this.renderContingentBeneficiary}
             />
           }
-          {this.state.bene_Data.transfer_on_Death_Bene &&
+          {this.state.beneData.transfer_on_Death_Bene &&
             <FlatList
-              data={this.state.bene_Data.transfer_on_Death_Bene}
+              data={this.state.beneData.transfer_on_Death_Bene}
               keyExtractor={this.generateKeyExtractor}
               renderItem={this.renderTransferOnDeathBeneficiary}
             />
@@ -266,7 +271,7 @@ class VerifyManageBenificiariesComponent extends Component {
           {/* --------------------------- Distribution Percentage View -------------------------------- */}
 
           <View style={styles.distributionViewStyle}>
-            {this.state.bene_Data.transfer_on_Death_Bene ?
+            {this.state.beneData.transfer_on_Death_Bene ?
               <Text style={styles.todBeneDistributionTxt}>Total Distribution Percentage</Text> :
               <Text style={styles.otherBeneDistributionTxt}>{`Total Distribution Percentage of Primary ( ${this.state.totalPrimaryDistribution} %) + Contingent ( ${this.state.totalContingentDistribution} %)`}</Text>
             }

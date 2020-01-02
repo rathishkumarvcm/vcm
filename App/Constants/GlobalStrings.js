@@ -466,8 +466,8 @@ export default {
         creationDate: "Creation Date",
         postBoxAcception: "(P.O. Box cannot be accepted.)",
         federalLawDesc: "Is this trust / estate organized under U.S. state or federal law?",
-        specifyCountry:"Specify Country of Organization",
-        specifyState:"Specify State",
+        specifyCountry: "Specify Country of Organization",
+        specifyState: "Specify State",
         orgCountry: "Specify Country of Organization",
         trusteeOrExector: "Trustee / Executor",
         addTrusteeOrExector: "Add Co-Trustee / Co-Executor",
@@ -476,23 +476,23 @@ export default {
         residencePhoneNo: "Residence Phone Number",
         areaCode: "(include area code)",
         businessPhoneNumber: "Business Phone Number",
-        isBusinessTrust:"Is the trust a business trust?",
-        isBrokerDealerTrust:"Is the trust a broker/dealer?",
-        isBrokerOrDealer:"Broker / Dealer?",
-        isBankTrust:"Is the trust a bank?",
-        bankTrustType:"Trust a Bankk?",
-        isForeignUSBranchTrust:"Is the trust a foreign branch of a U.S. financial institution?",
-        businessTrust:"Trust a Business",
-        isMoneyTransmitterOrCurrencyExchangeOrgnaised:"Trust a money transmitter or currency exchanger organized under foreign law?",
-        isCorrespondentAccountsOffersProvided:"Does the trust offer correspondent accounts to other financial institutions?",
-        typeOfFiniancialInstitution:"Type of Financial Institution",
-        isCorrespondentAccountsForeignOffersProvided:"Trust Provides Correspondent Accounts to other foreign financial Institution?",
-        VCMFundAccountNumbers:"VCM Mutual Funds Account Number(s)",
-        isFinanacialInstitutionDescribed:"Is the trust a financial institution that is not described above?",
-        describeFinanacialInstitution:"Describe the type of Financial Institution",
-        isPhysicalPresenceMaintained:"Trust maintain a Physical Presence?",
-        isIndividualEmploymentThere:"Does the trust employ individuals on a full-time basis?",
-        isTrustMaintainRecords:"Does the trust maintain operating records related to its business activities?",
+        isBusinessTrust: "Is the trust a business trust?",
+        isBrokerDealerTrust: "Is the trust a broker/dealer?",
+        isBrokerOrDealer: "Broker / Dealer?",
+        isBankTrust: "Is the trust a bank?",
+        bankTrustType: "Trust a Bankk?",
+        isForeignUSBranchTrust: "Is the trust a foreign branch of a U.S. financial institution?",
+        businessTrust: "Trust a Business",
+        isMoneyTransmitterOrCurrencyExchangeOrgnaised: "Trust a money transmitter or currency exchanger organized under foreign law?",
+        isCorrespondentAccountsOffersProvided: "Does the trust offer correspondent accounts to other financial institutions?",
+        typeOfFiniancialInstitution: "Type of Financial Institution",
+        isCorrespondentAccountsForeignOffersProvided: "Trust Provides Correspondent Accounts to other foreign financial Institution?",
+        VCMFundAccountNumbers: "VCM Mutual Funds Account Number(s)",
+        isFinanacialInstitutionDescribed: "Is the trust a financial institution that is not described above?",
+        describeFinanacialInstitution: "Describe the type of Financial Institution",
+        isPhysicalPresenceMaintained: "Trust maintain a Physical Presence?",
+        isIndividualEmploymentThere: "Does the trust employ individuals on a full-time basis?",
+        isTrustMaintainRecords: "Does the trust maintain operating records related to its business activities?",
         trustInfo: "Trust Information",
         trustName: "Trust Name",
 
@@ -639,7 +639,7 @@ export default {
         emptyIndividualEmploymentThereMsg: "Please indicate whether the trust employs individuals on a full-time basis?",
         emptyTrustMaintainRecordsMsg: "Please indicate whether the trust maintains operating records related to its business activities?",
 
-   
+
 
 
     },
@@ -1394,7 +1394,17 @@ export default {
         mailingToNumber: "Mailing to This Address",
         wireTransferStmt: "The transaction will be processed on confirmation of wire transfer details. Please wait for 3-5 business days for completion of your transaction.",
         "address": "Mellon Trust of New England 1 Boston Place Boston, Massachusetts 02108 ABA # 011001234",
-        reviewAndConfrm:"Review and Confirm"
+        reviewAndConfrm: "Review and Confirm"
+    },
+    exchange: {
+        accountSelection: "Account Selection",
+        openAccount: "Open Account",
+        accountName: "Account Name",
+        accountNumber: "Account Number",
+        currentValue: "Current Value",
+        holding: "Holding",
+        automaticInvPlan: "Automatic Investment Plan",
+
     }
 
 };

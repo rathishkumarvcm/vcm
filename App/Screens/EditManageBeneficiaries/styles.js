@@ -191,7 +191,8 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   marginStyle: {
-    marginTop: scaledHeight(10)
+    marginTop: scaledHeight(10),
+    flexDirection: 'row'
   },
   flexMainView: {
     flex: 0.85
@@ -231,6 +232,13 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     fontSize: scaledHeight(15),
     lineHeight: 24
+  },
+  beneNameTxtStyle: {
+    color: "#54565B",
+    fontWeight: "400",
+    fontSize: scaledHeight(15),
+    lineHeight: 24,
+    paddingLeft: '4%'
   },
   distributionView: {
     width: '100%',
