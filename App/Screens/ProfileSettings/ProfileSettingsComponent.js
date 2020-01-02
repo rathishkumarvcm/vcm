@@ -1,82 +1,88 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, FlatList } from 'react-native';
+import { Text, View, Image, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import { GHeaderComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
-import PropTypes from "prop-types";
 
-const UserRelationShipInformation = (props) => {
-    return (
-        <View style={styles.editEmailHolder}>
+let editDeleteMenuOption = [
+    {
+        menuName: 'Delete',
+        menuId: '1'
+    },
+];
 
-            <View style={[styles.profileDivideIcon]}>
-                <View style={styles.profileDivideIconOne}>
-                    <Text style={styles.editEmailType}
-                        onPress={props.relationShipOnPressed}>
-                        {props.relationShipName}
-                    </Text>
-                </View>
+// const UserRelationShipInformation = (props) => {
+//     return (
+//         <View style={styles.editEmailHolder}>
 
-                <View style={styles.profileDivideIconTwo}>
-                    <Image style={styles.imageWidthHeight}
-                        source={require("../../Images/menu_icon.png")} />
-                </View>
-            </View>
+//             <View style={[styles.profileDivideIcon]}>
+//                 <View style={styles.profileDivideIconOne}>
+//                     <Text style={styles.editEmailType}
+//                         onPress={props.relationShipOnPressed}>
+//                         {props.relationShipName}
+//                     </Text>
+//                 </View>
 
-            <View style={styles.editEmailBorder} />
+//                 <View style={styles.profileDivideIconTwo}>
+//                     <Image style={styles.imageWidthHeight}
+//                         source={require("../../Images/menu_icon.png")} />
+//                 </View>
+//             </View>
 
-            <View style={styles.relationLabelTextView}>
-                <Text style={styles.profileSettingLabel}>
-                    {globalString.accManagement.relationToOwner}
-                </Text>
+//             <View style={styles.editEmailBorder} />
 
-                <Text style={styles.profileSettingValueLabel}>
-                    {props.relationShipType}
-                </Text>
-            </View>
+//             <View style={styles.relationLabelTextView}>
+//                 <Text style={styles.profileSettingLabel}>
+//                     {globalString.accManagement.relationToOwner}
+//                 </Text>
 
-            <View style={styles.relationLabelTextView}>
-                <Text style={styles.profileSettingLabel}>
-                    {globalString.accManagement.gender}
-                </Text>
+//                 <Text style={styles.profileSettingValueLabel}>
+//                     {props.relationShipType}
+//                 </Text>
+//             </View>
 
-                <Text style={styles.profileSettingValueLabel}>
-                    {props.relationShipGender}
-                </Text>
-            </View>
+//             <View style={styles.relationLabelTextView}>
+//                 <Text style={styles.profileSettingLabel}>
+//                     {globalString.accManagement.gender}
+//                 </Text>
 
-            <View style={styles.relationLabelTextView}>
-                <Text style={styles.profileSettingLabel}>
-                    {globalString.accManagement.emailAddress}
-                </Text>
+//                 <Text style={styles.profileSettingValueLabel}>
+//                     {props.relationShipGender}
+//                 </Text>
+//             </View>
 
-                <Text style={styles.profileSettingValueLabel}>
-                    {props.relationShipEmail}
-                </Text>
-            </View>
+//             <View style={styles.relationLabelTextView}>
+//                 <Text style={styles.profileSettingLabel}>
+//                     {globalString.accManagement.emailAddress}
+//                 </Text>
 
-            <View style={styles.relationLabelTextView}>
-                <Text style={styles.profileSettingLabel}>
-                    {globalString.accManagement.maritalStatus}
-                </Text>
+//                 <Text style={styles.profileSettingValueLabel}>
+//                     {props.relationShipEmail}
+//                 </Text>
+//             </View>
 
-                <Text style={styles.profileSettingValueLabel}>
-                    {props.relationShipStatus}
-                </Text>
-            </View>
+//             <View style={styles.relationLabelTextView}>
+//                 <Text style={styles.profileSettingLabel}>
+//                     {globalString.accManagement.maritalStatus}
+//                 </Text>
 
-        </View>
-    );
-};
+//                 <Text style={styles.profileSettingValueLabel}>
+//                     {props.relationShipStatus}
+//                 </Text>
+//             </View>
 
-UserRelationShipInformation.propTypes = {
-    relationShipName: PropTypes.string,
-    relationShipType: PropTypes.string,
-    relationShipGender: PropTypes.string,
-    relationShipEmail: PropTypes.string,
-    relationShipStatus: PropTypes.string,
-    relationShipOnPressed: PropTypes.func
-};
+//         </View>
+//     );
+// };
+
+// UserRelationShipInformation.propTypes = {
+//     relationShipName: PropTypes.string,
+//     relationShipType: PropTypes.string,
+//     relationShipGender: PropTypes.string,
+//     relationShipEmail: PropTypes.string,
+//     relationShipStatus: PropTypes.string,
+//     relationShipOnPressed: PropTypes.func
+// };
 
 class ProfileSettingsComponent extends Component {
     constructor(props) {
@@ -91,6 +97,7 @@ class ProfileSettingsComponent extends Component {
             isRelationRefreshed: false,
             isProfileRetired: false,
             isServingMilitary: false,
+            selectedIndex: -1,
 
             // Profile Information
             profileName: '',
@@ -447,6 +454,97 @@ class ProfileSettingsComponent extends Component {
 
     profileSettingAddRelation = () => this.props.navigation.navigate('editRelationshipInfo');
 
+    renderRelationShipInformation = () => ({ item, index }) =>
+        (<View style={styles.editEmailHolder}>
+            <View style={[styles.profileDivideIcon]}>
+                <View style={styles.profileDivideIconOne}>
+                    <Text style={styles.editEmailType}
+                        onPress={this.relationShipOnPressed(item, index)}>
+                        {item.relationShipName}
+                    </Text>
+                </View>
+
+                <View style={styles.profileDivideIconTwo}>
+                    <TouchableOpacity
+                        onPress={this.onMenuOptionClicked(index)}>
+                        <Image style={styles.imageWidthHeight}
+                            source={require("../../Images/menu_icon.png")} />
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+            {index === this.state.selectedIndex ?
+                (<FlatList style={styles.editFlatList}
+                    data={editDeleteMenuOption}
+                    renderItem={({ item, index }) =>
+                        (<TouchableOpacity style={styles.editDropdown}>
+                            <Text style={styles.editDropdownText}
+                                onPress={this.onMenuItemClicked(index)}>
+                                {item.menuName}
+                            </Text>
+                        </TouchableOpacity>)}
+                    keyExtractor={item => item.menuId} />)
+                : null}
+
+            <View style={styles.editEmailBorder} />
+
+            <View style={styles.relationLabelTextView}>
+                <Text style={styles.profileSettingLabel}>
+                    {globalString.accManagement.relationToOwner}
+                </Text>
+
+                <Text style={styles.profileSettingValueLabel}>
+                    {item.relationShipType}
+                </Text>
+            </View>
+
+            <View style={styles.relationLabelTextView}>
+                <Text style={styles.profileSettingLabel}>
+                    {globalString.accManagement.gender}
+                </Text>
+
+                <Text style={styles.profileSettingValueLabel}>
+                    {item.relationShipGender}
+                </Text>
+            </View>
+
+            <View style={styles.relationLabelTextView}>
+                <Text style={styles.profileSettingLabel}>
+                    {globalString.accManagement.emailAddress}
+                </Text>
+
+                <Text style={styles.profileSettingValueLabel}>
+                    {item.relationShipEmail}
+                </Text>
+            </View>
+
+            <View style={styles.relationLabelTextView}>
+                <Text style={styles.profileSettingLabel}>
+                    {globalString.accManagement.maritalStatus}
+                </Text>
+
+                <Text style={styles.profileSettingValueLabel}>
+                    {item.relationShipStatus}
+                </Text>
+            </View>
+        </View>
+        );
+
+    // Manage Relationship Menu Option
+
+    onMenuOptionClicked = (index) => () => {
+        console.log("@@@@@@@@@@ Menu Pressed ::", index + ' ' + this.state.selectedIndex);
+        index === this.state.selectedIndex ?
+            this.setState({
+                isRelationRefreshed: !this.state.isRelationRefreshed,
+                selectedIndex: -1
+            }) :
+            this.setState({
+                isRelationRefreshed: !this.state.isRelationRefreshed,
+                selectedIndex: index
+            });
+    }
+
     // Manage Relationship Details
 
     relationShipOnPressed = (item, index) => () => {
@@ -459,15 +557,18 @@ class ProfileSettingsComponent extends Component {
         }
     }
 
-    renderRelationShipInformation = () => ({ item, index }) => {
-        return (<UserRelationShipInformation
-            relationShipName={item.relationShipName}
-            relationShipType={item.relationShipType}
-            relationShipGender={item.relationShipGender}
-            relationShipEmail={item.relationShipEmail}
-            relationShipStatus={item.relationShipStatus}
-            relationShipOnPressed={this.relationShipOnPressed(item, index)} />)
-    };
+    // Manage Relationship Menu Item Clicked
+
+    onMenuItemClicked = (index) => () => {
+        switch (index) {
+            case 0:
+                this.setState({
+                    isRelationRefreshed: !this.state.isRelationRefreshed,
+                    selectedIndex: -1
+                });
+                break;
+        }
+    }
 
     ShowHideComponent = () => {
         if (this.state.show == true) {
@@ -1009,7 +1110,7 @@ class ProfileSettingsComponent extends Component {
                         <FlatList
                             data={this.state.profileRelationShipData}
                             keyExtractor={this.generateKeyExtractor}
-                            extraData={this.isRelationRefreshed}
+                            extraData={this.state.isRelationRefreshed}
                             renderItem={this.renderRelationShipInformation()} />
 
                     </View>
