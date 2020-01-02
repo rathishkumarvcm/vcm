@@ -1163,7 +1163,7 @@ export default {
         no_do_not_want_to_reinvest: 'I do not Reinvest',
         yes_want_to_reinvest: 'I want to Reinvest',
         future_securites: 'Future Securities',
-        setup_instruction: 'Instructions to Setup and manage Automatic Mutual Fund Purchases',
+        setup_instruction: 'Learn more about Dividends and Capital Gain Preference',
         reinvest_future_securites: 'Do you want to Reinvest for all future new securities?',
         reinvest_current_securites: 'Do you want to Reinvest Dividends and Capital Gains?',
         lorem_dividents: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
@@ -1184,7 +1184,10 @@ export default {
         directed_dividents: 'Directed Dividends and Capital Gains',
         directed_dividents_header: 'Do you want to Direct the Dividend and Capital Gain to a different Fund?\n\nPlease contact Victory Capital Management service Representative at',
         directed_dividents_header_contact: '+1 (000) 000-0000',
-        request_submit_dividents: 'You have successfully submitted the Dividends and Capital Gains Preferences request.'
+        request_submit_dividents: 'You have successfully submitted the Dividends and Capital Gains Preferences request.',
+        general_account: 'General Account',
+        ira_account: 'IRA Account',
+        utma_account: 'UTMA Account',
     },
     orderCheckBook: {
         order_checkbook: 'Order Checkbook',

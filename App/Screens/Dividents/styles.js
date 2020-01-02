@@ -179,6 +179,23 @@ export const styles = StyleSheet.create({
         flex:0.8,
         alignSelf: 'center'
     },
+    accountHeaderView: {
+        backgroundColor: '#FFFFFF',
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(11),
+        paddingVertical: scaledHeight(5),
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        flex: 1,
+    },
+    accountHeaderText: {
+        fontSize: scaledHeight(22),
+        color: '#56565A',
+        marginRight: '4%',
+        flex: 0.8,
+        alignSelf: 'center'
+    },
     submitButtonText: {
         fontSize: scaledHeight(16),
         color: '#FFFFFF'

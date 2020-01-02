@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { styles } from './styles';
 import { View, ScrollView, Text, Image } from 'react-native';
 import { GHeaderComponent, GInputComponent, GFooterComponent, GButtonComponent } from '../../CommonComponents';
 import PropTypes from "prop-types";
@@ -7,7 +6,7 @@ import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import { CustomRadio } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
-
+import { styles } from './styles';
 
 class AddOtherBankAccountComponent extends Component {
     constructor(props) {
@@ -48,8 +47,9 @@ class AddOtherBankAccountComponent extends Component {
         accountNumberValidation: true
 
     });
+
     isEmpty = (str) => {
-        if (str == "" || str == undefined || str == "null" || str == "undefined") {
+        if (str === "" || str === undefined || str === "null" || str === "undefined") {
             return true;
         } else {
             return false;
@@ -57,20 +57,14 @@ class AddOtherBankAccountComponent extends Component {
     }
     
     setInputRef = (inputComp) => (ref) => {
-        console.log("setInputRef:::>", this.state.financialInstitutionName);
         this[inputComp] = ref;
     }
 
     onSubmitEditing = (input) => text => {
-
-        console.log("onSubmitEditing:::>" + text);
-
         input.focus();
     }
 
     onChangeText = (keyName) => text => {
-        console.log("onChangeText:::>", this.state.financialInstitutionName);
-        console.log("onChangeText:::>");
         this.setState({
             [keyName]: text,
             accountTypeValidation: true,
@@ -82,13 +76,11 @@ class AddOtherBankAccountComponent extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log("componentDidUpdate ::: > addBankAccount " + JSON.stringify(this.props.addBankAccount));
         const addBankAccKey = ActionTypes.ADD_BANK_ACCOUNT;
         if (this.props.addBankAccount[addBankAccKey]) {
             if (this.props.addBankAccount[addBankAccKey] !== prevProps.addBankAccount[addBankAccKey]) {
-                console.log("componentDidUpdate ::: > addBankAccount " + JSON.stringify(this.props.addBankAccount));
                 const tempResponse = this.props.addBankAccount[addBankAccKey];
-                if (tempResponse.statusCode == 200 && tempResponse.statusType == "S") {
+                if (tempResponse.statusCode === 200 && tempResponse.statusType === "S") {
                     this.navigateBankAccount(true);
                 } else {
                     this.navigateBankAccount(false);
@@ -102,9 +94,6 @@ class AddOtherBankAccountComponent extends Component {
         let errMsg = "";
         let isValidationSuccess = false;
         let input = "";
-
-        console.log("validateBankAccount:::>", this.state.financialInstitutionName);
-        console.log("validateBankAccount:::>", this.state);
 
         if (this.isEmpty(this.state.accountType)) {
             errMsg = gblStrings.accManagement.emptyTypeOfAccount;
@@ -125,7 +114,6 @@ class AddOtherBankAccountComponent extends Component {
             isValidationSuccess = true;
         }
 
-        console.log("validateBankAccount:::> validating", errMsg);
         if (!isValidationSuccess) {
             this.setState({
                 [input + "Validation"]: false,
@@ -139,7 +127,6 @@ class AddOtherBankAccountComponent extends Component {
                 }
             }
 
-            console.log("validateBankAccount:::>", errMsg);
             alert(errMsg);
         } else {
             return this.callValidateBankAccount();
@@ -188,7 +175,7 @@ class AddOtherBankAccountComponent extends Component {
                                 label={"Savings"}
                                 descLabelStyle={styles.lblRadioDescTxt}
                                 descLabel={""}
-                                selected={(this.state.accountType !== null && this.state.accountType == "Savings") ? true : false}
+                                selected={(this.state.accountType !== null && this.state.accountType === "Savings") ? true : false}
                                 onPress={this.onPressRadio("accountType", "Savings")}
                             />
                             <CustomRadio
@@ -200,7 +187,7 @@ class AddOtherBankAccountComponent extends Component {
                                 label={"Checking"}
                                 descLabelStyle={styles.lblRadioDescTxt}
                                 descLabel={""}
-                                selected={(this.state.accountType !== null && this.state.accountType == "Checking") ? true : false}
+                                selected={(this.state.accountType !== null && this.state.accountType === "Checking") ? true : false}
                                 onPress={this.onPressRadio("accountType", "Checking")}
                             />
 
