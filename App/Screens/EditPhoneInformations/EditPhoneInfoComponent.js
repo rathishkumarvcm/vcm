@@ -49,7 +49,7 @@ const UserPhoneInformation = (props) => {
                     renderItem={({ item, index }) =>
                         (<TouchableOpacity style={styles.editDropdown}>
                             <Text style={styles.editDropdownText}
-                                onPress={props.onMenuItemClicked}>
+                                onPress={this.onEditAndDeleteItem(index)}>
                                 {item.name}
                             </Text>
                         </TouchableOpacity>)}
@@ -81,7 +81,7 @@ UserPhoneInformation.propTypes = {
     onMobileToggle: PropTypes.func,
     onMenuOptionClicked: PropTypes.func,
     selectedMenuIndex: PropTypes.any,
-    onMenuItemClicked: PropTypes.func
+    onMenuItemClicked: PropTypes.any
 };
 
 class editPhoneInfoComponent extends Component {
@@ -185,7 +185,69 @@ class editPhoneInfoComponent extends Component {
         }
     }
 
-    // Mobile Informations
+    renderPhoneInformation = () => ({ item, index }) =>
+        (<View style={styles.editEmailHolder}>
+            <View style={[styles.profileDivideIcon]}>
+                <View style={styles.profileDivideIconOne}>
+                    <Text style={styles.editEmailType}>
+                        {item.mobileNumberType}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {item.mobileNumber}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {item.mobilePreferredTime}
+                    </Text>
+                </View>
+
+                <View style={styles.profileDivideIconTwo}>
+                    <TouchableOpacity
+                        onPress={this.onMenuOptionClickedMobile(index)}>
+                        <Image style={styles.imageWidthHeight}
+                            source={require("../../Images/menu_icon.png")} />
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+            {index === this.state.selectedIndex ?
+                (<FlatList style={styles.editFlatList}
+                    data={editDeleteMenuOption}
+                    renderItem={({ item, index }) =>
+                        (<TouchableOpacity style={styles.editDropdown}>
+                            <Text style={styles.editDropdownText}>
+                                {item.name}
+                            </Text>
+                        </TouchableOpacity>)}
+                    keyExtractor={item => item.id} />)
+                : null}
+
+            <View style={styles.editEmailBorder} />
+
+            <View style={styles.editAddressView}>
+                <Text style={styles.editAddressLabel}>
+                    {globalString.profileSettingsPage.profileMailPrimaryLabel}
+                </Text>
+
+                <View style={styles.editSwitchButton}>
+                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                        onValueChange={this.onMobileToggle(item, index, 'mobile')}
+                        value={item.isPrimaryMobile} />
+                </View>
+            </View>
+        </View>
+        );
+
+    onMenuOptionClickedMobile = (index) => () => {
+        index === this.state.selectedIndex ?
+            this.setState({
+                isMobileRefreshed: !this.state.isMobileRefreshed,
+                selectedIndex: -1
+            }) :
+            this.setState({
+                isMobileRefreshed: !this.state.isMobileRefreshed,
+                selectedIndex: index
+            });
+    }
 
     onMobileToggle = (item, index, toggleState) => () => {
         let array = [];
@@ -235,71 +297,6 @@ class editPhoneInfoComponent extends Component {
         }
     }
 
-    onMenuOptionClicked = (item, index) => () => {
-        var array = [...this.state.userMobileNumber];
-        array[index].selectedMenuIndex = index;
-        this.setState({
-            userMobileNumber: array,
-            isMobileRefreshed: !this.state.isMobileRefreshed,
-            selectedIndex: index
-        });
-    }
-
-    updatePrimaryMobile = () => {
-        const updateMobileNumber = this.getUpdateMobile();
-        console.log("@@@@@@@@ Primary Mobile ::", updateMobileNumber);
-        this.props.saveProfileData("updatePrimaryMobile", updateMobileNumber);
-        this.props.navigation.navigate('profileSettings');
-    }
-
-    getUpdateMobile = () => {
-        let updatedMobileNumber = {};
-        if (this.props && this.props.profileState) {
-            updatedMobileNumber = {
-                ...this.props.profileState
-            };
-        }
-        return updatedMobileNumber;
-    }
-
-    renderPhoneInformation = () => ({ item, index }) => {
-        return (<UserPhoneInformation
-            mobileNumberType={item.mobileNumberType}
-            mobileNumber={item.mobileNumber}
-            mobilePreferredTime={item.mobilePreferredTime}
-            isPrimaryMobile={item.isPrimaryMobile}
-            onMobileToggle={this.onMobileToggle(item, index, 'mobile')}
-            onMenuOptionClicked={this.onMenuOptionClicked(item, index)}
-            selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0}
-            onMenuItemClicked={this.onEditAndDeleteItem(index, 'mobile')} />)
-    };
-
-    onEditAndDeleteItem = (index, menuType) => {
-        let editDeleteArray;
-        if (menuType === 'mobile') {
-            editDeleteArray = [...this.state.userMobileNumber];
-            switch (index) {
-                case 0:
-                    this.setState({
-                        selectedIndex: -1,
-                        userMobileNumber: editDeleteArray,
-                        isMobileRefreshed: !this.state.isMobileRefreshed,
-                    });
-                    break;
-
-                case 1:
-                    this.setState({
-                        selectedIndex: -1,
-                        userMobileNumber: editDeleteArray,
-                        isMobileRefreshed: !this.state.isMobileRefreshed,
-                    });
-                    break;
-
-
-            }
-        }
-    }
-
     // Home Informations
 
     onMenuOptionClickedHome = (item, index) => () => {
@@ -346,7 +343,25 @@ class editPhoneInfoComponent extends Component {
             selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0} />)
     };
 
-    phoneInformationOnAdd = () => this.props.navigation.navigate('editAddPhoneNumber');
+    updatePrimaryMobile = () => {
+        const updateMobileNumber = this.getUpdateMobile();
+        this.props.saveProfileData("updatePrimaryMobile", updateMobileNumber);
+        this.props.navigation.navigate('profileSettings');
+    }
+
+    getUpdateMobile = () => {
+        let updatedMobileNumber = {};
+        if (this.props && this.props.profileState) {
+            updatedMobileNumber = {
+                ...this.props.profileState
+            };
+        }
+        return updatedMobileNumber;
+    }
+
+    phoneInformationOnAdd = () => {
+        this.props.navigation.navigate('editAddPhoneNumber')
+    };
 
     phoneInformationOnCancel = () => {
         if (!this.state.isRelation) {

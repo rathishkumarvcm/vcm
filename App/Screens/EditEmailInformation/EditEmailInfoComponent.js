@@ -3,79 +3,18 @@ import { Text, View, Image, ScrollView, TouchableOpacity, FlatList, Switch } fro
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
-import PropTypes from "prop-types";
 import globalString from '../../Constants/GlobalStrings';
 
 let editDeleteMenuOption = [
     {
-        name: 'Edit',
-        id: '1'
+        menuName: 'Edit',
+        menuId: '1'
     },
     {
-        name: 'Delete',
-        id: '2'
+        menuName: 'Delete',
+        menuId: '2'
     },
 ];
-
-const UserEmailInformation = (props) => {
-    return (
-        <View style={styles.editEmailHolder}>
-            <View style={[styles.profileDivideIcon]}>
-                <View style={styles.profileDivideIconOne}>
-                    <Text style={styles.editEmailType}>
-                        {props.emailType}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {props.emailId}
-                    </Text>
-                </View>
-
-                <View style={styles.profileDivideIconTwo}>
-                    <TouchableOpacity
-                        onPress={props.onMenuOptionClicked}>
-                        <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/menu_icon.png")} />
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            {props.selectedMenuIndex == 1 ?
-                (<FlatList style={styles.editFlatList}
-                    data={editDeleteMenuOption}
-                    renderItem={({ item, index }) =>
-                        (<TouchableOpacity style={styles.editDropdown}>
-                            <Text style={styles.editDropdownText}>
-                                {item.name}
-                            </Text>
-                        </TouchableOpacity>)}
-                    keyExtractor={item => item.id} />)
-                : null}
-
-            <View style={styles.editEmailBorder} />
-
-            <View style={styles.editAddressView}>
-                <Text style={styles.editAddressLabel}>
-                    {globalString.profileSettingsPage.profileMailPrimaryLabel}
-                </Text>
-
-                <View style={styles.editSwitchButton}>
-                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={props.onEmailToggle}
-                        value={props.isPrimaryEmail} />
-                </View>
-            </View>
-        </View>
-    );
-};
-
-UserEmailInformation.propTypes = {
-    emailType: PropTypes.string,
-    emailId: PropTypes.string,
-    isPrimaryEmail: PropTypes.bool,
-    onEmailToggle: PropTypes.func,
-    onMenuOptionClicked: PropTypes.func,
-    selectedMenuIndex: PropTypes.any
-};
 
 class editEmailInfoComponent extends Component {
     constructor(props) {
@@ -124,7 +63,59 @@ class editEmailInfoComponent extends Component {
         }
     }
 
-    onEmailToggle = (item, index) => () => {
+    // Render Email Informations
+
+    renderEmailInformation = () => ({ item, index }) =>
+        (<View style={styles.editEmailHolder}>
+            <View style={[styles.profileDivideIcon]}>
+                <View style={styles.profileDivideIconOne}>
+                    <Text style={styles.editEmailType}>
+                        {item.emailType}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {item.emailId}
+                    </Text>
+                </View>
+
+                <View style={styles.profileDivideIconTwo}>
+                    <TouchableOpacity
+                        onPress={this.onMenuOptionClicked(index)}>
+                        <Image style={styles.imageWidthHeight}
+                            source={require("../../Images/menu_icon.png")} />
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+            {index === this.state.selectedIndex ?
+                (<FlatList style={styles.editFlatList}
+                    data={editDeleteMenuOption}
+                    renderItem={({ item, index }) =>
+                        (<TouchableOpacity style={styles.editDropdown}>
+                            <Text style={styles.editDropdownText}
+                                onPress={this.onMenuItemClicked(index)}>
+                                {item.menuName}
+                            </Text>
+                        </TouchableOpacity>)}
+                    keyExtractor={item => item.menuId} />)
+                : null}
+
+            <View style={styles.editEmailBorder} />
+
+            <View style={styles.editAddressView}>
+                <Text style={styles.editAddressLabel}>
+                    {globalString.profileSettingsPage.profileMailPrimaryLabel}
+                </Text>
+
+                <View style={styles.editSwitchButton}>
+                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                        onValueChange={this.onEmailToggle(index)}
+                        value={item.isPrimaryEmail} />
+                </View>
+            </View>
+        </View>
+        );
+
+    onEmailToggle = (index) => () => {
         var array = [...this.state.profileEmailData];
         if (index !== -1) {
             let switchVal = array[index].isPrimaryEmail;
@@ -136,28 +127,35 @@ class editEmailInfoComponent extends Component {
         }
     }
 
-    // Email Informations 
-
-    onMenuOptionClicked = (item, index) => () => {
-        var array = [...this.state.profileEmailData];
-        array[index].selectedMenuIndex = index;
-        this.setState({
-            profileEmailData: array,
-            isEmailRefreshed: !this.state.isMobileRefreshed,
-            selectedIndex: index
-        });
+    onMenuOptionClicked = (index) => () => {
+        index === this.state.selectedIndex ?
+            this.setState({
+                isEmailRefreshed: !this.state.isEmailRefreshed,
+                selectedIndex: -1
+            }) :
+            this.setState({
+                isEmailRefreshed: !this.state.isEmailRefreshed,
+                selectedIndex: index
+            });
     }
 
-    renderEmailInformation = () => ({ item, index }) => {
-        return (<UserEmailInformation
-            emailType={item.emailType}
-            emailId={item.emailId}
-            isPrimaryEmail={item.isPrimaryEmail}
-            onMobileToggle={this.onEmailToggle(item, index)}
-            onMenuOptionClicked={this.onMenuOptionClicked(item, index)}
-            selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0} />
-        )
-    };
+    onMenuItemClicked = (index) => () => {
+        switch (index) {
+            case 0:
+                this.setState({
+                    isEmailRefreshed: !this.state.isEmailRefreshed,
+                    selectedIndex: -1
+                });
+                break;
+
+            case 1:
+                this.setState({
+                    isEmailRefreshed: !this.state.isEmailRefreshed,
+                    selectedIndex: -1
+                });
+                break;
+        }
+    }
 
     emailAddNew = () => this.props.navigation.navigate('editEmailAddNew');
 
