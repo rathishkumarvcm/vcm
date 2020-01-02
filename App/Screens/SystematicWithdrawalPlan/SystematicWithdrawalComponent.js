@@ -54,11 +54,23 @@ class SystematicWithdrawalComponent extends Component {
         //     });
         // }
         if (this.props && this.props.systematicWithdrawalState) {
-            this.setState({
-                generalySystematicWithdrawal: this.props.systematicWithdrawalState.general,
-                iraSystematicWithdrawal: this.props.systematicWithdrawalState.ira,
-                utmaSystematicWithdrawal:this.props.systematicWithdrawalState.utma,
-            });
+            if(this.props.systematicWithdrawalState.savedAccData)
+            {
+                console.log('componentDidMount#####################',this.props.systematicWithdrawalState.savedAccData)
+                this.setState({
+                    generalySystematicWithdrawal: this.props.systematicWithdrawalState.savedAccData.general,
+                    iraSystematicWithdrawal: this.props.systematicWithdrawalState.savedAccData.ira,
+                    utmaSystematicWithdrawal:this.props.systematicWithdrawalState.savedAccData.utma,
+                });
+            }
+            else
+            {
+                this.setState({
+                    generalySystematicWithdrawal: this.props.systematicWithdrawalState.general,
+                    iraSystematicWithdrawal: this.props.systematicWithdrawalState.ira,
+                    utmaSystematicWithdrawal:this.props.systematicWithdrawalState.utma,
+                });
+            }
         }
     }
 
@@ -250,6 +262,7 @@ class SystematicWithdrawalComponent extends Component {
 
         return (
             <View style={styles.container} onPress={this.clickOutside}>
+                {console.log('###############################',this.state.generalySystematicWithdrawal)}
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
                 <TouchableWithoutFeedback onPress={this.editDelete(-1)}>

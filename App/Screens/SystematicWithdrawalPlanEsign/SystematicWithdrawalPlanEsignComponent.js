@@ -25,18 +25,24 @@ class SystematicWithdrawalPlanEsignComponent extends Component {
             errorTextMsg:''
         };
     }
+    componentDidUpdate(){
 
+        if(this.props.systematicWithdrawalState.savedAccData){
+            console.log('#####################',this.props.systematicWithdrawalState.savedAccData)
+            this.props.navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
+        }
+
+    }
     onCheckBoxCheck = () => {
         this.setState({ acceptPolicy: !this.state.acceptPolicy });
     }
     getPayload = () => {
         let payload = {};
         const item=myInstance.getSavedSystematicData();
-        console.log('------------------------',item)
         if (this.props && this.props.systematicWithdrawalState && item)
         {
-            let planJson={};
-             let selected={id:this.state.itemToEdit,
+            let planJson=[];
+             let selected={id:this.state.itemToEdit==='-1'?'3':this.state.itemToEdit,//this.state.itemToEdit
                 account:item.acc_name+"|"+item.acc_no ,
                 totalAmount:item.totalFund,
                             fundTo:item.fundTo,
@@ -47,71 +53,80 @@ class SystematicWithdrawalPlanEsignComponent extends Component {
                             //endDate:item.endDate,
                             nextWithdrawalDate:'',//item.nextWithdrawalDate
                         }
-            switch ((this.state.accountType)) {
-                case "general":
-                    if(this.props.systematicWithdrawalState.general){
-                            //Add
-                            planJson=this.props.systematicWithdrawalState.general;
-                            
-                            
-                            //Edit
-                            //var array = this.props.systematicWithdrawalState.general; // make a separate copy of the array
-                            if (this.state.itemToEdit !== -1) {
-                                planJson[this.state.itemToEdit]=selected
-                                //planJson=array
-                                console.log('planJson===================',planJson)
-                            }
-                            else
-                            {
-                                planJson.push(selected);
-                                console.log('planJson**************',planJson)
-                            }
-                            
-                            payload = {
-                                ...planJson
-                            };
-                            
-                        }
-                        else{
-                            let newObj = { "general" : selected}
-                            Object.assign(this.props.systematicWithdrawalState,newObj)
-                        }
-                    
-                    break;
-                case "ira":
-                    if(this.props.systematicWithdrawalState.ira){
-                        //Add
-                        planJson=this.props.systematicWithdrawalState.ira;
-                        planJson.push(selected);
-                        payload = {
-                            ...planJson
-                        };
-                        
+                        switch ((this.state.accountType)) {
+                            case "general":
+                                if(this.props.systematicWithdrawalState.general){
+                                        
+                                        planJson=[...this.props.systematicWithdrawalState.general];
+                                        if(this.state.itemToEdit==='-1')
+                                        {
+                                            planJson.push(selected);
+                                        }
+                                        else{
+                                            planJson[this.state.itemToEdit]=selected
+                                            
+                                        }
+                                        payload = {
+                                            ...this.props.systematicWithdrawalState,
+                                            general:planJson
+                                        };
+                                        
+                                    }
+                                    else{
+                                        let newObj = { "general" : selected}
+                                        Object.assign(this.props.systematicWithdrawalState,newObj)
+                                        payload = {
+                                            ...this.props.systematicWithdrawalState,
+                                        };
+                                    }
+                                
+                                break;
+                            case "ira":
+                                if(this.props.systematicWithdrawalState.ira){
+                                    planJson=[...this.props.systematicWithdrawalState.ira];
+                                        if(this.state.itemToEdit==='-1')
+                                        {
+                                            planJson.push(selected);
+                                        }
+                                        else{
+                                            planJson[this.state.itemToEdit]=selected
+                                            
+                                        }
+                                    
+                                }
+                                else{
+                                    let newObj = { "ira" : selected}
+                                    Object.assign(this.props.systematicWithdrawalState,newObj)
+                                    payload = {
+                                        ...this.props.systematicWithdrawalState,
+                                    };
+                                }
+                                break;
+                            case "utma":
+                                if(this.props.systematicWithdrawalState.utma){
+                                    planJson=[...this.props.systematicWithdrawalState.utma];
+                                    if(this.state.itemToEdit==='-1')
+                                    {
+                                        planJson.push(selected);
+                                    }
+                                    else{
+                                        planJson[this.state.itemToEdit]=selected
+                                        
+                                    }
+                                    
+                                }
+                                else{
+                                    let newObj = { "utma" : [selected]}
+                                    Object.assign(this.props.systematicWithdrawalState,newObj)
+                                    payload = {
+                                        ...this.props.systematicWithdrawalState,
+                                    };
+                                }
+                                break;
                     }
-                    else{
-                        let newObj = { "ira" : selected}
-                        Object.assign(this.props.systematicWithdrawalState,newObj)
-                    }
-                    break;
-                case "utma":
-                    if(this.props.systematicWithdrawalState.utma){
-                        //Add
-                        planJson=this.props.systematicWithdrawalState.utma;
-                        planJson.push(selected);
-                        payload = {
-                            ...planJson
-                        };
-                        
-                    }
-                    else{
-                        let newObj = { "utma" : [selected]}
-                        Object.assign(this.props.systematicWithdrawalState,newObj)
-                    }
-                    break;
-        }
-        return payload;
-
-    }
+                    return payload;
+            
+                }
 }
 
 navigationSubmit = () => {
@@ -120,7 +135,7 @@ navigationSubmit = () => {
         const payload = this.getPayload();
         this.props.saveData("systematicWithdrawalEsign", payload); 
         myInstance.setSystematicWithdrawalEditMode(false);
-        this.props.navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
+        
     }
     else
     this.setState({errorTextMsg:'Please select the above checkbox'})

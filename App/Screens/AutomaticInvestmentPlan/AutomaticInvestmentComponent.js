@@ -40,31 +40,42 @@ class AutomaticInvestmentComponent extends Component {
     }
 
     componentDidMount() {
-        
         if (this.props && this.props.automaticInvestmentState) {
-            this.setState({
-                generalAutoInvestment: this.props.automaticInvestmentState.general,
-                iraAutoInvestment: this.props.automaticInvestmentState.ira,
-                utmaAutoInvest:this.props.automaticInvestmentState.utma,
-            });
+                if(this.props.automaticInvestmentState.savedAccData)
+                {
+                    this.setState({
+                        generalAutoInvestment: this.props.automaticInvestmentState.savedAccData.general,
+                        iraAutoInvestment: this.props.automaticInvestmentState.savedAccData.ira,
+                        utmaAutoInvest:this.props.automaticInvestmentState.savedAccData.utma,
+                        refresh: !this.state.refresh
+                    });
+                }
+                else{
+                    this.setState({
+                        generalAutoInvestment: this.props.automaticInvestmentState.general,
+                        iraAutoInvestment: this.props.automaticInvestmentState.ira,
+                        utmaAutoInvest:this.props.automaticInvestmentState.utma,
+                        refresh: !this.state.refresh
+                    });
+                }
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
-       
-        if (this.props != prevProps) {
-            if (this.props &&
-                this.props.automaticInvestmentState) {
-                this.setState({
-                    generalAutoInvestment: this.props.automaticInvestmentState.general,
-                    iraAutoInvestment: this.props.automaticInvestmentState.ira,
-                    utmaAutoInvest:this.props.automaticInvestmentState.utma,
-                    refresh: !this.state.refresh
-                });    
-            }
-        }
+    // componentDidUpdate(prevProps, prevState) {
+    //     console.log('componentDidUpdate!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    //     if (this.props != prevProps) {
+    //         if (this.props &&
+    //             this.props.automaticInvestmentState) {
+    //             this.setState({
+    //                 generalAutoInvestment: this.props.automaticInvestmentState.general,
+    //                 iraAutoInvestment: this.props.automaticInvestmentState.ira,
+    //                 utmaAutoInvest:this.props.automaticInvestmentState.utma,
+    //                 refresh: !this.state.refresh
+    //             });    
+    //         }
+    //     }
         
-    }
+    // }
     setCollapsableUpdates = index => e => {
 
         var array = [...this.state.arr_expand]; // make a separate copy of the array

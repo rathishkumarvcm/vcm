@@ -6,6 +6,7 @@ import {
     GFooterComponent,
     GButtonComponent,
     GSingletonClass,
+    GDateComponent
 } from '../../CommonComponents';
 import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
@@ -54,7 +55,7 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
             //     };
             //     this.setState({ systematicWithdrawalJson: payload })
             // }
-            // this.setState({ systematicWithdrawalJson: myInstance.getSavedAutomaticData() })
+             this.setState({ systematicWithdrawalJson: myInstance.getSavedSystematicData() })
             
         }
 
@@ -92,22 +93,26 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
         this.props.navigation.goBack('systematicWithdrawalAdd')
     }
 
-    parsingInvestIn = (item) =>
-    {
-        console.log('item--------))))))))---------',item)
-        let fundlist="";
-        let array=item.investedIn;
-        {array.map((fund) => {
-            fundlist=fund.name+","+fundlist;
-        })}
-        return(<Text style={styles.verifyConent2}>{fundlist.replace(',','').trim()}</Text>)
-    }
+    // parsingInvestIn = (item) =>
+    // {
+    //     console.log('item--------))))))))---------',item)
+    //     let fundlist="";
+    //     let array=item.investedIn;
+    //     {array.map((fund) => {
+    //         fundlist=fund.name+","+fundlist;
+    //     })}
+    //     return(<Text style={styles.verifyConent2}>{fundlist.replace(',','').trim()}</Text>)
+    // }
 
     render() {
-        const item=myInstance.getSavedSystematicData();
+        const date = new Date().getDate(); //Current Date
+        const month = new Date().getMonth() + 1; //Current Month
+        const year = new Date().getFullYear(); //Current Year
+        const currentdate = month + "-" + date + "-" + year;
+        const item = this.state.systematicWithdrawalJson;
         console.log('************************',item)
         let fundlist="";
-        if(item)//if(this.state.autoInvestmentJson.account)
+        if(item.account || item.acc_name)//if(this.state.autoInvestmentJson.account)
         {
             item.investedIn.map((fund)=>{
                 fundlist=fund.name+','+fundlist;
@@ -176,7 +181,7 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
 
                         <View style={styles.verifyContentView}>
                             <Text style={styles.verifyConent1}>{"Account"}</Text>
-                            <Text style={styles.verifyConent2}>{item.acc_name+'|'+item.acc_no}</Text>
+                            <Text style={styles.verifyConent2}>{item.account?item.account:item.acc_name+'|'+item.acc_no}</Text>
                         </View>
                         <View style={styles.verifyContentView}>
                             <Text style={styles.verifyConent1}>{"Withdrawal From"}</Text>
@@ -186,7 +191,7 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
                         </View>
                         <View style={styles.verifyContentView}>
                             <Text style={styles.verifyConent1}>{"Total Amount"}</Text>
-                            <Text style={styles.verifyConent2}>{item.totalFund}</Text>
+                            <Text style={styles.verifyConent2}>{item.totalFund?item.totalFund:item.totalAmount}</Text>
                         </View>
                         <View style={styles.verifyContentView}>
                             <Text style={styles.verifyConent1}>{"Fund To"}</Text>
@@ -195,11 +200,11 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
 
                         <View style={styles.verifyContentView}>
                             <Text style={styles.verifyConent1}>{"Frequency"}</Text>
-                            <Text style={styles.verifyConent2}>{item.valueTypeDropDown}</Text>
+                            <Text style={styles.verifyConent2}>{item.valueTypeDropDown?item.valueTypeDropDown:item.invest}</Text>
                         </View>
                         <View style={styles.verifyContentView}>
                             <Text style={styles.verifyConent1}>{"Date"}</Text>
-                            <Text style={styles.verifyConent2}>{item.valueDateBeginDropDown}</Text>
+                            <Text style={styles.verifyConent2}>{item.valueDateBeginDropDown?item.valueDateBeginDropDown:item.dateToInvest}</Text>
                         </View>
                         <View style={styles.verifyContentView}>
                             <Text style={styles.verifyConent1}>{"Beginning on"}</Text>

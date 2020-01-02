@@ -29,6 +29,15 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
         this.setState({ acceptPolicy: !this.state.acceptPolicy });
     }
 
+    componentDidUpdate(){
+        console.log('%%%%%%%%%%%%%%%%%%%%%%%%',this.state.itemToEdit)
+        if(this.props.automaticInvestmentState.savedAccData){
+            console.log('Esign$$$$$$$$$$$$$$$$$$$$',this.props.automaticInvestmentState.savedAccData)
+            this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
+        }
+
+    }
+
     getPayload = () => {
         
         // let planJson=[];
@@ -114,8 +123,10 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
         const item=myInstance.getSavedAutomaticData();
         if (this.props && this.props.automaticInvestmentState && item)
         {
-            let planJson={};
-             let selected={id:this.state.itemToEdit,account:item.acc_name+"|"+item.acc_no ,totalAmount:item.totalFund,
+            let planJson=[];//this.state.itemToEdit
+             let selected={id:this.state.itemToEdit==='-1'?'3':this.state.itemToEdit,
+                account:item.acc_name+"|"+item.acc_no ,
+                totalAmount:item.totalFund,
                             fundFrom:item.fundFrom,investedIn:item.investedIn,
                             invest:item.valueTypeDropDown,dateToInvest:item.valueDateDropDown,
                             dateAdded:item.dateAdded,endDate:item.endDate,
@@ -124,62 +135,80 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
             switch ((this.state.accountType)) {
                 case "general":
                     if(this.props.automaticInvestmentState.general){
-                            //Add
-                            planJson=this.props.automaticInvestmentState.general;
                             
-                            
-                            //Edit
-                            //var array = this.props.automaticInvestmentState.general; // make a separate copy of the array
-                            if (this.state.itemToEdit !== -1) {
-                                planJson[this.state.itemToEdit]=selected
-                                //planJson=array
-                                console.log('planJson===================',planJson)
-                            }
-                            else
+                            planJson=[...this.props.automaticInvestmentState.general];
+                            if(this.state.itemToEdit==='-1')
                             {
+                                
                                 planJson.push(selected);
-                                console.log('planJson**************',planJson)
                             }
-                            
+                            else{
+                                planJson[this.state.itemToEdit]=selected
+                                
+                            }
                             payload = {
-                                ...planJson
+                                ...this.props.automaticInvestmentState,
+                                general:planJson
                             };
                             
                         }
                         else{
                             let newObj = { "general" : selected}
                             Object.assign(this.props.automaticInvestmentState,newObj)
+                            payload = {
+                                ...this.props.automaticInvestmentState,
+                            };
                         }
                     
                     break;
                 case "ira":
                     if(this.props.automaticInvestmentState.ira){
-                        //Add
-                        planJson=this.props.automaticInvestmentState.ira;
-                        planJson.push(selected);
-                        payload = {
-                            ...planJson
-                        };
+                        planJson=[...this.props.automaticInvestmentState.ira];
+                            if(this.state.itemToEdit==='-1')
+                            {
+                                planJson.push(selected);
+                            }
+                            else{
+                                planJson[this.state.itemToEdit]=selected
+                                
+                            }
+                            payload = {
+                                ...this.props.automaticInvestmentState,
+                                ira:planJson
+                            };
                         
                     }
                     else{
                         let newObj = { "ira" : selected}
                         Object.assign(this.props.automaticInvestmentState,newObj)
+                        payload = {
+                            ...this.props.automaticInvestmentState,
+                        };
                     }
                     break;
                 case "utma":
                     if(this.props.automaticInvestmentState.utma){
-                        //Add
-                        planJson=this.props.automaticInvestmentState.utma;
-                        planJson.push(selected);
+                        planJson=[...this.props.automaticInvestmentState.utma];
+                        if(this.state.itemToEdit==='-1')
+                        {
+                            planJson.push(selected);
+                        }
+                        else{
+                            planJson[this.state.itemToEdit]=selected
+                            
+                        }
                         payload = {
-                            ...planJson
+                            ...this.props.automaticInvestmentState,
+                            utma:planJson
                         };
                         
                     }
                     else{
                         let newObj = { "utma" : [selected]}
                         Object.assign(this.props.automaticInvestmentState,newObj)
+                        payload = {
+                            ...this.props.automaticInvestmentState,
+                        };
                     }
                     break;
         }
@@ -193,9 +222,8 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
             this.setState({errorTextMsg:''})
             const payload = this.getPayload();
             this.props.saveData("automaticInvestmentEsign", payload); 
-            console.log('automaticInvestmentEsign********',payload)
             myInstance.setAutomaticInvestmentEditMode(false);
-            this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
+            //this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
         }
         else
         this.setState({errorTextMsg:'Please select the above checkbox'})

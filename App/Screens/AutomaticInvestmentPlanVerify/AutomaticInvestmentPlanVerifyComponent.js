@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text } from 'react-native';
+import { View, ScrollView, Text, InteractionManager } from 'react-native';
 import { styles } from './styles';
 import {
     GHeaderComponent,
@@ -39,6 +39,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                     //...payload,
                     ...this.props.automaticInvestmentState.general
                 };
+                
                 this.setState({
                     autoInvestmentJson: payload[this.state.indexSelected],
                 });
@@ -53,7 +54,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
             //     };
             //     this.setState({ autoInvestmentJson: payload })
             // }
-            // this.setState({ autoInvestmentJson: myInstance.getSavedAutomaticData() })
+            this.setState({ autoInvestmentJson: myInstance.getSavedAutomaticData() })
             
         }
 
@@ -123,28 +124,37 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
         this.props.navigation.goBack('automaticInvestmentAdd')
     }
 
-    parsingInvestIn = (item) =>
-    {
-        console.log('item--------))))))))---------',item)
-        let fundlist="";
-        let array=item.investedIn;
-        {array.map((fund) => {
-            fundlist=fund.name+","+fundlist;
-        })}
-        return(<Text style={styles.verifyConent2}>{fundlist.replace(',','').trim()}</Text>)
-    }
+    // parsingInvestIn = (item) =>
+    // {
+    //     console.log('item--------))))))))---------',item)
+    //     let fundlist="";
+    //     let array=item.investedIn;
+    //     {array.map((fund) => {
+    //         fundlist=fund.name+","+fundlist;
+    //     })}
+    //     return(<Text style={styles.verifyConent2}>{fundlist.replace(',','').trim()}</Text>)
+    // }
 
     render() {
+
         const date = new Date().getDate(); //Current Date
         const month = new Date().getMonth() + 1; //Current Month
         const year = new Date().getFullYear(); //Current Year
         const currentdate = month + "-" + date + "-" + year;
-        // var item = this.state.autoInvestmentJson;
-        const item=myInstance.getSavedAutomaticData();
-        let fundlist="";
+        const item = this.state.autoInvestmentJson;
+        //const item=myInstance.getSavedAutomaticData();
         
-        if(item)//if(this.state.autoInvestmentJson.account)
+        let fundlist="";
+        // if(this.state.autoInvestmentJson)
+        // {
+        //     console.log('=======================',this.state.autoInvestmentJson)
+        //     item = this.state.autoInvestmentJson;
+            
+        // }
+       
+        if(item.account || item.acc_name)//if(this.state.autoInvestmentJson.account)
         {
+            console.log('item=======================',item)
             item.investedIn.map((fund)=>{
                 fundlist=fund.name+','+fundlist;
             })
@@ -211,7 +221,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
 
                             <View style={styles.verifyContentView}>
                                 <Text style={styles.verifyConent1}>{"Account"}</Text>
-                                <Text style={styles.verifyConent2}>{item.acc_name+'|'+item.acc_no}</Text>
+                                <Text style={styles.verifyConent2}>{item.account?item.account:item.acc_name+'|'+item.acc_no}</Text>
                             </View>
                             <View style={styles.verifyContentView}>
                                 <Text style={styles.verifyConent1}>{"Invested In"}</Text>
@@ -221,7 +231,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                             </View>
                             <View style={styles.verifyContentView}>
                                 <Text style={styles.verifyConent1}>{"Total Amount"}</Text>
-                                <Text style={styles.verifyConent2}>{item.totalFund}</Text>
+                                <Text style={styles.verifyConent2}>{item.totalFund?item.totalFund:item.totalAmount}</Text>
                             </View>
                             <View style={styles.verifyContentView}>
                                 <Text style={styles.verifyConent1}>{"Fund From"}</Text>
@@ -230,11 +240,11 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
 
                             <View style={styles.verifyContentView}>
                                 <Text style={styles.verifyConent1}>{"Invest"}</Text>
-                                <Text style={styles.verifyConent2}>{item.valueTypeDropDown}</Text>
+                                <Text style={styles.verifyConent2}>{item.valueTypeDropDown?item.valueTypeDropDown:item.invest}</Text>
                             </View>
                             <View style={styles.verifyContentView}>
                                 <Text style={styles.verifyConent1}>{"Date to Invest"}</Text>
-                                <Text style={styles.verifyConent2}>{item.valueDateDropDown}</Text>
+                                <Text style={styles.verifyConent2}>{item.valueDateDropDown?item.valueDateDropDown:item.dateToInvest}</Text>
                             </View>
                             <View style={styles.verifyContentView}>
                                 <Text style={styles.verifyConent1}>{"End Date"}</Text>
