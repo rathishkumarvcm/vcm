@@ -9,6 +9,11 @@ import Collapsible from 'react-native-collapsible';
 import { scaledHeight } from '../../Utils/Resolution';
 
 
+let savedData = {};
+let ammendData = {};
+let ammendIndex = 0;
+let menuList = [];
+
 const bankAccounts = [
     { bankIcon: "", bankAccName: "Bank Account 1", bankAccountNo: "XXX-XXX-3838" },
     { bankIcon: "", bankAccName: "Bank Account 2", bankAccountNo: "XXX-XXX-5247", status: "To be verified" },
@@ -17,12 +22,12 @@ const bankAccounts = [
 
 const reqAmountTypeJson = [
     {
-        id: '1',
-        title: 'Before Taxes'
+        key: '1',
+        value: 'Before Taxes'
     },
     {
-        id: '2',
-        title: 'After Taxes'
+        key: '2',
+        value: 'After Taxes'
     },
 ];
 
@@ -42,7 +47,7 @@ class LiquidationPageThreeComponent extends Component {
             fundingSource: {
                 selectedBankAccountNo: '',
                 selectedBankAccountName: '',
-                checkOrderSelected:false
+                checkOrderSelected: false
             },
             taxAccountingMethodData: {
                 requestedAmountType: 'Before Taxes',
@@ -55,19 +60,18 @@ class LiquidationPageThreeComponent extends Component {
                 totalWithdrawal: '',
                 stateTaxInDollars: '',
                 federalTaxInDollars: '',
-                taxHoldingOption:gblStrings.liquidation.withholdTaxes,
+                taxHoldingOption: gblStrings.liquidation.withholdTaxes,
             },
             showMessageFlex: false,
             switchOff: true,
             switchOn: false,
-            showDropDown: false,
-            disableNextButton:true,
-            ammend:false
+            disableNextButton: true,
+            ammend: false
         }
     }
 
     formatAmount = (amount) => {
-        if(this.isEmpty(amount)){
+        if (this.isEmpty(amount)) {
             return "";
         }
         var amt = parseInt(amount).toLocaleString();
@@ -80,8 +84,8 @@ class LiquidationPageThreeComponent extends Component {
         if (str === "" || str === undefined || str === null || str === "null" || str === "undefined") {
             return true;
         }
-            return false;
-      }
+        return false;
+    }
 
     onClickExpandFundSource = () => {
         this.setState({ collapseFundSource: !this.state.collapseFundSource });
@@ -126,13 +130,13 @@ class LiquidationPageThreeComponent extends Component {
     onClickCheckOrder = () => {
         this.setState({
             fundingSource: {
-                checkOrderSelected:!this.state.fundingSource.checkOrderSelected,
+                checkOrderSelected: !this.state.fundingSource.checkOrderSelected,
                 selectedBankAccountNo: '',
                 selectedBankAccountName: '',
             },
             selectedBankAccountIndex: null,
-            disableNextButton:false
-        
+            disableNextButton: false
+
         });
     }
 
@@ -142,11 +146,11 @@ class LiquidationPageThreeComponent extends Component {
             fundingSource: {
                 selectedBankAccountNo: item.bankAccountNo,
                 selectedBankAccountName: item.bankAccName,
-                checkOrderSelected:false
+                checkOrderSelected: false
             },
             selectedBankAccountIndex: index,
             showMessageFlex: item.status,
-            disableNextButton:false
+            disableNextButton: false
         });
     }
 
@@ -159,30 +163,26 @@ class LiquidationPageThreeComponent extends Component {
             switchOff: !this.state.switchOff,
             switchOn: !this.state.switchOn,
         });
-        this.state.switchOn?this.setState(prevState => ({
+        this.state.switchOn ? this.setState(prevState => ({
             taxAccountingMethodData: {
                 ...prevState.taxAccountingMethodData,
-                taxHoldingOption:gblStrings.liquidation.withholdTaxes
+                taxHoldingOption: gblStrings.liquidation.withholdTaxes
             }
-        })):this.setState(prevState => ({
+        })) : this.setState(prevState => ({
             taxAccountingMethodData: {
                 ...prevState.taxAccountingMethodData,
-                taxHoldingOption:gblStrings.liquidation.doNotWithholdTaxes
+                taxHoldingOption: gblStrings.liquidation.doNotWithholdTaxes
             }
         }));
     }
 
-    onClickShowDropDown = () => {
-        this.setState({
-            showDropDown: !this.state.showDropDown
-        });
-    }
 
     selectedDropDownValue = (value) => {
+        console.log("value--->"+value)
         this.setState(prevState => ({
             taxAccountingMethodData: {
                 ...prevState.taxAccountingMethodData,
-                requestedAmountType: value.title,
+                requestedAmountType: value,
                 federalTax: '',
                 stateTax: '',
                 totalTaxToBeWithhold: '',
@@ -193,7 +193,6 @@ class LiquidationPageThreeComponent extends Component {
                 stateTaxInDollars: '',
                 federalTaxInDollars: ''
             },
-            showDropDown: false
         }));
     }
 
@@ -273,80 +272,125 @@ class LiquidationPageThreeComponent extends Component {
         }
     }
 
-    navigateLiquidationPageOne = () => 
-    {
-        if(this.state.ammend)
-        {
-        this.props.navigation.navigate('tAmmendComponent',{ammend:true});
+    navigateLiquidationPageOne = () => {
+        if (this.state.ammend) {
+            this.props.navigation.navigate('tAmmendComponent', { ammend: true });
         }
-        else{
-        this.props.navigation.navigate('LiquidationPageOne',{ammend:false});
+        else {
+            this.props.navigation.navigate('LiquidationPageOne', { ammend: false });
         }
-    
+
     }
-    navigateLiquidationPageTwo = () => 
-    {
-        if(this.state.ammend)
-        {
-        this.props.navigation.navigate('LiquidationPageTwo',{ammend:true});
+    navigateLiquidationPageTwo = () => {
+        if (this.state.ammend) {
+            this.props.navigation.navigate('LiquidationPageTwo', { ammend: true });
         }
-        else{
-        this.props.navigation.navigate('LiquidationPageTwo',{ammend:false});
+        else {
+            this.props.navigation.navigate('LiquidationPageTwo', { ammend: false });
         }
     }
-    navigateLiquidationPageFour = () => 
-    {
-        if(this.state.ammend)
-        {
-        this.props.navigation.navigate('LiquidationPageFour', 
-        { taxAccountingMethodData: this.state.taxAccountingMethodData, fundingSource: this.state.fundingSource,ammend:true });
+    navigateLiquidationPageFour = () => {
+        if (this.state.ammend) {
+            this.props.navigation.navigate('LiquidationPageFour',
+                { taxAccountingMethodData: this.state.taxAccountingMethodData, fundingSource: this.state.fundingSource, ammend: true });
         }
-        else{
-            this.props.navigation.navigate('LiquidationPageFour', 
-            { taxAccountingMethodData: this.state.taxAccountingMethodData, fundingSource: this.state.fundingSource,ammend:false }); 
+        else {
+            this.props.navigation.navigate('LiquidationPageFour',
+                { taxAccountingMethodData: this.state.taxAccountingMethodData, fundingSource: this.state.fundingSource, ammend: false });
         }
     }
 
     nextButtonAction = () => {
         console.log('On Click Next Fund Withdrawal ...');
-        const payloadData = {
-            checkSelectedOrder:this.state.fundingSource.checkOrderSelected,
-            bankAccountNo:this.state.fundingSource.selectedBankAccountNo,
-            bankAccountName:this.state.fundingSource.selectedBankAccountName,
-            taxWithHoldingOption:this.state.taxAccountingMethodData.taxHoldingOption,
-            requestedAmountType:this.state.taxAccountingMethodData.requestedAmountType,
-            amountBeforeTaxes:gblStrings.liquidation.dollarSymbol+this.formatAmount(this.state.taxAccountingMethodData.amountBeforeTaxes),
-            amountAfterTaxes:gblStrings.liquidation.dollarSymbol+this.formatAmount(this.state.taxAccountingMethodData.amountAfterTaxes),
-            federalTaxInPerc:this.state.taxAccountingMethodData.federalTax + "%",
-            federalTaxInDollars:gblStrings.liquidation.dollarSymbol+this.formatAmount(this.state.taxAccountingMethodData.federalTaxInDollars),
-            stateTaxInPerc:this.state.taxAccountingMethodData.stateTax + "%",
-            stateTaxInDollars:gblStrings.liquidation.dollarSymbol+this.formatAmount(this.state.taxAccountingMethodData.stateTaxInDollars),
-            totalTaxToBeWithHold:gblStrings.liquidation.dollarSymbol+this.formatAmount(this.state.taxAccountingMethodData.totalTaxToBeWithhold),
-            totalYouWillReceive:gblStrings.liquidation.dollarSymbol+this.formatAmount(this.state.taxAccountingMethodData.totalYouWillReceive),
-            totalWithdrawal:gblStrings.liquidation.dollarSymbol+this.formatAmount(this.state.taxAccountingMethodData.totalWithdrawal),
-        };
-        this.props.saveData(payloadData);
-        console.log("Fund Withdrawal payloadData---> " + JSON.stringify(payloadData));
-        //this.props.navigation.navigate('LiquidationPageFour');
-        if(this.state.ammend)
-        {
-        this.props.navigation.navigate('LiquidationPageFour', {ammend:true,transactionType:"liquidation"});
+        const date = new Date().getDate();
+        const month = new Date().getMonth() + 1;
+        const year = new Date().getFullYear();
+        const updatedDate = date + '/' + month + '/' + year;
+        const finalKey = menuList[menuList.length - 1];
+
+        if (this.state.ammend) {
+            const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
+            const amndObj = menuList[pIndex];
+            const transType = ammendData.TransactionType;
+            const ammendPayloadData = {
+                "key": amndObj.key,
+                "title": amndObj.title,
+                "data": {
+                    "count": ammendData.count,
+                    "Dateadded": updatedDate,
+                    "TransactionType": transType,
+                    "OrderStatus": ammendData.OrderStatus,
+                    "totalSHares": ammendData.totalSHares,
+                    "worth": ammendData.worth,
+                    "selectedAccountData": ammendData.selectedAccountData,
+                    "selectedFundData": ammendData.selectedFundData,
+                    "selectedFundWithdrawalData":{
+                        "checkSelectedOrder": this.state.fundingSource.checkOrderSelected,
+                        "bankAccountNo": this.state.fundingSource.selectedBankAccountNo,
+                        "bankAccountName": this.state.fundingSource.selectedBankAccountName,
+                        "taxWithHoldingOption": this.state.taxAccountingMethodData.taxHoldingOption,
+                        "requestedAmountType": this.state.taxAccountingMethodData.requestedAmountType,
+                        "amountBeforeTaxes": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.amountBeforeTaxes),
+                        "amountAfterTaxes": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.amountAfterTaxes),
+                        "federalTaxInPerc": this.state.taxAccountingMethodData.federalTax + "%",
+                        "federalTaxInDollars": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.federalTaxInDollars),
+                        "stateTaxInPerc": this.state.taxAccountingMethodData.stateTax + "%",
+                        "stateTaxInDollars": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.stateTaxInDollars),
+                        "totalTaxToBeWithHold": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.totalTaxToBeWithhold),
+                        "totalYouWillReceive": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.totalYouWillReceive),
+                        "totalWithdrawal": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.totalWithdrawal),
+                    },
+                    "reviewConfirmLiquidationData":ammendData.reviewConfirmLiquidationData,
+                    "selectedFundSourceData": ammendData.selectedFundSourceData,
+                    "currentSecurities": ammendData.currentSecurities,
+                    "contribution": ammendData.contribution,
+                    "estimated": ammendData.estimated
+                }
+            }
+            menuList.splice(pIndex, 1, ammendPayloadData);
+            this.props.ammendActions(menuList);
+            console.log("Fund Withdrawal ammend payloadData---> " + JSON.stringify(ammendPayloadData));
+            this.props.navigation.navigate('LiquidationPageFour', { ammend: true, index: ammendIndex, data: ammendData });
+        }else{
+            const payloadData = {
+                saveLiquidationSelectedData: {
+                    ...savedData,
+                    "selectedFundWithdrawalData": {
+                        "checkSelectedOrder": this.state.fundingSource.checkOrderSelected,
+                        "bankAccountNo": this.state.fundingSource.selectedBankAccountNo,
+                        "bankAccountName": this.state.fundingSource.selectedBankAccountName,
+                        "taxWithHoldingOption": this.state.taxAccountingMethodData.taxHoldingOption,
+                        "requestedAmountType": this.state.taxAccountingMethodData.requestedAmountType,
+                        "amountBeforeTaxes": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.amountBeforeTaxes),
+                        "amountAfterTaxes": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.amountAfterTaxes),
+                        "federalTaxInPerc": this.state.taxAccountingMethodData.federalTax + "%",
+                        "federalTaxInDollars": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.federalTaxInDollars),
+                        "stateTaxInPerc": this.state.taxAccountingMethodData.stateTax + "%",
+                        "stateTaxInDollars": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.stateTaxInDollars),
+                        "totalTaxToBeWithHold": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.totalTaxToBeWithhold),
+                        "totalYouWillReceive": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.totalYouWillReceive),
+                        "totalWithdrawal": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.totalWithdrawal),
+                    },
+                },
+            };
+            this.props.saveData(payloadData);
+            console.log("Fund Withdrawal liquidation payloadData---> " + JSON.stringify(payloadData));
         }
-        else
-        {
-        this.props.navigation.navigate('LiquidationPageFour', {ammend:false,transactionType:"liquidation"});
-        }
+        this.props.navigation.navigate('LiquidationPageFour', { ammend: this.state.ammend });
+
     }
 
 
     componentDidMount() {
-        console.log(" Screen 3 componentdidmount " + JSON.stringify(this.props));
-        if(this.props.navigation.getParam('ammend'))
-        {
-            this.setState({ammend:true});
+        console.log(" Screen 3 componentdidmount " + JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
+        if (this.props.navigation.getParam('ammend')) {
+            menuList = this.props.amendReducerData.menu;
+            ammendIndex = this.props.navigation.getParam('index');
+            ammendData = this.props.amendReducerData.menu[ammendIndex - 1].data;
+            this.setState({ ammend: true });
         }
-        else{
-            this.setState({ammend:false});
+        else {
+            this.setState({ ammend: false });
         }
     }
 
@@ -354,11 +398,19 @@ class LiquidationPageThreeComponent extends Component {
         let currentPage = 3;
         let totalCount = 4;
         let pageName = gblStrings.liquidation.fundWithdrawalHeading;
-        if(this.state.ammend)
-        {
-             currentPage = 2;
-             pageName = '2 - Fund Withdrawl';
-             totalCount = 3;
+        if (this.state.ammend) {
+            currentPage = 2;
+            pageName = '2 - Fund Withdrawl';
+            totalCount = 3;
+        }
+        if (this.props.liquidationInitialState && this.props.liquidationInitialState.saveLiquidationSelectedData) {
+            savedData = this.props.liquidationInitialState.saveLiquidationSelectedData;
+        }
+        let accType = "";
+        if(this.state.ammend){
+            accType = ammendData.selectedAccountData.accountType;
+        }else{
+            accType = savedData.selectedAccountData.accountType;
         }
         return (
             <View style={styles.container}>
@@ -378,8 +430,8 @@ class LiquidationPageThreeComponent extends Component {
                     <View style={styles.flex2}>
 
                         <View style={styles.accountFlex}>
-                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountName}{this.props.liquidationInitialState.selectedAccountName}</Text>
-                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountNumber}{this.props.liquidationInitialState.selectedAccountNumber}</Text>
+                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountName}{this.state.ammend ? ammendData.selectedAccountData.accountName :savedData.selectedAccountData.accountName}</Text>
+                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountNumber}{this.state.ammend ? ammendData.selectedAccountData.accountNumber :savedData.selectedAccountData.accountNumber}</Text>
                         </View>
 
                         <View style={styles.headerFlex} onTouchStart={this.onClickExpandFundSource}>
@@ -485,171 +537,168 @@ class LiquidationPageThreeComponent extends Component {
                         <View style={styles.line} />
                     </View>
 
-                   {!this.state.collapseTaxAccounting?
-                   <View><View style={styles.flex2}>
-                   <Text style={styles.fundSourceContent}>{gblStrings.liquidation.taxAccountingMethodContext}</Text>
-               </View>
-          
-           {/* -----------------------------Tax Accounting Method ends here ------------------------*/}
+                    {!this.state.collapseTaxAccounting ?
+                        <View><View style={styles.flex2}>
+                            <Text style={styles.fundSourceContent}>{gblStrings.liquidation.taxAccountingMethodContext}</Text>
+                        </View>
 
-           {/* -----------------------------Tax Withholding Options starts here ------------------------*/}
-           {(this.props.liquidationInitialState.accType=="IRA")?
-           <View>
-           <View style={styles.flex2}>
-               <View style={styles.emptyFlex} />
-               <View style={styles.headerFlex} onTouchStart={this.onClickExpandTaxWithHoldingOptions}>
-                   <Text style={styles.headerText}>{this.state.collapseTWOIcon}</Text>
-                   <Text style={styles.headerText}>{gblStrings.liquidation.taxWithHoldingOptions}</Text>
-               </View>
-               <View style={styles.line} />
-           </View>
+                            {/* -----------------------------Tax Accounting Method ends here ------------------------*/}
 
-           {!this.state.collapseTaxWithHoldingOption ?
-               <View>
-                   <View style={styles.flex2}>
-                       <Text style={styles.fundSourceContent}>{gblStrings.liquidation.taxWithHoldingOptionsContent}</Text>
-                   </View>
+                            {/* -----------------------------Tax Withholding Options starts here ------------------------*/}
+                            {(accType == "IRA") ?
+                                <View>
+                                    <View style={styles.flex2}>
+                                        <View style={styles.emptyFlex} />
+                                        <View style={styles.headerFlex} onTouchStart={this.onClickExpandTaxWithHoldingOptions}>
+                                            <Text style={styles.headerText}>{this.state.collapseTWOIcon}</Text>
+                                            <Text style={styles.headerText}>{gblStrings.liquidation.taxWithHoldingOptions}</Text>
+                                        </View>
+                                        <View style={styles.line} />
+                                    </View>
 
-                   { /* -----------------------------Tax Withholding Options ends here ------------------------*/}
+                                    {!this.state.collapseTaxWithHoldingOption ?
+                                        <View>
+                                            <View style={styles.flex2}>
+                                                <Text style={styles.fundSourceContent}>{gblStrings.liquidation.taxWithHoldingOptionsContent}</Text>
+                                            </View>
 
-                    <View style = {styles.switchFlex}>
-                   <GSwitchComponent
-                       switchOffText={gblStrings.liquidation.doNotWithholdTaxes}
-                       switchOnText={gblStrings.liquidation.withholdTaxes}
-                       switchOff={this.state.switchOff}
-                       switchOn={this.state.switchOn}
-                       switchOnMethod={this.switchOnMethod}
-                       switchOffMethod={this.switchOnMethod}
-                       onStyle={styles.onButtonStyle}
-                       offStyle={styles.offButtonStyle}
-                       onStyleDisabled={styles.onButtonStyleDisable}
-                       offStyleDisabled={styles.offButtonStyleDisable}
-                       textOnStyle={styles.TextOnStyle}
-                       textOffStyle={this.state.switchOff ? styles.TextOffStyle : styles.TextOffStyleWithholdtax}
-                   />
-                   </View>
+                                            { /* -----------------------------Tax Withholding Options ends here ------------------------*/}
 
-                   {/* switch on view starts here*/}
-                   {this.state.switchOff ?
-                       <View style={styles.flex2}>
-                           <GDropDownComponent
-                               dropDownTextName={styles.blackTextBold16px}
-                               dropDownLayout={styles.dropDownLayout}
-                               textInputStyle={{ width: "98%", paddingLeft: "2%", marginLeft: "0%" }}
-                               dropDownName={gblStrings.liquidation.isTheReqAmount}
-                               data={reqAmountTypeJson}
-                               itemToDisplay={"title"}
-                               changeState={this.onClickShowDropDown}
-                               showDropDown={this.state.showDropDown}
-                               dropDownValue={this.state.taxAccountingMethodData.requestedAmountType}
-                               selectedDropDownValue={this.selectedDropDownValue}
-                               dropDownPostition={{
-                                   position: 'absolute', top: scaledHeight(80), width: "98%", marginLeft: "0%", paddingLeft: "4%", borderColor: "#DEDEDF",
-                                   borderWidth: scaledHeight(1), zIndex: 3, backgroundColor: 'white'
-                               }}
-                           />
+                                            <View style={styles.switchFlex}>
+                                                <GSwitchComponent
+                                                    switchOffText={gblStrings.liquidation.doNotWithholdTaxes}
+                                                    switchOnText={gblStrings.liquidation.withholdTaxes}
+                                                    switchOff={this.state.switchOff}
+                                                    switchOn={this.state.switchOn}
+                                                    switchOnMethod={this.switchOnMethod}
+                                                    switchOffMethod={this.switchOnMethod}
+                                                    onStyle={styles.onButtonStyle}
+                                                    offStyle={styles.offButtonStyle}
+                                                    onStyleDisabled={styles.onButtonStyleDisable}
+                                                    offStyleDisabled={styles.offButtonStyleDisable}
+                                                    textOnStyle={styles.TextOnStyle}
+                                                    textOffStyle={this.state.switchOff ? styles.TextOffStyle : styles.TextOffStyleWithholdtax}
+                                                />
+                                            </View>
 
-                           {
-                               (this.state.taxAccountingMethodData.requestedAmountType == "Before Taxes") ?
-                                   <View style={styles.stateTaxFlex}>
-                                       <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.amountBeforeTaxes}</Text>
-                                       <View style={styles.totalWithdrawalFlex}>
-                                           <Text style={styles.dollarSkin}>$</Text>
-                                           <GInputComponent
-                                               propInputStyle={styles.amountBeforeTaxesVal}
-                                               inputStyle={styles.inputStyle}
-                                               value={this.state.taxAccountingMethodData.amountBeforeTaxes}
-                                               onChangeText={this.onChangeAmountBeforeTaxes}
-                                               maxLength = {13}
-                                           />
-                                       </View>
-                                   </View> :
-                                   <View style={styles.stateTaxFlex}>
-                                       <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.amountAfterTaxes}</Text>
-                                       <View style={styles.totalWithdrawalFlex}>
-                                           <Text style={styles.dollarSkin}>$</Text>
-                                           <GInputComponent
-                                               propInputStyle={styles.amountBeforeTaxesVal}
-                                               inputStyle={styles.inputStyle}
-                                               value={this.state.taxAccountingMethodData.amountAfterTaxes}
-                                               onChangeText={this.onChangeAmountAfterTaxes} 
-                                               maxLength = {13}/>
-                                       </View>
-                                   </View>
-                           }
+                                            {/* switch on view starts here*/}
+                                            {this.state.switchOff ?
+                                                <View style={styles.flex2}>
+                                                    <GDropDownComponent
+                                                        dropDownLayout={styles.dropDownLayout}
+                                                        dropDownTextName={styles.blackTextBold16px}
+                                                        textInputStyle={{ width: "98%", paddingLeft: "2%", marginLeft: "0%" }}
+                                                        dropDownName={gblStrings.liquidation.isTheReqAmount}
+                                                        data={reqAmountTypeJson}
+                                                        dropDownValue={this.state.taxAccountingMethodData.requestedAmountType}
+                                                        selectedDropDownValue={this.selectedDropDownValue}
+                                                        dropDownPostition={{
+                                                            position: 'absolute', top: scaledHeight(80), width: "98%", marginLeft: "0%", paddingLeft: "4%", borderColor: "#DEDEDF",
+                                                            borderWidth: scaledHeight(1), zIndex: 3, backgroundColor: 'white'
+                                                        }}
+                                                    />
 
-                           <View style={styles.stateTaxFlex}>
-                               <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.federalTax}</Text>
-                               <View style={styles.horizontalFlex}>
-                                   <GInputComponent
-                                       propInputStyle={styles.stateTaxInputStyle}
-                                       inputStyle={styles.inputStyle}
-                                       value={this.state.taxAccountingMethodData.federalTax}
-                                       onChangeText={this.onChangeFederalTax}
-                                       onSubmitEditing={this.onSubmitEditingStateTax}
-                                       onBlur={this.onSubmitEditingStateTax}
-                                       maxLength = {3}
-                                   />
-                                   <View style={styles.stateTaxToDollarFlex}>
-                                       <Text style={styles.dollarSkin}>$</Text>
-                                       <Text style={styles.stateTaxToDollarText}>{this.formatAmount(this.state.taxAccountingMethodData.federalTaxInDollars)}</Text>
-                                   </View>
-                               </View>
-                           </View>
+                                                    {
+                                                        (this.state.taxAccountingMethodData.requestedAmountType == "Before Taxes") ?
+                                                            <View style={styles.stateTaxFlex}>
+                                                                <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.amountBeforeTaxes}</Text>
+                                                                <View style={styles.totalWithdrawalFlex}>
+                                                                    <Text style={styles.dollarSkin}>$</Text>
+                                                                    <GInputComponent
+                                                                        propInputStyle={styles.amountBeforeTaxesVal}
+                                                                        inputStyle={styles.inputStyle}
+                                                                        value={this.state.taxAccountingMethodData.amountBeforeTaxes}
+                                                                        onChangeText={this.onChangeAmountBeforeTaxes}
+                                                                        maxLength={13}
+                                                                    />
+                                                                </View>
+                                                            </View> :
+                                                            <View style={styles.stateTaxFlex}>
+                                                                <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.amountAfterTaxes}</Text>
+                                                                <View style={styles.totalWithdrawalFlex}>
+                                                                    <Text style={styles.dollarSkin}>$</Text>
+                                                                    <GInputComponent
+                                                                        propInputStyle={styles.amountBeforeTaxesVal}
+                                                                        inputStyle={styles.inputStyle}
+                                                                        value={this.state.taxAccountingMethodData.amountAfterTaxes}
+                                                                        onChangeText={this.onChangeAmountAfterTaxes}
+                                                                        maxLength={13} />
+                                                                </View>
+                                                            </View>
+                                                    }
 
-                           <View style={styles.stateTaxFlex}>
-                               <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.stateTax}</Text>
-                               <View style={styles.horizontalFlex}>
-                                   <GInputComponent
-                                       propInputStyle={styles.stateTaxInputStyle}
-                                       inputStyle={styles.inputStyle}
-                                       value={this.state.taxAccountingMethodData.stateTax}
-                                       onChangeText={this.onChangeStateTax}
-                                       onSubmitEditing={this.onSubmitEditingStateTax}
-                                       onBlur={this.onSubmitEditingStateTax}
-                                       maxLength = {3} />
-                                   <View style={styles.stateTaxToDollarFlex}>
-                                       <Text style={styles.dollarSkin}>$</Text>
-                                       <Text style={styles.stateTaxToDollarText}>{this.formatAmount(this.state.taxAccountingMethodData.stateTaxInDollars)}</Text>
-                                   </View>
-                               </View>
-                           </View>
+                                                    <View style={styles.stateTaxFlex}>
+                                                        <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.federalTax}</Text>
+                                                        <View style={styles.horizontalFlex}>
+                                                            <GInputComponent
+                                                                propInputStyle={styles.stateTaxInputStyle}
+                                                                inputStyle={styles.inputStyle}
+                                                                value={this.state.taxAccountingMethodData.federalTax}
+                                                                onChangeText={this.onChangeFederalTax}
+                                                                onSubmitEditing={this.onSubmitEditingStateTax}
+                                                                onBlur={this.onSubmitEditingStateTax}
+                                                                maxLength={3}
+                                                            />
+                                                            <View style={styles.stateTaxToDollarFlex}>
+                                                                <Text style={styles.dollarSkin}>$</Text>
+                                                                <Text style={styles.stateTaxToDollarText}>{this.formatAmount(this.state.taxAccountingMethodData.federalTaxInDollars)}</Text>
+                                                            </View>
+                                                        </View>
+                                                    </View>
 
-                           <View style={styles.stateTaxFlex}>
-                               <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.totalTaxToBeWithhold}</Text>
-                               <View style={styles.totalWithdrawalFlex}>
-                                   <Text style={styles.dollarSkin}>$</Text>
-                                   <Text style={styles.totalWithdrawalVal}>{this.formatAmount(this.state.taxAccountingMethodData.totalTaxToBeWithhold)}</Text>
-                               </View>
-                           </View>
+                                                    <View style={styles.stateTaxFlex}>
+                                                        <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.stateTax}</Text>
+                                                        <View style={styles.horizontalFlex}>
+                                                            <GInputComponent
+                                                                propInputStyle={styles.stateTaxInputStyle}
+                                                                inputStyle={styles.inputStyle}
+                                                                value={this.state.taxAccountingMethodData.stateTax}
+                                                                onChangeText={this.onChangeStateTax}
+                                                                onSubmitEditing={this.onSubmitEditingStateTax}
+                                                                onBlur={this.onSubmitEditingStateTax}
+                                                                maxLength={3} />
+                                                            <View style={styles.stateTaxToDollarFlex}>
+                                                                <Text style={styles.dollarSkin}>$</Text>
+                                                                <Text style={styles.stateTaxToDollarText}>{this.formatAmount(this.state.taxAccountingMethodData.stateTaxInDollars)}</Text>
+                                                            </View>
+                                                        </View>
+                                                    </View>
 
-                           <View style={styles.stateTaxFlex}>
-                               <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.totalYouWillReceive}</Text>
-                               <View style={styles.totalWithdrawalFlex}>
-                                   <Text style={styles.dollarSkin}>$</Text>
-                                   <Text style={styles.totalWithdrawalVal}>{this.formatAmount(this.state.taxAccountingMethodData.totalYouWillReceive)}</Text>
-                               </View>
-                           </View>
+                                                    <View style={styles.stateTaxFlex}>
+                                                        <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.totalTaxToBeWithhold}</Text>
+                                                        <View style={styles.totalWithdrawalFlex}>
+                                                            <Text style={styles.dollarSkin}>$</Text>
+                                                            <Text style={styles.totalWithdrawalVal}>{this.formatAmount(this.state.taxAccountingMethodData.totalTaxToBeWithhold)}</Text>
+                                                        </View>
+                                                    </View>
 
-                           <View style={styles.stateTaxFlex}>
-                               <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.totalWithdrawal}</Text>
-                               <View style={styles.totalWithdrawalFlex}>
-                                   <Text style={styles.dollarSkin}>$</Text>
-                                   <Text style={styles.totalWithdrawalVal}> {this.formatAmount(this.state.taxAccountingMethodData.totalWithdrawal)}</Text>
-                               </View>
-                           </View>
+                                                    <View style={styles.stateTaxFlex}>
+                                                        <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.totalYouWillReceive}</Text>
+                                                        <View style={styles.totalWithdrawalFlex}>
+                                                            <Text style={styles.dollarSkin}>$</Text>
+                                                            <Text style={styles.totalWithdrawalVal}>{this.formatAmount(this.state.taxAccountingMethodData.totalYouWillReceive)}</Text>
+                                                        </View>
+                                                    </View>
 
-                       </View> : null}
+                                                    <View style={styles.stateTaxFlex}>
+                                                        <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.totalWithdrawal}</Text>
+                                                        <View style={styles.totalWithdrawalFlex}>
+                                                            <Text style={styles.dollarSkin}>$</Text>
+                                                            <Text style={styles.totalWithdrawalVal}> {this.formatAmount(this.state.taxAccountingMethodData.totalWithdrawal)}</Text>
+                                                        </View>
+                                                    </View>
+
+                                                </View> : null}
 
 
-                   {/* switch on view ends here*/}
+                                            {/* switch on view ends here*/}
 
 
 
-               </View> : null}
-               </View>:null}
-</View>:null} 
-                        
+                                        </View> : null}
+                                </View> : null}
+                        </View> : null}
+
 
 
                     <View style={styles.flex6}>
@@ -681,10 +730,14 @@ class LiquidationPageThreeComponent extends Component {
 LiquidationPageThreeComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     liquidationInitialState: PropTypes.instanceOf(Object),
+    amendReducerData: PropTypes.instanceOf(Object),
     saveData: PropTypes.func,
+    ammendActions: PropTypes.func,
 };
 
 LiquidationPageThreeComponent.defaultProps = {
-
+    navigation: {},
+    liquidationInitialState: {},
+    amendReducerData: {},
 };
 export default LiquidationPageThreeComponent;

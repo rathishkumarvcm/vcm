@@ -11,6 +11,9 @@ class LiquidationFinishComponent extends Component {
         this.state = {
         };
     }
+    componentDidMount(){
+        console.log(" Screen 5 componentdidmount " + JSON.stringify(this.props.amendReducerData.menu));
+    }
     render() {
         return (
             <View style={styles.container} >
@@ -46,10 +49,16 @@ class LiquidationFinishComponent extends Component {
 
 
 LiquidationFinishComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    liquidationInitialState: PropTypes.instanceOf(Object),
+    amendReducerData: PropTypes.instanceOf(Object),
+    saveData: PropTypes.func,
+    ammendActions: PropTypes.func,
 };
 
 LiquidationFinishComponent.defaultProps = {
-
+    navigation: {},
+    liquidationInitialState: {},
+    amendReducerData: {},
 };
 export default LiquidationFinishComponent;
