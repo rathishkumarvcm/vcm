@@ -172,17 +172,7 @@ class OpenAccPageOneComponent extends Component {
         return payload;
 
     }
-    replaceUndefinedOrNull= (key, value) => {
-        if (value === null || value === undefined || value ==='') {
-          return undefined;
-        }
 
-        return value;
-      }
-    getCleanedPayload = (payload) =>{
-        const cleanedObject = JSON.stringify(payload, this.replaceUndefinedOrNull, 4);
-        return JSON.parse(cleanedObject);
-    }
 
     onClickNext = () => {
         const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
@@ -196,7 +186,7 @@ class OpenAccPageOneComponent extends Component {
             const screenState = {
                 ...stateData,
                 "openAccPageOne":{...this.state}
-            }
+            };
             myInstance.setScreenStateData(screenState);
             if (selectedAccount.key === "spec_acct") {
                 if (this.state.selectedItemID.startsWith("taeacc")) {

@@ -1229,9 +1229,9 @@ class OpenAccPageTwoComponent extends Component {
             }
         };
 
-        const trustAccPayload = {
-            "trustInfo": {
-                "firstName": this.state.estate.name || "",
+        const tempTrustAccPayload = {
+            "estateInfo": {
+                "name": this.state.estate.name || "",
                 "creationDate": this.state.estate.creationDate || "",
                 "ssnTin": this.state.estate.socialSecurityNo || "",
                 "mailingAddress": {
@@ -1271,17 +1271,15 @@ class OpenAccPageTwoComponent extends Component {
                 "isTrustMaintainRecords":this.state.estate.isTrustMaintainRecords || "",
                 "isCorrespondentAccountsForeignOffersProvided":this.state.estate.isCorrespondentAccountsForeignOffersProvided || "",
                 "bankTrustType":this.state.estate.bankTrustType || "",
-                "USFederalLawCond":this.state.estate.USFederalLawCond || ""
             },
-            "trusteeInFo":{
-                "prefix": this.state.estate.trusteeData[0].prefix || "",
-                "firstName":this.state.estate.trusteeData[0].prefix || "",
-                "middleInitial": this.state.estate.trusteeData[0].prefix || "",
-                "lastName": this.state.estate.trusteeData[0].prefix || "",
-                "suffix": this.state.estate.trusteeData[0].prefix || "",
-                "dob":this.state.estate.trusteeData[0].prefix || "",
-                "gender": this.state.estate.trusteeData[0].prefix || "",
-                "maritalStatus": this.state.estate.trusteeData[0].prefix || "",
+            "trusteeInfo":{
+                "firstName":this.state.estate.trusteeData[0].firstName || "",
+                "middleInitial": this.state.estate.trusteeData[0].middleInitial || "",
+                "lastName": this.state.estate.trusteeData[0].lastName || "",
+                "suffix": this.state.estate.trusteeData[0].suffix || "",
+                "dateOfBirth":this.state.estate.trusteeData[0].dob || "",
+                "gender": this.state.estate.trusteeData[0].gender || "",
+                "maritalStatus": this.state.estate.trusteeData[0].maritalStatus || "",
 
                 "mailingAddress": {
                     "addressType": this.state.estate.trusteeData[0].mailingAddressType || "",
@@ -1309,53 +1307,64 @@ class OpenAccPageTwoComponent extends Component {
                 "memberNumber": this.state.estate.trusteeData[0].memberNumber || "",
                 "ssnTin": this.state.estate.trusteeData[0].socialSecurityNo || ""
             },
-            "coTrusteeInfo":{
-                "prefix": this.state.estate.trusteeData[1].prefix || "",
-                "firstName":this.state.estate.trusteeData[1].prefix || "",
-                "middleInitial": this.state.estate.trusteeData[1].prefix || "",
-                "lastName": this.state.estate.trusteeData[1].prefix || "",
-                "suffix": this.state.estate.trusteeData[1].prefix || "",
-                "dob":this.state.estate.trusteeData[1].prefix || "",
-                "gender": this.state.estate.trusteeData[1].prefix || "",
-                "maritalStatus": this.state.estate.trusteeData[1].prefix || "",
-
-                "mailingAddress": {
-                    "addressType": this.state.estate.trusteeData[1].mailingAddressType || "",
-                    "streetNbr": this.state.estate.trusteeData[1].addrLine1 || "",
-                    "streetName": this.state.estate.trusteeData[1].addrLine2 || "",
-                    "zip": this.state.estate.trusteeData[1].zipcode || "",
-                    "city": this.state.estate.trusteeData[1].city || "",
-                    "state": this.state.estate.trusteeData[1].stateCity || ""
-                },
-                "isPhysAddrSameAsMailAddr": this.state.estate.trusteeData[1].isYourPhysicalAddresSame || "",
-                "physicalAddress": {
-                    "addressType": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].mailingAddressType || "" : this.state.estate.trusteeData[1].mailingAddressType,
-                    "streetNbr": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].addrLine1 || "" : this.state.estate.trusteeData[1].addrLine1_Phy,
-                    "streetName": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].addrLine2 || "" : this.state.estate.trusteeData[1].addrLine2_Phy,
-                    "zip": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].zipcode || "" : this.state.estate.trusteeData[1].zipcode_Phy,
-                    "city": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].city || "" : this.state.estate.trusteeData[1].city_Phy,
-                    "state": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].stateCity || "" : this.state.estate.trusteeData[1].stateCity_Phy,
-                },
-
-                "mobileNo": this.state.estate.trusteeData[1].mobileNo || "",
-                "memberPhoneNo": this.state.estate.trusteeData[1].memberPhoneNo || "",
-                "busniessPhoneNo": this.state.estate.trusteeData[1].busniessPhoneNo || "",
-                "residencePhoneNo":this.state.estate.trusteeData[1].residencePhoneNo || "",
-                "emailAddress": this.state.estate.trusteeData[1].emailAddress || "",
-                "memberNumber": this.state.estate.trusteeData[1].memberNumber || "",
-                "ssnTin": this.state.estate.trusteeData[1].socialSecurityNo || ""
-            }
-           
         };
 
+       
+        
+    
 
 
+        let trustAccPayload = {};
+        if(this.state.estate.trusteeData.length>1){
+            const coTrusteePayload = {
+                "coTrusteeInfo": {
+                    "firstName": this.state.estate.trusteeData[1].firstName || "",
+                    "middleInitial": this.state.estate.trusteeData[1].middleInitial || "",
+                    "lastName": this.state.estate.trusteeData[1].lastName || "",
+                    "suffix": this.state.estate.trusteeData[1].suffix || "",
+                    "dob": this.state.estate.trusteeData[1].dob || "",
+                    "gender": this.state.estate.trusteeData[1].gender || "",
+                    "maritalStatus": this.state.estate.trusteeData[1].maritalStatus || "",
+    
+                    "mailingAddress": {
+                        "addressType": this.state.estate.trusteeData[1].mailingAddressType || "",
+                        "streetNbr": this.state.estate.trusteeData[1].addrLine1 || "",
+                        "streetName": this.state.estate.trusteeData[1].addrLine2 || "",
+                        "zip": this.state.estate.trusteeData[1].zipcode || "",
+                        "city": this.state.estate.trusteeData[1].city || "",
+                        "state": this.state.estate.trusteeData[1].stateCity || ""
+                    },
+                    "isPhysAddrSameAsMailAddr": this.state.estate.trusteeData[1].isYourPhysicalAddresSame || "",
+                    "physicalAddress": {
+                        "addressType": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].mailingAddressType || "" : this.state.estate.trusteeData[1].mailingAddressType,
+                        "streetNbr": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].addrLine1 || "" : this.state.estate.trusteeData[1].addrLine1_Phy,
+                        "streetName": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].addrLine2 || "" : this.state.estate.trusteeData[1].addrLine2_Phy,
+                        "zip": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].zipcode || "" : this.state.estate.trusteeData[1].zipcode_Phy,
+                        "city": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].city || "" : this.state.estate.trusteeData[1].city_Phy,
+                        "state": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].stateCity || "" : this.state.estate.trusteeData[1].stateCity_Phy,
+                    },
+    
+                    "mobileNo": this.state.estate.trusteeData[1].mobileNo || "",
+                    "memberPhoneNo": this.state.estate.trusteeData[1].memberPhoneNo || "",
+                    "busniessPhoneNo": this.state.estate.trusteeData[1].busniessPhoneNo || "",
+                    "residencePhoneNo": this.state.estate.trusteeData[1].residencePhoneNo || "",
+                    "emailAddress": this.state.estate.trusteeData[1].emailAddress || "",
+                    "memberNumber": this.state.estate.trusteeData[1].memberNumber || "",
+                    "ssnTin": this.state.estate.trusteeData[1].socialSecurityNo || ""
+                }
+            };
+    
+            trustAccPayload = {...tempTrustAccPayload,coTrusteePayload};
+        }else{
+            trustAccPayload = {...tempTrustAccPayload};
+        }
 
         let payload = {};
         const savedAccData = myInstance.getSavedAccData();
         payload = {
             ...savedAccData,
-            "accountNickName": this.state.nickname || ""
+            "accountNickName": this.state.nickname || "",
+            "regType":accType||""
         };
 
         switch (accType) {
@@ -1386,14 +1395,15 @@ class OpenAccPageTwoComponent extends Component {
 
                 };
                 break;
-                case "Trust Account":
-                case "Esate Account":
-                    payload = {
-                        ...payload,
-                        ...trustAccPayload
-    
-                    };
-                    break;
+            case "Trust Account":
+            case "Estate Account":
+
+                payload = {
+                    ...payload,
+                    ...trustAccPayload
+
+                };
+                break;
             default:
                 break;
         };
@@ -1403,18 +1413,7 @@ class OpenAccPageTwoComponent extends Component {
         return payload;
     }
 
-    replaceUndefinedOrNull= (key, value) => {
-        if (value === null || value === undefined || value ==='') {
-          return undefined;
-        }
-
-        return value;
-      }
-
-    getCleanedPayload = (payload) =>{
-        const cleanedObject = JSON.stringify(payload, this.replaceUndefinedOrNull, 4);
-        return JSON.parse(cleanedObject);
-    }
+   
 
     onClickSave = () => {
 
