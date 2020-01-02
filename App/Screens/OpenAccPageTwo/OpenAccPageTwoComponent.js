@@ -654,7 +654,7 @@ class OpenAccPageTwoComponent extends Component {
             },
            
             // others
-            ...openAccPageTwo
+           // ...openAccPageTwo
 
 
         };
@@ -1229,6 +1229,125 @@ class OpenAccPageTwoComponent extends Component {
             }
         };
 
+        const trustAccPayload = {
+            "trustInfo": {
+                "firstName": this.state.estate.name || "",
+                "creationDate": this.state.estate.creationDate || "",
+                "ssnTin": this.state.estate.socialSecurityNo || "",
+                "mailingAddress": {
+                    "addressType": this.state.estate.mailingAddressType || "",
+                    "streetNbr": this.state.estate.addrLine1 || "",
+                    "streetName": this.state.estate.addrLine2 || "",
+                    "zip": this.state.estate.zipcode || "",
+                    "city": this.state.estate.city || "",
+                    "state": this.state.estate.stateCity || ""
+                },
+                "isPhysAddrSameAsMailAddr": this.state.estate.isYourPhysicalAddresSame || "",
+                "physicalAddress": {
+                    "addressType": this.state.estate.isYourPhysicalAddresSame ? this.state.estate.mailingAddressType || "" : this.state.estate.mailingAddressType,
+                    "streetNbr": this.state.estate.isYourPhysicalAddresSame ? this.state.estate.addrLine1 || "" : this.state.estate.addrLine1_Phy,
+                    "streetName": this.state.estate.isYourPhysicalAddresSame ? this.state.estate.addrLine2 || "" : this.state.estate.addrLine2_Phy,
+                    "zip": this.state.estate.isYourPhysicalAddresSame ? this.state.estate.zipcode || "" : this.state.estate.zipcode_Phy,
+                    "city": this.state.estate.isYourPhysicalAddresSame ? this.state.estate.city || "" : this.state.estate.city_Phy,
+                    "state": this.state.estate.isYourPhysicalAddresSame ? this.state.estate.stateCity || "" : this.state.estate.stateCity_Phy,
+                },
+                "isFederalLawApplicable":this.state.estate.isFederalLawApplicable || "",
+                "specifyState":this.state.estate.specifyState || "",
+                "orgCountry":this.state.estate.orgCountry || "",
+                "isBusinessTrust":this.state.estate.isBusinessTrust || "",
+                "isBrokerOrDealerTrust":this.state.estate.isBrokerOrDealerTrust || "",
+                "brokerOrDealer":this.state.estate.brokerOrDealer || "",
+                "isBankTrust":this.state.estate.isBankTrust || "",
+                "isForeignUSBranchTrust":this.state.estate.isForeignUSBranchTrust || "",
+                "businessTrust":this.state.estate.businessTrust || "",
+                "isMoneyTranOrCurrencyExchangeOrgnaised":this.state.estate.isMoneyTranOrCurrencyExchangeOrgnaised || "",
+                "isCorrespondentAccountsOffersProvided":this.state.estate.isCorrespondentAccountsOffersProvided || "",
+                "typeOfFiniancialInstitution":this.state.estate.typeOfFiniancialInstitution || "",
+                "VCMFundAccountNumbers":this.state.estate.VCMFundAccountNumbers || "",
+                "isFinanacialInstitutionDescribed":this.state.estate.isFinanacialInstitutionDescribed || "",
+                "finanacialInstitutionDesc":this.state.estate.finanacialInstitutionDesc || "",
+                "isPhysicalPresenceMaintained":this.state.estate.isPhysicalPresenceMaintained || "",
+                "isIndividualEmploymentThere":this.state.estate.isIndividualEmploymentThere || "",
+                "isTrustMaintainRecords":this.state.estate.isTrustMaintainRecords || "",
+                "isCorrespondentAccountsForeignOffersProvided":this.state.estate.isCorrespondentAccountsForeignOffersProvided || "",
+                "bankTrustType":this.state.estate.bankTrustType || "",
+                "USFederalLawCond":this.state.estate.USFederalLawCond || ""
+            },
+            "trusteeInFo":{
+                "prefix": this.state.estate.trusteeData[0].prefix || "",
+                "firstName":this.state.estate.trusteeData[0].prefix || "",
+                "middleInitial": this.state.estate.trusteeData[0].prefix || "",
+                "lastName": this.state.estate.trusteeData[0].prefix || "",
+                "suffix": this.state.estate.trusteeData[0].prefix || "",
+                "dob":this.state.estate.trusteeData[0].prefix || "",
+                "gender": this.state.estate.trusteeData[0].prefix || "",
+                "maritalStatus": this.state.estate.trusteeData[0].prefix || "",
+
+                "mailingAddress": {
+                    "addressType": this.state.estate.trusteeData[0].mailingAddressType || "",
+                    "streetNbr": this.state.estate.trusteeData[0].addrLine1 || "",
+                    "streetName": this.state.estate.trusteeData[0].addrLine2 || "",
+                    "zip": this.state.estate.trusteeData[0].zipcode || "",
+                    "city": this.state.estate.trusteeData[0].city || "",
+                    "state": this.state.estate.trusteeData[0].stateCity || ""
+                },
+                "isPhysAddrSameAsMailAddr": this.state.estate.trusteeData[0].isYourPhysicalAddresSame || "",
+                "physicalAddress": {
+                    "addressType": this.state.estate.trusteeData[0].isYourPhysicalAddresSame ? this.state.estate.trusteeData[0].mailingAddressType || "" : this.state.estate.trusteeData[0].mailingAddressType,
+                    "streetNbr": this.state.estate.trusteeData[0].isYourPhysicalAddresSame ? this.state.estate.trusteeData[0].addrLine1 || "" : this.state.estate.trusteeData[0].addrLine1_Phy,
+                    "streetName": this.state.estate.trusteeData[0].isYourPhysicalAddresSame ? this.state.estate.trusteeData[0].addrLine2 || "" : this.state.estate.trusteeData[0].addrLine2_Phy,
+                    "zip": this.state.estate.trusteeData[0].isYourPhysicalAddresSame ? this.state.estate.trusteeData[0].zipcode || "" : this.state.estate.trusteeData[0].zipcode_Phy,
+                    "city": this.state.estate.trusteeData[0].isYourPhysicalAddresSame ? this.state.estate.trusteeData[0].city || "" : this.state.estate.trusteeData[0].city_Phy,
+                    "state": this.state.estate.trusteeData[0].isYourPhysicalAddresSame ? this.state.estate.trusteeData[0].stateCity || "" : this.state.estate.trusteeData[0].stateCity_Phy,
+                },
+
+                "mobileNo": this.state.estate.trusteeData[0].mobileNo || "",
+                "memberPhoneNo": this.state.estate.trusteeData[0].memberPhoneNo || "",
+                "busniessPhoneNo": this.state.estate.trusteeData[0].busniessPhoneNo || "",
+                "residencePhoneNo":this.state.estate.trusteeData[0].residencePhoneNo || "",
+                "emailAddress": this.state.estate.trusteeData[0].emailAddress || "",
+                "memberNumber": this.state.estate.trusteeData[0].memberNumber || "",
+                "ssnTin": this.state.estate.trusteeData[0].socialSecurityNo || ""
+            },
+            "coTrusteeInfo":{
+                "prefix": this.state.estate.trusteeData[1].prefix || "",
+                "firstName":this.state.estate.trusteeData[1].prefix || "",
+                "middleInitial": this.state.estate.trusteeData[1].prefix || "",
+                "lastName": this.state.estate.trusteeData[1].prefix || "",
+                "suffix": this.state.estate.trusteeData[1].prefix || "",
+                "dob":this.state.estate.trusteeData[1].prefix || "",
+                "gender": this.state.estate.trusteeData[1].prefix || "",
+                "maritalStatus": this.state.estate.trusteeData[1].prefix || "",
+
+                "mailingAddress": {
+                    "addressType": this.state.estate.trusteeData[1].mailingAddressType || "",
+                    "streetNbr": this.state.estate.trusteeData[1].addrLine1 || "",
+                    "streetName": this.state.estate.trusteeData[1].addrLine2 || "",
+                    "zip": this.state.estate.trusteeData[1].zipcode || "",
+                    "city": this.state.estate.trusteeData[1].city || "",
+                    "state": this.state.estate.trusteeData[1].stateCity || ""
+                },
+                "isPhysAddrSameAsMailAddr": this.state.estate.trusteeData[1].isYourPhysicalAddresSame || "",
+                "physicalAddress": {
+                    "addressType": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].mailingAddressType || "" : this.state.estate.trusteeData[1].mailingAddressType,
+                    "streetNbr": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].addrLine1 || "" : this.state.estate.trusteeData[1].addrLine1_Phy,
+                    "streetName": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].addrLine2 || "" : this.state.estate.trusteeData[1].addrLine2_Phy,
+                    "zip": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].zipcode || "" : this.state.estate.trusteeData[1].zipcode_Phy,
+                    "city": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].city || "" : this.state.estate.trusteeData[1].city_Phy,
+                    "state": this.state.estate.trusteeData[1].isYourPhysicalAddresSame ? this.state.estate.trusteeData[1].stateCity || "" : this.state.estate.trusteeData[1].stateCity_Phy,
+                },
+
+                "mobileNo": this.state.estate.trusteeData[1].mobileNo || "",
+                "memberPhoneNo": this.state.estate.trusteeData[1].memberPhoneNo || "",
+                "busniessPhoneNo": this.state.estate.trusteeData[1].busniessPhoneNo || "",
+                "residencePhoneNo":this.state.estate.trusteeData[1].residencePhoneNo || "",
+                "emailAddress": this.state.estate.trusteeData[1].emailAddress || "",
+                "memberNumber": this.state.estate.trusteeData[1].memberNumber || "",
+                "ssnTin": this.state.estate.trusteeData[1].socialSecurityNo || ""
+            }
+           
+        };
+
 
 
 
@@ -1267,6 +1386,14 @@ class OpenAccPageTwoComponent extends Component {
 
                 };
                 break;
+                case "Trust Account":
+                case "Esate Account":
+                    payload = {
+                        ...payload,
+                        ...trustAccPayload
+    
+                    };
+                    break;
             default:
                 break;
         };
@@ -1509,7 +1636,9 @@ class OpenAccPageTwoComponent extends Component {
         this.setState(prevState => ({
             [stateKey]: {
                 ...prevState[stateKey],
-                [keyName]: dateStr
+                [keyName]: dateStr,
+                [`${keyName}Validation`]: true,
+
             }
         }));
     }
@@ -1572,9 +1701,11 @@ class OpenAccPageTwoComponent extends Component {
         this.setState(prevState => ({
             [stateKey]: {
                 ...prevState[stateKey],
-                [keyName]: text
+                [keyName]: text,
+                [`${keyName}Validation`]: true,
             }
         }));
+       
     }
 
     onChangeNickName = () => text => {
@@ -1582,21 +1713,12 @@ class OpenAccPageTwoComponent extends Component {
         this.setState({ nickname: text });
     }
 
-    onPressDropDown = (stateKey, keyName) => () => this.setState(prevState => ({
-        [stateKey]: {
-            ...prevState[stateKey],
-            [keyName]: !prevState[stateKey][keyName]
-        },
-        enableScrollViewScroll: gblStrings.isIOSPlatform
-    }));
-
     onPressRadio = (stateKey, keyName, text) => () => {
-
-
         this.setState(prevState => ({
             [stateKey]: {
                 ...prevState[stateKey],
-                [keyName]: text
+                [keyName]: text,
+                [`${keyName}Validation`]: true,
             }
         }));
     }
@@ -2942,7 +3064,9 @@ class OpenAccPageTwoComponent extends Component {
                     ...prevState[section],
                     [stateKey]: item.value,
                     [dropDownName]: false,
-                    rankKey: tempRankKey
+                    rankKey: tempRankKey,
+                    [`${stateKey}Validation`]: true,
+
                 }
             }));
 
@@ -2957,7 +3081,9 @@ class OpenAccPageTwoComponent extends Component {
                     ...prevState[section],
                     [stateKey]: item.value,
                     [dropDownName]: false,
-                    taxBracket: item.taxbracket
+                    taxBracket: item.taxbracket,
+                    [`${stateKey}Validation`]: true,
+
                 }
             }));
 
@@ -2966,7 +3092,9 @@ class OpenAccPageTwoComponent extends Component {
                 [section]: {
                     ...prevState[section],
                     [stateKey]: item.value,
-                    [dropDownName]: false
+                    [dropDownName]: false,
+                    [`${stateKey}Validation`]: true,
+
                 },
                 enableScrollViewScroll: true
             }));
@@ -2978,15 +3106,18 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.Dlog(`onSelectedIRABeneficiaryDropDownValue:: ${dropDownName}`);
         const newItems = [...this.state.retirementBeneficiaryData];
         const item = data[index];
+
         switch (dropDownName) {
 
             case "beneficiaryTypeDropDown":
                 newItems[objIndex].beneficiaryTypeDropDown = false;
                 newItems[objIndex].beneficiaryType = item.value;
+                newItems[objIndex][`${dropDownName}Validation`] = true;
                 break;
             case "relationshipToAccDropDown":
                 newItems[objIndex].relationshipToAccDropDown = false;
                 newItems[objIndex].relationshipToAcc = item.value;
+                newItems[objIndex][`${dropDownName}Validation`] = true;
                 break;
 
             default:
@@ -3001,30 +3132,15 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
-    onPressDropDownForIRABeneficiary = (keyName, index) => () => {
-        AppUtils.Dlog(`onPressDropDownForIRABeneficiary::: ${keyName}`);
-        const newItems = [...this.state.retirementBeneficiaryData];
-        newItems[index][keyName] = !newItems[index][keyName];
-        newItems[index].firstNameValidation = true;
-        newItems[index].lastNameValidation = true;
-        newItems[index].dobValidation = true;
-        newItems[index].emailAddressValidation = true;
-        newItems[index].socialSecurityNoValidation = true;
-        newItems[index].beneficiaryTypeValidation = true;
-        newItems[index].relationshipToAccValidation = true;
-        newItems[index].beneficiaryDistPercentValidation = true;
-
-        this.setState({
-            retirementBeneficiaryData: newItems
-        });
-
-    }
+  
 
     onChangeTextForIRABeneficiary = (keyName, index) => text => {
         AppUtils.Dlog("onChangeTextForIRABeneficiary:::>");
         const newItems = [...this.state.retirementBeneficiaryData];
         newItems[index][keyName] = text;
+        newItems[index][`${keyName}Validation`] = true;
 
+      /*
         newItems[index].firstNameValidation = true;
         newItems[index].lastNameValidation = true;
         newItems[index].dobValidation = true;
@@ -3033,7 +3149,7 @@ class OpenAccPageTwoComponent extends Component {
         newItems[index].beneficiaryTypeValidation = true;
         newItems[index].relationshipToAccValidation = true;
         newItems[index].beneficiaryDistPercentValidation = true;
-
+*/  
 
         this.setState({
             retirementBeneficiaryData: newItems,
@@ -3046,7 +3162,10 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.Dlog("onChangeDateForIRABeneficiary:::>");
         const newItems = [...this.state.retirementBeneficiaryData];
         newItems[index][keyName] = dateStr;
-        newItems[index].firstNameValidation = true;
+        newItems[index][`${keyName}Validation`] = true;
+
+
+     /*   newItems[index].firstNameValidation = true;
         newItems[index].lastNameValidation = true;
         newItems[index].dobValidation = true;
         newItems[index].emailAddressValidation = true;
@@ -3054,6 +3173,7 @@ class OpenAccPageTwoComponent extends Component {
         newItems[index].beneficiaryTypeValidation = true;
         newItems[index].relationshipToAccValidation = true;
         newItems[index].beneficiaryDistPercentValidation = true;
+        */
         this.setState({
             retirementBeneficiaryData: newItems,
         });
@@ -3118,11 +3238,14 @@ class OpenAccPageTwoComponent extends Component {
     onSelectedEstateTrustDropDownValue = (dropDownName, objIndex) => (value, index, data) => {
         AppUtils.Dlog(`onSelectedEstateTrustDropDownValue:: ${dropDownName}`);
         const newItems = [...this.state.estate.trusteeData];
-        newItems[objIndex].firstNameValidation = true;
+        newItems[objIndex][`${dropDownName}Validation`] = true;
+
+       /* newItems[objIndex].firstNameValidation = true;
         newItems[objIndex].lastNameValidation = true;
         newItems[objIndex].dobValidation = true;
         newItems[objIndex].emailAddressValidation = true;
         newItems[objIndex].socialSecurityNoValidation = true;
+        */
       
 
 
@@ -3153,12 +3276,15 @@ class OpenAccPageTwoComponent extends Component {
 
         const newItems = [...this.state.estate.trusteeData];
         newItems[index][keyName] = text;
+        newItems[index][`${keyName}Validation`] = true;
+
+/*
         newItems[index].firstNameValidation = true;
         newItems[index].lastNameValidation = true;
         newItems[index].dobValidation = true;
         newItems[index].emailAddressValidation = true;
         newItems[index].socialSecurityNoValidation = true;
-      
+   */   
 
 
         this.setState(() => (prevState => ({
@@ -3177,12 +3303,15 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.Dlog("onChangeDateForEstateTrust:::>");
         const newItems = [...this.state.estate.trusteeData];
         newItems[index][keyName] = dateStr;
+        newItems[index][`${keyName}Validation`] = true;
+
+        /*
         newItems[index].firstNameValidation = true;
         newItems[index].lastNameValidation = true;
         newItems[index].dobValidation = true;
         newItems[index].emailAddressValidation = true;
         newItems[index].socialSecurityNoValidation = true;
-      
+      */
 
 
         this.setState(() => (prevState => ({
@@ -3198,6 +3327,8 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.Dlog(`onPressRadioForEstateTrust:: ${keyName}`);
         const newItems = [...this.state.estate.trusteeData];
         newItems[index][keyName] = text;
+        newItems[index][`${keyName}Validation`] = true;
+
 
         this.setState(() => (prevState => ({
             estate: {
