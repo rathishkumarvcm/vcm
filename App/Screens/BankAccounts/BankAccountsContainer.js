@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import BankAccountsComponent from './BankAccountsComponent';
-import { getBankAccountInfo } from "../../Shared/Actions";
+import { bankAccountAction } from "../../Shared/Actions";
 
 
 const mapStateToProps = (state /* , props */) => (
@@ -10,7 +10,7 @@ const mapStateToProps = (state /* , props */) => (
 );
 
 const mapDispatchToProps = {
-    ...getBankAccountInfo
+    ...bankAccountAction
 };
 
 export default connect(

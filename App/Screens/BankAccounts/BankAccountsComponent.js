@@ -12,6 +12,7 @@ class BankAccountsComponent extends Component {
         this.showAlert = true;
         this.confirmDelete = false;
         this.deleteId = "";
+        this.accountNumber = "";
         this.bankName = "";
         this.state = {
             isLoading: false,
@@ -61,18 +62,9 @@ class BankAccountsComponent extends Component {
     deleteBankAccount = (shouldDelete) => {
         this.confirmDelete = false;
         if (shouldDelete) {
-            let tmpData = [];
-            let index = -1;
-            tmpData = this.state.bankAccountInfo;
-            tmpData.map((item) => {
-                if (item.Id == this.deleteId) {
-                    index = tmpData.indexOf(item);
-                }
-            });
-            if (index != -1) {
-                tmpData.splice(index, 1);
-            }
-            this.setState({ bankAccountInfo: tmpData });
+            let payload = [];
+            payload.push(JSON.stringify(tmpData));
+            this.props.deleteBankAccount(JSON.stringify(payload), this.accountNumber);
         } else {
             let tmpData = [];
             tmpData = this.state.bankAccountInfo;
@@ -83,6 +75,7 @@ class BankAccountsComponent extends Component {
             });
             this.setState({ bankAccountInfo: tmpData });
         }
+        this.updateView();
     }
 
     addBankAccount = (item) => {
@@ -98,19 +91,19 @@ class BankAccountsComponent extends Component {
         this.updateView();
     }
 
-    updateConfirmDelete = (confirmDelete, itemId, bankName) => {
+    updateConfirmDelete = (confirmDelete, item) => {
         this.confirmDelete = confirmDelete;
-        this.deleteId = itemId;
-        this.bankName = bankName;
+        this.deleteId = item.Id;
+        this.accountNumber = item.accountNumber;
+        this.bankName = item.bankName;
         this.updateView();
     }
 
     render() {
         if (this.props && this.props.bankAccountInfo && this.props.bankAccountInfo != this.state.bankAccountInfo) {
-            this.setState({ bankAccountInfo: this.props.bankAccountInfo});
+            this.setState({ bankAccountInfo: this.props.bankAccountInfo });
         }
         const {navigation} = this.props;
-        //const isSuccess = (this.props && this.props.navigation && this.props.navigation.getParam('isSuccess', ''));
         const isSuccess = navigation.getParam('isSuccess', false);
         const accountType = navigation.getParam('accountType', '');
         const financialInstitutionName = navigation.getParam('financialInstitutionName', "");
@@ -224,7 +217,7 @@ class BankAccountsComponent extends Component {
                                         buttonStyle={styles.deleteBtn}
                                         buttonText={gblStrings.common.delete}
                                         textStyle={styles.backButtonText}
-                                        onPress={() => this.updateConfirmDelete(true, item.Id, item.bankName)}
+                                        onPress={() => this.updateConfirmDelete(true, item)}
                                     />}
 
                                     <View style={styles.linkBreak2} />
