@@ -23,6 +23,11 @@ class ManageBenificiariesComponent extends Component {
   }
 
   handleEdit = (data) => () => {
+    console.log(data);
+    const payloadData = {
+      savedBeneficiaryData: data
+    };
+    this.props.saveBeneficiaryData(payloadData);
     this.props.navigation.navigate("editManageBeneficiaries", { acc_Data: data });
   }
 

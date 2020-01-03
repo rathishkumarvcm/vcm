@@ -8,6 +8,10 @@ import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
 
 
+let savedData = {};
+let ammendData = {};
+let ammendIndex = 0;
+let menuList = [];
 
 class LiquidationPageTwoComponent extends Component {
     constructor(props) {
@@ -16,22 +20,13 @@ class LiquidationPageTwoComponent extends Component {
             collapseLiquidationIcon: "-  ",
             collapseLiquidation: false,
             selectedFundIndex: null,
-            allSharesSelected: false,
-            dollarSelected: false,
-            percSelected: false,
             dollarValue: [],
             percentageValue: [],
             disableNextButton: true,
-            minHoldingDollar:[],
-            selectedFundData: {
-                fundName: '',
-                totalShares: '',
-                worthAmount: '',
-                allSharesSelected: false,
-                dollarValue: '',
-                percentageValue: '',
-            },
-            ammend:false
+            ammend: false,
+            fundListData: [],
+            selectedAccountType: '',
+            selectedIndex: 0,
         };
     }
 
@@ -41,7 +36,7 @@ class LiquidationPageTwoComponent extends Component {
         } else {
             return false;
         }
-      }
+    }
 
     onClickExpandLiquidation = () => {
         this.setState({ collapseLiquidation: !this.state.collapseLiquidation });
@@ -49,130 +44,215 @@ class LiquidationPageTwoComponent extends Component {
     };
 
     onClickSelectFund = (item, index) => {
-        this.setState(prevState => ({
-            selectedFundData: {
-                ...prevState.selectedFundData,
-                fundName: item.fundName,
-                totalShares: item.totalShares,
-                worthAmount: item.worthAmount,
-            },
+        let funds = this.state.fundListData;
+        for (let i = 0; i < funds.length; i++) {
+            if (i !== index) {
+                funds[i]["allSharesSelected"] = false;
+                funds[i]["percentageSelected"] = false;
+                funds[i]["percentageValue"] = '';
+                funds[i]["dollarSelected"] = false;
+                funds[i]["dollarValue"] = '';
+            }
+        }
+        this.setState({
             selectedFundIndex: index,
-        }))
+        });
     }
 
 
-    onClickAllShares = () => {
-        this.setState(prevState => ({
-            selectedFundData: {
-                ...prevState.selectedFundData,
-                dollarValue: '',
-                percentageValue:'',
-                allSharesSelected:!this.state.allSharesSelected,
-            },
-            allSharesSelected: !this.state.allSharesSelected,
-            dollarSelected: false,
-            percSelected: false,
-            disableNextButton: this.state.allSharesSelected,
-            percentageValue: [],
-            dollarValue: [],
-            minHoldingDollar:[],
-        }));
+    onClickAllShares = (item, index) => {
+        let funds = this.state.fundListData;
+        for (let i = 0; i < funds.length; i++) {
+            if (i === index) {
+                funds[i]["allSharesSelected"] = !funds[i]["allSharesSelected"];
+
+            } else {
+                funds[i]["allSharesSelected"] = false;
+            }
+            funds[i]["percentageSelected"] = false;
+            funds[i]["percentageValue"] = '';
+            funds[i]["dollarSelected"] = false;
+            funds[i]["dollarValue"] = '';
+
+        }
+        this.setState({
+            fundListData: funds,
+            disableNextButton: !funds[index]["allSharesSelected"],
+        });
     }
 
-    onClickAmountinDollar = () => {
-        this.setState(prevState => ({
-            selectedFundData: {
-                ...prevState.selectedFundData,
-                percentageValue:'',
-                allSharesSelected:false,
-            },
-            allSharesSelected: false,
-            dollarSelected: !this.state.dollarSelected,
-            percSelected: false,
-            disableNextButton: true,
-            percentageValue: [],
-        }));
+    onClickAmountinDollar = (item, index) => {
+        let funds = this.state.fundListData;
+        for (let i = 0; i < funds.length; i++) {
+            if (i === index) {
+                funds[i]["dollarSelected"] = !funds[i]["dollarSelected"];
+            } else {
+                funds[i]["dollarSelected"] = false;
+            }
+            funds[i]["allSharesSelected"] = false;
+            funds[i]["percentageSelected"] = false;
+            funds[i]["percentageValue"] = '';
+            funds[i]["dollarValue"] = '';
+
+        }
+        this.setState({
+            fundListData: funds,
+            disableNextButton: true
+        });
     }
 
-    onClickAmountInPerc = () => {
-        this.setState(prevState => ({
-            selectedFundData: {
-                ...prevState.selectedFundData,
-                dollarValue:'',
-                allSharesSelected:false,
-            },
-            allSharesSelected: false,
-            dollarSelected: false,
-            percSelected: !this.state.percSelected,
-            disableNextButton: true,
-            dollarValue: [],
-            minHoldingDollar:[],
-        }));
+    onClickAmountInPerc = (item, index) => {
+        let funds = this.state.fundListData;
+        for (let i = 0; i < funds.length; i++) {
+            if (i === index) {
+                funds[i]["percentageSelected"] = !funds[i]["percentageSelected"];
+            } else {
+                funds[i]["percentageSelected"] = false;
+            }
+            funds[i]["allSharesSelected"] = false;
+            funds[i]["dollarSelected"] = false;
+            funds[i]["percentageValue"] = '';
+            funds[i]["dollarValue"] = '';
+        }
+        this.setState({
+            fundListData: funds,
+            disableNextButton: true
+        });
     }
 
     onChangeDollarVal = (text) => {
-        let a = this.state.dollarValue.slice(); 
-        let b = this.state.minHoldingDollar.slice();
-        a[this.state.selectedFundIndex] = text;
-        b[this.state.selectedFundIndex] = (a[this.state.selectedFundIndex]>(0.95*this.state.selectedFundData.worthAmount));
-        this.setState(prevState => ({
-            selectedFundData: {
-                ...prevState.selectedFundData,
-                dollarValue: a[this.state.selectedFundIndex],
-                percentageValue:'',
-                allSharesSelected:false
-            },
-            dollarValue: a,
-            disableNextButton:this.isEmpty(text),
-            minHoldingDollar: b
-        }));
-        
+        let funds = this.state.fundListData;
+        for (let i = 0; i < funds.length; i++) {
+            if (i === this.state.selectedFundIndex) {
+                funds[i]["dollarValue"] = text;
+                funds[i]["dollarSelected"] = true;
+            } else {
+                funds[i]["dollarValue"] = '';
+                funds[i]["dollarSelected"] = false;
+            }
+            funds[i]["percentageSelected"] = false;
+            funds[i]["allSharesSelected"] = false;
+            funds[i]["percentageValue"] = '';
+        }
+        this.setState({
+            fundListData: funds,
+            disableNextButton: this.isEmpty(text),
+        });
+
     }
 
     onChangePercentageVal = (text) => {
-        let a = this.state.percentageValue.slice(); 
-        a[this.state.selectedFundIndex] = text;
-        this.setState(prevState => ({
-            selectedFundData: {
-                ...prevState.selectedFundData,
-                dollarValue:'',
-                percentageValue: a[this.state.selectedFundIndex],
-                allSharesSelected:false,
-            },
-            percentageValue: a,
-            disableNextButton:this.isEmpty(text),
-        }));
+        let funds = this.state.fundListData;
+        for (let i = 0; i < funds.length; i++) {
+            if (i === this.state.selectedFundIndex) {
+                funds[i]["percentageValue"] = text;
+                funds[i]["percentageSelected"] = true;
+            } else {
+                funds[i]["percentageValue"] = '';
+                funds[i]["percentageSelected"] = false;
+            }
+            funds[i]["dollarSelected"] = false;
+            funds[i]["allSharesSelected"] = false;
+            funds[i]["dollarValue"] = '';
+        }
+        this.setState({
+            fundListData: funds,
+            disableNextButton: this.isEmpty(text),
+        });
     }
 
-    navigateLiquidationPageOne = () => 
-    {
-        if(this.state.ammend)
-        {
+    navigateLiquidationPageOne = () => {
+        if (this.state.ammend) {
             this.props.navigation.navigate('tAmmendComponent');
         }
-        else{
+        else {
             this.props.navigation.navigate('LiquidationPageOne');
         }
-        
     }
     navigateLiquidationPageTwo = () => this.props.navigation.navigate('LiquidationPageTwo');
 
     nextButtonAction = () => {
-        console.log('On Click Next Fund Selection ...');
-        this.setState(prevState => ({
-            selectedFundData: {
-                ...prevState.selectedFundData,
-            },
-        }));
-        const payloadData = this.state.selectedFundData;
-        this.props.saveData(payloadData);
-        console.log("payloadData---> " + JSON.stringify(payloadData));
-        if(this.state.ammend)
-        {
-        this.props.navigation.navigate('LiquidationPageThree',{ammend:true});
+        console.log('On Click Next Fund Selection ... ');
+        let i = this.state.selectedFundIndex;
+        const date = new Date().getDate();
+        const month = new Date().getMonth() + 1;
+        const year = new Date().getFullYear();
+        const updatedDate = date + '/' + month + '/' + year;
+        const finalKey = menuList[menuList.length - 1];
+
+        if (this.state.ammend) {
+            const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
+            const amndObj = menuList[pIndex];
+            const transType = ammendData.TransactionType;
+            const ammendPayloadData = {
+                "key": amndObj.key,
+                "title": amndObj.title,
+                "data": {
+                    "count": ammendData.count,
+                    "Dateadded": updatedDate,
+                    "TransactionType": transType,
+                    "OrderStatus": ammendData.OrderStatus,
+                    "totalSHares": ammendData.totalSHares,
+                    "worth": ammendData.worth,
+                    "selectedAccountData": ammendData.selectedAccountData,
+                    "selectedFundData": {
+                        "fundName": this.state.fundListData[0].fundName,
+                        "fundNumber": "",
+                        "fundingOption": "",
+                        "initialInvestment": "",
+                        "monthlyInvestment": "",
+                        "startDate": "",
+                        "count": "",
+                        "total": "",
+                        "totalShares": this.state.fundListData[0].totalShares,
+                        "worthAmount": this.state.fundListData[0].worthAmount,
+                        "allSharesSelected": this.state.fundListData[0].allSharesSelected,
+                        "dollarSelected": this.state.fundListData[0].dollarSelected,
+                        "percentageSelected": this.state.fundListData[0].percentageSelected,
+                        "dollarValue": this.state.fundListData[0].dollarValue,
+                        "percentageValue": this.state.fundListData[0].percentageValue,
+                        "funds": this.state.fundListData,
+                    },
+                    "selectedFundWithdrawalData": ammendData.selectedFundWithdrawalData,
+                    "reviewConfirmLiquidationData":ammendData.reviewConfirmLiquidationData,
+                    "selectedFundSourceData": ammendData.selectedFundSourceData,
+                    "currentSecurities": ammendData.currentSecurities,
+                    "contribution": ammendData.contribution,
+                    "estimated": ammendData.estimated
+                }
+            }
+
+            menuList.splice(pIndex, 1, ammendPayloadData);
+            this.props.ammendActions(menuList);
+            this.props.navigation.navigate('LiquidationPageThree', { ammend: true, index: ammendIndex, data: ammendData });
         }
-        else{
-            this.props.navigation.navigate('LiquidationPageThree',{ammend:false});
+        else {
+            const payloadData = {
+                saveLiquidationSelectedData: {
+                    ...savedData,
+                    "selectedFundData": {
+                        "fundName": this.state.fundListData[i].fundName,
+                        "fundNumber": "",
+                        "fundingOption": "",
+                        "initialInvestment": "",
+                        "monthlyInvestment": "",
+                        "startDate": "",
+                        "count": "",
+                        "total": "",
+                        "totalShares": this.state.fundListData[i].totalShares,
+                        "worthAmount": this.state.fundListData[i].worthAmount,
+                        "allSharesSelected": this.state.fundListData[i].allSharesSelected,
+                        "dollarSelected": this.state.fundListData[i].dollarSelected,
+                        "percentageSelected": this.state.fundListData[i].percentageSelected,
+                        "dollarValue": this.state.fundListData[i].dollarValue,
+                        "percentageValue": this.state.fundListData[i].percentageValue,
+                        "funds": this.state.fundListData
+                    },
+                },
+            };
+            this.props.saveData(payloadData);
+            console.log("payloadData---> " + JSON.stringify(payloadData));
+            this.props.navigation.navigate('LiquidationPageThree', { ammend: false });
         }
     }
 
@@ -183,57 +263,80 @@ class LiquidationPageTwoComponent extends Component {
 
     navigateBack = () => this.props.navigation.goBack();
 
+
     componentDidMount() {
-        console.log("Page Two Compoennt componentDidMount --> " + JSON.stringify(this.props));
-        if(this.props.navigation.getParam('ammend'))
-        {
-            this.setState({ammend:true});
+        console.log("ammendData Reducer---componentDidMount->" + JSON.stringify(this.props))
+        if (this.props.navigation.getParam('ammend')) {
+            menuList = this.props.amendReducerData.menu;
+            ammendIndex = this.props.navigation.getParam('index');
+            ammendData = this.props.amendReducerData.menu[ammendIndex - 1].data;
+           
+            this.setState({
+                ammend: true,
+            });
         }
-        else{
-            this.setState({ammend:false});
+        else {
+            this.setState({ ammend: false });
         }
-        
+        if (this.props.liquidationInitialState && this.props.liquidationInitialState.saveLiquidationSelectedData) {
+            savedData = this.props.liquidationInitialState.saveLiquidationSelectedData;
+        }
+        this.getFundList();
+
     }
 
-    getFundList = () =>{
+    getFundList = () => {
         let selectedIndex = 0;
         let selectedAccountType = "";
         let selectedAccountNumber = "";
         let fundList = [];
         let accType = '';
-        if(this.props.navigation.getParam('ammend')){
-            accType = this.props.navigation.getParam('ammend').accountType;
-            selectedAccountNumber = this.props.navigation.getParam('ammend').accountNumber;
-        }else{
-            accType = this.props.liquidationInitialState.accType;
-            selectedAccountNumber = this.props.liquidationInitialState.selectedAccountNumber;
+        if (this.props.navigation.getParam('ammend')) {
+            accType = ammendData.selectedAccountData.accountType;
+            selectedAccountNumber = ammendData.selectedAccountData.accountNumber;
+        } else {
+            accType = savedData.selectedAccountData.accountType;
+            selectedAccountNumber = savedData.selectedAccountData.accountNumber;
         }
-        if(accType === "General"){
+        if (accType === "General") {
             selectedAccountType = "General_Account";
-        }else if(accType === "IRA"){
+        } else if (accType === "IRA") {
             selectedAccountType = "IRA_Account";
-        }else{
+        } else {
             selectedAccountType = "UTMA_Account";
         }
 
-            for( let i = 0; i<this.props.liquidationInitialState.accSelectionData[selectedAccountType].length;i++){
-                if(selectedAccountNumber===this.props.liquidationInitialState.accSelectionData[selectedAccountType][i].accountNumber){
-                    selectedIndex = i;
-                }
+        for (let i = 0; i < this.props.liquidationInitialState.accSelectionData[selectedAccountType].length; i++) {
+            if (selectedAccountNumber === this.props.liquidationInitialState.accSelectionData[selectedAccountType][i].accNumber) {
+                selectedIndex = i;
             }
-            fundList = this.props.liquidationInitialState.accSelectionData[selectedAccountType][selectedIndex].funds;
-            return fundList;
+        }
+        fundList = this.props.liquidationInitialState.accSelectionData[selectedAccountType][selectedIndex].funds;
+        if (this.props.navigation.getParam('ammend')) {
+            this.setState({
+                fundListData: ammendData.selectedFundData.funds,
+                disableNextButton: !(ammendData.selectedFundData.allSharesSelected || ammendData.selectedFundData.percentageSelected || ammendData.selectedFundData.dollarSelected)
+            });
+        } else {
+            this.setState({
+                fundListData: fundList,
+                selectedIndex: selectedIndex,
+                selectedAccountType: selectedAccountType
+            });
+        }
     }
 
     render() {
         let currentPage = 2;
         let totalCount = 4;
         let pageName = gblStrings.liquidation.fundSelectionScreenName;
-        if(this.state.ammend)
-        {
-             currentPage = 1;
-             pageName = '1 - Fund Selection';
-             totalCount = 3;
+        if (this.state.ammend) {
+            currentPage = 1;
+            pageName = '1 - Fund Selection';
+            totalCount = 3;
+        }
+        if (this.props.liquidationInitialState && this.props.liquidationInitialState.saveLiquidationSelectedData) {
+            savedData = this.props.liquidationInitialState.saveLiquidationSelectedData;
         }
         return (
             <View style={styles.container}>
@@ -251,8 +354,8 @@ class LiquidationPageTwoComponent extends Component {
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.flexHead}>
                         <View style={styles.accountFlex}>
-                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountName}{this.props.liquidationInitialState.selectedAccountName}</Text>
-                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountNumber}{this.props.liquidationInitialState.selectedAccountNumber}</Text>
+                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountName}{this.state.ammend ? ammendData.selectedAccountData.accountName : savedData.selectedAccountData.accountName}</Text>
+                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountNumber}{this.state.ammend ? ammendData.selectedAccountData.accountNumber : savedData.selectedAccountData.accountNumber}</Text>
                         </View>
 
                         <View style={styles.headerFlex} onTouchStart={this.onClickExpandLiquidation}>
@@ -265,7 +368,7 @@ class LiquidationPageTwoComponent extends Component {
                     <Collapsible collapsed={this.state.collapseLiquidation} align="center">
                         <Text style={styles.fundSourceContent}>{gblStrings.liquidation.fundSourceContext}</Text>
                         <FlatList
-                            data={fundsList}
+                            data={this.state.fundListData}
                             renderItem={({ item, index }) => {
                                 return (
                                     <View style={(this.state.selectedFundIndex === index) ? styles.fundsFlexSelected : styles.fundsFlex} onTouchStart={() => this.onClickSelectFund(item, index)}>
@@ -289,51 +392,51 @@ class LiquidationPageTwoComponent extends Component {
                                             <View style={styles.flex3}>
 
                                                 <View style={styles.allShares} >
-                                                    <TouchableOpacity onPress={this.onClickAllShares} disabled={!(this.state.selectedFundIndex === index)}>
+                                                    <TouchableOpacity onPress={() => this.onClickAllShares(item, index)} disabled={!(this.state.selectedFundIndex === index)}>
                                                         <View style={styles.radioButtonFlexOff}>
-                                                            {(this.state.allSharesSelected && (this.state.selectedFundIndex === index)) ? <View style={styles.radioButtonFlexOn} /> : null}
+                                                            {(item.allSharesSelected) ? <View style={styles.radioButtonFlexOn} /> : null}
                                                         </View>
                                                     </TouchableOpacity>
                                                     <Text style={styles.allSharesText}>{gblStrings.liquidation.allShares}</Text>
                                                 </View>
 
                                                 <View style={styles.allShares}>
-                                                    <TouchableOpacity onPress={this.onClickAmountinDollar} disabled={!(this.state.selectedFundIndex === index)}>
+                                                    <TouchableOpacity onPress={() => this.onClickAmountinDollar(item, index)} disabled={!(this.state.selectedFundIndex === index)}>
                                                         <View style={styles.radioButtonFlexOff}>
-                                                            {(this.state.dollarSelected && (this.state.selectedFundIndex === index)) ? <View style={styles.radioButtonFlexOn} /> : null}
+                                                            {(item.dollarSelected) ? <View style={styles.radioButtonFlexOn} /> : null}
                                                         </View>
                                                     </TouchableOpacity>
                                                     <Text style={styles.dollarText}>$</Text>
                                                     <GInputComponent
                                                         propInputStyle={styles.amountTextBox}
                                                         inputStyle={styles.inputStyle}
-                                                        value={this.state.dollarValue[index]}
+                                                        value={item.dollarValue}
                                                         onChangeText={this.onChangeDollarVal}
-                                                        editable={(this.state.dollarSelected && (this.state.selectedFundIndex === index))}
+                                                        editable={(item.dollarSelected)}
                                                         keyboardType="decimal-pad"
                                                         maxLength={13}
-                                                        errorFlag={(this.state.minHoldingDollar[index])&& (this.state.selectedFundIndex === index)}
+                                                        errorFlag={item.dollarValue > 0.95 * item.worthAmount}
                                                         errorText="Due to market fluctuations, this trade may fail. We suggest you do an ‘All’ shares liquidations"
                                                     />
                                                 </View>
 
 
                                                 <View style={styles.allShares}>
-                                                    <TouchableOpacity onPress={this.onClickAmountInPerc} disabled={!(this.state.selectedFundIndex === index)}>
+                                                    <TouchableOpacity onPress={() => this.onClickAmountInPerc(item, index)} disabled={!(this.state.selectedFundIndex === index)}>
                                                         <View style={styles.radioButtonFlexOff}>
-                                                            {(this.state.percSelected && (this.state.selectedFundIndex === index)) ? <View style={styles.radioButtonFlexOn} /> : null}
+                                                            {(item.percentageSelected) ? <View style={styles.radioButtonFlexOn} /> : null}
                                                         </View>
                                                     </TouchableOpacity>
                                                     <Text style={styles.dollarText}>%</Text>
                                                     <GInputComponent
                                                         propInputStyle={styles.amountTextBox}
                                                         inputStyle={styles.inputStyle}
-                                                        value={this.state.percentageValue[index]}
+                                                        value={item.percentageValue}
                                                         onChangeText={this.onChangePercentageVal}
-                                                        editable={(this.state.percSelected) && (this.state.selectedFundIndex === index)}
+                                                        editable={(item.percentageSelected)}
                                                         keyboardType="decimal-pad"
-                                                        maxLength = {3}
-                                                       />
+                                                        maxLength={3}
+                                                    />
                                                 </View>
                                             </View>
 
@@ -366,8 +469,6 @@ class LiquidationPageTwoComponent extends Component {
                     </View>
                     <GFooterComponent />
                 </ScrollView>
-
-
             </View>
 
         );
@@ -378,10 +479,14 @@ class LiquidationPageTwoComponent extends Component {
 LiquidationPageTwoComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     liquidationInitialState: PropTypes.instanceOf(Object),
+    amendReducerData: PropTypes.instanceOf(Object),
     saveData: PropTypes.func,
+    ammendActions: PropTypes.func,
 };
 
 LiquidationPageTwoComponent.defaultProps = {
-
+    navigation: {},
+    liquidationInitialState: {},
+    amendReducerData: {},
 };
 export default LiquidationPageTwoComponent;

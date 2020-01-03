@@ -1,22 +1,20 @@
 import { connect } from 'react-redux';
-import LiquidationFinishComponent from './LiquidationFinishComponent';
-import { liquidationActions, ammendActions } from "../../Shared/Actions";
+import ExchangeScreenOneComponent from './ExchangeScreenOneComponent';
+import { exchangeActions } from "../../Shared/Actions";
 
 /*----------------------
                                   Redux Methods
                                                              -------------------------- */
 
 const mapStateToProps = (state /* , props */) => ({
-  liquidationInitialState: state.liquidationData,
-  amendReducerData:state.amendReducerData
+  exchangeData: state.exchangeData,
 });
 
 const mapDispatchToProps = {
-  ...liquidationActions,
-  ...ammendActions
+  ...exchangeActions,
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(LiquidationFinishComponent);
+)(ExchangeScreenOneComponent);

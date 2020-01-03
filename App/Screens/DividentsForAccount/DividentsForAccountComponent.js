@@ -30,7 +30,7 @@ class DividentsForAccountComponent extends Component {
         requestSubmited: requestSubmitted
     });
 
-    updateCurrentSecurityChanged = () => this.setState({ stateChanged: !this.state.stateChanged });
+    updateStateChanged = () => this.setState({ stateChanged: !this.state.stateChanged });
 
     updateReinvestChanged = () => this.setState({ reinvestChanged: !this.state.reinvestChanged });
 
@@ -62,7 +62,7 @@ class DividentsForAccountComponent extends Component {
                         if (item.Id == itemId) {
                             item.currentSecuritiesSwitchOn = true;
                             item.currentSecuritiesSwitchOff = false;
-                            this.updateCurrentSecurityChanged();
+                            this.updateStateChanged();
 
                         }
                     });
@@ -74,7 +74,7 @@ class DividentsForAccountComponent extends Component {
                         if (item.Id == itemId) {
                             item.currentSecuritiesSwitchOn = false;
                             item.currentSecuritiesSwitchOff = true;
-                            this.updateCurrentSecurityChanged();
+                            this.updateStateChanged();
                         }
                     });
                     this.setState({ accountInfo: tmpData });
@@ -87,7 +87,7 @@ class DividentsForAccountComponent extends Component {
                         if (item.Id == itemId) {
                             item.futureSecuritiesSwitchOn = true;
                             item.futureSecuritiesSwitchOff = false;
-                            this.updateCurrentSecurityChanged();
+                            this.updateStateChanged();
                         }
                     });
                     this.setState({ accountInfo: tmpData });
@@ -98,7 +98,7 @@ class DividentsForAccountComponent extends Component {
                         if (item.Id == itemId) {
                             item.futureSecuritiesSwitchOn = false;
                             item.futureSecuritiesSwitchOff = true;
-                            this.updateCurrentSecurityChanged();
+                            this.updateStateChanged();
                         }
                     });
                     this.setState({ accountInfo: tmpData });
@@ -111,7 +111,7 @@ class DividentsForAccountComponent extends Component {
     switchOnOffReinvest = (fromView, flag, accountId, fundId) => () => {
         let tmpData = [];
         switch (fromView) {
-            case 'reinvestFund':
+            case 'currentSecurities':
                 tmpData = this.state.accountInfo;
                 tmpData.map((item) => {
                     if (item.Id == accountId) {
@@ -124,7 +124,27 @@ class DividentsForAccountComponent extends Component {
                                 } else {
                                     fund.enableReinvest = false;
                                 }
-                                this.updateCurrentSecurityChanged();
+                                this.updateStateChanged();
+                            }
+                        });
+                    }
+                });
+                this.setState({ accountInfo: tmpData });
+                break;
+            case 'futureSecurities':
+                tmpData = this.state.accountInfo;
+                tmpData.map((item) => {
+                    if (item.Id == accountId) {
+                        let tmpFutureSecurities = [];
+                        tmpFutureSecurities = item.futureFundList;
+                        tmpFutureSecurities.map((fund) => {
+                            if (fund.FundId == fundId) {
+                                if (flag) {
+                                    fund.enableReinvest = true;
+                                } else {
+                                    fund.enableReinvest = false;
+                                }
+                                this.updateStateChanged();
                             }
                         });
                     }
@@ -152,7 +172,7 @@ class DividentsForAccountComponent extends Component {
         <ViewAccountItem
             item={item}
             switchOnOffStateUpdates={this.switchOnOffStateUpdates}
-            updateCurrentSecurityChanged={this.updateCurrentSecurityChanged}
+            updateStateChanged={this.updateStateChanged}
             switchOnOffReinvest={this.switchOnOffReinvest}
             setDividentAmount={this.setDividentAmount}
         />)
@@ -192,7 +212,6 @@ class DividentsForAccountComponent extends Component {
                         <FlatList
                             data={this.state.accountInfo}
                             extraData={this.state.stateChanged}
-                            currentSecuritiesSwitchOn={this.state.currentSecuritiesSwitchOn}
                             keyExtractor={this.getKey}
                             renderItem={this.renderList}
                         />
@@ -271,9 +290,11 @@ class DividentsForAccountComponent extends Component {
 const ViewAccountItem = (props) => {
     let item = [];
     let currentSecurities = [];
+    let futureSecurities = [];
     item = props.item;
     currentSecurities = item.currentFundList;
-    props.updateCurrentSecurityChanged;
+    futureSecurities = item.futureFundList;
+    props.updateStateChanged;
     return (
         <>
             <View style={styles.accountView}>
@@ -331,7 +352,7 @@ const ViewAccountItem = (props) => {
                                     {fund.FundName}
                                 </Text>
                                 <Switch style={styles.switchStyle}
-                                    onValueChange={props.switchOnOffReinvest('reinvestFund', !fund.enableReinvest, item.Id, fund.FundId)}
+                                    onValueChange={props.switchOnOffReinvest('currentSecurities', !fund.enableReinvest, item.Id, fund.FundId)}
                                     value={fund.enableReinvest}
                                     trackColor={{ true: '#000000', false: '#DBDBDB' }}
                                 />
@@ -355,8 +376,8 @@ const ViewAccountItem = (props) => {
 
                 <View style={styles.switchContainer}>
                     <GSwitchComponent
-                        switchOnMethod={props.switchOnOffStateUpdates('futureSecurities', false)}
-                        switchOffMethod={props.switchOnOffStateUpdates('futureSecurities', true)}
+                        switchOnMethod={props.switchOnOffStateUpdates('futureSecurities', false, item.Id)}
+                        switchOffMethod={props.switchOnOffStateUpdates('futureSecurities', true, item.Id)}
                         switchOn={item.futureSecuritiesSwitchOff}
                         switchOff={item.futureSecuritiesSwitchOn}
                         switchOnText={gblStrings.common.yes}
@@ -381,7 +402,21 @@ const ViewAccountItem = (props) => {
 
 
             {item.futureSecuritiesSwitchOn ?
-                <View style={styles.reinvestContainer} />
+                <View style={styles.reinvestContainer}>
+                    {futureSecurities.map((fund) =>
+                        <>
+                            <View style={styles.fundContainer}>
+                                <Text style={styles.fundText}>
+                                    {fund.FundName}
+                                </Text>
+                                <Switch style={styles.switchStyle}
+                                    onValueChange={props.switchOnOffReinvest('futureSecurities', !fund.enableReinvest, item.Id, fund.FundId)}
+                                    value={fund.enableReinvest}
+                                    trackColor={{ true: '#000000', false: '#DBDBDB' }}
+                                />
+                            </View>
+                        </>)}
+                </View>
                 : null
             }
 
@@ -437,7 +472,7 @@ const ViewAccountItem = (props) => {
 
 ViewAccountItem.propTypes = {
     item: PropTypes.instanceOf(Object),
-    updateCurrentSecurityChanged: PropTypes.instanceOf(Function),
+    updateStateChanged: PropTypes.instanceOf(Function),
     switchOnOffStateUpdates: PropTypes.instanceOf(Function),
     switchOnOffReinvest: PropTypes.instanceOf(Function),
     setDividentAmount: PropTypes.instanceOf(Function),

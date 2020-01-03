@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { styles } from './styles';
 import { View, ScrollView, Text, FlatList, TouchableOpacity } from 'react-native';
-import { GHeaderComponent, GFooterComponent, GIcon, GButtonComponent } from '../../CommonComponents';
 import PropTypes from "prop-types";
+import { styles } from './styles';
+import { GHeaderComponent, GFooterComponent, GIcon, GButtonComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class BankAccountsComponent extends Component {
@@ -109,10 +109,10 @@ class BankAccountsComponent extends Component {
         if (this.props && this.props.bankAccountInfo && this.props.bankAccountInfo != this.state.bankAccountInfo) {
             this.setState({ bankAccountInfo: this.props.bankAccountInfo});
         }
-        const { navigation } = this.props;
+        const {navigation} = this.props;
+        //const isSuccess = (this.props && this.props.navigation && this.props.navigation.getParam('isSuccess', ''));
         const isSuccess = navigation.getParam('isSuccess', false);
-
-        const accountType = navigation.getParam('accountType', "");
+        const accountType = navigation.getParam('accountType', '');
         const financialInstitutionName = navigation.getParam('financialInstitutionName', "");
         const accountOwnerNames = navigation.getParam('accountOwnerNames', "");
         const transitRoutingNumber = navigation.getParam('transitRoutingNumber', "");
@@ -287,7 +287,12 @@ class BankAccountsComponent extends Component {
 }
 
 BankAccountsComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    getParam: PropTypes.func,
+    getBankAccountInfo: PropTypes.func,
 };
 
+BankAccountsComponent.defaultProps = {
+    navigation: {},
+};
 export default BankAccountsComponent;

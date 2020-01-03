@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import { styles } from './styles';
 import { View, ScrollView, Text, FlatList, TouchableOpacity } from 'react-native';
-import { GHeaderComponent, GFooterComponent, GIcon, GButtonComponent } from '../../CommonComponents';
 import PropTypes from "prop-types";
+import { GHeaderComponent, GFooterComponent, GIcon, GButtonComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
+import { styles } from './styles';
 
 class AddBankAccountComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: false,
             expand: false,
             popularAccount: [
                 "Discover",
@@ -24,11 +23,9 @@ class AddBankAccountComponent extends Component {
         };
     }
 
-    navigateAddOtherBank = function () {
-        this.props.navigation.navigate('addOtherBankAccountComponent');
+    navigateBankAccount = (isSuccess) => {
+        this.props.navigation.navigate('bankAccount', {isSuccess});
     }
-
-    navigateBankAccount = (isSuccess) => this.props.navigation.navigate('bankAccount', {isSuccess: isSuccess});
 
     setExpandInstruction = () => {
         this.setState({
@@ -37,20 +34,20 @@ class AddBankAccountComponent extends Component {
     }
 
     openAddBankOption = (bankName) => () => {
-        if(bankName == "Others") {
+        if(bankName === "Others") {
             this.props.navigation.navigate('addOtherBankAccountComponent');
         }
     }
 
     componentDidMount() {
-        let payload = [];
+        const payload = [];
 
         payload.push(JSON.stringify(this.state.popularAccount));
         this.props.getPopularBankNames(payload);
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props && this.props.popularBankInfo && this.props.popularBankInfo != prevProps.popularBankInfo) {
+        if (this.props && this.props.popularBankInfo && this.props.popularBankInfo !== prevProps.popularBankInfo) {
             this.setState({ popularAccount: JSON.parse(this.props.popularBankInfo)});
         }
     }
@@ -60,7 +57,7 @@ class AddBankAccountComponent extends Component {
             <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
 
-                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={{ justifyContent: 'center' }}>
+                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={styles.scrollViewContentStyle}>
                     <View style={styles.header}>
                         <Text style={styles.headerText}>
                             {gblStrings.addPopularBankAccount.add_bank_account}
@@ -95,7 +92,7 @@ class AddBankAccountComponent extends Component {
                         buttonStyle={styles.backBtn}
                         buttonText={gblStrings.common.cancel}
                         textStyle={styles.backButtonText}
-                        onPress={() => this.navigateBankAccount(false)}
+                        onPress={this.navigateBankAccount(false)}
                     />
 
                     <View style={styles.fullLine} />
@@ -114,7 +111,7 @@ class AddBankAccountComponent extends Component {
 }
 
 const ViewAccountItem = (props) => {
-    item = props.item;
+    const {item} = props;
     return (
         <TouchableOpacity style={styles.accountView} onPress={props.openAddBankOption(item)}>
             <GIcon 
@@ -132,7 +129,25 @@ const ViewAccountItem = (props) => {
 };
 
 AddBankAccountComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    popularBankInfo: PropTypes.instanceOf(Object),
+    getPopularBankNames: PropTypes.func,
+};
+
+AddBankAccountComponent.defaultProps = {
+    navigation: {},
+    popularBankInfo: {},
+    getPopularBankNames: () => {},
+};
+
+ViewAccountItem.propTypes = {
+    item: PropTypes.instanceOf(String),
+    openAddBankOption: PropTypes.func,
+};
+
+ViewAccountItem.defaultProps = {
+    item: "",
+    openAddBankOption: () => { },
 };
 
 export default AddBankAccountComponent;

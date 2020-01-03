@@ -14,6 +14,9 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
             reinvestChanged: false,
             expand: false,
             collapsedState: true,
+            generalAccCollapsedState: false,
+            iraAccCollapsedState: true,
+            utmaAccCollapsedState: true,
             requestSubmited: false,
             dividentsData: [],
             generalAccount: [],
@@ -43,7 +46,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
     navigateBack = () => this.props.navigation.goBack();
 
     navigateDividentsForAccount = (item) => {
-        this.updateShowRequestOption('showRequest', false, item.Id);
+        this.updateShowRequestOption(item.accountType, false, item.Id);
         this.props.navigation.navigate('dividentsForAccount', {
             accountName: item.accountName,
             accountNumber: item.AccountNumber,
@@ -52,6 +55,18 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
 
     updateCollapsedState = (flag) => () => {
         this.setState({ collapsedState: flag });
+    }
+
+    updateGeneralAccCollapsedState = (flag) => () => {
+        this.setState({ generalAccCollapsedState: flag });
+    }
+
+    updateIRAAccCollapsedState = (flag) => () => {
+        this.setState({ iraAccCollapsedState: flag });
+    }
+
+    updateUTMAAccCollapsedState = (flag) => () => {
+        this.setState({ utmaAccCollapsedState: flag });
     }
 
     updateCurrentSecurityChanged = () => this.setState({ stateChanged: !this.state.stateChanged });
@@ -163,9 +178,10 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
     }
 
     updateShowRequestOption = (fromView, showRequestOption, itemId) => {
-        switch (fromView) {
-            case 'showRequest':
-                let tmpData = this.state.generalAccount;
+        let tmpData = {};
+        switch (fromView) {            
+            case 'General Account':
+                tmpData = this.state.generalAccount;
                 tmpData.map((item) => {
                     if (item.Id === itemId) {
                         item.showRequestOption = showRequestOption;
@@ -173,6 +189,26 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                 });
                 this.updateStateChanged();
                 this.setState({ generalAccount: tmpData });
+                break;
+            case 'IRA Account':
+                tmpData = this.state.iraAccount;
+                tmpData.map((item) => {
+                    if (item.Id === itemId) {
+                        item.showRequestOption = showRequestOption;
+                    }
+                });
+                this.updateStateChanged();
+                this.setState({ iraAccount: tmpData });
+                break;
+            case 'UTMA Account':
+                tmpData = this.state.utmaAccount;
+                tmpData.map((item) => {
+                    if (item.Id === itemId) {
+                        item.showRequestOption = showRequestOption;
+                    }
+                });
+                this.updateStateChanged();
+                this.setState({ utmaAccount: tmpData });
                 break;
         }
     }
@@ -188,6 +224,14 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
     getKey(item) {
         return item.Id;
     }
+
+
+    renderList = ({ item }) => (
+        <ViewAccountItem
+            item={item}
+            updateShowRequestOption={this.updateShowRequestOption}
+            navigateDividentsForAccount={this.navigateDividentsForAccount}
+        />)
 
     render() {
         console.log("render ::: ");
@@ -235,88 +279,132 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
 
                     <View style={styles.linkBreak1} />
 
-                    {this.props && this.props.dividentsInfo && this.state.generalAccount.length > 0 &&
-                        <FlatList
-                            data={this.state.generalAccount}
-                            extraData={this.state.stateChanged}
-                            keyExtractor={this.getKey}
-                            renderItem={({ item}) => (
-                                <View style={styles.infoContainer}>
-                                    <View style={styles.accountName}>
-                                        <Text style={styles.accountNameText}>
-                                            {`${item.accountName}`}
-                                        </Text>
-
-                                        <TouchableOpacity style={styles.editInfo} key={item.Id} onPress={() => this.updateShowRequestOption('showRequest', true, item.Id)}>
+                    <GCollapseComponent
+                        collapsedState={this.state.generalAccCollapsedState}
+                        onPressAction={this.updateGeneralAccCollapsedState(!this.state.generalAccCollapsedState)}
+                        headerView={
+                            <>
+                                <View style={styles.accountHeaderView}>
+                                    <View style={{ flex: 0.2, alignSelf: 'center' }}>
+                                        {this.state.generalAccCollapsedState ?
                                             <GIcon
-                                                name="dots-vertical"
-                                                type="material-community"
-                                                size={30}
+                                                name="plus"
+                                                type="antdesign"
+                                                size={22}
+                                            /> :
+                                            <GIcon
+                                                name="minus"
+                                                type="antdesign"
+                                                size={22}
                                             />
-                                        </TouchableOpacity>
+                                        }
                                     </View>
 
-                                    <View style={styles.accountName}>
-                                        <Text style={styles.accountNameText}>
-                                            {gblStrings.dividents.account_number}
-                                        </Text>
-                                        <Text style={styles.accountNameText}>
-                                            {`${item.AccountNumber}`}
-                                        </Text>
+                                    <Text style={styles.accountHeaderText}>{gblStrings.dividents.general_account}</Text>
+
+                                </View>
+                                <View style={styles.linkBreak1} />
+                            </>
+                        }
+                        collapseView={
+                            <>
+                                {this.props && this.props.dividentsInfo && this.state.generalAccount.length > 0 &&
+                                    <FlatList
+                                        data={this.state.generalAccount}
+                                        extraData={this.state.stateChanged}
+                                        keyExtractor={this.getKey}
+                                        renderItem={this.renderList}
+                                    />
+
+                                }
+                            </>
+                        }
+                    />
+
+                    <GCollapseComponent
+                        collapsedState={this.state.iraAccCollapsedState}
+                        onPressAction={this.updateIRAAccCollapsedState(!this.state.iraAccCollapsedState)}
+                        headerView={
+                            <>
+                                <View style={styles.accountHeaderView}>
+                                    <View style={{ flex: 0.2, alignSelf: 'center' }}>
+                                        {this.state.iraAccCollapsedState ?
+                                            <GIcon
+                                                name="plus"
+                                                type="antdesign"
+                                                size={22}
+                                            /> :
+                                            <GIcon
+                                                name="minus"
+                                                type="antdesign"
+                                                size={22}
+                                            />
+                                        }
                                     </View>
 
-                                    {item.showRequestOption && <GButtonComponent
-                                        buttonStyle={styles.requestBtn}
-                                        buttonText={gblStrings.common.edit}
-                                        textStyle={styles.requestButtonText}
-                                        onPress={() =>
-                                            this.navigateDividentsForAccount(item)}
-                                    />}
+                                    <Text style={styles.accountHeaderText}>{gblStrings.dividents.ira_account}</Text>
 
-                                    <View style={styles.linkBreak2} />
+                                </View>
+                                <View style={styles.linkBreak1} />
+                            </>
+                        }
+                        collapseView={
+                            <>
+                                {this.props && this.props.dividentsInfo && this.state.iraAccount.length > 0 &&
+                                    <FlatList
+                                        data={this.state.iraAccount}
+                                        extraData={this.state.stateChanged}
+                                        keyExtractor={this.getKey}
+                                        renderItem={this.renderList}
+                                    />
 
-                                    <Text style={styles.accountNameHeaderText}>
-                                        {gblStrings.dividents.current_value}
-                                    </Text>
+                                }
+                            </>
+                        }
+                    />
 
-                                    <Text style={styles.accountNameSubHeaderText}>
-                                        {`${item.currectValue}`}
-                                    </Text>
+                    <GCollapseComponent
+                        collapsedState={this.state.utmaAccCollapsedState}
+                        onPressAction={this.updateUTMAAccCollapsedState(!this.state.utmaAccCollapsedState)}
+                        headerView={
+                            <>
+                                <View style={styles.accountHeaderView}>
+                                    <View style={{ flex: 0.2, alignSelf: 'center' }}>
+                                        {this.state.utmaAccCollapsedState ?
+                                            <GIcon
+                                                name="plus"
+                                                type="antdesign"
+                                                size={22}
+                                            /> :
+                                            <GIcon
+                                                name="minus"
+                                                type="antdesign"
+                                                size={22}
+                                            />
+                                        }
+                                    </View>
 
-                                    <Text style={styles.accountNameHeaderText}>
-                                        {gblStrings.dividents.holding}
-                                    </Text>
+                                    <Text style={styles.accountHeaderText}>{gblStrings.dividents.utma_account}</Text>
 
-                                    <Text style={styles.accountNameSubHeaderText}>
-                                        {`${item.holding}`}
-                                    </Text>
+                                </View>
+                                <View style={styles.linkBreak1} />
+                            </>
+                        }
+                        collapseView={
+                            <>
+                                {this.props && this.props.dividentsInfo && this.state.utmaAccount.length > 0 &&
+                                    <FlatList
+                                        data={this.state.utmaAccount}
+                                        extraData={this.state.stateChanged}
+                                        keyExtractor={this.getKey}
+                                        renderItem={this.renderList}
+                                    />
 
-                                    <Text style={styles.accountNameHeaderText}>
-                                        {gblStrings.dividents.current_funds}
-                                    </Text>
+                                }
+                            </>
+                        }
+                    />
 
-                                    <Text style={styles.accountNameSubHeaderText}>
-                                        {item.currentFunds ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
-                                    </Text>
-
-                                    <Text style={styles.accountNameHeaderText}>
-                                        {gblStrings.dividents.future_funds}
-                                    </Text>
-
-                                    <Text style={styles.accountNameSubHeaderText}>
-                                        {item.futureFunds ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
-                                    </Text>
-
-                                    <Text style={styles.accountNameHeaderText}>
-                                        {gblStrings.dividents.directed_dividents}
-                                    </Text>
-
-                                    <Text style={styles.accountNameSubHeaderText}>
-                                        {item.directedDividentsAndCapitalGains ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
-                                    </Text>
-
-                                </View>)}
-                        />}
 
                     <GButtonComponent
                         buttonStyle={styles.backBtn}
@@ -328,7 +416,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
 
                     <GCollapseComponent
                         collapsedState={this.state.collapsedState}
-                        onPressAction={() => this.updateCollapsedState(!this.state.collapsedState)}
+                        onPressAction={this.updateCollapsedState(!this.state.collapsedState)}
                         headerView={
                             <View style={styles.instructionsView}>
                                 <View style={{ flex: 0.2, alignSelf: 'center' }}>
@@ -364,7 +452,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                                 <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_subheader}</Text>
                             </>
                         }
-                    />
+                    /> 
 
                     <View style={styles.fullLine} />
 
@@ -379,7 +467,91 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
 
         );
     }
+
 }
+
+
+const ViewAccountItem = (props) => {
+    let item = [];
+    item = props.item;    
+    return (
+        <View style={styles.infoContainer}>
+            <View style={styles.accountName}>
+                <Text style={styles.accountNameText}>
+                    {`${item.accountName}`}
+                </Text>
+
+                <TouchableOpacity style={styles.editInfo} key={item.Id} onPress={() => props.updateShowRequestOption(item.accountType, true, item.Id)}>
+                    <GIcon
+                        name="dots-vertical"
+                        type="material-community"
+                        size={30}
+                    />
+                </TouchableOpacity>
+            </View>
+
+            <View style={styles.accountName}>
+                <Text style={styles.accountNameText}>
+                    {gblStrings.dividents.account_number}
+                </Text>
+                <Text style={styles.accountNameText}>
+                    {`${item.AccountNumber}`}
+                </Text>
+            </View>
+
+            {item.showRequestOption && <GButtonComponent
+                buttonStyle={styles.requestBtn}
+                buttonText={gblStrings.common.edit}
+                textStyle={styles.requestButtonText}
+                onPress={() =>
+                    props.navigateDividentsForAccount(item)}
+            />}
+
+            <View style={styles.linkBreak2} />
+
+            <Text style={styles.accountNameHeaderText}>
+                {gblStrings.dividents.current_value}
+            </Text>
+
+            <Text style={styles.accountNameSubHeaderText}>
+                {`${item.currectValue}`}
+            </Text>
+
+            <Text style={styles.accountNameHeaderText}>
+                {gblStrings.dividents.holding}
+            </Text>
+
+            <Text style={styles.accountNameSubHeaderText}>
+                {`${item.holding}`}
+            </Text>
+
+            <Text style={styles.accountNameHeaderText}>
+                {gblStrings.dividents.current_funds}
+            </Text>
+
+            <Text style={styles.accountNameSubHeaderText}>
+                {item.currentFunds ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
+            </Text>
+
+            <Text style={styles.accountNameHeaderText}>
+                {gblStrings.dividents.future_funds}
+            </Text>
+
+            <Text style={styles.accountNameSubHeaderText}>
+                {item.futureFunds ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
+            </Text>
+
+            <Text style={styles.accountNameHeaderText}>
+                {gblStrings.dividents.directed_dividents}
+            </Text>
+
+            <Text style={styles.accountNameSubHeaderText}>
+                {item.directedDividentsAndCapitalGains ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
+            </Text>
+
+        </View>
+    );
+};
 
 DividentsAndCapitalGainsPrefComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
