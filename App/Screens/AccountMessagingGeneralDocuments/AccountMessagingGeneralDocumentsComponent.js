@@ -215,7 +215,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                             label={item.name}     
                                             descLabelStyle={styles.lblRadioDescTxt}
                                             descLabel=""                                                             
-                                            selected={(this.state.selectedTaxDocumentsItemID !== "" && item.key === this.state.selectedTaxDocumentsItemID) ? true : false}
+                                            selected={!!((this.state.selectedTaxDocumentsItemID !== "" && item.key === this.state.selectedTaxDocumentsItemID))}
                                             onPress={this.onSelected(item,'taxDocuments')}
                                         />
                                         {
@@ -246,7 +246,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                         label={item.name}          
                                         descLabelStyle={styles.lblRadioDescTxt}
                                         descLabel=""                                                             
-                                        selected={(this.state.selectedConfirmItemID !== "" && item.key === this.state.selectedConfirmItemID) ? true : false}
+                                        selected={!!((this.state.selectedConfirmItemID !== "" && item.key === this.state.selectedConfirmItemID))}
                                         onPress={this.onSelectedConfirm(item)}
                                     />
                                 );
@@ -290,7 +290,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                                 label={item.name}     
                                                 descLabelStyle={styles.lblRadioDescTxt}
                                                 descLabel=""                                                                   
-                                                selected={(this.state.selectedGeneralDocumentsAnnualItemID !== "" && item.key === this.state.selectedGeneralDocumentsAnnualItemID) ? true : false}
+                                                selected={!!((this.state.selectedGeneralDocumentsAnnualItemID !== "" && item.key === this.state.selectedGeneralDocumentsAnnualItemID))}
                                                 onPress={this.onSelected(item,'generalDocumentsAnnual')}
                                             />
                                             {
@@ -323,7 +323,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                                 label={item.name}      
                                                 descLabelStyle={styles.lblRadioDescTxt}
                                                 descLabel=""                                                                 
-                                                selected={(this.state.selectedGeneralDocumentsPrivacyItemID !== "" && item.key === this.state.selectedGeneralDocumentsPrivacyItemID) ? true : false}
+                                                selected={!!((this.state.selectedGeneralDocumentsPrivacyItemID !== "" && item.key === this.state.selectedGeneralDocumentsPrivacyItemID))}
                                                 onPress={this.onSelected(item,'generalDocumentsPrivacy')}
                                             />
                                             {
@@ -376,7 +376,9 @@ AccountMessagingGeneralDocumentsComponent.propTypes = {
 };
 
 AccountMessagingGeneralDocumentsComponent.defaultProps = {
-
+    navigation : {},
+    accMessageDocumentinitialState : {},
+    saveData: () => { }
 };
 
 export default AccountMessagingGeneralDocumentsComponent;

@@ -90,111 +90,70 @@ class AccountMessagingAdviceComponent extends Component {
     }      
 
     componentDidMount() {     
-        if (this.props && this.props.accMessageAdviceinitialState){
-            (this.props.accMessageAdviceinitialState.gettingStartedSwitchOff);
+        if (this.props && this.props.accMessageAdviceinitialState){            
                 this.setState({ 
                     gettingStartedSwitchOff: this.props.accMessageAdviceinitialState.gettingStartedSwitchOff, 
-                    gettingStartedSwitchOn: this.props.accMessageAdviceinitialState.gettingStartedSwitchOn 
-                });
-            (this.props.accMessageAdviceinitialState.livingSwitchOff);
-                this.setState({ 
+                    gettingStartedSwitchOn: this.props.accMessageAdviceinitialState.gettingStartedSwitchOn, 
+                
                     livingSwitchOff: this.props.accMessageAdviceinitialState.livingSwitchOff, 
-                    livingSwitchOn: this.props.accMessageAdviceinitialState.livingSwitchOn 
-                });
-            (this.props.accMessageAdviceinitialState.growingSwitchOff);
-                this.setState({ 
+                    livingSwitchOn: this.props.accMessageAdviceinitialState.livingSwitchOn,
+               
                     growingSwitchOff: this.props.accMessageAdviceinitialState.growingSwitchOff, 
-                    growingSwitchOn: this.props.accMessageAdviceinitialState.growingSwitchOn 
-                });
-            (this.props.accMessageAdviceinitialState.eastPlanningSwitchOff);
-                this.setState({ 
+                    growingSwitchOn: this.props.accMessageAdviceinitialState.growingSwitchOn, 
+                
                     eastPlanningSwitchOff: this.props.accMessageAdviceinitialState.eastPlanningSwitchOff,
                     eastPlanningSwitchOn: this.props.accMessageAdviceinitialState.eastPlanningSwitchOn,
-                 });
-            (this.props.accMessageAdviceinitialState.taxCenterSwitchOff);
-                this.setState({ 
+                
                     taxCenterSwitchOff: this.props.accMessageAdviceinitialState.taxCenterSwitchOff,
-                    taxCenterSwitchOn: this.props.accMessageAdviceinitialState.taxCenterSwitchOn
-                 });
-            (this.props.accMessageAdviceinitialState.understandingInvestSwitchOff); 
-                this.setState({ 
+                    taxCenterSwitchOn: this.props.accMessageAdviceinitialState.taxCenterSwitchOn,
+                
                     understandingInvestSwitchOff: this.props.accMessageAdviceinitialState.understandingInvestSwitchOff,
                     understandingInvestSwitchOn: this.props.accMessageAdviceinitialState.understandingInvestSwitchOn,
-                });
-            (this.props.accMessageAdviceinitialState.saveBudgetSwitchOff);
-                this.setState({ 
+                
                     saveBudgetSwitchOff: this.props.accMessageAdviceinitialState.saveBudgetSwitchOff,
-                    saveBudgetSwitchOn: this.props.accMessageAdviceinitialState.saveBudgetSwitchOn
-                });
-            (this.props.accMessageAdviceinitialState.debtCreditSwitchOff);
-                this.setState({ 
+                    saveBudgetSwitchOn: this.props.accMessageAdviceinitialState.saveBudgetSwitchOn,
+                
                     debtCreditSwitchOff: this.props.accMessageAdviceinitialState.debtCreditSwitchOff,
-                    debtCreditSwitchOn: this.props.accMessageAdviceinitialState.debtCreditSwitchOn
-                });
-            (this.props.accMessageAdviceinitialState.financialSetSwitchOff);
-                this.setState({ 
+                    debtCreditSwitchOn: this.props.accMessageAdviceinitialState.debtCreditSwitchOn,
+               
                     financialSetSwitchOff: this.props.accMessageAdviceinitialState.financialSetSwitchOff,
-                    financialSetSwitchOn: this.props.accMessageAdviceinitialState.financialSetSwitchOn
-                });
-            (this.props.accMessageAdviceinitialState.getMarriedSwitchOff);    
-                this.setState({
+                    financialSetSwitchOn: this.props.accMessageAdviceinitialState.financialSetSwitchOn,
+               
                      getMarriedSwitchOff: this.props.accMessageAdviceinitialState.getMarriedSwitchOff, 
                      getMarriedSwitchOn: this.props.accMessageAdviceinitialState.getMarriedSwitchOn, 
-                    });
-            (this.props.accMessageAdviceinitialState.becomeParentSwitchOff);
-                this.setState({ 
+                  
                     becomeParentSwitchOff: this.props.accMessageAdviceinitialState.becomeParentSwitchOff,
-                    becomeParentSwitchOn: this.props.accMessageAdviceinitialState.becomeParentSwitchOn
-                 });
-            (this.props.accMessageAdviceinitialState.parentingSwitchOff);
-                this.setState({
+                    becomeParentSwitchOn: this.props.accMessageAdviceinitialState.becomeParentSwitchOn,
+                
                      parentingSwitchOff: this.props.accMessageAdviceinitialState.parentingSwitchOff, 
-                     parentingSwitchOn: this.props.accMessageAdviceinitialState.parentingSwitchOn
-                    });
-            (this.props.accMessageAdviceinitialState.youngAdultSwitchOff);
-                this.setState({ 
+                     parentingSwitchOn: this.props.accMessageAdviceinitialState.parentingSwitchOn,
+                  
                     youngAdultSwitchOff: this.props.accMessageAdviceinitialState.youngAdultSwitchOff,
-                    youngAdultSwitchOn: this.props.accMessageAdviceinitialState.youngAdultSwitchOn  
-                });
-            (this.props.accMessageAdviceinitialState.getDivorceSwitchOff);
-                this.setState({ 
+                    youngAdultSwitchOn: this.props.accMessageAdviceinitialState.youngAdultSwitchOn, 
+               
                     getDivorceSwitchOff: this.props.accMessageAdviceinitialState.getDivorceSwitchOff,
-                    getDivorceSwitchOn: this.props.accMessageAdviceinitialState.getDivorceSwitchOn 
-                });
-            (this.props.accMessageAdviceinitialState.lossOfLovedSwitchOff); 
-                this.setState({ 
+                    getDivorceSwitchOn: this.props.accMessageAdviceinitialState.getDivorceSwitchOn,
+               
                     lossOfLovedSwitchOff: this.props.accMessageAdviceinitialState.lossOfLovedSwitchOff, 
-                    lossOfLovedSwitchOn: this.props.accMessageAdviceinitialState.lossOfLovedSwitchOn
-                });   
-            (this.props.accMessageAdviceinitialState.lifeInsuranceSwitchOff);
-                this.setState({
+                    lossOfLovedSwitchOn: this.props.accMessageAdviceinitialState.lossOfLovedSwitchOn,
+               
                     lifeInsuranceSwitchOff: this.props.accMessageAdviceinitialState.lifeInsuranceSwitchOff, 
-                    lifeInsuranceSwitchOn: this.props.accMessageAdviceinitialState.lifeInsuranceSwitchOn 
-                });
-            (this.props.accMessageAdviceinitialState.healthInsuranceSwitchOff);
-                this.setState({
+                    lifeInsuranceSwitchOn: this.props.accMessageAdviceinitialState.lifeInsuranceSwitchOn, 
+               
                     healthInsuranceSwitchOff: this.props.accMessageAdviceinitialState.healthInsuranceSwitchOff,
-                    healthInsuranceSwitchOn: this.props.accMessageAdviceinitialState.healthInsuranceSwitchOn  
-                });
-            (this.props.accMessageAdviceinitialState.joiningMilitarySwitchOff); 
-                this.setState({ 
+                    healthInsuranceSwitchOn: this.props.accMessageAdviceinitialState.healthInsuranceSwitchOn,  
+               
                     joiningMilitarySwitchOff: this.props.accMessageAdviceinitialState.joiningMilitarySwitchOff,
-                    joiningMilitarySwitchOn: this.props.accMessageAdviceinitialState.joiningMilitarySwitchOn
-                 });  
-            (this.props.accMessageAdviceinitialState.deploymentSwitchOff);
-                this.setState({
+                    joiningMilitarySwitchOn: this.props.accMessageAdviceinitialState.joiningMilitarySwitchOn,
+                
                      deploymentSwitchOff: this.props.accMessageAdviceinitialState.deploymentSwitchOff,
-                     deploymentSwitchOn: this.props.accMessageAdviceinitialState.deploymentSwitchOn
-                     });
-            (this.props.accMessageAdviceinitialState.pcsSwitchOff);
-                this.setState({ 
+                     deploymentSwitchOn: this.props.accMessageAdviceinitialState.deploymentSwitchOn,
+                    
                     pcsSwitchOff: this.props.accMessageAdviceinitialState.pcsSwitchOff,
-                    pcsSwitchOn: this.props.accMessageAdviceinitialState.pcsSwitchOn
-                 });
-            (this.props.accMessageAdviceinitialState.leaveMilitarySwitchOff);
-                this.setState({
+                    pcsSwitchOn: this.props.accMessageAdviceinitialState.pcsSwitchOn,
+                
                     leaveMilitarySwitchOff: this.props.accMessageAdviceinitialState.leaveMilitarySwitchOff, 
-                    leaveMilitarySwitchOn: this.props.accMessageAdviceinitialState.leaveMilitarySwitchOn
+                    leaveMilitarySwitchOn: this.props.accMessageAdviceinitialState.leaveMilitarySwitchOn,
                 });
         }                 
     }
@@ -331,6 +290,8 @@ class AccountMessagingAdviceComponent extends Component {
                     });
                 }
                 break;
+                default:
+                    break;
         }
     }
 
@@ -420,6 +381,8 @@ class AccountMessagingAdviceComponent extends Component {
                 if (flag) this.setState({ leaveMilitarySwitchOn: true, leaveMilitarySwitchOff: false });
                 else this.setState({ leaveMilitarySwitchOn: false, leaveMilitarySwitchOff: true });
                 break;
+            default:
+                break;    
         }
     }    
 
@@ -938,7 +901,9 @@ AccountMessagingAdviceComponent.propTypes = {
 };
 
 AccountMessagingAdviceComponent.defaultProps = {
-
+    navigation : {},
+    accMessageAdviceinitialState : {},
+    saveData: () => { }
 };
 
 export default AccountMessagingAdviceComponent;

@@ -68,63 +68,43 @@ class DeliverySettingsComponent extends Component {
             this.setState({ phoneno: this.props.initialState.phone});
         }
 
-        if (this.props && this.props.deliverySettingsinitialState){
-            (this.props.deliverySettingsinitialState.emailUrgentSwitchOff);
+        if (this.props && this.props.deliverySettingsinitialState){            
                 this.setState({ 
                     emailUrgentSwitchOn: this.props.deliverySettingsinitialState.emailUrgentSwitchOn, 
-                    emailUrgentSwitchOff: this.props.deliverySettingsinitialState.emailUrgentSwitchOff 
-                });
-            (this.props.deliverySettingsinitialState.emailNotificationSwitchOn);
-            this.setState({ 
-                emailNotificationSwitchOn: this.props.deliverySettingsinitialState.emailNotificationSwitchOn, 
-                emailNotificationSwitchOff: this.props.deliverySettingsinitialState.emailNotificationSwitchOff 
-            }); 
-            (this.props.deliverySettingsinitialState.emailGuidanceSwitchOn);
-                this.setState({ 
+                    emailUrgentSwitchOff: this.props.deliverySettingsinitialState.emailUrgentSwitchOff, 
+               
+                    emailNotificationSwitchOn: this.props.deliverySettingsinitialState.emailNotificationSwitchOn, 
+                    emailNotificationSwitchOff: this.props.deliverySettingsinitialState.emailNotificationSwitchOff, 
+           
                     emailGuidanceSwitchOn: this.props.deliverySettingsinitialState.emailGuidanceSwitchOn, 
-                    emailGuidanceSwitchOff: this.props.deliverySettingsinitialState.emailGuidanceSwitchOff
-                });  
-            (this.props.deliverySettingsinitialState.notificationUrgentSwitchOn);
-                this.setState({ 
+                    emailGuidanceSwitchOff: this.props.deliverySettingsinitialState.emailGuidanceSwitchOff,
+              
                     notificationUrgentSwitchOn: this.props.deliverySettingsinitialState.notificationUrgentSwitchOn, 
-                    notificationUrgentSwitchOff: this.props.deliverySettingsinitialState.notificationUrgentSwitchOff
-                }); 
-            (this.props.deliverySettingsinitialState.notificationNotificationSwitchOn);
-                this.setState({ 
+                    notificationUrgentSwitchOff: this.props.deliverySettingsinitialState.notificationUrgentSwitchOff,
+              
                     notificationNotificationSwitchOn: this.props.deliverySettingsinitialState.notificationNotificationSwitchOn, 
-                    notificationNotificationSwitchOff: this.props.deliverySettingsinitialState.notificationNotificationSwitchOff
-                }); 
-            (this.props.deliverySettingsinitialState.notificationGuidanceSwitchOn);
-                this.setState({ 
+                    notificationNotificationSwitchOff: this.props.deliverySettingsinitialState.notificationNotificationSwitchOff,
+               
                     notificationGuidanceSwitchOn: this.props.deliverySettingsinitialState.notificationGuidanceSwitchOn, 
-                    notificationGuidanceSwitchOff: this.props.deliverySettingsinitialState.notificationGuidanceSwitchOff
-                });  
-            (this.props.deliverySettingsinitialState.textUrgentSwitchOn);
-                this.setState({ 
+                    notificationGuidanceSwitchOff: this.props.deliverySettingsinitialState.notificationGuidanceSwitchOff,
+               
                     textUrgentSwitchOn: this.props.deliverySettingsinitialState.textUrgentSwitchOn, 
-                    textUrgentSwitchOff: this.props.deliverySettingsinitialState.textUrgentSwitchOff
-                }); 
-            (this.props.deliverySettingsinitialState.textNotificationSwitchOn);
-                this.setState({ 
+                    textUrgentSwitchOff: this.props.deliverySettingsinitialState.textUrgentSwitchOff,
+               
                     textNotificationSwitchOn: this.props.deliverySettingsinitialState.textNotificationSwitchOn, 
-                    textNotificationSwitchOff: this.props.deliverySettingsinitialState.textNotificationSwitchOff
-                }); 
-            (this.props.deliverySettingsinitialState.textGuidanceSwitchOn);
-                this.setState({ 
+                    textNotificationSwitchOff: this.props.deliverySettingsinitialState.textNotificationSwitchOff,
+               
                     textGuidanceSwitchOn: this.props.deliverySettingsinitialState.textGuidanceSwitchOn, 
-                    textGuidanceSwitchOff: this.props.deliverySettingsinitialState.textGuidanceSwitchOff
-                });
-
-            (this.props.deliverySettingsinitialState.preferenceMorning);
-                this.setState({ preferenceMorning: this.props.deliverySettingsinitialState.preferenceMorning }); 
-            (this.props.deliverySettingsinitialState.preferenceMidDay);
-                this.setState({ preferenceMidDay: this.props.deliverySettingsinitialState.preferenceMidDay });
-            (this.props.deliverySettingsinitialState.preferenceEarlyEvening);
-                this.setState({ preferenceEarlyEvening: this.props.deliverySettingsinitialState.preferenceEarlyEvening });
-            (this.props.deliverySettingsinitialState.preferenceNight);
-                this.setState({ preferenceNight: this.props.deliverySettingsinitialState.preferenceNight });                     
-        }
+                    textGuidanceSwitchOff: this.props.deliverySettingsinitialState.textGuidanceSwitchOff,
+                
+                   preferenceMorning: this.props.deliverySettingsinitialState.preferenceMorning,
+                   preferenceMidDay: this.props.deliverySettingsinitialState.preferenceMidDay, 
+                   preferenceEarlyEvening: this.props.deliverySettingsinitialState.preferenceEarlyEvening, 
+                   preferenceNight: this.props.deliverySettingsinitialState.preferenceNight,                  
+        });
     }
+}
+
     goBack = () => {
         this.props.navigation.goBack();
     };
@@ -992,13 +972,17 @@ class DeliverySettingsComponent extends Component {
 
 DeliverySettingsComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    initialState: PropTypes.instanceOf(Object).isRequired,
-    deliverySettingsinitialState: PropTypes.instanceOf(Object).isRequired,
+    initialState: PropTypes.instanceOf(Object),
+    deliverySettingsinitialState: PropTypes.instanceOf(Object),
 
     saveData:PropTypes.func,
 };
 
 DeliverySettingsComponent.defaultProps = {
+    navigation : {},
+    initialState : {},
+    deliverySettingsinitialState : {},
+    saveData: () => { }
 
 };
 
