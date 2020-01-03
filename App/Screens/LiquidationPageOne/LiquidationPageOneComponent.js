@@ -3,14 +3,14 @@ import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native
 import PropTypes from 'prop-types';
 import Collapsible from 'react-native-collapsible';
 import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
-import { styles } from './styles';
+import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
 
-let accSelectionData = {};
 let savedData = {};
 
 class LiquidationPageOneComponent extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -42,8 +42,10 @@ class LiquidationPageOneComponent extends Component {
             collapseIRAAccount: true
         });
         (this.state.collapseGeneralAccount ?
-            this.setState({ generalAccountIcon: "-    ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }) : this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
+            this.setState({ generalAccountIcon: "-    ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }) : 
+            this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
     }
+
     onClickExpandIRAAccount = () => {
         this.setState({
             collapseIRAAccount: !this.state.collapseIRAAccount,
@@ -53,6 +55,7 @@ class LiquidationPageOneComponent extends Component {
         (this.state.collapseIRAAccount ?
             this.setState({ IRAAccountIcon: "-    ", generalAccountIcon: "+   ", UTMAAccountIcon: "+   " }) : this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
     }
+
     onClickExpandUTMAAccount = () => {
         this.setState({
             collapseUTMAAccount: !this.state.collapseUTMAAccount,
@@ -96,6 +99,7 @@ class LiquidationPageOneComponent extends Component {
             }
         });
     }
+
     onClickSelectUTMAAccount = (item, index) => () => {
         this.setState({
             selectedGeneralAccIndex: null,
@@ -114,7 +118,6 @@ class LiquidationPageOneComponent extends Component {
     }
 
     nextButtonAction = () => {
-        console.log('On Click Next Account Selection...');
         const payloadData = {
             saveLiquidationSelectedData: {
                 ...savedData,
@@ -129,20 +132,19 @@ class LiquidationPageOneComponent extends Component {
             }
         };
         this.props.saveData(payloadData);
-        console.log("Account Selection payloadData---> " + JSON.stringify(payloadData));
         this.props.navigation.navigate({ routeName: 'LiquidationPageTwo', key: 'LiquidationPageTwo' });
     }
-
+    
     noItemDisplay = () => {
         return (
             <View style={styles.noRecordsFlex}>
                 <Text style={styles.blackText14px}>No accounts available</Text>
             </View>
-        )
+        );
     }
 
     componentDidMount() {
-       // console.log("Page One Compoennt componentDidMount --> " + JSON.stringify(this.props));
+        console.log(" Screen 1 componentdidmount " + JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
     }
 
     render() {
@@ -150,7 +152,6 @@ class LiquidationPageOneComponent extends Component {
         const totalCount = 4;
         const pageName = gblStrings.liquidation.accountSelectionScreenName;
         if (this.props.liquidationInitialState && this.props.liquidationInitialState.accSelectionData) {
-            accSelectionData = this.props.liquidationInitialState.accSelectionData;
             savedData = this.props.liquidationInitialState.saveLiquidationSelectedData;
         }
         return (
@@ -388,6 +389,8 @@ LiquidationPageOneComponent.propTypes = {
 };
 
 LiquidationPageOneComponent.defaultProps = {
-
+    navigation: {},
+    liquidationInitialState: {},
+    saveData: () => { }
 };
 export default LiquidationPageOneComponent;

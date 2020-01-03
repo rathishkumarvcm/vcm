@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
-import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
+import { scaledHeight } from '../../Utils/Resolution';
 
 
-export const styles = StyleSheet.create({
+ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7FAFF',
@@ -159,12 +159,16 @@ export const styles = StyleSheet.create({
         height: scaledHeight(60),
     },
     dropDownLayout: {
-        //marginTop: scaledHeight(18),
         marginTop: scaledHeight(26),
         paddingLeft: '0%',
         width: "100%",
         marginLeft: "0%",
         marginRight: "0%",
+    },
+    dropDownText:{
+        width: "98%", 
+        paddingLeft: "2%", 
+        marginLeft: "0%"
     },
     amountBeforeTaxVal: {
         height: scaledHeight(48),
@@ -489,3 +493,4 @@ export const styles = StyleSheet.create({
     },
 
 });
+export default styles;

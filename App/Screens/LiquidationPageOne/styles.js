@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
 
-export const styles = StyleSheet.create({
+ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7FAFF',
@@ -240,3 +240,5 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
     },
 });
+
+export default styles;

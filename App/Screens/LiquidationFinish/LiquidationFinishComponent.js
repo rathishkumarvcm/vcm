@@ -1,36 +1,39 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
+import PropTypes from 'prop-types';
 import { GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-import { styles } from './styles';
-import PropTypes from 'prop-types';
+import styles from './styles';
+
+let orderId = '';
 
 class LiquidationFinishComponent extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
         };
     }
-    componentDidMount(){
-        console.log(" Screen 5 componentdidmount " + JSON.stringify(this.props.amendReducerData.menu));
+
+    componentDidMount() {
+         console.log(" Screen 5 componentdidmount amend Reducer", JSON.stringify(this.props.amendReducerData.menu));
+         console.log(" Screen 5 componentdidmount liquidation Reducer", JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
     }
+
     render() {
+        orderId = this.props.navigation.getParam('orderId');
         return (
-            <View style={styles.container} >
+            <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <View style={styles.backgroundFlex}>
                         <View style={styles.transactionStatusFlex}>
-                        <View style={styles.transactionStatusMessageFlex}>
-                            <Text style={styles.transactionStatusText}>{"The Liquidation Transaction Order ID" }</Text>
-                            <Text style={styles.transactionStatusTextBold}>{"XXXXXX1234"}</Text>
-                            <Text style={styles.transactionStatusText}>{"is been successfully Submitted."}</Text>
+                            <View style={styles.transactionStatusMessageFlex}>
+                                <Text style={styles.transactionStatusText}>The Liquidation Transaction <Text style={styles.transactionStatusTextBold}>{orderId}</Text>  is been successfully Submitted.</Text>
+                            </View>
                         </View>
-                        </View>
-                        <Text style = {styles.targetPageText}>{gblStrings.liquidation.targetPage}</Text>
+                        <Text style={styles.targetPageText}>{gblStrings.liquidation.targetPage}</Text>
                     </View>
-
-
                     <View style={styles.fullLine} />
                     <View style={styles.tNCFlex}>
                         <Text style={styles.tNcHeader}>{gblStrings.userManagement.VCDiscalimerTitle}{"\n"}</Text>
@@ -50,15 +53,11 @@ class LiquidationFinishComponent extends Component {
 
 LiquidationFinishComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    liquidationInitialState: PropTypes.instanceOf(Object),
-    amendReducerData: PropTypes.instanceOf(Object),
-    saveData: PropTypes.func,
-    ammendActions: PropTypes.func,
+    // amendReducerData: PropTypes.instanceOf(Object),
 };
 
 LiquidationFinishComponent.defaultProps = {
     navigation: {},
-    liquidationInitialState: {},
-    amendReducerData: {},
+    // amendReducerData: {},
 };
 export default LiquidationFinishComponent;

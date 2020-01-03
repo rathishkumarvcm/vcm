@@ -4,11 +4,9 @@ import PropTypes from 'prop-types';
 import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import { PageNumber } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-import { styles } from './styles';
+import styles from './styles';
 
 let savedData = {};
-let ammendData = {};
-let ammendIndex = 0;
 let menuList = [];
 let sellingAmount = '';
 
@@ -17,8 +15,31 @@ class LiquidationPageFourComponent extends Component {
         super(props);
         this.state = {
             ammend: false,
-            transactionType: ''
+            ammendData: {},
+            ammendIndex: null
         };
+    }
+
+    componentDidMount() {
+         console.log(" Screen 4 componentdidmount ",JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
+        this.getData();
+    }
+
+    getData = () => {
+        if (this.props.navigation.getParam('ammend')) {
+            this.setState({
+                ammend: this.props.navigation.getParam('ammend'),
+                 ammendData: this.props.navigation.getParam('data'),
+                // ammendData1 = this.props.amendReducerData.menu[ammendIndex - 1].data,
+                ammendIndex: this.props.navigation.getParam('index')
+            });
+            if (this.props && this.props.amendReducerData && this.props.amendReducerData.menu) {
+                menuList = this.props.amendReducerData.menu;
+            }
+        }else {
+            this.setState({ ammend: false });
+        }
+        
     }
 
     formatAmount = (amount) => {
@@ -34,6 +55,7 @@ class LiquidationPageFourComponent extends Component {
             this.props.navigation.navigate('LiquidationPageOne');
         }
     }
+
     navigateLiquidationPageThree = () => {
         if (this.state.ammend) {
             this.props.navigation.navigate('LiquidationPageThree', { ammend: true });
@@ -88,74 +110,42 @@ class LiquidationPageFourComponent extends Component {
     }
 
     submitButtonAction = () => {
-        console.log('On Click Submit Liquidation ...');
+
         const date = new Date().getDate();
         const month = new Date().getMonth() + 1;
         const year = new Date().getFullYear();
-        const updatedDate = date + '/' + month + '/' + year;
+        const updatedDate = `${date} / ${month} / ${year}`;
         const finalKey = menuList[menuList.length - 1];
+
         if (this.state.ammend) {
-            const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
+            const pIndex = menuList.findIndex((item) => item.key === this.state.ammendIndex);
             const amndObj = menuList[pIndex];
-            const transType = ammendData.TransactionType;
+            const transType = `${this.state.ammendData.TransactionType} `;
             const ammendPayloadData = {
                 "key": amndObj.key,
                 "title": amndObj.title,
                 "data": {
-                    "count": ammendData.count,
+                    "count": this.state.ammendData.count,
                     "Dateadded": updatedDate,
                     "TransactionType": transType,
-                    "OrderStatus": ammendData.OrderStatus,
-                    "totalSHares": ammendData.totalSHares,
-                    "worth": ammendData.worth,
-                    "selectedAccountData": ammendData.selectedAccountData,
-                    "selectedFundData": ammendData.selectedFundData,
-                    "selectedFundWithdrawalData": ammendData.selectedFundWithdrawalData,
-                    "reviewConfirmLiquidationData":{
-                        "tradeType": transType,
-                        "accountName": ammendData.selectedAccountData.accountName,
-                        'accountNumber': ammendData.selectedAccountData.accountNumber,
-                        "worthAmount": gblStrings.liquidation.dollarSymbol + this.formatAmount(ammendData.selectedFundData.worthAmount),
-                        "sellingAmount": sellingAmount,
-                        "fundingSourceName": ammendData.selectedFundWithdrawalData.bankAccountName,
-                        "fundingSourceNo":  ammendData.selectedFundWithdrawalData.bankAccountNo,
-                        "taxWithHoldingOption":ammendData.selectedFundWithdrawalData.taxWithHoldingOption,
-                        "requestedAmountType": ammendData.selectedFundWithdrawalData.requestedAmountType,
-                        "amountBeforeTaxes": ammendData.selectedFundWithdrawalData.amountBeforeTaxes,
-                        "amountAfterTaxes":ammendData.selectedFundWithdrawalData.amountAfterTaxes,
-                        "federalTaxInPerc": ammendData.selectedFundWithdrawalData.federalTaxInPerc,
-                        "federalTaxInDollars": ammendData.selectedFundWithdrawalData.federalTaxInDollars,
-                        "stateTaxInPerc": ammendData.selectedFundWithdrawalData.stateTaxInPerc,
-                        "stateTaxInDollars": ammendData.selectedFundWithdrawalData.stateTaxInDollars,
-                        "totalTaxToBeWithHold": ammendData.selectedFundWithdrawalData.totalTaxToBeWithHold,
-                        "totalYouWillReceive": ammendData.selectedFundWithdrawalData.totalYouWillReceive,
-                        "totalWithdrawal": ammendData.selectedFundWithdrawalData.totalWithdrawal
-                    },
-                    "selectedFundSourceData": ammendData.selectedFundSourceData,
-                    "currentSecurities": ammendData.currentSecurities,
-                    "contribution": ammendData.contribution,
-                    "estimated": ammendData.estimated
-                }
-            }
-            menuList.splice(pIndex, 1, ammendPayloadData);
-            this.props.ammendActions(menuList);
-        }
-        else {
-            const payloadData = {
-                saveLiquidationSelectedData: {
-                    ...savedData,
+                    "OrderStatus": this.state.ammendData.OrderStatus,
+                    "totalSHares": this.state.ammendData.totalSHares,
+                    "worth": this.state.ammendData.worth,
+                    "selectedAccountData": this.state.ammendData.selectedAccountData,
+                    "selectedFundData": savedData.selectedFundData,
+                    "selectedFundWithdrawalData": savedData.selectedFundWithdrawalData,
                     "reviewConfirmLiquidationData": {
-                        "tradeType": "Liquidation",
+                        "tradeType": transType,
                         "accountName": savedData.selectedAccountData.accountName,
                         'accountNumber': savedData.selectedAccountData.accountNumber,
                         "worthAmount": gblStrings.liquidation.dollarSymbol + this.formatAmount(savedData.selectedFundData.worthAmount),
                         "sellingAmount": sellingAmount,
                         "fundingSourceName": savedData.selectedFundWithdrawalData.bankAccountName,
                         "fundingSourceNo": savedData.selectedFundWithdrawalData.bankAccountNo,
-                        "taxWithHoldingOption":savedData.selectedFundWithdrawalData.taxWithHoldingOption,
+                        "taxWithHoldingOption": savedData.selectedFundWithdrawalData.taxWithHoldingOption,
                         "requestedAmountType": savedData.selectedFundWithdrawalData.requestedAmountType,
                         "amountBeforeTaxes": savedData.selectedFundWithdrawalData.amountBeforeTaxes,
-                        "amountAfterTaxes":savedData.selectedFundWithdrawalData.amountAfterTaxes,
+                        "amountAfterTaxes": savedData.selectedFundWithdrawalData.amountAfterTaxes,
                         "federalTaxInPerc": savedData.selectedFundWithdrawalData.federalTaxInPerc,
                         "federalTaxInDollars": savedData.selectedFundWithdrawalData.federalTaxInDollars,
                         "stateTaxInPerc": savedData.selectedFundWithdrawalData.stateTaxInPerc,
@@ -164,26 +154,65 @@ class LiquidationPageFourComponent extends Component {
                         "totalYouWillReceive": savedData.selectedFundWithdrawalData.totalYouWillReceive,
                         "totalWithdrawal": savedData.selectedFundWithdrawalData.totalWithdrawal
                     },
-                },
+                    "selectedFundSourceData": this.state.ammendData.selectedFundSourceData,
+                    "currentSecurities": this.state.ammendData.currentSecurities,
+                    "contribution": this.state.ammendData.contribution,
+                    "estimated": this.state.ammendData.estimated,
+                }
             };
-            this.props.saveData(payloadData);
-            console.log("Review Confirm Liquidation payloadData---> " + JSON.stringify(payloadData));
-        }
-        this.props.navigation.navigate('LiquidationFinish');
-    }
-
-    componentDidMount() {
-        console.log(" Screen 4 componentdidmount " + JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
-        if (this.props.navigation.getParam('ammend')) {
-            menuList = this.props.amendReducerData.menu;
-            ammendIndex = this.props.navigation.getParam('index');
-            ammendData = this.props.amendReducerData.menu[ammendIndex - 1].data;
-            this.setState({ ammend: true });
+            menuList.splice(pIndex, 1, ammendPayloadData);
+            this.props.ammendActions(menuList);
+            this.props.navigation.navigate('tAmmendComponent');
         }
         else {
-            this.setState({ ammend: false });
+            const orderId = `Order ID - LIQ0${year}${month}${date}`;
+            const payloadData = {
+                "key": finalKey,
+                "title": orderId,
+                "data": {
+                    "count": 5,
+                    "Dateadded": updatedDate,
+                    "TransactionType": gblStrings.liquidation.liquidation,
+                    "OrderStatus": "Pending",
+                    "totalSHares": "",
+                    "worth": "",
+                    "selectedAccountData": savedData.selectedAccountData,
+                    "selectedFundData": savedData.selectedFundData,
+                    "selectedFundWithdrawalData": savedData.selectedFundWithdrawalData,
+                    "reviewConfirmLiquidationData": {
+                        "tradeType": gblStrings.liquidation.liquidation,
+                        "accountName": savedData.selectedAccountData.accountName,
+                        'accountNumber': savedData.selectedAccountData.accountNumber,
+                        "worthAmount": gblStrings.liquidation.dollarSymbol + this.formatAmount(savedData.selectedFundData.worthAmount),
+                        "sellingAmount": sellingAmount,
+                        "fundingSourceName": savedData.selectedFundWithdrawalData.bankAccountName,
+                        "fundingSourceNo": savedData.selectedFundWithdrawalData.bankAccountNo,
+                        "taxWithHoldingOption": savedData.selectedFundWithdrawalData.taxWithHoldingOption,
+                        "requestedAmountType": savedData.selectedFundWithdrawalData.requestedAmountType,
+                        "amountBeforeTaxes": savedData.selectedFundWithdrawalData.amountBeforeTaxes,
+                        "amountAfterTaxes": savedData.selectedFundWithdrawalData.amountAfterTaxes,
+                        "federalTaxInPerc": savedData.selectedFundWithdrawalData.federalTaxInPerc,
+                        "federalTaxInDollars": savedData.selectedFundWithdrawalData.federalTaxInDollars,
+                        "stateTaxInPerc": savedData.selectedFundWithdrawalData.stateTaxInPerc,
+                        "stateTaxInDollars": savedData.selectedFundWithdrawalData.stateTaxInDollars,
+                        "totalTaxToBeWithHold": savedData.selectedFundWithdrawalData.totalTaxToBeWithHold,
+                        "totalYouWillReceive": savedData.selectedFundWithdrawalData.totalYouWillReceive,
+                        "totalWithdrawal": savedData.selectedFundWithdrawalData.totalWithdrawal
+                    },
+                    "selectedFundSourceData": "",
+                    "currentSecurities": "",
+                    "contribution": "",
+                    "estimated": {}
+                }
+            };
+            menuList.push(payloadData);
+            this.props.ammendActions(menuList);
+            this.props.navigation.navigate('LiquidationFinish', { orderId: orderId });
+            
         }
+
     }
+
 
     render() {
         let currentPage = 4;
@@ -200,18 +229,10 @@ class LiquidationPageFourComponent extends Component {
         let fundWithdrawalData = {};
         let accType = "";
         if (this.state.ammend) {
-            fundWithdrawalData = ammendData.selectedFundWithdrawalData;
-            accType = ammendData.selectedAccountData.accountType;
-            if (ammendData.selectedFundData.allSharesSelected) {
-                sellingAmount = gblStrings.liquidation.dollarSymbol + this.formatAmount(ammendData.selectedFundData.worthAmount);
-            } else if (this.isEmpty(ammendData.selectedFundData.percentageValue)) {
-                sellingAmount = gblStrings.liquidation.dollarSymbol + this.formatAmount(ammendData.selectedFundData.dollarValue);
-            } else {
-                sellingAmount = gblStrings.liquidation.dollarSymbol + this.formatAmount((ammendData.selectedFundData.percentageValue / 100) * ammendData.selectedFundData.worthAmount);
-            }
-        }
-        else {
+            accType = this.state.ammendData.selectedAccountData.accountType;
+        }else{
             accType = savedData.selectedAccountData.accountType;
+        }
             fundWithdrawalData = savedData.selectedFundWithdrawalData;
             if (savedData.selectedFundData.allSharesSelected) {
                 sellingAmount = gblStrings.liquidation.dollarSymbol + this.formatAmount(savedData.selectedFundData.worthAmount);
@@ -220,7 +241,7 @@ class LiquidationPageFourComponent extends Component {
             } else {
                 sellingAmount = gblStrings.liquidation.dollarSymbol + this.formatAmount((savedData.selectedFundData.percentageValue / 100) * savedData.selectedFundData.worthAmount);
             }
-        }
+        
 
         let amount = "";
         if (fundWithdrawalData.requestedAmountType === "Before Taxes") {
@@ -261,11 +282,11 @@ class LiquidationPageFourComponent extends Component {
                         <View style={styles.line} />
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountName}</Text>
-                            <Text style={styles.greyText16px}>{gblStrings.liquidation.accountName}{this.state.ammend ? ammendData.selectedAccountData.accountName : savedData.selectedAccountData.accountName}</Text>
+                            <Text style={styles.greyText16px}>{gblStrings.liquidation.accountName}{this.state.ammend ? this.state.ammendData.selectedAccountData.accountName : savedData.selectedAccountData.accountName}</Text>
                         </View>
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountNumber}</Text>
-                            <Text style={styles.greyText16px}>{this.state.ammend ? ammendData.selectedAccountData.accountNumber : savedData.selectedAccountData.accountNumber}</Text>
+                            <Text style={styles.greyText16px}>{this.state.ammend ? this.state.ammendData.selectedAccountData.accountNumber : savedData.selectedAccountData.accountNumber}</Text>
                         </View>
                         <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>{gblStrings.accManagement.selectedMutualFunds}</Text>
@@ -277,7 +298,7 @@ class LiquidationPageFourComponent extends Component {
                             <Text style={styles.blackTextBold22px}>{gblStrings.liquidation.govtSecuritiesFund}</Text>
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.worthAmount}</Text>
-                                <Text style={styles.greyText16px}>{gblStrings.liquidation.dollarSymbol}{this.state.ammend ? this.formatAmount(ammendData.selectedFundData.worthAmount) : this.formatAmount(savedData.selectedFundData.worthAmount)}</Text>
+                                <Text style={styles.greyText16px}>{gblStrings.liquidation.dollarSymbol}{this.formatAmount(savedData.selectedFundData.worthAmount)}</Text>
                             </View>
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.sellingAmount}</Text>
@@ -395,5 +416,7 @@ LiquidationPageFourComponent.defaultProps = {
     navigation: {},
     liquidationInitialState: {},
     amendReducerData: {},
+    saveData: () => { },
+    ammendActions: () => { }
 };
 export default LiquidationPageFourComponent;

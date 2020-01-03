@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Image, FlatList } from 'react-native';
-import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent, GDropDownComponent, GSwitchComponent } from '../../CommonComponents';
-import { styles } from './styles';
-import gblStrings from '../../Constants/GlobalStrings';
-import { PageNumber } from '../../AppComponents';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-native-collapsible';
+import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent, GDropDownComponent, GSwitchComponent } from '../../CommonComponents';
+import styles from './styles';
+import gblStrings from '../../Constants/GlobalStrings';
+import { PageNumber } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 
 
 let savedData = {};
 let ammendData = {};
-let ammendIndex = 0;
-let menuList = [];
+let ammendIndex = null;
 
 const bankAccounts = [
     { bankIcon: "", bankAccName: "Bank Account 1", bankAccountNo: "XXX-XXX-3838" },
@@ -66,7 +65,23 @@ class LiquidationPageThreeComponent extends Component {
             switchOff: true,
             switchOn: false,
             disableNextButton: true,
-            ammend: false
+            ammend: false,
+        };
+    }
+
+    componentDidMount() {
+        console.log(" Screen 3 componentdidmount " + JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
+        this.updateState();
+    }
+
+    updateState = () => {
+        if (this.props.navigation.getParam('ammend')) {
+            ammendData = this.props.navigation.getParam('data');
+            ammendIndex = this.props.navigation.getParam('index');
+            this.setState({ ammend: true });
+        }
+        else {
+            this.setState({ ammend: false });
         }
     }
 
@@ -74,7 +89,7 @@ class LiquidationPageThreeComponent extends Component {
         if (this.isEmpty(amount)) {
             return "";
         }
-        var amt = parseInt(amount).toLocaleString();
+        const amt = parseInt(amount).toLocaleString();
         return amt;
     }
 
@@ -89,22 +104,22 @@ class LiquidationPageThreeComponent extends Component {
 
     onClickExpandFundSource = () => {
         this.setState({ collapseFundSource: !this.state.collapseFundSource });
-        (this.state.collapseFundSource ? this.setState({ collapseFSIcon: "-   " }) : this.setState({ collapseFSIcon: "+  " }))
+        (this.state.collapseFundSource ? this.setState({ collapseFSIcon: "-   " }) : this.setState({ collapseFSIcon: "+  " }));
     };
 
     onClickExpandDeliveryAddress = () => {
         this.setState({ collapseDeliveryAddress: !this.state.collapseDeliveryAddress });
-        (this.state.collapseDeliveryAddress ? this.setState({ collpaseDAIcon: "-   " }) : this.setState({ collpaseDAIcon: "+  " }))
+        (this.state.collapseDeliveryAddress ? this.setState({ collpaseDAIcon: "-   " }) : this.setState({ collpaseDAIcon: "+  " }));
     }
 
     onClickExpandTaxAccounting = () => {
         this.setState({ collapseTaxAccounting: !this.state.collapseTaxAccounting });
-        (this.state.collapseTaxAccounting ? this.setState({ collapseTAIcon: "-   " }) : this.setState({ collapseTAIcon: "+  " }))
+        (this.state.collapseTaxAccounting ? this.setState({ collapseTAIcon: "-   " }) : this.setState({ collapseTAIcon: "+  " }));
     };
 
     onClickExpandTaxWithHoldingOptions = () => {
         this.setState({ collapseTaxWithHoldingOption: !this.state.collapseTaxWithHoldingOption });
-        (this.state.collapseTaxWithHoldingOption ? this.setState({ collapseTWOIcon: "-   " }) : this.setState({ collapseTWOIcon: "+  " }))
+        (this.state.collapseTaxWithHoldingOption ? this.setState({ collapseTWOIcon: "-   " }) : this.setState({ collapseTWOIcon: "+  " }));
     };
 
     addaccount = (props) => {
@@ -141,7 +156,6 @@ class LiquidationPageThreeComponent extends Component {
     }
 
     onSelectBankAccount = (item, index) => {
-        console.log("index" + index + " item:: " + JSON.stringify(item));
         this.setState({
             fundingSource: {
                 selectedBankAccountNo: item.bankAccountNo,
@@ -178,7 +192,6 @@ class LiquidationPageThreeComponent extends Component {
 
 
     selectedDropDownValue = (value) => {
-        console.log("value--->"+value)
         this.setState(prevState => ({
             taxAccountingMethodData: {
                 ...prevState.taxAccountingMethodData,
@@ -202,7 +215,7 @@ class LiquidationPageThreeComponent extends Component {
                 ...prevState.taxAccountingMethodData,
                 amountBeforeTaxes: amount,
             }
-        }))
+        }));
     }
 
     onChangeAmountAfterTaxes = (amount) => {
@@ -231,15 +244,16 @@ class LiquidationPageThreeComponent extends Component {
             }
         }));
     }
+
     onSubmitEditingStateTax = (tax) => {
-        var statetax = this.state.taxAccountingMethodData.stateTax;
-        var federaltax = this.state.taxAccountingMethodData.federalTax;
-        var amount = 0;
-        var totalTaxToBWithhold = 0;
-        var stateTaxToDollars = 0;
-        var federalTaxToDollars = 0;
+        const statetax = this.state.taxAccountingMethodData.stateTax;
+        const federaltax = this.state.taxAccountingMethodData.federalTax;
+        let amount = 0;
+        let totalTaxToBWithhold = 0;
+        let stateTaxToDollars = 0;
+        let federalTaxToDollars = 0;
         federalTaxToDollars = (((federaltax) / 100) * (amount));
-        if (this.state.taxAccountingMethodData.requestedAmountType == "Before Taxes") {
+        if (this.state.taxAccountingMethodData.requestedAmountType === "Before Taxes") {
             amount = this.state.taxAccountingMethodData.amountBeforeTaxes;
             stateTaxToDollars = (((statetax) / 100) * (amount));
             federalTaxToDollars = (((federaltax) / 100) * (amount));
@@ -253,7 +267,7 @@ class LiquidationPageThreeComponent extends Component {
                     totalYouWillReceive: amount - totalTaxToBWithhold,
                     totalWithdrawal: amount
                 }
-            }))
+            }));
         } else {
             amount = this.state.taxAccountingMethodData.amountAfterTaxes;
             stateTaxToDollars = (((statetax) / 100) * (amount));
@@ -268,7 +282,7 @@ class LiquidationPageThreeComponent extends Component {
                     totalYouWillReceive: amount,
                     totalWithdrawal: parseInt(amount) + parseInt(totalTaxToBWithhold)
                 }
-            }))
+            }));
         }
     }
 
@@ -281,6 +295,7 @@ class LiquidationPageThreeComponent extends Component {
         }
 
     }
+
     navigateLiquidationPageTwo = () => {
         if (this.state.ammend) {
             this.props.navigation.navigate('LiquidationPageTwo', { ammend: true });
@@ -289,69 +304,17 @@ class LiquidationPageThreeComponent extends Component {
             this.props.navigation.navigate('LiquidationPageTwo', { ammend: false });
         }
     }
+
     navigateLiquidationPageFour = () => {
         if (this.state.ammend) {
-            this.props.navigation.navigate('LiquidationPageFour',
-                { taxAccountingMethodData: this.state.taxAccountingMethodData, fundingSource: this.state.fundingSource, ammend: true });
+            this.props.navigation.navigate('LiquidationPageFour',{ ammend: true });
         }
         else {
-            this.props.navigation.navigate('LiquidationPageFour',
-                { taxAccountingMethodData: this.state.taxAccountingMethodData, fundingSource: this.state.fundingSource, ammend: false });
+            this.props.navigation.navigate('LiquidationPageFour',{ ammend: false });
         }
     }
 
     nextButtonAction = () => {
-        console.log('On Click Next Fund Withdrawal ...');
-        const date = new Date().getDate();
-        const month = new Date().getMonth() + 1;
-        const year = new Date().getFullYear();
-        const updatedDate = date + '/' + month + '/' + year;
-        const finalKey = menuList[menuList.length - 1];
-
-        if (this.state.ammend) {
-            const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
-            const amndObj = menuList[pIndex];
-            const transType = ammendData.TransactionType;
-            const ammendPayloadData = {
-                "key": amndObj.key,
-                "title": amndObj.title,
-                "data": {
-                    "count": ammendData.count,
-                    "Dateadded": updatedDate,
-                    "TransactionType": transType,
-                    "OrderStatus": ammendData.OrderStatus,
-                    "totalSHares": ammendData.totalSHares,
-                    "worth": ammendData.worth,
-                    "selectedAccountData": ammendData.selectedAccountData,
-                    "selectedFundData": ammendData.selectedFundData,
-                    "selectedFundWithdrawalData":{
-                        "checkSelectedOrder": this.state.fundingSource.checkOrderSelected,
-                        "bankAccountNo": this.state.fundingSource.selectedBankAccountNo,
-                        "bankAccountName": this.state.fundingSource.selectedBankAccountName,
-                        "taxWithHoldingOption": this.state.taxAccountingMethodData.taxHoldingOption,
-                        "requestedAmountType": this.state.taxAccountingMethodData.requestedAmountType,
-                        "amountBeforeTaxes": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.amountBeforeTaxes),
-                        "amountAfterTaxes": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.amountAfterTaxes),
-                        "federalTaxInPerc": this.state.taxAccountingMethodData.federalTax + "%",
-                        "federalTaxInDollars": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.federalTaxInDollars),
-                        "stateTaxInPerc": this.state.taxAccountingMethodData.stateTax + "%",
-                        "stateTaxInDollars": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.stateTaxInDollars),
-                        "totalTaxToBeWithHold": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.totalTaxToBeWithhold),
-                        "totalYouWillReceive": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.totalYouWillReceive),
-                        "totalWithdrawal": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.totalWithdrawal),
-                    },
-                    "reviewConfirmLiquidationData":ammendData.reviewConfirmLiquidationData,
-                    "selectedFundSourceData": ammendData.selectedFundSourceData,
-                    "currentSecurities": ammendData.currentSecurities,
-                    "contribution": ammendData.contribution,
-                    "estimated": ammendData.estimated
-                }
-            }
-            menuList.splice(pIndex, 1, ammendPayloadData);
-            this.props.ammendActions(menuList);
-            console.log("Fund Withdrawal ammend payloadData---> " + JSON.stringify(ammendPayloadData));
-            this.props.navigation.navigate('LiquidationPageFour', { ammend: true, index: ammendIndex, data: ammendData });
-        }else{
             const payloadData = {
                 saveLiquidationSelectedData: {
                     ...savedData,
@@ -374,24 +337,13 @@ class LiquidationPageThreeComponent extends Component {
                 },
             };
             this.props.saveData(payloadData);
-            console.log("Fund Withdrawal liquidation payloadData---> " + JSON.stringify(payloadData));
-        }
-        this.props.navigation.navigate('LiquidationPageFour', { ammend: this.state.ammend });
+            if (this.state.ammend) {
+                this.props.navigation.navigate('LiquidationPageFour', { ammend: true, data: ammendData, index: ammendIndex });
+            }
+            else {
+                this.props.navigation.navigate('LiquidationPageFour', { ammend: false });
+            }
 
-    }
-
-
-    componentDidMount() {
-        console.log(" Screen 3 componentdidmount " + JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
-        if (this.props.navigation.getParam('ammend')) {
-            menuList = this.props.amendReducerData.menu;
-            ammendIndex = this.props.navigation.getParam('index');
-            ammendData = this.props.amendReducerData.menu[ammendIndex - 1].data;
-            this.setState({ ammend: true });
-        }
-        else {
-            this.setState({ ammend: false });
-        }
     }
 
     render() {
@@ -407,9 +359,9 @@ class LiquidationPageThreeComponent extends Component {
             savedData = this.props.liquidationInitialState.saveLiquidationSelectedData;
         }
         let accType = "";
-        if(this.state.ammend){
+        if (this.state.ammend) {
             accType = ammendData.selectedAccountData.accountType;
-        }else{
+        } else {
             accType = savedData.selectedAccountData.accountType;
         }
         return (
@@ -430,8 +382,8 @@ class LiquidationPageThreeComponent extends Component {
                     <View style={styles.flex2}>
 
                         <View style={styles.accountFlex}>
-                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountName}{this.state.ammend ? ammendData.selectedAccountData.accountName :savedData.selectedAccountData.accountName}</Text>
-                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountNumber}{this.state.ammend ? ammendData.selectedAccountData.accountNumber :savedData.selectedAccountData.accountNumber}</Text>
+                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountName}{this.state.ammend ? ammendData.selectedAccountData.accountName : savedData.selectedAccountData.accountName}</Text>
+                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountNumber}{this.state.ammend ? ammendData.selectedAccountData.accountNumber : savedData.selectedAccountData.accountNumber}</Text>
                         </View>
 
                         <View style={styles.headerFlex} onTouchStart={this.onClickExpandFundSource}>
@@ -454,7 +406,7 @@ class LiquidationPageThreeComponent extends Component {
                                 data={bankAccounts}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={(this.state.selectedBankAccountIndex == index) ? styles.selectedBankAccountFlex : styles.unSelectedBankAccountFlex} onTouchStart={() => this.onSelectBankAccount(item, index)}>
+                                        <View style={(this.state.selectedBankAccountIndex === index) ? styles.selectedBankAccountFlex : styles.unSelectedBankAccountFlex} onTouchStart={() => this.onSelectBankAccount(item, index)}>
                                             <View style={styles.bankAccountFlex}>
                                                 <View style={styles.bankIconFlex}>
                                                     <Image style={styles.bankIconStyle}
@@ -469,7 +421,7 @@ class LiquidationPageThreeComponent extends Component {
                                                 </View>
                                             </View>
                                         </View>
-                                    )
+                                    );
                                 }}
                                 keyExtractor={a => a.bankAccountNo}
                                 extraData={this.state}
@@ -503,31 +455,36 @@ class LiquidationPageThreeComponent extends Component {
                                     <Text style={styles.cityHeading}>Address</Text>
                                     <GInputComponent
                                         propInputStyle={styles.addressBox}
-                                        inputStyle={styles.inputStyle} />
+                                        inputStyle={styles.inputStyle}
+                                    />
                                     <GInputComponent
                                         propInputStyle={styles.addressBox}
-                                        inputStyle={styles.inputStyle} />
+                                        inputStyle={styles.inputStyle}
+                                    />
                                     <Text style={styles.cityHeading}>ZIP Code</Text>
                                     <GInputComponent
                                         propInputStyle={styles.addressBox}
-                                        inputStyle={styles.inputStyle} />
+                                        inputStyle={styles.inputStyle}
+                                    />
                                     <Text style={styles.cityHeading}>City & State</Text>
                                     <View style={styles.flexCityNState}>
                                         <GInputComponent
                                             propInputStyle={styles.city}
-                                            inputStyle={styles.inputStyle} />
+                                            inputStyle={styles.inputStyle}
+                                        />
                                         <GInputComponent
                                             propInputStyle={styles.city}
-                                            inputStyle={styles.inputStyle} />
+                                            inputStyle={styles.inputStyle}
+                                        />
                                     </View>
                                 </View>
                             </Collapsible>
                         </View>
                     ) : null}
 
-                    {/* -----------------------------Delivery Address ends here ------------------------*/}
+                    { /* -----------------------------Delivery Address ends here ------------------------*/}
 
-                    {/* -----------------------------Tax Accounting Method starts here ------------------------*/}
+                    { /* -----------------------------Tax Accounting Method starts here ------------------------*/}
                     <View style={styles.flex2}>
                         <View style={styles.emptyFlex} />
                         <View style={styles.headerFlex} onTouchStart={this.onClickExpandTaxAccounting}>
@@ -538,14 +495,15 @@ class LiquidationPageThreeComponent extends Component {
                     </View>
 
                     {!this.state.collapseTaxAccounting ?
-                        <View><View style={styles.flex2}>
-                            <Text style={styles.fundSourceContent}>{gblStrings.liquidation.taxAccountingMethodContext}</Text>
-                        </View>
+                        <View>
+                            <View style={styles.flex2}>
+                                <Text style={styles.fundSourceContent}>{gblStrings.liquidation.taxAccountingMethodContext}</Text>
+                            </View>
 
                             {/* -----------------------------Tax Accounting Method ends here ------------------------*/}
 
                             {/* -----------------------------Tax Withholding Options starts here ------------------------*/}
-                            {(accType == "IRA") ?
+                            {(accType === "IRA") ?
                                 <View>
                                     <View style={styles.flex2}>
                                         <View style={styles.emptyFlex} />
@@ -581,13 +539,13 @@ class LiquidationPageThreeComponent extends Component {
                                                 />
                                             </View>
 
-                                            {/* switch on view starts here*/}
+                                            {/* switch on view starts here */}
                                             {this.state.switchOff ?
                                                 <View style={styles.flex2}>
                                                     <GDropDownComponent
                                                         dropDownLayout={styles.dropDownLayout}
                                                         dropDownTextName={styles.blackTextBold16px}
-                                                        textInputStyle={{ width: "98%", paddingLeft: "2%", marginLeft: "0%" }}
+                                                        textInputStyle={styles.dropDownText}
                                                         dropDownName={gblStrings.liquidation.isTheReqAmount}
                                                         data={reqAmountTypeJson}
                                                         dropDownValue={this.state.taxAccountingMethodData.requestedAmountType}
@@ -599,7 +557,7 @@ class LiquidationPageThreeComponent extends Component {
                                                     />
 
                                                     {
-                                                        (this.state.taxAccountingMethodData.requestedAmountType == "Before Taxes") ?
+                                                        (this.state.taxAccountingMethodData.requestedAmountType === "Before Taxes") ?
                                                             <View style={styles.stateTaxFlex}>
                                                                 <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.amountBeforeTaxes}</Text>
                                                                 <View style={styles.totalWithdrawalFlex}>
@@ -622,7 +580,8 @@ class LiquidationPageThreeComponent extends Component {
                                                                         inputStyle={styles.inputStyle}
                                                                         value={this.state.taxAccountingMethodData.amountAfterTaxes}
                                                                         onChangeText={this.onChangeAmountAfterTaxes}
-                                                                        maxLength={13} />
+                                                                        maxLength={13}
+                                                                    />
                                                                 </View>
                                                             </View>
                                                     }
@@ -656,7 +615,8 @@ class LiquidationPageThreeComponent extends Component {
                                                                 onChangeText={this.onChangeStateTax}
                                                                 onSubmitEditing={this.onSubmitEditingStateTax}
                                                                 onBlur={this.onSubmitEditingStateTax}
-                                                                maxLength={3} />
+                                                                maxLength={3}
+                                                            />
                                                             <View style={styles.stateTaxToDollarFlex}>
                                                                 <Text style={styles.dollarSkin}>$</Text>
                                                                 <Text style={styles.stateTaxToDollarText}>{this.formatAmount(this.state.taxAccountingMethodData.stateTaxInDollars)}</Text>
@@ -691,7 +651,7 @@ class LiquidationPageThreeComponent extends Component {
                                                 </View> : null}
 
 
-                                            {/* switch on view ends here*/}
+                                            { /*  switch on view ends here */}
 
 
 
@@ -739,5 +699,7 @@ LiquidationPageThreeComponent.defaultProps = {
     navigation: {},
     liquidationInitialState: {},
     amendReducerData: {},
+    saveData: () => { },
+    ammendActions: () => { }
 };
 export default LiquidationPageThreeComponent;

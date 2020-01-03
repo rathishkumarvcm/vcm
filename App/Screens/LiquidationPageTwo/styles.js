@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
 
-export const styles = StyleSheet.create({
+ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7FAFF',
@@ -51,7 +51,6 @@ export const styles = StyleSheet.create({
         marginLeft:"4%",
         marginRight:"4%",
         marginTop:"4%",
-       // marginBottom:"5%"
     },
     sharesFlex:{
         height:scaledHeight(347),
@@ -91,7 +90,6 @@ export const styles = StyleSheet.create({
         flexDirection:'row',
         height:scaledHeight(82),
         backgroundColor:'#EFECEC',
-        //opacity:0.5,
         justifyContent:'space-between'
     },
     totalSharesFlex:{
@@ -121,8 +119,6 @@ export const styles = StyleSheet.create({
         width:"92%",
         height:scaledHeight(40),
         marginTop:scaledHeight(20),
-       // borderColor: 'red',
-       //borderWidth: scaledHeight(1),
     },
     radioButtonFlexOff:{
         justifyContent: 'center',
@@ -142,7 +138,6 @@ export const styles = StyleSheet.create({
         height: scaledHeight(16),
         borderRadius: scaledHeight(8),
         backgroundColor: '#56565A',
-        //paddingTop:scaledHeight(2)
     },
     allSharesText:{
         color:'#56565A',
@@ -235,3 +230,5 @@ export const styles = StyleSheet.create({
     },
 
 });
+
+export default styles;
