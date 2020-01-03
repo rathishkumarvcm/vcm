@@ -654,7 +654,7 @@ class OpenAccPageTwoComponent extends Component {
             },
            
             // others
-           // ...openAccPageTwo
+            ...openAccPageTwo
 
 
         };
@@ -1119,17 +1119,17 @@ class OpenAccPageTwoComponent extends Component {
                     "contactDetails": {
                         "phoneNumber1": {
                             "phoneNumber": this.state.jointOwner.mobileNo || "",
-                            "phoneType": "Home",
-                            "contactDuring": this.state.jointOwner.contactDuringMobNo || ""
+                            "phoneType":this.state.jointOwner.phoneType || "",
+                            "contactDuring": this.state.jointOwner.contactDuringMobNo || "Anytime"
                         },
                         "phoneNumber2": {
                             "phoneNumber": this.state.jointOwner.telePhoneNo2 || "",
-                            "phoneType": "Home",
+                            "phoneType":this.state.jointOwner.phoneType2 || "",
                             "contactDuring": this.state.jointOwner.contactDuringTelePhone2 || ""
                         },
                         "phoneNumber3": {
                             "phoneNumber": this.state.jointOwner.telePhoneNo3 || "",
-                            "phoneType": "Home",
+                            "phoneType":this.state.jointOwner.phoneType3 || "",
                             "contactDuring": this.state.jointOwner.contactDuringTelePhone3 || ""
                         },
                         "emailAddress": this.state.jointOwner.emailAddress || ""
@@ -1171,7 +1171,18 @@ class OpenAccPageTwoComponent extends Component {
         };
 
         const investChildPayload = {
-
+            "beneficiaryInfo": {
+                "childBeneficiary": {
+                    "beneficiaryDetails": {
+                        "firstName": this.state.childBeneficiary.firstName || "",
+                        "middleInitial": this.state.childBeneficiary.middleInitial || "",
+                        "lastName": this.state.childBeneficiary.lastName || "",
+                        "ssnTin": this.state.childBeneficiary.socialSecurityNo || "",
+                        "dateOfBirth": this.state.childBeneficiary.dob || "",
+                        "relation": this.state.childBeneficiary.relationshipToAcc || "",
+                    }
+                }
+            },
         };
 
         /* const retirementAccPayload = {
@@ -3899,7 +3910,7 @@ class OpenAccPageTwoComponent extends Component {
                             propInputStyle={styles.customTxtBox}
                             placeholder={gblStrings.accManagement.phoneNoFormat}
                             value={this.state.personal.telePhoneNo2}
-                            maxLength={gblStrings.maxLength.telePhoneNo2}
+                            maxLength={gblStrings.maxLength.phoneNo}
                             keyboardType="phone-pad"
                             onChangeText={this.onChangeText("personal", "telePhoneNo2")}
                             onSubmitEditing={this.onSubmitEditing(this.contactDuringTelePhone2)}
@@ -3937,7 +3948,7 @@ class OpenAccPageTwoComponent extends Component {
                             propInputStyle={styles.customTxtBox}
                             placeholder=""
                             value={this.state.personal.telePhoneNo3}
-                            maxLength={gblStrings.maxLength.telePhoneNo3}
+                            maxLength={gblStrings.maxLength.phoneNo}
                             keyboardType="phone-pad"
                             onChangeText={this.onChangeText("personal", "telePhoneNo3")}
                             onSubmitEditing={this.onSubmitEditing(this.contactDuringTelePhone3)}
@@ -4949,7 +4960,8 @@ class OpenAccPageTwoComponent extends Component {
                             maxLength={gblStrings.maxLength.mobileNo}
                             keyboardType="phone-pad"
                             onChangeText={this.onChangeText("jointOwner", "mobileNo")}
-                            value={this.state.jointOwner.mobileNo.replace(/\d(?=\d{4})/g, "*")}
+                            value={this.state.jointOwner.mobileNo}
+
                             onSubmitEditing={this.onSubmitEditing(this.telePhoneNo2_joint)}
                             errorFlag={!this.state.jointOwner.mobileNoValidation}
                             errorText={this.state.errMsg}
@@ -4988,9 +5000,9 @@ class OpenAccPageTwoComponent extends Component {
                             inputref={this.setInputRef("telePhoneNo2_joint")}
                             propInputStyle={styles.customTxtBox}
                             placeholder={gblStrings.accManagement.phoneNoFormat}
-                            maxLength={gblStrings.maxLength.telePhoneNo2}
-                            value={this.state.jointOwner.telePhoneNo2}
+                            maxLength={gblStrings.maxLength.phoneNo}
                             keyboardType="phone-pad"
+                            value={this.state.jointOwner.telePhoneNo2}
                             onChangeText={this.onChangeText("jointOwner", "telePhoneNo2")}
                             onSubmitEditing={this.onSubmitEditing(this.telePhoneNo3_joint)}
 
@@ -5027,7 +5039,7 @@ class OpenAccPageTwoComponent extends Component {
                             propInputStyle={styles.customTxtBox}
                             placeholder=""
                             value={this.state.jointOwner.telePhoneNo3}
-                            maxLength={gblStrings.maxLength.telePhoneNo3}
+                            maxLength={gblStrings.maxLength.phoneNo}
                             keyboardType="phone-pad"
                             onChangeText={this.onChangeText("jointOwner", "telePhoneNo3")}
                             onSubmitEditing={this.onSubmitEditing(this.emailAddress_joint)}
@@ -7051,8 +7063,8 @@ class OpenAccPageTwoComponent extends Component {
                                         propInputStyle={styles.customTxtBox}
                                         placeholder={gblStrings.accManagement.phoneNoFormat}
                                         value={item.residencePhoneNo}
-                                        maxLength={gblStrings.maxLength.telePhoneNo2}
-                                        keyboardType="phone-pad"
+                                        maxLength={gblStrings.maxLength.phoneNo}
+                                         keyboardType="phone-pad"
                                         onChangeText={this.onChangeTextForEstateTrust("residencePhoneNo",index)}
                                         onSubmitEditing={this.onSubmitEditing(this[`residencePhoneNo${index}`])}
                                         errorFlag={!item.residencePhoneNoValidation}
@@ -7072,7 +7084,7 @@ class OpenAccPageTwoComponent extends Component {
                                         propInputStyle={styles.customTxtBox}
                                         placeholder={gblStrings.accManagement.phoneNoFormat}
                                         value={item.busniessPhoneNo}
-                                        maxLength={gblStrings.maxLength.telePhoneNo2}
+                                        maxLength={gblStrings.maxLength.phoneNo}
                                         keyboardType="phone-pad"
                                         onChangeText={this.onChangeTextForEstateTrust("busniessPhoneNo",index)}
                                         onSubmitEditing={this.onSubmitEditing(this[`emailAddress${index}`])}

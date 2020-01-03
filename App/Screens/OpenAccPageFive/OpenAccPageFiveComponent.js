@@ -139,7 +139,11 @@ class OpenAccPageFiveComponent extends Component {
                 { (regType === "Joint Account") && this.renderPrimaryEmploymentInfoJoint (data)}
                 { (regType === "Joint Account") && this.renderPrimaryMilitaryInfoJoint (data)}
                 { (regType === "Joint Account") && this.renderPrimaryFinancialInfoJoint (data)}
-                
+               
+                { (regType === "Retirement Account") && this.renderIRABeneficiaryInfo (data)}
+
+                { (regType === "UGMA/UTMA Account") && this.renderChildBeneficiaryInfo (data)}
+
                 {this.renderMutualFundList (data)}
                 {this.renderAccPrefencesInfo (data)}
             </View>
@@ -774,7 +778,7 @@ class OpenAccPageFiveComponent extends Component {
             <View style={[styles.sectionGrp]}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
-                        {gblStrings.accManagement.employmentInfoPrimary}
+                        {gblStrings.accManagement.employmentInformationJoint}
                     </Text>
                 </View>
 
@@ -852,7 +856,7 @@ class OpenAccPageFiveComponent extends Component {
             <View style={[styles.sectionGrp]}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
-                        {gblStrings.accManagement.militaryInformation}
+                        {gblStrings.accManagement.militaryInformationJoint}
                     </Text>
                 </View>
 
@@ -929,7 +933,7 @@ class OpenAccPageFiveComponent extends Component {
             <View style={[styles.sectionGrp]}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
-                        {gblStrings.accManagement.financialInformation}
+                        {gblStrings.accManagement.financialInformationJoint}
                     </Text>
                 </View>
 
@@ -977,6 +981,201 @@ class OpenAccPageFiveComponent extends Component {
         );
     }
 
+   
+    renderChildBeneficiaryInfo = (data) => {
+        const { beneficiaryInfo = {} } = data || {};
+        const { childBeneficiary = {} } = beneficiaryInfo || {};
+        const { beneficiaryDetails = {} } = childBeneficiary || {};
+        console.log(`beneficiaryDetails::${JSON.stringify(beneficiaryDetails)}`);
+
+        const {
+            prefix = '',
+            firstName = '',
+            middleInitial = '',
+            lastName = '',
+            suffix = '',
+            ssnTin = '',
+            dateOfBirth = '',
+            relation ='',
+        } = (beneficiaryDetails && beneficiaryDetails.firstName) ? beneficiaryDetails : {};
+
+
+        return (
+            <View style={[styles.sectionGrp]}>
+                <View style={styles.accTypeSelectSection}>
+                    <Text style={styles.headings}>
+                        {gblStrings.accManagement.personalInformationChild}
+                    </Text>
+                </View>
+
+                <Text style={styles.lblLine} />
+                <View style={styles.editDetailsGrp}>
+                    <TouchableOpacity
+                        onPress={this.navigateToScreen("openAccPageTwo")}
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                        style={styles.editBtn}
+                    >
+                        <Text style={styles.editBtnTxt}>
+                            {gblStrings.common.edit}
+                        </Text>
+                    </TouchableOpacity>
+                    <Text style={styles.lblLeftColTxt}>
+                        {gblStrings.accManagement.name}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${prefix} ${firstName} ${middleInitial} ${lastName} ${suffix}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.dob}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${dateOfBirth}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.socialSecurityNo}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${ssnTin}`}
+                    </Text>
+
+                </View>
+            </View>
+        );
+    }
+
+    renderIRABeneficiaryInfo = (data) => {
+        const { beneficiaryInfo = {} } = data || {};
+        const { beneficiaryDetails = [] } = beneficiaryInfo || {};
+/*
+            "type": this.state.retirementBeneficiaryData[i].beneficiaryType || "",
+            "relation": this.state.retirementBeneficiaryData[i].relationshipToAcc || "",
+            "distributionPercentage": this.state.retirementBeneficiaryData[i].beneficiaryDistPercent || "",
+            "firstName": this.state.retirementBeneficiaryData[i].firstName || "",
+            "middleInitial": this.state.retirementBeneficiaryData[i].middleInitial || "",
+            "lastName": this.state.retirementBeneficiaryData[i].lastName || "",
+            "ssnTin": this.state.retirementBeneficiaryData[i].socialSecurityNo || "",
+            "dateOfBirth": this.state.retirementBeneficiaryData[i].dob || "",
+            "emailAddress": this.state.retirementBeneficiaryData[i].emailAddress || "",
+            "isPrimaryBeneficiary": "true"
+*/
+       
+        console.log(`beneficiaryDetails::${JSON.stringify(beneficiaryDetails)}`);
+
+
+        return(
+          
+            <View style={[styles.sectionGrp]}>
+                <View style={styles.accTypeSelectSection}>
+                    <Text style={styles.headings}>
+                        {gblStrings.accManagement.beneficiariesOpt}
+                    </Text>
+                </View>
+                <Text style={styles.lblLine} />
+
+                <View style={styles.editDetailsGrp}>
+                    <TouchableOpacity
+                        onPress={this.navigateToScreen("openAccPageTwo")}
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                        style={styles.editBtn}
+                    >
+                        <Text style={styles.editBtnTxt}>
+                            {gblStrings.common.edit}
+                        </Text>
+                    </TouchableOpacity>
+                    {beneficiaryDetails.map((item, index) => {
+                        const key = `benificairy${index}`;
+                        const {
+                            type = "",
+                            relation = "",
+                            distributionPercentage = "",
+                            prefix = "",
+                            firstName = "",
+                            middleInitial = "",
+                            lastName = "",
+                            suffix= "",
+                            ssnTin = "",
+                            dateOfBirth = "",
+                            emailAddress = "",
+                            isPrimaryBeneficiary = false
+                         
+
+                        } = item;
+
+                        return (
+                            <View
+                                key={key}
+                            >
+
+                                <Text style={styles.lblNameTxt}>
+                                    {gblStrings.accManagement.beneficiary_type}
+                                </Text>
+                                <Text style={styles.lblNameValueTxt}>
+                                    {`${type}`}
+                                </Text>
+
+                                <Text style={styles.lblNameTxt}>
+                                    {gblStrings.accManagement.relationshipToAccHolder}
+                                </Text>
+                                <Text style={styles.lblNameValueTxt}>
+                                    {`${relation}`}
+                                </Text>
+
+                                <Text style={styles.lblNameTxt}>
+                                    {gblStrings.accManagement.distributionPercentage}
+                                </Text>
+                                <Text style={styles.lblNameValueTxt}>
+                                    {`${distributionPercentage}`}
+                                </Text>
+
+
+                                <Text style={styles.lblLeftColTxt}>
+                                    {gblStrings.accManagement.name}
+                                </Text>
+                                <Text style={styles.lblNameValueTxt}>
+                                    {`${prefix} ${firstName} ${middleInitial} ${lastName} ${suffix}`}
+                                </Text>
+
+                                <Text style={styles.lblNameTxt}>
+                                    {gblStrings.accManagement.dob}
+                                </Text>
+                                <Text style={styles.lblNameValueTxt}>
+                                    {`${dateOfBirth}`}
+                                </Text>
+
+                                <Text style={styles.lblNameTxt}>
+                                    {gblStrings.accManagement.socialSecurityNo}
+                                </Text>
+                                <Text style={styles.lblNameValueTxt}>
+                                    {`${ssnTin}`}
+                                </Text>
+
+                                <Text style={styles.lblNameTxt}>
+                                    {gblStrings.accManagement.emailAddress}
+                                </Text>
+                                <Text style={styles.lblNameValueTxt}>
+                                    {`${emailAddress}`}
+                                </Text>
+                                
+
+
+
+                            </View>
+                        );
+                    }
+                    )}
+
+                </View>
+
+
+            </View>
+
+        );
+
+    }
 
     renderMutualFundList = (data) => {
        
