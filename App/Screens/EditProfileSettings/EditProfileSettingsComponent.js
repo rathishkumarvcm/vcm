@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
+import { Text, View, Image, ScrollView } from 'react-native';
+import PropTypes from 'prop-types';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GDropDownComponent } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GRadioButtonComponent, GDropDownComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
-import { JS } from 'aws-amplify';
+import ImagesLoad from '../../Images/ImageIndex';
 
 const profileSettingsCitizenship = [
     { index1: 0, question: "U.S" },
@@ -26,30 +27,20 @@ const profileSettingsTempData = [
     },
 ];
 
-class editProfileSettingsComponent extends Component {
+class EditProfileSettingsComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: false,
-            enableBiometric: false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false,
             countryNonUS: false,
-            isValidPin: true,
-            validPin: '',
-
-            profileName: '',
-            profileMobile: '',
-            profileVcm: '',
-            profileSsn: '',
-            profileDob: '',
-            profilePrefix: '',
-            profileSuffix: '',
-            profileGender: '',
-            profileMaritalStatus: '',
-            profileCitizenShip: '',
-            profileCountryValue: '',
-
+            profileName: this.props.initialstate.firstName,
+            profileVcm: this.props.profileState.profileVcmID,
+            profileSsn: this.props.profileState.profileSsnNumber,
+            profileDob: this.props.profileState.profileDob,
+            profilePrefix: this.props.profileState.profilePrefix,
+            profileSuffix: this.props.profileState.profileSuffix,
+            profileGender: this.props.profileState.profileGender,
+            profileMaritalStatus: this.props.profileState.profileMaritalStatus,
+            
             radioButton: false,
             radioButtonIndex: 0,
 
@@ -80,20 +71,33 @@ class editProfileSettingsComponent extends Component {
         };
     }
 
+    componentDidMount() {
+        const payload = [];
+
+        const compositePayloadData = [
+            "prefix",
+            "suffix",
+            "gender",
+            "marital_status"
+        ];
+
+        for (let i = 0; i < compositePayloadData.length; i++) {
+            const tempkey = compositePayloadData[i];
+            if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
+                payload.push(tempkey);
+            }
+        }
+
+        this.props.getProfileCompositeData(payload);
+    }
+
     ShowHideComponent = () => {
-        if (this.state.countryNonUS == true) {
+        if (this.state.countryNonUS === true) {
             this.setState({ countryNonUS: false });
         } else {
             this.setState({ countryNonUS: true });
         }
     };
-
-    setValidPin = (text) => {
-        this.setState({
-            validPin: text,
-            isValidPin: true
-        });
-    }
 
     radioButtonClicked = (index) => {
         if (index !== this.state.radioButtonIndex) {
@@ -108,7 +112,7 @@ class editProfileSettingsComponent extends Component {
             });
         }
 
-        if (index == 1) {
+        if (index === 1) {
             this.setState({
                 countryNonUS: true
             });
@@ -120,12 +124,6 @@ class editProfileSettingsComponent extends Component {
     }
 
     navigationSuccess = () => {
-        if (this.state.validPin === "") {
-            this.setState({
-                isValidPin: false
-            });
-        }
-
         if (this.state.dropDownValue === '') {
             this.setState({
                 dropDownPrefixFlag: true,
@@ -154,10 +152,10 @@ class editProfileSettingsComponent extends Component {
             });
         }
 
-        if (this.state.dropDownValue != "" &&
-            this.state.dropDownSuffixValue != "" &&
-            this.state.dropDownGenderValue != "" &&
-            this.state.dropDownStatusValue != "") {
+        if (this.state.dropDownValue !== "" &&
+            this.state.dropDownSuffixValue !== "" &&
+            this.state.dropDownGenderValue !== "" &&
+            this.state.dropDownStatusValue !== "") {
             this.manageProfileInformations();
         }
     }
@@ -232,74 +230,6 @@ class editProfileSettingsComponent extends Component {
         });
     }
 
-    componentDidMount() {
-        if (this.props && this.props.initialstate && this.props.initialstate.firstName) {
-            this.setState({
-                profileName: this.props.initialstate.firstName
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileVcmID) {
-            this.setState({
-                profileVcm: this.props.profileState.profileVcmID
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileSsnNumber) {
-            this.setState({
-                profileSsn: this.props.profileState.profileSsnNumber
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileDob) {
-            this.setState({
-                profileDob: this.props.profileState.profileDob
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profilePrefix) {
-            this.setState({
-                profilePrefix: this.props.profileState.profilePrefix
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileSuffix) {
-            this.setState({
-                profileSuffix: this.props.profileState.profileSuffix
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileGender) {
-            this.setState({
-                profileGender: this.props.profileState.profileGender
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileMaritalStatus) {
-            this.setState({
-                profileMaritalStatus: this.props.profileState.profileMaritalStatus
-            });
-        }
-
-        let payload = [];
-
-        const compositePayloadData = [
-            "prefix",
-            "suffix",
-            "gender",
-            "marital_status"
-        ];
-
-        for (let i = 0; i < compositePayloadData.length; i++) {
-            let tempkey = compositePayloadData[i];
-            if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
-                payload.push(tempkey);
-            }
-        }
-
-        this.props.getProfileCompositeData(payload);
-    }
-
     manageProfileInformations = () => {
         const payloadData = this.getProfilePayloadData();
         this.props.saveProfileData("editProfileManage", payloadData);
@@ -320,9 +250,9 @@ class editProfileSettingsComponent extends Component {
         return profilePayload;
     }
 
-    editProfileBack = () => {this.props.navigation.navigate('profileSettings')};
+    editProfileBack = () => {this.props.navigation.navigate('profileSettings');};
 
-    editProfileOnCancel = () => {this.props.navigation.navigate('profileSettings')};
+    editProfileOnCancel = () => {this.props.navigation.navigate('profileSettings');};
 
     render() {
 
@@ -358,15 +288,16 @@ class editProfileSettingsComponent extends Component {
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.editProfileFlex}>
 
                     {/* Header Section - Tree Structure */}
 
                     <View style={styles.settingsView}>
                         <Text style={styles.editProfileHeadOne}>
-                            {"Pro.."}
+                            Pro..
                         </Text>
 
                         <Text style={styles.editProfileHeadTwo}>
@@ -376,15 +307,15 @@ class editProfileSettingsComponent extends Component {
                         <Text style={styles.editProfileHeadOne}
                             onPress={this.editProfileBack}
                         >
-                            {"Bas.."}
+                            Bas..
                         </Text>
 
                         <Text style={styles.editProfileHeadTwo}>
                             {"  >  "}
                         </Text>
 
-                        <Text style={{ color: '#56565A', fontSize: scaledHeight(14), fontWeight: 'bold' }}>
-                            {"Manage Personal Information"}
+                        <Text style={styles.editProfileManageLabel}>
+                            Manage Personal Information
                         </Text>
                     </View>
 
@@ -456,10 +387,11 @@ class editProfileSettingsComponent extends Component {
                             showDropDown={this.state.dropDownState}
                             dropDownValue={this.state.dropDownValue}
                             selectedDropDownValue={this.dropDownOnSelect}
-                            itemToDisplay={"value"}
+                            itemToDisplay="value"
                             errorFlag={this.state.dropDownPrefixFlag}
-                            errorText={this.dropDownPrefixMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(492) }} />
+                            errorText={this.state.dropDownPrefixMsg}
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(492) }}
+                        />
 
                         {/* Suffix Data */}
 
@@ -472,10 +404,11 @@ class editProfileSettingsComponent extends Component {
                             showDropDown={this.state.dropDownSuffixState}
                             dropDownValue={this.state.dropDownSuffixValue}
                             selectedDropDownValue={this.dropDownSuffixSelect}
-                            itemToDisplay={"value"}
+                            itemToDisplay="value"
                             errorFlag={this.state.dropDownSuffixFlag}
-                            errorText={this.dropDownSuffixMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(581) }} />
+                            errorText={this.state.dropDownSuffixMsg}
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(581) }}
+                        />
 
                         {/* Gender Data */}
 
@@ -488,10 +421,11 @@ class editProfileSettingsComponent extends Component {
                             showDropDown={this.state.dropDownGenderState}
                             dropDownValue={this.state.dropDownGenderValue}
                             selectedDropDownValue={this.dropDownGenderSelect}
-                            itemToDisplay={"value"}
+                            itemToDisplay="value"
                             errorFlag={this.state.dropDownGenderFlag}
-                            errorText={this.dropDownGenderMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(670) }} />
+                            errorText={this.state.dropDownGenderMsg}
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(670) }}
+                        />
 
                         {/* Marital Status Data */}
 
@@ -504,10 +438,11 @@ class editProfileSettingsComponent extends Component {
                             showDropDown={this.state.dropDownStatusState}
                             dropDownValue={this.state.dropDownStatusValue}
                             selectedDropDownValue={this.dropDownStatusSelect}
-                            itemToDisplay={"value"}
+                            itemToDisplay="value"
                             errorFlag={this.state.dropDownStatusFlag}
-                            errorText={this.dropDownStatusMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(760) }} />
+                            errorText={this.state.dropDownStatusMsg}
+                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(760) }}
+                        />
 
                         {/* Citizenship */}
 
@@ -518,23 +453,24 @@ class editProfileSettingsComponent extends Component {
 
                             <View style={styles.editRadioView}>
                                 {profileSettingsCitizenship.map((item, index) =>
-                                    index == this.state.radioButtonIndex ?
+                                    index === this.state.radioButtonIndex ?
                                         <GRadioButtonComponent
                                             onPress={() => this.radioButtonClicked(index)}
                                             selected
-                                            questions={item.question} />
+                                            questions={item.question}
+                                        />
                                         :
                                         <GRadioButtonComponent
                                             onPress={() => this.radioButtonClicked(index)}
                                             selected={false}
-                                            questions={item.question} />
+                                            questions={item.question}
+                                        />
                                 )}
                             </View>
                         </View>
 
                         {this.state.countryNonUS ? (
                             <GDropDownComponent
-                                placeholder={this.state.profileCountryValue}
                                 dropDownTextName={styles.editProfileLabel}
                                 dropDownName={globalString.profileSettingsPage.profileCountryLabel}
                                 data={profileSettingsTempData}
@@ -542,17 +478,19 @@ class editProfileSettingsComponent extends Component {
                                 showDropDown={this.state.dropDownCountryState}
                                 dropDownValue={this.state.dropDownCountryValue}
                                 selectedDropDownValue={this.dropDownCountrySelect}
-                                itemToDisplay={"value"}
+                                itemToDisplay="value"
                                 errorFlag={this.state.dropDownCountryFlag}
-                                errorText={this.dropDownCountryMsg}
-                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(950) }} />) : null}
+                                errorText={this.state.dropDownCountryMsg}
+                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(950) }}
+                            />) : null}
 
                         <View style={styles.editFlexDirectionColumn}>
                             <GButtonComponent
                                 buttonStyle={styles.cancelButtonStyle}
                                 buttonText={globalString.common.cancel}
                                 textStyle={styles.cancelButtonText}
-                                onPress={this.editProfileOnCancel} />
+                                onPress={this.editProfileOnCancel}
+                            />
                         </View>
 
                         <View style={styles.editFlexDirectionColumn}>
@@ -583,7 +521,7 @@ class editProfileSettingsComponent extends Component {
 
                         <View style={styles.connectWithUs}>
                             <Image
-                                source={require("../../Images/logo.png")}
+                                source={ImagesLoad.applicationLogo}
                             />
                         </View>
 
@@ -595,10 +533,10 @@ class editProfileSettingsComponent extends Component {
 
                         <View style={styles.whiteBackground}>
                             <Image style={styles.imageWidthHeight}
-                                source={require("../../Images/twitterlogo.png")}
+                                source={ImagesLoad.twitterlogo}
                             />
                             <Image style={styles.imageWidthHeight}
-                                source={require("../../Images/linkedinlogo.png")}
+                                source={ImagesLoad.linkedinlogo}
                             />
                         </View>
 
@@ -630,10 +568,27 @@ class editProfileSettingsComponent extends Component {
                     </View>
 
                 </ScrollView>
-
             </View>
         );
     }
 }
 
-export default editProfileSettingsComponent;
+EditProfileSettingsComponent.propTypes = {
+    navigation: PropTypes.instanceOf(Object).isRequired,
+    profileState: PropTypes.instanceOf(Object),
+    initialstate: PropTypes.instanceOf(Object),
+    profileSettingsLookup: PropTypes.instanceOf(Object),
+    getProfileCompositeData: PropTypes.func,
+    saveProfileData: PropTypes.func
+};
+
+EditProfileSettingsComponent.defaultProps = {
+    navigation: {},
+    profileState: {},
+    initialstate: {},
+    profileSettingsLookup: {},
+    getProfileCompositeData: null,
+    saveProfileData: null
+};
+
+export default EditProfileSettingsComponent;

@@ -412,5 +412,7 @@ export const styles = StyleSheet.create({
     editRadioView: { flexDirection: 'row', marginLeft: '2%', marginTop: scaledHeight(3), width: '40%' },
     editSecurityView: { color: '#56565A', fontSize: scaledHeight(18) },
     editProfileHeadOne: { color: '#0000FF', fontSize: scaledHeight(14) },
-    editProfileHeadTwo: { color: '#56565A', fontSize: scaledHeight(14) }
+    editProfileHeadTwo: { color: '#56565A', fontSize: scaledHeight(14) },
+    editProfileManageLabel: { color: '#56565A', fontSize: scaledHeight(14), fontWeight: 'bold' },
+    editProfileFlex: { flex: 0.85 }
 });
