@@ -15,8 +15,6 @@ class BankAccountsComponent extends Component {
         this.accountNumber = "";
         this.bankName = "";
         this.state = {
-            isLoading: false,
-            showDeleteOption: false,
             stateUpdated: false,
             bankAccountInfo: []
         };
@@ -37,9 +35,7 @@ class BankAccountsComponent extends Component {
     updateView = () => this.setState({ stateUpdated: !this.state.stateUpdated });
 
     updateShowDeleteOption = (fromView, showDeleteOption, itemId) => {
-        console.log("updateShowDeleteOption:::: ", fromView, showDeleteOption, itemId);
         switch (fromView) {
-
             case 'showDelete':
                 if (showDeleteOption) {
                     tmpData = this.state.bankAccountInfo;
@@ -56,6 +52,8 @@ class BankAccountsComponent extends Component {
                 }
                 break;
 
+                default:
+                    break;
         }
     }
 
@@ -63,7 +61,7 @@ class BankAccountsComponent extends Component {
         this.confirmDelete = false;
         if (shouldDelete) {
             let payload = [];
-            payload.push(JSON.stringify(tmpData));
+            payload.push(JSON.stringify(this.state.bankAccountInfo));
             this.props.deleteBankAccount(JSON.stringify(payload), this.accountNumber);
         } else {
             let tmpData = [];
@@ -79,9 +77,10 @@ class BankAccountsComponent extends Component {
     }
 
     addBankAccount = (item) => {
-        tmpData = this.state.bankAccountInfo;
-        tmpData.push(item);
-        this.setState({ bankAccountInfo: tmpData });
+        let payload = [];
+        payload.push(JSON.stringify(this.state.bankAccountInfo));
+        this.props.addBankAccount(item, JSON.stringify(payload));
+
         this.updateBankDetails = false;
         this.updateView();
     }

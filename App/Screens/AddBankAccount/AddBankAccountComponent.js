@@ -92,7 +92,7 @@ class AddBankAccountComponent extends Component {
                         buttonStyle={styles.backBtn}
                         buttonText={gblStrings.common.cancel}
                         textStyle={styles.backButtonText}
-                        onPress={this.navigateBankAccount(false)}
+                        onPress={() => this.navigateBankAccount(false)}
                     />
 
                     <View style={styles.fullLine} />
