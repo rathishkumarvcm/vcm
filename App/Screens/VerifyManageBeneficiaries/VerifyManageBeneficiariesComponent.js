@@ -9,7 +9,7 @@ import {
 } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
-
+let tempData = {};
 
 class VerifyManageBenificiariesComponent extends Component {
   constructor(props) {
@@ -18,45 +18,82 @@ class VerifyManageBenificiariesComponent extends Component {
       beneData: {},
       totalPrimaryDistribution: 0,
       totalContingentDistribution: 0,
-      totalTodDistribution: 0
+      totalDistribution: 0
     };
   }
 
   componentDidMount() {
-    this.updateInitialData();
+    if (this.props && this.props.manageBeneficiaryData && this.props.manageBeneficiaryData.savedBeneficiaryData) {
+      tempData = this.props.manageBeneficiaryData.savedBeneficiaryData;
+      let todArr = tempData.transfer_on_Death_Bene;
+      let conArr = tempData.contingent_Bene;
+      if (tempData.new_Primary_Bene && tempData.new_Primary_Bene.length) {
+        todArr = tempData.transfer_on_Death_Bene.concat(tempData.transfer_on_Death_Bene);
+      }
+      if (tempData.new_Contingent_Bene && tempData.new_Contingent_Bene.length) {
+        conArr = tempData.contingent_Bene.concat(tempData.new_Contingent_Bene);
+      }
+      tempData.transfer_on_Death_Bene = todArr;
+      tempData.contingent_Bene = conArr;
+      this.updateInitialData(tempData);
+    }
   }
 
-  updateInitialData = () => {
-    if (this.props && this.props.manageBeneficiaryData && this.props.manageBeneficiaryData.savedBeneficiaryData) {
-      this.setState({ beneData: this.props.manageBeneficiaryData.savedBeneficiaryData }, () => this.setInitialValue());
+  updateInitialData = (data) => {
+    if (data) {
+      this.setState({ beneData: data }, () => this.setInitialValue());
     }
-
   }
 
   setInitialValue = () => {
+    let totalPri = 0;
+    let totalCon = 0;
+    let totalTod = 0;
+    let total = 0;
     if (this.state.beneData.transfer_on_Death_Bene) {
-      let dist = 0;
-      for (const item of this.state.beneData.transfer_on_Death_Bene) {
-        dist = dist + parseInt(item.distribution_Per);
-      }
-      this.setState({ totalTodDistribution: dist });
+      const tot = this.state.beneData.transfer_on_Death_Bene.reduce((prev, cur) => {
+        let dist = parseInt(cur.distribution_Per);
+        if (this.isEmpty(cur.distribution_Per)) {
+          dist = 0;
+        }
+        return prev + dist;
+      }, 0);
+      totalTod = tot;
     }
     if (this.state.beneData.primary_Bene) {
-      let dist = 0;
-      for (const item of this.state.beneData.primary_Bene) {
-        dist = dist + parseInt(item.distribution_Per);
-      }
-      this.setState({ totalPrimaryDistribution: dist });
+      const tot = this.state.beneData.contingent_Bene.reduce((prev, cur) => {
+        let dist = parseInt(cur.distribution_Per);
+        if (this.isEmpty(cur.distribution_Per)) {
+          dist = 0;
+        }
+        return prev + dist;
+      }, 0);
+      totalPri = tot;
     }
     if (this.state.beneData.contingent_Bene) {
-      let dist = 0;
-      for (const item of this.state.beneData.contingent_Bene) {
-        dist = dist + parseInt(item.distribution_Per);
-      }
-      this.setState({ totalContingentDistribution: dist });
+      const tot = this.state.beneData.primary_Bene.reduce((prev, cur) => {
+        let dist = parseInt(cur.distribution_Per);
+        if (this.isEmpty(cur.distribution_Per)) {
+          dist = 0;
+        }
+        return prev + dist;
+      }, 0);
+      totalCon = tot;
     }
+
+    total = totalTod + totalPri + totalCon;
+    this.setState({ totalPrimaryDistribution: totalPri, totalContingentDistribution: totalCon, totalDistribution: total });
+
   }
 
+  isEmpty = (str) => {
+    if (str === "" || str === undefined || str === null || str === "null" || str === "undefined") {
+      return true;
+    }
+    return false;
+  }
+
+  /* ------------------ Button events -------------------------- */
   onClickEdit = () => {
     this.props.navigation.goBack();
   }
@@ -87,6 +124,8 @@ class VerifyManageBenificiariesComponent extends Component {
     return list;
   }
 
+  /* ------------------ Render Functions for FlatList -------------------------- */
+
   renderContingentBeneficiary = ({ item }) => (
     <View style={styles.marginStyle}>
       <View style={styles.flexStyle}>
@@ -99,7 +138,7 @@ class VerifyManageBenificiariesComponent extends Component {
       <View style={styles.paddingHorizontalStyle}>
         <View style={styles.contentViewBlock}>
           <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
-          <Text style={styles.shortContentValueText}>{item.bene_Name}</Text>
+          <Text style={styles.shortContentValueText}>{`${item.fname} ${item.mname} ${item.lname}`}</Text>
         </View>
         <View style={styles.contentViewBlock}>
           <Text style={styles.shortContentText}>{gblStrings.accManagement.socialSecurityNo}</Text>
@@ -141,7 +180,7 @@ class VerifyManageBenificiariesComponent extends Component {
       <View style={styles.paddingHorizontalStyle}>
         <View style={styles.contentViewBlock}>
           <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
-          <Text style={styles.shortContentValueText}>{item.bene_Name}</Text>
+          <Text style={styles.shortContentValueText}>{`${item.fname} ${item.mname} ${item.lname}`}</Text>
         </View>
         <View style={styles.contentViewBlock}>
           <Text style={styles.shortContentText}>{gblStrings.accManagement.socialSecurityNo}</Text>
@@ -183,7 +222,7 @@ class VerifyManageBenificiariesComponent extends Component {
       <View style={styles.paddingHorizontalStyle}>
         <View style={styles.contentViewBlock}>
           <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
-          <Text style={styles.shortContentValueText}>{item.bene_Name}</Text>
+          <Text style={styles.shortContentValueText}>{`${item.fname} ${item.mname} ${item.lname}`}</Text>
         </View>
         <View style={styles.contentViewBlock}>
           <Text style={styles.shortContentText}>{gblStrings.accManagement.socialSecurityNo}</Text>
@@ -250,6 +289,7 @@ class VerifyManageBenificiariesComponent extends Component {
             <FlatList
               data={this.state.beneData.primary_Bene}
               keyExtractor={this.generateKeyExtractor}
+              extraData={this.state}
               renderItem={this.renderPrimaryBeneficiary}
             />
           }
@@ -257,6 +297,7 @@ class VerifyManageBenificiariesComponent extends Component {
             <FlatList
               data={this.state.beneData.contingent_Bene}
               keyExtractor={this.generateKeyExtractor}
+              extraData={this.state}
               renderItem={this.renderContingentBeneficiary}
             />
           }
@@ -264,6 +305,7 @@ class VerifyManageBenificiariesComponent extends Component {
             <FlatList
               data={this.state.beneData.transfer_on_Death_Bene}
               keyExtractor={this.generateKeyExtractor}
+              extraData={this.state}
               renderItem={this.renderTransferOnDeathBeneficiary}
             />
           }
@@ -275,7 +317,7 @@ class VerifyManageBenificiariesComponent extends Component {
               <Text style={styles.todBeneDistributionTxt}>Total Distribution Percentage</Text> :
               <Text style={styles.otherBeneDistributionTxt}>{`Total Distribution Percentage of Primary ( ${this.state.totalPrimaryDistribution} %) + Contingent ( ${this.state.totalContingentDistribution} %)`}</Text>
             }
-            <Text style={styles.todBeneDistributionTxt}>{`= ${parseInt(this.state.totalPrimaryDistribution + this.state.totalContingentDistribution + this.state.totalTodDistribution)} %`}</Text>
+            <Text style={styles.todBeneDistributionTxt}>{`= ${this.state.totalDistribution} %`}</Text>
           </View>
 
           {/* --------------------------- Button View -------------------------------- */}

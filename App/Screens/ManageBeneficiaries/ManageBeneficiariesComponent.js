@@ -23,12 +23,15 @@ class ManageBenificiariesComponent extends Component {
   }
 
   handleEdit = (data) => () => {
-    console.log(data);
     const payloadData = {
       savedBeneficiaryData: data
     };
     this.props.saveBeneficiaryData(payloadData);
     this.props.navigation.navigate("editManageBeneficiaries", { acc_Data: data });
+  }
+
+  onClickAddBeneficiary = () => {
+    // this.props.navigation.navigate("addManageBeneficiaries");
   }
 
   getDeleteData = (item) => {
@@ -84,7 +87,7 @@ class ManageBenificiariesComponent extends Component {
         <View style={styles.marginPaddingStyle}>
           <View style={styles.marginTopStyle}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.contingentBeneficiary}</Text>
-            <Text style={styles.beneNameStyle}>{item.bene_Name}</Text>
+            <Text style={styles.beneNameStyle}>{`${item.fname} ${item.mname} ${item.lname}`}</Text>
           </View>
           <View style={styles.marginTopStyle}>
             <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToInsured}</Text>
@@ -112,7 +115,7 @@ class ManageBenificiariesComponent extends Component {
       <View style={styles.marginPaddingStyle}>
         <View style={styles.marginTopStyle}>
           <Text style={styles.shortContentText}>{gblStrings.accManagement.primaryBeneficiary}</Text>
-          <Text style={styles.beneNameStyle}>{item.bene_Name}</Text>
+          <Text style={styles.beneNameStyle}>{`${item.fname} ${item.mname} ${item.lname}`}</Text>
         </View>
         <View style={styles.marginTopStyle}>
           <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToInsured}</Text>
@@ -139,7 +142,7 @@ class ManageBenificiariesComponent extends Component {
       <View style={styles.marginPaddingStyle}>
         <View style={styles.marginTopStyle}>
           <Text style={styles.shortContentText}>{gblStrings.accManagement.primaryBeneficiary}</Text>
-          <Text style={styles.beneNameStyle}>{item.bene_Name}</Text>
+          <Text style={styles.beneNameStyle}>{`${item.fname} ${item.mname} ${item.lname}`}</Text>
         </View>
         <View style={styles.marginTopStyle}>
           <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToInsured}</Text>
@@ -216,9 +219,16 @@ class ManageBenificiariesComponent extends Component {
         <GHeaderComponent navigation={this.props.navigation} />
         <ScrollView style={styles.flexMainView}>
           <View style={styles.mainHeadingView}>
-            <Text style={styles.manageBenificiariesHeadline}>
-              {gblStrings.accManagement.manageBeneficiaries}
-            </Text>
+            <View style={styles.addNewBeneView}>
+              <Text style={styles.manageBenificiariesHeadline}>
+                {gblStrings.accManagement.manageBeneficiaries}
+              </Text>
+              <TouchableOpacity onPress={this.onClickAddBeneficiary}>
+                <Text style={styles.addNewBeneText}>
+                  Add Beneficiary
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={styles.line} />
           {this.state.isSuccessNotification ?
@@ -269,13 +279,15 @@ class ManageBenificiariesComponent extends Component {
 ManageBenificiariesComponent.propTypes = {
   navigation: PropTypes.instanceOf(Object),
   manageBeneficiaryData: PropTypes.instanceOf(Object),
-  deleteBeneficiaryData: PropTypes.func
+  deleteBeneficiaryData: PropTypes.func,
+  saveBeneficiaryData: PropTypes.func
 };
 
 ManageBenificiariesComponent.defaultProps = {
   navigation: {},
   manageBeneficiaryData: {},
-  deleteBeneficiaryData: () => { }
+  deleteBeneficiaryData: () => { },
+  saveBeneficiaryData: () => { }
 };
 
 export default ManageBenificiariesComponent;

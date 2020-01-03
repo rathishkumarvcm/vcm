@@ -241,8 +241,10 @@ const styles = StyleSheet.create({
     paddingLeft: '4%'
   },
   distributionView: {
-    width: '100%',
-    justifyContent: 'space-between'
+    marginTop: scaledHeight(10),
+    marginBottom: scaledHeight(15),
+    justifyContent: 'space-evenly',
+    flexDirection: 'row'
   },
   dropdownTextInput: {
     width: '100%',
@@ -256,13 +258,16 @@ const styles = StyleSheet.create({
   },
   distributionValueTxt: {
     color: '#B5B5B5',
+   // width: scaledHeight(60),
+    height: scaledHeight(40),
     fontSize: scaledHeight(10),
     borderColor: '#B5B5B5',
+    textAlign: 'center',
     borderWidth: scaledHeight(1),
-    padding: '4%'
+    paddingTop:'4%'
   },
   sliderView: {
-    width: '80%'
+    width: scaledHeight(250)
   },
   totalDisView: {
     marginTop: scaledHeight(30),

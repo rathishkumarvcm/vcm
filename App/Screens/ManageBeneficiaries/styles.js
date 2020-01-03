@@ -13,6 +13,18 @@ const styles = StyleSheet.create({
     paddingLeft: "4%",
     paddingRight: "4%"
   },
+  addNewBeneView: {
+    width: "100%",
+    flexDirection: 'row',
+    justifyContent: "space-between"
+  },
+  addNewBeneText: {
+    marginTop: scaledHeight(30),
+    color: "#5D83AE",
+    fontSize: scaledHeight(13),
+    fontWeight: "400",
+    paddingLeft: "4%"
+  },
   manageBenificiariesHeadline: {
     color: "#54565B",
     fontWeight: "bold",
