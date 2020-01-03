@@ -1146,7 +1146,8 @@ export default {
         validateTaxFilling: "Select Valid Tax Filling",
         validateEmpOccupation: "Enter Valid Occupation",
         validateEmpName: "Enter Valid Employee Name",
-        validateEmpLineOne: "Enter Valid Employee Line One"
+        validateEmpLineOne: "Enter Valid Employee Line One",
+        validatePayeeName:"Enter valid name"
     },
     accountServices: {
         account_services: 'Account Services',
