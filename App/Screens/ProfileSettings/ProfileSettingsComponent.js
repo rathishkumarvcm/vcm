@@ -1,367 +1,72 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 import { styles } from './styles';
 import { GHeaderComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
+import ImagesLoad from '../../Images/ImageIndex';
 
-let editDeleteMenuOption = [
+const editDeleteMenuOption = [
     {
         menuName: 'Delete',
         menuId: '1'
-    },
+    }
 ];
-
-// const UserRelationShipInformation = (props) => {
-//     return (
-//         <View style={styles.editEmailHolder}>
-
-//             <View style={[styles.profileDivideIcon]}>
-//                 <View style={styles.profileDivideIconOne}>
-//                     <Text style={styles.editEmailType}
-//                         onPress={props.relationShipOnPressed}>
-//                         {props.relationShipName}
-//                     </Text>
-//                 </View>
-
-//                 <View style={styles.profileDivideIconTwo}>
-//                     <Image style={styles.imageWidthHeight}
-//                         source={require("../../Images/menu_icon.png")} />
-//                 </View>
-//             </View>
-
-//             <View style={styles.editEmailBorder} />
-
-//             <View style={styles.relationLabelTextView}>
-//                 <Text style={styles.profileSettingLabel}>
-//                     {globalString.accManagement.relationToOwner}
-//                 </Text>
-
-//                 <Text style={styles.profileSettingValueLabel}>
-//                     {props.relationShipType}
-//                 </Text>
-//             </View>
-
-//             <View style={styles.relationLabelTextView}>
-//                 <Text style={styles.profileSettingLabel}>
-//                     {globalString.accManagement.gender}
-//                 </Text>
-
-//                 <Text style={styles.profileSettingValueLabel}>
-//                     {props.relationShipGender}
-//                 </Text>
-//             </View>
-
-//             <View style={styles.relationLabelTextView}>
-//                 <Text style={styles.profileSettingLabel}>
-//                     {globalString.accManagement.emailAddress}
-//                 </Text>
-
-//                 <Text style={styles.profileSettingValueLabel}>
-//                     {props.relationShipEmail}
-//                 </Text>
-//             </View>
-
-//             <View style={styles.relationLabelTextView}>
-//                 <Text style={styles.profileSettingLabel}>
-//                     {globalString.accManagement.maritalStatus}
-//                 </Text>
-
-//                 <Text style={styles.profileSettingValueLabel}>
-//                     {props.relationShipStatus}
-//                 </Text>
-//             </View>
-
-//         </View>
-//     );
-// };
-
-// UserRelationShipInformation.propTypes = {
-//     relationShipName: PropTypes.string,
-//     relationShipType: PropTypes.string,
-//     relationShipGender: PropTypes.string,
-//     relationShipEmail: PropTypes.string,
-//     relationShipStatus: PropTypes.string,
-//     relationShipOnPressed: PropTypes.func
-// };
 
 class ProfileSettingsComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: false,
-            enableBiometric: false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false,
             show: false,
-            profileRelationShipData: [],
+            profileRelationShipData: this.props.profileState.profileRelationShipDetails,
             isRelationRefreshed: false,
-            isProfileRetired: false,
-            isServingMilitary: false,
+            isProfileRetired: this.props.profileState.profileIsRetired,
+            isServingMilitary: this.props.profileState.profileServingMilitary,
             selectedIndex: -1,
 
             // Profile Information
-            profileName: '',
-            profilePrefix: '',
-            profileSuffix: '',
-            profileVcmID: '',
-            profileSsnNumber: '',
-            profileDob: '',
-            profileGender: '',
-            profileMaritalStatus: '',
-            profileCitizenship: '',
+            profileName: this.props.initialState.firstName,
+            profilePrefix: this.props.profileState.profilePrefix,
+            profileSuffix: this.props.profileState.profileSuffix,
+            profileVcmID: this.props.profileState.profileVcmID,
+            profileSsnNumber: this.props.profileState.profileSsnNumber,
+            profileDob: this.props.profileState.profileDob,
+            profileGender: this.props.profileState.profileGender,
+            profileMaritalStatus: this.props.profileState.profileMaritalStatus,
+            profileCitizenship: this.props.profileState.profileCitizenship,
 
             // Contact Information
-            profileMailingAddress: '',
-            profilePhysicalAddress: '',
+            profileMailingAddress: this.props.profileState.profileMailingAddress,
+            profilePhysicalAddress: this.props.profileState.profilePhysicalAddress,
 
             // Phone Information
-            profilePrimaryMobile: '',
+            profilePrimaryMobile: this.props.profileState.profilePrimaryMobile,
 
             // Email Information
-            profilePrimayMail: '',
+            profilePrimayMail: this.props.profileState.profilePrimayMail,
 
             // Finanicial Information
-            profileAnnualIncome: '',
-            profileTaxBracket: '',
-            profileNetWorth: '',
-            profileTaxFilling: '',
+            profileAnnualIncome: `$ ${this.props.profileState.financialInformations.profileAnnualIncome}`,
+            profileTaxBracket: `${this.props.profileState.financialInformations.profileTaxBracket} %`,
+            profileNetWorth: `$ ${this.props.profileState.financialInformations.profileNetWorth}`,
+            profileTaxFilling: this.props.profileState.financialInformations.profileTaxFilling,
 
             // Employment Information
-            profileEmploymentStatus: '',
-            profileEmpIndustry: '',
-            profileEmpOccupation: '',
-            profileEmpEmployer: '',
-            profilePrimarySourceIncome: '',
-
-            // RelationShip Information
-            profileRelationToOwner: '',
-            profileRelationGender: '',
-            profileRelationMail: '',
-            profileRelationMarital: '',
+            profileEmploymentStatus: this.props.profileState.employmentInformations.profileEmploymentStatus,
+            profileEmpIndustry: this.props.profileState.employmentInformations.profileEmpIndustry,
+            profileEmpOccupation: this.props.profileState.employmentInformations.profileEmpOccupation,
+            profileEmpEmployer: this.props.profileState.employmentInformations.profileEmpEmployer,
+            profilePrimarySourceIncome: this.props.profileState.employmentInformations.profileSourceOfIncome,
 
             // Military Information
-            profileMilitaryStatus: '',
-            profileMilitaryBranch: '',
-            profileMilitaryRank: '',
+            profileMilitaryBranch: this.props.profileState.profileMilitaryInformation.profileMilitaryBranch,
+            profileMilitaryRank: this.props.profileState.profileMilitaryInformation.profileMilitaryRank,
         };
     }
 
-    componentDidMount() {
-        if (this.props && this.props.initialState && this.props.initialState.firstName) {
-            this.setState({
-                profileName: this.props.initialState.firstName
-            });
-        }
+    componentDidMount() { }
 
-        if (this.props && this.props.initialState && this.props.profileState.profilePrimaryMobile) {
-            this.setState({
-                profilePrimaryMobile: this.props.profileState.profilePrimaryMobile
-            });
-        }
-
-        if (this.props && this.props.initialState && this.props.profileState.profilePrimayMail) {
-            this.setState({
-                profilePrimayMail: this.props.profileState.profilePrimayMail
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profilePrefix) {
-            this.setState({
-                profilePrefix: this.props.profileState.profilePrefix
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileSuffix) {
-            this.setState({
-                profileSuffix: this.props.profileState.profileSuffix
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileVcmID) {
-            this.setState({
-                profileVcmID: this.props.profileState.profileVcmID
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileSsnNumber) {
-            this.setState({
-                profileSsnNumber: this.props.profileState.profileSsnNumber
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileDob) {
-            this.setState({
-                profileDob: this.props.profileState.profileDob
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileGender) {
-            this.setState({
-                profileGender: this.props.profileState.profileGender
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileMaritalStatus) {
-            this.setState({
-                profileMaritalStatus: this.props.profileState.profileMaritalStatus
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileCitizenship) {
-            this.setState({
-                profileCitizenship: this.props.profileState.profileCitizenship
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileMailingAddress) {
-            this.setState({
-                profileMailingAddress: this.props.profileState.profileMailingAddress
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profilePhysicalAddress) {
-            this.setState({
-                profilePhysicalAddress: this.props.profileState.profilePhysicalAddress
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileIsRetired) {
-            this.setState({
-                isProfileRetired: this.props.profileState.profileIsRetired
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileServingMilitary) {
-            this.setState({
-                isServingMilitary: this.props.profileState.profileServingMilitary
-            });
-        }
-
-        // Financial Informations 
-
-        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileAnnualIncome) {
-            this.setState({
-                profileAnnualIncome: '$ ' + this.props.profileState.financialInformations.profileAnnualIncome
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileTaxBracket) {
-            this.setState({
-                profileTaxBracket: this.props.profileState.financialInformations.profileTaxBracket + ' %'
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileNetWorth) {
-            this.setState({
-                profileNetWorth: '$ ' + this.props.profileState.financialInformations.profileNetWorth
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileTaxFilling) {
-            this.setState({
-                profileTaxFilling: this.props.profileState.financialInformations.profileTaxFilling
-            });
-        }
-
-        // Employment Informations
-
-        if (this.props && this.props.profileState && this.props.profileState.employmentInformations
-            && this.props.profileState.employmentInformations.profileEmploymentStatus) {
-            this.setState({
-                profileEmploymentStatus: this.props.profileState.employmentInformations.profileEmploymentStatus
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.employmentInformations
-            && this.props.profileState.employmentInformations.profileEmpIndustry) {
-            this.setState({
-                profileEmpIndustry: this.props.profileState.employmentInformations.profileEmpIndustry
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.employmentInformations
-            && this.props.profileState.employmentInformations.profileEmpOccupation) {
-            this.setState({
-                profileEmpOccupation: this.props.profileState.employmentInformations.profileEmpOccupation
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.employmentInformations
-            && this.props.profileState.employmentInformations.profileEmpEmployer) {
-            this.setState({
-                profileEmpEmployer: this.props.profileState.employmentInformations.profileEmpEmployer
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.employmentInformations
-            && this.props.profileState.employmentInformations.profileSourceOfIncome) {
-            this.setState({
-                profilePrimarySourceIncome: this.props.profileState.employmentInformations.profileSourceOfIncome
-            });
-        }
-
-        // Profile Relationship 
-
-        if (this.props && this.props.profileState && this.props.profileState.profileRelationToOwner) {
-            this.setState({
-                profileRelationToOwner: this.props.profileState.profileRelationToOwner
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileRelationGender) {
-            this.setState({
-                profileRelationGender: this.props.profileState.profileRelationGender
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileRelationMail) {
-            this.setState({
-                profileRelationMail: this.props.profileState.profileRelationMail
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileRelationMarital) {
-            this.setState({
-                profileRelationMarital: this.props.profileState.profileRelationMarital
-            });
-        }
-
-        // Military Information
-
-        if (this.props && this.props.profileState && this.props.profileState.profileMilitaryInformation &&
-            this.props.profileState.profileMilitaryInformation.profileMilitaryStatus) {
-            this.setState({
-                profileMilitaryStatus: this.props.profileState.profileMilitaryInformation.profileMilitaryStatus
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileMilitaryInformation &&
-            this.props.profileState.profileMilitaryInformation.profileMilitaryBranch) {
-            this.setState({
-                profileMilitaryBranch: this.props.profileState.profileMilitaryInformation.profileMilitaryBranch
-            });
-        }
-
-        if (this.props && this.props.profileState && this.props.profileState.profileMilitaryInformation &&
-            this.props.profileState.profileMilitaryInformation.profileMilitaryRank) {
-            this.setState({
-                profileMilitaryRank: this.props.profileState.profileMilitaryInformation.profileMilitaryRank
-            });
-        }
-
-        // Relationship Details
-
-        if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileRelationShipDetails) {
-            this.setState({
-                profileRelationShipData: this.props.profileState.profileRelationShipDetails,
-                isRelationRefreshed: !this.state.isRelationRefreshed
-            });
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         if (this.props !== prevProps) {
             if (this.props && this.props.profileState) {
                 this.setState({
@@ -378,9 +83,6 @@ class ProfileSettingsComponent extends Component {
                     profileMailingAddress: this.props.profileState.profileMailingAddress,
                     profilePhysicalAddress: this.props.profileState.profilePhysicalAddress,
 
-                    profileRelationGender: this.props.profileState.profileRelationGender,
-                    profileRelationMail: this.props.profileState.profileRelationMail,
-                    profileRelationMarital: this.props.profileState.profileRelationMarital,
                     isProfileRetired: this.props.profileState.profileIsRetired,
                     isServingMilitary: this.props.profileState.profileServingMilitary
                 });
@@ -389,9 +91,9 @@ class ProfileSettingsComponent extends Component {
 
                 if (this.props && this.props.profileState && this.props.profileState.financialInformations) {
                     this.setState({
-                        profileAnnualIncome: '$ ' + this.props.profileState.financialInformations.profileAnnualIncome,
-                        profileTaxBracket: this.props.profileState.financialInformations.profileTaxBracket + ' %',
-                        profileNetWorth: '$ ' + this.props.profileState.financialInformations.profileNetWorth,
+                        profileAnnualIncome: `$ ${this.props.profileState.financialInformations.profileAnnualIncome}`,
+                        profileTaxBracket: `${this.props.profileState.financialInformations.profileTaxBracket} %`,
+                        profileNetWorth: `$ ${this.props.profileState.financialInformations.profileNetWorth}`,
                         profileTaxFilling: this.props.profileState.financialInformations.profileTaxFilling,
                     });
                 }
@@ -412,7 +114,6 @@ class ProfileSettingsComponent extends Component {
 
                 if (this.props && this.props.profileState && this.props.profileState.profileMilitaryInformation) {
                     this.setState({
-                        profileMilitaryStatus: this.props.profileState.profileMilitaryInformation.profileMilitaryStatus,
                         profileMilitaryBranch: this.props.profileState.profileMilitaryInformation.profileMilitaryBranch,
                         profileMilitaryRank: this.props.profileState.profileMilitaryInformation.profileMilitaryRank
                     });
@@ -425,11 +126,9 @@ class ProfileSettingsComponent extends Component {
                     this.props.profileState.profileRelationShipDetails) {
                     this.setState({
                         profileRelationShipData: this.props.profileState.profileRelationShipDetails,
-                        isRelationRefreshed: !this.state.isRelationRefreshed
+                        isRelationRefreshed: true
                     });
                 }
-
-                console.log('&&&&&&&&&&& Profile Status ::', this.state.isProfileRetired);
             }
         }
     }
@@ -456,34 +155,31 @@ class ProfileSettingsComponent extends Component {
 
     renderRelationShipInformation = () => ({ item, index }) =>
         (<View style={styles.editEmailHolder}>
-            <View style={[styles.profileDivideIcon]}>
+            <View style={styles.profileDivideIcon}>
                 <View style={styles.profileDivideIconOne}>
                     <Text style={styles.editEmailType}
-                        onPress={this.relationShipOnPressed(item, index)}>
+                        onPress={this.relationShipOnPressed(index)}
+                    >
                         {item.relationShipName}
                     </Text>
                 </View>
 
                 <View style={styles.profileDivideIconTwo}>
                     <TouchableOpacity
-                        onPress={this.onMenuOptionClicked(index)}>
+                        onPress={this.onMenuOptionClicked(index)}
+                    >
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/menu_icon.png")} />
+                            source={ImagesLoad.menuIcon}
+                        />
                     </TouchableOpacity>
                 </View>
             </View>
 
             {index === this.state.selectedIndex ?
-                (<FlatList style={styles.editFlatList}
+                (<FlatList 
+                    style={styles.editFlatList}
                     data={editDeleteMenuOption}
-                    renderItem={({ item, index }) =>
-                        (<TouchableOpacity style={styles.editDropdown}>
-                            <Text style={styles.editDropdownText}
-                                onPress={this.onMenuItemClicked(index)}>
-                                {item.menuName}
-                            </Text>
-                        </TouchableOpacity>)}
-                    keyExtractor={item => item.menuId} />)
+                    renderItem={this.renderProfileMenuOptions()} />)
                 : null}
 
             <View style={styles.editEmailBorder} />
@@ -530,10 +226,17 @@ class ProfileSettingsComponent extends Component {
         </View>
         );
 
+    renderProfileMenuOptions = () => ({ item, index }) =>
+        (<TouchableOpacity style={styles.editDropdown}>
+            <Text style={styles.editDropdownText}
+                onPress={this.onMenuItemClicked(index)}>
+                {item.menuName}
+            </Text>
+        </TouchableOpacity>);
+
     // Manage Relationship Menu Option
 
     onMenuOptionClicked = (index) => () => {
-        console.log("@@@@@@@@@@ Menu Pressed ::", index + ' ' + this.state.selectedIndex);
         index === this.state.selectedIndex ?
             this.setState({
                 isRelationRefreshed: !this.state.isRelationRefreshed,
@@ -547,7 +250,7 @@ class ProfileSettingsComponent extends Component {
 
     // Manage Relationship Details
 
-    relationShipOnPressed = (item, index) => () => {
+    relationShipOnPressed = (index) => () => {
         if (index !== -1) {
             this.props.navigation.navigate('editFamilyMemberInfo',
                 {
@@ -563,15 +266,18 @@ class ProfileSettingsComponent extends Component {
         switch (index) {
             case 0:
                 this.setState({
-                    isRelationRefreshed: !this.state.isRelationRefreshed,
+                    isRelationRefreshed: true,
                     selectedIndex: -1
                 });
+                break;
+
+            default:
                 break;
         }
     }
 
     ShowHideComponent = () => {
-        if (this.state.show == true) {
+        if (this.state.show === true) {
             this.setState({ show: false });
         } else {
             this.setState({ show: true });
@@ -582,9 +288,10 @@ class ProfileSettingsComponent extends Component {
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.profileFlex}>
 
                     {/* Header Section - Tree Structure */}
 
@@ -611,7 +318,8 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingPersonalManage} >
+                                onPress={this.profileSettingPersonalManage}
+                            >
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
@@ -627,7 +335,8 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.signInView}>
                                 <Text style={styles.profileSettingNameLabel}
-                                    onPress={this.ShowHideComponent} >
+                                    onPress={this.ShowHideComponent}
+                                >
                                     {this.state.profileName}
                                 </Text>
                             </View>
@@ -791,7 +500,8 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingPhoneManage}>
+                                onPress={this.profileSettingPhoneManage}
+                            >
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
@@ -923,7 +633,8 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingEmployeeManage}>
+                                onPress={this.profileSettingEmployeeManage}
+                            >
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
@@ -1029,7 +740,8 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingMilitaryManage}>
+                                onPress={this.profileSettingMilitaryManage}
+                            >
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
@@ -1100,7 +812,8 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.profileSettingViewTwo}
-                                onPress={this.profileSettingAddRelation}>
+                                onPress={this.profileSettingAddRelation}
+                            >
                                 {globalString.profileSettingsPage.profileRelationshipAdd}
                             </Text>
                         </View>
@@ -1127,24 +840,19 @@ class ProfileSettingsComponent extends Component {
                         <View style={styles.settingsBorder} />
 
                         <View style={styles.settingsSocialContainer}>
-
                             <View style={styles.settingsSocial}>
-
                                 <Image style={styles.imageWidthHeight}
-                                    source={require("../../Images/twitterlogo.png")}
+                                    source={ImagesLoad.twitterlogo}
                                 />
-
                                 <Text style={styles.profileSettingSocialLabel}>
                                     {globalString.profileSettingsPage.profileFacebookLabel}
                                 </Text>
                             </View>
 
                             <View style={styles.settingsSocial}>
-
                                 <Image style={styles.imageWidthHeight}
-                                    source={require("../../Images/linkedinlogo.png")}
+                                    source={ImagesLoad.linkedinlogo}
                                 />
-
                                 <Text style={styles.profileSettingSocialLabel}>
                                     {globalString.profileSettingsPage.profileTwitterLabel}
                                 </Text>
@@ -1172,7 +880,7 @@ class ProfileSettingsComponent extends Component {
                             </Text>
 
                             <Image style={styles.profileSettingSocialIcon}
-                                source={require("../../Images/logo.png")}
+                                source={ImagesLoad.applicationLogo}
                             />
 
                             <Text style={styles.profileSettingConnectLabel}>
@@ -1181,10 +889,10 @@ class ProfileSettingsComponent extends Component {
 
                             <View style={styles.whiteBackground}>
                                 <Image style={styles.imageWidthHeight}
-                                    source={require("../../Images/twitterlogo.png")}
+                                    source={ImagesLoad.twitterlogo}
                                 />
                                 <Image style={styles.imageWidthHeight}
-                                    source={require("../../Images/linkedinlogo.png")}
+                                    source={ImagesLoad.linkedinlogo}
                                 />
                             </View>
 
@@ -1222,5 +930,16 @@ class ProfileSettingsComponent extends Component {
         );
     }
 }
+
+ProfileSettingsComponent.propTypes = {
+    navigation: PropTypes.instanceOf(Object).isRequired,
+    profileState: PropTypes.instanceOf(Object),
+    initialState: PropTypes.instanceOf(Object)
+};
+
+ProfileSettingsComponent.defaultProps = {
+    profileState: {},
+    initialState: {}
+};
 
 export default ProfileSettingsComponent;
