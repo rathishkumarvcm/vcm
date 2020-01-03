@@ -1088,7 +1088,7 @@ class OpenAccPageTwoComponent extends Component {
 
         const jointAccPayload = {
             "jointOwner": {
-                "relation": "",
+                "relation": this.state.jointOwner.relationshipToAcc || "",
                 "personalInfo": {
                     "prefix": this.state.jointOwner.prefix || "",
                     "firstName": this.state.jointOwner.firstName || "",
@@ -1168,6 +1168,10 @@ class OpenAccPageTwoComponent extends Component {
                     "pepName": this.state.jointOwner.seniorPoliticalName || "",
                 }
             }
+        };
+
+        const investChildPayload = {
+
         };
 
         /* const retirementAccPayload = {
@@ -1391,7 +1395,8 @@ class OpenAccPageTwoComponent extends Component {
             case "UGMA/UTMA Account":
                 payload = {
                     ...payload,
-                    ...individualAccPayload
+                    ...individualAccPayload,
+                    ...investChildPayload
 
                 };
                 break;
@@ -3094,8 +3099,7 @@ class OpenAccPageTwoComponent extends Component {
                     [dropDownName]: false,
                     [`${stateKey}Validation`]: true,
 
-                },
-                enableScrollViewScroll: true
+                }
             }));
         }
 
@@ -4538,7 +4542,7 @@ class OpenAccPageTwoComponent extends Component {
                 <this.renderFinancialInfoJointOwner />
                 <this.renderMilitaryInfoJointOwner />
                 {
-                    (this.state.jointOwner.empStatus !== "Not Employed" && this.state.jointOwner.empStatus !== "") && <this.renderRegulatoryInfo_JointOwner />
+                    (this.state.jointOwner.empStatus !== "Not Employed" && this.state.jointOwner.empStatus !== "") && <this.renderRegulatoryInfoJointOwner />
                 }
             </View>
         );

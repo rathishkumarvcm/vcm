@@ -134,11 +134,18 @@ class OpenAccPageFiveComponent extends Component {
                 { (regType !== "Trust Account" && regType !== "Estate Account") && this.renderPrimaryEmploymentInfo (data)}
                 { (regType !== "Trust Account" && regType !== "Estate Account") && this.renderPrimaryMilitaryInfo (data)}
                 { (regType !== "Trust Account" && regType !== "Estate Account") && this.renderPrimaryFinancialInfo (data)}
+                
+                { (regType === "Joint Account") && this.renderPrimaryPersonalInfoJoint(data)}
+                { (regType === "Joint Account") && this.renderPrimaryEmploymentInfoJoint (data)}
+                { (regType === "Joint Account") && this.renderPrimaryMilitaryInfoJoint (data)}
+                { (regType === "Joint Account") && this.renderPrimaryFinancialInfoJoint (data)}
+                
                 {this.renderMutualFundList (data)}
                 {this.renderAccPrefencesInfo (data)}
             </View>
         );
     }
+
 
     renderAccountTypeInfo = (data) =>{
         const { accountType = ''} = data || {};
@@ -564,6 +571,412 @@ class OpenAccPageFiveComponent extends Component {
             </View>
         );
     }
+
+    renderPrimaryPersonalInfoJoint = (data) => {
+        const { jointOwner = {} } = data || {};
+        console.log(`jointOwner::${JSON.stringify(jointOwner)}`);
+        const { personalInfo = {} } = jointOwner || {};
+        
+        const {
+            prefix = '',
+            firstName = '',
+            lastName = '',
+            suffix = '',
+            dateOfBirth = '',
+            gender = '',
+            maritalStatus = '',
+            citizenship = '',
+            ssnTin = '',
+            mailingAddress: maillAddr_primary = {},
+            physicalAddress: physicAddr_primary = {},
+            // isPhysAddrSameAsMailAddr = "",
+            contactDetails: contact_primary = {},
+        } = (personalInfo && personalInfo.firstName) ? personalInfo : {};
+
+        const {
+            // addressType = '',
+            streetNb = '',
+            streetName = '',
+            zip = '',
+            city = '',
+            state = '',
+        } = (maillAddr_primary && maillAddr_primary.addressType) ? maillAddr_primary : {};
+        const {
+            // addressType: addressType_Phy = '',
+            streetNb: streetNb_Phy = '',
+            streetName: streetName_Phy = '',
+            zip: zip_Phy = '',
+            city: city_Phy = '',
+            state: state_Phy = '',
+        } = (physicAddr_primary && physicAddr_primary.addressType) ? physicAddr_primary : {};
+
+        const {
+            phoneNumber1 = {},
+            phoneNumber2 = {},
+            phoneNumber3 = {},
+            emailAddress: emailAddress_primary = ''
+
+        } = (contact_primary && contact_primary.phoneNumber1) ? contact_primary : {};
+
+        const {
+            phoneNumber: phoneNumber1_primary = '',
+            // phoneType: phoneType1_primary = '',
+            // contactDuring: contactDuring1_primary = '',
+        } = (phoneNumber1 && phoneNumber1.phoneNumber) ? phoneNumber1 : {};
+
+        const {
+            phoneNumber: phoneNumber2_primary = '',
+            //  phoneType: phoneType2_primary = '',
+            // contactDuring: contactDuring2_primary = '',
+        } = (phoneNumber2 && phoneNumber2.phoneNumber) ? phoneNumber2 : {};
+
+        const {
+            phoneNumber: phoneNumber3_primary = '',
+            // phoneType: phoneType3_primary = '',
+            // contactDuring: contactDuring3_primary = '',
+        } = (phoneNumber3 && phoneNumber3.phoneNumber) ? phoneNumber3 : {};
+
+        
+        return (
+            <View style={[styles.sectionGrp]}>
+                <View style={styles.accTypeSelectSection}>
+                    <Text style={styles.headings}>
+                        {gblStrings.accManagement.personalInformationJoint}
+                    </Text>
+                </View>
+
+                <Text style={styles.lblLine} />
+                <View style={styles.editDetailsGrp}>
+                    <TouchableOpacity
+                        onPress={this.navigateToScreen("openAccPageTwo")}
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                        style={styles.editBtn}
+                    >
+                        <Text style={styles.editBtnTxt}>
+                            {gblStrings.common.edit}
+                        </Text>
+                    </TouchableOpacity>
+                    <Text style={styles.lblLeftColTxt}>
+                        {gblStrings.accManagement.name}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${prefix} ${firstName} ${lastName} ${suffix}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.dob}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${dateOfBirth}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.gender}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${gender}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.maritalStatus}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${maritalStatus}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.citizenship}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${citizenship}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.socialSecurityNo}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${ssnTin}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.emailAddress}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${emailAddress_primary}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.mailingAddress}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${streetNb} ${streetName} ${city} ${state} ${zip}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.physicalAddress}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${streetNb_Phy} ${streetName_Phy} ${city_Phy} ${state_Phy} ${zip_Phy}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.mobileNo}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${phoneNumber1_primary}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.telePhoneNo2}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${phoneNumber2_primary}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.telePhoneNo3}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${phoneNumber3_primary}`}
+                    </Text>
+
+                </View>
+            </View>
+        );
+    }
+
+    renderPrimaryEmploymentInfoJoint = (data) => {
+        const { jointOwner = {} } = data || {};
+        const { employementInfo = {} } = jointOwner || {};
+        console.log(`jointOwner  employementInfo::${JSON.stringify(employementInfo)}`);
+
+
+        const {
+            employmentStatus = '',
+            industry = '',
+            occupation = '',
+            employerName = '',
+            employerAddress = {}
+        } = (employementInfo && employementInfo.employerAddress) ? employementInfo : {};
+
+
+        const {
+            addressLine1 = '',
+            addressLine2 = '',
+            city: city_empInfo = '',
+            state: state_empInfo = '',
+            zip: zip_empInfo = '',
+        } = (employerAddress && employerAddress.addressLine1) ? employerAddress : {};
+
+
+        return (
+            <View style={[styles.sectionGrp]}>
+                <View style={styles.accTypeSelectSection}>
+                    <Text style={styles.headings}>
+                        {gblStrings.accManagement.employmentInfoPrimary}
+                    </Text>
+                </View>
+
+                <Text style={styles.lblLine} />
+                <View style={styles.editDetailsGrp}>
+                    <TouchableOpacity
+                        onPress={this.navigateToScreen("openAccPageTwo")}
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                        style={styles.editBtn}
+                    >
+                        <Text style={styles.editBtnTxt}>
+                            {gblStrings.common.edit}
+                        </Text>
+                    </TouchableOpacity>
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.empStatus}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${employmentStatus}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.industry}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${industry}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.occupation}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${occupation}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.empName}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${employerName}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.empAddress}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${addressLine1} ${addressLine2} ${city_empInfo} ${state_empInfo} ${zip_empInfo}`}
+                    </Text>
+                </View>
+            </View>
+        );
+    }
+
+    renderPrimaryMilitaryInfoJoint= (data) => {
+        const { jointOwner = {} } = data || {};
+        const { militaryInfo = {} } = jointOwner || {};
+        console.log(`jointOwner  militaryInfo::${JSON.stringify(militaryInfo)}`);
+
+
+        const {
+            // servingStatus = '',
+            militaryStatus = '',
+            branchOfService = '',
+            rank = '',
+            serviceStartDate = '',
+            serviceToDate = '',
+            commissionSource = ''
+        } = (militaryInfo && militaryInfo.servingStatus) ? militaryInfo : {};
+
+
+
+
+        return (
+            <View style={[styles.sectionGrp]}>
+                <View style={styles.accTypeSelectSection}>
+                    <Text style={styles.headings}>
+                        {gblStrings.accManagement.militaryInformation}
+                    </Text>
+                </View>
+
+                <Text style={styles.lblLine} />
+                <View style={styles.editDetailsGrp}>
+                    <TouchableOpacity
+                        onPress={this.navigateToScreen("openAccPageTwo")}
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                        style={styles.editBtn}
+                    >
+                        <Text style={styles.editBtnTxt}>
+                            {gblStrings.common.edit}
+                        </Text>
+                    </TouchableOpacity>
+                    <Text style={styles.lblLeftColTxt}>
+                        {gblStrings.accManagement.militaryStatus}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${militaryStatus}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.branchOfService}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${branchOfService}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.rank}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${rank}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.datesOfService}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${serviceStartDate} - ${serviceToDate}`}
+                    </Text>
+
+                   
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.commissionSource}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${commissionSource}`}
+                    </Text>
+                </View>
+            </View>
+        );
+    }
+
+    renderPrimaryFinancialInfoJoint = (data) => {
+        const { jointOwner = {} } = data || {};
+        const { financialInfo = {} } = jointOwner || {};
+        console.log(`jointOwner  financialInfo::${JSON.stringify(financialInfo)}`);
+
+
+
+        const {
+            annualIncome = '',
+            taxBracket = '',
+            netWorth = '',
+            taxFilingStatus = '',
+        } = (financialInfo && financialInfo.annualIncome) ? financialInfo : {};
+
+
+
+
+        return (
+            <View style={[styles.sectionGrp]}>
+                <View style={styles.accTypeSelectSection}>
+                    <Text style={styles.headings}>
+                        {gblStrings.accManagement.financialInformation}
+                    </Text>
+                </View>
+
+                <Text style={styles.lblLine} />
+                <View style={styles.editDetailsGrp}>
+                    <TouchableOpacity
+                        onPress={this.navigateToScreen("openAccPageTwo")}
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                        style={styles.editBtn}
+                    >
+                        <Text style={styles.editBtnTxt}>
+                            {gblStrings.common.edit}
+                        </Text>
+                    </TouchableOpacity>
+                    <Text style={styles.lblLeftColTxt}>
+                        {gblStrings.accManagement.annualIncome}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${annualIncome}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.taxBracket}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${taxBracket}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.networth}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${netWorth}`}
+                    </Text>
+
+                    <Text style={styles.lblNameTxt}>
+                        {gblStrings.accManagement.taxFilingStatus}
+                    </Text>
+                    <Text style={styles.lblNameValueTxt}>
+                        {`${taxFilingStatus}`}
+                    </Text>
+                </View>
+            </View>
+        );
+    }
+
 
     renderMutualFundList = (data) => {
        
