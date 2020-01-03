@@ -120,7 +120,7 @@ class LiquidationPageFourComponent extends Component {
         if (this.state.ammend) {
             const pIndex = menuList.findIndex((item) => item.key === this.state.ammendIndex);
             const amndObj = menuList[pIndex];
-            const transType = `${this.state.ammendData.TransactionType} `;
+            const transType = `${this.state.ammendData.TransactionType} Amended`;
             const ammendPayloadData = {
                 "key": amndObj.key,
                 "title": amndObj.title,
@@ -167,15 +167,13 @@ class LiquidationPageFourComponent extends Component {
         else {
             const orderId = `Order ID - LIQ0${year}${month}${date}`;
             const payloadData = {
-                "key": finalKey,
-                "title": orderId,
-                "data": {
-                    "count": 5,
-                    "Dateadded": updatedDate,
-                    "TransactionType": gblStrings.liquidation.liquidation,
-                    "OrderStatus": "Pending",
-                    "totalSHares": "",
-                    "worth": "",
+                saveLiquidationSelectedData: {
+                    ...savedData,
+                    "key": finalKey,
+                    "order_Id": orderId,
+                    "transactionType": gblStrings.liquidation.liquidation,
+                    "lastModified": updatedDate,
+                    "orderStatus": "pending",
                     "selectedAccountData": savedData.selectedAccountData,
                     "selectedFundData": savedData.selectedFundData,
                     "selectedFundWithdrawalData": savedData.selectedFundWithdrawalData,
@@ -205,8 +203,7 @@ class LiquidationPageFourComponent extends Component {
                     "estimated": {}
                 }
             };
-            menuList.push(payloadData);
-            this.props.ammendActions(menuList);
+            this.props.saveData(payloadData);
             this.props.navigation.navigate('LiquidationFinish', { orderId: orderId });
             
         }

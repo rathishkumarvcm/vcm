@@ -16,8 +16,7 @@ class LiquidationFinishComponent extends Component {
     }
 
     componentDidMount() {
-         console.log(" Screen 5 componentdidmount amend Reducer", JSON.stringify(this.props.amendReducerData.menu));
-         console.log(" Screen 5 componentdidmount liquidation Reducer", JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
+         console.log(" Screen 5 componentdidmount ", JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
     }
 
     render() {
