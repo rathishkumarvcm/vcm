@@ -90,7 +90,7 @@ class RootComponent extends Component {
         (err) => {
           console.log("err",err);
         });
-    }, 30000);
+    }, 300000);
   }
 
   componentWillMount(){

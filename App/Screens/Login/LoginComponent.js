@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Text,View,Image,ScrollView,Linking,TouchableOpacity } from 'react-native';
 import {styles} from './styles';
-import {GButtonComponent,GInputComponent,GBiometricAuthentication,GHeaderComponent,GFooterSettingsComponent, GLoadingSpinner} from '../../CommonComponents';
+import {GButtonComponent,GInputComponent,GBiometricAuthentication,GHeaderComponent,GFooterSettingsComponent, GLoadingSpinner,showAlertWithCancelButton} from '../../CommonComponents';
 import TouchID from 'react-native-touch-id';
 import PropTypes from 'prop-types';
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
@@ -40,6 +40,7 @@ class LoginComponent extends Component {
         this.state={
             isLoading:false,
             enableBiometric:false,
+            registeredBioMetric : false,
             faceIdEnrolled: false,
             touchIdEnrolled: false,
             validationEmail : true,
@@ -61,6 +62,47 @@ class LoginComponent extends Component {
 
 
     componentDidMount(){
+
+       RNSecureKeyStore.get("enableBioMetric")
+      .then((value) => {
+          console.log("value------->",value);
+          this.setState({
+              registeredBioMetric : true
+          })
+      }).catch((error) => {
+          console.log("Error",error)
+          this.setState({
+            registeredBioMetric : false
+        })
+      });
+
+      RNSecureKeyStore.get("bioMetricUserName")
+      .then((value) => {
+          console.log("username------->",value);
+          this.setState({
+              registeredBioMetricUsername : value
+          })
+      }).catch((error) => {
+          console.log("Error",error)
+          this.setState({
+            registeredBioMetricUsername : ''
+        })
+      });
+
+
+      RNSecureKeyStore.get("bioMetricPassword")
+      .then((value) => {
+          console.log("password------->",value);
+          this.setState({
+              registeredBioMeticPassword : value
+          })
+      }).catch((error) => {
+          console.log("Error",error)
+          this.setState({
+            registeredBioMeticPassword : false
+        })
+      });
+
         console.log("componentDidMount");
         TouchID.isSupported()
         .then(biometryType => {
@@ -152,6 +194,45 @@ class LoginComponent extends Component {
      
         if(result){
             alert("Authentication Successfull");
+
+        let username = this.state.registeredBioMetricUsername;
+        let password = this.state.registeredBioMeticPassword;
+        let email = this.state.registeredBioMetricUsername;
+        let phone_number = "+918754499334";
+        Auth.signIn({
+            username,
+            password,
+            email,
+            phone_number
+        }).then(data => {
+            console.log("Data",JSON.stringify(data.signInUserSession.idToken.jwtToken));
+
+            RNSecureKeyStore.set("jwtToken",data.signInUserSession.idToken.jwtToken,{accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY}).then((res) => {
+                console.log("token saved suuccessfully",res)
+            }, (err) => {
+                console.log("Error",err);
+            })
+
+            let currentSessionTime = new Date();
+
+            RNSecureKeyStore.set("currentSession",currentSessionTime.getTime(), {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+              .then((res) => {
+                  console.log("*****currentSession******",res);
+              }, (err) => {
+                  console.log(err);
+              });
+              
+
+            alert("Signed In Successfully.");
+            RNSecureKeyStore.set("EmailAddress",username, {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+      .then((res) => {
+          console.log("stored",res);
+      }, (err) => {
+          console.log(err);
+      });
+            this.props.navigation.navigate('dashboard');
+        });
+
             this.setState({
                 enableBiometric : false
             });
@@ -191,6 +272,30 @@ class LoginComponent extends Component {
         });
     }
 
+    enableBioMetric = () => {
+        RNSecureKeyStore.set("enableBioMetric",true, {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+        .then((res) => {
+           alert("Registered Bio Metric Successfully.")
+        }, (err) => {
+            console.log(err);
+        });
+
+
+        RNSecureKeyStore.set("bioMetricUserName",this.state.email, {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+        .then((res) => {
+             console.log("Bio Metric username saved.")
+        }, (err) => {
+            console.log(err);
+        });
+
+        RNSecureKeyStore.set("bioMetricPassword",this.state.password, {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+        .then((res) => {
+             console.log("Bio Metric password saved.")
+        }, (err) => {
+            console.log(err);
+        });
+    }
+
     signIn = () => {
         console.log("test");
         let username = this.state.email;
@@ -219,6 +324,15 @@ class LoginComponent extends Component {
               }, (err) => {
                   console.log(err);
               });
+
+              showAlertWithCancelButton(
+                "Enable Bio Metric",
+                "Do you want to enable Bio Metric authentication?.",
+                "Cancel",
+                "Enable",
+                null,
+                ()=>this.enableBioMetric()
+                )
               
 
             alert("Signed In Successfully.");
@@ -381,14 +495,7 @@ class LoginComponent extends Component {
             />
             <View>
             {
-                !this.state.touchIdEnrolled && 
-                !this.state.faceIdEnrolled ?
-                <GButtonComponent 
-                        buttonStyle={styles.registernowButton1}
-                        buttonText="Register Touch/Face ID"
-                        textStyle={styles.registernowText}
-                        onPress={this.registerFaceTouchID}
-                /> :
+                !this.state.registeredBioMetric ? null :
 
                 this.state.faceIdEnrolled? 
                 <TouchableOpacity onPress={this.enableBiometricMethod}>
