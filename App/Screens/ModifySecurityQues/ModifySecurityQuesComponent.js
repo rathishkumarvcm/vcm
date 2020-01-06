@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { GButtonComponent, GHeaderComponent, GFooterComponent, GInputComponent, GRadioButtonComponent, GIcon, GDropDownComponent } from '../../CommonComponents';
-import { styles } from './styles';
+import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
-import { scaledHeight } from '../../Utils/Resolution';
+// import { scaledHeight } from '../../Utils/Resolution';
 
 
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
@@ -87,12 +87,7 @@ class ModifySecQuesComponent extends Component {
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
     componentDidMount() {
-        if (this.props && this.props.initialState && this.props.initialState.email) {
-            this.setState({
-                primaryEmail: this.props.initialState.email
-            });
-
-        }
+        
         const payload = [];
         const compositePayloadData = [
             "security_ques"
@@ -108,6 +103,18 @@ class ModifySecQuesComponent extends Component {
         this.props.getPersonalCompositeData(payload);
         // console.log("------>emailllllllll", this.props);
         // console.log("payload", payload);
+       
+        this.getInitialValues();
+        // console.log("questions",this.props.masterLookupStateData.security_ques.value);
+    }
+
+      getInitialValues = () =>{
+        if (this.props && this.props.initialState && this.props.initialState.email) {
+            this.setState({
+                primaryEmail: this.props.initialState.email
+            });
+
+        }
         if(this.props && this.props.saveQuestionsData&&this.props.saveQuestionsData.list_security_questions)
         {
             this.setState({
@@ -138,9 +145,8 @@ class ModifySecQuesComponent extends Component {
                 });
             }
         }
+      }
 
-        // console.log("questions",this.props.masterLookupStateData.security_ques.value);
-    }
     /* ----------------------
                                  Button Events 
                                  -------------------------- */
@@ -183,7 +189,7 @@ class ModifySecQuesComponent extends Component {
         // this.scrollToTop();
     }
 
-    radioButtonClicked = (index) => {
+    radioButtonClicked = (index) =>()=> {
         if (index !== this.state.radioButtonIndex) {
             this.setState({
                 radioButtonIndex: index,
@@ -247,6 +253,7 @@ class ModifySecQuesComponent extends Component {
             question2Dropdown: !this.state.question2Dropdown
         });
     }
+    
     selectTheQuestion3 = () => {
         this.setState({
             question3Dropdown: !this.state.question3Dropdown
@@ -277,9 +284,9 @@ class ModifySecQuesComponent extends Component {
     isEmpty = (str) => {
         if (str === "" || str === undefined || str === null || str === "null" || str === "undefined") {
             return true;
-        } else {
+        } 
             return false;
-        }
+        
     }
 
     additionalEmail = () => {
@@ -388,7 +395,7 @@ class ModifySecQuesComponent extends Component {
 
             <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.scrollView}>
                     <TouchableOpacity onPress={(this.goBack)}>
                         <GIcon
                             name="left"
@@ -403,8 +410,8 @@ class ModifySecQuesComponent extends Component {
                             {gblStrings.userManagement.modifySecurityHeading}
                         </Text>
                         <Text style={styles.lblLine} />
-                        <ScrollView >
-                            <View >
+                        <ScrollView>
+                            <View>
                                 <Text style={styles.lblTxt}>
                                     {gblStrings.userManagement.modifySecuritySelect}
                                 </Text>
@@ -421,7 +428,7 @@ class ModifySecQuesComponent extends Component {
                                 selectedDropDownValue={this.selectedDropDownValue}
                                 errorFlag={!this.state.q1Select||this.state.q1Val}
                                 errorText={this.state.errorText1}
-                                dropDownPostition={{ position: 'absolute', top: scaledHeight(155),width:"100%",marginLeft:"0%",marginRight:"0%" }}
+                                dropDownPostition={styles.dropDown1}
                             />
                             <GInputComponent
                                 propInputStyle={styles.userIDTextBox}
@@ -442,7 +449,7 @@ class ModifySecQuesComponent extends Component {
                                 selectedDropDownValue={this.selectedDropDownValue2}
                                 errorFlag={!this.state.q2Select||this.state.q2Val}
                                 errorText={this.state.errorText2}
-                                dropDownPostition={{ position: 'absolute', top: scaledHeight(330),width:"100%",marginLeft:"0%",marginRight:"0%" }}
+                                dropDownPostition={styles.dropDown2}
                             />
                             <GInputComponent
                                 propInputStyle={styles.userIDTextBox}
@@ -463,7 +470,7 @@ class ModifySecQuesComponent extends Component {
                                 selectedDropDownValue={this.selectedDropDownValue3}
                                 errorFlag={!this.state.q3Select||this.state.q3Val}
                                 errorText={this.state.errorText3}
-                                dropDownPostition={{ position: 'absolute', top: scaledHeight(500),width:"100%",marginLeft:"0%",marginRight:"0%" }}
+                                dropDownPostition={styles.dropDown3}
                                 />                                 
                             <GInputComponent
                                 propInputStyle={styles.userIDTextBox}
@@ -510,13 +517,13 @@ class ModifySecQuesComponent extends Component {
                             {securityQuestions.map((item, index) =>
                                 index === this.state.radioButtonIndex ?
                                     <GRadioButtonComponent
-                                        onPress={() => this.radioButtonClicked(index)}
+                                        onPress={this.radioButtonClicked(index)}
                                         selected
                                         questions={item.question}
                                     />
                                     :
                                     <GRadioButtonComponent
-                                        onPress={() => this.radioButtonClicked(index)}
+                                        onPress={this.radioButtonClicked(index)}
                                         selected={false}
                                         questions={item.question}
                                     />

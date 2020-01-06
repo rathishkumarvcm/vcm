@@ -5,8 +5,6 @@ import {loginActions,SignInMethodsActions} from "../../Shared/Actions";
 
 const mapStateToProps = (state) => (
   {
-    //loginState: state.loginData,
-    //initialState :state.initialAppData,
     signInMethodsData : state.signInMethodsData
   }
 );

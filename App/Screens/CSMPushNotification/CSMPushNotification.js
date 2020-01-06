@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { GButtonComponent, GHeaderComponent, GFooterComponent,GIcon } from '../../CommonComponents';
-import { styles } from '../ChangeSignInMethod/styles';
-import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from 'prop-types';
+import { GButtonComponent, GHeaderComponent, GFooterComponent,GIcon } from '../../CommonComponents';
+import styles from '../ChangeSignInMethod/styles';
+import gblStrings from '../../Constants/GlobalStrings';
+
 
 
 
@@ -17,48 +18,38 @@ class CSMPushNotificationComponent extends Component {
         
        
       }
+
       onClickCancel = () => {
         this.props.navigation.navigate('ChangeSignInMethod');
       }
 
-      dateFormat = () => {
-        var date = new Date().getDate(); //Current Date
-        var month = new Date().getMonth() + 1; //Current Month
-        var year = new Date().getFullYear(); //Current Year
-        var hours = new Date().getHours(); //Current Hours
-        var min = new Date().getMinutes(); //Current Minutes
-        var sec = new Date().getSeconds(); //Current Seconds
-        this.setState({
-            //Setting the value of the date time
-            date:
-              date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
-          });
-      }
+      
+
       onClickSave = () => {
         let payloadData = {};
-        var date = new Date().getDate(); //Current Date
-        var month = new Date().getMonth() + 1; //Current Month
-        var year = new Date().getFullYear(); //Current Year
-        var hours = new Date().getHours(); //Current Hours
-        var min = new Date().getMinutes(); //Current Minutes
-        var sec = new Date().getSeconds(); //Current Seconds
-          let updatedDate=date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec;
+        const date = new Date().getDate(); 
+        const month = new Date().getMonth() + 1; 
+        const year = new Date().getFullYear();
+        const hours = new Date().getHours(); 
+        const min = new Date().getMinutes(); 
+        const sec = new Date().getSeconds(); 
+        const updatedDate=`${date} / ${month} / ${year} ${hours} : ${min} : ${sec}`;
         payloadData = {
             selectedMethod:'PUSHNOTIFICATION',
             lastUpdatedTime:updatedDate
         };
         this.props.signInMethods("signInMethodsData", payloadData);
-        //console.log("----signInMethods",payloadData);
+        // console.log("----signInMethods",payloadData);
         this.props.navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.pushNotification,index:2});
       
       }
 
     render() {
       return(
-          <View style={styles.container} >
+          <View style={styles.container}>
               <GHeaderComponent navigation={this.props.navigation} />
-              <ScrollView style={{ flex: 0.85 }}>
-              <TouchableOpacity >
+              <ScrollView style={styles.scrollViewFlex}>
+              <TouchableOpacity>
                         <GIcon
                             name="left"
                             type="antdesign"
@@ -67,13 +58,13 @@ class CSMPushNotificationComponent extends Component {
                         />
 
               </TouchableOpacity>
-              <View style={styles.signInView} >
+              <View style={styles.signInView}>
               <Text style={styles.signIntext}>
               {gblStrings.userManagement.changeSignInHeadingPushNotification}
               </Text>
               <Text style={styles.lblLine} />
-              <View style={{ width: "100%" }}>
-              <Text style={styles.lblTxt} >
+              <View style={styles.widthView}>
+              <Text style={styles.lblTxt}>
               {gblStrings.userManagement.downloadPushNotification}
               </Text>
               </View>
@@ -107,11 +98,13 @@ class CSMPushNotificationComponent extends Component {
   }
 CSMPushNotificationComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    signInMethodsData : PropTypes.instanceOf(Object),
+    // signInMethodsData : PropTypes.instanceOf(Object),
     signInMethods : PropTypes.func
 };
 
 CSMPushNotificationComponent.defaultProps = {
-
+  navigation: {},
+  // signInMethodsData : {},
+  signInMethods : ()=>{}
 };
     export default CSMPushNotificationComponent;

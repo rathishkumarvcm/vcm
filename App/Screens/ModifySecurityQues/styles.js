@@ -2,10 +2,9 @@ import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
 
-//const { width } = Dimensions.get('window');
+// const { width } = Dimensions.get('window');
 
-
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7FAFF',
@@ -54,15 +53,15 @@ export const styles = StyleSheet.create({
         width : '100%'
     },
     userIDTextBox:{
-        //marginLeft:'2%',
-        //marginRight:'2%',
+        // marginLeft:'2%',
+        // marginRight:'2%',
         marginBottom:scaledHeight(18),
         width:'100%',
         marginTop:scaledHeight(15)
     },
     userIDTextBoxError:{
-        //marginLeft:'2%',
-        //marginRight:'2%',
+        // marginLeft:'2%',
+        // marginRight:'2%',
         marginBottom:scaledHeight(18),
         borderColor : 'red',
         width:'100%',
@@ -93,7 +92,7 @@ export const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(12),
-        //borderRadius:scaledHeight(25),
+        // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#56565A',
         alignItems:'center',
@@ -118,5 +117,31 @@ export const styles = StyleSheet.create({
     underlineText: {
         textDecorationLine: 'underline', color: "#0000FF"
     },
-    additionaemailView: { alignSelf: 'flex-end' }
+    additionaemailView: { alignSelf: 'flex-end' },
+    scrollView:{
+        flex: 0.85
+    },
+    dropDown1:{
+         position: 'absolute', 
+         top: scaledHeight(155),
+         width:"100%",
+         marginLeft:"0%",
+         marginRight:"0%" 
+    },
+    dropDown2:{
+         position: 'absolute', 
+         top: scaledHeight(330),
+         width:"100%",
+         marginLeft:"0%",
+         marginRight:"0%" 
+    },
+    dropDown3:{
+         position: 'absolute', 
+         top: scaledHeight(500),
+         width:"100%",
+         marginLeft:"0%",
+         marginRight:"0%" 
+    }
 });
+
+export default styles;
