@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableHighlight } from 'react-native';
-import { styles } from './styles';
+import styles from './styles';
 import { GHeaderComponent, GFooterComponent, GLoadingSpinner } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';

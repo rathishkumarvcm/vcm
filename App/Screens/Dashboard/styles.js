@@ -3,47 +3,116 @@ import {scaledHeight,scaledWidth } from '../../Utils/Resolution';
 
 
 
-export const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F7FAFF',
-        width: '100%'
-    },
-    pageHeader: {
-        flex: .15,
-        flexDirection: 'row',
+const styles = StyleSheet.create({
+    buttonCancelActionStyle:{
+        alignContent: 'center',      
+        alignItems: 'center',
         backgroundColor: '#FFFFFF',
-        paddingLeft: scaledHeight(4),
-        paddingRight: scaledHeight(4),
+        borderColor:'#544A54',
+        borderWidth:1,
+        height: scaledHeight(50),
         justifyContent: 'center',
-        alignItems: 'center'
+        marginLeft:'2%',
+        marginRight:'2%',   
+        width: scaledWidth(100),
+    },
+    buttonCancelTextStyle: {
+        color: '#FFFFFF',
+        fontSize: scaledHeight(16),      
+        textAlign: 'center',
+        width: '100%',       
     },
 
     
-    scrollContentStyle: {
-        paddingVertical: 0,
-        flexGrow: 1
-    },
-    dashboardSection: {
-        width: '100%',
+    buttonGoActionStyle: {        
+        alignContent: 'center',      
         alignItems: 'center',
-        //backgroundColor: '#F7FAFF'
+        backgroundColor: '#544A54',
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginLeft:'2%',       
+        marginRight:'2%',   
+        width: scaledWidth(100),       
+    },
+    buttonGoTextStyle: {
+        color: '#544A54',
+        fontSize: scaledHeight(16),      
+        textAlign: 'center',
+        width: '100%',        
+    },
+    container: {
+        backgroundColor: '#F7FAFF',
+        flex: 1,
+        width: '100%'
+    },
+    copyRightSection: {
+        alignItems: 'center',
+        backgroundColor: '#56565A',
+        height: scaledHeight(50),
+        justifyContent: 'center'
+    },
+    copyRightText: {
+        color: '#FFFFFF',
+        fontSize: scaledHeight(12)
+
+    },
+
+    dashboardSection: {
+        alignItems: 'center',
+        width: '100%',
+        // backgroundColor: '#F7FAFF'
     },
     dashboardText: {
-        marginTop: scaledHeight(116),
+        color: '#5D83AE',
         fontSize: scaledHeight(44),
         fontWeight: 'bold',
-        color: '#5D83AE',
+        marginTop: scaledHeight(116),
         opacity:0.25
         // textAlign:'center'
+
+    },
+    disclaimerTitleTxt: { // termsofuseText
+        fontSize: scaledHeight(16),
+        marginBottom: scaledHeight(10),
+        fontWeight: 'bold',
+        color: '#56565A',
+        lineHeight: 25
+    },
+    disclaimerTxt: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        lineHeight: 25
+
+    },
+    modalContainerStyle: {
+        backgroundColor: '#FFFFFF',       
+        marginTop:scaledHeight(80),
+        paddingBottom: scaledHeight(15),
+        paddingLeft: '4%',
+        paddingRight: '4%', 
+        paddingTop: scaledHeight(15), 
+
+    },
+    moreTxt: {
+        color: '#61285F',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold'
+    },
+    newVictorySection: {
+        backgroundColor: '#FFFFFF',
+        flexGrow: 1,
+        marginBottom: scaledHeight(5),
+        padding: scaledHeight(12),
+        width: '100%',
+
 
     },
     openAccBtn: {
         borderColor: '#61285F',
         borderWidth: 1,
          width: 260,
-        //marginLeft: '18%',
-        //marginRight: '18%',
+        // marginLeft: '18%',
+        // marginRight: '18%',
         marginBottom:scaledHeight(157),
         marginTop:scaledHeight(26),
         
@@ -55,51 +124,32 @@ export const styles = StyleSheet.create({
 
     },
     openAccBtnTxt: {
-        fontSize: scaledHeight(16),
         color: '#FFFFFF',
-        fontWeight: 'bold',
-        width: '100%',
-        textAlign: 'center'
-
-    },
-
-    newVictorySection: {
-        marginBottom: scaledHeight(5),
-        padding: scaledHeight(12),
-        width: '100%',
-        flexGrow: 1,
-        backgroundColor: '#FFFFFF',
-
-
-    },
-    moreTxt: {
         fontSize: scaledHeight(16),
-        color: '#61285F',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        textAlign: 'center',
+        width: '100%'
+
     },
     pageFooter: {
-        width: '100%',
-        flexGrow: 1,
         backgroundColor: '#FFFFFF',
+        flexGrow: 1,
+        width: '100%',
 
-        //backgroundColor:'yellow',
+        // backgroundColor:'yellow',
 
-    },
-    disclaimerTitleTxt: { //termsofuseText
-        fontSize: scaledHeight(16),
-        marginBottom: scaledHeight(10),
-        fontWeight: 'bold',
-        color: '#56565A',
-        lineHeight: 25
-    },
-    disclaimerTxt: {
-        fontSize: scaledHeight(16),
-        color: '#56565A',
-        lineHeight: 25
-
+    },   
+    pageHeader: {
+        flex: .15,
+        flexDirection: 'row',
+        backgroundColor: '#FFFFFF',
+        paddingLeft: scaledHeight(4),
+        paddingRight: scaledHeight(4),
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     privacyAgreement: {
-        //marginTop:convertToDeviceResolution(4),
+        // marginTop:convertToDeviceResolution(4),
         marginVertical: scaledHeight(19),
         padding: scaledHeight(12),
         alignItems: 'center',
@@ -112,65 +162,18 @@ export const styles = StyleSheet.create({
     },
     privacyText: {
         width: '50%',
-        //paddingLeft:'4%',
+        // paddingLeft:'4%',
         marginVertical: '2%',
         color: '#61285F',
         fontWeight: 'bold',
         fontSize: scaledHeight(16)
     },
-    copyRightSection: {
-        height: scaledHeight(50),
-        backgroundColor: '#56565A',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    copyRightText: {
-        color: '#FFFFFF',
-        fontSize: scaledHeight(12)
-
-    },
-    buttonGoActionStyle: {        
-        width: scaledWidth(100),      
-        height: scaledHeight(50),
-        backgroundColor: '#544A54',
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',       
-        marginLeft:'2%',   
-        marginRight:'2%',       
-    },   
-    buttonGoTextStyle: {
-        fontSize: scaledHeight(16),
-        color: '#544A54',      
-        width: '100%',
-        textAlign: 'center',        
-    },
-    buttonCancelActionStyle:{
-        width: scaledWidth(100),      
-        height: scaledHeight(50),
-        borderColor:'#544A54',
-        borderWidth:1,
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
-        marginLeft:'2%',   
-        marginRight:'2%',
-    },
-    modalContainerStyle: {
-        backgroundColor: '#FFFFFF',       
-        paddingRight: '4%',
-        paddingLeft: '4%',
-        paddingTop: scaledHeight(15),
-        paddingBottom: scaledHeight(15), 
-        marginTop:scaledHeight(80), 
-
-    },
-    buttonCancelTextStyle: {
-        fontSize: scaledHeight(16),
-        color: '#FFFFFF',      
-        width: '100%',
-        textAlign: 'center',       
+    scrollContentStyle: {
+        flexGrow: 1,
+        paddingVertical: 0
     },
 
 });
+
+
+export default styles;

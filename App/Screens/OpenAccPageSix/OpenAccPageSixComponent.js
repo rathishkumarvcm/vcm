@@ -1,7 +1,7 @@
 /* eslint-disable react/no-multi-comp */
 import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList } from 'react-native';
-import { styles } from './styles';
+import styles from './styles';
 import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner,GSingletonClass} from '../../CommonComponents';
 import { CustomRadio, CustomCheckBox, CustomPageWizard } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
@@ -73,8 +73,6 @@ const SignPDFItem = (props) => {
                 {props.fileDesc}
             </Text>
             {props.isSeparatorShow && <Text style={styles.lblLine} />}
-
-
         </View>
 
 
