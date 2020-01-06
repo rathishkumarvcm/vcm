@@ -266,6 +266,13 @@ export default {
         socialSecurityNo: "Social Security Number",
         ssnNoFormat: "**********",
         citizenship: "Citizenship",
+        residenceStatus:"Residence Status",
+        countryOfCitizenship:"Country of citizenship",
+        USResidentCardNo:"U.S. Permanent Resident Card Number",
+        USResidentCardNoExpiryDate:"Expiration Date",
+        passportNumber:"Passport number",
+        passportNoExpiryDate:"Expiration Date",
+
 
         empStatus: "Employment Status",
         industry: "Industry",
