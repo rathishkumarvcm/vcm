@@ -445,5 +445,14 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: scaledWidth(20)
     },
-    profileFlex: { flex: 0.85 }
+    profileFlex: { flex: 0.85 },
+    profileHeaderViewCenter: {
+        flexDirection: 'row',
+        width: '100%',
+        marginTop: scaledHeight(18),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+        justifyContent: 'center', 
+        alignItems: 'center'
+    }
 });

@@ -1151,7 +1151,7 @@ export default {
         validRelationSecurity: "Enter Valid Social Security Number"
     },
     profileValidationMessages: {
-        validateAddressLineOne: "Enter a valid Address.",
+        validateAddressLineOne: "Please enter Address Line 1",
         validateZipcode: "Enter a valid zipcode",
         validatePrefix: "Select Valid Prefix",
         validateSuffix: "Select Valid Suffix",

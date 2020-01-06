@@ -179,7 +179,8 @@ class ProfileSettingsComponent extends Component {
                 (<FlatList 
                     style={styles.editFlatList}
                     data={editDeleteMenuOption}
-                    renderItem={this.renderProfileMenuOptions()} />)
+                    renderItem={this.renderProfileMenuOptions()}
+                />)
                 : null}
 
             <View style={styles.editEmailBorder} />
@@ -223,29 +224,30 @@ class ProfileSettingsComponent extends Component {
                     {item.relationShipStatus}
                 </Text>
             </View>
-        </View>
+         </View>
         );
 
     renderProfileMenuOptions = () => ({ item, index }) =>
         (<TouchableOpacity style={styles.editDropdown}>
             <Text style={styles.editDropdownText}
-                onPress={this.onMenuItemClicked(index)}>
+                onPress={this.onMenuItemClicked(index)}
+            >
                 {item.menuName}
             </Text>
-        </TouchableOpacity>);
+         </TouchableOpacity>);
 
     // Manage Relationship Menu Option
 
     onMenuOptionClicked = (index) => () => {
         index === this.state.selectedIndex ?
-            this.setState({
-                isRelationRefreshed: !this.state.isRelationRefreshed,
+            this.setState(prevState => ({
+                isRelationRefreshed: prevState.this.state.isRelationRefreshed,
                 selectedIndex: -1
-            }) :
-            this.setState({
-                isRelationRefreshed: !this.state.isRelationRefreshed,
+            })) :
+            this.setState(prevState => ({
+                isRelationRefreshed: prevState.this.state.isRelationRefreshed,
                 selectedIndex: index
-            });
+            }));
     }
 
     // Manage Relationship Details
@@ -265,10 +267,10 @@ class ProfileSettingsComponent extends Component {
     onMenuItemClicked = (index) => () => {
         switch (index) {
             case 0:
-                this.setState({
-                    isRelationRefreshed: true,
+                this.setState(prevState => ({
+                    isRelationRefreshed: prevState.this.state.isRelationRefreshed,
                     selectedIndex: -1
-                });
+                }));
                 break;
 
             default:
@@ -312,7 +314,7 @@ class ProfileSettingsComponent extends Component {
                     {/* Personal Information with Manage Options */}
 
                     <View>
-                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                        <View style={styles.profileHeaderViewCenter}>
                             <Text style={styles.profileSettingViewOne}>
                                 {globalString.profileSettingsPage.profilePersonalInfo}
                             </Text>
@@ -450,7 +452,7 @@ class ProfileSettingsComponent extends Component {
                     {/* Contact Information with Manage Options */}
 
                     <View>
-                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                        <View style={styles.profileHeaderViewCenter}>
                             <Text style={styles.profileSettingViewOne}>
                                 {globalString.profileSettingsPage.profileContactLabel}
                             </Text>
@@ -494,7 +496,7 @@ class ProfileSettingsComponent extends Component {
                     {/* Phone Information with Manage Options */}
 
                     <View>
-                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                        <View style={styles.profileHeaderViewCenter}>
                             <Text style={styles.profileSettingViewOne}>
                                 {globalString.profileSettingsPage.profilePhoneInfoLabel}
                             </Text>
@@ -526,7 +528,7 @@ class ProfileSettingsComponent extends Component {
                     {/* Email Information with Manage Options */}
 
                     <View>
-                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                        <View style={styles.profileHeaderViewCenter}>
                             <Text style={styles.profileSettingViewOne}>
                                 {globalString.profileSettingsPage.profileMailLabel}
                             </Text>
@@ -558,7 +560,7 @@ class ProfileSettingsComponent extends Component {
                     {/* Financial Information with Manage Options */}
 
                     <View>
-                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                        <View style={styles.profileHeaderViewCenter}>
                             <Text style={styles.profileSettingViewOne}>
                                 {globalString.profileSettingsPage.profileFinancialInfo}
                             </Text>
@@ -627,7 +629,7 @@ class ProfileSettingsComponent extends Component {
                     {/* Employment Information with Manage Options */}
 
                     <View>
-                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                        <View style={styles.profileHeaderViewCenter}>
                             <Text style={styles.profileSettingViewOne}>
                                 {globalString.profileSettingsPage.profileEmployeeInfo}
                             </Text>
@@ -734,7 +736,7 @@ class ProfileSettingsComponent extends Component {
                     {/* Military Information with Manage Options */}
 
                     <View>
-                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                        <View style={styles.profileHeaderViewCenter}>
                             <Text style={styles.profileSettingViewOne}>
                                 {globalString.profileSettingsPage.profileMilitaryInfo}
                             </Text>
@@ -806,7 +808,7 @@ class ProfileSettingsComponent extends Component {
                     {/* Manage Relationship with Add Options */}
 
                     <View>
-                        <View style={[styles.settingsView, styles.profileSettingView]}>
+                        <View style={styles.profileHeaderViewCenter}>
                             <Text style={styles.profileSettingViewOne}>
                                 {globalString.profileSettingsPage.profileRelationshipLabel}
                             </Text>
@@ -824,14 +826,15 @@ class ProfileSettingsComponent extends Component {
                             data={this.state.profileRelationShipData}
                             keyExtractor={this.generateKeyExtractor}
                             extraData={this.state.isRelationRefreshed}
-                            renderItem={this.renderRelationShipInformation()} />
+                            renderItem={this.renderRelationShipInformation()}
+                        />
 
                     </View>
 
                     {/* Social Media Informations */}
 
                     <View>
-                        <View style={[styles.settingsView]}>
+                        <View style={styles.settingsView}>
                             <Text style={styles.profileSettingSocialView}>
                                 {globalString.profileSettingsPage.profileSocialMediaLabel}
                             </Text>

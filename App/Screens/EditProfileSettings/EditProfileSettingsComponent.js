@@ -3,7 +3,6 @@ import { Text, View, Image, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GRadioButtonComponent, GDropDownComponent } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 import ImagesLoad from '../../Images/ImageIndex';
 
@@ -41,7 +40,6 @@ class EditProfileSettingsComponent extends Component {
             profileGender: this.props.profileState.profileGender,
             profileMaritalStatus: this.props.profileState.profileMaritalStatus,
             
-            radioButton: false,
             radioButtonIndex: 0,
 
             dropDownState: false,
@@ -81,7 +79,7 @@ class EditProfileSettingsComponent extends Component {
             "marital_status"
         ];
 
-        for (let i = 0; i < compositePayloadData.length; i++) {
+        for (let i = 0; i < compositePayloadData.length; i += 1) {
             const tempkey = compositePayloadData[i];
             if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
                 payload.push(tempkey);
@@ -102,13 +100,7 @@ class EditProfileSettingsComponent extends Component {
     radioButtonClicked = (index) => {
         if (index !== this.state.radioButtonIndex) {
             this.setState({
-                radioButtonIndex: index,
-                radioButton: false
-            });
-        }
-        else {
-            this.setState({
-                radioButton: false
+                radioButtonIndex: index
             });
         }
 
@@ -161,70 +153,70 @@ class EditProfileSettingsComponent extends Component {
     }
 
     dropDownOnClick = () => {
-        this.setState({
-            dropDownState: !this.state.dropDownState
-        });
+        this.setState(prevState => ({
+            dropDownState: prevState.this.state.dropDownState
+        }));
     }
 
-    dropDownOnSelect = (valuePrefix) => {
+    dropDownOnSelect = (value, index, data) => {
         this.setState({
-            dropDownValue: valuePrefix.value,
+            dropDownValue: data[index].value,
             dropDownState: false,
             dropDownPrefixFlag: false
         });
     }
 
     dropDownSuffixClick = () => {
-        this.setState({
-            dropDownSuffixState: !this.state.dropDownSuffixState
-        });
+        this.setState(prevState => ({
+            dropDownSuffixState: prevState.this.state.dropDownSuffixState
+        }));
     }
 
-    dropDownSuffixSelect = (valueSuffix) => {
+    dropDownSuffixSelect = (value, index, data) => {
         this.setState({
-            dropDownSuffixValue: valueSuffix.value,
+            dropDownSuffixValue: data[index].value,
             dropDownSuffixState: false,
             dropDownSuffixFlag: false
         });
     }
 
     dropDownGenderClick = () => {
-        this.setState({
-            dropDownGenderState: !this.state.dropDownGenderState
-        });
+        this.setState(prevState => ({
+            dropDownGenderState: prevState.this.state.dropDownGenderState
+        }));
     }
 
-    dropDownGenderSelect = (valueGender) => {
+    dropDownGenderSelect = (value, index, data) => {
         this.setState({
-            dropDownGenderValue: valueGender.value,
+            dropDownGenderValue: data[index].value,
             dropDownGenderState: false,
             dropDownGenderFlag: false
         });
     }
 
     dropDownStatusClick = () => {
-        this.setState({
-            dropDownStatusState: !this.state.dropDownStatusState
-        });
+        this.setState(prevState => ({
+            dropDownStatusState: prevState.this.state.dropDownStatusState
+        }));
     }
 
-    dropDownStatusSelect = (valueStatus) => {
+    dropDownStatusSelect = (value, index, data) => {
         this.setState({
-            dropDownStatusValue: valueStatus.value,
+            dropDownStatusValue: data[index].value,
             dropDownStatusState: false,
             dropDownStatusFlag: false
         });
     }
 
     dropDownCountryClick = () => {
-        this.setState({
-            dropDownCountryState: !this.state.dropDownCountryState
-        });
+        this.setState(prevState => ({
+            dropDownCountryState: prevState.this.state.dropDownCountryState
+        }));
     }
 
-    dropDownCountrySelect = (valueCountry) => {
+    dropDownCountrySelect = (value, index, data) => {
         this.setState({
-            dropDownCountryValue: valueCountry.value,
+            dropDownCountryValue: data[index].value,
             dropDownCountryState: false,
             dropDownCountryFlag: false
         });
@@ -244,15 +236,16 @@ class EditProfileSettingsComponent extends Component {
                 "profilePrefix": this.state.dropDownValue,
                 "profileSuffix": this.state.dropDownSuffixValue,
                 "profileGender": this.state.dropDownGenderValue,
-                "profileMaritalStatus": this.state.dropDownStatusValue
+                "profileMaritalStatus": this.state.dropDownStatusValue,
+                "profileCitizenship": this.state.countryNonUS ? this.state.dropDownCountryValue : "United State"
             };
         }
         return profilePayload;
     }
 
-    editProfileBack = () => {this.props.navigation.navigate('profileSettings');};
+    editProfileBack = () => {this.props.navigation.navigate('profileSettings')};
 
-    editProfileOnCancel = () => {this.props.navigation.navigate('profileSettings');};
+    editProfileOnCancel = () => {this.props.navigation.navigate('profileSettings')};
 
     render() {
 
@@ -390,7 +383,7 @@ class EditProfileSettingsComponent extends Component {
                             itemToDisplay="value"
                             errorFlag={this.state.dropDownPrefixFlag}
                             errorText={this.state.dropDownPrefixMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(492) }}
+                            // dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(492) }}
                         />
 
                         {/* Suffix Data */}
@@ -407,7 +400,7 @@ class EditProfileSettingsComponent extends Component {
                             itemToDisplay="value"
                             errorFlag={this.state.dropDownSuffixFlag}
                             errorText={this.state.dropDownSuffixMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(581) }}
+                            // dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(581) }}
                         />
 
                         {/* Gender Data */}
@@ -424,7 +417,7 @@ class EditProfileSettingsComponent extends Component {
                             itemToDisplay="value"
                             errorFlag={this.state.dropDownGenderFlag}
                             errorText={this.state.dropDownGenderMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(670) }}
+                            // dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(670) }}
                         />
 
                         {/* Marital Status Data */}
@@ -441,7 +434,7 @@ class EditProfileSettingsComponent extends Component {
                             itemToDisplay="value"
                             errorFlag={this.state.dropDownStatusFlag}
                             errorText={this.state.dropDownStatusMsg}
-                            dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(760) }}
+                            // dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(760) }}
                         />
 
                         {/* Citizenship */}
@@ -481,7 +474,7 @@ class EditProfileSettingsComponent extends Component {
                                 itemToDisplay="value"
                                 errorFlag={this.state.dropDownCountryFlag}
                                 errorText={this.state.dropDownCountryMsg}
-                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(950) }}
+                                // dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(950) }}
                             />) : null}
 
                         <View style={styles.editFlexDirectionColumn}>

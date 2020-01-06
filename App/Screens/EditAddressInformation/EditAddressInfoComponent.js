@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity, FlatList, Switch } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
+import { GButtonComponent, GHeaderComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
-import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+import ImagesLoad from '../../Images/ImageIndex';
 
 let editDeleteMenuOption = [
     {
@@ -18,89 +17,7 @@ let editDeleteMenuOption = [
     },
 ];
 
-const UserAddressInformation = (props) => {
-    return (
-        <View style={styles.editEmailHolder}>
-            <View style={[styles.profileDivideIcon]}>
-                <View style={styles.profileDivideIconOne}>
-                    <Text style={styles.editEmailType}>
-                        {props.addressType}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {props.addressLineOne}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {props.addressCity}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {props.addressState}
-                    </Text>
-                </View>
-
-                <View style={styles.profileDivideIconTwo}>
-                <TouchableOpacity
-                        onPress={props.onMenuOptionClicked}>
-                        <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/menu_icon.png")} />
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            {props.selectedMenuIndex == 1 ?
-                (<FlatList style={styles.editFlatList}
-                    data={editDeleteMenuOption}
-                    renderItem={({ item, index }) =>
-                        (<TouchableOpacity style={styles.editDropdown}>
-                            <Text style={styles.editDropdownText}>
-                                {item.name}
-                            </Text>
-                        </TouchableOpacity>)}
-                    keyExtractor={item => item.id} />)
-                : null}
-
-            <View style={styles.editEmailBorder} />
-
-            <View style={styles.editAddressView}>
-                <Text style={styles.editAddressLabel}>
-                    {globalString.editAddressInfo.editAddressSetMailing}
-                </Text>
-
-                <View style={styles.editSwitchButton}>
-                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={props.onMailingSwitchToggle}
-                        value={props.isMailingAddress} />
-                </View>
-            </View>
-
-            <View style={styles.editAddressView}>
-                <Text style={styles.editAddressLabel}>
-                    {globalString.editAddressInfo.editAddressSetPhysical}
-                </Text>
-                <View style={styles.editSwitchButton}>
-                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={props.onPhysicalSwitchToggle}
-                        value={props.isPhysicalAddress} />
-                </View>
-            </View>
-        </View>
-    );
-};
-
-UserAddressInformation.propTypes = {
-    addressType: PropTypes.string,
-    addressLineOne: PropTypes.string,
-    addressCity: PropTypes.string,
-    addressState: PropTypes.string,
-    addressZipcode: PropTypes.string,
-    isMailingAddress: PropTypes.bool,
-    isPhysicalAddress: PropTypes.bool,
-    onMailingSwitchToggle: PropTypes.func,
-    onPhysicalSwitchToggle: PropTypes.func,
-    onMenuOptionClicked: PropTypes.func,
-    selectedMenuIndex: PropTypes.any
-};
-
-class editAddressInfoComponent extends Component {
+class EditAddressInfoComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -148,7 +65,7 @@ class editAddressInfoComponent extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         if (!this.state.isRelation) {
             if (this.props != prevProps) {
                 if (this.props &&
@@ -177,7 +94,108 @@ class editAddressInfoComponent extends Component {
         }
     }
 
-    onMailingSwitchToggle = (item, index) => () => {
+    renderAddressInformation = () => ({ item, index }) =>
+        (<View style={styles.editEmailHolder}>
+            <View style={styles.profileDivideIcon}>
+                <View style={styles.profileDivideIconOne}>
+                    <Text style={styles.editEmailType}>
+                        {item.addressType}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {item.addressLineOne}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {item.addressCity}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {item.addressState + ' ' + item.addressZipcode}
+                    </Text>
+                </View>
+
+                <View style={styles.profileDivideIconTwo}>
+                    <TouchableOpacity
+                        onPress={this.onMenuOptionClicked(index)}>
+                        <Image style={styles.imageWidthHeight}
+                            source={ImagesLoad.menuIcon} />
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+            {index === this.state.selectedIndex ?
+                (<FlatList style={styles.editFlatList}
+                    data={editDeleteMenuOption}
+                    renderItem={this.renderMenuOptions()} />)
+                : null}
+
+            <View style={styles.editEmailBorder} />
+
+            <View style={styles.editAddressView}>
+                <Text style={styles.editAddressLabel}>
+                    {globalString.editAddressInfo.editAddressSetMailing}
+                </Text>
+
+                <View style={styles.editSwitchButton}>
+                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                        onValueChange={this.onMailingSwitchToggle(index)}
+                        value={item.isMailingAddress} />
+                </View>
+            </View>
+
+            <View style={styles.editAddressView}>
+                <Text style={styles.editAddressLabel}>
+                    {globalString.editAddressInfo.editAddressSetPhysical}
+                </Text>
+                <View style={styles.editSwitchButton}>
+                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                        onValueChange={this.onPhysicalSwitchToggle(index)}
+                        value={item.isPhysicalAddress} />
+                </View>
+            </View>
+        </View>
+        );
+
+    renderMenuOptions = () => ({ item, index }) => (
+        <TouchableOpacity style={styles.editDropdown}>
+            <Text style={styles.editDropdownText}
+                onPress={this.onMenuItemClicked(index)}>
+                {item.name}
+            </Text>
+        </TouchableOpacity>);
+
+    onMenuOptionClicked = (index) => () => {
+        index === this.state.selectedIndex ?
+            this.setState({
+                refreshAddressData: !this.state.refreshAddressData,
+                selectedIndex: -1
+            }) :
+            this.setState({
+                refreshAddressData: !this.state.refreshAddressData,
+                selectedIndex: index
+            });
+    }
+
+    onMenuItemClicked = (index) => () => {
+        switch (index) {
+            case 0:
+                this.setState({
+                    refreshAddressData: !this.state.refreshAddressData,
+                    selectedIndex: -1
+                });
+                break;
+
+            case 1:
+                this.setState({
+                    refreshAddressData: !this.state.refreshAddressData,
+                    selectedIndex: -1
+                });
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    onMailingSwitchToggle = (index) => () => {
         var array = [...this.state.profileUserAddressValue];
         if (index !== -1) {
             let switchVal = array[index].isMailingAddress;
@@ -189,7 +207,7 @@ class editAddressInfoComponent extends Component {
         }
     }
 
-    onPhysicalSwitchToggle = (item, index) => () => {
+    onPhysicalSwitchToggle = (index) => () => {
         var array = [...this.state.profileUserAddressValue];
         if (index !== -1) {
             let switchVal = array[index].isPhysicalAddress;
@@ -199,31 +217,6 @@ class editAddressInfoComponent extends Component {
                 refreshAddressData: !this.state.refreshAddressData
             });
         }
-    }
-
-    // Contact Informations 
-
-    onMenuOptionClicked = (item, index) => () => {
-        var array = [...this.state.profileUserAddressValue];
-        array[index].selectedMenuIndex = index;
-        this.setState({
-            profileUserAddressValue: array,
-            refreshAddressData: !this.state.refreshAddressData,
-            selectedIndex: index
-        });
-    }
-
-    renderAddressInformation = () => ({ item, index }) => {
-        return (<UserAddressInformation
-            addressType={item.addressType}
-            addressLineOne={item.addressLineOne}
-            addressCity={item.addressCity}
-            addressState={item.addressState + ' ' + item.addressZipcode}
-            isMailingAddress={item.isMailingAddress}
-            isPhysicalAddress={item.isPhysicalAddress}
-            onMailingSwitchToggle={this.onMailingSwitchToggle(item, index)} 
-            onMenuOptionClicked={this.onMenuOptionClicked(item, index)}
-            selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0} />);
     }
 
     editAddressInfoAddNew = () => this.props.navigation.navigate('editAddressAddNew',
@@ -246,7 +239,7 @@ class editAddressInfoComponent extends Component {
                 <GHeaderComponent
                     navigation={this.props.navigation} />
 
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.addressInformationFlex}>
 
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
@@ -295,7 +288,7 @@ class editAddressInfoComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={ImagesLoad.applicationLogo} />
                     </View>
 
                     <View style={styles.privacyAgreement}>
@@ -330,4 +323,14 @@ class editAddressInfoComponent extends Component {
     }
 }
 
-export default editAddressInfoComponent;
+EditAddressInfoComponent.propTypes = {
+    navigation: PropTypes.instanceOf(Object).isRequired,
+    profileState: PropTypes.instanceOf(Object)
+};
+
+EditAddressInfoComponent.defaultProps = {
+    navigation: {},
+    profileState: {}
+};
+
+export default EditAddressInfoComponent;

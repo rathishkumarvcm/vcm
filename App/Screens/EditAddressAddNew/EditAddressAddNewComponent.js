@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GLoadingSpinner } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 import * as reGex from '../../Constants/RegexConstants';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
@@ -14,7 +13,7 @@ const profileAddNewAddress = [
     { index4: 4, question: "DPO (Diplomatic Post Office)" },
 ];
 
-class editAddressAddNewComponent extends Component {
+class EditAddressAddNewComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -37,9 +36,14 @@ class editAddressAddNewComponent extends Component {
 
             validationAddressOne: true,
             addressOne: '',
+            validAddressOneMessage: '',
+
+            validationAddressTwo: true,
+            validAddressTwoMessage: '',
 
             isZipCodeValid: true,
             zipCodeValue: '',
+            validZipCodeMessage: '',
 
             addressTwo: '',
             userCity: '',
@@ -69,14 +73,11 @@ class editAddressAddNewComponent extends Component {
                 this.setState({
                     relationShipContactData: relationshipContacts[this.state.relationShipPosition]
                 });
-                console.log("@@@@ Ralation Ship Contact Info 003", relationshipContacts[0]);
-                console.log("@@@@ Ralation Ship Contact Info 002", this.state.relationShipContactData);
             }
-            console.log("@@@@ Ralation Ship Contact Info 001", relationshipContacts);
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         const stateCityResponseData = ActionTypes.GET_STATECITY;
         const addressResponseData = ActionTypes.GET_ADDRESSFORMAT;
 
@@ -115,7 +116,8 @@ class editAddressAddNewComponent extends Component {
                         this.setState({
                             addressOne: '',
                             addressTwo: '',
-                            validationAddressOne: false
+                            validationAddressOne: false,
+                            validAddressOneMessage: globalString.profileValidationMessages.validateAddressLineOne
                         });
                     }
                 }
@@ -166,12 +168,27 @@ class editAddressAddNewComponent extends Component {
             addressOne: text,
             validationAddressOne: true
         });
+
+        if (this.state.addressOne.length.toString() == 49) {
+            this.setState({
+                validationAddressOne: false,
+                validAddressOneMessage: 'Max. character length exceeded'
+            })
+        }
     }
 
     setAddressTwo = (text) => {
         this.setState({
-            addressTwo: text
+            addressTwo: text,
+            validationAddressTwo: true
         });
+
+        if (this.state.addressTwo.length.toString() == 49) {
+            this.setState({
+                validationAddressTwo: false,
+                validAddressTwoMessage: 'Max. character length exceeded'
+            })
+        }
     }
 
     setZipcodeValue = (text) => {
@@ -179,6 +196,13 @@ class editAddressAddNewComponent extends Component {
             zipCodeValue: text,
             isZipCodeValid: true
         });
+
+        if (this.state.zipCodeValue.length.toString() == 5) {
+            this.setState({
+                isZipCodeValid: false,
+                validZipCodeMessage: 'Max. character length exceeded'
+            })
+        }
     }
 
     addAddressOnValidate = (validationType) => () => {
@@ -186,7 +210,8 @@ class editAddressAddNewComponent extends Component {
             case 'validateAddressValueOne':
                 if (this.state.addressOne === "") {
                     this.setState({
-                        validationAddressOne: false
+                        validationAddressOne: false,
+                        validAddressOneMessage: globalString.profileValidationMessages.validateAddressLineOne
                     });
                 }
 
@@ -197,8 +222,8 @@ class editAddressAddNewComponent extends Component {
                     });
                 }
 
-                if (this.state.addressOne != '' &&
-                    this.state.zipCodeValue != '') {
+                if (this.state.addressOne !== '' || this.state.addressTwo !== '' &&
+                    this.state.zipCodeValue !== '') {
                     this.addNewAddress();
                 }
                 break;
@@ -218,7 +243,8 @@ class editAddressAddNewComponent extends Component {
             this.props.getStateCity(payload);
         } else {
             this.setState({
-                isZipCodeValid: false
+                isZipCodeValid: false,
+                validZipCodeMessage: globalString.profileValidationMessages.validateZipcode
             })
         }
     }
@@ -301,14 +327,11 @@ class editAddressAddNewComponent extends Component {
 
             relationAddressPayload = this.props.profileState.profileRelationShipDetails[this.state.relationShipPosition].relationAddress;
             relationAddressPayload.push(addContactInformation);
-            console.log("@@@@@@@@@@@@@@@@@@@ Relation Address", relationAddressPayload);
             const relationAddressUpdated = [this.props.profileState.profileRelationShipDetails[this.state.relationShipPosition]]
-            console.log("################## Relation Updated", relationAddressUpdated);
             relationContactPayload = {
                 ...this.props.profileState,
                 profileRelationShipDetails: relationAddressUpdated
             }
-            console.log('%%%%%%%%%%%%%%%%%%%%%%%% Payload Data', relationContactPayload);
         }
         return relationContactPayload;
     }
@@ -395,8 +418,9 @@ class editAddressAddNewComponent extends Component {
                                 placeholder={globalString.addAddressInfo.addressLineOne}
                                 onChangeText={this.setAddressOne}
                                 value={this.state.addressOne}
+                                maxLength={50}
                                 errorFlag={!this.state.validationAddressOne}
-                                errorText={globalString.profileValidationMessages.validateAddressLineOne} />
+                                errorText={this.state.validAddressOneMessage} />
                         </View>
 
                         <View style={styles.settingsView1}>
@@ -410,7 +434,10 @@ class editAddressAddNewComponent extends Component {
                                 propInputStyle={styles.editAddressInput}
                                 placeholder={globalString.addAddressInfo.addressLineTwo}
                                 value={this.state.addressTwo}
-                                onChangeText={this.setAddressTwo} />
+                                maxLength={50}
+                                onChangeText={this.setAddressTwo}
+                                errorFlag={!this.state.validationAddressTwo}
+                                errorText={this.state.validAddressTwoMessage} />
                         </View>
 
                         <View style={styles.settingsView1}>
@@ -429,7 +456,7 @@ class editAddressAddNewComponent extends Component {
                                 keyboardType="number-pad"
                                 maxLength={5}
                                 errorFlag={!this.state.isZipCodeValid}
-                                errorText={globalString.profileValidationMessages.validateZipcode} />
+                                errorText={this.state.validZipCodeMessage} />
                         </View>
 
                         <View style={styles.editFlexDirectionColumn}>
@@ -529,4 +556,4 @@ class editAddressAddNewComponent extends Component {
     }
 }
 
-export default editAddressAddNewComponent;
+export default EditAddressAddNewComponent;

@@ -4,8 +4,7 @@ import {profileSettingsAction} from '../../Shared/Actions';
 
 const mapStateToProps = (state /* , props */) => (
   {
-    profileState: state.profileInformationData,
-    stateCityData:state.addressFormatData
+    profileState: state.profileInformationData
   }
 );
 

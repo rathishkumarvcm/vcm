@@ -443,5 +443,6 @@ export const styles = StyleSheet.create({
         color: '#56565A',
         fontWeight: 'bold',
         marginLeft: scaledWidth(20)
-    }
+    },
+    addressInformationFlex: { flex: 0.85 }
 });
