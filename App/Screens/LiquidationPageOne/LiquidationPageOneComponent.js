@@ -36,32 +36,32 @@ class LiquidationPageOneComponent extends Component {
     }
 
     onClickExpandGeneralAccount = () => {
-        this.setState({
-            collapseGeneralAccount: !this.state.collapseGeneralAccount,
+        this.setState(prevState => ({
+            collapseGeneralAccount: !prevState.collapseGeneralAccount,
             collapseUTMAAccount: true,
             collapseIRAAccount: true
-        });
+        }));
         (this.state.collapseGeneralAccount ?
             this.setState({ generalAccountIcon: "-    ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }) : 
             this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
     }
 
     onClickExpandIRAAccount = () => {
-        this.setState({
-            collapseIRAAccount: !this.state.collapseIRAAccount,
+        this.setState(prevState => ({
+            collapseIRAAccount: !prevState.collapseIRAAccount,
             collapseUTMAAccount: true,
             collapseGeneralAccount: true
-        });
+        }));
         (this.state.collapseIRAAccount ?
             this.setState({ IRAAccountIcon: "-    ", generalAccountIcon: "+   ", UTMAAccountIcon: "+   " }) : this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
     }
 
     onClickExpandUTMAAccount = () => {
-        this.setState({
-            collapseUTMAAccount: !this.state.collapseUTMAAccount,
+        this.setState(prevState => ({
+            collapseUTMAAccount: !prevState.collapseUTMAAccount,
             collapseIRAAccount: true,
             collapseGeneralAccount: true
-        });
+        }));
         (this.state.collapseUTMAAccount ?
             this.setState({ UTMAAccountIcon: "-    ", generalAccountIcon: "+   ", IRAAccountIcon: "+   " }) : this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
     }
@@ -144,7 +144,7 @@ class LiquidationPageOneComponent extends Component {
     }
 
     componentDidMount() {
-        console.log(" Screen 1 componentdidmount " + JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
+        // console.log(" Screen 1 componentdidmount " + JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
     }
 
     render() {

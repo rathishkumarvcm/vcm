@@ -233,9 +233,9 @@ class ExchangeScreenTwoComponent extends Component {
     }
 
     render() {
-        let currentPage = 2;
-        let totalCount = 4;
-        let pageName = gblStrings.liquidation.fundSelectionScreenName;
+        const currentPage = 2;
+        const totalCount = 4;
+        const pageName = gblStrings.liquidation.fundSelectionScreenName;
         if (this.props.exchangeData && this.props.exchangeData) {
             savedData = this.props.exchangeData.saveExchangeSelectedData;
         }

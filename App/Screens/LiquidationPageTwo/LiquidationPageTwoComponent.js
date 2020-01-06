@@ -33,13 +33,15 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     onClickExpandLiquidation = () => {
-        this.setState({ collapseLiquidation: !this.state.collapseLiquidation });
+        this.setState(prevState => ({
+            collapseLiquidation: !prevState.collapseLiquidation,
+        }));
         (this.state.collapseLiquidation ? this.setState({ collapseLiquidationIcon: "-   " }) : this.setState({ collapseLiquidationIcon: "+  " }));
     };
 
     onClickSelectFund = (item, index) => {
         const funds = this.state.fundListData;
-        for (let i = 0; i < funds.length; i++) {
+        for (let i = 0; i < funds.length; i+= 1) {
             if (i !== index) {
                 funds[i].allSharesSelected = false;
                 funds[i].percentageSelected = false;
@@ -56,7 +58,7 @@ class LiquidationPageTwoComponent extends Component {
 
     onClickAllShares = (item, index) => {
         const funds = this.state.fundListData;
-        for (let i = 0; i < funds.length; i++) {
+        for (let i = 0; i < funds.length; i+= 1) {
             if (i === index) {
                 funds[i].allSharesSelected = !funds[i].allSharesSelected;
 
@@ -77,7 +79,7 @@ class LiquidationPageTwoComponent extends Component {
 
     onClickAmountinDollar = (item, index) => {
         const funds = this.state.fundListData;
-        for (let i = 0; i < funds.length; i++) {
+        for (let i = 0; i < funds.length; i+= 1) {
             if (i === index) {
                 funds[i].dollarSelected = !funds[i].dollarSelected;
             } else {
@@ -97,7 +99,7 @@ class LiquidationPageTwoComponent extends Component {
 
     onClickAmountInPerc = (item, index) => {
         const funds = this.state.fundListData;
-        for (let i = 0; i < funds.length; i++) {
+        for (let i = 0; i < funds.length; i+= 1) {
             if (i === index) {
                 funds[i].percentageSelected = !funds[i].percentageSelected;
             } else {
@@ -116,7 +118,7 @@ class LiquidationPageTwoComponent extends Component {
 
     onChangeDollarVal = (text) => {
         const funds = this.state.fundListData;
-        for (let i = 0; i < funds.length; i++) {
+        for (let i = 0; i < funds.length; i+= 1) {
             if (i === this.state.selectedFundIndex) {
                 funds[i].dollarValue = text;
                 funds[i].dollarSelected = true;
@@ -137,7 +139,7 @@ class LiquidationPageTwoComponent extends Component {
 
     onChangePercentageVal = (text) => {
         const funds = this.state.fundListData;
-        for (let i = 0; i < funds.length; i++) {
+        for (let i = 0; i < funds.length; i+= 1) {
             if (i === this.state.selectedFundIndex) {
                 funds[i].percentageValue = text;
                 funds[i].percentageSelected = true;
@@ -246,7 +248,7 @@ class LiquidationPageTwoComponent extends Component {
             selectedAccountType = "UTMA_Account";
         }
 
-        for (let i = 0; i < this.props.liquidationInitialState.accSelectionData[selectedAccountType].length; i++) {
+        for (let i = 0; i < this.props.liquidationInitialState.accSelectionData[selectedAccountType].length; i+= 1) {
             if (selectedAccountNumber === this.props.liquidationInitialState.accSelectionData[selectedAccountType][i].accNumber) {
                 selectedIndex = i;
             }
@@ -255,7 +257,8 @@ class LiquidationPageTwoComponent extends Component {
         if (this.props.navigation.getParam('ammend')) {
             this.setState({
                 fundListData: ammendData.selectedFundData.funds,
-                // disableNextButton: !(ammendData.selectedFundData.allSharesSelected || ammendData.selectedFundData.percentageSelected || ammendData.selectedFundData.dollarSelected)
+                disableNextButton: !(ammendData.selectedFundData.allSharesSelected || ammendData.selectedFundData.percentageSelected || ammendData.selectedFundData.dollarSelected),
+                selectedFundIndex: 0,
             });
         } else {
             this.setState({
@@ -417,16 +420,12 @@ class LiquidationPageTwoComponent extends Component {
 LiquidationPageTwoComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     liquidationInitialState: PropTypes.instanceOf(Object),
-    amendReducerData: PropTypes.instanceOf(Object),
     saveData: PropTypes.func,
-    ammendActions: PropTypes.func,
 };
 
 LiquidationPageTwoComponent.defaultProps = {
     navigation: {},
     liquidationInitialState: {},
-    amendReducerData: {},
     saveData: () => { },
-    ammendActions: () => { }
 };
 export default LiquidationPageTwoComponent;

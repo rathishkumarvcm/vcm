@@ -78,7 +78,31 @@ class LiquidationPageThreeComponent extends Component {
         if (this.props.navigation.getParam('ammend')) {
             ammendData = this.props.navigation.getParam('data');
             ammendIndex = this.props.navigation.getParam('index');
-            this.setState({ ammend: true });
+            this.setState({ 
+                ammend: true,
+                taxAccountingMethodData: {
+                    requestedAmountType: ammendData.selectedFundWithdrawalData.requestedAmountType,
+                    amountBeforeTaxes: ammendData.selectedFundWithdrawalData.amountBeforeTaxes,
+                    amountAfterTaxes: ammendData.selectedFundWithdrawalData.amountAfterTaxes,
+                    federalTax: ammendData.selectedFundWithdrawalData.federalTaxInPerc,
+                    stateTax: ammendData.selectedFundWithdrawalData.stateTaxInPerc,
+                    totalTaxToBeWithhold: ammendData.selectedFundWithdrawalData.totalTaxToBeWithHold,
+                    totalYouWillReceive: ammendData.selectedFundWithdrawalData.totalYouWillReceive,
+                    totalWithdrawal: ammendData.selectedFundWithdrawalData.totalWithdrawal,
+                    stateTaxInDollars: ammendData.selectedFundWithdrawalData.stateTaxInDollars,
+                    federalTaxInDollars: ammendData.selectedFundWithdrawalData.federalTaxInDollars,
+                    taxHoldingOption: ammendData.selectedFundWithdrawalData.taxWithHoldingOption,
+                },
+                    fundingSource: {
+                        selectedBankAccountNo: "XXX-XXX-3838",
+                        selectedBankAccountName: "Bank Account 1",
+                        checkOrderSelected: false
+                    },
+                    selectedBankAccountIndex: 0,
+                    showMessageFlex: false,
+                    disableNextButton: false
+                
+             });
         }
         else {
             this.setState({ ammend: false });
@@ -103,22 +127,30 @@ class LiquidationPageThreeComponent extends Component {
     }
 
     onClickExpandFundSource = () => {
-        this.setState({ collapseFundSource: !this.state.collapseFundSource });
+        this.setState(prevState => ({
+            collapseFundSource: !prevState.collapseFundSource,
+        }));
         (this.state.collapseFundSource ? this.setState({ collapseFSIcon: "-   " }) : this.setState({ collapseFSIcon: "+  " }));
     };
 
     onClickExpandDeliveryAddress = () => {
-        this.setState({ collapseDeliveryAddress: !this.state.collapseDeliveryAddress });
+        this.setState(prevState => ({
+            collapseDeliveryAddress: !prevState.collapseDeliveryAddress,
+        }));
         (this.state.collapseDeliveryAddress ? this.setState({ collpaseDAIcon: "-   " }) : this.setState({ collpaseDAIcon: "+  " }));
     }
 
     onClickExpandTaxAccounting = () => {
-        this.setState({ collapseTaxAccounting: !this.state.collapseTaxAccounting });
+        this.setState(prevState => ({
+            collapseTaxAccounting: !prevState.collapseTaxAccounting,
+        }));
         (this.state.collapseTaxAccounting ? this.setState({ collapseTAIcon: "-   " }) : this.setState({ collapseTAIcon: "+  " }));
     };
 
     onClickExpandTaxWithHoldingOptions = () => {
-        this.setState({ collapseTaxWithHoldingOption: !this.state.collapseTaxWithHoldingOption });
+        this.setState(prevState => ({
+            collapseTaxWithHoldingOption: !prevState.collapseTaxWithHoldingOption,
+        }));
         (this.state.collapseTaxWithHoldingOption ? this.setState({ collapseTWOIcon: "-   " }) : this.setState({ collapseTWOIcon: "+  " }));
     };
 
@@ -143,16 +175,16 @@ class LiquidationPageThreeComponent extends Component {
     }
 
     onClickCheckOrder = () => {
-        this.setState({
+        this.setState(prevState => ({
             fundingSource: {
-                checkOrderSelected: !this.state.fundingSource.checkOrderSelected,
+                checkOrderSelected: !prevState.fundingSource.checkOrderSelected,
                 selectedBankAccountNo: '',
                 selectedBankAccountName: '',
             },
             selectedBankAccountIndex: null,
             disableNextButton: false
 
-        });
+        }));
     }
 
     onSelectBankAccount = (item, index) => {
@@ -173,10 +205,10 @@ class LiquidationPageThreeComponent extends Component {
     }
 
     switchOnMethod = () => {
-        this.setState({
-            switchOff: !this.state.switchOff,
-            switchOn: !this.state.switchOn,
-        });
+        this.setState(prevState => ({
+            switchOff: !prevState.switchOff,
+            switchOn: !prevState.switchOn,
+        }));
         this.state.switchOn ? this.setState(prevState => ({
             taxAccountingMethodData: {
                 ...prevState.taxAccountingMethodData,
@@ -690,16 +722,12 @@ class LiquidationPageThreeComponent extends Component {
 LiquidationPageThreeComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     liquidationInitialState: PropTypes.instanceOf(Object),
-    amendReducerData: PropTypes.instanceOf(Object),
     saveData: PropTypes.func,
-    ammendActions: PropTypes.func,
 };
 
 LiquidationPageThreeComponent.defaultProps = {
     navigation: {},
     liquidationInitialState: {},
-    amendReducerData: {},
     saveData: () => { },
-    ammendActions: () => { }
 };
 export default LiquidationPageThreeComponent;
