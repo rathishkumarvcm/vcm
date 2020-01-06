@@ -455,6 +455,10 @@ export const styles = StyleSheet.create({
         flexGrow: 1,
         width: "40%"
     },
+    nonUSView: {
+        flexGrow: 1,
+        marginTop: scaledHeight(25)
+    },
     uploadW8View: {
         flexGrow: 1,
         marginTop: scaledHeight(25)

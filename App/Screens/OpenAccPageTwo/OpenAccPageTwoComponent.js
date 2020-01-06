@@ -68,6 +68,13 @@ class OpenAccPageTwoComponent extends Component {
                 maritalStatus: "",
                 maritalStatusDropDown: false,
                 citizenship: "U.S",
+                residenceStatus: "",
+                countryOfCitizenship: "",
+                countryOfCitizenshipDropDown: false,
+                USResidentCardNo: "",
+                USResidentCardNoExpiryDate: "",
+                passportNumber: "",
+                passportNoExpiryDate: "",
 
                 mailingAddressType: "",
                 addressType: "",
@@ -135,6 +142,12 @@ class OpenAccPageTwoComponent extends Component {
                 workPhoneNoValidation: true,
                 emailAddressValidation: true,
                 socialSecurityNoValidation: true,
+                residenceStatusValidation: true,
+                countryOfCitizenshipValidation: true,
+                USResidentCardNoValidation: true,
+                USResidentCardNoExpiryDateValidation: true,
+                passportNumberValidation: true,
+                passportNoExpiryDateValidation: true,
 
                 // Employer Info
                 empStatus: "",
@@ -219,6 +232,13 @@ class OpenAccPageTwoComponent extends Component {
                 maritalStatus: "",
                 maritalStatusDropDown: false,
                 citizenship: "U.S",
+                residenceStatus: "",
+                countryOfCitizenship: "",
+                countryOfCitizenshipDropDown: false,
+                USResidentCardNo: "",
+                USResidentCardNoExpiryDate: "",
+                passportNumber: "",
+                passportNoExpiryDate: "",
 
                 mailingAddressType: "",
                 addressType: "",
@@ -286,6 +306,12 @@ class OpenAccPageTwoComponent extends Component {
                 workPhoneNoValidation: true,
                 emailAddressValidation: true,
                 socialSecurityNoValidation: true,
+                residenceStatusValidation: true,
+                countryOfCitizenshipValidation: true,
+                USResidentCardNoValidation: true,
+                USResidentCardNoExpiryDateValidation: true,
+                passportNumberValidation: true,
+                passportNoExpiryDateValidation: true,
 
                 // Employer Info
                 empStatus: "",
@@ -1768,7 +1794,19 @@ class OpenAccPageTwoComponent extends Component {
             input = 'maritalStatus';
         } else if (this.isEmpty(this.state.personal.citizenship)) {
             errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
-        } else if (this.isEmpty(this.state.personal.mailingAddressType)) {
+        } else if (this.state.personal.citizenship !== "U.S" && this.isEmpty(this.state.personal.residenceStatus)) {
+            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+        } else if (this.state.personal.citizenship !== "U.S" && this.isEmpty(this.state.personal.countryOfCitizenship)) {
+            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+        } else if (this.state.personal.citizenship !== "U.S" && this.isEmpty(this.state.personal.USResidentCardNo)) {
+            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+        } else if (this.state.personal.citizenship !== "U.S" && this.isEmpty(this.state.personal.USResidentCardNoExpiryDate)) {
+            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+        } else if (this.state.personal.citizenship !== "U.S" && this.isEmpty(this.state.personal.passportNumber)) {
+            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+        } else if (this.state.personal.citizenship !== "U.S" && this.isEmpty(this.state.personal.passportNoExpiryDate)) {
+            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+        }else if (this.isEmpty(this.state.personal.mailingAddressType)) {
             errMsg = gblStrings.accManagement.emptyAddressTypeMsg;
             input = 'mailingAddressType';
         } else if (this.isEmpty(this.state.personal.addrLine1)) {
@@ -3026,6 +3064,9 @@ class OpenAccPageTwoComponent extends Component {
             case "phoneType3DropDown":
                 tempkey = "phone_type";
                 break;
+            case "countryOfCitizenshipDropDown":
+                tempkey = "";
+                break;
             default:
                 break;
 
@@ -3621,6 +3662,7 @@ class OpenAccPageTwoComponent extends Component {
 
                         {
                             this.state.personal.citizenship !== "U.S" &&
+                            /*
                             <View style={styles.uploadW8View}>
                                 <Text>
                                     <Text style={styles.lblTxt}>
@@ -3640,6 +3682,113 @@ class OpenAccPageTwoComponent extends Component {
 
                                 />
                             </View>
+                            */
+                            <View style={styles.nonUSView}>
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.residenceStatus}
+                                </Text>
+                                <View style={styles.radioBtnColGrp}>
+                                    <CustomRadio
+                                        //componentStyle={styles.radioCol1}
+                                        size={30}
+                                        outerCicleColor="#DEDEDF"
+                                        innerCicleColor="#61285F"
+                                        labelStyle={styles.lblRadioBtnTxt}
+                                        label="Resident Alien"
+                                        descLabelStyle={styles.lblRadioDescTxt}
+                                        descLabel=""
+                                        selected={!!((this.state.personal.residenceStatus !== null && this.state.personal.residenceStatus === "Resident Alien"))}
+                                        onPress={this.onPressRadio("personal", "residenceStatus", "Resident Alien")}
+                                    />
+                                    <CustomRadio
+                                       // componentStyle={styles.radioCol2}
+                                        size={30}
+                                        outerCicleColor="#DEDEDF"
+                                        innerCicleColor="#61285F"
+                                        labelStyle={styles.lblRadioBtnTxt}
+                                        label="Non-resident Alien"
+                                        descLabelStyle={styles.lblRadioDescTxt}
+                                        descLabel="Please call 800-235-8396."
+                                        selected={!!((this.state.personal.residenceStatus !== null && this.state.personal.residenceStatus === "Non-resident Alien"))}
+                                        onPress={this.onPressRadio("personal", "residenceStatus", "Non-resident Alien")}
+
+                                    />
+                                </View>
+
+                                {this.renderCustomDropDown({
+                                    section: "personal",
+                                    stateKey: "countryOfCitizenship",
+                                    dropDownName: "countryOfCitizenshipDropDown",
+                                    lblDropdownName: gblStrings.accManagement.countryOfCitizenship,
+                                    isOptional: false
+                                })
+                                }
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.USResidentCardNo}
+                                </Text>
+                                <GInputComponent
+                                    inputref={this.setInputRef("USResidentCardNo")}
+                                    propInputStyle={this.state.personal.USResidentCardNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder={gblStrings.accManagement.ssnNoFormat}
+                                    value={this.state.personal.USResidentCardNo}
+                                    keyboardType="number-pad"
+                                    maxLength={gblStrings.maxLength.ssnNo}
+                                    onChangeText={this.onChangeText("personal", "USResidentCardNo")}
+                                    errorFlag={!this.state.personal.USResidentCardNoValidation}
+                                    errorText={this.state.errMsg}
+                                    secureTextEntry
+
+                                />
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.USResidentCardNoExpiryDate}
+                                </Text>
+                                <GDateComponent
+                                    inputref={this.setInputRef("USResidentCardNoExpiryDate")}
+                                    date={this.state.personal.USResidentCardNoExpiryDate}
+                                    placeholder="Select Date"
+                                    errorFlag={!this.state.personal.USResidentCardNoExpiryDateValidation}
+                                    errorMsg={this.state.errMsg}
+                                    minDate={prevDate}
+                                    onDateChange={this.onChangeDate("personal", "USResidentCardNoExpiryDate")}
+                                />
+
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.passportNumber}
+                                </Text>
+                                <GInputComponent
+                                    inputref={this.setInputRef("passportNumber")}
+                                    propInputStyle={this.state.personal.passportNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder={gblStrings.accManagement.ssnNoFormat}
+                                    value={this.state.personal.passportNumber}
+                                    keyboardType="number-pad"
+                                    maxLength={gblStrings.maxLength.ssnNo}
+                                    onChangeText={this.onChangeText("personal", "passportNumber")}
+                                    errorFlag={!this.state.personal.passportNumberValidation}
+                                    errorText={this.state.errMsg}
+                                    secureTextEntry
+
+                                />
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.passportNoExpiryDate}
+                                </Text>
+                                <GDateComponent
+                                    inputref={this.setInputRef("passportNoExpiryDate")}
+                                    date={this.state.personal.passportNoExpiryDate}
+                                    placeholder="Select Date"
+                                    errorFlag={!this.state.personal.passportNoExpiryDateValidation}
+                                    errorMsg={this.state.errMsg}
+                                    minDate={prevDate}
+                                    onDateChange={this.onChangeDate("personal", "passportNoExpiryDate")}
+                                />
+
+
+                            </View>
+
 
                         }
 

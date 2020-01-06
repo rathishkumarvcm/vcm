@@ -646,6 +646,15 @@ export default {
         emptyIndividualEmploymentThereMsg: "Please indicate whether the trust employs individuals on a full-time basis?",
         emptyTrustMaintainRecordsMsg: "Please indicate whether the trust maintains operating records related to its business activities?",
 
+        emptyResidenceStatusMsg: "Please indicate whether you are Resident Alien orn Non-Resident Alien?",
+        emptyCountryOfCitizenshipMsg: "Please select country of Citizenship",
+        emptyUSResidentCardNoMsg: "Please enter U.S. Permanent Resident Card Number",
+        emptyUSResidentCardNoExpiryDateMsg: "Please select expiration date of U.S. Permanent Resident Card Number",
+        emptyPassportNumberMsg: "Please select Passport Number",
+        emptyPassportNoExpiryDateMsg: "Please select expiration date of Passport Number",
+
+        
+        
 
 
 
