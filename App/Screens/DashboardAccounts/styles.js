@@ -57,6 +57,9 @@ const styles = StyleSheet.create({
         alignContent: 'center'
        
     },
+    commonColView:{
+        flexGrow:1
+    },
     container: {
         backgroundColor: '#F7FAFF',
         flex: 1,
@@ -85,6 +88,10 @@ const styles = StyleSheet.create({
         fontSize:scaledHeight(16),
         lineHeight: 25
 
+    },
+    listContainer:{
+         flexGrow: 1, 
+         marginTop: scaledHeight(59) 
     },
     moreTxt:{
         color:'#61285F',
@@ -137,6 +144,9 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         fontSize:scaledHeight(16)
     },
+    scrollView: {
+        flex: .85
+    },
     touchItem: {
        // width:scaledHeight(250),
       //  height:scaledHeight(250),
@@ -151,7 +161,7 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(93),
         textAlign: 'center'
 
-    },
+    }
 
 
    

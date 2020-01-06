@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableHighlight } from 'react-native';
 import PropTypes from "prop-types";
 import styles from './styles';
-import { GHeaderComponent, GFooterComponent, GLoadingSpinner } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
+import { GHeaderComponent, GFooterComponent, GLoadingSpinner ,showAlert} from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+import AppUtils from '../../Utils/AppUtils';
+
 /*
 const accList = [
 
@@ -49,28 +50,33 @@ class DashboardAccComponent extends Component {
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
     componentDidMount() {
-        console.log("componentDidMount::::> ");
+       AppUtils.debugLog("componentDidMount::::> ");
+        const { getAccountTypes , retriveSavedData } = this.props;
         const payload = "acct_type";
-        this.props.getAccountTypes(payload);
+        getAccountTypes(payload);
         const pendingAppPayload = {
             "onlineId": 'arumugamt',
             "customerId": '761735',
             "accountType": 'ind'
         };
-        this.props.retriveSavedData(pendingAppPayload);
+        retriveSavedData(pendingAppPayload);
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log(`componentDidUpdate::::> ${ prevState}`);
+       AppUtils.debugLog(`componentDidUpdate::::> ${ prevState}`);
+       const { navigation , accOpeningData } = this.props;
+       const { navigate } = navigation;  
+
+       const { retrivePendingAppData } = this.state;
 
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.RETRIVE_OPENING_ACCT;
-            if (this.props.accOpeningData[responseKey]) {
-                if (this.props.accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
-                    const tempResponse = this.props.accOpeningData[responseKey];
-                    if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
+            if (accOpeningData[responseKey]) {
+                if (accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
+                    const tempResponse = accOpeningData[responseKey];
+                    if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
                         const msg = tempResponse.message;
-                        console.log(`Account  Saved ::: :: ${ msg}`);
+                       AppUtils.debugLog(`Account  Saved ::: :: ${ msg}`);
                         // alert( JSON.stringify(tempResponse.result));
                         this.setState({
                             retrivePendingAppData: tempResponse.result.Item
@@ -83,17 +89,17 @@ class DashboardAccComponent extends Component {
             }
 
             const populateAppKey = "isPendingApplication";
-            if (this.props.accOpeningData[populateAppKey]) {
-                if (this.props.accOpeningData[populateAppKey] !== prevProps.accOpeningData[populateAppKey]) {
-                    const isPendingApplication = this.props.accOpeningData[populateAppKey];
+            if (accOpeningData[populateAppKey]) {
+                if (accOpeningData[populateAppKey] !== prevProps.accOpeningData[populateAppKey]) {
+                    const isPendingApplication = accOpeningData[populateAppKey];
                     if (isPendingApplication) {
 
                         const selectedAccount = {
-                            "key": this.state.retrivePendingAppData.accountType || "",
-                            "value": this.state.retrivePendingAppData.accountMainCategory || ""
+                            "key": retrivePendingAppData.accountType || "",
+                            "value": retrivePendingAppData.accountMainCategory || ""
 
                         };
-                        const pageNo = `${ this.state.retrivePendingAppData.savedPages}`;
+                        const pageNo = `${ retrivePendingAppData.savedPages}`;
                         let screenName = 'openAccPageOne';
 
 
@@ -116,10 +122,12 @@ class DashboardAccComponent extends Component {
                             case "6":
                                 screenName = 'openAccPageSix';
                                 break;
+                                default:
+                                    break;
                         }
 
                         if (screenName !== "") {
-                            this.props.navigation.navigate({ routeName: screenName, key: screenName, params: { selectedAccount, accType: "" } });
+                            navigate({ routeName: screenName, key: screenName, params: { selectedAccount, accType: "" } });
                         }
                     }
                 }
@@ -132,21 +140,25 @@ class DashboardAccComponent extends Component {
                                  Button Events 
                                                                  -------------------------- */
     onClickHeader = () => {
-        console.log("#TODO : onClickHeader");
+       AppUtils.debugLog("#TODO : onClickHeader");
     }
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const { navigation} = this.props;
+        const { goBack } = navigation; 
+        goBack();
     }
 
     onSelectedPendingAcc = () => {
-        this.props.populatePendingApplication(true);
+       const { populatePendingApplication} = this.props;
+       populatePendingApplication(true);
     }
 
     onSelected = (item) => () => {
-        console.log(`item: ${ item.key}`);
-        console.log(`You selected :: ${ item.value}`);
-
+       AppUtils.debugLog(`item: ${ item.key}`);
+       AppUtils.debugLog(`You selected :: ${ item.value}`);
+       const { navigation,selectAccount} = this.props;
+       const { navigate } = navigation;  
         let accType = "";
         switch (item.key) {
             case "gen_inv_acct":
@@ -161,14 +173,16 @@ class DashboardAccComponent extends Component {
             case "spec_acct":
                 accType = "SpecialtyAcc";
                 break;
+            default:
+                break;
         }
         const screenName = 'openAccPageOne';
-        console.log(`accType :: ${ accType}`);
+       AppUtils.debugLog(`accType :: ${ accType}`);
 
         if (screenName !== "") {
             // this.props.accOpeningData.accountType !=undefined && this.props.accOpeningData.accountType !=null 
-            this.props.selectAccount({ accountType: item });
-            this.props.navigation.navigate({ routeName: screenName, key: screenName, params: { type: item.key, selectedAccount: item, accountType: item } });
+            selectAccount({ accountType: item });
+            navigate({ routeName: screenName, key: screenName, params: { type: item.key, selectedAccount: item, accountType: item } });
         }
         // populatePendingApplication
 
@@ -178,12 +192,18 @@ class DashboardAccComponent extends Component {
                                  Render Methods
                                                                  -------------------------- */
     render() {
-        console.log("RENDER::: DashboardAccounts ::>>> ", this.props);
+       AppUtils.debugLog("RENDER::: DashboardAccounts ::>>> ", this.props);
+       const { accOpeningData } = this.props;
+       const { navigation} = this.props;
+
+       const { retrivePendingAppData } = this.state;
+
+
         let accList = [];
         const tempkey = ActionTypes.GET_ACCOUNT_TYPES;
-        if (this.props && this.props.accOpeningData && this.props.accOpeningData[tempkey]) {
-            const tempResponse = this.props.accOpeningData[tempkey];
-            if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
+        if (this.props && accOpeningData && accOpeningData[tempkey]) {
+            const tempResponse = accOpeningData[tempkey];
+            if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
                 accList = tempResponse.result;
                 accList = accList.value;
             }
@@ -197,22 +217,21 @@ class DashboardAccComponent extends Component {
               accList = accList.value;
           }
           */
-        console.log("accList:::", accList);
-
+       AppUtils.debugLog("accList:::", accList);
         return (
             <View style={styles.container}>
-                {this.props.accOpeningData.isLoading && <GLoadingSpinner />}
-                {this.props.accOpeningData.isError && alert("Service Error")}
+                {accOpeningData.isLoading && <GLoadingSpinner />}
+                {accOpeningData.isError && showAlert("VCM Memeber Services","Service Error","OK")}
 
 
-                <GHeaderComponent navigation={this.props.navigation} onPress={this.onClickHeader} />
-                <ScrollView style={{ flex: .85 }}>
+                <GHeaderComponent navigation={navigation} onPress={this.onClickHeader} />
+                <ScrollView style={styles.scrollView}>
                     <View style={styles.accountSection}>
 
                         <Text style={styles.welcomeTxt}>
                             {gblStrings.dashBoard.openAnAccountWithVCM}
                         </Text>
-                        <View style={{ flexGrow: 1, marginTop: scaledHeight(59) }}>
+                        <View style={styles.listContainer}>
                             {accList.map((item) => {
                                 return (
                                     <TouchableHighlight
@@ -235,21 +254,21 @@ class DashboardAccComponent extends Component {
                             })}
 
                             {
-                                (this.state.retrivePendingAppData && this.state.retrivePendingAppData.accountType) && (
+                                (retrivePendingAppData && retrivePendingAppData.accountType) && (
                                 <TouchableHighlight
                                     onPress={this.onSelectedPendingAcc}
 
-                                    key={this.state.retrivePendingAppData.accountType}
+                                    key={retrivePendingAppData.accountType}
                                     activeOpacity={0.8}
                                     accessibilityRole="button"
                                     style={styles.touchItem}
                                 >
                                     <View style={styles.accountItem}>
                                             <Text style={styles.accountItemTxt}>
-                                                {`Pending Application:: ${this.state.retrivePendingAppData.accountType}`}
+                                                {`Pending Application:: ${retrivePendingAppData.accountType}`}
                                             </Text>
                                             <Text style={styles.accountItemDescTxt}>
-                                                {`Last Saved:: ${this.state.retrivePendingAppData.lastSavedDate}`}
+                                                {`Last Saved:: ${retrivePendingAppData.lastSavedDate}`}
                                             </Text>
                                     </View>
                                 </TouchableHighlight>
@@ -281,12 +300,22 @@ class DashboardAccComponent extends Component {
 }
 
 DashboardAccComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object).isRequired,
-    accOpeningData: PropTypes.instanceOf(Object).isRequired,
+    navigation: PropTypes.instanceOf(Object),
+    accOpeningData: PropTypes.instanceOf(Object),
     getAccountTypes: PropTypes.func,
     selectAccount: PropTypes.func,
     retriveSavedData:PropTypes.instanceOf(Object),
     populatePendingApplication:PropTypes.func
 
 };
+DashboardAccComponent.defaultProps = {
+    navigation: {},
+    accOpeningData: {},
+    getAccountTypes: null,
+    selectAccount: null,
+    retriveSavedData: null,
+    populatePendingApplication: null
+
+};
+
 export default DashboardAccComponent;

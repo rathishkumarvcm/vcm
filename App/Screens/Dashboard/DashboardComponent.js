@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import styles from './styles';
 import { GButtonComponent, GHeaderComponent, GFooterSettingsComponent, GModalComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
+import AppUtils from '../../Utils/AppUtils';
 
 class DashboardComponent extends Component {
     constructor(props) {
@@ -22,12 +23,12 @@ class DashboardComponent extends Component {
     componentDidMount() {
         RNSecureKeyStore.get("EmailAddress")
             .then((res) => {
-                console.log(res);
+               AppUtils.debugLog(res);
                 this.setState({
                     memberId: res
                 });
             }, (err) => {
-                console.log(err);
+               AppUtils.debugLog(err);
             });
 
     }
