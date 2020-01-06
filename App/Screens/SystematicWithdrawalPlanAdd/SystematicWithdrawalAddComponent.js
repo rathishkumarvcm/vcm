@@ -58,7 +58,7 @@ const fundingOptionsData = [
 
 
 const ListItem = (props) => {
-    AppUtils.Dlog(`ListItem:: ${props}`);
+    AppUtils.debugLog(`ListItem:: ${props}`);
 
     return (
 
@@ -646,9 +646,9 @@ class SystematicWithdrawalComponent extends Component {
         );
 
     onSelectFundList = (item, index) => () => {
-        AppUtils.Dlog(`onSelectFundList:: ${index}`);
+        AppUtils.debugLog(`onSelectFundList:: ${index}`);
         const newItems = [...this.state.vcmFundList];
-        AppUtils.Dlog(`newItems:: ${newItems}`);
+        AppUtils.debugLog(`newItems:: ${newItems}`);
         newItems[index].isActive = !newItems[index].isActive;
         const tempData = new InvestmentDetails();
         tempData.fundName = item.fundName;
@@ -701,7 +701,7 @@ class SystematicWithdrawalComponent extends Component {
     }
 
     getSelectedItems = () => {
-        AppUtils.Dlog("getSelectedItems:: ");
+        AppUtils.debugLog("getSelectedItems:: ");
         const selecteditems = [];
         const newItems = [...this.state.vcmFundList];
         newItems.map((item) => {
@@ -709,7 +709,7 @@ class SystematicWithdrawalComponent extends Component {
                 selecteditems.push(item);
             }
         });
-        AppUtils.Dlog(`selecteditems:: ${selecteditems.length}`);
+        AppUtils.debugLog(`selecteditems:: ${selecteditems.length}`);
 
         return selecteditems;
 
@@ -717,14 +717,14 @@ class SystematicWithdrawalComponent extends Component {
     }
 
     onClickRowItem = (item, index) => () => {
-        AppUtils.Dlog(`onSelectFundList:: ${item.fundNumber}`);
+        AppUtils.debugLog(`onSelectFundList:: ${item.fundNumber}`);
         //  this.props.navigation.navigate({ routeName: 'investmentPlanInfo', key: 'investmentPlanInfo' })
         this.props.navigation.push('investmentPlanInfo', { fundDetails: item.fundNumber });
 
     }
 
     onChangeText = (keyName) => text => {
-        AppUtils.Dlog("onChangeText:::>");
+        AppUtils.debugLog("onChangeText:::>");
         this.setState({
             [keyName]: text,
             accountTypeValidation: true,
@@ -745,7 +745,7 @@ class SystematicWithdrawalComponent extends Component {
     });
 
     onPressDropDownForInvestment = (keyName, index) => () => {
-        AppUtils.Dlog(`onPressDropDownForInvestment::: ${keyName}`);
+        AppUtils.debugLog(`onPressDropDownForInvestment::: ${keyName}`);
         const newItems = [...this.state.selectedFundInvestmentsData];
         newItems[index][keyName] = !newItems[index][keyName];
         // newItems[index][keyName+"Validation"] = false;
@@ -761,7 +761,7 @@ class SystematicWithdrawalComponent extends Component {
     }
 
     onPressRemoveInvestment = (item, index) => () => {
-        AppUtils.Dlog(`onPressRemoveInvestment::: ${item}`);
+        AppUtils.debugLog(`onPressRemoveInvestment::: ${item}`);
         const newSelectedData = [...this.state.selectedFundInvestmentsData];
         const newItems = [...this.state.vcmFundList];
         const isObjExistIndex = this.getIndex(item.fundNumber, newSelectedData, 'fundNumber');
@@ -788,7 +788,7 @@ class SystematicWithdrawalComponent extends Component {
     }
 
     onChangeTextForInvestment = (keyName, index) => text => {
-        AppUtils.Dlog("onChangeTextForInvestment:::>");
+        AppUtils.debugLog("onChangeTextForInvestment:::>");
         const newItems = [...this.state.selectedFundInvestmentsData];
         newItems[index][keyName] = text;
         // newItems[index][keyName+"Validation"] = false;
@@ -805,7 +805,7 @@ class SystematicWithdrawalComponent extends Component {
             }
         }
 
-        AppUtils.Dlog(`total:::>${total}`);
+        AppUtils.debugLog(`total:::>${total}`);
 
         this.setState({
             totalInitialInvestment: `$ ${total}`,
@@ -816,7 +816,7 @@ class SystematicWithdrawalComponent extends Component {
     }
 
     onChangeDateForInvestment = (keyName, index) => date => {
-        AppUtils.Dlog("onChangeDateForInvestment:::>");
+        AppUtils.debugLog("onChangeDateForInvestment:::>");
         const newItems = [...this.state.selectedFundInvestmentsData];
         newItems[index][keyName] = date;
         // newItems[index][keyName+"Validation"] = false;
@@ -831,7 +831,7 @@ class SystematicWithdrawalComponent extends Component {
     }
 
     onSelectedDropDownValue = (dropDownName, objIndex) => (value, index, data) => {
-        AppUtils.Dlog(`onSelectedDropDownValue:: ${dropDownName}`);
+        AppUtils.debugLog(`onSelectedDropDownValue:: ${dropDownName}`);
         let item = data[index];
         const newItems = [...this.state.selectedFundInvestmentsData];
 
@@ -840,8 +840,8 @@ class SystematicWithdrawalComponent extends Component {
                 newItems[objIndex].fundingOptionDropDown = item.value;
                 newItems[objIndex].fundingOption = item.key;
 
-                AppUtils.Dlog(`item.value:: ${item.value}`);
-                AppUtils.Dlog(`newItems[objIndex]:: ${newItems[objIndex]}`);
+                AppUtils.debugLog(`item.value:: ${item.value}`);
+                AppUtils.debugLog(`newItems[objIndex]:: ${newItems[objIndex]}`);
 
                 this.setState({
                     selectedFundInvestmentsData: newItems
@@ -907,17 +907,17 @@ class SystematicWithdrawalComponent extends Component {
                 }
             }
         });
-        AppUtils.Dlog("minInvest=", mininvestkey);
-        AppUtils.Dlog("risk=", riskkey);
-        AppUtils.Dlog("fundData=", funddatakey);
+        AppUtils.debugLog("minInvest=", mininvestkey);
+        AppUtils.debugLog("risk=", riskkey);
+        AppUtils.debugLog("fundData=", funddatakey);
 
         const fundListPayload = { 'minInvestment': mininvestkey };
         this.props.getFundListData(fundListPayload);
     }
     // Checkbox selection on Clicking Filters 
     onCheckboxSelect = (fromtype, item, index) => () => {
-        AppUtils.Dlog('Index : ', index);
-        AppUtils.Dlog('Checkbox Selected : ', `${item.key} ${item.value} ${item.isActive}`);
+        AppUtils.debugLog('Index : ', index);
+        AppUtils.debugLog('Checkbox Selected : ', `${item.key} ${item.value} ${item.isActive}`);
         let newItm = [];
         switch (fromtype) {
             case 'minInvest':
@@ -936,7 +936,7 @@ class SystematicWithdrawalComponent extends Component {
                 this.setState({ filterfunddata: newItm });
                 break;
         }
-        AppUtils.Dlog(`New Item:${JSON.stringify(newItm)}`);
+        AppUtils.debugLog(`New Item:${JSON.stringify(newItm)}`);
     }
 
     // Clear Filter Actions  
@@ -964,7 +964,7 @@ class SystematicWithdrawalComponent extends Component {
 
 
 
-        AppUtils.Dlog('Filter Clicked...');
+        AppUtils.debugLog('Filter Clicked...');
         if (temp_key_min_inv !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[temp_key_min_inv] && this.props.masterLookupStateData[temp_key_min_inv].value) {
             tempMinInvData = this.props.masterLookupStateData[temp_key_min_inv].value;
         }
@@ -985,14 +985,14 @@ class SystematicWithdrawalComponent extends Component {
     }
 
     navigateCompareFunds = () => {
-        // AppUtils.Dlog(this.state.selectedFundInvestmentsData);
+        // AppUtils.debugLog(this.state.selectedFundInvestmentsData);
         if (this.state.selectedFundInvestmentsData.length > 1) {
             if (this.state.selectedFundInvestmentsData.length < 5) {
                 let fundSelectedCompare = "";
                 this.state.selectedFundInvestmentsData.map((item, index) => {
                     fundSelectedCompare = `${fundSelectedCompare.concat(`fundNumber${index + 1}=${item.fundNumber}`)}&`;
                 });
-                // AppUtils.Dlog("Selected Funds:"+fundSelectedCompare);
+                // AppUtils.debugLog("Selected Funds:"+fundSelectedCompare);
                 if (fundSelectedCompare !== null && fundSelectedCompare !== "") {
                     this.props.navigation.push('compareFunds', { fundDetails: fundSelectedCompare });
                 }

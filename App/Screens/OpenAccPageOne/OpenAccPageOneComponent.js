@@ -81,18 +81,18 @@ class OpenAccPageOneComponent extends Component {
                                                                  -------------------------- */
 
     componentDidMount() {
-        AppUtils.Dlog("componentDidMount::::> ");
+        AppUtils.debugLog("componentDidMount::::> ");
        // alert("getAccOpeningEditMode::"+ myInstance.getAccOpeningEditMode());
 
         const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
-        AppUtils.Dlog(`selectedAccount::::> ${ selectedAccount}`);
+        AppUtils.debugLog(`selectedAccount::::> ${ selectedAccount}`);
 
         const payload = selectedAccount.key;
         this.props.getAccountSubTypes(payload);
     }
 
     componentDidUpdate(prevProps, prevState) {
-        AppUtils.Dlog(`componentDidUpdate::::> ${prevState}`);
+        AppUtils.debugLog(`componentDidUpdate::::> ${prevState}`);
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.ACCT_TYPE_SAVE_OPENING_ACCT;
             if (this.props.accOpeningData[responseKey]) {
@@ -100,7 +100,7 @@ class OpenAccPageOneComponent extends Component {
                     const tempResponse = this.props.accOpeningData[responseKey];
                     if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
                         const msg = tempResponse.message;
-                        AppUtils.Dlog(`Account Type Saved ::: :: ${ msg}`);
+                        AppUtils.debugLog(`Account Type Saved ::: :: ${ msg}`);
                         alert(tempResponse.result);
                     } else {
                         alert(tempResponse.message);
@@ -115,7 +115,7 @@ class OpenAccPageOneComponent extends Component {
                                  Button Events 
                                                                  -------------------------- */
     onClickHeader = () => {
-        AppUtils.Dlog("#TODO : onClickHeader");
+        AppUtils.debugLog("#TODO : onClickHeader");
     }
 
     goBack = () => {
@@ -128,7 +128,7 @@ class OpenAccPageOneComponent extends Component {
     }
 
     onSelected = (item) => () => {
-        AppUtils.Dlog(`item: ${ item.key}`);
+        AppUtils.debugLog(`item: ${ item.key}`);
         this.setState(
             {
                 selectedItemID: item.key,
@@ -146,12 +146,12 @@ class OpenAccPageOneComponent extends Component {
     }
 
     onChangeNickname = (event) => {
-        AppUtils.Dlog(`onChangeNickname: ${ event}`);
+        AppUtils.debugLog(`onChangeNickname: ${ event}`);
     }
 
     getPayload = () => {
         const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
-        AppUtils.Dlog(`selectedAccount::::> ${ selectedAccount}`);
+        AppUtils.debugLog(`selectedAccount::::> ${ selectedAccount}`);
 
         let payload = {
             "onlineId": "arumugamt",
@@ -230,9 +230,9 @@ class OpenAccPageOneComponent extends Component {
     }
 
     validateFields = () => {
-        AppUtils.Dlog(`validateFields:::> ${ JSON.stringify(this.state)}`);
+        AppUtils.debugLog(`validateFields:::> ${ JSON.stringify(this.state)}`);
         const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
-        AppUtils.Dlog(`selectedAccount:::> ${ selectedAccount}`);
+        AppUtils.debugLog(`selectedAccount:::> ${ selectedAccount}`);
 
         let errMsg = "";
         let isValidationSuccess = false;
@@ -345,7 +345,7 @@ class OpenAccPageOneComponent extends Component {
     }
 
     render() {
-        AppUtils.Dlog("RENDER::: OpenAccPageOne ::>>> ", this.props);
+        AppUtils.debugLog("RENDER::: OpenAccPageOne ::>>> ", this.props);
         const { navigation } = this.props;
         const selectedAccount = navigation.getParam('selectedAccount', {});
 

@@ -75,7 +75,7 @@ const filterfunddata = [
 ];
 
 const ListItem = (props) => {
-    AppUtils.Dlog(`ListItem:: ${ props}`);
+    AppUtils.debugLog(`ListItem:: ${ props}`);
 
     return (
 
@@ -154,7 +154,7 @@ ListItem.defaultProps = {
 
 
 const SourceListItem = (props) => {
-    AppUtils.Dlog("SourceListItem:: ");
+    AppUtils.debugLog("SourceListItem:: ");
 
     return (
 
@@ -323,7 +323,7 @@ class OpenAccPageThreeComponent extends Component {
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
     componentDidMount() {
-        AppUtils.Dlog("componentDidMount::::> ");
+        AppUtils.debugLog("componentDidMount::::> ");
         if (this.state && this.state.fundList && !this.state.fundList.length > 0) {
             const fundListPayload = {};
             this.props.getFundListData(fundListPayload);
@@ -351,7 +351,7 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        AppUtils.Dlog(`componentDidUpdate::::> ${prevState}`);
+        AppUtils.debugLog(`componentDidUpdate::::> ${prevState}`);
 
 
         if (this.props !== prevProps) {
@@ -369,7 +369,7 @@ class OpenAccPageThreeComponent extends Component {
             if(this.state.fundingSourceList.length == 0){
                 if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.fund_source && this.props.masterLookupStateData.fund_source.value) {
                     tempFundingSourceList = this.props.masterLookupStateData.fund_source.value;
-                    AppUtils.Dlog(`tempFundingSourceList:: ${ JSON.stringify(tempFundingSourceList)}`);
+                    AppUtils.debugLog(`tempFundingSourceList:: ${ JSON.stringify(tempFundingSourceList)}`);
                         if (tempFundingSourceList.length > 0) {
                             const offLineSubtypes = tempFundingSourceList[0].subtypes;
                             const onLineSubtypes = tempFundingSourceList[1].subtypes;
@@ -389,7 +389,7 @@ class OpenAccPageThreeComponent extends Component {
                     const tempResponse = this.props.accOpeningData[responseKey];
                     if (tempResponse.statusCode == 200) {
                         const msg = tempResponse.message;
-                        AppUtils.Dlog(`Account Type Saved ::: :: ${ msg}`);
+                        AppUtils.debugLog(`Account Type Saved ::: :: ${ msg}`);
                         alert(tempResponse.result);
                     } else {
                         alert(tempResponse.message);
@@ -402,14 +402,14 @@ class OpenAccPageThreeComponent extends Component {
                 if (this.props.addBankAccount[addBankAccKey] !== prevProps.addBankAccount[addBankAccKey]) {
                     const tempResponse = this.props.addBankAccount[addBankAccKey];
                     if (tempResponse.statusCode == 200 && tempResponse.statusType =="S") {
-                        AppUtils.Dlog(`Valid bank account::${tempResponse.message}`);
+                        AppUtils.debugLog(`Valid bank account::${tempResponse.message}`);
                             this.setState({
                                 isValidBankAccount: true,
                                 validBankAccountMsg:tempResponse.message
                             });
                         
                     } else {
-                        AppUtils.Dlog(`Not Valid bank account::${tempResponse.message}`);
+                        AppUtils.debugLog(`Not Valid bank account::${tempResponse.message}`);
 
                         this.setState({
                             isValidBankAccount: false,
@@ -430,7 +430,7 @@ class OpenAccPageThreeComponent extends Component {
                                  Button Events
                                                                  -------------------------- */
     onClickHeader = () => {
-        AppUtils.Dlog("#TODO : onClickHeader");
+        AppUtils.debugLog("#TODO : onClickHeader");
     }
 
     goBack = () => {
@@ -470,7 +470,7 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     getSelectedFundsList = () => {
-        AppUtils.Dlog("getSelectedFundsList::::>");
+        AppUtils.debugLog("getSelectedFundsList::::>");
         const fundDataList = [];
         for (let i = 0; i < this.state.fundList.length; i++) {
             const tempObj = this.state.fundList[i];
@@ -518,13 +518,13 @@ class OpenAccPageThreeComponent extends Component {
 
     onSubmitEditing = (input) => text => {
 
-        AppUtils.Dlog(`onSubmitEditing:::>${ text}`);
+        AppUtils.debugLog(`onSubmitEditing:::>${ text}`);
 
         input.focus();
     }
 
     onChangeText = (keyName) => text => {
-        AppUtils.Dlog("onChangeText:::>");
+        AppUtils.debugLog("onChangeText:::>");
         this.setState({
             [keyName]: text,
             accountTypeValidation: true,
@@ -536,7 +536,7 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     onChangeTextForInvestment = (keyName, index) => text => {
-        AppUtils.Dlog("onChangeTextForInvestment:::>");
+        AppUtils.debugLog("onChangeTextForInvestment:::>");
         const newItems = [...this.state.selectedFundInvestmentsData];
         newItems[index][keyName] = text;
        // newItems[index][keyName+"Validation"] = false;
@@ -553,7 +553,7 @@ class OpenAccPageThreeComponent extends Component {
             }
         }
 
-        AppUtils.Dlog(`total:::>${ total}`);
+        AppUtils.debugLog(`total:::>${ total}`);
 
         this.setState({
             totalInitialInvestment: `$ ${ total}`,
@@ -564,7 +564,7 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     onChangeDateForInvestment = (keyName, index) => date => {
-        AppUtils.Dlog("onChangeDateForInvestment:::>");
+        AppUtils.debugLog("onChangeDateForInvestment:::>");
         const newItems = [...this.state.selectedFundInvestmentsData];
         newItems[index][keyName] = date;
        // newItems[index][keyName+"Validation"] = false;
@@ -588,7 +588,7 @@ class OpenAccPageThreeComponent extends Component {
     });
 
     onPressDropDownForInvestment = (keyName, index) => () => {
-        AppUtils.Dlog(`onPressDropDownForInvestment::: ${ keyName}`);
+        AppUtils.debugLog(`onPressDropDownForInvestment::: ${ keyName}`);
         const newItems = [...this.state.selectedFundInvestmentsData];
         newItems[index][keyName] = !newItems[index][keyName];
         // newItems[index][keyName+"Validation"] = false;
@@ -604,7 +604,7 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     onPressRemoveInvestment = (item, index) => () => {
-        AppUtils.Dlog(`onPressRemoveInvestment::: ${ item}`);
+        AppUtils.debugLog(`onPressRemoveInvestment::: ${ item}`);
         const newSelectedData = [...this.state.selectedFundInvestmentsData];
         const newItems = [...this.state.fundList];
         const isObjExistIndex = this.getIndex(item.fundNumber, newSelectedData, 'fundNumber');
@@ -642,7 +642,7 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     onSelectFundList = (item, index) => () => {
-        AppUtils.Dlog(`onSelectFundList:: ${ index}`);
+        AppUtils.debugLog(`onSelectFundList:: ${ index}`);
         const newItems = [...this.state.fundList];
         newItems[index].isActive = !newItems[index].isActive;
         const tempData = new InvestmentDetails();
@@ -700,14 +700,14 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     onClickRowItem = (item, index) => () => {
-        AppUtils.Dlog(`onSelectFundList:: ${ item.fundNumber}`);
+        AppUtils.debugLog(`onSelectFundList:: ${ item.fundNumber}`);
         //  this.props.navigation.navigate({ routeName: 'investmentPlanInfo', key: 'investmentPlanInfo' })
         this.props.navigation.push('investmentPlanInfo', { fundDetails: item.fundNumber });
 
     }
 
     onSelectSourceFundList = (item, index, method) => () => {
-        AppUtils.Dlog(`onSelectSourceFundList:::>  ${ method}`);
+        AppUtils.debugLog(`onSelectSourceFundList:::>  ${ method}`);
         let toBeChangedData = [];
         let notToBeChangedData = [];
         switch (method) {
@@ -747,7 +747,7 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     getSelectedItems = () => {
-        AppUtils.Dlog("getSelectedItems:: ");
+        AppUtils.debugLog("getSelectedItems:: ");
         const selecteditems = [];
         const newItems = [...this.state.fundList];
         newItems.map((item) => {
@@ -755,7 +755,7 @@ class OpenAccPageThreeComponent extends Component {
                 selecteditems.push(item);
             }
         });
-        AppUtils.Dlog(`selecteditems:: ${ selecteditems.length}`);
+        AppUtils.debugLog(`selecteditems:: ${ selecteditems.length}`);
 
         return selecteditems;
 
@@ -763,13 +763,13 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     showAllItems = (count) => () => {
-        AppUtils.Dlog(`showAllItems:: ${ count}`);
+        AppUtils.debugLog(`showAllItems:: ${ count}`);
         this.setState({ minCount: count });
 
     }
 
     onSelectedDropDownValue = (dropDownName, objIndex) => (value, index,data) => {
-        AppUtils.Dlog(`onSelectedDropDownValue:: ${ dropDownName}`);
+        AppUtils.debugLog(`onSelectedDropDownValue:: ${ dropDownName}`);
         let item = data[index];
         const newItems = [...this.state.selectedFundInvestmentsData];
 
@@ -778,8 +778,8 @@ class OpenAccPageThreeComponent extends Component {
                 newItems[objIndex].fundingOptionDropDown = item.value;
                 newItems[objIndex].fundingOption = item.key;
 
-                AppUtils.Dlog(`item.value:: ${ item.value}`);
-                AppUtils.Dlog(`newItems[objIndex]:: ${ newItems[objIndex]}`);
+                AppUtils.debugLog(`item.value:: ${ item.value}`);
+                AppUtils.debugLog(`newItems[objIndex]:: ${ newItems[objIndex]}`);
 
                 this.setState({
                     selectedFundInvestmentsData: newItems
@@ -832,7 +832,7 @@ class OpenAccPageThreeComponent extends Component {
         );
 
     renderDropDown = (dropDownName, data, width = '100%') => {
-        AppUtils.Dlog(`renderDropDown::: ${ dropDownName}`);
+        AppUtils.debugLog(`renderDropDown::: ${ dropDownName}`);
         let dropDownCompState = false;
         const keyName = "value";// "title";
         let dropDownData = dummyData;
@@ -933,8 +933,8 @@ class OpenAccPageThreeComponent extends Component {
             for (let i = 0; i < this.state.selectedFundInvestmentsData.length; i++) {
                 let tempErrMsg = "";
                 const tempObj = this.state.selectedFundInvestmentsData[i];
-                AppUtils.Dlog(`tempObj::${ JSON.stringify(tempObj)}`);
-                AppUtils.Dlog(`tempObj.fundname::${ tempObj.fundName}`);
+                AppUtils.debugLog(`tempObj::${ JSON.stringify(tempObj)}`);
+                AppUtils.debugLog(`tempObj.fundname::${ tempObj.fundName}`);
 
                 let tempValidation = false;
                 if (this.isEmpty(tempObj.fundingOption)) {
@@ -965,7 +965,7 @@ class OpenAccPageThreeComponent extends Component {
                     tempValidation = true;
                 }
 
-                AppUtils.Dlog(`tempErrMsg: ${ tempErrMsg}`);
+                AppUtils.debugLog(`tempErrMsg: ${ tempErrMsg}`);
 
                 if (!tempValidation) {
                     errMsg = tempErrMsg;
@@ -1101,9 +1101,9 @@ class OpenAccPageThreeComponent extends Component {
                 }
             }
         });
-        AppUtils.Dlog("minInvest=", mininvestkey);
-        AppUtils.Dlog("risk=", riskkey);
-        AppUtils.Dlog("fundData=", funddatakey);
+        AppUtils.debugLog("minInvest=", mininvestkey);
+        AppUtils.debugLog("risk=", riskkey);
+        AppUtils.debugLog("fundData=", funddatakey);
 
         const fundListPayload = { 'minInvestment': mininvestkey };
         this.props.getFundListData(fundListPayload);
@@ -1134,7 +1134,7 @@ class OpenAccPageThreeComponent extends Component {
 
        
 
-        AppUtils.Dlog('Filter Clicked...');
+        AppUtils.debugLog('Filter Clicked...');
         if (temp_key_min_inv !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[temp_key_min_inv] && this.props.masterLookupStateData[temp_key_min_inv].value) {
             tempMinInvData = this.props.masterLookupStateData[temp_key_min_inv].value;
         }
@@ -1156,8 +1156,8 @@ class OpenAccPageThreeComponent extends Component {
 
     // Checkbox selection on Clicking Filters 
     onCheckboxSelect = (fromtype, item, index) => () => {
-        AppUtils.Dlog('Index : ', index);
-        AppUtils.Dlog('Checkbox Selected : ', `${item.key } ${ item.value } ${ item.isActive}`);
+        AppUtils.debugLog('Index : ', index);
+        AppUtils.debugLog('Checkbox Selected : ', `${item.key } ${ item.value } ${ item.isActive}`);
         let newItm = [];
         switch (fromtype) {
             case 'minInvest':
@@ -1176,18 +1176,18 @@ class OpenAccPageThreeComponent extends Component {
                 this.setState({ filterfunddata: newItm });
                 break;
         }
-        AppUtils.Dlog(`New Item:${ JSON.stringify(newItm)}`);
+        AppUtils.debugLog(`New Item:${ JSON.stringify(newItm)}`);
     }
 
     navigateCompareFunds= () =>{
-        // AppUtils.Dlog(this.state.selectedFundInvestmentsData);
+        // AppUtils.debugLog(this.state.selectedFundInvestmentsData);
         if(this.state.selectedFundInvestmentsData.length > 1){
             if(this.state.selectedFundInvestmentsData.length < 5){
                 let fundSelectedCompare = "";
                 this.state.selectedFundInvestmentsData.map((item,index)=>{                   
                     fundSelectedCompare = `${fundSelectedCompare.concat(`fundNumber${index+1}=${item.fundNumber}`)}&`;
                 });                                               
-               // AppUtils.Dlog("Selected Funds:"+fundSelectedCompare);
+               // AppUtils.debugLog("Selected Funds:"+fundSelectedCompare);
                if (fundSelectedCompare !== null && fundSelectedCompare !== "") {
                     this.props.navigation.push('compareFunds', { fundDetails: fundSelectedCompare });
                }
@@ -1204,7 +1204,7 @@ class OpenAccPageThreeComponent extends Component {
                                  Render Methods
                                                                  -------------------------- */
     render() {
-        AppUtils.Dlog(`RENDER::: OpenAccPageThree ::>>>  ::::${ JSON.stringify(this.props)}`);
+        AppUtils.debugLog(`RENDER::: OpenAccPageThree ::>>>  ::::${ JSON.stringify(this.props)}`);
         const tempFundOptionsData = fundingOptionsData;
         let tempFundListData = [];
         const currentPage = 3;

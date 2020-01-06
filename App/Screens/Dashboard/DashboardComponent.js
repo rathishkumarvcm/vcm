@@ -1,21 +1,21 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
+import RNSecureKeyStore from 'react-native-secure-key-store';
+import PropTypes from "prop-types";
 import styles from './styles';
 import { GButtonComponent, GHeaderComponent, GFooterSettingsComponent, GModalComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-import RNSecureKeyStore from 'react-native-secure-key-store';
-import PropTypes from "prop-types";
 
 class DashboardComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
             memberId: '',
             modalVisible:true
         };
     }
+
     /*----------------------
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
@@ -31,14 +31,20 @@ class DashboardComponent extends Component {
             });
 
     }
+
     /*----------------------
                                  Button Events 
                                                                  -------------------------- */
     goBack = () => {
-        this.props.navigation.goBack();
+        const { navigation} = this.props;
+        const { goBack } = navigation;  
+        goBack();
     }
+
     onClickOpenAnAccount = () => {
-        this.props.navigation.navigate({ routeName: 'termsAndConditions', key: 'termsAndConditions' });
+        const { navigation} = this.props;
+        const { navigate } = navigation;  
+        navigate({ routeName: 'termsAndConditions', key: 'termsAndConditions' });
     }
 
     closeModal = () => {
@@ -51,7 +57,7 @@ class DashboardComponent extends Component {
         this.setState({
             modalVisible : !this.state.modalVisible
         });
-        const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));   
+        const specialMFAUserType = `${ this.props && this.props.navigation.getParam('SpecialMFA','')}`;   
         this.props.navigation.navigate('openAccPageFive',{SpecialMFA:specialMFAUserType});
     }
 
@@ -59,11 +65,11 @@ class DashboardComponent extends Component {
                                  Render Methods
                                                                  -------------------------- */
     render() {
-        const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));   
+        const specialMFAUserType = `${ this.props && this.props.navigation.getParam('SpecialMFA','')}`; 
         return (
 
 
-            <View style={styles.container} >
+            <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={{ flex: .85 }}>          
                 
@@ -80,21 +86,22 @@ class DashboardComponent extends Component {
                         />
                     </View>                  
 
-                    {(specialMFAUserType!="" && (specialMFAUserType=="UserForm" || specialMFAUserType=="NewUser"))?
+                    {(specialMFAUserType!="" && (specialMFAUserType=="UserForm" || specialMFAUserType=="NewUser"))? (
                         <GModalComponent 
                             modalVisible={this.state.modalVisible}
                             modalContainerStyle={styles.modalContainerStyle}
-                            titleContent={'Your Account Opening Form is Pending for Submission'}
-                            descContent1={'Lorem ipsum is simple dummy text of printing.'}                           
+                            titleContent="Your Account Opening Form is Pending for Submission"
+                            descContent1="Lorem ipsum is simple dummy text of printing."                           
                             buttonGoActionStyle={styles.buttonCancelActionStyle}
                             buttonCancelActionStyle={styles.buttonGoActionStyle}
-                            buttonGoText={'Cancel'}
-                            buttonCancelText={'Proceed'}                       
+                            buttonGoText="Cancel"
+                            buttonCancelText="Proceed"                       
                             buttonGoTextStyle={styles.buttonGoTextStyle}
                             buttonCancelTextStyle={styles.buttonCancelTextStyle}
                             buttonGoOnPress={this.closeModal}
                             buttonGoCancelPress={this.navigateAccountOpening}
                         />
+                      )
                     :null
                     }
 

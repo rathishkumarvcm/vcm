@@ -261,14 +261,14 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     navigateCompareFunds = () => {
-        // AppUtils.Dlog(this.state.selectedFundInvestmentsData);
+        // AppUtils.debugLog(this.state.selectedFundInvestmentsData);
         // if (this.state.selectedFundInvestmentsData.length > 1) {
         //     if (this.state.selectedFundInvestmentsData.length < 5) {
         //         let fundSelectedCompare = "";
         //         this.state.selectedFundInvestmentsData.map((item, index) => {
         //             fundSelectedCompare = `${fundSelectedCompare.concat(`fundNumber${index + 1}=${item.fundNumber}`)}&`;
         //         });
-        //         // AppUtils.Dlog("Selected Funds:"+fundSelectedCompare);
+        //         // AppUtils.debugLog("Selected Funds:"+fundSelectedCompare);
         //         if (fundSelectedCompare !== null && fundSelectedCompare !== "") {
         //             this.props.navigation.push('compareFunds', { fundDetails: fundSelectedCompare });
         //         }

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableHighlight } from 'react-native';
+import PropTypes from "prop-types";
 import styles from './styles';
 import { GHeaderComponent, GFooterComponent, GLoadingSpinner } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
-import PropTypes from "prop-types";
 /*
 const accList = [
 
@@ -38,16 +38,13 @@ const accList = [
 class DashboardAccComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
-            itemID: "",
-            selectedItemID: "",
-            selectedItemName: "",
             retrivePendingAppData: {}
 
         };
     }
+
     /*----------------------
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
@@ -62,18 +59,19 @@ class DashboardAccComponent extends Component {
         };
         this.props.retriveSavedData(pendingAppPayload);
     }
+
     componentDidUpdate(prevProps, prevState) {
-        console.log("componentDidUpdate::::> " + prevState);
+        console.log(`componentDidUpdate::::> ${ prevState}`);
 
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.RETRIVE_OPENING_ACCT;
             if (this.props.accOpeningData[responseKey]) {
                 if (this.props.accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
-                    let tempResponse = this.props.accOpeningData[responseKey];
+                    const tempResponse = this.props.accOpeningData[responseKey];
                     if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
-                        let msg = tempResponse.message;
-                        console.log("Account  Saved ::: :: " + msg);
-                        //alert( JSON.stringify(tempResponse.result));
+                        const msg = tempResponse.message;
+                        console.log(`Account  Saved ::: :: ${ msg}`);
+                        // alert( JSON.stringify(tempResponse.result));
                         this.setState({
                             retrivePendingAppData: tempResponse.result.Item
                         });
@@ -87,15 +85,15 @@ class DashboardAccComponent extends Component {
             const populateAppKey = "isPendingApplication";
             if (this.props.accOpeningData[populateAppKey]) {
                 if (this.props.accOpeningData[populateAppKey] !== prevProps.accOpeningData[populateAppKey]) {
-                    let isPendingApplication = this.props.accOpeningData[populateAppKey];
+                    const isPendingApplication = this.props.accOpeningData[populateAppKey];
                     if (isPendingApplication) {
 
-                        let selectedAccount = {
+                        const selectedAccount = {
                             "key": this.state.retrivePendingAppData.accountType || "",
                             "value": this.state.retrivePendingAppData.accountMainCategory || ""
 
                         };
-                        let pageNo = "" + this.state.retrivePendingAppData.savedPages;
+                        const pageNo = `${ this.state.retrivePendingAppData.savedPages}`;
                         let screenName = 'openAccPageOne';
 
 
@@ -121,7 +119,7 @@ class DashboardAccComponent extends Component {
                         }
 
                         if (screenName !== "") {
-                            this.props.navigation.navigate({ routeName: screenName, key: screenName, params: { selectedAccount: selectedAccount, accType: "" } });
+                            this.props.navigation.navigate({ routeName: screenName, key: screenName, params: { selectedAccount, accType: "" } });
                         }
                     }
                 }
@@ -129,21 +127,25 @@ class DashboardAccComponent extends Component {
         }
 
     }
+
     /*----------------------
                                  Button Events 
                                                                  -------------------------- */
     onClickHeader = () => {
         console.log("#TODO : onClickHeader");
     }
+
     goBack = () => {
         this.props.navigation.goBack();
     }
+
     onSelectedPendingAcc = () => {
         this.props.populatePendingApplication(true);
     }
+
     onSelected = (item) => () => {
-        console.log("item: " + item.key);
-        console.log("You selected :: " + item.value);
+        console.log(`item: ${ item.key}`);
+        console.log(`You selected :: ${ item.value}`);
 
         let accType = "";
         switch (item.key) {
@@ -160,15 +162,15 @@ class DashboardAccComponent extends Component {
                 accType = "SpecialtyAcc";
                 break;
         }
-        let screenName = 'openAccPageOne';
-        console.log("accType :: " + accType);
+        const screenName = 'openAccPageOne';
+        console.log(`accType :: ${ accType}`);
 
         if (screenName !== "") {
-            //this.props.accOpeningData.accountType !=undefined && this.props.accOpeningData.accountType !=null 
+            // this.props.accOpeningData.accountType !=undefined && this.props.accOpeningData.accountType !=null 
             this.props.selectAccount({ accountType: item });
             this.props.navigation.navigate({ routeName: screenName, key: screenName, params: { type: item.key, selectedAccount: item, accountType: item } });
         }
-        //populatePendingApplication
+        // populatePendingApplication
 
     }
 
@@ -178,7 +180,7 @@ class DashboardAccComponent extends Component {
     render() {
         console.log("RENDER::: DashboardAccounts ::>>> ", this.props);
         let accList = [];
-        let tempkey = ActionTypes.GET_ACCOUNT_TYPES;
+        const tempkey = ActionTypes.GET_ACCOUNT_TYPES;
         if (this.props && this.props.accOpeningData && this.props.accOpeningData[tempkey]) {
             const tempResponse = this.props.accOpeningData[tempkey];
             if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
@@ -187,7 +189,7 @@ class DashboardAccComponent extends Component {
             }
         }
 
-        //let tempPendingAppData = this.state.retrivePendingAppData;
+        // let tempPendingAppData = this.state.retrivePendingAppData;
 
 
         /*  if (this.props.accOpeningData.result != undefined && this.props.accOpeningData.result != null) {
@@ -217,45 +219,41 @@ class DashboardAccComponent extends Component {
                                         key={item.key}
                                         onPress={this.onSelected(item)}
                                         activeOpacity={0.8}
-                                        accessibilityRole={'button'}
-                                        style={[styles.touchItem]}
+                                        accessibilityRole="button"
+                                        style={styles.touchItem}
                                     >
-                                        {
-                                            <View style={[styles.accountItem]}>
+                                        <View style={styles.accountItem}>
                                                 <Text style={styles.accountItemTxt}>
                                                     {item.value}
                                                 </Text>
                                                 <Text style={styles.accountItemDescTxt}>
                                                     {item.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcitt et faucibus lectus ut gdsgg massa convallis."}
                                                 </Text>
-                                            </View>
-                                        }
+                                        </View>
                                     </TouchableHighlight>
                                 );
                             })}
 
                             {
-                                (this.state.retrivePendingAppData && this.state.retrivePendingAppData.accountType) &&
+                                (this.state.retrivePendingAppData && this.state.retrivePendingAppData.accountType) && (
                                 <TouchableHighlight
                                     onPress={this.onSelectedPendingAcc}
 
                                     key={this.state.retrivePendingAppData.accountType}
                                     activeOpacity={0.8}
-                                    accessibilityRole={'button'}
-                                    style={[styles.touchItem]}
+                                    accessibilityRole="button"
+                                    style={styles.touchItem}
                                 >
-                                    {
-                                        <View style={[styles.accountItem]}>
+                                    <View style={styles.accountItem}>
                                             <Text style={styles.accountItemTxt}>
                                                 {`Pending Application:: ${this.state.retrivePendingAppData.accountType}`}
                                             </Text>
                                             <Text style={styles.accountItemDescTxt}>
                                                 {`Last Saved:: ${this.state.retrivePendingAppData.lastSavedDate}`}
                                             </Text>
-                                        </View>
-                                    }
+                                    </View>
                                 </TouchableHighlight>
-                            }
+                              )}
 
                         </View>
                     </View>

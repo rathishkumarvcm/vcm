@@ -684,7 +684,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
         };
-        AppUtils.Dlog(`Constructor 2::${ JSON.stringify(this.state)}`);
+        AppUtils.debugLog(`Constructor 2::${ JSON.stringify(this.state)}`);
 
     }
 
@@ -693,7 +693,7 @@ class OpenAccPageTwoComponent extends Component {
                                                                  -------------------------- */
     componentDidMount() {
 
-        AppUtils.Dlog(`componentDidMount::::> ${this.props}`);
+        AppUtils.debugLog(`componentDidMount::::> ${this.props}`);
         const payload = [
         ];
         const compositePayloadData = [
@@ -731,7 +731,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        AppUtils.Dlog(`componentDidUpdate::::> ${prevState}`);
+        AppUtils.debugLog(`componentDidUpdate::::> ${prevState}`);
         const { 
             stateKey = "",
             keyName = "",
@@ -745,7 +745,7 @@ class OpenAccPageTwoComponent extends Component {
                     const tempResponse = this.props.accOpeningData[responseKey];
                     if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
                         const msg = tempResponse.message;
-                        AppUtils.Dlog(`Account Type Saved ::: :: ${msg}`);
+                        AppUtils.debugLog(`Account Type Saved ::: :: ${msg}`);
                         alert(tempResponse.result);
                     } else {
                         alert(tempResponse.message);
@@ -988,7 +988,7 @@ class OpenAccPageTwoComponent extends Component {
     /* ------- Page Navigation methods --------*/
 
     onClickHeader = () => {
-        AppUtils.Dlog("#TODO : onClickHeader");
+        AppUtils.debugLog("#TODO : onClickHeader");
     }
 
     goBack = () => {
@@ -1005,7 +1005,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onSelected = (item) => {
-        AppUtils.Dlog(`item: ${item.id}`);
+        AppUtils.debugLog(`item: ${item.id}`);
         this.setState({ selectedItemID: item.id });
         this.setState({ selectedItemName: item.name });
     }
@@ -1449,7 +1449,7 @@ class OpenAccPageTwoComponent extends Component {
             default:
                 break;
         };
-        AppUtils.Dlog(`payload:: ${JSON.stringify(payload)}`);
+        AppUtils.debugLog(`payload:: ${JSON.stringify(payload)}`);
 
 
         return payload;
@@ -1459,7 +1459,7 @@ class OpenAccPageTwoComponent extends Component {
 
     onClickSave = () => {
 
-        AppUtils.Dlog("onClickSave::::> ");
+        AppUtils.debugLog("onClickSave::::> ");
         if (this.validateFields()) {
             const payload = this.getPayload();
             this.props.saveAccountOpening("OpenAccPageTwo", payload);
@@ -1476,20 +1476,20 @@ class OpenAccPageTwoComponent extends Component {
 
     uploadImage = () => {
         ImagePicker.showImagePicker(imagePickerOptions, (response) => {
-            // AppUtils.Dlog('Response = ', response);
+            // AppUtils.debugLog('Response = ', response);
 
             if (response.didCancel) {
-                AppUtils.Dlog('User cancelled image picker');
+                AppUtils.debugLog('User cancelled image picker');
             } else if (response.error) {
-                AppUtils.Dlog('ImagePicker Error: ', response.error);
+                AppUtils.debugLog('ImagePicker Error: ', response.error);
             } else if (response.customButton) {
-                AppUtils.Dlog('User tapped custom button: ', response.customButton);
+                AppUtils.debugLog('User tapped custom button: ', response.customButton);
             } else {
-                AppUtils.Dlog('IMAGE PICKER SUCCESS::> ');
+                AppUtils.debugLog('IMAGE PICKER SUCCESS::> ');
 
                 const source = { uri: response.uri };
                 const base64source = { uri: `data:image/jpeg;base64,${response.data}` };
-                AppUtils.Dlog("base64source", base64source.length);
+                AppUtils.debugLog("base64source", base64source.length);
                 this.setState({
                     userAvatar: source
                 });
@@ -1512,19 +1512,19 @@ class OpenAccPageTwoComponent extends Component {
             },
         };
         ImagePicker.launchCamera(options, (response) => {
-            // AppUtils.Dlog('Response = ', response);
+            // AppUtils.debugLog('Response = ', response);
             if (response.didCancel) {
-                AppUtils.Dlog('User cancelled image picker');
+                AppUtils.debugLog('User cancelled image picker');
             } else if (response.error) {
-                AppUtils.Dlog('ImagePicker Error: ', response.error);
+                AppUtils.debugLog('ImagePicker Error: ', response.error);
                 alert('Error: ', response.error);
 
             } else if (response.customButton) {
-                AppUtils.Dlog('User tapped custom button: ', response.customButton);
+                AppUtils.debugLog('User tapped custom button: ', response.customButton);
                 alert(response.customButton);
             } else {
                 // const source = { uri: response.uri };
-                // AppUtils.Dlog('response', JSON.stringify(response));
+                // AppUtils.debugLog('response', JSON.stringify(response));
                 this.setState({
                     filePath: response,
                     fileData: response.data,
@@ -1542,7 +1542,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
     onSubmitZipEditing = (stateKey, keyName, nextInputFocus) => text => {
-        AppUtils.Dlog(`onSubmitZipEditing:::>${nextInputFocus} ${text}`);
+        AppUtils.debugLog(`onSubmitZipEditing:::>${nextInputFocus} ${text}`);
 
         const newItems = { ...this.state.currentZipCodeRef };
         //  const newItems = { ...this.state.currentZipCodeRef };
@@ -1596,7 +1596,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onSubmitEmpZipEditing = (stateKey, keyName, nextInputFocus) => text => {
-        AppUtils.Dlog(`onSubmitEmpZipEditing:::>${nextInputFocus} ${text}`);
+        AppUtils.debugLog(`onSubmitEmpZipEditing:::>${nextInputFocus} ${text}`);
 
         const newItems = { ...this.state.currentZipCodeRef };
         newItems.keyName = keyName;
@@ -1610,7 +1610,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onSubmitZipTrusteeEditing = (stateKey, keyName, nextInputFocus,objIndex) => text => {
-        AppUtils.Dlog(`onSubmitZipTrusteeEditing:::>${nextInputFocus} ${text}`);
+        AppUtils.debugLog(`onSubmitZipTrusteeEditing:::>${nextInputFocus} ${text}`);
 
         const newItems = { ...this.state.currentZipCodeRef };
         //  const newItems = { ...this.state.currentZipCodeRef };
@@ -1667,13 +1667,13 @@ class OpenAccPageTwoComponent extends Component {
 
     onSubmitEditing = (input) => text => {
 
-        AppUtils.Dlog(`onSubmitEditing:::>${text}`);
+        AppUtils.debugLog(`onSubmitEditing:::>${text}`);
 
         input.focus();
     }
 
     onChangeDate = (stateKey, keyName) => dateStr => {
-        AppUtils.Dlog("onChangeDate:::>");
+        AppUtils.debugLog("onChangeDate:::>");
         this.setState(prevState => ({
             [stateKey]: {
                 ...prevState[stateKey],
@@ -1685,7 +1685,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onChangeSpiltDate = (stateKey, keyName, index) => dateStr => {
-        AppUtils.Dlog(`onChangeSpiltDate:::>${index} ${dateStr}`);
+        AppUtils.debugLog(`onChangeSpiltDate:::>${index} ${dateStr}`);
         const tempCurrentDate = `${this.state[stateKey][keyName]}`;
 
         const tempCurrentDateComp = tempCurrentDate !== "" ? tempCurrentDate.split('-') : [];
@@ -1694,12 +1694,12 @@ class OpenAccPageTwoComponent extends Component {
         if (tempCurrentDateComp.length > 2) {
             tempCurrentDateComp[index] = dateStr;
         } else {
-            AppUtils.Dlog(`index:::>${index}`);
+            AppUtils.debugLog(`index:::>${index}`);
 
             switch (index) {
 
                 case 0:
-                    AppUtils.Dlog(`0:::>${index}`);
+                    AppUtils.debugLog(`0:::>${index}`);
 
                     tempCurrentDateComp[index] = dateStr;
                     tempCurrentDateComp[1] = "";
@@ -1707,14 +1707,14 @@ class OpenAccPageTwoComponent extends Component {
 
                     break;
                 case 1:
-                    AppUtils.Dlog(`2:::>${index}`);
+                    AppUtils.debugLog(`2:::>${index}`);
 
                     tempCurrentDateComp[0] = "";
                     tempCurrentDateComp[index] = dateStr;
                     tempCurrentDateComp[2] = "";
                     break;
                 case 2:
-                    AppUtils.Dlog(`3:::>${index}`);
+                    AppUtils.debugLog(`3:::>${index}`);
 
                     tempCurrentDateComp[0] = "";
                     tempCurrentDateComp[1] = "";
@@ -1738,7 +1738,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onChangeText = (stateKey, keyName) => text => {
-        AppUtils.Dlog("onChangeText:::>");
+        AppUtils.debugLog("onChangeText:::>");
         this.setState(prevState => ({
             [stateKey]: {
                 ...prevState[stateKey],
@@ -1750,7 +1750,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onChangeNickName = () => text => {
-        AppUtils.Dlog("onChangeNickName:::>");
+        AppUtils.debugLog("onChangeNickName:::>");
         this.setState({ nickname: text });
     }
 
@@ -1905,7 +1905,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
         if (!isValidationSuccess) {
-            AppUtils.Dlog(`Personal Info errMsg:: ${errMsg}`);
+            AppUtils.debugLog(`Personal Info errMsg:: ${errMsg}`);
 
             this.setState(prevState => ({
                 personal: {
@@ -2069,7 +2069,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
         if (!isValidationSuccess) {
-            AppUtils.Dlog(`JointOwner Info errMsg:: ${errMsg}`);
+            AppUtils.debugLog(`JointOwner Info errMsg:: ${errMsg}`);
 
             this.setState(prevState => ({
                 jointOwner: {
@@ -2144,7 +2144,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
         if (!isValidationSuccess) {
-            AppUtils.Dlog(`childBeneficiary Info errMsg:: ${errMsg}`);
+            AppUtils.debugLog(`childBeneficiary Info errMsg:: ${errMsg}`);
 
             this.setState(prevState => ({
                 childBeneficiary: {
@@ -2182,7 +2182,7 @@ class OpenAccPageTwoComponent extends Component {
             for (let i = 0; i < this.state.retirementBeneficiaryData.length; i += 1) {
                 let tempErrMsg = "";
                 const tempObj = this.state.retirementBeneficiaryData[i];
-                AppUtils.Dlog(`tempObj::${JSON.stringify(tempObj)}`);
+                AppUtils.debugLog(`tempObj::${JSON.stringify(tempObj)}`);
 
 
                 let tempValidation = false;
@@ -2226,7 +2226,7 @@ class OpenAccPageTwoComponent extends Component {
                     tempValidation = true;
                 }
 
-                AppUtils.Dlog(`tempErrMsg: ${tempErrMsg}`);
+                AppUtils.debugLog(`tempErrMsg: ${tempErrMsg}`);
 
                 if (!tempValidation) {
                     errMsg = tempErrMsg;
@@ -2276,7 +2276,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     validateEstateTrustInfoFields = () => {
-        AppUtils.Dlog(`validateEstateTrustInfoFields:::`);
+        AppUtils.debugLog(`validateEstateTrustInfoFields:::`);
         const accType = this.props.navigation.getParam('accType', '');
      
        
@@ -2449,7 +2449,7 @@ class OpenAccPageTwoComponent extends Component {
             for (let i = 0; i < this.state.estate.trusteeData.length; i+=1) {
                 let tempErrMsg = "";
                 const tempObj = this.state.estate.trusteeData[i];
-                AppUtils.Dlog(`tempObj::${ JSON.stringify(tempObj)}`);
+                AppUtils.debugLog(`tempObj::${ JSON.stringify(tempObj)}`);
                 
 
                 let tempValidation = false;
@@ -2534,7 +2534,7 @@ class OpenAccPageTwoComponent extends Component {
                     tempValidation = true;
                 }
 
-                AppUtils.Dlog(`tempErrMsg: ${ tempErrMsg}`);
+                AppUtils.debugLog(`tempErrMsg: ${ tempErrMsg}`);
 
                 if (!tempValidation) {
                     errMsg = tempErrMsg;
@@ -2575,7 +2575,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
 
-        AppUtils.Dlog(`errMsg:::${errMsg}`);
+        AppUtils.debugLog(`errMsg:::${errMsg}`);
         if (!isValidationSuccess) {
 
 
@@ -2614,7 +2614,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
             const accType = this.props.navigation.getParam('accType', '');
-            AppUtils.Dlog(`validateFields::: ${accType}`);
+            AppUtils.debugLog(`validateFields::: ${accType}`);
          
             if ((accType === "Estate Account" || accType === "Trust Account") && !this.validateEstateTrustInfoFields()) {
                 isValidationSuccess = false;
@@ -2743,7 +2743,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
         } catch (err) {
-            AppUtils.Dlog(`Error:::${JSON.stringify(err)}`);
+            AppUtils.debugLog(`Error:::${JSON.stringify(err)}`);
         }
         return isValidationSuccess;
 
@@ -2756,7 +2756,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
     renderRadio = (sectionName, radioName, radioSize, componentStyle, layoutStyle) => {
-        AppUtils.Dlog(`renderRadio::: ${radioName}`);
+        AppUtils.debugLog(`renderRadio::: ${radioName}`);
         let tempkey = "";// "title";
         let radioData = dummyData;
         switch (radioName) {
@@ -2774,13 +2774,13 @@ class OpenAccPageTwoComponent extends Component {
 
         }
 
-        AppUtils.Dlog(`tempkey::${tempkey}`);
+        AppUtils.debugLog(`tempkey::${tempkey}`);
 
         if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
-            AppUtils.Dlog(`tempkey inside::${tempkey}`);
+            AppUtils.debugLog(`tempkey inside::${tempkey}`);
             radioData = this.props.masterLookupStateData[tempkey].value;
         } else {
-            AppUtils.Dlog(`tempkey not there::${tempkey}`);
+            AppUtils.debugLog(`tempkey not there::${tempkey}`);
 
         }
 
@@ -2817,7 +2817,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     renderYesNoRadio = (sectionName, radioName) => {
-        AppUtils.Dlog(`renderYesNoRadio::: ${radioName}`);
+        AppUtils.debugLog(`renderYesNoRadio::: ${radioName}`);
         
         return(
             <>
@@ -2861,7 +2861,7 @@ class OpenAccPageTwoComponent extends Component {
 
     renderRadioForEstateTrust = (radioName, radioSize, componentStyle, layoutStyle,objIndex) => {
         const sectionName = "estate";
-        AppUtils.Dlog(`renderRadioForEstateTrust::: ${radioName}`);
+        AppUtils.debugLog(`renderRadioForEstateTrust::: ${radioName}`);
         const newItems = [...this.state.estate.trusteeData];
       
         let tempkey = "";// "title";
@@ -2875,13 +2875,13 @@ class OpenAccPageTwoComponent extends Component {
 
         }
 
-        AppUtils.Dlog(`tempkey::${tempkey}`);
+        AppUtils.debugLog(`tempkey::${tempkey}`);
 
         if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
-            AppUtils.Dlog(`tempkey inside::${tempkey}`);
+            AppUtils.debugLog(`tempkey inside::${tempkey}`);
             radioData = this.props.masterLookupStateData[tempkey].value;
         } else {
-            AppUtils.Dlog(`tempkey not there::${tempkey}`);
+            AppUtils.debugLog(`tempkey not there::${tempkey}`);
 
         }
 
@@ -2918,7 +2918,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     renderCalender = (sectionName, calendarName) => {
-        AppUtils.Dlog(`renderCalender::: ${calendarName}`);
+        AppUtils.debugLog(`renderCalender::: ${calendarName}`);
         return (
             <GDateComponent
                 date={this.state[sectionName][calendarName]}
@@ -2933,7 +2933,7 @@ class OpenAccPageTwoComponent extends Component {
 
     /*
     renderSplitCalender = (sectionName, calendarName) => {
-        AppUtils.Dlog(`renderSplitCalender::: ${ calendarName}`);
+        AppUtils.debugLog(`renderSplitCalender::: ${ calendarName}`);
 
         const tempCurrentDate = `${ this.state[sectionName][calendarName]}`;
         const tempCurrentDateComp = tempCurrentDate !== "" ? tempCurrentDate.split('-') : [];
@@ -3134,7 +3134,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onSelectedDropDownValue = (section, stateKey, dropDownName) => (value, index, data) => {
-        AppUtils.Dlog("onSelectedDropDownValue:");
+        AppUtils.debugLog("onSelectedDropDownValue:");
 
         const item = data[index];
         const tempRankKey = `mil_rank_${item.key}`;
@@ -3184,7 +3184,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onSelectedIRABeneficiaryDropDownValue = (dropDownName, objIndex) => (value, index, data) => {
-        AppUtils.Dlog(`onSelectedIRABeneficiaryDropDownValue:: ${dropDownName}`);
+        AppUtils.debugLog(`onSelectedIRABeneficiaryDropDownValue:: ${dropDownName}`);
         const newItems = [...this.state.retirementBeneficiaryData];
         const item = data[index];
 
@@ -3216,7 +3216,7 @@ class OpenAccPageTwoComponent extends Component {
   
 
     onChangeTextForIRABeneficiary = (keyName, index) => text => {
-        AppUtils.Dlog("onChangeTextForIRABeneficiary:::>");
+        AppUtils.debugLog("onChangeTextForIRABeneficiary:::>");
         const newItems = [...this.state.retirementBeneficiaryData];
         newItems[index][keyName] = text;
         newItems[index][`${keyName}Validation`] = true;
@@ -3240,7 +3240,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onChangeDateForIRABeneficiary = (keyName, index) => dateStr => {
-        AppUtils.Dlog("onChangeDateForIRABeneficiary:::>");
+        AppUtils.debugLog("onChangeDateForIRABeneficiary:::>");
         const newItems = [...this.state.retirementBeneficiaryData];
         newItems[index][keyName] = dateStr;
         newItems[index][`${keyName}Validation`] = true;
@@ -3261,7 +3261,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onPressRemoveIRABeneficiary = (index) => () => {
-        AppUtils.Dlog(`onPressRemoveIRABeneficiary::: ${index}`);
+        AppUtils.debugLog(`onPressRemoveIRABeneficiary::: ${index}`);
         const newItems = [...this.state.retirementBeneficiaryData];
         newItems.splice(index, 1);
         this.setState({
@@ -3270,7 +3270,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onPressAddIRABeneficiary = () => {
-        AppUtils.Dlog("onPressAddIRABeneficiary::: ");
+        AppUtils.debugLog("onPressAddIRABeneficiary::: ");
 
         const tempBeneficiaryObj = {
             beneficiaryType: "",
@@ -3317,7 +3317,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onSelectedEstateTrustDropDownValue = (dropDownName, objIndex) => (value, index, data) => {
-        AppUtils.Dlog(`onSelectedEstateTrustDropDownValue:: ${dropDownName}`);
+        AppUtils.debugLog(`onSelectedEstateTrustDropDownValue:: ${dropDownName}`);
         const newItems = [...this.state.estate.trusteeData];
         newItems[objIndex][`${dropDownName}Validation`] = true;
 
@@ -3353,7 +3353,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onChangeTextForEstateTrust = (keyName, index) => text => {
-        AppUtils.Dlog("onChangeTextForEstateTrust:::>");
+        AppUtils.debugLog("onChangeTextForEstateTrust:::>");
 
         const newItems = [...this.state.estate.trusteeData];
         newItems[index][keyName] = text;
@@ -3381,7 +3381,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onChangeDateForEstateTrust = (keyName, index) => dateStr => {
-        AppUtils.Dlog("onChangeDateForEstateTrust:::>");
+        AppUtils.debugLog("onChangeDateForEstateTrust:::>");
         const newItems = [...this.state.estate.trusteeData];
         newItems[index][keyName] = dateStr;
         newItems[index][`${keyName}Validation`] = true;
@@ -3405,7 +3405,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onPressRadioForEstateTrust = (keyName,index,text) => () => {
-        AppUtils.Dlog(`onPressRadioForEstateTrust:: ${keyName}`);
+        AppUtils.debugLog(`onPressRadioForEstateTrust:: ${keyName}`);
         const newItems = [...this.state.estate.trusteeData];
         newItems[index][keyName] = text;
         newItems[index][`${keyName}Validation`] = true;
@@ -3420,7 +3420,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onPressRemoveEstateTrust = (index) => () => {
-        AppUtils.Dlog(`onPressRemoveEstateTrust::: ${index}`);
+        AppUtils.debugLog(`onPressRemoveEstateTrust::: ${index}`);
         const newItems = [...this.state.estate.trusteeData];
         newItems.splice(index, 1);
         this.setState(() => (prevState => ({
@@ -3433,7 +3433,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onPressAddIEstateTrust = () => {
-        AppUtils.Dlog("onPressAddIEstateTrust::: ");
+        AppUtils.debugLog("onPressAddIEstateTrust::: ");
 
 
         const tempTrusteeObj = {
@@ -3520,7 +3520,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
     onClickExpandCollpaseEvent = (stateKey, keyName) => () => {
-        AppUtils.Dlog("onClickExpandCollpaseEvent:::>");
+        AppUtils.debugLog("onClickExpandCollpaseEvent:::>");
         this.setState(prevState => ({
             [stateKey]: {
                 ...prevState[stateKey],
@@ -6923,7 +6923,7 @@ class OpenAccPageTwoComponent extends Component {
         dropDownData = this.props.masterLookupStateData[tempkey].value;
        }
        const tempSuffixData =dropDownData;
-       AppUtils.Dlog(`this.state.estate.trusteeData.length::: ${this.state.estate.trusteeData.length}`);
+       AppUtils.debugLog(`this.state.estate.trusteeData.length::: ${this.state.estate.trusteeData.length}`);
 
         return (
             <View style={styles.sectionGrp}>
@@ -7413,7 +7413,7 @@ class OpenAccPageTwoComponent extends Component {
     };
     /*
     scrollToItem = (itemRef) => {
-        AppUtils.Dlog("itemRef--------------:::" + JSON.stringify(itemRef));
+        AppUtils.debugLog("itemRef--------------:::" + JSON.stringify(itemRef));
 
         requestAnimationFrame(() => {
             if (this[itemRef] && this.scrollViewRef) {
@@ -7431,11 +7431,11 @@ class OpenAccPageTwoComponent extends Component {
 
 
     render() {
-        AppUtils.Dlog(`RENDER::: OpenAccPageTwo ::>>>  ::::${JSON.stringify(this.props)}`);
+        AppUtils.debugLog(`RENDER::: OpenAccPageTwo ::>>>  ::::${JSON.stringify(this.props)}`);
 
         const accType = `${this.props.navigation.getParam('accType', '')}`;
         const tempAccTypeCAPS = accType.toUpperCase();
-        AppUtils.Dlog(`render accType::::>${accType}`);
+        AppUtils.debugLog(`render accType::::>${accType}`);
 
 
         const currentPage = 2;

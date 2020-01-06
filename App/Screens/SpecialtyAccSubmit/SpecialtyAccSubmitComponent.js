@@ -42,7 +42,7 @@ class SpecialtyAccSubmitComponent extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        AppUtils.Dlog("==Did Update Called==");
+        AppUtils.debugLog("==Did Update Called==");
         const uploadImgKey = ActionTypes.UPLOAD_AVATAR;
         if (this.props.accOpeningData[uploadImgKey]) {
             if (this.props.accOpeningData[uploadImgKey] !== prevProps.accOpeningData[uploadImgKey]) {
@@ -93,20 +93,20 @@ class SpecialtyAccSubmitComponent extends Component {
 
     uploadImage = () => {
         ImagePicker.showImagePicker(imagePickerOptions, (response) => {
-            // AppUtils.Dlog('Response = ', response);
+            // AppUtils.debugLog('Response = ', response);
 
             if (response.didCancel) {
-                AppUtils.Dlog('User cancelled image picker');
+                AppUtils.debugLog('User cancelled image picker');
             } else if (response.error) {
-                AppUtils.Dlog('ImagePicker Error: ', response.error);
+                AppUtils.debugLog('ImagePicker Error: ', response.error);
             } else if (response.customButton) {
-                AppUtils.Dlog('User tapped custom button: ', response.customButton);
+                AppUtils.debugLog('User tapped custom button: ', response.customButton);
             } else {
-                AppUtils.Dlog('IMAGE PICKER SUCCESS::> ');
+                AppUtils.debugLog('IMAGE PICKER SUCCESS::> ');
 
                 const source = { uri: response.uri };
                 const base64source = { uri: `data:image/jpeg;base64,${ response.data}` };
-                // AppUtils.Dlog("base64source", base64source.length);
+                // AppUtils.debugLog("base64source", base64source.length);
                 this.setState({
                     userAvatar: source
                 });
