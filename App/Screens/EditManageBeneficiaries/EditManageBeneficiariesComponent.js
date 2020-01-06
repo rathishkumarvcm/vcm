@@ -393,7 +393,7 @@ class EditManageBenificiariesComponent extends Component {
         tempData.last_modified = this.state.todayDate;
         tempData.dob = data.dob;
         tempData.email = data.email;
-        tempData.beneficiaryType = data.beneficiary_type;
+        tempData.beneficiaryType = data.beneficiaryType;
         tempData.social_security_number = data.social_security_number;
 
         tempArr.push(tempData);
@@ -419,7 +419,7 @@ class EditManageBenificiariesComponent extends Component {
         tempData.last_modified = this.state.todayDate;
         tempData.dob = data.dob;
         tempData.email = data.email;
-        tempData.beneficiaryType = data.beneficiary_type;
+        tempData.beneficiaryType = data.beneficiaryType;
         tempData.social_security_number = data.social_security_number;
 
         tempArr.push(tempData);
@@ -445,7 +445,7 @@ class EditManageBenificiariesComponent extends Component {
         tempData.last_modified = this.state.todayDate;
         tempData.dob = data.dob;
         tempData.email = data.email;
-        tempData.beneficiaryType = data.beneficiary_type;
+        tempData.beneficiaryType = data.beneficiaryType;
         tempData.social_security_number = data.social_security_number;
 
         tempArr.push(tempData);
@@ -471,7 +471,7 @@ class EditManageBenificiariesComponent extends Component {
         tempData.last_modified = this.state.todayDate;
         tempData.dob = data.dob;
         tempData.email = data.email;
-        tempData.beneficiaryType = data.beneficiary_type;
+        tempData.beneficiaryType = data.beneficiaryType;
         tempData.social_security_number = data.social_security_number;
 
         tempArr.push(tempData);
@@ -497,7 +497,7 @@ class EditManageBenificiariesComponent extends Component {
         tempData.last_modified = this.state.todayDate;
         tempData.dob = data.dob;
         tempData.email = data.email;
-        tempData.beneficiaryType = data.beneficiary_type;
+        tempData.beneficiaryType = data.beneficiaryType;
         tempData.social_security_number = data.social_security_number;
 
         tempArr.push(tempData);
@@ -566,12 +566,11 @@ class EditManageBenificiariesComponent extends Component {
 
     switch (type) {
       case "Primary": {
-        this.setState(prevState => ({
-          primaryBeneficiaryData: prevState.primaryBeneficiaryData.filter((item, key) => {
-            if (key === index) return Object.assign({}, item, item[keyName] = text);
-            return item;
-          })
-        }));
+        const newItems = [...this.state.primaryBeneficiaryData];
+        newItems[index][keyName] = text;
+        this.setState({
+          primaryBeneficiaryData: newItems
+        });
         switch (keyName) {
           case "beneficiaryType":
             this.onChangeValidationText(index, "beneTypeFlag", false, "Primary");
@@ -585,12 +584,11 @@ class EditManageBenificiariesComponent extends Component {
         break;
       }
       case "Contingent": {
-        this.setState(prevState => ({
-          contingentBeneficiaryData: prevState.contingentBeneficiaryData.filter((item, key) => {
-            if (key === index) return Object.assign({}, item, item[keyName] = text);
-            return item;
-          })
-        }));
+        const newItems = [...this.state.contingentBeneficiaryData];
+        newItems[index][keyName] = text;
+        this.setState({
+          contingentBeneficiaryData: newItems
+        });
         switch (keyName) {
           case "beneficiaryType":
             this.onChangeValidationText(index, "beneTypeFlag", false, "Contingent");
@@ -604,12 +602,11 @@ class EditManageBenificiariesComponent extends Component {
         break;
       }
       case "Tod": {
-        this.setState(prevState => ({
-          todBeneficiaryData: prevState.todBeneficiaryData.filter((item, key) => {
-            if (key === index) return Object.assign({}, item, item[keyName] = text);
-            return item;
-          })
-        }));
+        const newItems = [...this.state.todBeneficiaryData];
+        newItems[index][keyName] = text;
+        this.setState({
+          todBeneficiaryData: newItems
+        });
         switch (keyName) {
           case "beneficiaryType":
             this.onChangeValidationText(index, "beneTypeFlag", false, "Tod");
@@ -704,7 +701,7 @@ class EditManageBenificiariesComponent extends Component {
   addNewPrimaryBene = () => {
     primaryCount += 1;
     const array = this.state.newPrimaryBene;
-    const tempData = {};
+    let tempData = {};
     tempData.key = `tod_${this.state.beneData.key}_${primaryCount}`;
     tempData.fname = "";
     tempData.mname = "";
@@ -745,7 +742,7 @@ class EditManageBenificiariesComponent extends Component {
   addContingentBene = () => {
     contingentCount += 1;
     let array = this.state.newContingentBene;
-    const tempData = {};
+    let tempData = {};
     tempData.key = `con_${this.state.beneData.key}_${contingentCount}`;
     tempData.fname = "";
     tempData.mname = "";
@@ -785,12 +782,11 @@ class EditManageBenificiariesComponent extends Component {
   }
 
   selectedNewConDropDownValue = (index, keyName) => text => {
-    this.setState(prevState => ({
-      newContingentBene: prevState.newContingentBene.filter((item, key) => {
-        if (key === index) return Object.assign({}, item, item[keyName] = text);
-        return item;
-      })
-    }));
+    const newItems = [...this.state.newContingentBene];
+    newItems[index][keyName] = text;
+    this.setState({
+      newContingentBene: newItems
+    });
     switch (keyName) {
       case "suffix":
         this.onAddedBeneValidationText(index, "suffixFlag", false);
@@ -807,12 +803,11 @@ class EditManageBenificiariesComponent extends Component {
   }
 
   selectedNewPriDropDownValue = (index, keyName) => text => {
-    this.setState(prevState => ({
-      newPrimaryBene: prevState.newPrimaryBene.filter((item, key) => {
-        if (key === index) return Object.assign({}, item, item[keyName] = text);
-        return item;
-      })
-    }));
+    const newItems = [...this.state.newPrimaryBene];
+    newItems[index][keyName] = text;
+    this.setState({
+      newPrimaryBene: newItems
+    });
     switch (keyName) {
       case "suffix":
         this.onAddedPriBeneValidationText(index, "suffixFlag", false);
@@ -829,7 +824,7 @@ class EditManageBenificiariesComponent extends Component {
   }
 
   onAddedBeneChangeText = (index, keyName) => text => {
-    const value = text;
+    let value = text;
     if (keyName === "distribution_Per") {
       value = (text * 100).toFixed(2).toString();
     }
@@ -842,7 +837,7 @@ class EditManageBenificiariesComponent extends Component {
   }
 
   onAddedNewPriTextChange = (index, keyName) => text => {
-    const value = text;
+    let value = text;
     if (keyName === "distribution_Per") {
       value = (text * 100).toFixed(2).toString();
     }
@@ -882,13 +877,37 @@ class EditManageBenificiariesComponent extends Component {
   }
 
   onValidate = () => {
+
     let isPriValidationSuccess = true;
     let isConValidationSuccess = true;
     let isTodValidationSuccess = true;
     let isNewContingentSuccess = true;
     let isNewPrimarySuccess = true;
 
+
     if (this.state.primaryBeneficiaryData) {
+      // let i=0;
+      // let len = this.state.primaryBeneficiaryData.length;
+      // for (i = 0; i < len; i++) {
+      //   let arr=this.state.primaryBeneficiaryData;
+      //   let obj=arr[i];
+
+      //   this.setState(prevState => ({
+      //     primaryBeneficiaryData: {
+      //       ...prevState.primaryBeneficiaryData,
+      //       fnameValidation: true,
+      //       lnameValidation: true,
+      //       emailValidation: true,
+      //       addressLine1Validation: true,
+      //       addressLine2Validation: true,
+      //       zipCodeValidation: true,
+      //       relationValidation: false,
+      //       startDateValidation: true,
+      //       endDateValidation: true,
+      //       addValidation: true
+      //     }
+      //   }));
+      // }
       isPriValidationSuccess = false;
       if (!this.validateEachPriFields()) {
         isPriValidationSuccess = false;
@@ -1011,7 +1030,7 @@ class EditManageBenificiariesComponent extends Component {
         this.onChangeValidationText(i, "beneTypeValidationMsg", gblStrings.accManagement.emptyBeneficiaryType, "Tod");
         isErrMsg = true;
       }
-      if (this.state.primaryBeneficiaryData[i].dob === '') {
+      if (this.state.todBeneficiaryData[i].dob === '') {
         this.onChangeValidationText(i, "dobValidationFlag", false, "Tod");
         this.onChangeValidationText(i, "dobValidationMsg", gblStrings.accManagement.emptyDateOfBirth, "Tod");
         isErrMsg = true;
@@ -1243,7 +1262,7 @@ class EditManageBenificiariesComponent extends Component {
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0
             } else {
-              distributionValue = parseInt(item.distribution_Per) / 100;
+              distributionValue = parseInt(item.distribution_Per);
             }
             return (
               <View key={index} style={styles.blockMarginTop}>
@@ -1314,7 +1333,7 @@ class EditManageBenificiariesComponent extends Component {
                   <View style={styles.distributionView}>
                     <View style={styles.sliderView}>
                       <Slider
-                        value={distributionValue}
+                        value={distributionValue / 100}
                         onValueChange={this.onChangeText(index, 'distribution_Per', "Primary")}
                       />
                     </View>
@@ -1333,7 +1352,7 @@ class EditManageBenificiariesComponent extends Component {
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0
             } else {
-              distributionValue = parseInt(item.distribution_Per) / 100;
+              distributionValue = parseInt(item.distribution_Per);
             }
             return (
               <View key={index} style={styles.blockMarginTop}>
@@ -1404,8 +1423,8 @@ class EditManageBenificiariesComponent extends Component {
                   <View style={styles.distributionView}>
                     <View style={styles.sliderView}>
                       <Slider
-                        value={distributionValue}
-                        onValueChange={this.onChangeText(index, 'distribution_Per', "Primary")}
+                        value={distributionValue / 100}
+                        onValueChange={this.onChangeText(index, 'distribution_Per', "Contingent")}
                       />
                     </View>
                     <Text style={styles.distributionValueTxt}>{`${distributionValue} %`}</Text>
@@ -1422,7 +1441,7 @@ class EditManageBenificiariesComponent extends Component {
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0
             } else {
-              distributionValue = parseInt(item.distribution_Per) / 100;
+              distributionValue = parseInt(item.distribution_Per);
             }
             return (
               <View key={index} style={styles.blockMarginTop}>
@@ -1525,7 +1544,7 @@ class EditManageBenificiariesComponent extends Component {
                   <View style={styles.distributionView}>
                     <View style={styles.sliderView}>
                       <Slider
-                        value={distributionValue}
+                        value={(distributionValue) / 100}
                         onValueChange={this.onAddedBeneChangeText(index, 'distribution_Per')}
                       />
                     </View>
@@ -1555,11 +1574,12 @@ class EditManageBenificiariesComponent extends Component {
 
 
           {this.state.todBeneficiaryData && this.state.todBeneficiaryData.map((item, index) => {
+
             let distributionValue = 0;
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0
             } else {
-              distributionValue = parseInt(item.distribution_Per) / 100;
+              distributionValue = parseInt(item.distribution_Per);
             }
             return (
               <View key={index} style={styles.blockMarginTop}>
@@ -1630,8 +1650,8 @@ class EditManageBenificiariesComponent extends Component {
                   <View style={styles.distributionView}>
                     <View style={styles.sliderView}>
                       <Slider
-                        value={distributionValue}
-                        onValueChange={this.onChangeText(index, 'distribution_Per', "Primary")}
+                        value={distributionValue / 100}
+                        onValueChange={this.onChangeText(index, 'distribution_Per', "Tod")}
                       />
                     </View>
                     <Text style={styles.distributionValueTxt}>{`${distributionValue} %`}</Text>
@@ -1645,11 +1665,12 @@ class EditManageBenificiariesComponent extends Component {
           {/*----------------- Add Primary Beneficiary ---------------------------*/}
 
           {this.state.newPrimaryBene && this.state.newPrimaryBene.map((item, index) => {
+            console.log(item.distribution_Per);
             let distributionValue = 0;
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0
             } else {
-              distributionValue = parseInt(item.distribution_Per) / 100;
+              distributionValue = parseInt(item.distribution_Per);
             }
             return (
               <View key={index} style={styles.blockMarginTop}>
@@ -1759,8 +1780,8 @@ class EditManageBenificiariesComponent extends Component {
                   <View style={styles.distributionView}>
                     <View style={styles.sliderView}>
                       <Slider
-                        value={distributionValue}
-                        onValueChange={this.onAddedNewPriTextChange(index, 'distribution_Per', "Primary")}
+                        value={distributionValue / 100}
+                        onValueChange={this.onAddedNewPriTextChange(index, 'distribution_Per')}
                       />
                     </View>
                     <Text style={styles.distributionValueTxt}>{`${distributionValue} %`}</Text>

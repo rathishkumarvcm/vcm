@@ -97,6 +97,7 @@ import AddNewIntrestedPartiesComponent from './Screens/AddNewIntrestedParties';
 import VerifyIntrestedPartiesComponent from './Screens/VerifyIntrestedParties';
 import EditManageIntrestedPartiesComponent from './Screens/EditManageIntrestedParties';
 import ManageBeneficiariesComponent from './Screens/ManageBeneficiaries';
+import AddNewBeneficiaryComponent from './Screens/AddNewBeneficiary';
 import EditManageBeneficiariesComponent from './Screens/EditManageBeneficiaries';
 import VerifyManageBenificiariesComponent from './Screens/VerifyManageBeneficiaries';
 
@@ -645,7 +646,8 @@ const AppNavigator = createStackNavigator({
         navigationOptions: {
             header: null
         }
-    }, passwordRecovery: {
+    },
+    passwordRecovery: {
         screen: PasswordRecovery,
         navigationOptions: {
             header: null,
@@ -843,6 +845,12 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
+    addManageBeneficiaries: {
+        screen: AddNewBeneficiaryComponent,
+        navigationOptions: {
+            header: null
+        }
+    },
     editManageBeneficiaries: {
         screen: EditManageBeneficiariesComponent,
         navigationOptions: {
@@ -940,9 +948,9 @@ const AppNavigator = createStackNavigator({
         }
     },
     dividentsForAccount: {
-            screen: DividentsForAccount,
-            navigationOptions: {
-                header: null,
+        screen: DividentsForAccount,
+        navigationOptions: {
+            header: null,
         }
     },
     exchangeScreenOne: {

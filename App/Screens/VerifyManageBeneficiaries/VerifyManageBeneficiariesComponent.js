@@ -25,18 +25,66 @@ class VerifyManageBenificiariesComponent extends Component {
   componentDidMount() {
     if (this.props && this.props.manageBeneficiaryData && this.props.manageBeneficiaryData.savedBeneficiaryData) {
       tempData = this.props.manageBeneficiaryData.savedBeneficiaryData;
-      let todArr = tempData.transfer_on_Death_Bene;
-      let conArr = tempData.contingent_Bene;
-      if (tempData.new_Primary_Bene && tempData.new_Primary_Bene.length) {
-        todArr = tempData.transfer_on_Death_Bene.concat(tempData.transfer_on_Death_Bene);
+      if (tempData.primary_Bene && tempData.primary_Bene.length > 0 && tempData.contingent_Bene && tempData.contingent_Bene.length > 0 && tempData.transfer_on_Death_Bene && tempData.transfer_on_Death_Bene.length > 0) {
+        let priArr = [];
+        let conArr = [];
+        if (tempData.new_Primary_Bene && tempData.new_Contingent_Bene.length) {
+          priArr = tempData.new_Primary_Bene;
+        }
+        if (tempData.new_Contingent_Bene && tempData.new_Contingent_Bene.length) {
+          conArr = tempData.new_Contingent_Bene;
+        }
+        tempData.primary_Bene = priArr;
+        tempData.contingent_Bene = conArr;
+      } else {
+        let todArr = tempData.transfer_on_Death_Bene;
+        let conArr = tempData.contingent_Bene;
+        if (tempData.new_Primary_Bene && tempData.new_Primary_Bene.length) {
+          todArr = tempData.transfer_on_Death_Bene.concat(tempData.transfer_on_Death_Bene);
+        }
+        if (tempData.new_Contingent_Bene && tempData.new_Contingent_Bene.length) {
+          conArr = tempData.contingent_Bene.concat(tempData.new_Contingent_Bene);
+        }
+        tempData.transfer_on_Death_Bene = todArr;
+        tempData.contingent_Bene = conArr;
+
       }
-      if (tempData.new_Contingent_Bene && tempData.new_Contingent_Bene.length) {
-        conArr = tempData.contingent_Bene.concat(tempData.new_Contingent_Bene);
-      }
-      tempData.transfer_on_Death_Bene = todArr;
-      tempData.contingent_Bene = conArr;
       this.updateInitialData(tempData);
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      if (this.props && this.props.manageBeneficiaryData && this.props.manageBeneficiaryData.savedBeneficiaryData) {
+        tempData = this.props.manageBeneficiaryData.savedBeneficiaryData;
+        if (tempData.primary_Bene && tempData.primary_Bene.length > 0 && tempData.contingent_Bene && tempData.contingent_Bene.length > 0 && tempData.transfer_on_Death_Bene && tempData.transfer_on_Death_Bene.length > 0) {
+          let priArr = [];
+          let conArr = [];
+          if (tempData.new_Primary_Bene && tempData.new_Contingent_Bene.length) {
+            priArr = tempData.new_Primary_Bene;
+          }
+          if (tempData.new_Contingent_Bene && tempData.new_Contingent_Bene.length) {
+            conArr = tempData.new_Contingent_Bene;
+          }
+          tempData.primary_Bene = priArr;
+          tempData.contingent_Bene = conArr;
+        } else {
+          let todArr = tempData.transfer_on_Death_Bene;
+          let conArr = tempData.contingent_Bene;
+          if (tempData.new_Primary_Bene && tempData.new_Primary_Bene.length) {
+            todArr = tempData.transfer_on_Death_Bene.concat(tempData.transfer_on_Death_Bene);
+          }
+          if (tempData.new_Contingent_Bene && tempData.new_Contingent_Bene.length) {
+            conArr = tempData.contingent_Bene.concat(tempData.new_Contingent_Bene);
+          }
+          tempData.transfer_on_Death_Bene = todArr;
+          tempData.contingent_Bene = conArr;
+
+        }
+        this.updateInitialData(tempData);
+      }
+    }
+
   }
 
   updateInitialData = (data) => {
@@ -102,9 +150,32 @@ class VerifyManageBenificiariesComponent extends Component {
     this.props.navigation.navigate("manageBeneficiaries");
   }
 
+  clearData = () => {
+    let data =
+    {
+      "key": "",
+      "account_Type": "",
+      "account_Name": "",
+      "account_Number": "",
+      "accumulated_Value": "",
+      "distribution_Per": "",
+      "transfer_on_Death_Bene": [],
+      "primary_Bene": [],
+      "contingent_Bene": [],
+      "new_Primary_Bene": [],
+      "new_Contingent_Bene": []
+    };
+
+    let payload = {
+      savedBeneficiaryData: data
+    };
+    this.props.clearBeneficiaryData(payload);
+  }
+
   onClickSubmit = () => {
     const payloadData = this.getData();
     this.props.saveBeneficiaryData("verifyBeneficiary", payloadData);
+    this.clearData();
     this.props.navigation.navigate("manageBeneficiaries", { showMsg: true, successMsg: "Data has been added Successfully" });
   }
 

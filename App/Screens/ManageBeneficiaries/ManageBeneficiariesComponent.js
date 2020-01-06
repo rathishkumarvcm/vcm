@@ -31,7 +31,7 @@ class ManageBenificiariesComponent extends Component {
   }
 
   onClickAddBeneficiary = () => {
-    // this.props.navigation.navigate("addManageBeneficiaries");
+    this.props.navigation.navigate("addManageBeneficiaries");
   }
 
   getDeleteData = (item) => {
