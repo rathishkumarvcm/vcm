@@ -78,7 +78,8 @@ export default {
         ssnNo: 9,
         company: 30,
 
-
+        USResidentCardNo:13,
+        passportNumber:8,
         address: 60,
         addressLine1: 50,
         addressLine2: 50,
@@ -655,7 +656,6 @@ export default {
 
         
         
-
 
 
     },

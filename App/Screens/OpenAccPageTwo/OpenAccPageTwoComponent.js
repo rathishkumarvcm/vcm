@@ -1794,18 +1794,26 @@ class OpenAccPageTwoComponent extends Component {
             input = 'maritalStatus';
         } else if (this.isEmpty(this.state.personal.citizenship)) {
             errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+            input = 'citizenship';
+
         } else if (this.state.personal.citizenship !== "U.S" && this.isEmpty(this.state.personal.residenceStatus)) {
-            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+            errMsg = gblStrings.accManagement.emptyResidenceStatusMsg;
+            input = 'residenceStatus';
         } else if (this.state.personal.citizenship !== "U.S" && this.isEmpty(this.state.personal.countryOfCitizenship)) {
-            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+            errMsg = gblStrings.accManagement.emptyCountryOfCitizenshipMsg;
+            input = 'countryOfCitizenship';
         } else if (this.state.personal.citizenship !== "U.S" && this.isEmpty(this.state.personal.USResidentCardNo)) {
-            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+            errMsg = gblStrings.accManagement.emptyUSResidentCardNoMsg;
+            input = 'USResidentCardNo';
         } else if (this.state.personal.citizenship !== "U.S" && this.isEmpty(this.state.personal.USResidentCardNoExpiryDate)) {
-            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+            errMsg = gblStrings.accManagement.emptyUSResidentCardNoExpiryDateMsg;
+            input = 'USResidentCardNoExpiryDate';
         } else if (this.state.personal.citizenship !== "U.S" && this.isEmpty(this.state.personal.passportNumber)) {
-            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+            errMsg = gblStrings.accManagement.emptyPassportNumberMsg;
+            input = 'passportNumber';
         } else if (this.state.personal.citizenship !== "U.S" && this.isEmpty(this.state.personal.passportNoExpiryDate)) {
-            errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+            errMsg = gblStrings.accManagement.emptyPassportNoExpiryDateMsg;
+            input = 'passportNoExpiryDate';
         }else if (this.isEmpty(this.state.personal.mailingAddressType)) {
             errMsg = gblStrings.accManagement.emptyAddressTypeMsg;
             input = 'mailingAddressType';
@@ -1953,6 +1961,24 @@ class OpenAccPageTwoComponent extends Component {
             input = 'maritalStatus';
         } else if (this.isEmpty(this.state.jointOwner.citizenship)) {
             errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
+        } else if (this.state.jointOwner.citizenship !== "U.S" && this.isEmpty(this.state.jointOwner.residenceStatus)) {
+            errMsg = gblStrings.accManagement.emptyResidenceStatusMsg;
+            input = 'residenceStatus';
+        } else if (this.state.jointOwner.citizenship !== "U.S" && this.isEmpty(this.state.jointOwner.countryOfCitizenship)) {
+            errMsg = gblStrings.accManagement.emptyCountryOfCitizenshipMsg;
+            input = 'countryOfCitizenship';
+        } else if (this.state.jointOwner.citizenship !== "U.S" && this.isEmpty(this.state.jointOwner.USResidentCardNo)) {
+            errMsg = gblStrings.accManagement.emptyUSResidentCardNoMsg;
+            input = 'USResidentCardNo';
+        } else if (this.state.jointOwner.citizenship !== "U.S" && this.isEmpty(this.state.jointOwner.USResidentCardNoExpiryDate)) {
+            errMsg = gblStrings.accManagement.emptyUSResidentCardNoExpiryDateMsg;
+            input = 'USResidentCardNoExpiryDate';
+        } else if (this.state.jointOwner.citizenship !== "U.S" && this.isEmpty(this.state.jointOwner.passportNumber)) {
+            errMsg = gblStrings.accManagement.emptyPassportNumberMsg;
+            input = 'passportNumber';
+        } else if (this.state.jointOwner.citizenship !== "U.S" && this.isEmpty(this.state.jointOwner.passportNoExpiryDate)) {
+            errMsg = gblStrings.accManagement.emptyPassportNoExpiryDateMsg;
+            input = 'passportNoExpiryDate';
         } else if (this.isEmpty(this.state.jointOwner.mailingAddressType)) {
             errMsg = gblStrings.accManagement.emptyAddressTypeMsg;
             input = 'mailingAddressType';
@@ -3715,6 +3741,11 @@ class OpenAccPageTwoComponent extends Component {
 
                                     />
                                 </View>
+                                {!this.state.personal.residenceStatusValidation &&
+                                    <Text style={styles.errMsg}>
+                                        {this.state.errMsg}
+                                    </Text>
+                                }
 
                                 {this.renderCustomDropDown({
                                     section: "personal",
@@ -4854,8 +4885,8 @@ class OpenAccPageTwoComponent extends Component {
                         </Text>
                         {this.renderRadio("jointOwner", "citizenship", 30, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
                         {
-                            this.state.personal.citizenship !== "U.S" &&
-                            <View style={styles.uploadW8View}>
+                            this.state.jointOwner.citizenship !== "U.S" &&
+                           /* <View style={styles.uploadW8View}>
                                 <Text>
                                     <Text style={styles.lblTxt}>
                                         {gblStrings.accManagement.uploadW8Form}
@@ -4874,6 +4905,116 @@ class OpenAccPageTwoComponent extends Component {
 
                                 />
                             </View>
+                            */
+                           <View style={styles.nonUSView}>
+
+                           <Text style={styles.lblTxt}>
+                               {gblStrings.accManagement.residenceStatus}
+                           </Text>
+                           <View style={styles.radioBtnColGrp}>
+                               <CustomRadio
+                                   //componentStyle={styles.radioCol1}
+                                   size={30}
+                                   outerCicleColor="#DEDEDF"
+                                   innerCicleColor="#61285F"
+                                   labelStyle={styles.lblRadioBtnTxt}
+                                   label="Resident Alien"
+                                   descLabelStyle={styles.lblRadioDescTxt}
+                                   descLabel=""
+                                   selected={!!((this.state.jointOwner.residenceStatus !== null && this.state.jointOwner.residenceStatus === "Resident Alien"))}
+                                   onPress={this.onPressRadio("jointOwner", "residenceStatus", "Resident Alien")}
+                               />
+                               <CustomRadio
+                                  // componentStyle={styles.radioCol2}
+                                   size={30}
+                                   outerCicleColor="#DEDEDF"
+                                   innerCicleColor="#61285F"
+                                   labelStyle={styles.lblRadioBtnTxt}
+                                   label="Non-resident Alien"
+                                   descLabelStyle={styles.lblRadioDescTxt}
+                                   descLabel="Please call 800-235-8396."
+                                   selected={!!((this.state.jointOwner.residenceStatus !== null && this.state.jointOwner.residenceStatus === "Non-resident Alien"))}
+                                   onPress={this.onPressRadio("jointOwner", "residenceStatus", "Non-resident Alien")}
+
+                               />
+                           </View>
+                           {!this.state.jointOwner.residenceStatusValidation &&
+                            <Text style={styles.errMsg}>
+                                {this.state.errMsg}
+                            </Text>
+                           }
+
+
+                           {this.renderCustomDropDown({
+                               section: "jointOwner",
+                               stateKey: "countryOfCitizenship",
+                               dropDownName: "countryOfCitizenshipDropDown",
+                               lblDropdownName: gblStrings.accManagement.countryOfCitizenship,
+                               isOptional: false
+                           })
+                           }
+
+                           <Text style={styles.lblTxt}>
+                               {gblStrings.accManagement.USResidentCardNo}
+                           </Text>
+                           <GInputComponent
+                               inputref={this.setInputRef("USResidentCardNo")}
+                               propInputStyle={this.state.jointOwner.USResidentCardNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                               placeholder={gblStrings.accManagement.ssnNoFormat}
+                               value={this.state.jointOwner.USResidentCardNo}
+                               keyboardType="number-pad"
+                               maxLength={gblStrings.maxLength.ssnNo}
+                               onChangeText={this.onChangeText("jointOwner", "USResidentCardNo")}
+                               errorFlag={!this.state.jointOwner.USResidentCardNoValidation}
+                               errorText={this.state.errMsg}
+                               secureTextEntry
+
+                           />
+
+                           <Text style={styles.lblTxt}>
+                               {gblStrings.accManagement.USResidentCardNoExpiryDate}
+                           </Text>
+                           <GDateComponent
+                               inputref={this.setInputRef("USResidentCardNoExpiryDate")}
+                               date={this.state.jointOwner.USResidentCardNoExpiryDate}
+                               placeholder="Select Date"
+                               errorFlag={!this.state.jointOwner.USResidentCardNoExpiryDateValidation}
+                               errorMsg={this.state.errMsg}
+                               minDate={prevDate}
+                               onDateChange={this.onChangeDate("jointOwner", "USResidentCardNoExpiryDate")}
+                           />
+
+
+                           <Text style={styles.lblTxt}>
+                               {gblStrings.accManagement.passportNumber}
+                           </Text>
+                           <GInputComponent
+                               inputref={this.setInputRef("passportNumber")}
+                               propInputStyle={this.state.jointOwner.passportNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                               placeholder={gblStrings.accManagement.ssnNoFormat}
+                               value={this.state.jointOwner.passportNumber}
+                               keyboardType="number-pad"
+                               maxLength={gblStrings.maxLength.ssnNo}
+                               onChangeText={this.onChangeText("jointOwner", "passportNumber")}
+                               errorFlag={!this.state.jointOwner.passportNumberValidation}
+                               errorText={this.state.errMsg}
+                               secureTextEntry
+
+                           />
+
+                           <Text style={styles.lblTxt}>
+                               {gblStrings.accManagement.passportNoExpiryDate}
+                           </Text>
+                           <GDateComponent
+                               inputref={this.setInputRef("passportNoExpiryDate")}
+                               date={this.state.jointOwner.passportNoExpiryDate}
+                               placeholder="Select Date"
+                               errorFlag={!this.state.jointOwner.passportNoExpiryDateValidation}
+                               errorMsg={this.state.errMsg}
+                               minDate={prevDate}
+                               onDateChange={this.onChangeDate("jointOwner", "passportNoExpiryDate")}
+                           />
+                       </View>
 
                         }
 
