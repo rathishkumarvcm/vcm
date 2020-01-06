@@ -184,7 +184,7 @@ class ExchangeScreenTwoComponent extends Component {
                 },
             };
             this.props.saveData(payloadData);
-            this.props.navigation.navigate('exchangeScreenThree');
+           // this.props.navigation.navigate('exchangeScreenThree');
     }
 
     formatAmount = (amount) => {

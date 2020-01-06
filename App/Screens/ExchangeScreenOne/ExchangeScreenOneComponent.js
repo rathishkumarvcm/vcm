@@ -34,7 +34,6 @@ class ExchangeScreenOneComponent extends Component {
                 AutoInvPlan: "",
                 accType: "",
             },
-            fundsList: []
         };
     }
 
@@ -99,7 +98,6 @@ class ExchangeScreenOneComponent extends Component {
                 AutoInvPlan: item.AutomaticInvestmentPlan,
                 accType: 'General'
             },
-            fundsList: funds
         });
     }
 
@@ -118,7 +116,6 @@ class ExchangeScreenOneComponent extends Component {
                 AutoInvPlan: item.AutomaticInvestmentPlan,
                 accType: 'IRA'
             },
-            fundsList: funds
         });
     }
 
@@ -137,7 +134,6 @@ class ExchangeScreenOneComponent extends Component {
                 AutoInvPlan: item.AutomaticInvestmentPlan,
                 accType: 'UTMA'
             },
-            fundsList: funds
         });
     }
 
@@ -153,10 +149,10 @@ class ExchangeScreenOneComponent extends Component {
                     "holdingValue": this.state.selectedAccountData.holdingValue,
                     "AutomaticInvestmentPlan": this.state.selectedAccountData.AutoInvPlan
                 },
-                "fundsList": this.state.fundsList
             }
         };
         this.props.saveData(payloadData);
+        this.props.navigation.navigate('exchangeScreenTwo');
     }
 
     render() {
