@@ -1421,6 +1421,7 @@ export default {
         currentValue: "Current Value",
         holding: "Holding",
         automaticInvPlan: "Automatic Investment Plan",
+        exchangeYourFund:"Exchange your Fund"
 
     }
 

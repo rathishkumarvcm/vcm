@@ -143,7 +143,7 @@ class ExchangeScreenOneComponent extends Component {
 
     nextButtonAction = () => {
         const payloadData = {
-            savePurchaseSelectedData: {
+            saveExchangeSelectedData: {
                 ...savedData,
                 "selectedAccountData": {
                     "accountType": this.state.selectedAccountData.selectedAccountType,
