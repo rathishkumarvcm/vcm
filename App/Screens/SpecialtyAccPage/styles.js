@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     accTypeSelectSection: {
         alignItems: "center",       
         flexDirection: 'row',
@@ -209,3 +209,5 @@ export const styles = StyleSheet.create({
         overflow: 'hidden'
     },
 });
+
+export default styles;

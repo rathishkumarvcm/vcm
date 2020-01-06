@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
-import { styles } from './styles';
+import styles from './styles';
 import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio, CustomDropDown } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';

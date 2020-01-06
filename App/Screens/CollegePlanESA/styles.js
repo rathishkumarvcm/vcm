@@ -3,145 +3,120 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 
 
-export const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F7FAFF',
-        width: '100%'
-    },
-
-    sectionGrp: {
-        overflow: 'hidden',
-        marginHorizontal: scaledHeight(12),
-        marginTop: scaledHeight(0),
-        flexGrow: 1
-    },
-    headerGrp: {
-        overflow: 'hidden',
-        marginHorizontal: scaledHeight(12),
-        marginTop: scaledHeight(0),
-        flexGrow: 1,
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-        alignContent: 'center',
-        justifyContent: 'flex-start'
-    },
-
-    headings: {
-        textAlign: 'left',
-        fontSize: scaledHeight(20),
-        fontWeight: 'bold',
-        color: '#535353',
-        lineHeight: 22,
-        flexWrap: 'wrap'
-
-    },
-    subHeadings: {
-        textAlign: 'left',
-        fontSize: scaledHeight(20),
-        color: '#535353',
-        lineHeight: 22,
-        flexWrap: 'wrap'
-
-    },
-    headingDescTxt: {
-        marginTop: scaledHeight(19.5),
-        fontSize: scaledHeight(16),
-        color: '#333333DE',
-        opacity: .75,
-        lineHeight: 22
-
-    },
-    titleBoldTxt: {
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold',
-        color: '#333333DE',
-        opacity: .75,
-        lineHeight: 22
-
-    },
-    ESASignGrp: {
-        overflow: 'hidden',
-        marginHorizontal: scaledHeight(12),
-        marginTop: scaledHeight(0),
-        flexGrow: 1,
-        backgroundColor: '#ECEEEF',
-        borderColor: '#CFD1D2',
-        borderWidth: 1,
-        paddingHorizontal: scaledHeight(20),
-        paddingVertical: scaledHeight(26),
-
-
-    },
-    titleDescTxt: {
-        marginVertical: scaledHeight(23),
-
-        fontSize: scaledHeight(14),
-        color: '#333333DE',
-        opacity: .75,
-        lineHeight: 22
-
-    },
-
-    printSaveBtn: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        marginTop: scaledHeight(0)
-    },
-    printSaveBtnTxt: {
-        fontSize: scaledHeight(14),
-        color: '#61285FDE',
-        textAlign: 'right',
-        lineHeight: 17
-    },
-    lblSep: {
-        marginHorizontal: scaledHeight(10),
-        width: scaledHeight(1),
-        backgroundColor: '#333333DE'
-    },
-
+const styles = StyleSheet.create({
     ESASignContentSection: {
-        overflow: 'hidden',
-        marginTop: scaledHeight(13),
-        flexGrow: 1,
         backgroundColor: '#FFFFFF',
         borderColor: '#C4C4C4',
         borderWidth: 1,
+        flexGrow: 1,
+        marginTop: scaledHeight(13),
+        overflow: 'hidden',
         paddingHorizontal: scaledHeight(23),
         paddingVertical: scaledHeight(23)
 
 
     },
-    signBlackBtn: {
-        width: '75%',
+
+    ESASignGrp: {
+        backgroundColor: '#ECEEEF',
+        borderColor: '#CFD1D2',
         borderWidth: 1,
-        borderColor: "#61285F45",
-        borderRadius: scaledHeight(24),
-        height: scaledHeight(50),
-        backgroundColor: '#544A54',
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
+        flexGrow: 1,
+        marginHorizontal: scaledHeight(12),
+        marginTop: scaledHeight(0),
+        overflow: 'hidden',
+        paddingHorizontal: scaledHeight(20),
+        paddingVertical: scaledHeight(26),
 
 
-
-    },
-    signBlackBtnTxt: {
-        fontSize: scaledHeight(16),
-        color: '#fff',
-        width: '100%',
-        textAlign: 'center'
     },
     agreeTxt: {
-        marginBottom: scaledHeight(50),
-        width:"100%",
-        textAlign:"left",
+        color: '#333333DE',
         fontSize: scaledHeight(14),
         fontWeight: 'bold',
-        color: '#333333DE',
+        lineHeight: 22,
+        marginBottom: scaledHeight(50),
         opacity: .75,
-        lineHeight: 22
+        textAlign:"left",
+        width:"100%"
+
+    },
+
+    btnGrp: {
+        alignContent: 'center',
+        alignItems: 'center',
+        flexGrow: 1,
+
+        justifyContent: 'center',
+        marginBottom: scaledHeight(50),
+        marginHorizontal: scaledHeight(12),
+        marginTop: scaledHeight(25)
+    },
+    container: {
+        backgroundColor: '#F7FAFF',
+        flex: 1,
+        width: '100%'
+    },
+    disclaimerTitleTxt: { // termsofuseText
+        fontSize: scaledHeight(16),
+        marginBottom: scaledHeight(10),
+        fontWeight: 'bold',
+        color: '#56565A',
+        lineHeight: 25
+    },
+    disclaimerTxt: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        lineHeight: 25
+
+    },
+    downloadPDFBtn: {
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderColor: "#61285F",
+        borderRadius: scaledHeight(24),
+        borderWidth: 1,
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginTop: scaledHeight(22),
+        width: '75%'
+    },
+    downloadPDFBtnTxt: {
+        color: '#61285F',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        lineHeight: 20,
+        textAlign: 'center',
+        width: '100%'
+
+    },
+
+    headerGrp: {
+        alignContent: 'center',
+        flexDirection: 'row',
+        flexGrow: 1,
+        flexWrap: 'wrap',
+        justifyContent: 'flex-start',
+        marginHorizontal: scaledHeight(12),
+        marginTop: scaledHeight(0),
+        overflow: 'hidden'
+    },
+    headingDescTxt: {
+        color: '#333333DE',
+        fontSize: scaledHeight(16),
+        lineHeight: 22,
+        marginTop: scaledHeight(19.5),
+        opacity: .75
+
+    },
+    headings: {
+        color: '#535353',
+        flexWrap: 'wrap',
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold',
+        lineHeight: 22,
+        textAlign: 'left'
 
     },
 
@@ -153,7 +128,11 @@ export const styles = StyleSheet.create({
         backgroundColor: '#707070',
         opacity: 0.5
     },
-
+    lblSep: {
+        backgroundColor: '#333333DE',
+        marginHorizontal: scaledHeight(10),
+        width: scaledHeight(1)
+    },
     lblTxt: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
@@ -161,74 +140,22 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(25)
 
     },
-    sectionDescTxt: {
-        marginTop: scaledHeight(19.5),
-        fontSize: scaledHeight(18),
-        color: 'rgba(51, 51, 51, 0.87)',
-        lineHeight: 22
-
-    },
-
-    touchItem: {
-        marginTop: scaledHeight(16),
-    },
-
-
-    downloadPDFBtn: {
-        width: '75%',
-        borderWidth: 1,
-        borderColor: "#61285F",
-        borderRadius: scaledHeight(24),
-        height: scaledHeight(50),
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
-        marginTop: scaledHeight(22)
-    },
-    downloadPDFBtnTxt: {
-        fontSize: scaledHeight(16),
+    moreTxt: {
         color: '#61285F',
-        fontWeight: 'bold',
-        width: '100%',
-        textAlign: 'center',
-        lineHeight: 20
-
-    },
-
-
-
-    btnGrp: {
-        marginHorizontal: scaledHeight(12),
-        marginTop: scaledHeight(25),
-        marginBottom: scaledHeight(50),
-
-        flexGrow: 1,
-        alignContent: 'center',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    normalWhiteBtn: {
-        //  width: '90%',
-        borderWidth: 1,
-        borderColor: "#61285F45",
-        borderRadius: scaledHeight(24),
-        height: scaledHeight(50),
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
-        marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
-
-    },
-    normalWhiteBtnTxt: {
         fontSize: scaledHeight(16),
-        color: '#544A54',
-        width: '100%',
-        textAlign: 'center',
-        lineHeight: 22
+        fontWeight: 'bold'
     },
+
+    newVictorySection: {
+        //  marginTop: scaledHeight(150),
+        padding: scaledHeight(12),
+        width: '100%',
+        flexGrow: 1,
+        backgroundColor: '#FFFFFF',
+
+
+    },
+
     normalBlackBtn: {
         //  width: '90%',
         borderWidth: 1,
@@ -244,12 +171,21 @@ export const styles = StyleSheet.create({
 
 
     },
-    normalBlackBtnTxt: {
-        fontSize: scaledHeight(16),
+    normalBlackBtnDisabledTxt: {
         color: '#fff',
-        width: '100%',
-        textAlign: 'center'
+        fontSize: scaledHeight(16),
+        textAlign: 'center',
+        width: '100%'
     },
+
+    normalBlackBtnTxt: {
+        color: '#fff',
+        fontSize: scaledHeight(16),
+        textAlign: 'center',
+        width: '100%'
+    },
+
+
     normalBlackDisabledBtn: {
         //  width: '90%',
         borderWidth: 1,
@@ -263,45 +199,111 @@ export const styles = StyleSheet.create({
         marginVertical: scaledHeight(7.5),
         marginHorizontal: scaledHeight(37)
     },
-    normalBlackBtnDisabledTxt: {
-        fontSize: scaledHeight(16),
-        color: '#fff',
-        width: '100%',
-        textAlign: 'center'
+    normalWhiteBtn: {
+        //  width: '90%',
+        borderWidth: 1,
+        borderColor: "#61285F45",
+        borderRadius: scaledHeight(24),
+        height: scaledHeight(50),
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        marginVertical: scaledHeight(7.5),
+        marginHorizontal: scaledHeight(37)
+
     },
 
 
 
-    newVictorySection: {
-        //  marginTop: scaledHeight(150),
-        padding: scaledHeight(12),
-        width: '100%',
+    normalWhiteBtnTxt: {
+        color: '#544A54',
+        fontSize: scaledHeight(16),
+        lineHeight: 22,
+        textAlign: 'center',
+        width: '100%'
+    },
+    printSaveBtn: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginTop: scaledHeight(0)
+    },
+    printSaveBtnTxt: {
+        color: '#61285FDE',
+        fontSize: scaledHeight(14),
+        lineHeight: 17,
+        textAlign: 'right'
+    },
+    sectionDescTxt: {
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(18),
+        lineHeight: 22,
+        marginTop: scaledHeight(19.5)
+
+    },
+    sectionGrp: {
         flexGrow: 1,
-        backgroundColor: '#FFFFFF',
+        marginHorizontal: scaledHeight(12),
+        marginTop: scaledHeight(0),
+        overflow: 'hidden'
+    },
+    signBlackBtn: {
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#544A54',
+        borderColor: "#61285F45",
+        borderRadius: scaledHeight(24),
+        borderWidth: 1,
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        width: '75%',
+
 
 
     },
-    moreTxt: {
+    signBlackBtnTxt: {
+        color: '#fff',
         fontSize: scaledHeight(16),
-        color: '#61285F',
-        fontWeight: 'bold'
+        textAlign: 'center',
+        width: '100%'
     },
 
 
 
-    disclaimerTitleTxt: { //termsofuseText
+    subHeadings: {
+        color: '#535353',
+        flexWrap: 'wrap',
+        fontSize: scaledHeight(20),
+        lineHeight: 22,
+        textAlign: 'left'
+
+    },
+    titleBoldTxt: {
+        color: '#333333DE',
         fontSize: scaledHeight(16),
-        marginBottom: scaledHeight(10),
         fontWeight: 'bold',
-        color: '#56565A',
-        lineHeight: 25
-    },
-    disclaimerTxt: {
-        fontSize: scaledHeight(16),
-        color: '#56565A',
-        lineHeight: 25
+        lineHeight: 22,
+        opacity: .75
 
+    },
+
+
+
+    titleDescTxt: {
+        color: '#333333DE',
+
+        fontSize: scaledHeight(14),
+        lineHeight: 22,
+        marginVertical: scaledHeight(23),
+        opacity: .75
+
+    },
+    touchItem: {
+        marginTop: scaledHeight(16),
     },
 
 
 });
+
+export default styles;

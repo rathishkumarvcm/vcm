@@ -3,78 +3,143 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
+    agreeTxt: {
+        color: '#333333DE',
+        fontSize: scaledHeight(14),
+
+        fontWeight: 'bold',
+        lineHeight: 22,
+        marginBottom: scaledHeight(50),
+        opacity: .75,
+        textAlign:"left",
+        width:"100%"
+
+    },
+
+    btnGrp: {
+        alignContent: 'center',
+        alignItems: 'center',
+        flexGrow: 1,
+        justifyContent: 'center',
+        marginHorizontal: scaledHeight(12),
+        marginVertical: scaledHeight(50)
+    },
+
     container: {
-        flex: 1,
         backgroundColor: '#F7FAFF',
+        flex: 1,
         width: '100%'
     },
+    detailsRow: {
+        alignItems: 'flex-start',
+        flexDirection: 'row',
+        flexGrow: 1,
+        justifyContent: 'flex-start',
+        marginVertical: scaledHeight(12)
 
-    sectionGrp: {
-        overflow: 'hidden',
-        marginHorizontal: scaledHeight(12),
-        marginTop: scaledHeight(31),
-        flexGrow: 1
     },
 
+
+    disclaimerTitleTxt: { // termsofuseText
+        fontSize: scaledHeight(16),
+        marginBottom: scaledHeight(10),
+        fontWeight: 'bold',
+        color: '#56565A',
+        lineHeight: 25
+    },
+    disclaimerTxt: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        lineHeight: 25
+
+    },
     editBtn: {
+        alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'flex-end',
-        alignItems: 'center',
         marginTop: scaledHeight(0)
     },
+
     editBtnTxt: {
-        fontSize: scaledHeight(16),
         color: '#61285F',
+        fontSize: scaledHeight(16),
         fontWeight: 'bold',
-        width: '100%',
+        lineHeight: 20,
         textAlign: 'right',
-        lineHeight: 20
+        width: '100%'
     },
-
-
     editDetailsGrp: {
-        flexGrow: 1,
+        backgroundColor: '#FFFFFF',
         borderColor: '#7070701A',
         borderWidth: 1,
-        backgroundColor: '#FFFFFF',
+        flexGrow: 1,
         marginTop: scaledHeight(15),
         paddingHorizontal: scaledHeight(15),
         paddingVertical: scaledHeight(25)
 
     },
+
     editSeletedFundsDetailsGrp: {
-        flexGrow: 1,
+        backgroundColor: '#FFFFFF',
         borderColor: '#7070701A',
         borderWidth: 1,
-        backgroundColor: '#FFFFFF',
-        paddingHorizontal: scaledHeight(15),
-        paddingTop: scaledHeight(16),
-        paddingBottom: scaledHeight(10)
-
-    },
-    detailsRow: {
-        flexDirection: 'row',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
         flexGrow: 1,
-        marginVertical: scaledHeight(12)
+        paddingBottom: scaledHeight(10),
+        paddingHorizontal: scaledHeight(15),
+        paddingTop: scaledHeight(16)
+
+    },
+    explainDotteBorderTxt: {
+
+        color: '#333333DE',
+        fontSize: scaledHeight(18),
+        lineHeight: 28,
+        marginTop:scaledHeight(10)
 
     },
 
+    explainDottedBorder:{
+        alignItems:"center",
+        borderBottomColor:'#56565A',
+        borderBottomWidth:1,
+        flexDirection:'row',
+        justifyContent:"flex-start"
+       
+    },
+
+
+
+    explainTxt:{
+
+        color: '#000000DE',
+        fontSize: scaledHeight(18),
+        lineHeight: 28,
+        marginTop:scaledHeight(10)
+    },
+    explainUnderline:{
+        alignItems:"center",
+        borderBottomColor:'#56565A',
+        borderBottomWidth:1,
+        flexDirection:'row',
+        justifyContent:"flex-start"
+       
+    },
+
+    explainUnderlineTxt: {
+
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        lineHeight: 25,
+        marginTop:scaledHeight(10)
+
+    },
     lblLeftColTxt: {
-        width: '50%',
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        width: '50%'
     },
-    lblRightColTxt: {
-        fontSize: scaledHeight(16),
-        width: '50%',
-        color: 'rgba(51, 51, 51, 0.87)'
-
-    },
-
     lblNameTxt: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
@@ -84,135 +149,47 @@ export const styles = StyleSheet.create({
     },
     lblNameValueTxt: {
         fontSize: scaledHeight(16),
-        //width: '50%',
+        // width: '50%',
         color: 'rgba(51, 51, 51, 0.87)',
         marginTop: scaledHeight(12)
     },
-
-    btnGrp: {
-        marginHorizontal: scaledHeight(12),
-        marginVertical: scaledHeight(50),
-        flexGrow: 1,
-        alignContent: 'center',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-
-
-
-    regulatoryQuestTxt: {
-        marginTop:scaledHeight(23),
-        fontSize: scaledHeight(16),
-        fontWeight:'bold',
-        color: '#333333DE',
-        lineHeight: 28
-
-    },
-    explainTxt:{
-
-        marginTop:scaledHeight(10),
-        fontSize: scaledHeight(18),
-        color: '#000000DE',
-        lineHeight: 28
-    },
-
-    explainDottedBorder:{
-        flexDirection:'row',
-        alignItems:"center",
-        justifyContent:"flex-start",
-        borderBottomWidth:1,
-        borderBottomColor:'#56565A'
-       
-    },
-    explainDotteBorderTxt: {
-
-        marginTop:scaledHeight(10),
-        fontSize: scaledHeight(18),
-        color: '#333333DE',
-        lineHeight: 28
-
-    },
-    explainUnderline:{
-        flexDirection:'row',
-        alignItems:"center",
-        justifyContent:"flex-start",
-        borderBottomWidth:1,
-        borderBottomColor:'#56565A'
-       
-    },
-    explainUnderlineTxt: {
-
-        marginTop:scaledHeight(10),
-        fontSize: scaledHeight(16),
-        color: '#56565A',
-        lineHeight: 25
-
-    },
     
-    radioBtnGrp:{
-        flexGrow:1,
-        marginTop:scaledHeight(0),
-        flexDirection:'row'
-    },
     lblRadioBtnTxt:{
         color:'#333333DE',
+        flexWrap:'wrap',
         fontSize:scaledHeight(16),
-        lineHeight:28,
-        flexWrap:'wrap'
+        lineHeight:28
     },
     lblRadioDescTxt:{
-        marginTop:scaledHeight(14),
         color:'#333333DE',
+        flexWrap:'wrap',
         fontSize:scaledHeight(14),
         lineHeight:22,
-        flexWrap:'wrap',
+        marginTop:scaledHeight(14),
         opacity:.75
     },
-
-    noteTxt: {
-        width:"100%",
-        marginBottom:scaledHeight(39),
-        fontSize: scaledHeight(14),
-        color: '#333333DE',
-        opacity: .75,
-        lineHeight: 22,
-        textAlign:"left"
-
-    },
-    agreeTxt: {
-        width:"100%",
-        textAlign:"left",
-
-        marginBottom: scaledHeight(50),
-        fontSize: scaledHeight(14),
-        fontWeight: 'bold',
-        color: '#333333DE',
-        opacity: .75,
-        lineHeight: 22
-
-    },
-
-    normalWhiteBtn: {
-        //  width: '90%',
-        borderWidth: 1,
-        borderColor: "#61285F45",
-        borderRadius: scaledHeight(24),
-        height: scaledHeight(50),
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
-        marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
-
-    },
-    normalWhiteBtnTxt: {
+    lblRightColTxt: {
+        color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
-        color: '#544A54',
-        width: '100%',
-        textAlign: 'center',
-        lineHeight: 22
+        width: '50%'
+
     },
+
+    moreTxt: {
+        color: '#61285F',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold'
+    },
+    newVictorySection: {
+        //  marginTop: scaledHeight(150),
+        padding: scaledHeight(12),
+        width: '100%',
+        flexGrow: 1,
+        backgroundColor: '#FFFFFF',
+
+
+    },
+
     normalBlackBtn: {
         //  width: '90%',
         borderWidth: 1,
@@ -228,11 +205,17 @@ export const styles = StyleSheet.create({
 
 
     },
-    normalBlackBtnTxt: {
-        fontSize: scaledHeight(16),
+    normalBlackBtnDisabledTxt: {
         color: '#fff',
-        width: '100%',
-        textAlign: 'center'
+        fontSize: scaledHeight(16),
+        textAlign: 'center',
+        width: '100%'
+    },
+    normalBlackBtnTxt: {
+        color: '#fff',
+        fontSize: scaledHeight(16),
+        textAlign: 'center',
+        width: '100%'
     },
     normalBlackDisabledBtn: {
         //  width: '90%',
@@ -247,43 +230,62 @@ export const styles = StyleSheet.create({
         marginVertical: scaledHeight(7.5),
         marginHorizontal: scaledHeight(37)
     },
-    normalBlackBtnDisabledTxt: {
+    normalWhiteBtn: {
+        //  width: '90%',
+        borderWidth: 1,
+        borderColor: "#61285F45",
+        borderRadius: scaledHeight(24),
+        height: scaledHeight(50),
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        marginVertical: scaledHeight(7.5),
+        marginHorizontal: scaledHeight(37)
+
+    },
+    normalWhiteBtnTxt: {
+        color: '#544A54',
         fontSize: scaledHeight(16),
-        color: '#fff',
-        width: '100%',
-        textAlign: 'center'
+        lineHeight: 22,
+        textAlign: 'center',
+        width: '100%'
     },
 
 
 
-    newVictorySection: {
-        //  marginTop: scaledHeight(150),
-        padding: scaledHeight(12),
-        width: '100%',
+    noteTxt: {
+        color: '#333333DE',
+        fontSize: scaledHeight(14),
+        lineHeight: 22,
+        marginBottom:scaledHeight(39),
+        opacity: .75,
+        textAlign:"left",
+        width:"100%"
+
+    },
+
+
+    radioBtnGrp:{
+        flexDirection:'row',
+        flexGrow:1,
+        marginTop:scaledHeight(0)
+    },
+    regulatoryQuestTxt: {
+        color: '#333333DE',
+        fontSize: scaledHeight(16),
+        fontWeight:'bold',
+        lineHeight: 28,
+        marginTop:scaledHeight(23)
+
+    },
+    sectionGrp: {
         flexGrow: 1,
-        backgroundColor: '#FFFFFF',
-
-
-    },
-
-
-    disclaimerTitleTxt: { //termsofuseText
-        fontSize: scaledHeight(16),
-        marginBottom: scaledHeight(10),
-        fontWeight: 'bold',
-        color: '#56565A',
-        lineHeight: 25
-    },
-    disclaimerTxt: {
-        fontSize: scaledHeight(16),
-        color: '#56565A',
-        lineHeight: 25
-
-    },
-    moreTxt: {
-        fontSize: scaledHeight(16),
-        color: '#61285F',
-        fontWeight: 'bold'
+        marginHorizontal: scaledHeight(12),
+        marginTop: scaledHeight(31),
+        overflow: 'hidden'
     },
 
 });
+
+export default styles;
