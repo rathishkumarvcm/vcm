@@ -192,6 +192,7 @@ class LiquidationPageTwoComponent extends Component {
                 },
             };
             this.props.saveData(payloadData);
+            ammendData = this.props.amendReducerData.menu[ammendIndex-1].data;
             if (this.state.ammend) {
                 this.props.navigation.navigate('LiquidationPageThree', { ammend: true, data: ammendData, index: ammendIndex });
             }
@@ -228,32 +229,6 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     getFundList = () => {
-        let selectedIndex = 0;
-        let selectedAccountType = "";
-        let selectedAccountNumber = "";
-        let fundList = [];
-        let accType = '';
-        if (this.props.navigation.getParam('ammend')) {
-            accType = ammendData.selectedAccountData.accountType;
-            selectedAccountNumber = ammendData.selectedAccountData.accountNumber;
-        } else {
-            accType = savedData.selectedAccountData.accountType;
-            selectedAccountNumber = savedData.selectedAccountData.accountNumber;
-        }
-        if (accType === "General") {
-            selectedAccountType = "General_Account";
-        } else if (accType === "IRA") {
-            selectedAccountType = "IRA_Account";
-        } else {
-            selectedAccountType = "UTMA_Account";
-        }
-
-        for (let i = 0; i < this.props.liquidationInitialState.accSelectionData[selectedAccountType].length; i+= 1) {
-            if (selectedAccountNumber === this.props.liquidationInitialState.accSelectionData[selectedAccountType][i].accNumber) {
-                selectedIndex = i;
-            }
-        }
-        fundList = this.props.liquidationInitialState.accSelectionData[selectedAccountType][selectedIndex].funds;
         if (this.props.navigation.getParam('ammend')) {
             this.setState({
                 fundListData: ammendData.selectedFundData.funds,
@@ -262,7 +237,7 @@ class LiquidationPageTwoComponent extends Component {
             });
         } else {
             this.setState({
-                fundListData: fundList,
+                fundListData: this.props.liquidationInitialState.fundsListData.funds,
             });
         }
     }
@@ -420,12 +395,14 @@ class LiquidationPageTwoComponent extends Component {
 LiquidationPageTwoComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     liquidationInitialState: PropTypes.instanceOf(Object),
+    amendReducerData: PropTypes.instanceOf(Object),
     saveData: PropTypes.func,
 };
 
 LiquidationPageTwoComponent.defaultProps = {
     navigation: {},
     liquidationInitialState: {},
+    amendReducerData: {},
     saveData: () => { },
 };
 export default LiquidationPageTwoComponent;

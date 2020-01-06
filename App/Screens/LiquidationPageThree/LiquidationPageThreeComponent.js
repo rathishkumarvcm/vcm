@@ -77,7 +77,17 @@ class LiquidationPageThreeComponent extends Component {
     updateState = () => {
         if (this.props.navigation.getParam('ammend')) {
             ammendData = this.props.navigation.getParam('data');
+            console.log("Screen 3 ammendData---> "+JSON.stringify(ammendData));
             ammendIndex = this.props.navigation.getParam('index');
+            let selectedBankAccount = null;
+            if(!ammendData.selectedFundWithdrawalData.checkSelectedOrder){
+                for(let i=0; i <bankAccounts.length; i+=1){
+                    if(ammendData.selectedFundWithdrawalData.bankAccountNo === bankAccounts[i].bankAccountNo){
+                        selectedBankAccount = i;
+                    }
+                }
+                
+            }
             this.setState({ 
                 ammend: true,
                 taxAccountingMethodData: {
@@ -94,11 +104,11 @@ class LiquidationPageThreeComponent extends Component {
                     taxHoldingOption: ammendData.selectedFundWithdrawalData.taxWithHoldingOption,
                 },
                     fundingSource: {
-                        selectedBankAccountNo: "XXX-XXX-3838",
-                        selectedBankAccountName: "Bank Account 1",
-                        checkOrderSelected: false
+                        selectedBankAccountNo: ammendData.selectedFundWithdrawalData.bankAccountNo,
+                        selectedBankAccountName: ammendData.selectedFundWithdrawalData.bankAccountName,
+                        checkOrderSelected: ammendData.selectedFundWithdrawalData.checkSelectedOrder
                     },
-                    selectedBankAccountIndex: 0,
+                    selectedBankAccountIndex: selectedBankAccount,
                     showMessageFlex: false,
                     disableNextButton: false
                 
@@ -356,15 +366,15 @@ class LiquidationPageThreeComponent extends Component {
                         "bankAccountName": this.state.fundingSource.selectedBankAccountName,
                         "taxWithHoldingOption": this.state.taxAccountingMethodData.taxHoldingOption,
                         "requestedAmountType": this.state.taxAccountingMethodData.requestedAmountType,
-                        "amountBeforeTaxes": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.amountBeforeTaxes),
-                        "amountAfterTaxes": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.amountAfterTaxes),
-                        "federalTaxInPerc": this.state.taxAccountingMethodData.federalTax + "%",
-                        "federalTaxInDollars": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.federalTaxInDollars),
-                        "stateTaxInPerc": this.state.taxAccountingMethodData.stateTax + "%",
-                        "stateTaxInDollars": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.stateTaxInDollars),
-                        "totalTaxToBeWithHold": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.totalTaxToBeWithhold),
-                        "totalYouWillReceive": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.totalYouWillReceive),
-                        "totalWithdrawal": gblStrings.liquidation.dollarSymbol + this.formatAmount(this.state.taxAccountingMethodData.totalWithdrawal),
+                        "amountBeforeTaxes": this.state.taxAccountingMethodData.amountBeforeTaxes,
+                        "amountAfterTaxes": this.state.taxAccountingMethodData.amountAfterTaxes,
+                        "federalTaxInPerc": this.state.taxAccountingMethodData.federalTax,
+                        "federalTaxInDollars": this.state.taxAccountingMethodData.federalTaxInDollars,
+                        "stateTaxInPerc": this.state.taxAccountingMethodData.stateTax,
+                        "stateTaxInDollars":this.state.taxAccountingMethodData.stateTaxInDollars,
+                        "totalTaxToBeWithHold": this.state.taxAccountingMethodData.totalTaxToBeWithhold,
+                        "totalYouWillReceive": this.state.taxAccountingMethodData.totalYouWillReceive,
+                        "totalWithdrawal": this.state.taxAccountingMethodData.totalWithdrawal,
                     },
                 },
             };
@@ -632,6 +642,7 @@ class LiquidationPageThreeComponent extends Component {
                                                             />
                                                             <View style={styles.stateTaxToDollarFlex}>
                                                                 <Text style={styles.dollarSkin}>$</Text>
+                                                                {console.log("this.state.taxAccountingMethodData.federalTaxInDollars-->"+this.state.taxAccountingMethodData.federalTaxInDollars)}
                                                                 <Text style={styles.stateTaxToDollarText}>{this.formatAmount(this.state.taxAccountingMethodData.federalTaxInDollars)}</Text>
                                                             </View>
                                                         </View>

@@ -109,6 +109,7 @@ import PurchaseScreenFourComponent from './Screens/PurchaseScreenFour';
 import PurchaseFinishComponent from './Screens/PurchaseFinish';
 
 import ExchangeScreenOneComponent from './Screens/ExchangeScreenOne';
+import ExchangeScreenTwoComponent from './Screens/ExchangeScreenTwo';
 
 import EditRelationshipInfo from './Screens/EditRelationshipInformation/';
 import EditRegulatoryInfo from './Screens/EditRegulatoryInformations/EditRegulatoryComponent';
@@ -958,7 +959,13 @@ const AppNavigator = createStackNavigator({
         navigationOptions: {
             header: null,
         }
-    }
+    },
+    exchangeScreenTwo: {
+        screen: ExchangeScreenTwoComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
 
 },
     {

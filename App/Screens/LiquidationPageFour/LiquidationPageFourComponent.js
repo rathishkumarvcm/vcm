@@ -204,8 +204,51 @@ class LiquidationPageFourComponent extends Component {
                 }
             };
             this.props.saveData(payloadData);
-            this.props.navigation.navigate('LiquidationFinish', { orderId: orderId });
             
+
+            const ammendPayloadData = {
+                "key": finalKey,
+                "title": orderId,
+                "data": {
+                    "count": 5,
+                    "Dateadded": updatedDate,
+                    "TransactionType": gblStrings.liquidation.liquidation,
+                    "OrderStatus": "Pending",
+                    "totalSHares": "",
+                    "worth": "",
+                    "selectedAccountData": savedData.selectedAccountData,
+                    "selectedFundData": savedData.selectedFundData,
+                    "selectedFundWithdrawalData": savedData.selectedFundWithdrawalData,
+                    "reviewConfirmLiquidationData": {
+                        "tradeType": gblStrings.liquidation.liquidation,
+                        "accountName": savedData.selectedAccountData.accountName,
+                        'accountNumber': savedData.selectedAccountData.accountNumber,
+                        "worthAmount": gblStrings.liquidation.dollarSymbol + this.formatAmount(savedData.selectedFundData.worthAmount),
+                        "sellingAmount": sellingAmount,
+                        "fundingSourceName": savedData.selectedFundWithdrawalData.bankAccountName,
+                        "fundingSourceNo": savedData.selectedFundWithdrawalData.bankAccountNo,
+                        "taxWithHoldingOption": savedData.selectedFundWithdrawalData.taxWithHoldingOption,
+                        "requestedAmountType": savedData.selectedFundWithdrawalData.requestedAmountType,
+                        "amountBeforeTaxes": savedData.selectedFundWithdrawalData.amountBeforeTaxes,
+                        "amountAfterTaxes": savedData.selectedFundWithdrawalData.amountAfterTaxes,
+                        "federalTaxInPerc": savedData.selectedFundWithdrawalData.federalTaxInPerc,
+                        "federalTaxInDollars": savedData.selectedFundWithdrawalData.federalTaxInDollars,
+                        "stateTaxInPerc": savedData.selectedFundWithdrawalData.stateTaxInPerc,
+                        "stateTaxInDollars": savedData.selectedFundWithdrawalData.stateTaxInDollars,
+                        "totalTaxToBeWithHold": savedData.selectedFundWithdrawalData.totalTaxToBeWithHold,
+                        "totalYouWillReceive": savedData.selectedFundWithdrawalData.totalYouWillReceive,
+                        "totalWithdrawal": savedData.selectedFundWithdrawalData.totalWithdrawal
+                    },
+                    "selectedFundSourceData": savedData.selectedFundSourceData,
+                    "currentSecurities": savedData.currentSecurities,
+                    "contribution": savedData.contribution,
+                    "estimated": {}
+                }
+            };
+            menuList.push(ammendPayloadData);
+            this.props.ammendActions(menuList);
+            this.props.navigation.navigate('LiquidationFinish', { orderId: orderId });
+
         }
 
     }
@@ -338,27 +381,27 @@ class LiquidationPageFourComponent extends Component {
                                 </View>
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.amount}{fundWithdrawalData.requestedAmountType}</Text>
-                                    <Text style={styles.greyText16px}>{amount}</Text>
+                                    <Text style={styles.greyText16px}>{gblStrings.liquidation.dollarSymbol + this.formatAmount(amount)}</Text>
                                 </View>
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.federalTax}</Text>
-                                    <Text style={styles.greyText16px}>{fundWithdrawalData.federalTaxInPerc}  -  {fundWithdrawalData.federalTaxInDollars}</Text>
+                                    <Text style={styles.greyText16px}>{fundWithdrawalData.federalTaxInPerc+"%"}  -  {gblStrings.liquidation.dollarSymbol + this.formatAmount(fundWithdrawalData.federalTaxInDollars)}</Text>
                                 </View>
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.stateTax}</Text>
-                                    <Text style={styles.greyText16px}>{fundWithdrawalData.stateTaxInPerc}  -  {fundWithdrawalData.stateTaxInDollars}</Text>
+                                    <Text style={styles.greyText16px}>{fundWithdrawalData.stateTaxInPerc+"%"}  -  {gblStrings.liquidation.dollarSymbol + this.formatAmount(fundWithdrawalData.stateTaxInDollars)}</Text>
                                 </View>
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalTaxToBeWithhold}</Text>
-                                    <Text style={styles.greyText16px}>{fundWithdrawalData.totalTaxToBeWithHold}</Text>
+                                    <Text style={styles.greyText16px}>{gblStrings.liquidation.dollarSymbol + this.formatAmount(fundWithdrawalData.totalTaxToBeWithHold)}</Text>
                                 </View>
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalYouWillReceive}</Text>
-                                    <Text style={styles.greyText16px}>{fundWithdrawalData.totalYouWillReceive}</Text>
+                                    <Text style={styles.greyText16px}>{gblStrings.liquidation.dollarSymbol + this.formatAmount(fundWithdrawalData.totalYouWillReceive)}</Text>
                                 </View>
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalWithdrawal}</Text>
-                                    <Text style={styles.greyText16px}>{fundWithdrawalData.totalWithdrawal}</Text>
+                                    <Text style={styles.greyText16px}>{gblStrings.liquidation.dollarSymbol + this.formatAmount(fundWithdrawalData.totalWithdrawal)}</Text>
                                 </View>
                             </View>
                             : null}
