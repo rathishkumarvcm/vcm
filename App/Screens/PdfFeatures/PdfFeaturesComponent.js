@@ -4,7 +4,7 @@ import { scaledHeight } from '../../Utils/Resolution';
 import {GButtonComponent} from '../../CommonComponents';
 import PropTypes from 'prop-types';
 
-//const url = 'http://www.africau.edu/Images/default/sample.pdf';
+// const url = 'http:// www.africau.edu/Images/default/sample.pdf';
 
 const styles = StyleSheet.create({
     containerStyle:{
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         marginLeft : '5%',
         marginRight : '5%',
         marginTop:'10%'
-        //alignItems:'center'
+        // alignItems:'center'
     },
     labeltext:{
         fontSize:20,
@@ -53,7 +53,7 @@ class PdfFeaturesComponent extends Component {
 
     componentDidMount() {
         
-        //Linking.openURL(url);
+        // Linking.openURL(url);
     }
 
     goBack = ()=>this.props.navigation.goBack();
@@ -71,7 +71,7 @@ class PdfFeaturesComponent extends Component {
             <View style={styles.containerStyle}>
                 <Text style={styles.labeltext}>{"PDF Features:"}</Text>
                 <GButtonComponent 
-                //disabled
+                // disabled
                 buttonStyle={styles.buttonStyle} 
                 textStyle={styles.buttonTextStyle}
                 buttonText= {"Web View"}

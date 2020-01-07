@@ -5,13 +5,13 @@ import AccountMessagingSettings from '../App/Screens/AccountMessagingSettings/Ac
 
 describe('Account Messaging Settings',()=>{
 
-    // Snap shot 
+    //  Snap shot 
     it('Match Snapshot', () => {  
       const tree = renderer.create(<AccountMessagingSettings />).toJSON();
       expect(tree).toMatchSnapshot();
     });
   
-    // Render using shallow - shallow not includes child component
+    //  Render using shallow - shallow not includes child component
     test('render',()=>{
       const component = shallow(<AccountMessagingSettings />);  
       component.render();

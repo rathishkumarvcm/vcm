@@ -5,12 +5,12 @@ import FirstComponent from './FirstComponent';
 
 const mapStateToProps = (state /* , props */) => (
     {
-     // homeData: getHome(state)
+     //  homeData: getHome(state)
     }
   );
 
 const mapDispatchToProps = {
-  //  ...homeActions
+  //   ...homeActions
   };
 
 export default connect(

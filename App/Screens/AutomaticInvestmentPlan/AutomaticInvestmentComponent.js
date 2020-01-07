@@ -61,24 +61,24 @@ class AutomaticInvestmentComponent extends Component {
         }
     }
 
-    // componentDidUpdate(prevProps, prevState) {
-    //     console.log('componentDidUpdate!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
-    //     if (this.props != prevProps) {
-    //         if (this.props &&
-    //             this.props.automaticInvestmentState) {
-    //             this.setState({
-    //                 generalAutoInvestment: this.props.automaticInvestmentState.general,
-    //                 iraAutoInvestment: this.props.automaticInvestmentState.ira,
-    //                 utmaAutoInvest:this.props.automaticInvestmentState.utma,
-    //                 refresh: !this.state.refresh
-    //             });    
-    //         }
-    //     }
+    //  componentDidUpdate(prevProps, prevState) {
+    //      console.log('componentDidUpdate!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    //      if (this.props != prevProps) {
+    //          if (this.props &&
+    //              this.props.automaticInvestmentState) {
+    //              this.setState({
+    //                  generalAutoInvestment: this.props.automaticInvestmentState.general,
+    //                  iraAutoInvestment: this.props.automaticInvestmentState.ira,
+    //                  utmaAutoInvest:this.props.automaticInvestmentState.utma,
+    //                  refresh: !this.state.refresh
+    //              });    
+    //          }
+    //      }
         
-    // }
+    //  }
     setCollapsableUpdates = index => e => {
 
-        var array = [...this.state.arr_expand]; // make a separate copy of the array
+        var array = [...this.state.arr_expand]; //  make a separate copy of the array
         let IndexExpand = this.state.expandIndex;
 
 
@@ -210,10 +210,10 @@ class AutomaticInvestmentComponent extends Component {
     navigationInvestmentVerify = index =>e=> this.props.navigation.navigate({routeName:'automaticInvestmentVerify',key:'automaticInvestmentVerify',params: { skip: true,indexSelected:index }});
 
     navigationInvestmentEdit = index => e => {
-        // let id;
-        // this.state.arr_expand.map(()=>{
+        //  let id;
+        //  this.state.arr_expand.map(()=>{
 
-        // })
+        //  })
         switch ((index)) {
             case 0:
                 this.props.navigation.navigate({routeName:'automaticInvestmentAdd',key:'automaticInvestmentAdd', params:{ option: index, ItemToEdit: this.state.selectedIndex ,accountType:'general'}});

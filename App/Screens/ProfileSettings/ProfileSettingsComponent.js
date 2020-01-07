@@ -24,7 +24,7 @@ class ProfileSettingsComponent extends Component {
             isServingMilitary: this.props.profileState.profileServingMilitary,
             selectedIndex: -1,
 
-            // Profile Information
+            //  Profile Information
             profileName: this.props.initialState.firstName,
             profilePrefix: this.props.profileState.profilePrefix,
             profileSuffix: this.props.profileState.profileSuffix,
@@ -35,30 +35,30 @@ class ProfileSettingsComponent extends Component {
             profileMaritalStatus: this.props.profileState.profileMaritalStatus,
             profileCitizenship: this.props.profileState.profileCitizenship,
 
-            // Contact Information
+            //  Contact Information
             profileMailingAddress: this.props.profileState.profileMailingAddress,
             profilePhysicalAddress: this.props.profileState.profilePhysicalAddress,
 
-            // Phone Information
+            //  Phone Information
             profilePrimaryMobile: this.props.profileState.profilePrimaryMobile,
 
-            // Email Information
+            //  Email Information
             profilePrimayMail: this.props.profileState.profilePrimayMail,
 
-            // Finanicial Information
+            //  Finanicial Information
             profileAnnualIncome: `$ ${this.props.profileState.financialInformations.profileAnnualIncome}`,
             profileTaxBracket: `${this.props.profileState.financialInformations.profileTaxBracket} %`,
             profileNetWorth: `$ ${this.props.profileState.financialInformations.profileNetWorth}`,
             profileTaxFilling: this.props.profileState.financialInformations.profileTaxFilling,
 
-            // Employment Information
+            //  Employment Information
             profileEmploymentStatus: this.props.profileState.employmentInformations.profileEmploymentStatus,
             profileEmpIndustry: this.props.profileState.employmentInformations.profileEmpIndustry,
             profileEmpOccupation: this.props.profileState.employmentInformations.profileEmpOccupation,
             profileEmpEmployer: this.props.profileState.employmentInformations.profileEmpEmployer,
             profilePrimarySourceIncome: this.props.profileState.employmentInformations.profileSourceOfIncome,
 
-            // Military Information
+            //  Military Information
             profileMilitaryBranch: this.props.profileState.profileMilitaryInformation.profileMilitaryBranch,
             profileMilitaryRank: this.props.profileState.profileMilitaryInformation.profileMilitaryRank,
         };
@@ -87,7 +87,7 @@ class ProfileSettingsComponent extends Component {
                     isServingMilitary: this.props.profileState.profileServingMilitary
                 });
 
-                // Financial Information
+                //  Financial Information
 
                 if (this.props && this.props.profileState && this.props.profileState.financialInformations) {
                     this.setState({
@@ -98,7 +98,7 @@ class ProfileSettingsComponent extends Component {
                     });
                 }
 
-                // Employment Information
+                //  Employment Information
 
                 if (this.props && this.props.profileState && this.props.profileState.employmentInformations) {
                     this.setState({
@@ -110,7 +110,7 @@ class ProfileSettingsComponent extends Component {
                     });
                 }
 
-                // Military Information
+                //  Military Information
 
                 if (this.props && this.props.profileState && this.props.profileState.profileMilitaryInformation) {
                     this.setState({
@@ -119,7 +119,7 @@ class ProfileSettingsComponent extends Component {
                     });
                 }
 
-                // Relationship Details
+                //  Relationship Details
 
                 if (this.props &&
                     this.props.profileState &&
@@ -149,7 +149,7 @@ class ProfileSettingsComponent extends Component {
 
     profileSettingRegulatoryManage = () => this.props.navigation.navigate('editRegulatoryInfo');
 
-    // Add Relationship Details
+    //  Add Relationship Details
 
     profileSettingAddRelation = () => this.props.navigation.navigate('editRelationshipInfo');
 
@@ -236,7 +236,7 @@ class ProfileSettingsComponent extends Component {
             </Text>
         </TouchableOpacity>);
 
-    // Manage Relationship Menu Option
+    //  Manage Relationship Menu Option
 
     onMenuOptionClicked = (index) => () => {
         index === this.state.selectedIndex ?
@@ -250,7 +250,7 @@ class ProfileSettingsComponent extends Component {
             });
     }
 
-    // Manage Relationship Details
+    //  Manage Relationship Details
 
     relationShipOnPressed = (index) => () => {
         if (index !== -1) {
@@ -262,7 +262,7 @@ class ProfileSettingsComponent extends Component {
         }
     }
 
-    // Manage Relationship Menu Item Clicked
+    //  Manage Relationship Menu Item Clicked
 
     onMenuItemClicked = (index) => () => {
         switch (index) {

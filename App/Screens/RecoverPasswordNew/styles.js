@@ -1,6 +1,6 @@
 import {StyleSheet, Dimensions} from 'react-native';
 import {scaledHeight,scaledWidth} from '../../Utils/Resolution';
-//import {Colors} from 'react-native/Libraries/NewAppScreen';
+// import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const {width} = Dimensions.get('window');
 
@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
     borderColor: '#56565A',
     borderWidth: 1,
     width: width / 3.3,
-    // borderRadius:scaledHeight(14),
+    //  borderRadius:scaledHeight(14),
     height: scaledHeight(28),
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
@@ -33,7 +33,7 @@ export const styles = StyleSheet.create({
     borderColor: '#56565A',
     borderWidth: 1,
     width: width / 2,
-    //borderRadius:scaledHeight(24),
+    // borderRadius:scaledHeight(24),
     height: scaledHeight(48),
     backgroundColor: '#FFFFFF',
     alignSelf: 'center',
@@ -65,12 +65,12 @@ export const styles = StyleSheet.create({
   userIDTextBox: {
     marginLeft: '4%',
     marginRight: '4%',
-    // marginBottom:scaledHeight(18)
+    //  marginBottom:scaledHeight(18)
   },
   userIDTextBoxError: {
     marginLeft: '4%',
     marginRight: '4%',
-    //marginBottom:scaledHeight(18),
+    // marginBottom:scaledHeight(18),
     borderColor: 'red',
   },
   forgotLineText: {
@@ -191,8 +191,8 @@ export const styles = StyleSheet.create({
     width: '80%',
     marginLeft: '10%',
     marginRight: '10%',
-    //marginTop:scaledHeight(42),
-    // borderRadius:scaledHeight(25),
+    // marginTop:scaledHeight(42),
+    //  borderRadius:scaledHeight(25),
     height: scaledHeight(50),
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
@@ -211,7 +211,7 @@ export const styles = StyleSheet.create({
     marginLeft: '10%',
     marginRight: '10%',
     marginTop: scaledHeight(15),
-    // borderRadius:scaledHeight(25),
+    //  borderRadius:scaledHeight(25),
     height: scaledHeight(50),
     backgroundColor: '#544A54',
     alignItems: 'center',
@@ -231,7 +231,7 @@ export const styles = StyleSheet.create({
     marginLeft: '4%',
     marginRight: '4%',
     height: scaledHeight(70),
-    //backgroundColor:'#aeb3b4'
+    // backgroundColor:'#aeb3b4'
     backgroundColor: '#878280',
   },
   refreshSecurity: {
@@ -283,7 +283,7 @@ export const styles = StyleSheet.create({
   },
   refreshOtp: {
     color: '#0000FF',
-    //textDecorationLine:"underline",
+    // textDecorationLine:"underline",
     fontSize: scaledHeight(16),
     fontWeight: '500',
   },
@@ -292,7 +292,7 @@ export const styles = StyleSheet.create({
     borderBottomColor: '#0000FF',
     borderBottomWidth: 1,
     alignSelf: 'center',
-    //marginBottom:scaledHeight(42)
+    // marginBottom:scaledHeight(42)
   },
   hintView: {
     flex: 1,
@@ -306,17 +306,17 @@ export const styles = StyleSheet.create({
     borderBottomColor: '#0000FF',
     borderBottomWidth: 1,
     alignSelf: 'center',
-    //marginBottom:scaledHeight(42)
+    // marginBottom:scaledHeight(42)
   },
   passwordTextBox: {
     marginLeft: '4%',
     marginRight: '4%',
-    // marginBottom:scaledHeight(18)
+    //  marginBottom:scaledHeight(18)
   },
   passwordTextBoxError: {
     marginLeft: '4%',
     marginRight: '4%',
-    //marginBottom:scaledHeight(18),
+    // marginBottom:scaledHeight(18),
     borderColor: 'red',
   },
   errorMessage: {

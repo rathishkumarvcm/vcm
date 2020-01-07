@@ -23,7 +23,7 @@ const profileSettingsTempData = [
 class editRelationshipComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             enableBiometric: false,
@@ -294,9 +294,9 @@ class editRelationshipComponent extends Component {
 
     render() {
 
-        const date = new Date().getDate(); //Current Date
-        const month = new Date().getMonth() + 1; //Current Month
-        const year = new Date().getFullYear(); //Current Year
+        const date = new Date().getDate(); // Current Date
+        const month = new Date().getMonth() + 1; // Current Month
+        const year = new Date().getFullYear(); // Current Year
         const currentdate = month + "-" + date + "-" + year;
 
         let profileRelationData = profileSettingsTempData;

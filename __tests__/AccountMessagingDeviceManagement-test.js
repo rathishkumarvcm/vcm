@@ -5,13 +5,13 @@ import AccountMessagingDeviceManagement from '../App/Screens/AccountMessagingDev
 
 describe('Account Messaging Device Management',()=>{
 
-    // Snap shot 
+    //  Snap shot 
     it('Match Snapshot', () => {  
       const tree = renderer.create(<AccountMessagingDeviceManagement />).toJSON();
       expect(tree).toMatchSnapshot();
     });
   
-    // Render using shallow - shallow not includes child component
+    //  Render using shallow - shallow not includes child component
     test('render',()=>{
       const component = shallow(<AccountMessagingDeviceManagement />);  
       component.render();

@@ -1,10 +1,10 @@
-// packages
+//  packages
 import { Dimensions, PixelRatio } from 'react-native';
 
-// Retrieve initial screen's width
+//  Retrieve initial screen's width
 let screenWidth = Dimensions.get('window').width;
 
-// Retrieve initial screen's height
+//  Retrieve initial screen's height
 let screenHeight = Dimensions.get('window').height;
 
 /**
@@ -14,10 +14,10 @@ let screenHeight = Dimensions.get('window').height;
  * @return {number}              The calculated dp depending on current device's screen width.
  */
 const widthPercentageToDP = widthPercent => {
-  // Parse string percentage input and convert it to number.
+  //  Parse string percentage input and convert it to number.
   const elemWidth = parseFloat(widthPercent);
-  // Use PixelRatio.roundToNearestPixel method in order to round the layout
-  // size (dp) to the nearest one that correspons to an integer number of pixels.
+  //  Use PixelRatio.roundToNearestPixel method in order to round the layout
+  //  size (dp) to the nearest one that correspons to an integer number of pixels.
   return PixelRatio.roundToNearestPixel(Dimensions.get('window').width * elemWidth / 100);
 };
 
@@ -28,11 +28,11 @@ const widthPercentageToDP = widthPercent => {
  * @return {number}               The calculated dp depending on current device's screen height.
  */
 const heightPercentageToDP = heightPercent => {
-  // Parse string percentage input and convert it to number.
+  //  Parse string percentage input and convert it to number.
   const elemHeight = parseFloat(heightPercent);
-  // Use PixelRatio.roundToNearestPixel method in order to round the layout
-  // size (dp) to the nearest one that correspons to an integer number of pixels.
-  // console.log("Dimensions.get('window').height",Dimensions.get('window').height)
+  //  Use PixelRatio.roundToNearestPixel method in order to round the layout
+  //  size (dp) to the nearest one that correspons to an integer number of pixels.
+  //  console.log("Dimensions.get('window').height",Dimensions.get('window').height)
   return PixelRatio.roundToNearestPixel(Dimensions.get('window').height * elemHeight / 100);
 };
 
@@ -47,11 +47,11 @@ const heightPercentageToDP = heightPercent => {
  */
 const listenOrientationChange = that => {
   Dimensions.addEventListener('change', newDimensions => {
-    // Retrieve and save new dimensions
+    //  Retrieve and save new dimensions
     screenWidth = newDimensions.window.width;
     screenHeight = newDimensions.window.height;
 
-    // Trigger screen's rerender with a state update of the orientation variable
+    //  Trigger screen's rerender with a state update of the orientation variable
     that.setState({
       orientation: screenWidth < screenHeight ? 'portrait' : 'landscape'
     });

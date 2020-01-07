@@ -18,7 +18,7 @@ import gblStrings from '../../Constants/GlobalStrings';
 import {
     CustomCheckBox
 } from '../../AppComponents';
-// import { MaskService } from 'react-native-masked-text';
+//  import { MaskService } from 'react-native-masked-text';
 
 
 class CSMOtp extends Component {
@@ -26,11 +26,11 @@ class CSMOtp extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // additionaProtection:true,
-            // radioButton: false,
+            //  additionaProtection:true,
+            //  radioButton: false,
             radioButtonIndex: 0,
-            // mobileNo:"",
-            // email:"",
+            //  mobileNo:"",
+            //  email:"",
             signInMethods: [],
             saveCurrentDevice: false,
         };
@@ -41,7 +41,7 @@ class CSMOtp extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        // console.log("componentDidUpdate::::> "+prevState);
+        //  console.log("componentDidUpdate::::> "+prevState);
         if (this.props !== prevProps) {
             if (this.props && this.props.signInMethodsData && this.props.signInMethodsData.saveCurrentDevice) {
                 this.setState({
@@ -71,7 +71,7 @@ class CSMOtp extends Component {
         if (this.props && this.props.initialState && this.props.initialState.email && this.props.initialState.phone) {
             this.renderMaskedInput();
         }
-        // console.log("------>mobbbbb",this.state.email,this.state.mobileNo);
+        //  console.log("------>mobbbbb",this.state.email,this.state.mobileNo);
         if (this.props && this.props.signInMethodsData && this.props.signInMethodsData.saveCurrentDevice) {
             this.setState({
                 saveCurrentDevice: this.props.signInMethodsData.saveCurrentDevice
@@ -105,8 +105,8 @@ class CSMOtp extends Component {
             mobileNo : this.props.initialState.phone,
           }); */
         const strmobile = this.props.initialState.phone;
-        // console.log("------>mobbbbbnext", strmobile);
-        // var maskmobile = strmobile.substring(0,2)+strmobile.substring(2,8).replace(/\d/g,"*")+strmobile.substring(8,10)
+        //  console.log("------>mobbbbbnext", strmobile);
+        //  var maskmobile = strmobile.substring(0,2)+strmobile.substring(2,8).replace(/\d/g,"*")+strmobile.substring(8,10)
         const maskmobile = strmobile.substring(4, 6) + strmobile.substring(6, 12).replace(/\d/g, "*") + strmobile.substring(12, 14);
         const myemailId = this.props.initialState.email;
 
@@ -177,7 +177,7 @@ class CSMOtp extends Component {
             otpMethodType: otpType
         };
         this.props.signInMethods("signInMethodsData", payloadData);
-        // console.log("----signInMethods",payloadData);
+        //  console.log("----signInMethods",payloadData);
         this.props.navigation.navigate('ChangeSignInMethod', {
             showAlert: true,
             message: gblStrings.userManagement.otp,
@@ -189,28 +189,28 @@ class CSMOtp extends Component {
         if (index !== this.state.radioButtonIndex) {
             this.setState({
                 radioButtonIndex: index,
-                // radioButton: false
+                //  radioButton: false
             });
-            //     if(index == 0)
-            //     {
-            //         //alert("OTP Selected");
-            //         this.setState({alertString:gblStrings.userManagement.otp});
-            //     }
-            //     else if(index == 1)
-            //     {
-            //         //alert("Soft Token Selected");
-            //         this.setState({alertString:gblStrings.userManagement.softToken,initialSelection:true});
-            //     }
-            //     else if(index == 2)
-            //     {
-            //         //alert("Push Notification");
-            //         this.setState({alertString:gblStrings.userManagement.pushNotification,initialSelection:true});
-            //     }   
-            // }
-            // else {
-            //     this.setState({
-            //         radioButton: false
-            //     });
+            //      if(index == 0)
+            //      {
+            //          // alert("OTP Selected");
+            //          this.setState({alertString:gblStrings.userManagement.otp});
+            //      }
+            //      else if(index == 1)
+            //      {
+            //          // alert("Soft Token Selected");
+            //          this.setState({alertString:gblStrings.userManagement.softToken,initialSelection:true});
+            //      }
+            //      else if(index == 2)
+            //      {
+            //          // alert("Push Notification");
+            //          this.setState({alertString:gblStrings.userManagement.pushNotification,initialSelection:true});
+            //      }   
+            //  }
+            //  else {
+            //      this.setState({
+            //          radioButton: false
+            //      });
         }
     }
 

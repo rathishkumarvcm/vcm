@@ -1,7 +1,7 @@
 import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { StyleSheet } from "react-native";
-// import { Modal } from 'react-native-router-flux';
+//  import { Modal } from 'react-native-router-flux';
 
 
 
@@ -25,11 +25,11 @@ const styles = StyleSheet.create({
 
 const GActivityIndicatorHOC = () =>{
         return (
-            // <Modal>
+            //  <Modal>
               <View style={[styles.container]}>
                   <ActivityIndicator size="large" color="#0000ff" />
               </View>
-            //  </Modal>
+            //   </Modal>
             );
 };
 

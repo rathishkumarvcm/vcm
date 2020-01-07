@@ -1,13 +1,13 @@
-/* global require */
+
 import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Dimensions, Image, FlatList, Modal } from 'react-native';
-import { GIcon } from './GIcon';
-import { scaledHeight, scaledWidth } from '../Utils/Resolution';
 import PropTypes from "prop-types";
 import { Auth } from "aws-amplify";
 import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
 import { NavigationActions } from 'react-navigation';
-import { DrawerActions } from 'react-navigation-drawer'
+import { DrawerActions } from 'react-navigation-drawer';
+import { GIcon } from './GIcon';
+import { scaledHeight, scaledWidth } from '../Utils/Resolution';
 
 const { width } = Dimensions.get('window');
 
@@ -38,7 +38,7 @@ const newData = [
     title: 'Marketing and Privacy',
   },
   {
-    //navigateTo:'Logout'
+    //  navigateTo:'Logout'
     title: 'Sign Out',
   }
 ];
@@ -51,6 +51,29 @@ const styles = StyleSheet.create({
     paddingLeft: '4%',
     paddingRight: '4%',
     width: '100%'
+  },
+  modalGreenColorText: {
+    marginTop: 10
+  },
+  modalImage: {
+    width: 30, height: 30, marginTop: 20
+  },
+  modalInsideView: {
+    alignItems: 'center',
+    backgroundColor: '#F7FAFF',
+    height: "100%",
+    justifyContent: 'center',
+    width: "100%",
+
+  },
+  modalRedColorText: {
+    marginTop: 10
+  },
+  modalView: {
+    alignItems: 'center',
+    backgroundColor: '#F7FAFF',
+    flex: 1,
+    justifyContent: 'center',
   },
   registernowButton: {
     borderColor: '#61285F',
@@ -66,29 +89,6 @@ const styles = StyleSheet.create({
     fontSize: scaledHeight(10),
     color: '#56565A'
   },
-  modalView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F7FAFF',
-  },
-  modalInsideView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F7FAFF',
-    height: "100%",
-    width: "100%",
-
-  },
-  modalRedColorText: {
-    marginTop: 10
-  },
-  modalGreenColorText: {
-    marginTop: 10
-  },
-  modalImage: {
-    width: 30, height: 30, marginTop: 20
-  },
   signIntext: {
     textAlign: 'left',
     fontSize: scaledHeight(25),
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
 class GHeaderComponent extends Component {
   constructor(props) {
     super(props);
-    //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+    // set true to isLoading if data for this screen yet to be received and wanted to show loader.
     this.state = {
       menuList: false,
       SignOut: false,
@@ -123,7 +123,7 @@ class GHeaderComponent extends Component {
 
   signOut = () => {
 
-    // For removing key
+    //  For removing key
     RNSecureKeyStore.remove("currentSession")
       .then((res) => {
         console.log(res);
@@ -189,7 +189,7 @@ class GHeaderComponent extends Component {
     return (
 
       <>
-        {this.props.register ?
+        {this.props.register ? (
           <TouchableOpacity style={styles.loginHeader}>
             <TouchableOpacity
               style={{ width: scaledWidth(100) }}
@@ -212,9 +212,10 @@ class GHeaderComponent extends Component {
               />
             </TouchableOpacity>
           </TouchableOpacity>
+        )
 
 
-          :
+          : (
           <>
             <TouchableOpacity style={styles.loginHeader}>
               <TouchableOpacity style={{ width: '25%', height: scaledWidth(50) }}
@@ -228,7 +229,8 @@ class GHeaderComponent extends Component {
 
               <View style={{ width: '15%' }} />
 
-              {!this.props.registerShow ? <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', marginTop: scaledHeight(15) }}
+              {!this.props.registerShow ? (
+<TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', marginTop: scaledHeight(15) }}
                 onPress={this.setMenu}
               >
                 <GIcon
@@ -237,7 +239,8 @@ class GHeaderComponent extends Component {
                   size={40}
                   color="black"
                 />
-              </TouchableOpacity> : null}
+              </TouchableOpacity>
+) : null}
 
               <View style={{ width: '10%' }} />
 
@@ -271,7 +274,7 @@ class GHeaderComponent extends Component {
                 />
               </TouchableOpacity>
             </TouchableOpacity>
-            {this.state.menuList &&
+            {this.state.menuList && (
               <TouchableOpacity
                 onPress={this.navigateProfile}
                 style={{ height: scaledHeight(250), marginTop: scaledHeight(85), zIndex: 2, position: 'absolute', borderWidth: 1, width: '100%', borderColor: "#DEDEDF", backgroundColor: 'white' }}
@@ -293,15 +296,14 @@ class GHeaderComponent extends Component {
                           <Image source={require('../Images/logo.png')} style={styles.modalImage} />
                         </View>
                       </View>
-                    </Modal>) : null
+                    </Modal>
+) : null
                 }
-              </TouchableOpacity>}
+              </TouchableOpacity>
+            )}
 
           </>
-
-
-
-        }
+        )}
 
 
       </>

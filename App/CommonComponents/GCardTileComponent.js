@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
         alignItems:'center'
     },
     wrapper:{
-        //flex:0.1,
+        // flex:0.1,
         marginTop:'1%',
         textAlign:'center',
         alignItems:'center',
@@ -25,29 +25,29 @@ export const styles = StyleSheet.create({
         flex:1,
         flexDirection:'row',
         height:scaledHeight(50),
-        //width:'90%',
-        //borderRightWidth:1,
-        //borderLeftWidth:1,
-        //justifyContent:'center',
-        //alignItems:'center'
+        // width:'90%',
+        // borderRightWidth:1,
+        // borderLeftWidth:1,
+        // justifyContent:'center',
+        // alignItems:'center'
     },
     titileConatainerB:{
         flex: 1,
         flexDirection:'row',
         height:scaledHeight(50),
-        //borderLeftWidth:1,
-        //borderRightWidth:1,
-        //justifyContent:'center',
-        //alignItems:'center'
+        // borderLeftWidth:1,
+        // borderRightWidth:1,
+        // justifyContent:'center',
+        // alignItems:'center'
     },
     detailStyle:{
         height:scaledHeight(20),
         fontWeight:'bold'
-       // textAlign:'center'
+       //  textAlign:'center'
     },
     addMore:{
             height:scaledHeight(15),
-           // textAlign:'center',
+           //  textAlign:'center',
             color:'blue'
         },
     addView : {

@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(9),
         width: '100%'
     },
-    disclaimerTitleTxt: { // termsofuseText
+    disclaimerTitleTxt: { //  termsofuseText
         color: '#56565A',        
         fontSize: scaledHeight(16),
         fontWeight: 'bold',       
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
         width: '80%'
     },
     lblLine: {
-        // width:"100%",
+        //  width:"100%",
         backgroundColor: '#707070',
         flexGrow: 1,       
         height: scaledHeight(1),      
@@ -105,20 +105,20 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     newVictorySection: {
-        //  marginTop: scaledHeight(150),           
+        //   marginTop: scaledHeight(150),           
         backgroundColor: '#FFFFFF',        
         flexGrow: 1,
         padding: scaledHeight(12),
         width: '100%',
     },
     normalBlackBtn: {
-        //  width: '90%',
+        //   width: '90%',
         alignContent: 'center',
         alignItems: 'center',        
         backgroundColor: '#544A54',       
         borderColor: "#61285F45",
         borderWidth: 1,
-        // borderRadius: scaledHeight(24),
+        //  borderRadius: scaledHeight(24),
         height: scaledHeight(50),       
         justifyContent: 'center',       
         marginHorizontal: scaledHeight(37),
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     normalBlackDisabledBtn: {
-        //  width: '90%',        
+        //   width: '90%',        
         alignContent: 'center',
         alignItems: 'center',
         backgroundColor: '#544A54',        
@@ -150,13 +150,13 @@ const styles = StyleSheet.create({
         marginVertical: scaledHeight(7.5),        
     },
     normalWhiteBtn: {
-        //  width: '90%',
+        //   width: '90%',
         alignContent: 'center',
         alignItems: 'center',        
         backgroundColor: '#fff',        
         borderColor: "#61285F45",
         borderWidth: 1,
-       // borderRadius: scaledHeight(24),
+       //  borderRadius: scaledHeight(24),
         height: scaledHeight(50),      
         justifyContent: 'center',
         marginHorizontal: scaledHeight(37),

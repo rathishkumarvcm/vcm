@@ -70,7 +70,7 @@ export const styles = StyleSheet.create({
     userIDTextBoxError:{
         marginLeft:'4%',
         marginRight:'4%',
-        //marginBottom:scaledHeight(10),
+        // marginBottom:scaledHeight(10),
         borderColor:'red'
     },
     forgotLineText:{
@@ -107,7 +107,7 @@ export const styles = StyleSheet.create({
         marginLeft:'14%',
         marginRight:'14%',
         marginTop:scaledHeight(12),
-        //borderRadius:scaledHeight(25),
+        // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#56565A',
         alignItems:'center',
@@ -125,7 +125,7 @@ export const styles = StyleSheet.create({
         marginLeft:'14%',
         marginRight:'14%',
         marginTop:scaledHeight(12),
-        //borderRadius:scaledHeight(25),
+        // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#FFFFFF',
         alignItems:'center',

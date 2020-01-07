@@ -74,7 +74,7 @@ class PaginationComponent extends Component {
         let contentOffset = e.nativeEvent.contentOffset;
         let viewSize = e.nativeEvent.layoutMeasurement;
     
-        // Divide the horizontal offset by the width of the view to see which page is visible
+        //  Divide the horizontal offset by the width of the view to see which page is visible
         let pageNum = Math.floor(contentOffset.x / viewSize.width);
         this.setState({
           pageNumber : pageNum

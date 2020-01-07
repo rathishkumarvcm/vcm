@@ -22,21 +22,21 @@ class RecoveryOtpComponent extends Component {
       err_otp: '',
       phoneNo:'',     
     };
-    // set true to isLoading if data for this screen yet to be received and wanted to show loader.    
+    //  set true to isLoading if data for this screen yet to be received and wanted to show loader.    
   }
 
   
 
-//   static getDerivedStateFromProps(props){
-//     //if(props.initialState)
-//     if(this.props && this.props.initialState && this.props.initialState.phone){
-//       this.setState({
-//         phoneNo : this.protectPhone(this.props.initialState.phone)
-//       });
-//     }
-//     else 
-//       return null;
-//  } 
+//    static getDerivedStateFromProps(props){
+//      // if(props.initialState)
+//      if(this.props && this.props.initialState && this.props.initialState.phone){
+//        this.setState({
+//          phoneNo : this.protectPhone(this.props.initialState.phone)
+//        });
+//      }
+//      else 
+//        return null;
+//   } 
 
 componentDidMount(){ 
   if(this.props && this.props.initialState && this.props.initialState.phone){

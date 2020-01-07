@@ -24,7 +24,7 @@ import { scaledHeight } from '../../Utils/Resolution';
 class registerAddressComponent extends Component {
     constructor(props){
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
             isLoading:false,
             enableBiometric:false,
@@ -195,7 +195,7 @@ class registerAddressComponent extends Component {
             borderRadius:5,
             marginLeft:'4%',
             marginRight:'4%',
-            // marginBottom:scaledHeight(8),
+            //  marginBottom:scaledHeight(8),
             width : '92%',
             height:50
            }}
@@ -203,7 +203,7 @@ class registerAddressComponent extends Component {
            rippleCentered={true}
            inputContainerStyle={{ borderBottomColor: 'transparent' }}
            dropdownMargins={{min:16,max:160}}
-           //dropdownPosition={20}
+           // dropdownPosition={20}
            
                             data={data}
         />*/}

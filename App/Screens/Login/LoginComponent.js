@@ -19,11 +19,11 @@ const awsmobile = {
     "oauth": {}
 };
 
-//Amplify.configure(awsmobile);
+// Amplify.configure(awsmobile);
 
 const testawsMobile = {
     "aws_project_region": "us-east-2",
-    // "aws_cognito_identity_pool_id": "us-east-2:47948e7d-eb40-4622-918a-a5682bb6796f",
+    //  "aws_cognito_identity_pool_id": "us-east-2:47948e7d-eb40-4622-918a-a5682bb6796f",
     "aws_cognito_region": "us-east-2",
     "aws_user_pools_id": "us-east-2_TOS87x5Rt",
     "aws_user_pools_web_client_id": "3a3rpdjb4gi1iqu1g6i2blk37c",
@@ -36,7 +36,7 @@ Amplify.configure(testawsMobile);
 class LoginComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             enableBiometric: false,
@@ -45,7 +45,7 @@ class LoginComponent extends Component {
             touchIdEnrolled: false,
             validationEmail: true,
             validationPassword: true,
-            // password: '',
+            //  password: '',
             email: 'rathish.kumar2@cognizant.com',
             registeredOnlineID: '',
             switchOn: true,
@@ -112,21 +112,21 @@ class LoginComponent extends Component {
                         touchIdEnrolled: true,
                         faceIdEnrolled: false
                     });
-                    // Touch ID is supported on iOS
+                    //  Touch ID is supported on iOS
                 }
                 else if (biometryType === 'FaceID') {
                     this.setState({
                         faceIdEnrolled: true,
                         touchIdEnrolled: false
                     });
-                    // Face ID is supported on iOS
+                    //  Face ID is supported on iOS
                 }
                 else if (biometryType === true) {
                     this.setState({
                         touchIdEnrolled: true,
                         faceIdEnrolled: false
                     });
-                    // Touch ID is supported on Android
+                    //  Touch ID is supported on Android
                 }
             }).catch(error => {
                 this.setState({
@@ -154,7 +154,7 @@ class LoginComponent extends Component {
             });
         }
 
-        // Special MFA Requirements
+        //  Special MFA Requirements
         let onlineIdVerify = this.props.navigation.getParam('onlineIdCreated');
         if (onlineIdVerify !== undefined) {
             this.setState({
@@ -246,7 +246,7 @@ class LoginComponent extends Component {
                 enableBiometric: false
             });
         }
-        //this.setState({isLoading:result,enableBiometric:false});
+        // this.setState({isLoading:result,enableBiometric:false});
     }
 
     validateEmail = () => {
@@ -361,8 +361,8 @@ class LoginComponent extends Component {
 
 
 
-            //this.props.navigation.navigate('otpAuth');
-            //this.props.navigation.navigate('dashboard');
+            // this.props.navigation.navigate('otpAuth');
+            // this.props.navigation.navigate('dashboard');
         }).catch(error => {
             alert("Username and Password Incorrect.");
             console.log(error);
@@ -388,7 +388,7 @@ class LoginComponent extends Component {
     navigateEmail = () => this.props.navigation.navigate('registerEmail');
 
     navigateDashboard = () => this.props.navigation.navigate('dashboard');
-    //Menu
+    // Menu
     navigateToDashBoard = () => this.props.navigation.navigate('dashboardScreen')
 
     navigateCommonUI = () => {
@@ -406,11 +406,11 @@ class LoginComponent extends Component {
             }, (err) => {
                 console.log(err);
             });
-        //this.props.navigation.navigate('Common');
+        // this.props.navigation.navigate('Common');
 
     }
 
-    //Recover password navigation
+    // Recover password navigation
     navigationResetPassword = () => this.props.navigation.navigate('passwordRecovery')
 
     navigationRetrieveOnlineID = () => this.props.navigation.navigate("retrieveOnlineId")
@@ -483,11 +483,11 @@ class LoginComponent extends Component {
                         </View>
                         <GInputComponent
                             propInputStyle={styles.userIDTextBox}
-                            //placeholder={"E-mail"}
+                            // placeholder={"E-mail"}
                             onChangeText={this.setEmail}
-                            //onBlur={this.validateEmail}
+                            // onBlur={this.validateEmail}
                             value={this.state.email}
-                            //validateError={this.state.validateEmail}
+                            // validateError={this.state.validateEmail}
                             errorFlag={!this.state.validationEmail}
                             errorText={"Enter a valid email."}
                             maxLength={30}
@@ -501,9 +501,9 @@ class LoginComponent extends Component {
 
                         <GInputComponent
                             propInputStyle={!this.state.validationPassword ? styles.userIDTextBoxError : styles.userIDTextBox}
-                            //placeholder={"Password"}
+                            // placeholder={"Password"}
                             onChangeText={this.setPassword}
-                            //onBlur={this.validatePassword}
+                            // onBlur={this.validatePassword}
                             validateError={this.state.validatePassword}
                             value={this.state.password}
                             secureTextEntry
@@ -543,7 +543,7 @@ class LoginComponent extends Component {
                             buttonText="Sign In"
                             textStyle={styles.signInButtonText}
                             onPress={this.navigateDashboard}
-                        //onPress={this.navigateDashboard}
+                        // onPress={this.navigateDashboard}
                         />
                         <View>
                             {
@@ -587,7 +587,7 @@ class LoginComponent extends Component {
                             buttonText="Cognito Sign In"
                             textStyle={styles.signInButtonText}
                             onPress={this.signIn}
-                        //onPress={this.navigateDashboard}
+                        // onPress={this.navigateDashboard}
                         />
 
 
@@ -633,7 +633,7 @@ class LoginComponent extends Component {
                                 buttonStyle={styles.newVictoryButton}
                                 buttonText="Native Menu"
                                 textStyle={styles.newVictoryButtonText}
-                                //Menu
+                                // Menu
                                 onPress={this.navigateToDashBoard}
                             />
                         </View>

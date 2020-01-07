@@ -1,13 +1,13 @@
 # This file contains the fastlane.tools configuration
-# You can find the documentation at https://docs.fastlane.tools
+# You can find the documentation at https:// docs.fastlane.tools
 #
 # For a list of all available actions, check out
 #
-#     https://docs.fastlane.tools/actions
+#     https:// docs.fastlane.tools/actions
 #
 # For a list of all available plugins, check out
 #
-#     https://docs.fastlane.tools/plugins/available-plugins
+#     https:// docs.fastlane.tools/plugins/available-plugins
 #
 
 # Uncomment the line if you want fastlane to automatically update itself
@@ -19,7 +19,7 @@ platform :ios do
 
   desc "Description of what the lane does"
   lane :custom_lane do
-    # add actions here: https://docs.fastlane.tools/actions
+    # add actions here: https:// docs.fastlane.tools/actions
   end
 
   desc "Submit a new Beta Build to Firebase App Distribution Beta"
@@ -63,7 +63,7 @@ platform :ios do
         groups: "ctsdevelopers, ctstesters",
         release_notes: "VCM Member Services IOS App New Release",
         firebase_cli_path: "/usr/local/bin/firebase",
-        firebase_cli_token: "1//0gZoiIQ7Fx3LACgYIARAAGBASNwF-L9IrzzrV4B8Dw_BFL7NByOqErkCfg0tzS5F3RchhgGxGCyIjcErCrUzsQQFu4SCFm5cpKYU"
+        firebase_cli_token: "1// 0gZoiIQ7Fx3LACgYIARAAGBASNwF-L9IrzzrV4B8Dw_BFL7NByOqErkCfg0tzS5F3RchhgGxGCyIjcErCrUzsQQFu4SCFm5cpKYU"
     )
     # enable_automatic_code_signing(path: "my_project.xcodeproj")
 

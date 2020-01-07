@@ -34,7 +34,7 @@ const profileCountryProofData = [
 class editFamilyDetailComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             enableBiometric: false,
@@ -96,11 +96,11 @@ class editFamilyDetailComponent extends Component {
             }
         }
 
-        // if (this.props && this.props.initialState && this.props.initialState.firstName) {
-        //     this.setState({
-        //         profileName: this.props.initialState.firstName
-        //     });
-        // }
+        //  if (this.props && this.props.initialState && this.props.initialState.firstName) {
+        //      this.setState({
+        //          profileName: this.props.initialState.firstName
+        //      });
+        //  }
 
         let payload = [];
 

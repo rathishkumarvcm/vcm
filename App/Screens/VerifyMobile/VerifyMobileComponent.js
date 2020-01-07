@@ -8,7 +8,7 @@ import gblStrings from '../../Constants/GlobalStrings';
 class VerifyMobileComponent extends Component {
     constructor(props) {
         super(props);
-        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             validateMobile : false,
@@ -21,7 +21,7 @@ class VerifyMobileComponent extends Component {
     }
 
     navigateVerifyOTP = () =>{
-        // Joint Account , New User
+        //  Joint Account , New User
         const specialMFAUserType = (this.props && this.props.navigation && this.props.navigation.getParam('SpecialMFA',''));   
         this.props.navigation.navigate('passwordRecoveryOtp',{fromPage:'SpecialMFA',SpecialMFA:specialMFAUserType});   
     }

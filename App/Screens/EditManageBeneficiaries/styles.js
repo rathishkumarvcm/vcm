@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
   },
   distributionValueTxt: {
     color: '#B5B5B5',
-   // width: scaledHeight(60),
+   //  width: scaledHeight(60),
     height: scaledHeight(40),
     fontSize: scaledHeight(10),
     borderColor: '#B5B5B5',

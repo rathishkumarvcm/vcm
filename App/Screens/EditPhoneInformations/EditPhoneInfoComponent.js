@@ -20,7 +20,7 @@ let editDeleteMenuOption = [
 class EditPhoneInfoComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             enableBiometric: false,
@@ -121,7 +121,7 @@ class EditPhoneInfoComponent extends Component {
         }
     }
 
-    // Render Mobile Phone List with Menu Option - Edit and Delete
+    //  Render Mobile Phone List with Menu Option - Edit and Delete
 
     renderPhoneInformation = () => ({ item, index }) =>
         (<View style={styles.editEmailHolder}>
@@ -228,7 +228,7 @@ class EditPhoneInfoComponent extends Component {
         }
     }
 
-    // Render Home Number List with Menu Option - Edit and Delete
+    //  Render Home Number List with Menu Option - Edit and Delete
 
     renderHomeNumberInformation = () => ({ item, index }) =>
         (<View style={styles.editEmailHolder}>

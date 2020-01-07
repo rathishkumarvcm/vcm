@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Text,View,ScrollView,TouchableOpacity,FlatList } from 'react-native';
+import axios from "axios";
 import {styles} from './styles';
 import {GButtonComponent,GInputComponent,GIcon,GHeaderComponent} from '../../CommonComponents';
-//import { makeRequest } from "../../network/apiInterface";
-import axios from "axios";
+//  import { makeRequest } from "../../network/apiInterface";
 
 
 const accountData = [
@@ -48,7 +48,7 @@ const accountData = [
 class AccountInquiryComponent extends Component {
     constructor(props){
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
             accountNumber : '122',
             accountName: '',
@@ -58,7 +58,7 @@ class AccountInquiryComponent extends Component {
     }
 
     webServiceCall = () => {
-        axios.post('https://effrd3yhmi.execute-api.us-east-2.amazonaws.com/dev/v1-api-getaccountdetails', {
+        axios.post('https:// effrd3yhmi.execute-api.us-east-2.amazonaws.com/dev/v1-api-getaccountdetails', {
             
                 "companyNumber": 591,
                 "fundNumber": 30,
@@ -92,9 +92,11 @@ class AccountInquiryComponent extends Component {
     }
 
     selectTheFund = () => {
-        this.setState({
-            fundDropDown : !this.state.fundDropDown
-        });
+        this.setState(
+            //  prevState => ({fundDropDown: !prevState.fundDropDown}));
+            {fundDropDown : !this.state.fundDropDown});
+
+    
     }
 
     selectedFundDropDownValue = (value) => {
@@ -136,18 +138,18 @@ class AccountInquiryComponent extends Component {
 
             <View style={styles.signInView}>
                 <Text style={styles.signIntext}>
-                    {"Account Inquiry"}
+                    Account Inquiry
                 </Text>
             </View>
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"Account Number"}       
+                    Account Number       
                 </Text>
             </View>
             <TouchableOpacity style={{flexDirection:'row'}} onPress={this.selectTheAccount}>
                 <GInputComponent 
                     propInputStyle={styles.userIDTextBox1} 
-                    placeholder={""}
+                    placeholder=""
                     editable={false}
                     value={this.state.accountValueDropDown}
                 />
@@ -162,34 +164,37 @@ class AccountInquiryComponent extends Component {
                 </TouchableOpacity>
             </TouchableOpacity>
 
-            {this.state.accountDropDown && 
+            {this.state.accountDropDown && (
         <View style={{height:100,borderWidth:1,marginLeft:'4%',marginRight:'4%',width:'92%',borderWidth:1,borderColor : "#DEDEDF",backgroundColor:'white'}}>
             <FlatList
                 data={accountData}
                 renderItem={({ item }) => 
-                (<TouchableOpacity 
+                (
+<TouchableOpacity 
                     style={{height:33}} 
                     onPress={()=>this.selectedAccountDropDownValue(item.title)}
-                >
+>
                     <Text> {item.title} </Text>
-                 </TouchableOpacity>)
+</TouchableOpacity>
+)
                 }
         keyExtractor={item => item.id}
             />
-        </View> }
+        </View>
+      )}
 
 
 
 
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"Fund Number"}       
+                    Fund Number       
                 </Text>
             </View>
             <TouchableOpacity style={{flexDirection:'row'}} onPress={this.selectTheFund}>
                 <GInputComponent 
                     propInputStyle={styles.userIDTextBox1} 
-                    placeholder={""}
+                    placeholder=""
                     editable={false}
                     value={this.state.fundValueDropDown}
                 />
@@ -204,31 +209,34 @@ class AccountInquiryComponent extends Component {
                 </TouchableOpacity>
             </TouchableOpacity>
 
-            {this.state.fundDropDown && 
+            {this.state.fundDropDown && (
         <View style={{height:70,borderWidth:1,marginLeft:'4%',marginRight:'4%',width:'92%',borderWidth:1,borderColor : "#DEDEDF",backgroundColor:'white'}}>
             <FlatList
                 data={fundData}
                 renderItem={({ item }) => 
-                (<TouchableOpacity 
+                (
+<TouchableOpacity 
                     style={{height:33}} 
                     onPress={()=>this.selectedFundDropDownValue(item.title)}
-                >
+>
                     <Text> {item.title} </Text>
-                 </TouchableOpacity>)
+</TouchableOpacity>
+)
                 }
         keyExtractor={item => item.id}
             />
-        </View> }
+        </View>
+      )}
 
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"Company Number"}       
+                    Company Number       
                 </Text>
             </View>
             <TouchableOpacity style={{flexDirection:'row'}} onPress={this.selectTheCompany}>
                 <GInputComponent 
                     propInputStyle={styles.userIDTextBox1} 
-                    placeholder={""}
+                    placeholder=""
                     editable={false}
                     value={this.state.companyValueDropDown}
                 />
@@ -245,30 +253,33 @@ class AccountInquiryComponent extends Component {
 
             
 
-        {this.state.companyDropDown && 
+        {this.state.companyDropDown && (
         <View style={{height:33,borderWidth:1,marginLeft:'4%',marginRight:'4%',width:'92%',borderWidth:1,borderColor : "#DEDEDF",backgroundColor:'white'}}>
             <FlatList
                 data={companyData}
                 renderItem={({ item }) => 
-                (<TouchableOpacity 
+                (
+<TouchableOpacity 
                     style={{height:33}} 
                     onPress={()=>this.selectedCompanyDropDownValue(item.title)}
-                >
+>
                     <Text> {item.title} </Text>
-                 </TouchableOpacity>)
+</TouchableOpacity>
+)
                 }
         keyExtractor={item => item.id}
             />
-        </View> }
+        </View>
+      )}
 
 <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"USER NAME"}       
+                    USER NAME       
                 </Text>
 </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                placeholder={""}
+                placeholder=""
                 value={this.state.accountName}
                 editable={false}
             />

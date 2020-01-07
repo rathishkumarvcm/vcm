@@ -5,19 +5,19 @@ import AccountMessagingGeneralDocuments from '../App/Screens/AccountMessagingGen
 
 describe('Account Messaging General Documents',()=>{
 
-    // Snap shot 
+    //  Snap shot 
     it('Match Snapshot', () => {  
       const tree = renderer.create(<AccountMessagingGeneralDocuments />).toJSON();
       expect(tree).toMatchSnapshot();
     });
   
-    // Render using shallow - shallow not includes child component
+    //  Render using shallow - shallow not includes child component
     test('render',()=>{
       const component = shallow(<AccountMessagingGeneralDocuments />);  
       component.render();
     });
 
-    // Function testing 
+    //  Function testing 
     test('function testing',()=>{
       const component = shallow(<AccountMessagingGeneralDocuments />);
       const wrapper = new AccountMessagingGeneralDocuments;

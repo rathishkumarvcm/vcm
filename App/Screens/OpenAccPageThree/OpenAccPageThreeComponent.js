@@ -86,7 +86,7 @@ class OpenAccPageThreeComponent extends Component {
         const openAccPageThree = myInstance.getAccOpeningEditMode() ? (myInstance.getScreenStateData().openAccPageThree || {}):{};
 
         super(props);
-        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             isValidationSuccess: true,
@@ -131,7 +131,7 @@ class OpenAccPageThreeComponent extends Component {
             action: "",
             selectedFundInvestmentsData: [],
 
-            // Filters
+            //  Filters
             isFilterApplied: false,
             modalVisible: false,
             filtermindata: [...tempFiltermindata.map(v => ({ ...v, isActive: false }))],
@@ -142,7 +142,7 @@ class OpenAccPageThreeComponent extends Component {
             isAddBankAccount: false,
             isValidBankAccount: true,
             validBankAccountMsg: '',
-            // others
+            //  others
             ...openAccPageThree
         };
     }
@@ -284,7 +284,7 @@ class OpenAccPageThreeComponent extends Component {
         const { navigate } = navigation; 
         if (this.validateFields()) {
             const payload = this.getPayload();
-           // this.props.saveData("OpenAccPageThree", payload);
+           //  this.props.saveData("OpenAccPageThree", payload);
         
             myInstance.setSavedAccData(payload);
             const stateData = myInstance.getScreenStateData();
@@ -351,7 +351,7 @@ class OpenAccPageThreeComponent extends Component {
                 }
             }
 
-            //  alert(errMsg);
+            //   alert(errMsg);
         } else {
             this.callValidateBankAccount();
         }
@@ -465,7 +465,7 @@ class OpenAccPageThreeComponent extends Component {
         const {selectedFundInvestmentsData} = this.state;
         const newItems = [...selectedFundInvestmentsData];
         newItems[index][keyName] = text;
-       // newItems[index][keyName+"Validation"] = false;
+       //  newItems[index][keyName+"Validation"] = false;
         newItems[index].fundingOptionValidation = true;
         newItems[index].initialInvestmentValidation = true;
         newItems[index].monthlyInvestmentValidation = true;
@@ -494,7 +494,7 @@ class OpenAccPageThreeComponent extends Component {
         const { selectedFundInvestmentsData } = this.state;
         const newItems = [...selectedFundInvestmentsData];
         newItems[index][keyName] = date;
-        // newItems[index][keyName+"Validation"] = false;
+        //  newItems[index][keyName+"Validation"] = false;
         newItems[index].fundingOptionValidation = true;
         newItems[index].initialInvestmentValidation = true;
         newItems[index].monthlyInvestmentValidation = true;
@@ -519,7 +519,7 @@ class OpenAccPageThreeComponent extends Component {
         const {selectedFundInvestmentsData} = this.state;
         const newItems = [...selectedFundInvestmentsData];
         newItems[index][keyName] = !newItems[index][keyName];
-        // newItems[index][keyName+"Validation"] = false;
+        //  newItems[index][keyName+"Validation"] = false;
         newItems[index].fundingOptionValidation = true;
         newItems[index].initialInvestmentValidation = true;
         newItems[index].monthlyInvestmentValidation = true;
@@ -546,8 +546,8 @@ class OpenAccPageThreeComponent extends Component {
 
         }
 
-        // newSelectedData[index].isActive = false;
-        // newSelectedData.splice(index, 1);
+        //  newSelectedData[index].isActive = false;
+        //  newSelectedData.splice(index, 1);
         this.setState({
             fundList: newItems,
             selectedFundInvestmentsData: newSelectedData,
@@ -626,12 +626,12 @@ class OpenAccPageThreeComponent extends Component {
                 return i;
             }
         }
-        return -1; // to handle the case where the value doesn't exist
+        return -1; //  to handle the case where the value doesn't exist
     }
 
     onClickRowItem = (item, index) => () => {
         AppUtils.debugLog(`onSelectFundList:: ${ item.fundNumber}`);
-        //  this.props.navigation.navigate({ routeName: 'investmentPlanInfo', key: 'investmentPlanInfo' })
+        //   this.props.navigation.navigate({ routeName: 'investmentPlanInfo', key: 'investmentPlanInfo' })
         const { navigation} = this.props;
         const { push } = navigation;  
         push('investmentPlanInfo', { fundDetails: item.fundNumber });
@@ -797,7 +797,7 @@ class OpenAccPageThreeComponent extends Component {
 
     validateFields = () => {
 
-        // return this.props.navigation.navigate({ routeName: 'openAccPageFour', key: 'openAccPageFour' });
+        //  return this.props.navigation.navigate({ routeName: 'openAccPageFour', key: 'openAccPageFour' });
 
         let errMsg = "";
         let isValidationSuccess = false;
@@ -904,7 +904,7 @@ class OpenAccPageThreeComponent extends Component {
                 isValidationSuccess,
                 errMsg: isValidationSuccess === false ? errMsg : ""
             });
-           // alert(errMsg);
+           //  alert(errMsg);
         }
 
         return isValidationSuccess;
@@ -914,7 +914,7 @@ class OpenAccPageThreeComponent extends Component {
 
 
 
-    // Modal - Filter Funds
+    //  Modal - Filter Funds
     setModalVisible = (visible) => () => {
         const {applyFilterState} = this.state;
 
@@ -927,7 +927,7 @@ class OpenAccPageThreeComponent extends Component {
         }
     }
 
-    // Apply Filter Actions  
+    //  Apply Filter Actions  
     applyFilterAction = (visible) => () => {
         const {getFundListData} = this.props;
         const { 
@@ -983,7 +983,7 @@ class OpenAccPageThreeComponent extends Component {
         getFundListData(fundListPayload);
     }
 
-    // Clear Filter Actions  
+    //  Clear Filter Actions  
     clearFilterAction = () => {
         this.setState({ applyFilterState: false });
         const { 
@@ -1003,7 +1003,7 @@ class OpenAccPageThreeComponent extends Component {
         });
     }
 
-    // Construct Filter values from Master Data on Clicking Filter Funds
+    //  Construct Filter values from Master Data on Clicking Filter Funds
     constructFilterData = () => {
 
         const { masterLookupStateData} = this.props;
@@ -1037,7 +1037,7 @@ class OpenAccPageThreeComponent extends Component {
         });
     }
 
-    // Checkbox selection on Clicking Filters 
+    //  Checkbox selection on Clicking Filters 
     onCheckboxSelect = (fromtype, item, index) => () => {
         AppUtils.debugLog('Index : ', index);
         AppUtils.debugLog('Checkbox Selected : ', `${item.key } ${ item.value } ${ item.isActive}`);
@@ -1071,7 +1071,7 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     navigateCompareFunds= () =>{
-        // AppUtils.debugLog(this.state.selectedFundInvestmentsData);
+        //  AppUtils.debugLog(this.state.selectedFundInvestmentsData);
         const {selectedFundInvestmentsData} = this.state;
         const { navigation} = this.props;
         const { push } = navigation;  
@@ -1081,7 +1081,7 @@ class OpenAccPageThreeComponent extends Component {
                 selectedFundInvestmentsData.map((item,index)=>{                   
                     fundSelectedCompare = `${fundSelectedCompare.concat(`fundNumber${index+1}=${item.fundNumber}`)}&`;
                 });                                               
-               // AppUtils.debugLog("Selected Funds:"+fundSelectedCompare);
+               //  AppUtils.debugLog("Selected Funds:"+fundSelectedCompare);
                if (fundSelectedCompare !== null && fundSelectedCompare !== "") {
                    push('compareFunds', { fundDetails: fundSelectedCompare });
                }
@@ -1127,9 +1127,9 @@ class OpenAccPageThreeComponent extends Component {
         const { navigation,accOpeningData,masterLookupStateData,addBankAccount} = this.props;
         let tempFundListData = [];
         const currentPage = 3;
-        const date = new Date().getDate(); // Current Date
-        const month = new Date().getMonth() + 1; // Current Month
-        const year = new Date().getFullYear(); // Current Year
+        const date = new Date().getDate(); //  Current Date
+        const month = new Date().getMonth() + 1; //  Current Month
+        const year = new Date().getFullYear(); //  Current Year
         const currentdate = `${month}-${date}-${year}`;
         tempFundListData = fundList.length > minCount ? fundList.slice(0, minCount) : fundList;
 
@@ -1471,7 +1471,7 @@ class OpenAccPageThreeComponent extends Component {
                                     {gblStrings.accManagement.fundYourInvest}
                                 </Text>
                                 <TouchableOpacity
-                                    //  onPress={() => { alert("Expand/Cllapse") }}
+                                    //   onPress={() => { alert("Expand/Cllapse") }}
                                     activeOpacity={0.8}
                                     accessibilityRole="button"
                                 >
@@ -1521,7 +1521,7 @@ class OpenAccPageThreeComponent extends Component {
                                                     dropDownName={gblStrings.accManagement.fundingOptions}
                                                     data={tempFundOptionsData}
                                                     changeState={this.onPressDropDownForInvestment("fundingOptionDropDown", index)}
-                                                   // showDropDown={this.state.selectedFundInvestmentsData[index].fundingOptionDropDown}
+                                                   //  showDropDown={this.state.selectedFundInvestmentsData[index].fundingOptionDropDown}
                                                     dropDownValue={this.state.selectedFundInvestmentsData[index].fundingOptionDropDown}
                                                     selectedDropDownValue={this.onSelectedDropDownValue("fundingOptionDropDown", index)}
                                                     itemToDisplay="value"

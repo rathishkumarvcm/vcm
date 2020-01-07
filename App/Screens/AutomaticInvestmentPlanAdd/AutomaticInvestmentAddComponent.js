@@ -103,11 +103,11 @@ class AutomaticInvestmentAddComponent extends Component {
         const savedAutoData = myInstance.getSavedAutomaticData();
         let payload = {
             ...savedAutoData,
-            // account: this.state.acc_name+'|'+this.state.acc_no,
-            // totalAmount: '$' + this.state.totalFund,
-            // fundFrom: autoInvestmentAddBankJson[this.state.selectedBank].account,
-            // investedIn: selected,
-            // switchOnOff: true
+            //  account: this.state.acc_name+'|'+this.state.acc_no,
+            //  totalAmount: '$' + this.state.totalFund,
+            //  fundFrom: autoInvestmentAddBankJson[this.state.selectedBank].account,
+            //  investedIn: selected,
+            //  switchOnOff: true
             selectedItemID: "D",
             selectedItemName: "Doller",
             autoInvestmentAddAmountJson: this.state.autoInvestmentAddAmountJson,
@@ -119,19 +119,19 @@ class AutomaticInvestmentAddComponent extends Component {
             selectedBank: this.state.selectedBank,
             fundRemaining: this.state.fundRemaining,
             totalFund: '$' +this.state.totalFund,
-            // investedIn: this.state.investedIn,
+            //  investedIn: this.state.investedIn,
             fundFrom: autoInvestmentAddBankJson[this.state.selectedBank].account,
             investedIn: selected,
             fundConsumed: this.state.fundConsumed,
             refresh:this.state.refresh,
             errorMsg:this.state.errorMsg,
         };
-        // if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
-        //     payload = {
-        //         ...payload,
-        //         ...this.props.automaticInvestmentState.savedAccData
-        //     };
-        // }
+        //  if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+        //      payload = {
+        //          ...payload,
+        //          ...this.props.automaticInvestmentState.savedAccData
+        //      };
+        //  }
         return payload;
 
     }
@@ -139,7 +139,7 @@ class AutomaticInvestmentAddComponent extends Component {
     navigationNext = () => {
 
         const payload = this.getPayload();
-        //this.props.saveData("automaticInvestmentAdd", payload);
+        // this.props.saveData("automaticInvestmentAdd", payload);
         const stateData = myInstance.getScreenStateData();
             myInstance.setSavedAutomaticData(payload);
             const screenState = {
@@ -172,7 +172,7 @@ class AutomaticInvestmentAddComponent extends Component {
         this.setState({ selectedItemID: item.id });
         this.setState({ selectedItemName: item.name });
     }
-    //navigationNext = () => this.props.navigation.navigate('automaticInvestmentSchedule', { ItemToEdit: this.state.ItemToEdit });
+    // navigationNext = () => this.props.navigation.navigate('automaticInvestmentSchedule', { ItemToEdit: this.state.ItemToEdit });
     navigationBack = () => this.props.navigation.goBack();
     navigationCancel = () => this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
 
@@ -192,11 +192,11 @@ class AutomaticInvestmentAddComponent extends Component {
             </TouchableOpacity>
         )
     toggleSwitch = index => e => {
-        //this.setState({ switch1Value: value });
+        // this.setState({ switch1Value: value });
 
 
-        var array = [...this.state.fundList]; // make a separate copy of the array
-        //var indexChange = this.state.selectedIndex
+        var array = [...this.state.fundList]; //  make a separate copy of the array
+        // var indexChange = this.state.selectedIndex
         if (index !== -1) {
 
             let switchVal = array[index].isActive;
@@ -214,12 +214,12 @@ class AutomaticInvestmentAddComponent extends Component {
     }
 
     getFundAmount = (value, index) => {
-        var array = [...this.state.fundList]; // make a separate copy of the array
+        var array = [...this.state.fundList]; //  make a separate copy of the array
         var indexChange = this.state.selectedIndex
         if (index !== -1) {
             array[index].fundAmount = value;
-            //let remaining=this.state.totalFund-value;
-            //this.setState({ fundList: array,fundRemaining:remaining});
+            // let remaining=this.state.totalFund-value;
+            // this.setState({ fundList: array,fundRemaining:remaining});
             this.setState({ fundList: array });
         }
     }
@@ -244,10 +244,10 @@ class AutomaticInvestmentAddComponent extends Component {
                 this.setState({ fundList: array,refresh:!this.state.refresh,errorMsg:msg });
             }
             else if(item.isActive){
-                var array = [...this.state.fundList]; // make a separate copy of the array
+                var array = [...this.state.fundList]; //  make a separate copy of the array
                 array[index].IsNotValidAmount = true;
                 this.setState({ fundList: array,refresh:!this.state.refresh });
-                // console.log('****************************',this.state.fundList)
+                //  console.log('****************************',this.state.fundList)
             }
         })
         this.setState({ fundRemaining: this.state.totalFund - remaining, fundConsumed: remaining });

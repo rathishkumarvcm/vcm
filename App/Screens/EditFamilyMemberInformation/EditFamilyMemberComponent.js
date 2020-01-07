@@ -8,7 +8,7 @@ import globalString from '../../Constants/GlobalStrings';
 class editFamilyMemberComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             enableBiometric: false,
@@ -33,13 +33,13 @@ class editFamilyMemberComponent extends Component {
         }
     }
 
-    // Go Back to Profile Home Screen
+    //  Go Back to Profile Home Screen
 
     editFamilyDetailOnCancel = () => {
         this.props.navigation.navigate('profileSettings');
     }
 
-    // Edit Relationship Personal Details
+    //  Edit Relationship Personal Details
 
     editFamilyDetailManage = () => this.props.navigation.navigate('editFamilyDetail',
         {
@@ -48,7 +48,7 @@ class editFamilyMemberComponent extends Component {
         });
 
 
-    // Edit Relationship Contact Details
+    //  Edit Relationship Contact Details
 
     editFamilyContactDetail = () => this.props.navigation.navigate('editAddressSettings',
         {
@@ -56,7 +56,7 @@ class editFamilyMemberComponent extends Component {
             isRelation: true
         });
 
-    // Edit Relationship Phone Details
+    //  Edit Relationship Phone Details
 
     editFamilyPhoneDetails = () => this.props.navigation.navigate('editPhoneInformation',
         {

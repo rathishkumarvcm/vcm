@@ -4,13 +4,13 @@ import VerifyMobile from '../App/Screens/VerifyMobile/VerifyMobileComponent';
 import {shallow} from 'enzyme';
 import { GButtonComponent } from '../App/CommonComponents';
 
-// Snap shot
+//  Snap shot
 it('Match Snapshot', () => {  
   const tree = renderer.create(<VerifyMobile />).toJSON();
   expect(tree).toMatchSnapshot();
 });
 
-// Function testing 
+//  Function testing 
 test('function testing',()=>{
   const component = shallow(<VerifyMobile />);
   const wrapper = new VerifyMobile;
@@ -20,21 +20,21 @@ test('function testing',()=>{
   wrapper.onClickNext();
 });
 
-// Input Component matches the length 
+//  Input Component matches the length 
 it('Input text matches with length', () => {
   const instanceOf = renderer.create(<VerifyMobile />).getInstance();
   instanceOf.setMobileNumber('12345678900');  
   expect(instanceOf.state.mobileNumber).toHaveLength(11);
 });
 
- // Input Component matches with given input
+ //  Input Component matches with given input
 it('Input text matches with given input',()=>{
   const instanceOf = renderer.create(<VerifyMobile />).getInstance();
   instanceOf.setMobileNumber('12345678900');  
   expect(instanceOf.state.mobileNumber).toEqual('12345678900');
 });
 
-// mocked function call on button click
+//  mocked function call on button click
 it('Called function on button click', () => {       
   const wrapper = shallow(<VerifyMobile onPress={jest.fn()} />)
   const spy = jest.spyOn(wrapper.instance(), 'onClickNext');
@@ -44,14 +44,14 @@ it('Called function on button click', () => {
   spy.mockClear();  
 });
 
-// // Instead of render method using at each time
-// let wrapper;
-// beforeEach(() => {
-//   wrapper = shallow(<VerifyMobile />);
-// });
+//  //  Instead of render method using at each time
+//  let wrapper;
+//  beforeEach(() => {
+//    wrapper = shallow(<VerifyMobile />);
+//  });
 
-// describe('<Verify Mobile />', () => {
-//   it('should match Snapshot', () => {
-//       expect(wrapper).toMatchSnapshot();
-//   });
-// });
+//  describe('<Verify Mobile />', () => {
+//    it('should match Snapshot', () => {
+//        expect(wrapper).toMatchSnapshot();
+//    });
+//  });

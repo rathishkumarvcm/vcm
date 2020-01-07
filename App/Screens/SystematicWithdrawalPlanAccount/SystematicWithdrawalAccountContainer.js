@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import systematicWithdrawalAccountComponent from './SystematicWithdrawalAccountComponent';
-//import { addAutomaticInvestmentActions } from "../../Shared/Actions";
+// import { addAutomaticInvestmentActions } from "../../Shared/Actions";
 
 
 
@@ -10,7 +10,7 @@ const mapStateToProps = (state) => ({
   });
 
 const mapDispatchToProps = {
-   // ...addAutomaticInvestmentActions
+   //  ...addAutomaticInvestmentActions
   };
 
 export default connect(

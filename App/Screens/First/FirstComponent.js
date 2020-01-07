@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-// eslint-disable-next-line no-unused-vars
+//  eslint-disable-next-line no-unused-vars
 import React, { Component } from 'react';
 import { Text,View,ScrollView, Image} from 'react-native';
 import {styles} from './styles';
@@ -74,8 +74,8 @@ class FirstComponent extends Component {
                         .catch(err => console.log(err));*/
 
           
-              // You can also display the image using data:
-              // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+              //  You can also display the image using data:
+              //  const source = { uri: 'data:image/jpeg;base64,' + response.data };
           alert("Url Selected");
             /*  this.setState({
                filePath: response,
@@ -140,9 +140,9 @@ class FirstComponent extends Component {
                 buttonStyle={styles.buttonStyle} 
                 textStyle={styles.buttonTextStyle}
                 buttonText= {"Image Upload"}
-                //onPress = {()=>this.props.navigation.navigate('first',{new:'one'})}
-                //onPress = {this.updateState}
-                //onPress={()=> this.props.homeActionMethod(ActionTypes.LOGIN_SUCESS)}
+                // onPress = {()=>this.props.navigation.navigate('first',{new:'one'})}
+                // onPress = {this.updateState}
+                // onPress={()=> this.props.homeActionMethod(ActionTypes.LOGIN_SUCESS)}
                 onPress={this.uploadDoc}
             />  
 
@@ -150,9 +150,9 @@ class FirstComponent extends Component {
                 buttonStyle={styles.buttonStyle} 
                 textStyle={styles.buttonTextStyle}
                 buttonText= {"Open Camera"}
-                //onPress = {()=>this.props.navigation.navigate('first',{new:'one'})}
-                //onPress = {this.updateState}
-                //onPress={()=> this.props.homeActionMethod(ActionTypes.LOGIN_SUCESS)}
+                // onPress = {()=>this.props.navigation.navigate('first',{new:'one'})}
+                // onPress = {this.updateState}
+                // onPress={()=> this.props.homeActionMethod(ActionTypes.LOGIN_SUCESS)}
                 onPress={this.launchCamera}
 /> 
 

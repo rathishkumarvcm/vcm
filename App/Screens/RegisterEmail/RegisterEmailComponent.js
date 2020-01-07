@@ -10,7 +10,7 @@ const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/;
 class RegisterEmailComponent extends Component {
     constructor(props){
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
             isLoading:false,
             email:'',
@@ -78,7 +78,7 @@ class RegisterEmailComponent extends Component {
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox}
-                //placeholder={"Email"}
+                // placeholder={"Email"}
                 onChangeText={this.setEmail}
                 onBlur={this.validateEmail}
                 value={this.state.email}

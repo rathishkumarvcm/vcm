@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { GButtonComponent, GHeaderComponent, GFooterComponent, GInputComponent, GRadioButtonComponent, GIcon, GDropDownComponent } from '../../CommonComponents';
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
-// import { scaledHeight } from '../../Utils/Resolution';
+//  import { scaledHeight } from '../../Utils/Resolution';
 
 
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
@@ -44,7 +44,7 @@ const securityQuestions = [
 class ModifySecQuesComponent extends Component {
     constructor(props) {
         super(props);
-        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             question1: '',
@@ -101,11 +101,11 @@ class ModifySecQuesComponent extends Component {
         }
 
         this.props.getPersonalCompositeData(payload);
-        // console.log("------>emailllllllll", this.props);
-        // console.log("payload", payload);
+        //  console.log("------>emailllllllll", this.props);
+        //  console.log("payload", payload);
        
         this.getInitialValues();
-        // console.log("questions",this.props.masterLookupStateData.security_ques.value);
+        //  console.log("questions",this.props.masterLookupStateData.security_ques.value);
     }
 
       getInitialValues = () =>{
@@ -156,7 +156,7 @@ class ModifySecQuesComponent extends Component {
     }
 
     onClickSave = () => {
-        // console.log("Save:::");
+        //  console.log("Save:::");
         this.manageData();
     }
 
@@ -177,17 +177,17 @@ class ModifySecQuesComponent extends Component {
         };
 
 
-        // list.push(addedQuestionsPayload);
+        //  list.push(addedQuestionsPayload);
         return addedQuestionsPayload;
     }
 
     manageData = () => {
         const payloadData = this.saveQuestions();
         this.props.saveQuestions("saveQuestionsData", payloadData);
-        // console.log("----questions", payloadData);
+        //  console.log("----questions", payloadData);
         this.props.navigation.navigate('otpSecurityConfirm');
-        //this.goBack();
-        // this.scrollToTop();
+        // this.goBack();
+        //  this.scrollToTop();
     }
 
     radioButtonClicked = (index) =>()=> {
@@ -222,7 +222,7 @@ class ModifySecQuesComponent extends Component {
     }));
 
     onChangeText = (stateKey, val) => text => {
-        // console.log("onChangeText:::>");
+        //  console.log("onChangeText:::>");
         this.setState({
             [stateKey]: text,
             [val]: (!this.isEmpty(text)),
@@ -389,8 +389,8 @@ class ModifySecQuesComponent extends Component {
         if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.security_ques && this.props.masterLookupStateData.security_ques.value) {
             quesData = this.props.masterLookupStateData.security_ques.value;
         }
-        // console.log("props", this.props.masterLookupStateData);
-        // console.log("security questions render",this.props.saveQuestionsData);
+        //  console.log("props", this.props.masterLookupStateData);
+        //  console.log("security questions render",this.props.saveQuestionsData);
         
         return (
 
@@ -552,7 +552,7 @@ ModifySecQuesComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     initialState: PropTypes.instanceOf(Object),
     masterLookupStateData: PropTypes.instanceOf(Object),
-    // onSelectedItem: PropTypes.func,
+    //  onSelectedItem: PropTypes.func,
     value: PropTypes.instanceOf(Object),
     saveQuestions: PropTypes.func,
     saveQuestionsData:PropTypes.instanceOf(Object),
@@ -563,7 +563,7 @@ ModifySecQuesComponent.defaultProps = {
     navigation: {},
     initialState: {},
     masterLookupStateData: {},
-    // onSelectedItem: ()=>{},
+    //  onSelectedItem: ()=>{},
     value: {},
     saveQuestions: ()=>{},
     saveQuestionsData:{},

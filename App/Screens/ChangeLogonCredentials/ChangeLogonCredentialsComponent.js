@@ -20,12 +20,12 @@ class ChangeLogonCredentialsComponent extends Component {
                     show: false
                 });
             }, 4000);
-            // if (this.state.show) {
+            //  if (this.state.show) {
                 return (
                 <View style={styles.messageFlex}>
                     <Text style={styles.messageText}>{message}</Text>
                 </View>);
-           // }
+           //  }
         }
         return null;
     }

@@ -84,7 +84,7 @@ class SearchComponent extends Component {
         }
         else{
           this.setState({
-            //flatListData : [],
+            // flatListData : [],
             noData:true
         });
         }
@@ -108,7 +108,7 @@ class SearchComponent extends Component {
         this.setState({
           flatListData : newData,
           noData : false,
-        //  loading : false
+        //   loading : false
         });
       }
       this.setState({promiseVal:text});
@@ -132,7 +132,7 @@ class SearchComponent extends Component {
         return(
           <View style={styles.container}>
             <GButtonComponent 
-                //disabled
+                // disabled
                 buttonStyle={styles.buttonStyle} 
                 textStyle={styles.buttonTextStyle}
                 buttonText= {"Back"}

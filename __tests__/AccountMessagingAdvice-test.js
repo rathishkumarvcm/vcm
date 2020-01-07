@@ -5,19 +5,19 @@ import AccountMessagingAdvice from '../App/Screens/AccountMessagingAdvice/Accoun
 
 describe('Account Messaging Advice',()=>{
 
-    // Snap shot 
+    //  Snap shot 
     it('Match Snapshot', () => {  
       const tree = renderer.create(<AccountMessagingAdvice />).toJSON();
       expect(tree).toMatchSnapshot();
     });
   
-    // Render using shallow - shallow not includes child component
+    //  Render using shallow - shallow not includes child component
     test('render',()=>{
       const component = shallow(<AccountMessagingAdvice />);  
       component.render();
     });
 
-    // Function testing 
+    //  Function testing 
     test('function testing',()=>{
       const component = shallow(<AccountMessagingAdvice />);
       const wrapper = new AccountMessagingAdvice;

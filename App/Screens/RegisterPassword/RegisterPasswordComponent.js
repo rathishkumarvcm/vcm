@@ -7,12 +7,12 @@ import { GButtonComponent, GInputComponent, GFooterSettingsComponent, GHeaderCom
 import globalStrings from '../../Constants/GlobalStrings';
 import { ValidatePassword } from '../../Utils/ValidatePassword';
 
-// const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+//  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 
 class RegisterPasswordComponent extends Component {
     constructor(props) {
         super(props);
-        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,           
             validationOnlineId: true,
@@ -60,7 +60,7 @@ class RegisterPasswordComponent extends Component {
         Auth.signUp({
             username,
             password,
-            // phoneNumber,
+            //  phoneNumber,
             attributes: {
                 email,
                 given_name: firstName,
@@ -76,11 +76,11 @@ class RegisterPasswordComponent extends Component {
             alert("Signed Up Successfully. OTP received.");
             this.props.navigation.navigate('emailVerify', { passwordData: registerSelfData });
         });
-        // this.props.navigation.navigate('emailVerify');   
+        //  this.props.navigation.navigate('emailVerify');   
     }
 
     validatePassword = () => {
-        // const validate = passwordRegex.test(this.state.password);
+        //  const validate = passwordRegex.test(this.state.password);
         const validate = (ValidatePassword(this.state.password) === globalStrings.userManagement.strong);
         this.setState({
             validationPassword: validate
@@ -179,7 +179,7 @@ class RegisterPasswordComponent extends Component {
 
                     <GInputComponent
                         propInputStyle={styles.userIDTextBox}
-                        // placeholder={"Online ID"}
+                        //  placeholder={"Online ID"}
                         value={this.state.email}
                         onChangeText={this.setOnlineId}
                         onBlur={this.validateOnlineId}
@@ -198,7 +198,7 @@ class RegisterPasswordComponent extends Component {
 
                     <GInputComponent
                         propInputStyle={styles.userIDTextBox}
-                        // placeholder={"Password"}
+                        //  placeholder={"Password"}
                         onChangeText={this.setPassword}
                         secureTextEntry
                         onBlur={this.validatePassword}
@@ -237,7 +237,7 @@ class RegisterPasswordComponent extends Component {
 
                     <GInputComponent
                         propInputStyle={styles.userIDTextBox}
-                        // placeholder={"Confirm Password"}
+                        //  placeholder={"Confirm Password"}
                         onChangeText={this.setConfirmPassword}
                         secureTextEntry
                         onBlur={this.validateConfirmPassword}

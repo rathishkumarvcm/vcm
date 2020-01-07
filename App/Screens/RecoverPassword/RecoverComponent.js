@@ -29,7 +29,7 @@ class RecoveryComponent extends Component {
       err_security:'',
       boo_security:false
     };
-    //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+    // set true to isLoading if data for this screen yet to be received and wanted to show loader.
   }
 
 

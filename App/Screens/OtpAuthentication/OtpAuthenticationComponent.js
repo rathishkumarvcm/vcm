@@ -9,7 +9,7 @@ import { Auth } from "aws-amplify";
 class OtpAuthenticationComponent extends Component {
     constructor(props){
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
             isLoading:false,
             email:'',
@@ -103,7 +103,7 @@ class OtpAuthenticationComponent extends Component {
 
 
                 <View style={{marginLeft:'4%',marginRight:'4%'}}>
-                        <GRadioButtonComponent selected={this.state.radioEnabled} onPress={this.radioButtonClicked('email')}//questionsStyle={{width:'40%',flexWrap:'wrap'}} 
+                        <GRadioButtonComponent selected={this.state.radioEnabled} onPress={this.radioButtonClicked('email')}// questionsStyle={{width:'40%',flexWrap:'wrap'}} 
                         questions={`${"Send OTP to email "} ${this.state.email}`}
                         />
 

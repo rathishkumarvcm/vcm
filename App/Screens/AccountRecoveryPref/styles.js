@@ -34,7 +34,7 @@ export const styles = StyleSheet.create({
         color: '#535353',
         fontSize: scaledHeight(20),
         marginTop: '4%'
-        //fontFamily:'Roboto'
+        // fontFamily:'Roboto'
     },
     chooseAccRecPref: {
         marginLeft: "4%",
@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
         color: '#535353',
         fontSize: scaledHeight(16),
         marginTop: '4%'
-        //fontFamily:'Roboto'
+        // fontFamily:'Roboto'
     },
     line: {
         backgroundColor: '#535353',

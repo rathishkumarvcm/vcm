@@ -44,7 +44,7 @@ export const styles = StyleSheet.create({
         color:'#56565A'
     },
     signInView:{
-        //marginTop:scaledHeight(),
+        // marginTop:scaledHeight(),
         marginLeft:'4%',
         marginRight:'4%',
     },
@@ -113,7 +113,7 @@ export const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(12),
-        //borderRadius:scaledHeight(25),
+        // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#FFFFFF',
         alignItems:'center',
@@ -126,7 +126,7 @@ export const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(12),
-        //borderRadius:scaledHeight(25),
+        // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#56565A',
         alignItems:'center',

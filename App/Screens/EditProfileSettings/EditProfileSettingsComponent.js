@@ -383,7 +383,7 @@ class EditProfileSettingsComponent extends Component {
                             itemToDisplay="value"
                             errorFlag={this.state.dropDownPrefixFlag}
                             errorText={this.state.dropDownPrefixMsg}
-                            // dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(492) }}
+                            //  dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(492) }}
                         />
 
                         {/* Suffix Data */}
@@ -400,7 +400,7 @@ class EditProfileSettingsComponent extends Component {
                             itemToDisplay="value"
                             errorFlag={this.state.dropDownSuffixFlag}
                             errorText={this.state.dropDownSuffixMsg}
-                            // dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(581) }}
+                            //  dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(581) }}
                         />
 
                         {/* Gender Data */}
@@ -417,7 +417,7 @@ class EditProfileSettingsComponent extends Component {
                             itemToDisplay="value"
                             errorFlag={this.state.dropDownGenderFlag}
                             errorText={this.state.dropDownGenderMsg}
-                            // dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(670) }}
+                            //  dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(670) }}
                         />
 
                         {/* Marital Status Data */}
@@ -434,7 +434,7 @@ class EditProfileSettingsComponent extends Component {
                             itemToDisplay="value"
                             errorFlag={this.state.dropDownStatusFlag}
                             errorText={this.state.dropDownStatusMsg}
-                            // dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(760) }}
+                            //  dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(760) }}
                         />
 
                         {/* Citizenship */}
@@ -474,7 +474,7 @@ class EditProfileSettingsComponent extends Component {
                                 itemToDisplay="value"
                                 errorFlag={this.state.dropDownCountryFlag}
                                 errorText={this.state.dropDownCountryMsg}
-                                // dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(950) }}
+                                //  dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(950) }}
                             />) : null}
 
                         <View style={styles.editFlexDirectionColumn}>

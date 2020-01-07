@@ -19,11 +19,11 @@ class Login extends Component {
 const styles = StyleSheet.create({
   container: { flex: 1 },
   textWrapper: {
-    height: hp('70%'), // 70% of height device screen
-    width: wp('80%')   // 80% of width device screen
+    height: hp('70%'), //  70% of height device screen
+    width: wp('80%')   //  80% of width device screen
   },
   myText: {
-    fontSize: hp('5%') // End result looks like the provided UI mockup
+    fontSize: hp('5%') //  End result looks like the provided UI mockup
   }
 });
 

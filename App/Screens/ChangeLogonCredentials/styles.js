@@ -54,7 +54,7 @@ export const styles = StyleSheet.create({
         marginTop: '4%'
     },
     resetPasswordFlex: {
-        //backgroundColor: '#EEEEEE',
+        // backgroundColor: '#EEEEEE',
         borderColor: '#A4A4A4DD',
         borderWidth: scaledHeight(1),
         height: scaledHeight(120),

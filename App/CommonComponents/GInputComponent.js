@@ -37,8 +37,8 @@ export const styles = StyleSheet.create({
     fontSize: scaledHeight(12)
   },
   errorView: {
-    //marginLeft:'4%',
-    //marginRight:'4%',
+    // marginLeft:'4%',
+    // marginRight:'4%',
     borderColor: 'red'
   },
   arrowIconStyle: {
@@ -73,7 +73,7 @@ export const GInputComponent = (props) => (
         placeholder={props.placeholder}
         placeholderTextColor={props.placeholderTextColor}
         selectionColor={props.selectionColor}
-        //underlineColorAndroid={props.underlineColorAndroid}
+        // underlineColorAndroid={props.underlineColorAndroid}
         autoCapitalize={props.autoCapitalize}
         ref={props.inputref}
         underlineColorAndroid="transparent"
@@ -136,7 +136,7 @@ GInputComponent.propTypes = {
 
 GInputComponent.defaultProps = {
   inputStyle: {},
-  // value: '',
+  //  value: '',
   autoFocus: false,
   editable: true,
   keyboardType: "default",

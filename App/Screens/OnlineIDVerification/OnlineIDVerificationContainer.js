@@ -5,7 +5,7 @@ import { loginActions } from "../../Shared/Actions";
 
 const mapStateToProps = (state /* , props */) => (
     {
-      //loginData: getLogin(state)
+      // loginData: getLogin(state)
     }
   );
 

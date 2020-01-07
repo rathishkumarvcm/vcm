@@ -65,7 +65,7 @@ export const styles = StyleSheet.create({
     userIDText:{
         color:'#000000',
         fontSize:scaledHeight(16),
-        //fontWeight:'bold',
+        // fontWeight:'bold',
         marginBottom:scaledHeight(5)
     },
     userIDTextBox:{

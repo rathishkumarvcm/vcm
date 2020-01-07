@@ -1,4 +1,4 @@
-//React Native Library for securely storing keys to iOS and Android devices in KeyChain and KeyStore respectively
+// React Native Library for securely storing keys to iOS and Android devices in KeyChain and KeyStore respectively
 import RNSecureKeyStore from "react-native-secure-key-store";
 
 /* **************************\

@@ -5,19 +5,19 @@ import DeliverySettings from '../App/Screens/DeliverySettings/DeliverySettingsCo
 
 describe('Delivery Settings',()=>{
 
-    // Snap shot 
+    //  Snap shot 
     it('Match Snapshot', () => {  
       const tree = renderer.create(<DeliverySettings />).toJSON();
       expect(tree).toMatchSnapshot();
     });
   
-    // Render using shallow - shallow not includes child component
+    //  Render using shallow - shallow not includes child component
     test('render',()=>{
       const component = shallow(<DeliverySettings />);  
       component.render();
     });
 
-    // Function testing 
+    //  Function testing 
     test('function testing',()=>{
       const component = shallow(<DeliverySettings />);
       const wrapper = new DeliverySettings;

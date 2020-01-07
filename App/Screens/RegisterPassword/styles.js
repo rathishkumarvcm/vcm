@@ -102,7 +102,7 @@ export const styles = StyleSheet.create({
         marginLeft:'14%',
         marginRight:'14%',
         marginTop:scaledHeight(12),
-        //borderRadius:scaledHeight(25),
+        // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#56565A',
         alignItems:'center',
@@ -120,7 +120,7 @@ export const styles = StyleSheet.create({
         marginLeft:'14%',
         marginRight:'14%',
         marginTop:scaledHeight(12),
-        //borderRadius:scaledHeight(25),
+        // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#FFFFFF',
         alignItems:'center',
@@ -239,7 +239,7 @@ export const styles = StyleSheet.create({
         paddingLeft:'4%',
         paddingRight:'4%',
         width:'100%',
-        //height:scaledHeight(70),
+        // height:scaledHeight(70),
         marginTop:scaledHeight(20)
     },
     goBack:{

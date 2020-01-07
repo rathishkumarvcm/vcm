@@ -434,7 +434,7 @@ export const styles = StyleSheet.create({
     editDropdown: {
         height: scaledHeight(60),
         backgroundColor: '#FFFFFF',
-        //backgroundColor:'red',
+        // backgroundColor:'red',
         borderColor: '#00000029',
         borderBottomWidth: 1,
         justifyContent: 'center',

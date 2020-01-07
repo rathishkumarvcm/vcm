@@ -84,7 +84,7 @@ const specaltyAccPDFList = {
 };
 
 const PDFListItem = (props) => {
-    //  alert("PDFListItem")
+    //   alert("PDFListItem")
     return (
         <View style={styles.pdfSection}>
             <Text style={styles.pdfTitleTxt}>
@@ -112,7 +112,7 @@ PDFListItem.defaultProps = {
 class SpecialtyAccPageComponent extends Component {
     constructor(props) {
         super(props);
-        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             itemID: "",
@@ -145,11 +145,11 @@ class SpecialtyAccPageComponent extends Component {
     }
 
     onClickSave = () => {
-        // this.validateFields();
+        //  this.validateFields();
     }
 
     onClickNext = (currentPage,accType) => () => {
-        // this.validateFields();
+        //  this.validateFields();
         let pageNo = currentPage;
         if (pageNo < 5) {
             ++pageNo;
@@ -163,7 +163,7 @@ class SpecialtyAccPageComponent extends Component {
         console.log("item: ",item.id);
         this.setState({ selectedItemID: item.id });
         this.setState({ selectedItemName: item.name });
-        // alert("You selected :: " + item.name)
+        //  alert("You selected :: " + item.name)
     }
 
     generateKeyExtractor = (item) => item.PDFName;

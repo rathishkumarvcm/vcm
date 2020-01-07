@@ -127,8 +127,8 @@ class LiquidationPageFourComponent extends Component {
                             <FlatList
                             data={this.state.menu}
                             renderItem={this.renderFundList()}
-                            //extraData={this.state.flatListUpdate}
-                            //keyExtractor={this.generateKeyExtractor}
+                            // extraData={this.state.flatListUpdate}
+                            // keyExtractor={this.generateKeyExtractor}
                             ItemSeparatorComponent={this.FlatListItemSeparatorlist}
                            />
                            </View>

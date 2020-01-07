@@ -38,11 +38,11 @@ export const GCommonFlatListView = (props) => (
             initialNumToRender={props.initialNumToRender}
             onEndReached={props.onEndReached}
             onEndReachedThreshold={props.onEndReachedThreshold}
-            //inverted={props.inverted}
+            // inverted={props.inverted}
             initialScrollIndex={props.initialScrollIndex}
             ListFooterComponent={props.ListFooterComponent}
             ListHeaderComponent={props.ListHeaderComponent}
-            // key={data.names}
+            //  key={data.names}
         />
     </View>
 );

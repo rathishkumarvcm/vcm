@@ -1,4 +1,4 @@
-# To learn about Buck see [Docs](https://buckbuild.com/).
+# To learn about Buck see [Docs](https:// buckbuild.com/).
 # To run your application with Buck:
 # - install Buck
 # - `npm start` - to start the packager
@@ -46,7 +46,7 @@ android_resource(
 
 android_binary(
     name = "app",
-    keystore = "//android/keystores:debug",
+    keystore = "// android/keystores:debug",
     manifest = "src/main/AndroidManifest.xml",
     package_type = "debug",
     deps = [

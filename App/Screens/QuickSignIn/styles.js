@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
         flexWrap: 'wrap',
     },
     lblLine: {
-        // width:"100%",
+        //  width:"100%",
         flexGrow: 1,
         marginTop: scaledHeight(9.5),
         height: scaledHeight(1),
@@ -102,7 +102,7 @@ cancelButton:{
     marginLeft:'10%',
     marginRight:'10%',
     marginTop:scaledHeight(30),
-    //borderRadius:scaledHeight(25),
+    // borderRadius:scaledHeight(25),
     height:scaledHeight(50),
     backgroundColor:'#FFFFFF',
     alignItems:'center',

@@ -7,7 +7,7 @@ import styles from './styles';
 
 
 let menuList=[];
-// let selectedFunds =[]
+//  let selectedFunds =[]
 export default class TAmmendComponent extends Component {
 
     constructor(props) {
@@ -26,11 +26,11 @@ export default class TAmmendComponent extends Component {
         
         if(this.props && this.props.amendReducerData && this.props.amendReducerData.menu)
         {
-            // console.log("---->menu",this.props.amendReducerData.menu)
-           // this.setState({ menu : this.props.amendReducerData.menu}) ;
+            //  console.log("---->menu",this.props.amendReducerData.menu)
+           //  this.setState({ menu : this.props.amendReducerData.menu}) ;
            menuList = this.props.amendReducerData.menu;
         }
-        // console.log("state menu",this.state.menuList);
+        //  console.log("state menu",this.state.menuList);
         this.filterPendingItems();
     }
 
@@ -55,7 +55,7 @@ export default class TAmmendComponent extends Component {
     }
 
     selectIndex = (item,title,index) => {
-        // console.log('parent trigger', title,index);
+        //  console.log('parent trigger', title,index);
         this.setState({
             selectedTitle: title,
             selectedValue: item.selectedAccountData.currentValue,
@@ -63,7 +63,7 @@ export default class TAmmendComponent extends Component {
             data:item
             
         });
-        // selectedFunds= item.funds;
+        //  selectedFunds= item.funds;
         
     }
     
@@ -91,7 +91,7 @@ export default class TAmmendComponent extends Component {
                                 buttonStyle={styles.filterButton}
                                 buttonText="Filter"
                                 textStyle={styles.filterButtonText}
-                                // onPress={this.hideModal}
+                                //  onPress={this.hideModal}
                          />
                        
             </View>

@@ -38,17 +38,17 @@ const endingJson = [
 
 const dateJson = [];
 
-// const dummyYearJson = [
-//     {
-//         id: '1',
-//         title: '2019'
-//     },
-//     {
-//         id: '2',
-//         title: '2020'
-//     },
+//  const dummyYearJson = [
+//      {
+//          id: '1',
+//          title: '2019'
+//      },
+//      {
+//          id: '2',
+//          title: '2020'
+//      },
 
-// ];
+//  ];
 const myInstance = GSingletonClass.getInstance();
 class AutomaticInvestmentPlanScheduleComponent extends Component {
     constructor(props) {
@@ -63,10 +63,10 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
             valueEndDropDown: '',
             customDateValue: '',
             errorDate:false,
-            // dateBeginDropDown: false,
-            // valueDateBeginDropDown: '',
-            // yearDropDown: false,
-            // valueYearDropDown: '',
+            //  dateBeginDropDown: false,
+            //  valueDateBeginDropDown: '',
+            //  yearDropDown: false,
+            //  valueYearDropDown: '',
             autoInvestmentAddAmountJson: {},
             itemToEdit: `${this.props.navigation.getParam('ItemToEdit', -1)}`,
             acc_name:`${this.props.navigation.getParam('acc_name')}`,
@@ -98,9 +98,9 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
 
     getPayload = () => {
 
-        const date = new Date().getDate(); //Current Date
-        const month = new Date().getMonth() + 1; //Current Month
-        const year = new Date().getFullYear(); //Current Year
+        const date = new Date().getDate(); // Current Date
+        const month = new Date().getMonth() + 1; // Current Month
+        const year = new Date().getFullYear(); // Current Year
         const currentdate = month + "/" + date + "/" + year;
 
         /*Calculate Next Month */
@@ -113,12 +113,12 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
         const quarter = Math.floor((today.getMonth() / 3));
         const startFullQuarter = new Date(today.getFullYear(), quarter * 3 + 3, 1);
         const endFullQuarter = new Date(startFullQuarter.getFullYear(), startFullQuarter.getMonth() + 3, 0);
-        //console.log('----------------------------',this.state.valueEndDropDown.toLowerCase())
+        // console.log('----------------------------',this.state.valueEndDropDown.toLowerCase())
         const savedAutoData = myInstance.getSavedAutomaticData();
         let payload = {
             ...savedAutoData,
-            // invest: this.state.valueTypeDropDown,
-            // dateToInvest: this.state.valueDateDropDown,
+            //  invest: this.state.valueTypeDropDown,
+            //  dateToInvest: this.state.valueDateDropDown,
             dateAdded: currentdate,
             endDate: this.state.valueEndDropDown.toLowerCase()==="custom"?this.state.customDateValue:"Never",
             nextInvestementDate: nextMonthDate,
@@ -136,12 +136,12 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
             acc_no:this.state.acc_no,
             accountType:this.state.accountType,
         };
-        // if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
-        //     payload = {
-        //         ...payload,
-        //         ...this.props.automaticInvestmentState.savedAccData
-        //     };
-        // }
+        //  if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+        //      payload = {
+        //          ...payload,
+        //          ...this.props.automaticInvestmentState.savedAccData
+        //      };
+        //  }
         return payload;
 
     }
@@ -150,7 +150,7 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
         if(this.state.customDateValue!='' || this.state.valueEndDropDown==='Never')
         {
             const payload = this.getPayload();
-            // this.props.saveData("automaticInvestmentSchedule", payload);
+            //  this.props.saveData("automaticInvestmentSchedule", payload);
             const stateData = myInstance.getScreenStateData();
             myInstance.setSavedAutomaticData(payload);
             const screenState = {
@@ -212,40 +212,40 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
         });
     }
 
-    // selectTheBeginDate = () => {
-    //     this.setState({
-    //         dateBeginDropDown: !this.state.dateBeginDropDown
-    //     });
-    // }
+    //  selectTheBeginDate = () => {
+    //      this.setState({
+    //          dateBeginDropDown: !this.state.dateBeginDropDown
+    //      });
+    //  }
 
-    // selectedDropDownBeginDateValue = (valueDate) => {
-    //     this.setState({
-    //         valueDateBeginDropDown: valueDate.title,
-    //         dateBeginDropDown: false
-    //     });
-    // }
+    //  selectedDropDownBeginDateValue = (valueDate) => {
+    //      this.setState({
+    //          valueDateBeginDropDown: valueDate.title,
+    //          dateBeginDropDown: false
+    //      });
+    //  }
 
-    // selectTheYear = () => {
-    //     this.setState({
-    //         yearDropDown: !this.state.yearDropDown
-    //     });
-    // }
+    //  selectTheYear = () => {
+    //      this.setState({
+    //          yearDropDown: !this.state.yearDropDown
+    //      });
+    //  }
 
-    // selectedDropDownYearValue = (value) => {
-    //     this.setState({
-    //         valueYearDropDown: value,
-    //         yearDropDown: false
-    //     });
-    // }
+    //  selectedDropDownYearValue = (value) => {
+    //      this.setState({
+    //          valueYearDropDown: value,
+    //          yearDropDown: false
+    //      });
+    //  }
 
-   //navigationNext = () => this.props.navigation.navigate('automaticInvestmentVerify', { skip: false });
+   // navigationNext = () => this.props.navigation.navigate('automaticInvestmentVerify', { skip: false });
     navigationBack = () => this.props.navigation.goBack();
     navigationCancel = () => this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
 
     render() {
-        const date = new Date().getDate(); //Current Date
-        const month = new Date().getMonth() + 1; //Current Month
-        const year = new Date().getFullYear(); //Current Year
+        const date = new Date().getDate(); // Current Date
+        const month = new Date().getMonth() + 1; // Current Month
+        const year = new Date().getFullYear(); // Current Year
         const currentdate = month + "/" + date + "/" + year;
         return (
             <View style={styles.container}>

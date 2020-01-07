@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(20),
         flexDirection: 'row',
         justifyContent: 'space-between',
-        // marginHorizontal: scaledHeight(12),
+        //  marginHorizontal: scaledHeight(12),
         alignItems: "center",
         flexGrow: 1
     },
@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
         borderColor: '#5D83AE99',
         borderWidth: 1,
         borderStyle: 'solid',
-        // width:'75%',
+        //  width:'75%',
         height: scaledHeight(80),
-        // flexWrap:"wrap"
+        //  flexWrap:"wrap"
 
     },
     accountItemImg: {
@@ -55,9 +55,9 @@ const styles = StyleSheet.create({
         borderColor: '#B5E198',
         borderWidth: 6,
         borderStyle: 'solid',
-        // width:'75%',
+        //  width:'75%',
         height: scaledHeight(92),
-        // flexWrap:"wrap"
+        //  flexWrap:"wrap"
     },
     accountItemTxt: {
         color: '#56565A',
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
-       // width: '80%',
+       //  width: '80%',
        textAlign: 'center'
     },
     contactMSR: {
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(9),
         width: '100%'
     },
-    disclaimerTitleTxt: { // termsofuseText
+    disclaimerTitleTxt: { //  termsofuseText
         fontSize: scaledHeight(16),
         marginBottom: scaledHeight(10),
         fontWeight: 'bold',
@@ -158,8 +158,8 @@ const styles = StyleSheet.create({
 
     },
     dropDownLayout: {
-        // alignItems: "flex-start",
-        // justifyContent: "flex-start",
+        //  alignItems: "flex-start",
+        //  justifyContent: "flex-start",
          marginLeft: '0%',
          marginRight: '0%',
          marginTop: scaledHeight(25),
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
-        // width: '80%',
+        //  width: '80%',
         textAlign: 'center'
     },
     fundListGrp: {
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
         borderTopColor: "#FFFFFF",
         borderWidth: 1,
         flexGrow: 1,
-        //  padding: scaledHeight(20)
+        //   padding: scaledHeight(20)
 
     },
     labOR:{
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
 
     },
     lblLine: {
-        // width:"100%",
+        //  width:"100%",
         flexGrow: 1,
         marginTop: scaledHeight(9.5),
         height: scaledHeight(1),
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
         opacity: 0.5
     },
     lblLine1: {
-        // width:"100%",
+        //  width:"100%",
 
         height: scaledHeight(1),
         backgroundColor: '#696069'
@@ -344,14 +344,14 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(22),
         fontWeight: 'bold',
         width: '90%',
-        //  lineHeight:20
+        //   lineHeight:20
     },
     lblSelectedCountTxt: {
         color: '#56565A',
         fontSize: scaledHeight(13),
         opacity: .65,
-        // marginTop: scaledHeight(25),
-        // marginBottom: scaledHeight(15)
+        //  marginTop: scaledHeight(25),
+        //  marginBottom: scaledHeight(15)
     },
     lblSpecimen: {
         color: 'rgba(51, 51, 51, 0.87)',
@@ -492,7 +492,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     newVictorySection: {
-        //  marginTop: scaledHeight(150),
+        //   marginTop: scaledHeight(150),
         padding: scaledHeight(12),
         width: '100%',
         flexGrow: 1,
@@ -501,7 +501,7 @@ const styles = StyleSheet.create({
 
     },
     normalBlackBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         height: scaledHeight(50),
@@ -527,7 +527,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     normalBlackDisabledBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         height: scaledHeight(50),
@@ -539,7 +539,7 @@ const styles = StyleSheet.create({
         marginHorizontal: scaledHeight(37)
     },
     normalWhiteBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         height: scaledHeight(50),
@@ -572,8 +572,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'flex-end',
         flexGrow: 1,
-        // borderColor:'#afabb0',
-        //  borderWidth:1 ,
+        //  borderColor:'#afabb0',
+        //   borderWidth:1 ,
         marginTop: scaledHeight(0)
     },
     rowItem: {
@@ -581,8 +581,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'flex-end',
         flexGrow: 1,
-        // borderColor:'#afabb0',
-        //  borderWidth:1 ,
+        //  borderColor:'#afabb0',
+        //   borderWidth:1 ,
         marginTop: scaledHeight(22)
     },
     saveButtonStyle: {
@@ -623,17 +623,17 @@ const styles = StyleSheet.create({
     showPagesNosTxt: {
         color: '#584f58',
         fontSize: scaledHeight(15),
-        //   marginTop: scaledHeight(25),
+        //    marginTop: scaledHeight(25),
         letterSpacing: 1
-        // marginBottom: scaledHeight(7)
+        //  marginBottom: scaledHeight(7)
     },
     showPagesTxt: {
         color: '#61285F',
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
 
-        //  marginTop: scaledHeight(25),
-        // marginBottom: scaledHeight(7)
+        //   marginTop: scaledHeight(25),
+        //  marginBottom: scaledHeight(7)
     },
     specimenImg: {
         height: scaledHeight(176)
@@ -655,8 +655,8 @@ const styles = StyleSheet.create({
         padding: scaledHeight(23),
     },
     touchItem: {
-        // width:scaledHeight(250),
-        //  height:scaledHeight(250),
+        //  width:scaledHeight(250),
+        //   height:scaledHeight(250),
         marginVertical: scaledHeight(14),
     },
 });

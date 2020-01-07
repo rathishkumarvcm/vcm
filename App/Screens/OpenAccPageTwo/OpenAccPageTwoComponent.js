@@ -9,7 +9,7 @@ import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import AppUtils from '../../Utils/AppUtils';
-// import { Header } from 'react-navigation';
+//  import { Header } from 'react-navigation';
 
 const imagePickerOptions = {
     title: 'Select Image',
@@ -24,9 +24,9 @@ const imagePickerOptions = {
 };
 
 const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
-const date = new Date().getDate(); // Current Date
-const month = new Date().getMonth() + 1; // Current Month
-const year = new Date().getFullYear(); // Current Year
+const date = new Date().getDate(); //  Current Date
+const month = new Date().getMonth() + 1; //  Current Month
+const year = new Date().getFullYear(); //  Current Year
 const currentdate = `${month}-${date}-${year}`;
 
 const tempDate = new Date();
@@ -43,7 +43,7 @@ const myInstance = GSingletonClass.getInstance();
 class OpenAccPageTwoComponent extends Component {
     constructor(props) {
         super(props);
-        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         const {initialState} = this.props;
         const openAccPageTwo = myInstance.getAccOpeningEditMode() ? (myInstance.getScreenStateData().openAccPageTwo || {}) : {};
         this.state = {
@@ -53,7 +53,7 @@ class OpenAccPageTwoComponent extends Component {
             itemID: "",
             selectedItemID: "",
             selectedItemName: "",
-            // Perosnal info
+            //  Perosnal info
             nickname: "",
             userAvatar: "",
             personal: {
@@ -150,7 +150,7 @@ class OpenAccPageTwoComponent extends Component {
                 passportNumberValidation: true,
                 passportNoExpiryDateValidation: true,
 
-                // Employer Info
+                //  Employer Info
                 empStatus: "",
                 empStatusDropDown: false,
                 empIndustry: "",
@@ -177,7 +177,7 @@ class OpenAccPageTwoComponent extends Component {
                 empIndustryForOtherValidation: true,
 
 
-                // Financial Info
+                //  Financial Info
                 annualIncome: "",
                 annualIncomeDropDown: false,
                 taxBracket: "",
@@ -188,7 +188,7 @@ class OpenAccPageTwoComponent extends Component {
                 taxFilingStatusDropDown: false,
 
 
-                // Military Info
+                //  Military Info
 
                 isMilitaryHistory: null,
                 militaryStatus: "",
@@ -207,7 +207,7 @@ class OpenAccPageTwoComponent extends Component {
                 militaryStatusValidation: true,
 
 
-                // ExpandCollapse
+                //  ExpandCollapse
                 isPersonalInfoExpanded: false,
                 isEmploymentInfoExpanded: false,
                 isFinancialInfoExpanded: false,
@@ -314,7 +314,7 @@ class OpenAccPageTwoComponent extends Component {
                 passportNumberValidation: true,
                 passportNoExpiryDateValidation: true,
 
-                // Employer Info
+                //  Employer Info
                 empStatus: "",
                 empStatusDropDown: false,
                 empIndustry: "",
@@ -339,7 +339,7 @@ class OpenAccPageTwoComponent extends Component {
                 empStatusForOtherValidation: true,
                 empIndustryForOtherValidation: true,
 
-                // Employer Info
+                //  Employer Info
                 annualIncome: "",
                 annualIncomeDropDown: false,
                 taxBracket: "",
@@ -350,7 +350,7 @@ class OpenAccPageTwoComponent extends Component {
                 taxFilingStatusDropDown: false,
 
 
-                // Military Info
+                //  Military Info
 
                 isMilitaryHistory: null,
                 militaryStatus: "",
@@ -513,7 +513,7 @@ class OpenAccPageTwoComponent extends Component {
                 bankTrustTypeValidation: true,
                 USFederalLawCondValidation: true,
 
-                // ExpandCollapse
+                //  ExpandCollapse
                 isTrustInfoExpanded: false,
                 isTrusteeInfoExpanded: false,
                 isCoTrusteeInfoExpanded: false,
@@ -680,7 +680,7 @@ class OpenAccPageTwoComponent extends Component {
                 objIndex:""
             },
            
-            // others
+            //  others
             ...openAccPageTwo
 
 
@@ -737,7 +737,7 @@ class OpenAccPageTwoComponent extends Component {
 
        const {currentZipCodeRef,estate} = this.state;
         const { 
-            // stateKey = "",
+            //  stateKey = "",
             keyName = "",
             objIndex = -1
         } = currentZipCodeRef;
@@ -971,7 +971,7 @@ class OpenAccPageTwoComponent extends Component {
             if (accOpeningData[uploadImgKey]) {
                 if (accOpeningData[uploadImgKey] !== prevProps.accOpeningData[uploadImgKey]) {
                     const tempResponse = accOpeningData[uploadImgKey];
-                    // alert ("Image stautus \n::"+JSON.stringify(tempResponse));
+                    //  alert ("Image stautus \n::"+JSON.stringify(tempResponse));
                     if (tempResponse && tempResponse.b) {
                         if (tempResponse.b.Location) {
                             alert(`Image Uploaded Successfully \n::${tempResponse.b.Location}`);
@@ -1024,7 +1024,7 @@ class OpenAccPageTwoComponent extends Component {
         const { navigate } = navigation;  
         if (this.validateFields()) {
             const payload = this.getPayload();
-            // this.props.saveData("OpenAccPageTwo", payload);
+            //  this.props.saveData("OpenAccPageTwo", payload);
             const stateData = myInstance.getScreenStateData();
             myInstance.setSavedAccData(payload);
             const screenState = {
@@ -1244,9 +1244,9 @@ class OpenAccPageTwoComponent extends Component {
                          "dateOfBirth": this.state.retirement.dob || "",
                          "emailAddress": this.state.retirement.emailAddress || ""
                      }
-                     // "beneficiary2Details,beneficiary3Details": ""
+                     //  "beneficiary2Details,beneficiary3Details": ""
                  },
-                 "secondBeneficiary": { //  #TODO
+                 "secondBeneficiary": { //   #TODO
                      "beneficiary1Details": {
                          "type": this.state.retirement.beneficiaryType || "",
                          "relation": this.state.retirement.relationshipToAcc || "",
@@ -1495,7 +1495,7 @@ class OpenAccPageTwoComponent extends Component {
 
     uploadImage = () => {
         ImagePicker.showImagePicker(imagePickerOptions, (response) => {
-            // AppUtils.debugLog('Response = ', response);
+            //  AppUtils.debugLog('Response = ', response);
             const { uploadAavatarImg} = this.props;
 
             if (response.didCancel) {
@@ -1532,7 +1532,7 @@ class OpenAccPageTwoComponent extends Component {
             },
         };
         ImagePicker.launchCamera(options, (response) => {
-            // AppUtils.debugLog('Response = ', response);
+            //  AppUtils.debugLog('Response = ', response);
             if (response.didCancel) {
                 AppUtils.debugLog('User cancelled image picker');
             } else if (response.error) {
@@ -1543,8 +1543,8 @@ class OpenAccPageTwoComponent extends Component {
                 AppUtils.debugLog('User tapped custom button: ', response.customButton);
                 alert(response.customButton);
             } else {
-                // const source = { uri: response.uri };
-                // AppUtils.debugLog('response', JSON.stringify(response));
+                //  const source = { uri: response.uri };
+                //  AppUtils.debugLog('response', JSON.stringify(response));
                 this.setState({
                     filePath: response,
                     fileData: response.data,
@@ -1569,13 +1569,13 @@ class OpenAccPageTwoComponent extends Component {
         
 
         const newItems = { ...currentZipCodeRef };
-        //  const newItems = { ...this.state.currentZipCodeRef };
+        //   const newItems = { ...this.state.currentZipCodeRef };
 
         newItems.keyName = keyName;
         newItems.stateKey = stateKey;
         newItems.objIndex = -1;
 
-        // alert("onSubmitZipEditing::"+JSON.stringify(newItems));
+        //  alert("onSubmitZipEditing::"+JSON.stringify(newItems));
         this.setState({ currentZipCodeRef: newItems });
 
         let payload = {};
@@ -1616,7 +1616,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
 
-        // nextInputFocus.focus();
+        //  nextInputFocus.focus();
     }
 
     onSubmitEmpZipEditing = (stateKey, keyName, nextInputFocus) => text => {
@@ -1628,10 +1628,10 @@ class OpenAccPageTwoComponent extends Component {
         newItems.stateKey = stateKey;
         newItems.objIndex = -1;
 
-        // alert("onSubmitEmpZipEditing::"+JSON.stringify(newItems));
+        //  alert("onSubmitEmpZipEditing::"+JSON.stringify(newItems));
         this.setState({ currentZipCodeRef: newItems });
 
-        // nextInputFocus.focus();
+        //  nextInputFocus.focus();
     }
 
     onSubmitZipTrusteeEditing = (stateKey, keyName, nextInputFocus,objIndex) => text => {
@@ -1641,12 +1641,12 @@ class OpenAccPageTwoComponent extends Component {
         const {getStateCity,getAddressFormat} = this.props;
 
         const newItems = { ...currentZipCodeRef };
-        //  const newItems = { ...this.state.currentZipCodeRef };
+        //   const newItems = { ...this.state.currentZipCodeRef };
 
         newItems.keyName = keyName;
         newItems.stateKey = stateKey;
         newItems.objIndex = objIndex;
-        // alert("onSubmitZipEditing::"+JSON.stringify(newItems));
+        //  alert("onSubmitZipEditing::"+JSON.stringify(newItems));
         this.setState({ currentZipCodeRef: newItems });
 
         const newTrusteeItmes = [...estate.trusteeData];
@@ -1690,7 +1690,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
 
-        // nextInputFocus.focus();
+        //  nextInputFocus.focus();
     }
 
     onSubmitEditing = (input) => text => {
@@ -1960,7 +1960,7 @@ class OpenAccPageTwoComponent extends Component {
                     }
                 }
             }
-            // alert(errMsg);
+            //  alert(errMsg);
         }
 
         return isValidationSuccess;
@@ -2124,7 +2124,7 @@ class OpenAccPageTwoComponent extends Component {
                     }
                 }
             }
-            // alert(errMsg);
+            //  alert(errMsg);
         }
 
         return isValidationSuccess;
@@ -2136,7 +2136,7 @@ class OpenAccPageTwoComponent extends Component {
         let errMsg = "";
         let isValidationSuccess = false;
         let input = "";
-        // var employmentInfoVisible = false;
+        //  var employmentInfoVisible = false;
 
 
         /*
@@ -2196,7 +2196,7 @@ class OpenAccPageTwoComponent extends Component {
                     }
                 }
             }
-            // alert(errMsg);
+            //  alert(errMsg);
         }
 
         return isValidationSuccess;
@@ -2300,7 +2300,7 @@ class OpenAccPageTwoComponent extends Component {
             this.setState({
                 [`${input}Validation`]: false
             });
-            // alert(errMsg);
+            //  alert(errMsg);
         }
 
 
@@ -2646,7 +2646,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
     validateFields = () => {
-       // return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
+       //  return this.props.navigation.navigate({ routeName: 'openAccPageThree', key: 'openAccPageThree' });
         let isValidationSuccess = false;
         const { navigation} = this.props;
         const { getParam } = navigation; 
@@ -2798,7 +2798,7 @@ class OpenAccPageTwoComponent extends Component {
 
     renderRadio = (sectionName, radioName, radioSize, componentStyle, layoutStyle) => {
         AppUtils.debugLog(`renderRadio::: ${radioName}`);
-        let tempkey = "";// "title";
+        let tempkey = "";//  "title";
         let radioData = dummyData;
         const { masterLookupStateData} = this.props;
 
@@ -2909,7 +2909,7 @@ class OpenAccPageTwoComponent extends Component {
 
         const newItems = [...estate.trusteeData];
 
-        let tempkey = "";// "title";
+        let tempkey = "";//  "title";
         let radioData = dummyData;
         switch (radioName) {
             case "citizenship":
@@ -3161,14 +3161,14 @@ class OpenAccPageTwoComponent extends Component {
                 inputref={this.setInputRef(`${stateKey}${inputRefKey}`)}
                 dropDownLayout={styles.dropDownLayout}
                 dropDownTextName={styles.dropDownTextName}
-                // pickerStyle={styles.textInputStyle}
+                //  pickerStyle={styles.textInputStyle}
                 dropDownName={lblDropdownName}
                 data={dropDownData}
                 dropDownValue={this.state[section][stateKey]}
-                // showDropDown={this.state[section][dropDownName]}
-                // changeState={(stateKey !== "taxBracket") ? this.onPressDropDown(section, dropDownName) : null}
+                //  showDropDown={this.state[section][dropDownName]}
+                //  changeState={(stateKey !== "taxBracket") ? this.onPressDropDown(section, dropDownName) : null}
                 selectedDropDownValue={this.onSelectedDropDownValue(section, stateKey, dropDownName)}
-                // itemToDisplay="value"
+                //  itemToDisplay="value"
                 dropDownPostition={styles.dropDownPostition}
                 errorFlag={isOptional ? false : validationKeyValue}
                 errorText={errMsg}
@@ -3645,7 +3645,7 @@ class OpenAccPageTwoComponent extends Component {
                             {gblStrings.accManagement.firstName}
                         </Text>
                         <GInputComponent
-                            // inputref={(ref)=> this.firstName = ref}
+                            //  inputref={(ref)=> this.firstName = ref}
                             inputref={this.setInputRef("firstName")}
                             value={personal.firstName}
                             editable={personal.firstName === ""}
@@ -3667,7 +3667,7 @@ class OpenAccPageTwoComponent extends Component {
                             </Text>
                         </Text>
                         <GInputComponent
-                            // inputref={(ref)=> this.middleInitial = ref}
+                            //  inputref={(ref)=> this.middleInitial = ref}
                             inputref={this.setInputRef("middleInitial")}
                             value={personal.middleInitial}
                             editable={initialState.middleInitial === ""}
@@ -3683,7 +3683,7 @@ class OpenAccPageTwoComponent extends Component {
                             {gblStrings.accManagement.lastName}
                         </Text>
                         <GInputComponent
-                            // inputref={ref => this.lastName = ref}
+                            //  inputref={ref => this.lastName = ref}
                             inputref={this.setInputRef("lastName")}
                             value={personal.lastName}
                             editable={personal.lastName === ""}
@@ -3778,7 +3778,7 @@ class OpenAccPageTwoComponent extends Component {
                                 </Text>
                                 <View style={styles.radioBtnColGrp}>
                                     <CustomRadio
-                                        // componentStyle={styles.radioCol1}
+                                        //  componentStyle={styles.radioCol1}
                                         size={30}
                                         outerCicleColor="#DEDEDF"
                                         innerCicleColor="#61285F"
@@ -3790,7 +3790,7 @@ class OpenAccPageTwoComponent extends Component {
                                         onPress={this.onPressRadio("personal", "residenceStatus", "Resident Alien")}
                                     />
                                     <CustomRadio
-                                       // componentStyle={styles.radioCol2}
+                                       //  componentStyle={styles.radioCol2}
                                         size={30}
                                         outerCicleColor="#DEDEDF"
                                         innerCicleColor="#61285F"
@@ -4109,7 +4109,7 @@ class OpenAccPageTwoComponent extends Component {
                             placeholder={gblStrings.accManagement.phoneNoFormat}
                             maxLength={gblStrings.maxLength.mobileNo}
                             keyboardType="phone-pad"
-                           // value={personal.mobileNo.replace(/\d(?=\d{4})/g, "*")}
+                           //  value={personal.mobileNo.replace(/\d(?=\d{4})/g, "*")}
                             value={personal.mobileNo}
                             onChangeText={this.onChangeText("personal", "mobileNo")}
                             onSubmitEditing={this.onSubmitEditing(this.contactDuringMobNo)}
@@ -4294,7 +4294,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
                         {
-                            // Render employment fields if user have employment history
+                            //  Render employment fields if user have employment history
                             (personal.empStatus !== "" && personal.empStatus !== "Unemployed" && personal.empStatus !== "Homemaker" && personal.empStatus !== "Student" && personal.empStatus !== "Retired") && (
                             <View style={styles.childSectionGrp}>
 
@@ -4434,7 +4434,7 @@ class OpenAccPageTwoComponent extends Component {
                             </View>
                           )}
                         {
-                            // Render employment fields if user not have employment history
+                            //  Render employment fields if user not have employment history
                             (personal.empStatus === "Unemployed" || personal.empStatus === "Homemaker" || personal.empStatus === "Student" || personal.empStatus === "Retired") && (
                             <View style={styles.childSectionGrp}>
                                 {this.renderCustomDropDown({
@@ -4976,7 +4976,7 @@ class OpenAccPageTwoComponent extends Component {
                                     </Text>
                                     <View style={styles.radioBtnColGrp}>
                                         <CustomRadio
-                                            // componentStyle={styles.radioCol1}
+                                            //  componentStyle={styles.radioCol1}
                                             size={30}
                                             outerCicleColor="#DEDEDF"
                                             innerCicleColor="#61285F"
@@ -4988,7 +4988,7 @@ class OpenAccPageTwoComponent extends Component {
                                             onPress={this.onPressRadio("jointOwner", "residenceStatus", "Resident Alien")}
                                         />
                                         <CustomRadio
-                                            // componentStyle={styles.radioCol2}
+                                            //  componentStyle={styles.radioCol2}
                                             size={30}
                                             outerCicleColor="#DEDEDF"
                                             innerCicleColor="#61285F"
@@ -5497,7 +5497,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
                         {
-                            // Render employment fields if user have employment history
+                            //  Render employment fields if user have employment history
                             (jointOwner.empStatus !== "" && jointOwner.empStatus !== "Unemployed" && jointOwner.empStatus !== "Homemaker" && jointOwner.empStatus !== "Student" && jointOwner.empStatus !== "Retired") && (
                             <View style={styles.childSectionGrp}>
 
@@ -5637,7 +5637,7 @@ class OpenAccPageTwoComponent extends Component {
                             </View>
                           )}
                         {
-                            // Render employment fields if user not have employment history
+                            //  Render employment fields if user not have employment history
                             (jointOwner.empStatus === "Unemployed" || jointOwner.empStatus === "Homemaker" || jointOwner.empStatus === "Student" || jointOwner.empStatus === "Retired") && (
                             <View style={styles.childSectionGrp}>
                                 {this.renderCustomDropDown({
@@ -5895,7 +5895,7 @@ class OpenAccPageTwoComponent extends Component {
                         {gblStrings.accManagement.regulatoryQuestionJoint}
                     </Text>
                     <TouchableOpacity
-                        // onPress={() => { alert("Expand/Cllapse") }}
+                        //  onPress={() => { alert("Expand/Cllapse") }}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
@@ -6010,7 +6010,7 @@ class OpenAccPageTwoComponent extends Component {
                         {gblStrings.accManagement.personalInformationChild}
                     </Text>
                     <TouchableOpacity
-                        // onPress={() => { alert("Expand/Cllapse") }}
+                        //  onPress={() => { alert("Expand/Cllapse") }}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
@@ -6139,7 +6139,7 @@ class OpenAccPageTwoComponent extends Component {
                         {gblStrings.accManagement.regulatoryQuestionChild}
                     </Text>
                     <TouchableOpacity
-                        // onPress={() => { alert("Expand/Cllapse") }}
+                        //  onPress={() => { alert("Expand/Cllapse") }}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
@@ -6260,7 +6260,7 @@ class OpenAccPageTwoComponent extends Component {
                         {gblStrings.accManagement.beneficiariesOpt}
                     </Text>
                     <TouchableOpacity
-                        //  onPress={() => { alert("Expand/Cllapse") }}
+                        //   onPress={() => { alert("Expand/Cllapse") }}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
@@ -6295,7 +6295,7 @@ class OpenAccPageTwoComponent extends Component {
                                     textInputStyle={styles.textInputStyle}
                                     dropDownName={gblStrings.accManagement.beneficiary}
                                     data={tempBeneficiaryData}
-                                   // changeState={this.onPressDropDownForIRABeneficiary("beneficiaryTypeDropDown", index)}
+                                   //  changeState={this.onPressDropDownForIRABeneficiary("beneficiaryTypeDropDown", index)}
                                     showDropDown={retirementBeneficiaryData[index].beneficiaryTypeDropDown}
                                     dropDownValue={retirementBeneficiaryData[index].beneficiaryType}
                                     selectedDropDownValue={this.onSelectedIRABeneficiaryDropDownValue("beneficiaryTypeDropDown", index)}
@@ -6315,7 +6315,7 @@ class OpenAccPageTwoComponent extends Component {
                                     textInputStyle={styles.textInputStyle}
                                     dropDownName={gblStrings.accManagement.relationshipToAccHolder}
                                     data={tempRelationShipData}
-                                   // changeState={this.onPressDropDownForIRABeneficiary("relationshipToAccDropDown", index)}
+                                   //  changeState={this.onPressDropDownForIRABeneficiary("relationshipToAccDropDown", index)}
                                     showDropDown={retirementBeneficiaryData[index].relationshipToAccDropDown}
                                     dropDownValue={retirementBeneficiaryData[index].relationshipToAcc}
                                     selectedDropDownValue={this.onSelectedIRABeneficiaryDropDownValue("relationshipToAccDropDown", index)}
@@ -6541,7 +6541,7 @@ class OpenAccPageTwoComponent extends Component {
                             {accType === "Trust Account"?gblStrings.accManagement.trustName :gblStrings.accManagement.estateName}
                         </Text>
                         <GInputComponent
-                            // inputref={(ref)=> this.firstName = ref}
+                            //  inputref={(ref)=> this.firstName = ref}
                             inputref={this.setInputRef("name")}
                             value={estate.name}
                             propInputStyle={estate.nameValidation ? styles.customTxtBox : styles.customTxtBoxError}
@@ -7115,8 +7115,8 @@ class OpenAccPageTwoComponent extends Component {
                                             data={tempSuffixData}
                                             dropDownValue={item.suffix}
                                             selectedDropDownValue={this.onSelectedEstateTrustDropDownValue("suffixDropDown", index)}
-                                            // itemToDisplay="value"
-                                            // dropDownPostition={{ ...styles.dropDownPostition, top: scaledHeight(160) }}
+                                            //  itemToDisplay="value"
+                                            //  dropDownPostition={{ ...styles.dropDownPostition, top: scaledHeight(160) }}
                                             isOptional
                                         />
                                     </View>
@@ -7279,7 +7279,7 @@ class OpenAccPageTwoComponent extends Component {
                                         maxLength={gblStrings.maxLength.state}
                                         value={item.stateCity}
                                         onChangeText={this.onChangeTextForEstateTrust("stateCity",index)}
-                                        // onSubmitEditing={this.onSubmitEditing(this[`stateCity${index}`])}
+                                        //  onSubmitEditing={this.onSubmitEditing(this[`stateCity${index}`])}
                                         errorFlag={!estate.stateCityValidation}
                                         errorText={errMsg}
                                         editable={item.citizenship !== "U.S"}
@@ -7402,7 +7402,7 @@ class OpenAccPageTwoComponent extends Component {
                                                 maxLength={gblStrings.maxLength.state}
                                                 value={item.stateCity_Phy}
                                                 onChangeText={this.onChangeTextForEstateTrust("stateCity_Phy",index)}
-                                               // onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
+                                               //  onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
                                                 errorFlag={!item.stateCity_PhyValidation}
                                                 errorText={errMsg}
                                                 editable={item.citizenship !== "U.S"}
@@ -7518,8 +7518,8 @@ class OpenAccPageTwoComponent extends Component {
 
             <KeyboardAvoidingView
                 style={styles.container}
-                // keyboardVerticalOffset = { Header.HEIGHT + 20 }  
-                // behavior="padding"
+                //  keyboardVerticalOffset = { Header.HEIGHT + 20 }  
+                //  behavior="padding"
                 behavior={(Platform.OS === 'ios') ? "padding" : null}
                 keyboardVerticalOffset={Platform.select({ ios: 20, android: 500 })}
             >

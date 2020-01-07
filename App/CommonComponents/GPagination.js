@@ -26,13 +26,13 @@ export const GPagination = (props) => (
             initialNumToRender={props.initialNumToRender}
             onEndReached={props.onEndReached}
             onEndReachedThreshold={props.onEndReachedThreshold}
-            //inverted={props.inverted}
+            // inverted={props.inverted}
             initialScrollIndex={props.initialScrollIndex}
             ListFooterComponent={props.ListFooterComponent}
             ListHeaderComponent={props.ListHeaderComponent}
             pagingEnabled
             onScroll={props.onScroll}
-            // key={data.names}
+            //  key={data.names}
         />
         <View style={{flexDirection:'row',justifyContent:'center'}}>
 {props.data.map((newitems,index) =>

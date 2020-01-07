@@ -9,13 +9,13 @@ import { CustomPageWizard } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import AppUtils from '../../Utils/AppUtils';
 
-const maxFileLimit=10; // No. of Files
-const maxFileSize=30; // Maximum file size 30 MB
+const maxFileLimit=10; //  No. of Files
+const maxFileSize=30; //  Maximum file size 30 MB
 
 class SpecialtyAccSubmitComponent extends Component {
     constructor(props) {
         super(props);
-        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             itemID: "",
@@ -56,12 +56,12 @@ class SpecialtyAccSubmitComponent extends Component {
         navigation.goBack('termsAndConditions');
     }
 
-    // onClickSave = () => {
-    //    // this.validateFields();
-    // }
+    //  onClickSave = () => {
+    //     //  this.validateFields();
+    //  }
 
     onClickSubmit = () => {
-       // this.validateFields();
+       //  this.validateFields();
     }
 
     onPressCheck = (keyName) => () => this.setState({        
@@ -72,19 +72,19 @@ class SpecialtyAccSubmitComponent extends Component {
         AppUtils.debugLog(`item: ${ item.id}`);
         this.setState({ selectedItemID: item.id });
         this.setState({ selectedItemName: item.name });
-        //  alert("You selected :: " + item.name)
+        //   alert("You selected :: " + item.name)
     }
 
     async uploadImage() {
-        // Opening Document Picker for selection of multiple file
+        //  Opening Document Picker for selection of multiple file
         try {
             let results;
 
-            // Android File formats
+            //  Android File formats
             if(Platform.OS === 'android'){          
               results = await DocumentPicker.pickMultiple({
                 type: [
-                     // DocumentPicker.types.allFiles
+                     //  DocumentPicker.types.allFiles
                     mime.lookup('docx'),
                     mime.lookup('doc'),
                     mime.lookup('jpg'),
@@ -98,28 +98,28 @@ class SpecialtyAccSubmitComponent extends Component {
               });
             }
   
-            // IOS File formats
+            //  IOS File formats
             if(Platform.OS === 'ios'){          
               results = await DocumentPicker.pickMultiple({
                 type: [
                   'org.openxmlformats.wordprocessingml.document',
                   'com.adobe.pdf',             
                   'org.openxmlformats.spreadsheetml.sheet',    
-                  // DocumentPicker.types.images,            
+                  //  DocumentPicker.types.images,            
                 ]
               });
             }  
   
-            // for (const res of results) {
-            //   // Printing the log realted to the file
-            //   console.log(`res : ${ JSON.stringify(res)}`);
-            //   console.log(`URI : ${ res.uri}`);
-            //   console.log(`Type : ${ res.type}`);
-            //   console.log(`File Name : ${ res.name}`);
-            //   console.log(`File Size : ${ res.size}`);
-            // }
+            //  for (const res of results) {
+            //    //  Printing the log realted to the file
+            //    console.log(`res : ${ JSON.stringify(res)}`);
+            //    console.log(`URI : ${ res.uri}`);
+            //    console.log(`Type : ${ res.type}`);
+            //    console.log(`File Name : ${ res.name}`);
+            //    console.log(`File Size : ${ res.size}`);
+            //  }
 
-            // Setting the state to show multiple file attributes
+            //  Setting the state to show multiple file attributes
 
             if(results.length > maxFileLimit){
                 this.setState({ fileSelected:true,errorMessage:`You can attach only ${maxFileLimit} file` });
@@ -128,12 +128,12 @@ class SpecialtyAccSubmitComponent extends Component {
             }            
 
           } catch (err) {
-            // Handling any exception (If any)
+            //  Handling any exception (If any)
             if (DocumentPicker.isCancel(err)) {
-              // If user canceled the document selection
-              // alert('Canceled from multiple doc picker');
+              //  If user canceled the document selection
+              //  alert('Canceled from multiple doc picker');
             } else {
-              // For Unknown Error
+              //  For Unknown Error
               alert(`Unknown Error: ${ JSON.stringify(err)}`);
               throw err;
             }
@@ -374,12 +374,12 @@ class SpecialtyAccSubmitComponent extends Component {
 
 SpecialtyAccSubmitComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    // accOpeningData: PropTypes.instanceOf(Object),
+    //  accOpeningData: PropTypes.instanceOf(Object),
   };
 
   SpecialtyAccSubmitComponent.defaultProps = {  
     navigation : {},
-    // accOpeningData : {},  
+    //  accOpeningData : {},  
 };
 
 export default SpecialtyAccSubmitComponent;

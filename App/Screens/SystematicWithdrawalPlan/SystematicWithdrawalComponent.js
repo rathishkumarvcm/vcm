@@ -30,11 +30,11 @@ class SystematicWithdrawalComponent extends Component {
     constructor(props) {
         super(props);
 
-        // this.state = {
-        //     expand: false,
-        //     selectedIndex: -1,
-        //     systematicWithdrawalJson: {},
-        // };
+        //  this.state = {
+        //      expand: false,
+        //      selectedIndex: -1,
+        //      systematicWithdrawalJson: {},
+        //  };
         this.state = {
             expand: false,
             selectedIndex: -1,
@@ -48,11 +48,11 @@ class SystematicWithdrawalComponent extends Component {
     }
 
     componentDidMount() {
-        // if (this.props && this.props.systamaticWithdrawalState) {
-        //     this.setState({
-        //         systematicWithdrawalJson: this.props.systamaticWithdrawalState,
-        //     });
-        // }
+        //  if (this.props && this.props.systamaticWithdrawalState) {
+        //      this.setState({
+        //          systematicWithdrawalJson: this.props.systamaticWithdrawalState,
+        //      });
+        //  }
         if (this.props && this.props.systematicWithdrawalState) {
             if(this.props.systematicWithdrawalState.savedAccData)
             {
@@ -92,7 +92,7 @@ class SystematicWithdrawalComponent extends Component {
 
     setCollapsableUpdates = index => e => {
 
-        var array = [...this.state.arr_expand]; // make a separate copy of the array
+        var array = [...this.state.arr_expand]; //  make a separate copy of the array
         let IndexExpand = this.state.expandIndex;
 
 
@@ -192,17 +192,17 @@ class SystematicWithdrawalComponent extends Component {
 
         )
 
-    // editDelete = index => e => {
-    //     index === this.state.selectedIndex ?
-    //         this.setState({
-    //             selectedIndex: -1
-    //         })
-    //         :
-    //         this.setState({
-    //             selectedIndex: index
-    //         });
+    //  editDelete = index => e => {
+    //      index === this.state.selectedIndex ?
+    //          this.setState({
+    //              selectedIndex: -1
+    //          })
+    //          :
+    //          this.setState({
+    //              selectedIndex: index
+    //          });
 
-    // }
+    //  }
     editDelete = index => e => {
         index === this.state.selectedIndex ?
             this.setState({
@@ -233,15 +233,15 @@ class SystematicWithdrawalComponent extends Component {
 
     navigationInvestmentAccount = () => 
             this.props.navigation.navigate({routeName:'systematicWithdrawalAccount',key:'systematicWithdrawalAccount',params:{newEdit:false}});
-    //this.props.navigation.navigate('systematicWithdrawalAccount');
+    // this.props.navigation.navigate('systematicWithdrawalAccount');
 
-    //navigationInvestmentVerify = () => this.props.navigation.navigate('systematicWithdrawalVerify', { skip: true });
+    // navigationInvestmentVerify = () => this.props.navigation.navigate('systematicWithdrawalVerify', { skip: true });
 
     navigationInvestmentVerify = index =>e=> this.props.navigation.navigate({routeName:'systematicWithdrawalVerify',key:'systematicWithdrawalVerify',params: { skip: true,indexSelected:index }});
     navigationInvestmentEdit = index => e => {
         switch ((index)) {
             case 0:
-                //this.props.navigation.navigate('systematicWithdrawalAdd', { option: index, ItemToEdit: this.state.selectedIndex });
+                // this.props.navigation.navigate('systematicWithdrawalAdd', { option: index, ItemToEdit: this.state.selectedIndex });
                 this.props.navigation.navigate({routeName:'systematicWithdrawalAdd',key:'systematicWithdrawalAdd', params:{ option: index, ItemToEdit: this.state.selectedIndex ,accountType:'general'}});
                 break;
             case 1:

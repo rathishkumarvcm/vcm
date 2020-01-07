@@ -886,28 +886,28 @@ class EditManageBenificiariesComponent extends Component {
 
 
     if (this.state.primaryBeneficiaryData) {
-      // let i=0;
-      // let len = this.state.primaryBeneficiaryData.length;
-      // for (i = 0; i < len; i++) {
-      //   let arr=this.state.primaryBeneficiaryData;
-      //   let obj=arr[i];
+      //  let i=0;
+      //  let len = this.state.primaryBeneficiaryData.length;
+      //  for (i = 0; i < len; i++) {
+      //    let arr=this.state.primaryBeneficiaryData;
+      //    let obj=arr[i];
 
-      //   this.setState(prevState => ({
-      //     primaryBeneficiaryData: {
-      //       ...prevState.primaryBeneficiaryData,
-      //       fnameValidation: true,
-      //       lnameValidation: true,
-      //       emailValidation: true,
-      //       addressLine1Validation: true,
-      //       addressLine2Validation: true,
-      //       zipCodeValidation: true,
-      //       relationValidation: false,
-      //       startDateValidation: true,
-      //       endDateValidation: true,
-      //       addValidation: true
-      //     }
-      //   }));
-      // }
+      //    this.setState(prevState => ({
+      //      primaryBeneficiaryData: {
+      //        ...prevState.primaryBeneficiaryData,
+      //        fnameValidation: true,
+      //        lnameValidation: true,
+      //        emailValidation: true,
+      //        addressLine1Validation: true,
+      //        addressLine2Validation: true,
+      //        zipCodeValidation: true,
+      //        relationValidation: false,
+      //        startDateValidation: true,
+      //        endDateValidation: true,
+      //        addValidation: true
+      //      }
+      //    }));
+      //  }
       isPriValidationSuccess = false;
       if (!this.validateEachPriFields()) {
         isPriValidationSuccess = false;
@@ -1281,7 +1281,7 @@ class EditManageBenificiariesComponent extends Component {
                     propInputStyle={styles.customTxtBox}
                     placeholder='XXX-XX-XXXX'
                     keyboardType="numeric"
-                    //value={item.social_security_number.replace(/\d(?=\d{5})/g, "*")}
+                    // value={item.social_security_number.replace(/\d(?=\d{5})/g, "*")}
                     value={item.social_security_number}
                     maxLength={gblStrings.maxLength.ssnNo}
                     onChangeText={this.onChangeText(index, 'social_security_number', "Primary")}
@@ -1372,7 +1372,7 @@ class EditManageBenificiariesComponent extends Component {
                     placeholder='XXX-XX-XXXX'
                     keyboardType='numeric'
                     value={item.social_security_number}
-                    //value={item.social_security_number.replace(/\d(?=\d{5})/g, "*")}
+                    // value={item.social_security_number.replace(/\d(?=\d{5})/g, "*")}
                     maxLength={gblStrings.maxLength.ssnNo}
                     onChangeText={this.onChangeText(index, 'social_security_number', "Contingent")}
                     errorFlag={!item.ssnValidation}
@@ -1493,7 +1493,7 @@ class EditManageBenificiariesComponent extends Component {
                     placeholder='XXX-XX-XXXX'
                     keyboardType='numeric'
                     value={item.social_security_number}
-                    //value={item.social_security_number.replace(/\d(?=\d{5})/g, "*")}
+                    // value={item.social_security_number.replace(/\d(?=\d{5})/g, "*")}
                     maxLength={gblStrings.maxLength.ssnNo}
                     onChangeText={this.onAddedBeneChangeText(index, 'social_security_number')}
                     errorFlag={!item.ssnValidation}
@@ -1599,7 +1599,7 @@ class EditManageBenificiariesComponent extends Component {
                     placeholder='XXX-XX-XXXX'
                     keyboardType='numeric'
                     value={item.social_security_number}
-                    //value={item.social_security_number.replace(/\d(?=\d{5})/g, "*")}
+                    // value={item.social_security_number.replace(/\d(?=\d{5})/g, "*")}
                     maxLength={gblStrings.maxLength.ssnNo}
                     onChangeText={this.onChangeText(index, 'social_security_number', "Tod")}
                     errorFlag={!item.ssnValidation}
@@ -1729,7 +1729,7 @@ class EditManageBenificiariesComponent extends Component {
                     placeholder='XXX-XX-XXXX'
                     keyboardType='numeric'
                     value={item.social_security_number}
-                    //value={item.social_security_number.replace(/\d(?=\d{5})/g, "*")}
+                    // value={item.social_security_number.replace(/\d(?=\d{5})/g, "*")}
                     maxLength={gblStrings.maxLength.ssnNo}
                     onChangeText={this.onAddedNewPriTextChange(index, 'social_security_number')}
                     errorFlag={!item.ssnValidation}

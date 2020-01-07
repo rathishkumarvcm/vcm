@@ -6,7 +6,7 @@ import {scaledHeight} from '../../Utils/Resolution';
 const styles = StyleSheet.create({
     accountItem: {
         backgroundColor: '#FFFFFF',
-       // padding: 10,
+       //  padding: 10,
         justifyContent: 'center',
         alignItems: 'center',
         alignContent: 'center',
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
  
     accountItemSelected: {
         backgroundColor: '#FFFFFF',
-        // padding: 10,
+        //  padding: 10,
         justifyContent: 'center',
         alignItems: 'center',
         alignContent: 'center',
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     accountSection: {
         width: '80%',
         marginHorizontal:"10%",
-       // flexGrow: 1,
+       //  flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
         alignContent: 'center'
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         fontSize:scaledHeight(12)
 
     },
-    disclaimerTitleTxt:{ // termsofuseText
+    disclaimerTitleTxt:{ //  termsofuseText
         fontSize : scaledHeight(16),
         marginBottom : scaledHeight(10),
         fontWeight : 'bold',
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         flexGrow:1,
         width:'100%',
  
-        // backgroundColor:'yellow',
+        //  backgroundColor:'yellow',
  
      },
     pageHeader: {
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     privacyAgreement:{
-        // marginTop:convertToDeviceResolution(4),
+        //  marginTop:convertToDeviceResolution(4),
         marginVertical:scaledHeight(19),
         padding:scaledHeight(12),
         alignItems:'center',
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     },
     privacyText:{
         width:'50%',
-        // paddingLeft:'4%',
+        //  paddingLeft:'4%',
         marginVertical:'2%',
         color:'#61285F',
         fontWeight:'bold',
@@ -148,8 +148,8 @@ const styles = StyleSheet.create({
         flex: .85
     },
     touchItem: {
-       // width:scaledHeight(250),
-      //  height:scaledHeight(250),
+       //  width:scaledHeight(250),
+      //   height:scaledHeight(250),
       marginVertical:"5%"
 
     },

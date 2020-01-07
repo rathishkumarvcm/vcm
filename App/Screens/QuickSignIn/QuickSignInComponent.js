@@ -5,7 +5,7 @@ import { styles } from '../QuickSignIn/styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
 
-// eslint-disable-next-line react/prefer-stateless-function
+//  eslint-disable-next-line react/prefer-stateless-function
 class QuickSignInComponent extends Component {
     constructor(props) {
         super(props);

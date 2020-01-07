@@ -11,17 +11,17 @@ class GBiometricAuthentication extends React.PureComponent {
     }
 
     static getDerivedStateFromProps(props, state){
-        //initialize state variable and return. If no changes required for state
-        //variable then return empty object. return {}
+        // initialize state variable and return. If no changes required for state
+        // variable then return empty object. return {}
         console.log('error',props,state);
-        return {}; //should return empty object by default
+        return {}; // should return empty object by default
 
     }
 
 componentDidMount(){
 
    
-    //console.log("TouchID.isSupported()",TouchID.isSupported(),this.props.enableBiometric)
+    // console.log("TouchID.isSupported()",TouchID.isSupported(),this.props.enableBiometric)
     if(this.props.enableBiometric)
     TouchID.isSupported()
     .then(biometryType => {
@@ -38,7 +38,7 @@ componentDidMount(){
                 });
                 console.log('error',error);
             });
-            // Touch ID is supported on iOS
+            //  Touch ID is supported on iOS
           } 
         else if (biometryType === 'FaceID') {
             TouchID.authenticate('Authenticate with faceprint')
@@ -48,13 +48,13 @@ componentDidMount(){
                 });
             })
             .catch(error => {
-                //alert(JSON.stringify(error))
+                // alert(JSON.stringify(error))
                 this.setState({biometryAuth:false},()=>{
                     this.props.onAuthenticate(this.state.biometryAuth);
                 });
                 console.log('error',error);
             });
-            // Face ID is supported on iOS
+            //  Face ID is supported on iOS
           } 
           else if (biometryType === true) {
             TouchID.authenticate('Authenticate with biometric')
@@ -69,7 +69,7 @@ componentDidMount(){
                 });
                 console.log('error',error);
             });
-            // Touch ID is supported on Android
+            //  Touch ID is supported on Android
           }
     }).catch(error => {
         console.log('error--',JSON.stringify(error));

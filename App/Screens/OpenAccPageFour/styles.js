@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
 
-    disclaimerTitleTxt: { // termsofuseText
+    disclaimerTitleTxt: { //  termsofuseText
         fontSize: scaledHeight(16),
         marginBottom: scaledHeight(10),
         fontWeight: 'bold',
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
       },
     explainDotteBorderTxt: {
 
-        // marginTop:scaledHeight(10),
+        //  marginTop:scaledHeight(10),
         fontSize: scaledHeight(18),
         color: '#333333DE',
         lineHeight: 28
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
 
     explainTxt: {
 
-        //  marginTop:scaledHeight(10),
+        //   marginTop:scaledHeight(10),
         fontSize: scaledHeight(18),
         color: '#000000DE',
         lineHeight: 28
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     },
 
     lblLine: {
-        // width:"100%",
+        //  width:"100%",
         flexGrow: 1,
         marginTop: scaledHeight(9.5),
         height: scaledHeight(1),
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         opacity: 0.5
     },
     lblLine1: {
-        // width:"100%",
+        //  width:"100%",
 
         height: scaledHeight(1),
         backgroundColor: '#696069'
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     newVictorySection: {
-        //  marginTop: scaledHeight(150),
+        //   marginTop: scaledHeight(150),
         padding: scaledHeight(12),
         width: '100%',
         flexGrow: 1,
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     },
 
     normalBlackBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         height: scaledHeight(50),
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     normalBlackDisabledBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         height: scaledHeight(50),
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
         marginHorizontal: scaledHeight(37)
     },
     normalWhiteBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         height: scaledHeight(50),

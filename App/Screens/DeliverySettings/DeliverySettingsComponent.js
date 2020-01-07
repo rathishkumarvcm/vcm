@@ -9,7 +9,7 @@ import gblStrings from '../../Constants/GlobalStrings';
 class DeliverySettingsComponent extends Component {
     constructor(props) {
         super(props);
-        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
 
@@ -143,7 +143,7 @@ class DeliverySettingsComponent extends Component {
 
     switchOnOffStateUpdates = (fromView, flag) =>()=> {
         switch (fromView) {
-            // Email Section Switch
+            //  Email Section Switch
             case 'emailUrgentMessage':
                 if (flag) this.setState({ emailUrgentSwitchOn: true, emailUrgentSwitchOff: false });
                 else this.setState({ emailUrgentSwitchOn: false, emailUrgentSwitchOff: true });
@@ -156,7 +156,7 @@ class DeliverySettingsComponent extends Component {
                 if (flag) this.setState({ emailGuidanceSwitchOn: true, emailGuidanceSwitchOff: false });
                 else this.setState({ emailGuidanceSwitchOn: false, emailGuidanceSwitchOff: true });
                 break;
-            // Notification Section Switch
+            //  Notification Section Switch
             case 'pushNotifyUrgentMessage':
                 if (flag) this.setState({ notificationUrgentSwitchOn: true, notificationUrgentSwitchOff: false });
                 else this.setState({ notificationUrgentSwitchOn: false, notificationUrgentSwitchOff: true });
@@ -169,7 +169,7 @@ class DeliverySettingsComponent extends Component {
                 if (flag) this.setState({ notificationGuidanceSwitchOn: true, notificationGuidanceSwitchOff: false });
                 else this.setState({ notificationGuidanceSwitchOn: false, notificationGuidanceSwitchOff: true });
                 break;
-            // Text Message Section Switch
+            //  Text Message Section Switch
             case 'textUrgentMessage':
                 if (flag) this.setState({ textUrgentSwitchOn: true, textUrgentSwitchOff: false });
                 else this.setState({ textUrgentSwitchOn: false, textUrgentSwitchOff: true });

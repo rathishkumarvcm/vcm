@@ -17,7 +17,7 @@ class ChangeSignInMethod extends Component {
     constructor(props) {
         super(props);
         this.state = {
-              // radioButton: false,
+              //  radioButton: false,
               radioButtonIndex: this.props.navigation.getParam('index'),
               lastUpdate:''
             };
@@ -30,7 +30,7 @@ class ChangeSignInMethod extends Component {
 
      componentDidUpdate(prevProps) 
      {
-        // console.log("componentDidUpdate::::> "+prevState);
+        //  console.log("componentDidUpdate::::> "+prevState);
         if (this.props !== prevProps) {
             if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.selectedMethod &&
                 this.props.signInMethodsData.selectedMethod === "OTP")
@@ -96,13 +96,13 @@ class ChangeSignInMethod extends Component {
         if (index !== this.state.radioButtonIndex) {
             this.setState({
                 radioButtonIndex: index,
-                // radioButton:false
+                //  radioButton:false
             });
             
         }
         else {
             this.setState({
-                // radioButton:false
+                //  radioButton:false
             });
         }
     }

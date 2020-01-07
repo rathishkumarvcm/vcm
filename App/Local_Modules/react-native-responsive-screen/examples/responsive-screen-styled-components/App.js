@@ -1,4 +1,4 @@
-// packages
+//  packages
 import * as React from 'react';
 import { widthPercentageToDP, heightPercentageToDP } from 'react-native-responsive-screen';
 import styled from 'styled-components';

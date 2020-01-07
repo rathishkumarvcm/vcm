@@ -6,7 +6,7 @@ import { WebView } from 'react-native-webview';
 export const GWebViewComponent = (props) => (
     <WebView
             source={{ uri: props.source.uri }}
-            // injectedJavaScript={props.injectedJavaScript}
+            //  injectedJavaScript={props.injectedJavaScript}
     /> 
 );
 

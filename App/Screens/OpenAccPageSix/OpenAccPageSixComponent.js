@@ -94,7 +94,7 @@ const myInstance = GSingletonClass.getInstance();
 class OpenAccPageSixComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             itemID: "",
             confirmTINType: "",
@@ -388,7 +388,7 @@ class OpenAccPageSixComponent extends Component {
         }
 
         if (!isValidationSuccess) {
-           // alert(errMsg);
+           //  alert(errMsg);
 
         }
         this.setState({

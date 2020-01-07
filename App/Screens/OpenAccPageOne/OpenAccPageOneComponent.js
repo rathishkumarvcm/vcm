@@ -61,7 +61,7 @@ const myInstance = GSingletonClass.getInstance();
 class OpenAccPageOneComponent extends Component {
     constructor(props) {
         super(props);
-        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         const openAccPageOne = myInstance.getAccOpeningEditMode() ? (myInstance.getScreenStateData().openAccPageOne || {}) : {};
 
         this.state = {
@@ -82,7 +82,7 @@ class OpenAccPageOneComponent extends Component {
 
     componentDidMount() {
         AppUtils.debugLog("componentDidMount::::> ");
-        // alert("getAccOpeningEditMode::"+ myInstance.getAccOpeningEditMode());
+        //  alert("getAccOpeningEditMode::"+ myInstance.getAccOpeningEditMode());
 
         const { navigation, getAccountSubTypes } = this.props;
         const { getParam } = navigation;
@@ -196,7 +196,7 @@ class OpenAccPageOneComponent extends Component {
         if (this.validateFields()) {
 
             const payload = this.getPayload();
-            // this.props.saveData("OpenAccPageOne", payload);             
+            //  this.props.saveData("OpenAccPageOne", payload);             
             myInstance.setSavedAccData(payload);
             const stateData = myInstance.getScreenStateData();
             myInstance.setSavedAccData(payload);

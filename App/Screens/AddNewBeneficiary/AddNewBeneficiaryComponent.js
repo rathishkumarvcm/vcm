@@ -35,26 +35,26 @@ let suffixData = [
   { "key": "iii", "value": "III" }
 ];
 
-// let supportedAccountData = [
-//   { "key": "key1", "value": "Retirement (IRA)" },
-//   { "key": "key2", "value": "Traditional" },
-//   { "key": "key3", "value": "Roth" },
-//   { "key": "key4", "value": "Retirement (for self-employed or small business)" },
-//   { "key": "key5", "value": "SEP IRA" },
-//   { "key": "key6", "value": "Simple IRA" },
-//   { "key": "key7", "value": "Retirement (Other)" },
-//   { "key": "key8", "value": "403b" }
-// ];
+//  let supportedAccountData = [
+//    { "key": "key1", "value": "Retirement (IRA)" },
+//    { "key": "key2", "value": "Traditional" },
+//    { "key": "key3", "value": "Roth" },
+//    { "key": "key4", "value": "Retirement (for self-employed or small business)" },
+//    { "key": "key5", "value": "SEP IRA" },
+//    { "key": "key6", "value": "Simple IRA" },
+//    { "key": "key7", "value": "Retirement (Other)" },
+//    { "key": "key8", "value": "403b" }
+//  ];
 
 let supportedAccountData = [
-  //{ "key": "key1", "value": "Retirement (IRA)" },
+  // { "key": "key1", "value": "Retirement (IRA)" },
   { "key": "key2", "value": "Traditional" },
   { "key": "key3", "value": "Roth" },
-  //{ "key": "key4", "value": "Retirement (for self-employed or small business)" },
-  //{ "key": "key5", "value": "SEP IRA" },
-  //{ "key": "key6", "value": "Simple IRA" },
-  //{ "key": "key7", "value": "Retirement (Other)" },
-  //{ "key": "key8", "value": "403b" }
+  // { "key": "key4", "value": "Retirement (for self-employed or small business)" },
+  // { "key": "key5", "value": "SEP IRA" },
+  // { "key": "key6", "value": "Simple IRA" },
+  // { "key": "key7", "value": "Retirement (Other)" },
+  // { "key": "key8", "value": "403b" }
 ];
 
 class AddNewBeneficiaryComponent extends Component {
@@ -471,21 +471,21 @@ class AddNewBeneficiaryComponent extends Component {
     let isNewContingentSuccess = true;
     let isNewPrimarySuccess = true;
 
-    // this.setState(prevState => ({
-    //   newPrimaryBene: {
-    //     ...prevState.personal,
-    //     fnameValidation: true,
-    //     lnameValidation: true,
-    //     emailValidation: true,
-    //     addressLine1Validation: true,
-    //     addressLine2Validation: true,
-    //     zipCodeValidation: true,
-    //     relationValidation: false,
-    //     startDateValidation: true,
-    //     endDateValidation: true,
-    //     addValidation: true
-    //   }
-    // }));
+    //  this.setState(prevState => ({
+    //    newPrimaryBene: {
+    //      ...prevState.personal,
+    //      fnameValidation: true,
+    //      lnameValidation: true,
+    //      emailValidation: true,
+    //      addressLine1Validation: true,
+    //      addressLine2Validation: true,
+    //      zipCodeValidation: true,
+    //      relationValidation: false,
+    //      startDateValidation: true,
+    //      endDateValidation: true,
+    //      addValidation: true
+    //    }
+    //  }));
     if (this.state.newContingentBene) {
       isNewContingentSuccess = false;
       if (!this.validateEachNewConFields()) {
@@ -733,7 +733,7 @@ class AddNewBeneficiaryComponent extends Component {
                     placeholder='XXX-XX-XXXX'
                     keyboardType='numeric'
                     value={item.social_security_number}
-                    //value={item.social_security_number.replace(/\d(?=\d{5})/g, "*")}
+                    // value={item.social_security_number.replace(/\d(?=\d{5})/g, "*")}
                     maxLength={gblStrings.maxLength.ssnNo}
                     onChangeText={this.onAddedNewPriTextChange(index, 'social_security_number')}
                     errorFlag={!item.ssnValidation}
@@ -854,7 +854,7 @@ class AddNewBeneficiaryComponent extends Component {
                     placeholder='XXX-XX-XXXX'
                     keyboardType='numeric'
                     value={item.social_security_number}
-                    //value={item.social_security_number.replace(/\d(?=\d{5})/g, "*")}
+                    // value={item.social_security_number.replace(/\d(?=\d{5})/g, "*")}
                     maxLength={gblStrings.maxLength.ssnNo}
                     onChangeText={this.onAddedBeneChangeText(index, 'social_security_number')}
                     errorFlag={!item.ssnValidation}

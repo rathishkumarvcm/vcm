@@ -261,23 +261,23 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     navigateCompareFunds = () => {
-        // AppUtils.debugLog(this.state.selectedFundInvestmentsData);
-        // if (this.state.selectedFundInvestmentsData.length > 1) {
-        //     if (this.state.selectedFundInvestmentsData.length < 5) {
-        //         let fundSelectedCompare = "";
-        //         this.state.selectedFundInvestmentsData.map((item, index) => {
-        //             fundSelectedCompare = `${fundSelectedCompare.concat(`fundNumber${index + 1}=${item.fundNumber}`)}&`;
-        //         });
-        //         // AppUtils.debugLog("Selected Funds:"+fundSelectedCompare);
-        //         if (fundSelectedCompare !== null && fundSelectedCompare !== "") {
-        //             this.props.navigation.push('compareFunds', { fundDetails: fundSelectedCompare });
-        //         }
-        //     } else {
-        //         alert('Please select minimum 2 or maximum 4 funds to compare');
-        //     }
-        // } else {
-        //     alert('Please select minimum 2 or maximum 4 funds to compare');
-        // }
+        //  AppUtils.debugLog(this.state.selectedFundInvestmentsData);
+        //  if (this.state.selectedFundInvestmentsData.length > 1) {
+        //      if (this.state.selectedFundInvestmentsData.length < 5) {
+        //          let fundSelectedCompare = "";
+        //          this.state.selectedFundInvestmentsData.map((item, index) => {
+        //              fundSelectedCompare = `${fundSelectedCompare.concat(`fundNumber${index + 1}=${item.fundNumber}`)}&`;
+        //          });
+        //          //  AppUtils.debugLog("Selected Funds:"+fundSelectedCompare);
+        //          if (fundSelectedCompare !== null && fundSelectedCompare !== "") {
+        //              this.props.navigation.push('compareFunds', { fundDetails: fundSelectedCompare });
+        //          }
+        //      } else {
+        //          alert('Please select minimum 2 or maximum 4 funds to compare');
+        //      }
+        //  } else {
+        //      alert('Please select minimum 2 or maximum 4 funds to compare');
+        //  }
     }
 
     /* -------------------Validation Events ----------------------- */

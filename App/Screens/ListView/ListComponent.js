@@ -125,7 +125,7 @@ class ListComponent extends Component {
                 inverted={-1}
                 initialNumToRender={10}
                 initialScrollIndex={20}
-                //horizontal
+                // horizontal
                 updateFlatList={this.updateFlatList}
                 onEndReached={this.onEndReachedFunction}
                 onEndReachedThreshold={0.1}

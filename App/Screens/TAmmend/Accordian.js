@@ -163,8 +163,8 @@ export default class Accordian extends Component {
 
     /* onClick = (item) => {
         console.log('touch event', item)
-        // const temp = this.state.data.slice();
-        // temp[index].value = !temp[index].value
+        //  const temp = this.state.data.slice();
+        //  temp[index].value = !temp[index].value
         this.setState({ selectedIndex: item.Key });
     } */
 

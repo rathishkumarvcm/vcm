@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { GButtonComponent, GHeaderComponent, GFooterComponent, GInputComponent,GIcon } from '../../CommonComponents';
 import styles from '../ChangeSignInMethod/styles';
 import gblStrings from '../../Constants/GlobalStrings';
-// import { CustomCheckBox } from '../../AppComponents';
+//  import { CustomCheckBox } from '../../AppComponents';
 
 
 
-// eslint-disable-next-line react/prefer-stateless-function
+//  eslint-disable-next-line react/prefer-stateless-function
 class CSMSoftTokenComponent extends Component {
     constructor(props) {
         super(props);
@@ -19,8 +19,8 @@ class CSMSoftTokenComponent extends Component {
           secondToken:"",
           token2Val:true,
           additionaProtection:false,
-          // isValidationSuccess:false,
-          // errMsg:"",
+          //  isValidationSuccess:false,
+          //  errMsg:"",
         };
     }
 
@@ -33,7 +33,7 @@ class CSMSoftTokenComponent extends Component {
     } */
 
     onChangeText = (stateKey, val) => text => {
-        // console.log("onChangeText:::>");
+        //  console.log("onChangeText:::>");
         this.setState({
             [stateKey]: text,
             [val]: (!this.isEmpty(text)),
@@ -65,7 +65,7 @@ class CSMSoftTokenComponent extends Component {
             lastUpdatedTime:updatedDate
         };
         this.props.signInMethods("signInMethodsData", payloadData);
-        // console.log("----signInMethods",payloadData);
+        //  console.log("----signInMethods",payloadData);
         
         this.props.navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.softToken,index:1});
     }
@@ -136,12 +136,12 @@ class CSMSoftTokenComponent extends Component {
                 <Text style={styles.lblTxtToken}>{gblStrings.userManagement.firstToken}</Text>
                 <View style={styles.widthView}>
                 <GInputComponent
-                // propInputStyle={!this.state.validationEmail ? styles.userIDTextBoxError : styles.userIDTextBox} 
+                //  propInputStyle={!this.state.validationEmail ? styles.userIDTextBoxError : styles.userIDTextBox} 
                 propInputStyle={styles.userIDTextBox}
                 value={this.state.firstToken}
                 onChangeText={this.onChangeText("firstToken","token1Val")}
                 maxLength={6}
-                // validateError={this.state.validateEmail}
+                //  validateError={this.state.validateEmail}
                 errorFlag={!this.state.token1Val}
                 errorText="Please Enter First Token"
                 />
@@ -151,14 +151,14 @@ class CSMSoftTokenComponent extends Component {
                 <Text style={styles.lblTxtToken}>{gblStrings.userManagement.secondToken}</Text>
                 <View style={styles.widthView}>
                 <GInputComponent
-                // propInputStyle={!this.state.validationEmail ? styles.userIDTextBoxError : styles.userIDTextBox} 
+                //  propInputStyle={!this.state.validationEmail ? styles.userIDTextBoxError : styles.userIDTextBox} 
                 propInputStyle={styles.userIDTextBox}
                 value={this.state.secondToken}
                 onChangeText={this.onChangeText("secondToken","token2Val")}
                 maxLength={6}
                 errorFlag={!this.state.token2Val}
                 errorText="Please Enter Second Token"
-                // validateError={this.state.validateEmail}
+                //  validateError={this.state.validateEmail}
                 />
                 </View>
                 </View>
@@ -205,13 +205,13 @@ class CSMSoftTokenComponent extends Component {
 }
 CSMSoftTokenComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    // signInMethodsData : PropTypes.instanceOf(Object),
+    //  signInMethodsData : PropTypes.instanceOf(Object),
     signInMethods : PropTypes.func
 };
 
 CSMSoftTokenComponent.defaultProps = {
     navigation:{},
-    // signInMethodsData:{},
+    //  signInMethodsData:{},
     signInMethods:() => {}
 
 };

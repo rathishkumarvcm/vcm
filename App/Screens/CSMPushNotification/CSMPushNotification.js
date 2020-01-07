@@ -8,7 +8,7 @@ import gblStrings from '../../Constants/GlobalStrings';
 
 
 
-// eslint-disable-next-line react/prefer-stateless-function
+//  eslint-disable-next-line react/prefer-stateless-function
 class CSMPushNotificationComponent extends Component {
     constructor(props) {
         super(props);
@@ -39,7 +39,7 @@ class CSMPushNotificationComponent extends Component {
             lastUpdatedTime:updatedDate
         };
         this.props.signInMethods("signInMethodsData", payloadData);
-        // console.log("----signInMethods",payloadData);
+        //  console.log("----signInMethods",payloadData);
         this.props.navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.pushNotification,index:2});
       
       }
@@ -98,13 +98,13 @@ class CSMPushNotificationComponent extends Component {
   }
 CSMPushNotificationComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    // signInMethodsData : PropTypes.instanceOf(Object),
+    //  signInMethodsData : PropTypes.instanceOf(Object),
     signInMethods : PropTypes.func
 };
 
 CSMPushNotificationComponent.defaultProps = {
   navigation: {},
-  // signInMethodsData : {},
+  //  signInMethodsData : {},
   signInMethods : ()=>{}
 };
     export default CSMPushNotificationComponent;

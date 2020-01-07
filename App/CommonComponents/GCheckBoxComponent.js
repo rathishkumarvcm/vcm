@@ -5,14 +5,14 @@ import PropTypes from "prop-types";
 export const styles = StyleSheet.create({
     radioButtonLayout : {
         width : '80%', 
-        // marginRight : "50%", 
+        //  marginRight : "50%", 
         marginTop : '5%',
         flexDirection: "row"
     },
     outerCircle : {
         height: 30,
         width: 30,
-        //borderRadius: 12,
+        // borderRadius: 12,
         borderWidth: 2,
         borderColor: '#000',
         alignItems: 'center',
@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
     innerCircle : {
         height: 15,
         width: 15,
-        //borderRadius: 6,
+        // borderRadius: 6,
         backgroundColor: '#000'
     },
     optionsSection : {

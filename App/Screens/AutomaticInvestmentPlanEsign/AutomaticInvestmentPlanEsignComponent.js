@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
 
 const myInstance = GSingletonClass.getInstance();
-const url = 'https://content.usaa.com/mcontent/static_assets/Mstar/Morningstar_FundProfiles_USSPX.pdf';
+const url = 'https:// content.usaa.com/mcontent/static_assets/Mstar/Morningstar_FundProfiles_USSPX.pdf';
 class AutomaticInvestmentPlanEsignComponent extends Component {
     constructor(props) {
         super(props);
@@ -40,90 +40,90 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
 
     getPayload = () => {
         
-        // let planJson=[];
+        //  let planJson=[];
         let payload = {};
         
-        // switch ((this.state.accountType)) {
-        //     case "general":
-        //         planJson=this.props.automaticInvestmentState.general?this.props.automaticInvestmentState.general:[];
-        //         break;
-        //     case "ira":
-        //         planJson=this.props.automaticInvestmentState.ira?this.props.automaticInvestmentState.ira:[];
-        //         break;
-        //     case "utma":
-        //         planJson=this.props.automaticInvestmentState.utma?this.props.automaticInvestmentState.utma:[];
-        //         break;
-        //     default:
-        //         break;
-        // }
+        //  switch ((this.state.accountType)) {
+        //      case "general":
+        //          planJson=this.props.automaticInvestmentState.general?this.props.automaticInvestmentState.general:[];
+        //          break;
+        //      case "ira":
+        //          planJson=this.props.automaticInvestmentState.ira?this.props.automaticInvestmentState.ira:[];
+        //          break;
+        //      case "utma":
+        //          planJson=this.props.automaticInvestmentState.utma?this.props.automaticInvestmentState.utma:[];
+        //          break;
+        //      default:
+        //          break;
+        //  }
         
-        // if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+        //  if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
             
-        //     //planJson.push(this.props.automaticInvestmentState.savedAccData)
-        //     let planJson={};
-        //     switch ((this.state.accountType)) {
-        //         case "general":
-        //             if(this.props.automaticInvestmentState.general){
-        //                 //Add
-        //                 // planJson=this.props.automaticInvestmentState.general;
-        //                 // planJson.push(this.props.automaticInvestmentState.savedAccData);
-        //                 //Edit
-        //                 var array = this.props.automaticInvestmentState.general; // make a separate copy of the array
-        //                 var indexDelete = 0
-        //                 if (indexDelete !== -1) {
-        //                     array[0]=this.props.automaticInvestmentState.savedAccData
-        //                     //planJson=array
-        //                 }
+        //      // planJson.push(this.props.automaticInvestmentState.savedAccData)
+        //      let planJson={};
+        //      switch ((this.state.accountType)) {
+        //          case "general":
+        //              if(this.props.automaticInvestmentState.general){
+        //                  // Add
+        //                  //  planJson=this.props.automaticInvestmentState.general;
+        //                  //  planJson.push(this.props.automaticInvestmentState.savedAccData);
+        //                  // Edit
+        //                  var array = this.props.automaticInvestmentState.general; //  make a separate copy of the array
+        //                  var indexDelete = 0
+        //                  if (indexDelete !== -1) {
+        //                      array[0]=this.props.automaticInvestmentState.savedAccData
+        //                      // planJson=array
+        //                  }
                         
-        //                 payload = {
-        //                     ...this.props.automaticInvestmentState,
-        //                     general: array,
-        //                 };
-        //             }
-        //             else{
-        //                 let newObj = { "general" : [this.props.automaticInvestmentState.savedAccData]}
-        //                 Object.assign(this.props.automaticInvestmentState,newObj)
-        //             }
-        //             break;
-        //         case "ira":
-        //             if(this.props.automaticInvestmentState.ira){
-        //                 planJson.push(this.props.automaticInvestmentState.savedAccData);//=this.props.automaticInvestmentState.ira
-        //                 payload = {
-        //                     ...this.props.automaticInvestmentState,
-        //                     ira: planJson,
-        //                 };
-        //             }
-        //             else{
-        //                 let newObj = { "ira" : [this.props.automaticInvestmentState.savedAccData]}
-        //                 Object.assign(this.props.automaticInvestmentState,newObj)
-        //             }
-        //             break;
-        //         case "utma":
-        //             if(this.props.automaticInvestmentState.utma){
-        //                 planJson.push(this.props.automaticInvestmentState.savedAccData);//=this.props.automaticInvestmentState.utma
-        //                 payload = {
-        //                     ...this.props.automaticInvestmentState,
-        //                     utma: planJson,
-        //                 };
-        //             }
-        //             else{
-        //                 let newObj = { "utma" : [this.props.automaticInvestmentState.savedAccData]}
-        //                 Object.assign(this.props.automaticInvestmentState,newObj)
-        //                 // payload = {
-        //                 //     ...this.props.automaticInvestmentState,
-        //                 //     utma:[this.props.automaticInvestmentState.savedAccData],
-        //                 // };
-        //             }
-        //             break;
-        //         default:
-        //             break;
-        //     }
-        // }
+        //                  payload = {
+        //                      ...this.props.automaticInvestmentState,
+        //                      general: array,
+        //                  };
+        //              }
+        //              else{
+        //                  let newObj = { "general" : [this.props.automaticInvestmentState.savedAccData]}
+        //                  Object.assign(this.props.automaticInvestmentState,newObj)
+        //              }
+        //              break;
+        //          case "ira":
+        //              if(this.props.automaticInvestmentState.ira){
+        //                  planJson.push(this.props.automaticInvestmentState.savedAccData);// =this.props.automaticInvestmentState.ira
+        //                  payload = {
+        //                      ...this.props.automaticInvestmentState,
+        //                      ira: planJson,
+        //                  };
+        //              }
+        //              else{
+        //                  let newObj = { "ira" : [this.props.automaticInvestmentState.savedAccData]}
+        //                  Object.assign(this.props.automaticInvestmentState,newObj)
+        //              }
+        //              break;
+        //          case "utma":
+        //              if(this.props.automaticInvestmentState.utma){
+        //                  planJson.push(this.props.automaticInvestmentState.savedAccData);// =this.props.automaticInvestmentState.utma
+        //                  payload = {
+        //                      ...this.props.automaticInvestmentState,
+        //                      utma: planJson,
+        //                  };
+        //              }
+        //              else{
+        //                  let newObj = { "utma" : [this.props.automaticInvestmentState.savedAccData]}
+        //                  Object.assign(this.props.automaticInvestmentState,newObj)
+        //                  //  payload = {
+        //                  //      ...this.props.automaticInvestmentState,
+        //                  //      utma:[this.props.automaticInvestmentState.savedAccData],
+        //                  //  };
+        //              }
+        //              break;
+        //          default:
+        //              break;
+        //      }
+        //  }
 
         const item=myInstance.getSavedAutomaticData();
         if (this.props && this.props.automaticInvestmentState && item)
         {
-            let planJson=[];//this.state.itemToEdit
+            let planJson=[];// this.state.itemToEdit
              let selected={id:this.state.itemToEdit==='-1'?'3':this.state.itemToEdit,
                 account:item.acc_name+"|"+item.acc_no ,
                 totalAmount:item.totalFund,
@@ -223,13 +223,13 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
             const payload = this.getPayload();
             this.props.saveData("automaticInvestmentEsign", payload); 
             myInstance.setAutomaticInvestmentEditMode(false);
-            //this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
+            // this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
         }
         else
         this.setState({errorTextMsg:'Please select the above checkbox'})
     }
 
-    //navigationSubmit = () => this.props.navigation.navigate('automaticInvestment');
+    // navigationSubmit = () => this.props.navigation.navigate('automaticInvestment');
     navigationCancel=()=>this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
     navigationBack = () => this.props.navigation.goBack();
 

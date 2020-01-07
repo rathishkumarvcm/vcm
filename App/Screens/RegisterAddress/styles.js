@@ -101,7 +101,7 @@ export const styles = StyleSheet.create({
         marginLeft:'4%',
         marginRight:'4%',
         marginTop:scaledHeight(12),
-        //borderRadius:scaledHeight(25),
+        // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#56565A',
         alignItems:'center',
@@ -226,7 +226,7 @@ export const styles = StyleSheet.create({
     userIDTextBox1:{
         marginLeft:'4%',
         marginRight:'4%',
-        //marginBottom:scaledHeight(8),
+        // marginBottom:scaledHeight(8),
         width : '92%',
     }
 });

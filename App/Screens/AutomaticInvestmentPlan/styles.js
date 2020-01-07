@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
         width: '30%',
         justifyContent: "center",
         alignItems: 'center',
-       // borderRadius: scaledHeight(20),
+       //  borderRadius: scaledHeight(20),
         backgroundColor: "#FFFFFF",
         marginTop: '2%'
     },
@@ -93,7 +93,7 @@ export const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       // borderRadius:scaledHeight(25),
+       //  borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#FFFFFF',
         alignItems:'center',
@@ -107,7 +107,7 @@ export const styles = StyleSheet.create({
     editDropdown:{
         height:scaledHeight(60),
         backgroundColor:'#FFFFFF',
-        //backgroundColor:'red',
+        // backgroundColor:'red',
         borderColor:'#00000029',
         borderBottomWidth:1,
         justifyContent:'center',

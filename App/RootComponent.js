@@ -21,7 +21,7 @@ const initialState = {
     appID: "",
     language: "en"
     };
-//const store = configureStore({ initialState });
+// const store = configureStore({ initialState });
 
 var sessionId;
 
@@ -60,7 +60,7 @@ class RootComponent extends Component {
                       null,
                       ()=>this.signOut()
                       )
-                    //alert("TIME OUT IS CALLING");
+                    // alert("TIME OUT IS CALLING");
                     this.setState({
                       timeOut : true
                     });

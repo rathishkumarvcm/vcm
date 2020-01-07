@@ -18,7 +18,7 @@ const myInstance = GSingletonClass.getInstance();
 class OpenAccPageFourComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         const openAccPageFour =  myInstance.getAccOpeningEditMode() ? (myInstance.getScreenStateData().openAccPageFour || {}):{};
 
         this.state = {
@@ -114,7 +114,7 @@ class OpenAccPageFourComponent extends Component {
     onClickNext = () => {
         if (this.validateFields()) {
             const payload = this.getPayload();
-           // this.props.saveData("OpenAccPageFour", payload);
+           //  this.props.saveData("OpenAccPageFour", payload);
             myInstance.setSavedAccData(payload);
             const stateData = myInstance.getScreenStateData();
             const screenState = {
@@ -160,7 +160,7 @@ class OpenAccPageFourComponent extends Component {
         }
 
         if (!isValidationSuccess) {
-           // alert(errMsg);
+           //  alert(errMsg);
         }
         this.setState({
             isValidationSuccess: isValidationSuccess,

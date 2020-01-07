@@ -18,7 +18,7 @@ export const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-around',
         alignItems: 'center',
-       // marginVertical: scaledHeight(25)
+       //  marginVertical: scaledHeight(25)
        marginTop:scaledHeight(41),
 
     },
@@ -72,9 +72,9 @@ export const styles = StyleSheet.create({
 
     wizardTitleTxt: {
         fontSize: scaledHeight(20),
-      //  fontFamily:'Roboto',
+      //   fontFamily:'Roboto',
         marginHorizontal: scaledHeight(12),
-       // marginVertical: scaledHeight(5),
+       //  marginVertical: scaledHeight(5),
         marginTop: scaledHeight(34),
         fontWeight: 'bold',
         color: '#535353',
@@ -82,20 +82,20 @@ export const styles = StyleSheet.create({
     },
     lblLine: {
         width:"90%",
-       // flexGrow: 1,
-       // marginTop: scaledHeight(9.5),
+       //  flexGrow: 1,
+       //  marginTop: scaledHeight(9.5),
         height: scaledHeight(1),
         backgroundColor: '#707070',
-        //opacity: .25,
+        // opacity: .25,
         position:"absolute",
     },
     otplblLine: {
         width:"80%",
-       // flexGrow: 1,
-       // marginTop: scaledHeight(9.5),
+       //  flexGrow: 1,
+       //  marginTop: scaledHeight(9.5),
         height: scaledHeight(1),
         backgroundColor: '#707070',
-        //opacity: .25,
+        // opacity: .25,
         position:"absolute",
     }
 

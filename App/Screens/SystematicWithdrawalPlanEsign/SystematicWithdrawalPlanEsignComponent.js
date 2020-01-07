@@ -14,7 +14,7 @@ import globalString from '../../Constants/GlobalStrings';
 import * as regEx from '../../Constants/RegexConstants';
 
 const myInstance = GSingletonClass.getInstance();
-const url = 'https://content.usaa.com/mcontent/static_assets/Mstar/Morningstar_FundProfiles_USSPX.pdf';
+const url = 'https:// content.usaa.com/mcontent/static_assets/Mstar/Morningstar_FundProfiles_USSPX.pdf';
 class SystematicWithdrawalPlanEsignComponent extends Component {
     constructor(props) {
         super(props);
@@ -42,16 +42,16 @@ class SystematicWithdrawalPlanEsignComponent extends Component {
         if (this.props && this.props.systematicWithdrawalState && item)
         {
             let planJson=[];
-             let selected={id:this.state.itemToEdit==='-1'?'3':this.state.itemToEdit,//this.state.itemToEdit
+             let selected={id:this.state.itemToEdit==='-1'?'3':this.state.itemToEdit,// this.state.itemToEdit
                 account:item.acc_name+"|"+item.acc_no ,
                 totalAmount:item.totalFund,
                             fundTo:item.fundTo,
                             investedIn:item.investedIn,
                             invest:item.valueTypeDropDown,
                             dateToInvest:item.valueDateBeginDropDown,
-                            //dateAdded:item.dateAdded,
-                            //endDate:item.endDate,
-                            nextWithdrawalDate:'',//item.nextWithdrawalDate
+                            // dateAdded:item.dateAdded,
+                            // endDate:item.endDate,
+                            nextWithdrawalDate:'',// item.nextWithdrawalDate
                         }
                         switch ((this.state.accountType)) {
                             case "general":
@@ -142,7 +142,7 @@ navigationSubmit = () => {
 }
     navigationBack = () => this.props.navigation.goBack();
     navigationCancel = () => this.props.navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
-    // this.props.navigation.navigate('systematicWithdrawal');
+    //  this.props.navigation.navigate('systematicWithdrawal');
 
     render() {
         return (

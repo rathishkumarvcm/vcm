@@ -56,7 +56,7 @@ class AutomaticInvestmentAccountComponent extends Component {
     }
     setStateUpdates = index => e => {
 
-        var array = [...this.state.expand]; // make a separate copy of the array
+        var array = [...this.state.expand]; //  make a separate copy of the array
         let IndexExpand = this.state.expandIndex;
 
 
@@ -67,7 +67,7 @@ class AutomaticInvestmentAccountComponent extends Component {
         }
         array[index] = !array[index];
 
-        this.setState({ expand: array, expandIndex: index });//,selectedAccount:-1
+        this.setState({ expand: array, expandIndex: index });// ,selectedAccount:-1
 
 
     }
@@ -80,14 +80,14 @@ class AutomaticInvestmentAccountComponent extends Component {
                 utmaAccountJson: this.props.accountState.utma,
 
             });
-            // if(this.state.newEdit)
-            // {
-            //     payload = {
-            //         //...payload,
-            //         ...this.props.automaticInvestmentState.savedAccData
-            //     };
-            //     this.setState({selectedAccount:payload.selectedAccount})
-            // }
+            //  if(this.state.newEdit)
+            //  {
+            //      payload = {
+            //          // ...payload,
+            //          ...this.props.automaticInvestmentState.savedAccData
+            //      };
+            //      this.setState({selectedAccount:payload.selectedAccount})
+            //  }
         }
     }
    
@@ -108,25 +108,25 @@ class AutomaticInvestmentAccountComponent extends Component {
             accountType:this.state.accountType,
             newItemId:this.state.newItemId,
             newEdit:this.state.newEdit,
-            // id:this.state.newItemId,
-            //accountType:this.state.accountType,
-            //selectedAccount:this.state.selectedAccount
-            //account: this.state.selectedAccountJson.accountName+'|'+this.state.selectedAccountJson.accountNumber,
+            //  id:this.state.newItemId,
+            // accountType:this.state.accountType,
+            // selectedAccount:this.state.selectedAccount
+            // account: this.state.selectedAccountJson.accountName+'|'+this.state.selectedAccountJson.accountNumber,
         };
-        // if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
-        //     payload = {
-        //         ...payload,
-        //         ...this.props.automaticInvestmentState.savedAccData
-        //     };
-        // }
-       // console.log('))))))))))))))))))))))',this.props.automaticInvestmentState.savedAccData)
+        //  if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+        //      payload = {
+        //          ...payload,
+        //          ...this.props.automaticInvestmentState.savedAccData
+        //      };
+        //  }
+       //  console.log('))))))))))))))))))))))',this.props.automaticInvestmentState.savedAccData)
         return payload;
 
     }
 
     navigationNext = () => {
             const payload = this.getPayload();
-            // this.props.saveData("automaticInvestmentAccount", payload); 
+            //  this.props.saveData("automaticInvestmentAccount", payload); 
             const stateData = myInstance.getScreenStateData();
             myInstance.setSavedAutomaticData(payload);
             const screenState = {

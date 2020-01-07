@@ -3,7 +3,7 @@
 const AppUtils = {
     enableDebugLog:true,
     debugLog: (printLog) => {
-        // Debugger Log
+        //  Debugger Log
         if(AppUtils.enableDebugLog){
           console.log(`::React Log::  ${printLog}`);
         }

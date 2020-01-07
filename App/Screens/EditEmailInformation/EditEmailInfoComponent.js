@@ -19,7 +19,7 @@ let editDeleteMenuOption = [
 class EditEmailInfoComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             enableBiometric: false,
@@ -63,7 +63,7 @@ class EditEmailInfoComponent extends Component {
         }
     }
 
-    // Render Email Informations
+    //  Render Email Informations
 
     renderEmailInformation = () => ({ item, index }) =>
         (<View style={styles.editEmailHolder}>

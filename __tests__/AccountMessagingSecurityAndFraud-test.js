@@ -5,13 +5,13 @@ import AccountMessagingSecurityAndFraud from '../App/Screens/AccountMessagingSec
 
 describe('Account Messaging Security and Fraud',()=>{
 
-    // Snap shot 
+    //  Snap shot 
     it('Match Snapshot', () => {  
       const tree = renderer.create(<AccountMessagingSecurityAndFraud />).toJSON();
       expect(tree).toMatchSnapshot();
     });
   
-    // Render using shallow - shallow not includes child component
+    //  Render using shallow - shallow not includes child component
     test('render',()=>{
       const component = shallow(<AccountMessagingSecurityAndFraud />);  
       component.render();

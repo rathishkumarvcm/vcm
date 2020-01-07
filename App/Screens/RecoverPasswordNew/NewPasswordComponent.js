@@ -10,7 +10,7 @@ import {
 import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
 import * as regexConst from '../../Constants/RegexConstants';
-//const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
+// const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 import {ValidatePassword} from '../../Utils/ValidatePassword';
 
 class NewPasswordComponent extends Component {
@@ -18,7 +18,7 @@ class NewPasswordComponent extends Component {
     super(props);
     this.state = {
       isReset: true,
-      // validationPassword: false,
+      //  validationPassword: false,
       password: '',
       boo_new: false,
       str_new: '',     
@@ -29,7 +29,7 @@ class NewPasswordComponent extends Component {
       err_cfm: '',
       validationPassword: true,
     };
-    //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+    // set true to isLoading if data for this screen yet to be received and wanted to show loader.
   }
 
   setNew = (text) => {
@@ -44,18 +44,18 @@ class NewPasswordComponent extends Component {
     });
   }
 
-  // validatePassword = () => {
-  //   //ßconst validate = passwordRegex.test(this.state.password);
-  //   this.setState({
-  //     //validationPassword : validate
-  //   });
-  // }
+  //  validatePassword = () => {
+  //    // ßconst validate = passwordRegex.test(this.state.password);
+  //    this.setState({
+  //      // validationPassword : validate
+  //    });
+  //  }
 
-  // setPassword = text => {
-  //   this.setState({
-  //     password: text
-  //   });
-  // }
+  //  setPassword = text => {
+  //    this.setState({
+  //      password: text
+  //    });
+  //  }
   validateNewPassword = () => {
     const validate = (ValidatePassword(this.state.str_new)===globalString.userManagement.strong);
     this.setState({ validationPassword: validate });
@@ -67,9 +67,9 @@ class NewPasswordComponent extends Component {
     let validate_new=regexConst.passwordRegex.test(this.state.str_new);
     let validate_cfm=regexConst.passwordRegex.test(this.state.str_cfm);
     
-    //const validPass=regexConst.passwordRegex.test(this.state.str_new);
+    // const validPass=regexConst.passwordRegex.test(this.state.str_new);
     this.setState({
-      boo_new: !validate_new,//== "" ? true : false,
+      boo_new: !validate_new,// == "" ? true : false,
       err_new: !validate_new ? globalString.recoverPassword.validPassword : '',
       boo_cfm: !validate_cfm,
       err_cfm: !validate_cfm ? globalString.recoverPassword.validPassword : '',

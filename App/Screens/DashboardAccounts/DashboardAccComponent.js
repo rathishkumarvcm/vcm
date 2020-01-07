@@ -39,7 +39,7 @@ const accList = [
 class DashboardAccComponent extends Component {
     constructor(props) {
         super(props);
-        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             retrivePendingAppData: {}
 
@@ -77,13 +77,13 @@ class DashboardAccComponent extends Component {
                     if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
                         const msg = tempResponse.message;
                        AppUtils.debugLog(`Account  Saved ::: :: ${ msg}`);
-                        // alert( JSON.stringify(tempResponse.result));
+                        //  alert( JSON.stringify(tempResponse.result));
                         this.setState({
                             retrivePendingAppData: tempResponse.result.Item
                         });
 
                     } else {
-                        // alert(tempResponse.message)
+                        //  alert(tempResponse.message)
                     }
                 }
             }
@@ -180,11 +180,11 @@ class DashboardAccComponent extends Component {
        AppUtils.debugLog(`accType :: ${ accType}`);
 
         if (screenName !== "") {
-            // this.props.accOpeningData.accountType !=undefined && this.props.accOpeningData.accountType !=null 
+            //  this.props.accOpeningData.accountType !=undefined && this.props.accOpeningData.accountType !=null 
             selectAccount({ accountType: item });
             navigate({ routeName: screenName, key: screenName, params: { type: item.key, selectedAccount: item, accountType: item } });
         }
-        // populatePendingApplication
+        //  populatePendingApplication
 
     }
 
@@ -209,7 +209,7 @@ class DashboardAccComponent extends Component {
             }
         }
 
-        // let tempPendingAppData = this.state.retrivePendingAppData;
+        //  let tempPendingAppData = this.state.retrivePendingAppData;
 
 
         /*  if (this.props.accOpeningData.result != undefined && this.props.accOpeningData.result != null) {

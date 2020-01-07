@@ -12,7 +12,7 @@ import gblStrings from '../../Constants/GlobalStrings';
 class AccountMessagingSettingsComponent extends Component {
     constructor(props) {
         super(props);
-        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
         };

@@ -56,7 +56,7 @@ let tempDataDropDown = [
 class editOccupationInfoComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             enableBiometric: false,
@@ -160,7 +160,7 @@ class editOccupationInfoComponent extends Component {
             });
         }
 
-        // Employee City and State
+        //  Employee City and State
 
         if (this.props && this.props.profileState && this.props.profileState.profileUserCity) {
             this.setState({

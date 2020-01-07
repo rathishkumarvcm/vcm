@@ -16,16 +16,16 @@ class SystematicWithdrawalAccountComponent extends Component {
     constructor(props) {
         super(props);
         const systematicAccount =  myInstance.getSystematicWithdrawalEditMode()? (myInstance.getScreenStateData().systematicAccount || {}):{};
-        // this.state = {
+        //  this.state = {
 
-        //     selectedItemID: "",
-        //     selectedItemName: "",
-        //     accountJson: {},
-        //     selectedAccount: -1,
-        //     //ItemToEdit: this.props.navigation.getParam('ItemToEdit', -1),
-        //     expand: [true, false, false],
-        //     expandIndex: 0,
-        // };
+        //      selectedItemID: "",
+        //      selectedItemName: "",
+        //      accountJson: {},
+        //      selectedAccount: -1,
+        //      // ItemToEdit: this.props.navigation.getParam('ItemToEdit', -1),
+        //      expand: [true, false, false],
+        //      expandIndex: 0,
+        //  };
         this.state = {
             generalAccountJson: {},
             iraAccountJson: {},
@@ -42,10 +42,10 @@ class SystematicWithdrawalAccountComponent extends Component {
         };
 
     }
-    // selectedAccount = index => e => {
+    //  selectedAccount = index => e => {
 
-    //     this.setState({ selectedAccount: index })
-    // }
+    //      this.setState({ selectedAccount: index })
+    //  }
 
     selectedAccount = (index,type) => e => {
         let json={};
@@ -72,7 +72,7 @@ class SystematicWithdrawalAccountComponent extends Component {
 
     setStateUpdates = index => e => {
 
-        var array = [...this.state.expand]; // make a separate copy of the array
+        var array = [...this.state.expand]; //  make a separate copy of the array
         let IndexExpand = this.state.expandIndex;
 
 
@@ -87,14 +87,14 @@ class SystematicWithdrawalAccountComponent extends Component {
 
 
     }
-    // componentDidMount() {
-    //     if (this.props && this.props.accountState) {
+    //  componentDidMount() {
+    //      if (this.props && this.props.accountState) {
 
-    //         this.setState({
-    //             accountJson: this.props.accountState,
-    //         });
-    //     }
-    // }
+    //          this.setState({
+    //              accountJson: this.props.accountState,
+    //          });
+    //      }
+    //  }
 
     componentDidMount() {
         if (this.props && this.props.accountState) {
@@ -107,29 +107,29 @@ class SystematicWithdrawalAccountComponent extends Component {
             });
         }
     }
-    // onSelected = (item) => () => {
-    //     console.log("item: " + item.id);
-    //     this.setState({ selectedItemID: item.id });
-    //     this.setState({ selectedItemName: item.name });
-    // }
-    //navigationNext = () => this.props.navigation.navigate('automaticInvestmentAdd', { ItemToEdit: -1 });
+    //  onSelected = (item) => () => {
+    //      console.log("item: " + item.id);
+    //      this.setState({ selectedItemID: item.id });
+    //      this.setState({ selectedItemName: item.name });
+    //  }
+    // navigationNext = () => this.props.navigation.navigate('automaticInvestmentAdd', { ItemToEdit: -1 });
     navigationCancel = () => this.props.navigation.goBack();
 
-    // getPayload = () => {
+    //  getPayload = () => {
         
 
-    //     let payload = {
-    //         account: "Account 3 / 90989123",
-    //     };
-    //     if (this.props && this.props.systematicWithdrawalState && this.props.systematicWithdrawalState.savedAccData) {
-    //         payload = {
-    //             ...payload,
-    //             ...this.props.systematicWithdrawalState.savedAccData
-    //         };
-    //     }
-    //     return payload;
+    //      let payload = {
+    //          account: "Account 3 / 90989123",
+    //      };
+    //      if (this.props && this.props.systematicWithdrawalState && this.props.systematicWithdrawalState.savedAccData) {
+    //          payload = {
+    //              ...payload,
+    //              ...this.props.systematicWithdrawalState.savedAccData
+    //          };
+    //      }
+    //      return payload;
 
-    // }
+    //  }
 
     getPayload = () => {
         
@@ -152,11 +152,11 @@ class SystematicWithdrawalAccountComponent extends Component {
     }
     
 
-    // navigationNext = () => {
-    //         //const payload = this.getPayload();
-    //         //this.props.saveData("systematicWithdrawalAccount", payload); 
-    //         this.props.navigation.navigate('systematicWithdrawalAdd', { ItemToEdit: -1});
-    // }
+    //  navigationNext = () => {
+    //          // const payload = this.getPayload();
+    //          // this.props.saveData("systematicWithdrawalAccount", payload); 
+    //          this.props.navigation.navigate('systematicWithdrawalAdd', { ItemToEdit: -1});
+    //  }
 
     navigationNext = () => {
         const payload = this.getPayload();

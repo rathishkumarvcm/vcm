@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import {styles} from './styles';
 
 class DrawerComponent extends React.Component {
-    //Detail Screen to show from any Open detail button
+    // Detail Screen to show from any Open detail button
     navigateToScreen = (route) => () => {
         const navigateAction = NavigationActions.navigate({
             routeName: route

@@ -11,7 +11,7 @@ import PropTypes from "prop-types";
 class CollegePlanPersonalComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             itemID: "",
@@ -71,7 +71,7 @@ class CollegePlanPersonalComponent extends Component {
                     { /*-----------Personal information -------------------*/}
                     <View style={[styles.sectionGrp]}>
                         <TouchableOpacity
-                            // onPress={() => { alert("#TODO:: Edit") }}
+                            //  onPress={() => { alert("#TODO:: Edit") }}
                             activeOpacity={0.8}
                             accessibilityRole={'button'}
                             style={styles.editBtn}

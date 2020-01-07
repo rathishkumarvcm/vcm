@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 class OtpSeucrityQuestionsComponent extends Component {
     constructor(props){
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
             isLoading:false,
             email:'',
@@ -173,7 +173,7 @@ class OtpSeucrityQuestionsComponent extends Component {
 
 
                 <View style={{marginLeft:'4%',marginRight:'4%'}}>
-                        <GRadioButtonComponent selected //questionsStyle={{width:'40%',flexWrap:'wrap'}} 
+                        <GRadioButtonComponent selected // questionsStyle={{width:'40%',flexWrap:'wrap'}} 
                         questions={"Deliver all my documents at vcm.com"}
                         />
 

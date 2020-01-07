@@ -10,7 +10,7 @@ import { Auth } from "aws-amplify";
 class OtpConfirmComponent extends Component {
     constructor(props){
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
             isLoading:false,
             code:'',
@@ -86,7 +86,7 @@ class OtpConfirmComponent extends Component {
                     propInputStyle={styles.userIDTextBox}
                     placeholder={""}
                     onChangeText={this.setEmail}
-                    //onBlur={this.validateEmail}
+                    // onBlur={this.validateEmail}
                     value={this.state.code}
                 />
 

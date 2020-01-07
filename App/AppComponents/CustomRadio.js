@@ -7,9 +7,9 @@ import PropTypes from "prop-types";
 const CustomRadio = props => (
 
     <TouchableOpacity style={{
-      //  width: props.width,
+      //   width: props.width,
         flexDirection: "row",
-       // flexGrow: 1,
+       //  flexGrow: 1,
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
         marginTop: scaledHeight(props.itemTop),
@@ -77,7 +77,7 @@ CustomRadio.propTypes = {
 CustomRadio.defaultProps = {
     itemTop: scaledHeight(0),
     itemBottom: scaledHeight(12),
-   // width: '100%',
+   //  width: '100%',
     size: 24,
     outerCicleColor: '#33A8FF',
     innerCicleColor: '#33A8FF',

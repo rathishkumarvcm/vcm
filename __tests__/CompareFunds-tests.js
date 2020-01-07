@@ -5,7 +5,7 @@ import CompareFunds from '../App/Screens/CompareFunds/CompareFundsComponent';
 
 describe('Compare Funds',()=>{
 
-    // Render using shallow - shallow not includes child component
+    //  Render using shallow - shallow not includes child component
     test('Match Snapshot',()=>{
         const props = {};
         const getFundDetailsData = jest.fn();

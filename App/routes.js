@@ -43,10 +43,10 @@ import AccountMessagingAdvice from './Screens/AccountMessagingAdvice/';
 import AccountMessagingGeneralDocuments from './Screens/AccountMessagingGeneralDocuments/';
 import AccountMessagingSecurityAndFraud from './Screens/AccountMessagingSecurityAndFraud/AccountMessagingSecurityAndFraudComponent';
 import AccountMessagingDeviceManagement from './Screens/AccountMessagingDeviceManagement/';
-//Dashboard
+// Dashboard
 
 
-// OTP Authentication
+//  OTP Authentication
 
 import OtpAuthentication from './Screens/OtpAuthentication';
 import OtpConfirm from './Screens/OtpConfirm/OtpConfirmComponent';
@@ -56,7 +56,7 @@ import EmailVerify from './Screens/EmailVerification/EmailVerificationComponent'
 import RetrieveOnlineId from './Screens/RetrieveOnlineId/RetrieveOnlineIdComponent';
 import OnlineIDVerification from './Screens/OnlineIDVerification/OnlineIDVerificationComponent';
 
-// Acc Management
+//  Acc Management
 import Dashboard from './Screens/Dashboard/DashboardComponent';
 import TermsAndConditions from './Screens/TermsAndConditions/TermsAndConditionsComponent';
 import DashboardAccounts from './Screens/DashboardAccounts/';
@@ -79,7 +79,7 @@ import LiquidationPageThreeComponent from './Screens/LiquidationPageThree';
 import LiquidationFinishComponent from './Screens/LiquidationFinish';
 import LiquidationPageFourComponent from './Screens/LiquidationPageFour';
 import CompareFunds from './Screens/CompareFunds';
-// Done By 806048
+//  Done By 806048
 
 import EditProfileSettings from './Screens/EditProfileSettings/';
 import EditAddressSettings from './Screens/EditAddressInformation/';
@@ -123,21 +123,21 @@ import EditRegulatoryInfo from './Screens/EditRegulatoryInformations/EditRegulat
 import EditFamilyMemberInfo from './Screens/EditFamilyMemberInformation/';
 import EditFamilyDetail from './Screens/EditFamilyMemberDetails/';
 
-//Password Recovery
+// Password Recovery
 import PasswordRecovery from './Screens/RecoverPassword/';
 import PasswordRecoveryOtp from './Screens/RecoverPasswordOtp/';
 import PasswordRecoverTemp from './Screens/RecoverTempPassword/';
 import PasswordReset from './Screens/RecoverPasswordNew/';
 import PasswordSuccess from './Screens/RecoverPasswordSuccess/';
 
-//Transactions  
+// Transactions  
 import TAmmendComponent from './Screens/TAmmend/';
 import FundSelectionComponent from './Screens/TAmmendFundSelection';
 import FundWithdrawlComponent from './Screens/TAmmendFundWithdrawl';
 import ReviewConfirmComponent from './Screens/TAmmendReviewAndConfirm';
 
 
-//Account Services
+// Account Services
 import AccountServicesComponent from './Screens/AccountServices';
 import DividentsAndCapitalGainsPrefComponent from './Screens/Dividents';
 import CheckBookComponent from './Screens/OrderCheckBook';
@@ -147,7 +147,7 @@ import AddOtherBankAccountComponent from './Screens/AddOtherBankAccount';
 import CheckBookPlaceOrder from './Screens/CheckBookPlaceOrder';
 import DividentsForAccount from './Screens/DividentsForAccount';
 
-//Systematic Withdrawal plan
+// Systematic Withdrawal plan
 import systematicWithdrawal from './Screens/SystematicWithdrawalPlan';
 import systematicWithdrawalAdd from './Screens/SystematicWithdrawalPlanAdd';
 import systematicWithdrawalSchedule from './Screens/SystematicWithdrawalPlanSchedule';
@@ -156,7 +156,7 @@ import systematicWithdrawalEsign from './Screens/SystematicWithdrawalPlanEsign';
 import systematicWithdrawalAccount from './Screens/SystematicWithdrawalPlanAccount';
 
 
-//Automatic Investment Plan
+// Automatic Investment Plan
 import automaticInvestment from './Screens/AutomaticInvestmentPlan';
 import automaticInvestmentAdd from './Screens/AutomaticInvestmentPlanAdd';
 import automaticInvestmentSchedule from './Screens/AutomaticInvestmentPlanSchedule';
@@ -166,16 +166,16 @@ import automaticInvestmentAccount from './Screens/AutomaticInvestmentPlanAccount
 
 import ImageUpload from './Screens/First';
 
-// Special MFA Requirements
+//  Special MFA Requirements
 import VerifySSNComponent from './Screens/VerifySSN/VerifySSNComponent';
 import VerifyMobileComponent from './Screens/VerifyMobile/VerifyMobileComponent';
-//Menu
+// Menu
 import DrawerComponent from './Screens/Menu/DrawerComponent';
 import TabMoreComponent from './Screens/Menu/TabMoreComponent';
 import Screen1Component from './Screens/NotificationTab/Screen1';
 import Screen2Component from './Screens/NotificationTab/Screen2';
 
-//Notification Tabs
+// Notification Tabs
 const NotificationTabNavigator = createMaterialTopTabNavigator(
     {
         'Message Center': { screen: Screen1Component },
@@ -193,10 +193,10 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
             title: 'TabExample',
         },
         tabBarOptions: {
-            //activeTintColor: '#FFFFFF',
-            //inactiveTintColor: '#F8F8F8',
+            // activeTintColor: '#FFFFFF',
+            // inactiveTintColor: '#F8F8F8',
             style: {
-                //backgroundColor: '#633689',
+                // backgroundColor: '#633689',
             },
             labelStyle: {
                 textAlign: 'center',
@@ -208,7 +208,7 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
         },
     }
 );
-// Bottom Tabs
+//  Bottom Tabs
 const BottomTabNavigator = createBottomTabNavigator({
     myVCM: {
         screen: AccountServicesComponent,

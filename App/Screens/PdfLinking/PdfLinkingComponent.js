@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Linking,TouchableOpacity,Text, StyleSheet,View } from 'react-native';
-//import { WebView } from 'react-native-webview';
+// import { WebView } from 'react-native-webview';
 import {GButtonComponent} from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import PropTypes from 'prop-types';
 
-const url = 'http://www.africau.edu/Images/default/sample.pdf';
+const url = 'http:// www.africau.edu/Images/default/sample.pdf';
 
 
 const styles = StyleSheet.create({
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
         marginLeft : '5%',
         marginRight : '5%',
         marginTop:'10%'
-        //alignItems:'center'
+        // alignItems:'center'
     },
     labeltext:{
         fontSize:20,
@@ -64,7 +64,7 @@ class PdfLinkingComponent extends Component {
 
     componentDidMount() {
         
-        //Linking.openURL(url);
+        // Linking.openURL(url);
     }
 
     goback = ()=>this.props.navigation.goBack();

@@ -297,7 +297,7 @@ const styles = StyleSheet.create({
     alignContent: 'flex-end',
     justifyContent: 'flex-end',
     marginVertical: scaledHeight(7.5),
-    // marginHorizontal: scaledHeight(37),
+    //  marginHorizontal: scaledHeight(37),
   },
   validateBtnTxt: {
     fontSize: scaledHeight(14),

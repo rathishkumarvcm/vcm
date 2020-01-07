@@ -1,13 +1,13 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
-// const { width } = Dimensions.get('window');
+//  const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     accTypeSelectSection: {
         marginTop: scaledHeight(0),
         flexDirection: 'row',
         justifyContent: 'space-between',
-        // marginHorizontal: scaledHeight(12),
+        //  marginHorizontal: scaledHeight(12),
         alignItems: "center",
         flexGrow: 1
     },
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(9),
         width : '100%'
     },
-    disclaimerTitleTxt: { // termsofuseText
+    disclaimerTitleTxt: { //  termsofuseText
         fontSize: scaledHeight(16),
         marginBottom: scaledHeight(10),
         fontWeight: 'bold',
@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
         opacity: .65
     },
     lblLine: {
-        // width:"100%",
+        //  width:"100%",
         flexGrow: 1,
         marginTop: scaledHeight(9.5),
         height: scaledHeight(1),
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     },
 
     newVictorySection: {
-        //  marginTop: scaledHeight(150),
+        //   marginTop: scaledHeight(150),
         padding: scaledHeight(12),
         width: '100%',
         flexGrow: 1,
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
 
     },
     normalBlackBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         borderRadius: scaledHeight(24),
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     normalBlackDisabledBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         borderRadius: scaledHeight(24),
@@ -235,7 +235,7 @@ const styles = StyleSheet.create({
         marginHorizontal: scaledHeight(37)
     },
     normalWhiteBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         borderRadius: scaledHeight(24),

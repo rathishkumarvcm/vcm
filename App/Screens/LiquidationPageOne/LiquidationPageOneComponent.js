@@ -144,7 +144,7 @@ class LiquidationPageOneComponent extends Component {
     }
 
     componentDidMount() {
-        // console.log(" Screen 1 componentdidmount " + JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
+        //  console.log(" Screen 1 componentdidmount " + JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
     }
 
     render() {

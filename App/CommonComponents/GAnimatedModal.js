@@ -9,7 +9,7 @@ const styles = {
       position: "absolute",
       height: '50%',
       width: '100%',
-      bottom: -height, // initial position of the view. Hide the view at bottom.
+      bottom: -height, //  initial position of the view. Hide the view at bottom.
       backgroundColor: "#fff",
     }
   };
@@ -30,23 +30,23 @@ export default class GAnimatedModal extends React.Component {
     }
 
     static getDerivedStateFromProps(props, state){
-      //initialize state variable and return. If no changes required for state
-      //variable then return empty object. return {}
+      // initialize state variable and return. If no changes required for state
+      // variable then return empty object. return {}
       console.log("props",props,state);
-      return {}; //should return empty object by default
+      return {}; // should return empty object by default
     }
     componentDidUpdate(prevProps, prevState) {
       console.log("prevProps",prevProps,prevState);
         if (this.props.visible) {
-          // animate to show the modal
-          this.yTranslate.setValue(0); // reset the animated value
+          //  animate to show the modal
+          this.yTranslate.setValue(0); //  reset the animated value
           Animated.spring(this.yTranslate, {
             toValue: 1,
             duration: 400,
             overshootClamping:true 
           }).start();
         } else {
-          // animate to hide the modal
+          //  animate to hide the modal
           Animated.timing(this.yTranslate, {
             toValue: 0,
             duration: 400,

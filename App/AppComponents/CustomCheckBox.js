@@ -70,7 +70,7 @@ CustomCheckBox.defaultProps = {
     labelStyle: {
         width: '80%',
         marginLeft: scaledHeight(12)
-        // width: '100%',
+        //  width: '100%',
     },
 
 };

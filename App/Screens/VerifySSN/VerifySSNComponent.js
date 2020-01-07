@@ -8,7 +8,7 @@ import gblStrings from '../../Constants/GlobalStrings';
 class VerifySSNComponent extends Component {
     constructor(props) {
         super(props);
-        //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        //   set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             validateSSN : false,
@@ -21,7 +21,7 @@ class VerifySSNComponent extends Component {
     }
 
     navigateVerifyMobileNumber = () =>{        
-        // Joint Account , New User
+        //  Joint Account , New User
         const specialMFAUserType = (this.props.navigation.getParam('SpecialMFA',""));   
         this.props.navigation.navigate('verifyMobileNumber',{SpecialMFA:specialMFAUserType});    
     } 
@@ -48,7 +48,7 @@ class VerifySSNComponent extends Component {
     
     render(){                        
         const specialMFAUserType =(this.props && this.props.navigation && this.props.navigation.getParam('SpecialMFA',''));      
-        // console.log(`UserType-----${specialMFAUserType}`);
+        //  console.log(`UserType-----${specialMFAUserType}`);
         return(
             <View style={styles.container}>
             {/* {

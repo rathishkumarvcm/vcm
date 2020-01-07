@@ -7,12 +7,12 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
     accTypeSelectSection: {
         flexDirection: 'row',
-       // marginHorizontal: scaledHeight(12),
+       //  marginHorizontal: scaledHeight(12),
         flexGrow: 1
     },
     accountItem: {
         backgroundColor: '#FFFFFF',
-        // padding: 10,
+        //  padding: 10,
         justifyContent: 'center',
         alignItems: 'center',
         alignContent: 'center',
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         width : '100%'
         
     },
-    disclaimerTitleTxt: { // termsofuseText
+    disclaimerTitleTxt: { //  termsofuseText
         fontSize: scaledHeight(16),
         marginBottom: scaledHeight(10),
         fontWeight: 'bold',
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
         width: '80%'
     },
     lblLine: {
-        // width:"100%",
+        //  width:"100%",
         flexGrow: 1,
         marginTop: scaledHeight(9.5),
         height: scaledHeight(1),
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     },
 
     lblLine1:{
-         // width:"100%",
+         //  width:"100%",
         
          height:scaledHeight(1),
          backgroundColor:'#696069'
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
         marginVertical: "5%"
     },
     newVictorySection: {
-      //  marginTop: scaledHeight(150),
+      //   marginTop: scaledHeight(150),
         padding: scaledHeight(12),
         width: '100%',
         flexGrow: 1,
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
 
     },
     normalBlackBtn: {
-         //  width: '90%',
+         //   width: '90%',
          borderWidth : 1,
          borderColor : "#61285F45",
          height: scaledHeight(50),
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
      normalWhiteBtn: {
-      //  width: '90%',
+      //   width: '90%',
         borderWidth : 1,
         borderColor : "#61285F45",
         height: scaledHeight(50),
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         width: '100%',
 
-        // backgroundColor:'yellow',
+        //  backgroundColor:'yellow',
 
     },
     pageHeader: {
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     privacyAgreement: {
-        // marginTop:convertToDeviceResolution(4),
+        //  marginTop:convertToDeviceResolution(4),
         marginVertical: scaledHeight(19),
         padding: scaledHeight(12),
         alignItems: 'center',
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     },
     privacyText: {
         width: '50%',
-        // paddingLeft:'4%',
+        //  paddingLeft:'4%',
         marginVertical: '2%',
         color: '#61285F',
         fontWeight: 'bold',
@@ -274,8 +274,8 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     touchItem: {
-        // width:scaledHeight(250),
-        //  height:scaledHeight(250),
+        //  width:scaledHeight(250),
+        //   height:scaledHeight(250),
         marginVertical: "5%"
 
     },
@@ -333,7 +333,7 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'space-around',
         alignItems: 'center',
-       // marginVertical: scaledHeight(25)
+       //  marginVertical: scaledHeight(25)
        marginTop:scaledHeight(41),
 
     },
@@ -351,9 +351,9 @@ const styles = StyleSheet.create({
     },
     wizardTitleTxt: {
         fontSize: scaledHeight(20),
-      //  fontFamily:'Roboto',
+      //   fontFamily:'Roboto',
         marginHorizontal: scaledHeight(12),
-       // marginVertical: scaledHeight(5),
+       //  marginVertical: scaledHeight(5),
         marginTop: scaledHeight(34),
         fontWeight: 'bold',
         color: '#535353',

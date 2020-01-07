@@ -40,12 +40,12 @@ class CommonUIComponent extends Component {
 
     throwException = ()=>{
         console.log('Exception from Home Component');
-        //console.log('baseUrl:-',Config);
+        // console.log('baseUrl:-',Config);
         throw new Error('Custom Exception throw from home component');
     }
 
-   // newMethod(item) {
-     //   return () => this.props.navigation.navigate(item.naviagteTo);
+   //  newMethod(item) {
+     //    return () => this.props.navigation.navigate(item.naviagteTo);
     
 
     radioButtonClicked = (index)=>{
@@ -92,7 +92,7 @@ class CommonUIComponent extends Component {
                 <View style={styles.containerStyle}>
                 <Text style={styles.labeltext}>{"Button Component:"}</Text>
                 <GButtonComponent 
-                //disabled
+                // disabled
                 buttonStyle={styles.buttonStyle} 
                 textStyle={styles.buttonTextStyle}
                 buttonText= {"Charts"}
@@ -147,7 +147,7 @@ class CommonUIComponent extends Component {
                         {"Text Input Component:"}
                     </Text>
                     <GInputComponent
-                    //textInputStyle={}
+                    // textInputStyle={}
                     secureTextEntry={false}
                     inputText={""}
                     placeholder={"Username"}
@@ -155,7 +155,7 @@ class CommonUIComponent extends Component {
                     autoFocus
                     editable
                     maxLength={100}
-                    // value={"Need to clear"}
+                    //  value={"Need to clear"}
                     />
                 </View>
 
@@ -178,7 +178,7 @@ class CommonUIComponent extends Component {
                 <GFloatingInputComponent
                 inputBorder={styles.initialfloatingBorder}
                 labelText={"Username"}
-                // style={styles.floatStyle}
+                //  style={styles.floatStyle}
                 value={"FloatLabel"}
                 inputStyle={styles.floatInput}
                 />
@@ -304,7 +304,7 @@ class CommonUIComponent extends Component {
                         icon="home"
                         iconSize={40}
                         iconRight
-                       // onPress={() => this.iconButtonPressed('home')}
+                       //  onPress={() => this.iconButtonPressed('home')}
                     />
                 </View>
 
@@ -321,7 +321,7 @@ class CommonUIComponent extends Component {
                         iconRight
                         buttonStyle={{backgroundColor: "grey"}}
                         textStyle={{color:"white"}}
-                       // onPress={() => this.iconButtonPressed('facebook')}
+                       //  onPress={() => this.iconButtonPressed('facebook')}
                     />
                 </View>
 
@@ -335,7 +335,7 @@ class CommonUIComponent extends Component {
                         iconType="font-awesome"
                         iconSize={20}
                         iconColor="orange"
-                       // onPress={() => this.iconButtonPressed('address-card')}
+                       //  onPress={() => this.iconButtonPressed('address-card')}
                     />
                 </View>
 

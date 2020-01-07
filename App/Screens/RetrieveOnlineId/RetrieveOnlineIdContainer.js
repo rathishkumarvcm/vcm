@@ -4,7 +4,7 @@ import RetrieveOnlineIdComponent from './RetrieveOnlineIdComponent';
 
 const mapStateToProps = ( /* , props */) => (
     {
-      //loginData: getLogin(state)
+      // loginData: getLogin(state)
     }
   );
 

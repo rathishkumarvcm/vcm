@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%'
     },
-    disclaimerTitleTxt: { // termsofuseText
+    disclaimerTitleTxt: { //  termsofuseText
         fontSize: scaledHeight(16),
         marginBottom: scaledHeight(10),
         fontWeight: 'bold',
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     },
 
     lblLine: {
-        // width:"100%",
+        //  width:"100%",
         flexGrow: 1,
         marginTop: scaledHeight(9.5),
         height: scaledHeight(1),
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     },
 
     newVictorySection: {
-        //  marginTop: scaledHeight(150),
+        //   marginTop: scaledHeight(150),
         padding: scaledHeight(12),
         width: '100%',
         flexGrow: 1,
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     },
 
     normalBlackBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         borderRadius: scaledHeight(24),
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
 
 
     normalBlackDisabledBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         borderRadius: scaledHeight(24),
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
         marginHorizontal: scaledHeight(37)
     },
     normalWhiteBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         borderRadius: scaledHeight(24),

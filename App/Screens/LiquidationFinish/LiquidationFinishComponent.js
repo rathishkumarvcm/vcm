@@ -53,12 +53,12 @@ class LiquidationFinishComponent extends Component {
 LiquidationFinishComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     liquidationInitialState: PropTypes.instanceOf(Object),
-    // amendReducerData: PropTypes.instanceOf(Object),
+    //  amendReducerData: PropTypes.instanceOf(Object),
 };
 
 LiquidationFinishComponent.defaultProps = {
     navigation: {},
     liquidationInitialState: {},
-    // amendReducerData: {},
+    //  amendReducerData: {},
 };
 export default LiquidationFinishComponent;

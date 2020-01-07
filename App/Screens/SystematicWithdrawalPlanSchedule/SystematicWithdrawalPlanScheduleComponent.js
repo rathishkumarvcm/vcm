@@ -201,7 +201,7 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
             "systematicSchedule":{...this.state}
         }
         myInstance.setScreenStateData(screenState);
-        // this.props.navigation.navigate('systematicWithdrawalVerify');
+        //  this.props.navigation.navigate('systematicWithdrawalVerify');
         this.props.navigation.navigate({routeName:'systematicWithdrawalVerify',key:'systematicWithdrawalVerify',params: { skip: false ,accountType:this.state.accountType,indexSelected:this.state.itemToEdit}});
     }
 

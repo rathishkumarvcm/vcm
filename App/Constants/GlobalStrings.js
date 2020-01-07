@@ -133,7 +133,7 @@ export default {
 
     },
     accManagement: {
-        // labels 
+        //  labels 
         accType: "Account Type",
         generalInvestmentAcc: "General Investment Account",
         retirementAcc: "Retirement Accounts",
@@ -147,7 +147,7 @@ export default {
         uploadW8Form: "Upload W-8 form",
         whatISW8Form: "What is W-8 form?",
 
-        //manage beneficiearies
+        // manage beneficiearies
         manageBeneficiaries: "Manage Beneficiaries",
         contactUs: "Contact Us",
         myAccountBeneficiariesInfo: "My Accounts / Beneficiary Information",
@@ -191,7 +191,7 @@ export default {
         emptyDateOfBirth: "Please enter Date of Birth",
         validDateOfBirthMsg: "Please enter valid Date of Birth",
 
-        //manageIntrestedParties
+        // manageIntrestedParties
         manageIntrestedParties: "Manage Interested Parties",
         addNew: "Add",
         statements: "Statements",
@@ -470,7 +470,7 @@ export default {
         successorAccOwnerInfo: "Successor Account Owner Information",
         successorAccOwnerInfoQuest: "Do you want to name someone who can become the owner or successor of the account if you become unable to continue?",
 
-        //Speciality Accounts
+        // Speciality Accounts
         estateInfo: "Estate Information",
         estateName: "Estate Name",
         creationDate: "Creation Date",
@@ -524,7 +524,7 @@ export default {
 
 
 
-        // placeholder
+        //  placeholder
         enterName: "Enter Name",
         enterZip: "Enter Zip",
         enterCity: "Enter City",
@@ -537,7 +537,7 @@ export default {
 
 
 
-        // Err messages
+        //  Err messages
         emptyAccType: "Please select an account",
         emptyRegTypeMsg: "Please select any Registraion Type",
 
@@ -778,7 +778,7 @@ export default {
         accountMessagingArrow: ">    Account Messaging",
         accountMessagingTitleDesc: "Lorem Ipsum is dummy text of the typesetting industry.",
 
-        // Title and Title Descriptions Settings > Account Messaging
+        //  Title and Title Descriptions Settings > Account Messaging
         goalTitle: "Goals",
         goalTitleDesc: "Lorem Ipsum has been the industrys standard dummy text ever since the 1500s",
         adviceTitle: "Advice",
@@ -790,7 +790,7 @@ export default {
         deviceManagementTitle: "Device Management",
         deviceManagementTitleDesc: "Lorem Ipsum has been the industrys standard dummy text ever since the 1500s",
 
-        // Title and Title Descriptions Settings > Account Messaging > Goals
+        //  Title and Title Descriptions Settings > Account Messaging > Goals
         accountMessagingGoalsArrow: ">    Goals",
         accountMessagingGoalTitleDesc: "Lorem Ipsum is dummy text of the typesetting industry.",
         accountMessagingGoalDebtManagementGoal: "Debt Management Goal",
@@ -798,7 +798,7 @@ export default {
         accountMessagingGoalNoGoals: "Currently there are only alerts for Debt Goals",
         accountMessagingGoalCreateGoal: "Create a Goal",
 
-        // Title and Title Descriptions Settings > Account Messaging > Advice
+        //  Title and Title Descriptions Settings > Account Messaging > Advice
         accountMessagingAdviceArrow: ">     Advice",
         accountMessagingAdviceTitleDesc: "Lorem Ipsum is dummy text of the typesetting industry.",
         accountMessagingAdviceSwitchOn: "On",
@@ -833,7 +833,7 @@ export default {
         accountMessagingAdvicePcs: "PCS",
         accountMessagingAdviceLeavingMilitary: "Leaving the Military",
 
-        // Title and Title Descriptions Settings > Account Messaging > General Documents
+        //  Title and Title Descriptions Settings > Account Messaging > General Documents
         accountMessagingGeneralArrow: ">     General Documents",
         accountMessagingGeneralTitleDesc: "Lorem Ipsum is dummy text of the typesetting industry.",
         accountMessagingGeneralAlertForDocument: "Alerts for All Documents",
@@ -855,7 +855,7 @@ export default {
         accountMessagingGeneralBraillePaper: "Braille & Paper",
         accountMessagingGeneralScreenReader: "Screen Reader Compatible & Online",
 
-        // Title and Title Descriptions Settings > Account Messaging > Alerts for Security and Fraud
+        //  Title and Title Descriptions Settings > Account Messaging > Alerts for Security and Fraud
         accountMessagingSecurityFraudArrow: ">     Alerts for Security and Fraud",
         accountMessagingSecurityFraudTitle: "Alerts for Security and Fraud",
         accountMessagingSecurityFraudTitleDesc: "Lorem Ipsum is dummy text of the typesetting industry.",
@@ -864,7 +864,7 @@ export default {
         accountMessagingSecurityFraudCenter: "Security Center",
         accountMessagingSecurityFraudOnVcm: " on VCM.com",
 
-        // Title and Title Descriptions Settings > Account Messaging > Device Management
+        //  Title and Title Descriptions Settings > Account Messaging > Device Management
         accountMessagingDeviceManageArrow: ">     Device Management",
         accountMessagingDeviceManageTitleDesc: "Lorem Ipsum is dummy text of the typesetting industry.",
         accountMessagingDeviceManagePushNotify: "Push notifications are automatically set up on the device you are using every time you access the VCM mobile app.",
@@ -1045,7 +1045,7 @@ export default {
         password_success_footer1: 'Neque porro quisquam est qui dolorem',
         password_success_footer2: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet dictum orci et faucibus. Suspendisse non malesuada enim. Aliquam fringilla lectus ut massa convallis gravida. Integer condimentum mollis velit, nec porta diam mattis sit amet. Quisque sodales, enim quis laoreet aliquet, mauris nisi condimentum libero, a viverra ligula libero sed sem. Pellentesque sed mollis tortor, vitae finibus metus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus blandit consequat arcu nec iaculis. Aenean at pharetra nisl. Sed eget turpis sit amet'
     },
-    //Automatic Investment Plan
+    // Automatic Investment Plan
     automaticInvestment: {
         autoInves_Title: 'Automatic Investment Plan',
         autoInves_current: 'Current Automatic Investment Plans',
@@ -1056,7 +1056,7 @@ export default {
         acc_content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text.',
 
     },
-    //Systematic Investment Plan
+    // Systematic Investment Plan
     systematicWithdrawal: {
         sysWith_Title: 'Systematic Withdrawal Plan',
         sysWith_current: 'Current Systematic Withdrawal Plans',
@@ -1354,7 +1354,7 @@ export default {
         marketingNoteOne: "We show you gave VCM permission to make marketing calls to you using an automated dialing system or pre recorded voice message. If you want to change you preference.",
         marketingNoteTwo: "What Types of Offers Are You Interested in?",
         marketingNoteThree: "You can tailor the VCM offers you receive and how you like to get them",
-        marketingNoteFour: "Please note that your selections do not apply to pre-screened offers of credit. To opt-out of pre-screened offers of credit please visit https://www.optoutprescreen.com or call to free Phone Number. The phone number and website are operated by the major consumer reporting companies",
+        marketingNoteFour: "Please note that your selections do not apply to pre-screened offers of credit. To opt-out of pre-screened offers of credit please visit https:// www.optoutprescreen.com or call to free Phone Number. The phone number and website are operated by the major consumer reporting companies",
         marketingProductLabl: "Products & Services",
         marketingExpandAll: "Expand All",
         marketingInvestments: " -  Investments",

@@ -27,11 +27,11 @@ export const styles = StyleSheet.create({
     },
     questionsSection : {
         height:scaledHeight(50), 
-        //alignItems:'center',
-        //justifyContent:'center',
+        // alignItems:'center',
+        // justifyContent:'center',
         marginLeft : '5%', 
         flexDirection:'column'
-        //marginTop: '1%'
+        // marginTop: '1%'
     },
 
     questionsText : {

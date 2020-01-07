@@ -1,6 +1,6 @@
 import { StyleSheet,Dimensions } from "react-native";
 import { scaledHeight,scaledWidth} from '../../Utils/Resolution';
-//import { Colors } from "react-native/Libraries/NewAppScreen";
+// import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const {width} = Dimensions.get('window');
 
@@ -150,7 +150,7 @@ export const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       // borderRadius:scaledHeight(25),
+       //  borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#FFFFFF',
         alignItems:'center',
@@ -168,7 +168,7 @@ export const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       // borderRadius:scaledHeight(25),
+       //  borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:"rgba(84,74,84,0.5)",
         alignItems:'center',

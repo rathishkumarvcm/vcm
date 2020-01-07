@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   notificationView: {
     width: "100%",
-    // height: scaledHeight(60),
+    //  height: scaledHeight(60),
     flexDirection: "row",
     marginTop: scaledHeight(10),
     marginBottom: scaledHeight(20),
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   },
   saveSuccessMsgTxt: {
     flex: 0.7,
-    // height: scaledHeight(50)
+    //  height: scaledHeight(50)
   },
   sideBtn: {
     width: scaledHeight(20)

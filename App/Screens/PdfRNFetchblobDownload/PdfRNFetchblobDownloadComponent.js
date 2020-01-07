@@ -6,14 +6,14 @@ import RNFetchBlob from 'rn-fetch-blob';
 import {PermissionsAndroid} from 'react-native';
 import PropTypes from 'prop-types';
 
-const url = 'http://www.africau.edu/Images/default/sample.pdf';
+const url = 'http:// www.africau.edu/Images/default/sample.pdf';
 
 
 
 const { fs: { dirs } } = RNFetchBlob;
-//const PATH_TO_LIST = dirs.DocumentDir;
-//const dest = `${PATH_TO_LIST}/big_buck_bunny_720p_10mb.pdf`;
-//const tmpPath = `${dest}.download`;
+// const PATH_TO_LIST = dirs.DocumentDir;
+// const dest = `${PATH_TO_LIST}/big_buck_bunny_720p_10mb.pdf`;
+// const tmpPath = `${dest}.download`;
 
 const styles = StyleSheet.create({
     containerStyle:{
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         marginLeft : '5%',
         marginRight : '5%',
         marginTop:'10%'
-        //alignItems:'center'
+        // alignItems:'center'
     },
     labeltext:{
         fontSize:20,
@@ -67,12 +67,12 @@ class PdfRNFetchblobDownload extends Component {
     
           if (result.action === Share.sharedAction) {
               if (result.activityType) {
-                  // shared with activity type of result.activityType
+                  //  shared with activity type of result.activityType
               } else {
-                  // shared
+                  //  shared
               }
           } else if (result.action === Share.dismissedAction) {
-              // dismissed
+              //  dismissed
           }
       } catch (error) {
           alert(error.message);
@@ -89,7 +89,7 @@ class PdfRNFetchblobDownload extends Component {
         appendExt : 'pdf'
       })
       .fetch('GET', url, {
-      //some headers ..
+      // some headers ..
       })
       .then((res) => {
         console.log('The file saved to ', JSON.stringify(res));
@@ -115,7 +115,7 @@ class PdfRNFetchblobDownload extends Component {
                     }
             })       
             .fetch('GET', url, {
-              //some headers ..
+              // some headers ..
             })
             .then((res) => {
             

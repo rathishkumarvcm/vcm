@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import systematicWithdrawalComponent from './SystematicWithdrawalAddComponent';
-import { accOpeningActions,addressFormatActions } from "../../Shared/Actions";//,getBankAccountInfo
+import { accOpeningActions,addressFormatActions } from "../../Shared/Actions";// ,getBankAccountInfo
 
 
 

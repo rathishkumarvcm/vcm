@@ -96,7 +96,7 @@ const relationShipData = [
 class CollegePlanBeneficiaryComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             itemID: "",
@@ -161,7 +161,7 @@ class CollegePlanBeneficiaryComponent extends Component {
         console.log("item: " + item.id);
         this.setState({ selectedItemID: item.id });
         this.setState({ selectedItemName: item.name });
-        // alert("You selected :: " + item.name)
+        //  alert("You selected :: " + item.name)
     }
 
     selectedDropDownValue = (dropDownName, value) =>()=> {
@@ -309,7 +309,7 @@ class CollegePlanBeneficiaryComponent extends Component {
             this.setState({
                 [input + 'Validation']: false
             });
-           // var temp = input !== "" ? this[input].focus() : ""
+           //  var temp = input !== "" ? this[input].focus() : ""
             alert(errMsg);
 
         }
@@ -425,7 +425,7 @@ class CollegePlanBeneficiaryComponent extends Component {
                             }}
                             */
                             onChangeText = {this.onChangeText("firstName")}
-                           // onSubmitEditing={() => this.middleInitial.focus()}
+                           //  onSubmitEditing={() => this.middleInitial.focus()}
                             onSubmitEditing={this.onSubmitEditing(this.middleInitial)}
 
                         />

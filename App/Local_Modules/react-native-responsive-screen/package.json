@@ -18,34 +18,34 @@
   "_requiredBy": [
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/react-native-responsive-screen/-/react-native-responsive-screen-1.2.0.tgz",
+  "_resolved": "https:// registry.npmjs.org/react-native-responsive-screen/-/react-native-responsive-screen-1.2.0.tgz",
   "_shasum": "82cc22902c5424527aba74d724611d989735f884",
   "_spec": "react-native-responsive-screen@^1.1.10",
   "_where": "/Users/jose/Documents/LHC_ESLIST_JAN_31/RNClaim.Jose",
   "author": {
     "name": "Tasos Maroudas",
     "email": "maroudasa@gmail.com",
-    "url": "https://github.com/marudy"
+    "url": "https:// github.com/marudy"
   },
   "bugs": {
-    "url": "https://github.com/marudy/react-native-responsive-screen/issues"
+    "url": "https:// github.com/marudy/react-native-responsive-screen/issues"
   },
   "bundleDependencies": false,
   "contributors": [
     {
       "name": "Tasos Maroudas",
       "email": "maroudasa@gmail.com",
-      "url": "https://github.com/marudy"
+      "url": "https:// github.com/marudy"
     },
     {
       "name": "Chrysa Kaia",
       "email": "kaia.chrysa@gmail.com",
-      "url": "https://github.com/ckaia"
+      "url": "https:// github.com/ckaia"
     }
   ],
   "deprecated": false,
   "description": "Make React Native views responsive for all devices with the use of 2 simple methods.",
-  "homepage": "https://github.com/marudy/react-native-responsive-screen#readme",
+  "homepage": "https:// github.com/marudy/react-native-responsive-screen#readme",
   "keywords": [
     "react-native",
     "responsive-ui",
@@ -61,7 +61,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marudy/react-native-responsive-screen.git"
+    "url": "git+https:// github.com/marudy/react-native-responsive-screen.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

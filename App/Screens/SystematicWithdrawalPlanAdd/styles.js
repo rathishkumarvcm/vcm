@@ -205,7 +205,7 @@ export const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       // borderRadius:scaledHeight(25),
+       //  borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#FFFFFF',
         alignItems:'center',
@@ -223,7 +223,7 @@ export const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       // borderRadius:scaledHeight(25),
+       //  borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:"rgba(84,74,84,0.5)",
         alignItems:'center',
@@ -271,14 +271,14 @@ export const styles = StyleSheet.create({
 
 
 
-    //filter funds
+    // filter funds
     rowHeaderItem: {
         flexDirection: 'row',
         alignItems: 'flex-start',
         justifyContent: 'flex-end',
         flexGrow: 1,
-        // borderColor:'#afabb0',
-        //  borderWidth:1 ,
+        //  borderColor:'#afabb0',
+        //   borderWidth:1 ,
         marginTop: scaledHeight(0)
     },
     rowItem: {
@@ -286,8 +286,8 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'flex-end',
         flexGrow: 1,
-        // borderColor:'#afabb0',
-        //  borderWidth:1 ,
+        //  borderColor:'#afabb0',
+        //   borderWidth:1 ,
         marginTop: scaledHeight(22)
     },
     colItem: {
@@ -307,7 +307,7 @@ export const styles = StyleSheet.create({
         color: '#0D7CB5',
         fontSize: scaledHeight(22),
         fontWeight: 'bold',
-        //  lineHeight:20
+        //   lineHeight:20
     },
 
     lblLeftColTxt: {
@@ -324,7 +324,7 @@ export const styles = StyleSheet.create({
         width: '40%',
 
     },
-//bottom section offline 2
+// bottom section offline 2
     sectionGrp: {
         overflow: 'hidden',
         marginHorizontal: scaledHeight(12),
@@ -335,7 +335,7 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(20),
         flexDirection: 'row',
         justifyContent: 'space-between',
-        // marginHorizontal: scaledHeight(12),
+        //  marginHorizontal: scaledHeight(12),
         alignItems: "center",
         flexGrow: 1
     },
@@ -353,7 +353,7 @@ export const styles = StyleSheet.create({
         textAlign: 'center'
     },
     lblLine: {
-        // width:"100%",
+        //  width:"100%",
         flexGrow: 1,
         marginTop: scaledHeight(9.5),
         height: scaledHeight(1),
@@ -387,8 +387,8 @@ export const styles = StyleSheet.create({
     },
     
     dropDownLayout: {
-        // alignItems: "flex-start",
-        // justifyContent: "flex-start",
+        //  alignItems: "flex-start",
+        //  justifyContent: "flex-start",
          marginLeft: '0%',
          marginRight: '0%',
          marginTop: scaledHeight(25),
@@ -443,7 +443,7 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
-        //width: '80%',
+        // width: '80%',
         textAlign: 'center'
     },
     compareFundsBtn: {
@@ -463,7 +463,7 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
-       // width: '80%',
+       //  width: '80%',
        textAlign: 'center'
     },
     modalBackgroundView: {

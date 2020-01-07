@@ -12,12 +12,12 @@ export default class PDFExample extends React.Component {
     goBack = ()=>this.props.navigation.goBack();
 
     render() {
-        const source = {uri:'http://samples.leanpub.com/thereactnativebook-sample.pdf',cache:true};
-        //const source = require('./test.pdf');  // ios only
-        //const source = {uri:'bundle-assets://test.pdf'};
+        const source = {uri:'http:// samples.leanpub.com/thereactnativebook-sample.pdf',cache:true};
+        // const source = require('./test.pdf');  //  ios only
+        // const source = {uri:'bundle-assets:// test.pdf'};
  
-        //const source = {uri:'file:///sdcard/test.pdf'};
-        //const source = {uri:"data:application/pdf;base64,..."};
+        // const source = {uri:'file:// /sdcard/test.pdf'};
+        // const source = {uri:"data:application/pdf;base64,..."};
  
         return (
             <View style={styles.container}>

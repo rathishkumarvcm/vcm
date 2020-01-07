@@ -92,7 +92,7 @@ PODS:
     - React
   - rn-fetch-blob (0.10.16):
     - React-Core
-  - RNAWSCognito (3.2.0):
+  - RNAWSCognito (3.2.1):
     - JKBigInteger2 (= 0.0.5)
     - React
   - RNGestureHandler (1.4.1):
@@ -249,7 +249,7 @@ SPEC CHECKSUMS:
   React-RCTWebSocket: cd932a16b7214898b6b7f788c8bddb3637246ac4
   ReactNativeExceptionHandler: 8025d98049c25f186835a3af732dd7c9974d6dce
   rn-fetch-blob: 651b8d076b43d0d7aa294a3d9ec16c00aab8bef9
-  RNAWSCognito: 8cdb673873f82dc770c769b87c336eb4b67b8ae0
+  RNAWSCognito: 5c0df55a382a2f23ae81ec6e717975880002dd63
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
   RNSecureKeyStore: f1ad870e53806453039f650720d2845c678d89c8
   RNShare: 8b171d4b43c1d886917fdd303bf7a4b87167b05c

@@ -378,7 +378,7 @@ class addNewIntrestedPartiesComponent extends Component {
             "endDate": data.endDate,
             "accounts_Tagged": '1'
         };
-        // removed isAPi calling from if
+        //  removed isAPi calling from if
         if (this.state.personal.addValidation && this.state.personal.addressLine1 && this.state.personal.addressLine2) {
             this.props.navigation.navigate("verifyIntrestedParties", { acc_Data: this.state.account_Data, added_obj: obj });
         }

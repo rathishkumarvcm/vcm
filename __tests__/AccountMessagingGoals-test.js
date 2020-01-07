@@ -5,13 +5,13 @@ import AccountMessagingGoals from '../App/Screens/AccountMessagingGoals/AccountM
 
 describe('Account Messaging Goals',()=>{
 
-    // Snap shot 
+    //  Snap shot 
     it('Match Snapshot', () => {  
       const tree = renderer.create(<AccountMessagingGoals />).toJSON();
       expect(tree).toMatchSnapshot();
     });
   
-    // Render using shallow - shallow not includes child component
+    //  Render using shallow - shallow not includes child component
     test('render',()=>{
       const component = shallow(<AccountMessagingGoals />);  
       component.render();

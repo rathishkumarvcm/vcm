@@ -159,7 +159,7 @@ class SystematicWithdrawalComponent extends Component {
             refresh: false,
             errorMsg: 'Please enter amount greater than or equal to 50',
             valueaddressDropDown: 'Current mailing address',
-            //zip address validation
+            // zip address validation
             isZipApiCalling: false,
             isAddressApiCalling: false,
             validationAddressOne: true,
@@ -186,7 +186,7 @@ class SystematicWithdrawalComponent extends Component {
             selectedFundInvestmentsData: [],
             action: "",
             totalInitialInvestment: "",
-            // Filters
+            //  Filters
             isFilterApplied: false,
             modalVisible: false,
             filtermindata: [],
@@ -205,7 +205,7 @@ class SystematicWithdrawalComponent extends Component {
             const fundListPayload = {};
             this.props.getFundListData(fundListPayload);
         }
-        //filter funds
+        // filter funds
         const payload = [];
         const compositePayloadData = [
             "filter_min_inv",
@@ -697,7 +697,7 @@ class SystematicWithdrawalComponent extends Component {
                 return i;
             }
         }
-        return -1; // to handle the case where the value doesn't exist
+        return -1; //  to handle the case where the value doesn't exist
     }
 
     getSelectedItems = () => {
@@ -718,7 +718,7 @@ class SystematicWithdrawalComponent extends Component {
 
     onClickRowItem = (item, index) => () => {
         AppUtils.debugLog(`onSelectFundList:: ${item.fundNumber}`);
-        //  this.props.navigation.navigate({ routeName: 'investmentPlanInfo', key: 'investmentPlanInfo' })
+        //   this.props.navigation.navigate({ routeName: 'investmentPlanInfo', key: 'investmentPlanInfo' })
         this.props.navigation.push('investmentPlanInfo', { fundDetails: item.fundNumber });
 
     }
@@ -748,7 +748,7 @@ class SystematicWithdrawalComponent extends Component {
         AppUtils.debugLog(`onPressDropDownForInvestment::: ${keyName}`);
         const newItems = [...this.state.selectedFundInvestmentsData];
         newItems[index][keyName] = !newItems[index][keyName];
-        // newItems[index][keyName+"Validation"] = false;
+        //  newItems[index][keyName+"Validation"] = false;
         newItems[index].fundingOptionValidation = true;
         newItems[index].initialInvestmentValidation = true;
         newItems[index].monthlyInvestmentValidation = true;
@@ -774,8 +774,8 @@ class SystematicWithdrawalComponent extends Component {
 
         }
 
-        // newSelectedData[index].isActive = false;
-        // newSelectedData.splice(index, 1);
+        //  newSelectedData[index].isActive = false;
+        //  newSelectedData.splice(index, 1);
         this.setState({
             vcmFundList: newItems,
             selectedFundInvestmentsData: newSelectedData,
@@ -791,7 +791,7 @@ class SystematicWithdrawalComponent extends Component {
         AppUtils.debugLog("onChangeTextForInvestment:::>");
         const newItems = [...this.state.selectedFundInvestmentsData];
         newItems[index][keyName] = text;
-        // newItems[index][keyName+"Validation"] = false;
+        //  newItems[index][keyName+"Validation"] = false;
         newItems[index].fundingOptionValidation = true;
         newItems[index].initialInvestmentValidation = true;
         newItems[index].monthlyInvestmentValidation = true;
@@ -819,7 +819,7 @@ class SystematicWithdrawalComponent extends Component {
         AppUtils.debugLog("onChangeDateForInvestment:::>");
         const newItems = [...this.state.selectedFundInvestmentsData];
         newItems[index][keyName] = date;
-        // newItems[index][keyName+"Validation"] = false;
+        //  newItems[index][keyName+"Validation"] = false;
         newItems[index].fundingOptionValidation = true;
         newItems[index].initialInvestmentValidation = true;
         newItems[index].monthlyInvestmentValidation = true;
@@ -855,7 +855,7 @@ class SystematicWithdrawalComponent extends Component {
 
         }
     }
-    // Modal - Filter Funds
+    //  Modal - Filter Funds
     setModalVisible = (visible) => () => {
         if (!visible && !this.state.applyFilterState) {
             this.clearFilterAction();
@@ -866,7 +866,7 @@ class SystematicWithdrawalComponent extends Component {
         }
     }
 
-    // Apply Filter Actions  
+    //  Apply Filter Actions  
     applyFilterAction = (visible) => () => {
         this.setState({
             modalVisible: visible,
@@ -914,7 +914,7 @@ class SystematicWithdrawalComponent extends Component {
         const fundListPayload = { 'minInvestment': mininvestkey };
         this.props.getFundListData(fundListPayload);
     }
-    // Checkbox selection on Clicking Filters 
+    //  Checkbox selection on Clicking Filters 
     onCheckboxSelect = (fromtype, item, index) => () => {
         AppUtils.debugLog('Index : ', index);
         AppUtils.debugLog('Checkbox Selected : ', `${item.key} ${item.value} ${item.isActive}`);
@@ -939,7 +939,7 @@ class SystematicWithdrawalComponent extends Component {
         AppUtils.debugLog(`New Item:${JSON.stringify(newItm)}`);
     }
 
-    // Clear Filter Actions  
+    //  Clear Filter Actions  
     clearFilterAction = () => {
         this.setState({ applyFilterState: false });
         const tempmindata = [...this.state.filtermindata];
@@ -953,7 +953,7 @@ class SystematicWithdrawalComponent extends Component {
         });
     }
 
-    // Construct Filter values from Master Data on Clicking Filter Funds
+    //  Construct Filter values from Master Data on Clicking Filter Funds
     constructFilterData = () => {
         const temp_key_min_inv = 'filter_min_inv';
         const temp_key_risk = 'filter_risk';
@@ -985,14 +985,14 @@ class SystematicWithdrawalComponent extends Component {
     }
 
     navigateCompareFunds = () => {
-        // AppUtils.debugLog(this.state.selectedFundInvestmentsData);
+        //  AppUtils.debugLog(this.state.selectedFundInvestmentsData);
         if (this.state.selectedFundInvestmentsData.length > 1) {
             if (this.state.selectedFundInvestmentsData.length < 5) {
                 let fundSelectedCompare = "";
                 this.state.selectedFundInvestmentsData.map((item, index) => {
                     fundSelectedCompare = `${fundSelectedCompare.concat(`fundNumber${index + 1}=${item.fundNumber}`)}&`;
                 });
-                // AppUtils.debugLog("Selected Funds:"+fundSelectedCompare);
+                //  AppUtils.debugLog("Selected Funds:"+fundSelectedCompare);
                 if (fundSelectedCompare !== null && fundSelectedCompare !== "") {
                     this.props.navigation.push('compareFunds', { fundDetails: fundSelectedCompare });
                 }
@@ -1007,9 +1007,9 @@ class SystematicWithdrawalComponent extends Component {
 
     render() {
         const tempFundOptionsData = fundingOptionsData;
-        const date = new Date().getDate(); // Current Date
-        const month = new Date().getMonth() + 1; // Current Month
-        const year = new Date().getFullYear(); // Current Year
+        const date = new Date().getDate(); //  Current Date
+        const month = new Date().getMonth() + 1; //  Current Month
+        const year = new Date().getFullYear(); //  Current Year
         const currentdate = `${month}-${date}-${year}`;
         return (
             <View style={styles.container}>
@@ -1250,7 +1250,7 @@ class SystematicWithdrawalComponent extends Component {
                                                     {globalString.accManagement.fundYourInvest}
                                                 </Text>
                                                 <TouchableOpacity
-                                                    //  onPress={() => { alert("Expand/Cllapse") }}
+                                                    //   onPress={() => { alert("Expand/Cllapse") }}
                                                     activeOpacity={0.8}
                                                     accessibilityRole="button"
                                                 >
@@ -1300,7 +1300,7 @@ class SystematicWithdrawalComponent extends Component {
                                                                     dropDownName={globalString.accManagement.fundingOptions}
                                                                     data={tempFundOptionsData}
                                                                     changeState={this.onPressDropDownForInvestment("fundingOptionDropDown", index)}
-                                                                    // showDropDown={this.state.selectedFundInvestmentsData[index].fundingOptionDropDown}
+                                                                    //  showDropDown={this.state.selectedFundInvestmentsData[index].fundingOptionDropDown}
                                                                     dropDownValue={this.state.selectedFundInvestmentsData[index].fundingOptionDropDown}
                                                                     selectedDropDownValue={this.onSelectedDropDownValue("fundingOptionDropDown", index)}
                                                                     itemToDisplay="value"
@@ -1427,16 +1427,16 @@ class SystematicWithdrawalComponent extends Component {
                     />
                     {this.state.valueaddressDropDown === 'Payee and address' ?
                         <GButtonComponent
-                            buttonStyle={styles.continueButtonSelected}//this.state.selectedBank>-1 && 
+                            buttonStyle={styles.continueButtonSelected}// this.state.selectedBank>-1 && 
                             buttonText={globalString.common.validate}
                             textStyle={styles.continueButtonText}
                             onPress={this.addAddressOnValidate('validateAddressValueOne')}
                         /> : null}
                     <GButtonComponent
-                        buttonStyle={this.state.totalFund >= 50 && this.state.fundRemaining === 0 ? styles.continueButtonSelected : styles.continueButton}//this.state.selectedBank>-1 && 
+                        buttonStyle={this.state.totalFund >= 50 && this.state.fundRemaining === 0 ? styles.continueButtonSelected : styles.continueButton}// this.state.selectedBank>-1 && 
                         buttonText={globalString.common.next}
                         textStyle={styles.continueButtonText}
-                        onPress={this.state.totalFund >= 50 && this.state.fundRemaining === 0 ? this.navigationNext : null}//this.state.selectedBank>-1 && 
+                        onPress={this.state.totalFund >= 50 && this.state.fundRemaining === 0 ? this.navigationNext : null}// this.state.selectedBank>-1 && 
                     />
                     <GFooterComponent />
 

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {StyleSheet,Dimensions } from 'react-native';
-//import { WebView } from 'react-native-webview';
+// import { WebView } from 'react-native-webview';
 import { scaledHeight } from '../../Utils/Resolution';
 import {GWebViewComponent,GButtonComponent} from '../../CommonComponents';
 import PropTypes from "prop-types";
 
-const url = 'http://www.africau.edu/Images/default/sample.pdf';
+const url = 'http:// www.africau.edu/Images/default/sample.pdf';
 
 class WebviewComponent extends Component {
     constructor(props){
@@ -17,7 +17,7 @@ class WebviewComponent extends Component {
 
     componentDidMount() {
         
-        //Linking.openURL(url);
+        // Linking.openURL(url);
     }
 
     goBack = ()=>this.props.navigation.goBack();
@@ -40,7 +40,7 @@ class WebviewComponent extends Component {
             <GWebViewComponent
                 source={{ uri: url }}
                 injectedJavaScript={runFirst}
-                //onMessage={this.onMessage}
+                // onMessage={this.onMessage}
             /> 
 
             

@@ -31,7 +31,7 @@ const createStyles = () => {
       position: "relative"
     },
     input: {
-        // height:scaledHeight(20),
+        //  height:scaledHeight(20),
         width:'90%',
         justifyContent: "center",
         alignItems:'center',
@@ -40,7 +40,7 @@ const createStyles = () => {
         fontSize: scaledHeight(14),
         paddingLeft: scaledHeight(10),
         marginTop: scaledHeight(17),
-        // marginBottom: scaledHeight(5)
+        //  marginBottom: scaledHeight(5)
     },
     label: labelStyleObj
   });
@@ -164,7 +164,7 @@ const GFloatingLabel = createReactClass({
       clearButtonMode: this.props.clearButtonMode,
       clearTextOnFocus: this.props.clearTextOnFocus,
       controlled: this.props.controlled,
-      // editable: this.props.editable,
+      //  editable: this.props.editable,
       enablesReturnKeyAutomatically: this.props.enablesReturnKeyAutomatically,
       keyboardType: this.props.keyboardType,
       multiline: this.props.multiline,
@@ -176,7 +176,7 @@ const GFloatingLabel = createReactClass({
       onFocus: this._onFocus,
       onSubmitEditing: this.props.onSubmitEditing,
       placeholder: this.props.placeholder,
-      secureTextEntry: this.props.secureTextEntry, // Compatibility
+      secureTextEntry: this.props.secureTextEntry, //  Compatibility
       returnKeyType: this.props.returnKeyType,
       selectTextOnFocus: this.props.selectTextOnFocus,
       selectionState: this.props.selectionState,
@@ -184,11 +184,11 @@ const GFloatingLabel = createReactClass({
       testID: this.props.testID,
       value: this.state.text,
       underlineColorAndroid: this.props.underlineColorAndroid,
-      // android TextInput will show the default bottom border
+      //  android TextInput will show the default bottom border
       onKeyPress: this.props.onKeyPress,
       editable: !this.props.disabled,
       useNativeDriver: true
-      // ref:this.props.reference
+      //  ref:this.props.reference
     };
 
     const elementStyles = [styles.element];
@@ -208,7 +208,7 @@ const GFloatingLabel = createReactClass({
           {...props}
           ref={r => this.props.updateRefs && this.props.updateRefs(r)}
           autoCorrect={false}
-        // selectionColor="black"
+        //  selectionColor="black"
         />
       </View>
     );

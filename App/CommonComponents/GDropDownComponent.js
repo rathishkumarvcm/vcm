@@ -37,7 +37,7 @@ dropDownTextName:{
     color:"#333333DE",
     fontSize:scaledHeight(16),
     fontWeight:'bold',
-    //marginBottom:scaledHeight(8)
+    // marginBottom:scaledHeight(8)
 },
 textInputStyle:{
     marginLeft:'4%',
@@ -108,7 +108,7 @@ export const GDropDownComponent = props => (
       data={props.data}
       dropdownOffset={{ 'top': 5 }}
       baseColor={"#DEDEDF"}
-      //dropdownPosition={-5.75}
+      // dropdownPosition={-5.75}
       pickerStyle={styles.pickerStyle}
       inputContainerStyle={!props.errorFlag ? styles.inputStyle : styles.errorInputStyle}
       value={props.dropDownValue}
@@ -129,7 +129,7 @@ GDropDownComponent.propTypes = {
   disabled:PropTypes.bool,
 
   dropDownLayout: PropTypes.instanceOf(Object),
-  //pickerStyle: PropTypes.instanceOf(Object),
+  // pickerStyle: PropTypes.instanceOf(Object),
   dropDownTextName: PropTypes.instanceOf(Object),
   textInputStyle: PropTypes.instanceOf(Object),
   dropDownPostition : PropTypes.instanceOf(Object),

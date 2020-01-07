@@ -51,7 +51,7 @@ UserPhoneInformation.propTypes = {
     onMobileToggle: PropTypes.func
 };
 
-// Email Information's Data
+//  Email Information's Data
 
 const UserEmailInformation = (props) => {
     return (
@@ -96,7 +96,7 @@ UserEmailInformation.propTypes = {
     onEmailToggle: PropTypes.func
 };
 
-// Address Informations Data
+//  Address Informations Data
 
 const UserAddressInformation = (props) => {
     return (
@@ -153,7 +153,7 @@ UserAddressInformation.propTypes = {
 class MarketingandPrivacyComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             enableBiometric: false,
@@ -234,7 +234,7 @@ class MarketingandPrivacyComponent extends Component {
         }
     }
 
-    // Mobile Toggle and Information 
+    //  Mobile Toggle and Information 
 
     onMobileToggle = (item, index) => () => {
         var array = [...this.state.mobileNumberData];
@@ -257,7 +257,7 @@ class MarketingandPrivacyComponent extends Component {
             onMobileToggle={this.onMobileToggle(item, index)} />)
     };
 
-    // Email Toggle and Information
+    //  Email Toggle and Information
 
     onEmailToggle = (item, index) => () => {
         var array = [...this.state.emailData];
@@ -279,7 +279,7 @@ class MarketingandPrivacyComponent extends Component {
             onEmailToggle={this.onEmailToggle(item, index)} />)
     };
 
-    // Address Toggle and Information
+    //  Address Toggle and Information
 
     onAddressToggle = (item, index) => () => {
         var array = [...this.state.addressData];

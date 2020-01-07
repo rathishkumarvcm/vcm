@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     dashboardSection: {
         alignItems: 'center',
         width: '100%',
-        // backgroundColor: '#F7FAFF'
+        //  backgroundColor: '#F7FAFF'
     },
     dashboardText: {
         color: '#5D83AE',
@@ -68,10 +68,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: scaledHeight(116),
         opacity:0.25
-        // textAlign:'center'
+        //  textAlign:'center'
 
     },
-    disclaimerTitleTxt: { // termsofuseText
+    disclaimerTitleTxt: { //  termsofuseText
         fontSize: scaledHeight(16),
         marginBottom: scaledHeight(10),
         fontWeight: 'bold',
@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
         borderColor: '#61285F',
         borderWidth: 1,
          width: 260,
-        // marginLeft: '18%',
-        // marginRight: '18%',
+        //  marginLeft: '18%',
+        //  marginRight: '18%',
         marginBottom:scaledHeight(157),
         marginTop:scaledHeight(26),
         
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         width: '100%',
 
-        // backgroundColor:'yellow',
+        //  backgroundColor:'yellow',
 
     },   
     pageHeader: {
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     privacyAgreement: {
-        // marginTop:convertToDeviceResolution(4),
+        //  marginTop:convertToDeviceResolution(4),
         marginVertical: scaledHeight(19),
         padding: scaledHeight(12),
         alignItems: 'center',
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     },
     privacyText: {
         width: '50%',
-        // paddingLeft:'4%',
+        //  paddingLeft:'4%',
         marginVertical: '2%',
         color: '#61285F',
         fontWeight: 'bold',

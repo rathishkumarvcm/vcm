@@ -14,7 +14,7 @@ const myInstance = GSingletonClass.getInstance();
 class OpenAccPageFiveComponent extends Component {
     constructor(props) {
         super(props);
-        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
             itemID: "",
@@ -193,12 +193,12 @@ class OpenAccPageFiveComponent extends Component {
             ssnTin = '',
             mailingAddress: maillAddr_primary = {},
             physicalAddress: physicAddr_primary = {},
-            // isPhysAddrSameAsMailAddr = "",
+            //  isPhysAddrSameAsMailAddr = "",
             contactDetails: contact_primary = {},
         } = (personalInfo && personalInfo.firstName) ? personalInfo : {};
 
         const {
-            // addressType = '',
+            //  addressType = '',
             streetNb = '',
             streetName = '',
             zip = '',
@@ -206,7 +206,7 @@ class OpenAccPageFiveComponent extends Component {
             state = '',
         } = (maillAddr_primary && maillAddr_primary.addressType) ? maillAddr_primary : {};
         const {
-            // addressType: addressType_Phy = '',
+            //  addressType: addressType_Phy = '',
             streetNb: streetNb_Phy = '',
             streetName: streetName_Phy = '',
             zip: zip_Phy = '',
@@ -224,20 +224,20 @@ class OpenAccPageFiveComponent extends Component {
 
         const {
             phoneNumber: phoneNumber1_primary = '',
-            // phoneType: phoneType1_primary = '',
-            // contactDuring: contactDuring1_primary = '',
+            //  phoneType: phoneType1_primary = '',
+            //  contactDuring: contactDuring1_primary = '',
         } = (phoneNumber1 && phoneNumber1.phoneNumber) ? phoneNumber1 : {};
 
         const {
             phoneNumber: phoneNumber2_primary = '',
-            //  phoneType: phoneType2_primary = '',
-            // contactDuring: contactDuring2_primary = '',
+            //   phoneType: phoneType2_primary = '',
+            //  contactDuring: contactDuring2_primary = '',
         } = (phoneNumber2 && phoneNumber2.phoneNumber) ? phoneNumber2 : {};
 
         const {
             phoneNumber: phoneNumber3_primary = '',
-            // phoneType: phoneType3_primary = '',
-            // contactDuring: contactDuring3_primary = '',
+            //  phoneType: phoneType3_primary = '',
+            //  contactDuring: contactDuring3_primary = '',
         } = (phoneNumber3 && phoneNumber3.phoneNumber) ? phoneNumber3 : {};
 
         
@@ -438,7 +438,7 @@ class OpenAccPageFiveComponent extends Component {
 
         const { militaryInfo = {} } = data || {};
         const {
-            // servingStatus = '',
+            //  servingStatus = '',
             militaryStatus = '',
             branchOfService = '',
             rank = '',
@@ -593,12 +593,12 @@ class OpenAccPageFiveComponent extends Component {
             ssnTin = '',
             mailingAddress: maillAddr_primary = {},
             physicalAddress: physicAddr_primary = {},
-            // isPhysAddrSameAsMailAddr = "",
+            //  isPhysAddrSameAsMailAddr = "",
             contactDetails: contact_primary = {},
         } = (personalInfo && personalInfo.firstName) ? personalInfo : {};
 
         const {
-            // addressType = '',
+            //  addressType = '',
             streetNb = '',
             streetName = '',
             zip = '',
@@ -606,7 +606,7 @@ class OpenAccPageFiveComponent extends Component {
             state = '',
         } = (maillAddr_primary && maillAddr_primary.addressType) ? maillAddr_primary : {};
         const {
-            // addressType: addressType_Phy = '',
+            //  addressType: addressType_Phy = '',
             streetNb: streetNb_Phy = '',
             streetName: streetName_Phy = '',
             zip: zip_Phy = '',
@@ -624,20 +624,20 @@ class OpenAccPageFiveComponent extends Component {
 
         const {
             phoneNumber: phoneNumber1_primary = '',
-            // phoneType: phoneType1_primary = '',
-            // contactDuring: contactDuring1_primary = '',
+            //  phoneType: phoneType1_primary = '',
+            //  contactDuring: contactDuring1_primary = '',
         } = (phoneNumber1 && phoneNumber1.phoneNumber) ? phoneNumber1 : {};
 
         const {
             phoneNumber: phoneNumber2_primary = '',
-            //  phoneType: phoneType2_primary = '',
-            // contactDuring: contactDuring2_primary = '',
+            //   phoneType: phoneType2_primary = '',
+            //  contactDuring: contactDuring2_primary = '',
         } = (phoneNumber2 && phoneNumber2.phoneNumber) ? phoneNumber2 : {};
 
         const {
             phoneNumber: phoneNumber3_primary = '',
-            // phoneType: phoneType3_primary = '',
-            // contactDuring: contactDuring3_primary = '',
+            //  phoneType: phoneType3_primary = '',
+            //  contactDuring: contactDuring3_primary = '',
         } = (phoneNumber3 && phoneNumber3.phoneNumber) ? phoneNumber3 : {};
 
         
@@ -840,7 +840,7 @@ class OpenAccPageFiveComponent extends Component {
 
 
         const {
-            // servingStatus = '',
+            //  servingStatus = '',
             militaryStatus = '',
             branchOfService = '',
             rank = '',
@@ -1181,8 +1181,8 @@ class OpenAccPageFiveComponent extends Component {
        
         const { investmentInfo = {}} = data || {};
         const {
-            // fundingSource = {},
-            // totalFunds = '',
+            //  fundingSource = {},
+            //  totalFunds = '',
             fundListData = []
         } = (investmentInfo && investmentInfo.fundListData) ? investmentInfo : {};
 
@@ -1230,9 +1230,9 @@ class OpenAccPageFiveComponent extends Component {
 
         const {
             fundingSource = {},
-           // totalFunds = '',
+           //  totalFunds = '',
             totalInitialInvestment ='',
-           // fundListData = []
+           //  fundListData = []
         } = (investmentInfo && investmentInfo.fundListData) ? investmentInfo : {};
 
 
@@ -1290,7 +1290,7 @@ class OpenAccPageFiveComponent extends Component {
         
         const {
             documentDeliveryFormat = '',
-            // dividendCapitalGain = ''
+            //  dividendCapitalGain = ''
         } = (accountPreferences && accountPreferences.documentDeliveryFormat) ? accountPreferences : {};
 
 
@@ -1363,7 +1363,7 @@ class OpenAccPageFiveComponent extends Component {
         } = (estateInfo && estateInfo.name) ? estateInfo : {};
 
         const {
-            // addressType = '',
+            //  addressType = '',
             streetNbr = '',
             streetName = '',
             zip = '',
@@ -1371,7 +1371,7 @@ class OpenAccPageFiveComponent extends Component {
             state = '',
         } = (maillAddr_primary && maillAddr_primary.zip) ? maillAddr_primary : {};
         const {
-            // addressType: addressType_Phy = '',
+            //  addressType: addressType_Phy = '',
             streetNbr: streetNbr_Phy = '',
             streetName: streetName_Phy = '',
             zip: zip_Phy = '',
@@ -1602,7 +1602,7 @@ class OpenAccPageFiveComponent extends Component {
         } = (trusteeInfo && trusteeInfo.firstName) ? trusteeInfo : {};
 
         const {
-            // addressType = '',
+            //  addressType = '',
             streetNbr = '',
             streetName = '',
             zip = '',
@@ -1610,7 +1610,7 @@ class OpenAccPageFiveComponent extends Component {
             state = '',
         } = (maillAddr_primary && maillAddr_primary.zip) ? maillAddr_primary : {};
         const {
-            // addressType: addressType_Phy = '',
+            //  addressType: addressType_Phy = '',
             streetNbr: streetNbr_Phy = '',
             streetName: streetName_Phy = '',
             zip: zip_Phy = '',
@@ -1744,7 +1744,7 @@ class OpenAccPageFiveComponent extends Component {
                                  Render Methods
                                                                  -------------------------- */
     render() {
-        // const tempInfoData = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
+        //  const tempInfoData = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
         const tempInfoData = myInstance.getSavedAccData();
 
         const currentPage = 5;
@@ -1752,7 +1752,7 @@ class OpenAccPageFiveComponent extends Component {
         return (
             <View style={styles.container}>
                 {
-                    // this.props.accOpeningData.isLoading && <GLoadingSpinner />
+                    //  this.props.accOpeningData.isLoading && <GLoadingSpinner />
                 }
                 <GHeaderComponent
                     navigation={this.props.navigation}

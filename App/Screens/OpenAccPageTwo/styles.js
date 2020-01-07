@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         justifyContent: 'space-between',
         marginTop: scaledHeight(18),
-        // marginHorizontal: scaledHeight(12),
+        //  marginHorizontal: scaledHeight(12),
     },
     accSelection: {
         flexGrow: 1,
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     },
 
     lblLine1: {
-        // width:"100%",
+        //  width:"100%",
         backgroundColor: '#696069',
         height: scaledHeight(1),
     },
@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
         marginVertical: scaledHeight(50)
     },
     normalWhiteBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         height: scaledHeight(50),
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     normalBlackBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         height: scaledHeight(50),
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
     },
 
     normalBlackDisabledBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         height: scaledHeight(50),
@@ -315,7 +315,7 @@ const styles = StyleSheet.create({
         width: scaledHeight(160),
         borderWidth: scaledHeight(1),
         borderColor: "#61285F45",
-        // borderRadius: scaledHeight(4),
+        //  borderRadius: scaledHeight(4),
         height: scaledHeight(50),
         backgroundColor: '#544A54',
         alignItems: 'center',
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
         color: '#000000',
         fontWeight: 'bold',
         width: '100%',
-        // height:'100%',
+        //  height:'100%',
         textAlign: 'center',
         marginTop: scaledHeight(10),
     },
@@ -370,7 +370,7 @@ const styles = StyleSheet.create({
 
 
     newVictorySection: {
-        //  marginTop: scaledHeight(150),
+        //   marginTop: scaledHeight(150),
         padding: scaledHeight(12),
         width: '100%',
         flexGrow: 1,
@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
 
-    disclaimerTitleTxt: { // termsofuseText
+    disclaimerTitleTxt: { //  termsofuseText
         fontSize: scaledHeight(16),
         marginBottom: scaledHeight(10),
         fontWeight: 'bold',
@@ -403,8 +403,8 @@ const styles = StyleSheet.create({
         width: scaledHeight(100)
     },
     dropDownLayout: {
-       // alignItems: "flex-start",
-       // justifyContent: "flex-start",
+       //  alignItems: "flex-start",
+       //  justifyContent: "flex-start",
         marginLeft: '0%',
         marginRight: '0%',
         marginTop: scaledHeight(25),
@@ -442,8 +442,8 @@ const styles = StyleSheet.create({
         marginLeft: scaledHeight(0),
         marginRight: scaledHeight(0),
         width: '100%',
-        // position: 'absolute',
-        // left: 0
+        //  position: 'absolute',
+        //  left: 0
     },
     errMsg: {
         color: 'red',

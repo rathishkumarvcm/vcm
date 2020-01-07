@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(20),
         flexDirection: 'row',
         justifyContent: 'space-between',
-        // marginHorizontal: scaledHeight(12),
+        //  marginHorizontal: scaledHeight(12),
         alignItems: "center",
         flexGrow: 1
     },
@@ -45,7 +45,7 @@ export const styles = StyleSheet.create({
         lineHeight: 35
     },
     lblLine: {
-        // width:"100%",
+        //  width:"100%",
         flexGrow: 1,
         marginTop: scaledHeight(9.5),
         height: scaledHeight(1),
@@ -54,7 +54,7 @@ export const styles = StyleSheet.create({
     },
 
     lblLine1: {
-        //width:"100%",
+        // width:"100%",
 
         height: scaledHeight(1),
         backgroundColor: '#696069'
@@ -76,7 +76,7 @@ export const styles = StyleSheet.create({
     },
     tabItem: {
         height: scaledHeight(40),
-       // marginHorizontal: scaledHeight(16),
+       //  marginHorizontal: scaledHeight(16),
         borderBottomWidth: 4,
         borderBottomColor: 'transparent',
         alignContent: 'center',
@@ -172,7 +172,7 @@ export const styles = StyleSheet.create({
     },
     lblNameValueTxt: {
         fontSize: scaledHeight(16),
-        //  width: '50%',
+        //   width: '50%',
         color: 'rgba(51, 51, 51, 0.87)',
         marginTop: scaledHeight(12)
     },
@@ -195,7 +195,7 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#333333DE',
         lineHeight: scaledHeight(19),
-        //marginTop:scaledHeight(5)
+        // marginTop:scaledHeight(5)
     },
 
     table:{
@@ -216,7 +216,7 @@ export const styles = StyleSheet.create({
     },
     tableRow:{
         flexGrow: 1, 
-       // paddingHorizontal: scaledHeight(4),
+       //  paddingHorizontal: scaledHeight(4),
         backgroundColor:"#E6E6E6"
 
     },
@@ -301,7 +301,7 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     },
     normalWhiteBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",        
         height: scaledHeight(50),
@@ -321,7 +321,7 @@ export const styles = StyleSheet.create({
         lineHeight: 22
     },
     normalBlackBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         borderRadius: scaledHeight(24),
@@ -343,7 +343,7 @@ export const styles = StyleSheet.create({
     },
 
     normalBlackDisabledBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         borderRadius: scaledHeight(24),
@@ -366,7 +366,7 @@ export const styles = StyleSheet.create({
 
 
     newVictorySection: {
-        //  marginTop: scaledHeight(150),
+        //   marginTop: scaledHeight(150),
         padding: scaledHeight(12),
         width: '100%',
         flexGrow: 1,
@@ -381,7 +381,7 @@ export const styles = StyleSheet.create({
     },
 
 
-    disclaimerTitleTxt: { //termsofuseText
+    disclaimerTitleTxt: { // termsofuseText
         fontSize: scaledHeight(16),
         marginBottom: scaledHeight(10),
         fontWeight: 'bold',

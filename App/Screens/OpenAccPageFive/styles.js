@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
     },
     detailsGrpHeaderTxt: {
         flexGrow: 1,
-        // borderColor:'rgba(224, 226, 227, .44)',
-        // borderWidth:1,
+        //  borderColor:'rgba(224, 226, 227, .44)',
+        //  borderWidth:1,
         backgroundColor: 'rgba(224, 226, 227, .44)',
         paddingHorizontal: scaledHeight(15),
         paddingVertical: scaledHeight(21),
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
         marginVertical: scaledHeight(12)
 
     },
-    disclaimerTitleTxt: { // termsofuseText
+    disclaimerTitleTxt: { //  termsofuseText
         fontSize: scaledHeight(16),
         marginBottom: scaledHeight(10),
         fontWeight: 'bold',
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
         width: '50%'
     },
     lblLine: {
-        // width:"100%",
+        //  width:"100%",
         flexGrow: 1,
         marginTop: scaledHeight(9.5),
         height: scaledHeight(1),
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         opacity: 0.25
     },
     lblLine1: {
-        // width:"100%",
+        //  width:"100%",
 
         height: scaledHeight(1),
         backgroundColor: '#696069'
@@ -141,7 +141,7 @@ const styles = StyleSheet.create({
     },
     lblNameValueTxt: {
         fontSize: scaledHeight(16),
-      //  width: '50%',
+      //   width: '50%',
         color: 'rgba(51, 51, 51, 0.87)',
         marginTop: scaledHeight(12)
     },
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     newVictorySection: {
-        //  marginTop: scaledHeight(150),
+        //   marginTop: scaledHeight(150),
         padding: scaledHeight(12),
         width: '100%',
         flexGrow: 1,
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
 
     },
     normalBlackBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         height: scaledHeight(50),
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     normalBlackDisabledBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         height: scaledHeight(50),
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
         marginHorizontal: scaledHeight(37)
     },
     normalWhiteBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         height: scaledHeight(50),

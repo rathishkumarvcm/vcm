@@ -13,7 +13,7 @@ import PropTypes from "prop-types";
 class CollegePlanESAComponent extends Component {
     constructor(props) {
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             isLoading: false,
         };
@@ -99,7 +99,7 @@ class CollegePlanESAComponent extends Component {
                         <Text style={styles.lblLine} />
                         <View style={{ flexGrow: 1, marginTop: scaledHeight(35), flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', alignContent: 'center' }}>
                             <TouchableOpacity
-                                //  onPress={() => { alert("#TODO:: Print Version") }}
+                                //   onPress={() => { alert("#TODO:: Print Version") }}
                                 activeOpacity={0.8}
                                 accessibilityRole={'button'}
                                 style={styles.printSaveBtn}
@@ -111,7 +111,7 @@ class CollegePlanESAComponent extends Component {
                             <Text style={styles.lblSep} />
 
                             <TouchableOpacity
-                                // onPress={() => { alert("#TODO:: Print Version") }}
+                                //  onPress={() => { alert("#TODO:: Print Version") }}
                                 activeOpacity={0.8}
                                 accessibilityRole={'button'}
                                 style={styles.printSaveBtn}

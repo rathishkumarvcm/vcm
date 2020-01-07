@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
         marginLeft : '5%',
         marginRight : '5%',
         marginTop:'10%'
-        //alignItems:'center'
+        // alignItems:'center'
     },
     homeText:{
         fontSize:scaledHeight(10)
@@ -57,7 +57,7 @@ export const styles = StyleSheet.create({
         lineHeight:scaledHeight(20),
     },
     floatStyle: {
-            //height:scaledHeight(20),
+            // height:scaledHeight(20),
             width:'90%',
             justifyContent: "center",
             alignItems:'center',
@@ -67,8 +67,8 @@ export const styles = StyleSheet.create({
     },
     floatInput: {
       width: "90%",
-      // marginTop : "5%"
-      //marginBottom : "5%"
+      //  marginTop : "5%"
+      // marginBottom : "5%"
     },
     initialfloatingBorder: {
         marginBottom:'5%',

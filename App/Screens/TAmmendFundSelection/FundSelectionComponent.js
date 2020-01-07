@@ -95,7 +95,7 @@ export default class FundSelectionComponent extends Component {
         this.setState({
             selectedIndex: index
         })
-        //if(this.props.navigation.getParam('index') === index)
+        // if(this.props.navigation.getParam('index') === index)
         this.setState({selectedShare:false,selected$:false,selectedPercentage:true})
     
     }
@@ -207,7 +207,7 @@ renderFundList= () => ({ item }) =>{
                     width: 310,
                     marginLeft: 50,
                     marginRight: 30,
-                    //backgroundColor: 'black',
+                    // backgroundColor: 'black',
                 }}
             />
         );
@@ -249,7 +249,7 @@ renderFundList= () => ({ item }) =>{
                             data={this.state.menu}
                             renderItem={this.renderFundList()}
                             extraData={this.state.flatListUpdate}
-                            //keyExtractor={this.generateKeyExtractor}
+                            // keyExtractor={this.generateKeyExtractor}
                             ItemSeparatorComponent={this.FlatListItemSeparatorlist}
 
             />
@@ -271,8 +271,8 @@ renderFundList= () => ({ item }) =>{
                 <Text style={styles.lblLine} />
                 { console.log("data---funds",this.props.navigation.getParam('fundsList'))}
                 <FlatList
-                                //data={this.props.navigation.getParam('data')}
-                                //renderItem={this.renderFundItem({item,index})}
+                                // data={this.props.navigation.getParam('data')}
+                                // renderItem={this.renderFundItem({item,index})}
                                 data={this.props.navigation.getParam('data').funds}
                                 renderItem={({ item, index }) => {
                                     return(

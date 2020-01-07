@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 class RegisterSelfComponent extends Component {
     constructor(props){
         super(props);
-        //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
             isLoading:false,
             enableBiometric:false,
@@ -164,7 +164,7 @@ class RegisterSelfComponent extends Component {
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                //placeholder={"First name"}
+                // placeholder={"First name"}
                 onChangeText={this.setFirstName}
                 onBlur={this.checkFirstName}
                 value={this.state.firstName}
@@ -179,7 +179,7 @@ class RegisterSelfComponent extends Component {
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                //placeholder={"Middle Name"}
+                // placeholder={"Middle Name"}
                 onChangeText={this.setMiddleName}
                 value={this.state.middleName}
                 onBlur={this.checkMiddleName}
@@ -194,7 +194,7 @@ class RegisterSelfComponent extends Component {
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                //placeholder={"Last name"}
+                // placeholder={"Last name"}
                 onChangeText={this.setLastName}
                 value={this.state.lastName}
                 onBlur={this.checkLastName}
@@ -258,7 +258,7 @@ class RegisterSelfComponent extends Component {
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                //placeholder={"Phone"}
+                // placeholder={"Phone"}
                 onChangeText={this.setPhone}
                 value={this.state.phone}
                 onBlur={this.checkPhone}
@@ -305,7 +305,7 @@ class RegisterSelfComponent extends Component {
                     buttonText="Next"
                     textStyle={styles.signInButtonText}
                     onPress={this.navigateAddress}
-                    //disabled={!this.state.phoneFlag || !this.state.firstNameFlag || !this.state.middleNameFlag || !this.state.lastNameFlag}
+                    // disabled={!this.state.phoneFlag || !this.state.firstNameFlag || !this.state.middleNameFlag || !this.state.lastNameFlag}
             />
             
             

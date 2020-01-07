@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
         lineHeight: scaledHeight(26),
     },
     lblLine: {
-        // width:"100%",
+        //  width:"100%",
         flexGrow: 1,
         marginTop: scaledHeight(9.5),
         height: scaledHeight(1),
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         opacity: 0.5
     },
     lblLine1: {
-        //width:"100%",
+        // width:"100%",
 
         height: scaledHeight(1),
         backgroundColor: '#696069'
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     lblRadioBtnTxt: {
         color: '#333333DE',
         fontSize: scaledHeight(16),
-        // lineHeight:22,
+        //  lineHeight:22,
         flexWrap: 'wrap'
     },
     lblRadioDescTxt: {
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#333333DE',
         lineHeight: scaledHeight(19),
-        //marginTop:scaledHeight(5)
+        // marginTop:scaledHeight(5)
     },
     agreeSectionGrp: {
         flexGrow: 1,
@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#333333DE',
         lineHeight: scaledHeight(19),
-        //marginTop:scaledHeight(5)
+        // marginTop:scaledHeight(5)
 
     },
 
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     normalWhiteBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         height: scaledHeight(50),
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
         lineHeight: 22
     },
     normalBlackBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         height: scaledHeight(50),
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     normalBlackDisabledBtn: {
-        //  width: '90%',
+        //   width: '90%',
         borderWidth: 1,
         borderColor: "#61285F45",
         height: scaledHeight(50),
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
 
 
     newVictorySection: {
-        //  marginTop: scaledHeight(150),
+        //   marginTop: scaledHeight(150),
         padding: scaledHeight(12),
         width: '100%',
         flexGrow: 1,
@@ -225,7 +225,7 @@ const styles = StyleSheet.create({
     },
 
 
-    disclaimerTitleTxt: { //termsofuseText
+    disclaimerTitleTxt: { // termsofuseText
         fontSize: scaledHeight(16),
         marginBottom: scaledHeight(10),
         fontWeight: 'bold',

@@ -22,7 +22,7 @@ class RecoverTempComponent extends Component {
       err_temp: '',
       email:''
     };
-    //set true to isLoading if data for this screen yet to be received and wanted to show loader.
+    // set true to isLoading if data for this screen yet to be received and wanted to show loader.
   }
 
   setTemp = (text) => {
@@ -34,8 +34,8 @@ protect_email(user_email) {
     var splitted, part1, part2;
     splitted = user_email.split("@");
     part1 = splitted[0];
-    //avg = part1.length / 2;
-    //part1 = part1.substring(0, (part1.length - avg));
+    // avg = part1.length / 2;
+    // part1 = part1.substring(0, (part1.length - avg));
     part2 = splitted[1];
     return part1.substring(0, 3) + "*****"+part1.substring(part1.length-2,part1.length )+"@" + part2;
 }
@@ -47,7 +47,7 @@ protect_email(user_email) {
       
       this.setState({
           email : this.protect_email(this.props.initialState.email)
-        //email:reGex.protect_email(this.props.initialState.verifiedEmail)
+        // email:reGex.protect_email(this.props.initialState.verifiedEmail)
       });
     }
   }
