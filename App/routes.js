@@ -1,4 +1,11 @@
-import { createAppContainer, createStackNavigator } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import { createDrawerNavigator } from 'react-navigation-drawer';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import React from 'react';
+import { Text, View, ScrollView, TouchableOpacity, Modal } from 'react-native';
+
 import LoginComponent from './Screens/Login/';
 import RegisterEmail from './Screens/RegisterEmail/RegisterEmailComponent';
 import RegisterPassword from './Screens/RegisterPassword/RegisterPasswordComponent';
@@ -162,10 +169,117 @@ import ImageUpload from './Screens/First';
 // Special MFA Requirements
 import VerifySSNComponent from './Screens/VerifySSN/VerifySSNComponent';
 import VerifyMobileComponent from './Screens/VerifyMobile/VerifyMobileComponent';
+//Menu
+import DrawerComponent from './Screens/Menu/DrawerComponent';
+import TabMoreComponent from './Screens/Menu/TabMoreComponent';
+import Screen1Component from './Screens/NotificationTab/Screen1';
+import Screen2Component from './Screens/NotificationTab/Screen2';
 
+//Notification Tabs
+const NotificationTabNavigator = createMaterialTopTabNavigator(
+    {
+        'Message Center': { screen: Screen1Component },
+        Notification: { screen: Screen2Component },
+    },
+    {
+        tabBarPosition: 'top',
+        swipeEnabled: true,
+        animationEnabled: true,
+        navigationOptions: {
+            headerStyle: {
+                backgroundColor: '#633689',
+            },
+            headerTintColor: '#FFFFFF',
+            title: 'TabExample',
+        },
+        tabBarOptions: {
+            //activeTintColor: '#FFFFFF',
+            //inactiveTintColor: '#F8F8F8',
+            style: {
+                //backgroundColor: '#633689',
+            },
+            labelStyle: {
+                textAlign: 'center',
+            },
+            indicatorStyle: {
+                borderBottomColor: 'white',
+                borderBottomWidth: 2,
+            },
+        },
+    }
+);
+// Bottom Tabs
+const BottomTabNavigator = createBottomTabNavigator({
+    myVCM: {
+        screen: AccountServicesComponent,
+        navigationOptions: {
+            tabBarLabel: 'MyVCM',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon name="home" color={tintColor} size={25} />
+            )
+        },
+    },
+    portfolio: {
+        screen: TermsAndConditions,
+        navigationOptions: {
+            tabBarLabel: 'Portfolio',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon name="note" color={tintColor} size={25} />
+            )
+        },
+    },
+    invest: {
+        screen: AccountServicesComponent,
+        navigationOptions: {
+            tabBarLabel: 'Invest',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon name="insert-chart" color={tintColor} size={25} />
+            )
+        },
+    },
+    learn: {
+        screen: ListView,
+        navigationOptions: {
+            tabBarLabel: 'Learn',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon name="library-books" color={tintColor} size={25} />
+            )
+        },
+    },
+    more: {
+        screen: TermsAndConditions,
+        navigationOptions: {
+            tabBarLabel: 'More',
+            tabBarIcon: ({ tintColor }) => (
+                <Icon name="more" color={tintColor} size={25} />
+            )
+        },
+    },
+}, {
+    tabBarOptions: {
+    }
+});
+
+const DrawerNavigator = createDrawerNavigator({
+    Home: BottomTabNavigator,
+    editMilitaryInfo: {
+        screen: EditMilitaryInfo,
+    },
+    NotificationTabs: NotificationTabNavigator,
+}, {
+    initialRouteName: 'Home',
+    contentComponent: DrawerComponent,
+    drawerWidth: 220
+});
 const AppNavigator = createStackNavigator({
     login: {
         screen: LoginComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    dashboardScreen: {
+        screen: DrawerNavigator,
         navigationOptions: {
             header: null,
         }
