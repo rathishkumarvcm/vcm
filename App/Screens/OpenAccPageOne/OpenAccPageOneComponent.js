@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import PropTypes from "prop-types";
 import styles from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner,GSingletonClass } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GSingletonClass } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
@@ -62,7 +62,7 @@ class OpenAccPageOneComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
-        const openAccPageOne = myInstance.getAccOpeningEditMode()? (myInstance.getScreenStateData().openAccPageOne || {}):{};
+        const openAccPageOne = myInstance.getAccOpeningEditMode() ? (myInstance.getScreenStateData().openAccPageOne || {}) : {};
 
         this.state = {
             isLoading: false,
@@ -71,7 +71,7 @@ class OpenAccPageOneComponent extends Component {
             accType: "",
             isValidationSuccess: true,
             isNextBtnDisabled: true,
-            errMsg:"",
+            errMsg: "",
             ...openAccPageOne
         };
     }
@@ -82,13 +82,15 @@ class OpenAccPageOneComponent extends Component {
 
     componentDidMount() {
         AppUtils.debugLog("componentDidMount::::> ");
-       // alert("getAccOpeningEditMode::"+ myInstance.getAccOpeningEditMode());
+        // alert("getAccOpeningEditMode::"+ myInstance.getAccOpeningEditMode());
 
-        const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
-        AppUtils.debugLog(`selectedAccount::::> ${ selectedAccount}`);
+        const { navigation, getAccountSubTypes } = this.props;
+        const { getParam } = navigation;
+        const selectedAccount = getParam('selectedAccount', '');
+        AppUtils.debugLog(`selectedAccount::::> ${selectedAccount}`);
 
         const payload = selectedAccount.key;
-        this.props.getAccountSubTypes(payload);
+        getAccountSubTypes(payload);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -96,11 +98,11 @@ class OpenAccPageOneComponent extends Component {
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.ACCT_TYPE_SAVE_OPENING_ACCT;
             if (this.props.accOpeningData[responseKey]) {
-                if (this.props.accOpeningData[responseKey]!== prevProps.accOpeningData[responseKey]) {
+                if (this.props.accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
                     const tempResponse = this.props.accOpeningData[responseKey];
                     if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
                         const msg = tempResponse.message;
-                        AppUtils.debugLog(`Account Type Saved ::: :: ${ msg}`);
+                        AppUtils.debugLog(`Account Type Saved ::: :: ${msg}`);
                         alert(tempResponse.result);
                     } else {
                         alert(tempResponse.message);
@@ -119,20 +121,20 @@ class OpenAccPageOneComponent extends Component {
     }
 
     goBack = () => {
-        const { navigation} = this.props;
-        const { goBack } = navigation;  
+        const { navigation } = this.props;
+        const { goBack } = navigation;
         goBack();
     }
 
     onClickCancel = () => {
         myInstance.setAccOpeningEditMode(false);
-        const { navigation} = this.props;
-        const { goBack } = navigation;  
+        const { navigation } = this.props;
+        const { goBack } = navigation;
         goBack('termsAndConditions');
     }
 
     onSelected = (item) => () => {
-        AppUtils.debugLog(`item: ${ item.key}`);
+        AppUtils.debugLog(`item: ${item.key}`);
         const { selectAccTypes } = this.props;
         this.setState(
             {
@@ -140,8 +142,8 @@ class OpenAccPageOneComponent extends Component {
                 selectedItemName: item.value,
                 accType: item.value,
                 isValidationSuccess: true,
-                isNextBtnDisabled:false,
-                errMsg:""
+                isNextBtnDisabled: false,
+                errMsg: ""
 
             }
         );
@@ -151,23 +153,23 @@ class OpenAccPageOneComponent extends Component {
     }
 
     onChangeNickname = (event) => {
-        AppUtils.debugLog(`onChangeNickname: ${ event}`);
+        AppUtils.debugLog(`onChangeNickname: ${event}`);
     }
 
     getPayload = () => {
-        const { navigation,accOpeningData} = this.props;
-        const { getParam } = navigation;  
+        const { navigation, accOpeningData } = this.props;
+        const { getParam } = navigation;
         const selectedAccount = getParam('selectedAccount', '');
-        AppUtils.debugLog(`selectedAccount::::> ${ selectedAccount}`);
+        AppUtils.debugLog(`selectedAccount::::> ${selectedAccount}`);
 
-        const { selectedItemID} = this.state;
+        const { selectedItemID } = this.state;
 
 
         let payload = {
             "onlineId": "arumugamt",
             "customerId": "761735",
             "accountType": selectedItemID,
-            "accountMainCategory":selectedAccount.value,
+            "accountMainCategory": selectedAccount.value,
             "accountSubType": (accOpeningData && accOpeningData.accountSubType) ? accOpeningData.accountSubType.key : "",
             "accountSubCategory": (accOpeningData && accOpeningData.accountSubType) ? accOpeningData.accountSubType.value : "",
         };
@@ -185,22 +187,22 @@ class OpenAccPageOneComponent extends Component {
 
 
     onClickNext = () => {
-        const { navigation} = this.props;
-        const { navigate } = navigation; 
+        const { navigation } = this.props;
+        const { navigate } = navigation;
 
-        const { selectedItemID,selectedItemName,accType} = this.state;
+        const { selectedItemID, selectedItemName, accType } = this.state;
 
         const selectedAccount = navigation.getParam('selectedAccount', '');
         if (this.validateFields()) {
 
             const payload = this.getPayload();
-           // this.props.saveData("OpenAccPageOne", payload);             
+            // this.props.saveData("OpenAccPageOne", payload);             
             myInstance.setSavedAccData(payload);
             const stateData = myInstance.getScreenStateData();
             myInstance.setSavedAccData(payload);
             const screenState = {
                 ...stateData,
-                "openAccPageOne":{...this.state}
+                "openAccPageOne": { ...this.state }
             };
             myInstance.setScreenStateData(screenState);
             if (selectedAccount.key === "spec_acct") {
@@ -224,7 +226,7 @@ class OpenAccPageOneComponent extends Component {
                     navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Individual Account" } });
                 }
             } else if (selectedAccount.key === "ira") {
-                  navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Retirement Account" } });
+                navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Retirement Account" } });
             }
         }
     }
@@ -232,41 +234,47 @@ class OpenAccPageOneComponent extends Component {
     onClickSave = () => {
         if (this.validateFields()) {
             const payload = this.getPayload();
-            this.props.saveAccountOpening("OpenAccPageOne", payload);
+            const { saveAccountOpening } = this.props;
+            saveAccountOpening("OpenAccPageOne", payload);
         }
     }
 
     isEmpty = (str) => {
         if (str === "" || str === undefined || str === null || str === "null" || str === "undefined") {
             return true;
-        } 
-            return false;
-        
+        }
+        return false;
+
     }
 
     validateFields = () => {
-        AppUtils.debugLog(`validateFields:::> ${ JSON.stringify(this.state)}`);
-        const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
-        AppUtils.debugLog(`selectedAccount:::> ${ selectedAccount}`);
+        AppUtils.debugLog(`validateFields:::> ${JSON.stringify(this.state)}`);
+
+        const { navigation } = this.props;
+        const { getParam } = navigation;
+
+        const { accType } = this.state;
+
+        const selectedAccount = getParam('selectedAccount', '');
+        AppUtils.debugLog(`selectedAccount:::> ${selectedAccount}`);
 
         let errMsg = "";
         let isValidationSuccess = false;
-        if (this.isEmpty(this.state.accType)) {
+        if (this.isEmpty(accType)) {
             errMsg = 'Please select an account';
         } else {
             isValidationSuccess = true;
         }
 
         if (!isValidationSuccess) {
-            alert(errMsg);
-           
+            AppUtils.debugLog(errMsg);
         }
 
         this.setState({
             isValidationSuccess,
-            isNextBtnDisabled:false,
-            errMsg:isValidationSuccess === false ? errMsg:""
-         });
+            isNextBtnDisabled: false,
+            errMsg: isValidationSuccess === false ? errMsg : ""
+        });
 
         return isValidationSuccess;
 
@@ -276,12 +284,16 @@ class OpenAccPageOneComponent extends Component {
                                                                  -------------------------- */
 
     renderRadioBtnGrp = () => {
+        const { accOpeningData } = this.props;
+
+        const { selectedItemID } = this.state;
+
         let isSectionAvailable = false;
         let sectionData = [];
         let result = [];
         let accSubTypes = [];
-        if (this.props.accOpeningData[ActionTypes.GET_ACCOUNT_SUBTYPES] !== undefined && this.props.accOpeningData[ActionTypes.GET_ACCOUNT_SUBTYPES] !== null) {
-            result = this.props.accOpeningData[ActionTypes.GET_ACCOUNT_SUBTYPES].result;
+        if (accOpeningData[ActionTypes.GET_ACCOUNT_SUBTYPES] !== undefined && accOpeningData[ActionTypes.GET_ACCOUNT_SUBTYPES] !== null) {
+            result = accOpeningData[ActionTypes.GET_ACCOUNT_SUBTYPES].result;
             if (result.subtypes !== undefined && result.subtypes !== null) {
                 accSubTypes = result.subtypes;
             } else {
@@ -314,7 +326,7 @@ class OpenAccPageOneComponent extends Component {
                                                 label={subItem.value}
                                                 descLabelStyle={styles.lblRadioDescTxt}
                                                 descLabel={subItem.description}
-                                                selected={!!((this.state.selectedItemID !== "" && subItem.key === this.state.selectedItemID))}
+                                                selected={!!((selectedItemID !== "" && subItem.key === selectedItemID))}
                                                 onPress={this.onSelected(subItem)}
                                             />
                                         );
@@ -327,57 +339,62 @@ class OpenAccPageOneComponent extends Component {
                 </View>
             );
 
-        } 
-            return (
-                <View>
-                    <Text style={styles.lblTxt}>
-                        {result.value}
-                    </Text>
-                    <View style={styles.radioBtnGrp}>
-                        {accSubTypes.map((item) => {
-                            return (
-                                <CustomRadio
-                                    key={item.key}
-                                    size={36}
-                                    componentStyle={styles.radioRow}
-                                    outerCicleColor="#DEDEDF"
-                                    innerCicleColor="#61285F"
-                                    labelStyle={styles.lblRadioBtnTxt}
-                                    label={item.value}
-                                    descLabelStyle={styles.lblRadioDescTxt}
-                                    descLabel={item.description}
-                                    selected={!!((this.state.selectedItemID !== "" && item.key === this.state.selectedItemID))}
-                                    onPress={this.onSelected(item)}
-                                />
-                            );
-                        })}
-                    </View>
+        }
+        return (
+            <View>
+                <Text style={styles.lblTxt}>
+                    {result.value}
+                </Text>
+                <View style={styles.radioBtnGrp}>
+                    {accSubTypes.map((item) => {
+                        return (
+                            <CustomRadio
+                                key={item.key}
+                                size={36}
+                                componentStyle={styles.radioRow}
+                                outerCicleColor="#DEDEDF"
+                                innerCicleColor="#61285F"
+                                labelStyle={styles.lblRadioBtnTxt}
+                                label={item.value}
+                                descLabelStyle={styles.lblRadioDescTxt}
+                                descLabel={item.description}
+                                selected={!!((selectedItemID !== "" && item.key === selectedItemID))}
+                                onPress={this.onSelected(item)}
+                            />
+                        );
+                    })}
                 </View>
-            );
-        
+            </View>
+        );
+
 
 
     }
 
     render() {
         AppUtils.debugLog("RENDER::: OpenAccPageOne ::>>> ", this.props);
-        const { navigation } = this.props;
-        const selectedAccount = navigation.getParam('selectedAccount', {});
+        const { navigation,accOpeningData } = this.props;
+        const { getParam } = navigation;
+        const selectedAccount = getParam('selectedAccount', {});
+
+        
+
+        const { isNextBtnDisabled ,isValidationSuccess ,errMsg } = this.state;
 
         const type = selectedAccount.key || "";
         const currentPage = 1;
-        const nextBtnstyle = !this.state.isNextBtnDisabled ? styles.normalBlackBtn : [styles.normalBlackBtn, { opacity: .45 }];
+        const nextBtnstyle = !isNextBtnDisabled ? styles.normalBlackBtn : [styles.normalBlackBtn, { opacity: .45 }];
         return (
             <View style={styles.container}>
                 {
-                    (this.props.accOpeningData.isLoading) && <GLoadingSpinner />
+                    (accOpeningData.isLoading) && <GLoadingSpinner />
                 }
                 <GHeaderComponent
-                    navigation={this.props.navigation}
+                    navigation={navigation}
                     onPress={this.onClickHeader}
                 />
                 <ScrollView style={styles.scrollView}>
-                    <CustomPageWizard currentPage={currentPage} pageName={`${currentPage } ${ gblStrings.accManagement.accType}`} />
+                    <CustomPageWizard currentPage={currentPage} pageName={`${currentPage} ${gblStrings.accManagement.accType}`} />
                     <View style={styles.sectionGrp}>
                         <View style={styles.accTypeSelectSection}>
                             <Text style={styles.headings}>
@@ -386,11 +403,11 @@ class OpenAccPageOneComponent extends Component {
                         </View>
 
                         <Text style={styles.lblLine} />
-                        {!this.state.isValidationSuccess && (
+                        {!isValidationSuccess && (
                             <Text style={styles.errMsg}>
-                                {this.state.errMsg}
+                                {errMsg}
                             </Text>
-                          )}
+                        )}
                         {this.renderRadioBtnGrp()}
                     </View>
 
@@ -414,7 +431,7 @@ class OpenAccPageOneComponent extends Component {
                             buttonText="Next"
                             textStyle={styles.normalBlackBtnTxt}
                             onPress={this.onClickNext}
-                            disabled={this.state.isNextBtnDisabled}
+                            disabled={isNextBtnDisabled}
                         />
                     </View>
 
@@ -445,18 +462,16 @@ class OpenAccPageOneComponent extends Component {
 OpenAccPageOneComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     accOpeningData: PropTypes.instanceOf(Object),
-    getAccountSubTypes:PropTypes.func,
-    saveData:PropTypes.func,
-    saveAccountOpening:PropTypes.func,
-    selectAccTypes:PropTypes.func
+    getAccountSubTypes: PropTypes.func,
+    saveAccountOpening: PropTypes.func,
+    selectAccTypes: PropTypes.func
 };
 OpenAccPageOneComponent.defaultProps = {
-    navigation:{},
+    navigation: {},
     getAccountSubTypes: {},
     accOpeningData: {},
-    saveData: null,
-    selectAccTypes: null ,
-    saveAccountOpening: null 
+    selectAccTypes: null,
+    saveAccountOpening: null
 
 };
 export default OpenAccPageOneComponent;
