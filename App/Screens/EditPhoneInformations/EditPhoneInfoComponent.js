@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity, FlatList, Switch } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GInputComponent } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GInputComponent, showAlertWithCancelButton } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
 import ImagesLoad from '../../Images/ImageIndex';
@@ -121,6 +121,8 @@ class EditPhoneInfoComponent extends Component {
         }
     }
 
+    // Render Mobile Phone List with Menu Option - Edit and Delete
+
     renderPhoneInformation = () => ({ item, index }) =>
         (<View style={styles.editEmailHolder}>
             <View style={[styles.profileDivideIcon]}>
@@ -197,16 +199,36 @@ class EditPhoneInfoComponent extends Component {
                 break;
 
             case 1:
-                this.setState({
-                    isMobileRefreshed: !this.state.isMobileRefreshed,
-                    selectedMobileIndex: -1
-                });
+                showAlertWithCancelButton(globalString.common.vcmMemberService,
+                    globalString.common.deleteAlertMsg,
+                    globalString.common.cancel,
+                    globalString.common.delete,
+                    () => {
+                        this.setState({
+                            isMobileRefreshed: !this.state.isMobileRefreshed,
+                            selectedMobileIndex: -1
+                        });
+                    },
+                    () => {
+                        var array = [...this.state.userMobileNumber];
+                        var indexDelete = this.state.selectedMobileIndex
+                        if (indexDelete !== -1) {
+                            array.splice(indexDelete, 1);
+                            this.setState({
+                                userMobileNumber: array,
+                                isMobileRefreshed: !this.state.isMobileRefreshed,
+                                selectedMobileIndex: -1
+                            });
+                        }
+                    });
                 break;
 
             default:
                 break;
         }
     }
+
+    // Render Home Number List with Menu Option - Edit and Delete
 
     renderHomeNumberInformation = () => ({ item, index }) =>
         (<View style={styles.editEmailHolder}>
@@ -284,10 +306,28 @@ class EditPhoneInfoComponent extends Component {
                 break;
 
             case 1:
-                this.setState({
-                    isHomeRefreshed: !this.state.isHomeRefreshed,
-                    selectedHomeIndex: -1
-                });
+                showAlertWithCancelButton(globalString.common.vcmMemberService,
+                    globalString.common.deleteAlertMsg,
+                    globalString.common.cancel,
+                    globalString.common.delete,
+                    () => {
+                        this.setState({
+                            isHomeRefreshed: !this.state.isHomeRefreshed,
+                            selectedHomeIndex: -1
+                        });
+                    },
+                    () => {
+                        var array = [...this.state.userHomeNumber];
+                        var indexDelete = this.state.selectedHomeIndex
+                        if (indexDelete !== -1) {
+                            array.splice(indexDelete, 1);
+                            this.setState({
+                                userHomeNumber: array,
+                                isHomeRefreshed: !this.state.isHomeRefreshed,
+                                selectedHomeIndex: -1
+                            });
+                        }
+                    });
                 break;
 
             default:
@@ -371,10 +411,28 @@ class EditPhoneInfoComponent extends Component {
                 break;
 
             case 1:
-                this.setState({
-                    isWorkRefreshed: !this.state.isWorkRefreshed,
-                    selectedWorkIndex: -1
-                });
+                showAlertWithCancelButton(globalString.common.vcmMemberService,
+                    globalString.common.deleteAlertMsg,
+                    globalString.common.cancel,
+                    globalString.common.delete,
+                    () => {
+                        this.setState({
+                            isWorkRefreshed: !this.state.isWorkRefreshed,
+                            selectedWorkIndex: -1
+                        });
+                    },
+                    () => {
+                        var array = [...this.state.userWorkNumber];
+                        var indexDelete = this.state.selectedWorkIndex
+                        if (indexDelete !== -1) {
+                            array.splice(indexDelete, 1);
+                            this.setState({
+                                userWorkNumber: array,
+                                isWorkRefreshed: !this.state.isWorkRefreshed,
+                                selectedWorkIndex: -1
+                            });
+                        }
+                    });
                 break;
 
             default:
@@ -499,12 +557,21 @@ class EditPhoneInfoComponent extends Component {
                                 </Text>
                             </View>
 
-                            <FlatList
-                                data={this.state.userMobileNumber}
-                                keyExtractor={this.generateKeyExtractor}
-                                extraData={this.state.isMobileRefreshed}
-                                renderItem={this.renderPhoneInformation()} />
-
+                            {this.state.userMobileNumber.length === 0 ?
+                                (<View style={[styles.editEmailHolderNoFile, styles.marketingPadding]}>
+                                    <Text style={styles.marketingHomeBold}>
+                                        {globalString.marketingPrivacyLabel.marketingNoneLabel}
+                                    </Text>
+                                    <Text style={styles.marketingHomeNormal}>
+                                        {globalString.marketingPrivacyLabel.marketingNoneMessageLabel}
+                                    </Text>
+                                </View>)
+                                :
+                                (<FlatList
+                                    data={this.state.userMobileNumber}
+                                    keyExtractor={this.generateKeyExtractor}
+                                    extraData={this.state.isMobileRefreshed}
+                                    renderItem={this.renderPhoneInformation()} />)}
                         </View>
 
                         {/* User Home Number */}
@@ -514,12 +581,21 @@ class EditPhoneInfoComponent extends Component {
                                 <Text style={styles.phoneMobileView}>{"Home"}</Text>
                             </View>
 
-                            <FlatList
-                                data={this.state.userHomeNumber}
-                                keyExtractor={this.generateKeyExtractor}
-                                extraData={this.state.isHomeRefreshed}
-                                renderItem={this.renderHomeNumberInformation()} />
-
+                            {this.state.userHomeNumber.length === 0 ?
+                                (<View style={[styles.editEmailHolderNoFile, styles.marketingPadding]}>
+                                    <Text style={styles.marketingHomeBold}>
+                                        {globalString.marketingPrivacyLabel.marketingNoneLabel}
+                                    </Text>
+                                    <Text style={styles.marketingHomeNormal}>
+                                        {globalString.marketingPrivacyLabel.marketingNoneMessageLabel}
+                                    </Text>
+                                </View>)
+                                :
+                                (<FlatList
+                                    data={this.state.userHomeNumber}
+                                    keyExtractor={this.generateKeyExtractor}
+                                    extraData={this.state.isHomeRefreshed}
+                                    renderItem={this.renderHomeNumberInformation()} />)}
                         </View>
 
                         {/* User Work Number */}
@@ -529,11 +605,21 @@ class EditPhoneInfoComponent extends Component {
                                 <Text style={styles.phoneMobileView}>{"Work"}</Text>
                             </View>
 
-                            <FlatList
-                                data={this.state.userWorkNumber}
-                                keyExtractor={this.generateKeyExtractor}
-                                extraData={this.state.isWorkRefreshed}
-                                renderItem={this.renderWorkNumberInformation()} />
+                            {this.state.userWorkNumber.length === 0 ?
+                                (<View style={[styles.editEmailHolderNoFile, styles.marketingPadding]}>
+                                    <Text style={styles.marketingHomeBold}>
+                                        {globalString.marketingPrivacyLabel.marketingNoneLabel}
+                                    </Text>
+                                    <Text style={styles.marketingHomeNormal}>
+                                        {globalString.marketingPrivacyLabel.marketingNoneMessageLabel}
+                                    </Text>
+                                </View>)
+                                :
+                                (<FlatList
+                                    data={this.state.userWorkNumber}
+                                    keyExtractor={this.generateKeyExtractor}
+                                    extraData={this.state.isWorkRefreshed}
+                                    renderItem={this.renderWorkNumberInformation()} />)}
                         </View>
 
                         {/* User Fax Number */}
@@ -560,12 +646,21 @@ class EditPhoneInfoComponent extends Component {
                                     </Text>
                                 </View>
 
-                                <FlatList
-                                    data={this.state.userMobileNumber}
-                                    keyExtractor={this.generateKeyExtractor}
-                                    extraData={this.state.isMobileRefreshed}
-                                    renderItem={this.renderPhoneInformation()} />
-
+                                {this.state.userMobileNumber.length === 0 ?
+                                    (<View style={[styles.editEmailHolderNoFile, styles.marketingPadding]}>
+                                        <Text style={styles.marketingHomeBold}>
+                                            {globalString.marketingPrivacyLabel.marketingNoneLabel}
+                                        </Text>
+                                        <Text style={styles.marketingHomeNormal}>
+                                            {globalString.marketingPrivacyLabel.marketingNoneMessageLabel}
+                                        </Text>
+                                    </View>)
+                                    :
+                                    (<FlatList
+                                        data={this.state.userMobileNumber}
+                                        keyExtractor={this.generateKeyExtractor}
+                                        extraData={this.state.isMobileRefreshed}
+                                        renderItem={this.renderPhoneInformation()} />)}
                             </View>
                         </View>
                     ) : null}

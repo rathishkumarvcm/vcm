@@ -472,5 +472,17 @@ export const styles = StyleSheet.create({
         color: '#56565A',
         fontWeight: 'bold',
         marginLeft: scaledWidth(20)
-    }
+    },
+    editEmailHolderNoFile: {
+        width: '96%', marginLeft: '2%', marginRight: '2%', marginTop: '2%', marginBottom: '2%', borderColor: '#CCCCCC', borderWidth: 1, backgroundColor: '#fff'
+    },
+    marketingPadding: {
+        padding: '4%'
+    },
+    marketingHomeBold: {
+        color: '#56565A', fontSize: scaledHeight(16), width: '92%', marginRight: '4%', marginLeft: '4%', marginTop: '4%', marginBottom: '2%', fontWeight: 'bold'
+    },
+    marketingHomeNormal: {
+        color: '#56565A', fontSize: scaledHeight(16), width: '92%', marginRight: '4%', marginLeft: '4%', marginTop: '4%', marginBottom: '2%'
+    },
 });

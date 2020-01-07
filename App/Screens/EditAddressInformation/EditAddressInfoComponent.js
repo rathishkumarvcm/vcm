@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity, FlatList, Switch } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, showAlertWithCancelButton } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
 import ImagesLoad from '../../Images/ImageIndex';
@@ -184,10 +184,28 @@ class EditAddressInfoComponent extends Component {
                 break;
 
             case 1:
-                this.setState({
-                    refreshAddressData: !this.state.refreshAddressData,
-                    selectedIndex: -1
-                });
+                showAlertWithCancelButton(globalString.common.vcmMemberService,
+                    globalString.common.deleteAlertMsg,
+                    globalString.common.cancel,
+                    globalString.common.delete,
+                    () => {
+                        this.setState({
+                            refreshAddressData: !this.state.refreshAddressData,
+                            selectedIndex: -1
+                        });
+                    },
+                    () => {
+                        var array = [...this.state.profileUserAddressValue];
+                        var indexDelete = this.state.selectedIndex
+                        if (indexDelete !== -1) {
+                            array.splice(indexDelete, 1);
+                            this.setState({
+                                profileUserAddressValue: array,
+                                refreshAddressData: !this.state.refreshAddressData,
+                                selectedIndex: -1
+                            });
+                        }
+                    });
                 break;
 
             default:

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity, FlatList, Switch } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, showAlertWithCancelButton } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import ImagesLoad from '../../Images/ImageIndex';
 
@@ -150,10 +150,28 @@ class EditEmailInfoComponent extends Component {
                 break;
 
             case 1:
-                this.setState({
-                    isEmailRefreshed: !this.state.isEmailRefreshed,
-                    selectedIndex: -1
-                });
+                showAlertWithCancelButton(globalString.common.vcmMemberService,
+                    globalString.common.deleteAlertMsg,
+                    globalString.common.cancel,
+                    globalString.common.delete,
+                    () => {
+                        this.setState({
+                            isEmailRefreshed: !this.state.isEmailRefreshed,
+                            selectedIndex: -1
+                        });
+                    },
+                    () => {
+                        var array = [...this.state.profileEmailData];
+                        var indexDelete = this.state.selectedIndex
+                        if (indexDelete !== -1) {
+                            array.splice(indexDelete, 1);
+                            this.setState({
+                                profileEmailData: array,
+                                isEmailRefreshed: !this.state.isEmailRefreshed,
+                                selectedIndex: -1
+                            });
+                        }
+                    });
                 break;
         }
     }
@@ -192,11 +210,23 @@ class EditEmailInfoComponent extends Component {
 
                     <View style={styles.settingsBorder} />
 
-                    <FlatList
-                        data={this.state.profileEmailData}
-                        extraData={this.state.isEmailRefreshed}
-                        keyExtractor={this.generateKeyExtractor}
-                        renderItem={this.renderEmailInformation()} />
+                    <View>
+                        {this.state.profileEmailData.length === 0 ?
+                            (<View style={[styles.editEmailHolderNoFile, styles.marketingPadding]}>
+                                <Text style={styles.marketingHomeBold}>
+                                    {globalString.marketingPrivacyLabel.marketingNoneLabel}
+                                </Text>
+                                <Text style={styles.marketingHomeNormal}>
+                                    {globalString.marketingPrivacyLabel.marketingNoneMessageLabel}
+                                </Text>
+                            </View>)
+                            :
+                            (<FlatList
+                                data={this.state.profileEmailData}
+                                extraData={this.state.isEmailRefreshed}
+                                keyExtractor={this.generateKeyExtractor}
+                                renderItem={this.renderEmailInformation()} />)}
+                    </View>
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
