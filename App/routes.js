@@ -100,7 +100,7 @@ import ManageBeneficiariesComponent from './Screens/ManageBeneficiaries';
 import AddNewBeneficiaryComponent from './Screens/AddNewBeneficiary';
 import EditManageBeneficiariesComponent from './Screens/EditManageBeneficiaries';
 import VerifyManageBenificiariesComponent from './Screens/VerifyManageBeneficiaries';
-
+import PhysicalWayManageBeneficiaryComponent from './Screens/PhysicalWayManageBeneficiary';
 
 import PurchaseScreenOneComponent from './Screens/PurchaseScreenOne';
 import PurchaseScreenTwoComponent from './Screens/PurchaseScreenTwo';
@@ -966,7 +966,12 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
-
+    physicalWayManageBeneficiary: {
+        screen: PhysicalWayManageBeneficiaryComponent,
+        navigationOptions: {
+            header: null,
+        }
+    }
 },
     {
         initialRouteName: "login"
