@@ -62,7 +62,7 @@ class OpenAccPageOneComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
-        const openAccPageOne =  myInstance.getAccOpeningEditMode()? (myInstance.getScreenStateData().openAccPageOne || {}):{};
+        const openAccPageOne = myInstance.getAccOpeningEditMode()? (myInstance.getScreenStateData().openAccPageOne || {}):{};
 
         this.state = {
             isLoading: false,
@@ -119,16 +119,21 @@ class OpenAccPageOneComponent extends Component {
     }
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const { navigation} = this.props;
+        const { goBack } = navigation;  
+        goBack();
     }
 
     onClickCancel = () => {
         myInstance.setAccOpeningEditMode(false);
-        this.props.navigation.goBack('termsAndConditions');
+        const { navigation} = this.props;
+        const { goBack } = navigation;  
+        goBack('termsAndConditions');
     }
 
     onSelected = (item) => () => {
         AppUtils.debugLog(`item: ${ item.key}`);
+        const { selectAccTypes } = this.props;
         this.setState(
             {
                 selectedItemID: item.key,
@@ -141,7 +146,7 @@ class OpenAccPageOneComponent extends Component {
             }
         );
 
-        this.props.selectAccTypes({ accountSubType: item });
+        selectAccTypes({ accountSubType: item });
 
     }
 
@@ -150,21 +155,26 @@ class OpenAccPageOneComponent extends Component {
     }
 
     getPayload = () => {
-        const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
+        const { navigation,accOpeningData} = this.props;
+        const { getParam } = navigation;  
+        const selectedAccount = getParam('selectedAccount', '');
         AppUtils.debugLog(`selectedAccount::::> ${ selectedAccount}`);
+
+        const { selectedItemID} = this.state;
+
 
         let payload = {
             "onlineId": "arumugamt",
             "customerId": "761735",
-            "accountType": this.state.selectedItemID,
+            "accountType": selectedItemID,
             "accountMainCategory":selectedAccount.value,
-            "accountSubType": (this.props.accOpeningData && this.props.accOpeningData.accountSubType) ? this.props.accOpeningData.accountSubType.key : "",
-            "accountSubCategory": (this.props.accOpeningData && this.props.accOpeningData.accountSubType) ? this.props.accOpeningData.accountSubType.value : "",
+            "accountSubType": (accOpeningData && accOpeningData.accountSubType) ? accOpeningData.accountSubType.key : "",
+            "accountSubCategory": (accOpeningData && accOpeningData.accountSubType) ? accOpeningData.accountSubType.value : "",
         };
-        if (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) {
+        if (this.props && accOpeningData && accOpeningData.savedAccData) {
             payload = {
                 ...payload,
-                ...this.props.accOpeningData.savedAccData
+                ...accOpeningData.savedAccData
             };
         }
 
@@ -175,7 +185,12 @@ class OpenAccPageOneComponent extends Component {
 
 
     onClickNext = () => {
-        const selectedAccount = this.props.navigation.getParam('selectedAccount', '');
+        const { navigation} = this.props;
+        const { navigate } = navigation; 
+
+        const { selectedItemID,selectedItemName,accType} = this.state;
+
+        const selectedAccount = navigation.getParam('selectedAccount', '');
         if (this.validateFields()) {
 
             const payload = this.getPayload();
@@ -189,27 +204,27 @@ class OpenAccPageOneComponent extends Component {
             };
             myInstance.setScreenStateData(screenState);
             if (selectedAccount.key === "spec_acct") {
-                if (this.state.selectedItemID.startsWith("taeacc")) {
-                    this.props.navigation.navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Trust Account" } });
-                } else if (this.state.selectedItemID.startsWith("taeacc1")) {
-                    this.props.navigation.navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Estate Account" } });
+                if (selectedItemID.startsWith("taeacc")) {
+                    navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Trust Account" } });
+                } else if (selectedItemID.startsWith("taeacc1")) {
+                    navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Estate Account" } });
                 } else {
-                    this.props.navigation.navigate({ routeName: 'specialtyAccPage', key: 'specialtyAccPage', params: { pageNo: 2, accType: "Specialty Account" } });
+                    navigate({ routeName: 'specialtyAccPage', key: 'specialtyAccPage', params: { pageNo: 2, accType: "Specialty Account" } });
                 }
             } else if (selectedAccount.key === "inv_child") {
-                if (this.state.selectedItemName === "529 College Saving Plan" || this.state.selectedItemID === "colleg") {
-                    this.props.navigation.navigate({ routeName: 'collegePlanESA', key: 'collegePlanESA', params: { accType: this.state.accType } });
+                if (selectedItemName === "529 College Saving Plan" || selectedItemID === "colleg") {
+                    navigate({ routeName: 'collegePlanESA', key: 'collegePlanESA', params: { accType } });
                 } else {
-                    this.props.navigation.navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "UGMA/UTMA Account" } });
+                    navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "UGMA/UTMA Account" } });
                 }
             } else if (selectedAccount.key === "gen_inv_acct") {
-                if (this.state.selectedItemID.startsWith("joint")) {
-                    this.props.navigation.navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Joint Account" } });
+                if (selectedItemID.startsWith("joint")) {
+                    navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Joint Account" } });
                 } else {
-                    this.props.navigation.navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Individual Account" } });
+                    navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Individual Account" } });
                 }
             } else if (selectedAccount.key === "ira") {
-                this.props.navigation.navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Retirement Account" } });
+                  navigate({ routeName: 'openAccPageTwo', key: 'openAccPageTwo', params: { accType: "Retirement Account" } });
             }
         }
     }
@@ -371,11 +386,11 @@ class OpenAccPageOneComponent extends Component {
                         </View>
 
                         <Text style={styles.lblLine} />
-                        {!this.state.isValidationSuccess &&
+                        {!this.state.isValidationSuccess && (
                             <Text style={styles.errMsg}>
                                 {this.state.errMsg}
                             </Text>
-                        }
+                          )}
                         {this.renderRadioBtnGrp()}
                     </View>
 
