@@ -32,11 +32,12 @@ class LiquidationPageFourComponent extends Component {
                  ammendData: this.props.navigation.getParam('data'),
                 ammendIndex: this.props.navigation.getParam('index')
             });
-            if (this.props && this.props.amendReducerData && this.props.amendReducerData.menu) {
-                menuList = this.props.amendReducerData.menu;
-            }
+            
         }else {
             this.setState({ ammend: false });
+        }
+        if (this.props && this.props.amendReducerData && this.props.amendReducerData.menu) {
+            menuList = this.props.amendReducerData.menu;
         }
         
     }
@@ -115,10 +116,10 @@ class LiquidationPageFourComponent extends Component {
         const year = new Date().getFullYear();
         const updatedDate = `${date} / ${month} / ${year}`;
         const finalKey = menuList[menuList.length - 1];
-
         if (this.state.ammend) {
             const pIndex = menuList.findIndex((item) => item.key === this.state.ammendIndex);
             const amndObj = menuList[pIndex];
+            
             const transType = `${this.state.ammendData.TransactionType} Amended`;
             const ammendPayloadData = {
                 "key": amndObj.key,
