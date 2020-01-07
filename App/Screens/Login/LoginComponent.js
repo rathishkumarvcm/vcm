@@ -46,14 +46,15 @@ class LoginComponent extends Component {
             validationEmail : true,
             validationPassword : true,
            // password: '',
-            email:'',
+            email:'rathish.kumar2@cognizant.com',
             registeredOnlineID: '',
             switchOn : true,
             switchOff : false,
             registeredSuccess : false,
             name : '',
-            password : '',
-            phone : ''
+            password : 'Radhi@12345',
+            phone : '',
+            inActivityAccount : false
         };
     }
 
@@ -142,6 +143,8 @@ class LoginComponent extends Component {
     }
 
     componentDidUpdate(){
+
+        
         let emailVerify = this.props.navigation.getParam('emailVerified');
         let onlineID = this.props.navigation.getParam('emailVerifiedData');
         if(emailVerify !== undefined && !this.state.registeredSuccess){
@@ -325,14 +328,16 @@ class LoginComponent extends Component {
                   console.log(err);
               });
 
-              showAlertWithCancelButton(
-                "Enable Bio Metric",
-                "Do you want to enable Bio Metric authentication?.",
-                "Cancel",
-                "Enable",
-                null,
-                ()=>this.enableBioMetric()
-                )
+              if(!this.state.registeredBioMetric){
+                    showAlertWithCancelButton(
+                        "Enable Bio Metric",
+                        "Do you want to enable Bio Metric authentication?.",
+                        "Cancel",
+                        "Enable",
+                        null,
+                        ()=>this.enableBioMetric()
+                    )
+              }
               
 
             alert("Signed In Successfully.");
@@ -342,7 +347,22 @@ class LoginComponent extends Component {
       }, (err) => {
           console.log(err);
       });
-            this.props.navigation.navigate('dashboard');
+            this.props.updateEmail(username);
+
+            /* If it is a first time user use OTP auth */
+            RNSecureKeyStore.get("authProcessCompleted")
+      .then((value) => {
+          console.log("authProcessCompleted------->",value);
+          this.props.navigation.navigate('dashboard');
+      }).catch((error) => {
+          console.log("Error",error)
+          this.props.navigation.navigate('otpAuth');
+      });
+
+
+            
+            //this.props.navigation.navigate('otpAuth');
+            //this.props.navigation.navigate('dashboard');
         }).catch(error => {
             alert("Username and Password Incorrect.");
             console.log(error);
@@ -369,7 +389,24 @@ class LoginComponent extends Component {
 
     navigateDashboard = ()=>this.props.navigation.navigate('dashboard');
 
-    navigateCommonUI = ()=>this.props.navigation.navigate('Common');
+    navigateCommonUI = ()=>{
+        
+        RNSecureKeyStore.remove("enableBioMetric")
+        .then((res) => {
+            console.log(res);
+        }, (err) => {
+            console.log(err);
+        });
+
+        RNSecureKeyStore.remove("authProcessCompleted")
+        .then((res) => {
+            console.log(res);
+        }, (err) => {
+            console.log(err);
+        });
+        //this.props.navigation.navigate('Common');
+
+    }
 
     //Recover password navigation
     navigationResetPassword=()=>this.props.navigation.navigate('passwordRecovery')
@@ -421,11 +458,22 @@ class LoginComponent extends Component {
             :
             null
             }
+
             <View style={styles.signInView}>
                 <Text style={styles.signIntext}>
                     {"Sign In"}
                 </Text>
             </View>
+
+            {this.state.inActivityAccount ?  <View style={styles.inActivityView}>
+                <Text style={styles.inActivitytext}>
+                    {"Your online account has been locked for 90 days of inactivity. Please contact Victory Capital Management service Rep at +1 (000) 000-0000"}
+                </Text>
+            </View>
+            : 
+            null}            
+           
+
             <View style={styles.signInUser}>
                 <Text style={styles.userIDText}>
                     {"Online ID"}       
@@ -440,6 +488,7 @@ class LoginComponent extends Component {
                 //validateError={this.state.validateEmail}
                 errorFlag={!this.state.validationEmail}
                 errorText={"Enter a valid email."}
+                maxLength={30}
             />
 
             <View style={styles.passwordView}>
@@ -458,6 +507,7 @@ class LoginComponent extends Component {
                 secureTextEntry
                 errorFlag={!this.state.validationPassword}
                 errorText={"Enter a valid password."}
+                maxLength={30}
             />
             
 

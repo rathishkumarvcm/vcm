@@ -4,6 +4,7 @@ import {styles} from './styles';
 import {GButtonComponent,GHeaderComponent,GIcon,GRadioButtonComponent} from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 import PropTypes from 'prop-types';
+import { Auth } from "aws-amplify";
 
 class OtpAuthenticationComponent extends Component {
     constructor(props){
@@ -16,11 +17,58 @@ class OtpAuthenticationComponent extends Component {
         };
     }
 
-    componentDidMount(){
+    
        
+    componentDidMount(){ 
+        if(this.props && this.props.initialState && this.props.initialState.phone){
+          this.setState({
+            phoneNo : this.protectPhone(this.props.initialState.phone)
+          });
+        }
+        
+        if(this.props && this.props.initialState && this.props.initialState.email){
+            this.setState({
+              email : this.props.initialState.email
+            });
+          }
     }
 
-    navigatePassword = ()=>this.props.navigation.navigate('registerPassword');
+    navigateLogin = ()=>this.props.navigation.navigate('login');
+
+    navigatePassword = ()=>{
+        console.log("this.state.email",this.state.email);
+
+        Auth.verifyCurrentUserAttribute('email')
+        .then(() => {
+             console.log('a verification code is sent');
+        }).catch((e) => {
+             console.log('failed with error', e);
+        });
+        
+        
+        this.props.navigation.navigate('otpConfirm');
+
+    }
+
+    protectPhone=(userPhone)=> {
+        const x = userPhone.replace(/\D/g, '').match(/(\d{2})(\d{6})(\d{2})/);
+        return `${x[1] }******${ x[3]}`;
+    }
+    
+    radioButtonClicked = (index) =>() =>{
+        if (index === 'email') {
+            this.setState({
+                radioEnabled: true,
+                selectedOption : 'email'
+            });
+        }
+        else {
+            this.setState({
+                radioEnabled:false,
+                selectedOption : 'phone_number'
+            });
+        }
+    }
     
  
     render(){
@@ -35,14 +83,6 @@ class OtpAuthenticationComponent extends Component {
              />
         
             <ScrollView style={{flex:0.85}}>
-                <TouchableOpacity onPress={this.goBack} style={styles.goBack}>
-                        <GIcon 
-                            name="left"
-                            type="antdesign"
-                            size={25}
-                            color="black"
-                        />
-                </TouchableOpacity>
 
                 <CustomPageWizard 
                     currentPage={1}
@@ -63,11 +103,11 @@ class OtpAuthenticationComponent extends Component {
 
 
                 <View style={{marginLeft:'4%',marginRight:'4%'}}>
-                        <GRadioButtonComponent selected //questionsStyle={{width:'40%',flexWrap:'wrap'}} 
-                        questions={"Send OTP to email ra***@gmail.com"}
+                        <GRadioButtonComponent selected={this.state.radioEnabled} onPress={this.radioButtonClicked('email')}//questionsStyle={{width:'40%',flexWrap:'wrap'}} 
+                        questions={`${"Send OTP to email "} ${this.state.email}`}
                         />
 
-                        <GRadioButtonComponent questions={"Send OTP to mobile  87*****34"} />
+                        <GRadioButtonComponent selected={!this.state.radioEnabled} onPress={this.radioButtonClicked('mobile')} questions={`${"Send OTP to mobile "} ${this.state.phoneNo}`} />
                 </View>
              
 
@@ -75,7 +115,7 @@ class OtpAuthenticationComponent extends Component {
                     buttonStyle={styles.cancelButton}
                     buttonText="Cancel"
                     textStyle={styles.cancelButtonText}
-                    onPress={this.navigatePassword}
+                    onPress={this.navigateLogin}
                 />
 
             <GButtonComponent 

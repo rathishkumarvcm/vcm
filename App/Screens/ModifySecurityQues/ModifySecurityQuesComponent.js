@@ -185,7 +185,8 @@ class ModifySecQuesComponent extends Component {
         const payloadData = this.saveQuestions();
         this.props.saveQuestions("saveQuestionsData", payloadData);
         // console.log("----questions", payloadData);
-        this.goBack();
+        this.props.navigation.navigate('otpSecurityConfirm');
+        //this.goBack();
         // this.scrollToTop();
     }
 
@@ -396,15 +397,6 @@ class ModifySecQuesComponent extends Component {
             <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.scrollView}>
-                    <TouchableOpacity onPress={(this.goBack)}>
-                        <GIcon
-                            name="left"
-                            type="antdesign"
-                            size={25}
-                            color="#707070"
-                        />
-
-                    </TouchableOpacity>
                     <View style={styles.signInView}>
                         <Text style={styles.signIntext}>
                             {gblStrings.userManagement.modifySecurityHeading}

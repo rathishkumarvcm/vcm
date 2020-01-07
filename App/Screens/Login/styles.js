@@ -66,6 +66,26 @@ export const styles = StyleSheet.create({
         paddingLeft:'4%',
         paddingRight:'4%',
     },
+    inActivityView : {
+        marginTop:scaledHeight(10),
+        marginLeft:'4%',
+        marginRight:'4%',
+        width:'92%',
+        borderWidth : 1,
+        borderRadius : 5,
+        borderColor : '#973937',
+        backgroundColor : '#FFF6F6',
+        height : scaledHeight(106),
+        alignItems :'center',
+        justifyContent : 'center'
+    },
+    inActivitytext : {
+        color:'#973937',
+        fontSize:scaledHeight(14),
+        fontWeight : '300',
+        paddingLeft : '2%',
+        paddingRight : '2%'
+    },
     passwordView:{
         paddingLeft:'4%',
         paddingRight:'4%',

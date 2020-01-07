@@ -84,6 +84,7 @@ class RegisterEmailComponent extends Component {
                 value={this.state.email}
                 errorFlag={!this.state.validationEmail}
                 errorText={"Enter a valid email."}
+                maxLength={30}
             />
 
 

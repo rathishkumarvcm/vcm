@@ -41,7 +41,7 @@ import AccountMessagingDeviceManagement from './Screens/AccountMessagingDeviceMa
 
 // OTP Authentication
 
-import OtpAuthentication from './Screens/OtpAuthentication/OtpAuthenticationComponent';
+import OtpAuthentication from './Screens/OtpAuthentication';
 import OtpConfirm from './Screens/OtpConfirm/OtpConfirmComponent';
 import OtpSeurity from './Screens/OtpSeucrityQuestions/OtpSeucrityQuestionsComponent';
 import OtpSecurityConfirm from './Screens/OtpSeucrityConfirm';

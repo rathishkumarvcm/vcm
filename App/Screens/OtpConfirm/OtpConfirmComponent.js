@@ -5,6 +5,7 @@ import {GButtonComponent,GInputComponent,GHeaderComponent,GIcon} from '../../Com
 import { CustomPageWizard } from '../../AppComponents';
 import { scaledHeight} from '../../Utils/Resolution';
 import PropTypes from 'prop-types';
+import { Auth } from "aws-amplify";
 
 class OtpConfirmComponent extends Component {
     constructor(props){
@@ -12,7 +13,7 @@ class OtpConfirmComponent extends Component {
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
             isLoading:false,
-            email:'',
+            code:'',
             validationEmail: true
         };
     }
@@ -21,7 +22,29 @@ class OtpConfirmComponent extends Component {
        
     }
 
-    navigatePassword = ()=> this.props.navigation.navigate('registerPassword');
+    verifyOTP = () => {
+        Auth.verifyCurrentUserAttributeSubmit('email', this.state.code)
+        .then(() => {
+            console.log("email verified");
+            this.props.navigation.navigate('modifySecurityQues');
+        }).catch(e => {
+            console.log('failed with error', e);
+        });
+    }
+
+    setEmail = text => {
+        this.setState({
+            code : text
+        });
+    }
+
+    
+
+    navigateLogin = ()=> this.props.navigation.navigate('login');
+
+    goBack = ()=>this.props.navigation.goBack();
+
+    navigatePassword = ()=> this.props.navigation.navigate('modifySecurityQues');
  
     render(){
         
@@ -35,14 +58,7 @@ class OtpConfirmComponent extends Component {
              />
         
             <ScrollView style={{flex:0.85}}>
-                <TouchableOpacity onPress={this.goBack} style={styles.goBack}>
-                        <GIcon 
-                            name="left"
-                            type="antdesign"
-                            size={25}
-                            color="black"
-                        />
-                </TouchableOpacity>
+            
 
                 <CustomPageWizard 
                     currentPage={2}
@@ -70,15 +86,15 @@ class OtpConfirmComponent extends Component {
                     propInputStyle={styles.userIDTextBox}
                     placeholder={""}
                     onChangeText={this.setEmail}
-                    onBlur={this.validateEmail}
-                    //value={this.state.email}
+                    //onBlur={this.validateEmail}
+                    value={this.state.code}
                 />
 
-                <View style={{alignItems:'center',justifyContent:'center'}}>
-                    <Text style={{color:'#0000FF',textDecorationLine:'underline',fontSize:scaledHeight(16)}}>
+                <TouchableOpacity style={{alignItems:'center',justifyContent:'center'}}>
+                    <Text style={{color:'#2C8DBF',textDecorationLine:'underline',fontSize:scaledHeight(16)}}>
                         {"Resend OTP"}
                     </Text>
-                </View>
+                </TouchableOpacity>
                 
              
                 
@@ -86,20 +102,20 @@ class OtpConfirmComponent extends Component {
                     buttonStyle={styles.cancelButton}
                     buttonText="Back"
                     textStyle={styles.cancelButtonText}
-                    onPress={this.navigatePassword}
+                    onPress={this.goBack}
                 />
                 <GButtonComponent 
                     buttonStyle={styles.cancelButton}
                     buttonText="Cancel"
                     textStyle={styles.cancelButtonText}
-                    onPress={this.navigatePassword}
+                    onPress={this.navigateLogin}
                 />
 
             <GButtonComponent 
                     buttonStyle={styles.sendOTPButton}
                     buttonText="Confirm"
                     textStyle={styles.signInButtonText}
-                    oonPress={this.navigatePassword}
+                    onPress={this.verifyOTP}
             />
 
             <View style={{marginTop:20}}>

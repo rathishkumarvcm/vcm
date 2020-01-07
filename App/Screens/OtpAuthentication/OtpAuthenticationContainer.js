@@ -4,7 +4,7 @@ import OtpAuthenticationComponent from './OtpAuthenticationComponent';
 
 const mapStateToProps = (state /* , props */) => (
     {
-      
+      initialState :state.initialAppData
     }
   );
 

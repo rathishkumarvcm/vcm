@@ -239,7 +239,7 @@ export const styles = StyleSheet.create({
         marginLeft:'4%',
         marginRight:'4%',
         backgroundColor:'#FFFFFF',
-        height:scaledHeight(630),
+        height:scaledHeight(700),
         borderWidth:1,
         borderColor:'#D6D8DC'
     },
@@ -260,7 +260,7 @@ export const styles = StyleSheet.create({
         paddingRight:'4%',
         borderBottomWidth:1,
         borderBottomColor:'#D6D8DC',
-        height:scaledHeight(100)
+        height:scaledHeight(120)
     },
     securityListTitle:{
         fontSize:scaledHeight(16),
@@ -278,6 +278,6 @@ export const styles = StyleSheet.create({
     {
         fontSize:scaledHeight(18),
         color:'#333333DE',
-        marginTop:scaledHeight(20)
+        marginTop:scaledHeight(15)
     }
 });

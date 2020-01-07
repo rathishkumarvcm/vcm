@@ -4,7 +4,7 @@ import {styles} from './styles';
 import {GButtonComponent,GHeaderComponent,GIcon, GFooterComponent} from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 import PropTypes from 'prop-types';
-
+import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 
 class OtpSeucrityConfirmComponent extends Component {
     constructor(props){
@@ -21,7 +21,22 @@ class OtpSeucrityConfirmComponent extends Component {
        
     }
 
-    navigatePassword = ()=>this.props.navigation.navigate('registerPassword');
+    navigateLogin = ()=>this.props.navigation.navigate('login');
+
+    navigatePassword = ()=>{
+
+        RNSecureKeyStore.set("authProcessCompleted",true, {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+      .then((res) => {
+          console.log("stored",res);
+      }, (err) => {
+          console.log(err);
+      });
+
+        
+        this.props.navigation.navigate('dashboard');
+    }
+
+    goBack = ()=>this.props.navigation.goBack();
  
     render(){
         console.log("security",this.props.saveQuestionsData);
@@ -35,14 +50,6 @@ class OtpSeucrityConfirmComponent extends Component {
              />
         
             <ScrollView style={{flex:0.85}}>
-                <TouchableOpacity onPress={this.goBack} style={styles.goBack}>
-                        <GIcon 
-                            name="left"
-                            type="antdesign"
-                            size={25}
-                            color="black"
-                        />
-                </TouchableOpacity>
 
                 <CustomPageWizard 
                     currentPage={4}
@@ -135,14 +142,14 @@ class OtpSeucrityConfirmComponent extends Component {
                     buttonStyle={styles.cancelButton}
                     buttonText="Back"
                     textStyle={styles.cancelButtonText}
-                    onPress={this.navigatePassword}
+                    onPress={this.navigateLogin}
                 />
 
                 <GButtonComponent 
                     buttonStyle={styles.cancelButton}
                     buttonText="Cancel"
                     textStyle={styles.cancelButtonText}
-                    onPress={this.navigatePassword}
+                    onPress={this.goBack}
                 />
 
             <GButtonComponent 
