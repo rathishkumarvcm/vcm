@@ -542,7 +542,7 @@ class LoginComponent extends Component {
                             buttonStyle={styles.signInButton}
                             buttonText="Sign In"
                             textStyle={styles.signInButtonText}
-                            onPress={this.callSignIn}
+                            onPress={this.navigateDashboard}
                         //onPress={this.navigateDashboard}
                         />
                         <View>
