@@ -1,25 +1,16 @@
 import React, { Component } from 'react';
-import { Text, View,ScrollView } from 'react-native';
+import { Text, View,ScrollView, TouchableOpacity, Platform } from 'react-native';
 import PropTypes from "prop-types";
-import ImagePicker from 'react-native-image-picker';
+import * as mime from 'react-native-mime-types';
+import DocumentPicker from 'react-native-document-picker';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GFooterSettingsComponent, GIcon } from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import AppUtils from '../../Utils/AppUtils';
 
-const imagePickerOptions = {
-    title: 'Select Image',
-    customButtons: [
-        { name: 'customOptionKey', title: 'Choose Photo from Custom Option' },
-    ],
-    storageOptions: {
-        skipBackup: true,
-        path: 'images',
-        avatarSource: ''
-    },
-};
+const maxFileLimit=10; // No. of Files
+const maxFileSize=30; // Maximum file size 30 MB
 
 class SpecialtyAccSubmitComponent extends Component {
     constructor(props) {
@@ -30,7 +21,10 @@ class SpecialtyAccSubmitComponent extends Component {
             itemID: "",
             pageName: "",
             selectedItemID: "",
-            selectedItemName: ""
+            selectedItemName: "",
+            multipleFile: [], 
+            fileSelected:false,
+            errorMessage:"",
         };
     }
 
@@ -41,35 +35,25 @@ class SpecialtyAccSubmitComponent extends Component {
 
     }
 
-    componentDidUpdate(prevProps) {
-        AppUtils.debugLog("==Did Update Called==");
-        const uploadImgKey = ActionTypes.UPLOAD_AVATAR;
-        if (this.props.accOpeningData[uploadImgKey]) {
-            if (this.props.accOpeningData[uploadImgKey] !== prevProps.accOpeningData[uploadImgKey]) {
-                const tempResponse = this.props.accOpeningData[uploadImgKey];
-               // alert ("Image stautus \n::"+JSON.stringify(tempResponse));
-                if (tempResponse && tempResponse.b) {
-                    if (tempResponse.b.Location) {
-                        alert(`Image Uploaded Successfully \n::${ tempResponse.b.Location}`);
-                    }
-                }
-            }
-        }
+    componentDidUpdate() {
+        AppUtils.debugLog("==Did Update Called==");        
     }
 
     /*----------------------
                                  Button Events
                                                                  -------------------------- */
     onClickHeader = () => {
-        console.log("#TODO : onClickHeader");
+        AppUtils.debugLog("#TODO : onClickHeader");
     }
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const {navigation} = this.props;
+        navigation.goBack();
     }
 
     onClickCancel = () => {
-        this.props.navigation.goBack('termsAndConditions');
+        const {navigation} = this.props;
+        navigation.goBack('termsAndConditions');
     }
 
     // onClickSave = () => {
@@ -80,45 +64,99 @@ class SpecialtyAccSubmitComponent extends Component {
        // this.validateFields();
     }
 
-    onPressCheck = (keyName) => () => this.setState({
+    onPressCheck = (keyName) => () => this.setState({        
         [keyName]: !this.state[keyName]
     });
 
     onSelected = (item) => {
-        console.log(`item: ${ item.id}`);
+        AppUtils.debugLog(`item: ${ item.id}`);
         this.setState({ selectedItemID: item.id });
         this.setState({ selectedItemName: item.name });
         //  alert("You selected :: " + item.name)
     }
 
-    uploadImage = () => {
-        ImagePicker.showImagePicker(imagePickerOptions, (response) => {
-            // AppUtils.debugLog('Response = ', response);
+    async uploadImage() {
+        // Opening Document Picker for selection of multiple file
+        try {
+            let results;
 
-            if (response.didCancel) {
-                AppUtils.debugLog('User cancelled image picker');
-            } else if (response.error) {
-                AppUtils.debugLog('ImagePicker Error: ', response.error);
-            } else if (response.customButton) {
-                AppUtils.debugLog('User tapped custom button: ', response.customButton);
-            } else {
-                AppUtils.debugLog('IMAGE PICKER SUCCESS::> ');
-
-                const source = { uri: response.uri };
-                const base64source = { uri: `data:image/jpeg;base64,${ response.data}` };
-                // AppUtils.debugLog("base64source", base64source.length);
-                this.setState({
-                    userAvatar: source
-                });
-                if (response.data && response.data !== null && response.data !== undefined && response.data.length > 0) {
-                    const payload = {
-                        "Body": `${ response.data}`
-                    };
-                    this.props.uploadAavatarImg(payload);
-                }
-
+            // Android File formats
+            if(Platform.OS === 'android'){          
+              results = await DocumentPicker.pickMultiple({
+                type: [
+                     // DocumentPicker.types.allFiles
+                    mime.lookup('docx'),
+                    mime.lookup('doc'),
+                    mime.lookup('jpg'),
+                    mime.lookup('jpeg'),
+                    mime.lookup('png'),
+                    mime.lookup('xls'),
+                    mime.lookup('pdf'),
+                    mime.lookup('gif'),
+                    mime.lookup('bmp')
+                    ]                          
+              });
             }
-        });
+  
+            // IOS File formats
+            if(Platform.OS === 'ios'){          
+              results = await DocumentPicker.pickMultiple({
+                type: [
+                  'org.openxmlformats.wordprocessingml.document',
+                  'com.adobe.pdf',             
+                  'org.openxmlformats.spreadsheetml.sheet',    
+                  // DocumentPicker.types.images,            
+                ]
+              });
+            }  
+  
+            // for (const res of results) {
+            //   // Printing the log realted to the file
+            //   console.log(`res : ${ JSON.stringify(res)}`);
+            //   console.log(`URI : ${ res.uri}`);
+            //   console.log(`Type : ${ res.type}`);
+            //   console.log(`File Name : ${ res.name}`);
+            //   console.log(`File Size : ${ res.size}`);
+            // }
+
+            // Setting the state to show multiple file attributes
+
+            if(results.length > maxFileLimit){
+                this.setState({ fileSelected:true,errorMessage:`You can attach only ${maxFileLimit} file` });
+            }else{
+                this.setState({ multipleFile: results,fileSelected:false });
+            }            
+
+          } catch (err) {
+            // Handling any exception (If any)
+            if (DocumentPicker.isCancel(err)) {
+              // If user canceled the document selection
+              // alert('Canceled from multiple doc picker');
+            } else {
+              // For Unknown Error
+              alert(`Unknown Error: ${ JSON.stringify(err)}`);
+              throw err;
+            }
+          }
+    }
+
+    uploadSelectedFiles = () => {
+        const{multipleFile} = this.state;
+        if(multipleFile.length > 0){
+            let size = 0;
+
+            multipleFile.map((item) => (                
+                size += item.size
+            ));            
+
+            if((size / 1024 ** 2) > maxFileSize){
+                this.setState({ fileSelected:true,errorMessage:'Total Size limit should be less than 30 MB' });
+            }else {
+                alert(`File uploaded successfully`);
+            }            
+        }else {
+            this.setState({ fileSelected:true,errorMessage:'Please select a file before uploading' });
+        }
     }
 
     /*----------------------
@@ -129,9 +167,10 @@ class SpecialtyAccSubmitComponent extends Component {
         const currentPage = 6;
         const { navigation } = this.props;
         const accType = navigation.getParam('accType', '');
+        const { fileSelected,multipleFile,errorMessage } = this.state;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation}
+                <GHeaderComponent navigation={navigation}
                 onPress={this.onClickHeader}
                 />
                 <ScrollView style={styles.scrollViewFlex}>
@@ -143,7 +182,7 @@ class SpecialtyAccSubmitComponent extends Component {
                     <CustomPageWizard currentPage={currentPage} pageName={`${currentPage }  ${gblStrings.common.mail}`} />
 
                     { /* -----------Personal Info -------------------*/}
-                    <View style={[styles.sectionGrp]}>
+                    <View style={styles.sectionGrp}>
                         <View style={styles.accTypeSelectSection}>
                             <Text style={styles.headings}>
                                 {gblStrings.common.mail}
@@ -165,18 +204,58 @@ class SpecialtyAccSubmitComponent extends Component {
                                 buttonStyle={styles.selectFilesBtn}
                                 buttonText={gblStrings.accManagement.selectFiles}
                                 textStyle={styles.selectFilesBtnTxt}
-                                onPress={this.uploadImage}
+                                onPress={this.uploadImage.bind(this)}
                             />
+                           
                             <GIcon
                                 name="file-upload"
                                 type="material"
                                 size={30}
                                 color="#E9E4E4"
                             />
-                            <Text style={styles.uploadText}>
-                                {gblStrings.common.upload}
-                            </Text>
+                            <TouchableOpacity onPress={this.uploadSelectedFiles}>
+                                <Text style={styles.uploadText}>
+                                    {gblStrings.common.upload}
+                                </Text>
+                            </TouchableOpacity>
                         </View>
+
+                        {                           
+                        fileSelected ? (
+                            <View style={styles.selectedFileDescContainer}>
+                                <Text style={styles.fileDesctextStyleError}>
+                                    {errorMessage}
+                                </Text>
+                            </View>
+                          )
+                            : null
+                        }
+
+                        {/* Showing the data of selected Multiple files */}
+                        {multipleFile.map((item) => (
+                            <View style={styles.selectedFileDescContainer} key={item.name}>
+                                
+                                <Text style={styles.fileDesctextStyle}>
+                                    {item.name ? item.name : ''}
+
+                                    {/* {'\n'}
+                                    Type: {item.type ? item.type : ''}
+                                    {'\n'}
+                                    File Size: {item.size ? item.size : ''}
+                                    {'\n'}
+                                    URI: {item.uri ? item.uri : ''}
+                                    {'\n'}                            */}
+                                </Text>   
+                                {                                                    
+                                <Text style={styles.fileDesctextStyleError}>
+                                    {((item.size / 1024 ** 2) < maxFileSize) ? '' : 'Size limit of file should be less than 30 MB' }
+                                </Text>  
+                                }                     
+                                
+                                {/* <Image source={{"uri":item.uri}} style={styles.userAvatar} /> */}
+                            
+                            </View>
+                        ))}
 
                         <View style={styles.uploadFileContainer}>
                             <Text style={styles.uploadFileTitle}>
@@ -294,13 +373,13 @@ class SpecialtyAccSubmitComponent extends Component {
 }
 
 SpecialtyAccSubmitComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object).isRequired,
-    uploadAavatarImg: PropTypes.func,
-    accOpeningData: PropTypes.instanceOf(Object),
+    navigation: PropTypes.instanceOf(Object),
+    // accOpeningData: PropTypes.instanceOf(Object),
   };
 
   SpecialtyAccSubmitComponent.defaultProps = {  
-    uploadAavatarImg: null ,
+    navigation : {},
+    // accOpeningData : {},  
 };
 
 export default SpecialtyAccSubmitComponent;

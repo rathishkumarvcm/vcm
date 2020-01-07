@@ -18,11 +18,13 @@
     "react-native": "0.60.5",
     "react-native-collapsible": "^1.5.1",
     "react-native-datepicker": "^1.7.2",
+    "react-native-document-picker": "^3.2.4",
     "react-native-exception-handler": "^2.10.8",
     "react-native-gesture-handler": "^1.4.0",
     "react-native-html-to-pdf": "^0.8.0",
     "react-native-image-picker": "^1.1.0",
     "react-native-material-dropdown": "^0.11.1",
+    "react-native-mime-types": "^2.2.1",
     "react-native-pdf": "^5.1.4",
     "react-native-secure-key-store": "^2.0.5",
     "react-native-share": "^2.0.0",
@@ -63,6 +65,8 @@
   },
   "jest": {
     "preset": "react-native",
-    "setupFilesAfterEnv": ["./setupTests.js"]
+    "setupFilesAfterEnv": [
+      "./setupTests.js"
+    ]
   }
 }

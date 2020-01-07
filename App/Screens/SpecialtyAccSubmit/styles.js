@@ -223,9 +223,27 @@ export const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',        
         flexDirection:'row',
         justifyContent:'center',
-        marginBottom:scaledHeight(15),
         marginTop:scaledHeight(10),
         paddingVertical:scaledHeight(10)        
+    },
+    selectedFileDescContainer:{  
+        flexDirection:'row',      
+        backgroundColor: '#FFFFFF',              
+        paddingVertical:scaledHeight(10),
+    },
+    fileDesctextStyle:{    
+        flex:0.5,          
+        fontSize: scaledHeight(14),       
+        color: '#707070',
+        marginHorizontal: scaledHeight(20), 
+        marginLeft:scaledHeight(30)            
+    },
+    fileDesctextStyleError:{      
+        flex:0.5,  
+        fontSize: scaledHeight(14),       
+        color: '#de421b',
+        marginHorizontal: scaledHeight(20), 
+        marginLeft:scaledHeight(30)            
     },
     selectFilesBtn: {                   
         backgroundColor: '#B2B2B2',             
