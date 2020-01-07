@@ -48,12 +48,6 @@ export const styles = StyleSheet.create({
         marginHorizontal: '4%',
         alignSelf:'stretch'
     },
-    linkBreak2: {
-        backgroundColor: '#707070',
-        opacity: 0.5,
-        height: scaledHeight(1),
-        alignSelf: 'stretch'
-    },
     backButtonText: {
         fontSize: scaledHeight(16),
         color: '#544A54'
@@ -125,10 +119,6 @@ export const styles = StyleSheet.create({
         height: scaledHeight(50),
         backgroundColor: '#FFFFFF',        
         zIndex: 5
-    },
-    backButtonText: {
-        fontSize: scaledHeight(16),
-        color: '#544A54'
     },
     requestButtonText: {
         fontSize: scaledHeight(16),

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { styles } from './styles';
-import { View, ScrollView, Text, FlatList, Switch, TouchableOpacity } from 'react-native';
-import { GHeaderComponent, GDropDownComponent, GFooterComponent, GButtonComponent, GIcon } from '../../CommonComponents';
 import PropTypes from "prop-types";
+import { styles } from './styles';
+import { View, ScrollView, Text } from 'react-native';
+import { GHeaderComponent, GFooterComponent, GButtonComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class CheckBookPlaceOrder extends Component {

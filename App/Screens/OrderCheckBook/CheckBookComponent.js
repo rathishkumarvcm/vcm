@@ -14,78 +14,6 @@ class CheckBookComponent extends Component {
             reinvestChanged: false,
             showRequestOption: false,
             showAlert: true,
-            checkBookDetails: [
-                {
-                    Id: "1",
-                    AccountName: "Account Name1",
-                    DeliveryAddress: "973 Gilbert Ferry Road Se, Attalla AL, 3554",
-                    AccountType: "General Account",
-                    AccountNumber: "56654654",
-                    NoOfCheckLeaves: "50",
-                    enableReinvest: false,
-                    CheckBookRequestedOn: "30/10/2019",
-                    showRequestOption: false,
-
-                },
-                {
-                    Id: "2",
-                    AccountName: "Account Name2",
-                    DeliveryAddress: "973 Gilbert Ferry Road Se, Attalla AL, 3554",
-                    AccountType: "General Account",
-                    AccountNumber: "56654654",
-                    NoOfCheckLeaves: "50",
-                    enableReinvest: false,
-                    showRequestOption: false,
-                },
-                {
-                    Id: "3",
-                    AccountName: "Account Name3",
-                    DeliveryAddress: "973 Gilbert Ferry Road Se, Attalla AL, 3554",
-                    AccountType: "General Account",
-                    AccountNumber: "56654654",
-                    NoOfCheckLeaves: "50",
-                    enableReinvest: false,
-                    CheckBookRequestedOn: "30/10/2019",
-                    showRequestOption: false,
-
-                },
-                {
-                    Id: "4",
-                    AccountName: "Account Name4",
-                    DeliveryAddress: "973 Gilbert Ferry Road Se, Attalla AL, 3554",
-                    AccountType: "IRA Account",
-                    AccountNumber: "56654654",
-                    NoOfCheckLeaves: "50",
-                    enableReinvest: false,
-                    CheckBookRequestedOn: "30/10/2019",
-                    showRequestOption: false,
-
-                },
-                {
-                    Id: "5",
-                    AccountName: "Account Name5",
-                    DeliveryAddress: "973 Gilbert Ferry Road Se, Attalla AL, 3554",
-                    AccountType: "UTMA Account",
-                    AccountNumber: "56654654",
-                    NoOfCheckLeaves: "50",
-                    enableReinvest: false,
-                    CheckBookRequestedOn: "30/10/2019",
-                    showRequestOption: false,
-
-                },
-                {
-                    Id: "6",
-                    AccountName: "Account Name6",
-                    DeliveryAddress: "973 Gilbert Ferry Road Se, Attalla AL, 3554",
-                    AccountType: "IRA Account",
-                    AccountNumber: "56654654",
-                    NoOfCheckLeaves: "50",
-                    enableReinvest: false,
-                    CheckBookRequestedOn: "30/10/2019",
-                    showRequestOption: false,
-
-                },
-            ],
             generalAccount: [],
             iraAccount: [],
             utmaAccount: []
@@ -94,36 +22,7 @@ class CheckBookComponent extends Component {
     }
 
     componentDidMount() {
-        let payload = [];
-
-        payload.push(JSON.stringify(this.state.checkBookDetails));
-        this.props.getCheckBookInfo(JSON.stringify(payload));
-    }
-
-    componentDidUpdate(prevProps) {
-        console.log('componentDidUpdate called.');
-        if (this.props && this.props.checkBookInfo && this.props.checkBookInfo != prevProps.checkBookInfo) {
-            this.setState({ checkBookDetails: JSON.parse(JSON.parse(this.props.checkBookInfo)[0]) });
-
-            tmpData = this.state.checkBookDetails;
-            tmpGeneralAccount = [];
-            tmpIRAAccount = [];
-            tmpUTMAAccount = [];
-            tmpData.map((item) => {
-                switch (item.AccountType) {
-                    case 'General Account':
-                        tmpGeneralAccount.push(item);
-                        break;
-                    case 'IRA Account':
-                        tmpIRAAccount.push(item);
-                        break;
-                    case 'UTMA Account':
-                        tmpUTMAAccount.push(item);
-                        break;
-                }
-            });
-            this.setState({ generalAccount: tmpGeneralAccount, iraAccount: tmpIRAAccount, utmaAccount: tmpUTMAAccount });
-        }
+        this.props.getCheckBookInfo();
     }
 
     navigateBack = () => this.props.navigation.goBack();
@@ -163,7 +62,29 @@ class CheckBookComponent extends Component {
     }
 
     render() {
-        console.log('render called.');
+        if (this.props && this.props.checkBookInfo && this.props.checkBookInfo != this.state.checkBookDetails) {
+            this.setState({ checkBookDetails: this.props.checkBookInfo }, () => {
+
+            tmpData = this.state.checkBookDetails;
+            tmpGeneralAccount = [];
+            tmpIRAAccount = [];
+            tmpUTMAAccount = [];
+            tmpData.map((item) => {
+                switch (item.AccountType) {
+                    case 'General Account':
+                        tmpGeneralAccount.push(item);
+                        break;
+                    case 'IRA Account':
+                        tmpIRAAccount.push(item);
+                        break;
+                    case 'UTMA Account':
+                        tmpUTMAAccount.push(item);
+                        break;
+                }
+            });
+            this.setState({ generalAccount: tmpGeneralAccount, iraAccount: tmpIRAAccount, utmaAccount: tmpUTMAAccount });
+        });
+        }
         const { navigation } = this.props;
         const isSuccess = navigation.getParam('isSuccess', false);
 
