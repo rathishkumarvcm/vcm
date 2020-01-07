@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { styles } from './styles';
-import { GHeaderComponent } from '../../CommonComponents';
+import { GHeaderComponent, showAlertWithCancelButton } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import ImagesLoad from '../../Images/ImageIndex';
 
@@ -176,7 +176,7 @@ class ProfileSettingsComponent extends Component {
             </View>
 
             {index === this.state.selectedIndex ?
-                (<FlatList 
+                (<FlatList
                     style={styles.editFlatList}
                     data={editDeleteMenuOption}
                     renderItem={this.renderProfileMenuOptions()}
@@ -224,7 +224,7 @@ class ProfileSettingsComponent extends Component {
                     {item.relationShipStatus}
                 </Text>
             </View>
-         </View>
+        </View>
         );
 
     renderProfileMenuOptions = () => ({ item, index }) =>
@@ -234,7 +234,7 @@ class ProfileSettingsComponent extends Component {
             >
                 {item.menuName}
             </Text>
-         </TouchableOpacity>);
+        </TouchableOpacity>);
 
     // Manage Relationship Menu Option
 
@@ -267,9 +267,27 @@ class ProfileSettingsComponent extends Component {
     onMenuItemClicked = (index) => () => {
         switch (index) {
             case 0:
-                this.setState({
-                    isRelationRefreshed: !this.state.isRelationRefreshed,
-                    selectedIndex: -1
+                showAlertWithCancelButton(globalString.common.vcmMemberService, 
+                globalString.common.deleteAlertMsg, 
+                globalString.common.cancel,
+                globalString.common.delete,
+                () => {
+                    this.setState({
+                        isRelationRefreshed: !this.state.isRelationRefreshed,
+                        selectedIndex: -1
+                    });
+                }, 
+                () => {
+                    var array = [...this.state.profileRelationShipData];
+                    var indexDelete = this.state.selectedIndex
+                    if (indexDelete !== -1) {
+                        array.splice(indexDelete, 1);
+                        this.setState({
+                            profileRelationShipData: array,
+                            isRelationRefreshed: !this.state.isRelationRefreshed,
+                            selectedIndex: -1
+                        });
+                    }
                 });
                 break;
 

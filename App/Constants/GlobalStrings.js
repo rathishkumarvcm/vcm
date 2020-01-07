@@ -56,7 +56,9 @@ export default {
         mail: "Mail",
         victoryCapital: "Victory Capital",
         supportVCMFaxNumber: "800-292-8177",
-        victoryCapitalAddress: "P.O. Box 659453\nSan Antonio, TX 78265-9009"
+        victoryCapitalAddress: "P.O. Box 659453\nSan Antonio, TX 78265-9009",
+        deleteAlertMsg: "Are you sure to delete?",
+        vcmMemberService: "VCM Memeber Services"
     },
     login: {
         imageRequest: "imageRequest",
