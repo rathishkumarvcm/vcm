@@ -3,114 +3,20 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 
  const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F7FAFF',
-        width: '100%'
-    },
-    mainFlex:{
-        flex: 0.85
-    },
     accountFlex:{
-        height:scaledHeight(82),
-        flexDirection:'column',
-        borderWidth:scaledHeight(1),
         borderColor:'#9DB4CE',
+        borderWidth:scaledHeight(1),
+        flexDirection:'column',
+        height:scaledHeight(82),
         marginBottom:"6%"
     },
     accountNumberText:{
         color:'#54565B',
         fontSize:scaledHeight(18),
         fontWeight:'bold',
+        marginLeft:scaledHeight(10),
         marginTop:scaledHeight(10),
-        marginLeft:scaledHeight(10)
-    },
-    headerFlex:{
-        height:scaledHeight(29),
-        flexDirection:'row',
-    },
-    headerText:{
-        color:'#56565A',
-        fontSize:scaledHeight(22),
-        fontWeight:'bold',
-    },
-    flexHead:{
-        marginLeft: "4%",
-        marginRight:"4%",
-    },
-    line: {
-        backgroundColor: '#535353',
-        opacity: 0.25,
-        height: scaledHeight(1),
-        marginTop: '3%',
-    },
-    fundSourceContent:{
-        color:'#56565A',
-        fontSize:scaledHeight(16),
-        width:"92%",
-        marginLeft:"4%",
-        marginRight:"4%",
-        marginTop:"4%",
-    },
-    sharesFlex:{
-        height:scaledHeight(347),
-        borderWidth:scaledHeight(1),
-        borderColor:'#5D83AE99',
-        flexDirection:'column'
-    },
-    fundsFlex:{
-        borderWidth:scaledHeight(3),
-        borderColor:'#FFFFFF',
-        marginLeft:"4%",
-        marginRight:"4%",
-        marginTop:"5%",
-    },
-    fundsFlexSelected:{
-        borderWidth:scaledHeight(3),
-        borderColor:'#B5E198',
-        marginLeft:"4%",
-        marginRight:"4%",
-        marginTop:"5%",
-    },
-    flex1:{
-        flexDirection:'row',
-        height:scaledHeight(60),
-        borderBottomColor:'#5D83AE99',
-        borderBottomWidth:scaledHeight(1)
-    },
-    blackTextBold13px:{
-        fontSize:scaledHeight(13),
-        fontWeight:'bold',
-        color:'#544A54',
-        width:"70%",
-        alignSelf:'center',
-        marginLeft:"4%"
-    },
-    flex2:{
-        flexDirection:'row',
-        height:scaledHeight(82),
-        backgroundColor:'#EFECEC',
-        justifyContent:'space-between'
-    },
-    totalSharesFlex:{
-        flexDirection:'column',
-        marginLeft:"4%",
-        width:"46%",
-       justifyContent:'center',
-    },
-    totalSharesText:{
-        color:'#56565A',
-        fontSize:scaledHeight(14),
-        fontWeight:'bold',
-        opacity:1
-    },
-    totalSharesValue:{
-        color:'#56565A',
-        fontSize:scaledHeight(14),
-    },
-    flex3:{
-        flexDirection:'column',
-        height:scaledHeight(189),
+       
     },
     allShares:{
         flexDirection:'row',
@@ -120,30 +26,45 @@ import { scaledHeight } from '../../Utils/Resolution';
         height:scaledHeight(40),
         marginTop:scaledHeight(20),
     },
-    radioButtonFlexOff:{
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: scaledHeight(32),
-        height: scaledHeight(32),
-        borderRadius: scaledHeight(16),
-        borderColor: '#DEDEDF',
-        borderWidth: 1,
-        backgroundColor: '#FFFFFF',
-        marginTop:scaledHeight(4)
-    },
-    radioButtonFlexOn:{
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: scaledHeight(16),
-        height: scaledHeight(16),
-        borderRadius: scaledHeight(8),
-        backgroundColor: '#56565A',
-    },
     allSharesText:{
         color:'#56565A',
         fontSize:scaledHeight(16),
         marginLeft:"3%",
         paddingTop:scaledHeight(11),
+    },
+    amountTextBox:{
+        borderColor:'#DEDEDF',
+        borderWidth:scaledHeight(1),
+        height:scaledHeight(40),
+        marginLeft: "8%",
+        width:"76%",
+    },
+    backButtonFlex: {
+        alignItems: 'center',
+        backgroundColor:'#FFFFFF',
+        borderColor: '#61285F45',
+        borderWidth: scaledHeight(1),
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginTop:scaledHeight(18)
+    },
+    backButtonText: {
+        color: '#544A54',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+    },
+    blackTextBold13px:{
+        alignSelf:'center',
+        color:'#544A54',
+        fontSize:scaledHeight(13),
+        fontWeight:'bold',
+        marginLeft:"4%",
+        width:"70%",
+    },
+    container: {
+        backgroundColor: '#F7FAFF',
+        flex: 1,
+        width: '100%'
     },
     dollarText:{
         color:'#333333DE',
@@ -152,67 +73,135 @@ import { scaledHeight } from '../../Utils/Resolution';
         marginLeft:"3%",
         paddingTop:scaledHeight(11),
     },
-    amountTextBox:{
-        borderColor:'#DEDEDF',
-        borderWidth:scaledHeight(1),
-        height:scaledHeight(40),
-        width:"76%",
-        marginLeft: "8%",
+    flex1:{
+        borderBottomColor:'#5D83AE99',
+        borderBottomWidth:scaledHeight(1),
+        flexDirection:'row',
+        height:scaledHeight(60),
+    },
+    flex2:{
+        backgroundColor:'#EFECEC',
+        flexDirection:'row',
+        height:scaledHeight(82),
+        justifyContent:'space-between'
+    },
+    flex3:{
+        height:scaledHeight(189),
+        flexDirection:'column',
+    },
+    flex6:{
+        flexDirection: 'column',
+        height:scaledHeight(205),
+        marginLeft: "10%",
+        marginRight: "10%",
+        marginTop:"12%",
+    },
+    flexHead:{
+        marginLeft: "4%",
+        marginRight:"4%",
+    },
+    fundsFlex:{
+        borderColor:'#FFFFFF',
+        borderWidth:scaledHeight(3),
+        marginLeft:"4%",
+        marginRight:"4%",
+        marginTop:"5%",
+    },
+    fundsFlexSelected:{
+        borderColor:'#B5E198',
+        borderWidth:scaledHeight(3),
+        marginLeft:"4%",
+        marginRight:"4%",
+        marginTop:"5%",
+    },
+    fundSourceContent:{
+        color:'#56565A',
+        fontSize:scaledHeight(16),
+        marginLeft:"4%",
+        marginRight:"4%",
+        marginTop:"4%",
+        width:"92%",
+    },
+    fullLine: {
+        backgroundColor: '#7B8288',
+        height: scaledHeight(1),
+        opacity: 0.4,
+        marginTop: scaledHeight(40),
+    },
+    headerFlex:{
+        flexDirection:'row',
+        height:scaledHeight(29),
+    },
+    headerText:{
+        color:'#56565A',
+        fontSize:scaledHeight(22),
+        fontWeight:'bold',
     },
     inputStyle:{
         color:'#56565A',
         fontSize:scaledHeight(16),
     },
-    flex6:{
-        height:scaledHeight(205),
-        flexDirection: 'column',
-        marginLeft: "10%",
-        marginRight: "10%",
-        marginTop:"12%",
+    line: {
+        backgroundColor: '#535353',
+        height: scaledHeight(1),
+        marginTop: '3%',
+        opacity: 0.25,
     },
-    backButtonFlex: {
-        height: scaledHeight(50),
-        borderColor: '#61285F45',
-        borderWidth: scaledHeight(1),
-        backgroundColor:'#FFFFFF',
-        justifyContent: 'center',
+    mainFlex:{
+        flex: 0.85
+    },
+    radioButtonFlexOff:{
         alignItems: 'center',
-        marginTop:scaledHeight(18)
+        backgroundColor: '#FFFFFF',
+        borderColor: '#DEDEDF',
+        borderRadius: scaledHeight(16),
+        borderWidth: 1,
+        height: scaledHeight(32),
+        justifyContent: 'center',
+        marginTop:scaledHeight(4),
+        width: scaledHeight(32),
     },
-    backButtonText: {
-        color: '#544A54',
-        fontWeight: 'bold',
-        fontSize: scaledHeight(16),
+    radioButtonFlexOn:{
+        alignItems: 'center',
+        backgroundColor: '#56565A',
+        borderRadius: scaledHeight(8),
+        height: scaledHeight(16),
+        justifyContent: 'center',
+        width: scaledHeight(16),
+    },
+    sharesFlex:{
+        borderColor:'#5D83AE99',
+        borderWidth:scaledHeight(1),
+        flexDirection:'column',
+        height:scaledHeight(347),
     },
     submitFlex: {
-        height: scaledHeight(50),
+        alignItems: 'center',
+        backgroundColor:'#544A54',
         borderColor: '#61285F45',
         borderWidth: scaledHeight(1),
-        backgroundColor:'#544A54',
+        height: scaledHeight(50),
         justifyContent: 'center',
-        alignItems: 'center',
         marginTop:scaledHeight(19)
     },
     submitFlexDisabled: {
-        height: scaledHeight(50),
+        alignItems: 'center',
+        backgroundColor:'#544A54',
         borderColor: '#544A54',
         borderWidth: scaledHeight(1),
-        backgroundColor:'#544A54',
+        height: scaledHeight(50),
         justifyContent: 'center',
-        alignItems: 'center',
         marginTop:scaledHeight(19),
         opacity:0.5
     },
     submitText: {
         color: '#FFFFFF',
-        fontWeight: 'bold',
         fontSize: scaledHeight(16),
+        fontWeight: 'bold',
     },
-    fullLine: {
-        backgroundColor: '#7B8288',
-        opacity: 0.4,
-        height: scaledHeight(1),
-        marginTop: scaledHeight(40),
+    tNcBody: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
     },
     tNCFlex: {
         marginLeft: "4%",
@@ -224,11 +213,22 @@ import { scaledHeight } from '../../Utils/Resolution';
         fontSize: scaledHeight(16),
         fontWeight: 'bold'
     },
-    tNcBody: {
-        color: '#56565A',
-        fontSize: scaledHeight(16),
+    totalSharesFlex:{
+        flexDirection:'column',
+        justifyContent:'center',
+        marginLeft:"4%",
+        width:"46%",
     },
-
+    totalSharesText:{
+        color:'#56565A',
+        fontSize:scaledHeight(14),
+        fontWeight:'bold',
+        opacity:1
+    },
+    totalSharesValue:{
+        color:'#56565A',
+        fontSize:scaledHeight(14),
+    },
 });
 
 export default styles;

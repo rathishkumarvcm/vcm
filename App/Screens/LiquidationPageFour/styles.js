@@ -4,22 +4,22 @@ import { scaledHeight } from '../../Utils/Resolution';
 
  const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#F7FAFF',
+        flex: 1,
         width: '100%'
-    },
-    mainFlex:{
-         flex: 0.85 
     },
     flexContainer:{
         marginLeft: "4%",
         marginRight: "4%",
     },
+    mainFlex:{
+         flex: 0.85 
+    },
     headerFlex:{
         backgroundColor:'#E4EBFE',
         height:scaledHeight(46),
+        alignItems:'center',
         justifyContent:'center',
-        alignItems:'center'
     },
     headerText:{
         color:'#4D79F6',
@@ -38,15 +38,15 @@ import { scaledHeight } from '../../Utils/Resolution';
     },
     line: {
         backgroundColor: '#535353',
-        opacity: 0.25,
         height: scaledHeight(1),
+        opacity: 0.25,
         marginTop: '4%',
         marginBottom:"4%",
     },
     section:{
+        flexDirection:'column',
         marginLeft: '4%',
         marginRight: '4%',
-        flexDirection:'column',
         marginTop:scaledHeight(15),
         justifyContent: 'space-around',
     },
@@ -63,8 +63,8 @@ import { scaledHeight } from '../../Utils/Resolution';
     },
     horizontalFlex:{
         flexDirection: 'row',
-        justifyContent:'space-between',
         alignItems:'center',
+        justifyContent:'space-between',
         marginTop:scaledHeight(52)
     },
     edit:{
@@ -90,44 +90,44 @@ import { scaledHeight } from '../../Utils/Resolution';
         margin:"4%"
     },
     flex6:{
-        height:scaledHeight(205),
         flexDirection: 'column',
+        height:scaledHeight(205),
         marginLeft: "10%",
         marginRight: "10%",
         marginTop:"12%",
     },
     backButtonFlex: {
-        height: scaledHeight(50),
         borderColor: '#61285F45',
+        height: scaledHeight(50),
         borderWidth: scaledHeight(1),
         backgroundColor:'#FFFFFF',
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
         marginTop:scaledHeight(18)
     },
     backButtonText: {
         color: '#544A54',
-        fontWeight: 'bold',
         fontSize: scaledHeight(16),
+        fontWeight: 'bold',
     },
     submitFlex: {
-        height: scaledHeight(50),
         borderColor: '#61285F45',
+        height: scaledHeight(50),
         borderWidth: scaledHeight(1),
         backgroundColor:'#544A54',
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
         marginTop:scaledHeight(19)
     },
     submitText: {
         color: '#FFFFFF',
-        fontWeight: 'bold',
         fontSize: scaledHeight(16),
+        fontWeight: 'bold',
     },
     fullLine: {
         backgroundColor: '#7B8288',
-        opacity: 0.4,
         height: scaledHeight(1),
+        opacity: 0.4,
         marginTop: scaledHeight(40),
     },
     tNCFlex: {

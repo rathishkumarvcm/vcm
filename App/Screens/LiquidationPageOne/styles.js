@@ -4,16 +4,16 @@ import { scaledHeight } from '../../Utils/Resolution';
 
  const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#F7FAFF',
+        flex: 1,
         width: '100%'
+    },
+    headerFlex:{
+        flexDirection:'row',
+        height:scaledHeight(29),
     },
     mainFlex:{
         flex: 0.85
-    },
-    headerFlex:{
-        height:scaledHeight(29),
-        flexDirection:'row'
     },
     headerText:{
         color:'#56565A',
@@ -22,10 +22,10 @@ import { scaledHeight } from '../../Utils/Resolution';
     },
     toggleOnFlex:{
         backgroundColor: 'white', 
-        width: "15%", 
         marginTop: "1%", 
         alignItems: 'flex-start', 
         justifyContent: 'flex-start', 
+        width: "15%", 
         flexDirection: 'row', 
         marginRight: "6%" 
     },
@@ -33,15 +33,15 @@ import { scaledHeight } from '../../Utils/Resolution';
         backgroundColor: '#444444', 
         borderColor: '#707070', 
         borderWidth: scaledHeight(1), 
-        width: "100%", 
         height: scaledHeight(25), 
+        width: "100%", 
         borderRadius: 15, 
         marginTop: scaledHeight(2)
     },
     toggleOnCircle:{
         backgroundColor: '#FFFFFF', 
-        width: scaledHeight(30),
-        height: scaledHeight(30),  
+        height: scaledHeight(30), 
+        width: scaledHeight(30), 
         borderRadius: scaledHeight(15), 
         borderColor: '#707070', 
         borderWidth: scaledHeight(1), 
@@ -50,10 +50,10 @@ import { scaledHeight } from '../../Utils/Resolution';
     },
     toggleOffFlex:{
         backgroundColor: 'white', 
-        width: "15%", 
         marginTop: "1%", 
         alignItems: 'flex-start', 
         justifyContent: 'flex-start', 
+        width: "15%", 
         flexDirection: 'row', 
         marginRight: "6%"
     },
@@ -61,14 +61,14 @@ import { scaledHeight } from '../../Utils/Resolution';
         backgroundColor: '#DBDBDB', 
         borderColor: '#707070', 
         borderWidth: scaledHeight(1), 
-        width: "100%", 
         height: scaledHeight(25), 
+        width: "100%", 
         borderRadius: 15,
         marginTop: scaledHeight(2)
     },
     toggleOffCircle:{
-        width: scaledHeight(30), 
         height: scaledHeight(30), 
+        width: scaledHeight(30), 
         borderRadius: scaledHeight(15), 
         borderColor: '#707070', 
         borderWidth: scaledHeight(1), 
@@ -104,63 +104,63 @@ import { scaledHeight } from '../../Utils/Resolution';
         fontSize:scaledHeight(14),
     },
     accountTypeFlex:{
+        flexDirection:'column',
         height:scaledHeight(45),
         marginTop:scaledHeight(30),
-        flexDirection:'column'
     },
     line: {
         backgroundColor: '#535353',
         opacity: 0.25,
         height: scaledHeight(1),
-        width: "100%",
         marginTop: '4%',
+        width: "100%",
     },
 
     accountDetailsFlex:{
-        height:"100%",
         flexDirection:'column',
+        height:"100%",
         borderColor:'#9DB4CE',
         borderWidth:scaledHeight(1),
         backgroundColor:'#FFFFFF',
     },
     accountDetailsFlexSelected:{
+        flexDirection:'column',
         height:scaledHeight(246),
         marginTop:scaledHeight(20),
-        flexDirection:'column',
         borderColor:'#B5E198',
         borderWidth:scaledHeight(3),
         backgroundColor:'#FFFFFF',
     },
     accountDetailsFlexUnSelected:{
+        flexDirection:'column',
         height:scaledHeight(246),
         marginTop:scaledHeight(20),
-        flexDirection:'column',
         borderColor:'#FFFFFF',
         borderWidth:scaledHeight(3),
         backgroundColor:'#FFFFFF',
     },
 
     flexAccDetails1:{
+        flexDirection:'row',
         height:scaledHeight(73),
         marginLeft: '2%',
         marginRight:"4%",
         marginTop:"4%",
-        flexDirection:'row',
     },
     accountNumberFlex:{
         width:"85%"
     },
     flexAccDetails2:{
+        flexDirection:'row',
         height:scaledHeight(44),
         marginTop: scaledHeight(20),
-        flexDirection:'row',
         marginLeft: "4%",
         marginRight: "4%"
     },
     flexAccDetails3:{
+        flexDirection:'column',
         height:scaledHeight(44),
         marginTop: scaledHeight(20),
-        flexDirection:'column',
         marginLeft: "4%",
         marginRight: "4%",
         justifyContent:'space-between'
@@ -170,13 +170,13 @@ import { scaledHeight } from '../../Utils/Resolution';
         marginTop:"2%"
     },
     iconStyle:{
-        justifyContent: 'flex-start', 
         alignItems: 'flex-start',
+        justifyContent: 'flex-start', 
         width:"20%"
     },
     flex6:{
-        height:scaledHeight(140),
         flexDirection: 'column',
+        height:scaledHeight(140),
         marginLeft: "10%",
         marginRight: "10%",
         marginTop:"12%",
@@ -186,8 +186,8 @@ import { scaledHeight } from '../../Utils/Resolution';
         borderColor: '#61285F45',
         borderWidth: scaledHeight(1),
         backgroundColor:'#FFFFFF',
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
         marginTop:scaledHeight(18)
     },
     backButtonText: {
@@ -200,8 +200,8 @@ import { scaledHeight } from '../../Utils/Resolution';
         borderColor: '#544A54',
         borderWidth: scaledHeight(1),
         backgroundColor:'#544A54',
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
         marginTop:scaledHeight(19)
     },
     submitFlexDisabled: {
@@ -209,8 +209,8 @@ import { scaledHeight } from '../../Utils/Resolution';
         borderColor: '#544A54',
         borderWidth: scaledHeight(1),
         backgroundColor:'#544A54',
-        justifyContent: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
         marginTop:scaledHeight(19),
         opacity:0.5
     },

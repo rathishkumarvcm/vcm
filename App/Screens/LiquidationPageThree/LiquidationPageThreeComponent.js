@@ -77,7 +77,6 @@ class LiquidationPageThreeComponent extends Component {
     updateState = () => {
         if (this.props.navigation.getParam('ammend')) {
             ammendData = this.props.navigation.getParam('data');
-            console.log("Screen 3 ammendData---> "+JSON.stringify(ammendData));
             ammendIndex = this.props.navigation.getParam('index');
             let selectedBankAccount = null;
             if(!ammendData.selectedFundWithdrawalData.checkSelectedOrder){
@@ -642,7 +641,6 @@ class LiquidationPageThreeComponent extends Component {
                                                             />
                                                             <View style={styles.stateTaxToDollarFlex}>
                                                                 <Text style={styles.dollarSkin}>$</Text>
-                                                                {console.log("this.state.taxAccountingMethodData.federalTaxInDollars-->"+this.state.taxAccountingMethodData.federalTaxInDollars)}
                                                                 <Text style={styles.stateTaxToDollarText}>{this.formatAmount(this.state.taxAccountingMethodData.federalTaxInDollars)}</Text>
                                                             </View>
                                                         </View>
