@@ -47,7 +47,6 @@ class editMilitaryInfoComponent extends Component {
 
             militaryFromDate: '',
             militaryToDate: '',
-            militaryCommissionSource: '',
 
             isValidFromDate: false,
             isValidToDate: false,
@@ -65,7 +64,11 @@ class editMilitaryInfoComponent extends Component {
             dropDownMarineState: false,
             dropDownMarineValue: '',
             dropDownMarineFlag: false,
-            dropDownMarineMsg: ''
+            dropDownMarineMsg: '',
+
+            militaryCommissionValue: '',
+            isMilitaryCommissionFlag: true,
+            militaryCommissionMsg: ''
         };
     }
 
@@ -101,8 +104,6 @@ class editMilitaryInfoComponent extends Component {
                 radioButtonIndex: 1
             });
         }
-
-        console.log(" @@@@@@@@@@@@@@ Military Did Mount :: ", this.state.isMilitaryService + ' Index ' + this.state.radioButtonIndex);
     }
 
     radioButtonClicked = (index) => {
@@ -128,8 +129,6 @@ class editMilitaryInfoComponent extends Component {
                 radioButtonIndex: 1
             });
         }
-
-        console.log(" @@@@@@@@@@@@@@ Military On Radio Click :: ", this.state.isMilitaryService + ' Index ' + this.state.radioButtonIndex + ' Clicked ' + index);
     }
 
     dropDownMilitaryOnClick = () => {
@@ -199,7 +198,6 @@ class editMilitaryInfoComponent extends Component {
 
     saveMilitaryInformations = () => {
         if (this.state.isMilitaryService) {
-            console.log(' @@@@@@@@@@@@@@@ Military Service 00 :: ', this.state.isMilitaryService);
             if (this.state.dropDownMilitaryValue === '') {
                 this.setState({
                     dropDownMilitaryFlag: false,
@@ -227,14 +225,12 @@ class editMilitaryInfoComponent extends Component {
                 this.manageMilitaryInformations();
             }
         } else {
-            console.log(' @@@@@@@@@@@@@@@ Military Service 01 :: ', this.state.isMilitaryService);
             this.manageMilitaryInformations();
         }
     }
 
     manageMilitaryInformations = () => {
         const payloadData = this.getMilitaryData();
-        console.log("@@@@@@@@ Status ::", payloadData);
         this.props.saveProfileData("addMilitaryInformation", payloadData);
         this.props.navigation.navigate('profileSettings');
     }
@@ -280,6 +276,20 @@ class editMilitaryInfoComponent extends Component {
                 errorText={this.state.dropDownMarineMsg}
                 dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(270) }} />
         );
+    }
+
+    setValidMilitaryCommission = (text) => {
+        this.setState({
+            militaryCommissionValue: text,
+            isMilitaryCommissionFlag: true
+        });
+
+        if (this.state.militaryCommissionValue.length.toString() === "29") {
+            this.setState({
+                isMilitaryCommissionFlag: false,
+                militaryCommissionMsg: 'Max. character length exceeded'
+            })
+        }
     }
 
     render() {
@@ -457,7 +467,12 @@ class editMilitaryInfoComponent extends Component {
                                 </Text>
                                 <GInputComponent
                                     propInputStyle={styles.editAddressInput}
-                                    placeholder={""} />
+                                    placeholder={""}
+                                    onChangeText={this.setValidMilitaryCommission}
+                                    value={this.state.militaryCommissionValue}
+                                    maxLength={30}
+                                    errorFlag={!this.state.isMilitaryCommissionFlag}
+                                    errorText={this.state.militaryCommissionMsg} />
                             </View>
 
                         </View>

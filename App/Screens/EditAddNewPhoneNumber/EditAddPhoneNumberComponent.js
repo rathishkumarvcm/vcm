@@ -35,7 +35,7 @@ const contactTimeData = [
     }
 ];
 
-class editAddPhoneNumberComponent extends Component {
+class EditAddPhoneNumberComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -307,4 +307,4 @@ class editAddPhoneNumberComponent extends Component {
     }
 }
 
-export default editAddPhoneNumberComponent;
+export default EditAddPhoneNumberComponent;

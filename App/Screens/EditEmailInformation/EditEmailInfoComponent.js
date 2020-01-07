@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity, FlatList, Switch } from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
+import ImagesLoad from '../../Images/ImageIndex';
 
 let editDeleteMenuOption = [
     {
@@ -16,7 +16,7 @@ let editDeleteMenuOption = [
     },
 ];
 
-class editEmailInfoComponent extends Component {
+class EditEmailInfoComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -50,7 +50,7 @@ class editEmailInfoComponent extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         if (this.props != prevProps) {
             if (this.props &&
                 this.props.profileState &&
@@ -81,7 +81,7 @@ class editEmailInfoComponent extends Component {
                     <TouchableOpacity
                         onPress={this.onMenuOptionClicked(index)}>
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/menu_icon.png")} />
+                            source={ImagesLoad.menuIcon} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -89,14 +89,7 @@ class editEmailInfoComponent extends Component {
             {index === this.state.selectedIndex ?
                 (<FlatList style={styles.editFlatList}
                     data={editDeleteMenuOption}
-                    renderItem={({ item, index }) =>
-                        (<TouchableOpacity style={styles.editDropdown}>
-                            <Text style={styles.editDropdownText}
-                                onPress={this.onMenuItemClicked(index)}>
-                                {item.menuName}
-                            </Text>
-                        </TouchableOpacity>)}
-                    keyExtractor={item => item.menuId} />)
+                    renderItem={this.renderMenuOption()} />)
                 : null}
 
             <View style={styles.editEmailBorder} />
@@ -138,6 +131,14 @@ class editEmailInfoComponent extends Component {
                 selectedIndex: index
             });
     }
+
+    renderMenuOption = () => ({ item, index }) =>
+        (<TouchableOpacity style={styles.editDropdown}>
+            <Text style={styles.editDropdownText}
+                onPress={this.onMenuItemClicked(index)}>
+                {item.menuName}
+            </Text>
+        </TouchableOpacity>);
 
     onMenuItemClicked = (index) => () => {
         switch (index) {
@@ -216,7 +217,7 @@ class editEmailInfoComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={ImagesLoad.applicationLogo} />
                     </View>
 
                     <View style={styles.whiteBackground}>
@@ -227,9 +228,9 @@ class editEmailInfoComponent extends Component {
 
                     <View style={styles.whiteBackground}>
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/twitterlogo.png")} />
+                            source={ImagesLoad.twitterlogo} />
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/linkedinlogo.png")} />
+                            source={ImagesLoad.linkedinlogo} />
                     </View>
 
                     <View style={styles.privacyAgreement}>
@@ -264,4 +265,4 @@ class editEmailInfoComponent extends Component {
     }
 }
 
-export default editEmailInfoComponent;
+export default EditEmailInfoComponent;

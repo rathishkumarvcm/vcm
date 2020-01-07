@@ -399,7 +399,7 @@ export const styles = StyleSheet.create({
         flexDirection: 'row', marginLeft: '2%', width: '40%', marginTop: scaledHeight(2)
     },
     editProfileLabel: { color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginBottom: scaledHeight(3) },
-    editAddressInput: { flexDirection: 'column', width: '100%', paddingLeft: '4%', paddingRight: '4%', marginBottom: '2%', marginTop: '2%' },
+    editAddressInput: { flexDirection: 'column', width: '100%', paddingLeft: '2%', paddingRight: '2%', marginBottom: '2%' },
     offButtonStyle: {
         borderColor: '#56565A',
         borderRadius: 30,

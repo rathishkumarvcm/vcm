@@ -240,14 +240,14 @@ class ProfileSettingsComponent extends Component {
 
     onMenuOptionClicked = (index) => () => {
         index === this.state.selectedIndex ?
-            this.setState(prevState => ({
-                isRelationRefreshed: prevState.this.state.isRelationRefreshed,
+            this.setState({
+                isRelationRefreshed: !this.state.isRelationRefreshed,
                 selectedIndex: -1
-            })) :
-            this.setState(prevState => ({
-                isRelationRefreshed: prevState.this.state.isRelationRefreshed,
+            }) :
+            this.setState({
+                isRelationRefreshed: !this.state.isRelationRefreshed,
                 selectedIndex: index
-            }));
+            });
     }
 
     // Manage Relationship Details
@@ -267,10 +267,10 @@ class ProfileSettingsComponent extends Component {
     onMenuItemClicked = (index) => () => {
         switch (index) {
             case 0:
-                this.setState(prevState => ({
-                    isRelationRefreshed: prevState.this.state.isRelationRefreshed,
+                this.setState({
+                    isRelationRefreshed: !this.state.isRelationRefreshed,
                     selectedIndex: -1
-                }));
+                });
                 break;
 
             default:

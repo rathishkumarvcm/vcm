@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity, FlatList, Switch } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
+import { GButtonComponent, GHeaderComponent, GInputComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
+import ImagesLoad from '../../Images/ImageIndex';
 
 let editDeleteMenuOption = [
     {
@@ -17,74 +17,7 @@ let editDeleteMenuOption = [
     },
 ];
 
-const UserPhoneInformation = (props) => {
-    return (
-        <View style={styles.editEmailHolder}>
-
-            <View style={[styles.profileDivideIcon]}>
-                <View style={styles.profileDivideIconOne}>
-                    <Text style={styles.editEmailType}>
-                        {props.mobileNumberType}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {props.mobileNumber}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {props.mobilePreferredTime}
-                    </Text>
-                </View>
-
-                <View style={styles.profileDivideIconTwo}>
-                    <TouchableOpacity
-                        onPress={props.onMenuOptionClicked}>
-                        <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/menu_icon.png")} />
-                    </TouchableOpacity>
-                </View>
-            </View>
-
-            {props.selectedMenuIndex == 1 ?
-                (<FlatList style={styles.editFlatList}
-                    data={editDeleteMenuOption}
-                    renderItem={({ item, index }) =>
-                        (<TouchableOpacity style={styles.editDropdown}>
-                            <Text style={styles.editDropdownText}
-                                onPress={this.onEditAndDeleteItem(index)}>
-                                {item.name}
-                            </Text>
-                        </TouchableOpacity>)}
-                    keyExtractor={item => item.id} />)
-                : null}
-
-            <View style={styles.editEmailBorder} />
-
-            <View style={styles.editAddressView}>
-                <Text style={styles.editAddressLabel}>
-                    {globalString.profileSettingsPage.profileMailPrimaryLabel}
-                </Text>
-
-                <View style={styles.editSwitchButton}>
-                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={props.onMobileToggle}
-                        value={props.isPrimaryMobile} />
-                </View>
-            </View>
-        </View>
-    )
-};
-
-UserPhoneInformation.propTypes = {
-    mobileNumberType: PropTypes.string,
-    mobileNumber: PropTypes.string,
-    mobilePreferredTime: PropTypes.string,
-    isPrimaryMobile: PropTypes.bool,
-    onMobileToggle: PropTypes.func,
-    onMenuOptionClicked: PropTypes.func,
-    selectedMenuIndex: PropTypes.any,
-    onMenuItemClicked: PropTypes.any
-};
-
-class editPhoneInfoComponent extends Component {
+class EditPhoneInfoComponent extends Component {
     constructor(props) {
         super(props);
         //set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -94,7 +27,10 @@ class editPhoneInfoComponent extends Component {
             faceIdEnrolled: false,
             touchIdEnrolled: false,
 
-            selectedIndex: -1,
+            selectedMobileIndex: -1,
+            selectedHomeIndex: -1,
+            selectedWorkIndex: -1,
+
             isMobileRefreshed: false,
             isWorkRefreshed: false,
             isHomeRefreshed: false,
@@ -152,7 +88,7 @@ class editPhoneInfoComponent extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         if (!this.state.isRelation) {
             if (this.props != prevProps) {
                 if (this.props &&
@@ -204,21 +140,15 @@ class editPhoneInfoComponent extends Component {
                     <TouchableOpacity
                         onPress={this.onMenuOptionClickedMobile(index)}>
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/menu_icon.png")} />
+                            source={ImagesLoad.menuIcon} />
                     </TouchableOpacity>
                 </View>
             </View>
 
-            {index === this.state.selectedIndex ?
+            {index === this.state.selectedMobileIndex ?
                 (<FlatList style={styles.editFlatList}
                     data={editDeleteMenuOption}
-                    renderItem={({ item, index }) =>
-                        (<TouchableOpacity style={styles.editDropdown}>
-                            <Text style={styles.editDropdownText}>
-                                {item.name}
-                            </Text>
-                        </TouchableOpacity>)}
-                    keyExtractor={item => item.id} />)
+                    renderItem={this.renderMobileMenuOptions()} />)
                 : null}
 
             <View style={styles.editEmailBorder} />
@@ -230,7 +160,7 @@ class editPhoneInfoComponent extends Component {
 
                 <View style={styles.editSwitchButton}>
                     <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={this.onMobileToggle(item, index, 'mobile')}
+                        onValueChange={this.onMobileToggle(index, 'mobile')}
                         value={item.isPrimaryMobile} />
                 </View>
             </View>
@@ -238,18 +168,221 @@ class editPhoneInfoComponent extends Component {
         );
 
     onMenuOptionClickedMobile = (index) => () => {
-        index === this.state.selectedIndex ?
+        index === this.state.selectedMobileIndex ?
             this.setState({
                 isMobileRefreshed: !this.state.isMobileRefreshed,
-                selectedIndex: -1
+                selectedMobileIndex: -1
             }) :
             this.setState({
                 isMobileRefreshed: !this.state.isMobileRefreshed,
-                selectedIndex: index
+                selectedMobileIndex: index
             });
     }
 
-    onMobileToggle = (item, index, toggleState) => () => {
+    renderMobileMenuOptions = () => ({ item, index }) =>
+        (<TouchableOpacity style={styles.editDropdown}>
+            <Text style={styles.editDropdownText}
+                onPress={this.onMobileMenuItemClicked(index)}>
+                {item.name}
+            </Text>
+        </TouchableOpacity>);
+
+    onMobileMenuItemClicked = (index) => () => {
+        switch (index) {
+            case 0:
+                this.setState({
+                    isMobileRefreshed: !this.state.isMobileRefreshed,
+                    selectedMobileIndex: -1
+                });
+                break;
+
+            case 1:
+                this.setState({
+                    isMobileRefreshed: !this.state.isMobileRefreshed,
+                    selectedMobileIndex: -1
+                });
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    renderHomeNumberInformation = () => ({ item, index }) =>
+        (<View style={styles.editEmailHolder}>
+            <View style={[styles.profileDivideIcon]}>
+                <View style={styles.profileDivideIconOne}>
+                    <Text style={styles.editEmailType}>
+                        {item.mobileNumberType}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {item.mobileNumber}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {item.mobilePreferredTime}
+                    </Text>
+                </View>
+
+                <View style={styles.profileDivideIconTwo}>
+                    <TouchableOpacity
+                        onPress={this.onMenuOptionClickedHome(index)}>
+                        <Image style={styles.imageWidthHeight}
+                            source={ImagesLoad.menuIcon} />
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+            {index === this.state.selectedHomeIndex ?
+                (<FlatList style={styles.editFlatList}
+                    data={editDeleteMenuOption}
+                    renderItem={this.renderHomeMenuOptions()} />)
+                : null}
+
+            <View style={styles.editEmailBorder} />
+
+            <View style={styles.editAddressView}>
+                <Text style={styles.editAddressLabel}>
+                    {globalString.profileSettingsPage.profileMailPrimaryLabel}
+                </Text>
+
+                <View style={styles.editSwitchButton}>
+                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                        onValueChange={this.onMobileToggle(index, 'home')}
+                        value={item.isPrimaryMobile} />
+                </View>
+            </View>
+        </View>
+        );
+
+    onMenuOptionClickedHome = (index) => () => {
+        index === this.state.selectedHomeIndex ?
+            this.setState({
+                isHomeRefreshed: !this.state.isHomeRefreshed,
+                selectedHomeIndex: -1
+            }) :
+            this.setState({
+                isHomeRefreshed: !this.state.isHomeRefreshed,
+                selectedHomeIndex: index
+            });
+    }
+
+    renderHomeMenuOptions = () => ({ item, index }) =>
+        (<TouchableOpacity style={styles.editDropdown}>
+            <Text style={styles.editDropdownText}
+                onPress={this.onHomeMenuItemClicked(index)}>
+                {item.name}
+            </Text>
+        </TouchableOpacity>);
+
+    onHomeMenuItemClicked = (index) => () => {
+        switch (index) {
+            case 0:
+                this.setState({
+                    isHomeRefreshed: !this.state.isHomeRefreshed,
+                    selectedHomeIndex: -1
+                });
+                break;
+
+            case 1:
+                this.setState({
+                    isHomeRefreshed: !this.state.isHomeRefreshed,
+                    selectedHomeIndex: -1
+                });
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    renderWorkNumberInformation = () => ({ item, index }) =>
+        (<View style={styles.editEmailHolder}>
+            <View style={[styles.profileDivideIcon]}>
+                <View style={styles.profileDivideIconOne}>
+                    <Text style={styles.editEmailType}>
+                        {item.mobileNumberType}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {item.mobileNumber}
+                    </Text>
+                    <Text style={styles.editEmailId}>
+                        {item.mobilePreferredTime}
+                    </Text>
+                </View>
+
+                <View style={styles.profileDivideIconTwo}>
+                    <TouchableOpacity
+                        onPress={this.onMenuOptionClickedWork(index)}>
+                        <Image style={styles.imageWidthHeight}
+                            source={ImagesLoad.menuIcon} />
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+            {index === this.state.selectedWorkIndex ?
+                (<FlatList style={styles.editFlatList}
+                    data={editDeleteMenuOption}
+                    renderItem={this.renderWorkMenuOptions()} />)
+                : null}
+
+            <View style={styles.editEmailBorder} />
+
+            <View style={styles.editAddressView}>
+                <Text style={styles.editAddressLabel}>
+                    {globalString.profileSettingsPage.profileMailPrimaryLabel}
+                </Text>
+
+                <View style={styles.editSwitchButton}>
+                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                        onValueChange={this.onMobileToggle(index, 'work')}
+                        value={item.isPrimaryMobile} />
+                </View>
+            </View>
+        </View>
+        );
+
+    onMenuOptionClickedWork = (index) => () => {
+        index === this.state.selectedWorkIndex ?
+            this.setState({
+                isWorkRefreshed: !this.state.isWorkRefreshed,
+                selectedWorkIndex: -1
+            }) :
+            this.setState({
+                isWorkRefreshed: !this.state.isWorkRefreshed,
+                selectedWorkIndex: index
+            });
+    }
+
+    renderWorkMenuOptions = () => ({ item, index }) =>
+        (<TouchableOpacity style={styles.editDropdown}>
+            <Text style={styles.editDropdownText}
+                onPress={this.onWorkMenuItemClicked(index)}>
+                {item.name}
+            </Text>
+        </TouchableOpacity>);
+
+    onWorkMenuItemClicked = (index) => () => {
+        switch (index) {
+            case 0:
+                this.setState({
+                    isWorkRefreshed: !this.state.isWorkRefreshed,
+                    selectedWorkIndex: -1
+                });
+                break;
+
+            case 1:
+                this.setState({
+                    isWorkRefreshed: !this.state.isWorkRefreshed,
+                    selectedWorkIndex: -1
+                });
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    onMobileToggle = (index, toggleState) => () => {
         let array = [];
         switch (toggleState) {
             case 'mobile':
@@ -267,8 +400,8 @@ class editPhoneInfoComponent extends Component {
                         userMobileNumber: array,
                         isMobileRefreshed: !this.state.isMobileRefreshed,
                     });
+                    this.updatePrimaryMobile();
                 }
-                this.updatePrimaryMobile();
                 break;
 
             case 'home':
@@ -296,52 +429,6 @@ class editPhoneInfoComponent extends Component {
                 break
         }
     }
-
-    // Home Informations
-
-    onMenuOptionClickedHome = (item, index) => () => {
-        var array = [...this.state.userHomeNumber];
-        array[index].selectedMenuIndex = index;
-        this.setState({
-            userHomeNumber: array,
-            isHomeRefreshed: !this.state.isHomeRefreshed,
-            selectedIndex: index
-        });
-    }
-
-    renderHomeNumberInformation = () => ({ item, index }) => {
-        return (<UserPhoneInformation
-            mobileNumberType={item.mobileNumberType}
-            mobileNumber={item.mobileNumber}
-            mobilePreferredTime={item.mobilePreferredTime}
-            isPrimaryMobile={item.isPrimaryMobile}
-            onMobileToggle={this.onMobileToggle(item, index, 'home')}
-            onMenuOptionClicked={this.onMenuOptionClickedHome(item, index)}
-            selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0} />)
-    };
-
-    // Work Informations
-
-    onMenuOptionClickedWork = (item, index) => () => {
-        var array = [...this.state.userWorkNumber];
-        array[index].selectedMenuIndex = index;
-        this.setState({
-            userWorkNumber: array,
-            isWorkRefreshed: !this.state.isWorkRefreshed,
-            selectedIndex: index
-        });
-    }
-
-    renderWorkNumberInformation = () => ({ item, index }) => {
-        return (<UserPhoneInformation
-            mobileNumberType={item.mobileNumberType}
-            mobileNumber={item.mobileNumber}
-            mobilePreferredTime={item.mobilePreferredTime}
-            isPrimaryMobile={item.isPrimaryMobile}
-            onMobileToggle={this.onMobileToggle(item, index, 'work')}
-            onMenuOptionClicked={this.onMenuOptionClickedWork(item, index)}
-            selectedMenuIndex={index == this.state.selectedIndex ? 1 : 0} />)
-    };
 
     updatePrimaryMobile = () => {
         const updateMobileNumber = this.getUpdateMobile();
@@ -502,7 +589,7 @@ class editPhoneInfoComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={ImagesLoad.applicationLogo} />
                     </View>
 
                     <View style={styles.whiteBackground}>
@@ -513,9 +600,9 @@ class editPhoneInfoComponent extends Component {
 
                     <View style={styles.whiteBackground}>
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/twitterlogo.png")} />
+                            source={ImagesLoad.twitterlogo} />
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/linkedinlogo.png")} />
+                            source={ImagesLoad.linkedinlogo} />
                     </View>
 
                     <View style={styles.privacyAgreement}>
@@ -550,4 +637,4 @@ class editPhoneInfoComponent extends Component {
     }
 }
 
-export default editPhoneInfoComponent;
+export default EditPhoneInfoComponent;

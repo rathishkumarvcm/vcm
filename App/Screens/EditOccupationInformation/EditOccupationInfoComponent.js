@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image, ScrollView } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GDropDownComponent, GLoadingSpinner } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GInputComponent, GDropDownComponent, GLoadingSpinner } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+import ImagesLoad from '../../Images/ImageIndex';
 
 let tempEmploymentClass = [
     {
@@ -174,7 +175,7 @@ class editOccupationInfoComponent extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
         const stateCityResponseData = ActionTypes.GET_STATECITY;
         const addressResponseData = ActionTypes.GET_ADDRESSFORMAT;
 
@@ -283,7 +284,7 @@ class editOccupationInfoComponent extends Component {
             isValidOccupation: true
         });
 
-        if (this.state.employeeOccupationValue.length.toString() == 29) {
+        if (this.state.employeeOccupationValue.length.toString() === "29") {
             this.setState({
                 isValidOccupation: false,
                 validOccupationMsg: 'Max. character length exceeded'
@@ -297,7 +298,7 @@ class editOccupationInfoComponent extends Component {
             isValidName: true
         });
 
-        if (this.state.employeeNameValue.length.toString() == 29) {
+        if (this.state.employeeNameValue.length.toString() === "29") {
             this.setState({
                 isValidName: false,
                 validNameMsg: 'Max. character length exceeded'
@@ -432,7 +433,6 @@ class editOccupationInfoComponent extends Component {
 
     manageEmployeeInformations = () => {
         const payloadData = this.getProfilePayloadData();
-        console.log("@@@@@@@@ Status ::", payloadData);
         this.props.saveProfileData("editEmploymentInformations", payloadData);
         this.props.navigation.navigate('profileSettings');
     }
@@ -462,7 +462,6 @@ class editOccupationInfoComponent extends Component {
 
     manageEmployeeRetired = () => {
         const payloadIsRetired = this.getRetiredStatus();
-        console.log("######## Status ::", payloadIsRetired);
         this.props.saveProfileData('addEmploymentStatus', payloadIsRetired);
         this.props.navigation.navigate('profileSettings');
     }
@@ -701,7 +700,15 @@ class editOccupationInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.validateEmploymentValues} />
+                            onPress={this.editOccupationOnCancel} />
+                    </View>
+
+                    <View style={styles.editFlexDirectionColumn}>
+                        <GButtonComponent
+                            buttonStyle={styles.saveButtonStyle}
+                            buttonText={globalString.common.validate}
+                            textStyle={styles.saveButtonText}
+                            onPress={this.validateZipAddress} />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -709,7 +716,7 @@ class editOccupationInfoComponent extends Component {
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
                             textStyle={styles.saveButtonText}
-                            onPress={this.validateZipAddress} />
+                            onPress={this.validateEmploymentValues} />
                     </View>
 
                     <View style={styles.newVictorySection}>
@@ -723,7 +730,7 @@ class editOccupationInfoComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")}
+                            source={ImagesLoad.applicationLogo}
                         />
                     </View>
 
