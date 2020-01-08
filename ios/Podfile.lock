@@ -57,6 +57,8 @@ PODS:
     - React-cxxreact (= 0.60.5)
     - React-jsi (= 0.60.5)
   - React-jsinspector (0.60.5)
+  - react-native-document-picker (3.2.4):
+    - React
   - react-native-html-to-pdf (0.8.0):
     - React
   - react-native-image-picker (1.1.0):
@@ -97,6 +99,10 @@ PODS:
     - React
   - RNGestureHandler (1.4.1):
     - React
+  - RNReanimated (1.4.0):
+    - React
+  - RNScreens (2.0.0-alpha.22):
+    - React
   - RNSecureKeyStore (1.0.0):
     - React
   - RNShare (2.0.0):
@@ -120,6 +126,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-html-to-pdf (from `../node_modules/react-native-html-to-pdf`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
@@ -138,6 +145,8 @@ DEPENDENCIES:
   - rn-fetch-blob (from `../node_modules/rn-fetch-blob`)
   - RNAWSCognito (from `../node_modules/amazon-cognito-identity-js`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNReanimated (from `../node_modules/react-native-reanimated`)
+  - RNScreens (from `../node_modules/react-native-screens`)
   - RNSecureKeyStore (from `../node_modules/react-native-secure-key-store/ios`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -146,7 +155,7 @@ DEPENDENCIES:
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/cocoapods/specs.git:
     - boost-for-react-native
     - JKBigInteger2
 
@@ -171,6 +180,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-document-picker:
+    :path: "../node_modules/react-native-document-picker"
   react-native-html-to-pdf:
     :path: "../node_modules/react-native-html-to-pdf"
   react-native-image-picker:
@@ -207,6 +218,10 @@ EXTERNAL SOURCES:
     :path: "../node_modules/amazon-cognito-identity-js"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNReanimated:
+    :path: "../node_modules/react-native-reanimated"
+  RNScreens:
+    :path: "../node_modules/react-native-screens"
   RNSecureKeyStore:
     :path: "../node_modules/react-native-secure-key-store/ios"
   RNShare:
@@ -233,6 +248,7 @@ SPEC CHECKSUMS:
   React-jsi: 4d8c9efb6312a9725b18d6fc818ffc103f60fec2
   React-jsiexecutor: 90ad2f9db09513fc763bc757fdc3c4ff8bde2a30
   React-jsinspector: e08662d1bf5b129a3d556eb9ea343a3f40353ae4
+  react-native-document-picker: c36bf5f067a581657ecaf7124dcd921a8be19061
   react-native-html-to-pdf: be2f7a88b33a12b481b771d1bf172dca5968ef50
   react-native-image-picker: 3637d63fef7e32a230141ab4660d3ceb773c824f
   react-native-pdf: 34ac241e3a373da9d69a414fedfca58ec54dd9bc
@@ -251,6 +267,8 @@ SPEC CHECKSUMS:
   rn-fetch-blob: 651b8d076b43d0d7aa294a3d9ec16c00aab8bef9
   RNAWSCognito: 5c0df55a382a2f23ae81ec6e717975880002dd63
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
+  RNReanimated: b2ab0b693dddd2339bd2f300e770f6302d2e960c
+  RNScreens: 6adf01eb4080f44af6cca551207c6b0505066857
   RNSecureKeyStore: f1ad870e53806453039f650720d2845c678d89c8
   RNShare: 8b171d4b43c1d886917fdd303bf7a4b87167b05c
   RNSVG: 435cda60cd9e1ea6188eb0e21c12fc0f85def8e8
@@ -260,4 +278,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 9c732d2041cc95a6e84d6ba2988420d3b8c9c503
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.6.1
