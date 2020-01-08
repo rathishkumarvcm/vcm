@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 

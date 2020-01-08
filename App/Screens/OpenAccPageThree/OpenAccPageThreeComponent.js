@@ -1570,17 +1570,17 @@ class OpenAccPageThreeComponent extends Component {
 
                                                 {
                                                     item.fundingOptionDropDown === "Initial and Monthly Investment" && (
-                                                    <View style={{flexGrow:1}}>
+                                                    <View style={styles.commonColView}>
                                                         <Text style={styles.lblTxt}>
                                                             {gblStrings.accManagement.monthlyInvestment}
                                                         </Text>
-                                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: scaledHeight(7) }}>
-                                                            <Text style={{ color: '#56565A', fontSize: scaledHeight(16) }}>
+                                                        <View style={styles.monthInvestmentContainer}>
+                                                            <Text style={styles.dollarTxt}>
                                                                 $
                                                             </Text>
                                                             <GInputComponent
                                                                 inputref={this.setInputRef(`monthlyInvestment${index}`)}
-                                                                propInputStyle={{ width: '90%' }}
+                                                                propInputStyle={styles.initInvestTxtBox}
                                                                 maxLength={gblStrings.maxLength.monthlyInvestment}
                                                                 placeholder="Monthly Investment"
                                                                 value={item.monthlyInvestment}
@@ -1623,12 +1623,12 @@ class OpenAccPageThreeComponent extends Component {
                                 })}
 
                                 <View style={styles.investmentSectionFooter}>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: scaledHeight(20) }}>
+                                    <View style={styles.totalAmountContainer}>
 
-                                        <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
+                                        <Text style={styles.totalAmountTxt}>
                                             {gblStrings.accManagement.total}
                                         </Text>
-                                        <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
+                                        <Text style={styles.totalAmountTxt}>
                                             {totalInitialInvestment}
                                         </Text>
                                     </View>

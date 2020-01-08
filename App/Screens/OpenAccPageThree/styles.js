@@ -88,6 +88,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: scaledHeight(19),
         paddingVertical: scaledHeight(10),
     },
+    callTollFee: {
+        color: '#333333DE',
+        fontSize: scaledHeight(15),
+        lineHeight: 22,
+        textAlign: 'center'
+    },
+    callTollFeeNo: {
+        color: '#333333DE',
+        fontSize: scaledHeight(18),
+        fontWeight: 'bold',
+        lineHeight: 22,
+        textAlign: 'center'
+    },
     childSectionGrp: {
         flexGrow: 1
     },
@@ -102,14 +115,17 @@ const styles = StyleSheet.create({
         marginVertical: scaledHeight(15),
         padding: scaledHeight(15)
     },
+    commonColView: {
+        flexGrow: 1
+    },
     compareFundsBtn: {
         alignContent: 'center',
         backgroundColor: '#FFFFFF',
-        borderColor: "#61285F45",       
+        borderColor: "#61285F45",
         borderWidth: 1,
-        height: scaledHeight(60),      
+        height: scaledHeight(60),
         justifyContent: 'center',
-        marginBottom:scaledHeight(5),
+        marginBottom: scaledHeight(5),
         marginTop: scaledHeight(15),
         paddingHorizontal: scaledHeight(25),
         width: '72%'
@@ -119,8 +135,8 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
-       //  width: '80%',
-       textAlign: 'center'
+        //  width: '80%',
+        textAlign: 'center'
     },
     contactMSR: {
         alignContent: 'center',
@@ -151,20 +167,26 @@ const styles = StyleSheet.create({
         color: '#56565A',
         lineHeight: 25
     },
+
     disclaimerTxt: {
         color: '#56565A',
         fontSize: scaledHeight(16),
         lineHeight: 25
 
     },
+    dollarTxt: {
+        color: '#56565A',
+        fontSize: scaledHeight(16)
+    },
+
     dropDownLayout: {
         //  alignItems: "flex-start",
         //  justifyContent: "flex-start",
-         marginLeft: '0%',
-         marginRight: '0%',
-         marginTop: scaledHeight(25),
-         width: '100%'
-     },
+        marginLeft: '0%',
+        marginRight: '0%',
+        marginTop: scaledHeight(25),
+        width: '100%'
+    },
     dropDownPostition: {
         left: 0,
         marginLeft: scaledHeight(20),
@@ -173,20 +195,20 @@ const styles = StyleSheet.create({
         width: "100%"
 
     },
-
     dropDownTextName: {
-         borderColor:'blue',
-         color: 'rgba(51, 51, 51, 0.87)',
-         fontSize: scaledHeight(16),
-         fontWeight: 'bold',
-         marginBottom: scaledHeight(9),
-         marginLeft: '0%',
-         marginRight: '0%',
-         paddingLeft: '0%',
-         paddingRight: '0%',
-         width: '100%'
- 
-     },
+        borderColor: 'blue',
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginBottom: scaledHeight(9),
+        marginLeft: '0%',
+        marginRight: '0%',
+        paddingLeft: '0%',
+        paddingRight: '0%',
+        width: '100%'
+
+    },
+
     editFlexDirectionColumn: {
         flexDirection: 'column',
         marginTop: scaledHeight(20),
@@ -203,7 +225,6 @@ const styles = StyleSheet.create({
         marginVertical: scaledHeight(12),
 
     },
-
     expandCollpaseTxt: {
         color: '#56565A',
         fontSize: scaledHeight(15),
@@ -213,9 +234,9 @@ const styles = StyleSheet.create({
     filterFundsBtn: {
         alignContent: 'center',
         backgroundColor: '#FFFFFF',
-        borderColor: "#61285F45",        
+        borderColor: "#61285F45",
         borderWidth: 1,
-        height: scaledHeight(60),      
+        height: scaledHeight(60),
         justifyContent: 'center',
         marginTop: scaledHeight(25),
         paddingHorizontal: scaledHeight(25),
@@ -241,7 +262,15 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         width: '80%'
     },
-
+    initInvestTxtBox: {
+        width: '90%'
+    },
+    initInvestmentContainer: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: scaledHeight(7)
+    },
     investmentSection: {
         backgroundColor: '#FFFFFF',
         borderColor: '#70707080',
@@ -252,7 +281,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: scaledHeight(20)
 
     },
-     investmentSectionFooter: {
+    investmentSectionFooter: {
         backgroundColor: '#FFFFFF',
         borderColor: '#70707080',
         borderTopColor: "#FFFFFF",
@@ -261,7 +290,7 @@ const styles = StyleSheet.create({
         //   padding: scaledHeight(20)
 
     },
-    labOR:{
+    labOR: {
         color: '#333333DE',
         fontSize: scaledHeight(18),
         lineHeight: 22,
@@ -297,6 +326,7 @@ const styles = StyleSheet.create({
         lineHeight: 25,
         marginBottom: scaledHeight(25)
     },
+
     lblMSRTxt: {
         color: '#000000',
         fontSize: scaledHeight(15),
@@ -324,6 +354,7 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         lineHeight: 28
     },
+
     lblRadioDescTxt: {
         color: '#333333DE',
         flexWrap: 'wrap',
@@ -338,7 +369,6 @@ const styles = StyleSheet.create({
         width: '40%',
 
     },
-
     lblRowtitleTxt: {
         color: '#0D7CB5',
         fontSize: scaledHeight(22),
@@ -363,6 +393,7 @@ const styles = StyleSheet.create({
         textDecorationStyle: 'solid'
 
     },
+
     lblSpecimenDesc: {
         color: '#333333DE',
         fontSize: scaledHeight(11),
@@ -370,12 +401,19 @@ const styles = StyleSheet.create({
         textAlign: 'left'
 
     },
-
     lblTxt: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
         marginTop: scaledHeight(25)
+    },
+
+    mininitialInvestment: {
+        color: '#56565A',
+        fontSize: scaledHeight(12),
+        marginTop: scaledHeight(12),
+        textAlign: 'right',
+        width: '100%'
     },
     modalActionContainer: {
         flexDirection: 'row',
@@ -419,6 +457,9 @@ const styles = StyleSheet.create({
 
     },
 
+
+
+
     modalClearFilterBtn: {
         alignContent: 'center',
         alignItems: 'center',
@@ -442,6 +483,8 @@ const styles = StyleSheet.create({
         paddingRight: '4%',
         paddingTop: scaledHeight(15),
     },
+
+
     modalFundCheckBoxContainer: {
         marginLeft: '4%',
         marginRight: '4%',
@@ -459,7 +502,6 @@ const styles = StyleSheet.create({
         marginBottom: scaledHeight(16),
         marginTop: scaledHeight(18),
     },
-
     modalRiskCheckBoxContainer: {
         marginLeft: '4%',
         marginRight: '4%',
@@ -469,10 +511,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '80%',
     },
-
-
-
-
     modalTitleText: {
         color: '#56565A',
         fontSize: scaledHeight(26),
@@ -484,8 +522,12 @@ const styles = StyleSheet.create({
     modalTitleView: {
         flexDirection: 'row',
     },
-
-
+    monthInvestmentContainer: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: scaledHeight(7)
+    },
     moreTxt: {
         color: '#61285F',
         fontSize: scaledHeight(16),
@@ -567,6 +609,29 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         marginTop: scaledHeight(19)
     },
+    radioCol1: {
+        marginBottom: scaledHeight(0),
+        width: "50%"
+    },
+    radioCol2: {
+        marginBottom: scaledHeight(0),
+        width: "50%"
+
+    },
+    removeInvestment: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginTop: scaledHeight(22)
+    },
+    removeInvestmentTxt: {
+        color: '#61285F',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        lineHeight: 20,
+        textAlign: 'right',
+        width: '100%'
+    },
     rowHeaderItem: {
         flexDirection: 'row',
         alignItems: 'flex-start',
@@ -601,6 +666,9 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: scaledHeight(16)
     },
+    scrollView: {
+        flex: .85
+    },
     sectionDescTxt: {
         color: '#56565A',
         fontSize: scaledHeight(18),
@@ -619,6 +687,16 @@ const styles = StyleSheet.create({
         marginLeft: '4%',
         marginRight: '4%',
         marginTop: scaledHeight(10)
+    },
+    showAllItemsContainer: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    showAllItemsTxt: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'flex-start'
     },
     showPagesNosTxt: {
         color: '#584f58',
@@ -654,77 +732,22 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         padding: scaledHeight(23),
     },
+    totalAmountContainer: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: scaledHeight(20)
+    },
+    totalAmountTxt: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold'
+    },
     touchItem: {
         //  width:scaledHeight(250),
         //   height:scaledHeight(250),
         marginVertical: scaledHeight(14),
-    },
-    radioCol1: {
-        marginBottom: scaledHeight(0),
-        width: "50%"
-    },
-    radioCol2: {
-        marginBottom: scaledHeight(0),
-        width: "50%"
-
-    },
-    scrollView: {
-        flex: .85
-    },
-    commonColView:{
-        flexGrow:1
-    },
-    removeInvestment:{
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        marginTop: scaledHeight(22) 
-    },
-    removeInvestmentTxt:{
-        fontSize: scaledHeight(16),
-        color: '#61285F',
-        fontWeight: 'bold',
-        width: '100%',
-        textAlign: 'right',
-        lineHeight: 20 
-    },
-    showAllItemsContainer:{ 
-     flexDirection: 'row',
-      alignItems: 'center',
-     justifyContent: 'space-between' 
-    },
-    showAllItemsTxt:{
-        flexDirection: 'row',
-         alignItems: 'center',
-          justifyContent: 'flex-start' 
-    },
-    callTollFee:{
-        fontSize: scaledHeight(15),
-         color: '#333333DE',
-          textAlign: 'center',
-           lineHeight: 22
-    },
-    callTollFeeNo:{
-        fontSize: scaledHeight(18),
-         fontWeight: 'bold',
-          color: '#333333DE',
-           textAlign: 'center', 
-           lineHeight: 22 
-    },
-    initInvestmentContainer:{
-         flexDirection: 'row',
-          justifyContent: 'space-between',
-           alignItems: 'center',
-            marginTop: scaledHeight(7)
-    },
-    dollarTxt:{ 
-        color:'#56565A',
-         fontSize: scaledHeight(16)
-         },
-   initInvestTxtBox:{
-    width: '90%' 
-   },
-   mininitialInvestment:{ textAlign: 'right', width: '100%', color: '#56565A', fontSize: scaledHeight(12), marginTop: scaledHeight(12), }
+    }
 });
 
 export default styles;
