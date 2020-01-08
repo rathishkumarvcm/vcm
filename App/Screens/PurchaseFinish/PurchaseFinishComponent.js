@@ -6,6 +6,7 @@ import { GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 let orderId = '';
+
 class PurchaseFinishComponent extends Component {
     constructor(props) {
         super(props);
@@ -14,10 +15,11 @@ class PurchaseFinishComponent extends Component {
     }
 
     render() {
-        orderId = this.props.navigation.getParam('orderId');
+        const {navigation}=this.props;
+        orderId = navigation.getParam('orderId');
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <View style={styles.backgroundFlex}>
                         <View style={styles.transactionStatusFlex}>

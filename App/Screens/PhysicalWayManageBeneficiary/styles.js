@@ -55,6 +55,20 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: scaledHeight(20)
     },
+    fileDescTextStyle: {
+        color: '#707070',
+        flex: 0.5,
+        fontSize: scaledHeight(14),
+        marginHorizontal: scaledHeight(20),
+        marginLeft: scaledHeight(30)
+    },
+    fileDescTextStyleError: {
+        color: '#de421b',
+        flex: 0.5,
+        fontSize: scaledHeight(14),
+        marginHorizontal: scaledHeight(20),
+        marginLeft: scaledHeight(30)
+    },
     fullLine: {
         backgroundColor: '#7B8288',
         height: scaledHeight(1),
@@ -129,17 +143,16 @@ const styles = StyleSheet.create({
         height: scaledHeight(50),
         justifyContent: 'center',
         marginHorizontal: scaledHeight(37),
-        marginVertical: scaledHeight(7.5),
-
+        marginVertical: scaledHeight(7.5)
     },
-    normalBlackBtnTxt: {
+    normalBlackBtnDisabledTxt: {
         color: '#fff',
         fontSize: scaledHeight(16),
         fontWeight: '600',
         textAlign: 'center',
         width: '100%'
     },
-    normalBlackBtnDisabledTxt: {
+    normalBlackBtnTxt: {
         color: '#fff',
         fontSize: scaledHeight(16),
         fontWeight: '600',
@@ -210,11 +223,15 @@ const styles = StyleSheet.create({
         shadowColor: "#00000029",
         shadowOffset: {
             width: 0,
-            height: 3
+            height: 2
         },
         shadowOpacity: 0.2,
-        shadowRadius: 1.41,
-        width: scaledHeight(110),
+        width:'30%',
+    },
+    selectedFileDescContainer: {
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row',
+        paddingVertical: scaledHeight(10),
     },
     selectFileText: {
         color: '#FFFFFF',

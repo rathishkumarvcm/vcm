@@ -235,7 +235,9 @@ const styles = StyleSheet.create({
     width: '100%',
     textAlign: 'center'
   },
-
+  marginTopStyle: {
+    marginTop: scaledHeight(15)
+  },
   normalBlackDisabledBtn: {
     borderWidth: 1,
     opacity: 0.5,

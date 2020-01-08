@@ -87,7 +87,7 @@ class PurchaseFourComponent extends Component {
         const month = new Date().getMonth() + 1;
         const year = new Date().getFullYear();
         const updatedDate = `${date} / ${month} / ${year}`;
-        const finalKey = menuList[menuList.length - 1];
+        const finalKey = menuList[menuList.length - 1].key + 1;
 
         if (this.state.ammend) {
             const pIndex = menuList.findIndex((item) => item.key === this.state.ammendIndex);
@@ -116,7 +116,7 @@ class PurchaseFourComponent extends Component {
             this.props.navigation.navigate('tAmmendComponent');
         }
         else {
-            const orderId = `Order ID - PUR0${year}${month}${date}`;
+            const orderId = `Order ID - PUR${year}${month}${date}${finalKey}`;
             const payloadData = {
                 "key": finalKey,
                 "title": orderId,
