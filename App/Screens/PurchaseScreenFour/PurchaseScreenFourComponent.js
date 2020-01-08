@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
-import { GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import { GHeaderComponent, GFooterSettingsComponent } from '../../CommonComponents';
 import { PageNumber } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
@@ -25,95 +25,106 @@ class PurchaseFourComponent extends Component {
     }
 
     getData = () => {
+        const { navigation, amendReducerData } = this.props;
         this.setState({
-            ammend: this.props.navigation.getParam('ammend'),
-            ammendData: this.props.navigation.getParam('data'),
-            ammendIndex: this.props.navigation.getParam('index')
+            ammend: navigation.getParam('ammend'),
+            ammendData: navigation.getParam('data'),
+            ammendIndex: navigation.getParam('index')
         });
-        if (this.props && this.props.amendReducerData && this.props.amendReducerData.menu) {
-            menuList = this.props.amendReducerData.menu;
+        if (this.props && amendReducerData && amendReducerData.menu) {
+            menuList = amendReducerData.menu;
         }
     }
 
     navigatePurchasePageOne = () => {
-        if (this.state.ammend) {
-            this.props.navigation.navigate('tAmmendComponent');
+        const { navigation } = this.props;
+        const { ammend } = this.state;
+        if (ammend) {
+            navigation.navigate('tAmmendComponent');
         }
         else {
-            this.props.navigation.navigate('purchaseScreenOne');
+            navigation.navigate('purchaseScreenOne');
         }
     }
 
     navigatePurchasePageThree = () => {
-        if (this.state.ammend) {
-            this.props.navigation.navigate('purchaseScreenThree', { ammend: true });
+        const { navigation } = this.props;
+        const { ammend } = this.state;
+        if (ammend) {
+            navigation.navigate('purchaseScreenThree', { ammend: true });
         }
         else {
-            this.props.navigation.navigate('purchaseScreenThree', { ammend: false });
+            navigation.navigate('purchaseScreenThree', { ammend: false });
         }
     }
 
     onClickEditAccountSelection = () => {
-        if (this.state.ammend) {
-            this.props.navigation.navigate('tAmmendComponent', { ammend: true });
+        const { navigation } = this.props;
+        const { ammend } = this.state;
+        if (ammend) {
+            navigation.navigate('tAmmendComponent', { ammend: true });
         }
         else {
-            this.props.navigation.navigate('purchaseScreenOne', { ammend: false });
+            navigation.navigate('purchaseScreenOne', { ammend: false });
         }
     }
 
     onClickEditSelectedFund = () => {
-
-        if (this.state.ammend) {
-            this.props.navigation.navigate('purchaseScreenTwo', { ammend: true });
+        const { navigation } = this.props;
+        const { ammend } = this.state;
+        if (ammend) {
+            navigation.navigate('purchaseScreenTwo', { ammend: true });
         }
         else {
-            this.props.navigation.navigate('purchaseScreenTwo', { ammend: false });
+            navigation.navigate('purchaseScreenTwo', { ammend: false });
         }
     }
 
     onClickEditFundingSource = () => {
-        if (this.state.ammend) {
-            this.props.navigation.navigate('purchaseScreenThree', { ammend: true });
+        const { navigation } = this.props;
+        const { ammend } = this.state;
+        if (ammend) {
+            navigation.navigate('purchaseScreenThree', { ammend: true });
         }
         else {
-            this.props.navigation.navigate('purchaseScreenThree', { ammend: false });
+            navigation.navigate('purchaseScreenThree', { ammend: false });
         }
     }
 
     onClickSave = () => {
-
+        const { navigation, ammendActions } = this.props;
+        const { ammend, ammendData, ammendIndex } = this.state;
         const date = new Date().getDate();
         const month = new Date().getMonth() + 1;
         const year = new Date().getFullYear();
         const updatedDate = `${date} / ${month} / ${year}`;
         const finalKey = menuList[menuList.length - 1].key + 1;
 
-        if (this.state.ammend) {
-            const pIndex = menuList.findIndex((item) => item.key === this.state.ammendIndex);
+        if (ammend) {
+            const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
             const amndObj = menuList[pIndex];
-            const transType = `${this.state.ammendData.TransactionType} Amended `;
+            const transType = `${ammendData.TransactionType} Amended `;
             const ammendPayloadData = {
                 "key": amndObj.key,
                 "title": amndObj.title,
                 "data": {
-                    "count": this.state.ammendData.count,
+                    "count": ammendData.count,
                     "Dateadded": updatedDate,
                     "TransactionType": transType,
-                    "OrderStatus": this.state.ammendData.OrderStatus,
-                    "totalSHares": this.state.ammendData.totalSHares,
-                    "worth": this.state.ammendData.worth,
+                    "OrderStatus": ammendData.OrderStatus,
+                    "totalSHares": ammendData.totalSHares,
+                    "worth": ammendData.worth,
                     "selectedAccountData": savedData.selectedAccountData,
                     "selectedFundData": savedData.selectedFundData,
                     "selectedFundSourceData": savedData.selectedFundSourceData,
                     "currentSecurities": savedData.currentSecurities,
                     "contribution": savedData.contribution,
-                    "estimated": this.state.ammendData.estimated
+                    "estimated": ammendData.estimated
                 }
             };
             menuList.splice(pIndex, 1, ammendPayloadData);
-            this.props.ammendActions(menuList);
-            this.props.navigation.navigate('tAmmendComponent');
+            ammendActions(menuList);
+            navigation.navigate('tAmmendComponent');
         }
         else {
             const orderId = `Order ID - PUR${year}${month}${date}${finalKey}`;
@@ -136,28 +147,30 @@ class PurchaseFourComponent extends Component {
                 }
             };
             menuList.push(payloadData);
-            this.props.ammendActions(menuList);
-            this.props.navigation.navigate('purchaseFinish', { orderId: orderId });
+            ammendActions(menuList);
+            navigation.navigate('purchaseFinish', { orderId: orderId });
         }
     }
 
     render() {
+        const { ammend } = this.state;
+        const { purchaseData, navigation } = this.props;
         let currentPage = 4;
         let pageName = `${currentPage} - ${gblStrings.purchase.reviewAndConfrm}`;
         let totalCount = 4;
-        if (this.state.ammend) {
+        if (ammend) {
             currentPage = 3;
             pageName = `${currentPage} - ${gblStrings.purchase.reviewAndConfrm}`;
             totalCount = 3;
         }
 
-        if (this.props.purchaseData && this.props.purchaseData.savePurchaseSelectedData) {
-            savedData = this.props.purchaseData.savePurchaseSelectedData;
+        if (this.props && purchaseData && purchaseData.savePurchaseSelectedData) {
+            savedData = purchaseData.savePurchaseSelectedData;
         }
 
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.flexContainer}>
@@ -190,11 +203,11 @@ class PurchaseFourComponent extends Component {
                             <Text style={styles.blackTextBold22px}>{savedData.selectedFundData.fundName}</Text>
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>Initial Investment</Text>
-                                <Text style={styles.greyText16px}>{savedData.selectedFundData.initialInvestment}</Text>
+                                <Text style={styles.greyText16px}>{`$ ${savedData.selectedFundData.initialInvestment}`}</Text>
                             </View>
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>Monthly Investment</Text>
-                                <Text style={styles.greyText16px}>{savedData.selectedFundData.monthlyInvestment}</Text>
+                                <Text style={styles.greyText16px}>{`$ ${savedData.selectedFundData.monthlyInvestment}`}</Text>
                             </View>
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>Start Date</Text>
@@ -221,16 +234,19 @@ class PurchaseFourComponent extends Component {
                             <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.paymentMode}</Text>
                         </View>
 
-                        {
-                            (savedData.selectedFundSourceData.paymentMode === "Check" || "Wire Transfer") ?
+                        {(savedData.selectedFundSourceData.fundSourceType === "Offline") ?
+                            (
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalInvestment}</Text>
                                     <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.totalInvestment}</Text>
-                                </View> :
+                                </View>
+                            ) :
+                            (
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountNumber}</Text>
                                     <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.bankAccountNumber}</Text>
                                 </View>
+                            )
                         }
 
                         <View style={styles.horizontalFlex}>
@@ -281,14 +297,11 @@ class PurchaseFourComponent extends Component {
                         </TouchableOpacity>
                     </View>
 
-                    {/* ----------------------------------- Footer View -------------------------------- */}
 
-                    <View style={styles.fullLine} />
-                    <View style={styles.tNCFlex}>
-                        <Text style={styles.tNcHeader}>{gblStrings.userManagement.VCDiscalimerTitle}{"\n"}</Text>
-                        <Text style={styles.tNcBody}>{gblStrings.userManagement.VCDiscalimerDesc}{"\n"}{"\n"}{gblStrings.userManagement.VCPrivacyNoticeDesc} </Text>
-                    </View>
-                    <GFooterComponent />
+                    { /* ----------- Disclaimer -------------------*/}
+
+                    <GFooterSettingsComponent />
+
                 </ScrollView>
 
             </View>

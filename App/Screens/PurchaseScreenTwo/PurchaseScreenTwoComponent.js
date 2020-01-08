@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList, Modal } from 'react-native';
 import PropTypes from "prop-types";
-import { GIcon, GInputComponent, GHeaderComponent, GDateComponent, GDropDownComponent, GButtonComponent, GFooterComponent } from '../../CommonComponents';
+import { GIcon, GInputComponent, GHeaderComponent, GDateComponent, GDropDownComponent, GButtonComponent, GFooterSettingsComponent } from '../../CommonComponents';
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { CustomCheckBox, PageNumber } from '../../AppComponents';
@@ -66,21 +66,24 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     componentDidMount() {
+        const { navigation } = this.props;
         this.getLookUpData();
-        ammendData = this.props.navigation.getParam('data');
-        ammendIndex = this.props.navigation.getParam('index');
+        ammendData = navigation.getParam('data');
+        ammendIndex = navigation.getParam('index');
     }
 
     componentDidUpdate(prevProps) {
         if (this.props !== prevProps) {
+            const { accOpeningData } = this.props;
+            const { ammend } = this.state;
             let tempFundListData = [];
-            if (this.props.accOpeningData[ActionTypes.GET_FUNDLIST] !== undefined && this.props.accOpeningData[ActionTypes.GET_FUNDLIST].Items !== null) {
-                tempFundListData = this.props.accOpeningData[ActionTypes.GET_FUNDLIST].Items;
+            if (accOpeningData[ActionTypes.GET_FUNDLIST] !== undefined && accOpeningData[ActionTypes.GET_FUNDLIST].Items !== null) {
+                tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST].Items;
                 this.setState({
                     fundList: [...tempFundListData],
                     isFilterApplied: false
                 });
-                if (this.state.ammend) {
+                if (ammend) {
                     tempFundListData.map((item, k) => {
                         if (item.fundName === ammendData.selectedFundData.fundName) {
                             this.setState({ selectedFundIndex: k });
@@ -94,16 +97,18 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     getLookUpData = () => {
-        if (this.props.navigation.getParam('ammend')) {
+        const { navigation, getFundListData, masterLookupStateData, getCompositeLookUpData } = this.props;
+        const { fundList } = this.state;
+        if (navigation.getParam('ammend')) {
             this.setState({ ammend: true });
         }
         else {
             this.setState({ ammend: false });
         }
 
-        if (this.state && this.state.fundList && !this.state.fundList.length > 0) {
+        if (this.state && fundList && !fundList.length > 0) {
             const fundListPayload = {};
-            this.props.getFundListData(fundListPayload);
+            getFundListData(fundListPayload);
         }
 
         const payload = [];
@@ -115,45 +120,49 @@ class PurchaseScreenTwoComponent extends Component {
             "filter_risk"
         ];
 
-        for (let i = 0; i < compositePayloadData.length; i = i + 1) {
+        for (let i = 0; i < compositePayloadData.length; i += 1) {
             const tempkey = compositePayloadData[i];
-            if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempkey]) {
+            if (this.props && masterLookupStateData && !masterLookupStateData[tempkey]) {
                 payload.push(tempkey);
             }
         }
-        this.props.getCompositeLookUpData(payload);
+        getCompositeLookUpData(payload);
     }
 
     /* ---------------Button Events ------------------- */
     goBack = () => {
-        this.props.navigation.goBack();
+        const { navigation } = this.props;
+        navigation.goBack();
     }
 
     onClickCancel = () => {
-        if (this.state.ammend) {
-            this.props.navigation.navigate('tAmmendComponent');
+        const { navigation } = this.props;
+        const { ammend } = this.state;
+        if (ammend) {
+            navigation.navigate('tAmmendComponent');
         }
         else {
-            this.props.navigation.navigate('purchaseScreenOne');
+            navigation.navigate('purchaseScreenOne');
         }
     }
 
     /* ----------------- Filter Events ------------------ */
     onCheckboxSelect = (type, item, index) => () => {
+        const { filterMinData, filterRiskData, filterFundData } = this.state;
         let newItm = [];
         switch (type) {
             case 'minInvest':
-                newItm = [...this.state.filterMinData];
+                newItm = [...filterMinData];
                 newItm[index].isActive = !newItm[index].isActive;
                 this.setState({ filterMinData: newItm });
                 break;
             case 'risk':
-                newItm = [...this.state.filterRiskData];
+                newItm = [...filterRiskData];
                 newItm[index].isActive = !newItm[index].isActive;
                 this.setState({ filterRiskData: newItm });
                 break;
             case 'fundType':
-                newItm = [...this.state.filterFundData];
+                newItm = [...filterFundData];
                 newItm[index].isActive = !newItm[index].isActive;
                 this.setState({ filterFundData: newItm });
                 break;
@@ -163,20 +172,22 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     setModalVisible = (visible) => () => {
-        if (!visible && !this.state.applyFilterState) {
+        const { applyFilterState } = this.state;
+        if (!visible && !applyFilterState) {
             this.clearFilterAction();
         }
         this.setState({ modalVisible: visible });
-        if (!this.state.applyFilterState) {
+        if (!applyFilterState) {
             this.constructFilterData();
         }
     }
 
     clearFilterAction = () => {
+        const { filterMinData, filterRiskData, filterFundData } = this.state;
         this.setState({ applyFilterState: false });
-        const tempMin = [...this.state.filterMinData];
-        const tempRisk = [...this.state.filterRiskData];
-        const tempFund = [...this.state.filterFundData];
+        const tempMin = [...filterMinData];
+        const tempRisk = [...filterRiskData];
+        const tempFund = [...filterFundData];
 
         this.setState({
             filterMinData: [...tempMin.map(v => ({ ...v, isActive: false }))],
@@ -186,6 +197,7 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     constructFilterData = () => {
+        const { masterLookupStateData } = this.props;
         const tempKeyMinInv = 'filter_min_inv';
         const tempKeyRisk = 'filter_risk';
         const tempKeyFundType = 'filter_fund_type';
@@ -193,16 +205,16 @@ class PurchaseScreenTwoComponent extends Component {
         let tempRiskData = [];
         let tempFundTypeData = [];
 
-        if (tempKeyMinInv !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempKeyMinInv] && this.props.masterLookupStateData[tempKeyMinInv].value) {
-            tempMinInvData = this.props.masterLookupStateData[tempKeyMinInv].value;
+        if (tempKeyMinInv !== "" && this.props && masterLookupStateData && masterLookupStateData[tempKeyMinInv] && masterLookupStateData[tempKeyMinInv].value) {
+            tempMinInvData = masterLookupStateData[tempKeyMinInv].value;
         }
 
-        if (tempKeyRisk !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempKeyRisk] && this.props.masterLookupStateData[tempKeyRisk].value) {
-            tempRiskData = this.props.masterLookupStateData[tempKeyRisk].value;
+        if (tempKeyRisk !== "" && this.props && masterLookupStateData && masterLookupStateData[tempKeyRisk] && masterLookupStateData[tempKeyRisk].value) {
+            tempRiskData = masterLookupStateData[tempKeyRisk].value;
         }
 
-        if (tempKeyFundType !== "" && this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempKeyFundType] && this.props.masterLookupStateData[tempKeyFundType].value) {
-            tempFundTypeData = this.props.masterLookupStateData[tempKeyFundType].value;
+        if (tempKeyFundType !== "" && this.props && masterLookupStateData && masterLookupStateData[tempKeyFundType] && masterLookupStateData[tempKeyFundType].value) {
+            tempFundTypeData = masterLookupStateData[tempKeyFundType].value;
         }
 
         this.setState({
@@ -213,6 +225,8 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     applyFilterAction = (visible) => () => {
+        const { filterMinData, filterRiskData, filterFundData } = this.state;
+        const { getFundListData } = this.props;
         this.setState({
             modalVisible: visible,
             applyFilterState: true,
@@ -221,10 +235,10 @@ class PurchaseScreenTwoComponent extends Component {
         });
 
         let minInvestKey = "";
-        this.state.filterMinData.map((item) => {
+        filterMinData.map((item) => {
             if (item.isActive) {
                 if (minInvestKey !== null && minInvestKey !== "") {
-                    minInvestKey = minInvestKey.concat("|" + item.value);
+                    minInvestKey = minInvestKey.concat(`| ${item.value}`);
                 } else {
                     minInvestKey = item.value;
                 }
@@ -233,10 +247,10 @@ class PurchaseScreenTwoComponent extends Component {
         });
 
         let riskKey = "";
-        this.state.filterRiskData.map((item) => {
+        filterRiskData.map((item) => {
             if (item.isActive) {
                 if (riskKey !== null && riskKey !== "") {
-                    riskKey = riskKey.concat("|" + item.key);
+                    riskKey = riskKey.concat(`| ${item.key}`);
                 } else {
                     riskKey = item.key;
                 }
@@ -245,10 +259,10 @@ class PurchaseScreenTwoComponent extends Component {
         });
 
         let fundKey = "";
-        this.state.filterFundData.map((item) => {
+        filterFundData.map((item) => {
             if (item.isActive) {
                 if (fundKey !== null && fundKey !== "") {
-                    fundKey = fundKey.concat("|" + item.key);
+                    fundKey = fundKey.concat(`| ${item.key}`);
                 } else {
                     fundKey = item.key;
                 }
@@ -257,7 +271,7 @@ class PurchaseScreenTwoComponent extends Component {
         });
 
         const fundListPayload = { 'minInvestment': minInvestKey };
-        this.props.getFundListData(fundListPayload);
+        getFundListData(fundListPayload);
     }
 
     navigateCompareFunds = () => {
@@ -286,6 +300,7 @@ class PurchaseScreenTwoComponent extends Component {
         if (str === "" || str === undefined || str === "null" || str === "undefined") {
             return true;
         }
+        return false;
     }
 
     onValidate = () => {
@@ -316,23 +331,23 @@ class PurchaseScreenTwoComponent extends Component {
     onValidateEach = () => {
         let isErr = false;
         let isValidationSuccess = false;
-
-        if (this.isEmpty(this.state.selectedFundInvestmentData.fundingOption)) {
+        const { selectedFundInvestmentData } = this.state;
+        if (this.isEmpty(selectedFundInvestmentData.fundingOption)) {
             this.onUpdateField("fundingOptionValidation", false);
             isErr = true;
         }
 
-        if (this.isEmpty(this.state.selectedFundInvestmentData.initialInvestment)) {
+        if (this.isEmpty(selectedFundInvestmentData.initialInvestment)) {
             this.onUpdateField("initialInvestmentValidation", false);
             isErr = true;
         }
 
-        if (this.state.selectedFundInvestmentData.fundingOption === 'Initial and Monthly Investment') {
-            if (this.isEmpty(this.state.selectedFundInvestmentData.monthlyInvestment)) {
+        if (selectedFundInvestmentData.fundingOption === 'Initial and Monthly Investment') {
+            if (this.isEmpty(selectedFundInvestmentData.monthlyInvestment)) {
                 this.onUpdateField("monthlyInvestmentValidation", false);
                 isErr = true;
             }
-            if (this.isEmpty(this.state.selectedFundInvestmentData.startDate)) {
+            if (this.isEmpty(selectedFundInvestmentData.startDate)) {
                 this.onUpdateField("startDateValidation", false);
                 isErr = true;
             }
@@ -346,19 +361,21 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     onClickSave = () => {
-        if (this.state.ammend) {
+        const { selectedFundInvestmentData, ammend, totalInitialInvestment } = this.state;
+        const { saveData, navigation } = this.props;
+        if (ammend) {
             const ammendPayloadData = {
                 savePurchaseSelectedData: {
                     "selectedAccountData": ammendData.selectedAccountData,
                     "selectedFundData": {
-                        "fundName": this.state.selectedFundInvestmentData.fundName,
-                        "fundNumber": this.state.selectedFundInvestmentData.fundNumber,
-                        "fundingOption": this.state.selectedFundInvestmentData.fundingOption,
-                        "initialInvestment": this.state.selectedFundInvestmentData.initialInvestment,
-                        "monthlyInvestment": this.state.selectedFundInvestmentData.monthlyInvestment,
-                        "startDate": this.state.selectedFundInvestmentData.startDate,
+                        "fundName": selectedFundInvestmentData.fundName,
+                        "fundNumber": selectedFundInvestmentData.fundNumber,
+                        "fundingOption": selectedFundInvestmentData.fundingOption,
+                        "initialInvestment": selectedFundInvestmentData.initialInvestment,
+                        "monthlyInvestment": selectedFundInvestmentData.monthlyInvestment,
+                        "startDate": selectedFundInvestmentData.startDate,
                         "count": '',
-                        "total": this.state.totalInitialInvestment
+                        "total": totalInitialInvestment
                     },
                     "selectedFundSourceData": ammendData.selectedFundSourceData,
                     "currentSecurities": ammendData.currentSecurities,
@@ -366,27 +383,27 @@ class PurchaseScreenTwoComponent extends Component {
                     "estimated": ammendData.estimated
                 }
             };
-            this.props.saveData(ammendPayloadData);
-            this.props.navigation.navigate('purchaseScreenThree', { ammend: true, index: ammendIndex, data: ammendData });
+            saveData(ammendPayloadData);
+            navigation.navigate('purchaseScreenThree', { ammend: true, index: ammendIndex, data: ammendData });
         }
         else {
             const payloadData = {
                 savePurchaseSelectedData: {
                     ...savedData,
                     "selectedFundData": {
-                        "fundName": this.state.selectedFundInvestmentData.fundName,
-                        "fundNumber": this.state.selectedFundInvestmentData.fundNumber,
-                        "fundingOption": this.state.selectedFundInvestmentData.fundingOption,
-                        "initialInvestment": this.state.selectedFundInvestmentData.initialInvestment,
-                        "monthlyInvestment": this.state.selectedFundInvestmentData.monthlyInvestment,
-                        "startDate": this.state.selectedFundInvestmentData.startDate,
+                        "fundName": selectedFundInvestmentData.fundName,
+                        "fundNumber": selectedFundInvestmentData.fundNumber,
+                        "fundingOption": selectedFundInvestmentData.fundingOption,
+                        "initialInvestment": selectedFundInvestmentData.initialInvestment,
+                        "monthlyInvestment": selectedFundInvestmentData.monthlyInvestment,
+                        "startDate": selectedFundInvestmentData.startDate,
                         "count": '',
-                        "total": this.state.totalInitialInvestment
+                        "total": totalInitialInvestment
                     },
                 }
             };
-            this.props.saveData(payloadData);
-            this.props.navigation.navigate('purchaseScreenThree', { ammend: false });
+            saveData(payloadData);
+            navigation.navigate('purchaseScreenThree', { ammend: false });
         }
     }
 
@@ -401,8 +418,9 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     onSelectFund = (item, index) => () => {
+        const { ammend } = this.state;
         const tempData = {};
-        if (!this.state.ammend) {
+        if (!ammend) {
             tempData.fundName = item.fundName;
             tempData.fundNumber = item.fundNumber;
             tempData.fundingOption = "";
@@ -423,7 +441,7 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     onAmmendFund = () => {
-        let tempData = {};
+        const tempData = {};
         if (ammendData) {
             tempData.fundName = ammendData.selectedFundData.fundName;
             tempData.fundNumber = ammendData.selectedFundData.fundNumber;
@@ -449,19 +467,22 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     onSelectedDropDownValue = (value) => {
-        const newData = this.state.selectedFundInvestmentData;
+        const { selectedFundInvestmentData } = this.state;
+        const newData = selectedFundInvestmentData;
         newData.fundingOption = value;
         this.setState({ selectedFundInvestmentData: newData });
     }
 
     onUpdateField = (keyName, data) => {
-        const newData = this.state.selectedFundInvestmentData;
+        const { selectedFundInvestmentData } = this.state;
+        const newData = selectedFundInvestmentData;
         newData[keyName] = data;
         this.setState({ selectedFundInvestmentData: newData });
     }
 
     onChangeDateForInvestment = (keyName) => date => {
-        const newData = this.state.selectedFundInvestmentData;
+        const { selectedFundInvestmentData } = this.state;
+        const newData = selectedFundInvestmentData;
         newData[keyName] = date;
         newData.fundingOptionValidation = true;
         newData.initialInvestmentValidation = true;
@@ -471,7 +492,8 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     onChangeTextForInvestment = (keyName) => text => {
-        const newData = this.state.selectedFundInvestmentData;
+        const { selectedFundInvestmentData } = this.state;
+        const newData = selectedFundInvestmentData;
         let total = 0;
         newData[keyName] = text;
         newData.fundingOptionValidation = true;
@@ -493,12 +515,45 @@ class PurchaseScreenTwoComponent extends Component {
 
     generateFundListKeyExtractor = (item) => item.fundNumber.toString();
 
+    renderFundList = ({ item, index }) => {
+        const { selectedFundIndex } = this.state;
+        return (
+            <View style={(selectedFundIndex === index) ? styles.fundItemStyleSelected : styles.fundItemStyle} onTouchStart={this.onSelectFund(item, index)}>
+                <View style={styles.fundItemHeaderView}>
+                    <Text style={styles.fundItemHeaderTxt}>{item.fundName}</Text>
+                    {item.existingFund ? <Text style={styles.existingFundStyle}>Existing Fund</Text> : null}
+                </View>
+                <View style={styles.lineStyle} />
+                <View style={styles.fundItemContntView}>
+                    <View style={styles.marginBottomStyle}>
+                        <Text style={styles.fundItemValueHeading}>Last NAV (Previous day close</Text>
+                        <Text style={styles.fundItemValueTxt}>$ 143</Text>
+                    </View>
+                    <View style={styles.marginBottomStyle}>
+                        <Text style={styles.fundItemValueHeading}>NAV in %</Text>
+                        <Text style={styles.fundItemValueTxt}>14.3</Text>
+                    </View>
+                    <View style={styles.marginBottomStyle}>
+                        <Text style={styles.fundItemValueHeading}>Min. / Max. Amount</Text>
+                        <Text style={styles.fundItemValueTxt}>$ 300/ $ 5000</Text>
+                    </View>
+                    <View style={styles.marginBottomStyle}>
+                        <Text style={styles.fundItemValueHeading}>52 week Min. / Max. Values</Text>
+                        <Text style={styles.fundItemValueTxt}>$ 3000 / $ 5000</Text>
+                    </View>
+                </View>
+            </View>
+        );
+    }
 
     render() {
+        const { ammend, fundList, selectedFundIndex, selectedFundInvestmentData, totalInitialInvestment, disableNextButton, modalVisible, filterMinData, filterRiskData, filterFundData } = this.state;
+        const { purchaseData, accOpeningData, masterLookupStateData, navigation } = this.props;
+
         let currentPage = 2;
         let pageName = `${currentPage} - ${gblStrings.purchase.investmentSelection}`;
         let totalCount = 4;
-        if (this.state.ammend) {
+        if (ammend) {
             currentPage = 1;
             pageName = `${currentPage} - ${gblStrings.purchase.investmentSelection}`;
             totalCount = 3;
@@ -509,21 +564,21 @@ class PurchaseScreenTwoComponent extends Component {
         const year = new Date().getFullYear();
         const currentDate = `${month}-${date}-${year}`;
 
-        if (this.props.purchaseData && this.props.purchaseData.savePurchaseSelectedData) {
-            savedData = this.props.purchaseData.savePurchaseSelectedData;
+        if (this.props && purchaseData && purchaseData.savePurchaseSelectedData) {
+            savedData = purchaseData.savePurchaseSelectedData;
         }
 
         return (
             <View style={styles.container}>
-                {this.props.accOpeningData.isLoading || this.props.masterLookupStateData.isLoading && <GLoadingSpinner />}
-                <GHeaderComponent navigation={this.props.navigation} />
+                {accOpeningData.isLoading || masterLookupStateData.isLoading && <GLoadingSpinner />}
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.topContainer}>
-                        <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountName} {this.state.ammend ? ammendData.selectedAccountData.accountName : savedData.selectedAccountData.accountName}</Text>
+                        <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountName} {ammend ? ammendData.selectedAccountData.accountName : savedData.selectedAccountData.accountName}</Text>
                         <View style={styles.flexDirectionStyle}>
                             <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountNumber}</Text>
-                            <Text style={styles.topContainerTxtBold}>{this.state.ammend ? ammendData.selectedAccountData.accountNumber : savedData.selectedAccountData.accountNumber}</Text>
+                            <Text style={styles.topContainerTxtBold}>{ammend ? ammendData.selectedAccountData.accountNumber : savedData.selectedAccountData.accountNumber}</Text>
                         </View>
                     </View>
 
@@ -532,55 +587,35 @@ class PurchaseScreenTwoComponent extends Component {
                     <View style={styles.innerContainerStyle}>
                         <Text style={styles.headerText}>{gblStrings.purchase.selectVcmMutualFund}</Text>
                         <View style={styles.line} />
-                        {!this.state.ammend && <Text style={styles.stmtTxtStyle}>{gblStrings.purchase.selectStmt}</Text>}
-                        {!this.state.ammend && <Text style={styles.stmtTxtStyle}>{gblStrings.purchase.useFilterStmt}</Text>}
+                        {!ammend && <Text style={styles.stmtTxtStyle}>{gblStrings.purchase.selectStmt}</Text>}
+                        {!ammend && <Text style={styles.stmtTxtStyle}>{gblStrings.purchase.useFilterStmt}</Text>}
                         <View style={styles.contentView}>
-                            {!this.state.ammend && <GButtonComponent
-                                buttonStyle={styles.filterFundsBtn}
-                                buttonText={gblStrings.purchase.fillerFund}
-                                textStyle={styles.filterFundsBtnTxt}
-                                onPress={this.setModalVisible(true)}
-                            />}
-                            {!this.state.ammend && <GButtonComponent
-                                buttonStyle={styles.compareFundsBtn}
-                                buttonText={gblStrings.purchase.compareFund}
-                                textStyle={styles.compareFundsBtnTxt}
-                                onPress={this.navigateCompareFunds}
-                            />}
+                            {!ammend &&
+                                (
+                                    <GButtonComponent
+                                        buttonStyle={styles.filterFundsBtn}
+                                        buttonText={gblStrings.purchase.fillerFund}
+                                        textStyle={styles.filterFundsBtnTxt}
+                                        onPress={this.setModalVisible(true)}
+                                    />
+                                )
+                            }
+                            {!ammend &&
+                                (
+                                    <GButtonComponent
+                                        buttonStyle={styles.compareFundsBtn}
+                                        buttonText={gblStrings.purchase.compareFund}
+                                        textStyle={styles.compareFundsBtnTxt}
+                                        onPress={this.navigateCompareFunds}
+                                    />
+                                )
+                            }
                             <View style={styles.fundListGrp}>
                                 <FlatList
-                                    data={this.state.fundList ? this.state.fundList : []}
+                                    data={fundList}
                                     keyExtractor={this.generateFundListKeyExtractor}
                                     extraData={this.state}
-                                    renderItem={({ item, index }) => {
-                                        return (
-                                            <View style={(this.state.selectedFundIndex === index) ? styles.fundItemStyleSelected : styles.fundItemStyle} onTouchStart={this.onSelectFund(item, index)}>
-                                                <View style={styles.fundItemHeaderView}>
-                                                    <Text style={styles.fundItemHeaderTxt}>{item.fundName}</Text>
-                                                    {item.existingFund ? <Text style={styles.existingFundStyle}>Existing Fund</Text> : null}
-                                                </View>
-                                                <View style={styles.lineStyle} />
-                                                <View style={styles.fundItemContntView}>
-                                                    <View style={styles.marginBottomStyle}>
-                                                        <Text style={styles.fundItemValueHeading}>Last NAV (Previous day close</Text>
-                                                        <Text style={styles.fundItemValueTxt}>$ 143</Text>
-                                                    </View>
-                                                    <View style={styles.marginBottomStyle}>
-                                                        <Text style={styles.fundItemValueHeading}>NAV in %</Text>
-                                                        <Text style={styles.fundItemValueTxt}>14.3</Text>
-                                                    </View>
-                                                    <View style={styles.marginBottomStyle}>
-                                                        <Text style={styles.fundItemValueHeading}>Min. / Max. Amount</Text>
-                                                        <Text style={styles.fundItemValueTxt}>$ 300/ $ 5000</Text>
-                                                    </View>
-                                                    <View style={styles.marginBottomStyle}>
-                                                        <Text style={styles.fundItemValueHeading}>52 week Min. / Max. Values</Text>
-                                                        <Text style={styles.fundItemValueTxt}>$ 3000 / $ 5000</Text>
-                                                    </View>
-                                                </View>
-                                            </View>
-                                        );
-                                    }}
+                                    renderItem={this.renderFundList}
                                 />
                             </View>
                             <View style={styles.loadMoreStyle}>
@@ -589,104 +624,111 @@ class PurchaseScreenTwoComponent extends Component {
                         </View>
                     </View>
 
-                    {this.state.selectedFundIndex ?
-                        <View style={styles.innerContainerStyle}>
-                            <Text style={styles.headerText}>{gblStrings.purchase.fundYourAcc}</Text>
-                            <View style={styles.line} />
-                            <Text style={styles.stmtTxtStyle}>{gblStrings.purchase.fundAccStmt}</Text>
-                            <View>
-                                <TouchableOpacity
-                                    onPress={this.onPressRemoveInvestment}
-                                    style={styles.removeBtnStyle}
-                                >
-                                    <Text style={styles.removeTxtStyle}>
-                                        {gblStrings.common.remove}
-                                    </Text>
-                                </TouchableOpacity>
+                    {selectedFundIndex ?
+                        (
+                            <View style={styles.innerContainerStyle}>
+                                <Text style={styles.headerText}>{gblStrings.purchase.fundYourAcc}</Text>
+                                <View style={styles.line} />
+                                <Text style={styles.stmtTxtStyle}>{gblStrings.purchase.fundAccStmt}</Text>
+                                <View>
+                                    <TouchableOpacity
+                                        onPress={this.onPressRemoveInvestment}
+                                        style={styles.removeBtnStyle}
+                                    >
+                                        <Text style={styles.removeTxtStyle}>
+                                            {gblStrings.common.remove}
+                                        </Text>
+                                    </TouchableOpacity>
 
-                                <View style={styles.fundInvestView}>
-                                    <View style={styles.marginBottomStyle}>
-                                        <Text style={styles.fundInvestTitle}>{gblStrings.accManagement.fundName}</Text>
-                                        <Text style={styles.fundItemValueTxt}>{this.state.selectedFundInvestmentData.fundName}</Text>
-                                    </View>
-                                    <View style={styles.marginBottomStyle}>
-                                        <GDropDownComponent
-                                            inputref={this.setInputRef("fundingOptionDropDown")}
-                                            dropDownLayout={styles.dropDownLayout}
-                                            dropDownTextName={styles.fundInvestTitle}
-                                            textInputStyle={styles.textInputStyle}
-                                            dropDownName={gblStrings.accManagement.fundingOptions}
-                                            data={fundingOptionsData}
-                                            dropDownValue={this.state.selectedFundInvestmentData.fundingOption}
-                                            selectedDropDownValue={this.onSelectedDropDownValue}
-                                            errorFlag={!this.state.selectedFundInvestmentData.fundingOptionValidation}
-                                            errorText={gblStrings.accManagement.emptyFundOptionsMsg}
-                                        />
-                                    </View>
-                                    <View style={styles.marginBottomStyle}>
-                                        <Text style={styles.fundInvestTitle}>{gblStrings.purchase.initialInvestment}</Text>
-                                        <View style={styles.iconFrontStyle}>
-                                            <Text style={styles.dollerIconTxt}>$</Text>
-                                            <GInputComponent
-                                                inputref={this.setInputRef("initialInvestment")}
-                                                propInputStyle={styles.amountBox}
-                                                value={this.state.selectedFundInvestmentData.initialInvestment}
-                                                maxLength={gblStrings.maxLength.initInvestment}
-                                                placeholder="Initial Investment"
-                                                keyboardType="decimal-pad"
-                                                onChangeText={this.onChangeTextForInvestment("initialInvestment")}
-                                                errorFlag={!this.state.selectedFundInvestmentData.initialInvestmentValidation}
-                                                errorText=""
+                                    <View style={styles.fundInvestView}>
+                                        <View style={styles.marginBottomStyle}>
+                                            <Text style={styles.fundInvestTitle}>{gblStrings.accManagement.fundName}</Text>
+                                            <Text style={styles.fundItemValueTxt}>{selectedFundInvestmentData.fundName}</Text>
+                                        </View>
+                                        <View style={styles.marginBottomStyle}>
+                                            <GDropDownComponent
+                                                inputref={this.setInputRef("fundingOptionDropDown")}
+                                                dropDownLayout={styles.dropDownLayout}
+                                                dropDownTextName={styles.fundInvestTitle}
+                                                textInputStyle={styles.textInputStyle}
+                                                dropDownName={gblStrings.accManagement.fundingOptions}
+                                                data={fundingOptionsData}
+                                                dropDownValue={selectedFundInvestmentData.fundingOption}
+                                                selectedDropDownValue={this.onSelectedDropDownValue}
+                                                errorFlag={!selectedFundInvestmentData.fundingOptionValidation}
+                                                errorText={gblStrings.accManagement.emptyFundOptionsMsg}
                                             />
                                         </View>
-                                        {!this.state.selectedFundInvestmentData.initialInvestmentValidation &&
-                                            <Text style={styles.errMsg}>{gblStrings.accManagement.emptyInitInvestmentMsg}</Text>
-                                        }
-                                        <Text style={styles.helpText}>
-                                            {`Minimum $${this.state.selectedFundInvestmentData.mininitialInvestment}`}
-                                        </Text>
-                                        {this.state.selectedFundInvestmentData.fundingOption === "Initial and Monthly Investment" &&
-                                            <View style={styles.marginBottomStyle}>
-                                                <Text style={styles.fundInvestTitle}>{gblStrings.purchase.monthlyInvestment}</Text>
-                                                <View style={styles.iconFrontStyle}>
-                                                    <Text style={styles.dollerIconTxt}>{"$"}</Text>
-                                                    <GInputComponent
-                                                        inputref={this.setInputRef("monthlyInvestment")}
-                                                        propInputStyle={styles.amountBox}
-                                                        maxLength={gblStrings.maxLength.monthlyInvestment}
-                                                        placeholder="Monthly Investment"
-                                                        value={this.state.selectedFundInvestmentData.monthlyInvestment}
-                                                        keyboardType="decimal-pad"
-                                                        onChangeText={this.onChangeTextForInvestment("monthlyInvestment")}
-                                                        errorFlag={!this.state.selectedFundInvestmentData.monthlyInvestmentValidation}
-                                                        errorText=""
-                                                    />
-                                                </View>
-                                                {!this.state.selectedFundInvestmentData.monthlyInvestmentValidation && <Text style={styles.errMsg}>{gblStrings.accManagement.emptyMonthlyInvestmentMsg}</Text>}
-                                                <Text style={styles.helpText}>
-                                                    {`Minimum $${this.state.selectedFundInvestmentData.minmonthlyInvestment}`}
-                                                </Text>
-                                                <Text style={styles.fundInvestTitle}>{gblStrings.purchase.startDate}</Text>
-                                                <GDateComponent
-                                                    inputref={this.setInputRef("startDate")}
-                                                    date={this.state.selectedFundInvestmentData.startDate}
-                                                    minDate={currentDate}
-                                                    placeholder="MM-DD-YYYY"
-                                                    errorFlag={!this.state.selectedFundInvestmentData.startDateValidation}
-                                                    errorMsg={gblStrings.accManagement.emptyStartDate}
-                                                    onDateChange={this.onChangeDateForInvestment("startDate")}
+                                        <View style={styles.marginBottomStyle}>
+                                            <Text style={styles.fundInvestTitle}>{gblStrings.purchase.initialInvestment}</Text>
+                                            <View style={styles.iconFrontStyle}>
+                                                <Text style={styles.dollerIconTxt}>$</Text>
+                                                <GInputComponent
+                                                    inputref={this.setInputRef("initialInvestment")}
+                                                    propInputStyle={styles.amountBox}
+                                                    value={selectedFundInvestmentData.initialInvestment}
+                                                    maxLength={gblStrings.maxLength.initInvestment}
+                                                    placeholder="Initial Investment"
+                                                    keyboardType="decimal-pad"
+                                                    onChangeText={this.onChangeTextForInvestment("initialInvestment")}
+                                                    errorFlag={!selectedFundInvestmentData.initialInvestmentValidation}
+                                                    errorText=""
                                                 />
                                             </View>
-                                        }
-                                    </View>
-                                    <View style={styles.line} />
-                                    <View style={styles.totalView}>
-                                        <Text style={styles.fundInvestTitle}>{gblStrings.accManagement.total}</Text>
-                                        <Text style={styles.fundInvestTitle}>{this.state.totalInitialInvestment}</Text>
+                                            {!this.state.selectedFundInvestmentData.initialInvestmentValidation &&
+                                                <Text style={styles.errMsg}>{gblStrings.accManagement.emptyInitInvestmentMsg}</Text>
+                                            }
+                                            <Text style={styles.helpText}>
+                                                {`Minimum $${selectedFundInvestmentData.mininitialInvestment}`}
+                                            </Text>
+                                            {selectedFundInvestmentData.fundingOption === "Initial and Monthly Investment" &&
+                                                (
+                                                    <View style={styles.marginBottomStyle}>
+                                                        <Text style={styles.fundInvestTitle}>{gblStrings.purchase.monthlyInvestment}</Text>
+                                                        <View style={styles.iconFrontStyle}>
+                                                            <Text style={styles.dollerIconTxt}>{"$"}</Text>
+                                                            <GInputComponent
+                                                                inputref={this.setInputRef("monthlyInvestment")}
+                                                                propInputStyle={styles.amountBox}
+                                                                maxLength={gblStrings.maxLength.monthlyInvestment}
+                                                                placeholder="Monthly Investment"
+                                                                value={selectedFundInvestmentData.monthlyInvestment}
+                                                                keyboardType="decimal-pad"
+                                                                onChangeText={this.onChangeTextForInvestment("monthlyInvestment")}
+                                                                errorFlag={!selectedFundInvestmentData.monthlyInvestmentValidation}
+                                                                errorText=""
+                                                            />
+                                                        </View>
+                                                        {!selectedFundInvestmentData.monthlyInvestmentValidation &&
+                                                            <Text style={styles.errMsg}>{gblStrings.accManagement.emptyMonthlyInvestmentMsg}</Text>
+                                                        }
+                                                        <Text style={styles.helpText}>
+                                                            {`Minimum $${selectedFundInvestmentData.minmonthlyInvestment}`}
+                                                        </Text>
+                                                        <Text style={styles.fundInvestTitle}>{gblStrings.purchase.startDate}</Text>
+                                                        <GDateComponent
+                                                            inputref={this.setInputRef("startDate")}
+                                                            date={selectedFundInvestmentData.startDate}
+                                                            minDate={currentDate}
+                                                            placeholder="MM-DD-YYYY"
+                                                            errorFlag={!selectedFundInvestmentData.startDateValidation}
+                                                            errorMsg={gblStrings.accManagement.emptyStartDate}
+                                                            onDateChange={this.onChangeDateForInvestment("startDate")}
+                                                        />
+                                                    </View>
+                                                )
+                                            }
+                                        </View>
+                                        <View style={styles.line} />
+                                        <View style={styles.totalView}>
+                                            <Text style={styles.fundInvestTitle}>{gblStrings.accManagement.total}</Text>
+                                            <Text style={styles.fundInvestTitle}>{totalInitialInvestment}</Text>
+                                        </View>
                                     </View>
                                 </View>
                             </View>
-                        </View> : null
+                        )
+                        : null
                     }
 
                     {/* ----------------- Button Group -------------------- */}
@@ -705,28 +747,22 @@ class PurchaseScreenTwoComponent extends Component {
                             onPress={this.goBack}
                         />
                         <GButtonComponent
-                            buttonStyle={this.state.disableNextButton ? styles.normalBlackDisabledBtn : styles.normalBlackBtn}
+                            buttonStyle={disableNextButton ? styles.normalBlackDisabledBtn : styles.normalBlackBtn}
                             buttonText={gblStrings.common.next}
-                            textStyle={this.state.disableNextButton ? styles.normalBlackBtnTxt : styles.normalBlackBtnDisabledTxt}
+                            textStyle={disableNextButton ? styles.normalBlackBtnTxt : styles.normalBlackBtnDisabledTxt}
                             onPress={this.onValidate}
-                            disabled={this.state.disableNextButton}
+                            disabled={disableNextButton}
                         />
                     </View>
 
                     {/* ---------------------- Footer View -------------------- */}
-
-                    <View style={styles.fullLine} />
-                    <View style={styles.tNCFlex}>
-                        <Text style={styles.tNcHeader}>{gblStrings.userManagement.VCDiscalimerTitle}{"\n"}</Text>
-                        <Text style={styles.tNcBody}>{gblStrings.userManagement.VCDiscalimerDesc}{"\n"}{"\n"}{gblStrings.userManagement.VCPrivacyNoticeDesc} </Text>
-                    </View>
-                    <GFooterComponent />
+                    <GFooterSettingsComponent />
 
                     {/* --------------------- Modal View For Filter Funds -------------------------- */}
                     <Modal
                         transparent
-                        visible={this.state.modalVisible}
-                        onRequestClose={this.setModalVisible(!this.state.modalVisible)}
+                        visible={modalVisible}
+                        onRequestClose={this.setModalVisible(!modalVisible)}
                     >
                         <View style={styles.modalBackgroundView}>
                             <View style={styles.modalContainer}>
@@ -744,12 +780,12 @@ class PurchaseScreenTwoComponent extends Component {
                                         <Text style={styles.modalMinInvestTitleText}>
                                             {gblStrings.accManagement.minimumInvestment}
                                         </Text>
-                                        {this.state.filterMinData.map((item, index) => {
-                                            let itemvalue = item.value;
+                                        {filterMinData.map((item, index) => {
+                                            let temp = item.value;
                                             if (item.key === 50) {
-                                                itemvalue = itemvalue.replace(new RegExp('50', 'g'), gblStrings.common.dollar + '50');
+                                                temp = temp.replace(new RegExp('50', 'g'), gblStrings.common.dollar + '50');
                                             } else {
-                                                itemvalue = gblStrings.common.dollar + item.value;
+                                                temp = gblStrings.common.dollar + item.value;
                                             }
                                             return (
                                                 <CustomCheckBox
@@ -760,7 +796,7 @@ class PurchaseScreenTwoComponent extends Component {
                                                     outerCicleColor="#DEDEDF"
                                                     innerCicleColor="#61285F"
                                                     labelStyle={styles.modalCheckBoxLabel}
-                                                    label={itemvalue}
+                                                    label={temp}
                                                     selected={item.isActive}
                                                     onPress={this.onCheckboxSelect("minInvest", item, index)}
                                                 />
@@ -773,7 +809,7 @@ class PurchaseScreenTwoComponent extends Component {
                                         <Text style={styles.modalMinInvestTitleText}>
                                             {gblStrings.accManagement.risk}
                                         </Text>
-                                        {this.state.filterRiskData.map((item, index) => {
+                                        {filterRiskData.map((item, index) => {
                                             return (
                                                 <View key={item.key} style={styles.modalRiskViewContainer}>
                                                     <CustomCheckBox
@@ -800,7 +836,7 @@ class PurchaseScreenTwoComponent extends Component {
                                         <Text style={styles.modalMinInvestTitleText}>
                                             {gblStrings.accManagement.fundType}
                                         </Text>
-                                        {this.state.filterFundData.map((item, index) => {
+                                        {filterFundData.map((item, index) => {
                                             return (
                                                 <CustomCheckBox
                                                     key={item.key}

@@ -59,13 +59,15 @@ class PurchaseScreenThreeComponent extends Component {
     }
 
     componentDidMount() {
-        ammendData = this.props.navigation.getParam('data');
-        ammendIndex = this.props.navigation.getParam('index');
+        const { navigation } = this.props;
+        ammendData = navigation.getParam('data');
+        ammendIndex = navigation.getParam('index');
         this.updateState();
     }
 
     updateState = () => {
-        if (this.props.navigation.getParam('ammend')) {
+        const { navigation } = this.props;
+        if (navigation.getParam('ammend')) {
             this.setState({ ammend: true });
         }
         else {
@@ -113,48 +115,49 @@ class PurchaseScreenThreeComponent extends Component {
     /* -------------------------------- Button Events ---------------------------------- */
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const { navigation } = this.props;
+        navigation.goBack();
     }
 
     onClickCancel = () => {
-        if (this.state.ammend) {
-            this.props.navigation.navigate('tAmmendComponent');
+        const { navigation } = this.props;
+        const { ammend } = this.state;
+        if (ammend) {
+            navigation.navigate('tAmmendComponent');
         }
         else {
-            this.props.navigation.navigate('purchaseScreenOne');
+            navigation.navigate('purchaseScreenOne');
         }
     }
 
     onClickSave = () => {
+        const { navigation, saveData } = this.props;
+        const { ammend, fundingSourceName, bankAccountName, fundingMethod, bankAccountNumber, switchOff, selectedContributionData } = this.state;
         const payloadData = {
             savePurchaseSelectedData: {
                 ...savedData,
                 "selectedFundSourceData": {
-                    "paymentMode": this.state.fundingSourceName,
-                    "bankAccountName": this.state.bankAccountName,
-                    "bankAccountNumber": this.state.bankAccountNumber,
-                    "fundSourceType": this.state.fundingMethod,
+                    "paymentMode": fundingSourceName,
+                    "bankAccountName": bankAccountName,
+                    "bankAccountNumber": bankAccountNumber,
+                    "fundSourceType": fundingMethod,
                     "totalInvestment": savedData.selectedFundData.total
                 },
                 "currentSecurities": {
-                    "reinvest": this.state.switchOff
+                    "reinvest": switchOff
                 },
                 "contribution": {
-                    "contribution": this.state.selectedContributionData.contribution
+                    "contribution": selectedContributionData.contribution
                 }
             }
         };
-        this.props.saveData(payloadData);
-        if (this.state.ammend) {
-            this.props.navigation.navigate('purchaseScreenFour', { ammend: true, data: ammendData, index: ammendIndex });
+        saveData(payloadData);
+        if (ammend) {
+            navigation.navigate('purchaseScreenFour', { ammend: true, data: ammendData, index: ammendIndex });
         }
         else {
-            this.props.navigation.navigate('purchaseScreenFour', { ammend: false });
+            navigation.navigate('purchaseScreenFour', { ammend: false });
         }
-    }
-
-    onSubmitEditing = (input) => text => {
-        input.focus();
     }
 
     /* -------------------------------- Validation Events ---------------------------------- */
@@ -175,7 +178,7 @@ class PurchaseScreenThreeComponent extends Component {
                 this.onClickSave();
             }
         } catch (err) {
-            console.log(`Error::: ${err}`);
+            // console.log(`Error::: ${err}`);
         }
 
 
@@ -184,7 +187,7 @@ class PurchaseScreenThreeComponent extends Component {
     onValidateEach = () => {
         let isErr = false;
         let isValidationSuccess = false;
-
+        const { selectedContributionData } = this.state;
         const date = new Date().getDate();
         const month = new Date().getMonth() + 1;
         const year = new Date().getFullYear();
@@ -192,10 +195,10 @@ class PurchaseScreenThreeComponent extends Component {
         const lastDateToContribute = `04-15-${year}`;
 
         if (isIRA) {
-            if (this.state.selectedContributionData.contribution === "") {
+            if (selectedContributionData.contribution === "") {
                 this.setState({ contributionFlag: false, contributionErrMsg: "Please select Contribution" });
                 isErr = true;
-            } else if (this.state.selectedContributionData.contribution === "Previous Year") {
+            } else if (selectedContributionData.contribution === "Previous Year") {
                 if (new Date(todaysDate) > new Date(lastDateToContribute)) {
                     this.setState({ contributionFlag: false, contributionErrMsg: "Please enter valid data" });
                     isErr = true;
@@ -212,9 +215,6 @@ class PurchaseScreenThreeComponent extends Component {
 
     /* -------------------------------- Fund Source Events Events ---------------------------------- */
 
-    setInputRef = (inputComp) => (ref) => {
-        this[inputComp] = ref;
-    }
 
     onClickCheckOrderSelected = () => {
         this.setState({
@@ -247,7 +247,8 @@ class PurchaseScreenThreeComponent extends Component {
     }
 
     switchMethod = () => {
-        if (this.state.fundingMethod === 'Online') {
+        const { fundingMethod } = this.state;
+        if (fundingMethod === 'Online') {
             this.setState(prevState => ({
                 switchOff: !prevState.switchOff,
                 switchOn: !prevState.switchOn,
@@ -274,20 +275,40 @@ class PurchaseScreenThreeComponent extends Component {
         });
     }
 
+    renderBankAccList = ({ item, index }) => {
+        const { selectedBankAccountIndex } = this.state;
+        return (
+            <View style={(selectedBankAccountIndex === index) ? styles.boxStyleViewSelected : styles.boxStyleView} onTouchStart={this.onSelectBankAccount(item, index)}>
+                <View style={styles.iconContainerView}>
+                    <Image source={BankAcc} resizeMode="contain" />
+                </View>
+                <View style={styles.titleContainerView}>
+                    <Text style={styles.bankTitle}>{item.bankAccName}</Text>
+                    <Text style={styles.bankDisc}>{item.bankAccountNo}</Text>
+                    {!item.verified ? <Text style={styles.verifiedText}>To Be Verified</Text> : null}
+                </View>
+            </View>
+        );
+    }
+
     generateFundSourceKeyExtractor = (item) => item.key;
+
+    generateBankKey = (a) => a.bankAccountNo;
 
     render() {
         let currentPage = 3;
         let totalCount = 4;
+        const { disableNextButton, ammend, fundingSourceName, showCheckMsg, showWireTransferMsg, switchOff, switchOn, selectedContributionData, contributionFlag, contributionErrMsg } = this.state;
+        const { purchaseData, navigation } = this.props;
         let pageName = `${currentPage} - ${gblStrings.purchase.fundSource}`;
-        if (this.state.ammend) {
+        if (ammend) {
             currentPage = 2;
             pageName = `${currentPage} - ${gblStrings.purchase.fundSource}`;
             totalCount = 3;
         }
 
-        if (this.props.purchaseData && this.props.purchaseData.savePurchaseSelectedData) {
-            savedData = this.props.purchaseData.savePurchaseSelectedData;
+        if (this.props && purchaseData && purchaseData.savePurchaseSelectedData) {
+            savedData = purchaseData.savePurchaseSelectedData;
         }
 
         if (savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountType === 'IRA') {
@@ -296,7 +317,7 @@ class PurchaseScreenThreeComponent extends Component {
 
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.topContainer}>
@@ -316,7 +337,7 @@ class PurchaseScreenThreeComponent extends Component {
                         <View style={styles.marginTopStyle}>
                             <Text style={styles.subHeadingTxtStyle}>{gblStrings.purchase.offlineMethod}</Text>
                             <Text style={styles.dummyTextStyle}>{gblStrings.purchase.commnStmt}</Text>
-                            <View style={this.state.fundingSourceName === 'Check' ? styles.boxStyleViewSelected : styles.boxStyleView} onTouchStart={this.onClickCheckOrderSelected}>
+                            <View style={fundingSourceName === 'Check' ? styles.boxStyleViewSelected : styles.boxStyleView} onTouchStart={this.onClickCheckOrderSelected}>
                                 <View style={styles.iconContainerView}>
                                     <Image source={checkOrder} resizeMode="contain" />
                                 </View>
@@ -324,7 +345,7 @@ class PurchaseScreenThreeComponent extends Component {
                                     <Text style={styles.titleTxtStyle}>{gblStrings.purchase.checkOrder}</Text>
                                 </View>
                             </View>
-                            <View style={this.state.fundingSourceName === 'Wire Transfer' ? styles.boxStyleViewSelected : styles.boxStyleView} onTouchStart={this.onClickWireTransferSelected}>
+                            <View style={fundingSourceName === 'Wire Transfer' ? styles.boxStyleViewSelected : styles.boxStyleView} onTouchStart={this.onClickWireTransferSelected}>
                                 <View style={styles.iconContainerView}>
                                     <Image source={wireTransfer} resizeMode="contain" />
                                 </View>
@@ -340,21 +361,8 @@ class PurchaseScreenThreeComponent extends Component {
                             <Text style={styles.subHeadingTxtStyle}>{gblStrings.purchase.onlineMethod}</Text>
                             <FlatList
                                 data={bankAccounts}
-                                renderItem={({ item, index }) => {
-                                    return (
-                                        <View style={(this.state.selectedBankAccountIndex === index) ? styles.boxStyleViewSelected : styles.boxStyleView} onTouchStart={this.onSelectBankAccount(item, index)}>
-                                            <View style={styles.iconContainerView}>
-                                                <Image source={BankAcc} resizeMode="contain" />
-                                            </View>
-                                            <View style={styles.titleContainerView}>
-                                                <Text style={styles.bankTitle}>{item.bankAccName}</Text>
-                                                <Text style={styles.bankDisc}>{item.bankAccountNo}</Text>
-                                                {!item.verified ? <Text style={styles.verifiedText}>To Be Verified</Text> : null}
-                                            </View>
-                                        </View>
-                                    );
-                                }}
-                                keyExtractor={a => a.bankAccountNo}
+                                renderItem={this.renderBankAccList}
+                                keyExtractor={this.generateBankKey}
                                 extraData={this.state}
                             />
                             <View style={styles.boxStyleView} onTouchStart={this.onClickAddBankAccount}>
@@ -366,36 +374,40 @@ class PurchaseScreenThreeComponent extends Component {
                                 </View>
                             </View>
                         </View>
-                        {this.state.showCheckMsg &&
-                            <View style={styles.checkOrderStmtView}>
-                                <Text style={styles.checkOrderTitle}>{gblStrings.purchase.check}</Text>
-                                <View style={styles.line} />
-                                <View>
-                                    <Text style={styles.checkOrderText}>{gblStrings.purchase.checkOrderStmt1}</Text>
-                                    <Text style={styles.checkOrderText}>{gblStrings.purchase.checkOrderStmt2}</Text>
-                                    <Text style={styles.checkOrderText}>{gblStrings.purchase.checkOrderStmt3}</Text>
-                                    <Text style={styles.checkOrderText}>{gblStrings.purchase.checkOrderStmt4}</Text>
+                        {showCheckMsg &&
+                            (
+                                <View style={styles.checkOrderStmtView}>
+                                    <Text style={styles.checkOrderTitle}>{gblStrings.purchase.check}</Text>
+                                    <View style={styles.line} />
+                                    <View>
+                                        <Text style={styles.checkOrderText}>{gblStrings.purchase.checkOrderStmt1}</Text>
+                                        <Text style={styles.checkOrderText}>{gblStrings.purchase.checkOrderStmt2}</Text>
+                                        <Text style={styles.checkOrderText}>{gblStrings.purchase.checkOrderStmt3}</Text>
+                                        <Text style={styles.checkOrderText}>{gblStrings.purchase.checkOrderStmt4}</Text>
+                                    </View>
                                 </View>
-                            </View>
+                            )
                         }
-                        {this.state.showWireTransferMsg &&
-                            <View style={styles.checkOrderStmtView}>
-                                <Text style={styles.checkOrderTitle}>{gblStrings.purchase.wireTransfer}</Text>
-                                <View style={styles.line} />
-                                <View>
-                                    <Text style={styles.checkOrderText}>{gblStrings.purchase.usaaFundName}</Text>
-                                    <Text style={styles.wireTransferTxt}>{savedData.selectedFundData.fundName}</Text>
-                                    <Text style={styles.checkOrderText}>{gblStrings.purchase.usaaAccNum}</Text>
-                                    <Text style={styles.wireTransferTxt}>{savedData.selectedAccountData.accountNumber}</Text>
-                                    <Text style={styles.checkOrderText}>{gblStrings.purchase.name}</Text>
-                                    <Text style={styles.wireTransferTxt}>William</Text>
-                                    <Text style={styles.checkOrderText}>{gblStrings.purchase.usaaMutualFundAccNumber}</Text>
-                                    <Text style={styles.wireTransferTxt}>{savedData.selectedFundData.fundNumber}</Text>
-                                    <Text style={styles.checkOrderText}>{gblStrings.purchase.mailingToNumber}</Text>
-                                    <Text style={styles.addressText}>{gblStrings.purchase.address}</Text>
-                                    <Text style={styles.checkOrderText}>{gblStrings.purchase.wireTransferStmt}</Text>
+                        {showWireTransferMsg &&
+                            (
+                                <View style={styles.checkOrderStmtView}>
+                                    <Text style={styles.checkOrderTitle}>{gblStrings.purchase.wireTransfer}</Text>
+                                    <View style={styles.line} />
+                                    <View>
+                                        <Text style={styles.checkOrderText}>{gblStrings.purchase.usaaFundName}</Text>
+                                        <Text style={styles.wireTransferTxt}>{savedData.selectedFundData.fundName}</Text>
+                                        <Text style={styles.checkOrderText}>{gblStrings.purchase.usaaAccNum}</Text>
+                                        <Text style={styles.wireTransferTxt}>{savedData.selectedAccountData.accountNumber}</Text>
+                                        <Text style={styles.checkOrderText}>{gblStrings.purchase.name}</Text>
+                                        <Text style={styles.wireTransferTxt}>William</Text>
+                                        <Text style={styles.checkOrderText}>{gblStrings.purchase.usaaMutualFundAccNumber}</Text>
+                                        <Text style={styles.wireTransferTxt}>{savedData.selectedFundData.fundNumber}</Text>
+                                        <Text style={styles.checkOrderText}>{gblStrings.purchase.mailingToNumber}</Text>
+                                        <Text style={styles.addressText}>{gblStrings.purchase.address}</Text>
+                                        <Text style={styles.checkOrderText}>{gblStrings.purchase.wireTransferStmt}</Text>
+                                    </View>
                                 </View>
-                            </View>
+                            )
                         }
                     </View>
 
@@ -410,8 +422,8 @@ class PurchaseScreenThreeComponent extends Component {
                             <GSwitchComponent
                                 switchOffText="No"
                                 switchOnText="Yes"
-                                switchOff={this.state.switchOff}
-                                switchOn={this.state.switchOn}
+                                switchOff={switchOff}
+                                switchOn={switchOn}
                                 switchOnMethod={this.switchMethod}
                                 switchOffMethod={this.switchMethod}
                                 onStyle={styles.onButtonStyle}
@@ -419,7 +431,7 @@ class PurchaseScreenThreeComponent extends Component {
                                 onStyleDisabled={styles.onButtonStyleDisable}
                                 offStyleDisabled={styles.offButtonStyleDisable}
                                 textOnStyle={styles.TextOnStyle}
-                                textOffStyle={this.state.switchOn ? styles.TextOffStyle : styles.TextOffStyleBold}
+                                textOffStyle={switchOn ? styles.TextOffStyle : styles.TextOffStyleBold}
                             />
                             <View style={styles.switchTextStyle}>
                                 <Text style={styles.switchTxt}>{gblStrings.purchase.notReinvest}</Text>
@@ -432,22 +444,24 @@ class PurchaseScreenThreeComponent extends Component {
                     {/* ------------------------- Contribution ----------------------------- */}
 
                     {isIRA ?
-                        <View style={styles.innerContainerStyle}>
-                            <Text style={styles.headerText}>{gblStrings.purchase.contribution}</Text>
-                            <View style={styles.line} />
-                            <Text style={styles.stmtSmallTextStyle}>{gblStrings.purchase.contDummyText}</Text>
-                            <GDropDownComponent
-                                dropDownLayout={styles.dropDownLayout}
-                                dropDownTextName={styles.dropDownTextName}
-                                textInputStyle={styles.textInputStyle}
-                                dropDownName={gblStrings.accManagement.contForIRAAccount}
-                                data={contributionData}
-                                dropDownValue={this.state.selectedContributionData.contribution}
-                                selectedDropDownValue={this.onSelectedDropDownValue}
-                                errorFlag={!this.state.contributionFlag}
-                                errorText={this.state.contributionErrMsg}
-                            />
-                        </View> : null
+                        (
+                            <View style={styles.innerContainerStyle}>
+                                <Text style={styles.headerText}>{gblStrings.purchase.contribution}</Text>
+                                <View style={styles.line} />
+                                <Text style={styles.stmtSmallTextStyle}>{gblStrings.purchase.contDummyText}</Text>
+                                <GDropDownComponent
+                                    dropDownLayout={styles.dropDownLayout}
+                                    dropDownTextName={styles.dropDownTextName}
+                                    textInputStyle={styles.textInputStyle}
+                                    dropDownName={gblStrings.accManagement.contForIRAAccount}
+                                    data={contributionData}
+                                    dropDownValue={selectedContributionData.contribution}
+                                    selectedDropDownValue={this.onSelectedDropDownValue}
+                                    errorFlag={!contributionFlag}
+                                    errorText={contributionErrMsg}
+                                />
+                            </View>
+                        ) : null
                     }
 
 
@@ -467,11 +481,11 @@ class PurchaseScreenThreeComponent extends Component {
                             onPress={this.goBack}
                         />
                         <GButtonComponent
-                            buttonStyle={this.state.disableNextButton ? styles.normalBlackDisabledBtn : styles.normalBlackBtn}
+                            buttonStyle={disableNextButton ? styles.normalBlackDisabledBtn : styles.normalBlackBtn}
                             buttonText={gblStrings.common.next}
-                            textStyle={this.state.disableNextButton ? styles.normalBlackBtnTxt : styles.normalBlackBtnDisabledTxt}
+                            textStyle={disableNextButton ? styles.normalBlackBtnTxt : styles.normalBlackBtnDisabledTxt}
                             onPress={this.onValidate}
-                            disabled={this.state.disableNextButton}
+                            disabled={disableNextButton}
                         />
                     </View>
 
