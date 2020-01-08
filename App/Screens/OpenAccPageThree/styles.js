@@ -659,6 +659,72 @@ const styles = StyleSheet.create({
         //   height:scaledHeight(250),
         marginVertical: scaledHeight(14),
     },
+    radioCol1: {
+        marginBottom: scaledHeight(0),
+        width: "50%"
+    },
+    radioCol2: {
+        marginBottom: scaledHeight(0),
+        width: "50%"
+
+    },
+    scrollView: {
+        flex: .85
+    },
+    commonColView:{
+        flexGrow:1
+    },
+    removeInvestment:{
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        marginTop: scaledHeight(22) 
+    },
+    removeInvestmentTxt:{
+        fontSize: scaledHeight(16),
+        color: '#61285F',
+        fontWeight: 'bold',
+        width: '100%',
+        textAlign: 'right',
+        lineHeight: 20 
+    },
+    showAllItemsContainer:{ 
+     flexDirection: 'row',
+      alignItems: 'center',
+     justifyContent: 'space-between' 
+    },
+    showAllItemsTxt:{
+        flexDirection: 'row',
+         alignItems: 'center',
+          justifyContent: 'flex-start' 
+    },
+    callTollFee:{
+        fontSize: scaledHeight(15),
+         color: '#333333DE',
+          textAlign: 'center',
+           lineHeight: 22
+    },
+    callTollFeeNo:{
+        fontSize: scaledHeight(18),
+         fontWeight: 'bold',
+          color: '#333333DE',
+           textAlign: 'center', 
+           lineHeight: 22 
+    },
+    initInvestmentContainer:{
+         flexDirection: 'row',
+          justifyContent: 'space-between',
+           alignItems: 'center',
+            marginTop: scaledHeight(7)
+    },
+    dollarTxt:{ 
+        color:'#56565A',
+         fontSize: scaledHeight(16)
+         },
+   initInvestTxtBox:{
+    width: '90%' 
+   },
+   mininitialInvestment:{ textAlign: 'right', width: '100%', color: '#56565A', fontSize: scaledHeight(12), marginTop: scaledHeight(12), }
 });
 
 export default styles;
