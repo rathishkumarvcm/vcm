@@ -16,14 +16,18 @@ class LiquidationFinishComponent extends Component {
     }
 
     componentDidMount() {
-         console.log(" Screen 5 componentdidmount ", JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
+        const { liquidationInitialState } = this.props;
+        console.log(" Screen 5 componentdidmount ", JSON.stringify(liquidationInitialState.saveLiquidationSelectedData));
     }
 
     render() {
-        orderId = this.props.navigation.getParam('orderId');
+        const { navigation } = this.props;
+        const { getParam } = navigation; 
+        // orderId = this.props.navigation.getParam('orderId');
+        orderId = `${getParam('orderId', '')}`;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <View style={styles.backgroundFlex}>
                         <View style={styles.transactionStatusFlex}>
@@ -49,16 +53,13 @@ class LiquidationFinishComponent extends Component {
     }
 }
 
-
 LiquidationFinishComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     liquidationInitialState: PropTypes.instanceOf(Object),
-    //  amendReducerData: PropTypes.instanceOf(Object),
 };
 
 LiquidationFinishComponent.defaultProps = {
     navigation: {},
     liquidationInitialState: {},
-    //  amendReducerData: {},
 };
 export default LiquidationFinishComponent;

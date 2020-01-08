@@ -34,35 +34,42 @@ class LiquidationPageOneComponent extends Component {
             }
         };
     }
+    
+    componentDidMount() {
+        // console.log(" Screen 1 componentdidmount " + JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
+    }
 
     onClickExpandGeneralAccount = () => {
+        const { collapseGeneralAccount } = this.state;
         this.setState(prevState => ({
             collapseGeneralAccount: !prevState.collapseGeneralAccount,
             collapseUTMAAccount: true,
             collapseIRAAccount: true
         }));
-        (this.state.collapseGeneralAccount ?
+        (collapseGeneralAccount ?
             this.setState({ generalAccountIcon: "-    ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }) : 
             this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
     }
 
     onClickExpandIRAAccount = () => {
+        const { collapseIRAAccount } = this.state;
         this.setState(prevState => ({
             collapseIRAAccount: !prevState.collapseIRAAccount,
             collapseUTMAAccount: true,
             collapseGeneralAccount: true
         }));
-        (this.state.collapseIRAAccount ?
+        (collapseIRAAccount ?
             this.setState({ IRAAccountIcon: "-    ", generalAccountIcon: "+   ", UTMAAccountIcon: "+   " }) : this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
     }
 
     onClickExpandUTMAAccount = () => {
+        const { collapseUTMAAccount } = this.state;
         this.setState(prevState => ({
             collapseUTMAAccount: !prevState.collapseUTMAAccount,
             collapseIRAAccount: true,
             collapseGeneralAccount: true
         }));
-        (this.state.collapseUTMAAccount ?
+        (collapseUTMAAccount ?
             this.setState({ UTMAAccountIcon: "-    ", generalAccountIcon: "+   ", IRAAccountIcon: "+   " }) : this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
     }
 
@@ -118,21 +125,24 @@ class LiquidationPageOneComponent extends Component {
     }
 
     nextButtonAction = () => {
+        const { navigation,saveData } = this.props;
+        const { navigate } = navigation; 
+        const { selectedAccountData } = this.state;
         const payloadData = {
             saveLiquidationSelectedData: {
                 ...savedData,
                 "selectedAccountData": {
-                    "accountType": this.state.selectedAccountData.accountType,
-                    "accountName": this.state.selectedAccountData.accountName,
-                    "accountNumber": this.state.selectedAccountData.accountNumber,
-                    "currentValue": this.state.selectedAccountData.currentValue,
-                    "holdingValue": this.state.selectedAccountData.holdingValue,
-                    "AutomaticInvestmentPlan": this.state.selectedAccountData.AutomaticInvestmentPlan
+                    "accountType": selectedAccountData.accountType,
+                    "accountName": selectedAccountData.accountName,
+                    "accountNumber": selectedAccountData.accountNumber,
+                    "currentValue": selectedAccountData.currentValue,
+                    "holdingValue": selectedAccountData.holdingValue,
+                    "AutomaticInvestmentPlan": selectedAccountData.AutomaticInvestmentPlan
                 }
             }
         };
-        this.props.saveData(payloadData);
-        this.props.navigation.navigate({ routeName: 'LiquidationPageTwo', key: 'LiquidationPageTwo' });
+        saveData(payloadData);
+        navigate({ routeName: 'LiquidationPageTwo', key: 'LiquidationPageTwo' });
     }
     
     noItemDisplay = () => {
@@ -143,20 +153,18 @@ class LiquidationPageOneComponent extends Component {
         );
     }
 
-    componentDidMount() {
-        //  console.log(" Screen 1 componentdidmount " + JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
-    }
-
     render() {
         const currentPage = 1;
         const totalCount = 4;
         const pageName = gblStrings.liquidation.accountSelectionScreenName;
-        if (this.props.liquidationInitialState && this.props.liquidationInitialState.accSelectionData) {
-            savedData = this.props.liquidationInitialState.saveLiquidationSelectedData;
+        const { navigation, liquidationInitialState } = this.props;
+        const { collapseGeneralAccount,selectedGeneralAccIndex,generalAccountIcon,collapseIRAAccount,selectedIRAAccIndex,IRAAccountIcon,collapseUTMAAccount,selectedUTMAAccIndex,UTMAAccountIcon,disableNextButton } = this.state;
+        if (liquidationInitialState && liquidationInitialState.accSelectionData) {
+            savedData = liquidationInitialState.saveLiquidationSelectedData;
         }
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <TouchableOpacity onPress={this.goBack}>
                         <GIcon
@@ -174,17 +182,17 @@ class LiquidationPageOneComponent extends Component {
 
                         <View style={styles.accountTypeFlex}>
                             <View style={styles.headerFlex}>
-                                <Text style={styles.headerText} onPress={this.onClickExpandGeneralAccount}>{this.state.generalAccountIcon}</Text>
+                                <Text style={styles.headerText} onPress={this.onClickExpandGeneralAccount}>{generalAccountIcon}</Text>
                                 <Text style={styles.headerText}>{gblStrings.liquidation.generalAccountHeading}</Text>
                             </View>
                             <View style={styles.line} />
                         </View>
-                        <Collapsible collapsed={this.state.collapseGeneralAccount} align="center">
+                        <Collapsible collapsed={collapseGeneralAccount} align="center">
                             <FlatList
-                                data={this.props.liquidationInitialState.accSelectionData.General_Account}
+                                data={liquidationInitialState.accSelectionData.General_Account}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={(this.state.selectedGeneralAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectGeneralAccount(item, index)}>
+                                        <View style={(selectedGeneralAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectGeneralAccount(item, index)}>
                                             <View style={styles.accountDetailsFlex}>
                                                 <View style={styles.flexAccDetails1}>
                                                     <View style={styles.iconStyle}>
@@ -235,17 +243,17 @@ class LiquidationPageOneComponent extends Component {
 
                         <View style={styles.accountTypeFlex}>
                             <View style={styles.headerFlex}>
-                                <Text style={styles.headerText} onPress={this.onClickExpandIRAAccount}>{this.state.IRAAccountIcon}</Text>
+                                <Text style={styles.headerText} onPress={this.onClickExpandIRAAccount}>{IRAAccountIcon}</Text>
                                 <Text style={styles.headerText}>{gblStrings.liquidation.iraAccountHeading}</Text>
                             </View>
                             <View style={styles.line} />
                         </View>
-                        <Collapsible collapsed={this.state.collapseIRAAccount} align="center">
+                        <Collapsible collapsed={collapseIRAAccount} align="center">
                             <FlatList
-                                data={this.props.liquidationInitialState.accSelectionData.IRA_Account}
+                                data={liquidationInitialState.accSelectionData.IRA_Account}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={(this.state.selectedIRAAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectIRAAccount(item, index)}>
+                                        <View style={(selectedIRAAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectIRAAccount(item, index)}>
                                             <View style={styles.accountDetailsFlex}>
                                                 <View style={styles.flexAccDetails1}>
                                                     <View style={styles.iconStyle}>
@@ -295,18 +303,18 @@ class LiquidationPageOneComponent extends Component {
 
                         <View style={styles.accountTypeFlex}>
                             <View style={styles.headerFlex}>
-                                <Text style={styles.headerText} onPress={this.onClickExpandUTMAAccount}>{this.state.UTMAAccountIcon}</Text>
+                                <Text style={styles.headerText} onPress={this.onClickExpandUTMAAccount}>{UTMAAccountIcon}</Text>
                                 <Text style={styles.headerText}>{gblStrings.liquidation.utmaAccountHeading}</Text>
                             </View>
                             <View style={styles.line} />
                         </View>
 
-                        <Collapsible collapsed={this.state.collapseUTMAAccount} align="center">
+                        <Collapsible collapsed={collapseUTMAAccount} align="center">
                             <FlatList
-                                data={this.props.liquidationInitialState.accSelectionData.UTMA_Account}
+                                data={liquidationInitialState.accSelectionData.UTMA_Account}
                                 renderItem={({ item, index }) => {
                                     return (
-                                        <View style={(this.state.selectedUTMAAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectUTMAAccount(item, index)}>
+                                        <View style={(selectedUTMAAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectUTMAAccount(item, index)}>
                                             <View style={styles.accountDetailsFlex}>
 
                                                 <View style={styles.flexAccDetails1}>
@@ -360,7 +368,7 @@ class LiquidationPageOneComponent extends Component {
                         <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateLiquidationPageOne}>
                             <Text style={styles.backButtonText}>{gblStrings.common.cancel}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={this.state.disableNextButton ? styles.submitFlexDisabled : styles.submitFlex} onPress={this.nextButtonAction} disabled={this.state.disableNextButton}>
+                        <TouchableOpacity style={disableNextButton ? styles.submitFlexDisabled : styles.submitFlex} onPress={this.nextButtonAction} disabled={disableNextButton}>
                             <Text style={styles.submitText}>{gblStrings.common.next}</Text>
                         </TouchableOpacity>
                     </View>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
-import PropTypes from 'prop-types';
 import Collapsible from 'react-native-collapsible';
+import PropTypes from 'prop-types';
 import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
@@ -25,17 +25,19 @@ class LiquidationPageTwoComponent extends Component {
     }
     
     componentDidMount() {
-        console.log(" Screen 2 componentdidmount " + JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
-        if (this.props.navigation.getParam('ammend')) {
-            ammendData = this.props.navigation.getParam('data');
-            ammendIndex = this.props.navigation.getParam('index');
+        const { navigation,liquidationInitialState } = this.props;
+        const { getParam } = navigation;
+        console.log(" Screen 2 componentdidmount " , JSON.stringify(liquidationInitialState.saveLiquidationSelectedData));
+        if (getParam('ammend')) {
+            ammendData = getParam('data');
+            ammendIndex = getParam('index');
             this.setState({ ammend: true });
         }
         else {
             this.setState({ ammend: false });
         }
-        if (this.props.liquidationInitialState && this.props.liquidationInitialState.saveLiquidationSelectedData) {
-            savedData = this.props.liquidationInitialState.saveLiquidationSelectedData;
+        if (liquidationInitialState && liquidationInitialState.saveLiquidationSelectedData) {
+            savedData = liquidationInitialState.saveLiquidationSelectedData;
         }
         this.getFundList();
     }
@@ -48,14 +50,16 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     onClickExpandLiquidation = () => {
+        const { collapseLiquidation } = this.state;
         this.setState(prevState => ({
             collapseLiquidation: !prevState.collapseLiquidation,
         }));
-        (this.state.collapseLiquidation ? this.setState({ collapseLiquidationIcon: "-   " }) : this.setState({ collapseLiquidationIcon: "+  " }));
+        (collapseLiquidation ? this.setState({ collapseLiquidationIcon: "-   " }) : this.setState({ collapseLiquidationIcon: "+  " }));
     };
 
     onClickSelectFund = (item, index) => {
-        const funds = this.state.fundListData;
+        const { fundListData } = this.state;
+        const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
             if (i !== index) {
                 funds[i].allSharesSelected = false;
@@ -77,7 +81,8 @@ class LiquidationPageTwoComponent extends Component {
 
 
     onClickAllShares = (item, index) => {
-        const funds = this.state.fundListData;
+        const { fundListData } = this.state;
+        const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
             if (i === index) {
                 funds[i].allSharesSelected = !funds[i].allSharesSelected;
@@ -97,7 +102,8 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     onClickAmountinDollar = (item, index) => {
-        const funds = this.state.fundListData;
+        const { fundListData } = this.state;
+        const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
             if (i === index) {
                 funds[i].dollarSelected = !funds[i].dollarSelected;
@@ -117,7 +123,8 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     onClickAmountInPerc = (item, index) => {
-        const funds = this.state.fundListData;
+        const { fundListData } = this.state;
+        const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
             if (i === index) {
                 funds[i].percentageSelected = !funds[i].percentageSelected;
@@ -136,7 +143,8 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     onChangeDollarVal = (text) => {
-        const funds = this.state.fundListData;
+        const { fundListData } = this.state;
+        const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
             if (funds[i].isSelected) {
                 funds[i].dollarValue = text;
@@ -157,7 +165,8 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     onChangePercentageVal = (text) => {
-        const funds = this.state.fundListData;
+        const { fundListData } = this.state;
+        const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
             if (funds[i].isSelected) {
                 funds[i].percentageValue = text;
@@ -177,16 +186,22 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     navigateLiquidationPageOne = () => {
-        if (this.state.ammend) {
-            this.props.navigation.navigate('tAmmendComponent');
+        const { navigation } = this.props;
+        const { navigate } = navigation; 
+        const { ammend } = this.state;
+        if (ammend) {
+            navigate('tAmmendComponent');
         }
         else {
-            this.props.navigation.navigate('LiquidationPageOne');
+            navigate('LiquidationPageOne');
         }
     }
 
     nextButtonAction = () => {
-        const funds = this.state.fundListData;
+        const { fundListData,ammend } = this.state;
+        const { navigation,saveData } = this.props;
+        const {navigate} = navigation;
+        const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
             if (funds[i].isSelected) {
                 if (funds[i].allSharesSelected) {
@@ -206,7 +221,6 @@ class LiquidationPageTwoComponent extends Component {
                 ...savedData,
                 "selectedFundData": {
                     "fundName": "",
-                    "fundName": "",
                     "fundNumber": "",
                     "fundingOption": "",
                     "initialInvestment": "",
@@ -214,17 +228,18 @@ class LiquidationPageTwoComponent extends Component {
                     "startDate": "",
                     "count": "",
                     "total": "",
-                    "funds": this.state.fundListData
+                    "funds": fundListData
                 },
             },
         };
-        this.props.saveData(payloadData);
-        if (this.state.ammend) {
-            ammendData = this.props.amendReducerData.menu[ammendIndex - 1].data;
-            this.props.navigation.navigate('LiquidationPageThree', { ammend: true, data: ammendData, index: ammendIndex });
+       saveData(payloadData);
+        if (ammend) {
+            const { amendReducerData } = this.props;
+            ammendData = amendReducerData.menu[ammendIndex - 1].data;
+            navigate('LiquidationPageThree', { ammend: true, data: ammendData, index: ammendIndex });
         }
         else {
-            this.props.navigation.navigate('LiquidationPageThree', { ammend: false });
+            navigate('LiquidationPageThree', { ammend: false });
         }
 
 
@@ -235,19 +250,22 @@ class LiquidationPageTwoComponent extends Component {
         return amt;
     }
 
-    navigateBack = () => this.props.navigation.goBack();
-
-
-   
+    navigateBack = () => {
+        const { navigation } = this.props;
+        navigation.goBack();
+    }
+    
     getFundList = () => {
-        if (this.props.navigation.getParam('ammend')) {
+        const { navigation,liquidationInitialState } = this.props;
+        const { getParam } = navigation;
+        if (getParam('ammend')) {
             this.setState({
                 fundListData: ammendData.selectedFundData.funds,
                 disableNextButton: !(ammendData.selectedFundData.funds[0].allSharesSelected || ammendData.selectedFundData.funds[0].percentageSelected || ammendData.selectedFundData.funds[0].dollarSelected),
             });
         } else {
             this.setState({
-                fundListData: this.props.liquidationInitialState.fundsListData.funds,
+                fundListData:liquidationInitialState.fundsListData.funds,
             });
         }
     }
@@ -256,17 +274,19 @@ class LiquidationPageTwoComponent extends Component {
         let currentPage = 2;
         let totalCount = 4;
         let pageName = gblStrings.liquidation.fundSelectionScreenName;
-        if (this.state.ammend) {
+        const {navigation,liquidationInitialState } = this.props;
+        const { ammend,disableNextButton,collapseLiquidationIcon,collapseLiquidation,fundListData } = this.state;
+        if (ammend) {
             currentPage = 1;
             pageName = '1 - Fund Selection';
             totalCount = 3;
         }
-        if (this.props.liquidationInitialState && this.props.liquidationInitialState.saveLiquidationSelectedData) {
-            savedData = this.props.liquidationInitialState.saveLiquidationSelectedData;
+        if (liquidationInitialState && liquidationInitialState.saveLiquidationSelectedData) {
+            savedData = liquidationInitialState.saveLiquidationSelectedData;
         }
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <TouchableOpacity onPress={this.goBack}>
                         <GIcon
@@ -280,21 +300,21 @@ class LiquidationPageTwoComponent extends Component {
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.flexHead}>
                         <View style={styles.accountFlex}>
-                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountName}{this.state.ammend ? ammendData.selectedAccountData.accountName : savedData.selectedAccountData.accountName}</Text>
-                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountNumber}{this.state.ammend ? ammendData.selectedAccountData.accountNumber : savedData.selectedAccountData.accountNumber}</Text>
+                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountName}{ammend ? ammendData.selectedAccountData.accountName : savedData.selectedAccountData.accountName}</Text>
+                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountNumber}{ammend ? ammendData.selectedAccountData.accountNumber : savedData.selectedAccountData.accountNumber}</Text>
                         </View>
 
                         <View style={styles.headerFlex} onTouchStart={this.onClickExpandLiquidation}>
-                            <Text style={styles.headerText}>{this.state.collapseLiquidationIcon}</Text>
+                            <Text style={styles.headerText}>{collapseLiquidationIcon}</Text>
                             <Text style={styles.headerText}>{gblStrings.liquidation.liquidationYourFund}</Text>
                         </View>
 
                         <View style={styles.line} />
                     </View>
-                    <Collapsible collapsed={this.state.collapseLiquidation} align="center">
+                    <Collapsible collapsed={collapseLiquidation} align="center">
                         <Text style={styles.fundSourceContent}>{gblStrings.liquidation.fundSourceContext}</Text>
                         <FlatList
-                            data={this.state.fundListData}
+                            data={fundListData}
                             renderItem={({ item, index }) => {
                                 return (
                                     <View style={(item.isSelected) ? styles.fundsFlexSelected : styles.fundsFlex} onTouchStart={() => this.onClickSelectFund(item, index)}>
@@ -383,7 +403,7 @@ class LiquidationPageTwoComponent extends Component {
                         <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateLiquidationPageOne}>
                             <Text style={styles.backButtonText}>{gblStrings.common.back}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={this.state.disableNextButton ? styles.submitFlexDisabled : styles.submitFlex} onPress={this.nextButtonAction} disabled={this.state.disableNextButton}>
+                        <TouchableOpacity style={disableNextButton ? styles.submitFlexDisabled : styles.submitFlex} onPress={this.nextButtonAction} disabled={disableNextButton}>
                             <Text style={styles.submitText}>{gblStrings.common.next}</Text>
                         </TouchableOpacity>
                     </View>

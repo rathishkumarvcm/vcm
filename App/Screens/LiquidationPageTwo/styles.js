@@ -20,11 +20,11 @@ import { scaledHeight } from '../../Utils/Resolution';
     },
     allShares:{
         flexDirection:'row',
+        height:scaledHeight(40),
         marginLeft:"4%",
         marginRight:"4%",
-        width:"92%",
-        height:scaledHeight(40),
         marginTop:scaledHeight(20),
+        width:"92%",
     },
     allSharesText:{
         color:'#56565A',
@@ -86,8 +86,8 @@ import { scaledHeight } from '../../Utils/Resolution';
         justifyContent:'space-between'
     },
     flex3:{
-        height:scaledHeight(189),
         flexDirection:'column',
+        height:scaledHeight(189),
     },
     flex6:{
         flexDirection: 'column',
@@ -99,6 +99,20 @@ import { scaledHeight } from '../../Utils/Resolution';
     flexHead:{
         marginLeft: "4%",
         marginRight:"4%",
+    },
+    fullLine: {
+        backgroundColor: '#7B8288',
+        height: scaledHeight(1),
+        marginTop: scaledHeight(40),
+        opacity: 0.4,
+    },
+    fundSourceContent:{
+        color:'#56565A',
+        fontSize:scaledHeight(16),
+        marginLeft:"4%",
+        marginRight:"4%",
+        marginTop:"4%",
+        width:"92%",
     },
     fundsFlex:{
         borderColor:'#FFFFFF',
@@ -114,20 +128,7 @@ import { scaledHeight } from '../../Utils/Resolution';
         marginRight:"4%",
         marginTop:"5%",
     },
-    fundSourceContent:{
-        color:'#56565A',
-        fontSize:scaledHeight(16),
-        marginLeft:"4%",
-        marginRight:"4%",
-        marginTop:"4%",
-        width:"92%",
-    },
-    fullLine: {
-        backgroundColor: '#7B8288',
-        height: scaledHeight(1),
-        opacity: 0.4,
-        marginTop: scaledHeight(40),
-    },
+    
     headerFlex:{
         flexDirection:'row',
         height:scaledHeight(29),
@@ -199,14 +200,14 @@ import { scaledHeight } from '../../Utils/Resolution';
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
     },
-    tNcBody: {
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-    },
     tNCFlex: {
         marginLeft: "4%",
         marginTop: scaledHeight(41),
         width: "92%",
+    },
+    tNcBody: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
     },
     tNcHeader: {
         color: '#56565A',

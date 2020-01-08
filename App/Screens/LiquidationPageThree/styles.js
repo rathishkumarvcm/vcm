@@ -281,100 +281,6 @@ import { scaledHeight } from '../../Utils/Resolution';
         justifyContent: 'space-between',
         marginBottom: "4%"
     },
-    or: {
-        color: '#333333DE',
-        fontSize: scaledHeight(18),
-        marginBottom: scaledHeight(15),
-        marginTop: scaledHeight(34),
-        textAlign: 'center'
-    },
-    selectedBankAccountFlex: {
-        borderColor: '#B5E198',
-        borderWidth: scaledHeight(4),
-        height: scaledHeight(89),
-        marginTop: scaledHeight(24)
-    },
-    stateTaxValFlex: {
-        alignContent: 'center',
-        borderColor: '#DEDEDF',
-        borderWidth: scaledHeight(1),
-        height: scaledHeight(48),
-        justifyContent: 'center',
-        marginTop: scaledHeight(15),
-        width: scaledHeight(345),
-    },
-    statusText: {
-        color: '#EE3F5D',
-        fontSize: scaledHeight(12),
-        paddingBottom: scaledHeight(1),
-        paddingTop: scaledHeight(1),
-    },
-    stateTaxVal: {
-        backgroundColor: '#FFFFFF',
-        borderColor: '#DEDEDF',
-        borderWidth: scaledHeight(1),
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-        height: scaledHeight(48),
-        marginTop: scaledHeight(15),
-        paddingLeft: "4%",
-        paddingTop: scaledHeight(15),
-        width: "100%",
-    },
-    stateTaxFlex: {
-        height: scaledHeight(82),
-        marginTop: scaledHeight(26),
-    },
-    subHeadingText: {
-        color: '#56565A',
-        fontSize: scaledHeight(18),
-        fontWeight: 'bold',
-        marginTop: "3%",
-    },
-    switchFlex: {
-        height: scaledHeight(60),
-    },
-    totalWithdrawalVal: {
-        backgroundColor: '#F1F1F1',
-        borderColor: '#DEDEDF',
-        borderWidth: scaledHeight(1),
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-        height: scaledHeight(48),
-        marginLeft: "3%",
-        opacity: 0.8,
-        paddingLeft: "2%",
-        paddingTop: scaledHeight(15),
-        width: "92%",
-    },
-    stateTaxToDollarFlex: {
-        flexDirection: 'row',
-        marginLeft: "10%",
-        marginTop: "4%"
-    },
-    stateTaxToDollarText: {
-        backgroundColor: '#F1F1F1',
-        borderColor: '#DEDEDF',
-        borderWidth: scaledHeight(1),
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-        height: scaledHeight(48),
-        marginLeft: "6%",
-        opacity: 0.8,
-        paddingLeft: "4%",
-        paddingTop: scaledHeight(15),
-        width: "58%",
-    },
-   
-    
-    reqAmountTypeStyle: {
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-        width: "100%",
-    },
-   
-   
-    
     offButtonStyle: {
         backgroundColor: '#B7B7B7',
         borderColor: '#56565A',
@@ -412,10 +318,88 @@ import { scaledHeight } from '../../Utils/Resolution';
         marginLeft: "10%",
         width: "67%",
     },
-   
     onlineMethodFlex: {
         justifyContent: 'space-between',
     },
+    or: {
+        color: '#333333DE',
+        fontSize: scaledHeight(18),
+        marginBottom: scaledHeight(15),
+        marginTop: scaledHeight(34),
+        textAlign: 'center'
+    },
+    reqAmountTypeStyle: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        width: "100%",
+    },
+    selectedBankAccountFlex: {
+        borderColor: '#B5E198',
+        borderWidth: scaledHeight(4),
+        height: scaledHeight(89),
+        marginTop: scaledHeight(24)
+    },
+    stateTaxFlex: {
+        height: scaledHeight(82),
+        marginTop: scaledHeight(26),
+    },
+    stateTaxVal: {
+        backgroundColor: '#FFFFFF',
+        borderColor: '#DEDEDF',
+        borderWidth: scaledHeight(1),
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        height: scaledHeight(48),
+        marginTop: scaledHeight(15),
+        paddingLeft: "4%",
+        paddingTop: scaledHeight(15),
+        width: "100%",
+    },
+    stateTaxValFlex: {
+        alignContent: 'center',
+        borderColor: '#DEDEDF',
+        borderWidth: scaledHeight(1),
+        height: scaledHeight(48),
+        justifyContent: 'center',
+        marginTop: scaledHeight(15),
+        width: scaledHeight(345),
+    },
+    statusText: {
+        color: '#EE3F5D',
+        fontSize: scaledHeight(12),
+        paddingBottom: scaledHeight(1),
+        paddingTop: scaledHeight(1),
+    },
+    subHeadingText: {
+        color: '#56565A',
+        fontSize: scaledHeight(18),
+        fontWeight: 'bold',
+        marginTop: "3%",
+    },
+    switchFlex: {
+        height: scaledHeight(60),
+    },
+    
+    stateTaxToDollarFlex: {
+        flexDirection: 'row',
+        marginLeft: "10%",
+        marginTop: "4%"
+    },
+    stateTaxToDollarText: {
+        backgroundColor: '#F1F1F1',
+        borderColor: '#DEDEDF',
+        borderWidth: scaledHeight(1),
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        height: scaledHeight(48),
+        marginLeft: "6%",
+        opacity: 0.8,
+        paddingLeft: "4%",
+        paddingTop: scaledHeight(15),
+        width: "58%",
+    },
+   
+    
     stateTaxInputStyle: {
         borderColor: '#DEDEDF',
         borderWidth: scaledHeight(1),
@@ -449,8 +433,20 @@ import { scaledHeight } from '../../Utils/Resolution';
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
     },
-    
-    
+    tNCFlex: {
+        marginLeft: "4%",
+        marginTop: scaledHeight(41),
+        width: "92%",
+    },
+    tNcBody: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+    },
+    tNcHeader: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold'
+    },
     TextOffStyle: {
         color: '#544A54',
         fontSize: scaledHeight(14),
@@ -475,24 +471,23 @@ import { scaledHeight } from '../../Utils/Resolution';
         marginLeft: "0%",
         paddingLeft: "10%"
     },
-    tNcBody: {
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-    },
-    tNCFlex: {
-        marginLeft: "4%",
-        marginTop: scaledHeight(41),
-        width: "92%",
-    },
-    tNcHeader: {
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold'
-    },
     totalWithdrawalFlex: {
         flexDirection: 'row',
         height: scaledHeight(48),
         marginTop: scaledHeight(15),
+    },
+    totalWithdrawalVal: {
+        backgroundColor: '#F1F1F1',
+        borderColor: '#DEDEDF',
+        borderWidth: scaledHeight(1),
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        height: scaledHeight(48),
+        marginLeft: "3%",
+        opacity: 0.8,
+        paddingLeft: "2%",
+        paddingTop: scaledHeight(15),
+        width: "92%",
     },
     unSelectedBankAccountFlex: {
         borderColor: '#FFFFFF',
