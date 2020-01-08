@@ -16,49 +16,63 @@ class ExchangeScreenTwoComponent extends Component {
         this.state = {
             collapseExchangeFundIcon: "-  ",
             collapseExchangeFund: false,
-            selectedFundIndex: null,
             disableNextButton: true,
             fundListData: [],
         };
+    }
+
+    componentDidMount() {
+        const { exchangeData } = this.props;
+        if (exchangeData && exchangeData.saveExchangeSelectedData) {
+            savedData = exchangeData.saveExchangeSelectedData;
+        }
+        this.getFundList();
+
     }
 
     isEmpty = (str) => {
         if (str === "" || str === undefined || str === null || str === "null" || str === "undefined") {
             return true;
         }
-            return false;
+        return false;
     }
 
     onClickExpandExchangeFund = () => {
+        const { collapseExchangeFund } = this.state;
         this.setState(prevState => ({
             collapseExchangeFund: !prevState.collapseExchangeFund,
         }));
-        (this.state.collapseExchangeFund ? this.setState({ collapseExchangeFundIcon: "-   " }) : this.setState({ collapseExchangeFundIcon: "+  " }));
+        (collapseExchangeFund ? this.setState({ collapseExchangeFundIcon: "-   " }) : this.setState({ collapseExchangeFundIcon: "+  " }));
     };
 
     onClickSelectFund = (item, index) => {
-        const funds = this.state.fundListData;
-        for (let i = 0; i < funds.length; i+= 1) {
+        const { fundListData } = this.state;
+        const funds = fundListData;
+        for (let i = 0; i < funds.length; i += 1) {
             if (i !== index) {
                 funds[i].allSharesSelected = false;
                 funds[i].percentageSelected = false;
                 funds[i].percentageValue = '';
                 funds[i].dollarSelected = false;
                 funds[i].dollarValue = '';
+                funds[i].sellingAmount = "";
+                funds[i].isSelected = false;
+            } else {
+                funds[i].sellingAmount = "";
+                funds[i].isSelected = true;
             }
         }
         this.setState({
-            selectedFundIndex: index,
+            fundListData: funds,
         });
     }
 
-
     onClickAllShares = (item, index) => {
-        const funds = this.state.fundListData;
-        for (let i = 0; i < funds.length; i+= 1) {
+        const { fundListData } = this.state;
+        const funds = fundListData;
+        for (let i = 0; i < funds.length; i += 1) {
             if (i === index) {
                 funds[i].allSharesSelected = !funds[i].allSharesSelected;
-
             } else {
                 funds[i].allSharesSelected = false;
             }
@@ -75,8 +89,9 @@ class ExchangeScreenTwoComponent extends Component {
     }
 
     onClickAmountinDollar = (item, index) => {
-        const funds = this.state.fundListData;
-        for (let i = 0; i < funds.length; i+= 1) {
+        const { fundListData } = this.state;
+        const funds = fundListData;
+        for (let i = 0; i < funds.length; i += 1) {
             if (i === index) {
                 funds[i].dollarSelected = !funds[i].dollarSelected;
             } else {
@@ -95,8 +110,9 @@ class ExchangeScreenTwoComponent extends Component {
     }
 
     onClickAmountInPerc = (item, index) => {
-        const funds = this.state.fundListData;
-        for (let i = 0; i < funds.length; i+= 1) {
+        const { fundListData } = this.state;
+        const funds = fundListData;
+        for (let i = 0; i < funds.length; i += 1) {
             if (i === index) {
                 funds[i].percentageSelected = !funds[i].percentageSelected;
             } else {
@@ -114,9 +130,10 @@ class ExchangeScreenTwoComponent extends Component {
     }
 
     onChangeDollarVal = (text) => {
-        const funds = this.state.fundListData;
-        for (let i = 0; i < funds.length; i+= 1) {
-            if (i === this.state.selectedFundIndex) {
+        const { fundListData } = this.state;
+        const funds = fundListData;
+        for (let i = 0; i < funds.length; i += 1) {
+            if (funds[i].isSelected) {
                 funds[i].dollarValue = text;
                 funds[i].dollarSelected = true;
             } else {
@@ -135,9 +152,10 @@ class ExchangeScreenTwoComponent extends Component {
     }
 
     onChangePercentageVal = (text) => {
-        const funds = this.state.fundListData;
-        for (let i = 0; i < funds.length; i+= 1) {
-            if (i === this.state.selectedFundIndex) {
+        const { fundListData } = this.state;
+        const funds = fundListData;
+        for (let i = 0; i < funds.length; i += 1) {
+            if (funds[i].isSelected) {
                 funds[i].percentageValue = text;
                 funds[i].percentageSelected = true;
             } else {
@@ -155,36 +173,48 @@ class ExchangeScreenTwoComponent extends Component {
     }
 
     navigateExchangeScreenOne = () => {
-            this.props.navigation.navigate('exchangeScreenOne');
+        const { navigation } = this.props;
+        const { navigate } = navigation;
+        navigate('exchangeScreenOne');
     }
 
     nextButtonAction = () => {
-        const i = this.state.selectedFundIndex;
-            const payloadData = {
-                saveExchangeSelectedData: {
-                    ...savedData,
-                    "selectedFundData": {
-                        "fundName": this.state.fundListData[i].fundName,
-                        "fundNumber": "",
-                        "fundingOption": "",
-                        "initialInvestment": "",
-                        "monthlyInvestment": "",
-                        "startDate": "",
-                        "count": "",
-                        "total": "",
-                        "totalShares": this.state.fundListData[i].totalShares,
-                        "worthAmount": this.state.fundListData[i].worthAmount,
-                        "allSharesSelected": this.state.fundListData[i].allSharesSelected,
-                        "dollarSelected": this.state.fundListData[i].dollarSelected,
-                        "percentageSelected": this.state.fundListData[i].percentageSelected,
-                        "dollarValue": this.state.fundListData[i].dollarValue,
-                        "percentageValue": this.state.fundListData[i].percentageValue,
-                        "funds": this.state.fundListData
-                    },
+        const { navigation, saveData } = this.props;
+        const { navigate } = navigation;
+        const { fundListData } = this.state;
+        const funds = fundListData;
+        for (let i = 0; i < funds.length; i += 1) {
+            if (funds[i].isSelected) {
+                if (funds[i].allSharesSelected) {
+                    funds[i].sellingAmount = funds[i].worthAmount;
+                } else if (this.isEmpty(funds[i].percentageValue)) {
+                    funds[i].sellingAmount = funds[i].dollarValue;
+                } else {
+                    funds[i].sellingAmount = (funds[i].percentageValue / 100) * funds[i].worthAmount;
+                }
+            }
+        }
+        this.setState({
+            fundListData: funds
+        });
+        const payloadData = {
+            saveExchangeSelectedData: {
+                ...savedData,
+                "selectedFundData": {
+                    "fundName": "",
+                    "fundNumber": "",
+                    "fundingOption": "",
+                    "initialInvestment": "",
+                    "monthlyInvestment": "",
+                    "startDate": "",
+                    "count": "",
+                    "total": "",
+                    "funds": fundListData
                 },
-            };
-            this.props.saveData(payloadData);
-           //  this.props.navigation.navigate('exchangeScreenThree');
+            },
+        };
+        saveData(payloadData);
+        // navigate('exchangeScreenThree');
     }
 
     formatAmount = (amount) => {
@@ -192,56 +222,30 @@ class ExchangeScreenTwoComponent extends Component {
         return amt;
     }
 
-    navigateBack = () => this.props.navigation.goBack();
-
-
-    componentDidMount() {
-        if (this.props.exchangeData && this.props.exchangeData.saveExchangeSelectedData) {
-            savedData = this.props.exchangeData.saveExchangeSelectedData;
-        }
-        this.getFundList();
-
+    navigateBack = () => {
+        const { navigation } = this.props;
+        navigation.goBack();
     }
 
     getFundList = () => {
-        let selectedIndex = 0;
-        let selectedAccountType = "";
-        let selectedAccountNumber = "";
-        let fundList = [];
-        let accType = '';
-        accType = savedData.selectedAccountData.accountType;
-        selectedAccountNumber = savedData.selectedAccountData.accountNumber;
-        
-        if (accType === "General") {
-            selectedAccountType = "General_Account";
-        } else if (accType === "IRA") {
-            selectedAccountType = "IRA_Account";
-        } else {
-            selectedAccountType = "UTMA_Account";
-        }
-
-        for (let i = 0; i < this.props.exchangeData.accSelectionData[selectedAccountType].length; i+= 1) {
-            if (selectedAccountNumber === this.props.exchangeData.accSelectionData[selectedAccountType][i].accNumber) {
-                selectedIndex = i;
-            }
-        }
-        fundList = this.props.exchangeData.accSelectionData[selectedAccountType][selectedIndex].funds;
-        
-            this.setState({
-                fundListData: fundList,
-            });
+        const { exchangeData } = this.props;
+        this.setState({
+            fundListData: exchangeData.fundsListData.funds,
+        });
     }
 
     render() {
         const currentPage = 2;
         const totalCount = 4;
         const pageName = gblStrings.liquidation.fundSelectionScreenName;
-        if (this.props.exchangeData && this.props.exchangeData) {
-            savedData = this.props.exchangeData.saveExchangeSelectedData;
+        const { navigation, exchangeData } = this.props;
+        const { collapseExchangeFundIcon, collapseExchangeFund, fundListData, disableNextButton } = this.state;
+        if (exchangeData && exchangeData) {
+            savedData = exchangeData.saveExchangeSelectedData;
         }
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <TouchableOpacity onPress={this.goBack}>
                         <GIcon
@@ -255,24 +259,24 @@ class ExchangeScreenTwoComponent extends Component {
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.flexHead}>
                         <View style={styles.accountFlex}>
-                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountName}{ savedData.selectedAccountData.accountName}</Text>
+                            <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountName}{savedData.selectedAccountData.accountName}</Text>
                             <Text style={styles.accountNumberText}>{gblStrings.liquidation.accountNumber}{savedData.selectedAccountData.accountNumber}</Text>
                         </View>
 
                         <View style={styles.headerFlex} onTouchStart={this.onClickExpandExchangeFund}>
-                            <Text style={styles.headerText}>{this.state.collapseExchangeFundIcon}</Text>
+                            <Text style={styles.headerText}>{collapseExchangeFundIcon}</Text>
                             <Text style={styles.headerText}>{gblStrings.exchange.exchangeYourFund}</Text>
                         </View>
 
                         <View style={styles.line} />
                     </View>
-                    <Collapsible collapsed={this.state.collapseExchangeFund} align="center">
+                    <Collapsible collapsed={collapseExchangeFund} align="center">
                         <Text style={styles.fundSourceContent}>{gblStrings.liquidation.fundSourceContext}</Text>
                         <FlatList
-                            data={this.state.fundListData}
+                            data={fundListData}
                             renderItem={({ item, index }) => {
                                 return (
-                                    <View style={(this.state.selectedFundIndex === index) ? styles.fundsFlexSelected : styles.fundsFlex} onTouchStart={() => this.onClickSelectFund(item, index)}>
+                                    <View style={(item.isSelected) ? styles.fundsFlexSelected : styles.fundsFlex} onTouchStart={() => this.onClickSelectFund(item, index)}>
                                         <View style={styles.sharesFlex}>
 
                                             <View style={styles.flex1}>
@@ -293,7 +297,7 @@ class ExchangeScreenTwoComponent extends Component {
                                             <View style={styles.flex3}>
 
                                                 <View style={styles.allShares}>
-                                                    <TouchableOpacity onPress={() => this.onClickAllShares(item, index)} disabled={!(this.state.selectedFundIndex === index)}>
+                                                    <TouchableOpacity onPress={() => this.onClickAllShares(item, index)} disabled={!(item.isSelected)}>
                                                         <View style={styles.radioButtonFlexOff}>
                                                             {(item.allSharesSelected) ? <View style={styles.radioButtonFlexOn} /> : null}
                                                         </View>
@@ -302,7 +306,7 @@ class ExchangeScreenTwoComponent extends Component {
                                                 </View>
 
                                                 <View style={styles.allShares}>
-                                                    <TouchableOpacity onPress={() => this.onClickAmountinDollar(item, index)} disabled={!(this.state.selectedFundIndex === index)}>
+                                                    <TouchableOpacity onPress={() => this.onClickAmountinDollar(item, index)} disabled={!(item.isSelected)}>
                                                         <View style={styles.radioButtonFlexOff}>
                                                             {(item.dollarSelected) ? <View style={styles.radioButtonFlexOn} /> : null}
                                                         </View>
@@ -323,7 +327,7 @@ class ExchangeScreenTwoComponent extends Component {
 
 
                                                 <View style={styles.allShares}>
-                                                    <TouchableOpacity onPress={() => this.onClickAmountInPerc(item, index)} disabled={!(this.state.selectedFundIndex === index)}>
+                                                    <TouchableOpacity onPress={() => this.onClickAmountInPerc(item, index)} disabled={!(item.isSelected)}>
                                                         <View style={styles.radioButtonFlexOff}>
                                                             {(item.percentageSelected) ? <View style={styles.radioButtonFlexOn} /> : null}
                                                         </View>
@@ -358,7 +362,7 @@ class ExchangeScreenTwoComponent extends Component {
                         <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateExchangeScreenOne}>
                             <Text style={styles.backButtonText}>{gblStrings.common.back}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={this.state.disableNextButton ? styles.submitFlexDisabled : styles.submitFlex} onPress={this.nextButtonAction} disabled={this.state.disableNextButton}>
+                        <TouchableOpacity style={disableNextButton ? styles.submitFlexDisabled : styles.submitFlex} onPress={this.nextButtonAction} disabled={disableNextButton}>
                             <Text style={styles.submitText}>{gblStrings.common.next}</Text>
                         </TouchableOpacity>
                     </View>
