@@ -34,10 +34,150 @@ class LiquidationPageOneComponent extends Component {
             }
         };
     }
-    
+
     componentDidMount() {
         // console.log(" Screen 1 componentdidmount " + JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
     }
+
+    /* -----------------FlatList Events --------------------- */
+
+    renderGeneralAccount = ({ item, index }) => {
+        const { selectedGeneralAccIndex } = this.state;
+        return (
+            <View style={(selectedGeneralAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectGeneralAccount(item, index)}>
+                <View style={styles.accountDetailsFlex}>
+                    <View style={styles.flexAccDetails1}>
+                        <View style={styles.iconStyle}>
+                            <GIcon
+                                name="closesquareo"
+                                type="antdesign"
+                                size={40}
+                                color="#BBB3B3"
+                            />
+                        </View>
+
+                        <View style={styles.accountNumberFlex}>
+                            <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
+                            <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
+                            <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.line} />
+                    <View style={styles.flexAccDetails2}>
+                        <View style={styles.currentValueflex}>
+                            <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.currentValue}</Text>
+                            <Text style={styles.blackText14px}>{item.currentValue}</Text>
+                        </View>
+                        <View style={styles.currentValueflex}>
+                            <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.holding}</Text>
+                            <Text style={styles.blackText14px}>{item.holdingValue}</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.flexAccDetails3}>
+                        <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.automaticInvestmentPlan}</Text>
+                        <Text style={styles.blackText14px}>{item.AutomaticInvestmentPlan}</Text>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
+    renderIRAAccount = ({ item, index }) => {
+        const { selectedIRAAccIndex } = this.state;
+        return (
+            <View style={(selectedIRAAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectIRAAccount(item, index)}>
+                <View style={styles.accountDetailsFlex}>
+                    <View style={styles.flexAccDetails1}>
+                        <View style={styles.iconStyle}>
+                            <GIcon
+                                name="closesquareo"
+                                type="antdesign"
+                                size={40}
+                                color="#BBB3B3"
+                            />
+                        </View>
+
+                        <View style={styles.accountNumberFlex}>
+                            <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
+                            <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
+                            <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.line} />
+
+
+                    <View style={styles.flexAccDetails2}>
+                        <View style={styles.currentValueflex}>
+                            <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.currentValue}</Text>
+                            <Text style={styles.blackText14px}>{item.currentValue}</Text>
+                        </View>
+                        <View style={styles.currentValueflex}>
+                            <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.holding}</Text>
+                            <Text style={styles.blackText14px}>{item.holdingValue}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.flexAccDetails3}>
+                        <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.automaticInvestmentPlan}</Text>
+                        <Text style={styles.blackText14px}>{item.AutomaticInvestmentPlan}</Text>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
+    renderUTMAAccount = ({ item, index }) => {
+        const { selectedUTMAAccIndex } = this.state;
+        return (
+            <View style={(selectedUTMAAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectUTMAAccount(item, index)}>
+                <View style={styles.accountDetailsFlex}>
+
+                    <View style={styles.flexAccDetails1}>
+                        <View style={styles.iconStyle}>
+                            <GIcon
+                                name="closesquareo"
+                                type="antdesign"
+                                size={40}
+                                color="#BBB3B3"
+                            />
+                        </View>
+
+                        <View style={styles.accountNumberFlex}>
+                            <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
+                            <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
+                            <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.line} />
+
+
+                    <View style={styles.flexAccDetails2}>
+                        <View style={styles.currentValueflex}>
+                            <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.currentValue}</Text>
+                            <Text style={styles.blackText14px}>{item.currentValue}</Text>
+                        </View>
+                        <View style={styles.currentValueflex}>
+                            <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.holding}</Text>
+                            <Text style={styles.blackText14px}>{item.holdingValue}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.flexAccDetails3}>
+                        <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.automaticInvestmentPlan}</Text>
+                        <Text style={styles.blackText14px}>{item.AutomaticInvestmentPlan}</Text>
+                    </View>
+                </View>
+            </View>
+        );
+    }
+
+    generateKeyGeneral = (x) => x.accNumber;
+
+    generateKeyIRA = (x) => x.accNumber;
+
+    generateKeyUTMA = (x) => x.accNumber;
 
     onClickExpandGeneralAccount = () => {
         const { collapseGeneralAccount } = this.state;
@@ -46,9 +186,11 @@ class LiquidationPageOneComponent extends Component {
             collapseUTMAAccount: true,
             collapseIRAAccount: true
         }));
-        (collapseGeneralAccount ?
-            this.setState({ generalAccountIcon: "-    ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }) : 
-            this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
+        if (collapseGeneralAccount) {
+            this.setState({ generalAccountIcon: "-    ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " });
+        } else {
+            this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " });
+        }
     }
 
     onClickExpandIRAAccount = () => {
@@ -58,8 +200,11 @@ class LiquidationPageOneComponent extends Component {
             collapseUTMAAccount: true,
             collapseGeneralAccount: true
         }));
-        (collapseIRAAccount ?
-            this.setState({ IRAAccountIcon: "-    ", generalAccountIcon: "+   ", UTMAAccountIcon: "+   " }) : this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
+        if (collapseIRAAccount) {
+            this.setState({ IRAAccountIcon: "-    ", generalAccountIcon: "+   ", UTMAAccountIcon: "+   " });
+        } else {
+            this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " });
+        }
     }
 
     onClickExpandUTMAAccount = () => {
@@ -69,8 +214,11 @@ class LiquidationPageOneComponent extends Component {
             collapseIRAAccount: true,
             collapseGeneralAccount: true
         }));
-        (collapseUTMAAccount ?
-            this.setState({ UTMAAccountIcon: "-    ", generalAccountIcon: "+   ", IRAAccountIcon: "+   " }) : this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " }));
+        if (collapseUTMAAccount) {
+            this.setState({ UTMAAccountIcon: "-    ", generalAccountIcon: "+   ", IRAAccountIcon: "+   " });
+        } else {
+            this.setState({ generalAccountIcon: "+   ", IRAAccountIcon: "+   ", UTMAAccountIcon: "+   " });
+        }
     }
 
     onClickSelectGeneralAccount = (item, index) => () => {
@@ -125,8 +273,8 @@ class LiquidationPageOneComponent extends Component {
     }
 
     nextButtonAction = () => {
-        const { navigation,saveData } = this.props;
-        const { navigate } = navigation; 
+        const { navigation, saveData } = this.props;
+        const { navigate } = navigation;
         const { selectedAccountData } = this.state;
         const payloadData = {
             saveLiquidationSelectedData: {
@@ -144,7 +292,7 @@ class LiquidationPageOneComponent extends Component {
         saveData(payloadData);
         navigate({ routeName: 'LiquidationPageTwo', key: 'LiquidationPageTwo' });
     }
-    
+
     noItemDisplay = () => {
         return (
             <View style={styles.noRecordsFlex}>
@@ -158,7 +306,7 @@ class LiquidationPageOneComponent extends Component {
         const totalCount = 4;
         const pageName = gblStrings.liquidation.accountSelectionScreenName;
         const { navigation, liquidationInitialState } = this.props;
-        const { collapseGeneralAccount,selectedGeneralAccIndex,generalAccountIcon,collapseIRAAccount,selectedIRAAccIndex,IRAAccountIcon,collapseUTMAAccount,selectedUTMAAccIndex,UTMAAccountIcon,disableNextButton } = this.state;
+        const { collapseGeneralAccount, generalAccountIcon, collapseIRAAccount, IRAAccountIcon, collapseUTMAAccount, UTMAAccountIcon, disableNextButton } = this.state;
         if (liquidationInitialState && liquidationInitialState.accSelectionData) {
             savedData = liquidationInitialState.saveLiquidationSelectedData;
         }
@@ -190,51 +338,8 @@ class LiquidationPageOneComponent extends Component {
                         <Collapsible collapsed={collapseGeneralAccount} align="center">
                             <FlatList
                                 data={liquidationInitialState.accSelectionData.General_Account}
-                                renderItem={({ item, index }) => {
-                                    return (
-                                        <View style={(selectedGeneralAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectGeneralAccount(item, index)}>
-                                            <View style={styles.accountDetailsFlex}>
-                                                <View style={styles.flexAccDetails1}>
-                                                    <View style={styles.iconStyle}>
-                                                        <GIcon
-                                                            name="closesquareo"
-                                                            type="antdesign"
-                                                            size={40}
-                                                            color="#BBB3B3"
-                                                        />
-                                                    </View>
-
-                                                    <View style={styles.accountNumberFlex}>
-                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
-                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
-                                                        <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
-                                                    </View>
-                                                </View>
-
-                                                <View style={styles.line} />
-
-
-                                                <View style={styles.flexAccDetails2}>
-                                                    <View style={styles.currentValueflex}>
-                                                        <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.currentValue}</Text>
-                                                        <Text style={styles.blackText14px}>{item.currentValue}</Text>
-                                                    </View>
-                                                    <View style={styles.currentValueflex}>
-                                                        <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.holding}</Text>
-                                                        <Text style={styles.blackText14px}>{item.holdingValue}</Text>
-                                                    </View>
-                                                </View>
-
-                                                <View style={styles.flexAccDetails3}>
-                                                    <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.automaticInvestmentPlan}</Text>
-                                                    <Text style={styles.blackText14px}>{item.AutomaticInvestmentPlan}</Text>
-                                                </View>
-                                            </View>
-                                        </View>
-
-                                    );
-                                }}
-                                keyExtractor={x => x.accNumber}
+                                renderItem={this.renderGeneralAccount}
+                                keyExtractor={this.generateKeyGeneral}
                                 extraData={this.state}
                                 ListEmptyComponent={this.noItemDisplay}
                             />
@@ -251,50 +356,8 @@ class LiquidationPageOneComponent extends Component {
                         <Collapsible collapsed={collapseIRAAccount} align="center">
                             <FlatList
                                 data={liquidationInitialState.accSelectionData.IRA_Account}
-                                renderItem={({ item, index }) => {
-                                    return (
-                                        <View style={(selectedIRAAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectIRAAccount(item, index)}>
-                                            <View style={styles.accountDetailsFlex}>
-                                                <View style={styles.flexAccDetails1}>
-                                                    <View style={styles.iconStyle}>
-                                                        <GIcon
-                                                            name="closesquareo"
-                                                            type="antdesign"
-                                                            size={40}
-                                                            color="#BBB3B3"
-                                                        />
-                                                    </View>
-
-                                                    <View style={styles.accountNumberFlex}>
-                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
-                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
-                                                        <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
-                                                    </View>
-                                                </View>
-
-                                                <View style={styles.line} />
-
-
-                                                <View style={styles.flexAccDetails2}>
-                                                    <View style={styles.currentValueflex}>
-                                                        <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.currentValue}</Text>
-                                                        <Text style={styles.blackText14px}>{item.currentValue}</Text>
-                                                    </View>
-                                                    <View style={styles.currentValueflex}>
-                                                        <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.holding}</Text>
-                                                        <Text style={styles.blackText14px}>{item.holdingValue}</Text>
-                                                    </View>
-                                                </View>
-                                                <View style={styles.flexAccDetails3}>
-                                                    <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.automaticInvestmentPlan}</Text>
-                                                    <Text style={styles.blackText14px}>{item.AutomaticInvestmentPlan}</Text>
-                                                </View>
-                                            </View>
-                                        </View>
-
-                                    );
-                                }}
-                                keyExtractor={x => x.accNumber}
+                                renderItem={this.renderIRAAccount}
+                                keyExtractor={this.generateKeyIRA}
                                 extraData={this.state}
                                 ListEmptyComponent={this.noItemDisplay}
                             />
@@ -312,51 +375,8 @@ class LiquidationPageOneComponent extends Component {
                         <Collapsible collapsed={collapseUTMAAccount} align="center">
                             <FlatList
                                 data={liquidationInitialState.accSelectionData.UTMA_Account}
-                                renderItem={({ item, index }) => {
-                                    return (
-                                        <View style={(selectedUTMAAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectUTMAAccount(item, index)}>
-                                            <View style={styles.accountDetailsFlex}>
-
-                                                <View style={styles.flexAccDetails1}>
-                                                    <View style={styles.iconStyle}>
-                                                        <GIcon
-                                                            name="closesquareo"
-                                                            type="antdesign"
-                                                            size={40}
-                                                            color="#BBB3B3"
-                                                        />
-                                                    </View>
-
-                                                    <View style={styles.accountNumberFlex}>
-                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountName} {item.accName}</Text>
-                                                        <Text style={styles.blackTextBold18px}>{gblStrings.liquidation.accountNumber}</Text>
-                                                        <Text style={styles.blackTextBold18px}>{item.accNumber}</Text>
-                                                    </View>
-                                                </View>
-
-                                                <View style={styles.line} />
-
-
-                                                <View style={styles.flexAccDetails2}>
-                                                    <View style={styles.currentValueflex}>
-                                                        <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.currentValue}</Text>
-                                                        <Text style={styles.blackText14px}>{item.currentValue}</Text>
-                                                    </View>
-                                                    <View style={styles.currentValueflex}>
-                                                        <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.holding}</Text>
-                                                        <Text style={styles.blackText14px}>{item.holdingValue}</Text>
-                                                    </View>
-                                                </View>
-                                                <View style={styles.flexAccDetails3}>
-                                                    <Text style={styles.blackTextBold14px}>{gblStrings.liquidation.automaticInvestmentPlan}</Text>
-                                                    <Text style={styles.blackText14px}>{item.AutomaticInvestmentPlan}</Text>
-                                                </View>
-                                            </View>
-                                        </View>
-
-                                    );
-                                }}
-                                keyExtractor={x => x.accNumber}
+                                renderItem={this.renderUTMAAccount}
+                                keyExtractor={this.generateKeyUTMA}
                                 extraData={this.state}
                                 ListEmptyComponent={this.noItemDisplay}
                             />
