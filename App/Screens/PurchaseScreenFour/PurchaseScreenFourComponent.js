@@ -324,4 +324,5 @@ PurchaseFourComponent.defaultProps = {
     amendReducerData: {},
     ammendActions: () => { }
 };
+
 export default PurchaseFourComponent;

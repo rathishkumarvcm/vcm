@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { View, ScrollView,Text } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import PropTypes from 'prop-types';
-import { GHeaderComponent,GButtonComponent} from '../../CommonComponents';
+import { GHeaderComponent, GButtonComponent } from '../../CommonComponents';
 import Accordian from './Accordian';
 import styles from './styles';
 
 
-let menuList=[];
+let menuList = [];
 //  let selectedFunds =[]
 export default class TAmmendComponent extends Component {
 
@@ -16,19 +16,17 @@ export default class TAmmendComponent extends Component {
             selectedIndex: '',
             selectedTitle: '',
             selectedValue: '',
-            pendingItems:[],
-            data:{}
+            pendingItems: [],
+            data: {}
         };
     }
 
-    componentDidMount()
-    {
-        
-        if(this.props && this.props.amendReducerData && this.props.amendReducerData.menu)
-        {
+    componentDidMount() {
+
+        if (this.props && this.props.amendReducerData && this.props.amendReducerData.menu) {
             //  console.log("---->menu",this.props.amendReducerData.menu)
-           //  this.setState({ menu : this.props.amendReducerData.menu}) ;
-           menuList = this.props.amendReducerData.menu;
+            //  this.setState({ menu : this.props.amendReducerData.menu}) ;
+            menuList = this.props.amendReducerData.menu;
         }
         //  console.log("state menu",this.state.menuList);
         this.filterPendingItems();
@@ -46,82 +44,78 @@ export default class TAmmendComponent extends Component {
     filterPendingItems = () => {
         const items = [];
         for (item of menuList) {
-            if(item.data.OrderStatus === "Pending")
-            {
-            items.push(item);
+            if (item.data.OrderStatus === "Pending") {
+                items.push(item);
             }
         }
-        this.setState({pendingItems:items});
+        this.setState({ pendingItems: items });
     }
 
-    selectIndex = (item,title,index) => {
+    selectIndex = (item, title, index) => {
         //  console.log('parent trigger', title,index);
         this.setState({
             selectedTitle: title,
             selectedValue: item.selectedAccountData.currentValue,
             selectedIndex: index,
-            data:item
-            
+            data: item
+
         });
         //  selectedFunds= item.funds;
-        
+
     }
-    
+
     render() {
         return (
             <View style={styles.container}>
-            <GHeaderComponent navigation={this.props.navigation} />
-            <ScrollView style={styles.scrollViewFlex}>
-            <View style={styles.signInView}>
-            <View style={styles.rowFlex}> 
-            <Text style={styles.signIntext}>
-                Transactions
+                <GHeaderComponent navigation={this.props.navigation} />
+                <ScrollView style={styles.scrollViewFlex}>
+                    <View style={styles.signInView}>
+                        <View style={styles.rowFlex}>
+                            <Text style={styles.signIntext}>
+                                Transactions
             </Text>
-           { /* <Text style={styles.sorttext}>
+                            { /* <Text style={styles.sorttext}>
                         Sort By :
                         </Text> */}
-                        { /*  <Text style={{}}>Pending</Text>
+                            { /*  <Text style={{}}>Pending</Text>
                     <GIcon
                             name="caretdown"
                             type="antdesign"
                             size={15}
                             color="#707070"
                         /> */}
-                         <GButtonComponent
+                            <GButtonComponent
                                 buttonStyle={styles.filterButton}
                                 buttonText="Filter"
                                 textStyle={styles.filterButtonText}
-                                //  onPress={this.hideModal}
-                         />
-                       
-            </View>
-                <Text style={styles.lblLine} />
-                <View style={styles.container}>
-                    {this.renderAccordians()}
-                </View>
-            </View>
-            </ScrollView>
+                            //  onPress={this.hideModal}
+                            />
+
+                        </View>
+                        <Text style={styles.lblLine} />
+                        <View style={styles.container}>
+                            {this.renderAccordians()}
+                        </View>
+                    </View>
+                </ScrollView>
             </View>
         );
     }
 
-    navigatetoFundSelection = () =>
-    {
-       if(this.state.data.TransactionType === "Liquidation")
-       {
-       this.props.navigation.navigate('LiquidationPageTwo',
-       {index:this.state.selectedIndex,data:this.state.data,ammend:true});
-       }
-       if(this.state.data.TransactionType === "Purchase")
-       {
-       this.props.navigation.navigate('purchaseScreenTwo',
-       {index:this.state.selectedIndex,data:this.state.data,ammend:true});
-       }
-      /* if(this.state.data.TransactionType=="Exchange")
-       {
-       this.props.navigation.navigate('LiquidationPageTwo',
-       {index:this.state.selectedIndex,data:this.state.data,ammend:true});
-       } */
+    navigatetoFundSelection = () => {
+        if (this.state.data.TransactionType === "Liquidation") {
+            this.props.navigation.navigate('LiquidationPageTwo',
+                { index: this.state.selectedIndex, data: this.state.data, ammend: true });
+        }
+        if (this.state.data.TransactionType === "Purchase") {
+            this.props.navigation.navigate('purchaseScreenTwo',
+                { index: this.state.selectedIndex, data: this.state.data, ammend: true });
+        }
+        /* if(this.state.data.TransactionType=="Exchange")
+         {
+         this.props.navigation.navigate('LiquidationPageTwo',
+         {index:this.state.selectedIndex,data:this.state.data,ammend:true});
+         } */
     }
 
     renderAccordians = () => {
@@ -141,16 +135,16 @@ export default class TAmmendComponent extends Component {
             );
         }
         return items;
-        
+
     }
 }
 
 TAmmendComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    amendReducerData:PropTypes.instanceOf(Object),
+    amendReducerData: PropTypes.instanceOf(Object),
 };
 
 TAmmendComponent.defaultProps = {
-    navigation:{},
-    amendReducerData:{}
+    navigation: {},
+    amendReducerData: {}
 };

@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
-import {
-  GHeaderComponent,
-  GFooterComponent,
-  GButtonComponent
-} from '../../CommonComponents';
+import { GHeaderComponent, GFooterSettingsComponent, GButtonComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 let tempData = {};
@@ -23,9 +19,11 @@ class VerifyManageBenificiariesComponent extends Component {
   }
 
   componentDidMount() {
-    if (this.props && this.props.manageBeneficiaryData && this.props.manageBeneficiaryData.savedBeneficiaryData) {
-      tempData = this.props.manageBeneficiaryData.savedBeneficiaryData;
-      if (tempData.primary_Bene && tempData.primary_Bene.length > 0 && tempData.contingent_Bene && tempData.contingent_Bene.length > 0 && tempData.transfer_on_Death_Bene && tempData.transfer_on_Death_Bene.length > 0) {
+    const { manageBeneficiaryData } = this.props;
+    console.log("didMount");
+    if (this.props && manageBeneficiaryData && manageBeneficiaryData.savedBeneficiaryData) {
+      tempData = manageBeneficiaryData.savedBeneficiaryData;
+      if (tempData.primary_Bene && tempData.primary_Bene.length <= 0 && tempData.contingent_Bene && tempData.contingent_Bene.length <= 0 && tempData.transfer_on_Death_Bene && tempData.transfer_on_Death_Bene.length > 0) {
         let priArr = [];
         let conArr = [];
         if (tempData.new_Primary_Bene && tempData.new_Contingent_Bene.length) {
@@ -55,9 +53,11 @@ class VerifyManageBenificiariesComponent extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      if (this.props && this.props.manageBeneficiaryData && this.props.manageBeneficiaryData.savedBeneficiaryData) {
-        tempData = this.props.manageBeneficiaryData.savedBeneficiaryData;
-        if (tempData.primary_Bene && tempData.primary_Bene.length > 0 && tempData.contingent_Bene && tempData.contingent_Bene.length > 0 && tempData.transfer_on_Death_Bene && tempData.transfer_on_Death_Bene.length > 0) {
+      console.log("in didUpdate");
+      const { manageBeneficiaryData } = this.props;
+      if (this.props && manageBeneficiaryData && manageBeneficiaryData.savedBeneficiaryData) {
+        tempData = manageBeneficiaryData.savedBeneficiaryData;
+        if (tempData.primary_Bene && tempData.primary_Bene.length <= 0 && tempData.contingent_Bene && tempData.contingent_Bene.length <= 0 && tempData.transfer_on_Death_Bene && tempData.transfer_on_Death_Bene.length > 0) {
           let priArr = [];
           let conArr = [];
           if (tempData.new_Primary_Bene && tempData.new_Contingent_Bene.length) {
@@ -84,22 +84,24 @@ class VerifyManageBenificiariesComponent extends Component {
         this.updateInitialData(tempData);
       }
     }
-
   }
 
   updateInitialData = (data) => {
+    console.warn("updateInitialData");
     if (data) {
       this.setState({ beneData: data }, () => this.setInitialValue());
     }
   }
 
   setInitialValue = () => {
+    console.warn("set initial value");
     let totalPri = 0;
     let totalCon = 0;
     let totalTod = 0;
     let total = 0;
-    if (this.state.beneData.transfer_on_Death_Bene) {
-      const tot = this.state.beneData.transfer_on_Death_Bene.reduce((prev, cur) => {
+    const { beneData } = this.state;
+    if (beneData.transfer_on_Death_Bene) {
+      const tot = beneData.transfer_on_Death_Bene.reduce((prev, cur) => {
         let dist = parseInt(cur.distribution_Per);
         if (this.isEmpty(cur.distribution_Per)) {
           dist = 0;
@@ -109,7 +111,7 @@ class VerifyManageBenificiariesComponent extends Component {
       totalTod = tot;
     }
     if (this.state.beneData.primary_Bene) {
-      const tot = this.state.beneData.contingent_Bene.reduce((prev, cur) => {
+      const tot = beneData.contingent_Bene.reduce((prev, cur) => {
         let dist = parseInt(cur.distribution_Per);
         if (this.isEmpty(cur.distribution_Per)) {
           dist = 0;
@@ -118,8 +120,8 @@ class VerifyManageBenificiariesComponent extends Component {
       }, 0);
       totalPri = tot;
     }
-    if (this.state.beneData.contingent_Bene) {
-      const tot = this.state.beneData.primary_Bene.reduce((prev, cur) => {
+    if (beneData.contingent_Bene) {
+      const tot = beneData.primary_Bene.reduce((prev, cur) => {
         let dist = parseInt(cur.distribution_Per);
         if (this.isEmpty(cur.distribution_Per)) {
           dist = 0;
@@ -143,15 +145,18 @@ class VerifyManageBenificiariesComponent extends Component {
 
   /* ------------------ Button events -------------------------- */
   onClickEdit = () => {
-    this.props.navigation.goBack();
+    const { navigation } = this.props;
+    navigation.goBack();
   }
 
   onClickCancel = () => {
-    this.props.navigation.navigate("manageBeneficiaries");
+    const { navigation } = this.props;
+    navigation.navigate("manageBeneficiaries");
   }
 
   clearData = () => {
-    let data =
+    const { clearBeneficiaryData } = this.props;
+    const data =
     {
       "key": "",
       "account_Type": "",
@@ -166,25 +171,28 @@ class VerifyManageBenificiariesComponent extends Component {
       "new_Contingent_Bene": []
     };
 
-    let payload = {
+    const payload = {
       savedBeneficiaryData: data
     };
-    this.props.clearBeneficiaryData(payload);
+    clearBeneficiaryData(payload);
   }
 
   onClickSubmit = () => {
+    const { saveBeneficiaryData, navigation } = this.props;
     const payloadData = this.getData();
-    this.props.saveBeneficiaryData("verifyBeneficiary", payloadData);
+    saveBeneficiaryData("verifyBeneficiary", payloadData);
     this.clearData();
-    this.props.navigation.navigate("manageBeneficiaries", { showMsg: true, successMsg: "Data has been added Successfully" });
+    navigation.navigate("manageBeneficiaries", { showMsg: true, successMsg: "Data has been added Successfully" });
   }
 
   getData = () => {
+    const { beneData } = this.state;
+    const { manageBeneficiaryData } = this.props;
     let updateBeneData = {};
     let list = [];
-    updateBeneData = this.state.beneData;
-    if (this.props && this.props.manageBeneficiaryData && this.props.manageBeneficiaryData.manage_beneficiary) {
-      list = this.props.manageBeneficiaryData.manage_beneficiary;
+    updateBeneData = beneData;
+    if (this.props && manageBeneficiaryData && manageBeneficiaryData.manage_beneficiary) {
+      list = manageBeneficiaryData.manage_beneficiary;
     }
     list.map((m, n) => {
       if (m.key === updateBeneData.key) {
@@ -326,9 +334,14 @@ class VerifyManageBenificiariesComponent extends Component {
   generateKeyExtractor = (item) => item.key;
 
   render() {
+    const { beneData, totalPrimaryDistribution, totalContingentDistribution, totalDistribution, navigation } = this.state;
+    // const { manageBeneficiaryData } = this.props;
+    // if (manageBeneficiaryData && manageBeneficiaryData.savedBeneficiaryData) {
+    //   this.setData();
+    // }
     return (
       <View style={styles.container}>
-        <GHeaderComponent navigation={this.props.navigation} />
+        <GHeaderComponent navigation={navigation} />
         <ScrollView style={styles.flexMainView}>
           <View style={styles.mainHeadingView}>
             <Text style={styles.manageBenificiariesHeadline}>
@@ -339,56 +352,62 @@ class VerifyManageBenificiariesComponent extends Component {
 
           <View style={styles.contentViewInternal}>
             <View style={styles.contentViewBlock}>
-              <Text style={styles.shortContentText}>{this.state.beneData.account_Type}</Text>
-              <Text style={styles.shortContentValueText}>{this.state.beneData.account_Name}</Text>
+              <Text style={styles.shortContentText}>{beneData.account_Type}</Text>
+              <Text style={styles.shortContentValueText}>{beneData.account_Name}</Text>
             </View>
             <View style={styles.contentViewBlock}>
               <Text style={styles.shortContentText}>{gblStrings.accManagement.registrationOwner}</Text>
-              <Text style={styles.shortContentValueText}>{this.state.beneData.account_Name}</Text>
+              <Text style={styles.shortContentValueText}>{beneData.account_Name}</Text>
             </View>
             <View style={styles.contentViewBlock}>
               <Text style={styles.shortContentText}>{gblStrings.accManagement.accountNumber}</Text>
-              <Text style={styles.shortContentValueText}>{this.state.beneData.account_Number}</Text>
+              <Text style={styles.shortContentValueText}>{beneData.account_Number}</Text>
             </View>
             <View style={styles.contentViewBlock}>
               <Text style={styles.shortContentText}>{gblStrings.accManagement.balance}</Text>
-              <Text style={styles.shortContentValueText}>{`$ ${this.state.beneData.accumulated_Value}`}</Text>
+              <Text style={styles.shortContentValueText}>{`$ ${beneData.accumulated_Value}`}</Text>
             </View>
           </View>
 
-          {this.state.beneData.primary_Bene &&
-            <FlatList
-              data={this.state.beneData.primary_Bene}
-              keyExtractor={this.generateKeyExtractor}
-              extraData={this.state}
-              renderItem={this.renderPrimaryBeneficiary}
-            />
+          {beneData.primary_Bene &&
+            (
+              <FlatList
+                data={beneData.primary_Bene}
+                keyExtractor={this.generateKeyExtractor}
+                extraData={this.state}
+                renderItem={this.renderPrimaryBeneficiary}
+              />
+            )
           }
-          {this.state.beneData.contingent_Bene &&
-            <FlatList
-              data={this.state.beneData.contingent_Bene}
-              keyExtractor={this.generateKeyExtractor}
-              extraData={this.state}
-              renderItem={this.renderContingentBeneficiary}
-            />
+          {beneData.contingent_Bene &&
+            (
+              <FlatList
+                data={beneData.contingent_Bene}
+                keyExtractor={this.generateKeyExtractor}
+                extraData={this.state}
+                renderItem={this.renderContingentBeneficiary}
+              />
+            )
           }
-          {this.state.beneData.transfer_on_Death_Bene &&
-            <FlatList
-              data={this.state.beneData.transfer_on_Death_Bene}
-              keyExtractor={this.generateKeyExtractor}
-              extraData={this.state}
-              renderItem={this.renderTransferOnDeathBeneficiary}
-            />
+          {beneData.transfer_on_Death_Bene &&
+            (
+              <FlatList
+                data={beneData.transfer_on_Death_Bene}
+                keyExtractor={this.generateKeyExtractor}
+                extraData={this.state}
+                renderItem={this.renderTransferOnDeathBeneficiary}
+              />
+            )
           }
 
           {/* --------------------------- Distribution Percentage View -------------------------------- */}
 
           <View style={styles.distributionViewStyle}>
-            {this.state.beneData.transfer_on_Death_Bene ?
+            {beneData.transfer_on_Death_Bene ?
               <Text style={styles.todBeneDistributionTxt}>Total Distribution Percentage</Text> :
-              <Text style={styles.otherBeneDistributionTxt}>{`Total Distribution Percentage of Primary ( ${this.state.totalPrimaryDistribution} %) + Contingent ( ${this.state.totalContingentDistribution} %)`}</Text>
+              <Text style={styles.otherBeneDistributionTxt}>{`Total Distribution Percentage of Primary ( ${totalPrimaryDistribution} %) + Contingent ( ${totalContingentDistribution} %)`}</Text>
             }
-            <Text style={styles.todBeneDistributionTxt}>{`= ${this.state.totalDistribution} %`}</Text>
+            <Text style={styles.todBeneDistributionTxt}>{`= ${totalDistribution} %`}</Text>
           </View>
 
           {/* --------------------------- Button View -------------------------------- */}
@@ -419,19 +438,9 @@ class VerifyManageBenificiariesComponent extends Component {
             />
           </View>
 
-          {/* --------------------------- Footer View -------------------------------- */}
-          <View style={styles.footerView} />
-          <View style={styles.line} />
-          <View style={styles.blockMarginTop} />
-          <View style={styles.mainHeadingView}>
-            <Text style={styles.disclaimerTextHeading}>
-              {gblStrings.accManagement.VCDiscalimerTitle}
-            </Text>
-            <Text style={styles.disclaimerTxt}>
-              {gblStrings.accManagement.VCDiscalimerDescContent}
-            </Text>
-          </View>
-          <GFooterComponent />
+          { /* ----------- Disclaimer -------------------*/}
+
+          <GFooterSettingsComponent />
         </ScrollView>
       </View>
     );
@@ -441,13 +450,15 @@ class VerifyManageBenificiariesComponent extends Component {
 VerifyManageBenificiariesComponent.propTypes = {
   navigation: PropTypes.instanceOf(Object),
   saveBeneficiaryData: PropTypes.func,
-  manageBeneficiaryData: PropTypes.instanceOf(Object)
+  manageBeneficiaryData: PropTypes.instanceOf(Object),
+  clearBeneficiaryData: PropTypes.instanceOf(Object)
 };
 
 VerifyManageBenificiariesComponent.defaultProps = {
   navigation: {},
   saveBeneficiaryData: () => { },
-  manageBeneficiaryData: {}
+  manageBeneficiaryData: {},
+  clearBeneficiaryData: () => { }
 };
 
 export default VerifyManageBenificiariesComponent;

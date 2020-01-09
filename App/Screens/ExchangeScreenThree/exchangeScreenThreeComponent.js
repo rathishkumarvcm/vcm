@@ -45,7 +45,7 @@ let savedData = {};
 let ammendData = {};
 let ammendIndex = 0;
 
-class PurchaseScreenTwoComponent extends Component {
+class ExchangeScreenThreeComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -72,7 +72,7 @@ class PurchaseScreenTwoComponent extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props !== prevProps) {
-            const { accOpeningData ,navigation} = this.props;
+            const { accOpeningData, navigation } = this.props;
             const { ammend } = this.state;
             let tempFundListData = [];
             if (navigation.getParam('ammend')) {
@@ -97,7 +97,7 @@ class PurchaseScreenTwoComponent extends Component {
                         }
                         return 0;
                     });
-                    //this.updateAmendDataToReducer();
+                    // this.updateAmendDataToReducer();
                     this.onAmendFund();
                 }
             }
@@ -153,7 +153,7 @@ class PurchaseScreenTwoComponent extends Component {
             navigation.navigate('tAmmendComponent');
         }
         else {
-            navigation.navigate('purchaseScreenOne');
+            navigation.navigate('exchangeScreenOne');
         }
     }
 
@@ -335,7 +335,7 @@ class PurchaseScreenTwoComponent extends Component {
                 this.onClickSave();
             }
         } catch (err) {
-           // console.log(`Error::: ${err}`);
+            // console.log(`Error::: ${err}`);
         }
     }
 
@@ -376,7 +376,7 @@ class PurchaseScreenTwoComponent extends Component {
         const { saveData, navigation } = this.props;
         if (ammend) {
             const ammendPayloadData = {
-                savePurchaseSelectedData: {
+                saveExchangeSelectedData: {
                     "selectedAccountData": ammendData.selectedAccountData,
                     "selectedFundData": {
                         "fundName": selectedFundInvestmentData.fundName,
@@ -395,11 +395,11 @@ class PurchaseScreenTwoComponent extends Component {
                 }
             };
             saveData(ammendPayloadData);
-            navigation.navigate('purchaseScreenThree', { ammend: true, index: ammendIndex, data: ammendData });
+            //   navigation.navigate('purchaseScreenThree', { ammend: true, index: ammendIndex, data: ammendData });
         }
         else {
             const payloadData = {
-                savePurchaseSelectedData: {
+                saveExchangeSelectedData: {
                     ...savedData,
                     "selectedFundData": {
                         "fundName": selectedFundInvestmentData.fundName,
@@ -414,7 +414,7 @@ class PurchaseScreenTwoComponent extends Component {
                 }
             };
             saveData(payloadData);
-            navigation.navigate('purchaseScreenThree', { ammend: false });
+            //  navigation.navigate('purchaseScreenThree', { ammend: false });
         }
     }
 
@@ -453,7 +453,7 @@ class PurchaseScreenTwoComponent extends Component {
     updateAmendDataToReducer = () => {
         let data = ammendData;
         const payloadData = {
-            savePurchaseSelectedData: {
+            saveExchangeSelectedData: {
                 "selectedFundData": data.selectedFundData,
                 "selectedAccountData": data.selectedAccountData,
                 "selectedFundSourceData": data.selectedFundSourceData,
@@ -572,7 +572,7 @@ class PurchaseScreenTwoComponent extends Component {
 
     render() {
         const { isLoading, ammend, fundList, selectedFundIndex, selectedFundInvestmentData, totalInitialInvestment, disableNextButton, modalVisible, filterMinData, filterRiskData, filterFundData } = this.state;
-        const { purchaseData, accOpeningData, masterLookupStateData, navigation } = this.props;
+        const { exchangeData, accOpeningData, masterLookupStateData, navigation } = this.props;
 
         let currentPage = 2;
         let pageName = `${currentPage} - ${gblStrings.purchase.investmentSelection}`;
@@ -588,8 +588,8 @@ class PurchaseScreenTwoComponent extends Component {
         const year = new Date().getFullYear();
         const currentDate = `${month}-${date}-${year}`;
 
-        if (this.props && purchaseData && purchaseData.savePurchaseSelectedData) {
-            savedData = purchaseData.savePurchaseSelectedData;
+        if (this.props && exchangeData && exchangeData.saveExchangeSelectedData) {
+            savedData = exchangeData.saveExchangeSelectedData;
         }
 
         return (
@@ -908,24 +908,24 @@ class PurchaseScreenTwoComponent extends Component {
 }
 
 
-PurchaseScreenTwoComponent.propTypes = {
+ExchangeScreenThreeComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     accOpeningData: PropTypes.instanceOf(Object),
     getFundListData: PropTypes.func,
     masterLookupStateData: PropTypes.instanceOf(Object),
     getCompositeLookUpData: PropTypes.func,
     saveData: PropTypes.func,
-    purchaseData: PropTypes.instanceOf(Object)
+    exchangeData: PropTypes.instanceOf(Object)
 };
 
-PurchaseScreenTwoComponent.defaultProps = {
+ExchangeScreenThreeComponent.defaultProps = {
     saveData: () => { },
     getCompositeLookUpData: () => { },
     masterLookupStateData: {},
     getFundListData: () => { },
     accOpeningData: {},
     navigation: {},
-    purchaseData: {}
+    exchangeData: {}
 };
 
-export default PurchaseScreenTwoComponent;
+export default ExchangeScreenThreeComponent;

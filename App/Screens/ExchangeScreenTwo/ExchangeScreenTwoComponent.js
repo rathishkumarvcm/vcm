@@ -214,7 +214,7 @@ class ExchangeScreenTwoComponent extends Component {
             },
         };
         saveData(payloadData);
-        // navigate('exchangeScreenThree');
+        navigate('exchangeScreenThree');
     }
 
     formatAmount = (amount) => {
