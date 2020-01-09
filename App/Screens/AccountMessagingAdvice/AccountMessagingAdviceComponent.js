@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 import { styles } from './styles';
 import { GHeaderComponent, GFooterSettingsComponent, GIcon, GButtonComponent, GSwitchComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
+import AppUtils from '../../Utils/AppUtils';
 
 class AccountMessagingAdviceComponent extends Component {
     constructor(props) {
         super(props);
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
+            // isLoading: false,
 
             retirementExpand: true,
             retirementTouchDisabled: true,
@@ -90,84 +91,90 @@ class AccountMessagingAdviceComponent extends Component {
     }      
 
     componentDidMount() {     
-        if (this.props && this.props.accMessageAdviceinitialState){            
+        const {accMessageAdviceinitialState} = this.props;
+        if (accMessageAdviceinitialState){            
                 this.setState({ 
-                    gettingStartedSwitchOff: this.props.accMessageAdviceinitialState.gettingStartedSwitchOff, 
-                    gettingStartedSwitchOn: this.props.accMessageAdviceinitialState.gettingStartedSwitchOn, 
+                    gettingStartedSwitchOff: accMessageAdviceinitialState.gettingStartedSwitchOff, 
+                    gettingStartedSwitchOn: accMessageAdviceinitialState.gettingStartedSwitchOn, 
                 
-                    livingSwitchOff: this.props.accMessageAdviceinitialState.livingSwitchOff, 
-                    livingSwitchOn: this.props.accMessageAdviceinitialState.livingSwitchOn,
+                    livingSwitchOff: accMessageAdviceinitialState.livingSwitchOff, 
+                    livingSwitchOn: accMessageAdviceinitialState.livingSwitchOn,
                
-                    growingSwitchOff: this.props.accMessageAdviceinitialState.growingSwitchOff, 
-                    growingSwitchOn: this.props.accMessageAdviceinitialState.growingSwitchOn, 
+                    growingSwitchOff: accMessageAdviceinitialState.growingSwitchOff, 
+                    growingSwitchOn: accMessageAdviceinitialState.growingSwitchOn, 
                 
-                    eastPlanningSwitchOff: this.props.accMessageAdviceinitialState.eastPlanningSwitchOff,
-                    eastPlanningSwitchOn: this.props.accMessageAdviceinitialState.eastPlanningSwitchOn,
+                    eastPlanningSwitchOff: accMessageAdviceinitialState.eastPlanningSwitchOff,
+                    eastPlanningSwitchOn: accMessageAdviceinitialState.eastPlanningSwitchOn,
                 
-                    taxCenterSwitchOff: this.props.accMessageAdviceinitialState.taxCenterSwitchOff,
-                    taxCenterSwitchOn: this.props.accMessageAdviceinitialState.taxCenterSwitchOn,
+                    taxCenterSwitchOff: accMessageAdviceinitialState.taxCenterSwitchOff,
+                    taxCenterSwitchOn: accMessageAdviceinitialState.taxCenterSwitchOn,
                 
-                    understandingInvestSwitchOff: this.props.accMessageAdviceinitialState.understandingInvestSwitchOff,
-                    understandingInvestSwitchOn: this.props.accMessageAdviceinitialState.understandingInvestSwitchOn,
+                    understandingInvestSwitchOff: accMessageAdviceinitialState.understandingInvestSwitchOff,
+                    understandingInvestSwitchOn: accMessageAdviceinitialState.understandingInvestSwitchOn,
                 
-                    saveBudgetSwitchOff: this.props.accMessageAdviceinitialState.saveBudgetSwitchOff,
-                    saveBudgetSwitchOn: this.props.accMessageAdviceinitialState.saveBudgetSwitchOn,
+                    saveBudgetSwitchOff: accMessageAdviceinitialState.saveBudgetSwitchOff,
+                    saveBudgetSwitchOn: accMessageAdviceinitialState.saveBudgetSwitchOn,
                 
-                    debtCreditSwitchOff: this.props.accMessageAdviceinitialState.debtCreditSwitchOff,
-                    debtCreditSwitchOn: this.props.accMessageAdviceinitialState.debtCreditSwitchOn,
+                    debtCreditSwitchOff: accMessageAdviceinitialState.debtCreditSwitchOff,
+                    debtCreditSwitchOn: accMessageAdviceinitialState.debtCreditSwitchOn,
                
-                    financialSetSwitchOff: this.props.accMessageAdviceinitialState.financialSetSwitchOff,
-                    financialSetSwitchOn: this.props.accMessageAdviceinitialState.financialSetSwitchOn,
+                    financialSetSwitchOff: accMessageAdviceinitialState.financialSetSwitchOff,
+                    financialSetSwitchOn: accMessageAdviceinitialState.financialSetSwitchOn,
                
-                     getMarriedSwitchOff: this.props.accMessageAdviceinitialState.getMarriedSwitchOff, 
-                     getMarriedSwitchOn: this.props.accMessageAdviceinitialState.getMarriedSwitchOn, 
+                     getMarriedSwitchOff: accMessageAdviceinitialState.getMarriedSwitchOff, 
+                     getMarriedSwitchOn: accMessageAdviceinitialState.getMarriedSwitchOn, 
                   
-                    becomeParentSwitchOff: this.props.accMessageAdviceinitialState.becomeParentSwitchOff,
-                    becomeParentSwitchOn: this.props.accMessageAdviceinitialState.becomeParentSwitchOn,
+                    becomeParentSwitchOff: accMessageAdviceinitialState.becomeParentSwitchOff,
+                    becomeParentSwitchOn: accMessageAdviceinitialState.becomeParentSwitchOn,
                 
-                     parentingSwitchOff: this.props.accMessageAdviceinitialState.parentingSwitchOff, 
-                     parentingSwitchOn: this.props.accMessageAdviceinitialState.parentingSwitchOn,
+                     parentingSwitchOff: accMessageAdviceinitialState.parentingSwitchOff, 
+                     parentingSwitchOn: accMessageAdviceinitialState.parentingSwitchOn,
                   
-                    youngAdultSwitchOff: this.props.accMessageAdviceinitialState.youngAdultSwitchOff,
-                    youngAdultSwitchOn: this.props.accMessageAdviceinitialState.youngAdultSwitchOn, 
+                    youngAdultSwitchOff:accMessageAdviceinitialState.youngAdultSwitchOff,
+                    youngAdultSwitchOn: accMessageAdviceinitialState.youngAdultSwitchOn, 
                
-                    getDivorceSwitchOff: this.props.accMessageAdviceinitialState.getDivorceSwitchOff,
-                    getDivorceSwitchOn: this.props.accMessageAdviceinitialState.getDivorceSwitchOn,
+                    getDivorceSwitchOff: accMessageAdviceinitialState.getDivorceSwitchOff,
+                    getDivorceSwitchOn: accMessageAdviceinitialState.getDivorceSwitchOn,
                
-                    lossOfLovedSwitchOff: this.props.accMessageAdviceinitialState.lossOfLovedSwitchOff, 
-                    lossOfLovedSwitchOn: this.props.accMessageAdviceinitialState.lossOfLovedSwitchOn,
+                    lossOfLovedSwitchOff: accMessageAdviceinitialState.lossOfLovedSwitchOff, 
+                    lossOfLovedSwitchOn: accMessageAdviceinitialState.lossOfLovedSwitchOn,
                
-                    lifeInsuranceSwitchOff: this.props.accMessageAdviceinitialState.lifeInsuranceSwitchOff, 
-                    lifeInsuranceSwitchOn: this.props.accMessageAdviceinitialState.lifeInsuranceSwitchOn, 
+                    lifeInsuranceSwitchOff: accMessageAdviceinitialState.lifeInsuranceSwitchOff, 
+                    lifeInsuranceSwitchOn: accMessageAdviceinitialState.lifeInsuranceSwitchOn, 
                
-                    healthInsuranceSwitchOff: this.props.accMessageAdviceinitialState.healthInsuranceSwitchOff,
-                    healthInsuranceSwitchOn: this.props.accMessageAdviceinitialState.healthInsuranceSwitchOn,  
+                    healthInsuranceSwitchOff: accMessageAdviceinitialState.healthInsuranceSwitchOff,
+                    healthInsuranceSwitchOn: accMessageAdviceinitialState.healthInsuranceSwitchOn,  
                
-                    joiningMilitarySwitchOff: this.props.accMessageAdviceinitialState.joiningMilitarySwitchOff,
-                    joiningMilitarySwitchOn: this.props.accMessageAdviceinitialState.joiningMilitarySwitchOn,
+                    joiningMilitarySwitchOff: accMessageAdviceinitialState.joiningMilitarySwitchOff,
+                    joiningMilitarySwitchOn: accMessageAdviceinitialState.joiningMilitarySwitchOn,
                 
-                     deploymentSwitchOff: this.props.accMessageAdviceinitialState.deploymentSwitchOff,
-                     deploymentSwitchOn: this.props.accMessageAdviceinitialState.deploymentSwitchOn,
+                     deploymentSwitchOff: accMessageAdviceinitialState.deploymentSwitchOff,
+                     deploymentSwitchOn: accMessageAdviceinitialState.deploymentSwitchOn,
                     
-                    pcsSwitchOff: this.props.accMessageAdviceinitialState.pcsSwitchOff,
-                    pcsSwitchOn: this.props.accMessageAdviceinitialState.pcsSwitchOn,
+                    pcsSwitchOff: accMessageAdviceinitialState.pcsSwitchOff,
+                    pcsSwitchOn: accMessageAdviceinitialState.pcsSwitchOn,
                 
-                    leaveMilitarySwitchOff: this.props.accMessageAdviceinitialState.leaveMilitarySwitchOff, 
-                    leaveMilitarySwitchOn: this.props.accMessageAdviceinitialState.leaveMilitarySwitchOn,
+                    leaveMilitarySwitchOff: accMessageAdviceinitialState.leaveMilitarySwitchOff, 
+                    leaveMilitarySwitchOn: accMessageAdviceinitialState.leaveMilitarySwitchOn,
                 });
         }                 
     }
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const {navigation} = this.props;
+       navigation.goBack();
     }
 
-    navigategeneralSettings = () => this.props.navigation.navigate('generalSettings');
+    navigategeneralSettings = () => {
+        const {navigation} = this.props;
+        navigation.navigate('generalSettings');
+    }
 
     setStateUpdates = (fromlist) => () => {
+        const {retirementExpand,financeExpand,familyExpand,militaryExpand} = this.state;
         switch (fromlist) {
             case 'retirement':
-                if (this.state.retirementExpand) {
+                if (retirementExpand) {
                     this.setState({
                         retirementExpand: false,
                         retirementTouchDisabled: false,
@@ -181,7 +188,7 @@ class AccountMessagingAdviceComponent extends Component {
                         militaryExpand: true,
                         militaryTouchDisabled: true
                     });
-                } else if (!this.state.retirementExpand) {
+                } else if (!retirementExpand) {
                     this.setState({
                         retirementExpand: true,
                         retirementTouchDisabled: true,
@@ -198,7 +205,7 @@ class AccountMessagingAdviceComponent extends Component {
                 }
                 break;
             case 'personalfinance':
-                if (!this.state.financeExpand) {
+                if (!financeExpand) {
                     this.setState({
                         retirementExpand: false,
                         retirementTouchDisabled: false,
@@ -212,7 +219,7 @@ class AccountMessagingAdviceComponent extends Component {
                         militaryExpand: false,
                         militaryTouchDisabled: false
                     });
-                } else if (this.state.financeExpand) {
+                } else if (financeExpand) {
                     this.setState({
                         retirementExpand: true,
                         retirementTouchDisabled: true,
@@ -229,7 +236,7 @@ class AccountMessagingAdviceComponent extends Component {
                 }
                 break;
             case 'familylife':
-                if (!this.state.familyExpand) {
+                if (!familyExpand) {
                     this.setState({
                         retirementExpand: false,
                         retirementTouchDisabled: false,
@@ -243,7 +250,7 @@ class AccountMessagingAdviceComponent extends Component {
                         militaryExpand: false,
                         militaryTouchDisabled: false
                     });
-                } else if (this.state.familyExpand) {
+                } else if (familyExpand) {
                     this.setState({
                         retirementExpand: true,
                         retirementTouchDisabled: true,
@@ -260,7 +267,7 @@ class AccountMessagingAdviceComponent extends Component {
                 }
                 break;
             case 'militarylife':
-                if (!this.state.militaryExpand) {
+                if (!militaryExpand) {
                     this.setState({
                         retirementExpand: false,
                         retirementTouchDisabled: false,
@@ -274,7 +281,7 @@ class AccountMessagingAdviceComponent extends Component {
                         militaryExpand: true,
                         militaryTouchDisabled: true
                     });
-                } else if (this.state.militaryExpand) {
+                } else if (militaryExpand) {
                     this.setState({
                         retirementExpand: true,
                         retirementTouchDisabled: true,
@@ -387,81 +394,137 @@ class AccountMessagingAdviceComponent extends Component {
     }    
 
     saveButtonAction = () =>{
-       console.log('Save Button Clicked...');           
+        AppUtils.debugLog('Save Button Clicked...');          
+        const {navigation,saveData} = this.props;
 
-       const payloadData = {
-            gettingStartedSwitchOff: this.state.gettingStartedSwitchOff,    
-            gettingStartedSwitchOn: this.state.gettingStartedSwitchOn,   
+        const {
+            gettingStartedSwitchOff,gettingStartedSwitchOn,
+            livingSwitchOff,livingSwitchOn,
+            growingSwitchOff,growingSwitchOn,
+            eastPlanningSwitchOff,eastPlanningSwitchOn,
+            taxCenterSwitchOff,taxCenterSwitchOn,
+            understandingInvestSwitchOff,understandingInvestSwitchOn,
+            saveBudgetSwitchOff,saveBudgetSwitchOn,
+            debtCreditSwitchOff,debtCreditSwitchOn,
+            financialSetSwitchOff,financialSetSwitchOn,
+            getMarriedSwitchOff,getMarriedSwitchOn,
+            becomeParentSwitchOff,becomeParentSwitchOn,
+            parentingSwitchOff,parentingSwitchOn,
+            youngAdultSwitchOff,youngAdultSwitchOn,
+            getDivorceSwitchOff,getDivorceSwitchOn,
+            lossOfLovedSwitchOff,lossOfLovedSwitchOn,
+            lifeInsuranceSwitchOff,lifeInsuranceSwitchOn,
+            healthInsuranceSwitchOff,healthInsuranceSwitchOn,
+            joiningMilitarySwitchOff,joiningMilitarySwitchOn,
+            deploymentSwitchOff,deploymentSwitchOn,
+            pcsSwitchOff,pcsSwitchOn,
+            leaveMilitarySwitchOff,leaveMilitarySwitchOn
+        } = this.state;          
 
-            livingSwitchOff: this.state.livingSwitchOff,    
-            livingSwitchOn: this.state.livingSwitchOn,    
+           const payloadData = {
+              
+            gettingStartedSwitchOff,    
+            gettingStartedSwitchOn,   
 
-            growingSwitchOff: this.state.growingSwitchOff,   
-            growingSwitchOn: this.state.growingSwitchOn,   
+            livingSwitchOff,   
+            livingSwitchOn,
 
-            eastPlanningSwitchOff: this.state.eastPlanningSwitchOff,
-            eastPlanningSwitchOn: this.state.eastPlanningSwitchOn,
+            growingSwitchOff,
+            growingSwitchOn,
 
-            taxCenterSwitchOff: this.state.taxCenterSwitchOff,
-            taxCenterSwitchOn: this.state.taxCenterSwitchOn,  
+            eastPlanningSwitchOff,
+            eastPlanningSwitchOn,
 
-            understandingInvestSwitchOff: this.state.understandingInvestSwitchOff,
-            understandingInvestSwitchOn: this.state.understandingInvestSwitchOn,
+            taxCenterSwitchOff,
+            taxCenterSwitchOn,  
 
-            saveBudgetSwitchOff: this.state.saveBudgetSwitchOff,
-            saveBudgetSwitchOn: this.state.saveBudgetSwitchOn,
+            understandingInvestSwitchOff,
+            understandingInvestSwitchOn,
 
-            debtCreditSwitchOff: this.state.debtCreditSwitchOff,
-            debtCreditSwitchOn: this.state.debtCreditSwitchOn,
+            saveBudgetSwitchOff,
+            saveBudgetSwitchOn,
 
-            financialSetSwitchOff: this.state.financialSetSwitchOff,
-            financialSetSwitchOn: this.state.financialSetSwitchOn,
+            debtCreditSwitchOff,
+            debtCreditSwitchOn,
 
-            getMarriedSwitchOff: this.state.getMarriedSwitchOff,
-            getMarriedSwitchOn: this.state.getMarriedSwitchOn,
+            financialSetSwitchOff,
+            financialSetSwitchOn,
 
-            becomeParentSwitchOff: this.state.becomeParentSwitchOff,
-            becomeParentSwitchOn: this.state.becomeParentSwitchOn,
+            getMarriedSwitchOff,
+            getMarriedSwitchOn,
 
-            parentingSwitchOff: this.state.parentingSwitchOff,
-            parentingSwitchOn: this.state.parentingSwitchOn,
+            becomeParentSwitchOff,
+            becomeParentSwitchOn,
 
-            youngAdultSwitchOff: this.state.youngAdultSwitchOff,
-            youngAdultSwitchOn: this.state.youngAdultSwitchOn,
+            parentingSwitchOff,
+            parentingSwitchOn,
 
-            getDivorceSwitchOff: this.state.getDivorceSwitchOff,
-            getDivorceSwitchOn: this.state.getDivorceSwitchOn,
+            youngAdultSwitchOff,
+            youngAdultSwitchOn,
 
-            lossOfLovedSwitchOff: this.state.lossOfLovedSwitchOff,
-            lossOfLovedSwitchOn: this.state.lossOfLovedSwitchOn,
+            getDivorceSwitchOff,
+            getDivorceSwitchOn,
 
-            lifeInsuranceSwitchOff: this.state.lifeInsuranceSwitchOff,
-            lifeInsuranceSwitchOn: this.state.lifeInsuranceSwitchOn,
+            lossOfLovedSwitchOff,
+            lossOfLovedSwitchOn,
 
-            healthInsuranceSwitchOff: this.state.healthInsuranceSwitchOff,
-            healthInsuranceSwitchOn: this.state.healthInsuranceSwitchOn,
+            lifeInsuranceSwitchOff,
+            lifeInsuranceSwitchOn,
 
-            joiningMilitarySwitchOff: this.state.joiningMilitarySwitchOff,
-            joiningMilitarySwitchOn: this.state.joiningMilitarySwitchOn,
+            healthInsuranceSwitchOff,
+            healthInsuranceSwitchOn,
 
-            deploymentSwitchOff: this.state.deploymentSwitchOff,
-            deploymentSwitchOn: this.state.deploymentSwitchOn,
+            joiningMilitarySwitchOff,
+            joiningMilitarySwitchOn,
 
-            pcsSwitchOff: this.state.pcsSwitchOff,
-            pcsSwitchOn: this.state.pcsSwitchOn,
+            deploymentSwitchOff,
+            deploymentSwitchOn,
 
-            leaveMilitarySwitchOff: this.state.leaveMilitarySwitchOff,   
-            leaveMilitarySwitchOn: this.state.leaveMilitarySwitchOn,   
+            pcsSwitchOff,
+            pcsSwitchOn,
+
+            leaveMilitarySwitchOff,   
+            leaveMilitarySwitchOn,   
         };        
-        this.props.saveData(payloadData);
-        this.props.navigation.goBack();    
+        saveData(payloadData);
+        navigation.goBack();    
     }
 
     render() {
+        const {navigation} = this.props;
+        const {retirementTouchDisabled,retirementExpand,financeTouchDisabled,
+            financeExpand,familyTouchDisabled,familyExpand,
+            militaryTouchDisabled,militaryExpand,
+        } = this.state;
+        const {
+            gettingStartedSwitchOff,gettingStartedSwitchOn,
+            livingSwitchOff,livingSwitchOn,
+            growingSwitchOff,growingSwitchOn,
+            eastPlanningSwitchOff,eastPlanningSwitchOn,
+            taxCenterSwitchOff,taxCenterSwitchOn,
+            understandingInvestSwitchOff,understandingInvestSwitchOn,
+            saveBudgetSwitchOff,saveBudgetSwitchOn,
+            debtCreditSwitchOff,debtCreditSwitchOn,
+            financialSetSwitchOff,financialSetSwitchOn,
+            getMarriedSwitchOff,getMarriedSwitchOn,
+            becomeParentSwitchOff,becomeParentSwitchOn,
+            parentingSwitchOff,parentingSwitchOn,
+            youngAdultSwitchOff,youngAdultSwitchOn,
+            getDivorceSwitchOff,getDivorceSwitchOn,
+            lossOfLovedSwitchOff,lossOfLovedSwitchOn,
+            lifeInsuranceSwitchOff,lifeInsuranceSwitchOn,
+            healthInsuranceSwitchOff,healthInsuranceSwitchOn,
+            joiningMilitarySwitchOff,joiningMilitarySwitchOn,
+            deploymentSwitchOff,deploymentSwitchOn,
+            pcsSwitchOff,pcsSwitchOn,
+            leaveMilitarySwitchOff,leaveMilitarySwitchOn
+        } = this.state;          
+
+
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation}
+                    navigation={navigation}
                 />
                 <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.settingsView}>
@@ -490,23 +553,24 @@ class AccountMessagingAdviceComponent extends Component {
                     </View>
 
                     <View style={styles.advicecontainer}>
-                        <TouchableOpacity style={styles.touchOpacityPosition} disabled={this.state.retirementTouchDisabled} onPress={this.setStateUpdates('retirement')}>
+                        <TouchableOpacity style={styles.touchOpacityPosition} disabled={retirementTouchDisabled} onPress={this.setStateUpdates('retirement')}>
                             <View style={styles.adviceHeaderview}>
 
-                                {this.state.retirementExpand ?
+                                {retirementExpand ? (
                                     <GIcon
                                         name="minus"
                                         type="antdesign"
                                         size={30}
                                         color="#088ACC"
-                                    /> :
+                                    />
+                                  ) : (
                                     <GIcon
                                         name="plus"
                                         type="antdesign"
                                         size={30}
                                         color="#088ACC"
                                     />
-                                }
+                                  )}
 
                                 <Text style={styles.adviceHeaderViewTitle}>
                                     {gblStrings.settingAccountMessaging.accountMessagingAdviceRetirement}
@@ -515,7 +579,7 @@ class AccountMessagingAdviceComponent extends Component {
                         </TouchableOpacity>
                     </View>
                     {
-                    (this.state.retirementExpand) ?           
+                    (retirementExpand) ? (
                         <View style={styles.adviceContainerBottom}>
                             <Text style={styles.adviceAlertsContent}>
                                 {gblStrings.settingAccountMessaging.accountMessagingAdviceGettingStarted}
@@ -523,8 +587,8 @@ class AccountMessagingAdviceComponent extends Component {
                             <GSwitchComponent
                                 switchOnMethod={this.switchOnOffStateUpdates('gettingStarted', true)}
                                 switchOffMethod={this.switchOnOffStateUpdates('gettingStarted', false)}
-                                switchOn={this.state.gettingStartedSwitchOn}
-                                switchOff={this.state.gettingStartedSwitchOff}
+                                switchOn={gettingStartedSwitchOn}
+                                switchOff={gettingStartedSwitchOff}
                                 switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                 switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                             />
@@ -536,8 +600,8 @@ class AccountMessagingAdviceComponent extends Component {
                             <GSwitchComponent
                                 switchOnMethod={this.switchOnOffStateUpdates('living', true)}
                                 switchOffMethod={this.switchOnOffStateUpdates('living', false)}
-                                switchOn={this.state.livingSwitchOn}
-                                switchOff={this.state.livingSwitchOff}
+                                switchOn={livingSwitchOn}
+                                switchOff={livingSwitchOff}
                                 switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                 switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                             />
@@ -548,8 +612,8 @@ class AccountMessagingAdviceComponent extends Component {
                             <GSwitchComponent
                                 switchOnMethod={this.switchOnOffStateUpdates('growing', true)}
                                 switchOffMethod={this.switchOnOffStateUpdates('growing', false)}
-                                switchOn={this.state.growingSwitchOn}
-                                switchOff={this.state.growingSwitchOff}
+                                switchOn={growingSwitchOn}
+                                switchOff={growingSwitchOff}
                                 switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                 switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                             />
@@ -561,32 +625,34 @@ class AccountMessagingAdviceComponent extends Component {
                             <GSwitchComponent
                                 switchOnMethod={this.switchOnOffStateUpdates('eastPlanning', true)}
                                 switchOffMethod={this.switchOnOffStateUpdates('eastPlanning', false)}
-                                switchOn={this.state.eastPlanningSwitchOn}
-                                switchOff={this.state.eastPlanningSwitchOff}
+                                switchOn={eastPlanningSwitchOn}
+                                switchOff={eastPlanningSwitchOff}
                                 switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                 switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                             />
-                        </View>     
+                        </View>
+                      )     
                     : null
                     }        
 
                     <View style={styles.advicecontainer}>
-                        <TouchableOpacity style={styles.touchOpacityPosition} disabled={this.state.financeTouchDisabled} onPress={this.setStateUpdates('personalfinance')}>
+                        <TouchableOpacity style={styles.touchOpacityPosition} disabled={financeTouchDisabled} onPress={this.setStateUpdates('personalfinance')}>
                             <View style={styles.adviceHeaderview}>
-                                {this.state.financeExpand ?
+                                {financeExpand ? (
                                     <GIcon
                                         name="minus"
                                         type="antdesign"
                                         size={30}
                                         color="#088ACC"
-                                    /> :
+                                    />
+                                  ) : (
                                     <GIcon
                                         name="plus"
                                         type="antdesign"
                                         size={30}
                                         color="#088ACC"
                                     />
-                                }
+                                  )}
                                 <Text style={styles.adviceHeaderViewTitle}>
                                     {gblStrings.settingAccountMessaging.accountMessagingAdvicePersonalFinance}
                                 </Text>
@@ -594,7 +660,7 @@ class AccountMessagingAdviceComponent extends Component {
                         </TouchableOpacity>
                     </View>
                     {
-                        (this.state.financeExpand) ?
+                        (financeExpand) ? (
                         <View style={styles.adviceContainerBottom}>
                             <Text style={styles.adviceAlertsContent}>
                                 {gblStrings.settingAccountMessaging.accountMessagingAdviceTaxCenter}
@@ -602,8 +668,8 @@ class AccountMessagingAdviceComponent extends Component {
                             <GSwitchComponent
                                 switchOnMethod={this.switchOnOffStateUpdates('taxCenter', true)}
                                 switchOffMethod={this.switchOnOffStateUpdates('taxCenter', false)}
-                                switchOn={this.state.taxCenterSwitchOn}
-                                switchOff={this.state.taxCenterSwitchOff}
+                                switchOn={taxCenterSwitchOn}
+                                switchOff={taxCenterSwitchOff}
                                 switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                 switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                             />
@@ -615,8 +681,8 @@ class AccountMessagingAdviceComponent extends Component {
                             <GSwitchComponent
                                 switchOnMethod={this.switchOnOffStateUpdates('understandingInvest', true)}
                                 switchOffMethod={this.switchOnOffStateUpdates('understandingInvest', false)}
-                                switchOn={this.state.understandingInvestSwitchOn}
-                                switchOff={this.state.understandingInvestSwitchOff}
+                                switchOn={understandingInvestSwitchOn}
+                                switchOff={understandingInvestSwitchOff}
                                 switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                 switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                             />
@@ -628,8 +694,8 @@ class AccountMessagingAdviceComponent extends Component {
                             <GSwitchComponent
                                 switchOnMethod={this.switchOnOffStateUpdates('saveBudget', true)}
                                 switchOffMethod={this.switchOnOffStateUpdates('saveBudget', false)}
-                                switchOn={this.state.saveBudgetSwitchOn}
-                                switchOff={this.state.saveBudgetSwitchOff}
+                                switchOn={saveBudgetSwitchOn}
+                                switchOff={saveBudgetSwitchOff}
                                 switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                 switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                             />
@@ -641,8 +707,8 @@ class AccountMessagingAdviceComponent extends Component {
                             <GSwitchComponent
                                 switchOnMethod={this.switchOnOffStateUpdates('debtCredit', true)}
                                 switchOffMethod={this.switchOnOffStateUpdates('debtCredit', false)}
-                                switchOn={this.state.debtCreditSwitchOn}
-                                switchOff={this.state.debtCreditSwitchOff}
+                                switchOn={debtCreditSwitchOn}
+                                switchOff={debtCreditSwitchOff}
                                 switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                 switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                             />
@@ -654,32 +720,34 @@ class AccountMessagingAdviceComponent extends Component {
                             <GSwitchComponent
                                 switchOnMethod={this.switchOnOffStateUpdates('financialSet', true)}
                                 switchOffMethod={this.switchOnOffStateUpdates('financialSet', false)}
-                                switchOn={this.state.financialSetSwitchOn}
-                                switchOff={this.state.financialSetSwitchOff}
+                                switchOn={financialSetSwitchOn}
+                                switchOff={financialSetSwitchOff}
                                 switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                 switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                             />
                         </View>
+                      )
                         : null
                     }
 
                     <View style={styles.advicecontainer}>
-                        <TouchableOpacity style={styles.touchOpacityPosition} disabled={this.state.familyTouchDisabled} onPress={this.setStateUpdates('familylife')}>
+                        <TouchableOpacity style={styles.touchOpacityPosition} disabled={familyTouchDisabled} onPress={this.setStateUpdates('familylife')}>
                             <View style={styles.adviceHeaderview}>
-                                {this.state.familyExpand ?
+                                {familyExpand ? (
                                     <GIcon
                                         name="minus"
                                         type="antdesign"
                                         size={30}
                                         color="#088ACC"
-                                    /> :
+                                    />
+                                  ) : (
                                     <GIcon
                                         name="plus"
                                         type="antdesign"
                                         size={30}
                                         color="#088ACC"
                                     />
-                                }
+                                  )}
                                 <Text style={styles.adviceHeaderViewTitle}>
                                     {gblStrings.settingAccountMessaging.accountMessagingAdviceFamilyLife}
                                 </Text>
@@ -687,7 +755,7 @@ class AccountMessagingAdviceComponent extends Component {
                         </TouchableOpacity>
                     </View>
                     {                        
-                        (this.state.familyExpand)?
+                        (familyExpand)? (
                         <View style={styles.adviceContainerBottom}>
                                 <Text style={styles.adviceAlertsContent}>
                                     {gblStrings.settingAccountMessaging.accountMessagingAdviceGettingMarried}
@@ -695,8 +763,8 @@ class AccountMessagingAdviceComponent extends Component {
                                 <GSwitchComponent
                                     switchOnMethod={this.switchOnOffStateUpdates('getMarried', true)}
                                     switchOffMethod={this.switchOnOffStateUpdates('getMarried', false)}
-                                    switchOn={this.state.getMarriedSwitchOn}
-                                    switchOff={this.state.getMarriedSwitchOff}
+                                    switchOn={getMarriedSwitchOn}
+                                    switchOff={getMarriedSwitchOff}
                                     switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                     switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                                 />
@@ -708,8 +776,8 @@ class AccountMessagingAdviceComponent extends Component {
                                 <GSwitchComponent
                                     switchOnMethod={this.switchOnOffStateUpdates('becomeParent', true)}
                                     switchOffMethod={this.switchOnOffStateUpdates('becomeParent', false)}
-                                    switchOn={this.state.becomeParentSwitchOn}
-                                    switchOff={this.state.becomeParentSwitchOff}
+                                    switchOn={becomeParentSwitchOn}
+                                    switchOff={becomeParentSwitchOff}
                                     switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                     switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                                 />
@@ -721,8 +789,8 @@ class AccountMessagingAdviceComponent extends Component {
                                 <GSwitchComponent
                                     switchOnMethod={this.switchOnOffStateUpdates('parenting', true)}
                                     switchOffMethod={this.switchOnOffStateUpdates('parenting', false)}
-                                    switchOn={this.state.parentingSwitchOn}
-                                    switchOff={this.state.parentingSwitchOff}
+                                    switchOn={parentingSwitchOn}
+                                    switchOff={parentingSwitchOff}
                                     switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                     switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                                 />
@@ -734,8 +802,8 @@ class AccountMessagingAdviceComponent extends Component {
                                 <GSwitchComponent
                                     switchOnMethod={this.switchOnOffStateUpdates('youngAdult', true)}
                                     switchOffMethod={this.switchOnOffStateUpdates('youngAdult', false)}
-                                    switchOn={this.state.youngAdultSwitchOn}
-                                    switchOff={this.state.youngAdultSwitchOff}
+                                    switchOn={youngAdultSwitchOn}
+                                    switchOff={youngAdultSwitchOff}
                                     switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                     switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                                 />
@@ -747,8 +815,8 @@ class AccountMessagingAdviceComponent extends Component {
                                 <GSwitchComponent
                                     switchOnMethod={this.switchOnOffStateUpdates('getDivorce', true)}
                                     switchOffMethod={this.switchOnOffStateUpdates('getDivorce', false)}
-                                    switchOn={this.state.getDivorceSwitchOn}
-                                    switchOff={this.state.getDivorceSwitchOff}
+                                    switchOn={getDivorceSwitchOn}
+                                    switchOff={getDivorceSwitchOff}
                                     switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                     switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                                 />
@@ -760,8 +828,8 @@ class AccountMessagingAdviceComponent extends Component {
                                 <GSwitchComponent
                                     switchOnMethod={this.switchOnOffStateUpdates('lossOfLoved', true)}
                                     switchOffMethod={this.switchOnOffStateUpdates('lossOfLoved', false)}
-                                    switchOn={this.state.lossOfLovedSwitchOn}
-                                    switchOff={this.state.lossOfLovedSwitchOff}
+                                    switchOn={lossOfLovedSwitchOn}
+                                    switchOff={lossOfLovedSwitchOff}
                                     switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                     switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                                 />
@@ -773,8 +841,8 @@ class AccountMessagingAdviceComponent extends Component {
                                 <GSwitchComponent
                                     switchOnMethod={this.switchOnOffStateUpdates('lifeInsurance', true)}
                                     switchOffMethod={this.switchOnOffStateUpdates('lifeInsurance', false)}
-                                    switchOn={this.state.lifeInsuranceSwitchOn}
-                                    switchOff={this.state.lifeInsuranceSwitchOff}
+                                    switchOn={lifeInsuranceSwitchOn}
+                                    switchOff={lifeInsuranceSwitchOff}
                                     switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                     switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                                 />
@@ -786,31 +854,33 @@ class AccountMessagingAdviceComponent extends Component {
                                 <GSwitchComponent
                                     switchOnMethod={this.switchOnOffStateUpdates('healthInsurance', true)}
                                     switchOffMethod={this.switchOnOffStateUpdates('healthInsurance', false)}
-                                    switchOn={this.state.healthInsuranceSwitchOn}
-                                    switchOff={this.state.healthInsuranceSwitchOff}
+                                    switchOn={healthInsuranceSwitchOn}
+                                    switchOff={healthInsuranceSwitchOff}
                                     switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                     switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                                 />
                         </View>
+                      )
                         : null
                     }
                     <View style={styles.advicecontainer}>
-                        <TouchableOpacity style={styles.touchOpacityPosition} disabled={this.state.militaryTouchDisabled} onPress={this.setStateUpdates('militarylife')}>
+                        <TouchableOpacity style={styles.touchOpacityPosition} disabled={militaryTouchDisabled} onPress={this.setStateUpdates('militarylife')}>
                             <View style={styles.adviceHeaderview}>
-                                {this.state.militaryExpand ?
+                                {militaryExpand ? (
                                     <GIcon
                                         name="minus"
                                         type="antdesign"
                                         size={30}
                                         color="#088ACC"
-                                    /> :
+                                    />
+                                  ) : (
                                     <GIcon
                                         name="plus"
                                         type="antdesign"
                                         size={30}
                                         color="#088ACC"
                                     />
-                                }
+                                  )}
                                 <Text style={styles.adviceHeaderViewTitle}>
                                     {gblStrings.settingAccountMessaging.accountMessagingAdviceMilitaryLife}
                                 </Text>
@@ -818,7 +888,7 @@ class AccountMessagingAdviceComponent extends Component {
                         </TouchableOpacity>
                     </View>
                     {
-                        (this.state.militaryExpand)?
+                        (militaryExpand)? (
                         <View style={styles.adviceContainerBottom}>
                                 <Text style={styles.adviceAlertsContent}>
                                     {gblStrings.settingAccountMessaging.accountMessagingAdviceJoinMilitary}
@@ -826,8 +896,8 @@ class AccountMessagingAdviceComponent extends Component {
                                 <GSwitchComponent
                                     switchOnMethod={this.switchOnOffStateUpdates('joiningMilitary', true)}
                                     switchOffMethod={this.switchOnOffStateUpdates('joiningMilitary', false)}
-                                    switchOn={this.state.joiningMilitarySwitchOn}
-                                    switchOff={this.state.joiningMilitarySwitchOff}
+                                    switchOn={joiningMilitarySwitchOn}
+                                    switchOff={joiningMilitarySwitchOff}
                                     switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                     switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                                 />
@@ -839,8 +909,8 @@ class AccountMessagingAdviceComponent extends Component {
                                 <GSwitchComponent
                                     switchOnMethod={this.switchOnOffStateUpdates('deployment', true)}
                                     switchOffMethod={this.switchOnOffStateUpdates('deployment', false)}
-                                    switchOn={this.state.deploymentSwitchOn}
-                                    switchOff={this.state.deploymentSwitchOff}
+                                    switchOn={deploymentSwitchOn}
+                                    switchOff={deploymentSwitchOff}
                                     switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                     switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                                 />
@@ -852,8 +922,8 @@ class AccountMessagingAdviceComponent extends Component {
                                 <GSwitchComponent
                                     switchOnMethod={this.switchOnOffStateUpdates('pcs', true)}
                                     switchOffMethod={this.switchOnOffStateUpdates('pcs', false)}
-                                    switchOn={this.state.pcsSwitchOn}
-                                    switchOff={this.state.pcsSwitchOff}
+                                    switchOn={pcsSwitchOn}
+                                    switchOff={pcsSwitchOff}
                                     switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                     switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                                 />
@@ -865,12 +935,13 @@ class AccountMessagingAdviceComponent extends Component {
                                 <GSwitchComponent
                                     switchOnMethod={this.switchOnOffStateUpdates('leaveMilitary', true)}
                                     switchOffMethod={this.switchOnOffStateUpdates('leaveMilitary', false)}
-                                    switchOn={this.state.leaveMilitarySwitchOn}
-                                    switchOff={this.state.leaveMilitarySwitchOff}
+                                    switchOn={leaveMilitarySwitchOn}
+                                    switchOff={leaveMilitarySwitchOff}
                                     switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
                                     switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                                 />
                         </View>
+                      )
                         :null
                     }
                     <GButtonComponent

@@ -14,35 +14,47 @@ class AccountMessagingSettingsComponent extends Component {
         super(props);
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
+            // isLoading: false,
         };
     }   
 
     componentDidMount() { }
 
-    navigateaccountMessagingGoals = () =>
-        this.props.navigation.navigate('accountMessagingGoals');
+    navigateaccountMessagingGoals = () =>{
+        const {navigation} = this.props;
+        navigation.navigate('accountMessagingGoals');
+    }
 
-    navigateaccountMessagingAdvice = () =>
-        this.props.navigation.navigate('accountMessagingAdvice');
+    navigateaccountMessagingAdvice = () =>{
+        const {navigation} = this.props;
+        navigation.navigate('accountMessagingAdvice');
+    }
 
-    navigateaccountMessagingGeneralDocuments = () =>
-        this.props.navigation.navigate('accountMessagingGeneralDocuments');
+    navigateaccountMessagingGeneralDocuments = () =>{
+        const {navigation} = this.props;
+        navigation.navigate('accountMessagingGeneralDocuments');
+    }
 
-    navigateAccountMessagingSecurityAndFraud = () =>
-        this.props.navigation.navigate('AccountMessagingSecurityAndFraud');
+    navigateAccountMessagingSecurityAndFraud = () =>{
+        const {navigation} = this.props;
+        navigation.navigate('AccountMessagingSecurityAndFraud');
+    }
 
-    navigateaccountMessagingDeviceManagement = () =>
-        this.props.navigation.navigate('accountMessagingDeviceManagement');   
+    navigateaccountMessagingDeviceManagement = () =>{
+        const {navigation} = this.props;
+       navigation.navigate('accountMessagingDeviceManagement');   
+    }
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const {navigation} = this.props;
+        navigation.goBack();
     };
 
     render() {
+        const {navigation} = this.props;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.settingsView}>
                         <TouchableOpacity
@@ -203,6 +215,8 @@ AccountMessagingSettingsComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
 };
 
-AccountMessagingSettingsComponent.defaultProps = {};
+AccountMessagingSettingsComponent.defaultProps = {
+    navigation:{}
+};
 
 export default AccountMessagingSettingsComponent;

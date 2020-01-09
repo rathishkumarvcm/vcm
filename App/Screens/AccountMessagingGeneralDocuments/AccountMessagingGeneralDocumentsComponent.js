@@ -5,13 +5,11 @@ import { styles } from './styles';
 import { GHeaderComponent, GFooterSettingsComponent, GIcon, GButtonComponent } from '../../CommonComponents';
 import { CustomRadio } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
+import AppUtils from '../../Utils/AppUtils';
 
 const documentsTypes = [
     { key: 'online', name: gblStrings.settingAccountMessaging.accountMessagingGeneralOnline },
-    { key: 'paper', name: gblStrings.settingAccountMessaging.accountMessagingGeneralPaper },
-    { key: 'largeprint', name: gblStrings.settingAccountMessaging.accountMessagingGeneralLargePrint },
-    { key: 'braille', name: gblStrings.settingAccountMessaging.accountMessagingGeneralBraillePaper },
-    { key: 'screen', name: gblStrings.settingAccountMessaging.accountMessagingGeneralScreenReader }
+    { key: 'paper', name: gblStrings.settingAccountMessaging.accountMessagingGeneralPaper }    
 ];
 
 const documentsTypesConfirm = [
@@ -24,65 +22,61 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
         super(props);
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,            
+           // isLoading: false,            
 
-            selectedTaxDocumentsItemID: '1',
-            selectedTaxDocumentsItemName: gblStrings.settingAccountMessaging.accountMessagingGeneralPaper,
-
-            selectedConfirmItemID:'1',
-            selectedConfirmItemName:gblStrings.common.no,
-
-            selectedGeneralDocumentsAnnualItemID: '1',
-            selectedGeneralDocumentsAnnualItemName: gblStrings.settingAccountMessaging.accountMessagingGeneralPaper,
-
+            selectedTaxDocumentsItemID: '1',          
+            selectedConfirmItemID:'1',           
+            selectedGeneralDocumentsAnnualItemID: '1',          
             selectedGeneralDocumentsPrivacyItemID: '1',
-            selectedGeneralDocumentsPrivacyItemName: gblStrings.settingAccountMessaging.accountMessagingGeneralPaper
+           
         };
     }        
 
     componentDidMount() {
-        if (this.props && this.props.accMessageDocumentinitialState && this.props.accMessageDocumentinitialState.selectedTaxDocumentsItemID) {
-            this.setState({ selectedTaxDocumentsItemID: this.props.accMessageDocumentinitialState.selectedTaxDocumentsItemID });
+        const{ accMessageDocumentinitialState }=this.props;
+        if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedTaxDocumentsItemID) {
+            this.setState({ selectedTaxDocumentsItemID: accMessageDocumentinitialState.selectedTaxDocumentsItemID });
         }
-        if (this.props && this.props.accMessageDocumentinitialState && this.props.accMessageDocumentinitialState.selectedConfirmItemID) {
-            this.setState({ selectedConfirmItemID: this.props.accMessageDocumentinitialState.selectedConfirmItemID });
+        if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedConfirmItemID) {
+            this.setState({ selectedConfirmItemID: accMessageDocumentinitialState.selectedConfirmItemID });
         }
-        if (this.props && this.props.accMessageDocumentinitialState && this.props.accMessageDocumentinitialState.selectedGeneralDocumentsAnnualItemID) {
-            this.setState({ selectedGeneralDocumentsAnnualItemID: this.props.accMessageDocumentinitialState.selectedGeneralDocumentsAnnualItemID });
+        if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedGeneralDocumentsAnnualItemID) {
+            this.setState({ selectedGeneralDocumentsAnnualItemID: accMessageDocumentinitialState.selectedGeneralDocumentsAnnualItemID });
         }
-        if (this.props && this.props.accMessageDocumentinitialState && this.props.accMessageDocumentinitialState.selectedGeneralDocumentsPrivacyItemID) {
-            this.setState({ selectedGeneralDocumentsPrivacyItemID: this.props.accMessageDocumentinitialState.selectedGeneralDocumentsPrivacyItemID });
+        if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedGeneralDocumentsPrivacyItemID) {
+            this.setState({ selectedGeneralDocumentsPrivacyItemID: accMessageDocumentinitialState.selectedGeneralDocumentsPrivacyItemID });
         }
     }
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const{ navigation }=this.props;
+        navigation.goBack();
     }
 
-    navigategeneralSettings = () => this.props.navigation.navigate('generalSettings');
-
+    navigategeneralSettings = () =>{
+        const{ navigation }=this.props;
+        navigation.navigate('generalSettings');
+    } 
     
 
     onSelected = (item,fromType) =>()=> {        
         switch(fromType){
             case 'taxDocuments':
             this.setState({
-                    selectedTaxDocumentsItemID: item.key,
-                    selectedTaxDocumentsItemName: item.name              
+                    selectedTaxDocumentsItemID: item.key                          
                 }
             );             
             break;
             case 'generalDocumentsAnnual':
             this.setState({
-                    selectedGeneralDocumentsAnnualItemID: item.key,
-                    selectedGeneralDocumentsAnnualItemName: item.name              
+                    selectedGeneralDocumentsAnnualItemID: item.key
                 }
             );  
             break;
             case 'generalDocumentsPrivacy':
             this.setState({
-                    selectedGeneralDocumentsPrivacyItemID: item.key,
-                    selectedGeneralDocumentsPrivacyItemName: item.name              
+                    selectedGeneralDocumentsPrivacyItemID: item.key
+                                
                 }
             );  
             break;
@@ -93,22 +87,23 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
 
     onSelectedConfirm = (item) => () =>{        
         this.setState({
-                selectedConfirmItemID: item.key,
-                selectedConfirmItemName: item.name              
+                selectedConfirmItemID: item.key                       
             }
         );     
     }
 
     saveButtonAction = () => {
-        console.log('Save Button Clicked...');         
+        AppUtils.debugLog('Save Button Clicked...');    
+        const{ selectedTaxDocumentsItemID,selectedConfirmItemID,selectedGeneralDocumentsAnnualItemID,selectedGeneralDocumentsPrivacyItemID }=this.state;
+        const{ navigation,saveData }=this.props;
         const payloadData = {
-            selectedTaxDocumentsItemID : this.state.selectedTaxDocumentsItemID,
-            selectedConfirmItemID:this.state.selectedConfirmItemID,
-            selectedGeneralDocumentsAnnualItemID: this.state.selectedGeneralDocumentsAnnualItemID,
-            selectedGeneralDocumentsPrivacyItemID: this.state.selectedGeneralDocumentsPrivacyItemID,    
+            selectedTaxDocumentsItemID, 
+            selectedConfirmItemID,
+            selectedGeneralDocumentsAnnualItemID,
+            selectedGeneralDocumentsPrivacyItemID,
         };        
-        this.props.saveData(payloadData);
-        this.props.navigation.goBack();        
+        saveData(payloadData);
+        navigation.goBack();        
     }
 
     navigateFAQPage=()=>{
@@ -132,10 +127,13 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
     }
 
     render() {
+        const{ navigation }=this.props;
+        const{ selectedTaxDocumentsItemID,selectedConfirmItemID,selectedGeneralDocumentsAnnualItemID,selectedGeneralDocumentsPrivacyItemID }=this.state;
+        
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation}
+                    navigation={navigation}
                 />
                 <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.settingsView}>
@@ -215,11 +213,11 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                             label={item.name}     
                                             descLabelStyle={styles.lblRadioDescTxt}
                                             descLabel=""                                                             
-                                            selected={!!((this.state.selectedTaxDocumentsItemID !== "" && item.key === this.state.selectedTaxDocumentsItemID))}
+                                            selected={!!((selectedTaxDocumentsItemID !== "" && item.key === selectedTaxDocumentsItemID))}
                                             onPress={this.onSelected(item,'taxDocuments')}
                                         />
                                         {
-                                        (this.state.selectedTaxDocumentsItemID !== "" && (item.key === this.state.selectedTaxDocumentsItemID && item.key === 'online') || (item.key === this.state.selectedTaxDocumentsItemID && item.key === 'braille')) ? 
+                                        (selectedTaxDocumentsItemID !== "" && (item.key === selectedTaxDocumentsItemID && item.key === 'online')) ? 
                                             this.renderToolTip()
                                         : null
                                         }                                 
@@ -246,7 +244,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                         label={item.name}          
                                         descLabelStyle={styles.lblRadioDescTxt}
                                         descLabel=""                                                             
-                                        selected={!!((this.state.selectedConfirmItemID !== "" && item.key === this.state.selectedConfirmItemID))}
+                                        selected={!!((selectedConfirmItemID !== "" && item.key === selectedConfirmItemID))}
                                         onPress={this.onSelectedConfirm(item)}
                                     />
                                 );
@@ -290,11 +288,11 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                                 label={item.name}     
                                                 descLabelStyle={styles.lblRadioDescTxt}
                                                 descLabel=""                                                                   
-                                                selected={!!((this.state.selectedGeneralDocumentsAnnualItemID !== "" && item.key === this.state.selectedGeneralDocumentsAnnualItemID))}
+                                                selected={!!((selectedGeneralDocumentsAnnualItemID !== "" && item.key === selectedGeneralDocumentsAnnualItemID))}
                                                 onPress={this.onSelected(item,'generalDocumentsAnnual')}
                                             />
                                             {
-                                                (this.state.selectedGeneralDocumentsAnnualItemID !== "" && (item.key === this.state.selectedGeneralDocumentsAnnualItemID && item.key === 'online') || (item.key === this.state.selectedGeneralDocumentsAnnualItemID && item.key === 'braille')) ? 
+                                                (selectedGeneralDocumentsAnnualItemID !== "" && (item.key === selectedGeneralDocumentsAnnualItemID && item.key === 'online')) ? 
                                                     this.renderToolTip()
                                                 : null
                                             }    
@@ -323,11 +321,11 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                                 label={item.name}      
                                                 descLabelStyle={styles.lblRadioDescTxt}
                                                 descLabel=""                                                                 
-                                                selected={!!((this.state.selectedGeneralDocumentsPrivacyItemID !== "" && item.key === this.state.selectedGeneralDocumentsPrivacyItemID))}
+                                                selected={!!((selectedGeneralDocumentsPrivacyItemID !== "" && item.key === selectedGeneralDocumentsPrivacyItemID))}
                                                 onPress={this.onSelected(item,'generalDocumentsPrivacy')}
                                             />
                                             {
-                                                (this.state.selectedGeneralDocumentsPrivacyItemID !== "" && (item.key === this.state.selectedGeneralDocumentsPrivacyItemID && item.key === 'online') || (item.key === this.state.selectedGeneralDocumentsPrivacyItemID && item.key === 'braille')) ? 
+                                                (selectedGeneralDocumentsPrivacyItemID !== "" && (item.key === selectedGeneralDocumentsPrivacyItemID && item.key === 'online')) ? 
                                                     this.renderToolTip()
                                                 : null
                                             }  

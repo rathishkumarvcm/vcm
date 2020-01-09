@@ -10,7 +10,7 @@ class AccountMessagingSecurityAndFraud extends Component {
         super(props);
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
+            // isLoading: false,
         };
     }
 
@@ -18,20 +18,25 @@ class AccountMessagingSecurityAndFraud extends Component {
     }
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const{ navigation }=this.props;
+        navigation.goBack();
     }
 
-    navigategeneralSettings = () => this.props.navigation.navigate('generalSettings');
+    navigategeneralSettings = () =>{ 
+        const{ navigation }=this.props;
+        navigation.navigate('generalSettings');
+    }
 
     navigateSecurityPage=()=> {
         alert('Navigate to Security Page');
     }   
 
     render() {
+        const{ navigation }=this.props;
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation}
+                    navigation={navigation}
                 />
                 <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.settingsView}>
@@ -96,7 +101,7 @@ AccountMessagingSecurityAndFraud.propTypes = {
 };
 
 AccountMessagingSecurityAndFraud.defaultProps = {
-
+    navigation:{}
 };
 
 export default AccountMessagingSecurityAndFraud;

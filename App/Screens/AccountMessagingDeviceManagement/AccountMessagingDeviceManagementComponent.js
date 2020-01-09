@@ -5,49 +5,59 @@ import { styles } from './styles';
 import { GHeaderComponent, GFooterSettingsComponent, GIcon, GButtonComponent } from '../../CommonComponents';
 import { CustomCheckBox } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
+import AppUtils from '../../Utils/AppUtils';
 
 class AccountMessagingDeviceManagementComponent extends Component {
     constructor(props) {
         super(props);
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
+            // isLoading: false,
             deviceSelected: false
         };
     }
 
     componentDidMount() {
-        if (this.props && this.props.accMessageDeviceinitialState){
-            if(this.props.accMessageDeviceinitialState.deviceSelected)
-                this.setState({ deviceSelected : this.props.accMessageDeviceinitialState.deviceSelected });
+        const {accMessageDeviceinitialState} = this.props;
+        if (accMessageDeviceinitialState){
+            if(accMessageDeviceinitialState.deviceSelected)
+                this.setState({ deviceSelected : accMessageDeviceinitialState.deviceSelected });
         }        
     }
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const {navigation} = this.props;
+        navigation.goBack();
     }
 
-    navigategeneralSettings = () => this.props.navigation.navigate('generalSettings');
+    navigategeneralSettings = () =>{
+        const {navigation} = this.props;
+        navigation.navigate('generalSettings');
+    }
 
     saveButtonAction = () => {        
-        console.log('Save Button Clicked...');       
+        AppUtils.debugLog('Save Button Clicked...');   
+        const {deviceSelected} = this.state;    
+        const {navigation,saveData} = this.props;
         const payloadData = {
-            deviceSelected: this.state.deviceSelected
+            deviceSelected
         };
-        this.props.saveData(payloadData);
-        this.props.navigation.goBack();                
-        
+        saveData(payloadData);
+        navigation.goBack();                
     }
 
     setDeviceState = () => {     
-        this.setState({deviceSelected : !this.state.deviceSelected });
+        const {deviceSelected} = this.state;    
+        this.setState({deviceSelected : !deviceSelected });
     }   
    
     render() {
+        const {navigation} = this.props;
+        const {deviceSelected} = this.state;    
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation}
+                    navigation={navigation}
                 />
                 <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.settingsView}>
@@ -105,7 +115,7 @@ class AccountMessagingDeviceManagementComponent extends Component {
                                 innerCicleColor="#61285F"
                                 labelStyle={styles.deviceSectionTxt}
                                 label="iPhone XR"
-                                selected={this.state.deviceSelected}
+                                selected={deviceSelected}
                                 onPress={this.setDeviceState}
                             />                            
                         </View>                              
@@ -139,7 +149,9 @@ AccountMessagingDeviceManagementComponent.propTypes = {
 };
 
 AccountMessagingDeviceManagementComponent.defaultProps = {
-
+    navigation : {},
+    accMessageDeviceinitialState : {},
+    saveData: () => { }
 };
 
 export default AccountMessagingDeviceManagementComponent;
