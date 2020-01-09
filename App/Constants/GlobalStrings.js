@@ -10,6 +10,7 @@ import { Platform } from 'react-native';
 export default {
     isIOSPlatform: Platform.OS === 'ios',
     common: {
+        appName : "VCM MemeberServices",
         cancel: "Cancel",
         ok: "Okay",
         enable: "Enable",
