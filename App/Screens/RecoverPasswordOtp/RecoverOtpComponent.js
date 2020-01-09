@@ -10,6 +10,7 @@ import {
 } from '../../CommonComponents';
 import globalStrings from '../../Constants/GlobalStrings';
 import * as regEx from '../../Constants/RegexConstants';
+import AppUtils from '../../Utils/AppUtils';
 
 
 class RecoveryOtpComponent extends Component {
@@ -17,9 +18,9 @@ class RecoveryOtpComponent extends Component {
     super(props);
     this.state = {
       
-      boo_otp: false,
-      str_otp: '',      
-      err_otp: '',
+      boolOtp: false,
+      otpString: '',      
+      errorOtp: '',
       phoneNo:'',     
     };
     //  set true to isLoading if data for this screen yet to be received and wanted to show loader.    
@@ -39,9 +40,10 @@ class RecoveryOtpComponent extends Component {
 //   } 
 
 componentDidMount(){ 
-  if(this.props && this.props.initialState && this.props.initialState.phone){
+  const {initialState} = this.props;
+  if(initialState &&initialState.phone){
     this.setState({
-      phoneNo : this.protectPhone(this.props.initialState.phone)
+      phoneNo : this.protectPhone(initialState.phone)
     });
   }  
 } 
@@ -53,43 +55,56 @@ isEmpty = (str) => {
   return false;  
 }
 
-  navigationLogin = () => this.props.navigation.navigate('login');
+navigationLogin = () =>{ 
+  const { navigation } = this.props;
+  
+  const specialMFAUserType = (navigation.getParam('SpecialMFA',''));   
+  if(specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser" || specialMFAUserType==="UserForm"){
+      navigation.push('verifySSN',{SpecialMFA:specialMFAUserType}); 
+  }else 
+    navigation.navigate('login');
+}
 
   navigationPasswordNew = () => {
-     const validOtp=regEx.allow_Four_Numeric.test(this.state.str_otp);
+    const { otpString } = this.state;
+    const validOtp=regEx.allow_Four_Numeric.test(otpString);
     this.setState({
-      boo_otp: !validOtp,
-      err_otp: !validOtp ? globalStrings.recoverPassword.otp_err : '',
+      boolOtp: !validOtp,
+      errorOtp: !validOtp ? globalStrings.recoverPassword.otp_err : '',
 
     }); 
 
     if (validOtp)
-    {
+    {      
       const recoveryJson={
-        otp:this.state.str_otp,
+        otp:otpString,
       };
-      console.log(recoveryJson);
-      const specialMFAUserType = (this.props && this.props.navigation.getParam('SpecialMFA',''));   
+      AppUtils.debugLog(recoveryJson);
+      const { navigation } = this.props;
+      const specialMFAUserType = (navigation.getParam('SpecialMFA',''));   
       if(specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser"){
-        this.props.navigation.navigate('registerPassword',{SpecialMFA:specialMFAUserType}); 
+          navigation.push('registerPassword',{SpecialMFA:specialMFAUserType}); 
       }else if(specialMFAUserType==="UserForm"){
-        this.props.navigation.navigate('dashboard',{SpecialMFA:specialMFAUserType});
+          navigation.push('dashboard',{SpecialMFA:specialMFAUserType});
       }
       else{
-        this.props.navigation.navigate('passwordReset');
+        navigation.navigate('passwordReset');
       }
     }
   }
 
-  navigationPasswordOtp = () => this.props.navigation.goBack();
+  navigationPasswordOtp = () =>{ 
+    const { navigation } = this.props;
+    navigation.goBack();
+  }
 
   resendOtp = ()=>{
-    console.log('Resend Otp');    
+    AppUtils.debugLog('Resend Otp');    
   }
 
   setOtp = (text) => {
     this.setState({
-      str_otp: text
+      otpString: text
     });
   }
 
@@ -99,17 +114,18 @@ isEmpty = (str) => {
   }  
 
   render() {
-
-    const specialMFAUserType = (this.props && this.props.navigation.getParam('SpecialMFA',''));   
+    const { navigation } = this.props;
+    const { boolOtp,otpString,errorOtp,phoneNo } = this.state;
+    const specialMFAUserType = (navigation.getParam('SpecialMFA',''));   
 
     return (
       <View style={styles.container}>
         <GHeaderComponent register
-          navigation={this.props.navigation}
+          navigation={navigation}
         />
         <ScrollView style={styles.scrollViewFlex}>
         {
-           (specialMFAUserType!=="" && !(specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser" || specialMFAUserType==="UserForm"))?
+           (specialMFAUserType!=="" && !(specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser" || specialMFAUserType==="UserForm"))? (
               <View style={styles.notifOuter}>         
                 <View style={styles.notifInner}>
                   <Text style={styles.notifInnerText}>{globalStrings.recoverPassword.otp_notify}</Text>
@@ -118,16 +134,18 @@ isEmpty = (str) => {
                 <Text>X</Text>
                 </View>            
               </View>
+            )
           :null
         }
         {
-          (specialMFAUserType!=="" && (specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser") && specialMFAUserType!=="UserForm")?
+          (specialMFAUserType!=="" && (specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser") && specialMFAUserType!=="UserForm")? (
           <View style={styles.pagerContainer}>
             <View style={styles.pagerOne} />    
             <View style={styles.pagerOne} />    
             <View style={styles.pagerOne} />    
             <View style={styles.pagerTwo} />                                
           </View>
+        )
           :null
         }
           <View style={styles.signInView}>
@@ -137,7 +155,7 @@ isEmpty = (str) => {
           </View>
 
           <View style={styles.passwordView}>
-            <Text style={styles.optTextMsg}>{globalStrings.recoverPassword.otp_textMsg}{this.state.phoneNo}</Text>
+            <Text style={styles.optTextMsg}>{globalStrings.recoverPassword.otp_textMsg}{phoneNo}</Text>
             
           </View>
 
@@ -147,11 +165,11 @@ isEmpty = (str) => {
 
           </View>
 
-          <GInputComponent propInputStyle={this.state.boo_otp ? styles.userIDTextBoxError : styles.userIDTextBox}
+          <GInputComponent propInputStyle={boolOtp ? styles.userIDTextBoxError : styles.userIDTextBox}
             onChangeText={this.setOtp}
-            value={this.state.str_otp} maxLength={globalStrings.maxLength.otp} secureTextEntry keyboardType="numeric"
+            value={otpString} maxLength={globalStrings.maxLength.otp} secureTextEntry keyboardType="numeric"
           />
-          <Text style={styles.errorMessage}>{this.state.err_otp}</Text>
+          <Text style={styles.errorMessage}>{errorOtp}</Text>
 
           <View style={styles.refreshOtpView}>
             <Text style={styles.refreshOtp} onPress={this.resendOtp}>{globalStrings.recoverPassword.otp_reset}</Text>

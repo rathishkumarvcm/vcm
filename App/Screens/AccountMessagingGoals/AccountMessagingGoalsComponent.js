@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, } from 'react-native';
 import PropTypes from 'prop-types';
 import { styles } from './styles';
-import { GHeaderComponent, GFooterSettingsComponent, GIcon } from '../../CommonComponents';
+import { GHeaderComponent, GFooterSettingsComponent, GIcon, showAlert } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class AccountMessagingGoalsComponent extends Component {
@@ -27,8 +27,8 @@ class AccountMessagingGoalsComponent extends Component {
         navigation.navigate('generalSettings');
     }
 
-    navigateCreateGoal=()=> {
-        alert('Navigate to Create Goal');
+    navigateCreateGoal=()=> {      
+        showAlert(gblStrings.common.appName ,"Navigate to Create Goal",gblStrings.common.ok);               
     }
 
     render() {

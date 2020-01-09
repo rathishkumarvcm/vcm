@@ -10,20 +10,22 @@ class VerifySSNComponent extends Component {
         super(props);
         //   set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
+            // isLoading: false,
             validateSSN : false,
             socialSecurityNumber : '',
         };
     }
 
-    goBack = () => {        
-        this.props.navigation.goBack();
+    goBack = () => {     
+        const { navigation } = this.props;   
+        navigation.goBack();
     }
 
-    navigateVerifyMobileNumber = () =>{        
+    navigateVerifyMobileNumber = () =>{     
+        const { navigation } = this.props;     
         //  Joint Account , New User
-        const specialMFAUserType = (this.props.navigation.getParam('SpecialMFA',""));   
-        this.props.navigation.navigate('verifyMobileNumber',{SpecialMFA:specialMFAUserType});    
+        const specialMFAUserType = (navigation.getParam('SpecialMFA',""));   
+        navigation.push('verifyMobileNumber',{SpecialMFA:specialMFAUserType});    
     } 
 
     isEmpty = (str) => {
@@ -37,8 +39,9 @@ class VerifySSNComponent extends Component {
         this.setState({ socialSecurityNumber : text });
     }
 
-    onClickNext = () =>{              
-       if(this.isEmpty(this.state.socialSecurityNumber) || this.state.socialSecurityNumber.length<gblStrings.maxLength.ssnNo){
+    onClickNext = () =>{         
+        const { socialSecurityNumber } = this.state;         
+       if(this.isEmpty(socialSecurityNumber) || socialSecurityNumber.length<gblStrings.maxLength.ssnNo){
             this.setState({ validateSSN : true });
        }else{
             this.setState({ validateSSN : false });
@@ -47,24 +50,27 @@ class VerifySSNComponent extends Component {
     }
     
     render(){                        
-        const specialMFAUserType =(this.props && this.props.navigation && this.props.navigation.getParam('SpecialMFA',''));      
+        const { navigation } = this.props;
+        const { socialSecurityNumber,validateSSN } = this.state; 
+        const specialMFAUserType =(navigation && navigation.getParam('SpecialMFA',''));      
         //  console.log(`UserType-----${specialMFAUserType}`);
         return(
             <View style={styles.container}>
             {/* {
                 this.props.stateCityData.isLoading && <GLoadingSpinner />
             } */}
-                <GHeaderComponent navigation={this.props.navigation} />                    
+                <GHeaderComponent navigation={navigation} />                    
                 <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.headContainer}>                                        
                     {
-                        (specialMFAUserType!=="" && specialMFAUserType!=="UserForm")?
+                        (specialMFAUserType!=="" && specialMFAUserType!=="UserForm")? (
                             <View style={styles.pagerContainer}>
                                 <View style={styles.pagerOne} />    
                                 <View style={styles.pagerTwo} />    
                                 <View style={styles.pagerTwo} />    
                                 <View style={styles.pagerTwo} />                                
                             </View>
+                          )
                         :null
                     }
                         <Text style={styles.headTitle}>
@@ -84,8 +90,8 @@ class VerifySSNComponent extends Component {
                             maxLength={gblStrings.maxLength.ssnNo}
                             secureTextEntry
                             onChangeText={this.setSocialSecurityNumber}                         
-                            value={this.state.socialSecurityNumber}
-                            errorFlag={this.state.validateSSN}
+                            value={socialSecurityNumber}
+                            errorFlag={validateSSN}
                             errorText="Enter a valid Social Security Number"
                         />
 
@@ -116,6 +122,8 @@ VerifySSNComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),    
 };
 
-VerifySSNComponent.defaultProps = {};
+VerifySSNComponent.defaultProps = {
+    navigation : {}
+};
 
 export default VerifySSNComponent;

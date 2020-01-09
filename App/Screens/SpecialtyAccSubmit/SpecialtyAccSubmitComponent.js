@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import * as mime from 'react-native-mime-types';
 import DocumentPicker from 'react-native-document-picker';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterSettingsComponent, GIcon } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterSettingsComponent, GIcon, showAlert } from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import AppUtils from '../../Utils/AppUtils';
@@ -64,15 +64,35 @@ class SpecialtyAccSubmitComponent extends Component {
        //  this.validateFields();
     }
 
-    onPressCheck = (keyName) => () => this.setState({        
-        [keyName]: !this.state[keyName]
-    });
+    onPressCheck = (keyName) => () => {       
+        this.setState({        
+            [keyName]: !this.state[keyName]
+        });
+    }
 
     onSelected = (item) => {
         AppUtils.debugLog(`item: ${ item.id}`);
         this.setState({ selectedItemID: item.id });
         this.setState({ selectedItemName: item.name });
         //   alert("You selected :: " + item.name)
+    }
+
+    uploadSelectedFiles = () => {
+        const{multipleFile} = this.state;
+        if(multipleFile.length > 0){
+            const size = 0;
+            multipleFile.map((item) => {
+                return( size === size+item.size );
+            });   
+
+            if((size / 1024 ** 2) > maxFileSize){
+                this.setState({ fileSelected:true,errorMessage:'Total Size limit should be less than 30 MB' });
+            }else {
+                showAlert(gblStrings.common.appName ,"File uploaded successfully",gblStrings.common.ok);               
+            }            
+        }else {
+            this.setState({ fileSelected:true,errorMessage:'Please select a file before uploading' });
+        }
     }
 
     async uploadImage() {
@@ -133,31 +153,13 @@ class SpecialtyAccSubmitComponent extends Component {
               //  If user canceled the document selection
               //  alert('Canceled from multiple doc picker');
             } else {
-              //  For Unknown Error
-              alert(`Unknown Error: ${ JSON.stringify(err)}`);
+              //  For Unknown Error         
+              showAlert(gblStrings.common.appName ,`Unknown Error: ${ JSON.stringify(err)}`,gblStrings.common.ok);   
               throw err;
             }
           }
     }
-
-    uploadSelectedFiles = () => {
-        const{multipleFile} = this.state;
-        if(multipleFile.length > 0){
-            let size = 0;
-
-            multipleFile.map((item) => (                
-                size += item.size
-            ));            
-
-            if((size / 1024 ** 2) > maxFileSize){
-                this.setState({ fileSelected:true,errorMessage:'Total Size limit should be less than 30 MB' });
-            }else {
-                alert(`File uploaded successfully`);
-            }            
-        }else {
-            this.setState({ fileSelected:true,errorMessage:'Please select a file before uploading' });
-        }
-    }
+    
 
     /*----------------------
                                  Render Methods
@@ -204,7 +206,7 @@ class SpecialtyAccSubmitComponent extends Component {
                                 buttonStyle={styles.selectFilesBtn}
                                 buttonText={gblStrings.accManagement.selectFiles}
                                 textStyle={styles.selectFilesBtnTxt}
-                                onPress={this.uploadImage.bind(this)}
+                                onPress={this.uploadImage}
                             />
                            
                             <GIcon

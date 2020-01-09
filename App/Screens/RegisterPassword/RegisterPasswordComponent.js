@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import { Auth } from "aws-amplify";
+import { NavigationActions } from 'react-navigation';
 import { styles } from './styles';
-import { GButtonComponent, GInputComponent, GFooterSettingsComponent, GHeaderComponent } from '../../CommonComponents';
+import { GButtonComponent, GInputComponent, GFooterSettingsComponent, GHeaderComponent, showAlert } from '../../CommonComponents';
 import globalStrings from '../../Constants/GlobalStrings';
 import { ValidatePassword } from '../../Utils/ValidatePassword';
+import AppUtils from '../../Utils/AppUtils';
 
 //  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 
@@ -14,7 +16,7 @@ class RegisterPasswordComponent extends Component {
         super(props);
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,           
+            // isLoading: false,           
             validationOnlineId: true,
             validationPassword: true,
             validationConfirmPassword: true,
@@ -24,20 +26,35 @@ class RegisterPasswordComponent extends Component {
         };
     }
 
-    componentDidMount() {       
-        const registerSelfData = this.props.navigation.getParam('selfData', '');
+    componentDidMount() {    
+        const { navigation } = this.props;   
+        const registerSelfData = navigation.getParam('selfData', '');
         if (!this.isEmpty(registerSelfData) && !this.isEmpty(registerSelfData.emailID)) {
             this.setState({ email: registerSelfData.emailID });
         }
     }
 
-    goBack = () => {
-        this.props.navigation.goBack();
+    goBack = () => {        
+        const { navigation } = this.props;
+        navigation.goBack();
+    }
+
+    navigateBack = () => {
+        const { navigation } = this.props;
+        const specialMFAUserType = (navigation.getParam('SpecialMFA',''));   
+        if(specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser" || specialMFAUserType==="UserForm"){
+            navigation.push('verifySSN',{SpecialMFA:specialMFAUserType}); 
+        }else
+            navigation.goBack();
     }
 
     navigateLogin = () => {
-        const specialMFAUserType = (this.props && this.props.navigation.getParam('SpecialMFA',''));  
-        this.props.navigation.push('login',{emailVerified:'',emailVerifiedData:'',SpecialMFA:specialMFAUserType});    
+        const { navigation } = this.props;
+        const specialMFAUserType = (navigation.getParam('SpecialMFA',''));  
+       // navigation.push('login',{emailVerified:'',emailVerifiedData:'',SpecialMFA:specialMFAUserType});   
+        navigation.reset([
+            NavigationActions.navigate({ routeName: 'login',params : {emailVerified:'',emailVerifiedData:'',SpecialMFA:specialMFAUserType} })         
+         ],0);
     }
 
     isEmpty = (str) => {
@@ -49,7 +66,8 @@ class RegisterPasswordComponent extends Component {
     }
 
     navigateSelf = () => {
-        const registerSelfData = this.props.navigation.getParam('selfData');
+        const { navigation } = this.props;
+        const registerSelfData = navigation.getParam('selfData');
         const username = registerSelfData.emailID;
         const {password} = this.state;
         const email = registerSelfData.emailID;
@@ -72,23 +90,25 @@ class RegisterPasswordComponent extends Component {
             },
 
         }).then(data => {
-            console.log("Data", data);
-            alert("Signed Up Successfully. OTP received.");
-            this.props.navigation.navigate('emailVerify', { passwordData: registerSelfData });
+            AppUtils.debugLog(`Data ${data}`);          
+            showAlert(globalStrings.common.appName ,"Signed Up Successfully. OTP received.",globalStrings.common.ok);   
+            navigation.navigate('emailVerify', { passwordData: registerSelfData });
         });
         //  this.props.navigation.navigate('emailVerify');   
     }
 
     validatePassword = () => {
         //  const validate = passwordRegex.test(this.state.password);
-        const validate = (ValidatePassword(this.state.password) === globalStrings.userManagement.strong);
+        const { password } = this.state;
+        const validate = (ValidatePassword(password) === globalStrings.userManagement.strong);
         this.setState({
             validationPassword: validate
         });
     }
 
     validateConfirmPassword = () => {
-        if (this.state.password === this.state.confirmPassword) {
+        const { password,confirmPassword } = this.state;
+        if (`${password}` === `${confirmPassword}`) {
             this.setState({
                 validationConfirmPassword: true
             });
@@ -101,7 +121,8 @@ class RegisterPasswordComponent extends Component {
     }
 
     validateOnlineId = () => {
-        if (this.isEmpty(this.state.email)) {
+        const { email } = this.state;
+        if (this.isEmpty(email)) {
             this.setState({ validationOnlineId: false });
         } else {
             this.setState({ validationOnlineId: true });
@@ -127,33 +148,37 @@ class RegisterPasswordComponent extends Component {
     }
 
     render() {
-        const specialMFAUserType =(this.props && this.props.navigation.getParam('SpecialMFA',''));   
+        const { navigation } = this.props;
+        const { email,validationOnlineId,password,validationPassword,confirmPassword,validationConfirmPassword } = this.state;
+        const specialMFAUserType =(navigation.getParam('SpecialMFA',''));   
         return (
             <View style={styles.container}>
 
                 <GHeaderComponent
-                    navigation={this.props.navigation}
+                    navigation={navigation}
                     register
                 />
 
                 <ScrollView style={styles.scrollViewFlex}>
                     {
-                        (specialMFAUserType!=="" && !(specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser" || specialMFAUserType==="UserForm"))?
+                        (specialMFAUserType!=="" && !(specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser" || specialMFAUserType==="UserForm"))? (
                             <View style={styles.stepsOuter}>
                                 <View style={styles.stepsInner} />
                                 <View style={styles.stepsInner} />
                             </View>
+                          )
                             : null
                     }
                     {/* Special MFA Requirements Scenario */}
                     {
-                        (specialMFAUserType!=="" && (specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser") && specialMFAUserType!=="UserForm")?
+                        (specialMFAUserType!=="" && (specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser") && specialMFAUserType!=="UserForm")? (
                             <View style={styles.pagerContainer}>
                                 <View style={styles.pagerOne} />
                                 <View style={styles.pagerOne} />
                                 <View style={styles.pagerOne} />
                                 <View style={styles.pagerOne} />
                             </View>
+                          )
                             : null
                     }
                     <View style={styles.signInView}>
@@ -180,10 +205,10 @@ class RegisterPasswordComponent extends Component {
                     <GInputComponent
                         propInputStyle={styles.userIDTextBox}
                         //  placeholder={"Online ID"}
-                        value={this.state.email}
+                        value={email}
                         onChangeText={this.setOnlineId}
                         onBlur={this.validateOnlineId}
-                        errorFlag={!this.state.validationOnlineId}
+                        errorFlag={!validationOnlineId}
                         errorText="Enter a valid Online ID"
                     />
 
@@ -202,26 +227,26 @@ class RegisterPasswordComponent extends Component {
                         onChangeText={this.setPassword}
                         secureTextEntry
                         onBlur={this.validatePassword}
-                        value={this.state.password}
-                        errorFlag={!this.state.validationPassword}
+                        value={password}
+                        errorFlag={!validationPassword}
                         errorText={globalStrings.recoverPassword.validPassword}
                     />
                     
                     <View style={styles.passwordStrengthFlex}>
                         <View style={styles.passwordStrongFlex}>
-                            <View style={(ValidatePassword(this.state.password) === globalStrings.userManagement.strong) ? styles.strong : styles.default} />
+                            <View style={(ValidatePassword(password) === globalStrings.userManagement.strong) ? styles.strong : styles.default} />
                             <Text style={styles.strongText}>
                                 {globalStrings.userManagement.strong}
                             </Text>
                         </View>
                         <View style={styles.passwordStrongFlex}>
-                            <View style={(ValidatePassword(this.state.password) === globalStrings.userManagement.good) ? styles.good : styles.default} />
+                            <View style={(ValidatePassword(password) === globalStrings.userManagement.good) ? styles.good : styles.default} />
                             <Text style={styles.strongText}>
                                 {globalStrings.userManagement.good}
                             </Text>
                         </View>
                         <View style={styles.passwordStrongFlex}>
-                            <View style={(this.state.password.length > 0) && (ValidatePassword(this.state.password) === globalStrings.userManagement.weak) ? styles.weak : styles.default} />
+                            <View style={(password.length > 0) && (ValidatePassword(password) === globalStrings.userManagement.weak) ? styles.weak : styles.default} />
                             <Text style={styles.strongText}>
                                 {globalStrings.userManagement.weak}
                             </Text>
@@ -241,8 +266,8 @@ class RegisterPasswordComponent extends Component {
                         onChangeText={this.setConfirmPassword}
                         secureTextEntry
                         onBlur={this.validateConfirmPassword}
-                        value={this.state.confirmPassword}
-                        errorFlag={!this.state.validationConfirmPassword}
+                        value={confirmPassword}
+                        errorFlag={!validationConfirmPassword}
                         errorText={globalStrings.recoverPassword.password_mismatch}
                     />
 
@@ -257,7 +282,7 @@ class RegisterPasswordComponent extends Component {
                         buttonStyle={styles.cancelButton}
                         buttonText={globalStrings.common.cancel}
                         textStyle={styles.cancelButtonText}
-                        onPress={this.goBack}
+                        onPress={(specialMFAUserType!=="" && (specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser" || specialMFAUserType==="UserForm")) ? this.navigateBack : this.goBack}
                     />
 
                     <GButtonComponent
@@ -265,7 +290,7 @@ class RegisterPasswordComponent extends Component {
                         buttonText={globalStrings.common.submit}
                         textStyle={styles.signInButtonText}
                         onPress={(specialMFAUserType!=="" && (specialMFAUserType==="JointAcc" || specialMFAUserType==="NewUser" || specialMFAUserType==="UserForm")) ? this.navigateLogin : this.navigateSelf}
-                        disabled={this.state.password === '' || this.state.confirmPassword === '' || !this.state.validationPassword || !this.state.validationConfirmPassword || !this.state.validationOnlineId}
+                        disabled={password === '' || confirmPassword === '' || !validationPassword || !validationConfirmPassword || !validationOnlineId}
                     />
 
                     <GFooterSettingsComponent />

@@ -10,20 +10,22 @@ class VerifyMobileComponent extends Component {
         super(props);
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
+            // isLoading: false,
             validateMobile : false,
             mobileNumber : '',
         };
     }
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const { navigation } = this.props;   
+        navigation.goBack();
     }
 
     navigateVerifyOTP = () =>{
+        const { navigation} = this.props;         
         //  Joint Account , New User
-        const specialMFAUserType = (this.props && this.props.navigation && this.props.navigation.getParam('SpecialMFA',''));   
-        this.props.navigation.navigate('passwordRecoveryOtp',{fromPage:'SpecialMFA',SpecialMFA:specialMFAUserType});   
+        const specialMFAUserType = (navigation.getParam('SpecialMFA',''));   
+        navigation.push('passwordRecoveryOtp',{fromPage:'SpecialMFA',SpecialMFA:specialMFAUserType});   
     }
 
     isEmpty = (str) => {
@@ -38,7 +40,8 @@ class VerifyMobileComponent extends Component {
     }
 
     onClickNext = () =>{        
-       if(this.isEmpty(this.state.mobileNumber) || this.state.mobileNumber.length<gblStrings.maxLength.mobileNo){
+        const { mobileNumber} = this.state;         
+       if(this.isEmpty(mobileNumber) || mobileNumber.length<gblStrings.maxLength.mobileNo){
             this.setState({ validateMobile : true });
        }else{
             this.setState({ validateMobile : false });
@@ -47,23 +50,26 @@ class VerifyMobileComponent extends Component {
     }
     
     render(){
-        const specialMFAUserType = (this.props && this.props.navigation && this.props.navigation.getParam('SpecialMFA',''));         
+        const { navigation} = this.props; 
+        const { mobileNumber,validateMobile} = this.state;            
+        const specialMFAUserType = (navigation && navigation.getParam('SpecialMFA',''));         
         return(
             <View style={styles.container}>
             {/* {
                 this.props.stateCityData.isLoading && <GLoadingSpinner />
             } */}
-                <GHeaderComponent navigation={this.props.navigation} />                    
+                <GHeaderComponent navigation={navigation} />                    
                 <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.headContainer}>        
                     {
-                        (specialMFAUserType!=="" && specialMFAUserType!=="UserForm")?
+                        (specialMFAUserType!=="" && specialMFAUserType!=="UserForm")? (
                         <View style={styles.pagerContainer}>
                             <View style={styles.pagerOne} />    
                             <View style={styles.pagerOne} />    
                             <View style={styles.pagerTwo} />    
                             <View style={styles.pagerTwo} />                                
                         </View>
+                      )
                         :null
                     }
 
@@ -83,8 +89,8 @@ class VerifyMobileComponent extends Component {
                             keyboardType="numeric"
                             maxLength={gblStrings.maxLength.mobileNo}                            
                             onChangeText={this.setMobileNumber}                         
-                            value={this.state.mobileNumber}
-                            errorFlag={this.state.validateMobile}
+                            value={mobileNumber}
+                            errorFlag={validateMobile}
                             errorText={gblStrings.accManagement.invalidMobileNoMsg}
                         />
 
@@ -121,6 +127,8 @@ VerifyMobileComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),    
 };
 
-VerifyMobileComponent.defaultProps = {};
+VerifyMobileComponent.defaultProps = {
+    navigation:{}
+};
 
 export default VerifyMobileComponent;

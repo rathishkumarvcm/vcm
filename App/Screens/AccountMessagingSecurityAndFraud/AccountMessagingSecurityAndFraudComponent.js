@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, } from 'react-native';
 import PropTypes from 'prop-types';
 import { styles } from './styles';
-import { GHeaderComponent, GFooterSettingsComponent, GIcon } from '../../CommonComponents';
+import { GHeaderComponent, GFooterSettingsComponent, GIcon, showAlert } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class AccountMessagingSecurityAndFraud extends Component {
@@ -27,8 +27,8 @@ class AccountMessagingSecurityAndFraud extends Component {
         navigation.navigate('generalSettings');
     }
 
-    navigateSecurityPage=()=> {
-        alert('Navigate to Security Page');
+    navigateSecurityPage=()=> {      
+        showAlert(gblStrings.common.appName ,"Navigate to Security Page",gblStrings.common.ok);    
     }   
 
     render() {

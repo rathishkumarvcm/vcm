@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, } from 'react-native';
 import PropTypes from 'prop-types';
 import { styles } from './styles';
-import { GHeaderComponent, GFooterSettingsComponent, GIcon, GButtonComponent } from '../../CommonComponents';
+import { GHeaderComponent, GFooterSettingsComponent, GIcon, GButtonComponent, showAlert } from '../../CommonComponents';
 import { CustomRadio } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import AppUtils from '../../Utils/AppUtils';
@@ -106,8 +106,8 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
         navigation.goBack();        
     }
 
-    navigateFAQPage=()=>{
-        alert('Navigate to Faq ');     
+    navigateFAQPage=()=>{       
+        showAlert(gblStrings.common.appName ,"Navigate to Faq",gblStrings.common.ok);       
      }
 
     renderToolTip=()=>{       

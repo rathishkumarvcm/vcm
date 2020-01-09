@@ -5,41 +5,45 @@ import { styles } from './styles';
 import { GHeaderComponent, GIcon, GFooterSettingsComponent, GRatingStarsComponent, GLoadingSpinner, GButtonComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+import AppUtils from '../../Utils/AppUtils';
 
 class CompareFundsComponent extends Component {
     constructor(props) {
         super(props);
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
+            // isLoading: false,
         };
     }   
 
     componentDidMount() {
-        const payload = this.props && this.props.navigation && this.props.navigation.getParam('fundDetails', '');
-        if(this.props)
-            this.props.getFundDetailsData(payload);
-        console.log('Payload:',payload);
+        const { navigation,getFundDetailsData } = this.props;
+
+        const payload = navigation.getParam('fundDetails', '');       
+        getFundDetailsData(payload);
+        AppUtils.debugLog('Payload:',payload);
     }
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const { navigation } = this.props;
+        navigation.goBack();
     };
 
     render() {
         let compareFundsData = [];
-        if (this.props && this.props.fundDetailsData && this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS] && this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS].result) {
-            compareFundsData = this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS].result;
-            console.log('Fund Data : ' , JSON.stringify(compareFundsData));
+        const { fundDetailsData,navigation } = this.props;
+
+        if (fundDetailsData && fundDetailsData[ActionTypes.GET_FUNDDETAILS] && fundDetailsData[ActionTypes.GET_FUNDDETAILS].result) {
+            compareFundsData = fundDetailsData[ActionTypes.GET_FUNDDETAILS].result;
+            AppUtils.debugLog('Fund Data : ' , JSON.stringify(compareFundsData));
         }
         return (
             <View style={styles.container}>
                 {
-                    this.props && this.props.fundDetailsData && this.props.fundDetailsData.isLoading && <GLoadingSpinner />
+                    fundDetailsData && fundDetailsData.isLoading && <GLoadingSpinner />
                 }
                 <GHeaderComponent
-                    navigation={this.props.navigation}
-                    onPress={() => { }}
+                   navigation={navigation}                   
                 />
                 <ScrollView style={styles.scrollviewcontainer}>
                     <View style={styles.sectionGrp}>
@@ -310,6 +314,11 @@ CompareFundsComponent.propTypes = {
     getFundDetailsData:PropTypes.func,
 };
 
-CompareFundsComponent.defaultProps = {};
+CompareFundsComponent.defaultProps = {
+    navigation : {},
+    fundDetailsData : {},
+    getFundDetailsData : () => { }
+
+};
 
 export default CompareFundsComponent;

@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList } from 'react-native';
 import PropTypes from "prop-types";
 import styles from './styles';
+import PDFListItem from './PDFListItem';
 import { GButtonComponent, GHeaderComponent, GFooterSettingsComponent } from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
+import AppUtils from '../../Utils/AppUtils';
 
 const specaltyAccPages = {
     2: {
@@ -83,42 +85,16 @@ const specaltyAccPDFList = {
 
 };
 
-const PDFListItem = (props) => {
-    //   alert("PDFListItem")
-    return (
-        <View style={styles.pdfSection}>
-            <Text style={styles.pdfTitleTxt}>
-                {props.PDFName}
-            </Text>
-            {props.PDFDesc !== "" ? <Text style={styles.pdfDescTxt}>{props.PDFDesc}</Text> : null}
-            <GButtonComponent
-                buttonStyle={styles.downloadPDFBtn}
-                buttonText="Download PDF"
-                textStyle={styles.downloadPDFBtnTxt}
-            />
-        </View>
-    );
-};
-
-PDFListItem.propTypes = {
-    PDFName: PropTypes.string,
-    PDFDesc: PropTypes.string
-};
-PDFListItem.defaultProps = {
-    PDFName : "",
-    PDFDesc : ""
-};
-
 class SpecialtyAccPageComponent extends Component {
     constructor(props) {
         super(props);
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
-            itemID: "",
+            // isLoading: false,
+            // itemID: "",
             pageName: "",
-            selectedItemID: "",
-            selectedItemName: ""
+            // selectedItemID: "",
+            // selectedItemName: ""
         };
     }
     /*----------------------
@@ -133,15 +109,17 @@ class SpecialtyAccPageComponent extends Component {
                                                                  -------------------------- */
     
                                                                  onClickHeader = () => {
-        console.log("#TODO : onClickHeader");
+        AppUtils.debugLog("#TODO : onClickHeader");
     }
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const {navigation} = this.props;
+        navigation.goBack();
     }
 
     onClickCancel = () => {
-        this.props.navigation.goBack('termsAndConditions');
+        const {navigation} = this.props;
+        navigation.goBack('termsAndConditions');
     }
 
     onClickSave = () => {
@@ -149,32 +127,34 @@ class SpecialtyAccPageComponent extends Component {
     }
 
     onClickNext = (currentPage,accType) => () => {
+        const {navigation} = this.props;
         //  this.validateFields();
         let pageNo = currentPage;
         if (pageNo < 5) {
-            ++pageNo;
-            this.props.navigation.push('specialtyAccPage', { pageNo,accType });
+            pageNo += 1;
+            navigation.push('specialtyAccPage', { pageNo,accType });
         } else {
-            this.props.navigation.navigate('specialtyAccSubmit', { key: 'specialtyAccSubmit' ,accType});
+           navigation.navigate('specialtyAccSubmit', { key: 'specialtyAccSubmit' ,accType});
         }
     }
 
     onSelected = (item) => {
-        console.log("item: ",item.id);
-        this.setState({ selectedItemID: item.id });
-        this.setState({ selectedItemName: item.name });
+        AppUtils.debugLog("item: ",item.id);
+        // this.setState({ selectedItemID: item.id });
+        // this.setState({ selectedItemName: item.name });
         //  alert("You selected :: " + item.name)
     }
 
     generateKeyExtractor = (item) => item.PDFName;
 
     renderPDFListItem = ({ item }) =>
-        (<PDFListItem
+        (
+<PDFListItem
             PDFName={item.PDFName}
             PDFDesc={item.PDFDesc}
             PDFURL={item.PDFURL}
             PDFFileName={item.PDFFileName}
-        />
+/>
         );
 
     /*----------------------
@@ -182,12 +162,14 @@ class SpecialtyAccPageComponent extends Component {
                                                                  -------------------------- */
     render() {
         const { navigation } = this.props;
+        const { pageName } = this.state;
+
         const pageNo = navigation.getParam('pageNo', '');
         const accType = navigation.getParam('accType', '');
         const currentPage = pageNo;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation}
+                <GHeaderComponent navigation={navigation}
                     onPress={this.onClickHeader}
                 />
                 <ScrollView style={styles.scrollViewFlex}>
@@ -195,10 +177,10 @@ class SpecialtyAccPageComponent extends Component {
                     <Text style={styles.accTypeTilte}>
                         {accType}
                     </Text>
-                    <CustomPageWizard currentPage={currentPage} pageName={this.state.pageName || `${currentPage } ${ specaltyAccPages[currentPage].pageName}`} />
+                    <CustomPageWizard currentPage={currentPage} pageName={pageName || `${currentPage } ${ specaltyAccPages[currentPage].pageName}`} />
 
                     { /*    -----------Page Info -------------------    */}
-                    <View style={[styles.sectionGrp]}>
+                    <View style={styles.sectionGrp}>
                         <View style={styles.accTypeSelectSection}>
                             <Text style={styles.headings}>
                                 {(specaltyAccPages[currentPage].secTitle)}
