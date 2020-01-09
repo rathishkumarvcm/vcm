@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity,FlatList } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import PropTypes from "prop-types";
 import styles from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterComponent,GSingletonClass } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent, GSingletonClass, showAlert } from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-import { scaledHeight } from '../../Utils/Resolution';
+import AppUtils from '../../Utils/AppUtils';
 
 
 
@@ -16,10 +16,6 @@ class OpenAccPageFiveComponent extends Component {
         super(props);
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
-            itemID: "",
-
-
         };
     }
 
@@ -33,20 +29,25 @@ class OpenAccPageFiveComponent extends Component {
                                  Button Events 
                                                                  -------------------------- */
     onClickHeader = () => {
-        console.log("#TODO : onClickHeader");
+        AppUtils.debugLog("#TODO : onClickHeader");
     }
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const { navigation } = this.props;
+        const { goBack } = navigation;
+        goBack();
     }
 
     onClickCancel = () => {
         myInstance.setAccOpeningEditMode(false);
-        this.props.navigation.goBack('termsAndConditions');
+        const { navigation } = this.props;
+        const { goBack } = navigation;
+        goBack('termsAndConditions');
     }
 
     onClickDownloadPDF = () => {
-        alert("#TODO : Download");
+        showAlert(gblStrings.common.appName, "#TODO : Download", gblStrings.common.ok);
+
     }
 
     onClickNext = () => {
@@ -57,105 +58,117 @@ class OpenAccPageFiveComponent extends Component {
         this.validateFields();
     }
 
-    validateFields = () => {    
-        const specialMFAUserType = `${ this.props && this.props.navigation.getParam('SpecialMFA','')}`;
-        if(specialMFAUserType=="GuestUser"){
-            this.props.navigation.push('login',{SpecialMFA:'GuestUser'});   
-        }  
-        else if(specialMFAUserType=="NewUser"){
-            this.props.navigation.push('openAccPageSix',{SpecialMFA:'NewUser'});   
-        }  
-        else if(specialMFAUserType=="UserForm"){
-            this.props.navigation.push('openAccPageSix',{SpecialMFA:'UserForm'});   
-        }         
-        else{
-            this.props.navigation.navigate({ routeName: 'openAccPageSix', key: 'openAccPageSix' });
-        }  
+    validateFields = () => {
+        const { navigation} = this.props;
+        const { push, navigate,getParam} = navigation;  
+        const specialMFAUserType = `${this.props && getParam('SpecialMFA', '')}`;
+        if (specialMFAUserType === "GuestUser") {
+            push('login', { SpecialMFA: 'GuestUser' });
+        }
+        else if (specialMFAUserType === "NewUser") {
+            push('openAccPageSix', { SpecialMFA: 'NewUser' });
+        }
+        else if (specialMFAUserType === "UserForm") {
+            push('openAccPageSix', { SpecialMFA: 'UserForm' });
+        }
+        else {
+            navigate({ routeName: 'openAccPageSix', key: 'openAccPageSix' });
+        }
     }
 
     getFieldValue = () => {
 
     }
 
-    navigateToScreen = (routeName) =>()=>{
+    navigateToScreen = (routeName) => () => {
         myInstance.setAccOpeningEditMode(true);
-        this.props.navigation.navigate({ routeName, key: routeName });
+        const { navigation} = this.props;
+        const { navigate } = navigation;  
+        
+        navigate({ routeName, key: routeName });
     }
 
     generateKeyExtractor = (item) => item.fundNumber.toString();
-   
+
     renderFundItem = () => ({ item }) =>
-    (<View>
+        (
+            <View>
                 <Text style={styles.detailsGrpHeaderTxt}>
                     {item.fundName}
                 </Text>
-                <View style={{flexGrow: 1,backgroundColor: '#FFFFFF',paddingHorizontal: scaledHeight(15),paddingTop: scaledHeight(16),paddingBottom: scaledHeight(10)}}>
-                <TouchableOpacity
+                <View style={styles.fundItem}>
+                    <TouchableOpacity
                         onPress={this.navigateToScreen("openAccPageThree")}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                         style={styles.editBtn}
-                >
+                    >
                         <Text style={styles.editBtnTxt}>
                             {gblStrings.common.edit}
                         </Text>
-                </TouchableOpacity>
+                    </TouchableOpacity>
                 </View>
 
-               
-                <View style={styles.editSeletedFundsDetailsGrp}>
-                   
 
-                  
+                <View style={styles.editSeletedFundsDetailsGrp}>
+
+
+
                     <View style={styles.detailsRow}>
                         <Text style={styles.lblLeftColTxt}>
                             {gblStrings.accManagement.initInvestment}
                         </Text>
                         <Text style={styles.lblRightColTxt}>
-                           {`$ ${item.initialInvestment}`}
+                            {`$ ${item.initialInvestment}`}
                         </Text>
                     </View>
                 </View>
-     </View>);
+            </View>
+        );
 
     renderAllSection = (data) => {
-        console.log(`renderAllSection::${JSON.stringify(data)}`);
-        const { accountType = '', accountSubType = '' ,accountSubCategory = '',regType = ''} = data || {};
-        console.log(`accountType::${accountType} => accountSubType::${accountSubType} => regType::${regType} =>`);
+        AppUtils.debugLog(`renderAllSection::${JSON.stringify(data)}`);
+        const { 
+            accountType = '',
+            accountSubType = '',
+            // accountSubCategory = '',
+              regType = '' 
+            } = data || {};
+        AppUtils.debugLog(`accountType::${accountType} => accountSubType::${accountSubType} => regType::${regType} =>`);
 
 
         return (
             <View>
-               
+
                 {this.renderAccountTypeInfo(data)}
-                { (regType === "Trust Account" || regType === "Estate Account") && this.renderEsateAndTrustInfo(data)}
-                { (regType === "Trust Account" || regType === "Estate Account") && this.renderTrusteeInfo(data)}
-                { (regType !== "Trust Account" && regType !== "Estate Account") && this.renderPrimaryPersonalInfo(data)}
-                { (regType !== "Trust Account" && regType !== "Estate Account") && this.renderPrimaryEmploymentInfo (data)}
-                { (regType !== "Trust Account" && regType !== "Estate Account") && this.renderPrimaryMilitaryInfo (data)}
-                { (regType !== "Trust Account" && regType !== "Estate Account") && this.renderPrimaryFinancialInfo (data)}
-                
-                { (regType === "Joint Account") && this.renderPrimaryPersonalInfoJoint(data)}
-                { (regType === "Joint Account") && this.renderPrimaryEmploymentInfoJoint (data)}
-                { (regType === "Joint Account") && this.renderPrimaryMilitaryInfoJoint (data)}
-                { (regType === "Joint Account") && this.renderPrimaryFinancialInfoJoint (data)}
-               
-                { (regType === "Retirement Account") && this.renderIRABeneficiaryInfo (data)}
+                {(regType === "Trust Account" || regType === "Estate Account") && this.renderEsateAndTrustInfo(data)}
+                {(regType === "Trust Account" || regType === "Estate Account") && this.renderTrusteeInfo(data)}
+                {(regType !== "Trust Account" && regType !== "Estate Account") && this.renderPrimaryPersonalInfo(data)}
+                {(regType !== "Trust Account" && regType !== "Estate Account") && this.renderPrimaryEmploymentInfo(data)}
+                {(regType !== "Trust Account" && regType !== "Estate Account") && this.renderPrimaryMilitaryInfo(data)}
+                {(regType !== "Trust Account" && regType !== "Estate Account") && this.renderPrimaryFinancialInfo(data)}
 
-                { (regType === "UGMA/UTMA Account") && this.renderChildBeneficiaryInfo (data)}
+                {(regType === "Joint Account") && this.renderPrimaryPersonalInfoJoint(data)}
+                {(regType === "Joint Account") && this.renderPrimaryEmploymentInfoJoint(data)}
+                {(regType === "Joint Account") && this.renderPrimaryMilitaryInfoJoint(data)}
+                {(regType === "Joint Account") && this.renderPrimaryFinancialInfoJoint(data)}
 
-                {this.renderMutualFundList (data)}
-                {this.renderAccPrefencesInfo (data)}
+                {(regType === "Retirement Account") && this.renderIRABeneficiaryInfo(data)}
+
+                {(regType === "UGMA/UTMA Account") && this.renderChildBeneficiaryInfo(data)}
+
+                {this.renderMutualFundList(data)}
+                {this.renderAccPrefencesInfo(data)}
             </View>
         );
     }
 
 
-    renderAccountTypeInfo = (data) =>{
-        const { accountType = ''} = data || {};
+    renderAccountTypeInfo = (data) => {
+        const { accountType = '' } = data || {};
 
         return (
-            <View style={[styles.sectionGrp]}>
+            <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
                         {gblStrings.accManagement.vcmInvestAccInfo}
@@ -180,7 +193,7 @@ class OpenAccPageFiveComponent extends Component {
     renderPrimaryPersonalInfo = (data) => {
         const { personalInfo = {} } = data || {};
 
-        console.log(`personalInfo::${JSON.stringify(personalInfo)}`);
+        AppUtils.debugLog(`personalInfo::${JSON.stringify(personalInfo)}`);
         const {
             prefix = '',
             firstName = '',
@@ -191,10 +204,10 @@ class OpenAccPageFiveComponent extends Component {
             maritalStatus = '',
             citizenship = '',
             ssnTin = '',
-            mailingAddress: maillAddr_primary = {},
-            physicalAddress: physicAddr_primary = {},
+            mailingAddress: maillAddrPrimary = {},
+            physicalAddress: physicAddrPrimary = {},
             //  isPhysAddrSameAsMailAddr = "",
-            contactDetails: contact_primary = {},
+            contactDetails: contactPrimary = {},
         } = (personalInfo && personalInfo.firstName) ? personalInfo : {};
 
         const {
@@ -204,45 +217,45 @@ class OpenAccPageFiveComponent extends Component {
             zip = '',
             city = '',
             state = '',
-        } = (maillAddr_primary && maillAddr_primary.addressType) ? maillAddr_primary : {};
+        } = (maillAddrPrimary && maillAddrPrimary.addressType) ? maillAddrPrimary : {};
         const {
             //  addressType: addressType_Phy = '',
-            streetNb: streetNb_Phy = '',
-            streetName: streetName_Phy = '',
-            zip: zip_Phy = '',
-            city: city_Phy = '',
-            state: state_Phy = '',
-        } = (physicAddr_primary && physicAddr_primary.addressType) ? physicAddr_primary : {};
+            streetNb: streetNbPhy = '',
+            streetName: streetNamePhy = '',
+            zip: zipPhy = '',
+            city: cityPhy = '',
+            state: statePhy = '',
+        } = (physicAddrPrimary && physicAddrPrimary.addressType) ? physicAddrPrimary : {};
 
         const {
             phoneNumber1 = {},
             phoneNumber2 = {},
             phoneNumber3 = {},
-            emailAddress: emailAddress_primary = ''
+            emailAddress: emailAddressPrimary = ''
 
-        } = (contact_primary && contact_primary.phoneNumber1) ? contact_primary : {};
+        } = (contactPrimary && contactPrimary.phoneNumber1) ? contactPrimary : {};
 
         const {
-            phoneNumber: phoneNumber1_primary = '',
+            phoneNumber: phoneNumber1Primary = '',
             //  phoneType: phoneType1_primary = '',
             //  contactDuring: contactDuring1_primary = '',
         } = (phoneNumber1 && phoneNumber1.phoneNumber) ? phoneNumber1 : {};
 
         const {
-            phoneNumber: phoneNumber2_primary = '',
+            phoneNumber: phoneNumber2Primary = '',
             //   phoneType: phoneType2_primary = '',
             //  contactDuring: contactDuring2_primary = '',
         } = (phoneNumber2 && phoneNumber2.phoneNumber) ? phoneNumber2 : {};
 
         const {
-            phoneNumber: phoneNumber3_primary = '',
+            phoneNumber: phoneNumber3Primary = '',
             //  phoneType: phoneType3_primary = '',
             //  contactDuring: contactDuring3_primary = '',
         } = (phoneNumber3 && phoneNumber3.phoneNumber) ? phoneNumber3 : {};
 
-        
+
         return (
-            <View style={[styles.sectionGrp]}>
+            <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
                         {gblStrings.accManagement.personalInfoPrimary}
@@ -307,7 +320,7 @@ class OpenAccPageFiveComponent extends Component {
                         {gblStrings.accManagement.emailAddress}
                     </Text>
                     <Text style={styles.lblNameValueTxt}>
-                        {`${emailAddress_primary}`}
+                        {`${emailAddressPrimary}`}
                     </Text>
 
                     <Text style={styles.lblNameTxt}>
@@ -321,28 +334,28 @@ class OpenAccPageFiveComponent extends Component {
                         {gblStrings.accManagement.physicalAddress}
                     </Text>
                     <Text style={styles.lblNameValueTxt}>
-                        {`${streetNb_Phy} ${streetName_Phy} ${city_Phy} ${state_Phy} ${zip_Phy}`}
+                        {`${streetNbPhy} ${streetNamePhy} ${cityPhy} ${statePhy} ${zipPhy}`}
                     </Text>
 
                     <Text style={styles.lblNameTxt}>
                         {gblStrings.accManagement.mobileNo}
                     </Text>
                     <Text style={styles.lblNameValueTxt}>
-                        {`${phoneNumber1_primary}`}
+                        {`${phoneNumber1Primary}`}
                     </Text>
 
                     <Text style={styles.lblNameTxt}>
                         {gblStrings.accManagement.telePhoneNo2}
                     </Text>
                     <Text style={styles.lblNameValueTxt}>
-                        {`${phoneNumber2_primary}`}
+                        {`${phoneNumber2Primary}`}
                     </Text>
 
                     <Text style={styles.lblNameTxt}>
                         {gblStrings.accManagement.telePhoneNo3}
                     </Text>
                     <Text style={styles.lblNameValueTxt}>
-                        {`${phoneNumber3_primary}`}
+                        {`${phoneNumber3Primary}`}
                     </Text>
 
                 </View>
@@ -368,14 +381,14 @@ class OpenAccPageFiveComponent extends Component {
         const {
             addressLine1 = '',
             addressLine2 = '',
-            city: city_empInfo = '',
-            state: state_empInfo = '',
-            zip: zip_empInfo = '',
+            city: cityEmpInfo = '',
+            state: stateEmpInfo = '',
+            zip: zipEmpInfo = '',
         } = (employerAddress && employerAddress.addressLine1) ? employerAddress : {};
 
 
         return (
-            <View style={[styles.sectionGrp]}>
+            <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
                         {gblStrings.accManagement.employmentInfoPrimary}
@@ -426,7 +439,7 @@ class OpenAccPageFiveComponent extends Component {
                         {gblStrings.accManagement.empAddress}
                     </Text>
                     <Text style={styles.lblNameValueTxt}>
-                        {`${addressLine1} ${addressLine2} ${city_empInfo} ${state_empInfo} ${zip_empInfo}`}
+                        {`${addressLine1} ${addressLine2} ${cityEmpInfo} ${stateEmpInfo} ${zipEmpInfo}`}
                     </Text>
                 </View>
             </View>
@@ -451,7 +464,7 @@ class OpenAccPageFiveComponent extends Component {
 
 
         return (
-            <View style={[styles.sectionGrp]}>
+            <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
                         {gblStrings.accManagement.militaryInformation}
@@ -498,7 +511,7 @@ class OpenAccPageFiveComponent extends Component {
                         {`${serviceStartDate} - ${serviceToDate}`}
                     </Text>
 
-                   
+
                     <Text style={styles.lblNameTxt}>
                         {gblStrings.accManagement.commissionSource}
                     </Text>
@@ -513,7 +526,7 @@ class OpenAccPageFiveComponent extends Component {
     renderPrimaryFinancialInfo = (data) => {
 
 
-        const { financialInfo = {}} = data || {};
+        const { financialInfo = {} } = data || {};
         const {
             annualIncome = '',
             taxBracket = '',
@@ -525,7 +538,7 @@ class OpenAccPageFiveComponent extends Component {
 
 
         return (
-            <View style={[styles.sectionGrp]}>
+            <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
                         {gblStrings.accManagement.financialInformation}
@@ -578,9 +591,9 @@ class OpenAccPageFiveComponent extends Component {
 
     renderPrimaryPersonalInfoJoint = (data) => {
         const { jointOwner = {} } = data || {};
-        console.log(`jointOwner::${JSON.stringify(jointOwner)}`);
+        AppUtils.debugLog(`jointOwner::${JSON.stringify(jointOwner)}`);
         const { personalInfo = {} } = jointOwner || {};
-        
+
         const {
             prefix = '',
             firstName = '',
@@ -591,10 +604,10 @@ class OpenAccPageFiveComponent extends Component {
             maritalStatus = '',
             citizenship = '',
             ssnTin = '',
-            mailingAddress: maillAddr_primary = {},
-            physicalAddress: physicAddr_primary = {},
+            mailingAddress: maillAddrPrimary = {},
+            physicalAddress: physicAddrPrimary = {},
             //  isPhysAddrSameAsMailAddr = "",
-            contactDetails: contact_primary = {},
+            contactDetails: contactPrimary = {},
         } = (personalInfo && personalInfo.firstName) ? personalInfo : {};
 
         const {
@@ -604,45 +617,45 @@ class OpenAccPageFiveComponent extends Component {
             zip = '',
             city = '',
             state = '',
-        } = (maillAddr_primary && maillAddr_primary.addressType) ? maillAddr_primary : {};
+        } = (maillAddrPrimary && maillAddrPrimary.addressType) ? maillAddrPrimary : {};
         const {
             //  addressType: addressType_Phy = '',
-            streetNb: streetNb_Phy = '',
-            streetName: streetName_Phy = '',
-            zip: zip_Phy = '',
-            city: city_Phy = '',
-            state: state_Phy = '',
-        } = (physicAddr_primary && physicAddr_primary.addressType) ? physicAddr_primary : {};
+            streetNb: streetNbPhy = '',
+            streetName: streetNamePhy = '',
+            zip: zipPhy = '',
+            city: cityPhy = '',
+            state: statePhy = '',
+        } = (physicAddrPrimary && physicAddrPrimary.addressType) ? physicAddrPrimary : {};
 
         const {
             phoneNumber1 = {},
             phoneNumber2 = {},
             phoneNumber3 = {},
-            emailAddress: emailAddress_primary = ''
+            emailAddress: emailAddressPrimary = ''
 
-        } = (contact_primary && contact_primary.phoneNumber1) ? contact_primary : {};
+        } = (contactPrimary && contactPrimary.phoneNumber1) ? contactPrimary : {};
 
         const {
-            phoneNumber: phoneNumber1_primary = '',
+            phoneNumber: phoneNumber1Primary = '',
             //  phoneType: phoneType1_primary = '',
             //  contactDuring: contactDuring1_primary = '',
         } = (phoneNumber1 && phoneNumber1.phoneNumber) ? phoneNumber1 : {};
 
         const {
-            phoneNumber: phoneNumber2_primary = '',
+            phoneNumber: phoneNumber2Primary = '',
             //   phoneType: phoneType2_primary = '',
             //  contactDuring: contactDuring2_primary = '',
         } = (phoneNumber2 && phoneNumber2.phoneNumber) ? phoneNumber2 : {};
 
         const {
-            phoneNumber: phoneNumber3_primary = '',
+            phoneNumber: phoneNumber3Primary = '',
             //  phoneType: phoneType3_primary = '',
             //  contactDuring: contactDuring3_primary = '',
         } = (phoneNumber3 && phoneNumber3.phoneNumber) ? phoneNumber3 : {};
 
-        
+
         return (
-            <View style={[styles.sectionGrp]}>
+            <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
                         {gblStrings.accManagement.personalInformationJoint}
@@ -707,7 +720,7 @@ class OpenAccPageFiveComponent extends Component {
                         {gblStrings.accManagement.emailAddress}
                     </Text>
                     <Text style={styles.lblNameValueTxt}>
-                        {`${emailAddress_primary}`}
+                        {`${emailAddressPrimary}`}
                     </Text>
 
                     <Text style={styles.lblNameTxt}>
@@ -721,28 +734,28 @@ class OpenAccPageFiveComponent extends Component {
                         {gblStrings.accManagement.physicalAddress}
                     </Text>
                     <Text style={styles.lblNameValueTxt}>
-                        {`${streetNb_Phy} ${streetName_Phy} ${city_Phy} ${state_Phy} ${zip_Phy}`}
+                        {`${streetNbPhy} ${streetNamePhy} ${cityPhy} ${statePhy} ${zipPhy}`}
                     </Text>
 
                     <Text style={styles.lblNameTxt}>
                         {gblStrings.accManagement.mobileNo}
                     </Text>
                     <Text style={styles.lblNameValueTxt}>
-                        {`${phoneNumber1_primary}`}
+                        {`${phoneNumber1Primary}`}
                     </Text>
 
                     <Text style={styles.lblNameTxt}>
                         {gblStrings.accManagement.telePhoneNo2}
                     </Text>
                     <Text style={styles.lblNameValueTxt}>
-                        {`${phoneNumber2_primary}`}
+                        {`${phoneNumber2Primary}`}
                     </Text>
 
                     <Text style={styles.lblNameTxt}>
                         {gblStrings.accManagement.telePhoneNo3}
                     </Text>
                     <Text style={styles.lblNameValueTxt}>
-                        {`${phoneNumber3_primary}`}
+                        {`${phoneNumber3Primary}`}
                     </Text>
 
                 </View>
@@ -753,7 +766,7 @@ class OpenAccPageFiveComponent extends Component {
     renderPrimaryEmploymentInfoJoint = (data) => {
         const { jointOwner = {} } = data || {};
         const { employementInfo = {} } = jointOwner || {};
-        console.log(`jointOwner  employementInfo::${JSON.stringify(employementInfo)}`);
+        AppUtils.debugLog(`jointOwner  employementInfo::${JSON.stringify(employementInfo)}`);
 
 
         const {
@@ -768,14 +781,14 @@ class OpenAccPageFiveComponent extends Component {
         const {
             addressLine1 = '',
             addressLine2 = '',
-            city: city_empInfo = '',
-            state: state_empInfo = '',
-            zip: zip_empInfo = '',
+            city: cityEmpInfo = '',
+            state: stateEmpInfo = '',
+            zip: zipEmpInfo = '',
         } = (employerAddress && employerAddress.addressLine1) ? employerAddress : {};
 
 
         return (
-            <View style={[styles.sectionGrp]}>
+            <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
                         {gblStrings.accManagement.employmentInformationJoint}
@@ -826,17 +839,17 @@ class OpenAccPageFiveComponent extends Component {
                         {gblStrings.accManagement.empAddress}
                     </Text>
                     <Text style={styles.lblNameValueTxt}>
-                        {`${addressLine1} ${addressLine2} ${city_empInfo} ${state_empInfo} ${zip_empInfo}`}
+                        {`${addressLine1} ${addressLine2} ${cityEmpInfo} ${stateEmpInfo} ${zipEmpInfo}`}
                     </Text>
                 </View>
             </View>
         );
     }
 
-    renderPrimaryMilitaryInfoJoint= (data) => {
+    renderPrimaryMilitaryInfoJoint = (data) => {
         const { jointOwner = {} } = data || {};
         const { militaryInfo = {} } = jointOwner || {};
-        console.log(`jointOwner  militaryInfo::${JSON.stringify(militaryInfo)}`);
+        AppUtils.debugLog(`jointOwner  militaryInfo::${JSON.stringify(militaryInfo)}`);
 
 
         const {
@@ -853,7 +866,7 @@ class OpenAccPageFiveComponent extends Component {
 
 
         return (
-            <View style={[styles.sectionGrp]}>
+            <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
                         {gblStrings.accManagement.militaryInformationJoint}
@@ -900,7 +913,7 @@ class OpenAccPageFiveComponent extends Component {
                         {`${serviceStartDate} - ${serviceToDate}`}
                     </Text>
 
-                   
+
                     <Text style={styles.lblNameTxt}>
                         {gblStrings.accManagement.commissionSource}
                     </Text>
@@ -915,7 +928,7 @@ class OpenAccPageFiveComponent extends Component {
     renderPrimaryFinancialInfoJoint = (data) => {
         const { jointOwner = {} } = data || {};
         const { financialInfo = {} } = jointOwner || {};
-        console.log(`jointOwner  financialInfo::${JSON.stringify(financialInfo)}`);
+        AppUtils.debugLog(`jointOwner  financialInfo::${JSON.stringify(financialInfo)}`);
 
 
 
@@ -930,7 +943,7 @@ class OpenAccPageFiveComponent extends Component {
 
 
         return (
-            <View style={[styles.sectionGrp]}>
+            <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
                         {gblStrings.accManagement.financialInformationJoint}
@@ -981,12 +994,12 @@ class OpenAccPageFiveComponent extends Component {
         );
     }
 
-   
+
     renderChildBeneficiaryInfo = (data) => {
         const { beneficiaryInfo = {} } = data || {};
         const { childBeneficiary = {} } = beneficiaryInfo || {};
         const { beneficiaryDetails = {} } = childBeneficiary || {};
-        console.log(`beneficiaryDetails::${JSON.stringify(beneficiaryDetails)}`);
+        AppUtils.debugLog(`beneficiaryDetails::${JSON.stringify(beneficiaryDetails)}`);
 
         const {
             prefix = '',
@@ -996,12 +1009,12 @@ class OpenAccPageFiveComponent extends Component {
             suffix = '',
             ssnTin = '',
             dateOfBirth = '',
-            relation ='',
+           // relation = '',
         } = (beneficiaryDetails && beneficiaryDetails.firstName) ? beneficiaryDetails : {};
 
 
         return (
-            <View style={[styles.sectionGrp]}>
+            <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
                         {gblStrings.accManagement.personalInformationChild}
@@ -1049,25 +1062,25 @@ class OpenAccPageFiveComponent extends Component {
     renderIRABeneficiaryInfo = (data) => {
         const { beneficiaryInfo = {} } = data || {};
         const { beneficiaryDetails = [] } = beneficiaryInfo || {};
-/*
-            "type": this.state.retirementBeneficiaryData[i].beneficiaryType || "",
-            "relation": this.state.retirementBeneficiaryData[i].relationshipToAcc || "",
-            "distributionPercentage": this.state.retirementBeneficiaryData[i].beneficiaryDistPercent || "",
-            "firstName": this.state.retirementBeneficiaryData[i].firstName || "",
-            "middleInitial": this.state.retirementBeneficiaryData[i].middleInitial || "",
-            "lastName": this.state.retirementBeneficiaryData[i].lastName || "",
-            "ssnTin": this.state.retirementBeneficiaryData[i].socialSecurityNo || "",
-            "dateOfBirth": this.state.retirementBeneficiaryData[i].dob || "",
-            "emailAddress": this.state.retirementBeneficiaryData[i].emailAddress || "",
-            "isPrimaryBeneficiary": "true"
-*/
-       
-        console.log(`beneficiaryDetails::${JSON.stringify(beneficiaryDetails)}`);
+        /*
+                    "type": this.state.retirementBeneficiaryData[i].beneficiaryType || "",
+                    "relation": this.state.retirementBeneficiaryData[i].relationshipToAcc || "",
+                    "distributionPercentage": this.state.retirementBeneficiaryData[i].beneficiaryDistPercent || "",
+                    "firstName": this.state.retirementBeneficiaryData[i].firstName || "",
+                    "middleInitial": this.state.retirementBeneficiaryData[i].middleInitial || "",
+                    "lastName": this.state.retirementBeneficiaryData[i].lastName || "",
+                    "ssnTin": this.state.retirementBeneficiaryData[i].socialSecurityNo || "",
+                    "dateOfBirth": this.state.retirementBeneficiaryData[i].dob || "",
+                    "emailAddress": this.state.retirementBeneficiaryData[i].emailAddress || "",
+                    "isPrimaryBeneficiary": "true"
+        */
+
+        AppUtils.debugLog(`beneficiaryDetails::${JSON.stringify(beneficiaryDetails)}`);
 
 
-        return(
-          
-            <View style={[styles.sectionGrp]}>
+        return (
+
+            <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
                         {gblStrings.accManagement.beneficiariesOpt}
@@ -1096,12 +1109,12 @@ class OpenAccPageFiveComponent extends Component {
                             firstName = "",
                             middleInitial = "",
                             lastName = "",
-                            suffix= "",
+                            suffix = "",
                             ssnTin = "",
                             dateOfBirth = "",
                             emailAddress = "",
-                            isPrimaryBeneficiary = false
-                         
+                           // isPrimaryBeneficiary = false
+
 
                         } = item;
 
@@ -1159,7 +1172,7 @@ class OpenAccPageFiveComponent extends Component {
                                 <Text style={styles.lblNameValueTxt}>
                                     {`${emailAddress}`}
                                 </Text>
-                                
+
 
 
 
@@ -1178,61 +1191,61 @@ class OpenAccPageFiveComponent extends Component {
     }
 
     renderMutualFundList = (data) => {
-       
-        const { investmentInfo = {}} = data || {};
+
+        const { investmentInfo = {} } = data || {};
         const {
             //  fundingSource = {},
             //  totalFunds = '',
             fundListData = []
         } = (investmentInfo && investmentInfo.fundListData) ? investmentInfo : {};
 
-       /*
-        const {
-            method = '',
-            bankAccount = '',
-            accountType = '',
-            financialInstitutionName = '',
-            accountOwner = '',
-            transitRoutingNumber = '',
-            accountNumber = '',
-
-        } = (fundingSource && fundingSource.method) ? fundingSource : {};
-
-        */
-        return(
+        /*
+         const {
+             method = '',
+             bankAccount = '',
+             accountType = '',
+             financialInstitutionName = '',
+             accountOwner = '',
+             transitRoutingNumber = '',
+             accountNumber = '',
+ 
+         } = (fundingSource && fundingSource.method) ? fundingSource : {};
+ 
+         */
+        return (
             <>
-            <View style={[styles.sectionGrp]}>
-                <View style={styles.accTypeSelectSection}>
-                    <Text style={styles.headings}>
-                        {gblStrings.accManagement.selectedMutualFunds}
-                    </Text>
+                <View style={styles.sectionGrp}>
+                    <View style={styles.accTypeSelectSection}>
+                        <Text style={styles.headings}>
+                            {gblStrings.accManagement.selectedMutualFunds}
+                        </Text>
+                    </View>
+
+                    <Text style={styles.lblLine} />
+
+                    <FlatList
+                        data={fundListData}
+                        keyExtractor={this.generateKeyExtractor}
+                        renderItem={this.renderFundItem()}
+
+                    />
+
                 </View>
-
-                <Text style={styles.lblLine} />
-
-                <FlatList
-                                data={fundListData}
-                                keyExtractor={this.generateKeyExtractor}
-                                renderItem={this.renderFundItem()}
-
-                />
-              
-            </View>
-             { fundListData.length >0 && this.renderInvestmentInfo(data)}
+                {fundListData.length > 0 && this.renderInvestmentInfo(data)}
             </>
 
         );
     }
 
     renderInvestmentInfo = (data) => {
-        const { investmentInfo = {}} = data || {};
+        const { investmentInfo = {} } = data || {};
 
 
         const {
             fundingSource = {},
-           //  totalFunds = '',
-            totalInitialInvestment ='',
-           //  fundListData = []
+            //  totalFunds = '',
+            totalInitialInvestment = '',
+            //  fundListData = []
         } = (investmentInfo && investmentInfo.fundListData) ? investmentInfo : {};
 
 
@@ -1242,7 +1255,7 @@ class OpenAccPageFiveComponent extends Component {
 
 
         return (
-            <View style={[styles.sectionGrp]}>
+            <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
                         {gblStrings.accManagement.fundingInfo}
@@ -1285,9 +1298,9 @@ class OpenAccPageFiveComponent extends Component {
         );
     }
 
-    renderAccPrefencesInfo = (data) =>{
+    renderAccPrefencesInfo = (data) => {
         const { accountPreferences = {} } = data || {};
-        
+
         const {
             documentDeliveryFormat = '',
             //  dividendCapitalGain = ''
@@ -1295,7 +1308,7 @@ class OpenAccPageFiveComponent extends Component {
 
 
         return (
-            <View style={[styles.sectionGrp]}>
+            <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
                         {gblStrings.accManagement.accountFeatures}
@@ -1333,15 +1346,13 @@ class OpenAccPageFiveComponent extends Component {
     renderEsateAndTrustInfo = (data) => {
 
         const { estateInfo = {} } = data || {};
-        console.log(`estateInfo::${JSON.stringify(estateInfo)}`);
-        const { accountType = ''} = data || {};
-
+        AppUtils.debugLog(`estateInfo::${JSON.stringify(estateInfo)}`);
         const {
             name = '',
             creationDate = '',
-            ssnTin ='',
-            mailingAddress:  maillAddr_primary = {},
-            physicalAddress : physicAddr_primary = {},
+            ssnTin = '',
+            mailingAddress: maillAddrPrimary = {},
+            physicalAddress: physicAddrPrimary = {},
             isFederalLawApplicable = '',
             specifyState = '',
             orgCountry = '',
@@ -1369,21 +1380,21 @@ class OpenAccPageFiveComponent extends Component {
             zip = '',
             city = '',
             state = '',
-        } = (maillAddr_primary && maillAddr_primary.zip) ? maillAddr_primary : {};
+        } = (maillAddrPrimary && maillAddrPrimary.zip) ? maillAddrPrimary : {};
         const {
             //  addressType: addressType_Phy = '',
-            streetNbr: streetNbr_Phy = '',
-            streetName: streetName_Phy = '',
-            zip: zip_Phy = '',
-            city: city_Phy = '',
-            state: state_Phy = '',
-        } = (physicAddr_primary && physicAddr_primary.zip) ? physicAddr_primary : {};
+            streetNbr: streetNbrPhy = '',
+            streetName: streetNamePhy = '',
+            zip: zipPhy = '',
+            city: cityPhy = '',
+            state: statePhy = '',
+        } = (physicAddrPrimary && physicAddrPrimary.zip) ? physicAddrPrimary : {};
 
-        
-      
-        
+
+
+
         return (
-            <View style={[styles.sectionGrp]}>
+            <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
                         {gblStrings.accManagement.estateInfo}
@@ -1423,7 +1434,7 @@ class OpenAccPageFiveComponent extends Component {
                         {`${ssnTin}`}
                     </Text>
 
-                  
+
 
                     <Text style={styles.lblNameTxt}>
                         {gblStrings.accManagement.mailingAddress}
@@ -1436,7 +1447,7 @@ class OpenAccPageFiveComponent extends Component {
                         {gblStrings.accManagement.physicalAddress}
                     </Text>
                     <Text style={styles.lblNameValueTxt}>
-                        {`${streetNbr_Phy} ${streetName_Phy} ${city_Phy} ${state_Phy} ${zip_Phy}`}
+                        {`${streetNbrPhy} ${streetNamePhy} ${cityPhy} ${statePhy} ${zipPhy}`}
                     </Text>
 
 
@@ -1533,7 +1544,7 @@ class OpenAccPageFiveComponent extends Component {
                         {`${typeOfFiniancialInstitution}`}
                     </Text>
 
-                   
+
                     <Text style={styles.lblNameTxt}>
                         {gblStrings.accManagement.isFinanacialInstitutionDescribed}
                     </Text>
@@ -1579,7 +1590,7 @@ class OpenAccPageFiveComponent extends Component {
     renderTrusteeInfo = (data) => {
         const { trusteeInfo = {} } = data || {};
 
-        console.log(`trusteeInfo::${JSON.stringify(trusteeInfo)}`);
+        AppUtils.debugLog(`trusteeInfo::${JSON.stringify(trusteeInfo)}`);
 
         const {
             prefix = '',
@@ -1597,8 +1608,8 @@ class OpenAccPageFiveComponent extends Component {
             emailAddress = '',
             memberNumber = '',
             ssnTin = '',
-            mailingAddress:  maillAddr_primary = {},
-            physicalAddress : physicAddr_primary = {},
+            mailingAddress: maillAddrPrimary = {},
+            physicalAddress: physicAddrPrimary = {},
         } = (trusteeInfo && trusteeInfo.firstName) ? trusteeInfo : {};
 
         const {
@@ -1608,21 +1619,21 @@ class OpenAccPageFiveComponent extends Component {
             zip = '',
             city = '',
             state = '',
-        } = (maillAddr_primary && maillAddr_primary.zip) ? maillAddr_primary : {};
+        } = (maillAddrPrimary && maillAddrPrimary.zip) ? maillAddrPrimary : {};
         const {
             //  addressType: addressType_Phy = '',
-            streetNbr: streetNbr_Phy = '',
-            streetName: streetName_Phy = '',
-            zip: zip_Phy = '',
-            city: city_Phy = '',
-            state: state_Phy = '',
-        } = (physicAddr_primary && physicAddr_primary.zip) ? physicAddr_primary : {};
+            streetNbr: streetNbrPhy = '',
+            streetName: streetNamePhy = '',
+            zip: zipPhy = '',
+            city: cityPhy = '',
+            state: statePhy = '',
+        } = (physicAddrPrimary && physicAddrPrimary.zip) ? physicAddrPrimary : {};
 
-       
-       
-        
+
+
+
         return (
-            <View style={[styles.sectionGrp]}>
+            <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
                     <Text style={styles.headings}>
                         {gblStrings.accManagement.trusteeOrExector}
@@ -1669,7 +1680,7 @@ class OpenAccPageFiveComponent extends Component {
                         {`${maritalStatus}`}
                     </Text>
 
-                   
+
                     <Text style={styles.lblNameTxt}>
                         {gblStrings.accManagement.socialSecurityNo}
                     </Text>
@@ -1703,7 +1714,7 @@ class OpenAccPageFiveComponent extends Component {
                         {gblStrings.accManagement.physicalAddress}
                     </Text>
                     <Text style={styles.lblNameValueTxt}>
-                        {`${streetNbr_Phy} ${streetName_Phy} ${city_Phy} ${state_Phy} ${zip_Phy}`}
+                        {`${streetNbrPhy} ${streetNamePhy} ${cityPhy} ${statePhy} ${zipPhy}`}
                     </Text>
 
                     <Text style={styles.lblNameTxt}>
@@ -1713,7 +1724,7 @@ class OpenAccPageFiveComponent extends Component {
                         {`${mobileNo}`}
                     </Text>
 
-                   
+
                     <Text style={styles.lblNameTxt}>
                         {gblStrings.accManagement.businessPhoneNumber}
                     </Text>
@@ -1746,23 +1757,25 @@ class OpenAccPageFiveComponent extends Component {
     render() {
         //  const tempInfoData = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
         const tempInfoData = myInstance.getSavedAccData();
-
+        const { navigation} = this.props;
+        const { getParam } = navigation;  
+        
         const currentPage = 5;
-        const specialMFAUserType = `${ this.props && this.props.navigation.getParam('SpecialMFA', '')}`;
+        const specialMFAUserType = `${this.props && getParam('SpecialMFA', '')}`;
         return (
             <View style={styles.container}>
                 {
                     //  this.props.accOpeningData.isLoading && <GLoadingSpinner />
                 }
                 <GHeaderComponent
-                    navigation={this.props.navigation}
+                    navigation={navigation}
                     onPress={this.onClickHeader}
                 />
-                <ScrollView style={{ flex: .85 }}>
-                    <CustomPageWizard currentPage={currentPage} pageName={`${currentPage } ${ gblStrings.accManagement.verifyInfo}`} />
+                <ScrollView style={styles.scrollView}>
+                    <CustomPageWizard currentPage={currentPage} pageName={`${currentPage} ${gblStrings.accManagement.verifyInfo}`} />
 
                     { /* -----------Account information -------------------*/}
-                    
+
                     {this.renderAllSection(tempInfoData)}
 
 
@@ -1770,34 +1783,36 @@ class OpenAccPageFiveComponent extends Component {
 
                     <View style={styles.btnGrp}>
                         {
-                            (specialMFAUserType!="" && specialMFAUserType!="GuestUser" && specialMFAUserType!="NewUser" && specialMFAUserType!="UserForm")?
-                            <GButtonComponent
-                                buttonStyle={styles.normalWhiteBtn}
-                                buttonText={gblStrings.common.save}
-                                textStyle={styles.normalWhiteBtnTxt}
-                                onPress={this.onClickSave}
-                            />
-                            :null
+                            (specialMFAUserType !== "" && specialMFAUserType !== "GuestUser" && specialMFAUserType !== "NewUser" && specialMFAUserType !== "UserForm") ? (
+                                <GButtonComponent
+                                    buttonStyle={styles.normalWhiteBtn}
+                                    buttonText={gblStrings.common.save}
+                                    textStyle={styles.normalWhiteBtnTxt}
+                                    onPress={this.onClickSave}
+                                />
+                            )
+                                : null
                         }
                         {
-                            (specialMFAUserType!="" && specialMFAUserType!="GuestUser" && specialMFAUserType!="NewUser" && specialMFAUserType!="UserForm")?
-                            <GButtonComponent
-                                buttonStyle={styles.normalWhiteBtn}
-                                buttonText={gblStrings.common.cancel}
-                                textStyle={styles.normalWhiteBtnTxt}
-                                onPress={this.onClickCancel}
-                            />
-                            :null
+                            (specialMFAUserType !== "" && specialMFAUserType !== "GuestUser" && specialMFAUserType !== "NewUser" && specialMFAUserType !== "UserForm") ? (
+                                <GButtonComponent
+                                    buttonStyle={styles.normalWhiteBtn}
+                                    buttonText={gblStrings.common.cancel}
+                                    textStyle={styles.normalWhiteBtnTxt}
+                                    onPress={this.onClickCancel}
+                                />
+                            )
+                                : null
                         }
                         <GButtonComponent
                             buttonStyle={styles.normalWhiteBtn}
-                            buttonText={(specialMFAUserType!="" && (specialMFAUserType=="GuestUser" || specialMFAUserType=="NewUser" || specialMFAUserType=="UserForm"))?gblStrings.common.cancel:gblStrings.common.back}
+                            buttonText={(specialMFAUserType !== "" && (specialMFAUserType === "GuestUser" || specialMFAUserType === "NewUser" || specialMFAUserType === "UserForm")) ? gblStrings.common.cancel : gblStrings.common.back}
                             textStyle={styles.normalWhiteBtnTxt}
                             onPress={this.goBack}
-                        />                            
+                        />
                         <GButtonComponent
                             buttonStyle={styles.normalBlackBtn}
-                            buttonText={specialMFAUserType=="GuestUser" ? gblStrings.common.verifySign:gblStrings.common.next}
+                            buttonText={specialMFAUserType === "GuestUser" ? gblStrings.common.verifySign : gblStrings.common.next}
                             textStyle={styles.normalBlackBtnTxt}
                             onPress={this.onClickNext}
 
@@ -1830,6 +1845,13 @@ class OpenAccPageFiveComponent extends Component {
 
 OpenAccPageFiveComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    accOpeningData: PropTypes.instanceOf(Object)
+   // accOpeningData: PropTypes.instanceOf(Object)
+};
+OpenAccPageFiveComponent.defaultProps = {
+    navigation: {},
+   //  accOpeningData: {}
+   
+    
+
 };
 export default OpenAccPageFiveComponent;

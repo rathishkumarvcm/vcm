@@ -1,13 +1,14 @@
-/* eslint-disable react/no-multi-comp */
+
 import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList } from 'react-native';
+import PropTypes from "prop-types";
 import styles from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner,GSingletonClass} from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GSingletonClass, showAlert } from '../../CommonComponents';
 import { CustomRadio, CustomCheckBox, CustomPageWizard } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
-import PropTypes from "prop-types";
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+import AppUtils from '../../Utils/AppUtils';
 
 const dummyData = [
     { "key": "key1", "value": "Option1" },
@@ -36,58 +37,7 @@ const signPdfList = [
         "key": "consent_elect_del"
     }
 ];
-const ViewPDFItem = (props) => {
-    return (
 
-        <View style={{ flexDirection: 'row', flexGrow: 1, flexWrap: 'wrap', marginVertical: scaledHeight(10.5) }} >
-            <Text style={styles.pdfFileNameTxt}>
-                {props.fileName}
-            </Text>
-            <Text style={styles.pdfFileTxt}>
-                {" (" + props.fileType + ")"}
-            </Text>
-        </View>
-    );
-};
-
-ViewPDFItem.propTypes = {
-    fileName: PropTypes.string,
-    fileType: PropTypes.string
-
-
-
-};
-
-const SignPDFItem = (props) => {
-    return (
-        <View style={{ flexGrow: 1, marginTop: scaledHeight(5) }}>
-            <View style={{ flexDirection: 'row', flexGrow: 1, flexWrap: 'wrap', marginVertical: scaledHeight(10.5) }} >
-                <Text style={styles.pdfFileNameTxt}>
-                    {props.fileName}
-                </Text>
-                <Text style={styles.pdfFileTxt}>
-                    {" (" + props.fileType + ")"}
-                </Text>
-            </View>
-            <Text style={styles.pdfFileDescTxt}>
-                {props.fileDesc}
-            </Text>
-            {props.isSeparatorShow && <Text style={styles.lblLine} />}
-        </View>
-
-
-    );
-};
-
-
-SignPDFItem.propTypes = {
-    fileName: PropTypes.string,
-    fileType: PropTypes.string,
-    fileDesc: PropTypes.string,
-    isSeparatorShow: PropTypes.bool
-
-
-};
 
 const myInstance = GSingletonClass.getInstance();
 
@@ -98,63 +48,72 @@ class OpenAccPageSixComponent extends Component {
         this.state = {
             itemID: "",
             confirmTINType: "",
-            confirmTINTypeValidation:true,
-            agreeConditionsValidation:true,
+            confirmTINTypeValidation: true,
+            agreeConditionsValidation: true,
             agreeConditions: false,
             isValidationSuccess: true,
-            errMsg:""
+            errMsg: ""
 
         };
     }
+
     /*----------------------
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
     componentDidMount() {
-        console.log("componentDidMount::::> ");
-        let payload = [];
+        AppUtils.debugLog("componentDidMount::::> ");
+        const { masterLookupStateData, getCompositeLookUpData } = this.props;
+        const payload = [];
         const compositePayloadData = [
             "backup_withholding",
             "docs_to_sign",
             "docs_to_view"
         ];
 
-        for (let i = 0; i < compositePayloadData.length; i++) {
-            let tempkey = compositePayloadData[i];
-            if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempkey]) {
+        for (let i = 0; i < compositePayloadData.length; i += 1) {
+            const tempkey = compositePayloadData[i];
+            if (this.props && masterLookupStateData && !masterLookupStateData[tempkey]) {
                 payload.push(tempkey);
             }
         }
-        this.props.getCompositeLookUpData(payload);
+        getCompositeLookUpData(payload);
     }
+
     componentDidUpdate(prevProps, prevState) {
-        console.log("componentDidUpdate::::> "+prevState);
+        AppUtils.debugLog(`componentDidUpdate::::> ${prevState}`);
+        const { accOpeningData, navigation } = this.props;
+        const { goBack } = navigation;
+
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.ESIGN_SAVE_OPENING_ACCT;
-            if (this.props.accOpeningData[responseKey]) {
-                if (this.props.accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
-                    let tempResponse = this.props.accOpeningData[responseKey];
-                    if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
-                        let msg = tempResponse.message;
-                        console.log("Account  Saved ::: :: " + msg);
-                        alert(tempResponse.result);
+            if (accOpeningData[responseKey]) {
+                if (accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
+                    const tempResponse = accOpeningData[responseKey];
+                    if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
+                        AppUtils.debugLog(`Account  Saved ::: :: ${tempResponse.message}`);
+                        showAlert(gblStrings.common.appName, tempResponse.message, gblStrings.common.ok);
                     } else {
-                        alert(tempResponse.message);
+                        AppUtils.debugLog(`Account  Saved  falied::: :: ${tempResponse.message}`);
+                        showAlert(gblStrings.common.appName, tempResponse.message, gblStrings.common.ok);
+
                     }
                 }
             }
 
             const submitResKey = ActionTypes.SUBMIT_OPENING_ACCT;
-            if (this.props.accOpeningData[submitResKey]) {
-                if (this.props.accOpeningData[submitResKey] !== prevProps.accOpeningData[submitResKey]) {
-                    let tempResponse = this.props.accOpeningData[submitResKey];
-                    if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
-                        let msg = tempResponse.message;
-                        console.log("Account Created ::: :: " + msg);
-                        alert(msg+"  :"+ tempResponse.accountId);
+            if (accOpeningData[submitResKey]) {
+                if (accOpeningData[submitResKey] !== prevProps.accOpeningData[submitResKey]) {
+                    const tempResponse = accOpeningData[submitResKey];
+                    if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
+                        const msg = `${tempResponse.message}  :${tempResponse.accountId}`;
+                        AppUtils.debugLog(`Account Created ::: :: ${msg}`);
+                        showAlert(gblStrings.common.appName, msg, gblStrings.common.ok);
+
                         myInstance.setAccOpeningEditMode(false);
-                        this.props.navigation.goBack('termsAndConditions');
+                        goBack('termsAndConditions');
                     } else {
-                        alert(tempResponse.message);
+                        AppUtils.debugLog(`Account Created failed::: :: ${tempResponse.message}`);
+                        showAlert(gblStrings.common.appName, tempResponse.message, gblStrings.common.ok);
                         myInstance.setAccOpeningEditMode(false);
                     }
                 }
@@ -163,223 +122,116 @@ class OpenAccPageSixComponent extends Component {
     }
 
 
-    /*----------------------
-                                    Service API 
-                                                                    -------------------------- */
-    submitAccOpening = () => {
-        console.log("submitAccOpening::::> ");
-        const payloadData = {
-            "customerId": "123",
-            "accountType": "IndivIdual",
-            "accountNickName": "TestUser",
-            "personalInfo": {
-                "prefix": "Mr.",
-                "firstName": "Name1",
-                "middleInitial": "",
-                "lastName": "Name2",
-                "suffix": "",
-                "dateOfBirth": "01/01/2000",
-                "gender": "Male",
-                "maritalStatus": "Married",
-                "citizenship": "US",
-                "ssnTin": "123456789",
-                "mailingAddress": {
-                    "addressType": "U.S or U.S Territories",
-                    "streetNbr": "4900",
-                    "streetName": "Tiedeman Rd",
-                    "zip": "44144",
-                    "city": "Brooklyn",
-                    "state": "OH"
-                },
-                "isPhysAddrSameAsMailAddr": "No",
-                "physicalAddress": {
-                    "addressType": "U.S or U.S Territories",
-                    "streetNbr": "4900",
-                    "streetName": "Tiedeman Rd",
-                    "zip": "44144",
-                    "city": "Brooklyn",
-                    "state": "OH"
-                },
-                "contactDetails": {
-                    "phoneNumber1": {
-                        "phoneNumber": "1234567890",
-                        "phoneType": "Home",
-                        "contactDuring": "Morning"
-                    },
-                    "phoneNumber2": {
-                        "phoneNumber": "1234567890",
-                        "phoneType": "Home",
-                        "contactDuring": "Morning"
-                    },
-                    "phoneNumber3": {
-                        "phoneNumber": "1234567890",
-                        "phoneType": "Home",
-                        "contactDuring": "Morning"
-                    },
-                    "emailAddress": "testUser@test.com"
-                }
-            },
-            "employementInfo": {
-                "employmentStatus": "Employed",
-                "industry": "Accounting",
-                "occupation": "SE",
-                "employerName": "Test",
-                "employerAddress": {
-                    "addressLine1": "4900",
-                    "addressLine2": "Tiedeman Rd",
-                    "city": "Brooklyn",
-                    "state": "OH",
-                    "zip": "44144"
-                }
-            },
-            "financialInfo": {
-                "annualIncome": "9700 and below",
-                "taxBracket": "10",
-                "netWorth": "34999 and below",
-                "taxFilingStatus": "Single indivIdual"
-            },
-            "militaryInfo": {
-                "servingStatus": "Yes",
-                "militaryStatus": "Active Duty Military",
-                "branchOfService": "Army",
-                "rank": "O1 - Second Lieutenant",
-                "serviceStartDate": "01/01/2018",
-                "commissionSource": "cust1CommissionSource"
-            },
-            "regulatoryDetails": {
-                "isPep": "Y",
-                "pepName": ""
-            },
-            "investmentInfo": {
-                "fundingSource": {
-                    "method": "",
-                    "bankAccount": "",
-                    "accountType": "",
-                    "financialInstitutionName": "",
-                    "accountOwner": "",
-                    "transitRoutingNumber": "",
-                    "accountNumber": ""
-                },
-                "totalFunds": "1",
-                "fund1": {
-                    "fundNumber": "123",
-                    "fundName": "Fund1",
-                    "fundingOption": "Initial",
-                    "initialInvestment": "3000",
-                    "monthlyInvestment": "",
-                    "startDate": "",
-                    "action": "add"
-                },
-                "fund2...10": ""
-            },
-            "accountPreferences": {
-                "dividendCapitalGain": "1",
-                "documentDeliveryFormat": "Online"
-            },
-            "userConsent": {
-                "backupCertFlag": "N",
-                "certifiedYN": "Y"
-            }
-        };
 
-
-
-        try {
-            this.props.submitAccountOpening(payloadData);
-        }
-        catch (err) {
-            console.log("error", err);
-        }
-
-    }
     /*----------------------
                                  Button Events 
                                                                  -------------------------- */
     onClickHeader = () => {
-        console.log("#TODO : onClickHeader");
+        AppUtils.debugLog("#TODO : onClickHeader");
     }
+
     goBack = () => {
-        this.props.navigation.goBack();
+        const { navigation} = this.props;
+        const { goBack } = navigation;
+        goBack();
     }
+
     onClickCancel = () => {
         myInstance.setAccOpeningEditMode(false);
-        this.props.navigation.goBack('termsAndConditions');
+        const { navigation} = this.props;
+        const { goBack } = navigation;
+        goBack('termsAndConditions');
     }
+
     onClickDownloadPDF = () => {
-        alert("#TODO : Download");
+        AppUtils.debugLog("#TODO : Download");
     }
+
     onClickSubmit = () => {
+        const { navigation,submitAccountOpening} = this.props;
+        const { getParam,navigate } = navigation;
         if (this.validateFields()) {
-            const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));
-            if(specialMFAUserType=="GuestUser" || specialMFAUserType=="NewUser" || specialMFAUserType=="UserForm"){
-               this.props.navigation.navigate('dashboard');
-            }           
-            else{
+            const specialMFAUserType = `${this.props && getParam('SpecialMFA', '')}`;
+            if (specialMFAUserType === "GuestUser" || specialMFAUserType === "NewUser" || specialMFAUserType === "UserForm") {
+                navigate('dashboard');
+            }
+            else {
                 const payload = this.getPayload();
-                this.props.submitAccountOpening(payload);
+                submitAccountOpening(payload);
             }
         }
     }
+
     onClickSave = () => {
+        const { saveAccountOpening} = this.props;
+
         if (this.validateFields()) {
             const payload = this.getPayload();
             myInstance.setSavedAccData(payload);
-            this.props.saveAccountOpening("OpenAccPageSix", payload);
+           saveAccountOpening("OpenAccPageSix", payload);
         }
     }
 
     getPayload = () => {
         const savedAccData = myInstance.getSavedAccData();
+        const { confirmTINType, agreeConditions } = this.state;
+
         const payload = {
-                ...savedAccData,
-                "userConsent":{
-                    "backupCertFlag":this.state.confirmTINType || "",
-                    "certifiedYN":this.state.agreeConditions || ""
-                  }
-            };
-        
+            ...savedAccData,
+            "userConsent": {
+                "backupCertFlag": confirmTINType || "",
+                "certifiedYN": agreeConditions || ""
+            }
+        };
+
         return payload;
 
     }
 
-    replaceUndefinedOrNull= (key, value) => {
-        if (value === null || value === undefined || value ==='') {
-          return undefined;
+    replaceUndefinedOrNull = (key, value) => {
+        if (value === null || value === undefined || value === '') {
+            return undefined;
         }
 
         return value;
-      }
-    getCleanedPayload = (payload) =>{
+    }
+
+    getCleanedPayload = (payload) => {
         const cleanedObject = JSON.stringify(payload, this.replaceUndefinedOrNull, 4);
         return JSON.parse(cleanedObject);
     }
 
     onPressCheck = (keyName, text) => () => this.setState({
         [keyName]: text,
-        confirmTINTypeValidation:true,
-        agreeConditionsValidation:true
+        confirmTINTypeValidation: true,
+        agreeConditionsValidation: true
     });
+
     onPressRadio = (keyName, text) => () => this.setState({
         [keyName]: text,
-        confirmTINTypeValidation:true,
-        agreeConditionsValidation:true
+        confirmTINTypeValidation: true,
+        agreeConditionsValidation: true
     });
-    isEmpty = (str) => {
-        if (str == "" || str == undefined || str == "null" || str == "undefined") {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    validateFields = () => {
-        var errMsg = "";
-        let input = "";
 
-        var isValidationSuccess = false;
-        if (this.isEmpty(this.state.confirmTINType)) {
+    isEmpty = (str) => {
+        if (str === "" || str === undefined || str === "null" || str === "undefined") {
+            return true;
+        }
+        return false;
+
+    }
+
+    validateFields = () => {
+        let errMsg = "";
+        let input = "";
+        const { confirmTINType, agreeConditions } = this.state;
+
+
+        let isValidationSuccess = false;
+        if (this.isEmpty(confirmTINType)) {
             errMsg = gblStrings.accManagement.confirmTINBackupWithholdingMsg;
             input = "confirmTINTypeValidation";
-        } else if (this.state.agreeConditions === false) {
+        } else if (agreeConditions === false) {
             errMsg = gblStrings.accManagement.confirmAgreeCondMsg;
             input = "agreeConditionsValidation";
 
@@ -388,65 +240,72 @@ class OpenAccPageSixComponent extends Component {
         }
 
         if (!isValidationSuccess) {
-           //  alert(errMsg);
+            //  alert(errMsg);
 
         }
         this.setState({
-            isValidationSuccess: isValidationSuccess,
-            errMsg:isValidationSuccess == false ? errMsg:"",
+            isValidationSuccess,
+            errMsg: isValidationSuccess === false ? errMsg : "",
             [input]: false
-         });
+        });
         return isValidationSuccess;
 
     }
 
     generateKeyExtractor = (item) => item.key;
+
     renderViewPDFItem = () => ({ item }) =>
-        (<ViewPDFItem
-            fileName={item.value}
-            fileType={"PDF"}
-         />
+        (
+            <ViewPDFItem
+                fileName={item.value}
+                fileType="PDF"
+            />
         );
 
     renderSignPDFItem = (dataLength) => ({ item, index }) =>
-        (<SignPDFItem
-            fileName={item.value}
-            fileType={"PDF"}
-            fileDesc={item.description}
-            isSeparatorShow={index < dataLength - 1 ? true : false}
-         />
+        (
+            <SignPDFItem
+                fileName={item.value}
+                fileType="PDF"
+                fileDesc={item.description}
+                isSeparatorShow={index < dataLength - 1}
+            />
         );
 
     renderRadio = (radioName, radioSize, componentStyle, layoutStyle) => {
-        console.log("renderRadio::: " + radioName);
+        AppUtils.debugLog(`renderRadio::: ${radioName}`);
+        const { masterLookupStateData } = this.props;
+
         let radioData = dummyData;
-        let tempkey ="";
+        let tempkey = "";
         switch (radioName) {
             case "confirmTINType":
                 tempkey = "backup_withholding";
                 break;
+            default:
+                break;
         }
 
-        console.log("tempkey::" + tempkey);
+        AppUtils.debugLog(`tempkey::${tempkey}`);
 
-        if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
-            radioData = this.props.masterLookupStateData[tempkey].value;
+        if (this.props && masterLookupStateData && masterLookupStateData[tempkey] && masterLookupStateData[tempkey].value) {
+            radioData = masterLookupStateData[tempkey].value;
         }
 
-        let radioCoponents = [];
-        for (let i = 0; i < radioData.length; i++) {
+        const radioCoponents = [];
+        for (let i = 0; i < radioData.length; i += 1) {
             radioCoponents.push(
                 <CustomRadio
                     key={radioData[i].key}
                     componentStyle={componentStyle}
                     size={radioSize}
-                    outerCicleColor={"#DEDEDF"}
-                    innerCicleColor={"#61285F"}
+                    outerCicleColor="#DEDEDF"
+                    innerCicleColor="#61285F"
                     labelStyle={styles.lblRadioBtnTxt}
                     label={radioData[i].value}
                     descLabelStyle={styles.lblRadioDescTxt}
-                    descLabel={""}
-                    selected={(this.state[radioName] !== null && this.state[radioName] == radioData[i].key) ? true : false}
+                    descLabel=""
+                    selected={!!((this.state[radioName] !== null && this.state[radioName] === radioData[i].key))}
                     onPress={this.onPressRadio(radioName, radioData[i].key)}
                 />
             );
@@ -463,34 +322,39 @@ class OpenAccPageSixComponent extends Component {
                                  Render Methods
                                                                  -------------------------- */
     render() {
-        console.log("RENDER::: OpenAccPageSix ::>>> ", this.props);
-        let tempViewPdfList = {...viewPdfList};
-        if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData["docs_to_view"] && this.props.masterLookupStateData["docs_to_view"].value) {
-            tempViewPdfList = this.props.masterLookupStateData["docs_to_view"].value;
+        AppUtils.debugLog("RENDER::: OpenAccPageSix ::>>> ", this.props);
+        const { masterLookupStateData, accOpeningData, navigation } = this.props;
+        const { getParam } = navigation;
+        const { confirmTINTypeValidation, agreeConditions, agreeConditionsValidation } = this.state;
+
+
+        let tempViewPdfList = viewPdfList;
+        if (this.props && masterLookupStateData && masterLookupStateData.docs_to_view && masterLookupStateData.docs_to_view.value) {
+            tempViewPdfList = masterLookupStateData.docs_to_view.value;
         }
 
-        let tempSignPdfList = {...signPdfList};
-        if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData["docs_to_sign"] && this.props.masterLookupStateData["docs_to_sign"].value) {
-            tempSignPdfList = this.props.masterLookupStateData["docs_to_sign"].value;
+        let tempSignPdfList = signPdfList;
+        if (this.props && masterLookupStateData && masterLookupStateData.docs_to_sign && masterLookupStateData.docs_to_sign.value) {
+            tempSignPdfList = masterLookupStateData.docs_to_sign.value;
         }
-        let currentPage = 6;
-        const specialMFAUserType = "" + (this.props && this.props.navigation.getParam('SpecialMFA',''));
+        const currentPage = 6;
+        const specialMFAUserType = `${this.props && getParam('SpecialMFA', '')}`;
         return (
             <View style={styles.container}>
-                 {
-                    (this.props.accOpeningData.isLoading || this.props.masterLookupStateData.isLoading) && <GLoadingSpinner />
+                {
+                    (accOpeningData.isLoading || masterLookupStateData.isLoading) && <GLoadingSpinner />
                 }
 
                 <GHeaderComponent
-                    navigation={this.props.navigation}
+                    navigation={navigation}
                     onPress={this.onClickHeader}
                 />
-                <ScrollView style={{ flex: .85 }}>
-                    <CustomPageWizard currentPage={currentPage} pageName={(currentPage) + " " + gblStrings.accManagement.eSign} />
+                <ScrollView style={styles.scrollView}>
+                    <CustomPageWizard currentPage={currentPage} pageName={`${currentPage} ${gblStrings.accManagement.eSign}`} />
 
-                    { /*-----------Tax Preferences -------------------*/}
-                    <View style={[styles.sectionGrp]}>
-                        <View style={styles.accTypeSelectSection} >
+                    { /* -----------Tax Preferences -------------------*/}
+                    <View style={styles.sectionGrp}>
+                        <View style={styles.accTypeSelectSection}>
                             <Text style={styles.headings}>
                                 {gblStrings.accManagement.TINBackupCert}
                             </Text>
@@ -499,12 +363,12 @@ class OpenAccPageSixComponent extends Component {
                         <Text style={styles.lblLine} />
 
 
-                        <View style={styles.pdfSectionGrp} >
-                            {!this.state.confirmTINTypeValidation &&
+                        <View style={styles.pdfSectionGrp}>
+                            {!confirmTINTypeValidation && (
                                 <Text style={styles.errMsg}>
                                     {gblStrings.accManagement.confirmTINBackupWithholdingMsg}
                                 </Text>
-                            }
+                            )}
                             {this.renderRadio("confirmTINType", 36, { marginBottom: scaledHeight(24), marginTop: scaledHeight(24) }, styles.radioBtnColGrp)}
                         </View>
 
@@ -512,16 +376,16 @@ class OpenAccPageSixComponent extends Component {
                     </View>
 
 
-                    { /*-----------Document View -------------------*/}
+                    { /* -----------Document View -------------------*/}
                     <View style={styles.sectionGrp}>
-                        <View style={styles.accTypeSelectSection} >
+                        <View style={styles.accTypeSelectSection}>
                             <Text style={styles.headings}>
                                 {gblStrings.accManagement.docToView}
                             </Text>
                         </View>
 
                         <Text style={styles.lblLine} />
-                        <View style={styles.pdfSectionGrp} >
+                        <View style={styles.pdfSectionGrp}>
                             <FlatList
                                 data={tempViewPdfList}
                                 keyExtractor={this.generateKeyExtractor}
@@ -532,9 +396,9 @@ class OpenAccPageSixComponent extends Component {
                         </View>
                     </View>
 
-                    { /*-----------Documents to Sign -------------------*/}
+                    { /* -----------Documents to Sign -------------------*/}
                     <View style={styles.sectionGrp}>
-                        <View style={styles.accTypeSelectSection} >
+                        <View style={styles.accTypeSelectSection}>
                             <Text style={styles.headings}>
                                 {gblStrings.accManagement.docToSign}
                             </Text>
@@ -545,7 +409,7 @@ class OpenAccPageSixComponent extends Component {
                         <Text style={styles.lblLine} />
 
 
-                        <View style={styles.pdfSectionGrp} >
+                        <View style={styles.pdfSectionGrp}>
                             <FlatList
                                 data={tempSignPdfList}
                                 keyExtractor={this.generateKeyExtractor}
@@ -553,29 +417,29 @@ class OpenAccPageSixComponent extends Component {
                             />
 
                         </View>
-                        <View style={styles.agreeSectionGrp} >
+                        <View style={styles.agreeSectionGrp}>
                             <CustomCheckBox
                                 size={24}
                                 itemBottom={0}
                                 itemTop={0}
 
-                                outerCicleColor={"#707070"}
-                                innerCicleColor={"#61285F"}
+                                outerCicleColor="#707070"
+                                innerCicleColor="#61285F"
                                 labelStyle={styles.agreeTermsTxt}
                                 label={gblStrings.accManagement.agreeConditions}
-                                selected={this.state.agreeConditions}
-                                onPress={this.onPressCheck("agreeConditions", (this.state.agreeConditions ? "Y":"N"))}
+                                selected={agreeConditions}
+                                onPress={this.onPressCheck("agreeConditions", (agreeConditions ? "Y" : "N"))}
 
                             />
 
-                            {!this.state.agreeConditionsValidation &&
+                            {!agreeConditionsValidation && (
                                 <Text style={styles.errMsg}>
-                                    { gblStrings.accManagement.confirmAgreeCondMsg}
+                                    {gblStrings.accManagement.confirmAgreeCondMsg}
                                 </Text>
-                            }
+                            )}
 
                         </View>
-                        <View style={{ flexGrow: 1, marginTop: scaledHeight(22) }}>
+                        <View style={styles.IRSConsentContainer}>
                             <Text style={styles.pdfFileDescTxt}>
                                 {gblStrings.accManagement.IRSConsentMsg}
                             </Text>
@@ -589,19 +453,20 @@ class OpenAccPageSixComponent extends Component {
 
 
 
-                    { /*----------- Buttons Group -------------------*/}
+                    { /* ----------- Buttons Group -------------------*/}
 
                     <View style={styles.btnGrp}>
-                    { 
-                        (specialMFAUserType!="" && specialMFAUserType!="GuestUser" && specialMFAUserType!="NewUser" && specialMFAUserType!="UserForm")?
-                            <GButtonComponent
-                                buttonStyle={styles.normalWhiteBtn}
-                                buttonText={gblStrings.common.save}
-                                textStyle={styles.normalWhiteBtnTxt}
-                                onPress={this.onClickSave}
-                            />
-                        :null
-                    }
+                        {
+                            (specialMFAUserType !== "" && specialMFAUserType !== "GuestUser" && specialMFAUserType !== "NewUser" && specialMFAUserType !== "UserForm") ? (
+                                <GButtonComponent
+                                    buttonStyle={styles.normalWhiteBtn}
+                                    buttonText={gblStrings.common.save}
+                                    textStyle={styles.normalWhiteBtnTxt}
+                                    onPress={this.onClickSave}
+                                />
+                            )
+                                : null
+                        }
                         <GButtonComponent
                             buttonStyle={styles.normalWhiteBtn}
                             buttonText={gblStrings.common.cancel}
@@ -622,7 +487,7 @@ class OpenAccPageSixComponent extends Component {
                         />
                     </View>
 
-                    { /*----------- Disclaimer -------------------*/}
+                    { /* ----------- Disclaimer -------------------*/}
 
                     <View style={styles.newVictorySection}>
                         <Text style={styles.disclaimerTitleTxt}>
@@ -644,11 +509,21 @@ class OpenAccPageSixComponent extends Component {
 }
 
 OpenAccPageSixComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object).isRequired,
+    navigation: PropTypes.instanceOf(Object),
     accOpeningData: PropTypes.instanceOf(Object),
     masterLookupStateData: PropTypes.instanceOf(Object),
     submitAccountOpening: PropTypes.func,
     saveAccountOpening: PropTypes.func,
-    getCompositeLookUpData:PropTypes.func
+    getCompositeLookUpData: PropTypes.func
+};
+OpenAccPageSixComponent.defaultProps = {
+    navigation: {},
+    accOpeningData: {},
+    masterLookupStateData: {},
+    getCompositeLookUpData: null,
+    saveAccountOpening: null,
+    submitAccountOpening: null
+
+
 };
 export default OpenAccPageSixComponent;

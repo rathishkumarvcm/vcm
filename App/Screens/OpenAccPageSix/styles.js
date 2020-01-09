@@ -4,26 +4,72 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 
 const styles = StyleSheet.create({
+    IRSConsentContainer: {
+        flexGrow: 1,
+        marginTop: scaledHeight(22)
+    },
+
+    agreeSectionGrp: {
+        backgroundColor: '#E8ECEE',
+        borderColor: '#7070701A',
+        borderWidth: 1,
+        flexGrow: 1,
+        marginTop: scaledHeight(10),
+        paddingHorizontal: scaledHeight(12),
+        paddingVertical: scaledHeight(12)
+
+    },
+
+    agreeTermsTxt: {
+        color: '#333333DE',
+        fontSize: scaledHeight(16),
+        lineHeight: scaledHeight(19),
+        textAlign: 'left',
+        // marginTop:scaledHeight(5)
+
+    },
+    btnGrp: {
+        alignContent: 'center',
+        alignItems: 'center',
+        flexGrow: 1,
+        justifyContent: 'center',
+        marginHorizontal: scaledHeight(12),
+        marginVertical: scaledHeight(50)
+    },
     container: {
-        flex: 1,
         backgroundColor: '#F7FAFF',
+        flex: 1,
         width: '100%'
     },
+    disclaimerTitleTxt: { // termsofuseText
+        fontSize: scaledHeight(16),
+        marginBottom: scaledHeight(10),
+        fontWeight: 'bold',
+        color: '#56565A',
+        lineHeight: 25
+    },
+    disclaimerTxt: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        lineHeight: 25
 
-    sectionGrp: {
-        overflow: 'hidden',
-        marginHorizontal: scaledHeight(12),
-        marginTop: scaledHeight(31),
-        flexGrow: 1
     },
 
+    errMsg: {
+        color: 'red',
+        fontSize: scaledHeight(12),
+        marginVertical: scaledHeight(12),
+
+    },
+
+
     headings: {
-        width: '80%',
-        textAlign: 'left',
+        color: '#000000',
         fontSize: scaledHeight(20),
         fontWeight: 'bold',
-        color: '#000000',
         lineHeight: scaledHeight(26),
+        textAlign: 'left',
+        width: '80%',
     },
     lblLine: {
         //  width:"100%",
@@ -39,6 +85,21 @@ const styles = StyleSheet.create({
         height: scaledHeight(1),
         backgroundColor: '#696069'
     },
+    lblRadioBtnTxt: {
+        color: '#333333DE',
+        fontSize: scaledHeight(16),
+        //  lineHeight:22,
+        flexWrap: 'wrap'
+    },
+
+    lblRadioDescTxt: {
+        color: '#56565A',
+        flexWrap: 'wrap',
+        fontSize: scaledHeight(14),
+        lineHeight: 22,
+        marginTop: scaledHeight(14),
+        opacity: .65
+    },
     lblTxt: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
@@ -46,127 +107,19 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(25)
 
     },
-    sectionDescTxt: {
-        marginTop: scaledHeight(8),
-        fontSize: scaledHeight(15),
-        color: '#56565A',
-        lineHeight: 22
-
-    },
-
-    touchItem: {
-        marginTop: scaledHeight(16),
-    },
-
-
-    pdfSectionGrp: {
-        flexGrow: 1,
-        borderColor: '#7070701A',
-        borderWidth: 1,
-        backgroundColor: '#FFFFFF',
-        marginTop: scaledHeight(26),
-        paddingHorizontal: scaledHeight(12),
-        paddingVertical: scaledHeight(12)
-
-    },
-    errMsg:{
-        color:'red',
-        fontSize:scaledHeight(12),
-        marginVertical: scaledHeight(12),
-
-      },
-    radioBtnGrp:{
-        flexGrow:1,
-        marginTop:scaledHeight(19),
-        flexDirection:'row'
-    },
-    radioBtnColGrp:{
-        flexGrow:1,
-        marginTop:scaledHeight(19)
-    },
-
-    lblRadioBtnTxt: {
-        color: '#333333DE',
+    moreTxt: {
+        color: '#61285F',
         fontSize: scaledHeight(16),
-        //  lineHeight:22,
-        flexWrap: 'wrap'
+        fontWeight: 'bold'
     },
-    lblRadioDescTxt: {
-        marginTop: scaledHeight(14),
-        color: '#56565A',
-        fontSize: scaledHeight(14),
-        lineHeight: 22,
-        flexWrap: 'wrap',
-        opacity: .65
-    },
-    pdfFileNameTxt: {
-        textAlign: 'left',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold',
-        color: '#0D7CB5DE',
-        lineHeight: scaledHeight(19),
-    },
-    pdfFileTxt: {
-        textAlign: 'left',
-        fontSize: scaledHeight(16),
-        color: '#56565A',
-        lineHeight: scaledHeight(22),
-    },
-    pdfFileDescTxt: {
-        textAlign: 'left',
-        fontSize: scaledHeight(16),
-        color: '#333333DE',
-        lineHeight: scaledHeight(19),
-        // marginTop:scaledHeight(5)
-    },
-    agreeSectionGrp: {
-        flexGrow: 1,
-        borderColor: '#7070701A',
-        borderWidth: 1,
-        backgroundColor: '#E8ECEE',
-        marginTop: scaledHeight(10),
-        paddingHorizontal: scaledHeight(12),
-        paddingVertical: scaledHeight(12)
-
-    },
-    agreeTermsTxt: {
-        textAlign: 'left',
-        fontSize: scaledHeight(16),
-        color: '#333333DE',
-        lineHeight: scaledHeight(19),
-        // marginTop:scaledHeight(5)
-
-    },
-
-
-
-    btnGrp: {
-        marginHorizontal: scaledHeight(12),
-        marginVertical: scaledHeight(50),
-        flexGrow: 1,
-        alignContent: 'center',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    normalWhiteBtn: {
-        //   width: '90%',
-        borderWidth: 1,
-        borderColor: "#61285F45",
-        height: scaledHeight(50),
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
-        marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
-
-    },
-    normalWhiteBtnTxt: {
-        fontSize: scaledHeight(16),
-        color: '#544A54',
+    newVictorySection: {
+        //   marginTop: scaledHeight(150),
+        padding: scaledHeight(12),
         width: '100%',
-        textAlign: 'center',
-        lineHeight: 22
+        flexGrow: 1,
+        backgroundColor: '#FFFFFF',
+
+
     },
     normalBlackBtn: {
         //   width: '90%',
@@ -182,12 +135,21 @@ const styles = StyleSheet.create({
 
 
     },
-    normalBlackBtnTxt: {
-        fontSize: scaledHeight(16),
+    normalBlackBtnDisabledTxt: {
         color: '#fff',
-        width: '100%',
-        textAlign: 'center'
+        fontSize: scaledHeight(16),
+        textAlign: 'center',
+        width: '100%'
     },
+    normalBlackBtnTxt: {
+        color: '#fff',
+        fontSize: scaledHeight(16),
+        textAlign: 'center',
+        width: '100%'
+    },
+
+
+
     normalBlackDisabledBtn: {
         //   width: '90%',
         borderWidth: 1,
@@ -200,44 +162,99 @@ const styles = StyleSheet.create({
         marginVertical: scaledHeight(7.5),
         marginHorizontal: scaledHeight(37)
     },
-    normalBlackBtnDisabledTxt: {
-        fontSize: scaledHeight(16),
-        color: '#fff',
-        width: '100%',
-        textAlign: 'center'
-    },
-
-
-
-    newVictorySection: {
-        //   marginTop: scaledHeight(150),
-        padding: scaledHeight(12),
-        width: '100%',
-        flexGrow: 1,
-        backgroundColor: '#FFFFFF',
-
+    normalWhiteBtn: {
+        //   width: '90%',
+        borderWidth: 1,
+        borderColor: "#61285F45",
+        height: scaledHeight(50),
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+        marginVertical: scaledHeight(7.5),
+        marginHorizontal: scaledHeight(37)
 
     },
-    moreTxt: {
+    normalWhiteBtnTxt: {
+        color: '#544A54',
         fontSize: scaledHeight(16),
-        color: '#61285F',
-        fontWeight: 'bold'
+        lineHeight: 22,
+        textAlign: 'center',
+        width: '100%'
     },
-
-
-    disclaimerTitleTxt: { // termsofuseText
+    pdfFileDescTxt: {
+        color: '#333333DE',
         fontSize: scaledHeight(16),
-        marginBottom: scaledHeight(10),
+        lineHeight: scaledHeight(19),
+        textAlign: 'left',
+        // marginTop:scaledHeight(5)
+    },
+    pdfFileNameTxt: {
+        color: '#0D7CB5DE',
+        fontSize: scaledHeight(16),
         fontWeight: 'bold',
-        color: '#56565A',
-        lineHeight: 25
+        lineHeight: scaledHeight(19),
+        textAlign: 'left',
     },
-    disclaimerTxt: {
-        fontSize: scaledHeight(16),
+    pdfFileTxt: {
         color: '#56565A',
-        lineHeight: 25
+        fontSize: scaledHeight(16),
+        lineHeight: scaledHeight(22),
+        textAlign: 'left',
+    },
+    pdfListContainer: {
+        flexGrow: 1,
+        marginTop: scaledHeight(5)
+    },
+
+
+
+    pdfRowContainer: {
+        flexDirection: 'row',
+        flexGrow: 1,
+        flexWrap: 'wrap',
+        marginVertical: scaledHeight(10.5)
+    },
+    pdfSectionGrp: {
+        backgroundColor: '#FFFFFF',
+        borderColor: '#7070701A',
+        borderWidth: 1,
+        flexGrow: 1,
+        marginTop: scaledHeight(26),
+        paddingHorizontal: scaledHeight(12),
+        paddingVertical: scaledHeight(12)
 
     },
+
+
+    radioBtnColGrp: {
+        flexGrow: 1,
+        marginTop: scaledHeight(19)
+    },
+    radioBtnGrp: {
+        flexDirection: 'row',
+        flexGrow: 1,
+        marginTop: scaledHeight(19)
+    },
+    scrollView: {
+        flex: .85
+    },
+    sectionDescTxt: {
+        color: '#56565A',
+        fontSize: scaledHeight(15),
+        lineHeight: 22,
+        marginTop: scaledHeight(8)
+
+    },
+    sectionGrp: {
+        flexGrow: 1,
+        marginHorizontal: scaledHeight(12),
+        marginTop: scaledHeight(31),
+        overflow: 'hidden'
+    },
+    touchItem: {
+        marginTop: scaledHeight(16),
+    }
 
 
 

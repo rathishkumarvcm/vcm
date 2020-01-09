@@ -103,6 +103,13 @@ const styles = StyleSheet.create({
         paddingTop: scaledHeight(16)
 
     },
+    fundItem: {
+        backgroundColor: '#FFFFFF',
+        flexGrow: 1,
+        paddingBottom: scaledHeight(10),
+        paddingHorizontal: scaledHeight(15),
+        paddingTop: scaledHeight(16)
+    },
     headings: {
         color: '#000000',
         fontSize: scaledHeight(20),
@@ -125,13 +132,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#707070',
         opacity: 0.25
     },
+
     lblLine1: {
         //  width:"100%",
 
         height: scaledHeight(1),
         backgroundColor: '#696069'
     },
-
     lblNameTxt: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
@@ -139,19 +146,20 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(30)
 
     },
+
     lblNameValueTxt: {
         fontSize: scaledHeight(16),
-      //   width: '50%',
+        //   width: '50%',
         color: 'rgba(51, 51, 51, 0.87)',
         marginTop: scaledHeight(12)
     },
-
     lblRightColTxt: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
         width: '50%'
 
     },
+
     lblTxt: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
@@ -159,7 +167,6 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(25)
 
     },
-
     moreTxt: {
         color: '#61285F',
         fontSize: scaledHeight(16),
@@ -212,6 +219,9 @@ const styles = StyleSheet.create({
         marginVertical: scaledHeight(7.5),
         marginHorizontal: scaledHeight(37)
     },
+
+
+
     normalWhiteBtn: {
         //   width: '90%',
         borderWidth: 1,
@@ -227,7 +237,6 @@ const styles = StyleSheet.create({
     },
 
 
-
     normalWhiteBtnTxt: {
         color: '#544A54',
         fontSize: scaledHeight(16),
@@ -235,8 +244,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         width: '100%'
     },
-
-
+    scrollView: {
+        flex: .85
+    },
     sectionDescTxt: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(18),
