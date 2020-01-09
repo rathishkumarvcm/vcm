@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList } from 'react-native';
 import PropTypes from "prop-types";
 import styles from './styles';
+import SignPDFItem from './SignPDFItem';
+import ViewPDFItem from './ViewPDFItem';
 import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GSingletonClass, showAlert } from '../../CommonComponents';
 import { CustomRadio, CustomCheckBox, CustomPageWizard } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';

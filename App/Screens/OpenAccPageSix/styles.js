@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     },
     touchItem: {
         marginTop: scaledHeight(16),
-    }
+    },
 
 
 
