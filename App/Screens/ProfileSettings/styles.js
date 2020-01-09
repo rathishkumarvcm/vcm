@@ -3,7 +3,7 @@ import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
 
 const { width } = Dimensions.get('window');
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7FAFF',
@@ -456,3 +456,5 @@ export const styles = StyleSheet.create({
         alignItems: 'center'
     }
 });
+
+export default styles;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
-import { styles } from './styles';
+import styles from './styles';
 import { GButtonComponent, GHeaderComponent, GRadioButtonComponent, GDropDownComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import ImagesLoad from '../../Images/ImageIndex';
@@ -29,49 +29,51 @@ const profileSettingsTempData = [
 class EditProfileSettingsComponent extends Component {
     constructor(props) {
         super(props);
+        const { profileState } = this.props;
         this.state = {
             countryNonUS: false,
-            profileName: this.props.initialstate.firstName,
-            profileVcm: this.props.profileState.profileVcmID,
-            profileSsn: this.props.profileState.profileSsnNumber,
-            profileDob: this.props.profileState.profileDob,
-            profilePrefix: this.props.profileState.profilePrefix,
-            profileSuffix: this.props.profileState.profileSuffix,
-            profileGender: this.props.profileState.profileGender,
-            profileMaritalStatus: this.props.profileState.profileMaritalStatus,
-            
             radioButtonIndex: 0,
+            editProfileSettingsData: {
+                profileName: profileState.firstName,
+                profileVcm: profileState.profileVcmID,
+                profileSsn: profileState.profileSsnNumber,
+                profileDob: profileState.profileDob,
+                profilePrefix: profileState.profilePrefix,
+                profileSuffix: profileState.profileSuffix,
+                profileGender: profileState.profileGender,
+                profileMaritalStatus: profileState.profileMaritalStatus,
 
-            dropDownState: false,
-            dropDownValue: '',
-            dropDownPrefixFlag: false,
-            dropDownPrefixMsg: '',
+                dropDownState: false,
+                dropDownValue: '',
+                dropDownPrefixFlag: false,
+                dropDownPrefixMsg: '',
 
-            dropDownSuffixState: false,
-            dropDownSuffixValue: '',
-            dropDownSuffixFlag: false,
-            dropDownSuffixMsg: '',
+                dropDownSuffixState: false,
+                dropDownSuffixValue: '',
+                dropDownSuffixFlag: false,
+                dropDownSuffixMsg: '',
 
-            dropDownGenderState: false,
-            dropDownGenderValue: '',
-            dropDownGenderFlag: false,
-            dropDownGenderMsg: '',
+                dropDownGenderState: false,
+                dropDownGenderValue: '',
+                dropDownGenderFlag: false,
+                dropDownGenderMsg: '',
 
-            dropDownStatusState: false,
-            dropDownStatusValue: '',
-            dropDownStatusFlag: false,
-            dropDownStatusMsg: '',
+                dropDownStatusState: false,
+                dropDownStatusValue: '',
+                dropDownStatusFlag: false,
+                dropDownStatusMsg: '',
 
-            dropDownCountryState: false,
-            dropDownCountryValue: '',
-            dropDownCountryFlag: false,
-            dropDownCountryMsg: ''
+                dropDownCountryState: false,
+                dropDownCountryValue: '',
+                dropDownCountryFlag: false,
+                dropDownCountryMsg: ''
+            }
         };
     }
 
     componentDidMount() {
         const payload = [];
-
+        const { profileSettingsLookup, getProfileCompositeData } = this.props;
         const compositePayloadData = [
             "prefix",
             "suffix",
@@ -81,24 +83,26 @@ class EditProfileSettingsComponent extends Component {
 
         for (let i = 0; i < compositePayloadData.length; i += 1) {
             const tempkey = compositePayloadData[i];
-            if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
+            if (this.props && profileSettingsLookup && !profileSettingsLookup[tempkey]) {
                 payload.push(tempkey);
             }
         }
 
-        this.props.getProfileCompositeData(payload);
+        getProfileCompositeData(payload);
     }
 
     ShowHideComponent = () => {
-        if (this.state.countryNonUS === true) {
+        const { countryNonUS } = this.state;
+        if (countryNonUS === true) {
             this.setState({ countryNonUS: false });
         } else {
             this.setState({ countryNonUS: true });
         }
     };
 
-    radioButtonClicked = (index) => {
-        if (index !== this.state.radioButtonIndex) {
+    radioButtonClicked = (index) => () => {
+        const { radioButtonIndex } = this.state;
+        if (index !== radioButtonIndex) {
             this.setState({
                 radioButtonIndex: index
             });
@@ -116,172 +120,243 @@ class EditProfileSettingsComponent extends Component {
     }
 
     navigationSuccess = () => {
-        if (this.state.dropDownValue === '') {
+        const { editProfileSettingsData } = this.state;
+
+        if (editProfileSettingsData.dropDownValue === '') {
             this.setState({
-                dropDownPrefixFlag: true,
-                dropDownPrefixMsg: globalString.profileValidationMessages.validatePrefix
+                editProfileSettingsData: {
+                    ...editProfileSettingsData,
+                    dropDownPrefixFlag: true,
+                    dropDownPrefixMsg: globalString.profileValidationMessages.validatePrefix
+                }
             });
         }
 
-        if (this.state.dropDownSuffixValue === '') {
+        if (editProfileSettingsData.dropDownSuffixValue === '') {
             this.setState({
-                dropDownSuffixFlag: true,
-                dropDownSuffixMsg: globalString.profileValidationMessages.validateSuffix
+                editProfileSettingsData: {
+                    ...editProfileSettingsData,
+                    dropDownSuffixFlag: true,
+                    dropDownSuffixMsg: globalString.profileValidationMessages.validateSuffix
+                }
             });
         }
 
-        if (this.state.dropDownGenderValue === '') {
+        if (editProfileSettingsData.dropDownGenderValue === '') {
             this.setState({
-                dropDownGenderFlag: true,
-                dropDownGenderMsg: globalString.profileValidationMessages.validateGender
+                editProfileSettingsData: {
+                    ...editProfileSettingsData,
+                    dropDownGenderFlag: true,
+                    dropDownGenderMsg: globalString.profileValidationMessages.validateGender
+                }
             });
         }
 
-        if (this.state.dropDownStatusValue === '') {
+        if (editProfileSettingsData.dropDownStatusValue === '') {
             this.setState({
-                dropDownStatusFlag: true,
-                dropDownStatusMsg: globalString.profileValidationMessages.validateStatus
+                editProfileSettingsData: {
+                    ...editProfileSettingsData,
+                    dropDownStatusFlag: true,
+                    dropDownStatusMsg: globalString.profileValidationMessages.validateStatus
+                }
             });
         }
 
-        if (this.state.dropDownValue !== "" &&
-            this.state.dropDownSuffixValue !== "" &&
-            this.state.dropDownGenderValue !== "" &&
-            this.state.dropDownStatusValue !== "") {
+        if (editProfileSettingsData.dropDownValue !== "" &&
+            editProfileSettingsData.dropDownSuffixValue !== "" &&
+            editProfileSettingsData.dropDownGenderValue !== "" &&
+            editProfileSettingsData.dropDownStatusValue !== "") {
             this.manageProfileInformations();
         }
     }
 
     dropDownOnClick = () => {
-        this.setState(prevState => ({
-            dropDownState: prevState.this.state.dropDownState
-        }));
+        const { editProfileSettingsData } = this.state;
+        this.setState({
+            editProfileSettingsData: {
+                ...editProfileSettingsData,
+                dropDownState: editProfileSettingsData.dropDownState
+            }
+        });
     }
 
     dropDownOnSelect = (value, index, data) => {
+        const {editProfileSettingsData } = this.state;
         this.setState({
-            dropDownValue: data[index].value,
-            dropDownState: false,
-            dropDownPrefixFlag: false
+            editProfileSettingsData: {
+                ...editProfileSettingsData,
+                dropDownValue: data[index].value,
+                dropDownState: false,
+                dropDownPrefixFlag: false
+            }
         });
     }
 
     dropDownSuffixClick = () => {
-        this.setState(prevState => ({
-            dropDownSuffixState: prevState.this.state.dropDownSuffixState
-        }));
+        const { editProfileSettingsData } = this.state;
+        this.setState({
+            editProfileSettingsData: {
+                ...editProfileSettingsData,
+                dropDownSuffixState: editProfileSettingsData.dropDownSuffixState
+            }
+        });
     }
 
     dropDownSuffixSelect = (value, index, data) => {
+        const {editProfileSettingsData } = this.state;
         this.setState({
-            dropDownSuffixValue: data[index].value,
-            dropDownSuffixState: false,
-            dropDownSuffixFlag: false
+            editProfileSettingsData: {
+                ...editProfileSettingsData,
+                dropDownSuffixValue: data[index].value,
+                dropDownSuffixState: false,
+                dropDownSuffixFlag: false
+            }
         });
     }
 
     dropDownGenderClick = () => {
-        this.setState(prevState => ({
-            dropDownGenderState: prevState.this.state.dropDownGenderState
-        }));
+        const { editProfileSettingsData } = this.state;
+        this.setState({
+            editProfileSettingsData: {
+                ...editProfileSettingsData,
+                dropDownGenderState: editProfileSettingsData.dropDownGenderState
+            }
+        });
     }
 
     dropDownGenderSelect = (value, index, data) => {
+        const {editProfileSettingsData } = this.state;
         this.setState({
-            dropDownGenderValue: data[index].value,
-            dropDownGenderState: false,
-            dropDownGenderFlag: false
+            editProfileSettingsData: {
+                ...editProfileSettingsData,
+                dropDownGenderValue: data[index].value,
+                dropDownGenderState: false,
+                dropDownGenderFlag: false
+            }
         });
     }
 
     dropDownStatusClick = () => {
-        this.setState(prevState => ({
-            dropDownStatusState: prevState.this.state.dropDownStatusState
-        }));
+        const { editProfileSettingsData } = this.state;
+        this.setState({
+            editProfileSettingsData: {
+                ...editProfileSettingsData,
+                dropDownStatusState: editProfileSettingsData.dropDownStatusState
+            }
+        });
     }
 
     dropDownStatusSelect = (value, index, data) => {
+        const {editProfileSettingsData } = this.state;
         this.setState({
-            dropDownStatusValue: data[index].value,
-            dropDownStatusState: false,
-            dropDownStatusFlag: false
+            editProfileSettingsData: {
+                ...editProfileSettingsData,
+                dropDownStatusValue: data[index].value,
+                dropDownStatusState: false,
+                dropDownStatusFlag: false
+            }
         });
     }
 
     dropDownCountryClick = () => {
-        this.setState(prevState => ({
-            dropDownCountryState: prevState.this.state.dropDownCountryState
-        }));
+        const { editProfileSettingsData } = this.state;
+        this.setState({
+            editProfileSettingsData: {
+                ...editProfileSettingsData,
+                dropDownCountryState: editProfileSettingsData.dropDownCountryState
+            }
+        });
     }
 
     dropDownCountrySelect = (value, index, data) => {
+        const {editProfileSettingsData } = this.state;
         this.setState({
-            dropDownCountryValue: data[index].value,
-            dropDownCountryState: false,
-            dropDownCountryFlag: false
+            editProfileSettingsData: {
+                ...editProfileSettingsData,
+                dropDownCountryValue: data[index].value,
+                dropDownCountryState: false,
+                dropDownCountryFlag: false
+            }
         });
     }
 
     manageProfileInformations = () => {
+        const { saveProfileData, navigation } = this.props;
         const payloadData = this.getProfilePayloadData();
-        this.props.saveProfileData("editProfileManage", payloadData);
-        this.props.navigation.navigate('profileSettings');
+        saveProfileData("editProfileManage", payloadData);
+        navigation.navigate('profileSettings');
     }
 
     getProfilePayloadData = () => {
         let profilePayload = {};
-        if (this.props && this.props.profileState) {
+        const { profileState } = this.props;
+        const { editProfileSettingsData, countryNonUS } = this.state;
+        if (this.props && profileState) {
             profilePayload = {
-                ...this.props.profileState,
-                "profilePrefix": this.state.dropDownValue,
-                "profileSuffix": this.state.dropDownSuffixValue,
-                "profileGender": this.state.dropDownGenderValue,
-                "profileMaritalStatus": this.state.dropDownStatusValue,
-                "profileCitizenship": this.state.countryNonUS ? this.state.dropDownCountryValue : "United State"
+                ...profileState,
+                "profilePrefix": editProfileSettingsData.dropDownValue,
+                "profileSuffix": editProfileSettingsData.dropDownSuffixValue,
+                "profileGender": editProfileSettingsData.dropDownGenderValue,
+                "profileMaritalStatus": editProfileSettingsData.dropDownStatusValue,
+                "profileCitizenship": countryNonUS ? editProfileSettingsData.dropDownCountryValue : "United State"
             };
         }
         return profilePayload;
     }
 
-    editProfileBack = () => {this.props.navigation.navigate('profileSettings')};
+    editProfileBack = () => {
+        const { navigation } = this.props;
+        navigation.navigate('profileSettings');
+    };
 
-    editProfileOnCancel = () => {this.props.navigation.navigate('profileSettings')};
+    editProfileOnCancel = () => {
+        const { navigation } = this.props;
+        navigation.navigate('profileSettings');
+    };
 
     render() {
+
+        const { profileSettingsLookup, navigation } = this.props;
+        const { editProfileSettingsData, radioButtonIndex, countryNonUS } = this.state;
+
+        const tempPrefixData = 'prefix';
+        const tempSuffixData = 'suffix';
+        const tempGenderData = 'gender';
+        const tempStatusData = 'marital_status';
 
         let profilePrefixData = profileSettingsTempData;
         let profileSuffixData = profileSettingsTempData;
         let profileGenderData = profileSettingsTempData;
         let profileStatusData = profileSettingsTempData;
 
-        if (this.props && this.props.profileSettingsLookup &&
-            this.props.profileSettingsLookup.prefix &&
-            this.props.profileSettingsLookup.prefix.value) {
-            profilePrefixData = this.props.profileSettingsLookup.prefix.value;
+        if (this.props && profileSettingsLookup &&
+            profileSettingsLookup[tempPrefixData] &&
+            profileSettingsLookup[tempPrefixData].value) {
+            profilePrefixData = profileSettingsLookup[tempPrefixData].value;
         }
 
-        if (this.props && this.props.profileSettingsLookup &&
-            this.props.profileSettingsLookup.suffix &&
-            this.props.profileSettingsLookup.suffix.value) {
-            profileSuffixData = this.props.profileSettingsLookup.suffix.value;
+        if (this.props && profileSettingsLookup &&
+            profileSettingsLookup[tempSuffixData] &&
+            profileSettingsLookup[tempSuffixData].value) {
+            profileSuffixData = profileSettingsLookup[tempSuffixData].value;
         }
 
-        if (this.props && this.props.profileSettingsLookup &&
-            this.props.profileSettingsLookup.gender &&
-            this.props.profileSettingsLookup.gender.value) {
-            profileGenderData = this.props.profileSettingsLookup.gender.value;
+        if (this.props && profileSettingsLookup &&
+            profileSettingsLookup[tempGenderData] &&
+            profileSettingsLookup[tempGenderData].value) {
+            profileGenderData = profileSettingsLookup[tempGenderData].value;
         }
 
-        if (this.props && this.props.profileSettingsLookup &&
-            this.props.profileSettingsLookup.marital_status &&
-            this.props.profileSettingsLookup.marital_status.value) {
-            profileStatusData = this.props.profileSettingsLookup.marital_status.value;
+        if (this.props && profileSettingsLookup &&
+            profileSettingsLookup[tempStatusData] &&
+            profileSettingsLookup[tempStatusData].value) {
+            profileStatusData = profileSettingsLookup[tempStatusData].value;
         }
 
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation}
+                    navigation={navigation}
                 />
 
                 <ScrollView style={styles.editProfileFlex}>
@@ -335,7 +410,7 @@ class EditProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.editProfileNameLabel}>
-                                {this.state.profileName}
+                                {editProfileSettingsData.profileName}
                             </Text>
                         </View>
 
@@ -345,7 +420,7 @@ class EditProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.editProfileValueView}>
-                                {this.state.profileVcm}
+                                {editProfileSettingsData.profileVcm}
                             </Text>
                         </View>
 
@@ -355,7 +430,7 @@ class EditProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.editProfileValueView}>
-                                {this.state.profileSsn}
+                                {editProfileSettingsData.profileSsn}
                             </Text>
                         </View>
 
@@ -365,76 +440,76 @@ class EditProfileSettingsComponent extends Component {
                             </Text>
 
                             <Text style={styles.editProfileValueView}>
-                                {this.state.profileDob}
+                                {editProfileSettingsData.profileDob}
                             </Text>
                         </View>
 
                         {/* Prefix Data */}
 
                         <GDropDownComponent
-                            placeholder={this.state.profilePrefix}
+                            placeholder={editProfileSettingsData.profilePrefix}
                             dropDownTextName={styles.editProfileLabel}
                             dropDownName={globalString.profileSettingsPage.profilePrefixLabel}
                             data={profilePrefixData}
                             changeState={this.dropDownOnClick}
-                            showDropDown={this.state.dropDownState}
-                            dropDownValue={this.state.dropDownValue}
+                            showDropDown={editProfileSettingsData.dropDownState}
+                            dropDownValue={editProfileSettingsData.dropDownValue}
                             selectedDropDownValue={this.dropDownOnSelect}
                             itemToDisplay="value"
-                            errorFlag={this.state.dropDownPrefixFlag}
-                            errorText={this.state.dropDownPrefixMsg}
-                            //  dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(492) }}
+                            errorFlag={editProfileSettingsData.dropDownPrefixFlag}
+                            errorText={editProfileSettingsData.dropDownPrefixMsg}
+                        //  dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(492) }}
                         />
 
                         {/* Suffix Data */}
 
                         <GDropDownComponent
-                            placeholder={this.state.profileSuffix}
+                            placeholder={editProfileSettingsData.profileSuffix}
                             dropDownTextName={styles.editProfileLabel}
                             dropDownName={globalString.profileSettingsPage.profileSuffixLabel}
                             data={profileSuffixData}
                             changeState={this.dropDownSuffixClick}
-                            showDropDown={this.state.dropDownSuffixState}
-                            dropDownValue={this.state.dropDownSuffixValue}
+                            showDropDown={editProfileSettingsData.dropDownSuffixState}
+                            dropDownValue={editProfileSettingsData.dropDownSuffixValue}
                             selectedDropDownValue={this.dropDownSuffixSelect}
                             itemToDisplay="value"
-                            errorFlag={this.state.dropDownSuffixFlag}
-                            errorText={this.state.dropDownSuffixMsg}
-                            //  dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(581) }}
+                            errorFlag={editProfileSettingsData.dropDownSuffixFlag}
+                            errorText={editProfileSettingsData.dropDownSuffixMsg}
+                        //  dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(581) }}
                         />
 
                         {/* Gender Data */}
 
                         <GDropDownComponent
-                            placeholder={this.state.profileGender}
+                            placeholder={editProfileSettingsData.profileGender}
                             dropDownTextName={styles.editProfileLabel}
                             dropDownName={globalString.profileSettingsPage.profileGenderLabel}
                             data={profileGenderData}
                             changeState={this.dropDownGenderClick}
-                            showDropDown={this.state.dropDownGenderState}
-                            dropDownValue={this.state.dropDownGenderValue}
+                            showDropDown={editProfileSettingsData.dropDownGenderState}
+                            dropDownValue={editProfileSettingsData.dropDownGenderValue}
                             selectedDropDownValue={this.dropDownGenderSelect}
                             itemToDisplay="value"
-                            errorFlag={this.state.dropDownGenderFlag}
-                            errorText={this.state.dropDownGenderMsg}
-                            //  dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(670) }}
+                            errorFlag={editProfileSettingsData.dropDownGenderFlag}
+                            errorText={editProfileSettingsData.dropDownGenderMsg}
+                        //  dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(670) }}
                         />
 
                         {/* Marital Status Data */}
 
                         <GDropDownComponent
-                            placeholder={this.state.profileMaritalStatus}
+                            placeholder={editProfileSettingsData.profileMaritalStatus}
                             dropDownTextName={styles.editProfileLabel}
                             dropDownName={globalString.profileSettingsPage.profileStatusLabel}
                             data={profileStatusData}
                             changeState={this.dropDownStatusClick}
-                            showDropDown={this.state.dropDownStatusState}
-                            dropDownValue={this.state.dropDownStatusValue}
+                            showDropDown={editProfileSettingsData.dropDownStatusState}
+                            dropDownValue={editProfileSettingsData.dropDownStatusValue}
                             selectedDropDownValue={this.dropDownStatusSelect}
                             itemToDisplay="value"
-                            errorFlag={this.state.dropDownStatusFlag}
-                            errorText={this.state.dropDownStatusMsg}
-                            //  dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(760) }}
+                            errorFlag={editProfileSettingsData.dropDownStatusFlag}
+                            errorText={editProfileSettingsData.dropDownStatusMsg}
+                        //  dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(760) }}
                         />
 
                         {/* Citizenship */}
@@ -446,36 +521,38 @@ class EditProfileSettingsComponent extends Component {
 
                             <View style={styles.editRadioView}>
                                 {profileSettingsCitizenship.map((item, index) =>
-                                    index === this.state.radioButtonIndex ?
+                                    index === radioButtonIndex ? (
                                         <GRadioButtonComponent
-                                            onPress={() => this.radioButtonClicked(index)}
+                                            onPress={this.radioButtonClicked(index)}
                                             selected
                                             questions={item.question}
                                         />
-                                        :
-                                        <GRadioButtonComponent
-                                            onPress={() => this.radioButtonClicked(index)}
-                                            selected={false}
-                                            questions={item.question}
-                                        />
+                                    ) : (
+                                            <GRadioButtonComponent
+                                                onPress={this.radioButtonClicked(index)}
+                                                selected={false}
+                                                questions={item.question}
+                                            />
+                                        )
                                 )}
                             </View>
                         </View>
 
-                        {this.state.countryNonUS ? (
+                        {countryNonUS ? (
                             <GDropDownComponent
                                 dropDownTextName={styles.editProfileLabel}
                                 dropDownName={globalString.profileSettingsPage.profileCountryLabel}
                                 data={profileSettingsTempData}
                                 changeState={this.dropDownCountryClick}
-                                showDropDown={this.state.dropDownCountryState}
-                                dropDownValue={this.state.dropDownCountryValue}
+                                showDropDown={editProfileSettingsData.dropDownCountryState}
+                                dropDownValue={editProfileSettingsData.dropDownCountryValue}
                                 selectedDropDownValue={this.dropDownCountrySelect}
                                 itemToDisplay="value"
-                                errorFlag={this.state.dropDownCountryFlag}
-                                errorText={this.state.dropDownCountryMsg}
-                                //  dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(950) }}
-                            />) : null}
+                                errorFlag={editProfileSettingsData.dropDownCountryFlag}
+                                errorText={editProfileSettingsData.dropDownCountryMsg}
+                            //  dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(950) }}
+                            />
+                        ) : null}
 
                         <View style={styles.editFlexDirectionColumn}>
                             <GButtonComponent
@@ -569,16 +646,13 @@ class EditProfileSettingsComponent extends Component {
 EditProfileSettingsComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
     profileState: PropTypes.instanceOf(Object),
-    initialstate: PropTypes.instanceOf(Object),
     profileSettingsLookup: PropTypes.instanceOf(Object),
     getProfileCompositeData: PropTypes.func,
     saveProfileData: PropTypes.func
 };
 
 EditProfileSettingsComponent.defaultProps = {
-    navigation: {},
     profileState: {},
-    initialstate: {},
     profileSettingsLookup: {},
     getProfileCompositeData: null,
     saveProfileData: null

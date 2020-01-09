@@ -3,7 +3,7 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 const { width } = Dimensions.get('window');
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7FAFF',
@@ -416,3 +416,5 @@ export const styles = StyleSheet.create({
     editProfileManageLabel: { color: '#56565A', fontSize: scaledHeight(14), fontWeight: 'bold' },
     editProfileFlex: { flex: 0.85 }
 });
+
+export default styles;
