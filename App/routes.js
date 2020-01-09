@@ -117,6 +117,7 @@ import PurchaseFinishComponent from './Screens/PurchaseFinish';
 
 import ExchangeScreenOneComponent from './Screens/ExchangeScreenOne';
 import ExchangeScreenTwoComponent from './Screens/ExchangeScreenTwo';
+import ExchangeScreenThreeComponent from './Screens/ExchangeScreenThree';
 
 import EditRelationshipInfo from './Screens/EditRelationshipInformation/';
 import EditRegulatoryInfo from './Screens/EditRegulatoryInformations/EditRegulatoryComponent';
@@ -1080,6 +1081,12 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
+    exchangeScreenThree: {
+        screen: ExchangeScreenThreeComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
     physicalWayManageBeneficiary: {
         screen: PhysicalWayManageBeneficiaryComponent,
         navigationOptions: {
@@ -1088,7 +1095,7 @@ const AppNavigator = createStackNavigator({
     }
 },
     {
-        initialRouteName: "login"
+        initialRouteName: "purchaseScreenOne"
     });
 
 export default createAppContainer(AppNavigator);
