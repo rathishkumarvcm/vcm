@@ -1,8 +1,8 @@
 import { StyleSheet } from "react-native";
-import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
+import { scaledHeight } from '../../Utils/Resolution';
 
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7FAFF',
@@ -112,5 +112,18 @@ cancelButton:{
     fontSize:scaledHeight(16),
     color:'#544A54',
     fontWeight:'bold'
-}
-})
+},
+scrollView:{
+     flex: 0.85 
+},
+switchBoxView:{
+    padding:"4%",
+    marginTop:"5%",
+    marginLeft:"5%",
+    width:"90%",
+    backgroundColor:"white",
+    borderWidth:0.5,
+    borderRadius:10,
+    borderColor:"#61285F45"}
+});
+export default styles;

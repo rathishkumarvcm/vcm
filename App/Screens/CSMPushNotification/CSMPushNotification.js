@@ -20,12 +20,14 @@ class CSMPushNotificationComponent extends Component {
       }
 
       onClickCancel = () => {
-        this.props.navigation.navigate('ChangeSignInMethod');
+        const{navigation}=this.props;
+        navigation.navigate('ChangeSignInMethod');
       }
 
       
 
       onClickSave = () => {
+        const{navigation,signInMethods}=this.props;
         let payloadData = {};
         const date = new Date().getDate(); 
         const month = new Date().getMonth() + 1; 
@@ -38,16 +40,17 @@ class CSMPushNotificationComponent extends Component {
             selectedMethod:'PUSHNOTIFICATION',
             lastUpdatedTime:updatedDate
         };
-        this.props.signInMethods("signInMethodsData", payloadData);
+        signInMethods("signInMethodsData", payloadData);
         //  console.log("----signInMethods",payloadData);
-        this.props.navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.pushNotification,index:2});
+        navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.pushNotification,index:2});
       
       }
 
     render() {
+      const{navigation}=this.props;
       return(
           <View style={styles.container}>
-              <GHeaderComponent navigation={this.props.navigation} />
+              <GHeaderComponent navigation={navigation} />
               <ScrollView style={styles.scrollViewFlex}>
               <TouchableOpacity>
                         <GIcon

@@ -47,11 +47,13 @@ class CSMSoftTokenComponent extends Component {
     
     onClickCancel = () => 
     {
-        this.props.navigation.navigate('ChangeSignInMethod');
+        const{navigation}=this.props;
+        navigation.navigate('ChangeSignInMethod');
     }
   
     
     onClickSave = () => {
+        const{navigation,signInMethods}=this.props;
         let payloadData = {} ;
         const date = new Date().getDate(); 
         const month = new Date().getMonth() + 1;
@@ -64,10 +66,10 @@ class CSMSoftTokenComponent extends Component {
             selectedMethod:'SOFTTOKEN',
             lastUpdatedTime:updatedDate
         };
-        this.props.signInMethods("signInMethodsData", payloadData);
+        signInMethods("signInMethodsData", payloadData);
         //  console.log("----signInMethods",payloadData);
         
-        this.props.navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.softToken,index:1});
+        navigation.navigate('ChangeSignInMethod',{showAlert:true,message:gblStrings.userManagement.softToken,index:1});
     }
 
     isEmpty = (str) => {
@@ -79,17 +81,17 @@ class CSMSoftTokenComponent extends Component {
     }
 
     validateFields = () => {
-        
+        const{firstToken,secondToken}=this.state;
         let errMsg = "";
         let isValidationSuccess = false;
-        if (this.isEmpty(this.state.firstToken)) {
+        if (this.isEmpty(firstToken)) {
             errMsg="error";
             this.setState({ token1Val: false });
         } 
         else{
             this.setState({ token1Val: true });
         }
-         if (this.isEmpty(this.state.secondToken)) {
+         if (this.isEmpty(secondToken)) {
             errMsg="error";
             this.setState({ token2Val: false });
         }
@@ -106,9 +108,11 @@ class CSMSoftTokenComponent extends Component {
     }
 
     render() {
+        const{navigation}=this.props;
+        const{firstToken,secondToken,token1Val,token2Val}=this.state;
         return(
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.scrollViewFlex}>
                 <TouchableOpacity>
                         <GIcon
@@ -138,11 +142,11 @@ class CSMSoftTokenComponent extends Component {
                 <GInputComponent
                 //  propInputStyle={!this.state.validationEmail ? styles.userIDTextBoxError : styles.userIDTextBox} 
                 propInputStyle={styles.userIDTextBox}
-                value={this.state.firstToken}
+                value={firstToken}
                 onChangeText={this.onChangeText("firstToken","token1Val")}
                 maxLength={6}
                 //  validateError={this.state.validateEmail}
-                errorFlag={!this.state.token1Val}
+                errorFlag={!token1Val}
                 errorText="Please Enter First Token"
                 />
                 </View>
@@ -153,10 +157,10 @@ class CSMSoftTokenComponent extends Component {
                 <GInputComponent
                 //  propInputStyle={!this.state.validationEmail ? styles.userIDTextBoxError : styles.userIDTextBox} 
                 propInputStyle={styles.userIDTextBox}
-                value={this.state.secondToken}
+                value={secondToken}
                 onChangeText={this.onChangeText("secondToken","token2Val")}
                 maxLength={6}
-                errorFlag={!this.state.token2Val}
+                errorFlag={!token2Val}
                 errorText="Please Enter Second Token"
                 //  validateError={this.state.validateEmail}
                 />

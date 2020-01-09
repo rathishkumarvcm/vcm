@@ -195,7 +195,8 @@ class ModifySecQuesComponent extends Component {
     }
 
     radioButtonClicked = (index) =>()=> {
-        if (index !== this.state.radioButtonIndex) {
+        const{radioButtonIndex}=this.state;
+        if (index !== radioButtonIndex) {
             this.setState({
                 radioButtonIndex: index,
                 radioButton: false
@@ -307,8 +308,8 @@ class ModifySecQuesComponent extends Component {
 
         let errMsg = "";
         let isValidationSuccess = false;
-
-        if (this.isEmpty(this.state.q1Ans)) {
+        const{q1Ans,q2Ans,q3Ans,primaryEmail,validationPrimaryEmail,question1,question2,question3}=this.state;
+        if (this.isEmpty(q1Ans)) {
             this.setState({ q1Ansval: false });
             errMsg = "error";
         }
@@ -316,7 +317,7 @@ class ModifySecQuesComponent extends Component {
             this.setState({ q1Ansval: true });
         }
 
-        if (this.isEmpty(this.state.q2Ans)) {
+        if (this.isEmpty(q2Ans)) {
             this.setState({ q2Ansval: false });
             errMsg = "error";
         }
@@ -324,7 +325,7 @@ class ModifySecQuesComponent extends Component {
             this.setState({ q2Ansval: true });
         }
 
-        if (this.isEmpty(this.state.q3Ans)) {
+        if (this.isEmpty(q3Ans)) {
             this.setState({ q3Ansval: false });
             errMsg = "error";
         }
@@ -332,29 +333,29 @@ class ModifySecQuesComponent extends Component {
             this.setState({ q3Ansval: true });
         }
 
-        if (this.isEmpty(this.state.primaryEmail)) {
+        if (this.isEmpty(primaryEmail)) {
             errMsg = "error";
         }
 
-        if (!this.state.validationPrimaryEmail) {
+        if (!validationPrimaryEmail) {
             errMsg = "error";
         }
 
-        if (this.isEmpty(this.state.question1)) {
+        if (this.isEmpty(question1)) {
             this.setState({ q1Select: false,errorText1:"Please Select your Question" });
             errMsg = "error";
         }
         else{
             this.setState({ q1Select: true, });
         }
-        if (this.isEmpty(this.state.question2)) {
+        if (this.isEmpty(question2)) {
             this.setState({ q2Select: false,errorText2:"Please Select your Question" });
             errMsg = "error";
         }
         else{
             this.setState({ q2Select: true,});
         }
-        if (this.isEmpty(this.state.question3)) {
+        if (this.isEmpty(question3)) {
             this.setState({ q3Select: false,errorText3:"Please Select your Question" });
             errMsg = "error";
         }
@@ -362,16 +363,16 @@ class ModifySecQuesComponent extends Component {
             this.setState({ q3Select: true, });
         }
         
-        if (!this.isEmpty(this.state.question1)&&!this.isEmpty(this.state.question2)&&this.state.question1 === this.state.question2) {
+        if (!this.isEmpty(question1)&&!this.isEmpty(question2)&&question1 === question2) {
             errMsg = "error";
             this.setState({ q1Val: true, q2Val: true, q3Val: false,errorText1:gblStrings.userManagement.dropDownError,errorText2:gblStrings.userManagement.dropDownError });
         }
-        else if (!this.isEmpty(this.state.question2)&&!this.isEmpty(this.state.question3)&&this.state.question2 === this.state.question3) {
+        else if (!this.isEmpty(question2)&&!this.isEmpty(question3)&&question2 === question3) {
             errMsg = "error";
             this.setState({ q2Val: true, q3Val: true, q1Val: false,errorText2:gblStrings.userManagement.dropDownError,errorText3:gblStrings.userManagement.dropDownError });
         }
 
-        else if (!this.isEmpty(this.state.question3)&&!this.isEmpty(this.state.question1)&&this.state.question3 === this.state.question1) {
+        else if (!this.isEmpty(question3)&&!this.isEmpty(question1)&&question3 === question1) {
             errMsg = "error";
             this.setState({ q3Val: true, q1Val: true, q2Val: false,errorText3:gblStrings.userManagement.dropDownError,errorText1:gblStrings.userManagement.dropDownError });
         }
@@ -394,9 +395,13 @@ class ModifySecQuesComponent extends Component {
 
     
     render() {
-
-        if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.security_ques && this.props.masterLookupStateData.security_ques.value) {
-            quesData = this.props.masterLookupStateData.security_ques.value;
+        const{masterLookupStateData,navigation}=this.props;
+        const{question1Dropdown,question1,q1Select,q1Val,errorText1,q1Ans,q1Ansval,
+            question2Dropdown,question2,q2Select,q2Val,errorText2,q2Ans,q2Ansval,
+            question3Dropdown,question3,q3Select,q3Val,errorText3,q3Ans,q3Ansval,primaryEmail,
+            validationPrimaryEmail,additionalEmailFlag,additionalEmail,radioButtonIndex}=this.state;
+        if (this.props && masterLookupStateData && masterLookupStateData.security_ques && masterLookupStateData.security_ques.value) {
+            quesData = masterLookupStateData.security_ques.value;
         }
         //  console.log("props", this.props.masterLookupStateData);
         //  console.log("security questions render",this.props.saveQuestionsData);
@@ -404,7 +409,7 @@ class ModifySecQuesComponent extends Component {
         return (
 
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.scrollView}>
                     <View style={styles.signInView}>
                         <Text style={styles.signIntext}>
@@ -424,18 +429,18 @@ class ModifySecQuesComponent extends Component {
                                 placeholder={gblStrings.common.select}
                                 itemToDisplay="value"
                                 changeState={this.selectTheQuestion}
-                                showDropDown={this.state.question1Dropdown}
-                                dropDownValue={this.state.question1}
+                                showDropDown={question1Dropdown}
+                                dropDownValue={question1}
                                 selectedDropDownValue={this.selectedDropDownValue}
-                                errorFlag={!this.state.q1Select||this.state.q1Val}
-                                errorText={this.state.errorText1}
+                                errorFlag={!q1Select||q1Val}
+                                errorText={errorText1}
                                 dropDownPostition={styles.dropDown1}
                             />
                             <GInputComponent
                                 propInputStyle={styles.userIDTextBox}
-                                value={this.state.q1Ans}
+                                value={q1Ans}
                                 onChangeText={this.onChangeText("q1Ans", "q1Ansval")}
-                                errorFlag={!this.state.q1Ansval}
+                                errorFlag={!q1Ansval}
                                 errorText={gblStrings.userManagement.inputError}
                             /> 
                             <GDropDownComponent
@@ -445,18 +450,18 @@ class ModifySecQuesComponent extends Component {
                                 placeholder={gblStrings.common.select}
                                 itemToDisplay="value"
                                 changeState={this.selectTheQuestion2}
-                                showDropDown={this.state.question2Dropdown}
-                                dropDownValue={this.state.question2}
+                                showDropDown={question2Dropdown}
+                                dropDownValue={question2}
                                 selectedDropDownValue={this.selectedDropDownValue2}
-                                errorFlag={!this.state.q2Select||this.state.q2Val}
-                                errorText={this.state.errorText2}
+                                errorFlag={!q2Select||q2Val}
+                                errorText={errorText2}
                                 dropDownPostition={styles.dropDown2}
                             />
                             <GInputComponent
                                 propInputStyle={styles.userIDTextBox}
-                                value={this.state.q2Ans}
+                                value={q2Ans}
                                 onChangeText={this.onChangeText("q2Ans", "q2Ansval")}
-                                errorFlag={!this.state.q2Ansval}
+                                errorFlag={!q2Ansval}
                                 errorText={gblStrings.userManagement.inputError}
                             />
                                 <GDropDownComponent
@@ -466,18 +471,18 @@ class ModifySecQuesComponent extends Component {
                                 placeholder={gblStrings.common.select}
                                 itemToDisplay="value"
                                 changeState={this.selectTheQuestion3}
-                                showDropDown={this.state.question3Dropdown}
-                                dropDownValue={this.state.question3}
+                                showDropDown={question3Dropdown}
+                                dropDownValue={question3}
                                 selectedDropDownValue={this.selectedDropDownValue3}
-                                errorFlag={!this.state.q3Select||this.state.q3Val}
-                                errorText={this.state.errorText3}
+                                errorFlag={!q3Select||q3Val}
+                                errorText={errorText3}
                                 dropDownPostition={styles.dropDown3}
                                 />                                 
                             <GInputComponent
                                 propInputStyle={styles.userIDTextBox}
-                                value={this.state.q3Ans}
+                                value={q3Ans}
                                 onChangeText={this.onChangeText("q3Ans", "q3Ansval")}
-                                errorFlag={!this.state.q3Ansval}
+                                errorFlag={!q3Ansval}
                                 errorText={gblStrings.userManagement.inputError}
                             />
                             <Text style={styles.lblTxt}>
@@ -487,17 +492,17 @@ class ModifySecQuesComponent extends Component {
                                 propInputStyle={styles.userIDTextBox}
                                 placeholder={gblStrings.accManagement.emailformat}
                                 keyboardType="email-address"
-                                value={this.state.primaryEmail}
+                                value={primaryEmail}
                                 maxLength={gblStrings.maxLength.emailID}
                                 onChangeText={this.onChangeText("primaryEmail")}
                                 onBlur={this.validatePrimaryEmail}
-                                errorFlag={!this.state.validationPrimaryEmail}
+                                errorFlag={!validationPrimaryEmail}
                                 errorText={gblStrings.userManagement.emailError}
                             />
                             <TouchableOpacity style={styles.additionaemailView} onPress={this.additionalEmail}>
                                 <Text style={styles.underlineText}>{gblStrings.userManagement.addAdditionalEmail}</Text>
                             </TouchableOpacity>
-                            {(this.state.additionalEmailFlag) ?
+                            {(additionalEmailFlag) ?
                                 (
                                     <GInputComponent
                                         propInputStyle={styles.userIDTextBox}
@@ -506,7 +511,7 @@ class ModifySecQuesComponent extends Component {
                                         maxLength={gblStrings.maxLength.emailID}
                                         onChangeText={this.onChangeText("additionalEmail")}
                                         onBlur={this.validateAdditionalEmail}
-                                        value={this.state.additionalEmail}
+                                        value={additionalEmail}
                                     />
                                 ) : null
 
@@ -516,7 +521,7 @@ class ModifySecQuesComponent extends Component {
                             </Text>
 
                             {securityQuestions.map((item, index) =>
-                                index === this.state.radioButtonIndex ?
+                                index === radioButtonIndex ?
                                     <GRadioButtonComponent
                                         onPress={this.radioButtonClicked(index)}
                                         selected

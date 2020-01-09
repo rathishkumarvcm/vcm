@@ -16,9 +16,10 @@ const signInMethods = [
 class ChangeSignInMethod extends Component {
     constructor(props) {
         super(props);
+        const{navigation}=this.props;
         this.state = {
               //  radioButton: false,
-              radioButtonIndex: this.props.navigation.getParam('index'),
+              radioButtonIndex: navigation.getParam('index'),
               lastUpdate:''
             };
     }
@@ -32,68 +33,78 @@ class ChangeSignInMethod extends Component {
      {
         //  console.log("componentDidUpdate::::> "+prevState);
         if (this.props !== prevProps) {
-            if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.selectedMethod &&
-                this.props.signInMethodsData.selectedMethod === "OTP")
-            {
-                this.setState({radioButtonIndex:0});
-            }
-            else if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.selectedMethod &&
-                this.props.signInMethodsData.selectedMethod === "SOFTTOKEN")
-            {
-                this.setState({radioButtonIndex:1});
-            }
-            else if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.selectedMethod &&
-                this.props.signInMethodsData.selectedMethod === "PUSHNOTIFICATION")
-            {
-                this.setState({radioButtonIndex:2});
-            }
-            if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.lastUpdatedTime)
-            {
-                this.setState({lastUpdate:this.props.signInMethodsData.lastUpdatedTime});
-            }
+            this.getUpdatedValues();
         }
      }
 
      getInitialValues = () => {
-        if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.selectedMethod &&
-            this.props.signInMethodsData.selectedMethod === "OTP")
+         const{signInMethodsData}=this.props;
+        if(this.props && signInMethodsData && signInMethodsData.selectedMethod &&
+            signInMethodsData.selectedMethod === "OTP")
         {
             this.setState({radioButtonIndex:0});
         }
-        else if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.selectedMethod &&
-            this.props.signInMethodsData.selectedMethod === "SOFTTOKEN")
+        else if(this.props && signInMethodsData && signInMethodsData.selectedMethod &&
+            signInMethodsData.selectedMethod === "SOFTTOKEN")
         {
             this.setState({radioButtonIndex:1});
         }
-        else if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.selectedMethod &&
-            this.props.signInMethodsData.selectedMethod === "PUSHNOTIFICATION")
+        else if(this.props && signInMethodsData && signInMethodsData.selectedMethod &&
+            signInMethodsData.selectedMethod === "PUSHNOTIFICATION")
         {
             this.setState({radioButtonIndex:2});
         }
-        if(this.props && this.props.signInMethodsData && this.props.signInMethodsData.lastUpdatedTime)
+        if(this.props && signInMethodsData && signInMethodsData.lastUpdatedTime)
         {
-            this.setState({lastUpdate:this.props.signInMethodsData.lastUpdatedTime});
+            this.setState({lastUpdate:signInMethodsData.lastUpdatedTime});
+        }
+     }
+
+     getUpdatedValues = () =>
+     {
+        const{signInMethodsData}=this.props;
+        if(this.props && signInMethodsData && signInMethodsData.selectedMethod &&
+            signInMethodsData.selectedMethod === "OTP")
+        {
+            this.setState({radioButtonIndex:0});
+        }
+        else if(this.props && signInMethodsData && signInMethodsData.selectedMethod &&
+            signInMethodsData.selectedMethod === "SOFTTOKEN")
+        {
+            this.setState({radioButtonIndex:1});
+        }
+        else if(this.props && signInMethodsData && signInMethodsData.selectedMethod &&
+            signInMethodsData.selectedMethod === "PUSHNOTIFICATION")
+        {
+            this.setState({radioButtonIndex:2});
+        }
+        if(this.props && signInMethodsData && signInMethodsData.lastUpdatedTime)
+        {
+            this.setState({lastUpdate:signInMethodsData.lastUpdatedTime});
         }
      }
 
        onClickContinue = () => 
        { 
-        if(this.state.radioButtonIndex === 0)
+           const{radioButtonIndex}=this.state;
+           const{navigation}=this.props;
+        if(radioButtonIndex === 0)
         {
-        this.props.navigation.navigate('CSMOtp');
+       navigation.navigate('CSMOtp');
         }
-        if(this.state.radioButtonIndex === 1)
+        if(radioButtonIndex === 1)
         {
-        this.props.navigation.navigate('CSMSoftTokenComponent');
+        navigation.navigate('CSMSoftTokenComponent');
         }
-        if(this.state.radioButtonIndex === 2)
+        if(radioButtonIndex === 2)
         {
-        this.props.navigation.navigate('CSMPushNotificationComponent');  
+        navigation.navigate('CSMPushNotificationComponent');  
         }
     }
 
     radioButtonClicked = (index) =>() =>{
-        if (index !== this.state.radioButtonIndex) {
+        const{radioButtonIndex}=this.state;
+        if (index !== radioButtonIndex) {
             this.setState({
                 radioButtonIndex: index,
                 //  radioButton:false
@@ -108,14 +119,17 @@ class ChangeSignInMethod extends Component {
     }
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const{navigation}=this.props;
+        navigation.goBack();
     }
       
 
     render() { 
+        const{navigation}=this.props;
+        const{radioButtonIndex,lastUpdate}=this.state;
         return(
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.scrollViewFlex}>
                 <TouchableOpacity onPress={(this.goBack)}>
                         <GIcon
@@ -132,9 +146,9 @@ class ChangeSignInMethod extends Component {
                 </Text>
                 
                 <Text style={styles.lblLine} />
-                {this.props.navigation.getParam('showAlert')?
+                {navigation.getParam('showAlert')?
                 (<View style={styles.messageFlex}>
-                <Text style={styles.messageText}>{this.props.navigation.getParam('message')}</Text>
+                <Text style={styles.messageText}>{navigation.getParam('message')}</Text>
                  </View>):null 
                 }
                 <View style={styles.widthView}>
@@ -142,11 +156,11 @@ class ChangeSignInMethod extends Component {
                 {gblStrings.userManagement.changeSignInSelection}
                 </Text>
                 <Text style={styles.lblTxtSmall}>
-                Last Update: {this.state.lastUpdate}
+                Last Update: {lastUpdate}
                 </Text>
                 </View> 
                 {signInMethods.map((item,index) => 
-                index === this.state.radioButtonIndex ? 
+                index === radioButtonIndex ? 
                 <GRadioButtonComponent 
                 onPress={this.radioButtonClicked(index)}
                 selected 

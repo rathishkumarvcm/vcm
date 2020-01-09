@@ -14,6 +14,7 @@ export default {
         cancel: "Cancel",
         ok: "Ok",
         enable: "Enable",
+        disable:"Disable",
         back: "Back",
         submit: "Submit",
         done: "Done",
