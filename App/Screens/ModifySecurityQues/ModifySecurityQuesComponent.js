@@ -92,15 +92,16 @@ class ModifySecQuesComponent extends Component {
         const compositePayloadData = [
             "security_ques"
         ];
+        const {getPersonalCompositeData,masterLookupStateData}=this.props;
 
         for (let i = 0; i < compositePayloadData.length; i += 1) {
             const tempkey = compositePayloadData[i];
-            if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempkey]) {
+            if (this.props && masterLookupStateData && !masterLookupStateData[tempkey]) {
                 payload.push(tempkey);
             }
         }
 
-        this.props.getPersonalCompositeData(payload);
+        getPersonalCompositeData(payload);
         //  console.log("------>emailllllllll", this.props);
         //  console.log("payload", payload);
        
@@ -109,25 +110,26 @@ class ModifySecQuesComponent extends Component {
     }
 
       getInitialValues = () =>{
-        if (this.props && this.props.initialState && this.props.initialState.email) {
+          const {initialState,saveQuestionsData} = this.props;
+        if (this.props && initialState && initialState.email) {
             this.setState({
-                primaryEmail: this.props.initialState.email
+                primaryEmail: initialState.email
             });
 
         }
-        if(this.props && this.props.saveQuestionsData&&this.props.saveQuestionsData.list_security_questions)
+        if(this.props && saveQuestionsData&&saveQuestionsData.list_security_questions)
         {
             this.setState({
-                question1:this.props.saveQuestionsData.list_security_questions[0].question1,
-                q1Ans:this.props.saveQuestionsData.list_security_questions[0].answer1,
-                question2:this.props.saveQuestionsData.list_security_questions[1].question2,
-                q2Ans:this.props.saveQuestionsData.list_security_questions[1].answer2,
-                question3:this.props.saveQuestionsData.list_security_questions[2].question3,
-                q3Ans:this.props.saveQuestionsData.list_security_questions[2].answer3,
-                primaryEmail:this.props.saveQuestionsData.primaryEmail,
-                additionalEmail:this.props.saveQuestionsData.additonalEmail
+                question1:saveQuestionsData.list_security_questions[0].question1,
+                q1Ans:saveQuestionsData.list_security_questions[0].answer1,
+                question2:saveQuestionsData.list_security_questions[1].question2,
+                q2Ans:saveQuestionsData.list_security_questions[1].answer2,
+                question3:saveQuestionsData.list_security_questions[2].question3,
+                q3Ans:saveQuestionsData.list_security_questions[2].answer3,
+                primaryEmail:saveQuestionsData.primaryEmail,
+                additionalEmail:saveQuestionsData.additonalEmail
             });
-            if(this.props.saveQuestionsData.documentDeliveryPreference === "Deliver All my documents online at vcm.com")
+            if(saveQuestionsData.documentDeliveryPreference === "Deliver All my documents online at vcm.com")
             {
                 this.setState({
                     radioButtonIndex:0
@@ -138,7 +140,7 @@ class ModifySecQuesComponent extends Component {
                     radioButtonIndex:1
                 });
             }
-            if(!this.isEmpty(this.props.saveQuestionsData.additonalEmail))
+            if(!this.isEmpty(saveQuestionsData.additonalEmail))
             {
                 this.setState({
                     additionalEmailFlag:true
@@ -152,7 +154,8 @@ class ModifySecQuesComponent extends Component {
                                  -------------------------- */
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const {navigation}=this.props;
+        navigation.goBack();
     }
 
     onClickSave = () => {
@@ -163,17 +166,17 @@ class ModifySecQuesComponent extends Component {
     saveQuestions = () => {
         let addedQuestionsPayload = {}; 
         const questionsList = [];
-
-        questionsList.push({ "question1": this.state.question1, "answer1": this.state.q1Ans });
-        questionsList.push({ "question2": this.state.question2, "answer2": this.state.q2Ans });
-        questionsList.push({ "question3": this.state.question3, "answer3": this.state.q3Ans });
+        const {question1,question2,question3,q1Ans,q2Ans,q3Ans,primaryEmail,additionalEmail,documentPreference}=this.state;
+        questionsList.push({ "question1": question1, "answer1": q1Ans });
+        questionsList.push({ "question2": question2, "answer2": q2Ans });
+        questionsList.push({ "question3": question3, "answer3": q3Ans });
 
 
         addedQuestionsPayload = {
             list_security_questions: questionsList,
-            primaryEmail: this.state.primaryEmail,
-            additonalEmail: this.state.additionalEmail,
-            documentDeliveryPreference: this.state.documentPreference
+            primaryEmail: primaryEmail,
+            additonalEmail: additionalEmail,
+            documentDeliveryPreference: documentPreference
         };
 
 
@@ -183,9 +186,10 @@ class ModifySecQuesComponent extends Component {
 
     manageData = () => {
         const payloadData = this.saveQuestions();
-        this.props.saveQuestions("saveQuestionsData", payloadData);
+        const {saveQuestions,navigation} = this.props;
+       saveQuestions("saveQuestionsData", payloadData);
         //  console.log("----questions", payloadData);
-        this.props.navigation.navigate('otpSecurityConfirm');
+       navigation.navigate('otpSecurityConfirm');
         // this.goBack();
         //  this.scrollToTop();
     }
@@ -230,34 +234,39 @@ class ModifySecQuesComponent extends Component {
     }
 
     validatePrimaryEmail = () => {
-        const validate = emailRegex.test(this.state.primaryEmail);
+        const {primaryEmail}=this.state;
+        const validate = emailRegex.test(primaryEmail);
         this.setState({
             validationPrimaryEmail: validate
         });
     }
     
     validateAdditionalEmail = () => {
-        const validate = emailRegex.test(this.state.additionalEmail);
+        const {additionalEmail}=this.state;
+        const validate = emailRegex.test(additionalEmail);
         this.setState({
             validationAdditionalEmail: validate
         });
     }
     
     selectTheQuestion = () => {
+        const{question1Dropdown}=this.state;
         this.setState({
-            question1Dropdown: !this.state.question1Dropdown
+            question1Dropdown: !question1Dropdown
         });
     }
 
     selectTheQuestion2 = () => {
+        const{question2Dropdown}=this.state;
         this.setState({
-            question2Dropdown: !this.state.question2Dropdown
+            question2Dropdown: !question2Dropdown
         });
     }
     
     selectTheQuestion3 = () => {
+        const{question3Dropdown}=this.state;
         this.setState({
-            question3Dropdown: !this.state.question3Dropdown
+            question3Dropdown: !question3Dropdown
         });
     }
 
