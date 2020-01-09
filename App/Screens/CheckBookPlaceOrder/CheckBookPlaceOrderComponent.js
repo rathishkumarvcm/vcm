@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from "prop-types";
-import { styles } from './styles';
 import { View, ScrollView, Text } from 'react-native';
+import { styles } from './styles';
 import { GHeaderComponent, GFooterComponent, GButtonComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class CheckBookPlaceOrder extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoading: false,
-        };
-    }
 
-    navigateBack = (isSuccess) => this.props.navigation.navigate('orderCheckBook', { isSuccess: isSuccess});
+    navigateBack = (isSuccess) => () => {
+        const { navigation } = this.props;
+        navigation.navigate('orderCheckBook', { isSuccess});
+    }
 
     render() {
         const { navigation } = this.props;
@@ -23,9 +20,9 @@ class CheckBookPlaceOrder extends Component {
         const deliveryAddress = navigation.getParam('deliveryAddress', '');
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
 
-                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={{ justifyContent: 'center' }}>
+                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={styles.contentStyle}>
                     <View style={styles.header}>
                         <Text style={styles.headerText}>
                             {gblStrings.orderCheckBook.order_checkbook}
@@ -37,7 +34,7 @@ class CheckBookPlaceOrder extends Component {
                     <View style={styles.infoContainer}>
 
                         <Text style={styles.accountNameText}>
-                            {"Account Name"}
+                            {gblStrings.orderCheckBook.accountNumber}
                         </Text>
                         <Text style={styles.accountNumberText}>
                             {accountName}
@@ -49,7 +46,7 @@ class CheckBookPlaceOrder extends Component {
                     <View style={styles.infoContainer}>
 
                         <Text style={styles.accountNameText}>
-                            {"Number of Check Leaves"}
+                            {gblStrings.orderCheckBook.number_of_checkleaves}
                         </Text>
                         <Text style={styles.accountNumberText}>
                             {noOfCheckLeaves}
@@ -58,7 +55,7 @@ class CheckBookPlaceOrder extends Component {
                     <View style={styles.infoContainer}>
 
                         <Text style={styles.accountNameText}>
-                            {"Delivery Address"}
+                            {gblStrings.orderCheckBook.delivery_address}
                         </Text>
                         <Text style={styles.accountNumberText}>
                             {deliveryAddress}
@@ -70,14 +67,14 @@ class CheckBookPlaceOrder extends Component {
                         buttonStyle={styles.backBtn}
                         buttonText={gblStrings.common.cancel}
                         textStyle={styles.backButtonText}
-                        onPress={() => this.navigateBack(false)}
+                        onPress={this.navigateBack(false)}
                     />
 
                     <GButtonComponent
                         buttonStyle={styles.submitBtn}
                         buttonText={gblStrings.common.submit}
                         textStyle={styles.submitButtonText}
-                        onPress={() => this.navigateBack(true)}
+                        onPress={this.navigateBack(true)}
                     />
 
                     <View style={styles.fullLine} />
@@ -97,6 +94,10 @@ class CheckBookPlaceOrder extends Component {
 
 CheckBookPlaceOrder.propTypes = {
     navigation: PropTypes.instanceOf(Object),
+};
+
+CheckBookPlaceOrder.defaultProps = {
+    navigation: {}
 };
 
 export default CheckBookPlaceOrder;

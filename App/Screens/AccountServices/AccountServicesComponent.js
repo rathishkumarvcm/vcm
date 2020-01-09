@@ -1,37 +1,47 @@
 import React, { Component } from 'react';
-import { styles } from './styles';
 import { View, ScrollView, Text, TouchableOpacity } from 'react-native';
-import { GHeaderComponent, GIcon, GFooterComponent } from '../../CommonComponents';
 import PropTypes from "prop-types";
+import { styles } from './styles';
+import { GHeaderComponent, GIcon, GFooterComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class AccountServicesComponent extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoading: false,
-        };
-    }
 
     componentDidMount() { }
 
-    navigateDividents = () => this.props.navigation.navigate('dividentsAndCapitalGainsPref')
+    navigateDividents = () => { 
+        const { navigation } = this.props;
+        navigation.navigate('dividentsAndCapitalGainsPref');
+    }
 
-    navigateOrderCheckBook = () => this.props.navigation.navigate('orderCheckBook')
+    navigateOrderCheckBook = () => {
+        const { navigation } = this.props;
+        navigation.navigate('orderCheckBook');
+    }
 
-    navigateBankAccount = () => this.props.navigation.navigate('bankAccount')
+    navigateBankAccount = () => {
+        const { navigation } = this.props;
+        navigation.navigate('bankAccount');
+    }
 
-    navigateAutomatic = () => this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'})
+    navigateAutomatic = () => {
+        const { navigation } = this.props;
+        navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
+    }
 
-    navigateSystamatic = () => this.props.navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'})
+    navigateSystamatic = () => {
+        const { navigation } = this.props;
+        navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
+    }
  
 
     render() {
+        const { navigation } = this.props;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
 
-                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={{ justifyContent: 'center' }}>
+                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={styles.contentStyle}>
                     <View style={styles.profileHeader}>
                         <Text style={styles.profileHeadline}>
                             {gblStrings.accountServices.account_services}
@@ -174,6 +184,10 @@ class AccountServicesComponent extends Component {
 
 AccountServicesComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object)
+};
+
+AccountServicesComponent.defaultProps = {
+    navigation: {}
 };
 
 export default AccountServicesComponent;

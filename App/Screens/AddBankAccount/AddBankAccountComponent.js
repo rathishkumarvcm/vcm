@@ -23,22 +23,6 @@ class AddBankAccountComponent extends Component {
         };
     }
 
-    navigateBankAccount = (isSuccess) => {
-        this.props.navigation.navigate('bankAccount', {isSuccess});
-    }
-
-    setExpandInstruction = () => {
-        this.setState({
-            expand: !this.state.expand,
-        });
-    }
-
-    openAddBankOption = (bankName) => () => {
-        if(bankName === "Others") {
-            this.props.navigation.navigate('addOtherBankAccountComponent');
-        }
-    }
-
     componentDidMount() {
         const payload = [];
 
@@ -48,14 +32,53 @@ class AddBankAccountComponent extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props && this.props.popularBankInfo && this.props.popularBankInfo !== prevProps.popularBankInfo) {
-            this.setState({ popularAccount: JSON.parse(this.props.popularBankInfo)});
+            this.setState({ popularAccount: JSON.parse(this.props.popularBankInfo) });
         }
     }
 
+    setExpandInstruction = () => {
+        const { expand } = this.state;
+        this.setState({            
+            expand: !expand,
+        });
+    }
+
+    openAddBankOption = (bankName) => () => {
+        const { navigation } = this.props;
+        if(bankName === "Others") {
+            navigation.navigate('addOtherBankAccountComponent');
+        }
+    }    
+
+    navigateBankAccount = (isSuccess) => () => {
+        const { navigation } = this.props;
+        navigation.navigate('bankAccount', { isSuccess });
+    }
+
+    renderBankInfo = () => ({ item }) =>
+    (
+        <TouchableOpacity style={styles.accountView} onPress={this.openAddBankOption(item)}>
+            <GIcon
+                name="closesquareo"
+                type="antdesign"
+                size={11.43}
+                color="#56565A"
+            />
+
+            <Text style={styles.accountText}>
+                {`${item}`}
+            </Text>
+        </TouchableOpacity>
+    );
+
+    bankInfoKey = (item) => this.state.popularAccount.indexOf(item);
+
     render() {
+        const { navigation } = this.props;
+        const { popularAccount } = this.state;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
 
                 <ScrollView style={styles.scrollviewStyle} contentContainerStyle={styles.scrollViewContentStyle}>
                     <View style={styles.header}>
@@ -76,23 +99,19 @@ class AddBankAccountComponent extends Component {
                         {gblStrings.addPopularBankAccount.popular_account}
                     </Text>
 
-                    {this.props && this.props.popularBankInfo &&
+                    {this.props && popularAccount && (
                         <FlatList
-                            data={this.state.popularAccount}
-                            renderItem={({ item }) => (
-                                <ViewAccountItem
-                                    item={item}
-                                    openAddBankOption={this.openAddBankOption}
-                                />)}
-                            keyExtractor={(item) => this.state.popularAccount.indexOf(item)}
+                            data={popularAccount}
+                            renderItem={this.renderBankInfo()}
+                            keyExtractor={this.bankInfoKey}
                         />
-                    }
+                      )}
 
                     <GButtonComponent
                         buttonStyle={styles.backBtn}
                         buttonText={gblStrings.common.cancel}
                         textStyle={styles.backButtonText}
-                        onPress={() => this.navigateBankAccount(false)}
+                        onPress={this.navigateBankAccount(false)}
                     />
 
                     <View style={styles.fullLine} />
@@ -110,24 +129,6 @@ class AddBankAccountComponent extends Component {
     }
 }
 
-const ViewAccountItem = (props) => {
-    const {item} = props;
-    return (
-        <TouchableOpacity style={styles.accountView} onPress={props.openAddBankOption(item)}>
-            <GIcon 
-                name="closesquareo"
-                type="antdesign"
-                size={11.43}
-                color="#56565A"
-            />
-            
-            <Text style={styles.accountText}>
-                {`${item}`}
-            </Text>
-        </TouchableOpacity>
-    );
-};
-
 AddBankAccountComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     popularBankInfo: PropTypes.instanceOf(Object),
@@ -138,16 +139,6 @@ AddBankAccountComponent.defaultProps = {
     navigation: {},
     popularBankInfo: {},
     getPopularBankNames: () => {},
-};
-
-ViewAccountItem.propTypes = {
-    item: PropTypes.instanceOf(String),
-    openAddBankOption: PropTypes.func,
-};
-
-ViewAccountItem.defaultProps = {
-    item: "",
-    openAddBankOption: () => { },
 };
 
 export default AddBankAccountComponent;

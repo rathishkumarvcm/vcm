@@ -1,38 +1,52 @@
 import React, { Component } from 'react';
-import {styles} from './styles';
 import {View, ScrollView, Text, TouchableOpacity} from 'react-native';
-import { GHeaderComponent, GIcon, GFooterComponent } from '../../CommonComponents';
 import PropTypes from "prop-types";
+import {styles} from './styles';
+import { GHeaderComponent, GIcon, GFooterComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class SecurityPreferences extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoading: false,
-        };
-    }
 
     componentDidMount() { }
 
-    navigateBack = () => this.props.navigation.goBack();
+    navigateBack = () => {
+        const { navigation } = this.props;
+        navigation.goBack();
+    }
 
-    navigateChangeLogon = () => this.props.navigation.navigate('changeLogonCredentials');
+    navigateChangeLogon = () => {
+        const { navigation } = this.props;
+        navigation.navigate('changeLogonCredentials');
+    }
 
-    navigateAccountRecovery = () => this.props.navigation.navigate('accountRecoveryPref');
+    navigateAccountRecovery = () => {
+        const { navigation } = this.props;
+        navigation.navigate('accountRecoveryPref');
+    }
 
-    navigateModifySecurity = () => this.props.navigation.navigate('modifySecurityQues');
+    navigateModifySecurity = () => {
+        const { navigation } = this.props;
+        navigation.navigate('modifySecurityQues');
+    }
 
-    navigateChooseSignIn = () => this.props.navigation.navigate('ChangeSignInMethod');
+    navigateChooseSignIn = () => {
+        const { navigation } = this.props;
+        navigation.navigate('ChangeSignInMethod');
+    }
 
-    navigateQuickSignIn = () => this.props.navigation.navigate('QuickSigninComponent');
+    navigateQuickSignIn = () => {
+        const { navigation } = this.props;
+        navigation.navigate('QuickSigninComponent');
+    }
 
     render() {
+
+        const { navigation } = this.props;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
 
-                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={{ justifyContent: 'center' }}>
+                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={styles.contentStyle}>
                     <View style={styles.header}>
                         <Text style={styles.headerText}>
                             {gblStrings.userManagement.securityPref}
@@ -182,6 +196,10 @@ class SecurityPreferences extends Component {
 
 SecurityPreferences.propTypes = {
     navigation : PropTypes.instanceOf(Object)
+};
+
+SecurityPreferences.defaultProps = {
+    navigation: {}
 };
 
 export default SecurityPreferences;

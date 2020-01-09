@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from "prop-types";
 import { View, ScrollView, Text, Image } from 'react-native';
 import { GHeaderComponent, GInputComponent, GFooterComponent, GButtonComponent } from '../../CommonComponents';
-import PropTypes from "prop-types";
 import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import { CustomRadio } from '../../AppComponents';
@@ -12,9 +12,6 @@ class AddOtherBankAccountComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLoading: false,
-            expand: false,
-
             accountType: "",
             financialInstitutionName: "",
             accountOwner: "",
@@ -29,7 +26,24 @@ class AddOtherBankAccountComponent extends Component {
         };
     }
 
-    navigateBack = () => this.props.navigation.goBack();
+    componentDidUpdate(prevProps) {
+        const addBankAccKey = ActionTypes.ADD_BANK_ACCOUNT;
+        if (this.props.addBankAccount[addBankAccKey]) {
+            if (this.props.addBankAccount[addBankAccKey] !== prevProps.addBankAccount[addBankAccKey]) {
+                const tempResponse = this.props.addBankAccount[addBankAccKey];
+                if (tempResponse.statusCode === 200 && tempResponse.statusType === "S") {
+                    this.navigateBankAccount(true);
+                } else {
+                    this.navigateBankAccount(false);
+                }
+            }
+        }
+    }
+
+    navigateBack = () => {
+        const { navigation } = this.props;
+        navigation.goBack();
+    }
 
     navigateBankAccount = (isSuccess) => this.props.navigation.navigate('bankAccount', { isSuccess: isSuccess,
         accountType : this.state.accountType || "-",
@@ -73,21 +87,7 @@ class AddOtherBankAccountComponent extends Component {
             transitRoutingNumberValidation: true,
             accountNumberValidation: true
         });
-    }
-
-    componentDidUpdate(prevProps) {
-        const addBankAccKey = ActionTypes.ADD_BANK_ACCOUNT;
-        if (this.props.addBankAccount[addBankAccKey]) {
-            if (this.props.addBankAccount[addBankAccKey] !== prevProps.addBankAccount[addBankAccKey]) {
-                const tempResponse = this.props.addBankAccount[addBankAccKey];
-                if (tempResponse.statusCode === 200 && tempResponse.statusType === "S") {
-                    this.navigateBankAccount(true);
-                } else {
-                    this.navigateBankAccount(false);
-                }
-            }
-        }
-    }
+    }    
 
     validateBankAccount = () => {
 
@@ -134,7 +134,6 @@ class AddOtherBankAccountComponent extends Component {
 
     }
     callValidateBankAccount = () => {
-        console.log("callValidateBankAccount:::>", this.state);
         const validateBankAccountPayload = {
             "accountType": this.state.accountType || "-",
             "financialInstitutionName": this.state.financialInstitutionName || "-",
@@ -169,24 +168,24 @@ class AddOtherBankAccountComponent extends Component {
                             <CustomRadio
                                 componentStyle={{ width: "50%", marginBottom: scaledHeight(15) }}
                                 size={30}
-                                outerCicleColor={"#DEDEDF"}
-                                innerCicleColor={"#61285F"}
+                                outerCicleColor="#DEDEDF"
+                                innerCicleColor="#61285F"
                                 labelStyle={styles.lblRadioBtnTxt}
-                                label={"Savings"}
+                                label="Savings"
                                 descLabelStyle={styles.lblRadioDescTxt}
-                                descLabel={""}
+                                descLabel=""
                                 selected={(this.state.accountType !== null && this.state.accountType === "Savings") ? true : false}
                                 onPress={this.onPressRadio("accountType", "Savings")}
                             />
                             <CustomRadio
                                 componentStyle={{ width: "50%", marginBottom: scaledHeight(0) }}
                                 size={30}
-                                outerCicleColor={"#DEDEDF"}
-                                innerCicleColor={"#61285F"}
+                                outerCicleColor="#DEDEDF"
+                                innerCicleColor="#61285F"
                                 labelStyle={styles.lblRadioBtnTxt}
-                                label={"Checking"}
+                                label="Checking"
                                 descLabelStyle={styles.lblRadioDescTxt}
-                                descLabel={""}
+                                descLabel=""
                                 selected={(this.state.accountType !== null && this.state.accountType === "Checking") ? true : false}
                                 onPress={this.onPressRadio("accountType", "Checking")}
                             />
@@ -204,7 +203,7 @@ class AddOtherBankAccountComponent extends Component {
                         <GInputComponent
                             inputref={this.setInputRef("financialInstitutionName")}
                             propInputStyle={this.state.financialInstitutionNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                            placeholder={""}
+                            placeholder=""
                             maxLength={gblStrings.maxLength.common}
                             value={this.state.financialInstitutionName}
                             errorFlag={!this.state.financialInstitutionNameValidation}
@@ -220,7 +219,7 @@ class AddOtherBankAccountComponent extends Component {
                         <GInputComponent
                             inputref={this.setInputRef("accountOwner")}
                             propInputStyle={this.state.accountOwnerValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                            placeholder={""}
+                            placeholder=""
                             maxLength={gblStrings.maxLength.common}
                             value={this.state.accountOwner}
                             errorFlag={!this.state.accountOwnerValidation}
@@ -237,7 +236,7 @@ class AddOtherBankAccountComponent extends Component {
                         <GInputComponent
                             inputref={this.setInputRef("transitRoutingNumber")}
                             propInputStyle={this.state.transitRoutingNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                            placeholder={""}
+                            placeholder=""
                             maxLength={gblStrings.maxLength.transitRoutingNumber}
                             value={this.state.transitRoutingNumber}
                             errorFlag={!this.state.transitRoutingNumberValidation}
@@ -253,14 +252,14 @@ class AddOtherBankAccountComponent extends Component {
                         <GInputComponent
                             inputref={this.setInputRef("accountNumber")}
                             propInputStyle={this.state.accountNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                            placeholder={""}
+                            placeholder=""
                             maxLength={gblStrings.maxLength.accountNumber}
                             value={this.state.accountNumber}
                             errorFlag={!this.state.accountNumberValidation}
                             errorText={gblStrings.accManagement.emptyAccountNumber}
                             onChangeText={this.onChangeText("accountNumber")}
                             keyboardType="number-pad"
-                            returnKeyType={"done"}
+                            returnKeyType="done"
 
                         />
 

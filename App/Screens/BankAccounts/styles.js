@@ -10,6 +10,9 @@ export const styles = StyleSheet.create({
     scrollviewStyle: {
         flex: 0.85
     },
+    contentStyle: {
+        justifyContent: 'center'
+    },
     header: {
         marginTop: scaledHeight(22),
         alignItems: 'flex-start',

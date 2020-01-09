@@ -3,10 +3,11 @@
 */
 import 'react-native';
 import React from 'react';
-import DividentsForAccount from '../App/Screens/DividentsForAccount/DividentsForAccountComponent';
 import renderer from 'react-test-renderer';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import DividentsForAccount from '../App/Screens/DividentsForAccount/DividentsForAccountComponent';
+
 Enzyme.configure({ adapter: new Adapter() });
 
 const navigation = { navigate: jest.fn(), getParam: jest.fn() }

@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
     scrollviewStyle: {
         flex: 0.85
     },
+    contentStyle: { justifyContent: 'center' },
     welcomeView: {
         marginTop: scaledHeight(14),
         backgroundColor: '#E9E9E9'

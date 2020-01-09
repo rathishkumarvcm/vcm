@@ -3,10 +3,11 @@
 */
 import 'react-native';
 import React from 'react';
-import Dividents from '../App/Screens/Dividents/DividentsAndCapitalGainsPrefComponent';
 import renderer from 'react-test-renderer';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import Dividents from '../App/Screens/Dividents/DividentsAndCapitalGainsPrefComponent';
+
 Enzyme.configure({ adapter: new Adapter() });
 
 const navigation = { navigate: jest.fn(), addListener: jest.fn() }
