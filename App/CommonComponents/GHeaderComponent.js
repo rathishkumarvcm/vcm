@@ -8,6 +8,7 @@ import { NavigationActions } from 'react-navigation';
 import { DrawerActions } from 'react-navigation-drawer';
 import { GIcon } from './GIcon';
 import { scaledHeight, scaledWidth } from '../Utils/Resolution';
+import DrawerIcon from '../Screens/Menu/DrawerIcon'
 
 const { width } = Dimensions.get('window');
 
@@ -152,7 +153,7 @@ class GHeaderComponent extends Component {
   navigateProfile = () => this.props.navigation.navigate('profileSettings')
 
   moveToNotifications = () => this.props.navigation.navigate('NotificationTabs')
-  openLeftDrawer = () =>  this.props.navigation.navigate('DrawerOpen') 
+  openLeftDrawer = () => this.props.navigation.navigate('DrawerOpen')
 
   updateDataList = ({ item }) => {
     return (<TouchableOpacity
@@ -216,94 +217,85 @@ class GHeaderComponent extends Component {
 
 
           : (
-          <>
-            <TouchableOpacity style={styles.loginHeader}>
-              <TouchableOpacity style={{ width: '25%', height: scaledWidth(50) }}
-                onPress={this.headerClicked}
-              >
-                <Image style={{ width: '100%', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                  resizeMode="contain"
-                  source={require("../Images/logo.png")}
-                />
-              </TouchableOpacity>
+            <>
+              <TouchableOpacity style={styles.loginHeader}>
+                <TouchableOpacity style={{ width: '25%', height: scaledWidth(50) }}
+                  onPress={this.headerClicked}
+                >
+                  <Image style={{ width: '100%', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                    resizeMode="contain"
+                    source={require("../Images/logo.png")}
+                  />
+                </TouchableOpacity>
 
-              <View style={{ width: '15%' }} />
+                <View style={{ width: '12%' }} />
 
-              {!this.props.registerShow ? (
-<TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', marginTop: scaledHeight(15) }}
-                onPress={this.setMenu}
-              >
-                <GIcon
-                  name="user"
-                  type="evilicon"
-                  size={40}
-                  color="black"
-                />
-              </TouchableOpacity>
-) : null}
+                {!this.props.registerShow ? (
+                  <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', marginTop: scaledHeight(15) }}
+                    onPress={this.setMenu}
+                  >
+                    <GIcon
+                      name="user"
+                      type="evilicon"
+                      size={40}
+                      color="black"
+                    />
+                  </TouchableOpacity>
+                ) : null}
 
-              <View style={{ width: '10%' }} />
+                <View style={{ width: '10%' }} />
 
-              <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }}>
-                <GIcon
-                  name="ios-search"
-                  type="ionicon"
-                  size={30}
-                  color="black"
-                />
+                <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }}>
+                  <GIcon
+                    name="ios-search"
+                    type="ionicon"
+                    size={30}
+                    color="black"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }}
+                  onPress={this.moveToNotifications}>
+                  <GIcon
+                    name="md-notifications-outline"
+                    type="ionicon"
+                    size={30}
+                    color="black"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={{ alignItems: 'flex-end', justifyContent: 'center' }}>
+                  <DrawerIcon navigation={this.props.navigation} />
+                </TouchableOpacity>
               </TouchableOpacity>
-              <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }}
-                onPress={()=>this.moveToNotifications()}
-              >
-                <GIcon
-                  name="md-notifications-outline"
-                  type="ionicon"
-                  size={30}
-                  color="black"
-                />
-              </TouchableOpacity>
-
-              <TouchableOpacity style={{ alignItems: 'flex-end', justifyContent: 'center' }}
-                onPress={() =>this.openLeftDrawer()}
-              >
-                <GIcon
-                  name="menu"
-                  type="material"
-                  size={40}
-                  color="black"
-                />
-              </TouchableOpacity>
-            </TouchableOpacity>
-            {this.state.menuList && (
-              <TouchableOpacity
-                onPress={this.navigateProfile}
-                style={{ height: scaledHeight(250), marginTop: scaledHeight(85), zIndex: 2, position: 'absolute', borderWidth: 1, width: '100%', borderColor: "#DEDEDF", backgroundColor: 'white' }}
-              >
-                <FlatList
-                  data={newData}
-                  renderItem={this.updateDataList}
-                  keyExtractor={item => item.title}
-                />
-                {this.state.SignOut ?
-                  (
-                    <Modal
-                      transparent
-                      visible={this.state.ModalVisibleStatus}
-                    >
-                      <View style={styles.modalView}>
-                        <View style={styles.modalInsideView}>
-                          <Text style={styles.signIntext}>Signing Out </Text>
-                          <Image source={require('../Images/logo.png')} style={styles.modalImage} />
+              {this.state.menuList && (
+                <TouchableOpacity
+                  onPress={this.navigateProfile}
+                  style={{ height: scaledHeight(250), marginTop: scaledHeight(85), zIndex: 2, position: 'absolute', borderWidth: 1, width: '100%', borderColor: "#DEDEDF", backgroundColor: 'white' }}
+                >
+                  <FlatList
+                    data={newData}
+                    renderItem={this.updateDataList}
+                    keyExtractor={item => item.title}
+                  />
+                  {this.state.SignOut ?
+                    (
+                      <Modal
+                        transparent
+                        visible={this.state.ModalVisibleStatus}
+                      >
+                        <View style={styles.modalView}>
+                          <View style={styles.modalInsideView}>
+                            <Text style={styles.signIntext}>Signing Out </Text>
+                            <Image source={require('../Images/logo.png')} style={styles.modalImage} />
+                          </View>
                         </View>
-                      </View>
-                    </Modal>
-) : null
-                }
-              </TouchableOpacity>
-            )}
+                      </Modal>
+                    ) : null
+                  }
+                </TouchableOpacity>
+              )}
 
-          </>
-        )}
+            </>
+          )}
 
 
       </>

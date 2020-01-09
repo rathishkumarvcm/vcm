@@ -1,13 +1,12 @@
 import React from 'react';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { Text, View, TouchableOpacity, StyleSheet, ScrollView, Image, TouchableWithoutFeedback } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, ScrollView, Image, TouchableWithoutFeedback, SafeAreaView } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { DrawerActions } from 'react-navigation-drawer'
 import PropTypes from 'prop-types';
-import {styles} from './styles';
+import { styles } from './styles';
+import { GIcon } from '../../CommonComponents';
 
 class DrawerComponent extends React.Component {
-    // Detail Screen to show from any Open detail button
     navigateToScreen = (route) => () => {
         const navigateAction = NavigationActions.navigate({
             routeName: route
@@ -18,8 +17,8 @@ class DrawerComponent extends React.Component {
 
     render() {
         return (
-            <View style={styles.container}>
-                <ScrollView style={{ flex: 1 ,width:"100%"}}>
+            <SafeAreaView style={styles.container}>
+                <ScrollView style={{ flex: 1, width: "100%" }}>
                     <View>
                         <View style={styles.headerContainer}>
                             <Image source={require('../../Images/FaceID.png')} />
@@ -29,52 +28,52 @@ class DrawerComponent extends React.Component {
                             </View>
 
                         </View>
-                        <View style={{height:1,backgroundColor:'lightgray',marginHorizontal:15}}/>
+                        <View style={{ height: 1, backgroundColor: 'lightgray', marginHorizontal: 15 }} />
                         <TouchableWithoutFeedback onPress={this.navigateToScreen('Home')}>
                             <View style={styles.menuContainer}>
                                 <Image style={styles.menuIcon} source={require('../../Images/onlinemethod1.png')} />
                                 <Text style={styles.menuName}  >Personal Information</Text>
-                                <Icon name='chevron-right' size={25} color='#4D0000' />
+                                <GIcon name="chevron-right" type="material" size={25} color="#4D0000"/>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.navigateToScreen('Home')}>
                             <View style={styles.menuContainer}>
                                 <Image style={styles.menuIcon} source={require('../../Images/onlinemethod1.png')} />
                                 <Text style={styles.menuName} >Contact Information</Text>
-                                <Icon name='chevron-right' size={25} color='#4D0000' />
+                                <GIcon name="chevron-right" type="material" size={25} color="#4D0000"/>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.navigateToScreen('Home')}>
                             <View style={styles.menuContainer}>
                                 <Image style={styles.menuIcon} source={require('../../Images/onlinemethod1.png')} />
                                 <Text style={styles.menuName} >Financial Information</Text>
-                                <Icon name='chevron-right' size={25} color='#4D0000' />
+                                <GIcon name="chevron-right" type="material" size={25} color="#4D0000"/>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.navigateToScreen('Home')}>
                             <View style={styles.menuContainer}>
                                 <Image style={styles.menuIcon} source={require('../../Images/onlinemethod1.png')} />
                                 <Text style={styles.menuName}  >Employee Information</Text>
-                                <Icon name='chevron-right' size={25} color='#4D0000' />
+                                <GIcon name="chevron-right" type="material" size={25} color="#4D0000"/>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.navigateToScreen('editMilitaryInfo')}>
                             <View style={styles.menuContainer}>
                                 <Image style={styles.menuIcon} source={require('../../Images/onlinemethod1.png')} />
                                 <Text style={styles.menuName}  >Military Information</Text>
-                                <Icon name='chevron-right' size={25} color='#4D0000' />
+                                <GIcon name="chevron-right" type="material" size={25} color="#4D0000"/>
                             </View>
                         </TouchableWithoutFeedback>
                         <TouchableWithoutFeedback onPress={this.navigateToScreen('editRelationshipInfo')}>
                             <View style={styles.menuContainer}>
                                 <Image style={styles.menuIcon} source={require('../../Images/onlinemethod1.png')} />
                                 <Text style={styles.menuName} >Relationship Information</Text>
-                                <Icon name='chevron-right' size={25} color='#4D0000' />
+                                <GIcon name="chevron-right" type="material" size={25} color="#4D0000"/>
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
                 </ScrollView>
-            </View>
+            </SafeAreaView>
         );
     }
 }

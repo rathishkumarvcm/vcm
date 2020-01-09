@@ -1,23 +1,43 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import {
+    Platform,
+    TouchableHighlight,
+    View,
+    StyleSheet,
+    Text,
+} from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Icon from 'react-native-vector-icons/SimpleLineIcons';
-class DrawerIcon extends Component{
+import { GIcon } from '../../CommonComponents';
+
+class DrawerIcon extends Component {
     render() {
-    return (
-        <TouchableOpacity
-        style={{
-            alignSelf:'center',
-            width: 44,
-            height: 44,
-            marginLeft: 20
-        }}
-        onPress={()=>{
-            this.props.navigation.openDrawer();
-        }}>
-            <Icon name='menu' size={20} color='black'/>
-        </TouchableOpacity>
-    )
+        return (
+            <TouchableOpacity
+                style={{
+                    alignItems: 'flex-end', justifyContent: 'center',
+                    marginEnd: 10
+                }}
+                onPress={() => {
+                    if (Platform.OS === 'android')
+                        this.props.navigation.openDrawer();
+                    else
+                        this.props.navigation.navigate("draweriOS");
+                }}>
+                {(Platform.OS === 'android') ?
+                    <GIcon
+                        name="menu"
+                        type="material"
+                        size={40}
+                        color="black"
+                    /> : <GIcon
+                        name="account-circle"
+                        type="material"
+                        size={40}
+                        color="black"
+                    />}
+            </TouchableOpacity>
+        )
     };
 }
 export default withNavigation(DrawerIcon);

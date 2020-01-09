@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
     container: { flex: 1, width: '100%', justifyContent: 'center', alignItems: 'flex-start', backgroundColor: 'white' },
     headerContainer: {
         // backgroundColor: 'pink',
-        margin: 20,
+        marginHorizontal: 20,marginVertical:25,
         flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'
     },
     menuContainer: {
@@ -28,6 +28,7 @@ export const styles = StyleSheet.create({
     menuIcon: {
         width: 25,
         height: 25,
+        marginHorizontal:5,
         padding: 5
     },
     buttonGoActionStyle: {        

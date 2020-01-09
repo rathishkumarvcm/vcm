@@ -2,9 +2,9 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import React from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Modal } from 'react-native';
+import { GIcon } from './CommonComponents/GIcon';
 
 import LoginComponent from './Screens/Login/';
 import RegisterEmail from './Screens/RegisterEmail/RegisterEmailComponent';
@@ -215,51 +215,72 @@ const BottomTabNavigator = createBottomTabNavigator({
         screen: AccountServicesComponent,
         navigationOptions: {
             tabBarLabel: 'MyVCM',
-            tabBarIcon: ({ tintColor }) => (
-                <Icon name="home" color={tintColor} size={25} />
-            )
         },
     },
     portfolio: {
         screen: TermsAndConditions,
         navigationOptions: {
             tabBarLabel: 'Portfolio',
-            tabBarIcon: ({ tintColor }) => (
-                <Icon name="note" color={tintColor} size={25} />
-            )
         },
     },
     invest: {
         screen: AccountServicesComponent,
         navigationOptions: {
             tabBarLabel: 'Invest',
-            tabBarIcon: ({ tintColor }) => (
-                <Icon name="insert-chart" color={tintColor} size={25} />
-            )
         },
     },
     learn: {
         screen: ListView,
         navigationOptions: {
             tabBarLabel: 'Learn',
-            tabBarIcon: ({ tintColor }) => (
-                <Icon name="library-books" color={tintColor} size={25} />
-            )
         },
     },
     more: {
         screen: TermsAndConditions,
         navigationOptions: {
             tabBarLabel: 'More',
-            tabBarIcon: ({ tintColor }) => (
-                <Icon name="more" color={tintColor} size={25} />
-            )
         },
     },
-}, {
-    tabBarOptions: {
+},
+    {
+        defaultNavigationOptions: ({ navigation }) => ({
+            tabBarIcon: ({ focused, horizontal, tintColor }) => {
+                const { routeName } = navigation.state;
+                let iconName;
+                if (routeName === 'myVCM') {
+                    iconName = 'home';
+                } else if (routeName === 'portfolio') {
+                    iconName = 'note';
+                } else if (routeName === 'invest') {
+                    iconName = 'insert-chart';
+                }
+                else if (routeName === 'learn') {
+                    iconName = 'library-books';
+                } else {
+                    iconName = 'more';
+                }
+                return <GIcon
+                    name={iconName}
+                    type="material"
+                    size={20}
+                    color={tintColor}
+                />
+            },
+            tabBarOnPress: ({ defaultHandler }) => {
+                const { routes, index, params } = navigation.state;
+                // console.warn('onPress:', navigation);
+                if (navigation && navigation.isFocused()) {
+                    //  console.warn('isFocused:', navigation.state);
+                }
+                defaultHandler();
+            }
+        }),
+        tabBarOptions: {
+            //activeTintColor: '#42f44b',
+            inactiveTintColor: 'gray',
+        },
     }
-});
+);
 
 const DrawerNavigator = createDrawerNavigator({
     Home: BottomTabNavigator,
@@ -270,7 +291,7 @@ const DrawerNavigator = createDrawerNavigator({
 }, {
     initialRouteName: 'Home',
     contentComponent: DrawerComponent,
-    drawerWidth: 220
+    drawerWidth: 250
 });
 const AppNavigator = createStackNavigator({
     login: {
@@ -285,6 +306,10 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
+    draweriOS: {
+        screen: DrawerComponent,
+    },
+
     Common: {
         screen: CommonUIComponent,
         navigationOptions: {
