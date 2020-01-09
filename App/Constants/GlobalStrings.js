@@ -12,7 +12,7 @@ export default {
     common: {
         appName : "VCM MemeberServices",
         cancel: "Cancel",
-        ok: "Okay",
+        ok: "Ok",
         enable: "Enable",
         back: "Back",
         submit: "Submit",
@@ -656,6 +656,7 @@ export default {
         emptyUSResidentCardNoExpiryDateMsg: "Please select expiration date of U.S. Permanent Resident Card Number",
         emptyPassportNumberMsg: "Please select Passport Number",
         emptyPassportNoExpiryDateMsg: "Please select expiration date of Passport Number",
+        validateCompareFundsMsg: "Please select minimum 2 or maximum 4 funds to compare"
 
         
         

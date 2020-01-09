@@ -3,7 +3,7 @@ import { Text, View, ScrollView, TouchableOpacity, Image, KeyboardAvoidingView, 
 import PropTypes from "prop-types";
 import ImagePicker from 'react-native-image-picker';
 import styles from './styles';
-import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GDateComponent, GDropDownComponent, GSingletonClass } from '../../CommonComponents';
+import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GDateComponent, GDropDownComponent, GSingletonClass,showAlert } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
@@ -750,9 +750,11 @@ class OpenAccPageTwoComponent extends Component {
                     if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
                         const msg = tempResponse.message;
                         AppUtils.debugLog(`Account Type Saved ::: :: ${msg}`);
-                        alert(tempResponse.result);
+                        showAlert(gblStrings.common.appName, tempResponse.result, gblStrings.common.ok);
+                        AppUtils.debugLog(tempResponse.result);
                     } else {
-                        alert(tempResponse.message);
+                        showAlert(gblStrings.common.appName, tempResponse.message, gblStrings.common.ok);
+                        AppUtils.debugLog(tempResponse.message);
                     }
                 }
             }
@@ -974,7 +976,9 @@ class OpenAccPageTwoComponent extends Component {
                     //  alert ("Image stautus \n::"+JSON.stringify(tempResponse));
                     if (tempResponse && tempResponse.b) {
                         if (tempResponse.b.Location) {
-                            alert(`Image Uploaded Successfully \n::${tempResponse.b.Location}`);
+                            AppUtils.debugLog(`Image Uploaded Successfully \n::${tempResponse.b.Location}`);
+                            showAlert(gblStrings.common.appName, `Image Uploaded Successfully \n::${tempResponse.b.Location}`, gblStrings.common.ok);
+
                         }
                     }
                 }
@@ -1537,11 +1541,13 @@ class OpenAccPageTwoComponent extends Component {
                 AppUtils.debugLog('User cancelled image picker');
             } else if (response.error) {
                 AppUtils.debugLog('ImagePicker Error: ', response.error);
-                alert('Error: ', response.error);
+                showAlert(gblStrings.common.appName ,response.error,"OK");
+                AppUtils.debugLog(response.error); 
 
             } else if (response.customButton) {
                 AppUtils.debugLog('User tapped custom button: ', response.customButton);
-                alert(response.customButton);
+                showAlert(gblStrings.common.appName ,response.error,"OK");
+                AppUtils.debugLog(response.customButton); 
             } else {
                 //  const source = { uri: response.uri };
                 //  AppUtils.debugLog('response', JSON.stringify(response));
@@ -1575,7 +1581,6 @@ class OpenAccPageTwoComponent extends Component {
         newItems.stateKey = stateKey;
         newItems.objIndex = -1;
 
-        //  alert("onSubmitZipEditing::"+JSON.stringify(newItems));
         this.setState({ currentZipCodeRef: newItems });
 
         let payload = {};
@@ -2023,7 +2028,7 @@ class OpenAccPageTwoComponent extends Component {
         } else if (this.isEmpty(jointOwner.zipcode)) {
             errMsg = gblStrings.accManagement.emptyZipCodeMsg;
             input = 'zipcode';
-        } else if (this.state.personal.zipcode.length < gblStrings.maxLength.zipCode) {
+        } else if (jointOwner.zipcode.length < gblStrings.maxLength.zipCode) {
             errMsg = gblStrings.accManagement.invalidZipCodeMsg;
             input = 'zipcode';
         } else if (this.isEmpty(jointOwner.city)) {
@@ -2076,7 +2081,7 @@ class OpenAccPageTwoComponent extends Component {
         } else if (this.isEmpty(jointOwner.socialSecurityNo)) {
             errMsg = gblStrings.accManagement.emptySSNMsg;
             input = 'socialSecurityNo';
-        } else if (this.state.personal.socialSecurityNo.length < gblStrings.maxLength.ssnNo) {
+        } else if (jointOwner.socialSecurityNo.length < gblStrings.maxLength.ssnNo) {
             errMsg = gblStrings.accManagement.invalidSSNMsg;
             input = 'socialSecurityNo';
         } else if (this.isEmpty(jointOwner.empStatus)) {

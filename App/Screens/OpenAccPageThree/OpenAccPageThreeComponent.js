@@ -216,10 +216,10 @@ class OpenAccPageThreeComponent extends Component {
                     if (tempResponse.statusCode === 200) {
                         const msg = tempResponse.message;
                         AppUtils.debugLog(`Account Type Saved ::: :: ${ msg}`);
-                        showAlert(gblStrings.common.appName ,tempResponse.result,"OK");
+                        showAlert(gblStrings.common.appName ,tempResponse.result,gblStrings.common.ok);
                         AppUtils.debugLog(tempResponse.result);
                     } else {
-                        showAlert(gblStrings.common.appName ,tempResponse.message,"OK");
+                        showAlert(gblStrings.common.appName ,tempResponse.message,gblStrings.common.ok);
                         AppUtils.debugLog(tempResponse.message);
                     }
                 }
@@ -1085,10 +1085,12 @@ class OpenAccPageThreeComponent extends Component {
                    push('compareFunds', { fundDetails: fundSelectedCompare });
                }
             }else{
-                alert('Please select minimum 2 or maximum 4 funds to compare');
+                showAlert(gblStrings.common.appName ,gblStrings.accManagement.validateCompareFundsMsg,gblStrings.common.ok);
+                AppUtils.debugLog(gblStrings.accManagement.validateCompareFundsMsg);
             }
         }else{
-            alert('Please select minimum 2 or maximum 4 funds to compare');
+            showAlert(gblStrings.common.appName ,gblStrings.accManagement.validateCompareFundsMsg,gblStrings.common.ok);
+            AppUtils.debugLog(gblStrings.accManagement.validateCompareFundsMsg);
         }      
     }
 

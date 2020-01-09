@@ -38,6 +38,13 @@ const styles = StyleSheet.create({
         marginVertical: scaledHeight(12),
 
       },
+    explainContainer:{
+        alignItems: "center",
+         flexDirection: 'row',
+          flexWrap: 'wrap',
+           justifyContent: "flex-start",
+            marginTop: scaledHeight(13) 
+    },
     explainDotteBorderTxt: {
 
         //  marginTop:scaledHeight(10),
@@ -231,6 +238,12 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         marginTop: scaledHeight(19)
     },
+    scrollView: {
+        flex: .85
+    },
+
+
+
     sectionDescTxt: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(18),
@@ -238,9 +251,6 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(19.5)
 
     },
-
-
-
     sectionGrp: {
         flexGrow: 1,
         marginHorizontal: scaledHeight(12),

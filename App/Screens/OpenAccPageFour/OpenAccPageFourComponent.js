@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
+import PropTypes from "prop-types";
 import styles from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterComponent ,GLoadingSpinner,GSingletonClass} from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent ,GLoadingSpinner,GSingletonClass,showAlert} from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
-import PropTypes from "prop-types";
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+import AppUtils from '../../Utils/AppUtils';
 
 const dummyData = [
     { "key": "key1", "value": "Option1" },
@@ -19,7 +20,7 @@ class OpenAccPageFourComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
-        const openAccPageFour =  myInstance.getAccOpeningEditMode() ? (myInstance.getScreenStateData().openAccPageFour || {}):{};
+        const openAccPageFour = myInstance.getAccOpeningEditMode() ? (myInstance.getScreenStateData().openAccPageFour || {}):{};
 
         this.state = {
             selectedDividendCapitalGains: "",
@@ -32,73 +33,92 @@ class OpenAccPageFourComponent extends Component {
 
         };
     }
+
     /*----------------------
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
     componentDidMount() {
-        let payload = [];
+        const payload = [];
         const compositePayloadData = [
             "div_capGain_pref",
             "stmt_pros_rep"
         ];
 
-        for (let i = 0; i < compositePayloadData.length; i++) {
-            let tempkey = compositePayloadData[i];
-            if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempkey]) {
+        const { masterLookupStateData,getCompositeLookUpData } = this.props;
+
+        for (let i = 0; i < compositePayloadData.length; i+=1) {
+            const tempkey = compositePayloadData[i];
+            if (this.props && masterLookupStateData && !masterLookupStateData[tempkey]) {
                 payload.push(tempkey);
             }
         }
-        this.props.getCompositeLookUpData(payload);
+        getCompositeLookUpData(payload);
     }
 
     componentDidUpdate(prevProps, prevState) {
-        console.log("componentDidUpdate::::> "+prevState);
+        AppUtils.debugLog(`componentDidUpdate::::> ${prevState}`);
+        const { accOpeningData} = this.props;
+
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.PREFERENCE_SAVE_OPENING_ACCT;
-            if (this.props.accOpeningData[responseKey]) {
-                if (this.props.accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
-                    const tempResponse = this.props.accOpeningData[responseKey];
-                    if (tempResponse.statusCode == 200 || tempResponse.statusCode == '200') {
-                        let msg = tempResponse.message;
-                        console.log("Account Type Saved ::: :: " + msg);
-                        alert(tempResponse.result);
+            if (accOpeningData[responseKey]) {
+                if (accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
+                    const tempResponse = accOpeningData[responseKey];
+                    if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
+                        const msg = tempResponse.message;
+                        AppUtils.debugLog(`Account Type Saved ::: :: ${ msg}`);
+                        showAlert(gblStrings.common.appName ,tempResponse.result,"OK");
+                        AppUtils.debugLog(tempResponse.result);
                     } else {
-                        alert(tempResponse.message);
+                        showAlert(gblStrings.common.appName ,tempResponse.message,"OK");
+                        AppUtils.debugLog(tempResponse.message);
                     }
                 }
             }
         }
     }
+
     /*----------------------
                                  Button Events
                                                                  -------------------------- */
     onClickHeader = () => {
-        console.log("#TODO : onClickHeader");
+        AppUtils.debugLog("#TODO : onClickHeader");
     }
+
     goBack = () => {
         myInstance.setAccOpeningEditMode(false);
-        this.props.navigation.goBack();
+        const { navigation} = this.props;
+        const { goBack } = navigation;  
+        goBack();
     }
+
     onClickCancel = () => {
         myInstance.setAccOpeningEditMode(false);
-        this.props.navigation.goBack('termsAndConditions');
+        const { navigation} = this.props;
+        const { goBack } = navigation;  
+        goBack('termsAndConditions');
     }
+
     onClickDownloadPDF = () => {
-        alert("#TODO : Download");
+        showAlert(gblStrings.common.appName ,"#TODO : Download","OK");
     }
+
     getPayload = () => {
         const savedAccData = myInstance.getSavedAccData();
+        const {selectedDividendCapitalGains,selectedProspectusReportsRef} = this.state;
+
         const payload = {
             ...savedAccData,
             "accountPreferences": {
-                "dividendCapitalGain": this.state.selectedDividendCapitalGains || "",
-                "documentDeliveryFormat": this.state.selectedProspectusReportsRef || ""
+                "dividendCapitalGain": selectedDividendCapitalGains || "",
+                "documentDeliveryFormat": selectedProspectusReportsRef || ""
             },
         };
         
         return payload;
 
     }
+
     replaceUndefinedOrNull= (key, value) => {
         if (value === null || value === undefined || value ==='') {
           return undefined;
@@ -106,12 +126,15 @@ class OpenAccPageFourComponent extends Component {
 
         return value;
       }
+
     getCleanedPayload = (payload) =>{
         const cleanedObject = JSON.stringify(payload, this.replaceUndefinedOrNull, 4);
         return JSON.parse(cleanedObject);
     }
 
     onClickNext = () => {
+        const { navigation} = this.props;
+        const { navigate } = navigation;  
         if (this.validateFields()) {
             const payload = this.getPayload();
            //  this.props.saveData("OpenAccPageFour", payload);
@@ -122,36 +145,43 @@ class OpenAccPageFourComponent extends Component {
                 "openAccPageFour":{...this.state}
               }; 
             myInstance.setScreenStateData(screenState);
-            this.props.navigation.navigate({ routeName: 'openAccPageFive', key: 'openAccPageFive' });
+            navigate({ routeName: 'openAccPageFive', key: 'openAccPageFive' });
           }
         }
+
     onClickSave = () => {
-        console.log("onClickSave::::> ");
+        AppUtils.debugLog("onClickSave::::> ");
+        const { saveAccountOpening} = this.props;
         if (this.validateFields()) {
             const payload = this.getPayload();
-            this.props.saveAccountOpening("OpenAccPageFour", payload);
+            saveAccountOpening("OpenAccPageFour", payload);
         }
     }
+
     onPressRadio = (keyName, text) => () => this.setState({
         [keyName]: text,
         dividendCapitalGainsValidation:true,
         ProspectusReportsRefValidation:true
     });
+
     isEmpty = (str) => {
-        if (str == "" || str == undefined || str == "null" || str == "undefined") {
+        if (str === "" || str === undefined || str === "null" || str === "undefined") {
             return true;
-        } else {
+        } 
             return false;
-        }
+        
     }
+
     validateFields = () => {
-        var errMsg = "";
+        const {selectedDividendCapitalGains,selectedProspectusReportsRef} = this.state;
+
+        let errMsg = "";
         let input = "";
-        var isValidationSuccess = false;
-        if (this.isEmpty(this.state.selectedDividendCapitalGains)) {
+        let isValidationSuccess = false;
+        if (this.isEmpty(selectedDividendCapitalGains)) {
             errMsg = gblStrings.accManagement.emptyDividendCapitalGainsMsg;
             input = "dividendCapitalGainsValidation";
-        } else if (this.isEmpty(this.state.selectedProspectusReportsRef)) {
+        } else if (this.isEmpty(selectedProspectusReportsRef)) {
             errMsg = gblStrings.accManagement.emptyProspectusReportsRefMsg;
             input = "ProspectusReportsRefValidation";
 
@@ -159,12 +189,10 @@ class OpenAccPageFourComponent extends Component {
             isValidationSuccess = true;
         }
 
-        if (!isValidationSuccess) {
-           //  alert(errMsg);
-        }
+       
         this.setState({
-            isValidationSuccess: isValidationSuccess,
-            errMsg:isValidationSuccess == false ? errMsg:"",
+            isValidationSuccess,
+            errMsg:isValidationSuccess === false ? errMsg:"",
             [input]: false
 
          });
@@ -174,7 +202,9 @@ class OpenAccPageFourComponent extends Component {
     }
 
     renderRadio = (radioName, radioSize, componentStyle, layoutStyle) => {
-        console.log("renderRadio::: " + radioName);
+        AppUtils.debugLog(`renderRadio::: ${ radioName}`);
+        const { masterLookupStateData} = this.props;
+
         let tempkey = "";
         let radioData = dummyData;
         switch (radioName) {
@@ -184,28 +214,31 @@ class OpenAccPageFourComponent extends Component {
             case "selectedProspectusReportsRef":
                 tempkey = "stmt_pros_rep";
                 break;
+            default:
+                break;
+            
         }
 
-        console.log("tempkey::" + tempkey);
+        AppUtils.debugLog(`tempkey::${ tempkey}`);
 
-        if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
-            radioData = this.props.masterLookupStateData[tempkey].value;
+        if (this.props && masterLookupStateData && masterLookupStateData[tempkey] && masterLookupStateData[tempkey].value) {
+            radioData = masterLookupStateData[tempkey].value;
         }
 
-        let radioCoponents = [];
-        for (let i = 0; i < radioData.length; i++) {
+        const radioCoponents = [];
+        for (let i = 0; i < radioData.length; i) {
             radioCoponents.push(
                 <CustomRadio
                     key={radioData[i].key}
                     componentStyle={componentStyle}
                     size={radioSize}
-                    outerCicleColor={"#DEDEDF"}
-                    innerCicleColor={"#61285F"}
+                    outerCicleColor="#DEDEDF"
+                    innerCicleColor="#61285F"
                     labelStyle={styles.lblRadioBtnTxt}
                     label={radioData[i].value}
                     descLabelStyle={styles.lblRadioDescTxt}
                     descLabel={radioData[i].value}
-                    selected={(this.state[radioName] !== null && this.state[radioName] == radioData[i].key) ? true : false}
+                    selected={!!((this.state[radioName] !== null && this.state[radioName] === radioData[i].key))}
                     onPress={this.onPressRadio(radioName, radioData[i].key)}
                 />
             );
@@ -223,22 +256,25 @@ class OpenAccPageFourComponent extends Component {
                                  Render Methods
                                                                  -------------------------- */
     render() {
-        let currentPage = 4;
+        const currentPage = 4;
+        const { accOpeningData,masterLookupStateData,navigation} = this.props;
+        const {dividendCapitalGainsValidation,ProspectusReportsRefValidation} = this.state;
+
         return (
             <View style={styles.container}>
                  {
-                    (this.props.accOpeningData.isLoading || this.props.masterLookupStateData.isLoading) && <GLoadingSpinner />
+                    (accOpeningData.isLoading || masterLookupStateData.isLoading) && <GLoadingSpinner />
                 }
                 <GHeaderComponent
-                    navigation={this.props.navigation}
+                    navigation={navigation}
                     onPress={this.onClickHeader}
                 />
-                <ScrollView style={{ flex: .85 }}>
-                    <CustomPageWizard currentPage={currentPage} pageName={(currentPage) + " " + gblStrings.accManagement.preferences} />
+                <ScrollView style={styles.scrollView}>
+                    <CustomPageWizard currentPage={currentPage} pageName={`${currentPage } ${ gblStrings.accManagement.preferences}`} />
 
-                    { /*-----------General Account Preferences -------------------*/}
-                    <View style={[styles.sectionGrp]}>
-                        <View style={styles.accTypeSelectSection} >
+                    { /* -----------General Account Preferences -------------------*/}
+                    <View style={styles.sectionGrp}>
+                        <View style={styles.accTypeSelectSection}>
                             <Text style={styles.headings}>
                                 {gblStrings.accManagement.genealAccPreferences}
                             </Text>
@@ -249,17 +285,17 @@ class OpenAccPageFourComponent extends Component {
                             {gblStrings.accManagement.genealAccPreferencesNote}
                         </Text>
 
-                        <View style={styles.questSectionGrp} >
+                        <View style={styles.questSectionGrp}>
                             <Text style={styles.questTxt}>
                                 {gblStrings.accManagement.dividensAndCapitalQuest}
                             </Text>
-                            {!this.state.dividendCapitalGainsValidation &&
+                            {!dividendCapitalGainsValidation && (
                                 <Text style={styles.errMsg}>
                                     {gblStrings.accManagement.emptyDividendCapitalGainsMsg}
                                 </Text>
-                            }
+                              )}
 
-                            <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "flex-start", flexWrap: 'wrap', marginTop: scaledHeight(13) }}>
+                            <View style={styles.explainContainer}>
                                 <Text style={styles.explainTxt}>
                                     {"Explain - "}
                                 </Text>
@@ -277,12 +313,12 @@ class OpenAccPageFourComponent extends Component {
                             <Text style={styles.questTxt}>
                                 {gblStrings.accManagement.prospectusReports}
                             </Text>
-                            {!this.state.ProspectusReportsRefValidation &&
+                            {!ProspectusReportsRefValidation && (
                                 <Text style={styles.errMsg}>
                                     {gblStrings.accManagement.emptyProspectusReportsRefMsg}
                                 </Text>
-                            }
-                            <View style={{ flexDirection: 'row', alignItems: "center", justifyContent: "flex-start", flexWrap: 'wrap', marginTop: scaledHeight(13) }}>
+                              )}
+                            <View style={styles.explainContainer}>
                                 <Text style={styles.explainTxt}>
                                     {"Explain - "}
                                 </Text>
@@ -303,7 +339,7 @@ class OpenAccPageFourComponent extends Component {
                     </View>
 
 
-                    { /*----------- Buttons Group -------------------*/}
+                    { /* ----------- Buttons Group -------------------*/}
 
                     <View style={styles.btnGrp}>
 
@@ -334,7 +370,7 @@ class OpenAccPageFourComponent extends Component {
                         />
                     </View>
 
-                    { /*----------- Disclaimer -------------------*/}
+                    { /* ----------- Disclaimer -------------------*/}
 
                     <View style={styles.newVictorySection}>
                         <Text style={styles.disclaimerTitleTxt}>
@@ -363,8 +399,16 @@ OpenAccPageFourComponent.propTypes = {
     accOpeningData: PropTypes.instanceOf(Object),
     masterLookupStateData: PropTypes.instanceOf(Object),
    
-    saveData:PropTypes.func,
     saveAccountOpening:PropTypes.func,
     getCompositeLookUpData:PropTypes.func
+};
+OpenAccPageFourComponent.defaultProps = {
+    navigation: {},
+    accOpeningData: {},
+    masterLookupStateData: {},
+    getCompositeLookUpData: null,
+    saveAccountOpening: null
+    
+
 };
 export default OpenAccPageFourComponent;

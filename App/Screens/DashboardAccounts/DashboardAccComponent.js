@@ -221,7 +221,7 @@ class DashboardAccComponent extends Component {
         return (
             <View style={styles.container}>
                 {accOpeningData.isLoading && <GLoadingSpinner />}
-                {accOpeningData.isError && showAlert("VCM Memeber Services","Service Error","OK")}
+                {accOpeningData.isError && showAlert(gblStrings.common.appName,"Service Error",gblStrings.common.ok)}
 
 
                 <GHeaderComponent navigation={navigation} onPress={this.onClickHeader} />
