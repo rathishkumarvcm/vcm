@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
-import { GHeaderComponent, GIcon, GFooterComponent } from '../../CommonComponents';
+import { GHeaderComponent, GIcon, GFooterSettingsComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import CardHeader from './CardHeader';
 
@@ -23,15 +23,17 @@ class ManageBenificiariesComponent extends Component {
   }
 
   handleEdit = (data) => () => {
+    const { navigation, saveBeneficiaryData } = this.props;
     const payloadData = {
       savedBeneficiaryData: data
     };
-    this.props.saveBeneficiaryData(payloadData);
-    this.props.navigation.navigate("editManageBeneficiaries", { acc_Data: data });
+    saveBeneficiaryData(payloadData);
+    navigation.navigate("editManageBeneficiaries", { acc_Data: data });
   }
 
   onClickAddBeneficiary = () => {
-    this.props.navigation.navigate("addManageBeneficiaries");
+    const { navigation } = this.props;
+    navigation.navigate("addManageBeneficiaries");
   }
 
   getDeleteData = (item) => {
@@ -74,8 +76,9 @@ class ManageBenificiariesComponent extends Component {
   }
 
   deleteBene = (item) => () => {
+    const { deleteBeneficiaryData } = this.props;
     const payloadData = this.getDeleteData(item);
-    this.props.deleteBeneficiaryData(payloadData);
+    deleteBeneficiaryData(payloadData);
   }
 
   generateKeyExtractor = (item) => item.key;
@@ -163,60 +166,70 @@ class ManageBenificiariesComponent extends Component {
     </View>
   );
 
-  renderBeneficiaryData = ({ item }) => (
-    <View style={styles.blockMarginTop}>
-      <View style={styles.titleHeadingView}>
-        <Text style={styles.titleWithIconStyle}>{this.state.collapseIcon}</Text>
-        <Text style={styles.titleHeaderText}>{item.account_Type}</Text>
-      </View>
-      <View style={styles.line} />
-      <View style={styles.containerView}>
-        <View style={styles.containerHeaderView}>
-          <Text style={styles.containerHeaderText}>{` - Acc Name - ${item.account_Name} | Acc Number - ${item.account_Number}`}</Text>
-          <View style={styles.flexDirectionStyle}>
-            <Text style={styles.containerHeaderText}>{` Value - $ ${item.accumulated_Value} | ${gblStrings.accManagement.distributionPercentage} - ${item.distribution_Per} %`}</Text>
-            <TouchableOpacity onPress={this.handleEdit(item)}>
-              <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
-            </TouchableOpacity>
-          </View>
+  renderBeneficiaryData = ({ item }) => {
+    const { collapseIcon } = this.state;
+    return (
+      <View style={styles.blockMarginTop}>
+        <View style={styles.titleHeadingView}>
+          <Text style={styles.titleWithIconStyle}>{collapseIcon}</Text>
+          <Text style={styles.titleHeaderText}>{item.account_Type}</Text>
         </View>
-        {item.primary_Bene &&
-          <FlatList
-            data={item.primary_Bene}
-            extraData={this.props}
-            keyExtractor={this.generateKeyExtractor}
-            renderItem={this.renderPrimaryBeneficiary}
-          />
-        }
-        {item.contingent_Bene &&
-          <FlatList
-            data={item.contingent_Bene}
-            extraData={this.props}
-            keyExtractor={this.generateKeyExtractor}
-            renderItem={this.renderContingentBeneficiary}
-          />
-        }
-        {item.transfer_on_Death_Bene &&
-          <FlatList
-            data={item.transfer_on_Death_Bene}
-            extraData={this.props}
-            keyExtractor={this.generateKeyExtractor}
-            renderItem={this.renderTransferOnDeathBeneficiary}
-          />
-        }
+        <View style={styles.line} />
+        <View style={styles.containerView}>
+          <View style={styles.containerHeaderView}>
+            <Text style={styles.containerHeaderText}>{` - Acc Name - ${item.account_Name} | Acc Number - ${item.account_Number}`}</Text>
+            <View style={styles.flexDirectionStyle}>
+              <Text style={styles.containerHeaderText}>{` Value - $ ${item.accumulated_Value} | ${gblStrings.accManagement.distributionPercentage} - ${item.distribution_Per} %`}</Text>
+              <TouchableOpacity onPress={this.handleEdit(item)}>
+                <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          {item.primary_Bene &&
+            (
+              <FlatList
+                data={item.primary_Bene}
+                extraData={this.props}
+                keyExtractor={this.generateKeyExtractor}
+                renderItem={this.renderPrimaryBeneficiary}
+              />
+            )
+          }
+          {item.contingent_Bene &&
+            (
+              <FlatList
+                data={item.contingent_Bene}
+                extraData={this.props}
+                keyExtractor={this.generateKeyExtractor}
+                renderItem={this.renderContingentBeneficiary}
+              />
+            )
+          }
+          {item.transfer_on_Death_Bene &&
+            (
+              <FlatList
+                data={item.transfer_on_Death_Bene}
+                extraData={this.props}
+                keyExtractor={this.generateKeyExtractor}
+                renderItem={this.renderTransferOnDeathBeneficiary}
+              />
+            )
+          }
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
 
   render() {
-
-    if (this.props.manageBeneficiaryData && this.props.manageBeneficiaryData.manage_beneficiary && this.props.manageBeneficiaryData.manage_beneficiary) {
-      beneficiaryData = this.props.manageBeneficiaryData.manage_beneficiary;
+    const { manageBeneficiaryData, navigation } = this.props;
+    const { isSuccessNotification, notificationMsg } = this.state;
+    if (this.props && manageBeneficiaryData && manageBeneficiaryData.manage_beneficiary && manageBeneficiaryData.manage_beneficiary) {
+      beneficiaryData = manageBeneficiaryData.manage_beneficiary;
     }
 
     return (
       <View style={styles.container}>
-        <GHeaderComponent navigation={this.props.navigation} />
+        <GHeaderComponent navigation={navigation} />
         <ScrollView style={styles.flexMainView}>
           <View style={styles.mainHeadingView}>
             <View style={styles.addNewBeneView}>
@@ -231,18 +244,20 @@ class ManageBenificiariesComponent extends Component {
             </View>
           </View>
           <View style={styles.line} />
-          {this.state.isSuccessNotification ?
-            <View style={styles.notificationView}>
-              <TouchableOpacity style={styles.flexSmall}>
-                <GIcon name="check" type="MaterialIcons" size={40} color="#707070" />
-              </TouchableOpacity>
-              <View style={styles.saveSuccessMsgTxt}>
-                <Text style={styles.notificationTxt}>{this.state.notificationMsg}</Text>
+          {isSuccessNotification ?
+            (
+              <View style={styles.notificationView}>
+                <TouchableOpacity style={styles.flexSmall}>
+                  <GIcon name="check" type="MaterialIcons" size={40} color="#707070" />
+                </TouchableOpacity>
+                <View style={styles.saveSuccessMsgTxt}>
+                  <Text style={styles.notificationTxt}>{notificationMsg}</Text>
+                </View>
+                <TouchableOpacity style={styles.flexSmall}>
+                  <GIcon name="close" type="EvilIcons" size={40} color="#707070" />
+                </TouchableOpacity>
               </View>
-              <TouchableOpacity style={styles.flexSmall}>
-                <GIcon name="close" type="EvilIcons" size={40} color="#707070" />
-              </TouchableOpacity>
-            </View> : null
+            ) : null
           }
           <View style={styles.mainHeadingView}>
             <Text style={styles.contentText}>
@@ -258,18 +273,9 @@ class ManageBenificiariesComponent extends Component {
             keyExtractor={this.generateKeyExtractor}
             renderItem={this.renderBeneficiaryData}
           />
-          <View style={styles.footerView} />
-          <View style={styles.line} />
-          <View style={styles.blockMarginTop} />
-          <View style={styles.mainHeadingView}>
-            <Text style={styles.disclaimerTextHeading}>
-              {gblStrings.accManagement.VCDiscalimerTitle}
-            </Text>
-            <Text style={styles.disclaimerTxt}>
-              {gblStrings.accManagement.VCDiscalimerDescContent}
-            </Text>
-          </View>
-          <GFooterComponent />
+
+          {/* ---------------------- Footer View -------------------- */}
+          <GFooterSettingsComponent />
         </ScrollView>
       </View>
     );

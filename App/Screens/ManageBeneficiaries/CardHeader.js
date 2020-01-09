@@ -19,29 +19,34 @@ class CardHeader extends Component {
     }
 
     onDelete = () => {
+        const { onPressDelete } = this.props;
         this.setState({ showModal: false });
-        this.props.onPressDelete();
+        onPressDelete();
     }
 
     render() {
+        const { showModal } = this.state;
+        const { item } = this.props;
         return (
             <View>
                 <View style={styles.innerHeaderView}>
                     <View style={styles.flexDirectionStyle}>
                         <Text style={styles.shortContentText}>{gblStrings.accManagement.contractNumber}</Text>
-                        <Text style={styles.contractText}>{this.props.item.contract_Number}</Text>
+                        <Text style={styles.contractText}>{item.contract_Number}</Text>
                     </View>
                     <TouchableOpacity style={styles.sideBtn} onPress={this.updateState}>
                         <GIcon name="dots-three-vertical" type="entypo" size={30} color="black" />
                     </TouchableOpacity>
                 </View>
                 {
-                    this.state.showModal ?
-                        <View style={styles.shadowView}>
-                            <TouchableOpacity onPress={this.onDelete}>
-                                <Text style={styles.lblTxtInner}>{gblStrings.common.delete}</Text>
-                            </TouchableOpacity>
-                        </View>
+                    showModal ?
+                        (
+                            <View style={styles.shadowView}>
+                                <TouchableOpacity onPress={this.onDelete}>
+                                    <Text style={styles.lblTxtInner}>{gblStrings.common.delete}</Text>
+                                </TouchableOpacity>
+                            </View>
+                        )
                         : null
                 }
             </View>

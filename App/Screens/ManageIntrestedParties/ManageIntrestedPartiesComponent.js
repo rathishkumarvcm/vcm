@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import PropTypes from "prop-types";
 import styles from './styles';
-import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import { GIcon, GHeaderComponent, GFooterSettingsComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import CardHeader from './CardHeader';
 
@@ -22,21 +22,25 @@ class manageIntrestedPartiesComponent extends Component {
     }
 
     componentDidUpdate(prevProps) {
+        const { navigation } = this.props;
         if (this.props !== prevProps) {
-            this.setState({ isSavedSuccess: this.props.navigation.getParam("showMsg"), successMsg: this.props.navigation.getParam("successMsg") });
+            this.setState({ isSavedSuccess: navigation.getParam("showMsg"), successMsg: navigation.getParam("successMsg") });
         }
     }
 
     updateNavigationProps = () => {
-        this.setState({ isSavedSuccess: this.props.navigation.getParam("showMsg"), successMsg: this.props.navigation.getParam("successMsg") });
+        const { navigation } = this.props;
+        this.setState({ isSavedSuccess: navigation.getParam("showMsg"), successMsg: navigation.getParam("successMsg") });
     }
 
     addInterestedParty = (data) => () => {
-        this.props.navigation.navigate("addIntrestedParties", { acc_Data: data });
+        const { navigation } = this.props;
+        navigation.navigate("addIntrestedParties", { acc_Data: data });
     }
 
     onClickEdit = (pObj, pKey, data) => () => {
-        this.props.navigation.navigate("editIntrestedParty", { acc_Data: data, parent_Obj: pObj, parent_Key: pKey });
+        const { navigation } = this.props;
+        navigation.navigate("editIntrestedParty", { acc_Data: data, parent_Obj: pObj, parent_Key: pKey });
     }
 
     getDeleteData = (item, obj) => {
@@ -56,15 +60,17 @@ class manageIntrestedPartiesComponent extends Component {
     }
 
     onDeleteFunc = (item, data) => () => {
+        const { deleteInterestedParties } = this.props;
         const payloadData = this.getDeleteData(item, data);
-        this.props.deleteInterestedParties(payloadData);
+        deleteInterestedParties(payloadData);
     }
 
     renderData = ({ item }) => {
+        const { collapseIcon } = this.state;
         return (
             <View style={styles.blockMarginTop}>
                 <View style={styles.titleHeadingView}>
-                    <Text style={styles.titleIconView}>{this.state.collapseIcon}</Text>
+                    <Text style={styles.titleIconView}>{collapseIcon}</Text>
                     <Text style={styles.titleHeaderText}>{item.account_Type}</Text>
                 </View>
                 <View style={styles.line} />
@@ -107,36 +113,40 @@ class manageIntrestedPartiesComponent extends Component {
     generateKeyExtractor = (item) => item.key;
 
     render() {
-        if (this.props.manageInterestedPartiesData && this.props.manageInterestedPartiesData.list_manage_interested_parties) {
-            newInterestedParties = this.props.manageInterestedPartiesData.list_manage_interested_parties;
+        const { navigation, manageInterestedPartiesData } = this.props;
+        const { successMsg, isSavedSuccess } = this.state;
+        if (this.props && manageInterestedPartiesData && manageInterestedPartiesData.list_manage_interested_parties) {
+            newInterestedParties = manageInterestedPartiesData.list_manage_interested_parties;
         }
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.flexMainView} keyboardShouldPersistTaps="always" ref={this.setScrollViewRef}>
                     <View style={styles.mainHeadingView}>
-                        {this.state.isSavedSuccess &&
-                            <View style={styles.notificationView}>
-                                <TouchableOpacity style={styles.flexSmall}>
-                                    <GIcon
-                                        name="check"
-                                        type="MaterialIcons"
-                                        size={40}
-                                        color="#707070"
-                                    />
-                                </TouchableOpacity>
-                                <View style={styles.saveSuccessMsgTxt}>
-                                    <Text style={styles.notificationTxt}>{this.state.successMsg}</Text>
+                        {isSavedSuccess &&
+                            (
+                                <View style={styles.notificationView}>
+                                    <TouchableOpacity style={styles.flexSmall}>
+                                        <GIcon
+                                            name="check"
+                                            type="MaterialIcons"
+                                            size={40}
+                                            color="#707070"
+                                        />
+                                    </TouchableOpacity>
+                                    <View style={styles.saveSuccessMsgTxt}>
+                                        <Text style={styles.notificationTxt}>{successMsg}</Text>
+                                    </View>
+                                    <TouchableOpacity style={styles.flexSmall}>
+                                        <GIcon
+                                            name="close"
+                                            type="EvilIcons"
+                                            size={40}
+                                            color="#707070"
+                                        />
+                                    </TouchableOpacity>
                                 </View>
-                                <TouchableOpacity style={styles.flexSmall}>
-                                    <GIcon
-                                        name="close"
-                                        type="EvilIcons"
-                                        size={40}
-                                        color="#707070"
-                                    />
-                                </TouchableOpacity>
-                            </View>
+                            )
                         }
                         <Text style={styles.mainHeadlineText}>
                             {gblStrings.accManagement.manageIntrestedParties}
@@ -148,12 +158,8 @@ class manageIntrestedPartiesComponent extends Component {
                         keyExtractor={this.generateKeyExtractor}
                         renderItem={this.renderData}
                     />
-                    <View style={styles.borderInternal} />
-                    <View style={styles.mainHeadingView}>
-                        <Text style={styles.disclaimerTextHeading}>{gblStrings.accManagement.VCDiscalimerTitle}</Text>
-                        <Text style={styles.disclaimerTxt}>{gblStrings.accManagement.VCDiscalimerDescContent}</Text>
-                    </View>
-                    <GFooterComponent />
+                    {/* ---------------------- Footer View -------------------- */}
+                    <GFooterSettingsComponent />
                 </ScrollView>
             </View>
 

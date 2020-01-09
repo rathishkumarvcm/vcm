@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import PropTypes from "prop-types";
 import styles from './styles';
-import { GIcon, GHeaderComponent, GLoadingSpinner, GFooterComponent, GInputComponent, GDateComponent, GDropDownComponent, GButtonComponent } from '../../CommonComponents';
+import { GIcon, GHeaderComponent, GLoadingSpinner, GFooterSettingsComponent, GInputComponent, GDateComponent, GDropDownComponent, GButtonComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 import { nameRegex, emailRegex, zipCodeRegex } from '../../Constants/RegexConstants';
@@ -63,28 +63,30 @@ class addNewIntrestedPartiesComponent extends Component {
     }
 
     componentDidMount() {
+        const { masterLookupStateData, getCompositeLookUpData } = this.props;
         const payload = [];
         const compositePayloadData = [
             "relationship"
         ];
         for (let i = 0; i < compositePayloadData.length; i += 1) {
             const tempKey = compositePayloadData[i];
-            if (this.props && this.props.masterLookupStateData && !this.props.masterLookupStateData[tempKey]) {
+            if (this.props && masterLookupStateData && !masterLookupStateData[tempKey]) {
                 payload.push(tempKey);
             }
         }
-        this.props.getCompositeLookUpData(payload);
+        getCompositeLookUpData(payload);
         this.updateState();
     }
 
     componentDidUpdate(prevProps) {
         const stateCityResponseData = ActionTypes.GET_STATECITY;
         const addressResponseData = ActionTypes.GET_ADDRESSFORMAT;
-
-        if (this.state.isZipApiCalling) {
+        const { isZipApiCalling, isAddressApiCalling } = this.state;
+        const { stateCityData } = this.props;
+        if (isZipApiCalling) {
             if (this.props !== prevProps) {
-                if (this.props && this.props.stateCityData[stateCityResponseData]) {
-                    const tempResponse = this.props.stateCityData[stateCityResponseData];
+                if (this.props && stateCityData[stateCityResponseData]) {
+                    const tempResponse = stateCityData[stateCityResponseData];
                     if (tempResponse && tempResponse.City) {
                         this.onUpdateField("personal", "city", tempResponse.City);
                         this.onUpdateField("personal", "stateValue", tempResponse.State);
@@ -99,10 +101,10 @@ class addNewIntrestedPartiesComponent extends Component {
             }
         }
 
-        if (this.state.isAddressApiCalling) {
+        if (isAddressApiCalling) {
             if (this.props !== prevProps) {
-                if (this.props && this.props.stateCityData[addressResponseData]) {
-                    const tempAddressResponse = this.props.stateCityData[addressResponseData];
+                if (this.props && stateCityData[addressResponseData]) {
+                    const tempAddressResponse = stateCityData[addressResponseData];
                     if (tempAddressResponse && tempAddressResponse.Address2) {
                         this.onUpdateField("personal", "addressLine1", tempAddressResponse.Address1 || "");
                         this.onUpdateField("personal", "addressLine2", tempAddressResponse.Address2 || "");
@@ -119,41 +121,46 @@ class addNewIntrestedPartiesComponent extends Component {
     }
 
     updateState = () => {
-        const data = this.props.navigation.getParam('acc_Data');
+        const { navigation } = this.props;
+        const data = navigation.getParam('acc_Data');
         this.setState({ account_Data: data });
     }
 
     getZipCodeValue = () => {
-        if (this.state.personal.zipCode !== '') {
+        const { getStateCity } = this.props;
+        const { personal } = this.state;
+        if (personal.zipCode !== '') {
             const payload = {
-                'Zip': this.state.personal.zipCode
+                'Zip': personal.zipCode
             };
             this.setState({ isZipApiCalling: true });
-            this.props.getStateCity(payload);
+            getStateCity(payload);
         }
     }
 
     getAddressValid = () => {
         let addAddressPayload = {};
-        if (this.state.personal.addressLine1 !== "" && this.state.personal.addressLine2 !== "") {
+        const { personal } = this.props;
+        const { getAddressFormat } = this.state;
+        if (personal.addressLine1 !== "" && personal.addressLine2 !== "") {
             if (this.state.personal.zipCode !== '') {
                 addAddressPayload = {
-                    "Address1": this.state.personal.addressLine1,
-                    "Address2": this.state.personal.addressLine2,
-                    "City": this.state.personal.city,
-                    "State": this.state.personal.stateValue,
-                    "Zip": this.state.personal.zipCode
+                    "Address1": personal.addressLine1,
+                    "Address2": personal.addressLine2,
+                    "City": personal.city,
+                    "State": personal.stateValue,
+                    "Zip": personal.zipCode
                 };
             } else {
                 addAddressPayload = {
-                    "Address1": this.state.personal.addressLine1,
-                    "Address2": this.state.personal.addressLine2,
-                    "City": this.state.personal.city,
-                    "State": this.state.personal.stateValue
+                    "Address1": personal.addressLine1,
+                    "Address2": personal.addressLine2,
+                    "City": personal.city,
+                    "State": personal.stateValue
                 };
             }
             this.setState({ isAddressApiCalling: true });
-            this.props.getAddressFormat(addAddressPayload);
+            getAddressFormat(addAddressPayload);
         }
 
     }
@@ -196,6 +203,7 @@ class addNewIntrestedPartiesComponent extends Component {
     }
 
     onCancelClick = () => {
+        const { navigation } = this.props;
         this.setState({
             personal: {
                 firstName: "",
@@ -213,12 +221,13 @@ class addNewIntrestedPartiesComponent extends Component {
                 endDate: ""
             }
         });
-        this.props.navigation.goBack();
+        navigation.goBack();
     }
 
     validateZipCode = () => {
-        if (!this.isEmpty(this.state.personal.zipCode)) {
-            const validate = zipCodeRegex.test(this.state.personal.zipCode);
+        const { personal } = this.state;
+        if (!this.isEmpty(personal.zipCode)) {
+            const validate = zipCodeRegex.test(personal.zipCode);
             this.onUpdateField("personal", "zipCodeValidation", validate);
             this.onUpdateField("personal", "zipCodeValiMsg", "Please enter valid ZipCode");
             if (validate) {
@@ -228,13 +237,14 @@ class addNewIntrestedPartiesComponent extends Component {
     }
 
     validateAddress = () => {
-        if (this.isEmpty(this.state.personal.addressLine1)) {
+        const { personal } = this.state;
+        if (this.isEmpty(personal.addressLine1)) {
             this.onUpdateField("personal", "addressLine1Validation", false);
         } else {
             this.onUpdateField("personal", "addressLine1Validation", true);
         }
 
-        if (this.isEmpty(this.state.personal.addressLine2)) {
+        if (this.isEmpty(personal.addressLine2)) {
             this.onUpdateField("personal", "addressLine2Validation", false);
         } else {
             this.onUpdateField("personal", "addressLine2Validation", true);
@@ -269,83 +279,83 @@ class addNewIntrestedPartiesComponent extends Component {
                 this.onClickSave();
             }
         } catch (err) {
-            console.log(`Error::: ${err}`);
+            // console.log(`Error::: ${err}`);
         }
     }
 
     validateEachFields = () => {
         let isErrMsg = false;
         let isValidationSuccess = false;
-
-        if (this.isEmpty(this.state.personal.firstName)) {
+        const { personal } = this.state;
+        if (this.isEmpty(personal.firstName)) {
             this.onUpdateField("personal", "fnameValidation", false);
             this.onUpdateField("personal", "fnameValiMsg", gblStrings.accManagement.emptyFirstNameMsg);
             isErrMsg = true;
         } else {
-            const validate = nameRegex.test(this.state.personal.firstName);
+            const validate = nameRegex.test(personal.firstName);
             this.onUpdateField("personal", "fnameValidation", validate);
             this.onUpdateField("personal", "fnameValiMsg", gblStrings.accManagement.firstNameFormat);
             isErrMsg = !validate;
         }
 
-        if (this.isEmpty(this.state.personal.lastName)) {
+        if (this.isEmpty(personal.lastName)) {
             this.onUpdateField("personal", "lnameValidation", false);
             this.onUpdateField("personal", "lnameValiMsg", gblStrings.accManagement.emptyLastNameMsg);
             isErrMsg = true;
         } else {
-            const validate = nameRegex.test(this.state.personal.lastName);
+            const validate = nameRegex.test(personal.lastName);
             this.onUpdateField("personal", "lnameValidation", validate);
             this.onUpdateField("personal", "lnameValiMsg", gblStrings.accManagement.lastNameFormat);
             isErrMsg = !validate;
         }
 
-        if (!this.isEmpty(this.state.personal.email)) {
-            const validate = emailRegex.test(this.state.personal.email);
+        if (!this.isEmpty(personal.email)) {
+            const validate = emailRegex.test(personal.email);
             this.onUpdateField("personal", "emailValidation", validate);
             isErrMsg = !validate;
         } else {
             this.onUpdateField("personal", "emailValidation", true);
         }
 
-        if (this.isEmpty(this.state.personal.addressLine1)) {
+        if (this.isEmpty(personal.addressLine1)) {
             this.onUpdateField("personal", "addressLine1Validation", false);
             isErrMsg = true;
         } else {
             this.onUpdateField("personal", "addressLine1Validation", true);
         }
 
-        if (this.isEmpty(this.state.personal.addressLine2)) {
+        if (this.isEmpty(personal.addressLine2)) {
             this.onUpdateField("personal", "addressLine2Validation", false);
             isErrMsg = true;
         } else {
             this.onUpdateField("personal", "addressLine2Validation", true);
         }
 
-        if (!this.isEmpty(this.state.personal.addressLine1) && !this.isEmpty(this.state.personal.addressLine2)) {
+        if (!this.isEmpty(personal.addressLine1) && !this.isEmpty(personal.addressLine2)) {
             this.getAddressValid();
         }
 
-        if (this.isEmpty(this.state.personal.zipCode)) {
+        if (this.isEmpty(personal.zipCode)) {
             this.onUpdateField("personal", "zipCodeValidation", false);
             this.onUpdateField("personal", "zipCodeValiMsg", gblStrings.accManagement.emptyZipCodeMsg);
             isErrMsg = true;
         } else {
-            const validate = zipCodeRegex.test(this.state.personal.zipCode);
+            const validate = zipCodeRegex.test(personal.zipCode);
             this.onUpdateField("personal", "zipCodeValidation", validate);
             this.onUpdateField("personal", "zipCodeValiMsg", "Please enter valid ZipCode");
             this.getZipCodeValue();
             isErrMsg = !validate;
         }
 
-        if (!this.isEmpty(this.state.personal.startDate) && !this.isEmpty(this.state.personal.endDate)) {
-            if (new Date(this.state.personal.startDate) > new Date(this.state.personal.endDate)) {
+        if (!this.isEmpty(personal.startDate) && !this.isEmpty(personal.endDate)) {
+            if (new Date(personal.startDate) > new Date(personal.endDate)) {
                 this.onUpdateField("personal", "startDateValidation", false);
                 this.onUpdateField("personal", "endDateValidation", false);
                 isErrMsg = true;
             }
         }
 
-        if (this.state.personal.relation === '') {
+        if (personal.relation === '') {
             this.onUpdateField("personal", "relationValidation", true);
             this.onUpdateField("personal", "relationValiMsg", gblStrings.accManagement.emptyRelationShipMsg);
         }
@@ -358,8 +368,10 @@ class addNewIntrestedPartiesComponent extends Component {
     }
 
     onClickSave = () => {
-        const data = this.state.personal;
-        const key = parseInt(this.state.account_Data.interestedParty.length) + 1;
+        const { personal, account_Data } = this.state;
+        const { navigation } = this.props;
+        const data = personal;
+        const key = parseInt(account_Data.interestedParty.length) + 1;
         const obj = {
             "key": key,
             "fname": data.firstName,
@@ -379,8 +391,8 @@ class addNewIntrestedPartiesComponent extends Component {
             "accounts_Tagged": '1'
         };
         //  removed isAPi calling from if
-        if (this.state.personal.addValidation && this.state.personal.addressLine1 && this.state.personal.addressLine2) {
-            this.props.navigation.navigate("verifyIntrestedParties", { acc_Data: this.state.account_Data, added_obj: obj });
+        if (personal.addValidation && personal.addressLine1 && personal.addressLine2) {
+            navigation.navigate("verifyIntrestedParties", { acc_Data: account_Data, added_obj: obj });
         }
 
     }
@@ -388,16 +400,18 @@ class addNewIntrestedPartiesComponent extends Component {
     generateKeyExtractor = (item) => item.key;
 
     render() {
-        if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData.relationship && this.props.masterLookupStateData.relationship.value) {
-            relationData = this.props.masterLookupStateData.relationship.value;
+        const { masterLookupStateData, stateCityData, navigation } = this.props;
+        const { account_Data, personal } = this.state;
+        if (this.props && masterLookupStateData && this.props.masterLookupStateData.relationship && masterLookupStateData.relationship.value) {
+            relationData = masterLookupStateData.relationship.value;
         }
 
         return (
             <View style={styles.container}>
                 {
-                    this.props.stateCityData.isLoading && <GLoadingSpinner />
+                    stateCityData.isLoading && <GLoadingSpinner />
                 }
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.flexMainView} keyboardShouldPersistTaps="always" ref={this.setScrollViewRef}>
                     <View style={styles.mainHeadingView}>
                         <Text style={styles.mainHeadlineText}>
@@ -406,11 +420,11 @@ class addNewIntrestedPartiesComponent extends Component {
                     </View>
                     <View style={styles.blockMarginTop}>
                         <View style={styles.titleHeadingView}>
-                            <Text style={styles.titleHeaderText}>{this.state.account_Data.account_Type}</Text>
+                            <Text style={styles.titleHeaderText}>{account_Data.account_Type}</Text>
                         </View>
                         <View style={styles.line} />
                         <View style={styles.containerView}>
-                            <Text style={styles.containerHeaderText}>{`Acc Name - ${this.state.account_Data.account_Name} | Acc Number - ${this.state.account_Data.account_Number}`}</Text>
+                            <Text style={styles.containerHeaderText}>{`Acc Name - ${account_Data.account_Name} | Acc Number - ${account_Data.account_Number}`}</Text>
                         </View>
                         <View style={styles.blockMarginTop} />
                         <View style={styles.titleHeadingView}>
@@ -429,8 +443,8 @@ class addNewIntrestedPartiesComponent extends Component {
                                 placeholder=""
                                 maxLength={gblStrings.maxLength.firstName}
                                 onChangeText={this.onChangeText("personal", "firstName")}
-                                errorFlag={!this.state.personal.fnameValidation}
-                                errorText={this.state.personal.fnameValiMsg}
+                                errorFlag={!personal.fnameValidation}
+                                errorText={personal.fnameValiMsg}
                             />
                             <Text style={styles.lblTxt}>
                                 <Text style={styles.lblTxt}>
@@ -456,8 +470,8 @@ class addNewIntrestedPartiesComponent extends Component {
                                 placeholder=""
                                 maxLength={gblStrings.maxLength.lastName}
                                 onChangeText={this.onChangeText("personal", "lastName")}
-                                errorFlag={!this.state.personal.lnameValidation}
-                                errorText={this.state.personal.lnameValiMsg}
+                                errorFlag={!personal.lnameValidation}
+                                errorText={personal.lnameValiMsg}
                             />
                             <GDropDownComponent
                                 dropDownName={gblStrings.accManagement.relationToAccountHolder}
@@ -465,9 +479,9 @@ class addNewIntrestedPartiesComponent extends Component {
                                 data={relationData}
                                 textInputStyle={styles.dropdownTextInput}
                                 dropDownLayout={styles.dropDownLayout}
-                                errorFlag={this.state.personal.relationValidation}
-                                errorText={this.state.personal.relationValiMsg}
-                                dropDownValue={this.state.personal.relation}
+                                errorFlag={personal.relationValidation}
+                                errorText={personal.relationValiMsg}
+                                dropDownValue={personal.relation}
                                 selectedDropDownValue={this.selectedRelationDropDownValue}
                             />
                             <Text style={styles.lblTxt}>
@@ -485,7 +499,7 @@ class addNewIntrestedPartiesComponent extends Component {
                                 keyboardType="email-address"
                                 maxLength={gblStrings.maxLength.emailID}
                                 onChangeText={this.onChangeText("personal", "email")}
-                                errorFlag={!this.state.personal.emailValidation}
+                                errorFlag={!personal.emailValidation}
                                 errorText={gblStrings.accManagement.emailformat}
                             />
                             <Text style={styles.lblTxt}>
@@ -511,22 +525,22 @@ class addNewIntrestedPartiesComponent extends Component {
                                 propInputStyle={styles.customTxtBox}
                                 placeholder={gblStrings.accManagement.empAddrLine1}
                                 maxLength={gblStrings.maxLength.emplAddress1}
-                                value={this.state.personal.addressLine1}
+                                value={personal.addressLine1}
                                 onChangeText={this.onChangeText("personal", "addressLine1")}
-                                errorFlag={!this.state.personal.addressLine1Validation}
-                                errorText={this.state.personal.addValidation ? gblStrings.accManagement.emptyAddressLine1Msg : ""}
+                                errorFlag={!personal.addressLine1Validation}
+                                errorText={personal.addValidation ? gblStrings.accManagement.emptyAddressLine1Msg : ""}
                             />
                             <GInputComponent
                                 inputref={this.setInputRef("addrLine2")}
                                 propInputStyle={styles.customTxtBox}
                                 placeholder={gblStrings.accManagement.empAddrLine2}
                                 maxLength={gblStrings.maxLength.addressLine2}
-                                value={this.state.personal.addressLine2}
+                                value={personal.addressLine2}
                                 onChangeText={this.onChangeText("personal", "addressLine2")}
-                                errorFlag={!this.state.personal.addressLine2Validation}
-                                errorText={this.state.personal.addValidation ? gblStrings.accManagement.emptyAddressLine2Msg : ""}
+                                errorFlag={!personal.addressLine2Validation}
+                                errorText={personal.addValidation ? gblStrings.accManagement.emptyAddressLine2Msg : ""}
                             />
-                            {!this.state.personal.addValidation && <Text style={styles.errMsg}>{this.state.personal.addressValiMsg}</Text>}
+                            {!personal.addValidation && <Text style={styles.errMsg}>{personal.addressValiMsg}</Text>}
                             <GButtonComponent
                                 buttonStyle={styles.validateBtn}
                                 buttonText="Verify"
@@ -546,8 +560,8 @@ class addNewIntrestedPartiesComponent extends Component {
                                 returnKeyType="done"
                                 onSubmitEditing={this.validateZipCode}
                                 onChangeText={this.onChangeText("personal", "zipCode")}
-                                errorFlag={!this.state.personal.zipCodeValidation}
-                                errorText={this.state.personal.zipCodeValiMsg}
+                                errorFlag={!personal.zipCodeValidation}
+                                errorText={personal.zipCodeValiMsg}
                             />
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.cityAndState}
@@ -557,7 +571,7 @@ class addNewIntrestedPartiesComponent extends Component {
                                     <GInputComponent
                                         propInputStyle={styles.customTxtBox}
                                         placeholder={gblStrings.accManagement.enterCity}
-                                        value={this.state.personal.city}
+                                        value={personal.city}
                                         editable={false}
                                     />
                                 </View>
@@ -565,7 +579,7 @@ class addNewIntrestedPartiesComponent extends Component {
                                     <GInputComponent
                                         propInputStyle={styles.customTxtBox}
                                         placeholder={gblStrings.accManagement.enterState}
-                                        value={this.state.personal.stateValue}
+                                        value={personal.stateValue}
                                         editable={false}
                                     />
                                 </View>
@@ -575,29 +589,31 @@ class addNewIntrestedPartiesComponent extends Component {
                                 <Text style={styles.lblTxt}>{gblStrings.accManagement.from}</Text>
                                 <GDateComponent
                                     inputref={this.setInputRef("startDate")}
-                                    date={this.state.personal.startDate}
+                                    date={personal.startDate}
                                     placeholder="MM-DD-YYYY"
                                     dateTextLayout={styles.dateTextStyle}
                                     componentStyle={styles.dateStyle}
-                                    maxDate={this.state.personal.endDate ? this.state.personal.endDate : ""}
-                                    errorFlag={!this.state.personal.startDateValidation}
+                                    maxDate={personal.endDate ? personal.endDate : ""}
+                                    errorFlag={!personal.startDateValidation}
                                     onDateChange={this.onChangeText("personal", "startDate")}
                                 />
                                 <Text style={styles.lblTxt}>{gblStrings.accManagement.to}</Text>
                                 <GDateComponent
                                     inputref={this.setInputRef("endDate")}
-                                    date={this.state.personal.endDate}
+                                    date={personal.endDate}
                                     placeholder="MM-DD-YYYY"
                                     dateTextLayout={styles.dateTextStyle}
                                     componentStyle={styles.dateStyle}
-                                    minDate={this.state.personal.startDate ? this.state.personal.startDate : ""}
+                                    minDate={personal.startDate ? personal.startDate : ""}
                                     errorFlag={!this.state.personal.endDateValidation}
                                     onDateChange={this.onChangeText("personal", "endDate")}
                                 />
-                                {!this.state.personal.startDateValidation && <Text style={styles.errMsg}>{gblStrings.accManagement.validDateSelect}</Text>}
+                                {!personal.startDateValidation && <Text style={styles.errMsg}>{gblStrings.accManagement.validDateSelect}</Text>}
                             </View>
                         </View>
                     </View>
+                    
+                    {/* ----------------- Button Group -------------------- */}
 
                     <View style={styles.btnGrp}>
                         <GButtonComponent
@@ -614,12 +630,8 @@ class addNewIntrestedPartiesComponent extends Component {
                         />
                     </View>
 
-                    <View style={styles.borderInternal} />
-                    <View style={styles.mainHeadingView}>
-                        <Text style={styles.disclaimerTextHeading}>{gblStrings.accManagement.VCDiscalimerTitle}</Text>
-                        <Text style={styles.disclaimerTxt}>{gblStrings.accManagement.VCDiscalimerDescContent}</Text>
-                    </View>
-                    <GFooterComponent />
+                    {/* ---------------------- Footer View -------------------- */}
+                    <GFooterSettingsComponent />
                 </ScrollView>
             </View>
 

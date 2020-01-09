@@ -18,30 +18,35 @@ class CardHeader extends Component {
     }
 
     edit = () => {
+        const { navigate } = this.props;
         this.setState({ showModal: false });
-        this.props.navigate();
+        navigate();
     }
 
     delete = () => {
+        const { onDelete } = this.props;
         this.setState({ showModal: false });
-        this.props.onDelete();
+        onDelete();
     }
 
     render() {
+        const { showModal } = this.state;
+        const { item } = this.props;
         return (
             <View>
                 <View style={styles.innerHeaderView}>
                     <View style={styles.flexDirectionStyle}>
-                        <Text style={styles.shortContentText}>{gblStrings.accManagement.contractNumber} <Text style={styles.shortContentValueText}>{this.props.item.contract_Number}</Text></Text>
-                        
+                        <Text style={styles.shortContentText}>{gblStrings.accManagement.contractNumber} <Text style={styles.shortContentValueText}>{item.contract_Number}</Text></Text>
+
                     </View>
                     <TouchableOpacity style={styles.sideBtn} onPress={this.updateState}>
                         <GIcon name="dots-three-vertical" type="entypo" size={30} color="black" />
                     </TouchableOpacity>
                 </View>
                 {
-                    this.state.showModal ?
-                        <View style={styles.shadowView}>
+                    showModal ?
+                        (
+                            <View style={styles.shadowView}>
                             <TouchableOpacity onPress={this.edit}>
                                 <Text style={styles.lblTxtInner}>{gblStrings.common.edit}</Text>
                             </TouchableOpacity>
@@ -49,7 +54,8 @@ class CardHeader extends Component {
                             <TouchableOpacity onPress={this.delete}>
                                 <Text style={styles.lblTxtInner}>{gblStrings.common.delete}</Text>
                             </TouchableOpacity>
-                        </View> : null
+                        </View>
+                        ) : null
                 }
             </View>
         );
