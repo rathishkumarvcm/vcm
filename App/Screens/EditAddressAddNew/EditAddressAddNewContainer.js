@@ -6,7 +6,7 @@ import { addressFormatActions } from "../../Shared/Actions";
 const mapStateToProps = (state /* , props */) => (
   {
     profileState: state.profileInformationData,
-    stateCityData:state.addressFormatData
+    stateCityData: state.addressFormatData
   }
 );
 

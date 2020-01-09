@@ -3,7 +3,7 @@ import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
 
 const { width } = Dimensions.get('window');
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7FAFF',
@@ -444,5 +444,18 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: scaledWidth(20)
     },
-    addressInformationFlex: { flex: 0.85 }
+    addressInformationFlex: { flex: 0.85 },
+    addressTitleStyle: {
+        color: '#B2B2B2',
+        fontWeight: "bold",
+        fontSize: scaledHeight(16)
+    },
+    addressHeaderTitleStyle: {
+        width: '70%',
+        fontSize: scaledHeight(20),
+        color: '#707070',
+        fontWeight: "bold"
+    }
 });
+
+export default styles;

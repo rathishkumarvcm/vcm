@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, Image, ScrollView } from 'react-native';
+import PropTypes from "prop-types";
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GLoadingSpinner } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GInputComponent, GRadioButtonComponent, GLoadingSpinner } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import * as reGex from '../../Constants/RegexConstants';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+import ImagesLoad from '../../Images/ImageIndex';
 
 const profileAddNewAddress = [
     { index1: 0, question: "U.S. or U.S. Territories" },
@@ -17,14 +19,10 @@ class EditAddressAddNewComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        const {navigation} = this.props;
         this.state = {
-            isLoading: false,
-            enableBiometric: false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false,
-
-            isRelationShipScreen: this.props.navigation.getParam('isRelationShipScreen'),
-            relationShipPosition: this.props.navigation.getParam('relationShipPosition'),
+            isRelationShipScreen: navigation.getParam('isRelationShipScreen'),
+            relationShipPosition: navigation.getParam('relationShipPosition'),
             relationShipContactData: [],
 
             isZipApiCalling: false,
@@ -52,32 +50,42 @@ class EditAddressAddNewComponent extends Component {
     }
 
     componentDidMount() {
-        if (this.props && this.props.profileState && this.props.profileState.profileUserCity) {
+        this.addNewContactMount();
+    }
+
+    componentDidUpdate(prevProps) {
+        this.addNewContactUpdate(prevProps);
+    }
+
+    addNewContactMount = () => {
+        const { profileState } = this.props;
+        const { isRelationShipScreen, relationShipPosition } = this.state;
+        if (this.props && profileState && profileState.profileUserCity) {
             this.setState({
-                userCity: this.props.profileState.profileUserCity
+                userCity: profileState.profileUserCity
             });
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.profileUserState) {
+        if (this.props && profileState && profileState.profileUserState) {
             this.setState({
-                userState: this.props.profileState.profileUserState
+                userState: profileState.profileUserState
             });
         }
 
-        if (this.state.isRelationShipScreen) {
+        if (isRelationShipScreen) {
             let relationshipContacts = [];
             if (this.props &&
-                this.props.profileState &&
-                this.props.profileState.profileRelationShipDetails) {
-                relationshipContacts = [...this.props.profileState.profileRelationShipDetails];
+                profileState &&
+                profileState.profileRelationShipDetails) {
+                relationshipContacts = [...rofileState.profileRelationShipDetails];
                 this.setState({
-                    relationShipContactData: relationshipContacts[this.state.relationShipPosition]
+                    relationShipContactData: relationshipContacts[relationShipPosition]
                 });
             }
         }
     }
 
-    componentDidUpdate(prevProps) {
+    addNewContactUpdate = (prevProps) => {
         const stateCityResponseData = ActionTypes.GET_STATECITY;
         const addressResponseData = ActionTypes.GET_ADDRESSFORMAT;
 
@@ -173,7 +181,7 @@ class EditAddressAddNewComponent extends Component {
             this.setState({
                 validationAddressOne: false,
                 validAddressOneMessage: 'Max. character length exceeded'
-            })
+            });
         }
     }
 
@@ -187,7 +195,7 @@ class EditAddressAddNewComponent extends Component {
             this.setState({
                 validationAddressTwo: false,
                 validAddressTwoMessage: 'Max. character length exceeded'
-            })
+            });
         }
     }
 
@@ -201,7 +209,7 @@ class EditAddressAddNewComponent extends Component {
             this.setState({
                 isZipCodeValid: false,
                 validZipCodeMessage: 'Max. character length exceeded'
-            })
+            });
         }
     }
 
@@ -216,7 +224,7 @@ class EditAddressAddNewComponent extends Component {
                 }
 
                 if (this.state.zipCodeValue === "") {
-                    let validate = reGex.zipCodeRegex.test(this.state.zipCodeValue);
+                    const validate = reGex.zipCodeRegex.test(this.state.zipCodeValue);
                     this.setState({
                         isZipCodeValid: validate
                     });
@@ -245,12 +253,12 @@ class EditAddressAddNewComponent extends Component {
             this.setState({
                 isZipCodeValid: false,
                 validZipCodeMessage: globalString.profileValidationMessages.validateZipcode
-            })
+            });
         }
     }
 
     addNewAddress = () => {
-        var addNewAddressPayload = {};
+        let addNewAddressPayload = {};
         if (this.state.zipCodeValue != '') {
             addNewAddressPayload = {
                 "Address1": this.state.addressOne,
@@ -269,7 +277,7 @@ class EditAddressAddNewComponent extends Component {
         }
         this.setState({
             isAddressApiCalling: true
-        })
+        });
         this.props.getAddressFormat(addNewAddressPayload);
     }
 
@@ -327,11 +335,11 @@ class EditAddressAddNewComponent extends Component {
 
             relationAddressPayload = this.props.profileState.profileRelationShipDetails[this.state.relationShipPosition].relationAddress;
             relationAddressPayload.push(addContactInformation);
-            const relationAddressUpdated = [this.props.profileState.profileRelationShipDetails[this.state.relationShipPosition]]
+            const relationAddressUpdated = [this.props.profileState.profileRelationShipDetails[this.state.relationShipPosition]];
             relationContactPayload = {
                 ...this.props.profileState,
                 profileRelationShipDetails: relationAddressUpdated
-            }
+            };
         }
         return relationContactPayload;
     }
@@ -355,7 +363,8 @@ class EditAddressAddNewComponent extends Component {
                     this.props.stateCityData.isLoading && <GLoadingSpinner />
                 }
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={this.props.navigation}
+                />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -392,18 +401,22 @@ class EditAddressAddNewComponent extends Component {
 
                         <View style={styles.editAddressInput}>
                             {profileAddNewAddress.map((item, index) =>
-                                index == this.state.radioButtonIndex ?
+                                index == this.state.radioButtonIndex ? (
                                     <GRadioButtonComponent
                                         questionsStyle={{ justifyContent: 'center' }}
                                         onPress={() => this.radioButtonClicked(index)}
                                         selected
-                                        questions={item.question} />
-                                    :
+                                        questions={item.question}
+                                    />
+                                  )
+                                    : (
                                     <GRadioButtonComponent
                                         questionsStyle={{ justifyContent: 'center' }}
                                         onPress={() => this.radioButtonClicked(index)}
                                         selected={false}
-                                        questions={item.question} />)}
+                                        questions={item.question}
+                                    />
+                                  ))}
                         </View>
 
                         <View style={styles.settingsView1}>
@@ -420,7 +433,8 @@ class EditAddressAddNewComponent extends Component {
                                 value={this.state.addressOne}
                                 maxLength={50}
                                 errorFlag={!this.state.validationAddressOne}
-                                errorText={this.state.validAddressOneMessage} />
+                                errorText={this.state.validAddressOneMessage}
+                            />
                         </View>
 
                         <View style={styles.settingsView1}>
@@ -437,7 +451,8 @@ class EditAddressAddNewComponent extends Component {
                                 maxLength={50}
                                 onChangeText={this.setAddressTwo}
                                 errorFlag={!this.state.validationAddressTwo}
-                                errorText={this.state.validAddressTwoMessage} />
+                                errorText={this.state.validAddressTwoMessage}
+                            />
                         </View>
 
                         <View style={styles.settingsView1}>
@@ -456,7 +471,8 @@ class EditAddressAddNewComponent extends Component {
                                 keyboardType="number-pad"
                                 maxLength={5}
                                 errorFlag={!this.state.isZipCodeValid}
-                                errorText={this.state.validZipCodeMessage} />
+                                errorText={this.state.validZipCodeMessage}
+                            />
                         </View>
 
                         <View style={styles.editFlexDirectionColumn}>
@@ -483,7 +499,8 @@ class EditAddressAddNewComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.manageContactInformations} />
+                            onPress={this.manageContactInformations}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -491,7 +508,8 @@ class EditAddressAddNewComponent extends Component {
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
                             textStyle={styles.saveButtonText}
-                            onPress={this.addAddressOnValidate('validateAddressValueOne')} />
+                            onPress={this.addAddressOnValidate('validateAddressValueOne')}
+                        />
                     </View>
 
                     <View style={styles.editAddressBorder} />
@@ -507,7 +525,8 @@ class EditAddressAddNewComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={ImagesLoad.applicationLogo}
+                        />
                     </View>
 
                     <View style={styles.whiteBackground}>
@@ -518,9 +537,11 @@ class EditAddressAddNewComponent extends Component {
 
                     <View style={styles.whiteBackground}>
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/twitterlogo.png")} />
+                            source={ImagesLoad.twitterlogo}
+                        />
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/linkedinlogo.png")} />
+                            source={ImagesLoad.linkedinlogo}
+                        />
                     </View>
 
                     <View style={styles.privacyAgreement}>
@@ -555,5 +576,20 @@ class EditAddressAddNewComponent extends Component {
         );
     }
 }
+
+EditAddressAddNewComponent.propTypes = {
+    navigation: PropTypes.instanceOf(Object).isRequired,
+    profileState: PropTypes.instanceOf(Object),
+    getStateCity: PropTypes.func,
+    getAddressFormat: PropTypes.func,
+    saveProfileData: PropTypes.func
+};
+
+EditAddressAddNewComponent.defaultProps = {
+    profileState: {},
+    getStateCity: null,
+    getAddressFormat: null,
+    saveProfileData: null
+};
 
 export default EditAddressAddNewComponent;

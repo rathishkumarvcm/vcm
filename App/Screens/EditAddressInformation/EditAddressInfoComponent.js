@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity, FlatList, Switch } from 'react-native';
-import { styles } from './styles';
+import PropTypes from "prop-types";
+import styles from './styles';
 import { GButtonComponent, GHeaderComponent, showAlertWithCancelButton } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
-import PropTypes from "prop-types";
 import ImagesLoad from '../../Images/ImageIndex';
 
-let editDeleteMenuOption = [
+const editDeleteMenuOption = [
     {
         name: 'Edit',
         id: '1'
@@ -17,168 +17,195 @@ let editDeleteMenuOption = [
     },
 ];
 
+const switchColor = { flase: '#DBDBDB', true: '#444444' };
+
 class EditAddressInfoComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        const { navigation } = this.props;
         this.state = {
-            isLoading: false,
-            enableBiometric: false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false,
             selectedIndex: -1,
-
-            contactPosition: this.props.navigation.getParam('contactPosition'),
-            isRelation: this.props.navigation.getParam('isRelation'),
-            relationContactInfo: {},
-
+            contactPosition: navigation.getParam('contactPosition'),
+            isRelation: navigation.getParam('isRelation'),
             refreshAddressData: false,
-            profileUserAddressValue: [],
-
-            isAddressTypeMailing: false,
-            isAddressTypePhysical: false,
+            profileUserAddressValue: []
         };
     }
 
     componentDidMount() {
-        if (!this.state.isRelation) {
+        this.addressDidMount();
+    }
+
+    componentDidUpdate(prevProps) {
+        this.addressDidUpdate(prevProps);
+    }
+
+    addressDidMount = () => {
+        const { isRelation, refreshAddressData, contactPosition } = this.state;
+        const { profileState } = this.props;
+        if (!isRelation) {
             if (this.props &&
-                this.props.profileState &&
-                this.props.profileState.profileUserAddressInformation) {
+                profileState &&
+                profileState.profileUserAddressInformation) {
                 this.setState({
-                    profileUserAddressValue: this.props.profileState.profileUserAddressInformation,
-                    refreshAddressData: !this.state.refreshAddressData
+                    profileUserAddressValue: profileState.profileUserAddressInformation,
+                    refreshAddressData: !refreshAddressData
                 });
             }
         } else {
             let relationshipContacts = [];
             if (this.props &&
-                this.props.profileState &&
-                this.props.profileState.profileRelationShipDetails) {
-                relationshipContacts = [...this.props.profileState.profileRelationShipDetails];
+                profileState &&
+                profileState.profileRelationShipDetails) {
+                relationshipContacts = [...profileState.profileRelationShipDetails];
                 this.setState({
-                    relationContactInfo: relationshipContacts[this.state.contactPosition],
-                    profileUserAddressValue: relationshipContacts[this.state.contactPosition].relationAddress,
-                    refreshAddressData: !this.state.refreshAddressData
+                    profileUserAddressValue: relationshipContacts[contactPosition].relationAddress,
+                    refreshAddressData: !refreshAddressData
                 });
             }
         }
     }
 
-    componentDidUpdate(prevProps) {
-        if (!this.state.isRelation) {
-            if (this.props != prevProps) {
+    addressDidUpdate = (prevProps) => {
+        const { isRelation, refreshAddressData, contactPosition } = this.state;
+        const { profileState } = this.props;
+        if (!isRelation) {
+            if (this.props !== prevProps) {
                 if (this.props &&
-                    this.props.profileState &&
-                    this.props.profileState.profileUserAddressInformation) {
+                    profileState &&
+                    profileState.profileUserAddressInformation) {
                     this.setState({
-                        profileUserAddressValue: this.props.profileState.profileUserAddressInformation,
-                        refreshAddressData: !this.state.refreshAddressData
+                        profileUserAddressValue: profileState.profileUserAddressInformation,
+                        refreshAddressData: !refreshAddressData
                     });
                 }
             }
-        } else {
-            if (this.props != prevProps) {
-                let relationshipContacts = [];
-                if (this.props &&
-                    this.props.profileState &&
-                    this.props.profileState.profileRelationShipDetails) {
-                    relationshipContacts = [...this.props.profileState.profileRelationShipDetails];
-                    this.setState({
-                        relationContactInfo: relationshipContacts[this.state.contactPosition],
-                        profileUserAddressValue: relationshipContacts[this.state.contactPosition].relationAddress,
-                        refreshAddressData: !this.state.refreshAddressData
-                    });
-                }
+        } else if (this.props !== prevProps) {
+            let relationshipContacts = [];
+            if (this.props &&
+                profileState &&
+                profileState.profileRelationShipDetails) {
+                relationshipContacts = [...profileState.profileRelationShipDetails];
+                this.setState({
+                    profileUserAddressValue: relationshipContacts[contactPosition].relationAddress,
+                    refreshAddressData: !refreshAddressData
+                });
             }
         }
     }
 
-    renderAddressInformation = () => ({ item, index }) =>
-        (<View style={styles.editEmailHolder}>
-            <View style={styles.profileDivideIcon}>
-                <View style={styles.profileDivideIconOne}>
-                    <Text style={styles.editEmailType}>
-                        {item.addressType}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {item.addressLineOne}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {item.addressCity}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {item.addressState + ' ' + item.addressZipcode}
-                    </Text>
+    renderAddressInformation = () => ({ item, index }) => {
+        const { selectedIndex } = this.state;
+        
+        return (
+            <View style={styles.editEmailHolder}>
+                <View style={styles.profileDivideIcon}>
+                    <View style={styles.profileDivideIconOne}>
+                        <Text style={styles.editEmailType}>
+                            {item.addressType}
+                        </Text>
+                        <Text style={styles.editEmailId}>
+                            {item.addressLineOne}
+                        </Text>
+                        <Text style={styles.editEmailId}>
+                            {item.addressCity}
+                        </Text>
+                        <Text style={styles.editEmailId}>
+                            {`${item.addressState} ${item.addressZipcode}`}
+                        </Text>
+                    </View>
+
+                    <View style={styles.profileDivideIconTwo}>
+                        <TouchableOpacity
+                            onPress={this.onMenuOptionClicked(index)}
+                        >
+                            <Image style={styles.imageWidthHeight}
+                                source={ImagesLoad.menuIcon}
+                            />
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
-                <View style={styles.profileDivideIconTwo}>
-                    <TouchableOpacity
-                        onPress={this.onMenuOptionClicked(index)}>
-                        <Image style={styles.imageWidthHeight}
-                            source={ImagesLoad.menuIcon} />
-                    </TouchableOpacity>
+                {index === selectedIndex ?
+                    (
+                        <FlatList style={styles.editFlatList}
+                            data={editDeleteMenuOption}
+                            renderItem={this.renderMenuOptions()}
+                        />
+                    )
+                    : null}
+
+                <View style={styles.editEmailBorder} />
+
+                <View style={styles.editAddressView}>
+                    <Text style={styles.editAddressLabel}>
+                        {globalString.editAddressInfo.editAddressSetMailing}
+                    </Text>
+
+                    <View style={styles.editSwitchButton}>
+                        <Switch trackColor={switchColor}
+                            onValueChange={this.onMailingSwitchToggle(index)}
+                            value={item.isMailingAddress}
+                        />
+                    </View>
+                </View>
+
+                <View style={styles.editAddressView}>
+                    <Text style={styles.editAddressLabel}>
+                        {globalString.editAddressInfo.editAddressSetPhysical}
+                    </Text>
+                    <View style={styles.editSwitchButton}>
+                        <Switch trackColor={switchColor}
+                            onValueChange={this.onPhysicalSwitchToggle(index)}
+                            value={item.isPhysicalAddress}
+                        />
+                    </View>
                 </View>
             </View>
-
-            {index === this.state.selectedIndex ?
-                (<FlatList style={styles.editFlatList}
-                    data={editDeleteMenuOption}
-                    renderItem={this.renderMenuOptions()} />)
-                : null}
-
-            <View style={styles.editEmailBorder} />
-
-            <View style={styles.editAddressView}>
-                <Text style={styles.editAddressLabel}>
-                    {globalString.editAddressInfo.editAddressSetMailing}
-                </Text>
-
-                <View style={styles.editSwitchButton}>
-                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={this.onMailingSwitchToggle(index)}
-                        value={item.isMailingAddress} />
-                </View>
-            </View>
-
-            <View style={styles.editAddressView}>
-                <Text style={styles.editAddressLabel}>
-                    {globalString.editAddressInfo.editAddressSetPhysical}
-                </Text>
-                <View style={styles.editSwitchButton}>
-                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={this.onPhysicalSwitchToggle(index)}
-                        value={item.isPhysicalAddress} />
-                </View>
-            </View>
-        </View>
         );
+    }
 
     renderMenuOptions = () => ({ item, index }) => (
         <TouchableOpacity style={styles.editDropdown}>
             <Text style={styles.editDropdownText}
-                onPress={this.onMenuItemClicked(index)}>
+                onPress={this.onMenuItemClicked(index)}
+            >
                 {item.name}
             </Text>
-        </TouchableOpacity>);
+        </TouchableOpacity>
+    );
 
     onMenuOptionClicked = (index) => () => {
-        index === this.state.selectedIndex ?
+        const { selectedIndex, refreshAddressData } = this.state;
+        if (index === selectedIndex) {
             this.setState({
-                refreshAddressData: !this.state.refreshAddressData,
+                refreshAddressData: !refreshAddressData,
                 selectedIndex: -1
-            }) :
+            });
+        } else {
             this.setState({
-                refreshAddressData: !this.state.refreshAddressData,
+                refreshAddressData: !refreshAddressData,
                 selectedIndex: index
             });
+        }
+        // index === this.state.selectedIndex ?
+        //     this.setState({
+        //         refreshAddressData: !this.state.refreshAddressData,
+        //         selectedIndex: -1
+        //     }) :
+        //     this.setState({
+        //         refreshAddressData: !this.state.refreshAddressData,
+        //         selectedIndex: index
+        //     });
     }
 
     onMenuItemClicked = (index) => () => {
+        const { selectedIndex, refreshAddressData, profileUserAddressValue } = this.state;
         switch (index) {
             case 0:
                 this.setState({
-                    refreshAddressData: !this.state.refreshAddressData,
+                    refreshAddressData: !refreshAddressData,
                     selectedIndex: -1
                 });
                 break;
@@ -190,18 +217,18 @@ class EditAddressInfoComponent extends Component {
                     globalString.common.delete,
                     () => {
                         this.setState({
-                            refreshAddressData: !this.state.refreshAddressData,
+                            refreshAddressData: !refreshAddressData,
                             selectedIndex: -1
                         });
                     },
                     () => {
-                        var array = [...this.state.profileUserAddressValue];
-                        var indexDelete = this.state.selectedIndex
+                        const array = [...profileUserAddressValue];
+                        const indexDelete = selectedIndex;
                         if (indexDelete !== -1) {
                             array.splice(indexDelete, 1);
                             this.setState({
                                 profileUserAddressValue: array,
-                                refreshAddressData: !this.state.refreshAddressData,
+                                refreshAddressData: !refreshAddressData,
                                 selectedIndex: -1
                             });
                         }
@@ -214,48 +241,59 @@ class EditAddressInfoComponent extends Component {
     }
 
     onMailingSwitchToggle = (index) => () => {
-        var array = [...this.state.profileUserAddressValue];
+        const { profileUserAddressValue, refreshAddressData } = this.state;
+        const array = [...profileUserAddressValue];
         if (index !== -1) {
-            let switchVal = array[index].isMailingAddress;
+            const switchVal = array[index].isMailingAddress;
             array[index].isMailingAddress = !switchVal;
             this.setState({
                 profileUserAddressValue: array,
-                refreshAddressData: !this.state.refreshAddressData
+                refreshAddressData: !refreshAddressData
             });
         }
     }
 
     onPhysicalSwitchToggle = (index) => () => {
-        var array = [...this.state.profileUserAddressValue];
+        const { profileUserAddressValue, refreshAddressData } = this.state;
+        const array = [...profileUserAddressValue];
         if (index !== -1) {
-            let switchVal = array[index].isPhysicalAddress;
+            const switchVal = array[index].isPhysicalAddress;
             array[index].isPhysicalAddress = !switchVal;
             this.setState({
                 profileUserAddressValue: array,
-                refreshAddressData: !this.state.refreshAddressData
+                refreshAddressData: !refreshAddressData
             });
         }
     }
 
-    editAddressInfoAddNew = () => this.props.navigation.navigate('editAddressAddNew',
-        {
-            relationShipPosition: this.state.contactPosition,
-            isRelationShipScreen: this.state.isRelation
-        });
+    editAddressInfoAddNew = () => {
+        const { navigation } = this.props;
+        const { contactPosition, isRelation } = this.state;
+        navigation.navigate('editAddressAddNew',
+            {
+                relationShipPosition: contactPosition,
+                isRelationShipScreen: isRelation
+            });
+    }
 
     editAddressOnCancel = () => {
-        if (!this.state.isRelation) {
-            this.props.navigation.navigate('profileSettings');
+        const { isRelation } = this.state;
+        const { navigation } = this.props;
+        if (!isRelation) {
+            navigation.navigate('profileSettings');
         } else {
-            this.props.navigation.navigate('editFamilyMemberInfo');
+            navigation.navigate('editFamilyMemberInfo');
         }
     }
 
     render() {
+        const { profileUserAddressValue, refreshAddressData } = this.state;
+        const { navigation } = this.props;
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={navigation}
+                />
 
                 <ScrollView style={styles.addressInformationFlex}>
 
@@ -263,18 +301,19 @@ class EditAddressInfoComponent extends Component {
                         <Text style={styles.settingsInfo}>
                             {globalString.editProfilePageValue.editAddressInfoHead}
                         </Text>
-                        <Text style={[styles.settingsInfo, styles.editLabelBold]}>
+                        <Text style={styles.addressTitleStyle}>
                             {globalString.editAddressInfo.editAddressTitle}
                         </Text>
                     </View>
 
                     <View style={styles.settingsView}>
-                        <Text style={[styles.settingsHeadline, styles.editTitleBold]}>
+                        <Text style={styles.addressHeaderTitleStyle}>
                             {globalString.editAddressInfo.editAddressTitle}
                         </Text>
 
                         <Text style={styles.addEditTextLabel}
-                            onPress={this.editAddressInfoAddNew} >
+                            onPress={this.editAddressInfoAddNew}
+                        >
                             {globalString.editAddressInfo.editAddressAddNew}
                         </Text>
                     </View>
@@ -282,17 +321,19 @@ class EditAddressInfoComponent extends Component {
                     <View style={styles.settingsBorder} />
 
                     <FlatList
-                        data={this.state.profileUserAddressValue}
+                        data={profileUserAddressValue}
                         keyExtractor={this.generateKeyExtractor}
-                        extraData={this.state.refreshAddressData}
-                        renderItem={this.renderAddressInformation()} />
+                        extraData={refreshAddressData}
+                        renderItem={this.renderAddressInformation()}
+                    />
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.back}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.editAddressOnCancel} />
+                            onPress={this.editAddressOnCancel}
+                        />
                     </View>
 
                     <View style={styles.newVictorySection}>
@@ -306,7 +347,8 @@ class EditAddressInfoComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={ImagesLoad.applicationLogo} />
+                            source={ImagesLoad.applicationLogo}
+                        />
                     </View>
 
                     <View style={styles.privacyAgreement}>
@@ -347,7 +389,6 @@ EditAddressInfoComponent.propTypes = {
 };
 
 EditAddressInfoComponent.defaultProps = {
-    navigation: {},
     profileState: {}
 };
 
