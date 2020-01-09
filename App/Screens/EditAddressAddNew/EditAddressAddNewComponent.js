@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView } from 'react-native';
 import PropTypes from "prop-types";
-import { styles } from './styles';
+import styles from './styles';
 import { GButtonComponent, GHeaderComponent, GInputComponent, GRadioButtonComponent, GLoadingSpinner } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import * as reGex from '../../Constants/RegexConstants';
@@ -19,16 +19,16 @@ class EditAddressAddNewComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         this.state = {
             isRelationShipScreen: navigation.getParam('isRelationShipScreen'),
             relationShipPosition: navigation.getParam('relationShipPosition'),
-            relationShipContactData: [],
+            // relationShipContactData: [],
 
             isZipApiCalling: false,
             isAddressApiCalling: false,
 
-            radioButton: false,
+            // radioButton: false,
             radioButtonIndex: 0,
             radioButtonValue: 'U.S. or U.S. Territories',
 
@@ -59,7 +59,7 @@ class EditAddressAddNewComponent extends Component {
 
     addNewContactMount = () => {
         const { profileState } = this.props;
-        const { isRelationShipScreen, relationShipPosition } = this.state;
+        // const { isRelationShipScreen, relationShipPosition } = this.state;
         if (this.props && profileState && profileState.profileUserCity) {
             this.setState({
                 userCity: profileState.profileUserCity
@@ -72,27 +72,29 @@ class EditAddressAddNewComponent extends Component {
             });
         }
 
-        if (isRelationShipScreen) {
-            let relationshipContacts = [];
-            if (this.props &&
-                profileState &&
-                profileState.profileRelationShipDetails) {
-                relationshipContacts = [...rofileState.profileRelationShipDetails];
-                this.setState({
-                    relationShipContactData: relationshipContacts[relationShipPosition]
-                });
-            }
-        }
+        // if (isRelationShipScreen) {
+        //     let relationshipContacts = [];
+        //     if (this.props &&
+        //         profileState &&
+        //         profileState.profileRelationShipDetails) {
+        //         relationshipContacts = [...profileState.profileRelationShipDetails];
+        //         this.setState({
+        //             relationShipContactData: relationshipContacts[relationShipPosition]
+        //         });
+        //     }
+        // }
     }
 
     addNewContactUpdate = (prevProps) => {
         const stateCityResponseData = ActionTypes.GET_STATECITY;
         const addressResponseData = ActionTypes.GET_ADDRESSFORMAT;
+        const { isZipApiCalling, isAddressApiCalling } = this.state;
+        const { stateCityData } = this.props;
 
-        if (this.state.isZipApiCalling) {
-            if (this.props != prevProps) {
-                if (this.props && this.props.stateCityData[stateCityResponseData]) {
-                    const tempResponse = this.props.stateCityData[stateCityResponseData];
+        if (isZipApiCalling) {
+            if (this.props !== prevProps) {
+                if (this.props && stateCityData[stateCityResponseData]) {
+                    const tempResponse = stateCityData[stateCityResponseData];
                     if (tempResponse && tempResponse.City) {
                         this.setState({
                             userCity: tempResponse.City,
@@ -110,10 +112,10 @@ class EditAddressAddNewComponent extends Component {
             }
         }
 
-        if (this.state.isAddressApiCalling) {
-            if (this.props != prevProps) {
-                if (this.props && this.props.stateCityData[addressResponseData]) {
-                    const tempAddressResponse = this.props.stateCityData[addressResponseData];
+        if (isAddressApiCalling) {
+            if (this.props !== prevProps) {
+                if (this.props && stateCityData[addressResponseData]) {
+                    const tempAddressResponse = stateCityData[addressResponseData];
                     if (tempAddressResponse && tempAddressResponse.Address2) {
                         this.setState({
                             addressOne: tempAddressResponse.Address1 || "",
@@ -133,38 +135,39 @@ class EditAddressAddNewComponent extends Component {
         }
     }
 
-    radioButtonClicked = (index) => {
-        if (index !== this.state.radioButtonIndex) {
+    radioButtonClicked = (index) => () => {
+        const { radioButtonIndex } = this.state;
+        if (index !== radioButtonIndex) {
             this.setState({
                 radioButtonIndex: index,
-                radioButton: false
+                // radioButton: false
             });
         } else {
             this.setState({
-                radioButton: false,
+                // radioButton: false,
                 radioButtonValue: 'U.S. or U.S. Territories'
             });
         }
 
-        if (this.state.radioButtonIndex == 1) {
+        if (radioButtonIndex === 1) {
             this.setState({
                 radioButtonValue: 'U.S. or U.S. Territories'
             });
         }
 
-        if (this.state.radioButtonIndex == 2) {
+        if (radioButtonIndex === 2) {
             this.setState({
                 radioButtonValue: 'APO (Army or Air Force Post Office)'
             });
         }
 
-        if (this.state.radioButtonIndex == 3) {
+        if (radioButtonIndex === 3) {
             this.setState({
                 radioButtonValue: 'FPO (Fleet Post Office)'
             });
         }
 
-        if (this.state.radioButtonIndex == 4) {
+        if (radioButtonIndex === 4) {
             this.setState({
                 radioButtonValue: 'DPO (Diplomatic Post Office)'
             });
@@ -172,12 +175,13 @@ class EditAddressAddNewComponent extends Component {
     }
 
     setAddressOne = (text) => {
+        const { addressOne } = this.state;
         this.setState({
             addressOne: text,
             validationAddressOne: true
         });
 
-        if (this.state.addressOne.length.toString() == 49) {
+        if (addressOne.length.toString() === "49") {
             this.setState({
                 validationAddressOne: false,
                 validAddressOneMessage: 'Max. character length exceeded'
@@ -186,12 +190,13 @@ class EditAddressAddNewComponent extends Component {
     }
 
     setAddressTwo = (text) => {
+        const { addressTwo } = this.state;
         this.setState({
             addressTwo: text,
             validationAddressTwo: true
         });
 
-        if (this.state.addressTwo.length.toString() == 49) {
+        if (addressTwo.length.toString() === "49") {
             this.setState({
                 validationAddressTwo: false,
                 validAddressTwoMessage: 'Max. character length exceeded'
@@ -200,12 +205,13 @@ class EditAddressAddNewComponent extends Component {
     }
 
     setZipcodeValue = (text) => {
+        const { zipCodeValue } = this.state;
         this.setState({
             zipCodeValue: text,
             isZipCodeValid: true
         });
 
-        if (this.state.zipCodeValue.length.toString() == 5) {
+        if (zipCodeValue.length.toString() === "5") {
             this.setState({
                 isZipCodeValid: false,
                 validZipCodeMessage: 'Max. character length exceeded'
@@ -214,41 +220,47 @@ class EditAddressAddNewComponent extends Component {
     }
 
     addAddressOnValidate = (validationType) => () => {
+        const { addressOne, addressTwo, zipCodeValue } = this.state;
         switch (validationType) {
             case 'validateAddressValueOne':
-                if (this.state.addressOne === "") {
+                if (addressOne === "") {
                     this.setState({
                         validationAddressOne: false,
                         validAddressOneMessage: globalString.profileValidationMessages.validateAddressLineOne
                     });
                 }
 
-                if (this.state.zipCodeValue === "") {
-                    const validate = reGex.zipCodeRegex.test(this.state.zipCodeValue);
+                if (zipCodeValue === "") {
+                    const validate = reGex.zipCodeRegex.test(zipCodeValue);
                     this.setState({
                         isZipCodeValid: validate
                     });
                 }
 
-                if (this.state.addressOne !== '' || this.state.addressTwo !== '' &&
-                    this.state.zipCodeValue !== '') {
+                if (addressOne !== '' || addressTwo !== '' &&
+                    zipCodeValue !== '') {
                     this.addNewAddress();
                 }
+                break;
+
+            default:
                 break;
         }
     }
 
     validateZipCodeValue = () => {
-        if (this.state.zipCodeValue != '') {
+        const { zipCodeValue } = this.state;
+        const { getStateCity } = this.props;
+        if (zipCodeValue !== '') {
             const payload = {
-                'Zip': this.state.zipCodeValue
+                'Zip': zipCodeValue
             };
 
             this.setState({
                 isZipCodeValid: true,
                 isZipApiCalling: true
             });
-            this.props.getStateCity(payload);
+            getStateCity(payload);
         } else {
             this.setState({
                 isZipCodeValid: false,
@@ -258,61 +270,67 @@ class EditAddressAddNewComponent extends Component {
     }
 
     addNewAddress = () => {
+        const { zipCodeValue, addressOne, addressTwo, userCity, userState } = this.state;
+        const { getAddressFormat } = this.props;
         let addNewAddressPayload = {};
-        if (this.state.zipCodeValue != '') {
+        if (zipCodeValue !== '') {
             addNewAddressPayload = {
-                "Address1": this.state.addressOne,
-                "Address2": this.state.addressTwo,
-                "City": this.state.userCity,
-                "State": this.state.userState,
-                "Zip": this.state.zipCodeValue
+                "Address1": addressOne,
+                "Address2": addressTwo,
+                "City": userCity,
+                "State": userState,
+                "Zip": zipCodeValue
             };
         } else {
             addNewAddressPayload = {
-                "Address1": this.state.addressOne,
-                "Address2": this.state.addressTwo,
-                "City": this.state.userCity,
-                "State": this.state.userState,
+                "Address1": addressOne,
+                "Address2": addressTwo,
+                "City": userCity,
+                "State": userState,
             };
         }
         this.setState({
             isAddressApiCalling: true
         });
-        this.props.getAddressFormat(addNewAddressPayload);
+        getAddressFormat(addNewAddressPayload);
     }
 
     manageContactInformations = () => {
+        const { isRelationShipScreen, relationShipPosition } = this.state;
+        const { saveProfileData, navigation } = this.props;
         let payloadData;
-        if (this.state.isRelationShipScreen) {
+        if (isRelationShipScreen) {
             payloadData = this.getRelationContactPayload();
         } else {
             payloadData = this.getContactPayloadData();
         }
-        this.props.saveProfileData("editContactInformation", payloadData);
-        this.props.navigation.navigate('editAddressSettings', {
-            contactPosition: this.state.relationShipPosition,
-            isRelation: this.state.isRelationShipScreen
+        saveProfileData("editContactInformation", payloadData);
+        navigation.navigate('editAddressSettings', {
+            contactPosition: relationShipPosition,
+            isRelation: isRelationShipScreen
         });
     }
 
     getContactPayloadData = () => {
         let contactPayload = {};
         let payloadUserAddress = [];
-        if (this.props && this.props.profileState) {
+        const { radioButtonValue, addressOne, addressTwo, userCity, userState, zipCodeValue } = this.state;
+        const { profileState } = this.props;
+        if (this.props && profileState) {
             const newContactInformation = {
-                "addressType": this.state.radioButtonValue,
-                "addressLineOne": this.state.addressOne === "" ? this.state.addressTwo : "",
-                "addressCity": this.state.userCity,
-                "addressState": this.state.userState,
-                "addressZipcode": this.state.zipCodeValue,
+                "addressType": radioButtonValue,
+                "addressLineOne": addressOne === "" ? addressTwo : "",
+                "addressCity": userCity,
+                "addressState": userState,
+                "addressZipcode": zipCodeValue,
                 "isMailingAddress": false,
                 "isPhysicalAddress": false
             };
 
-            payloadUserAddress = this.props.profileState.profileUserAddressInformation;
+            payloadUserAddress = profileState.profileUserAddressInformation;
             payloadUserAddress.push(newContactInformation);
             contactPayload = {
-                ...this.props.profileState,
+                ...profileState,
                 profileUserAddressInformation: payloadUserAddress,
             };
         }
@@ -320,24 +338,26 @@ class EditAddressAddNewComponent extends Component {
     }
 
     getRelationContactPayload = () => {
+        const {profileState} = this.props;
+        const { radioButtonValue, addressOne, addressTwo, userCity, userState, zipCodeValue , relationShipPosition} = this.state;
         let relationContactPayload = {};
         let relationAddressPayload = [];
-        if (this.props && this.props.profileState) {
+        if (this.props && profileState) {
             const addContactInformation = {
-                "addressType": this.state.radioButtonValue,
-                "addressLineOne": this.state.addressOne === "" ? this.state.addressTwo : "",
-                "addressCity": this.state.userCity,
-                "addressState": this.state.userState,
-                "addressZipcode": this.state.zipCodeValue,
+                "addressType": radioButtonValue,
+                "addressLineOne": addressOne === "" ? addressTwo : "",
+                "addressCity": userCity,
+                "addressState": userState,
+                "addressZipcode": zipCodeValue,
                 "isMailingAddress": false,
                 "isPhysicalAddress": false
             };
 
-            relationAddressPayload = this.props.profileState.profileRelationShipDetails[this.state.relationShipPosition].relationAddress;
+            relationAddressPayload = profileState.profileRelationShipDetails[relationShipPosition].relationAddress;
             relationAddressPayload.push(addContactInformation);
-            const relationAddressUpdated = [this.props.profileState.profileRelationShipDetails[this.state.relationShipPosition]];
+            const relationAddressUpdated = [profileState.profileRelationShipDetails[relationShipPosition]];
             relationContactPayload = {
-                ...this.props.profileState,
+                ...profileState,
                 profileRelationShipDetails: relationAddressUpdated
             };
         }
@@ -345,40 +365,45 @@ class EditAddressAddNewComponent extends Component {
     }
 
     editAddressAddNewOnCancel = () => {
-        if (!this.state.isRelationShipScreen) {
-            this.props.navigation.navigate('editAddressSettings');
+        const { isRelationShipScreen, relationShipPosition } = this.state;
+        const { navigation } = this.props;
+        if (!isRelationShipScreen) {
+            navigation.navigate('editAddressSettings');
         } else {
-            this.props.navigation.navigate('editAddressSettings',
+            navigation.navigate('editAddressSettings',
                 {
-                    contactPosition: this.state.relationShipPosition,
-                    isRelation: this.state.isRelationShipScreen
+                    contactPosition: relationShipPosition,
+                    isRelation: isRelationShipScreen
                 });
         }
     }
 
     render() {
+        const { navigation, stateCityData} = this.props;
+        const {radioButtonIndex, addressOne, validationAddressOne, validAddressOneMessage, addressTwo, validationAddressTwo,
+            validAddressTwoMessage, zipCodeValue, isZipCodeValid, validZipCodeMessage, userCity, userState} = this.state;
         return (
             <View style={styles.container}>
                 {
-                    this.props.stateCityData.isLoading && <GLoadingSpinner />
+                    stateCityData.isLoading && <GLoadingSpinner />
                 }
                 <GHeaderComponent
-                    navigation={this.props.navigation}
+                    navigation={navigation}
                 />
 
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.flexAddressNew}>
 
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
                             {globalString.editProfilePageValue.editAddressInfoHead}
                         </Text>
-                        <Text style={[styles.settingsInfo, styles.editLabelBold]}>
+                        <Text style={styles.addNewAddressTitleStyle}>
                             {globalString.addAddressInfo.addAddressTitle}
                         </Text>
                     </View>
 
                     <View style={styles.settingsView}>
-                        <Text style={[styles.settingsHeadline, styles.editTitleBold]}>
+                        <Text style={styles.addNewAddressHeaderStyle}>
                             {globalString.addAddressInfo.editAddressInformation}
                         </Text>
                     </View>
@@ -401,22 +426,21 @@ class EditAddressAddNewComponent extends Component {
 
                         <View style={styles.editAddressInput}>
                             {profileAddNewAddress.map((item, index) =>
-                                index == this.state.radioButtonIndex ? (
+                                index === radioButtonIndex ? (
                                     <GRadioButtonComponent
-                                        questionsStyle={{ justifyContent: 'center' }}
-                                        onPress={() => this.radioButtonClicked(index)}
+                                        questionsStyle={styles.addNewAddressJustify}
+                                        onPress={this.radioButtonClicked(index)}
                                         selected
                                         questions={item.question}
                                     />
-                                  )
-                                    : (
-                                    <GRadioButtonComponent
-                                        questionsStyle={{ justifyContent: 'center' }}
-                                        onPress={() => this.radioButtonClicked(index)}
-                                        selected={false}
-                                        questions={item.question}
-                                    />
-                                  ))}
+                                ) : (
+                                        <GRadioButtonComponent
+                                            questionsStyle={styles.addNewAddressJustify}
+                                            onPress={this.radioButtonClicked(index)}
+                                            selected={false}
+                                            questions={item.question}
+                                        />
+                                    ))}
                         </View>
 
                         <View style={styles.settingsView1}>
@@ -430,10 +454,10 @@ class EditAddressAddNewComponent extends Component {
                                 propInputStyle={styles.editAddressInput}
                                 placeholder={globalString.addAddressInfo.addressLineOne}
                                 onChangeText={this.setAddressOne}
-                                value={this.state.addressOne}
+                                value={addressOne}
                                 maxLength={50}
-                                errorFlag={!this.state.validationAddressOne}
-                                errorText={this.state.validAddressOneMessage}
+                                errorFlag={!validationAddressOne}
+                                errorText={validAddressOneMessage}
                             />
                         </View>
 
@@ -447,11 +471,11 @@ class EditAddressAddNewComponent extends Component {
                             <GInputComponent
                                 propInputStyle={styles.editAddressInput}
                                 placeholder={globalString.addAddressInfo.addressLineTwo}
-                                value={this.state.addressTwo}
+                                value={addressTwo}
                                 maxLength={50}
                                 onChangeText={this.setAddressTwo}
-                                errorFlag={!this.state.validationAddressTwo}
-                                errorText={this.state.validAddressTwoMessage}
+                                errorFlag={!validationAddressTwo}
+                                errorText={validAddressTwoMessage}
                             />
                         </View>
 
@@ -467,11 +491,11 @@ class EditAddressAddNewComponent extends Component {
                                 placeholder={globalString.addAddressInfo.zipCode}
                                 onBlur={this.validateZipCodeValue}
                                 onChangeText={this.setZipcodeValue}
-                                value={this.state.zipCodeValue}
+                                value={zipCodeValue}
                                 keyboardType="number-pad"
                                 maxLength={5}
-                                errorFlag={!this.state.isZipCodeValid}
-                                errorText={this.state.validZipCodeMessage}
+                                errorFlag={!isZipCodeValid}
+                                errorText={validZipCodeMessage}
                             />
                         </View>
 
@@ -480,7 +504,7 @@ class EditAddressAddNewComponent extends Component {
                                 {globalString.addAddressInfo.cityLabel}
                             </Text>
                             <Text style={styles.editAddressCityValue}>
-                                {this.state.userCity}
+                                {userCity}
                             </Text>
                         </View>
 
@@ -489,7 +513,7 @@ class EditAddressAddNewComponent extends Component {
                                 {globalString.addAddressInfo.stateLabel}
                             </Text>
                             <Text style={styles.editAddressCityValue}>
-                                {this.state.userState}
+                                {userState}
                             </Text>
                         </View>
                     </View>
@@ -582,14 +606,16 @@ EditAddressAddNewComponent.propTypes = {
     profileState: PropTypes.instanceOf(Object),
     getStateCity: PropTypes.func,
     getAddressFormat: PropTypes.func,
-    saveProfileData: PropTypes.func
+    saveProfileData: PropTypes.func,
+    stateCityData: PropTypes.func
 };
 
 EditAddressAddNewComponent.defaultProps = {
     profileState: {},
     getStateCity: null,
     getAddressFormat: null,
-    saveProfileData: null
+    saveProfileData: null,
+    stateCityData: null
 };
 
 export default EditAddressAddNewComponent;

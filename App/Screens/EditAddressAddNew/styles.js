@@ -3,7 +3,7 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 const { width } = Dimensions.get('window');
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7FAFF',
@@ -423,5 +423,20 @@ export const styles = StyleSheet.create({
     editAddressBackground: {
         padding: scaledHeight(15), width: '100%', backgroundColor: '#FFFFFF'
     },
-    editAddressInput: { flexDirection: 'column', width: '100%', paddingLeft: '2%', paddingRight: '2%', marginBottom: '2%', justifyContent: 'center' }
+    editAddressInput: { flexDirection: 'column', width: '100%', paddingLeft: '2%', paddingRight: '2%', marginBottom: '2%', justifyContent: 'center' },
+    addNewAddressJustify: { justifyContent: 'center' },
+    flexAddressNew: { flex: 0.85 },
+    addNewAddressTitleStyle: {
+        color: '#B2B2B2',
+        fontWeight: "bold",
+        fontSize: scaledHeight(16)
+    },
+    addNewAddressHeaderStyle: {
+        width: '70%',
+        color: '#707070',
+        fontWeight: "bold",
+        fontSize: scaledHeight(18)
+    }
 });
+
+export default styles;
