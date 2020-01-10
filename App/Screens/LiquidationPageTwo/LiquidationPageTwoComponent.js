@@ -23,11 +23,11 @@ class LiquidationPageTwoComponent extends Component {
             fundListData: [],
         };
     }
-    
+
     componentDidMount() {
-        const { navigation,liquidationInitialState } = this.props;
+        const { navigation, liquidationInitialState } = this.props;
         const { getParam } = navigation;
-        console.log(" Screen 2 componentdidmount " , JSON.stringify(liquidationInitialState.saveLiquidationSelectedData));
+        console.log(" Screen 2 componentdidmount ", JSON.stringify(liquidationInitialState.saveLiquidationSelectedData));
         if (getParam('ammend')) {
             ammendData = getParam('data');
             ammendIndex = getParam('index');
@@ -54,10 +54,14 @@ class LiquidationPageTwoComponent extends Component {
         this.setState(prevState => ({
             collapseLiquidation: !prevState.collapseLiquidation,
         }));
-        (collapseLiquidation ? this.setState({ collapseLiquidationIcon: "-   " }) : this.setState({ collapseLiquidationIcon: "+  " }));
+        if(collapseLiquidation){
+            this.setState({ collapseLiquidationIcon: "-   " });
+        }else{
+            this.setState({ collapseLiquidationIcon: "+  " });
+        }
     };
 
-    onClickSelectFund = (item, index) => {
+    onClickSelectFund = (item, index) => () => {
         const { fundListData } = this.state;
         const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
@@ -80,7 +84,7 @@ class LiquidationPageTwoComponent extends Component {
     }
 
 
-    onClickAllShares = (item, index) => {
+    onClickAllShares = (item, index) => () => {
         const { fundListData } = this.state;
         const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
@@ -101,7 +105,7 @@ class LiquidationPageTwoComponent extends Component {
         });
     }
 
-    onClickAmountinDollar = (item, index) => {
+    onClickAmountinDollar = (item, index) => () => {
         const { fundListData } = this.state;
         const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
@@ -122,7 +126,7 @@ class LiquidationPageTwoComponent extends Component {
         });
     }
 
-    onClickAmountInPerc = (item, index) => {
+    onClickAmountInPerc = (item, index) => () => {
         const { fundListData } = this.state;
         const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
@@ -187,7 +191,7 @@ class LiquidationPageTwoComponent extends Component {
 
     navigateLiquidationPageOne = () => {
         const { navigation } = this.props;
-        const { navigate } = navigation; 
+        const { navigate } = navigation;
         const { ammend } = this.state;
         if (ammend) {
             navigate('tAmmendComponent');
@@ -198,9 +202,9 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     nextButtonAction = () => {
-        const { fundListData,ammend } = this.state;
-        const { navigation,saveData } = this.props;
-        const {navigate} = navigation;
+        const { fundListData, ammend } = this.state;
+        const { navigation, saveData } = this.props;
+        const { navigate } = navigation;
         const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
             if (funds[i].isSelected) {
@@ -214,7 +218,7 @@ class LiquidationPageTwoComponent extends Component {
             }
         }
         this.setState({
-            fundListData:funds
+            fundListData: funds
         });
         const payloadData = {
             saveLiquidationSelectedData: {
@@ -232,7 +236,7 @@ class LiquidationPageTwoComponent extends Component {
                 },
             },
         };
-       saveData(payloadData);
+        saveData(payloadData);
         if (ammend) {
             const { amendReducerData } = this.props;
             ammendData = amendReducerData.menu[ammendIndex - 1].data;
@@ -241,8 +245,6 @@ class LiquidationPageTwoComponent extends Component {
         else {
             navigate('LiquidationPageThree', { ammend: false });
         }
-
-
     }
 
     formatAmount = (amount) => {
@@ -254,9 +256,9 @@ class LiquidationPageTwoComponent extends Component {
         const { navigation } = this.props;
         navigation.goBack();
     }
-    
+
     getFundList = () => {
-        const { navigation,liquidationInitialState } = this.props;
+        const { navigation, liquidationInitialState } = this.props;
         const { getParam } = navigation;
         if (getParam('ammend')) {
             this.setState({
@@ -265,17 +267,93 @@ class LiquidationPageTwoComponent extends Component {
             });
         } else {
             this.setState({
-                fundListData:liquidationInitialState.fundsListData.funds,
+                fundListData: liquidationInitialState.fundsListData.funds,
             });
         }
+    }
+
+    genrateKeyFunds = (x) => x.fundName;
+
+    renderFundList = ({ item, index }) => {
+        return (
+            <View style={(item.isSelected) ? styles.fundsFlexSelected : styles.fundsFlex} onTouchStart={this.onClickSelectFund(item, index)}>
+                <View style={styles.sharesFlex}>
+
+                    <View style={styles.flex1}>
+                        <Text style={styles.blackTextBold13px}>{item.fundName}</Text>
+                    </View>
+
+                    <View style={styles.flex2}>
+                        <View style={styles.totalSharesFlex}>
+                            <Text style={styles.totalSharesText}>{gblStrings.liquidation.totalShares}</Text>
+                            <Text style={styles.totalSharesValue}>{item.totalShares}</Text>
+                        </View>
+                        <View style={styles.totalSharesFlex}>
+                            <Text style={styles.totalSharesText}>{gblStrings.liquidation.worth}</Text>
+                            <Text style={styles.totalSharesValue}>$ {this.formatAmount(item.worthAmount)}{gblStrings.liquidation.approx}</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.flex3}>
+
+                        <View style={styles.allShares}>
+                            <TouchableOpacity onPress={this.onClickAllShares(item, index)} disabled={!(item.isSelected)}>
+                                <View style={styles.radioButtonFlexOff}>
+                                    {(item.allSharesSelected) ? <View style={styles.radioButtonFlexOn} /> : null}
+                                </View>
+                            </TouchableOpacity>
+                            <Text style={styles.allSharesText}>{gblStrings.liquidation.allShares}</Text>
+                        </View>
+
+                        <View style={styles.allShares}>
+                            <TouchableOpacity onPress={this.onClickAmountinDollar(item, index)} disabled={!(item.isSelected)}>
+                                <View style={styles.radioButtonFlexOff}>
+                                    {(item.dollarSelected) ? <View style={styles.radioButtonFlexOn} /> : null}
+                                </View>
+                            </TouchableOpacity>
+                            <Text style={styles.dollarText}>$</Text>
+                            <GInputComponent
+                                propInputStyle={styles.amountTextBox}
+                                inputStyle={styles.inputStyle}
+                                value={item.dollarValue}
+                                onChangeText={this.onChangeDollarVal}
+                                editable={(item.dollarSelected)}
+                                keyboardType="decimal-pad"
+                                maxLength={13}
+                                errorFlag={item.dollarValue > 0.95 * item.worthAmount}
+                                errorText="Due to market fluctuations, this trade may fail. We suggest you do an ‘All’ shares liquidations"
+                            />
+                        </View>
+                        <View style={styles.allShares}>
+                            <TouchableOpacity onPress={this.onClickAmountInPerc(item, index)} disabled={!(item.isSelected)}>
+                                <View style={styles.radioButtonFlexOff}>
+                                    {(item.percentageSelected) ? <View style={styles.radioButtonFlexOn} /> : null}
+                                </View>
+                            </TouchableOpacity>
+                            <Text style={styles.dollarText}>%</Text>
+                            <GInputComponent
+                                propInputStyle={styles.amountTextBox}
+                                inputStyle={styles.inputStyle}
+                                value={item.percentageValue}
+                                onChangeText={this.onChangePercentageVal}
+                                editable={(item.percentageSelected)}
+                                keyboardType="decimal-pad"
+                                maxLength={3}
+                            />
+                        </View>
+                    </View>
+
+                </View>
+            </View>
+        );
     }
 
     render() {
         let currentPage = 2;
         let totalCount = 4;
         let pageName = gblStrings.liquidation.fundSelectionScreenName;
-        const {navigation,liquidationInitialState } = this.props;
-        const { ammend,disableNextButton,collapseLiquidationIcon,collapseLiquidation,fundListData } = this.state;
+        const { navigation, liquidationInitialState } = this.props;
+        const { ammend, disableNextButton, collapseLiquidationIcon, collapseLiquidation, fundListData } = this.state;
         if (ammend) {
             currentPage = 1;
             pageName = '1 - Fund Selection';
@@ -315,82 +393,8 @@ class LiquidationPageTwoComponent extends Component {
                         <Text style={styles.fundSourceContent}>{gblStrings.liquidation.fundSourceContext}</Text>
                         <FlatList
                             data={fundListData}
-                            renderItem={({ item, index }) => {
-                                return (
-                                    <View style={(item.isSelected) ? styles.fundsFlexSelected : styles.fundsFlex} onTouchStart={() => this.onClickSelectFund(item, index)}>
-                                        <View style={styles.sharesFlex}>
-
-                                            <View style={styles.flex1}>
-                                                <Text style={styles.blackTextBold13px}>{item.fundName}</Text>
-                                            </View>
-
-                                            <View style={styles.flex2}>
-                                                <View style={styles.totalSharesFlex}>
-                                                    <Text style={styles.totalSharesText}>{gblStrings.liquidation.totalShares}</Text>
-                                                    <Text style={styles.totalSharesValue}>{item.totalShares}</Text>
-                                                </View>
-                                                <View style={styles.totalSharesFlex}>
-                                                    <Text style={styles.totalSharesText}>{gblStrings.liquidation.worth}</Text>
-                                                    <Text style={styles.totalSharesValue}>$ {this.formatAmount(item.worthAmount)}{gblStrings.liquidation.approx}</Text>
-                                                </View>
-                                            </View>
-
-                                            <View style={styles.flex3}>
-
-                                                <View style={styles.allShares}>
-                                                    <TouchableOpacity onPress={() => this.onClickAllShares(item, index)} disabled={!(item.isSelected)}>
-                                                        <View style={styles.radioButtonFlexOff}>
-                                                            {(item.allSharesSelected) ? <View style={styles.radioButtonFlexOn} /> : null}
-                                                        </View>
-                                                    </TouchableOpacity>
-                                                    <Text style={styles.allSharesText}>{gblStrings.liquidation.allShares}</Text>
-                                                </View>
-
-                                                <View style={styles.allShares}>
-                                                    <TouchableOpacity onPress={() => this.onClickAmountinDollar(item, index)} disabled={!(item.isSelected)}>
-                                                        <View style={styles.radioButtonFlexOff}>
-                                                            {(item.dollarSelected) ? <View style={styles.radioButtonFlexOn} /> : null}
-                                                        </View>
-                                                    </TouchableOpacity>
-                                                    <Text style={styles.dollarText}>$</Text>
-                                                    <GInputComponent
-                                                        propInputStyle={styles.amountTextBox}
-                                                        inputStyle={styles.inputStyle}
-                                                        value={item.dollarValue}
-                                                        onChangeText={this.onChangeDollarVal}
-                                                        editable={(item.dollarSelected)}
-                                                        keyboardType="decimal-pad"
-                                                        maxLength={13}
-                                                        errorFlag={item.dollarValue > 0.95 * item.worthAmount}
-                                                        errorText="Due to market fluctuations, this trade may fail. We suggest you do an ‘All’ shares liquidations"
-                                                    />
-                                                </View>
-
-
-                                                <View style={styles.allShares}>
-                                                    <TouchableOpacity onPress={() => this.onClickAmountInPerc(item, index)} disabled={!(item.isSelected)}>
-                                                        <View style={styles.radioButtonFlexOff}>
-                                                            {(item.percentageSelected) ? <View style={styles.radioButtonFlexOn} /> : null}
-                                                        </View>
-                                                    </TouchableOpacity>
-                                                    <Text style={styles.dollarText}>%</Text>
-                                                    <GInputComponent
-                                                        propInputStyle={styles.amountTextBox}
-                                                        inputStyle={styles.inputStyle}
-                                                        value={item.percentageValue}
-                                                        onChangeText={this.onChangePercentageVal}
-                                                        editable={(item.percentageSelected)}
-                                                        keyboardType="decimal-pad"
-                                                        maxLength={3}
-                                                    />
-                                                </View>
-                                            </View>
-
-                                        </View>
-                                    </View>
-                                );
-                            }}
-                            keyExtractor={x => x.fundName}
+                            renderItem={this.renderFundList}
+                            keyExtractor={this.genrateKeyFunds}
                             extraData={this.state}
                         />
 

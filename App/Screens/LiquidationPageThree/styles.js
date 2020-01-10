@@ -272,15 +272,6 @@ import { scaledHeight } from '../../Utils/Resolution';
         fontWeight: 'bold',
         padding: "4%"
     },
-    offlineMethodContent: {
-        color: '#333333DE',
-        fontSize: scaledHeight(14),
-        marginTop: "3%",
-    },
-    offlineMethodFlex: {
-        justifyContent: 'space-between',
-        marginBottom: "4%"
-    },
     offButtonStyle: {
         backgroundColor: '#B7B7B7',
         borderColor: '#56565A',
@@ -298,6 +289,15 @@ import { scaledHeight } from '../../Utils/Resolution';
         height: scaledHeight(61),
         marginLeft: "0%",
         width: "60%",
+    },
+    offlineMethodContent: {
+        color: '#333333DE',
+        fontSize: scaledHeight(14),
+        marginTop: "3%",
+    },
+    offlineMethodFlex: {
+        justifyContent: 'space-between',
+        marginBottom: "4%"
     },
     onButtonStyle: {
         backgroundColor: '#B7B7B7',
@@ -370,16 +370,6 @@ import { scaledHeight } from '../../Utils/Resolution';
         paddingBottom: scaledHeight(1),
         paddingTop: scaledHeight(1),
     },
-    subHeadingText: {
-        color: '#56565A',
-        fontSize: scaledHeight(18),
-        fontWeight: 'bold',
-        marginTop: "3%",
-    },
-    switchFlex: {
-        height: scaledHeight(60),
-    },
-    
     stateTaxToDollarFlex: {
         flexDirection: 'row',
         marginLeft: "10%",
@@ -398,8 +388,6 @@ import { scaledHeight } from '../../Utils/Resolution';
         paddingTop: scaledHeight(15),
         width: "58%",
     },
-   
-    
     stateTaxInputStyle: {
         borderColor: '#DEDEDF',
         borderWidth: scaledHeight(1),
@@ -408,6 +396,12 @@ import { scaledHeight } from '../../Utils/Resolution';
         height: scaledHeight(48),
         marginTop: scaledHeight(15),
         width: "45%",
+    },
+    subHeadingText: {
+        color: '#56565A',
+        fontSize: scaledHeight(18),
+        fontWeight: 'bold',
+        marginTop: "3%",
     },
     submitFlex: {
         alignItems: 'center',
@@ -432,6 +426,9 @@ import { scaledHeight } from '../../Utils/Resolution';
         color: '#FFFFFF',
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
+    },
+    switchFlex: {
+        height: scaledHeight(60),
     },
     tNCFlex: {
         marginLeft: "4%",
