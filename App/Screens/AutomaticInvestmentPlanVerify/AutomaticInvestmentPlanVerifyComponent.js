@@ -21,13 +21,11 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
 
         this.state = {
             skip: this.props.navigation.getParam('skip', false),
-            // edit:this.props.navigation.getParam('edit', false),
             indexSelected: `${this.props.navigation.getParam('indexSelected')}`,
             autoInvestmentJson: {},
             dateFromValue: '',
             dateToValue: '',
             accountType: `${this.props.navigation.getParam('accountType')}`,
-            // this.props.navigation.getParam('skip', false),
         };
     }
     componentDidMount() {
@@ -35,25 +33,30 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
         let payload = {};
         if (this.state.skip) {
             if (this.props && this.props.automaticInvestmentState) {
-                payload = {
-                    // ...payload,
-                    ...this.props.automaticInvestmentState.general
-                };
-                
+                switch(this.state.accountType.toLowerCase())
+                {
+                    case 'general':
+                        payload = {
+                            ...this.props.automaticInvestmentState.general
+                        };
+                        break;
+                    case 'ira':
+                        payload = {
+                            ...this.props.automaticInvestmentState.ira
+                        };
+                        break;
+                    case 'utma':
+                        payload = {
+                            ...this.props.automaticInvestmentState.utma
+                        };
+                        break;
+                }
                 this.setState({
                     autoInvestmentJson: payload[this.state.indexSelected],
                 });
             }
         }
         else {
-
-            //  if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
-            //      payload = {
-            //          // ...payload,
-            //          ...this.props.automaticInvestmentState.savedAccData
-            //      };
-            //      this.setState({ autoInvestmentJson: payload })
-            //  }
             this.setState({ autoInvestmentJson: myInstance.getSavedAutomaticData() })
             
         }
@@ -77,19 +80,9 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
     getPayload = () => {
 
 
-        let payload = {
-            //  totalAmount: '$500',  
-            //  fundFrom: 'Bank 1',
-            //  investedIn: 'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES',
-            //  invest: 'Quarterly',
-            //  dateToInvest: '15th',
-            //  dateAdded: '09/02/2019',
-            //  endDate: '15/12/2025',
-            //  nextInvestementDate: '15/11/2019',
-        };
+        let payload = {};
         if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
             payload = {
-                // ...payload,
                 ...this.props.automaticInvestmentState.savedAccData
             };
         }
@@ -109,11 +102,8 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
     }
 
     navigationNext = () => {
-        // const payload = this.getPayload();
-        // this.props.saveData("automaticInvestmentVerify", payload);
         this.props.navigation.navigate({routeName:'automaticInvestmentEsign',key:'automaticInvestmentEsign',params:{accountType:this.state.accountType,indexSelected:this.state.indexSelected}});
     }
-    // navigationNext = () => this.props.navigation.navigate('automaticInvestmentEsign');
 
     navigationSubmit = () => this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
     navigationBack = () => this.props.navigation.goBack();
@@ -121,47 +111,30 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
     editAddedAccount=()=>
     {
         myInstance.setAutomaticInvestmentEditMode(true);
-        this.props.navigation.goBack('automaticInvestmentAdd')
+        //if(this.state.indexSelected>-1)
+            this.props.navigation.goBack('automaticInvestmentSchedule')
+        //else
+            //this.props.navigation.goBack('automaticInvestmentAdd')
     }
-
-    //  parsingInvestIn = (item) =>
-    //  {
-    //      console.log('item--------))))))))---------',item)
-    //      let fundlist="";
-    //      let array=item.investedIn;
-    //      {array.map((fund) => {
-    //          fundlist=fund.name+","+fundlist;
-    //      })}
-    //      return(<Text style={styles.verifyConent2}>{fundlist.replace(',','').trim()}</Text>)
-    //  }
 
     render() {
 
-        const date = new Date().getDate(); // Current Date
-        const month = new Date().getMonth() + 1; // Current Month
-        const year = new Date().getFullYear(); // Current Year
+        const date = new Date().getDate(); //Current Date
+        const month = new Date().getMonth() + 1; //Current Month
+        const year = new Date().getFullYear(); //Current Year
         const currentdate = month + "-" + date + "-" + year;
         const item = this.state.autoInvestmentJson;
-        // const item=myInstance.getSavedAutomaticData();
         
         let fundlist="";
-        //  if(this.state.autoInvestmentJson)
-        //  {
-        //      console.log('=======================',this.state.autoInvestmentJson)
-        //      item = this.state.autoInvestmentJson;
-            
-        //  }
        
-        if(item.account || item.acc_name)// if(this.state.autoInvestmentJson.account)
+        if(item.account || item.acc_name)
         {
-            console.log('item=======================',item)
             item.investedIn.map((fund)=>{
                 fundlist=fund.name+','+fundlist;
             })
         }
         return (
             <View style={styles.container}>
-                {/* {this.parsingInvestIn(this.state.autoInvestmentJson)} */}
                 <GHeaderComponent register navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
                     {this.state.skip ? null :
@@ -210,12 +183,6 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
 
                         </View>
                         <View style={styles.seperator_line} />
-
-                        {/* <FlatList style={{ marginTop: scaledHeight(20) }}
-                            data={this.state.autoInvestmentJson}
-                            renderItem={this.renderInvestment()}
-                            keyExtractor={this.generateKeyExtractor}
-                        /> */}
 
                         <View style={styles.verifyContentMain}>
 

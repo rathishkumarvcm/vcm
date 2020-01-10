@@ -22,13 +22,11 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
         super(props);
         this.state = {
             skip: this.props.navigation.getParam('skip', false),
-            // edit:this.props.navigation.getParam('edit', false),
             indexSelected: `${this.props.navigation.getParam('indexSelected')}`,
             systematicWithdrawalJson: {},
             dateFromValue: '',
             dateToValue: '',
             accountType: `${this.props.navigation.getParam('accountType')}`,
-            // this.props.navigation.getParam('skip', false),
         };
     }
 
@@ -38,7 +36,6 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
         if (this.state.skip) {
             if (this.props && this.props.systematicWithdrawalState) {
                 payload = {
-                    // ...payload,
                     ...this.props.systematicWithdrawalState.general
                 };
                 this.setState({
@@ -47,14 +44,6 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
             }
         }
         else {
-
-            //  if (this.props && this.props.systematicWithdrawalState && this.props.systematicWithdrawalState.savedAccData) {
-            //      payload = {
-            //          // ...payload,
-            //          ...this.props.systematicWithdrawalState.savedAccData
-            //      };
-            //      this.setState({ systematicWithdrawalJson: payload })
-            //  }
              this.setState({ systematicWithdrawalJson: myInstance.getSavedSystematicData() })
             
         }
@@ -86,33 +75,22 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
     navigationCancel = () => this.props.navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
     navigationNext = () => this.props.navigation.navigate({routeName:'systematicWithdrawalEsign',key:'systematicWithdrawalEsign',params:{accountType:this.state.accountType,indexSelected:this.state.indexSelected}});
     navigationSubmit = () => this.props.navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
-    // this.props.navigation.navigate('systematicWithdrawalEsign');
+    
     editAddedAccount=()=>
     {
         myInstance.setSystematicWithdrawalEditMode(true);
         this.props.navigation.goBack('systematicWithdrawalAdd')
     }
 
-    //  parsingInvestIn = (item) =>
-    //  {
-    //      console.log('item--------))))))))---------',item)
-    //      let fundlist="";
-    //      let array=item.investedIn;
-    //      {array.map((fund) => {
-    //          fundlist=fund.name+","+fundlist;
-    //      })}
-    //      return(<Text style={styles.verifyConent2}>{fundlist.replace(',','').trim()}</Text>)
-    //  }
-
     render() {
-        const date = new Date().getDate(); // Current Date
-        const month = new Date().getMonth() + 1; // Current Month
-        const year = new Date().getFullYear(); // Current Year
+        const date = new Date().getDate(); //Current Date
+        const month = new Date().getMonth() + 1; //Current Month
+        const year = new Date().getFullYear(); //Current Year
         const currentdate = month + "-" + date + "-" + year;
         const item = this.state.systematicWithdrawalJson;
         console.log('************************',item)
         let fundlist="";
-        if(item.account || item.acc_name)// if(this.state.autoInvestmentJson.account)
+        if(item.account || item.acc_name)//if(this.state.autoInvestmentJson.account)
         {
             item.investedIn.map((fund)=>{
                 fundlist=fund.name+','+fundlist;
@@ -154,10 +132,6 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
                     </View>
                     }
                     <View style={styles.body}>
-                        {/* <View style={styles.autoInvest_sub_title_view}>
-                            <Text style={styles.autoInvest_sub_title_text}>{'- Verify the Withdrawal Plan'}</Text>
-                            <Text style={styles.autoInvest_sub_edit}>{'Edit'}</Text>
-                        </View> */}
                         <View style={styles.autoInvestTitleBody}>
                             {
                                 this.state.skip ?
@@ -172,11 +146,6 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
 
                         </View>
                         <View style={styles.seperator_line} />
-                        {/* <FlatList style={{ marginTop: scaledHeight(20) }}
-                            data={autoInvestmentJson}
-                            renderItem={this.renderInvestment()}
-                            keyExtractor={this.generateKeyExtractor}
-                        /> */}
                          <View style={styles.verifyContentMain}>
 
                         <View style={styles.verifyContentView}>

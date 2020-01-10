@@ -4,6 +4,73 @@ import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
 
 
 export const styles = StyleSheet.create({
+    bankInfoContainer: {
+        borderWidth: 1,
+        borderColor: '#9DB4CE',
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        paddingBottom: scaledHeight(21),
+        position: 'absolute', 
+        zIndex: 5, 
+        top: scaledHeight(80), 
+        width: '100%', 
+        shadowColor: "#000", 
+        shadowOffset: { width: 0, height: 1, }, 
+        shadowOpacity: 0.23, 
+        shadowRadius: 2.62, 
+        elevation: 4, 
+        
+    },
+    accountNameHeaderText: {
+        fontSize: scaledHeight(14),
+        color: '#56565A',
+        alignSelf: 'flex-start',
+        marginTop: scaledHeight(20),
+        marginHorizontal: '4%',
+        fontWeight: 'bold'
+    },
+    accountNameSubHeaderText: {
+        fontSize: scaledHeight(14),
+        color: '#56565A',
+        alignSelf: 'flex-start',
+        marginTop: scaledHeight(8),
+        marginHorizontal: '4%',
+    },
+    confirmDeleteView: {
+        flexDirection: 'row',
+    },
+    cancelBtn: {
+        borderColor: '#707070',
+        borderWidth: 1,
+        width: '40%',
+        marginHorizontal: '4%',
+        borderRadius: scaledHeight(1),
+        height: scaledHeight(44),
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 0.5
+    },
+    deleteBtn: {
+        borderWidth: 1,
+        width: '40%',
+        marginHorizontal: '4%',
+        borderRadius: scaledHeight(1),
+        height: scaledHeight(44),
+        backgroundColor: '#544A54',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 0.5
+    },
+    cancelBtnText: {
+        fontSize: scaledHeight(14),
+        color: '#544A54'
+    },
+    deleteBtnText: {
+        fontSize: scaledHeight(14),
+        color: '#FFFFFF'
+    },
     container: {
         flex: 1,
         backgroundColor: '#F7FAFF',
@@ -25,7 +92,7 @@ export const styles = StyleSheet.create({
         width: '30%',
         justifyContent: "center",
         alignItems: 'center',
-       //  borderRadius: scaledHeight(20),
+       // borderRadius: scaledHeight(20),
         backgroundColor: "#FFFFFF",
         marginTop: '2%'
     },
@@ -93,7 +160,7 @@ export const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       //  borderRadius:scaledHeight(25),
+       // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#FFFFFF',
         alignItems:'center',
@@ -107,7 +174,7 @@ export const styles = StyleSheet.create({
     editDropdown:{
         height:scaledHeight(60),
         backgroundColor:'#FFFFFF',
-        // backgroundColor:'red',
+        //backgroundColor:'red',
         borderColor:'#00000029',
         borderBottomWidth:1,
         justifyContent:'center',
@@ -162,7 +229,7 @@ export const styles = StyleSheet.create({
     },
     flatHeaderContent:{ 
         flexDirection: "row", 
-        flex: 0.6, 
+        flex: 0.9, 
         paddingLeft: scaledWidth(10), 
         paddingTop: scaledHeight(10), 
         paddingBottom: scaledHeight(10) 
@@ -179,7 +246,7 @@ export const styles = StyleSheet.create({
     editMenu:
     {
          flexDirection: "row", 
-         flex: 0.4, 
+         flex: 0.1, 
          justifyContent: 'flex-end', 
          paddingRight: scaledWidth(10) 
     },

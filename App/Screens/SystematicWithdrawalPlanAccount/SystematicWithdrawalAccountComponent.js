@@ -16,16 +16,6 @@ class SystematicWithdrawalAccountComponent extends Component {
     constructor(props) {
         super(props);
         const systematicAccount =  myInstance.getSystematicWithdrawalEditMode()? (myInstance.getScreenStateData().systematicAccount || {}):{};
-        //  this.state = {
-
-        //      selectedItemID: "",
-        //      selectedItemName: "",
-        //      accountJson: {},
-        //      selectedAccount: -1,
-        //      // ItemToEdit: this.props.navigation.getParam('ItemToEdit', -1),
-        //      expand: [true, false, false],
-        //      expandIndex: 0,
-        //  };
         this.state = {
             generalAccountJson: {},
             iraAccountJson: {},
@@ -42,10 +32,6 @@ class SystematicWithdrawalAccountComponent extends Component {
         };
 
     }
-    //  selectedAccount = index => e => {
-
-    //      this.setState({ selectedAccount: index })
-    //  }
 
     selectedAccount = (index,type) => e => {
         let json={};
@@ -71,30 +57,22 @@ class SystematicWithdrawalAccountComponent extends Component {
     }
 
     setStateUpdates = index => e => {
-
-        var array = [...this.state.expand]; //  make a separate copy of the array
-        let IndexExpand = this.state.expandIndex;
+        const{expand} = this.state;
+        const array = [...expand]; 
+        const IndexExpand = this.state.expandIndex;
 
 
         if (index !== IndexExpand) {
 
-            array[IndexExpand] = false;
+            array[Number(IndexExpand)] = false;
 
         }
-        array[index] = !array[index];
+        array[Number(index)] = !array[Number(index)];
 
-        this.setState({ expand: array, expandIndex: index });
+        this.setState({ expand: array, expandIndex: index,selectedAccount:-1 });
 
 
     }
-    //  componentDidMount() {
-    //      if (this.props && this.props.accountState) {
-
-    //          this.setState({
-    //              accountJson: this.props.accountState,
-    //          });
-    //      }
-    //  }
 
     componentDidMount() {
         if (this.props && this.props.accountState) {
@@ -107,29 +85,7 @@ class SystematicWithdrawalAccountComponent extends Component {
             });
         }
     }
-    //  onSelected = (item) => () => {
-    //      console.log("item: " + item.id);
-    //      this.setState({ selectedItemID: item.id });
-    //      this.setState({ selectedItemName: item.name });
-    //  }
-    // navigationNext = () => this.props.navigation.navigate('automaticInvestmentAdd', { ItemToEdit: -1 });
     navigationCancel = () => this.props.navigation.goBack();
-
-    //  getPayload = () => {
-        
-
-    //      let payload = {
-    //          account: "Account 3 / 90989123",
-    //      };
-    //      if (this.props && this.props.systematicWithdrawalState && this.props.systematicWithdrawalState.savedAccData) {
-    //          payload = {
-    //              ...payload,
-    //              ...this.props.systematicWithdrawalState.savedAccData
-    //          };
-    //      }
-    //      return payload;
-
-    //  }
 
     getPayload = () => {
         
@@ -151,13 +107,6 @@ class SystematicWithdrawalAccountComponent extends Component {
 
     }
     
-
-    //  navigationNext = () => {
-    //          // const payload = this.getPayload();
-    //          // this.props.saveData("systematicWithdrawalAccount", payload); 
-    //          this.props.navigation.navigate('systematicWithdrawalAdd', { ItemToEdit: -1});
-    //  }
-
     navigationNext = () => {
         const payload = this.getPayload();
         const stateData = myInstance.getScreenStateData();
@@ -176,7 +125,7 @@ class SystematicWithdrawalAccountComponent extends Component {
 generateGeneralKeyExtractor = (item) => item.accountName;
 renderGeneralAccount = () => ({ item, index }) =>
         (
-            <TouchableOpacity onPress={this.selectedAccount(index,"general")}>
+            <TouchableOpacity onPress={this.selectedAccount(index,globalString.automaticInvestment.general)}>
 
                 <View style={this.state.selectedAccount === index ? styles.selectedAccount : styles.accountList}>
                     <View style={styles.displayAccView}>
@@ -185,17 +134,17 @@ renderGeneralAccount = () => ({ item, index }) =>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <View style={styles.auto_invest_to_flat}>
-                            <Text style={styles.auto_invest_to_top}>{'Current Value'}</Text>
+                            <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.currentValue}</Text>
                             <Text style={styles.auto_invest_flat_min}>{item.currentValue}</Text>
                         </View>
 
                         <View style={styles.auto_invest_to_flat}>
-                            <Text style={styles.auto_invest_to_top}>{'Holding'}</Text>
+                            <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.holding}</Text>
                             <Text style={styles.auto_invest_flat_min}>{item.holding}</Text>
                         </View>
                     </View>
                     <View style={styles.auto_invest_to_flat}>
-                        <Text style={styles.auto_invest_to_top}>{'Automatic Investment Plan'}</Text>
+                        <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.autoInves_Title}</Text>
                         <Text style={styles.auto_invest_flat_min}>{item.automaticInvestmentPlan}</Text>
                     </View>
 
@@ -205,7 +154,7 @@ renderGeneralAccount = () => ({ item, index }) =>
         generateIraKeyExtractor = (item) => item.accountName;
         renderIraAccount = () => ({ item, index }) =>
             (
-                <TouchableOpacity onPress={this.selectedAccount(index,"ira")}>
+                <TouchableOpacity onPress={this.selectedAccount(index,globalString.automaticInvestment.ira)}>
                     <View style={this.state.selectedAccount === index ? styles.selectedAccount : styles.accountList}>
                         <View style={styles.displayAccView}>
                             <Text style={styles.displayAcc}>{item.accountName}</Text>
@@ -213,17 +162,17 @@ renderGeneralAccount = () => ({ item, index }) =>
                         </View>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={styles.auto_invest_to_flat}>
-                                <Text style={styles.auto_invest_to_top}>{'Current Value'}</Text>
+                                <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.currentValue}</Text>
                                 <Text style={styles.auto_invest_flat_min}>{item.currentValue}</Text>
                             </View>
     
                             <View style={styles.auto_invest_to_flat}>
-                                <Text style={styles.auto_invest_to_top}>{'Holding'}</Text>
+                                <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.holding}</Text>
                                 <Text style={styles.auto_invest_flat_min}>{item.holding}</Text>
                             </View>
                         </View>
                         <View style={styles.auto_invest_to_flat}>
-                            <Text style={styles.auto_invest_to_top}>{'Automatic Investment Plan'}</Text>
+                            <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.autoInves_Title}</Text>
                             <Text style={styles.auto_invest_flat_min}>{item.automaticInvestmentPlan}</Text>
                         </View>
     
@@ -234,7 +183,7 @@ renderGeneralAccount = () => ({ item, index }) =>
             generateUtmaKeyExtractor = (item) => item.accountName;
             renderUtmaAccount = () => ({ item, index }) =>
                 (
-                    <TouchableOpacity onPress={this.selectedAccount(index,"utma")}>
+                    <TouchableOpacity onPress={this.selectedAccount(index,globalString.automaticInvestment.utma)}>
                     <View style={this.state.selectedAccount === index ? styles.selectedAccount : styles.accountList}>
                         <View style={styles.displayAccView}>
                             <Text style={styles.displayAcc}>{item.accountName}</Text>
@@ -242,17 +191,17 @@ renderGeneralAccount = () => ({ item, index }) =>
                         </View>
                         <View style={{ flexDirection: 'row' }}>
                             <View style={styles.auto_invest_to_flat}>
-                                <Text style={styles.auto_invest_to_top}>{'Current Value'}</Text>
+                                <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.currentValue}</Text>
                                 <Text style={styles.auto_invest_flat_min}>{item.currentValue}</Text>
                             </View>
     
                             <View style={styles.auto_invest_to_flat}>
-                                <Text style={styles.auto_invest_to_top}>{'Holding'}</Text>
+                                <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.holding}</Text>
                                 <Text style={styles.auto_invest_flat_min}>{item.holding}</Text>
                             </View>
                         </View>
                         <View style={styles.auto_invest_to_flat}>
-                            <Text style={styles.auto_invest_to_top}>{'Automatic Investment Plan'}</Text>
+                            <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.autoInves_Title}</Text>
                             <Text style={styles.auto_invest_flat_min}>{item.automaticInvestmentPlan}</Text>
                         </View>
     
@@ -269,27 +218,27 @@ renderGeneralAccount = () => ({ item, index }) =>
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={{ flex: 0.85 }}>
                     <View>
-                        <Text style={styles.autoInvestHead}>{'Create Systematic Withdrawalß Plan'}</Text>
+                        <Text style={styles.autoInvestHead}>{'Create Systematic Withdrawal Plan'}</Text>
                         <View style={styles.seperator_line} />
                         <View style={styles.circle_view}>
                             <View style={styles.circle_Inprogress}>
-                                <Text style={styles.circleTextNew}>{'1'}</Text>
+                                <Text style={styles.circleTextNew}>{globalString.automaticInvestment.one}</Text>
                             </View>
                             <View style={styles.circle_connect} />
                             <View style={styles.circle_NotStarted}>
-                                <Text style={styles.circleText}>{'2'}</Text>
+                                <Text style={styles.circleText}>{globalString.automaticInvestment.two}</Text>
                             </View>
                             <View style={styles.circle_connect} />
                             <View style={styles.circle_NotStarted}>
-                                <Text style={styles.circleText}>{'3'}</Text>
+                                <Text style={styles.circleText}>{globalString.automaticInvestment.three}</Text>
                             </View>
                             <View style={styles.circle_connect} />
                             <View style={styles.circle_NotStarted}>
-                                <Text style={styles.circleText}>{'4'}</Text>
+                                <Text style={styles.circleText}>{globalString.automaticInvestment.four}</Text>
                             </View>
                             <View style={styles.circle_connect} />
                             <View style={styles.circle_NotStarted}>
-                                <Text style={styles.circleText}>{'5'}</Text>
+                                <Text style={styles.circleText}>{globalString.automaticInvestment.five}</Text>
                             </View>
                         </View>
                         <View style={styles.autoInvest_title_view}>
@@ -306,17 +255,17 @@ renderGeneralAccount = () => ({ item, index }) =>
                                         <GIcon
                                             name="minus"
                                             type="antdesign"
-                                            size={30}
-                                            color="#088ACC"
+                                            size={23}
+                                            color="#56565A"
                                         /> :
                                         <GIcon
                                             name="plus"
                                             type="antdesign"
-                                            size={30}
-                                            color="#088ACC"
+                                            size={23}
+                                            color="#56565A"
                                         />
                                     }
-                                    <Text style={styles.autoInvest_sub_title_text}>{'General Account'}</Text>
+                                    <Text style={styles.autoInvest_sub_title_text}>General Account</Text>
                                 </View>
                             </TouchableOpacity>
 
@@ -337,17 +286,17 @@ renderGeneralAccount = () => ({ item, index }) =>
                                         <GIcon
                                             name="minus"
                                             type="antdesign"
-                                            size={30}
-                                            color="#088ACC"
+                                            size={23}
+                                            color="#56565A"
                                         /> :
                                         <GIcon
                                             name="plus"
                                             type="antdesign"
-                                            size={30}
-                                            color="#088ACC"
+                                            size={23}
+                                            color="#56565A"
                                         />
                                     }
-                                    <Text style={styles.autoInvest_sub_title_text}>{'IRA Account'}</Text>
+                                    <Text style={styles.autoInvest_sub_title_text}>IRA Account</Text>
                                 </View>
                             </TouchableOpacity>
 
@@ -367,17 +316,17 @@ renderGeneralAccount = () => ({ item, index }) =>
                                         <GIcon
                                             name="minus"
                                             type="antdesign"
-                                            size={30}
-                                            color="#088ACC"
+                                            size={23}
+                                            color="#56565A"
                                         /> :
                                         <GIcon
                                             name="plus"
                                             type="antdesign"
-                                            size={30}
-                                            color="#088ACC"
+                                            size={23}
+                                            color="#56565A"
                                         />
                                     }
-                                    <Text style={styles.autoInvest_sub_title_text}>{'UTMA Account'}</Text>
+                                    <Text style={styles.autoInvest_sub_title_text}>UTMA Account</Text>
                                 </View>
                             </TouchableOpacity>
 
@@ -405,11 +354,6 @@ renderGeneralAccount = () => ({ item, index }) =>
                         textStyle={styles.continueButtonText}
                         onPress={this.state.selectedAccount>-1?this.navigationNext:null}
                     />
-
-
-
-
-
                     <GFooterComponent />
                 </ScrollView>
             </View>

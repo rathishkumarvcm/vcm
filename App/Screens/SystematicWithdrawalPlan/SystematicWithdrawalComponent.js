@@ -29,30 +29,22 @@ let editDeleteJson = [
 class SystematicWithdrawalComponent extends Component {
     constructor(props) {
         super(props);
-
-        //  this.state = {
-        //      expand: false,
-        //      selectedIndex: -1,
-        //      systematicWithdrawalJson: {},
-        //  };
+        this.showDeletePopup=false;
+        this.selectedIndex= -1;
         this.state = {
             expand: false,
-            selectedIndex: -1,
             generalySystematicWithdrawal: {},
             iraSystematicWithdrawal: {},
             utmaSystematicWithdrawal:{},
             arr_expand: [true, false, false],
             expandIndex: 0,
             refresh: false,
+            popupIndex: -1,
         };
     }
 
     componentDidMount() {
-        //  if (this.props && this.props.systamaticWithdrawalState) {
-        //      this.setState({
-        //          systematicWithdrawalJson: this.props.systamaticWithdrawalState,
-        //      });
-        //  }
+        const{refresh} = this.state;
         if (this.props && this.props.systematicWithdrawalState) {
             if(this.props.systematicWithdrawalState.savedAccData)
             {
@@ -61,6 +53,7 @@ class SystematicWithdrawalComponent extends Component {
                     generalySystematicWithdrawal: this.props.systematicWithdrawalState.savedAccData.general,
                     iraSystematicWithdrawal: this.props.systematicWithdrawalState.savedAccData.ira,
                     utmaSystematicWithdrawal:this.props.systematicWithdrawalState.savedAccData.utma,
+                    refresh: !refresh
                 });
             }
             else
@@ -69,44 +62,65 @@ class SystematicWithdrawalComponent extends Component {
                     generalySystematicWithdrawal: this.props.systematicWithdrawalState.general,
                     iraSystematicWithdrawal: this.props.systematicWithdrawalState.ira,
                     utmaSystematicWithdrawal:this.props.systematicWithdrawalState.utma,
+                   refresh: !refresh
                 });
             }
         }
     }
 
     componentDidUpdate(prevProps, prevState) {
-       
-        if (this.props != prevProps) {
-            if (this.props &&
-                this.props.systematicWithdrawalState) {
+        const{refresh} = this.state;
+        if (this.props && this.props.systematicWithdrawalState) {
+            if(this.props.systematicWithdrawalState.savedAccData)
+            {
+                console.log('componentDidMount#####################',this.props.systematicWithdrawalState.savedAccData)
                 this.setState({
-                    generalySystematicWithdrawal: this.props.systematicWithdrawalState.general,
-                    iraSystematicWithdrawal: this.props.systematicWithdrawalState.ira,
-                    utmaSystematicWithdrawal:this.props.systematicWithdrawalState.utma,
-                    refresh: !this.state.refresh
-                });    
+                    generalySystematicWithdrawal: this.props.systematicWithdrawalState.savedAccData.general,
+                    iraSystematicWithdrawal: this.props.systematicWithdrawalState.savedAccData.ira,
+                    utmaSystematicWithdrawal:this.props.systematicWithdrawalState.savedAccData.utma,
+                    refresh: !refresh
+                });
             }
+            // else
+            // {
+            //     this.setState({
+            //         generalySystematicWithdrawal: this.props.systematicWithdrawalState.general,
+            //         iraSystematicWithdrawal: this.props.systematicWithdrawalState.ira,
+            //         utmaSystematicWithdrawal:this.props.systematicWithdrawalState.utma,
+            //         refresh: !refresh
+            //     });
+            // }
         }
         
     }
 
     setCollapsableUpdates = index => e => {
-
-        var array = [...this.state.arr_expand]; //  make a separate copy of the array
-        let IndexExpand = this.state.expandIndex;
-
-
-        if (index !== IndexExpand) {
-
-            array[IndexExpand] = false;
-
+        const{arr_expand} =this.state;
+        const array = [...arr_expand]; 
+        const indexExpand = this.state.expandIndex;
+        if (index !== indexExpand) {
+            array[Number(indexExpand)] = false;
         }
-        array[index] = !array[index];
-
-        this.setState({ arr_expand: array, expandIndex: index, selectedAccount: -1 });
-
-
+        array[Number(index)] = !array[Number(index)];
+        this.setState({ arr_expand: array, expandIndex: index });
     }
+
+    generateSelectedFunds= item => item.id;
+
+    renderSelectedFunds =()=>({ item }) =>
+    (<View style={styles.editDropdown}>
+        <Text style={styles.editDropdownText}> {item.name} </Text>
+        <Text style={styles.editDropdownText}> {item.amount} </Text>
+     </View>)
+
+    generateEditDelete = item => item.id;
+
+    renderEditDeleteOption =()=>({ item, index }) =>
+    (
+    <TouchableOpacity style={styles.editDropdown}>
+        <Text style={styles.editDropdownText} onPress={this.navigationInvestmentEdit(index)}> {item.name} </Text>
+    </TouchableOpacity>
+     )
 
     generateKeyExtractor = (item) => item.id;
     renderInvestment = () => ({ item, index }) =>
@@ -115,39 +129,42 @@ class SystematicWithdrawalComponent extends Component {
             <View style={styles.flatHeader}>
                 <View style={styles.flatHeaderView}>
                     <View style={styles.flatHeaderContent}>
-                        {/* <Text style={styles.flatHeaderTitle}>{globalString.automaticInvestment.acc_Name}</Text> */}
                         <Text style={styles.flatHeaderValue}>{item.account}</Text>
                     </View>
                     <View style={styles.editMenu}>
-                        <TouchableOpacity onPress={this.editDelete(index)}>
+                        <TouchableOpacity onPress={this.editDelete(index,item.accountType)}>
                             <GIcon
                                 name="dots-vertical"
                                 type="material-community"
                                 size={30}
                             />
                         </TouchableOpacity>
-                        {/* <Text onPress={}>{":"}</Text> */}
                     </View>
                 </View>
 
                 {
-                    index === this.state.selectedIndex ?
+                    index === this.selectedIndex ?
                         <FlatList style={styles.editFlatList}
                             data={editDeleteJson}
-                            renderItem={({ item, index }) =>
-                                (<TouchableOpacity style={styles.editDropdown} >
-                                    <Text style={styles.editDropdownText} onPress={this.navigationInvestmentEdit(index)}> {item.name} </Text>
-                                </TouchableOpacity>)
-                            }
-                            keyExtractor={item => item.id}
+                            renderItem={this.renderEditDeleteOption()}
+                            keyExtractor={this.generateEditDelete}
                         /> : null}
 
                 <View style={styles.flatBody}>
 
                     <View style={styles.flatBodyTitle}>
                     <Text style={styles.flatBodyTitleValue}>{item.investedIn[0].name}</Text>
-                        <Text style={styles.flatBodyTitleLink}>{item.investedIn.length}</Text>
+                        <Text style={styles.flatBodyTitleLink} onPress={this.popupInvestedIn(index)}>{item.investedIn.length}</Text>
                     </View>
+
+                    {
+                        index === this.state.popupIndex ?
+                        
+                            <FlatList style={styles.editFlatList}
+                                data={item.investedIn}
+                                renderItem={this.renderSelectedFunds()}
+                                keyExtractor={this.generateSelectedFunds}
+                            /> : null}
 
                     <Text style={styles.flatBodyDate}>{"Date added " + item.dateAdded}</Text>
                     <View style={styles.seperator_line} />
@@ -181,7 +198,7 @@ class SystematicWithdrawalComponent extends Component {
                                 buttonStyle={styles.skipButton}
                                 buttonText={globalString.common.skip}
                                 textStyle={styles.skipButtonText}
-                                onPress={this.navigationInvestmentVerify(index)}
+                                onPress={this.navigationInvestmentVerify(index,item.accountType)}
                             />
                         </View>
                     </View>
@@ -191,67 +208,111 @@ class SystematicWithdrawalComponent extends Component {
             </View>
 
         )
+        editDelete = (index,type) => () => {
+            const{refresh} = this.state;
+            if(index === this.selectedIndex) {
+                this.selectedIndex= -1;
+                this.setState({
+                    refresh: !refresh,
+                    accountType:type,
+                });
+            }
+            else{
+                this.selectedIndex= index;
+                this.setState({
+                    refresh: !refresh,
+                    accountType:type,
+                });
+            }
+    
+        }
+    
+        popupInvestedIn = index => () => {
+            const{refresh} = this.state;
+            if(index === this.state.popupIndex)
+                this.setState({
+                    popupIndex: -1,
+                    refresh: !refresh
+                });
+            else
+                this.setState({
+                    popupIndex: index,
+                    refresh: !refresh
+                });
+    
+        }
 
-    //  editDelete = index => e => {
-    //      index === this.state.selectedIndex ?
-    //          this.setState({
-    //              selectedIndex: -1
-    //          })
-    //          :
-    //          this.setState({
-    //              selectedIndex: index
-    //          });
-
-    //  }
-    editDelete = index => e => {
-        index === this.state.selectedIndex ?
+        setStateUpdates = () => {
+            const{expand1} = this.state;
             this.setState({
-                selectedIndex: -1,
-                refresh: !this.state.refresh
-            })
-            :
-            this.setState({
-                selectedIndex: index,
-                refresh: !this.state.refresh
+                expand: !expand1,
             });
+        }
+    deleteAccount=(option)=>()=>{
+        const{refresh} = this.state;
+        this.showDeletePopup=false;
+        const indexDelete = this.selectedIndex;
+        this.selectedIndex=-1;
+        if(option)
+        {
+            let array;
+                switch (this.state.accountType.toLowerCase()) {
+                    case 'general':
+                        array = [...this.state.generalySystematicWithdrawal];
+                        if (indexDelete !== -1) {
+                            array.splice(indexDelete, 1);
+                            this.setState({ generalySystematicWithdrawal: array});
+                        }
+                        break;
+                    case 'ira':
+                        array = [...this.state.iraSystematicWithdrawal];
+                        if (indexDelete !== -1) {
+                            array.splice(indexDelete, 1);
+                            this.setState({ iraSystematicWithdrawal: array});
+                        }
+                        break;
+                    case 'utma':
+                        array = [...this.state.utmaSystematicWithdrawal];
+                        if (indexDelete !== -1) {
+                            array.splice(indexDelete, 1);
+                            this.setState({ utmaSystematicWithdrawal: array});
+                        }
+                        break;
+                    default:
+                        array = [...this.state.generalySystematicWithdrawal];
+                        if (indexDelete !== -1) {
+                            array.splice(indexDelete, 1);
+                            this.setState({ generalySystematicWithdrawal: array});
+                        }
+                        break;
 
+                }
+        }
+        else{
+            this.setState({refresh:!refresh});
+        }
     }
 
-    setStateUpdates = () => {
+    deleteConfirm=()=> 
+    {
+        const{refresh} = this.state;
+        this.showDeletePopup=true;
+        this.setState({refresh:!refresh});
+    }
 
-        this.setState({
-            expand: !this.state.expand,
-        });
-    }
-    clickOutside=()=>e=>{
-        this.setState({
-            selectedIndex: -1,
-        });
-        
-    }
     navigationBack = () => this.props.navigation.goBack();
 
     navigationInvestmentAccount = () => 
             this.props.navigation.navigate({routeName:'systematicWithdrawalAccount',key:'systematicWithdrawalAccount',params:{newEdit:false}});
-    // this.props.navigation.navigate('systematicWithdrawalAccount');
 
-    // navigationInvestmentVerify = () => this.props.navigation.navigate('systematicWithdrawalVerify', { skip: true });
-
-    navigationInvestmentVerify = index =>e=> this.props.navigation.navigate({routeName:'systematicWithdrawalVerify',key:'systematicWithdrawalVerify',params: { skip: true,indexSelected:index }});
+    navigationInvestmentVerify = (index,type) =>e=> this.props.navigation.navigate({routeName:'systematicWithdrawalVerify',key:'systematicWithdrawalVerify',params: { skip: true,indexSelected:index,accountType: type }});
     navigationInvestmentEdit = index => e => {
         switch ((index)) {
             case 0:
-                // this.props.navigation.navigate('systematicWithdrawalAdd', { option: index, ItemToEdit: this.state.selectedIndex });
-                this.props.navigation.navigate({routeName:'systematicWithdrawalAdd',key:'systematicWithdrawalAdd', params:{ option: index, ItemToEdit: this.state.selectedIndex ,accountType:'general'}});
+                this.props.navigation.navigate({routeName:'systematicWithdrawalAdd',key:'systematicWithdrawalAdd', params:{ option: index, ItemToEdit: this.selectedIndex ,accountType:this.state.accountType}});
                 break;
             case 1:
-                var array = [...this.state.generalySystematicWithdrawal]; 
-                var indexDelete = this.state.selectedIndex
-                if (indexDelete !== -1) {
-                    array.splice(indexDelete, 1);
-                    this.setState({ generalySystematicWithdrawal: array, selectedIndex: -1 });
-                }
-
+                this.deleteConfirm();
                 break;
             default:
                 break;
@@ -261,9 +322,33 @@ class SystematicWithdrawalComponent extends Component {
     render() {
 
         return (
-            <View style={styles.container} onPress={this.clickOutside}>
+            <View style={styles.container}>
                 {console.log('###############################',this.state.generalySystematicWithdrawal)}
                 <GHeaderComponent navigation={this.props.navigation} />
+                {this.showDeletePopup?<View style={styles.bankInfoContainer}>
+                            <Text style={styles.accountNameHeaderText}>
+                                Delete Automatic Investment Plan
+                            </Text>
+
+                            <Text style={styles.accountNameSubHeaderText}>
+                                Are you sure you want to delete selected Automatic Investment Plan
+                            </Text>
+
+                            <View style={styles.confirmDeleteView}>
+                                <GButtonComponent
+                                    buttonStyle={styles.cancelBtn}
+                                    buttonText={globalString.common.cancel}
+                                    textStyle={styles.cancelBtnText}
+                                    onPress={this.deleteAccount(false)}
+                                />
+                                <GButtonComponent
+                                    buttonStyle={styles.deleteBtn}
+                                    buttonText={globalString.common.delete}
+                                    textStyle={styles.deleteBtnText}
+                                    onPress={this.deleteAccount(true)}
+                                />
+                            </View>
+                                      </View>:null}
                 <ScrollView style={{ flex: 0.85 }}>
                 <TouchableWithoutFeedback onPress={this.editDelete(-1)}>
                     <View>
@@ -272,28 +357,20 @@ class SystematicWithdrawalComponent extends Component {
                             <Text style={styles.autoInvestHead}>{globalString.systematicWithdrawal.sysWith_Title}</Text>
                             <Text style={styles.addInvest} onPress={this.navigationInvestmentAccount}>{'Add'}</Text>
                         </View>
-
-                        {/* <View style={styles.seperator_line} />
-                        <Text style={styles.addInvestTitle}>{globalString.automaticInvestment.autoInves_current}</Text> */}
-                        {/* <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
-                            <Text style={styles.addInvestTitle}>{globalString.automaticInvestment.autoInves_current}</Text>
-                            <Text style={styles.addInvest} onPress={this.navigationInvestmentAdd}>{'Add'}</Text>
-                        </View> */}
                         <View style={styles.seperator_line} />
-                        {/* <Text style={styles.conentMarginTop}>{globalString.systematicWithdrawal.sysWith_current_content}</Text> */}
                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(0)}>
                             <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>
                                 {this.state.arr_expand[0] ?
                                     <GIcon
                                         name="minus"
                                         type="antdesign"
-                                        size={30}
+                                        size={20}
                                         color="#088ACC"
                                     /> :
                                     <GIcon
                                         name="plus"
                                         type="antdesign"
-                                        size={30}
+                                        size={20}
                                         color="#088ACC"
                                     />
                                 }
@@ -315,13 +392,13 @@ class SystematicWithdrawalComponent extends Component {
                                     <GIcon
                                         name="minus"
                                         type="antdesign"
-                                        size={30}
+                                        size={20}
                                         color="#088ACC"
                                     /> :
                                     <GIcon
                                         name="plus"
                                         type="antdesign"
-                                        size={30}
+                                        size={20}
                                         color="#088ACC"
                                     />
                                 }
@@ -344,13 +421,13 @@ class SystematicWithdrawalComponent extends Component {
                                     <GIcon
                                         name="minus"
                                         type="antdesign"
-                                        size={30}
+                                        size={20}
                                         color="#088ACC"
                                     /> :
                                     <GIcon
                                         name="plus"
                                         type="antdesign"
-                                        size={30}
+                                        size={20}
                                         color="#088ACC"
                                     />
                                 }
@@ -374,13 +451,13 @@ class SystematicWithdrawalComponent extends Component {
                                         <GIcon
                                             name="minus"
                                             type="antdesign"
-                                            size={30}
+                                            size={20}
                                             color="#088ACC"
                                         /> :
                                         <GIcon
                                             name="plus"
                                             type="antdesign"
-                                            size={30}
+                                            size={20}
                                             color="#088ACC"
                                         />
                                     }

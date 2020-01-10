@@ -1048,7 +1048,6 @@ export default {
         password_success_footer1: 'Neque porro quisquam est qui dolorem',
         password_success_footer2: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet dictum orci et faucibus. Suspendisse non malesuada enim. Aliquam fringilla lectus ut massa convallis gravida. Integer condimentum mollis velit, nec porta diam mattis sit amet. Quisque sodales, enim quis laoreet aliquet, mauris nisi condimentum libero, a viverra ligula libero sed sem. Pellentesque sed mollis tortor, vitae finibus metus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus blandit consequat arcu nec iaculis. Aenean at pharetra nisl. Sed eget turpis sit amet'
     },
-    // Automatic Investment Plan
     automaticInvestment: {
         autoInves_Title: 'Automatic Investment Plan',
         autoInves_current: 'Current Automatic Investment Plans',
@@ -1057,7 +1056,16 @@ export default {
         create_invest_plan: 'Create Automatic Investment Plan',
         acc_title: '1 - Account Selection',
         acc_content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text.',
-
+        currentValue:'Current Value',
+        holding:'Holding',
+        general:"general",
+        utma:"utma",
+        ira:"ira",
+        one:'1',
+        two:'2',
+        three:'3',
+        four:'4',
+        five:'5',
     },
     // Systematic Investment Plan
     systematicWithdrawal: {

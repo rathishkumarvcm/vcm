@@ -205,7 +205,7 @@ export const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       //  borderRadius:scaledHeight(25),
+       // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#FFFFFF',
         alignItems:'center',
@@ -223,7 +223,7 @@ export const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       //  borderRadius:scaledHeight(25),
+       // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:"rgba(84,74,84,0.5)",
         alignItems:'center',
@@ -271,14 +271,14 @@ export const styles = StyleSheet.create({
 
 
 
-    // filter funds
+    //filter funds
     rowHeaderItem: {
         flexDirection: 'row',
         alignItems: 'flex-start',
         justifyContent: 'flex-end',
         flexGrow: 1,
-        //  borderColor:'#afabb0',
-        //   borderWidth:1 ,
+        // borderColor:'#afabb0',
+        //  borderWidth:1 ,
         marginTop: scaledHeight(0)
     },
     rowItem: {
@@ -286,8 +286,8 @@ export const styles = StyleSheet.create({
         alignItems: 'flex-start',
         justifyContent: 'flex-end',
         flexGrow: 1,
-        //  borderColor:'#afabb0',
-        //   borderWidth:1 ,
+        // borderColor:'#afabb0',
+        //  borderWidth:1 ,
         marginTop: scaledHeight(22)
     },
     colItem: {
@@ -307,7 +307,7 @@ export const styles = StyleSheet.create({
         color: '#0D7CB5',
         fontSize: scaledHeight(22),
         fontWeight: 'bold',
-        //   lineHeight:20
+        //  lineHeight:20
     },
 
     lblLeftColTxt: {
@@ -324,7 +324,7 @@ export const styles = StyleSheet.create({
         width: '40%',
 
     },
-// bottom section offline 2
+//bottom section offline 2
     sectionGrp: {
         overflow: 'hidden',
         marginHorizontal: scaledHeight(12),
@@ -335,7 +335,7 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(20),
         flexDirection: 'row',
         justifyContent: 'space-between',
-        //  marginHorizontal: scaledHeight(12),
+        // marginHorizontal: scaledHeight(12),
         alignItems: "center",
         flexGrow: 1
     },
@@ -353,7 +353,7 @@ export const styles = StyleSheet.create({
         textAlign: 'center'
     },
     lblLine: {
-        //  width:"100%",
+        // width:"100%",
         flexGrow: 1,
         marginTop: scaledHeight(9.5),
         height: scaledHeight(1),
@@ -386,41 +386,41 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(25)
     },
     
-    dropDownLayout: {
-        //  alignItems: "flex-start",
-        //  justifyContent: "flex-start",
-         marginLeft: '0%',
-         marginRight: '0%',
-         marginTop: scaledHeight(25),
-         width: '100%'
-     },
-     dropDownTextName: {
-        color: 'rgba(51, 51, 51, 0.87)',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold',
-        marginLeft: '0%',
-        marginRight: '0%',
-        marginBottom: scaledHeight(9),
-        paddingLeft: '0%',
-        paddingRight: '0%',
-        width: '100%',
-        borderColor:'blue'
+    // dropDownLayout: {
+    //     // alignItems: "flex-start",
+    //     // justifyContent: "flex-start",
+    //      marginLeft: '0%',
+    //      marginRight: '0%',
+    //      marginTop: scaledHeight(25),
+    //      width: '100%'
+    //  },
+    //  dropDownTextName: {
+    //     color: 'rgba(51, 51, 51, 0.87)',
+    //     fontSize: scaledHeight(16),
+    //     fontWeight: 'bold',
+    //     marginLeft: '0%',
+    //     marginRight: '0%',
+    //     marginBottom: scaledHeight(9),
+    //     paddingLeft: '0%',
+    //     paddingRight: '0%',
+    //     width: '100%',
+    //     borderColor:'blue'
 
-    },
-    textInputStyle: {
-        width: '100%',
-        marginLeft: '0%',
-        marginRight: '0%',
-        marginTop: scaledHeight(0),
-    },
-    dropDownPostition: {
-        width: "100%",
-        marginLeft: scaledHeight(20),
-        marginRight: scaledHeight(20),
-        position: 'absolute',
-        left: 0
+    // },
+    // textInputStyle: {
+    //     width: '100%',
+    //     marginLeft: '0%',
+    //     marginRight: '0%',
+    //     marginTop: scaledHeight(0),
+    // },
+    // dropDownPostition: {
+    //     width: "100%",
+    //     marginLeft: scaledHeight(20),
+    //     marginRight: scaledHeight(20),
+    //     position: 'absolute',
+    //     left: 0
 
-    },
+    // },
     errMsg: {
         color: 'red',
         fontSize: scaledHeight(12),
@@ -443,7 +443,7 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
-        // width: '80%',
+        //width: '80%',
         textAlign: 'center'
     },
     compareFundsBtn: {
@@ -463,7 +463,7 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#5D83AE',
         fontWeight: 'bold',
-       //  width: '80%',
+       // width: '80%',
        textAlign: 'center'
     },
     modalBackgroundView: {
@@ -566,6 +566,248 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '80%',
     },
+
+// ira
+flex2: {
+    marginLeft: "4%",
+    marginRight: "4%",
+},
+
+emptyFlex: {
+    height: scaledHeight(50)
+},
+
+headerFlex: {
+    height: scaledHeight(29),
+    flexDirection: 'row',
+},
+headerText: {
+    color: '#56565A',
+    fontSize: scaledHeight(22),
+    fontWeight: 'bold',
+},
+line: {
+    backgroundColor: '#535353',
+    opacity: 0.25,
+    height: scaledHeight(1),
+    width: "100%",
+    marginTop: '4%',
+},
+fundSourceContent: {
+    color: '#54565B',
+    fontSize: scaledHeight(14),
+    marginTop: scaledHeight(21),
+},
+offButtonStyle: {
+    borderColor: '#56565A',
+    borderRadius: 30,
+    height: scaledHeight(61),
+    borderWidth: scaledHeight(1),
+    width: "55%",
+    backgroundColor: '#B7B7B7',
+    position: 'absolute'
+},
+onButtonStyleDisable: {
+    borderColor: '#56565A',
+    borderRadius: 30,
+    height: scaledHeight(61),
+    borderWidth: 1,
+    marginLeft: "10%",
+    width: "67%",
+    backgroundColor: '#FFFFFF',
+},
+offButtonStyleDisable: {
+    borderColor: '#56565A',
+    borderRadius: 30,
+    height: scaledHeight(61),
+    borderWidth: scaledHeight(1),
+    width: "60%",
+    marginLeft: "0%",
+    backgroundColor: '#FFFFFF',
+},
+onButtonStyle: {
+    borderColor: '#56565A',
+    borderRadius: 30,
+    height: scaledHeight(61),
+    borderWidth: scaledHeight(1),
+    width: "40%",
+    marginLeft: "30%",
+    backgroundColor: '#B7B7B7',
+    position: 'absolute'
+},
+TextOnStyle: {
+    color: '#56565A',
+    fontSize: scaledHeight(14),
+    fontWeight: 'bold',
+    justifyContent: 'flex-start',
+    marginLeft: "0%",
+    paddingLeft: "10%"
+},
+TextOffStyle: {
+    color: '#544A54',
+    opacity: 0.5,
+    fontSize: scaledHeight(14),
+    fontWeight: 'bold',
+    textAlign: 'left',
+    marginLeft: "4%"
+},
+TextOffStyleWithholdtax: {
+    color: '#544A54',
+    opacity: 0.5,
+    fontSize: scaledHeight(14),
+    fontWeight: 'bold',
+    textAlign: 'right',
+    marginLeft: "38%"
+},
+dropDownLayout1: {
+    marginTop: scaledHeight(26),
+    paddingLeft: '0%',
+    width: "100%",
+    marginLeft: "0%",
+    marginRight: "0%",
+},
+dropDownText:{
+    width: "98%", 
+    paddingLeft: "2%", 
+    marginLeft: "0%"
+},
+blackTextBold16px: {
+    fontSize: scaledHeight(16),
+    fontWeight: 'bold',
+    color: '#333333DE',
+    height: scaledHeight(19),
+},
+stateTaxFlex: {
+    marginTop: scaledHeight(26),
+    height: scaledHeight(82),
+},
+totalWithdrawalFlex: {
+    height: scaledHeight(48),
+    marginTop: scaledHeight(15),
+    flexDirection: 'row'
+},
+dollarSkin: {
+    height: scaledHeight(48),
+    width: "5%",
+    color: '#333333DE',
+    fontSize: scaledHeight(16),
+    fontWeight: 'bold',
+    paddingTop: scaledHeight(15),
+},
+amountBeforeTaxesVal: {
+    fontSize: scaledHeight(16),
+    color: '#56565A',
+    borderColor: '#DEDEDF',
+    borderWidth: scaledHeight(1),
+    height: scaledHeight(48),
+    width: "92%",
+    marginLeft: "3%"
+},
+inputStyle: {
+    color: '#56565A',
+    fontSize: scaledHeight(16),
+    paddingLeft: '1%'
+},
+horizontalFlex: {
+    flexDirection: 'row'
+},
+stateTaxInputStyle: {
+    fontSize: scaledHeight(16),
+    color: '#56565A',
+    borderColor: '#DEDEDF',
+    borderWidth: scaledHeight(1),
+    height: scaledHeight(48),
+    width: "45%",
+    marginTop: scaledHeight(15),
+},
+stateTaxToDollarFlex: {
+    marginLeft: "10%",
+    flexDirection: 'row',
+    marginTop: "4%"
+},
+stateTaxToDollarText: {
+    fontSize: scaledHeight(16),
+    color: '#56565A',
+    backgroundColor: '#F1F1F1',
+    borderColor: '#DEDEDF',
+    borderWidth: scaledHeight(1),
+    opacity: 0.8,
+    height: scaledHeight(48),
+    width: "58%",
+    paddingLeft: "4%",
+    paddingTop: scaledHeight(15),
+    marginLeft: "6%"
+},
+totalWithdrawalVal: {
+    fontSize: scaledHeight(16),
+    color: '#56565A',
+    backgroundColor: '#F1F1F1',
+    borderColor: '#DEDEDF',
+    borderWidth: scaledHeight(1),
+    opacity: 0.8,
+    height: scaledHeight(48),
+    width: "92%",
+    paddingLeft: "2%",
+    paddingTop: scaledHeight(15),
+    marginLeft: "3%"
+},
+switchFlex: {
+    height: scaledHeight(60),
+},
+// Vcm Fund
+fundItemStyle: {
+    borderColor: "#9DB4CE",
+    borderWidth: scaledHeight(1),
+    backgroundColor: "#FFFFFF",
+    width: "100%",
+    marginBottom: "4%"
+  },
+  fundItemHeaderView: {
+    margin: "4%"
+  },
+  fundItemHeaderTxt: {
+    fontSize: scaledHeight(18),
+    color: "#54565B",
+    fontWeight: "bold"
+  },
+  existingFundStyle: {
+    borderColor: "#B8B8B8",
+    borderWidth: scaledHeight(1),
+    color: "#656568",
+    borderRadius: scaledHeight(2),
+    padding: "2%",
+    fontSize: scaledHeight(10),
+    fontWeight: "400",
+    marginBottom: "2%",
+    marginTop: "4%",
+    height: scaledHeight(15),
+    width: "30%"
+  },
+  lineStyle: {
+    backgroundColor: "#9DB4CE",
+    height: scaledHeight(1),
+    width: "100%",
+    marginBottom: "4%",
+    opacity: 1
+  },
+  fundItemContntView: {
+    margin: "4%"
+  },
+  marginBottomStyle: {
+    marginBottom: "4%"
+  },
+  fundItemValueHeading: {
+    fontSize: scaledHeight(14),
+    color: "#56565A",
+    lineHeight: scaledHeight(19),
+    fontWeight: "bold"
+  },
+  fundItemValueTxt: {
+    fontSize: scaledHeight(14),
+    color: "#56565A",
+    lineHeight: scaledHeight(17),
+    fontWeight: "400"
+  },
 
    
 });

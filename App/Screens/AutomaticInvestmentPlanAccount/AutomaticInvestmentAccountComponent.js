@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, FlatList, TouchableOpacity } from 'react-native';
-import { styles } from './styles';
+import PropTypes from 'prop-types';
+import styles from './styles';
 import {
     GHeaderComponent,
     GFooterComponent,
@@ -8,14 +9,14 @@ import {
     GIcon,
     GSingletonClass
 } from '../../CommonComponents';
-import PropTypes from 'prop-types';
-import globalString from '../../Constants/GlobalStrings'
+import globalString from '../../Constants/GlobalStrings';
 
 const myInstance = GSingletonClass.getInstance();
 class AutomaticInvestmentAccountComponent extends Component {
     constructor(props) {
         super(props);
-        const automaticAccount =  myInstance.getAutomaticInvestmentEditMode()? (myInstance.getScreenStateData().automaticAccount || {}):{};
+        const automaticAccount = myInstance.getAutomaticInvestmentEditMode()? (myInstance.getScreenStateData().automaticAccount || {}):{};
+        
         this.state = {
             generalAccountJson: {},
             iraAccountJson: {},
@@ -32,46 +33,51 @@ class AutomaticInvestmentAccountComponent extends Component {
         };
 
     }
-    selectedAccount = (index,type) => e => {
+
+    selectedAccount = (index,type) => () => {
+        
         let json={};
         let id=0;
         switch (type) {
             case "general":
-                json=this.state.generalAccountJson[index];
+                json=this.state.generalAccountJson[Number(index)];
                 id=this.props.automaticInvestmentState.general?this.props.automaticInvestmentState.general.length+1:0;
                 break;
             case "ira":
-                json=this.state.iraAccountJson[index];
+                json=this.state.iraAccountJson[Number(index)];
                 id=this.props.automaticInvestmentState.ira?this.props.automaticInvestmentState.ira.length+1:0;
                 break;
             case "utma":
-                json=this.state.utmaAccountJson[index];
+                json=this.state.utmaAccountJson[Number(index)];
                 id=this.props.automaticInvestmentState.utma?this.props.automaticInvestmentState.utma.length+1:0;
                 break;
             default:
                 break;
         }
         
-        this.setState({ selectedAccount: index ,selectedAccountJson:json,accountType:type,newItemId:id.toString()})
+        this.setState({ selectedAccount: index ,selectedAccountJson:json,accountType:type,newItemId:id.toString()});
     }
-    setStateUpdates = index => e => {
 
-        var array = [...this.state.expand]; //  make a separate copy of the array
-        let IndexExpand = this.state.expandIndex;
+    setStateUpdates = index => () => {
+        const{expand} = this.state;
+        const array = [...expand]; 
+        const IndexExpand = this.state.expandIndex;
 
 
         if (index !== IndexExpand) {
 
-            array[IndexExpand] = false;
+            array[Number(IndexExpand)] = false;
 
         }
-        array[index] = !array[index];
+        array[Number(index)] = !array[Number(index)];
 
-        this.setState({ expand: array, expandIndex: index });// ,selectedAccount:-1
+        this.setState({ expand: array, expandIndex: index,selectedAccount:-1 });// ,selectedAccount:-1
 
 
     }
+
     componentDidMount() {
+        
         if (this.props && this.props.accountState) {
 
             this.setState({
@@ -80,23 +86,16 @@ class AutomaticInvestmentAccountComponent extends Component {
                 utmaAccountJson: this.props.accountState.utma,
 
             });
-            //  if(this.state.newEdit)
-            //  {
-            //      payload = {
-            //          // ...payload,
-            //          ...this.props.automaticInvestmentState.savedAccData
-            //      };
-            //      this.setState({selectedAccount:payload.selectedAccount})
-            //  }
         }
     }
+    
    
     navigationCancel = () => this.props.navigation.goBack();
 
     getPayload = () => {
         
         const savedAutoData = myInstance.getSavedAutomaticData();
-        let payload = {
+        const payload = {
             ...savedAutoData,
             generalAccountJson: this.state.generalAccountJson,
             iraAccountJson: this.state.iraAccountJson,
@@ -108,31 +107,20 @@ class AutomaticInvestmentAccountComponent extends Component {
             accountType:this.state.accountType,
             newItemId:this.state.newItemId,
             newEdit:this.state.newEdit,
-            //  id:this.state.newItemId,
-            // accountType:this.state.accountType,
-            // selectedAccount:this.state.selectedAccount
-            // account: this.state.selectedAccountJson.accountName+'|'+this.state.selectedAccountJson.accountNumber,
         };
-        //  if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
-        //      payload = {
-        //          ...payload,
-        //          ...this.props.automaticInvestmentState.savedAccData
-        //      };
-        //  }
-       //  console.log('))))))))))))))))))))))',this.props.automaticInvestmentState.savedAccData)
         return payload;
 
     }
 
     navigationNext = () => {
             const payload = this.getPayload();
-            //  this.props.saveData("automaticInvestmentAccount", payload); 
+            // this.props.saveData("automaticInvestmentAccount", payload); 
             const stateData = myInstance.getScreenStateData();
             myInstance.setSavedAutomaticData(payload);
             const screenState = {
                 ...stateData,
                 "automaticAccount":{...this.state}
-            }
+            };
             myInstance.setScreenStateData(screenState);
             this.props.navigation.navigate({routeName:'automaticInvestmentAdd',key:'automaticInvestmentAdd',  
                         params:{ ItemToEdit: -1,
@@ -140,30 +128,32 @@ class AutomaticInvestmentAccountComponent extends Component {
                         acc_no:this.state.selectedAccountJson.accountNumber,
                         accountType:this.state.accountType}});
     }
+
     generateGeneralKeyExtractor = (item) => item.accountName;
+
     renderGeneralAccount = () => ({ item, index }) =>
         (
             
-            <TouchableOpacity onPress={this.selectedAccount(index,"general")}>
+            <TouchableOpacity onPress={this.selectedAccount(index,globalString.automaticInvestment.general)}>
                 
                 <View style={this.state.selectedAccount === index ? styles.selectedAccount : styles.accountList}>
                     <View style={styles.displayAccView}>
                         <Text style={styles.displayAcc}>{item.accountName}</Text>
                         <Text style={styles.displayAcc}>{item.accountNumber}</Text>
                     </View>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={styles.currentView}>
                         <View style={styles.auto_invest_to_flat}>
-                            <Text style={styles.auto_invest_to_top}>{'Current Value'}</Text>
+                            <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.currentValue}</Text>
                             <Text style={styles.auto_invest_flat_min}>{item.currentValue}</Text>
                         </View>
 
                         <View style={styles.auto_invest_to_flat}>
-                            <Text style={styles.auto_invest_to_top}>{'Holding'}</Text>
+                            <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.holding}</Text>
                             <Text style={styles.auto_invest_flat_min}>{item.holding}</Text>
                         </View>
                     </View>
                     <View style={styles.auto_invest_to_flat}>
-                        <Text style={styles.auto_invest_to_top}>{'Automatic Investment Plan'}</Text>
+                        <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.autoInves_Title}</Text>
                         <Text style={styles.auto_invest_flat_min}>{item.automaticInvestmentPlan}</Text>
                     </View>
 
@@ -173,27 +163,28 @@ class AutomaticInvestmentAccountComponent extends Component {
 
 
         generateIraKeyExtractor = (item) => item.accountName;
+
     renderIraAccount = () => ({ item, index }) =>
         (
-            <TouchableOpacity onPress={this.selectedAccount(index,"ira")}>
+            <TouchableOpacity onPress={this.selectedAccount(index,globalString.automaticInvestment.ira)}>
                 <View style={this.state.selectedAccount === index ? styles.selectedAccount : styles.accountList}>
                     <View style={styles.displayAccView}>
                         <Text style={styles.displayAcc}>{item.accountName}</Text>
                         <Text style={styles.displayAcc}>{item.accountNumber}</Text>
                     </View>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={styles.currentView}>
                         <View style={styles.auto_invest_to_flat}>
-                            <Text style={styles.auto_invest_to_top}>{'Current Value'}</Text>
+                            <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.currentValue}</Text>
                             <Text style={styles.auto_invest_flat_min}>{item.currentValue}</Text>
                         </View>
 
                         <View style={styles.auto_invest_to_flat}>
-                            <Text style={styles.auto_invest_to_top}>{'Holding'}</Text>
+                            <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.holding}</Text>
                             <Text style={styles.auto_invest_flat_min}>{item.holding}</Text>
                         </View>
                     </View>
                     <View style={styles.auto_invest_to_flat}>
-                        <Text style={styles.auto_invest_to_top}>{'Automatic Investment Plan'}</Text>
+                        <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.autoInves_Title}</Text>
                         <Text style={styles.auto_invest_flat_min}>{item.automaticInvestmentPlan}</Text>
                     </View>
 
@@ -202,32 +193,33 @@ class AutomaticInvestmentAccountComponent extends Component {
         )
 
         generateUtmaKeyExtractor = (item) => item.accountName;
+
         renderUtmaAccount = () => ({ item, index }) =>
             (
-                <TouchableOpacity onPress={this.selectedAccount(index,"utma")}>
+                <TouchableOpacity onPress={this.selectedAccount(index,globalString.automaticInvestment.utma)}>
                 <View style={this.state.selectedAccount === index ? styles.selectedAccount : styles.accountList}>
                     <View style={styles.displayAccView}>
                         <Text style={styles.displayAcc}>{item.accountName}</Text>
                         <Text style={styles.displayAcc}>{item.accountNumber}</Text>
                     </View>
-                    <View style={{ flexDirection: 'row' }}>
+                    <View style={styles.currentView}>
                         <View style={styles.auto_invest_to_flat}>
-                            <Text style={styles.auto_invest_to_top}>{'Current Value'}</Text>
+                            <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.currentValue}</Text>
                             <Text style={styles.auto_invest_flat_min}>{item.currentValue}</Text>
                         </View>
 
                         <View style={styles.auto_invest_to_flat}>
-                            <Text style={styles.auto_invest_to_top}>{'Holding'}</Text>
+                            <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.holding}</Text>
                             <Text style={styles.auto_invest_flat_min}>{item.holding}</Text>
                         </View>
                     </View>
                     <View style={styles.auto_invest_to_flat}>
-                        <Text style={styles.auto_invest_to_top}>{'Automatic Investment Plan'}</Text>
+                        <Text style={styles.auto_invest_to_top}>{globalString.automaticInvestment.autoInves_Title}</Text>
                         <Text style={styles.auto_invest_flat_min}>{item.automaticInvestmentPlan}</Text>
                     </View>
 
                 </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
             )
 
 
@@ -237,29 +229,29 @@ class AutomaticInvestmentAccountComponent extends Component {
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.scrollStyle}>
                     <View>
                         <Text style={styles.autoInvestHead}>{globalString.automaticInvestment.create_invest_plan}</Text>
                         <View style={styles.seperator_line} />
                         <View style={styles.circle_view}>
                             <View style={styles.circle_Inprogress}>
-                                <Text style={styles.circleTextNew}>{'1'}</Text>
+                                <Text style={styles.circleTextNew}>{globalString.automaticInvestment.one}</Text>
                             </View>
                             <View style={styles.circle_connect} />
                             <View style={styles.circle_NotStarted}>
-                                <Text style={styles.circleText}>{'2'}</Text>
+                                <Text style={styles.circleText}>{globalString.automaticInvestment.two}</Text>
                             </View>
                             <View style={styles.circle_connect} />
                             <View style={styles.circle_NotStarted}>
-                                <Text style={styles.circleText}>{'3'}</Text>
+                                <Text style={styles.circleText}>{globalString.automaticInvestment.three}</Text>
                             </View>
                             <View style={styles.circle_connect} />
                             <View style={styles.circle_NotStarted}>
-                                <Text style={styles.circleText}>{'4'}</Text>
+                                <Text style={styles.circleText}>{globalString.automaticInvestment.four}</Text>
                             </View>
                             <View style={styles.circle_connect} />
                             <View style={styles.circle_NotStarted}>
-                                <Text style={styles.circleText}>{'5'}</Text>
+                                <Text style={styles.circleText}>{globalString.automaticInvestment.five}</Text>
                             </View>
                         </View>
                         <View style={styles.autoInvest_title_view}>
@@ -271,7 +263,7 @@ class AutomaticInvestmentAccountComponent extends Component {
                             <Text style={styles.autoInvestCont}>{globalString.automaticInvestment.acc_content}</Text>
 
                             <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setStateUpdates(0)}>
-                                <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>
+                                <View style={styles.expandView}>
                                     {this.state.expand[0] ?
                                         <GIcon
                                             name="minus"
@@ -286,7 +278,7 @@ class AutomaticInvestmentAccountComponent extends Component {
                                             color="#088ACC"
                                         />
                                     }
-                                    <Text style={styles.autoInvest_sub_title_text}>{'General Account'}</Text>
+                                    <Text style={styles.autoInvest_sub_title_text}>General Account</Text>
                                 </View>
                             </TouchableOpacity>
 
@@ -302,7 +294,7 @@ class AutomaticInvestmentAccountComponent extends Component {
                                 /> : null}
 
                             <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setStateUpdates(1)}>
-                                <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>
+                                <View style={styles.expandView}>
                                     {this.state.expand[1] ?
                                         <GIcon
                                             name="minus"
@@ -317,7 +309,7 @@ class AutomaticInvestmentAccountComponent extends Component {
                                             color="#088ACC"
                                         />
                                     }
-                                    <Text style={styles.autoInvest_sub_title_text}>{'IRA Account'}</Text>
+                                    <Text style={styles.autoInvest_sub_title_text}>IRA Account</Text>
                                 </View>
                             </TouchableOpacity>
 
@@ -329,10 +321,10 @@ class AutomaticInvestmentAccountComponent extends Component {
                                 renderItem={this.renderIraAccount()}
                                 keyExtractor={this.generateIraKeyExtractor}
                                 extraData={this.state.selectedAccount}
-                            /> : null} 
+                                /> : null} 
 
                             <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setStateUpdates(2)}>
-                                <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>
+                                <View style={styles.expandView}>
                                     {this.state.expand[2] ?
                                         <GIcon
                                             name="minus"
@@ -347,7 +339,7 @@ class AutomaticInvestmentAccountComponent extends Component {
                                             color="#088ACC"
                                         />
                                     }
-                                    <Text style={styles.autoInvest_sub_title_text}>{'UTMA Account'}</Text>
+                                    <Text style={styles.autoInvest_sub_title_text}>UTMA Account</Text>
                                 </View>
                             </TouchableOpacity>
 
@@ -359,10 +351,7 @@ class AutomaticInvestmentAccountComponent extends Component {
                                  renderItem={this.renderUtmaAccount()}
                                  keyExtractor={this.generateUtmaKeyExtractor}
                                  extraData={this.state.selectedAccount}
-                             /> : null}
-
-
-
+                                 /> : null}
                         </View>
                     </View>
                     <GButtonComponent
@@ -378,11 +367,6 @@ class AutomaticInvestmentAccountComponent extends Component {
                         onPress={this.state.selectedAccount>-1?this.navigationNext:null}
                         
                     />
-
-
-
-
-
                     <GFooterComponent />
                 </ScrollView>
             </View>
@@ -391,11 +375,15 @@ class AutomaticInvestmentAccountComponent extends Component {
 }
 AutomaticInvestmentAccountComponent.propTypes = {
 
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    accountState: PropTypes.instanceOf(Object),
+    automaticInvestmentState: PropTypes.instanceOf(Object),
 };
 
 AutomaticInvestmentAccountComponent.defaultProps = {
-
+    navigation:{},
+    accountState:{},
+    automaticInvestmentState:{},
 };
 
 export default AutomaticInvestmentAccountComponent;

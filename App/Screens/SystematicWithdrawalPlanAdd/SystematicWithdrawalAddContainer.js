@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import systematicWithdrawalComponent from './SystematicWithdrawalAddComponent';
-import { accOpeningActions,addressFormatActions } from "../../Shared/Actions";// ,getBankAccountInfo
+import { accOpeningActions,addressFormatActions,bankAccountAction } from "../../Shared/Actions";//,getBankAccountInfo
 
 
 
@@ -10,12 +10,14 @@ const mapStateToProps = (state /* , props */) => (
       systematicWithdrawalState:state.systematicWithdrawalData,
       stateCityData:state.addressFormatData,
       masterLookupStateData: state.masterLookUpData,
+      bankAccountInfo: state.bankAccountReducerData.bankAccountInfo,
     }
   );
 
 const mapDispatchToProps = {
   ...accOpeningActions,
-  ...addressFormatActions
+  ...addressFormatActions,
+  ...bankAccountAction
   };
 
 export default connect(

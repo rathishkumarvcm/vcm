@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import autoInvestmentComponent from './AutomaticInvestmentComponent';
-import {addAutomaticInvestmentActions } from "../../Shared/Actions";
+//import {addAutomaticInvestmentActions } from "../../Shared/Actions";
 
 
 const mapStateToProps = (state) => ({
@@ -8,7 +8,7 @@ const mapStateToProps = (state) => ({
   });
 
 const mapDispatchToProps = {
-  ...addAutomaticInvestmentActions
+  //...addAutomaticInvestmentActions
   };
 
 export default connect(

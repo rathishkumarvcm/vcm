@@ -4,6 +4,10 @@ import { scaledHeight, scaledWidth} from '../../Utils/Resolution';
 
 
 export const styles = StyleSheet.create({
+    bankTopView:{ width: scaledWidth(66), margin: scaledWidth(5), backgroundColor: '#E9E9E9' },
+    bankMidView:{ justifyContent: 'center', marginLeft: scaledWidth(20) },
+    bankNameText:{ color: '#56565A', fontSize: scaledHeight(20), fontWeight: 'bold' },
+    bankNumberText:{ color: '#56565A', fontSize: scaledHeight(14) },
     container:{
         flex:1,
         backgroundColor:'#F7FAFF',
@@ -171,7 +175,7 @@ export const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       //  borderRadius:scaledHeight(25),
+       // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#FFFFFF',
         alignItems:'center',
@@ -189,7 +193,7 @@ export const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       //  borderRadius:scaledHeight(25),
+       // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:"rgba(84,74,84,0.5)",
         alignItems:'center',
@@ -222,6 +226,17 @@ export const styles = StyleSheet.create({
     },
     leftSpace:{ 
         marginLeft: scaledWidth(10)
-     }
+     },
+     fundListView:{ borderWidth: 1, borderColor: '#5D83AE99', marginTop: scaledHeight(10) },
+     fundListHeader:
+     { flexDirection: 'row', flex: 1, justifyContent: "center", alignItems: 'center', borderBottomColor: '#61285F45', borderBottomWidth: 1, padding: scaledHeight(20) },
+     fundListHeaderView:{ flex: 0.7 },
+     fundNameText:
+     { color: '#544A54', fontSize: scaledHeight(13), fontWeight: 'bold' },
+     fundNameSwitch:
+     { flex: 0.3, alignItems: 'flex-end', marginRight: '4%' },
+     
+     scrollView:
+     { flex: 0.85 },
     
 });

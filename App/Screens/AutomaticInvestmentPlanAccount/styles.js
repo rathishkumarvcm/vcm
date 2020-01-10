@@ -1,9 +1,13 @@
-import { StyleSheet,Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 import { scaledHeight, scaledWidth} from '../../Utils/Resolution';
 
 
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
+    scrollStyle:{ flex: 0.85 },
+    currentView:{ flexDirection: 'row' },
+    expandView:
+    { flexDirection: 'row', flex: 1, alignItems: "center" },
     container:{
         flex:1,
         backgroundColor:'#F7FAFF',
@@ -76,7 +80,6 @@ export const styles = StyleSheet.create({
     {
         color:'#56565A',
         fontSize:scaledHeight(16),
-        marginTop:scaledHeight(10),
         marginTop:scaledHeight(10),
     },
     autoInvest_title_view:{
@@ -172,7 +175,7 @@ export const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       //  borderRadius:scaledHeight(25),
+       // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#FFFFFF',
         alignItems:'center',
@@ -190,7 +193,7 @@ export const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       //  borderRadius:scaledHeight(25),
+       // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:"rgba(84,74,84,0.5)",
         alignItems:'center',
@@ -224,3 +227,5 @@ export const styles = StyleSheet.create({
     topSpace:
     { marginTop: scaledHeight(20) }
 });
+
+export default styles;

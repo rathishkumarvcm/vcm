@@ -1,21 +1,20 @@
 import { connect } from "react-redux";
 import autoInvestmentAddComponent from './AutomaticInvestmentAddComponent';
-import { accOpeningActions,addAutomaticInvestmentActions } from "../../Shared/Actions";// ,getBankAccountInfo
+import { accOpeningActions,bankAccountAction } from "../../Shared/Actions";//addAutomaticInvestmentActions
 
 
 
 const mapStateToProps = (state) => ({
-      // automaticInvestmentState:state.automaticInvestmentData,
       fundListState:state.accOpeningReducerData,
       automaticInvestmentState:state.automaticInvestmentData,
-      // bankAccountInfo: state.bankAccountReducerData.bankAccountInfo,
+      bankAccountInfo: state.bankAccountReducerData.bankAccountInfo,
 
   });
 
 const mapDispatchToProps = {
   ...accOpeningActions,
-  ...addAutomaticInvestmentActions,
- //  ...getBankAccountInfo
+  //...addAutomaticInvestmentActions,
+  ...bankAccountAction
   };
 
 export default connect(
