@@ -4,23 +4,25 @@ import {shallow} from 'enzyme';
 import VerifySSN from '../App/Screens/VerifySSN/VerifySSNComponent';
 import { GButtonComponent } from '../App/CommonComponents';
 
+const navigation = { navigate: jest.fn(), getParam: jest.fn()};
+
 describe('Verify SSN ',()=>{
 
   //  Snap shot 
   it('snap shot', () => {  
-    const tree = renderer.create(<VerifySSN />).toJSON();
+    const tree = renderer.create(<VerifySSN navigation={navigation} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   //  Render using shallow - shallow not includes child component
   test('render',()=>{
-    const component = shallow(<VerifySSN />);  
+    const component = shallow(<VerifySSN navigation={navigation} />);  
     component.render();
   });
 
   //  Function testing
   test('function testing',()=>{
-    const component = shallow(<VerifySSN />);
+    const component = shallow(<VerifySSN navigation={navigation} />);
     const wrapper = new VerifySSN();
     component.render();
 
@@ -29,21 +31,21 @@ describe('Verify SSN ',()=>{
 
  //  Input Component matches the length 
 it('Input text matches with length', () => {
-  const instanceOf = renderer.create(<VerifySSN />).getInstance();
+  const instanceOf = renderer.create(<VerifySSN navigation={navigation} />).getInstance();
   instanceOf.setSocialSecurityNumber('123456789');  
   expect(instanceOf.state.socialSecurityNumber).toHaveLength(9);
 });
 
  //  Input Component matches with given input
 it('Input text matches with given input',()=>{
-  const instanceOf = renderer.create(<VerifySSN />).getInstance();
+  const instanceOf = renderer.create(<VerifySSN navigation={navigation} />).getInstance();
   instanceOf.setSocialSecurityNumber('123456789');
   expect(instanceOf.state.socialSecurityNumber).toEqual('123456789');
 });
 
 //  mocked function call on button click
 it('Called function on button click', () => {       
-  const wrapper = shallow(<VerifySSN onPress={jest.fn()} />)
+  const wrapper = shallow(<VerifySSN onPress={jest.fn()} navigation={navigation} />);
   const spy = jest.spyOn(wrapper.instance(), 'onClickNext');
   wrapper.instance().forceUpdate();
   wrapper.find(GButtonComponent).at(1).simulate('press');
