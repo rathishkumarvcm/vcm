@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, TouchableOpacity, FlatList, Switch } from 'react-native';
-import { styles } from './styles';
+import PropTypes from "prop-types";
+import styles from './styles';
 import { GButtonComponent, GHeaderComponent, showAlertWithCancelButton } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import ImagesLoad from '../../Images/ImageIndex';
 
-let editDeleteMenuOption = [
+const editDeleteMenuOption = [
     {
         menuName: 'Edit',
         menuId: '1'
@@ -16,48 +17,51 @@ let editDeleteMenuOption = [
     },
 ];
 
+const switchStyle = { flase: '#DBDBDB', true: '#444444' };
+
 class EditEmailInfoComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
-            enableBiometric: false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false,
-
             selectedIndex: -1,
             isEmailRefreshed: false,
-            profilePrimayMail: '',
             profileEmailData: []
         };
     }
 
     componentDidMount() {
-        if (this.props && this.props.initialState && this.props.initialState.email) {
-            this.setState({
-                profilePrimayMail: this.props.initialState.email
-            });
-        }
+        this.emailInformationMount();
+    }
+
+    componentDidUpdate(prevProps) {
+        this.emailInformationUpdate(prevProps);
+    }
+
+    emailInformationMount = () => {
+        const { profileState } = this.props;
+        const { isEmailRefreshed } = this.state;
 
         if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileUserMailInformation) {
+            profileState &&
+            profileState.profileUserMailInformation) {
             this.setState({
-                profileEmailData: this.props.profileState.profileUserMailInformation,
-                isEmailRefreshed: !this.state.isEmailRefreshed
+                profileEmailData: profileState.profileUserMailInformation,
+                isEmailRefreshed: !isEmailRefreshed
             });
         }
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props != prevProps) {
+    emailInformationUpdate = (prevProps) => {
+        const { profileState } = this.props;
+        const { isEmailRefreshed } = this.state;
+        if (this.props !== prevProps) {
             if (this.props &&
-                this.props.profileState &&
-                this.props.profileState.profileUserMailInformation) {
+                profileState &&
+                profileState.profileUserMailInformation) {
                 this.setState({
-                    profileEmailData: this.props.profileState.profileUserMailInformation,
-                    isEmailRefreshed: !this.state.isEmailRefreshed
+                    profileEmailData: profileState.profileUserMailInformation,
+                    isEmailRefreshed: !isEmailRefreshed
                 });
             }
         }
@@ -65,86 +69,112 @@ class EditEmailInfoComponent extends Component {
 
     //  Render Email Informations
 
-    renderEmailInformation = () => ({ item, index }) =>
-        (<View style={styles.editEmailHolder}>
-            <View style={[styles.profileDivideIcon]}>
-                <View style={styles.profileDivideIconOne}>
-                    <Text style={styles.editEmailType}>
-                        {item.emailType}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {item.emailId}
-                    </Text>
+    renderEmailInformation = () => ({ item, index }) => {
+        const { selectedIndex } = this.state;
+        return (
+            <View style={styles.editEmailHolder}>
+                <View style={styles.profileDivideIcon}>
+                    <View style={styles.profileDivideIconOne}>
+                        <Text style={styles.editEmailType}>
+                            {item.emailType}
+                        </Text>
+                        <Text style={styles.editEmailId}>
+                            {item.emailId}
+                        </Text>
+                    </View>
+
+                    <View style={styles.profileDivideIconTwo}>
+                        <TouchableOpacity
+                            onPress={this.onMenuOptionClicked(index)}
+                        >
+                            <Image style={styles.imageWidthHeight}
+                                source={ImagesLoad.menuIcon}
+                            />
+                        </TouchableOpacity>
+                    </View>
                 </View>
 
-                <View style={styles.profileDivideIconTwo}>
-                    <TouchableOpacity
-                        onPress={this.onMenuOptionClicked(index)}>
-                        <Image style={styles.imageWidthHeight}
-                            source={ImagesLoad.menuIcon} />
-                    </TouchableOpacity>
+                {index === selectedIndex ?
+                    (
+                        <FlatList style={styles.editFlatList}
+                            data={editDeleteMenuOption}
+                            renderItem={this.renderMenuOption()}
+                        />
+                    )
+                    : null}
+
+                <View style={styles.editEmailBorder} />
+
+                <View style={styles.editAddressView}>
+                    <Text style={styles.editAddressLabel}>
+                        {globalString.profileSettingsPage.profileMailPrimaryLabel}
+                    </Text>
+
+                    <View style={styles.editSwitchButton}>
+                        <Switch trackColor={switchStyle}
+                            onValueChange={this.onEmailToggle(index)}
+                            value={item.isPrimaryEmail}
+                        />
+                    </View>
                 </View>
             </View>
-
-            {index === this.state.selectedIndex ?
-                (<FlatList style={styles.editFlatList}
-                    data={editDeleteMenuOption}
-                    renderItem={this.renderMenuOption()} />)
-                : null}
-
-            <View style={styles.editEmailBorder} />
-
-            <View style={styles.editAddressView}>
-                <Text style={styles.editAddressLabel}>
-                    {globalString.profileSettingsPage.profileMailPrimaryLabel}
-                </Text>
-
-                <View style={styles.editSwitchButton}>
-                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={this.onEmailToggle(index)}
-                        value={item.isPrimaryEmail} />
-                </View>
-            </View>
-        </View>
         );
+    }
 
     onEmailToggle = (index) => () => {
-        var array = [...this.state.profileEmailData];
+        const { profileEmailData, isEmailRefreshed } = this.state;
+        const array = [...profileEmailData];
         if (index !== -1) {
-            let switchVal = array[index].isPrimaryEmail;
+            const switchVal = array[index].isPrimaryEmail;
             array[index].isPrimaryEmail = !switchVal;
             this.setState({
                 profileEmailData: array,
-                isEmailRefreshed: !this.state.isEmailRefreshed
+                isEmailRefreshed: !isEmailRefreshed
             });
         }
     }
 
     onMenuOptionClicked = (index) => () => {
-        index === this.state.selectedIndex ?
+        const { selectedIndex, isEmailRefreshed } = this.state;
+        if (index === selectedIndex) {
             this.setState({
-                isEmailRefreshed: !this.state.isEmailRefreshed,
+                isEmailRefreshed: !isEmailRefreshed,
                 selectedIndex: -1
-            }) :
+            });
+        } else {
             this.setState({
-                isEmailRefreshed: !this.state.isEmailRefreshed,
+                isEmailRefreshed: !isEmailRefreshed,
                 selectedIndex: index
             });
+        }
+        // index === this.state.selectedIndex ?
+        //     this.setState({
+        //         isEmailRefreshed: !this.state.isEmailRefreshed,
+        //         selectedIndex: -1
+        //     }) :
+        //     this.setState({
+        //         isEmailRefreshed: !this.state.isEmailRefreshed,
+        //         selectedIndex: index
+        //     });
     }
 
     renderMenuOption = () => ({ item, index }) =>
-        (<TouchableOpacity style={styles.editDropdown}>
-            <Text style={styles.editDropdownText}
-                onPress={this.onMenuItemClicked(index)}>
-                {item.menuName}
-            </Text>
-        </TouchableOpacity>);
+        (
+            <TouchableOpacity style={styles.editDropdown}>
+                <Text style={styles.editDropdownText}
+                    onPress={this.onMenuItemClicked(index)}
+                >
+                    {item.menuName}
+                </Text>
+            </TouchableOpacity>
+        );
 
     onMenuItemClicked = (index) => () => {
+        const { isEmailRefreshed, profileEmailData, selectedIndex } = this.state;
         switch (index) {
             case 0:
                 this.setState({
-                    isEmailRefreshed: !this.state.isEmailRefreshed,
+                    isEmailRefreshed: !isEmailRefreshed,
                     selectedIndex: -1
                 });
                 break;
@@ -156,54 +186,67 @@ class EditEmailInfoComponent extends Component {
                     globalString.common.delete,
                     () => {
                         this.setState({
-                            isEmailRefreshed: !this.state.isEmailRefreshed,
+                            isEmailRefreshed: !isEmailRefreshed,
                             selectedIndex: -1
                         });
                     },
                     () => {
-                        var array = [...this.state.profileEmailData];
-                        var indexDelete = this.state.selectedIndex
+                        const array = [...profileEmailData];
+                        const indexDelete = selectedIndex;
                         if (indexDelete !== -1) {
                             array.splice(indexDelete, 1);
                             this.setState({
                                 profileEmailData: array,
-                                isEmailRefreshed: !this.state.isEmailRefreshed,
+                                isEmailRefreshed: !isEmailRefreshed,
                                 selectedIndex: -1
                             });
                         }
                     });
                 break;
+
+            default:
+                break;
         }
     }
 
-    emailAddNew = () => this.props.navigation.navigate('editEmailAddNew');
+    emailAddNew = () => {
+        const { navigation } = this.props;
+        navigation.navigate('editEmailAddNew');
+    }
 
-    emailAddNewOnCancel = () => this.props.navigation.navigate('profileSettings');
+    emailAddNewOnCancel = () => {
+        const { navigation } = this.props;
+        navigation.navigate('profileSettings');
+    }
 
     render() {
+        const { navigation } = this.props;
+        const { profileEmailData, isEmailRefreshed } = this.state;
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={navigation}
+                />
 
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.emailInformationFlex}>
 
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
                             {globalString.editProfilePageValue.editAddressInfoHead}
                         </Text>
-                        <Text style={[styles.settingsInfo, styles.editLabelBold]}>
+                        <Text style={styles.emailInformationTitle}>
                             {globalString.editEmailInformations.editEmailTitle}
                         </Text>
                     </View>
 
-                    <View style={[styles.settingsView]}>
+                    <View style={styles.settingsView}>
                         <Text style={styles.profileSettingViewOne}>
                             {globalString.editEmailInformations.editEmailTitle}
                         </Text>
 
                         <Text style={styles.profileSettingViewTwo}
-                            onPress={this.emailAddNew}>
+                            onPress={this.emailAddNew}
+                        >
                             {globalString.editPhoneInformations.phoneAddNew}
                         </Text>
                     </View>
@@ -211,21 +254,26 @@ class EditEmailInfoComponent extends Component {
                     <View style={styles.settingsBorder} />
 
                     <View>
-                        {this.state.profileEmailData.length === 0 ?
-                            (<View style={[styles.editEmailHolderNoFile, styles.marketingPadding]}>
-                                <Text style={styles.marketingHomeBold}>
-                                    {globalString.marketingPrivacyLabel.marketingNoneLabel}
-                                </Text>
-                                <Text style={styles.marketingHomeNormal}>
-                                    {globalString.marketingPrivacyLabel.marketingNoneMessageLabel}
-                                </Text>
-                            </View>)
+                        {profileEmailData.length === 0 ?
+                            (
+                                <View style={styles.editEmailHolderNoFile}>
+                                    <Text style={styles.marketingHomeBold}>
+                                        {globalString.marketingPrivacyLabel.marketingNoneLabel}
+                                    </Text>
+                                    <Text style={styles.marketingHomeNormal}>
+                                        {globalString.marketingPrivacyLabel.marketingNoneMessageLabel}
+                                    </Text>
+                                </View>
+                            )
                             :
-                            (<FlatList
-                                data={this.state.profileEmailData}
-                                extraData={this.state.isEmailRefreshed}
-                                keyExtractor={this.generateKeyExtractor}
-                                renderItem={this.renderEmailInformation()} />)}
+                            (
+                                <FlatList
+                                    data={profileEmailData}
+                                    extraData={isEmailRefreshed}
+                                    keyExtractor={this.generateKeyExtractor}
+                                    renderItem={this.renderEmailInformation()}
+                                />
+                            )}
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -233,21 +281,23 @@ class EditEmailInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.back}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.emailAddNewOnCancel} />
+                            onPress={this.emailAddNewOnCancel}
+                        />
                     </View>
 
                     <View style={styles.newVictorySection}>
                         <Text style={styles.termsofuseText1}>
                             {globalString.editEmailInformations.editEmailTerms}
                         </Text>
-                        <Text style={[styles.openInvestment, lineHeight = 30]}>
+                        <Text style={styles.openInvestment}>
                             {globalString.editEmailInformations.editEmailInvestment}
                         </Text>
                     </View>
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={ImagesLoad.applicationLogo} />
+                            source={ImagesLoad.applicationLogo}
+                        />
                     </View>
 
                     <View style={styles.whiteBackground}>
@@ -258,9 +308,11 @@ class EditEmailInfoComponent extends Component {
 
                     <View style={styles.whiteBackground}>
                         <Image style={styles.imageWidthHeight}
-                            source={ImagesLoad.twitterlogo} />
+                            source={ImagesLoad.twitterlogo}
+                        />
                         <Image style={styles.imageWidthHeight}
-                            source={ImagesLoad.linkedinlogo} />
+                            source={ImagesLoad.linkedinlogo}
+                        />
                     </View>
 
                     <View style={styles.privacyAgreement}>
@@ -294,5 +346,14 @@ class EditEmailInfoComponent extends Component {
         );
     }
 }
+
+EditEmailInfoComponent.propTypes = {
+    navigation: PropTypes.instanceOf(Object).isRequired,
+    profileState: PropTypes.instanceOf(Object)
+};
+
+EditEmailInfoComponent.defaultProps = {
+    profileState: {}
+};
 
 export default EditEmailInfoComponent;

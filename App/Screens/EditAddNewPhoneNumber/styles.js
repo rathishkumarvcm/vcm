@@ -3,7 +3,7 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 const { width } = Dimensions.get('window');
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7FAFF',
@@ -432,5 +432,19 @@ export const styles = StyleSheet.create({
         color: '#56565A', fontSize: scaledHeight(18)
     },
     editAddressInput: { flexDirection: 'column', width: '100%', paddingLeft: '2%', paddingRight: '4%' },
-    editDropDownSelect: { height: 100, borderWidth: 1, marginRight: '4%', marginTop: '1%', width: '92%', borderColor: "#DEDEDF", backgroundColor: 'white'}
+    editDropDownSelect: { height: 100, borderWidth: 1, marginRight: '4%', marginTop: '1%', width: '92%', borderColor: "#DEDEDF", backgroundColor: 'white'},
+    addPhoneNumberFlex: { flex: 0.85 },
+    addPhoneNumberTitle: {
+        color: '#B2B2B2',
+        fontSize: scaledHeight(16),
+        fontWeight: "bold"
+    },
+    addPhoneNumberHeader: {
+        width: '90%',
+        color: '#707070',
+        fontSize: scaledHeight(20),
+        fontWeight: "bold"
+    }
 });
+
+export default styles;
