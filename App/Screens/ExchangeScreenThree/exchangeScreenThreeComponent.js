@@ -72,17 +72,9 @@ class ExchangeScreenThreeComponent extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props !== prevProps) {
-            const { accOpeningData, navigation } = this.props;
-            const { ammend } = this.state;
+            const { accOpeningData } = this.props;
             let tempFundListData = [];
-            if (navigation.getParam('ammend')) {
-                this.setState({ ammend: true });
-                ammendData = navigation.getParam('data');
-                ammendIndex = navigation.getParam('index');
-            }
-            else {
-                this.setState({ ammend: false });
-            }
+            this.updateAmendData();
             if (accOpeningData[ActionTypes.GET_FUNDLIST] !== undefined && accOpeningData[ActionTypes.GET_FUNDLIST].Items !== null) {
                 tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST].Items;
                 this.setState({
@@ -90,31 +82,33 @@ class ExchangeScreenThreeComponent extends Component {
                     isFilterApplied: false,
                     isLoading: false
                 });
-                if (ammend) {
-                    tempFundListData.map((item, k) => {
-                        if (item.fundName === ammendData.selectedFundData.fundName) {
-                            this.setState({ selectedFundIndex: k });
-                        }
-                        return 0;
-                    });
-                    // this.updateAmendDataToReducer();
-                    this.onAmendFund();
-                }
             }
         }
     }
 
-    getLookUpData = () => {
-        const { navigation, getFundListData, masterLookupStateData, getCompositeLookUpData } = this.props;
-        const { fundList } = this.state;
-        ammendData = navigation.getParam('data');
-        ammendIndex = navigation.getParam('index');
+    updateAmendData = () => {
+        const { navigation, fundList } = this.props;
         if (navigation.getParam('ammend')) {
             this.setState({ ammend: true });
+            ammendData = navigation.getParam('data');
+            ammendIndex = navigation.getParam('index');
+            fundList.map((item, k) => {
+                if (item.fundName === ammendData.selectedFundData.fundName) {
+                    this.setState({ selectedFundIndex: k });
+                }
+                return 0;
+            });
+            this.onAmendFund();
         }
         else {
             this.setState({ ammend: false });
         }
+
+    }
+
+    getLookUpData = () => {
+        const { getFundListData, masterLookupStateData, getCompositeLookUpData } = this.props;
+        const { fundList } = this.state;
 
         this.setState({ isLoading: true });
         if (this.state && fundList && !fundList.length > 0) {
@@ -386,7 +380,8 @@ class ExchangeScreenThreeComponent extends Component {
                         "monthlyInvestment": selectedFundInvestmentData.monthlyInvestment,
                         "startDate": selectedFundInvestmentData.startDate,
                         "count": '',
-                        "total": totalInitialInvestment
+                        "total": totalInitialInvestment,
+                        "funds": selectedFundInvestmentData.fundListData
                     },
                     "selectedFundSourceData": ammendData.selectedFundSourceData,
                     "currentSecurities": ammendData.currentSecurities,
@@ -395,6 +390,7 @@ class ExchangeScreenThreeComponent extends Component {
                 }
             };
             saveData(ammendPayloadData);
+            console.log("saved Data after screen three ammend", payload);
             //   navigation.navigate('purchaseScreenThree', { ammend: true, index: ammendIndex, data: ammendData });
         }
         else {
@@ -414,6 +410,7 @@ class ExchangeScreenThreeComponent extends Component {
                 }
             };
             saveData(payloadData);
+            console.log("saved Data after screen three", payload);
             //  navigation.navigate('purchaseScreenThree', { ammend: false });
         }
     }
@@ -448,21 +445,6 @@ class ExchangeScreenThreeComponent extends Component {
         // if (this.state.ammend) {
         //     this.onAmendFund(item);
         // }
-    }
-
-    updateAmendDataToReducer = () => {
-        let data = ammendData;
-        const payloadData = {
-            saveExchangeSelectedData: {
-                "selectedFundData": data.selectedFundData,
-                "selectedAccountData": data.selectedAccountData,
-                "selectedFundSourceData": data.selectedFundSourceData,
-                "currentSecurities": data.currentSecurities,
-                "contribution": data.contribution,
-                "estimated": data.estimated
-            }
-        };
-        this.props.saveData(payloadData);
     }
 
     onAmendFund = () => {
@@ -568,6 +550,15 @@ class ExchangeScreenThreeComponent extends Component {
                 </View>
             </View>
         );
+    }
+
+    onClickRowItem = (item, index) => () => {
+        AppUtils.debugLog(`onSelectFundList:: ${item.fundNumber}`);
+        //  this.props.navigation.navigate({ routeName: 'investmentPlanInfo', key: 'investmentPlanInfo' })
+        const { navigation } = this.props;
+        const { push } = navigation;
+        push('investmentPlanInfo', { fundDetails: item.fundNumber });
+
     }
 
     render() {
