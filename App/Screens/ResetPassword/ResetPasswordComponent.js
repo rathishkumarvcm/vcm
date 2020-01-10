@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
-import { styles } from './styles';
-import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from 'prop-types';
+import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import styles from './styles';
+import gblStrings from '../../Constants/GlobalStrings';
 import {ValidatePassword} from '../../Utils/ValidatePassword';
 
 
@@ -20,14 +20,16 @@ class ResetPasswordComponent extends Component {
     }
 
     setNewPassword = text => {
+        const { newPassword } = this.state;
          this.setState({
              newPassword: text
          });
-        this.disableSubmitButton = !((this.state.newPassword)===gblStrings.userManagement.strong);
+        this.disableSubmitButton = !((newPassword)===gblStrings.userManagement.strong);
     }
 
     validateNewPassword = () => {
-        const validate = (ValidatePassword(this.state.newPassword)===gblStrings.userManagement.strong);
+        const { newPassword } = this.state;
+        const validate = (ValidatePassword(newPassword)===gblStrings.userManagement.strong);
         this.setState({ passwordStrengthStrong: validate });
     }
 
@@ -38,10 +40,11 @@ class ResetPasswordComponent extends Component {
     }
 
     confirmNewlyEnteredPasswords = () => {
+        const { confirmNewPassword,newPassword,passwordStrengthStrong } = this.state;
         this.setState({
-            comparePasswords: (this.state.confirmNewPassword === this.state.newPassword)
+            comparePasswords: (confirmNewPassword === newPassword)
         });
-        if((this.state.confirmNewPassword === this.state.newPassword)&& (this.state.passwordStrengthStrong)){
+        if((confirmNewPassword === newPassword)&& (passwordStrengthStrong)){
             this.disableSubmitButton = false;
         }else{
             this.disableSubmitButton = true;
@@ -49,26 +52,31 @@ class ResetPasswordComponent extends Component {
     }
 
     onClickSubmit = () => {        
-        console.log('Submit Button Clicked...');       
+        // console.log('Submit Button Clicked...');     
+        const { confirmNewPassword } = this.state;  
+        const { navigation,saveNewPassword } = this.props;   
+        const { navigate } = navigation;  
         const payloadData = {
-            newPassword: this.state.confirmNewPassword
+            newPassword: confirmNewPassword
         };
-        this.props.saveNewPassword(payloadData);
-        this.props.navigation.navigate('changeLogonCredentials',{message:gblStrings.userManagement.changedPasswordSuccessfully, newPassword:this.state.confirmNewPassword});               
+        saveNewPassword(payloadData);
+        navigate('changeLogonCredentials',{message:gblStrings.userManagement.changedPasswordSuccessfully, newPassword:confirmNewPassword});               
     }
 
-    componentDidMount(){
-        
+    navigateChangeLogonCredentials = () => {
+        const { navigation } = this.props;   
+        const { navigate } = navigation;  
+        navigate('changeLogonCredentials');
     }
-
-    navigateChangeLogonCredentials = () => this.props.navigation.navigate('changeLogonCredentials');
 
 
     render() { 
-        console.log("render--->this.props"+JSON.stringify(this.props));
+        console.log("render--->this.props",JSON.stringify(this.props));
+        const { navigation } = this.props;
+        const { passwordStrengthStrong,newPassword,comparePasswords,confirmNewPassword } = this.state;
         return (
-            <View style={styles.container} >
-                <GHeaderComponent navigation={this.props.navigation} />
+            <View style={styles.container}>
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <TouchableOpacity onPress={this.goBack}>
                         <GIcon
@@ -88,26 +96,26 @@ class ResetPasswordComponent extends Component {
                         <Text style={styles.explainStyle}>{gblStrings.userManagement.explain}</Text>
                     </View>
                     <GInputComponent
-                        propInputStyle={this.state.passwordStrengthStrong ? styles.passwordTextBox : styles.passwordTextBoxError}
+                        propInputStyle={passwordStrengthStrong ? styles.passwordTextBox : styles.passwordTextBoxError}
                         placeholder={gblStrings.userManagement.newPassword}
-                        value={this.state.newPassword}
+                        value={newPassword}
                         onChangeText={this.setNewPassword}
                         onBlur={this.validateNewPassword}
                         onSubmitEditing={this.validateNewPassword}
-                        validateError={this.state.passwordStrengthStrong}
+                        validateError={passwordStrengthStrong}
                         secureTextEntry
                     />
                     <View style={styles.passwordStrengthFlex}>
                         <View style={styles.passwordStrongFlex}>
-                            <View style={(ValidatePassword(this.state.newPassword)==gblStrings.userManagement.strong)?styles.strong:styles.default} />
+                            <View style={(ValidatePassword(newPassword)===gblStrings.userManagement.strong)?styles.strong:styles.default} />
                             <Text style={styles.strongText}>{gblStrings.userManagement.strong}</Text>
                         </View>
                         <View style={styles.passwordStrongFlex}>
-                            <View style={(ValidatePassword(this.state.newPassword)==gblStrings.userManagement.good)?styles.good:styles.default} />
+                            <View style={(ValidatePassword(newPassword)===gblStrings.userManagement.good)?styles.good:styles.default} />
                             <Text style={styles.strongText}>{gblStrings.userManagement.good}</Text>
                         </View>
                         <View style={styles.passwordStrongFlex}>
-                            <View style={(this.state.newPassword.length>0)&&(ValidatePassword(this.state.newPassword)==gblStrings.userManagement.weak)?styles.weak:styles.default} />
+                            <View style={(newPassword.length>0)&&(ValidatePassword(newPassword)===gblStrings.userManagement.weak)?styles.weak:styles.default} />
                             <Text style={styles.strongText}>{gblStrings.userManagement.weak}</Text>
                         </View>
                     </View>
@@ -117,14 +125,14 @@ class ResetPasswordComponent extends Component {
                     </View>
 
                     <GInputComponent
-                        propInputStyle={this.state.comparePasswords ? styles.passwordTextBox : styles.passwordTextBoxError}
-                        inputStyle={this.state.comparePasswords ? null : styles.passwordTextBoxError}
+                        propInputStyle={comparePasswords ? styles.passwordTextBox : styles.passwordTextBoxError}
+                        inputStyle={comparePasswords ? null : styles.passwordTextBoxError}
                         placeholder={gblStrings.userManagement.confirmNewPassword}
-                        value={this.state.confirmNewPassword}
+                        value={confirmNewPassword}
                         onChangeText={this.setConfirmNewPassword}
                         onSubmitEditing={this.confirmNewlyEnteredPasswords}
                         onBlur={this.confirmNewlyEnteredPasswords}
-                        errorFlag={!this.state.comparePasswords}
+                        errorFlag={!comparePasswords}
                         errorText={gblStrings.userManagement.passwordDoesnotMatch}
                         secureTextEntry
                     />
@@ -156,12 +164,11 @@ class ResetPasswordComponent extends Component {
 
 ResetPasswordComponent.propTypes = {
     navigation : PropTypes.instanceOf(Object),
-    loginState : PropTypes.instanceOf(Object),
-    initialState : PropTypes.instanceOf(Object),
     saveNewPassword : PropTypes.func,
 };
 
 ResetPasswordComponent.defaultProps = {
-
+    navigation:{},
+    saveNewPassword:()=>{}
 };
 export default ResetPasswordComponent;

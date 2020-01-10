@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
-import { styles } from './styles';
 import PropTypes from 'prop-types';
+import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import styles from './styles';
 import globalStrings from '../../Constants/GlobalStrings';
 
 
@@ -12,24 +12,25 @@ class ResetPINComponent extends Component {
         this.state = {
             newPIN: '',
             confirmNewPIN: '',
-            validationPIN: true,
             comparePINS: true,
             pinlength:true,
         };
         this.disableSubmitButton = true;
     }
+
     setNewPIN = pin => {
         this.setState({
             newPIN: pin
         });
-        if(pin.length!=4){
+        if(pin.length!==4){
             this.disableSubmitButton=true;
         }
     }
 
     validateNewPIN = () => {
+        const {newPIN} = this.state;
             this.setState({
-                pinlength:(this.state.newPIN.length==4)
+                pinlength:(newPIN.length===4)
             });
     }
 
@@ -40,42 +41,49 @@ class ResetPINComponent extends Component {
     }
 
     comparePINS = () => {
+        const { confirmNewPIN,newPIN,pinlength } = this.state;
         this.setState({
-            comparePINS: (this.state.confirmNewPIN == this.state.newPIN)
+            comparePINS: (confirmNewPIN === newPIN)
         });
-        if((this.state.confirmNewPIN === this.state.newPIN)&&(this.state.pinlength==true)){
+        if((confirmNewPIN === newPIN)&&(pinlength===true)){
             this.disableSubmitButton = false;
         }else{
             this.disableSubmitButton = true;
         }
     }
 
-    /*onClickSubmit = () => {
+    /* onClickSubmit = () => {
         console.log("------- onClick submit reset PIN -------");
         this.resetPINJSON.newPIN = this.state.confirmNewPIN;
         console.log("resetPINJSON ------- "+JSON.stringify(this.resetPINJSON));
         this.props.navigation.navigate('changeLogonCredentials',{message:globalStrings.userManagement.changedPINSuccessfully,newPIN:this.state.confirmNewPIN});
-    }*/
+    } */
 
     onClickSubmit = () => {        
-        console.log('Submit Button Clicked...');       
+        // console.log('Submit Button Clicked...');  
+        const { confirmNewPIN } = this.state;  
+        const { navigation,saveNewPIN } = this.props;   
+        const { navigate } = navigation;
         const payloadData = {
-            newPIN: this.state.confirmNewPIN
+            newPIN: confirmNewPIN
         };
-        this.props.saveNewPIN(payloadData);
-        this.props.navigation.navigate('changeLogonCredentials',{message:globalStrings.userManagement.changedPINSuccessfully, newPIN:this.state.confirmNewPIN});               
+        saveNewPIN(payloadData);
+        navigate('changeLogonCredentials',{message:globalStrings.userManagement.changedPINSuccessfully, newPIN:confirmNewPIN});               
     }
 
-    navigateChangeLogonCredentials = () => this.props.navigation.navigate('changeLogonCredentials');
-    
-    
-    componentDidMount(){
+    navigateChangeLogonCredentials = () => {
+        const { navigation } = this.props;   
+        const { navigate } = navigation;
+        navigate('changeLogonCredentials');
     }
+    
     render() {
-        console.log("render--->this.props"+JSON.stringify(this.props));
+        console.log("render--->this.props",JSON.stringify(this.props));
+        const { confirmNewPIN,newPIN,pinlength,comparePINS } = this.state;
+        const { navigation } = this.props; 
         return (
-            <View style={styles.container} >
-                <GHeaderComponent navigation={this.props.navigation} />
+            <View style={styles.container}>
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <TouchableOpacity onPress={this.goBack}>
                         <GIcon
@@ -96,14 +104,14 @@ class ResetPINComponent extends Component {
                     </View>
                     
                     <GInputComponent
-                        propInputStyle={this.state.pinlength ? styles.pinTextBox : styles.pinTextBoxError}
-                        inputStyle={this.state.pinlength ? null : styles.pinTextBoxError}
+                        propInputStyle={pinlength ? styles.pinTextBox : styles.pinTextBoxError}
+                        inputStyle={pinlength ? null : styles.pinTextBoxError}
                         placeholder={globalStrings.userManagement.newPIN}
-                        value={this.state.newPIN}
+                        value={newPIN}
                         onChangeText={this.setNewPIN}
                         onSubmitEditing={this.validateNewPIN}
                         onBlur={this.validateNewPIN}
-                        errorFlag={!this.state.pinlength}
+                        errorFlag={!pinlength}
                         errorText={globalStrings.userManagement.pinLengthLessThanFour}
                         secureTextEntry
                         keyboardType="numeric"
@@ -114,15 +122,15 @@ class ResetPINComponent extends Component {
                         <Text style={styles.enterPINText}>{globalStrings.userManagement.confirmNewPIN}</Text>
                     </View>
                     <GInputComponent
-                        propInputStyle={this.state.comparePINS ? styles.pinTextBox : styles.pinTextBoxError}
-                        inputStyle={this.state.comparePINS ? null : styles.pinTextBoxError}
+                        propInputStyle={comparePINS ? styles.pinTextBox : styles.pinTextBoxError}
+                        inputStyle={comparePINS ? null : styles.pinTextBoxError}
                         placeholder={globalStrings.userManagement.confirmNewPIN}
-                        value={this.state.confirmNewPIN}
+                        value={confirmNewPIN}
                         onChangeText={this.setConfirmNewPIN}
                         onBlur={this.comparePINS}
                         keyboardType="numeric"
                         maxLength={4}
-                        errorFlag={!this.state.comparePINS}
+                        errorFlag={!comparePINS}
                         errorText={globalStrings.userManagement.pinDoesntMatch}
                         secureTextEntry
                     />
@@ -152,11 +160,11 @@ class ResetPINComponent extends Component {
 
 ResetPINComponent.propTypes = {
     navigation : PropTypes.instanceOf(Object),
-    loginState : PropTypes.instanceOf(Object),
-    initialState : PropTypes.instanceOf(Object),
     saveNewPIN : PropTypes.func,
 };
 
 ResetPINComponent.defaultProps = {
+    navigation:{},
+    saveNewPIN:()=>{}
 };
 export default ResetPINComponent;

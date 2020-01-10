@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
-import { styles } from './styles';
 import PropTypes from 'prop-types';
+import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 
 
@@ -16,21 +16,34 @@ class CurrentPINComponent extends Component {
         };
     }
 
-    isEmpty = (str) => {
-        if (str.trim() == "" || str == undefined || str == null || str == "null" || str == "undefined") {
-            return true;
-        } else {
-            return false;
-        }
+    componentDidMount() {
+        const { initialState } = this.props;
+        console.log("initialState--->",JSON.stringify(initialState.currentPIN));
+         if (this.props && initialState && initialState.currentPIN) {
+            this.setState({
+                currentPIN:initialState.currentPIN
+            });
+         }
     }
+
+    isEmpty = (str) => {
+        if (str.trim() === "" || str === undefined || str === null || str === "null" || str === "undefined") {
+            return true;
+        }
+        return false;
+    }
+
     onClickNext=()=>{
-        if(this.isEmpty(this.state.userEnteredPIN)){
+        const { userEnteredPIN,currentPIN } = this.state;
+        const { navigation } = this.props;   
+        const { navigate } = navigation;  
+        if(this.isEmpty(userEnteredPIN)){
             this.setState({errMsg : gblStrings.userManagement.pleaseEnterCurrentPIN});  
-        }else if(this.state.userEnteredPIN!==this.state.currentPIN){
+        }else if(userEnteredPIN!==currentPIN){
             this.setState({errMsg : gblStrings.userManagement.enteredIncorrectPIN});  
         }else{
             this.setState({errMsg : ''});
-            this.props.navigation.navigate('resetPIN');
+            navigate('resetPIN');
         }
     }
 
@@ -38,21 +51,19 @@ class CurrentPINComponent extends Component {
         this.setState({userEnteredPIN:pin});
     }
 
-    navigateChangeLogonCredentials = () => this.props.navigation.navigate('changeLogonCredentials');
-  
-    componentDidMount() {
-        console.log("this.props.initialState--->"+JSON.stringify(this.props.initialState.currentPIN));
-         if (this.props && this.props.initialState && this.props.initialState.currentPIN) {
-            this.setState({
-                currentPIN:this.props.initialState.currentPIN
-            });
-         }
+    navigateChangeLogonCredentials = () => {
+        const { navigation } = this.props;   
+        const { navigate } = navigation;  
+        navigate('changeLogonCredentials');
     }
-
+  
+   
     render() {
+        const {errMsg,userEnteredPIN} = this.state;
+        const { navigation } = this.props;
         return (
-            <View style={styles.container} >
-                <GHeaderComponent navigation={this.props.navigation} />
+            <View style={styles.container}>
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <TouchableOpacity onPress={this.goBack}>
                         <GIcon
@@ -73,11 +84,11 @@ class CurrentPINComponent extends Component {
                     <GInputComponent
                         propInputStyle={styles.pinTextBox}
                         placeholder={gblStrings.userManagement.currentPIN}
-                        value={this.state.userEnteredPIN}
+                        value={userEnteredPIN}
                         onChangeText={this.validateCurrentPIN}
                         onBlur={this.onClickNext}
-                        errorFlag={!this.isEmpty(this.state.errMsg)}
-                        errorText={this.state.errMsg}
+                        errorFlag={!this.isEmpty(errMsg)}
+                        errorText={errMsg}
                         keyboardType="number-pad"
                         maxLength={4}
                         secureTextEntry
@@ -111,5 +122,7 @@ CurrentPINComponent.propTypes = {
 };
 
 CurrentPINComponent.defaultProps = {
+    navigation:{},
+    initialState:{},
 };
 export default CurrentPINComponent;

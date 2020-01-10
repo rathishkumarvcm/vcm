@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
-import { styles } from './styles';
-import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from 'prop-types';
+import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import styles from './styles';
+import gblStrings from '../../Constants/GlobalStrings';
 
 class CurrentPasswordComponent extends Component {
     constructor(props) {
@@ -14,21 +14,36 @@ class CurrentPasswordComponent extends Component {
             errMsg:''
         };
     }
-    isEmpty = (str) => {
-        if (str.trim() == "" || str == undefined || str == null || str == "null" || str == "undefined") {
-            return true;
-        } else {
-            return false;
-        }
+
+    componentDidMount() {
+        const { initialState } = this.props;
+        console.log("initialState--->",JSON.stringify(initialState.currentPassword));
+         if (this.props && initialState && initialState.currentPassword) {
+            this.setState({
+                currentPassword:initialState.currentPassword
+            });
+         }
     }
+
+
+    isEmpty = (str) => {
+        if (str.trim() === "" || str === undefined || str === null || str === "null" || str === "undefined") {
+            return true;
+        }
+        return false;
+    }
+
     onClickNext=()=>{
-        if(this.isEmpty(this.state.userEnteredPassword)){
+        const { navigation } = this.props;   
+        const { navigate } = navigation; 
+        const { userEnteredPassword,currentPassword } = this.state;
+        if(this.isEmpty(userEnteredPassword)){
             this.setState({errMsg : gblStrings.userManagement.pleaseEnterCurrentPswd});  
-        }else if(this.state.userEnteredPassword!==this.state.currentPassword){
+        }else if(userEnteredPassword!==currentPassword){
             this.setState({errMsg :gblStrings.userManagement.enteredIncorrectPswd});  
         }else{
             this.setState({errMsg : ''});
-            this.props.navigation.navigate('resetPassword');
+            navigate('resetPassword');
         }
     }
 
@@ -36,23 +51,26 @@ class CurrentPasswordComponent extends Component {
         this.setState({userEnteredPassword:pswd});
     }
 
-    componentDidMount() {
-        console.log("this.props.initialState--->"+JSON.stringify(this.props.initialState.currentPassword));
-         if (this.props && this.props.initialState && this.props.initialState.currentPassword) {
-            this.setState({
-                currentPassword:this.props.initialState.currentPassword
-            });
-         }
+
+    navigateChangeLogonCredentials = () => {
+        const { navigation } = this.props;   
+        const { navigate } = navigation; 
+        navigate('changeLogonCredentials');
     }
 
 
-    navigateChangeLogonCredentials = () => this.props.navigation.navigate('changeLogonCredentials');
-    navigateResetPassword = () => this.props.navigation.navigate('resetPassword');
+    navigateResetPassword = () => {
+        const { navigation } = this.props;   
+        const { navigate } = navigation; 
+        navigate('resetPassword');
+    }
 
     render() {
+        const { navigation } = this.props;   
+        const { userEnteredPassword,errMsg } = this.state;
         return (
-            <View style={styles.container} >
-                <GHeaderComponent navigation={this.props.navigation} />
+            <View style={styles.container}>
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <TouchableOpacity onPress={this.goBack}>
                         <GIcon
@@ -73,11 +91,11 @@ class CurrentPasswordComponent extends Component {
                     <GInputComponent
                         propInputStyle={styles.passwordTextBox}
                         placeholder={gblStrings.userManagement.currentPassword}
-                        value={this.state.userEnteredPassword}
+                        value={userEnteredPassword}
                         onChangeText={this.validateCurrentPassword}
                         onBlur={this.onClickNext}
-                        errorFlag={!this.isEmpty(this.state.errMsg)}
-                        errorText={this.state.errMsg}
+                        errorFlag={!this.isEmpty(errMsg)}
+                        errorText={errMsg}
                         secureTextEntry
                     />
 
@@ -110,6 +128,7 @@ CurrentPasswordComponent.propTypes = {
 };
 
 CurrentPasswordComponent.defaultProps = {
-
+    navigation:{},
+    initialState:{},
 };
 export default CurrentPasswordComponent;
