@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity, Modal } from 'react-native';
+import { Text, View, ScrollView, Modal } from 'react-native';
 import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GInputComponent, GModalComponent } from '../../CommonComponents';
-import PropTypes from 'prop-types';
+import { GButtonComponent} from '../../CommonComponents';
+
 class TabMoreComponent extends Component {
     constructor(props) {
         super(props);
@@ -12,6 +12,7 @@ class TabMoreComponent extends Component {
             modalVisible: true
         };
     }
+
     render() {
         return (
             <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', flex: 1, justifyContent: 'center' }}>

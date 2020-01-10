@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import {
     Platform,
-    TouchableHighlight,
-    View,
-    StyleSheet,
-    Text,
 } from 'react-native';
 import { withNavigation } from 'react-navigation';
 import { TouchableOpacity } from "react-native-gesture-handler";

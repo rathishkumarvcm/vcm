@@ -4,8 +4,6 @@ import { View, StyleSheet, TouchableOpacity, Text, Dimensions, Image, FlatList, 
 import PropTypes from "prop-types";
 import { Auth } from "aws-amplify";
 import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
-import { NavigationActions } from 'react-navigation';
-import { DrawerActions } from 'react-navigation-drawer';
 import { GIcon } from './GIcon';
 import { scaledHeight, scaledWidth } from '../Utils/Resolution';
 import DrawerIcon from '../Screens/Menu/DrawerIcon'
@@ -152,7 +150,7 @@ class GHeaderComponent extends Component {
 
   navigateProfile = () => this.props.navigation.navigate('profileSettings')
 
-  moveToNotifications = () => this.props.navigation.navigate('NotificationTabs')
+  moveToNotifications = () => this.props.navigation.navigate('notificationTabs')
   openLeftDrawer = () => this.props.navigation.navigate('DrawerOpen')
 
   updateDataList = ({ item }) => {
@@ -164,8 +162,7 @@ class GHeaderComponent extends Component {
         justifyContent: 'center'
       }
       }
-      onPress={this.newMethod(item)}
-    >
+      onPress={this.newMethod(item)}>
       <Text> {item.title} </Text>
     </TouchableOpacity>);
   }
@@ -173,7 +170,7 @@ class GHeaderComponent extends Component {
   newMethod(item) {
 
     return () => {
-      if (item.title == "Sign Out") {
+      if (item.title === "Sign Out") {
         this.setState({ SignOut: true });
         this.showModal();
         this.signOut();
@@ -186,9 +183,7 @@ class GHeaderComponent extends Component {
   }
 
   render() {
-
     return (
-
       <>
         {this.props.register ? (
           <TouchableOpacity style={styles.loginHeader}>
@@ -214,8 +209,6 @@ class GHeaderComponent extends Component {
             </TouchableOpacity>
           </TouchableOpacity>
         )
-
-
           : (
             <>
               <TouchableOpacity style={styles.loginHeader}>
@@ -242,6 +235,7 @@ class GHeaderComponent extends Component {
                     />
                   </TouchableOpacity>
                 ) : null}
+                {/* <Text style={{ alignItems: 'center', justifyContent: 'center', marginTop: scaledHeight(15) }}>{this.props.headerText}</Text> */}
 
                 <View style={{ width: '10%' }} />
 
@@ -254,7 +248,7 @@ class GHeaderComponent extends Component {
                   />
                 </TouchableOpacity>
                 <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }}
-                  onPress={this.moveToNotifications}>
+                  onPress={this.moveToNotifications} >
                   <GIcon
                     name="md-notifications-outline"
                     type="ionicon"
@@ -296,7 +290,6 @@ class GHeaderComponent extends Component {
 
             </>
           )}
-
 
       </>
     );

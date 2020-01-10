@@ -1,9 +1,8 @@
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import React from 'react';
-import { Text, View, ScrollView, TouchableOpacity, Modal } from 'react-native';
 import { GIcon } from './CommonComponents/GIcon';
 
 import LoginComponent from './Screens/Login/';
@@ -175,6 +174,7 @@ import DrawerComponent from './Screens/Menu/DrawerComponent';
 import TabMoreComponent from './Screens/Menu/TabMoreComponent';
 import Screen1Component from './Screens/NotificationTab/Screen1';
 import Screen2Component from './Screens/NotificationTab/Screen2';
+import MoreModalComponent from './Screens/Menu/MoreModalComponent';
 
 // Notification Tabs
 const NotificationTabNavigator = createMaterialTopTabNavigator(
@@ -236,7 +236,7 @@ const BottomTabNavigator = createBottomTabNavigator({
         },
     },
     more: {
-        screen: TermsAndConditions,
+        screen: () => TermsAndConditions,
         navigationOptions: {
             tabBarLabel: 'More',
         },
@@ -267,18 +267,22 @@ const BottomTabNavigator = createBottomTabNavigator({
                 />
             },
             tabBarOnPress: ({ defaultHandler }) => {
-                const { routes, index, params } = navigation.state;
-                // console.warn('onPress:', navigation);
+                const { routeName } = navigation.state;
+                if (routeName === 'more') {
+                    console.warn('onPress:', navigation);
+                    navigation.goBack();
+                    navigation.navigate('learn');
+                } else {
+                    defaultHandler();
+                }
+
                 if (navigation && navigation.isFocused()) {
                     //  console.warn('isFocused:', navigation.state);
                 }
-                defaultHandler();
+
             }
         }),
-        tabBarOptions: {
-            //activeTintColor: '#42f44b',
-            inactiveTintColor: 'gray',
-        },
+
     }
 );
 
@@ -309,7 +313,9 @@ const AppNavigator = createStackNavigator({
     draweriOS: {
         screen: DrawerComponent,
     },
-
+    moreModal: {
+        screen: MoreModalComponent,
+    },
     Common: {
         screen: CommonUIComponent,
         navigationOptions: {

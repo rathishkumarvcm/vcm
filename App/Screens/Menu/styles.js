@@ -1,11 +1,11 @@
-import { StyleSheet,Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 import {scaledHeight,scaledWidth } from '../../Utils/Resolution';
 
-const {width} = Dimensions.get('window');
 export const styles = StyleSheet.create({
     container: { flex: 1, width: '100%', justifyContent: 'center', alignItems: 'flex-start', backgroundColor: 'white' },
+    scrollViewStyle:{ flex: 1, width: "100%" },
+    columnContainer:{ flexDirection: 'column', marginHorizontal: 10 },
     headerContainer: {
-        // backgroundColor: 'pink',
         marginHorizontal: 20,marginVertical:25,
         flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'
     },
@@ -74,5 +74,6 @@ export const styles = StyleSheet.create({
         width: '100%',
         textAlign: 'center',       
     },
+    dividerLine:{ height: 1, backgroundColor: 'lightgray', marginHorizontal: 15 }
 
 });
