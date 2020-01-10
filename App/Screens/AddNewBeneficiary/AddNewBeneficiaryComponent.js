@@ -636,6 +636,10 @@ class AddNewBeneficiaryComponent extends Component {
     return isValidationSuccess;
   }
 
+  generatePrimaryBene = (item) => item.key;
+  
+  generateContingentKey = (item) => item.key;
+
   render() {
     const { isDistHigh, navigation, editPrimaryIcon, newPrimaryBene, beneData, prevDate, supportedAccountFlag, supportedAccountMsg, newContingentBene, instructionIcon, isInstructionCollapse, totalPrimary, totalDistribution, totalContingent, addPrimaryText, addContingentText } = this.state;
     return (
@@ -649,7 +653,7 @@ class AddNewBeneficiaryComponent extends Component {
 
           {newPrimaryBene && newPrimaryBene.map((item, index) => {
             return (
-              <View key={index} style={styles.blockMarginTop}>
+              <View key={this.generatePrimaryBene} style={styles.blockMarginTop}>
                 <View style={styles.titleHeadingView}>
                   <Text style={styles.titleHeaderText}>{editPrimaryIcon}</Text>
                   <Text style={styles.titleHeaderText}>{index === 0 ? "Add New Beneficiary" : "Add Primary Beneficiary"}</Text>
@@ -796,7 +800,7 @@ class AddNewBeneficiaryComponent extends Component {
               distributionValue = parseInt(item.distribution_Per);
             }
             return (
-              <View key={index} style={styles.blockMarginTop}>
+              <View key={this.generateContingentKey} style={styles.blockMarginTop}>
                 <View style={styles.titleHeadingView}>
                   <Text style={styles.titleHeaderText}>{editPrimaryIcon}</Text>
                   <Text style={styles.titleHeaderText}>Add Contingent Beneficiary</Text>

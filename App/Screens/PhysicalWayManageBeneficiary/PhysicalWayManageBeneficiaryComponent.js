@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, Platform, TouchableOpacity, Alert } from 'react-native';
 import PropTypes from 'prop-types';
 import DocumentPicker from 'react-native-document-picker';
 import * as mime from 'react-native-mime-types';
@@ -12,6 +12,7 @@ const maxFileLimit = 10; // No. of Files
 const maxFileSize = 30; // Maximum file size 30 MB
 
 class PhysicalWayManageBeneficiaryComponent extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -26,13 +27,13 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
         };
     }
 
-    /*---------------------- Component LifeCycle Methods -------------------------- */
+    /* ---------------------- Component LifeCycle Methods -------------------------- */
 
     componentDidUpdate() {
         AppUtils.debugLog("==Did Update Called==");
     }
 
-    /*---------------------- Button Events -------------------------- */
+    /* ---------------------- Button Events -------------------------- */
 
     goBack = () => {
         const { navigation } = this.props;
@@ -52,9 +53,7 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
         // this.validateFields();
     }
 
-    onPressCheck = (keyName) => () => this.setState({
-        [keyName]: !this.state[keyName]
-    });
+    onPressCheck = (keyName) => () => this.setState(prevState => ({ [keyName]: !prevState[keyName] }));
 
     onSelected = (item) => {
         AppUtils.debugLog(`item: ${item.id}`);
@@ -63,7 +62,27 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
         //  alert("You selected :: " + item.name)
     }
 
-    /*---------------------- Document Picker Events -------------------------- */
+    /* ---------------------- Document Picker Events -------------------------- */
+
+    uploadSelectedFiles = () => {
+        const { multipleFile } = this.state;
+        if (multipleFile.length > 0) {
+            let size = 0;
+
+            multipleFile.map((item) => (
+                size += item.size
+            ));
+
+            if ((size / 1024 ** 2) > maxFileSize) {
+                this.setState({ fileSelected: true, errorMessage: 'Total Size limit should be less than 30 MB' });
+            } else {
+                alert(`File uploaded successfully`);
+            }
+        } else {
+            this.setState({ fileSelected: true, errorMessage: 'Please select a file before uploading' });
+        }
+    }
+
     async uploadImage() {
         // Opening Document Picker for selection of multiple file
         try {
@@ -122,32 +141,11 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
                 // alert('Canceled from multiple doc picker');
             } else {
                 // For Unknown Error
-                alert(`Unknown Error: ${JSON.stringify(err)}`);
+                Alert.alert(`Unknown Error: ${JSON.stringify(err)}`);
                 throw err;
             }
         }
     }
-
-    uploadSelectedFiles = () => {
-        const { multipleFile } = this.state;
-        if (multipleFile.length > 0) {
-            let size = 0;
-
-            multipleFile.map((item) => (
-                size += item.size
-            ));
-
-            if ((size / 1024 ** 2) > maxFileSize) {
-                this.setState({ fileSelected: true, errorMessage: 'Total Size limit should be less than 30 MB' });
-            } else {
-                alert(`File uploaded successfully`);
-            }
-        } else {
-            this.setState({ fileSelected: true, errorMessage: 'Please select a file before uploading' });
-        }
-    }
-
-
 
     render() {
         const { navigation } = this.props;
@@ -184,13 +182,14 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
                         </View>
                         {/* ----------------- Error Msg ------------------------ */}
                         {
-                            fileSelected ? (
-                                <View style={styles.selectedFileDescContainer}>
-                                    <Text style={styles.fileDescTextStyleError}>
-                                        {errorMessage}
-                                    </Text>
-                                </View>
-                            )
+                            fileSelected ?
+                                (
+                                    <View style={styles.selectedFileDescContainer}>
+                                        <Text style={styles.fileDescTextStyleError}>
+                                            {errorMessage}
+                                        </Text>
+                                    </View>
+                                )
                                 : null
                         }
 
@@ -210,7 +209,7 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
                                 </Text>
                                 {
                                     <Text style={styles.fileDescTextStyleError}>
-                                        {((item.size / 1024 ** 2) < maxFileSize) ? '' : 'Size limit of file should be less than 30 MB'}
+                                        {(item.size / 1024 ** 2) < maxFileSize ? '' : 'Size limit of file should be less than 30 MB'}
                                     </Text>
                                 }
                             </View>
@@ -244,7 +243,6 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
                             <View style={styles.marginTopStyle}>
                                 <Text style={styles.mailingAddName}>{gblStrings.common.victoryCapital}</Text>
                                 <Text style={styles.mailingAddress}>{gblStrings.common.victoryCapitalAddress}</Text>
-
                             </View>
                         </View>
                         <View style={styles.lastMarginTop}>
@@ -279,7 +277,7 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
                         />
                     </View>
 
-                    { /* ----------- Disclaimer -------------------*/}
+                    { /* ----------- Disclaimer ------------------- */}
 
                     <GFooterSettingsComponent />
                 </ScrollView>
