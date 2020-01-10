@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import OpenAccPageThreeComponent from './OpenAccPageThreeComponent';
-import { accOpeningActions } from "../../Shared/Actions";
-import { addBankAccountAction } from "../../Shared/Actions";
+import { accOpeningActions , addBankAccountAction } from "../../Shared/Actions";
+
 
 /*----------------------
                                   Redux Methods

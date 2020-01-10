@@ -253,51 +253,7 @@ class OpenAccPageFourComponent extends Component {
 
     }
 
-    renderRadio1 = (radioName, radioSize, componentStyle, layoutStyle) => {
-        AppUtils.debugLog(`renderRadio::: ${ radioName}`);
-        let tempkey = "";
-        let radioData = dummyData;
-        switch (radioName) {
-            case "selectedDividendCapitalGains":
-                tempkey = "div_capGain_pref";
-                break;
-            case "selectedProspectusReportsRef":
-                tempkey = "stmt_pros_rep";
-                break;
-        }
-
-        console.log("tempkey::" + tempkey);
-
-        if (this.props && this.props.masterLookupStateData && this.props.masterLookupStateData[tempkey] && this.props.masterLookupStateData[tempkey].value) {
-            radioData = this.props.masterLookupStateData[tempkey].value;
-        }
-
-        let radioCoponents = [];
-        for (let i = 0; i < radioData.length; i++) {
-            radioCoponents.push(
-                <CustomRadio
-                    key={radioData[i].key}
-                    componentStyle={componentStyle}
-                    size={radioSize}
-                    outerCicleColor={"#DEDEDF"}
-                    innerCicleColor={"#61285F"}
-                    labelStyle={styles.lblRadioBtnTxt}
-                    label={radioData[i].value}
-                    descLabelStyle={styles.lblRadioDescTxt}
-                    descLabel={radioData[i].value}
-                    selected={(this.state[radioName] !== null && this.state[radioName] == radioData[i].key) ? true : false}
-                    onPress={this.onPressRadio(radioName, radioData[i].key)}
-                />
-            );
-        }
-        return (
-            <View style={layoutStyle}>
-                {radioCoponents}
-            </View>
-        );
-
-    }
-
+  
 
 
 

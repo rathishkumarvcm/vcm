@@ -49,33 +49,40 @@ class DashboardComponent extends Component {
     }
 
     closeModal = () => {
-        this.setState({
-            modalVisible : !this.state.modalVisible
-        });
+        this.setState(prevState => ({
+            modalVisible : !prevState.modalVisible
+        }));
     }
 
     navigateAccountOpening = () => {
-        this.setState({
-            modalVisible : !this.state.modalVisible
-        });
-        const specialMFAUserType = `${ this.props && this.props.navigation.getParam('SpecialMFA','')}`;   
-        this.props.navigation.navigate('openAccPageFive',{SpecialMFA:specialMFAUserType});
+        const { navigation} = this.props;
+        const { navigate ,getParam} = navigation;  
+        
+        this.setState(prevState => ({
+            modalVisible : !prevState.modalVisible
+        }));
+        const specialMFAUserType = `${ this.props && getParam('SpecialMFA','')}`;   
+        navigate('openAccPageFive',{SpecialMFA:specialMFAUserType});
     }
 
     /*----------------------
                                  Render Methods
                                                                  -------------------------- */
     render() {
-        const specialMFAUserType = `${ this.props && this.props.navigation.getParam('SpecialMFA','')}`; 
+        const { navigation} = this.props;
+        const {getParam} = navigation;  
+        const {memberId,modalVisible} = this.state;
+
+        const specialMFAUserType = `${ this.props && getParam('SpecialMFA','')}`; 
         return (
 
 
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
-                <ScrollView style={{ flex: .85 }}>          
+                <GHeaderComponent navigation={navigation} />
+                <ScrollView style={styles.scrollView}>          
                 
                     <View style={styles.dashboardSection}>
-                        <Text>{`welcome ${this.state.memberId}`}</Text>
+                        <Text>{`welcome ${memberId}`}</Text>
                         <Text style={styles.dashboardText}>
                             {gblStrings.dashBoard.dashboard}
                         </Text>
@@ -87,9 +94,9 @@ class DashboardComponent extends Component {
                         />
                     </View>                  
 
-                    {(specialMFAUserType!="" && (specialMFAUserType=="UserForm" || specialMFAUserType=="NewUser"))? (
+                    {(specialMFAUserType !== "" && (specialMFAUserType === "UserForm" || specialMFAUserType === "NewUser"))? (
                         <GModalComponent 
-                            modalVisible={this.state.modalVisible}
+                            modalVisible={modalVisible}
                             modalContainerStyle={styles.modalContainerStyle}
                             titleContent="Your Account Opening Form is Pending for Submission"
                             descContent1="Lorem ipsum is simple dummy text of printing."                           

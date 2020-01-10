@@ -172,6 +172,9 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         paddingVertical: 0
     },
+    scrollView: {
+        flex: .85
+    },
 
 });
 

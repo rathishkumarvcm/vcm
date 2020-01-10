@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import PropTypes from "prop-types";
 import styles from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GSingletonClass } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner, GSingletonClass,showAlert } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
@@ -95,17 +95,22 @@ class OpenAccPageOneComponent extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         AppUtils.debugLog(`componentDidUpdate::::> ${prevState}`);
+        const { accOpeningData} = this.props;
+
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.ACCT_TYPE_SAVE_OPENING_ACCT;
-            if (this.props.accOpeningData[responseKey]) {
-                if (this.props.accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
-                    const tempResponse = this.props.accOpeningData[responseKey];
+            if (accOpeningData[responseKey]) {
+                if (accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
+                    const tempResponse = accOpeningData[responseKey];
                     if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
                         const msg = tempResponse.message;
                         AppUtils.debugLog(`Account Type Saved ::: :: ${msg}`);
-                        alert(tempResponse.result);
+                        showAlert(gblStrings.common.appName ,tempResponse.result,gblStrings.common.ok);
+
                     } else {
-                        alert(tempResponse.message);
+                        AppUtils.debugLog(tempResponse.message);
+                        showAlert(gblStrings.common.appName ,tempResponse.message,gblStrings.common.ok);
+
                     }
                 }
             }
