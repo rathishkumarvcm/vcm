@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
-import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GDropDownComponent } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
+import { Text, View, Image, ScrollView } from 'react-native';
+import PropTypes from "prop-types";
+import styles from './styles';
+import { GButtonComponent, GHeaderComponent, GInputComponent, GDropDownComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
+import ImagesLoad from '../../Images/ImageIndex';
 
 const phoneTypeData = [
     {
@@ -40,12 +41,7 @@ class EditAddPhoneNumberComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
-            enableBiometric: false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false,
             contactNumber: '',
-            isValidContact: false,
 
             dropDownPhoneState: false,
             dropDownPhoneValue: '',
@@ -64,43 +60,48 @@ class EditAddPhoneNumberComponent extends Component {
         };
     }
 
+    componentDidMount() { }
+
     dropDownPhoneClick = () => {
+        const { dropDownPhoneState } = this.state;
         this.setState({
-            dropDownPhoneState: !this.state.dropDownPhoneState
+            dropDownPhoneState: !dropDownPhoneState
         });
     }
 
-    dropDownPhoneSelect = (valuePhoneType) => {
+    dropDownPhoneSelect = (value, index, data) => {
         this.setState({
-            dropDownPhoneValue: valuePhoneType.value,
+            dropDownPhoneValue: data[index].value,
             dropDownPhoneState: false,
             dropDownPhoneFlag: false
         });
     }
 
     dropDownCodeClick = () => {
+        const { dropDownCodeState } = this.state;
         this.setState({
-            dropDownCodeState: !this.state.dropDownCodeState
+            dropDownCodeState: !dropDownCodeState
         });
     }
 
-    dropDownCodeSelect = (valueCode) => {
+    dropDownCodeSelect = (value, index, data) => {
         this.setState({
-            dropDownCodeValue: valueCode.value,
+            dropDownCodeValue: data[index].value,
             dropDownCodeState: false,
             dropDownCodeFlag: false
         });
     }
 
     dropDownContactClick = () => {
+        const { dropDownContactState } = this.state;
         this.setState({
-            dropDownContactState: !this.state.dropDownContactState
+            dropDownContactState: !dropDownContactState
         });
     }
 
-    dropDownContactSelect = (valueContactTime) => {
+    dropDownContactSelect = (value, index, data) => {
         this.setState({
-            dropDownContactValue: valueContactTime.value,
+            dropDownContactValue: data[index].value,
             dropDownContactState: false,
             dropDownContactFlag: false
         });
@@ -109,60 +110,59 @@ class EditAddPhoneNumberComponent extends Component {
     setContactNumber = (text) => {
         this.setState({
             contactNumber: text
-        })
+        });
     }
 
-    componentDidMount() { }
-
-    phoneAddNewNumberOnCancel = () => this.props.navigation.navigate('editPhoneInformation');
+    phoneAddNewNumberOnCancel = () => {
+        const { navigation } = this.props;
+        navigation.navigate('editPhoneInformation');
+    }
 
     managePhoneInformations = () => {
+        const { saveProfileData, navigation } = this.props;
         const payloadData = this.getPhonePayloadData();
-        this.props.saveProfileData("editPhoneInformation", payloadData);
-        this.props.navigation.navigate('editPhoneInformation');
+        saveProfileData("editPhoneInformation", payloadData);
+        navigation.navigate('editPhoneInformation');
     }
 
     getPhonePayloadData = () => {
+        const { profileState } = this.props;
+        const { dropDownPhoneValue, contactNumber, dropDownContactValue } = this.state;
         let phonePayload = {};
         let payloadUserPhone = [];
-        if (this.props && this.props.profileState) {
+        if (this.props && profileState) {
             const newPhoneInformation = {
-                "mobileNumberType": this.state.dropDownPhoneValue,
-                "mobileNumber": '+1' + ' ' + this.state.contactNumber,
-                "mobilePreferredTime": this.state.dropDownContactValue,
+                "mobileNumberType": dropDownPhoneValue,
+                "mobileNumber": `${'+1 '}${contactNumber}`,
+                "mobilePreferredTime": dropDownContactValue,
                 "isPrimaryMobile": false
             };
 
-            console.log("@@@@@@@@@@@@@@@@ Type", this.state.dropDownPhoneValue);
-
-            if (this.state.dropDownPhoneValue === 'Home') {
-                payloadUserPhone = this.props.profileState.profileUserHomeNumber;
+            if (dropDownPhoneValue === 'Home') {
+                payloadUserPhone = profileState.profileUserHomeNumber;
                 payloadUserPhone.push(newPhoneInformation);
                 phonePayload = {
-                    ...this.props.profileState,
+                    ...profileState,
                     profileUserHomeNumber: payloadUserPhone,
                 };
-                console.log("############# Home", phonePayload);
             }
 
-            if (this.state.dropDownPhoneValue === 'Mobile') {
-                payloadUserPhone = this.props.profileState.profileUserMobileNumber;
+            if (dropDownPhoneValue === 'Mobile') {
+                payloadUserPhone = profileState.profileUserMobileNumber;
                 payloadUserPhone.push(newPhoneInformation);
                 phonePayload = {
-                    ...this.props.profileState,
+                    ...profileState,
                     profileUserMobileNumber: payloadUserPhone,
                 };
-                console.log("$$$$$$$$$$$$$$ Mobile", phonePayload);
             }
 
-            if (this.state.dropDownPhoneValue === 'Work') {
-                payloadUserPhone = this.props.profileState.profileUserWorkNumber;
+            if (dropDownPhoneValue === 'Work') {
+                payloadUserPhone = profileState.profileUserWorkNumber;
                 payloadUserPhone.push(newPhoneInformation);
                 phonePayload = {
-                    ...this.props.profileState,
+                    ...profileState,
                     profileUserWorkNumber: payloadUserPhone,
                 };
-                console.log("%%%%%%%%%%%%%% Work", phonePayload);
             }
         }
         return phonePayload;
@@ -170,26 +170,31 @@ class EditAddPhoneNumberComponent extends Component {
 
     render() {
 
-        let userPhoneType = phoneTypeData;
+        const { navigation } = this.props;
+        const { dropDownPhoneState, dropDownPhoneValue, dropDownPhoneFlag, dropDownPhoneMsg,
+            dropDownCodeState, dropDownCodeValue, dropDownCodeFlag, dropDownCodeMsg,
+            dropDownContactState, dropDownContactValue, dropDownContactFlag, dropDownContactMsg } = this.state;
+        const userPhoneType = phoneTypeData;
 
         return (
 
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={navigation}
+                />
 
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.addPhoneNumberFlex}>
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
                             {globalString.editProfilePageValue.editAddressInfoHead}
                         </Text>
-                        <Text style={[styles.settingsInfo, styles.editLabelBold]}>
+                        <Text style={styles.addPhoneNumberTitle}>
                             {globalString.addPhoneNumber.addPhoneTitle}
                         </Text>
                     </View>
 
                     <View style={styles.settingsView}>
-                        <Text style={[styles.settingsHeadline, styles.editTitleBold]}>
+                        <Text style={styles.addPhoneNumberHeader}>
                             {globalString.addPhoneNumber.addPhoneTitle}
                         </Text>
                     </View>
@@ -201,33 +206,34 @@ class EditAddPhoneNumberComponent extends Component {
                         dropDownName={globalString.addPhoneNumber.phoneType}
                         data={userPhoneType}
                         changeState={this.dropDownPhoneClick}
-                        showDropDown={this.state.dropDownPhoneState}
-                        dropDownValue={this.state.dropDownPhoneValue}
+                        showDropDown={dropDownPhoneState}
+                        dropDownValue={dropDownPhoneValue}
                         selectedDropDownValue={this.dropDownPhoneSelect}
-                        itemToDisplay={"value"}
-                        errorFlag={this.state.dropDownPhoneFlag}
-                        errorText={this.dropDownPhoneMsg}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(190) }} />
+                        itemToDisplay="value"
+                        errorFlag={dropDownPhoneFlag}
+                        errorText={dropDownPhoneMsg}
+                    />
 
                     <GDropDownComponent
                         dropDownTextName={styles.phoneTypeLabel}
                         dropDownName={globalString.addPhoneNumber.phoneNumber}
                         data={contactTimeData}
                         changeState={this.dropDownCodeClick}
-                        showDropDown={this.state.dropDownCodeState}
-                        dropDownValue={this.state.dropDownCodeValue}
+                        showDropDown={dropDownCodeState}
+                        dropDownValue={dropDownCodeValue}
                         selectedDropDownValue={this.dropDownCodeSelect}
-                        itemToDisplay={"value"}
-                        errorFlag={this.state.dropDownCodeFlag}
-                        errorText={this.dropDownCodeMsg}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(290) }} />
+                        itemToDisplay="value"
+                        errorFlag={dropDownCodeFlag}
+                        errorText={dropDownCodeMsg}
+                    />
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GInputComponent
                             propInputStyle={styles.editAddressInput}
-                            placeholder={""}
+                            placeholder=""
                             onChangeText={this.setContactNumber}
-                            maxLength={10} />
+                            maxLength={10}
+                        />
                     </View>
 
                     <GDropDownComponent
@@ -235,20 +241,21 @@ class EditAddPhoneNumberComponent extends Component {
                         dropDownName={globalString.addPhoneNumber.callTimePreference}
                         data={contactTimeData}
                         changeState={this.dropDownContactClick}
-                        showDropDown={this.state.dropDownContactState}
-                        dropDownValue={this.state.dropDownContactValue}
+                        showDropDown={dropDownContactState}
+                        dropDownValue={dropDownContactValue}
                         selectedDropDownValue={this.dropDownContactSelect}
-                        itemToDisplay={"value"}
-                        errorFlag={this.state.dropDownContactFlag}
-                        errorText={this.dropDownContactMsg}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(460) }} />
+                        itemToDisplay="value"
+                        errorFlag={dropDownContactFlag}
+                        errorText={dropDownContactMsg}
+                    />
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.phoneAddNewNumberOnCancel} />
+                            onPress={this.phoneAddNewNumberOnCancel}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -256,7 +263,8 @@ class EditAddPhoneNumberComponent extends Component {
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
                             textStyle={styles.saveButtonText}
-                            onPress={this.managePhoneInformations} />
+                            onPress={this.managePhoneInformations}
+                        />
                     </View>
 
                     <View style={styles.newVictorySection}>
@@ -270,7 +278,7 @@ class EditAddPhoneNumberComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")}
+                            source={ImagesLoad.applicationLogo}
                         />
                     </View>
 
@@ -306,5 +314,16 @@ class EditAddPhoneNumberComponent extends Component {
         );
     }
 }
+
+EditAddPhoneNumberComponent.propTypes = {
+    navigation: PropTypes.instanceOf(Object).isRequired,
+    profileState: PropTypes.instanceOf(Object),
+    saveProfileData: PropTypes.func
+};
+
+EditAddPhoneNumberComponent.defaultProps = {
+    profileState: {},
+    saveProfileData: null
+};
 
 export default EditAddPhoneNumberComponent;

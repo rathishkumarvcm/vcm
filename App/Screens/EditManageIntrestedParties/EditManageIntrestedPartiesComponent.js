@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView } from 'react-native';
 import PropTypes from "prop-types";
 import styles from './styles';
-import { GButtonComponent, GDateComponent, GIcon, GDropDownComponent, GInputComponent, GHeaderComponent, GFooterComponent, GLoadingSpinner } from '../../CommonComponents';
+import { GButtonComponent, GDateComponent, GIcon, GDropDownComponent, GInputComponent, GHeaderComponent, GFooterSettingsComponent, GLoadingSpinner } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import { zipCodeRegex, emailRegex } from '../../Constants/RegexConstants';
 
@@ -20,7 +20,7 @@ class editManageIntrestedPartiesComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            account_Data: {},
+            accountData: {},
             interestedPartyObj: {},
             account_Key: '',
             personal: {
@@ -123,7 +123,7 @@ class editManageIntrestedPartiesComponent extends Component {
         const pData = navigation.getParam('parent_Obj');
         const pKey = navigation.getParam('parent_Key');
         this.setState(prevState => ({
-            account_Data: pData,
+            accountData: pData,
             account_Key: pKey,
             interestedPartyObj: data,
             personal: {
@@ -345,7 +345,7 @@ class editManageIntrestedPartiesComponent extends Component {
     }
 
     getPayloadData = () => {
-        const { personal, interestedPartyObj, account_Data } = this.state;
+        const { personal, interestedPartyObj, accountData } = this.state;
         const data = personal;
         const updatedObj = interestedPartyObj;
         updatedObj.relationship_To_Account_holder = data.relation;
@@ -359,10 +359,10 @@ class editManageIntrestedPartiesComponent extends Component {
         updatedObj.startDate = data.startDate;
         updatedObj.endDate = data.endDate;
 
-        const modObj = account_Data;
+        const modObj = accountData;
 
-        const pIndex = newInterestedParties.findIndex((item) => item.key === account_Data.key);
-        const cIndex = account_Data.interestedParty.findIndex((item) => item.key === interestedPartyObj.key);
+        const pIndex = newInterestedParties.findIndex((item) => item.key === accountData.key);
+        const cIndex = accountData.interestedParty.findIndex((item) => item.key === interestedPartyObj.key);
 
         const arr = [...newInterestedParties[pIndex].interestedParty];
         arr.splice(cIndex, 1, updatedObj);
@@ -391,7 +391,7 @@ class editManageIntrestedPartiesComponent extends Component {
 
     render() {
         const { masterLookupStateData, navigation, manageInterestedPartiesData, stateCityData } = this.props;
-        const { personal, account_Data } = this.state;
+        const { personal, accountData } = this.state;
         if (this.props && masterLookupStateData && masterLookupStateData.relationship && masterLookupStateData.relationship.value) {
             relationData = masterLookupStateData.relationship.value;
         }
@@ -412,15 +412,15 @@ class editManageIntrestedPartiesComponent extends Component {
                     </View>
                     <View style={styles.blockMarginTop}>
                         <View style={styles.titleHeadingView}>
-                            <Text style={styles.titleHeaderText}>{account_Data.account_Type}</Text>
+                            <Text style={styles.titleHeaderText}>{accountData.account_Type}</Text>
                         </View>
                         <View style={styles.line} />
                         <View style={styles.containerView}>
-                            <Text style={styles.containerHeaderText}>{` Acc Name - ${account_Data.account_Name} | Acc Number - ${account_Data.account_Number}`}</Text>
+                            <Text style={styles.containerHeaderText}>{` Acc Name - ${accountData.account_Name} | Acc Number - ${accountData.account_Number}`}</Text>
                         </View>
                         <View style={styles.blockMarginTop} />
                         <View style={styles.titleHeadingView}>
-                            <Text style={styles.titleHeaderText}>{`${gblStrings.accManagement.editIntrestedParty} ${account_Data.account_Type}`}</Text>
+                            <Text style={styles.titleHeaderText}>{`${gblStrings.accManagement.editIntrestedParty} ${accountData.account_Type}`}</Text>
                         </View>
                         <View style={styles.line} />
 
@@ -591,7 +591,7 @@ class editManageIntrestedPartiesComponent extends Component {
                             onPress={this.validateFields}
                         />
                     </View>
-                    
+
                     {/* ---------------------- Footer View -------------------- */}
                     <GFooterSettingsComponent />
                 </ScrollView>

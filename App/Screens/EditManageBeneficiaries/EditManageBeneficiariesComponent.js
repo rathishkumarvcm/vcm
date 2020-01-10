@@ -67,7 +67,7 @@ class EditManageBenificiariesComponent extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { masterLookupStateData, manageBeneficiaryData } = this.props;
+    const { masterLookupStateData } = this.props;
     if (this.props !== prevProps) {
       if (this.props && masterLookupStateData && masterLookupStateData.suffix && masterLookupStateData.suffix.value) {
         suffixData = masterLookupStateData.suffix.value;
@@ -75,9 +75,7 @@ class EditManageBenificiariesComponent extends Component {
       if (this.props && masterLookupStateData && masterLookupStateData.relationship && masterLookupStateData.relationship.value) {
         relationData = masterLookupStateData.relationship.value;
       }
-      if (this.props && manageBeneficiaryData && manageBeneficiaryData.savedBeneficiaryData) {
-        this.setState({ beneData: manageBeneficiaryData.savedBeneficiaryData });
-      }
+      this.getBeneData();
     }
   }
 
@@ -373,7 +371,7 @@ class EditManageBenificiariesComponent extends Component {
   }
 
   onClickSave = () => {
-    const { beneData, todBeneficiaryData, primaryBeneficiaryData, contingentBeneficiaryData, newPrimaryBene, newContingentBene } = this.state;
+    const { beneData, todayDate, todBeneficiaryData, primaryBeneficiaryData, contingentBeneficiaryData, newPrimaryBene, newContingentBene } = this.state;
     const { savedBeneficiaryData, navigation } = this.props;
     const completeData = beneData;
     let primaryData = [];
@@ -397,7 +395,7 @@ class EditManageBenificiariesComponent extends Component {
         tempData.relationship_To_Insured = data.relationship_To_Insured;
         tempData.accumulated_Value = data.accumulated_Value;
         tempData.distribution_Per = data.distribution_Per;
-        tempData.last_modified = this.state.todayDate;
+        tempData.last_modified = todayDate;
         tempData.dob = data.dob;
         tempData.email = data.email;
         tempData.beneficiaryType = data.beneficiaryType;
@@ -423,7 +421,7 @@ class EditManageBenificiariesComponent extends Component {
         tempData.relationship_To_Insured = data.relationship_To_Insured;
         tempData.accumulated_Value = data.accumulated_Value;
         tempData.distribution_Per = data.distribution_Per;
-        tempData.last_modified = this.state.todayDate;
+        tempData.last_modified = todayDate;
         tempData.dob = data.dob;
         tempData.email = data.email;
         tempData.beneficiaryType = data.beneficiaryType;
@@ -449,7 +447,7 @@ class EditManageBenificiariesComponent extends Component {
         tempData.relationship_To_Insured = data.relationship_To_Insured;
         tempData.accumulated_Value = data.accumulated_Value;
         tempData.distribution_Per = data.distribution_Per;
-        tempData.last_modified = this.state.todayDate;
+        tempData.last_modified = todayDate;
         tempData.dob = data.dob;
         tempData.email = data.email;
         tempData.beneficiaryType = data.beneficiaryType;
@@ -475,7 +473,7 @@ class EditManageBenificiariesComponent extends Component {
         tempData.relationship_To_Insured = data.relationship_To_Insured;
         tempData.accumulated_Value = data.accumulated_Value;
         tempData.distribution_Per = data.distribution_Per;
-        tempData.last_modified = this.state.todayDate;
+        tempData.last_modified = todayDate;
         tempData.dob = data.dob;
         tempData.email = data.email;
         tempData.beneficiaryType = data.beneficiaryType;
@@ -501,7 +499,7 @@ class EditManageBenificiariesComponent extends Component {
         tempData.relationship_To_Insured = data.relationship_To_Insured;
         tempData.accumulated_Value = data.accumulated_Value;
         tempData.distribution_Per = data.distribution_Per;
-        tempData.last_modified = this.state.todayDate;
+        tempData.last_modified = todayDate;
         tempData.dob = data.dob;
         tempData.email = data.email;
         tempData.beneficiaryType = data.beneficiaryType;
@@ -554,22 +552,18 @@ class EditManageBenificiariesComponent extends Component {
   /* -------------------- onChange Events -------------------------- */
 
 
-  generateEditPrimaryBeneficiaryKeyExtractor = (item) => (item.key);
+  generateEditPrimaryBeneficiaryKeyExtractor = (item) => item.key;
 
-  generateContingentBeneficiaryKeyExtractor = (item) => (item.key);
+  generateContingentBeneficiaryKeyExtractor = (item) => item.key;
 
-  generateNewContingentBeneficiaryKeyExtractor = (item) => (item.key);
+  generateNewContingentBeneficiaryKeyExtractor = (item) => item.key;
 
-  generateTodBeneficiaryKeyExtractor = (item) => (item.key);
+  generateTodBeneficiaryKeyExtractor = (item) => item.key;
 
-  generateNewTodBeneficiaryKeyExtractor = (item) => (item.key);
+  generateNewTodBeneficiaryKeyExtractor = (item) => item.key;
 
   setInputRef = (inputComp) => (ref) => {
     this[inputComp] = ref;
-  }
-
-  onSubmitEditing = (input) => text => {
-    input.focus();
   }
 
   selectedDropDown = (index, keyName, type) => text => {
@@ -635,37 +629,28 @@ class EditManageBenificiariesComponent extends Component {
   }
 
   onChangeText = (index, keyName, type) => text => {
-
+    const { primaryBeneficiaryData, contingentBeneficiaryData, todBeneficiaryData } = this.state;
     let value = text;
     if (keyName === "distribution_Per") {
       value = (text * 100).toFixed(2).toString();
     }
     switch (type) {
       case "Primary": {
-        this.setState(prevState => ({
-          primaryBeneficiaryData: prevState.primaryBeneficiaryData.filter((item, key) => {
-            if (key === index) return Object.assign({}, item, item[keyName] = value);
-            return item;
-          })
-        }));
+        const newItems = [...primaryBeneficiaryData];
+        newItems[index][keyName] = value;
+        this.setState({ primaryBeneficiaryData: newItems });
         break;
       }
       case "Contingent": {
-        this.setState(prevState => ({
-          contingentBeneficiaryData: prevState.contingentBeneficiaryData.filter((item, key) => {
-            if (key === index) return Object.assign({}, item, item[keyName] = value);
-            return item;
-          })
-        }));
+        const newItems = [...contingentBeneficiaryData];
+        newItems[index][keyName] = value;
+        this.setState({ contingentBeneficiaryData: newItems });
         break;
       }
       case "Tod": {
-        this.setState(prevState => ({
-          todBeneficiaryData: prevState.todBeneficiaryData.filter((item, key) => {
-            if (key === index) return Object.assign({}, item, item[keyName] = value);
-            return item;
-          })
-        }));
+        const newItems = [...todBeneficiaryData];
+        newItems[index][keyName] = value;
+        this.setState({ todBeneficiaryData: newItems });
         break;
       }
       default:
@@ -673,33 +658,26 @@ class EditManageBenificiariesComponent extends Component {
     }
   }
 
-  onChangeValidationText = (index, keyName, value, type) => {
+  onChangeValidationText = (index, keyName, val, type) => {
+    const { primaryBeneficiaryData, contingentBeneficiaryData, todBeneficiaryData } = this.state;
+    const value = val;
     switch (type) {
       case "Primary": {
-        this.setState(prevState => ({
-          primaryBeneficiaryData: prevState.primaryBeneficiaryData.filter((item, key) => {
-            if (key === index) return Object.assign({}, item, item[keyName] = value);
-            return item;
-          })
-        }));
+        const newItems = [...primaryBeneficiaryData];
+        newItems[index][keyName] = value;
+        this.setState({ primaryBeneficiaryData: newItems });
         break;
       }
       case "Contingent": {
-        this.setState(prevState => ({
-          contingentBeneficiaryData: prevState.contingentBeneficiaryData.filter((item, key) => {
-            if (key === index) return Object.assign({}, item, item[keyName] = value);
-            return item;
-          })
-        }));
+        const newItems = [...contingentBeneficiaryData];
+        newItems[index][keyName] = value;
+        this.setState({ contingentBeneficiaryData: newItems });
         break;
       }
       case "Tod": {
-        this.setState(prevState => ({
-          todBeneficiaryData: prevState.todBeneficiaryData.filter((item, key) => {
-            if (key === index) return Object.assign({}, item, item[keyName] = value);
-            return item;
-          })
-        }));
+        const newItems = [...todBeneficiaryData];
+        newItems[index][keyName] = value;
+        this.setState({ todBeneficiaryData: newItems });
         break;
       }
       default:
@@ -713,7 +691,7 @@ class EditManageBenificiariesComponent extends Component {
     const { newPrimaryBene, beneData } = this.state;
     primaryCount += 1;
     const array = newPrimaryBene;
-    let tempData = {};
+    const tempData = {};
     tempData.key = `tod_${beneData.key}_${primaryCount}`;
     tempData.fname = "";
     tempData.mname = "";
@@ -748,14 +726,14 @@ class EditManageBenificiariesComponent extends Component {
     tempData.distributionValidationMsg = '';
 
     array.push(tempData);
-    this.setState({ newPrimaryBene: array, isAddPrimaryBene: true });
+    this.setState({ newPrimaryBene: array });
   }
 
   addContingentBene = () => {
     const { newContingentBene, beneData } = this.state;
     contingentCount += 1;
-    let array = newContingentBene;
-    let tempData = {};
+    const array = newContingentBene;
+    const tempData = {};
     tempData.key = `con_${beneData.key}_${contingentCount}`;
     tempData.fname = "";
     tempData.mname = "";
@@ -790,7 +768,7 @@ class EditManageBenificiariesComponent extends Component {
     tempData.distributionValidationMsg = '';
 
     array.push(tempData);
-    this.setState({ newContingentBene: array, isAddContingentBene: true });
+    this.setState({ newContingentBene: array });
 
   }
 
@@ -818,7 +796,7 @@ class EditManageBenificiariesComponent extends Component {
 
   selectedNewPriDropDownValue = (index, keyName) => text => {
     const { newPrimaryBene } = this.state;
-    const newItems = [...this.state.newPrimaryBene];
+    const newItems = [...newPrimaryBene];
     newItems[index][keyName] = text;
     this.setState({
       newPrimaryBene: newItems
@@ -839,47 +817,41 @@ class EditManageBenificiariesComponent extends Component {
   }
 
   onAddedBeneChangeText = (index, keyName) => text => {
+    const { newContingentBene } = this.state;
     let value = text;
     if (keyName === "distribution_Per") {
       value = (text * 100).toFixed(2).toString();
     }
-    this.setState(prevState => ({
-      newContingentBene: prevState.newContingentBene.filter((item, key) => {
-        if (key === index) return Object.assign({}, item, item[keyName] = value);
-        return item;
-      })
-    }));
+    const newItems = [...newContingentBene];
+    newItems[index][keyName] = value;
+    this.setState({ newContingentBene: newItems });
   }
 
   onAddedNewPriTextChange = (index, keyName) => text => {
+    const { newPrimaryBene } = this.state;
     let value = text;
     if (keyName === "distribution_Per") {
       value = (text * 100).toFixed(2).toString();
     }
-    this.setState(prevState => ({
-      newPrimaryBene: prevState.newPrimaryBene.filter((item, key) => {
-        if (key === index) return Object.assign({}, item, item[keyName] = value);
-        return item;
-      })
-    }));
+    const newItems = [...newPrimaryBene];
+    newItems[index][keyName] = value;
+    this.setState({ newPrimaryBene: newItems });
   }
 
   onAddedBeneValidationText = (index, keyName, value) => {
-    this.setState(prevState => ({
-      newContingentBene: prevState.newContingentBene.filter((item, key) => {
-        if (key === index) return Object.assign({}, item, item[keyName] = value);
-        return item;
-      })
-    }));
+    const { newContingentBene } = this.state;
+    const newItems = [...newContingentBene];
+    const val = value;
+    newItems[index][keyName] = val;
+    this.setState({ newContingentBene: newItems });
   }
 
   onAddedPriBeneValidationText = (index, keyName, value) => {
-    this.setState(prevState => ({
-      newPrimaryBene: prevState.newPrimaryBene.filter((item, key) => {
-        if (key === index) return Object.assign({}, item, item[keyName] = value);
-        return item;
-      })
-    }));
+    const { newPrimaryBene } = this.state;
+    const newItems = [...newPrimaryBene];
+    const val = value;
+    newItems[index][keyName] = val;
+    this.setState({ newPrimaryBene: newItems });
   }
 
   /* -------------------- Validation Events -------------------------- */
@@ -950,8 +922,9 @@ class EditManageBenificiariesComponent extends Component {
     let isValidationSuccess = false;
     const { primaryBeneficiaryData } = this.state;
     for (let i = 0; i < primaryBeneficiaryData.length; i += 1) {
-      if (!this.isEmpty(primaryBeneficiaryData[i].social_security_number)) {
-        const validate = ssnRegex.test(primaryBeneficiaryData[i].social_security_number);
+      const obj = primaryBeneficiaryData[i];
+      if (!this.isEmpty(obj.social_security_number)) {
+        const validate = ssnRegex.test(obj.social_security_number);
         this.onChangeValidationText(i, "ssnValidation", validate, "Primary");
         this.onChangeValidationText(i, "ssnValidationMsg", gblStrings.accManagement.ssnNoFormat, "Primary");
         isErrMsg = (!validate);
@@ -959,8 +932,8 @@ class EditManageBenificiariesComponent extends Component {
         this.onChangeValidationText(i, "ssnValidation", true, "Primary");
         isErrMsg = false;
       }
-      if (!this.isEmpty(primaryBeneficiaryData[i].email)) {
-        const validate = emailRegex.test(primaryBeneficiaryData[i].email);
+      if (!this.isEmpty(obj.email)) {
+        const validate = emailRegex.test(obj.email);
         this.onChangeValidationText(i, "emailValidation", validate, "Primary");
         this.onChangeValidationText(i, "emailValidationMsg", gblStrings.accManagement.emailformat, "Primary");
         isErrMsg = (!validate);
@@ -968,17 +941,17 @@ class EditManageBenificiariesComponent extends Component {
         this.onChangeValidationText(i, "emailValidation", true, "Primary");
         isErrMsg = false;
       }
-      if (this.isEmpty(primaryBeneficiaryData[i].relationship_To_Insured)) {
+      if (this.isEmpty(obj.relationship_To_Insured)) {
         this.onChangeValidationText(i, "relationToAccOwnerFlag", true, "Primary");
         this.onChangeValidationText(i, "relationToAccOwnerValidationMsg", gblStrings.accManagement.emptyRelationShipMsg, "Primary");
         isErrMsg = true;
       }
-      if (this.isEmpty(primaryBeneficiaryData[i].beneficiaryType)) {
+      if (this.isEmpty(obj.beneficiaryType)) {
         this.onChangeValidationText(i, "beneTypeFlag", true, "Primary");
         this.onChangeValidationText(i, "beneTypeValidationMsg", gblStrings.accManagement.emptyBeneficiaryType, "Primary");
         isErrMsg = true;
       }
-      if (primaryBeneficiaryData[i].dob === '') {
+      if (obj.dob === '') {
         this.onChangeValidationText(i, "dobValidationFlag", false, "Primary");
         this.onChangeValidationText(i, "dobValidationMsg", gblStrings.accManagement.emptyDateOfBirth, "Primary");
         isErrMsg = true;
@@ -996,8 +969,9 @@ class EditManageBenificiariesComponent extends Component {
     let isValidationSuccess = false;
     const { todBeneficiaryData } = this.state;
     for (let i = 0; i < todBeneficiaryData.length; i += 1) {
-      if (!this.isEmpty(todBeneficiaryData[i].social_security_number)) {
-        const validate = ssnRegex.test(todBeneficiaryData[i].social_security_number);
+      const obj = todBeneficiaryData[i];
+      if (!this.isEmpty(obj.social_security_number)) {
+        const validate = ssnRegex.test(obj.social_security_number);
         this.onChangeValidationText(i, "ssnValidation", validate, "Tod");
         this.onChangeValidationText(i, "ssnValidationMsg", gblStrings.accManagement.ssnNoFormat, "Tod");
         isErrMsg = !validate;
@@ -1005,8 +979,8 @@ class EditManageBenificiariesComponent extends Component {
         this.onChangeValidationText(i, "ssnValidation", true, "Tod");
         isErrMsg = false;
       }
-      if (!this.isEmpty(todBeneficiaryData[i].email)) {
-        const validate = emailRegex.test(todBeneficiaryData[i].email);
+      if (!this.isEmpty(obj.email)) {
+        const validate = emailRegex.test(obj.email);
         this.onChangeValidationText(i, "emailValidation", validate, "Tod");
         this.onChangeValidationText(i, "emailValidationMsg", gblStrings.accManagement.emailformat, "Tod");
         isErrMsg = !validate;
@@ -1014,17 +988,17 @@ class EditManageBenificiariesComponent extends Component {
         this.onChangeValidationText(i, "emailValidation", true, "Tod");
         isErrMsg = false;
       }
-      if (todBeneficiaryData[i].relationship_To_Insured === '') {
+      if (obj.relationship_To_Insured === '') {
         this.onChangeValidationText(i, "relationToAccOwnerFlag", true, "Tod");
         this.onChangeValidationText(i, "relationToAccOwnerValidationMsg", gblStrings.accManagement.emptyRelationShipMsg, "Tod");
         isErrMsg = true;
       }
-      if (todBeneficiaryData[i].beneficiaryType === '') {
+      if (obj.beneficiaryType === '') {
         this.onChangeValidationText(i, "beneTypeFlag", true, "Tod");
         this.onChangeValidationText(i, "beneTypeValidationMsg", gblStrings.accManagement.emptyBeneficiaryType, "Tod");
         isErrMsg = true;
       }
-      if (todBeneficiaryData[i].dob === '') {
+      if (obj.dob === '') {
         this.onChangeValidationText(i, "dobValidationFlag", false, "Tod");
         this.onChangeValidationText(i, "dobValidationMsg", gblStrings.accManagement.emptyDateOfBirth, "Tod");
         isErrMsg = true;
@@ -1041,9 +1015,11 @@ class EditManageBenificiariesComponent extends Component {
     let isErrMsg = false;
     let isValidationSuccess = false;
     const { contingentBeneficiaryData } = this.state;
-    for (let i = 0; i < contingentBeneficiaryData.length; i += 1) {
-      if (!this.isEmpty(contingentBeneficiaryData[i].social_security_number)) {
-        const validate = ssnRegex.test(contingentBeneficiaryData[i].social_security_number);
+    const len = contingentBeneficiaryData.length;
+    for (let i = 0; i < len; i += 1) {
+      const obj = contingentBeneficiaryData[i];
+      if (!this.isEmpty(obj.social_security_number)) {
+        const validate = ssnRegex.test(obj.social_security_number);
         this.onChangeValidationText(i, "ssnValidation", validate, "Contingent");
         this.onChangeValidationText(i, "ssnValidationMsg", gblStrings.accManagement.ssnNoFormat, "Contingent");
         isErrMsg = !validate;
@@ -1051,8 +1027,8 @@ class EditManageBenificiariesComponent extends Component {
         this.onChangeValidationText(i, "ssnValidation", true, "Contingent");
         isErrMsg = false;
       }
-      if (!this.isEmpty(contingentBeneficiaryData[i].email)) {
-        const validate = emailRegex.test(contingentBeneficiaryData[i].email);
+      if (!this.isEmpty(obj.email)) {
+        const validate = emailRegex.test(obj.email);
         this.onChangeValidationText(i, "emailValidation", validate, "Contingent");
         this.onChangeValidationText(i, "emailValidationMsg", gblStrings.accManagement.emailformat, "Contingent");
         isErrMsg = !validate;
@@ -1060,17 +1036,17 @@ class EditManageBenificiariesComponent extends Component {
         this.onChangeValidationText(i, "emailValidation", true, "Contingent");
         isErrMsg = false;
       }
-      if (this.isEmpty(contingentBeneficiaryData[i].relationship_To_Insured)) {
+      if (this.isEmpty(obj.relationship_To_Insured)) {
         this.onChangeValidationText(i, "relationToAccOwnerFlag", true, "Contingent");
         this.onChangeValidationText(i, "relationToAccOwnerValidationMsg", gblStrings.accManagement.emptyRelationShipMsg, "Contingent");
         isErrMsg = true;
       }
-      if (this.isEmpty(contingentBeneficiaryData[i].beneficiaryType)) {
+      if (this.isEmpty(obj.beneficiaryType)) {
         this.onChangeValidationText(i, "beneTypeFlag", true, "Contingent");
         this.onChangeValidationText(i, "beneTypeValidationMsg", gblStrings.accManagement.emptyBeneficiaryType, "Contingent");
         isErrMsg = true;
       }
-      if (contingentBeneficiaryData[i].dob === '') {
+      if (obj.dob === '') {
         this.onChangeValidationText(i, "dobValidationFlag", false, "Contingent");
         this.onChangeValidationText(i, "dobValidationMsg", gblStrings.accManagement.emptyDateOfBirth, "Contingent");
         isErrMsg = true;
@@ -1088,31 +1064,31 @@ class EditManageBenificiariesComponent extends Component {
     let isValidationSuccess = false;
     const { newContingentBene } = this.state;
     for (let i = 0; i < newContingentBene.length; i += 1) {
-
-      if (this.isEmpty(newContingentBene[i].fname)) {
+      const obj = newContingentBene[i];
+      if (this.isEmpty(obj.fname)) {
         this.onAddedBeneValidationText(i, "fnameValidation", false);
         this.onAddedBeneValidationText(i, "fnameValidationMsg", gblStrings.accManagement.emptyFirstNameMsg);
         isErrMsg = true;
       } else {
-        const validate = nameRegex.test(newContingentBene[i].fname);
+        const validate = nameRegex.test(obj.fname);
         this.onAddedBeneValidationText(i, "fnameValidation", validate);
         this.onAddedBeneValidationText(i, "fnameValidationMsg", gblStrings.accManagement.firstNameFormat);
         isErrMsg = !validate;
       }
 
-      if (this.isEmpty(this.state.newContingentBene[i].lname)) {
+      if (this.isEmpty(obj.lname)) {
         this.onAddedBeneValidationText(i, "lnameValidation", false);
         this.onAddedBeneValidationText(i, "lnameValidationMsg", gblStrings.accManagement.emptyLastNameMsg);
         isErrMsg = true;
       } else {
-        const validate = nameRegex.test(newContingentBene[i].lname);
+        const validate = nameRegex.test(obj.lname);
         this.onAddedBeneValidationText(i, "lnameValidation", validate);
         this.onAddedBeneValidationText(i, "lnameValidationMsg", gblStrings.accManagement.lastNameFormat);
         isErrMsg = !validate;
       }
 
-      if (!this.isEmpty(newContingentBene[i].social_security_number)) {
-        const validate = ssnRegex.test(newContingentBene[i].social_security_number);
+      if (!this.isEmpty(obj.social_security_number)) {
+        const validate = ssnRegex.test(obj.social_security_number);
         this.onAddedBeneValidationText(i, "ssnValidation", validate);
         this.onAddedBeneValidationText(i, "ssnValidationMsg", gblStrings.accManagement.ssnNoFormat);
         isErrMsg = !validate;
@@ -1120,8 +1096,8 @@ class EditManageBenificiariesComponent extends Component {
         this.onAddedBeneValidationText(i, "ssnValidation", true);
         isErrMsg = false;
       }
-      if (!this.isEmpty(newContingentBene[i].email)) {
-        const validate = emailRegex.test(newContingentBene[i].email);
+      if (!this.isEmpty(obj.email)) {
+        const validate = emailRegex.test(obj.email);
         this.onAddedBeneValidationText(i, "emailValidation", validate);
         this.onAddedBeneValidationText(i, "emailValidationMsg", gblStrings.accManagement.emailformat);
         isErrMsg = !validate;
@@ -1129,17 +1105,17 @@ class EditManageBenificiariesComponent extends Component {
         this.onAddedBeneValidationText(i, "emailValidation", true);
         isErrMsg = false;
       }
-      if (this.isEmpty(newContingentBene[i].relationship_To_Insured)) {
+      if (this.isEmpty(obj.relationship_To_Insured)) {
         this.onAddedBeneValidationText(i, "relationToAccOwnerFlag", true);
         this.onAddedBeneValidationText(i, "relationToAccOwnerValidationMsg", gblStrings.accManagement.emptyRelationShipMsg);
         isErrMsg = true;
       }
-      if (this.isEmpty(newContingentBene[i].beneficiaryType)) {
+      if (this.isEmpty(obj.beneficiaryType)) {
         this.onAddedBeneValidationText(i, "beneTypeFlag", true);
         this.onAddedBeneValidationText(i, "beneTypeValidationMsg", gblStrings.accManagement.emptyBeneficiaryType);
         isErrMsg = true;
       }
-      if (newContingentBene[i].dob === '') {
+      if (obj.dob === '') {
         this.onAddedBeneValidationText(i, "dobValidationFlag", false);
         this.onAddedBeneValidationText(i, "dobValidationMsg", gblStrings.accManagement.emptyDateOfBirth);
         isErrMsg = true;
@@ -1157,31 +1133,31 @@ class EditManageBenificiariesComponent extends Component {
     let isValidationSuccess = false;
     const { newPrimaryBene } = this.state;
     for (let i = 0; i < newPrimaryBene.length; i += 1) {
-
-      if (this.isEmpty(newPrimaryBene[i].fname)) {
+      const obj = newPrimaryBene[i];
+      if (this.isEmpty(obj.fname)) {
         this.onAddedPriBeneValidationText(i, "fnameValidation", false);
         this.onAddedPriBeneValidationText(i, "fnameValidationMsg", gblStrings.accManagement.emptyFirstNameMsg);
         isErrMsg = true;
       } else {
-        const validate = nameRegex.test(newPrimaryBene[i].fname);
+        const validate = nameRegex.test(obj.fname);
         this.onAddedPriBeneValidationText(i, "fnameValidation", validate);
         this.onAddedPriBeneValidationText(i, "fnameValidationMsg", gblStrings.accManagement.firstNameFormat);
         isErrMsg = !validate;
       }
 
-      if (this.isEmpty(newPrimaryBene[i].lname)) {
+      if (this.isEmpty(obj.lname)) {
         this.onAddedPriBeneValidationText(i, "lnameValidation", false);
         this.onAddedPriBeneValidationText(i, "lnameValidationMsg", gblStrings.accManagement.emptyLastNameMsg);
         isErrMsg = true;
       } else {
-        const validate = nameRegex.test(newPrimaryBene[i].lname);
+        const validate = nameRegex.test(obj.lname);
         this.onAddedPriBeneValidationText(i, "lnameValidation", validate);
         this.onAddedPriBeneValidationText(i, "lnameValidationMsg", gblStrings.accManagement.lastNameFormat);
         isErrMsg = !validate;
       }
 
-      if (!this.isEmpty(newPrimaryBene[i].social_security_number)) {
-        const validate = ssnRegex.test(newPrimaryBene[i].social_security_number);
+      if (!this.isEmpty(obj.social_security_number)) {
+        const validate = ssnRegex.test(obj.social_security_number);
         this.onAddedPriBeneValidationText(i, "ssnValidation", validate);
         this.onAddedPriBeneValidationText(i, "ssnValidationMsg", gblStrings.accManagement.ssnNoFormat);
         isErrMsg = !validate;
@@ -1189,8 +1165,8 @@ class EditManageBenificiariesComponent extends Component {
         this.onAddedPriBeneValidationText(i, "ssnValidation", true);
         isErrMsg = false;
       }
-      if (!this.isEmpty(newPrimaryBene[i].email)) {
-        const validate = emailRegex.test(newPrimaryBene[i].email);
+      if (!this.isEmpty(obj.email)) {
+        const validate = emailRegex.test(obj.email);
         this.onAddedPriBeneValidationText(i, "emailValidation", validate);
         this.onAddedPriBeneValidationText(i, "emailValidationMsg", gblStrings.accManagement.emailformat);
         isErrMsg = !validate;
@@ -1198,17 +1174,17 @@ class EditManageBenificiariesComponent extends Component {
         this.onAddedPriBeneValidationText(i, "emailValidation", true);
         isErrMsg = false;
       }
-      if (this.isEmpty(newPrimaryBene[i].relationship_To_Insured)) {
+      if (this.isEmpty(obj.relationship_To_Insured)) {
         this.onAddedPriBeneValidationText(i, "relationToAccOwnerFlag", true);
         this.onAddedPriBeneValidationText(i, "relationToAccOwnerValidationMsg", gblStrings.accManagement.emptyRelationShipMsg);
         isErrMsg = true;
       }
-      if (this.isEmpty(newPrimaryBene[i].beneficiaryType)) {
+      if (this.isEmpty(obj.beneficiaryType)) {
         this.onAddedPriBeneValidationText(i, "beneTypeFlag", true);
         this.onAddedPriBeneValidationText(i, "beneTypeValidationMsg", gblStrings.accManagement.emptyBeneficiaryType);
         isErrMsg = true;
       }
-      if (newPrimaryBene[i].dob === '') {
+      if (obj.dob === '') {
         this.onAddedPriBeneValidationText(i, "dobValidationFlag", false);
         this.onAddedPriBeneValidationText(i, "dobValidationMsg", gblStrings.accManagement.emptyDateOfBirth);
         isErrMsg = true;
@@ -1223,7 +1199,7 @@ class EditManageBenificiariesComponent extends Component {
 
   render() {
     const { navigation } = this.props;
-    const { beneData, isDistHigh, instructionIcon, isInstructionCollapse, primaryBeneficiaryData, contingentBeneficiaryData, todBeneficiaryData, newContingentBene, addContingentText, addPrimaryText, newPrimaryBene, totalDistribution, totalContingent, totalPrimary } = this.state;
+    const { beneData, prevDate, isDistHigh, editPrimaryIcon, instructionIcon, isInstructionCollapse, primaryBeneficiaryData, contingentBeneficiaryData, todBeneficiaryData, newContingentBene, addContingentText, addPrimaryText, newPrimaryBene, totalDistribution, totalContingent, totalPrimary } = this.state;
     return (
       <View style={styles.container}>
         <GHeaderComponent navigation={navigation} />
@@ -1259,14 +1235,14 @@ class EditManageBenificiariesComponent extends Component {
           {primaryBeneficiaryData && primaryBeneficiaryData.map((item, index) => {
             let distributionValue = 0;
             if (this.isEmpty(item.distribution_Per)) {
-              distributionValue = 0
+              distributionValue = 0;
             } else {
               distributionValue = parseInt(item.distribution_Per);
             }
             return (
-              <View key={index} style={styles.blockMarginTop}>
+              <View key={this.generateEditPrimaryBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
                 <View style={styles.titleHeadingView}>
-                  <Text style={styles.titleHeaderText}>{this.state.editPrimaryIcon}</Text>
+                  <Text style={styles.titleHeaderText}>{editPrimaryIcon}</Text>
                   <Text style={styles.titleHeaderText}>{gblStrings.accManagement.editPrimaryBene}</Text>
                 </View>
                 <View style={styles.line} />
@@ -1291,7 +1267,7 @@ class EditManageBenificiariesComponent extends Component {
                   <GDateComponent
                     date={item.dob}
                     placeholder="MM-DD-YYYY"
-                    maxDate={this.state.prevDate}
+                    maxDate={prevDate}
                     errorFlag={!item.dobValidationFlag}
                     errMsg={item.dobValidationMsg}
                     onDateChange={this.onChangeText(index, "dob", "Primary")}
@@ -1349,14 +1325,14 @@ class EditManageBenificiariesComponent extends Component {
           {contingentBeneficiaryData && contingentBeneficiaryData.map((item, index) => {
             let distributionValue = 0;
             if (this.isEmpty(item.distribution_Per)) {
-              distributionValue = 0
+              distributionValue = 0;
             } else {
               distributionValue = parseInt(item.distribution_Per);
             }
             return (
-              <View key={index} style={styles.blockMarginTop}>
+              <View key={this.generateContingentBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
                 <View style={styles.titleHeadingView}>
-                  <Text style={styles.titleHeaderText}>{this.state.editPrimaryIcon}</Text>
+                  <Text style={styles.titleHeaderText}>{editPrimaryIcon}</Text>
                   <Text style={styles.titleHeaderText}>{gblStrings.accManagement.editContingentBene}</Text>
                 </View>
                 <View style={styles.line} />
@@ -1381,7 +1357,7 @@ class EditManageBenificiariesComponent extends Component {
                   <GDateComponent
                     date={item.dob}
                     placeholder="MM-DD-YYYY"
-                    maxDate={this.state.prevDate}
+                    maxDate={prevDate}
                     errorFlag={!item.dobValidationFlag}
                     errMsg={item.dobValidationMsg}
                     onDateChange={this.onChangeText(index, "dob", "Contingent")}
@@ -1438,14 +1414,14 @@ class EditManageBenificiariesComponent extends Component {
           {newContingentBene && newContingentBene.map((item, index) => {
             let distributionValue = 0;
             if (this.isEmpty(item.distribution_Per)) {
-              distributionValue = 0
+              distributionValue = 0;
             } else {
               distributionValue = parseInt(item.distribution_Per);
             }
             return (
-              <View key={index} style={styles.blockMarginTop}>
+              <View key={this.generateNewContingentBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
                 <View style={styles.titleHeadingView}>
-                  <Text style={styles.titleHeaderText}>{this.state.editPrimaryIcon}</Text>
+                  <Text style={styles.titleHeaderText}>{editPrimaryIcon}</Text>
                   <Text style={styles.titleHeaderText}>Add Contingent Beneficiary</Text>
                 </View>
                 <View style={styles.line} />
@@ -1502,7 +1478,7 @@ class EditManageBenificiariesComponent extends Component {
                   <GDateComponent
                     date={item.dob}
                     placeholder="MM-DD-YYYY"
-                    maxDate={this.state.prevDate}
+                    maxDate={prevDate}
                     errorFlag={!item.dobValidationFlag}
                     errMsg={item.dobValidationMsg}
                     onDateChange={this.onAddedBeneChangeText(index, "dob")}
@@ -1557,19 +1533,19 @@ class EditManageBenificiariesComponent extends Component {
           {todBeneficiaryData && todBeneficiaryData.length <= 0 ?
             (
               <View style={styles.totalDisView}>
-              <Text style={styles.disTxtStr}>{`Total Distribution Percentage of Primary ( ${totalPrimary} ) % Contingent( ${totalContingent} ) %`}</Text>
-              <Text style={styles.totalDistributionTxt}>{`= ${totalDistribution} %`}</Text>
-            </View> 
-            ): null
+                <Text style={styles.disTxtStr}>{`Total Distribution Percentage of Primary ( ${totalPrimary} ) % Contingent( ${totalContingent} ) %`}</Text>
+                <Text style={styles.totalDistributionTxt}>{`= ${totalDistribution} %`}</Text>
+              </View>
+            ) : null
           }
 
           {todBeneficiaryData && todBeneficiaryData.length <= 0 ?
             (
               <TouchableOpacity style={styles.paddingStyleLeft} onPress={this.addContingentBene}>
-              <Text style={styles.addPrimaryLink}>
-                {` + ${addContingentText}`}
-              </Text>
-            </TouchableOpacity>
+                <Text style={styles.addPrimaryLink}>
+                  {` + ${addContingentText}`}
+                </Text>
+              </TouchableOpacity>
             ) : null
           }
 
@@ -1585,9 +1561,9 @@ class EditManageBenificiariesComponent extends Component {
               distributionValue = parseInt(item.distribution_Per);
             }
             return (
-              <View key={index} style={styles.blockMarginTop}>
+              <View key={this.generateTodBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
                 <View style={styles.titleHeadingView}>
-                  <Text style={styles.titleHeaderText}>{this.state.editPrimaryIcon}</Text>
+                  <Text style={styles.titleHeaderText}>{editPrimaryIcon}</Text>
                   <Text style={styles.titleHeaderText}>{gblStrings.accManagement.editTodBene}</Text>
                 </View>
                 <View style={styles.line} />
@@ -1612,7 +1588,7 @@ class EditManageBenificiariesComponent extends Component {
                   <GDateComponent
                     date={item.dob}
                     placeholder="MM-DD-YYYY"
-                    maxDate={this.state.prevDate}
+                    maxDate={prevDate}
                     errorFlag={!item.dobValidationFlag}
                     errMsg={item.dobValidationMsg}
                     onDateChange={this.onChangeText(index, "dob", "Tod")}
@@ -1665,20 +1641,19 @@ class EditManageBenificiariesComponent extends Component {
           })}
 
 
-          {/*----------------- Add Primary Beneficiary ---------------------------*/}
+          {/* ----------------- Add Primary Beneficiary --------------------------- */}
 
           {newPrimaryBene && newPrimaryBene.map((item, index) => {
-            console.log(item.distribution_Per);
             let distributionValue = 0;
             if (this.isEmpty(item.distribution_Per)) {
-              distributionValue = 0
+              distributionValue = 0;
             } else {
               distributionValue = parseInt(item.distribution_Per);
             }
             return (
-              <View key={index} style={styles.blockMarginTop}>
+              <View key={this.generateNewTodBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
                 <View style={styles.titleHeadingView}>
-                  <Text style={styles.titleHeaderText}>{this.state.editPrimaryIcon}</Text>
+                  <Text style={styles.titleHeaderText}>{editPrimaryIcon}</Text>
                   <Text style={styles.titleHeaderText}>{gblStrings.accManagement.addPrimaryBeneficiary}</Text>
                 </View>
                 <View style={styles.line} />
@@ -1743,7 +1718,7 @@ class EditManageBenificiariesComponent extends Component {
                     date={item.dob}
                     placeholder="MM-DD-YYYY"
                     errorFlag={!item.dobValidationFlag}
-                    maxDate={this.state.prevDate}
+                    maxDate={prevDate}
                     errMsg={item.dobValidationMsg}
                     onDateChange={this.onAddedNewPriTextChange(index, "dob")}
                   />
@@ -1798,10 +1773,10 @@ class EditManageBenificiariesComponent extends Component {
           {todBeneficiaryData && todBeneficiaryData.length > 0 &&
             (
               <TouchableOpacity style={styles.paddingStyleLeft} onPress={this.addNewPrimaryBene}>
-              <Text style={styles.addPrimaryLink}>
-                {` + ${addPrimaryText}`}
-              </Text>
-            </TouchableOpacity>
+                <Text style={styles.addPrimaryLink}>
+                  {` + ${addPrimaryText}`}
+                </Text>
+              </TouchableOpacity>
             )
           }
 

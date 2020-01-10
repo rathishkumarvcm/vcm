@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import editEmailInfoComponent from './EditEmailInfoComponent';
-import {profileSettingsAction} from '../../Shared/Actions';
+import { profileSettingsAction } from '../../Shared/Actions';
 
 const mapStateToProps = (state /* , props */) => (
   {

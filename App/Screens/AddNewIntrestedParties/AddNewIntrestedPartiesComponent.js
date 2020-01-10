@@ -22,7 +22,7 @@ class addNewIntrestedPartiesComponent extends Component {
             isSavedSuccess: false,
             isCollapsable: false,
             collapseIcon: "-",
-            account_Data: {},
+            accountData: {},
             isZipApiCalling: false,
             isAddressApiCalling: false,
             personal: {
@@ -123,7 +123,7 @@ class addNewIntrestedPartiesComponent extends Component {
     updateState = () => {
         const { navigation } = this.props;
         const data = navigation.getParam('acc_Data');
-        this.setState({ account_Data: data });
+        this.setState({ accountData: data });
     }
 
     getZipCodeValue = () => {
@@ -140,8 +140,8 @@ class addNewIntrestedPartiesComponent extends Component {
 
     getAddressValid = () => {
         let addAddressPayload = {};
-        const { personal } = this.props;
-        const { getAddressFormat } = this.state;
+        const { personal } = this.state;
+        const { getAddressFormat } = this.props;
         if (personal.addressLine1 !== "" && personal.addressLine2 !== "") {
             if (this.state.personal.zipCode !== '') {
                 addAddressPayload = {
@@ -368,10 +368,10 @@ class addNewIntrestedPartiesComponent extends Component {
     }
 
     onClickSave = () => {
-        const { personal, account_Data } = this.state;
+        const { personal, accountData } = this.state;
         const { navigation } = this.props;
         const data = personal;
-        const key = parseInt(account_Data.interestedParty.length) + 1;
+        const key = parseInt(accountData.interestedParty.length) + 1;
         const obj = {
             "key": key,
             "fname": data.firstName,
@@ -392,7 +392,7 @@ class addNewIntrestedPartiesComponent extends Component {
         };
         //  removed isAPi calling from if
         if (personal.addValidation && personal.addressLine1 && personal.addressLine2) {
-            navigation.navigate("verifyIntrestedParties", { acc_Data: account_Data, added_obj: obj });
+            navigation.navigate("verifyIntrestedParties", { acc_Data: accountData, added_obj: obj });
         }
 
     }
@@ -401,8 +401,8 @@ class addNewIntrestedPartiesComponent extends Component {
 
     render() {
         const { masterLookupStateData, stateCityData, navigation } = this.props;
-        const { account_Data, personal } = this.state;
-        if (this.props && masterLookupStateData && this.props.masterLookupStateData.relationship && masterLookupStateData.relationship.value) {
+        const { accountData, personal } = this.state;
+        if (this.props && masterLookupStateData && masterLookupStateData.relationship && masterLookupStateData.relationship.value) {
             relationData = masterLookupStateData.relationship.value;
         }
 
@@ -420,11 +420,11 @@ class addNewIntrestedPartiesComponent extends Component {
                     </View>
                     <View style={styles.blockMarginTop}>
                         <View style={styles.titleHeadingView}>
-                            <Text style={styles.titleHeaderText}>{account_Data.account_Type}</Text>
+                            <Text style={styles.titleHeaderText}>{accountData.account_Type}</Text>
                         </View>
                         <View style={styles.line} />
                         <View style={styles.containerView}>
-                            <Text style={styles.containerHeaderText}>{`Acc Name - ${account_Data.account_Name} | Acc Number - ${account_Data.account_Number}`}</Text>
+                            <Text style={styles.containerHeaderText}>{`Acc Name - ${accountData.account_Name} | Acc Number - ${accountData.account_Number}`}</Text>
                         </View>
                         <View style={styles.blockMarginTop} />
                         <View style={styles.titleHeadingView}>
@@ -605,7 +605,7 @@ class addNewIntrestedPartiesComponent extends Component {
                                     dateTextLayout={styles.dateTextStyle}
                                     componentStyle={styles.dateStyle}
                                     minDate={personal.startDate ? personal.startDate : ""}
-                                    errorFlag={!this.state.personal.endDateValidation}
+                                    errorFlag={!personal.endDateValidation}
                                     onDateChange={this.onChangeText("personal", "endDate")}
                                 />
                                 {!personal.startDateValidation && <Text style={styles.errMsg}>{gblStrings.accManagement.validDateSelect}</Text>}

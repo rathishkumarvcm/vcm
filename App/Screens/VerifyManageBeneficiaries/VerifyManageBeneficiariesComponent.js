@@ -20,7 +20,6 @@ class VerifyManageBenificiariesComponent extends Component {
 
   componentDidMount() {
     const { manageBeneficiaryData } = this.props;
-    console.log("didMount");
     if (this.props && manageBeneficiaryData && manageBeneficiaryData.savedBeneficiaryData) {
       tempData = manageBeneficiaryData.savedBeneficiaryData;
       if (tempData.primary_Bene && tempData.primary_Bene.length <= 0 && tempData.contingent_Bene && tempData.contingent_Bene.length <= 0 && tempData.transfer_on_Death_Bene && tempData.transfer_on_Death_Bene.length > 0) {
@@ -53,7 +52,6 @@ class VerifyManageBenificiariesComponent extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      console.log("in didUpdate");
       const { manageBeneficiaryData } = this.props;
       if (this.props && manageBeneficiaryData && manageBeneficiaryData.savedBeneficiaryData) {
         tempData = manageBeneficiaryData.savedBeneficiaryData;
@@ -87,14 +85,12 @@ class VerifyManageBenificiariesComponent extends Component {
   }
 
   updateInitialData = (data) => {
-    console.warn("updateInitialData");
     if (data) {
       this.setState({ beneData: data }, () => this.setInitialValue());
     }
   }
 
   setInitialValue = () => {
-    console.warn("set initial value");
     let totalPri = 0;
     let totalCon = 0;
     let totalTod = 0;
@@ -110,7 +106,7 @@ class VerifyManageBenificiariesComponent extends Component {
       }, 0);
       totalTod = tot;
     }
-    if (this.state.beneData.primary_Bene) {
+    if (beneData.primary_Bene) {
       const tot = beneData.contingent_Bene.reduce((prev, cur) => {
         let dist = parseInt(cur.distribution_Per);
         if (this.isEmpty(cur.distribution_Per)) {

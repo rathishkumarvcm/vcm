@@ -13,6 +13,9 @@ let savedData = {};
 let ammendData = {};
 let ammendIndex = null;
 
+const addAccount = require("../../Images/addaccount.png");
+const checkOrder = require("../../Images/checkorder.png");
+
 const bankAccounts = [
     { bankIcon: "", bankAccName: "Bank Account 1", bankAccountNo: "XXX-XXX-3838" },
     { bankIcon: "", bankAccName: "Bank Account 2", bankAccountNo: "XXX-XXX-5247", status: "To be verified" },
@@ -146,7 +149,11 @@ class LiquidationPageThreeComponent extends Component {
         this.setState(prevState => ({
             collapseFundSource: !prevState.collapseFundSource,
         }));
-        (collapseFundSource ? this.setState({ collapseFSIcon: "-   " }) : this.setState({ collapseFSIcon: "+  " }));
+        if (collapseFundSource) {
+            this.setState({ collapseFSIcon: "-   " });
+        } else {
+            this.setState({ collapseFSIcon: "+  " });
+        }
     };
 
     onClickExpandDeliveryAddress = () => {
@@ -154,7 +161,11 @@ class LiquidationPageThreeComponent extends Component {
         this.setState(prevState => ({
             collapseDeliveryAddress: !prevState.collapseDeliveryAddress,
         }));
-        (collapseDeliveryAddress ? this.setState({ collpaseDAIcon: "-   " }) : this.setState({ collpaseDAIcon: "+  " }));
+        if (collapseDeliveryAddress) {
+            this.setState({ collpaseDAIcon: "-   " });
+        } else {
+            this.setState({ collpaseDAIcon: "+  " });
+        }
     }
 
     onClickExpandTaxAccounting = () => {
@@ -162,7 +173,11 @@ class LiquidationPageThreeComponent extends Component {
         this.setState(prevState => ({
             collapseTaxAccounting: !prevState.collapseTaxAccounting,
         }));
-        (collapseTaxAccounting ? this.setState({ collapseTAIcon: "-   " }) : this.setState({ collapseTAIcon: "+  " }));
+        if (collapseTaxAccounting) {
+            this.setState({ collapseTAIcon: "-   " });
+        } else {
+            this.setState({ collapseTAIcon: "+  " });
+        }
     };
 
     onClickExpandTaxWithHoldingOptions = () => {
@@ -170,7 +185,11 @@ class LiquidationPageThreeComponent extends Component {
         this.setState(prevState => ({
             collapseTaxWithHoldingOption: !prevState.collapseTaxWithHoldingOption,
         }));
-        (collapseTaxWithHoldingOption ? this.setState({ collapseTWOIcon: "-   " }) : this.setState({ collapseTWOIcon: "+  " }));
+        if (collapseTaxWithHoldingOption) {
+            this.setState({ collapseTWOIcon: "-   " });
+        } else {
+            this.setState({ collapseTWOIcon: "+  " });
+        }
     };
 
     addaccount = (props) => {
@@ -231,17 +250,21 @@ class LiquidationPageThreeComponent extends Component {
             switchOff: !prevState.switchOff,
             switchOn: !prevState.switchOn,
         }));
-        switchOn ? this.setState(prevState => ({
-            taxAccountingMethodData: {
-                ...prevState.taxAccountingMethodData,
-                taxHoldingOption: gblStrings.liquidation.withholdTaxes
-            }
-        })) : this.setState(prevState => ({
-            taxAccountingMethodData: {
-                ...prevState.taxAccountingMethodData,
-                taxHoldingOption: gblStrings.liquidation.doNotWithholdTaxes
-            }
-        }));
+        if (switchOn) {
+            this.setState(prevState => ({
+                taxAccountingMethodData: {
+                    ...prevState.taxAccountingMethodData,
+                    taxHoldingOption: gblStrings.liquidation.withholdTaxes
+                }
+            }));
+        } else {
+            this.setState(prevState => ({
+                taxAccountingMethodData: {
+                    ...prevState.taxAccountingMethodData,
+                    taxHoldingOption: gblStrings.liquidation.doNotWithholdTaxes
+                }
+            }));
+        }
     }
 
 
@@ -299,7 +322,7 @@ class LiquidationPageThreeComponent extends Component {
         }));
     }
 
-    onSubmitEditingStateTax = (tax) => {
+    onSubmitEditingStateTax = () => {
         const { taxAccountingMethodData } = this.state;
         const statetax = taxAccountingMethodData.stateTax;
         const federaltax = taxAccountingMethodData.federalTax;
@@ -339,6 +362,29 @@ class LiquidationPageThreeComponent extends Component {
                 }
             }));
         }
+    }
+
+    generatekeyBankAccNo = (a) => a.bankAccountNo;
+
+    renderBankAccounts = ({ item, index }) => {
+        const { selectedBankAccountIndex } = this.state;
+        return (
+            <View style={(selectedBankAccountIndex === index) ? styles.selectedBankAccountFlex : styles.unSelectedBankAccountFlex} onTouchStart={() => this.onSelectBankAccount(item, index)}>
+                <View style={styles.bankAccountFlex}>
+                    <View style={styles.bankIconFlex}>
+                        <Image style={styles.bankIconStyle}
+                            resizeMode="contain"
+                            source={addAccount}
+                        />
+                    </View>
+                    <View style={styles.bankDetailsFlex}>
+                        <Text style={styles.bankAccountName}>{item.bankAccName}</Text>
+                        <Text style={styles.bankAccountNo}>{item.bankAccountNo}</Text>
+                        {item.status ? <Text style={styles.statusText}>{item.status}</Text> : null}
+                    </View>
+                </View>
+            </View>
+        );
     }
 
     navigateLiquidationPageOne = () => {
@@ -417,7 +463,7 @@ class LiquidationPageThreeComponent extends Component {
         let currentPage = 3;
         let totalCount = 4;
         let pageName = gblStrings.liquidation.fundWithdrawalHeading;
-        const { ammend, collapseFSIcon, collapseTWOIcon, collapseFundSource, collapseTaxWithHoldingOption, disableNextButton, fundingSource, showMessageFlex, switchOff, switchOn, collapseTaxAccounting, collpaseDAIcon, collapseTAIcon, taxAccountingMethodData, selectedBankAccountIndex, collapseDeliveryAddress } = this.state;
+        const { ammend, collapseFSIcon, collapseTWOIcon, collapseFundSource, collapseTaxWithHoldingOption, disableNextButton, fundingSource, showMessageFlex, switchOff, switchOn, collapseTaxAccounting, collpaseDAIcon, collapseTAIcon, taxAccountingMethodData, collapseDeliveryAddress } = this.state;
         const { navigation, liquidationInitialState } = this.props;
         if (ammend) {
             currentPage = 2;
@@ -468,35 +514,17 @@ class LiquidationPageThreeComponent extends Component {
                             <Text style={styles.fundSourceContent}>{gblStrings.liquidation.fundSourceContext}</Text>
                             <Text style={styles.subHeadingText}>{gblStrings.liquidation.offlineMethod}</Text>
                             <Text style={styles.offlineMethodContent}>{gblStrings.liquidation.offlineMethodContext}</Text>
-                            <this.addaccount accountName="Check Order" Image={require("../../Images/checkorder.png")} flexStyle={fundingSource.checkOrderSelected ? styles.selectedBankAccountFlex : styles.unSelectedBankAccountFlex} onClickCheck={this.onClickCheckOrder} />
+                            <this.addaccount accountName="Check Order" Image={checkOrder} flexStyle={fundingSource.checkOrderSelected ? styles.selectedBankAccountFlex : styles.unSelectedBankAccountFlex} onClickCheck={this.onClickCheckOrder} />
                             <Text style={styles.or}>or</Text>
                             <Text style={styles.subHeadingText}>{gblStrings.liquidation.onlineMethod}</Text>
                             <FlatList
                                 data={bankAccounts}
-                                renderItem={({ item, index }) => {
-                                    return (
-                                        <View style={(selectedBankAccountIndex === index) ? styles.selectedBankAccountFlex : styles.unSelectedBankAccountFlex} onTouchStart={() => this.onSelectBankAccount(item, index)}>
-                                            <View style={styles.bankAccountFlex}>
-                                                <View style={styles.bankIconFlex}>
-                                                    <Image style={styles.bankIconStyle}
-                                                        resizeMode="contain"
-                                                        source={require("../../Images/addaccount.png")}
-                                                    />
-                                                </View>
-                                                <View style={styles.bankDetailsFlex}>
-                                                    <Text style={styles.bankAccountName}>{item.bankAccName}</Text>
-                                                    <Text style={styles.bankAccountNo}>{item.bankAccountNo}</Text>
-                                                    {item.status ? <Text style={styles.statusText}>{item.status}</Text> : null}
-                                                </View>
-                                            </View>
-                                        </View>
-                                    );
-                                }}
-                                keyExtractor={a => a.bankAccountNo}
+                                renderItem={this.renderBankAccounts}
+                                keyExtractor={this.generatekeyBankAccNo}
                                 extraData={this.state}
                             />
 
-                            <this.addaccount accountName={gblStrings.accManagement.addBankAccount} Image={require("../../Images/addaccount.png")} flexStyle={styles.unSelectedBankAccountFlex} onClickCheck={this.onClickAddBankAccount} />
+                            <this.addaccount accountName={gblStrings.accManagement.addBankAccount} Image={addAccount} flexStyle={styles.unSelectedBankAccountFlex} onClickCheck={this.onClickAddBankAccount} />
                         </View>
                     </Collapsible>
                     {
@@ -566,175 +594,179 @@ class LiquidationPageThreeComponent extends Component {
                     </View>
 
                     {!collapseTaxAccounting ?
-                        <View>
-                            <View style={styles.flex2}>
-                                <Text style={styles.fundSourceContent}>{gblStrings.liquidation.taxAccountingMethodContext}</Text>
-                            </View>
+                        (
+                            <View>
+                                <View style={styles.flex2}>
+                                    <Text style={styles.fundSourceContent}>{gblStrings.liquidation.taxAccountingMethodContext}</Text>
+                                </View>
 
-                            {/* -----------------------------Tax Accounting Method ends here ------------------------*/}
+                                {/* -----------------------------Tax Accounting Method ends here ------------------------*/}
 
-                            {/* -----------------------------Tax Withholding Options starts here ------------------------*/}
-                            {(accType === "IRA") ?
-                                <View>
-                                    <View style={styles.flex2}>
-                                        <View style={styles.emptyFlex} />
-                                        <View style={styles.headerFlex} onTouchStart={this.onClickExpandTaxWithHoldingOptions}>
-                                            <Text style={styles.headerText}>{collapseTWOIcon}</Text>
-                                            <Text style={styles.headerText}>{gblStrings.liquidation.taxWithHoldingOptions}</Text>
-                                        </View>
-                                        <View style={styles.line} />
-                                    </View>
-
-                                    {!collapseTaxWithHoldingOption ?
+                                {/* -----------------------------Tax Withholding Options starts here ------------------------*/}
+                                {(accType === "IRA") ?
+                                    (
                                         <View>
                                             <View style={styles.flex2}>
-                                                <Text style={styles.fundSourceContent}>{gblStrings.liquidation.taxWithHoldingOptionsContent}</Text>
+                                                <View style={styles.emptyFlex} />
+                                                <View style={styles.headerFlex} onTouchStart={this.onClickExpandTaxWithHoldingOptions}>
+                                                    <Text style={styles.headerText}>{collapseTWOIcon}</Text>
+                                                    <Text style={styles.headerText}>{gblStrings.liquidation.taxWithHoldingOptions}</Text>
+                                                </View>
+                                                <View style={styles.line} />
                                             </View>
 
-                                            { /* -----------------------------Tax Withholding Options ends here ------------------------*/}
+                                            {!collapseTaxWithHoldingOption ?
+                                                (
+                                                    <View>
+                                                        <View style={styles.flex2}>
+                                                            <Text style={styles.fundSourceContent}>{gblStrings.liquidation.taxWithHoldingOptionsContent}</Text>
+                                                        </View>
 
-                                            <View style={styles.switchFlex}>
-                                                <GSwitchComponent
-                                                    switchOffText={gblStrings.liquidation.doNotWithholdTaxes}
-                                                    switchOnText={gblStrings.liquidation.withholdTaxes}
-                                                    switchOff={switchOff}
-                                                    switchOn={switchOn}
-                                                    switchOnMethod={this.switchOnMethod}
-                                                    switchOffMethod={this.switchOnMethod}
-                                                    onStyle={styles.onButtonStyle}
-                                                    offStyle={styles.offButtonStyle}
-                                                    onStyleDisabled={styles.onButtonStyleDisable}
-                                                    offStyleDisabled={styles.offButtonStyleDisable}
-                                                    textOnStyle={styles.TextOnStyle}
-                                                    textOffStyle={switchOff ? styles.TextOffStyle : styles.TextOffStyleWithholdtax}
-                                                />
-                                            </View>
+                                                        { /* -----------------------------Tax Withholding Options ends here ------------------------*/}
 
-                                            {/* switch on view starts here */}
-                                            {switchOff ?
-                                                <View style={styles.flex2}>
-                                                    <GDropDownComponent
-                                                        dropDownLayout={styles.dropDownLayout}
-                                                        dropDownTextName={styles.blackTextBold16px}
-                                                        textInputStyle={styles.dropDownText}
-                                                        dropDownName={gblStrings.liquidation.isTheReqAmount}
-                                                        data={reqAmountTypeJson}
-                                                        dropDownValue={taxAccountingMethodData.requestedAmountType}
-                                                        selectedDropDownValue={this.selectedDropDownValue}
-                                                        dropDownPostition={{
-                                                            position: 'absolute', top: scaledHeight(80), width: "98%", marginLeft: "0%", paddingLeft: "4%", borderColor: "#DEDEDF",
-                                                            borderWidth: scaledHeight(1), zIndex: 3, backgroundColor: 'white'
-                                                        }}
-                                                    />
-
-                                                    {
-                                                        (taxAccountingMethodData.requestedAmountType === "Before Taxes") ?
-                                                            (
-                                                                <View style={styles.stateTaxFlex}>
-                                                                    <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.amountBeforeTaxes}</Text>
-                                                                    <View style={styles.totalWithdrawalFlex}>
-                                                                        <Text style={styles.dollarSkin}>$</Text>
-                                                                        <GInputComponent
-                                                                            propInputStyle={styles.amountBeforeTaxesVal}
-                                                                            inputStyle={styles.inputStyle}
-                                                                            value={taxAccountingMethodData.amountBeforeTaxes}
-                                                                            onChangeText={this.onChangeAmountBeforeTaxes}
-                                                                            maxLength={13}
-                                                                        />
-                                                                    </View>
-                                                                </View>
-                                                            ) :
-                                                            (
-                                                                <View style={styles.stateTaxFlex}>
-                                                                    <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.amountAfterTaxes}</Text>
-                                                                    <View style={styles.totalWithdrawalFlex}>
-                                                                        <Text style={styles.dollarSkin}>$</Text>
-                                                                        <GInputComponent
-                                                                            propInputStyle={styles.amountBeforeTaxesVal}
-                                                                            inputStyle={styles.inputStyle}
-                                                                            value={taxAccountingMethodData.amountAfterTaxes}
-                                                                            onChangeText={this.onChangeAmountAfterTaxes}
-                                                                            maxLength={13}
-                                                                        />
-                                                                    </View>
-                                                                </View>
-                                                            )
-                                                    }
-
-                                                    <View style={styles.stateTaxFlex}>
-                                                        <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.federalTax}</Text>
-                                                        <View style={styles.horizontalFlex}>
-                                                            <GInputComponent
-                                                                propInputStyle={styles.stateTaxInputStyle}
-                                                                inputStyle={styles.inputStyle}
-                                                                value={taxAccountingMethodData.federalTax}
-                                                                onChangeText={this.onChangeFederalTax}
-                                                                onSubmitEditing={this.onSubmitEditingStateTax}
-                                                                onBlur={this.onSubmitEditingStateTax}
-                                                                maxLength={3}
+                                                        <View style={styles.switchFlex}>
+                                                            <GSwitchComponent
+                                                                switchOffText={gblStrings.liquidation.doNotWithholdTaxes}
+                                                                switchOnText={gblStrings.liquidation.withholdTaxes}
+                                                                switchOff={switchOff}
+                                                                switchOn={switchOn}
+                                                                switchOnMethod={this.switchOnMethod}
+                                                                switchOffMethod={this.switchOnMethod}
+                                                                onStyle={styles.onButtonStyle}
+                                                                offStyle={styles.offButtonStyle}
+                                                                onStyleDisabled={styles.onButtonStyleDisable}
+                                                                offStyleDisabled={styles.offButtonStyleDisable}
+                                                                textOnStyle={styles.TextOnStyle}
+                                                                textOffStyle={switchOff ? styles.TextOffStyle : styles.TextOffStyleWithholdtax}
                                                             />
-                                                            <View style={styles.stateTaxToDollarFlex}>
-                                                                <Text style={styles.dollarSkin}>$</Text>
-                                                                <Text style={styles.stateTaxToDollarText}>{this.formatAmount(taxAccountingMethodData.federalTaxInDollars)}</Text>
-                                                            </View>
                                                         </View>
+
+                                                        {/* switch on view starts here */}
+                                                        {switchOff ?
+                                                            (
+                                                                <View style={styles.flex2}>
+                                                                    <GDropDownComponent
+                                                                        dropDownLayout={styles.dropDownLayout}
+                                                                        dropDownTextName={styles.blackTextBold16px}
+                                                                        textInputStyle={styles.dropDownText}
+                                                                        dropDownName={gblStrings.liquidation.isTheReqAmount}
+                                                                        data={reqAmountTypeJson}
+                                                                        dropDownValue={taxAccountingMethodData.requestedAmountType}
+                                                                        selectedDropDownValue={this.selectedDropDownValue}
+                                                                        dropDownPostition={{
+                                                                            position: 'absolute', top: scaledHeight(80), width: "98%", marginLeft: "0%", paddingLeft: "4%", borderColor: "#DEDEDF",
+                                                                            borderWidth: scaledHeight(1), zIndex: 3, backgroundColor: 'white'
+                                                                        }}
+                                                                    />
+
+                                                                    {
+                                                                        (taxAccountingMethodData.requestedAmountType === "Before Taxes") ?
+                                                                            (
+                                                                                <View style={styles.stateTaxFlex}>
+                                                                                    <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.amountBeforeTaxes}</Text>
+                                                                                    <View style={styles.totalWithdrawalFlex}>
+                                                                                        <Text style={styles.dollarSkin}>$</Text>
+                                                                                        <GInputComponent
+                                                                                            propInputStyle={styles.amountBeforeTaxesVal}
+                                                                                            inputStyle={styles.inputStyle}
+                                                                                            value={taxAccountingMethodData.amountBeforeTaxes}
+                                                                                            onChangeText={this.onChangeAmountBeforeTaxes}
+                                                                                            maxLength={13}
+                                                                                        />
+                                                                                    </View>
+                                                                                </View>
+                                                                            ) :
+                                                                            (
+                                                                                <View style={styles.stateTaxFlex}>
+                                                                                    <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.amountAfterTaxes}</Text>
+                                                                                    <View style={styles.totalWithdrawalFlex}>
+                                                                                        <Text style={styles.dollarSkin}>$</Text>
+                                                                                        <GInputComponent
+                                                                                            propInputStyle={styles.amountBeforeTaxesVal}
+                                                                                            inputStyle={styles.inputStyle}
+                                                                                            value={taxAccountingMethodData.amountAfterTaxes}
+                                                                                            onChangeText={this.onChangeAmountAfterTaxes}
+                                                                                            maxLength={13}
+                                                                                        />
+                                                                                    </View>
+                                                                                </View>
+                                                                            )
+                                                                    }
+
+                                                                    <View style={styles.stateTaxFlex}>
+                                                                        <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.federalTax}</Text>
+                                                                        <View style={styles.horizontalFlex}>
+                                                                            <GInputComponent
+                                                                                propInputStyle={styles.stateTaxInputStyle}
+                                                                                inputStyle={styles.inputStyle}
+                                                                                value={taxAccountingMethodData.federalTax}
+                                                                                onChangeText={this.onChangeFederalTax}
+                                                                                onSubmitEditing={this.onSubmitEditingStateTax}
+                                                                                onBlur={this.onSubmitEditingStateTax}
+                                                                                maxLength={3}
+                                                                            />
+                                                                            <View style={styles.stateTaxToDollarFlex}>
+                                                                                <Text style={styles.dollarSkin}>$</Text>
+                                                                                <Text style={styles.stateTaxToDollarText}>{this.formatAmount(taxAccountingMethodData.federalTaxInDollars)}</Text>
+                                                                            </View>
+                                                                        </View>
+                                                                    </View>
+
+                                                                    <View style={styles.stateTaxFlex}>
+                                                                        <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.stateTax}</Text>
+                                                                        <View style={styles.horizontalFlex}>
+                                                                            <GInputComponent
+                                                                                propInputStyle={styles.stateTaxInputStyle}
+                                                                                inputStyle={styles.inputStyle}
+                                                                                value={taxAccountingMethodData.stateTax}
+                                                                                onChangeText={this.onChangeStateTax}
+                                                                                onSubmitEditing={this.onSubmitEditingStateTax}
+                                                                                onBlur={this.onSubmitEditingStateTax}
+                                                                                maxLength={3}
+                                                                            />
+                                                                            <View style={styles.stateTaxToDollarFlex}>
+                                                                                <Text style={styles.dollarSkin}>$</Text>
+                                                                                <Text style={styles.stateTaxToDollarText}>{this.formatAmount(taxAccountingMethodData.stateTaxInDollars)}</Text>
+                                                                            </View>
+                                                                        </View>
+                                                                    </View>
+
+                                                                    <View style={styles.stateTaxFlex}>
+                                                                        <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.totalTaxToBeWithhold}</Text>
+                                                                        <View style={styles.totalWithdrawalFlex}>
+                                                                            <Text style={styles.dollarSkin}>$</Text>
+                                                                            <Text style={styles.totalWithdrawalVal}>{this.formatAmount(taxAccountingMethodData.totalTaxToBeWithhold)}</Text>
+                                                                        </View>
+                                                                    </View>
+
+                                                                    <View style={styles.stateTaxFlex}>
+                                                                        <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.totalYouWillReceive}</Text>
+                                                                        <View style={styles.totalWithdrawalFlex}>
+                                                                            <Text style={styles.dollarSkin}>$</Text>
+                                                                            <Text style={styles.totalWithdrawalVal}>{this.formatAmount(taxAccountingMethodData.totalYouWillReceive)}</Text>
+                                                                        </View>
+                                                                    </View>
+
+                                                                    <View style={styles.stateTaxFlex}>
+                                                                        <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.totalWithdrawal}</Text>
+                                                                        <View style={styles.totalWithdrawalFlex}>
+                                                                            <Text style={styles.dollarSkin}>$</Text>
+                                                                            <Text style={styles.totalWithdrawalVal}> {this.formatAmount(taxAccountingMethodData.totalWithdrawal)}</Text>
+                                                                        </View>
+                                                                    </View>
+
+                                                                </View>
+                                                            ) : null}
+
+                                                        { /*  switch on view ends here */}
+
                                                     </View>
-
-                                                    <View style={styles.stateTaxFlex}>
-                                                        <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.stateTax}</Text>
-                                                        <View style={styles.horizontalFlex}>
-                                                            <GInputComponent
-                                                                propInputStyle={styles.stateTaxInputStyle}
-                                                                inputStyle={styles.inputStyle}
-                                                                value={taxAccountingMethodData.stateTax}
-                                                                onChangeText={this.onChangeStateTax}
-                                                                onSubmitEditing={this.onSubmitEditingStateTax}
-                                                                onBlur={this.onSubmitEditingStateTax}
-                                                                maxLength={3}
-                                                            />
-                                                            <View style={styles.stateTaxToDollarFlex}>
-                                                                <Text style={styles.dollarSkin}>$</Text>
-                                                                <Text style={styles.stateTaxToDollarText}>{this.formatAmount(taxAccountingMethodData.stateTaxInDollars)}</Text>
-                                                            </View>
-                                                        </View>
-                                                    </View>
-
-                                                    <View style={styles.stateTaxFlex}>
-                                                        <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.totalTaxToBeWithhold}</Text>
-                                                        <View style={styles.totalWithdrawalFlex}>
-                                                            <Text style={styles.dollarSkin}>$</Text>
-                                                            <Text style={styles.totalWithdrawalVal}>{this.formatAmount(taxAccountingMethodData.totalTaxToBeWithhold)}</Text>
-                                                        </View>
-                                                    </View>
-
-                                                    <View style={styles.stateTaxFlex}>
-                                                        <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.totalYouWillReceive}</Text>
-                                                        <View style={styles.totalWithdrawalFlex}>
-                                                            <Text style={styles.dollarSkin}>$</Text>
-                                                            <Text style={styles.totalWithdrawalVal}>{this.formatAmount(taxAccountingMethodData.totalYouWillReceive)}</Text>
-                                                        </View>
-                                                    </View>
-
-                                                    <View style={styles.stateTaxFlex}>
-                                                        <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.totalWithdrawal}</Text>
-                                                        <View style={styles.totalWithdrawalFlex}>
-                                                            <Text style={styles.dollarSkin}>$</Text>
-                                                            <Text style={styles.totalWithdrawalVal}> {this.formatAmount(taxAccountingMethodData.totalWithdrawal)}</Text>
-                                                        </View>
-                                                    </View>
-
-                                                </View> : null}
-
-
-                                            { /*  switch on view ends here */}
-
-
-
-                                        </View> : null}
-                                </View> : null}
-                        </View> : null}
-
-
+                                                ) : null}
+                                        </View>
+                                    ) : null}
+                            </View>
+                        )
+                        : null}
 
                     <View style={styles.flex6}>
                         <TouchableOpacity style={styles.backButtonFlex} onPress={this.navigateLiquidationPageOne}>

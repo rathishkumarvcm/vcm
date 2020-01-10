@@ -189,7 +189,6 @@ const styles = StyleSheet.create({
     lineHeight: scaledHeight(23),
     color: "#56565A"
   },
-
   errorMsg: {
     fontSize: scaledHeight(12),
     marginLeft: "4%",

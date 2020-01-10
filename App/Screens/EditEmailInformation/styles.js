@@ -3,7 +3,7 @@ import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
 
 const { width } = Dimensions.get('window');
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7FAFF',
@@ -311,7 +311,8 @@ export const styles = StyleSheet.create({
     openInvestment: {
         fontSize: scaledHeight(16),
         color: '#56565A',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        lineHeight: 30
     },
     lineBorder: {
         marginTop: scaledHeight(15),
@@ -468,7 +469,7 @@ export const styles = StyleSheet.create({
         marginLeft: scaledWidth(20)
     },
     editEmailHolderNoFile: {
-        width: '96%', marginLeft: '2%', marginRight: '2%', marginTop: '2%', marginBottom: '2%', borderColor: '#CCCCCC', borderWidth: 1, backgroundColor: '#fff'
+        width: '96%', marginLeft: '2%', marginRight: '2%', marginTop: '2%', marginBottom: '2%', borderColor: '#CCCCCC', borderWidth: 1, backgroundColor: '#fff', padding: '4%'
     },
     marketingPadding: {
         padding: '4%'
@@ -479,4 +480,12 @@ export const styles = StyleSheet.create({
     marketingHomeNormal: {
         color: '#56565A', fontSize: scaledHeight(16), width: '92%', marginRight: '4%', marginLeft: '4%', marginTop: '4%', marginBottom: '2%'
     },
+    emailInformationFlex: { flex: 0.85 },
+    emailInformationTitle: {
+        color: '#B2B2B2',
+        fontWeight: "bold",
+        fontSize: scaledHeight(16)
+    }
 });
+
+export default styles;
