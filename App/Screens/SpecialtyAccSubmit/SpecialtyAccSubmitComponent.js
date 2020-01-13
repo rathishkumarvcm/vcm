@@ -3,7 +3,7 @@ import { Text, View,ScrollView, TouchableOpacity, Platform } from 'react-native'
 import PropTypes from "prop-types";
 import * as mime from 'react-native-mime-types';
 import DocumentPicker from 'react-native-document-picker';
-import { styles } from './styles';
+import styles from './styles';
 import { GButtonComponent, GHeaderComponent, GFooterSettingsComponent, GIcon, showAlert } from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';

@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { scaledHeight } from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     cancelButton: {
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
@@ -142,3 +142,4 @@ export const styles = StyleSheet.create({
     },
 
 });
+export default styles;
