@@ -5,7 +5,7 @@ import { createDrawerNavigator } from 'react-navigation-drawer';
 import React from 'react';
 import { GIcon } from './CommonComponents/GIcon';
 
-import LoginComponent from './Screens/Login/';
+import LoginComponent from "./Screens/Login";
 import RegisterEmail from './Screens/RegisterEmail/RegisterEmailComponent';
 import RegisterPassword from './Screens/RegisterPassword/RegisterPasswordComponent';
 import RegisterSelf from './Screens/RegisterSelf/RegisterSelfComponent';
@@ -24,10 +24,10 @@ import PdfLinking from './Screens/PdfLinking';
 import PdfRNFetchblobDownload from './Screens/PdfRNFetchblobDownload';
 import NativePdf from './Screens/NativePDF';
 import AccountInquiry from './Screens/AccountInquiry/AccountInquiryComponent';
-import GeneralSettings from './Screens/GeneralSettings/';
-import ProfileSettings from './Screens/ProfileSettings/';
+import GeneralSettings from "./Screens/GeneralSettings";
+import ProfileSettings from "./Screens/ProfileSettings";
 import DeliverySettings from './Screens/DeliverySettings';
-import MarketingandPrivacySettings from './Screens/MarketingandPrivacy/';
+import MarketingandPrivacySettings from "./Screens/MarketingandPrivacy";
 import ChangeLogonCredentialsComponent from './Screens/ChangeLogonCredentials/ChangeLogonCredentialsComponent';
 import CurrentPasswordComponent from './Screens/CurrentPassword';
 import ResetPasswordComponent from './Screens/ResetPassword';
@@ -38,10 +38,10 @@ import ProfilesAndPreferences from './Screens/ProfilesAndPreferences';
 import SecurityPreference from './Screens/SecurityPreferences';
 import AccountMessagingSettings from './Screens/AccountMessagingSettings/AccountMessagingSettingsComponent';
 import AccountMessagingGoals from './Screens/AccountMessagingGoals/AccountMessagingGoalsComponent';
-import AccountMessagingAdvice from './Screens/AccountMessagingAdvice/';
-import AccountMessagingGeneralDocuments from './Screens/AccountMessagingGeneralDocuments/';
+import AccountMessagingAdvice from "./Screens/AccountMessagingAdvice";
+import AccountMessagingGeneralDocuments from "./Screens/AccountMessagingGeneralDocuments";
 import AccountMessagingSecurityAndFraud from './Screens/AccountMessagingSecurityAndFraud/AccountMessagingSecurityAndFraudComponent';
-import AccountMessagingDeviceManagement from './Screens/AccountMessagingDeviceManagement/';
+import AccountMessagingDeviceManagement from "./Screens/AccountMessagingDeviceManagement";
 // Dashboard
 
 
@@ -58,15 +58,15 @@ import OnlineIDVerification from './Screens/OnlineIDVerification/OnlineIDVerific
 //  Acc Management
 import Dashboard from './Screens/Dashboard/DashboardComponent';
 import TermsAndConditions from './Screens/TermsAndConditions/TermsAndConditionsComponent';
-import DashboardAccounts from './Screens/DashboardAccounts/';
-import OpenAccPageOne from './Screens/OpenAccPageOne/';
-import OpenAccPageTwo from './Screens/OpenAccPageTwo/';
-import OpenAccPageThree from './Screens/OpenAccPageThree/';
-import OpenAccPageFour from './Screens/OpenAccPageFour/';
-import OpenAccPageFive from './Screens/OpenAccPageFive/';
-import OpenAccPageSix from './Screens/OpenAccPageSix/';
+import DashboardAccounts from './Screens/DashboardAccounts';
+import OpenAccPageOne from './Screens/OpenAccPageOne';
+import OpenAccPageTwo from './Screens/OpenAccPageTwo';
+import OpenAccPageThree from './Screens/OpenAccPageThree';
+import OpenAccPageFour from './Screens/OpenAccPageFour';
+import OpenAccPageFive from './Screens/OpenAccPageFive';
+import OpenAccPageSix from './Screens/OpenAccPageSix';
 import SpecialtyAccPage from './Screens/SpecialtyAccPage/SpecialtyAccPageComponent';
-import SpecialtyAccSubmit from './Screens/SpecialtyAccSubmit/';
+import SpecialtyAccSubmit from './Screens/SpecialtyAccSubmit';
 import CollegePlanESA from './Screens/CollegePlanESA/CollegePlanESAComponent';
 import CollegePlanPartOneTwo from './Screens/CollegePlanPartOneTwo/CollegePlanPartOneTwoComponent';
 import CollegePlanPersonal from './Screens/CollegePlanPersonal/CollegePlanPersonalComponent';
@@ -80,16 +80,16 @@ import LiquidationPageFourComponent from './Screens/LiquidationPageFour';
 import CompareFunds from './Screens/CompareFunds';
 //  Done By 806048
 
-import EditProfileSettings from './Screens/EditProfileSettings/';
-import EditAddressSettings from './Screens/EditAddressInformation/';
-import EditAddressAddNew from './Screens/EditAddressAddNew/';
-import EditPhoneInformation from './Screens/EditPhoneInformations/';
-import EditEmailInformation from './Screens/EditEmailInformation/';
-import EditEmailAddNew from './Screens/EditEmailInfoAddNew/';
-import EditAddFinancialInfo from './Screens/EditAddFinancialInformation/';
-import EditAddPhoneNumber from './Screens/EditAddNewPhoneNumber/';
-import EditMilitaryInfo from './Screens/EditMilitaryInformation/';
-import EditOccupationInfo from './Screens/EditOccupationInformation/';
+import EditProfileSettings from "./Screens/EditProfileSettings";
+import EditAddressSettings from "./Screens/EditAddressInformation";
+import EditAddressAddNew from "./Screens/EditAddressAddNew";
+import EditPhoneInformation from "./Screens/EditPhoneInformations";
+import EditEmailInformation from "./Screens/EditEmailInformation";
+import EditEmailAddNew from "./Screens/EditEmailInfoAddNew";
+import EditAddFinancialInfo from "./Screens/EditAddFinancialInformation";
+import EditAddPhoneNumber from "./Screens/EditAddNewPhoneNumber";
+import EditMilitaryInfo from "./Screens/EditMilitaryInformation";
+import EditOccupationInfo from "./Screens/EditOccupationInformation";
 import ModifySecurityQues from './Screens/ModifySecurityQues';
 import ChangeSignInMethod from './Screens/ChangeSignInMethod';
 import CSMSoftTokenComponent from './Screens/CSMSoftToken';
@@ -118,20 +118,20 @@ import ExchangeScreenOneComponent from './Screens/ExchangeScreenOne';
 import ExchangeScreenTwoComponent from './Screens/ExchangeScreenTwo';
 import ExchangeScreenThreeComponent from './Screens/ExchangeScreenThree';
 
-import EditRelationshipInfo from './Screens/EditRelationshipInformation/';
+import EditRelationshipInfo from "./Screens/EditRelationshipInformation";
 import EditRegulatoryInfo from './Screens/EditRegulatoryInformations/EditRegulatoryComponent';
-import EditFamilyMemberInfo from './Screens/EditFamilyMemberInformation/';
-import EditFamilyDetail from './Screens/EditFamilyMemberDetails/';
+import EditFamilyMemberInfo from "./Screens/EditFamilyMemberInformation";
+import EditFamilyDetail from "./Screens/EditFamilyMemberDetails";
 
 // Password Recovery
-import PasswordRecovery from './Screens/RecoverPassword/';
-import PasswordRecoveryOtp from './Screens/RecoverPasswordOtp/';
-import PasswordRecoverTemp from './Screens/RecoverTempPassword/';
-import PasswordReset from './Screens/RecoverPasswordNew/';
-import PasswordSuccess from './Screens/RecoverPasswordSuccess/';
+import PasswordRecovery from "./Screens/RecoverPassword";
+import PasswordRecoveryOtp from "./Screens/RecoverPasswordOtp";
+import PasswordRecoverTemp from "./Screens/RecoverTempPassword";
+import PasswordReset from "./Screens/RecoverPasswordNew";
+import PasswordSuccess from "./Screens/RecoverPasswordSuccess";
 
 // Transactions  
-import TAmmendComponent from './Screens/TAmmend/';
+import TAmmendComponent from "./Screens/TAmmend";
 import FundSelectionComponent from './Screens/TAmmendFundSelection';
 import FundWithdrawlComponent from './Screens/TAmmendFundWithdrawl';
 import ReviewConfirmComponent from './Screens/TAmmendReviewAndConfirm';
@@ -259,12 +259,14 @@ const BottomTabNavigator = createBottomTabNavigator({
                 } else {
                     iconName = 'more';
                 }
-                return <GIcon
-                    name={iconName}
-                    type="material"
-                    size={20}
-                    color={tintColor}
-                />
+                return (
+                    <GIcon
+                        name={iconName}
+                        type="material"
+                        size={20}
+                        color={tintColor}
+                    />
+                );
             },
             tabBarOnPress: ({ defaultHandler }) => {
                 const { routeName } = navigation.state;

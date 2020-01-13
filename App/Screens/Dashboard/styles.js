@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     dashboardSection: {
         alignItems: 'center',
         width: '100%',
-        //  backgroundColor: '#F7FAFF'
     },
     dashboardText: {
         color: '#5D83AE',
@@ -68,15 +67,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: scaledHeight(116),
         opacity:0.25
-        //  textAlign:'center'
 
     },
-    disclaimerTitleTxt: { //  termsofuseText
-        fontSize: scaledHeight(16),
-        marginBottom: scaledHeight(10),
-        fontWeight: 'bold',
+    disclaimerTitleTxt: { 
         color: '#56565A',
-        lineHeight: 25
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        lineHeight: 25,
+        marginBottom: scaledHeight(10)
     },
     disclaimerTxt: {
         color: '#56565A',
@@ -108,19 +106,18 @@ const styles = StyleSheet.create({
 
     },
     openAccBtn: {
+        alignContent: 'center',
+        alignItems: 'center',
+         backgroundColor: '#544A54',
+     
         borderColor: '#61285F',
         borderWidth: 1,
-         width: 260,
-        //  marginLeft: '18%',
-        //  marginRight: '18%',
-        marginBottom:scaledHeight(157),
-        marginTop:scaledHeight(26),
         
         height: scaledHeight(50),
-        backgroundColor: '#544A54',
-        alignItems: 'center',
-        alignContent: 'center',
         justifyContent: 'center',
+        marginBottom:scaledHeight(157),
+        marginTop:scaledHeight(26),
+        width: 260,
 
     },
     openAccBtnTxt: {
@@ -136,7 +133,6 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         width: '100%',
 
-        //  backgroundColor:'yellow',
 
     },   
     pageHeader: {
@@ -149,24 +145,22 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     privacyAgreement: {
-        //  marginTop:convertToDeviceResolution(4),
-        marginVertical: scaledHeight(19),
-        padding: scaledHeight(12),
         alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
         backgroundColor: 'white',
         flexDirection: 'row',
+        flexGrow: 1,
         flexWrap: 'wrap',
-        flexGrow: 1
+        justifyContent: 'center',
+        marginVertical: scaledHeight(19),
+        padding: scaledHeight(12),
+        width: '100%'
     },
     privacyText: {
-        width: '50%',
-        //  paddingLeft:'4%',
-        marginVertical: '2%',
         color: '#61285F',
+        fontSize: scaledHeight(16),
         fontWeight: 'bold',
-        fontSize: scaledHeight(16)
+        marginVertical: '2%',
+        width: '50%'
     },
     scrollContentStyle: {
         flexGrow: 1,
