@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
     scrollviewStyle: {
         flex: 0.85
     },
+    contentStyle: { justifyContent: 'center' },
     header: {
         marginTop: scaledHeight(22),
         alignItems: 'flex-start',
@@ -394,4 +395,5 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flex: 1,
     },
+    accountIconStyle: { flex: 0.2, alignSelf: 'center' },
 });

@@ -30,24 +30,26 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
         );
     }
 
-    componentDidFocus = (payload) => {
-        const { navigation } = this.props;
-        this.setState({requestSubmited: navigation.getParam('requestSubmited', false)});
-    };
-
     componentDidMount() {
-        this.props.getDividentsInfo();
+        const { getDividentsInfo } = this.props;
+        getDividentsInfo();
     }
 
     componentWillUnmount() {
         this.focusListener.remove();
     }
 
-    navigateBack = () => this.props.navigation.goBack();
+    getKey = (item) => item.Id
+
+    navigateBack = () => {
+        const {navigation} = this.props;
+        navigation.goBack();
+    }
 
     navigateDividentsForAccount = (item) => {
         this.updateShowRequestOption(item.accountType, false, item.Id);
-        this.props.navigation.navigate('dividentsForAccount', {
+        const { navigation } = this.props;
+       navigation.navigate('dividentsForAccount', {
             accountName: item.accountName,
             accountNumber: item.AccountNumber,
         });
@@ -69,20 +71,27 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
         this.setState({ utmaAccCollapsedState: flag });
     }
 
-    updateCurrentSecurityChanged = () => this.setState({ stateChanged: !this.state.stateChanged });
+    updateCurrentSecurityChanged = () => {
+        const { stateChanged } = this.state;
+        this.setState({ stateChanged: !stateChanged });
+    }
 
-    updateReinvestChanged = () => this.setState({ reinvestChanged: !this.state.reinvestChanged });
+    updateReinvestChanged = () => {
+        const { reinvestChanged } = this.state;
+        this.setState({ reinvestChanged: !reinvestChanged });
+    }
 
     setDividentAmount = (text, accountId, fundId) => () => {
         let tmpData = [];
-        tmpData = this.state.dividentsData;
+        const { dividentsData } = this.state;
+        tmpData = dividentsData;
         tmpData.map((item) => () => {
             if (item.Id === accountId) {
                 let tmpCurrentSecurities = [];
                 tmpCurrentSecurities = item.CurrentSecurities;
-                tmpCurrentSecurities.map((fund) => () => {
+                tmpCurrentSecurities.map((fund, index) => () => {
                     if (fund.FundId === fundId) {
-                        fund.amountRemaining = text;
+                        tmpCurrentSecurities[index].amountRemaining = text;
                     }
                 });
             }
@@ -92,15 +101,16 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
 
     switchOnOffStateUpdates = (fromView, flag, itemId) => () => {
         let tmpData = [];
+        const { dividentsData } = this.state;
+        tmpData = dividentsData;
+
         switch (fromView) {
             case 'currentSecurities':
                 if (flag) {
-
-                    tmpData = this.state.dividentsData;
-                    tmpData.map((item) => () => {
+                    tmpData.map((item, index) => () => {
                         if (item.Id === itemId) {
-                            item.currentSecuritiesSwitchOn = true;
-                            item.currentSecuritiesSwitchOff = false;
+                            tmpData[index].currentSecuritiesSwitchOn = true;
+                            tmpData[index].currentSecuritiesSwitchOff = false;
                             this.updateCurrentSecurityChanged();
 
                         }
@@ -108,11 +118,10 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                     this.setState({ dividentsData: tmpData });
                 }
                 else {
-                    tmpData = this.state.dividentsData;
-                    tmpData.map((item) => () => {
+                    tmpData.map((item, index) => () => {
                         if (item.Id === itemId) {
-                            item.currentSecuritiesSwitchOn = false;
-                            item.currentSecuritiesSwitchOff = true;
+                            tmpData[index].currentSecuritiesSwitchOn = false;
+                            tmpData[index].currentSecuritiesSwitchOff = true;
                             this.updateCurrentSecurityChanged();
                         }
                     });
@@ -121,22 +130,20 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                 break;
             case 'futureSecurities':
                 if (flag) {
-                    tmpData = this.state.dividentsData;
-                    tmpData.map((item) => () => {
+                    tmpData.map((item, index) => () => {
                         if (item.Id === itemId) {
-                            item.futureSecuritiesSwitchOn = true;
-                            item.futureSecuritiesSwitchOff = false;
+                            tmpData[index].futureSecuritiesSwitchOn = true;
+                            tmpData[index].futureSecuritiesSwitchOff = false;
                             this.updateCurrentSecurityChanged();
                         }
                     });
                     this.setState({ dividentsData: tmpData });
                 }
                 else {
-                    tmpData = this.state.dividentsData;
-                    tmpData.map((item) => () => {
+                    tmpData.map((item, index) => () => {
                         if (item.Id === itemId) {
-                            item.futureSecuritiesSwitchOn = false;
-                            item.futureSecuritiesSwitchOff = true;
+                            tmpData[index].futureSecuritiesSwitchOn = false;
+                            tmpData[index].futureSecuritiesSwitchOff = true;
                             this.updateCurrentSecurityChanged();
                         }
                     });
@@ -151,19 +158,20 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
 
     switchOnOffReinvest = (fromView, flag, accountId, fundId) => () => {
         let tmpData = [];
+        const { dividentsData } = this.state;
+        tmpData = dividentsData;
         switch (fromView) {
             case 'reinvestFund':
-                tmpData = this.state.dividentsData;
                 tmpData.map((item) => () => {
                     if (item.Id === accountId) {
                         let tmpCurrentSecurities = [];
                         tmpCurrentSecurities = item.CurrentSecurities;
-                        tmpCurrentSecurities.map((fund) => {
+                        tmpCurrentSecurities.map((fund, index) => () => {
                             if (fund.FundId === fundId) {
                                 if (flag) {
-                                    fund.enableReinvest = true;
+                                    tmpCurrentSecurities[index].enableReinvest = true;
                                 } else {
-                                    fund.enableReinvest = false;
+                                    tmpCurrentSecurities[index].enableReinvest = false;
                                 }
                                 this.updateCurrentSecurityChanged();
                             }
@@ -180,68 +188,95 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
     updateShowRequestOption = (fromView, showRequestOption, itemId) => {
         let tmpData = {};
         switch (fromView) {            
-            case 'General Account':
-                tmpData = this.state.generalAccount;
-                tmpData.map((item) => {
+            case 'General Account': {
+                const {generalAccount} = this.state;                
+                tmpData = generalAccount;
+                tmpData.map((item, i) => {
                     if (item.Id === itemId) {
-                        item.showRequestOption = showRequestOption;
+                        tmpData[i].showRequestOption = showRequestOption;
                     }
                 });
-                this.updateStateChanged();
                 this.setState({ generalAccount: tmpData });
+                this.updateStateChanged();
                 break;
-            case 'IRA Account':
-                tmpData = this.state.iraAccount;
-                tmpData.map((item) => {
+            }
+            case 'IRA Account': {
+                const { iraAccount } = this.state;                
+                tmpData = iraAccount;
+                tmpData.map((item, i) => {
                     if (item.Id === itemId) {
-                        item.showRequestOption = showRequestOption;
+                        tmpData[i].showRequestOption = showRequestOption;
                     }
                 });
-                this.updateStateChanged();
                 this.setState({ iraAccount: tmpData });
+                this.updateStateChanged();
                 break;
-            case 'UTMA Account':
-                tmpData = this.state.utmaAccount;
-                tmpData.map((item) => {
+            }
+            case 'UTMA Account': {
+                const { utmaAccount } = this.state;                
+                tmpData = utmaAccount;
+                tmpData.map((item, i) => {
                     if (item.Id === itemId) {
-                        item.showRequestOption = showRequestOption;
+                        tmpData[i].showRequestOption = showRequestOption;
                     }
                 });
                 this.updateStateChanged();
                 this.setState({ utmaAccount: tmpData });
+                this.updateStateChanged();
+                break;
+            }
+            default:
                 break;
         }
     }
 
-    updateStateChanged = () => this.setState({ stateChanged: !this.state.stateChanged });
+    updateStateChanged = () => {
+        const { stateChanged }= this.state;
+        this.setState({ stateChanged: !stateChanged });
+    }
 
     setExpandInstruction = () => {
+        const { expand } = this.state;
         this.setState({
-            expand: !this.state.expand,
+            expand: !expand,
         });
     }
 
-    getKey(item) {
-        return item.Id;
-    }
-
+    componentDidFocus = () => {
+        const { navigation } = this.props;
+        this.setState({ requestSubmited: navigation.getParam('requestSubmited', false) });
+    };
 
     renderList = ({ item }) => (
         <ViewAccountItem
             item={item}
             updateShowRequestOption={this.updateShowRequestOption}
             navigateDividentsForAccount={this.navigateDividentsForAccount}
-        />)
+        />
+)
 
     render() {
-        console.log("render ::: ");
-        if (this.props && this.props.dividentsInfo && this.props.dividentsInfo !== this.state.dividentsData) {
-            this.setState({ dividentsData: this.props.dividentsInfo });
+        const { dividentsInfo } = this.props;
+        const { navigation } = this.props;
+        const {dividentsData} = this.state;
+        const { generalAccCollapsedState } = this.state;
+        const { iraAccCollapsedState } = this.state;
+        const { utmaAccCollapsedState } = this.state;
+        const { generalAccount } = this.state;
+        const { utmaAccount } = this.state;
+        const { iraAccount } = this.state;
+        const { requestSubmited } = this.state;
+        const { stateChanged } = this.state;
+        const { collapsedState } = this.state;
 
-            const tmpData = this.props.dividentsInfo;
-            let tmpGeneralAccount = [];
-            let tmpIRAAccount = [];
-            let tmpUTMAAccount = [];
+
+        if (this.props && dividentsInfo && dividentsInfo !== dividentsData) {
+            this.setState({ dividentsData: dividentsInfo });
+
+            const tmpData = dividentsInfo;
+            const tmpGeneralAccount = [];
+            const tmpIRAAccount = [];
+            const tmpUTMAAccount = [];
             tmpData.map((item) => {
                 switch (item.accountType) {
                     case 'General Account':
@@ -253,6 +288,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                     case 'UTMA Account':
                         tmpUTMAAccount.push(item);
                         break;
+                    default: 
+                        break;
                 }
             });
             this.setState({ generalAccount: tmpGeneralAccount, iraAccount: tmpIRAAccount, utmaAccount: tmpUTMAAccount });
@@ -260,16 +297,16 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
 
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
 
-                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={{ justifyContent: 'center' }}>
-                    {this.state.requestSubmited &&
-                        <TouchableOpacity style={styles.confirmationView} onPress={() => this.setState({requestSubmited: false})}>
+                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={styles.contentStyle}>
+                    {requestSubmited && (
+                        <TouchableOpacity style={styles.confirmationView} onPress={this.setState({requestSubmited: false})}>
                             <Text style={styles.confirmationText}>
                                 {gblStrings.dividents.request_submit_dividents}
                             </Text>
                         </TouchableOpacity>
-                    }
+                      )}
 
                     <View style={styles.header}>
                         <Text style={styles.headerText}>
@@ -280,24 +317,25 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                     <View style={styles.linkBreak1} />
 
                     <GCollapseComponent
-                        collapsedState={this.state.generalAccCollapsedState}
-                        onPressAction={this.updateGeneralAccCollapsedState(!this.state.generalAccCollapsedState)}
-                        headerView={
+                        collapsedState={generalAccCollapsedState}
+                        onPressAction={this.updateGeneralAccCollapsedState(!generalAccCollapsedState)}
+                        headerView={(
                             <>
                                 <View style={styles.accountHeaderView}>
-                                    <View style={{ flex: 0.2, alignSelf: 'center' }}>
-                                        {this.state.generalAccCollapsedState ?
+                                    <View style={styles.accountIconStyle}>
+                                        {generalAccCollapsedState ? (
                                             <GIcon
                                                 name="plus"
                                                 type="antdesign"
                                                 size={22}
-                                            /> :
+                                            />
+                                          ) : (
                                             <GIcon
                                                 name="minus"
                                                 type="antdesign"
                                                 size={22}
                                             />
-                                        }
+                                          )}
                                     </View>
 
                                     <Text style={styles.accountHeaderText}>{gblStrings.dividents.general_account}</Text>
@@ -305,41 +343,41 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                                 </View>
                                 <View style={styles.linkBreak1} />
                             </>
-                        }
-                        collapseView={
+                          )}
+                        collapseView={(
                             <>
-                                {this.props && this.props.dividentsInfo && this.state.generalAccount.length > 0 &&
+                                {this.props && dividentsInfo && generalAccount.length > 0 && (
                                     <FlatList
-                                        data={this.state.generalAccount}
-                                        extraData={this.state.stateChanged}
+                                        data={generalAccount}
+                                        extraData={stateChanged}
                                         keyExtractor={this.getKey}
                                         renderItem={this.renderList}
                                     />
-
-                                }
+                                  )}
                             </>
-                        }
+                          )}
                     />
 
                     <GCollapseComponent
-                        collapsedState={this.state.iraAccCollapsedState}
-                        onPressAction={this.updateIRAAccCollapsedState(!this.state.iraAccCollapsedState)}
-                        headerView={
+                        collapsedState={iraAccCollapsedState}
+                        onPressAction={this.updateIRAAccCollapsedState(!iraAccCollapsedState)}
+                        headerView={(
                             <>
                                 <View style={styles.accountHeaderView}>
-                                    <View style={{ flex: 0.2, alignSelf: 'center' }}>
-                                        {this.state.iraAccCollapsedState ?
+                                    <View style={styles.accountIconStyle}>
+                                        {iraAccCollapsedState ? (
                                             <GIcon
                                                 name="plus"
                                                 type="antdesign"
                                                 size={22}
-                                            /> :
+                                            />
+                                          ) : (
                                             <GIcon
                                                 name="minus"
                                                 type="antdesign"
                                                 size={22}
                                             />
-                                        }
+                                          )}
                                     </View>
 
                                     <Text style={styles.accountHeaderText}>{gblStrings.dividents.ira_account}</Text>
@@ -347,41 +385,41 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                                 </View>
                                 <View style={styles.linkBreak1} />
                             </>
-                        }
-                        collapseView={
+                          )}
+                        collapseView={(
                             <>
-                                {this.props && this.props.dividentsInfo && this.state.iraAccount.length > 0 &&
+                                {this.props && dividentsInfo && iraAccount.length > 0 && (
                                     <FlatList
-                                        data={this.state.iraAccount}
-                                        extraData={this.state.stateChanged}
+                                        data={iraAccount}
+                                        extraData={stateChanged}
                                         keyExtractor={this.getKey}
                                         renderItem={this.renderList}
                                     />
-
-                                }
+                                  )}
                             </>
-                        }
+                          )}
                     />
 
                     <GCollapseComponent
-                        collapsedState={this.state.utmaAccCollapsedState}
-                        onPressAction={this.updateUTMAAccCollapsedState(!this.state.utmaAccCollapsedState)}
-                        headerView={
+                        collapsedState={utmaAccCollapsedState}
+                        onPressAction={this.updateUTMAAccCollapsedState(!utmaAccCollapsedState)}
+                        headerView={(
                             <>
                                 <View style={styles.accountHeaderView}>
-                                    <View style={{ flex: 0.2, alignSelf: 'center' }}>
-                                        {this.state.utmaAccCollapsedState ?
+                                    <View style={styles.accountIconStyle}>
+                                        {utmaAccCollapsedState ? (
                                             <GIcon
                                                 name="plus"
                                                 type="antdesign"
                                                 size={22}
-                                            /> :
+                                            />
+                                          ) : (
                                             <GIcon
                                                 name="minus"
                                                 type="antdesign"
                                                 size={22}
                                             />
-                                        }
+                                          )}
                                     </View>
 
                                     <Text style={styles.accountHeaderText}>{gblStrings.dividents.utma_account}</Text>
@@ -389,20 +427,19 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                                 </View>
                                 <View style={styles.linkBreak1} />
                             </>
-                        }
-                        collapseView={
+                          )}
+                        collapseView={(
                             <>
-                                {this.props && this.props.dividentsInfo && this.state.utmaAccount.length > 0 &&
+                                {this.props && dividentsInfo && utmaAccount.length > 0 && (
                                     <FlatList
-                                        data={this.state.utmaAccount}
-                                        extraData={this.state.stateChanged}
+                                        data={utmaAccount}
+                                        extraData={stateChanged}
                                         keyExtractor={this.getKey}
                                         renderItem={this.renderList}
                                     />
-
-                                }
+                                  )}
                             </>
-                        }
+                          )}
                     />
 
 
@@ -415,28 +452,29 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
 
 
                     <GCollapseComponent
-                        collapsedState={this.state.collapsedState}
-                        onPressAction={this.updateCollapsedState(!this.state.collapsedState)}
-                        headerView={
+                        collapsedState={collapsedState}
+                        onPressAction={this.updateCollapsedState(!collapsedState)}
+                        headerView={(
                             <View style={styles.instructionsView}>
-                                <View style={{ flex: 0.2, alignSelf: 'center' }}>
-                                    {this.state.collapsedState ?
+                                <View style={styles.accountIconStyle}>
+                                    {collapsedState ? (
                                         <GIcon
                                             name="plus"
                                             type="antdesign"
                                             size={22}
-                                        /> :
+                                        />
+                                      ) : (
                                         <GIcon
                                             name="minus"
                                             type="antdesign"
                                             size={22}
                                         />
-                                    }
+                                      )}
                                 </View>
                                 <Text style={styles.instructionText}>{gblStrings.dividents.setup_instruction}</Text>
                             </View>
-                        }
-                        collapseView={
+                          )}
+                        collapseView={(
                             <>
                                 <Text style={styles.setupInstructionText}>{gblStrings.dividents.dividents_faq}</Text>
                                 <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_header}</Text>
@@ -451,7 +489,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                                 <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_header}</Text>
                                 <Text style={styles.setupInstructionText}>{gblStrings.dividents.lorem_divident_subheader}</Text>
                             </>
-                        }
+                          )}
                     /> 
 
                     <View style={styles.fullLine} />
@@ -499,13 +537,15 @@ const ViewAccountItem = (props) => {
                 </Text>
             </View>
 
-            {item.showRequestOption && <GButtonComponent
+            {item.showRequestOption && (
+<GButtonComponent
                 buttonStyle={styles.requestBtn}
                 buttonText={gblStrings.common.edit}
                 textStyle={styles.requestButtonText}
                 onPress={() =>
                     props.navigateDividentsForAccount(item)}
-            />}
+/>
+)}
 
             <View style={styles.linkBreak2} />
 
@@ -557,6 +597,12 @@ DividentsAndCapitalGainsPrefComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     getDividentsInfo: PropTypes.instanceOf(Function),
     dividentsInfo: PropTypes.instanceOf(Object),
+};
+
+DividentsAndCapitalGainsPrefComponent.defaultProps = {
+    navigation: {},
+    getDividentsInfo: () => {},
+    dividentsInfo: () => {}
 };
 
 export default DividentsAndCapitalGainsPrefComponent;
