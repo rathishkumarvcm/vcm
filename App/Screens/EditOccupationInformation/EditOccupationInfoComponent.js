@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView } from 'react-native';
-import { styles } from './styles';
+import PropTypes from "prop-types";
+import styles from './styles';
 import { GButtonComponent, GHeaderComponent, GInputComponent, GDropDownComponent, GLoadingSpinner } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
 import globalString from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import ImagesLoad from '../../Images/ImageIndex';
+
+let primarySourceOfIncome = [];
 
 let tempEmploymentClass = [
     {
@@ -53,56 +55,63 @@ let tempDataDropDown = [
     }
 ];
 
-class editOccupationInfoComponent extends Component {
+class EditOccupationInfoComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
-            enableBiometric: false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false,
             isOccupationRetired: false,
-
-            dropDownEmployeeState: false,
-            dropDownEmployeeValue: '',
-            dropDownEmployeeFlag: false,
-            dropDownEmployeeMsg: '',
-
-            dropDownIndustryState: false,
-            dropDownIndustryValue: '',
-            dropDownIndustryFlag: false,
-            dropDownIndustryMsg: '',
-
-            dropDownPrimarySourceState: false,
-            dropDownPrimarySourceValue: '',
-            dropDownPrimarySourceFlag: false,
-            dropDownPrimarySourceMsg: '',
-
-            employeeOccupationValue: '',
-            employeeNameValue: '',
-            employeeLineOneValue: '',
-            employeeLineTwoValue: '',
-            employeeZipCodeValue: '',
-            employeeCityValue: '',
-            employeeStateValue: '',
-
-            isValidOccupation: true,
-            isValidName: true,
-            isValidLineOne: true,
-            isValidLineTwo: true,
-            isValidZipCode: true,
-
             isZipApiCalling: false,
             isAddressApiCalling: false,
-            validOccupationMsg: '',
-            validNameMsg: ''
+            occupationData: {
+
+                dropDownEmployeeState: false,
+                dropDownEmployeeValue: '',
+                dropDownEmployeeFlag: false,
+                dropDownEmployeeMsg: '',
+
+                dropDownIndustryState: false,
+                dropDownIndustryValue: '',
+                dropDownIndustryFlag: false,
+                dropDownIndustryMsg: '',
+
+                dropDownPrimarySourceState: false,
+                dropDownPrimarySourceValue: '',
+                dropDownPrimarySourceFlag: false,
+                dropDownPrimarySourceMsg: '',
+
+                employeeOccupationValue: '',
+                employeeNameValue: '',
+                employeeLineOneValue: '',
+                employeeLineTwoValue: '',
+                employeeZipCodeValue: '',
+                employeeCityValue: '',
+                employeeStateValue: '',
+
+                isValidOccupation: true,
+                isValidName: true,
+                isValidLineOne: true,
+                isValidLineTwo: true,
+                isValidZipCode: true,
+
+                validOccupationMsg: '',
+                validNameMsg: ''
+            }
         };
     }
 
     componentDidMount() {
+        this.occupationInfoMount();
+    }
 
-        let payload = [];
+    componentDidUpdate(prevProps) {
+        this.occupationInfoUpdate(prevProps);
+    }
+
+    occupationInfoMount = () => {
+        const payload = [];
+        const { getProfileCompositeData, profileSettingsLookup, profileState } = this.props;
+        const { occupationData } = this.state;
 
         const compositePayloadData = [
             "employment_status",
@@ -110,111 +119,147 @@ class editOccupationInfoComponent extends Component {
             "prim_src_income"
         ];
 
-        for (let i = 0; i < compositePayloadData.length; i++) {
-            let tempkey = compositePayloadData[i];
-            if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
+        for (let i = 0; i < compositePayloadData.length; i += 1) {
+            const tempkey = compositePayloadData[i];
+            if (this.props && profileSettingsLookup && !profileSettingsLookup[tempkey]) {
                 payload.push(tempkey);
             }
         }
 
-        this.props.getProfileCompositeData(payload);
+        getProfileCompositeData(payload);
 
-        if (this.props && this.props.profileState && this.props.profileState.profileIsRetired) {
+        if (this.props && profileState && profileState.profileIsRetired) {
             this.setState({
-                isOccupationRetired: this.props.profileState.profileIsRetired
+                isOccupationRetired: profileState.profileIsRetired
             });
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.employmentInformations
-            && this.props.profileState.employmentInformations.profileEmploymentStatus) {
+        if (this.props && profileState && profileState.employmentInformations
+            && profileState.employmentInformations.profileEmploymentStatus) {
             this.setState({
-                dropDownEmployeeValue: this.props.profileState.employmentInformations.profileEmploymentStatus
+                occupationData: {
+                    ...occupationData,
+                    dropDownEmployeeValue: profileState.employmentInformations.profileEmploymentStatus
+                }
             });
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.employmentInformations
-            && this.props.profileState.employmentInformations.profileEmpIndustry) {
+        if (this.props && profileState && profileState.employmentInformations
+            && profileState.employmentInformations.profileEmpIndustry) {
             this.setState({
-                dropDownIndustryValue: this.props.profileState.employmentInformations.profileEmpIndustry
+                occupationData: {
+                    ...occupationData,
+                    dropDownIndustryValue: profileState.employmentInformations.profileEmpIndustry
+                }
             });
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.employmentInformations
-            && this.props.profileState.employmentInformations.profileEmpOccupation) {
+        if (this.props && profileState && profileState.employmentInformations
+            && profileState.employmentInformations.profileEmpOccupation) {
             this.setState({
-                employeeOccupationValue: this.props.profileState.employmentInformations.profileEmpOccupation
+                occupationData: {
+                    ...occupationData,
+                    employeeOccupationValue: profileState.employmentInformations.profileEmpOccupation
+                }
             });
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.employmentInformations
-            && this.props.profileState.employmentInformations.profileSourceOfIncome) {
+        if (this.props && profileState && profileState.employmentInformations
+            && profileState.employmentInformations.profileSourceOfIncome) {
             this.setState({
-                dropDownPrimarySourceValue: this.props.profileState.employmentInformations.profileSourceOfIncome
+                occupationData: {
+                    ...occupationData,
+                    dropDownPrimarySourceValue: profileState.employmentInformations.profileSourceOfIncome
+                }
             });
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.employmentInformations
-            && this.props.profileState.employmentInformations.profileEmpEmployer) {
+        if (this.props && profileState && profileState.employmentInformations
+            && profileState.employmentInformations.profileEmpEmployer) {
             this.setState({
-                employeeNameValue: this.props.profileState.employmentInformations.profileEmpEmployer
+                occupationData: {
+                    ...occupationData,
+                    employeeNameValue: profileState.employmentInformations.profileEmpEmployer
+                }
             });
         }
 
         //  Employee City and State
 
-        if (this.props && this.props.profileState && this.props.profileState.profileUserCity) {
+        if (this.props && profileState && profileState.profileUserCity) {
             this.setState({
-                employeeCityValue: this.props.profileState.profileUserCity
+                occupationData: {
+                    ...occupationData,
+                    employeeCityValue: profileState.profileUserCity
+                }
             });
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.profileUserState) {
+        if (this.props && profileState && profileState.profileUserState) {
             this.setState({
-                employeeStateValue: this.props.profileState.profileUserState
+                occupationData: {
+                    ...occupationData,
+                    employeeStateValue: profileState.profileUserState
+                }
             });
         }
     }
 
-    componentDidUpdate(prevProps) {
+    occupationInfoUpdate = (prevProps) => {
         const stateCityResponseData = ActionTypes.GET_STATECITY;
         const addressResponseData = ActionTypes.GET_ADDRESSFORMAT;
 
-        if (this.state.isZipApiCalling) {
-            if (this.props != prevProps) {
-                if (this.props && this.props.stateCityData[stateCityResponseData]) {
-                    const tempResponse = this.props.stateCityData[stateCityResponseData];
+        const { occupationData, isZipApiCalling, isAddressApiCalling } = this.state;
+        const { stateCityData } = this.props;
+
+        if (isZipApiCalling) {
+            if (this.props !== prevProps) {
+                if (this.props && stateCityData[stateCityResponseData]) {
+                    const tempResponse = stateCityData[stateCityResponseData];
                     if (tempResponse && tempResponse.City) {
                         this.setState({
-                            employeeCityValue: tempResponse.City,
-                            employeeStateValue: tempResponse.State,
-                            isValidZipCode: true
+                            occupationData: {
+                                ...occupationData,
+                                employeeCityValue: tempResponse.City,
+                                employeeStateValue: tempResponse.State,
+                                isValidZipCode: true
+                            }
                         });
                     } else {
                         this.setState({
-                            employeeCityValue: ' - ',
-                            employeeStateValue: ' - ',
-                            isValidZipCode: false
+                            occupationData: {
+                                ...occupationData,
+                                employeeCityValue: ' - ',
+                                employeeStateValue: ' - ',
+                                isValidZipCode: false
+                            }
                         });
                     }
                 }
             }
         }
 
-        if (this.state.isAddressApiCalling) {
-            if (this.props != prevProps) {
-                if (this.props && this.props.stateCityData[addressResponseData]) {
-                    const tempAddressResponse = this.props.stateCityData[addressResponseData];
+        if (isAddressApiCalling) {
+            if (this.props !== prevProps) {
+                if (this.props && stateCityData[addressResponseData]) {
+                    const tempAddressResponse = stateCityData[addressResponseData];
                     if (tempAddressResponse && tempAddressResponse.Address2) {
                         this.setState({
-                            employeeLineOneValue: tempAddressResponse.Address1 || "",
-                            employeeLineTwoValue: tempAddressResponse.Address2 || "",
-                            isValidLineOne: true
+                            occupationData: {
+                                ...occupationData,
+                                employeeLineOneValue: tempAddressResponse.Address1 || "",
+                                employeeLineTwoValue: tempAddressResponse.Address2 || "",
+                                isValidLineOne: true
+                            }
                         });
                     } else {
                         this.setState({
-                            addressOne: '',
-                            addressTwo: '',
-                            isValidLineOne: false
+                            occupationData: {
+                                ...occupationData,
+                                addressOne: '',
+                                addressTwo: '',
+                                isValidLineOne: false
+                            }
                         });
                     }
                 }
@@ -222,11 +267,18 @@ class editOccupationInfoComponent extends Component {
         }
     }
 
-    editOccupationOnCancel = () => this.props.navigation.navigate('profileSettings');
+    editOccupationOnCancel = () => {
+        const { navigation } = this.props;
+        navigation.navigate('profileSettings');
+    }
 
     dropDownOccupationClick = () => {
+        const { occupationData } = this.state;
         this.setState({
-            dropDownEmployeeState: !this.state.dropDownEmployeeState
+            occupationData: {
+                ...occupationData,
+                dropDownEmployeeState: !occupationData.dropDownEmployeeState
+            }
         });
     }
 
@@ -244,215 +296,298 @@ class editOccupationInfoComponent extends Component {
             });
         }
 
+        const { occupationData } = this.state;
         this.setState({
-            dropDownEmployeeValue: data[index].value,
-            dropDownEmployeeState: false,
-            dropDownEmployeeFlag: false
+            occupationData: {
+                ...occupationData,
+                dropDownEmployeeValue: data[index].value,
+                dropDownEmployeeState: false,
+                dropDownEmployeeFlag: false
+            }
         });
     }
 
     dropDownSourceClick = () => {
+        const { occupationData } = this.state;
         this.setState({
-            dropDownPrimarySourceState: !this.state.dropDownPrimarySourceState
+            occupationData: {
+                ...occupationData,
+                dropDownPrimarySourceState: !occupationData.dropDownPrimarySourceState
+            }
         });
     }
 
     dropDownSourceSelect = (value, index, data) => {
+        const { occupationData } = this.state;
         this.setState({
-            dropDownPrimarySourceValue: data[index].value,
-            dropDownPrimarySourceState: false,
-            dropDownPrimarySourceFlag: false
+            occupationData: {
+                ...occupationData,
+                dropDownPrimarySourceValue: data[index].value,
+                dropDownPrimarySourceState: false,
+                dropDownPrimarySourceFlag: false
+            }
         });
     }
 
     dropDownIndustryClick = () => {
+        const { occupationData } = this.state;
         this.setState({
-            dropDownIndustryState: !this.state.dropDownIndustryState
+            occupationData: {
+                ...occupationData,
+                dropDownIndustryState: !occupationData.dropDownIndustryState
+            }
         });
     }
 
     dropDownIndustrySelect = (value, index, data) => {
+        const { occupationData } = this.state;
         this.setState({
-            dropDownIndustryValue: data[index].value,
-            dropDownIndustryState: false,
+            occupationData: {
+                ...occupationData,
+                dropDownIndustryValue: data[index].value,
+                dropDownIndustryState: false,
+            }
         });
     }
 
     setValidOccupation = (text) => {
+        const { occupationData } = this.state;
         this.setState({
-            employeeOccupationValue: text,
-            isValidOccupation: true
+            occupationData: {
+                ...occupationData,
+                employeeOccupationValue: text,
+                isValidOccupation: true
+            }
         });
 
-        if (this.state.employeeOccupationValue.length.toString() === "29") {
+        if (occupationData.employeeOccupationValue.length.toString() === "29") {
             this.setState({
-                isValidOccupation: false,
-                validOccupationMsg: 'Max. character length exceeded'
-            })
+                occupationData: {
+                    ...occupationData,
+                    isValidOccupation: false,
+                    validOccupationMsg: 'Max. character length exceeded'
+                }
+            });
         }
     }
 
     setValidEmpName = (text) => {
+        const { occupationData } = this.state;
         this.setState({
-            employeeNameValue: text,
-            isValidName: true
+            occupationData: {
+                ...occupationData,
+                employeeNameValue: text,
+                isValidName: true
+            }
         });
 
-        if (this.state.employeeNameValue.length.toString() === "29") {
+        if (occupationData.employeeNameValue.length.toString() === "29") {
             this.setState({
-                isValidName: false,
-                validNameMsg: 'Max. character length exceeded'
-            })
+                occupationData: {
+                    occupationData,
+                    isValidName: false,
+                    validNameMsg: 'Max. character length exceeded'
+                }
+            });
         }
     }
 
     setValidEmpLineOne = (text) => {
+        const { occupationData } = this.state;
         this.setState({
-            employeeLineOneValue: text,
-            isValidLineOne: true
+            occupationData: {
+                ...occupationData,
+                employeeLineOneValue: text,
+                isValidLineOne: true
+            }
         });
     }
 
     setValidEmpLineTwo = (text) => {
+        const { occupationData } = this.state;
         this.setState({
-            employeeLineTwoValue: text
+            occupationData: {
+                ...occupationData,
+                employeeLineTwoValue: text
+            }
         });
     }
 
     setValidEmpZipcode = (text) => {
+        const { occupationData } = this.state;
         this.setState({
-            employeeZipCodeValue: text,
-            isValidZipCode: true
+            occupationData: {
+                ...occupationData,
+                employeeZipCodeValue: text,
+                isValidZipCode: true
+            }
         });
     }
 
     validateZipCodeValue = () => {
-        if (this.state.employeeZipCodeValue != '') {
+        const { occupationData } = this.state;
+        const { getStateCity } = this.props;
+        if (occupationData.employeeZipCodeValue !== '') {
             const payload = {
-                'Zip': this.state.employeeZipCodeValue
+                'Zip': occupationData.employeeZipCodeValue
             };
 
             this.setState({
-                isZipCodeValid: true,
+                occupationData: {
+                    ...occupationData,
+                    isZipCodeValid: true,
+                },
                 isZipApiCalling: true
             });
-            this.props.getStateCity(payload);
+            getStateCity(payload);
         } else {
             this.setState({
-                isValidZipCode: false
+                occupationData: {
+                    ...occupationData,
+                    isValidZipCode: false
+                }
             });
         }
     }
 
     validateZipAddress = () => {
-        if (this.state.employeeZipCodeValue != '') {
+        const { occupationData } = this.state;
+        if (occupationData.employeeZipCodeValue !== '') {
             this.addNewAddress();
         } else {
             this.setState({
-                isValidZipCode: false
+                occupationData: {
+                    ...occupationData,
+                    isValidZipCode: false
+                }
             });
         }
     }
 
     addNewAddress = () => {
-        var addNewAddressPayload = {
-            "Address1": this.state.employeeLineOneValue,
-            "Address2": this.state.employeeLineTwoValue,
-            "City": this.state.employeeCityValue,
-            "State": this.state.employeeStateValue,
-            "Zip": this.state.employeeZipCodeValue
+        const { occupationData } = this.state;
+        const { getAddressFormat } = this.props;
+        const addNewAddressPayload = {
+            "Address1": occupationData.employeeLineOneValue,
+            "Address2": occupationData.employeeLineTwoValue,
+            "City": occupationData.employeeCityValue,
+            "State": occupationData.employeeStateValue,
+            "Zip": occupationData.employeeZipCodeValue
         };
         this.setState({
             isAddressApiCalling: true
         });
-        this.props.getAddressFormat(addNewAddressPayload);
+        getAddressFormat(addNewAddressPayload);
     }
 
     validateEmploymentValues = () => {
-        if (!this.state.isOccupationRetired) {
-            if (this.state.dropDownEmployeeValue === '') {
+        const { isOccupationRetired, occupationData } = this.state;
+        if (!isOccupationRetired) {
+            if (occupationData.dropDownEmployeeValue === '') {
                 this.setState({
-                    dropDownEmployeeFlag: true,
-                    dropDownEmployeeMsg: globalStrings.profileValidationMessages.validateNetWorth
+                    occupationData: {
+                        ...occupationData,
+                        dropDownEmployeeFlag: true,
+                        dropDownEmployeeMsg: globalString.profileValidationMessages.validateNetWorth
+                    }
                 });
             }
 
-            if (this.state.dropDownIndustryValue === '') {
+            if (occupationData.dropDownIndustryValue === '') {
                 this.setState({
-                    dropDownIndustryFlag: true,
-                    dropDownIndustryMsg: globalStrings.profileValidationMessages.validateNetWorth
+                    occupationData: {
+                        ...occupationData,
+                        dropDownIndustryFlag: true,
+                        dropDownIndustryMsg: globalString.profileValidationMessages.validateNetWorth
+                    }
                 });
             }
 
-            if (this.state.employeeOccupationValue === '') {
+            if (occupationData.employeeOccupationValue === '') {
                 this.setState({
-                    isValidOccupation: false,
-                    validOccupationMsg: globalString.profileValidationMessages.validateEmpOccupation
+                    occupationData: {
+                        ...occupationData,
+                        isValidOccupation: false,
+                        validOccupationMsg: globalString.profileValidationMessages.validateEmpOccupation
+                    }
                 });
             }
 
-            if (this.state.employeeNameValue === '') {
+            if (occupationData.employeeNameValue === '') {
                 this.setState({
-                    isValidName: false,
-                    validNameMsg: globalString.profileValidationMessages.validateEmpName
+                    occupationData: {
+                        ...occupationData,
+                        isValidName: false,
+                        validNameMsg: globalString.profileValidationMessages.validateEmpName
+                    }
                 });
             }
 
-            if (this.state.employeeLineOneValue === '' || this.state.employeeLineTwoValue === '') {
+            if (occupationData.employeeLineOneValue === '' || occupationData.employeeLineTwoValue === '') {
                 this.setState({
-                    isValidLineOne: false,
-                    isValidLineTwo: false
+                    occupationData: {
+                        ...occupationData,
+                        isValidLineOne: false,
+                        isValidLineTwo: false
+                    }
                 });
             }
 
-            if (this.state.employeeZipCodeValue === '') {
+            if (occupationData.employeeZipCodeValue === '') {
                 this.setState({
-                    isValidZipCode: false
+                    occupationData: {
+                        ...occupationData,
+                        isValidZipCode: false
+                    }
                 });
             }
 
-            if (this.state.dropDownEmployeeValue != '' &&
-                this.state.dropDownIndustryValue != '' &&
-                this.state.employeeOccupationValue != '' &&
-                this.state.employeeNameValue != '' &&
-                this.state.employeeLineOneValue || this.state.employeeLineTwoValue != '' &&
-                this.state.employeeZipCodeValue != '') {
+            if (occupationData.dropDownEmployeeValue !== '' &&
+                occupationData.dropDownIndustryValue !== '' &&
+                occupationData.employeeOccupationValue !== '' &&
+                occupationData.employeeNameValue !== '' &&
+                occupationData.employeeLineOneValue || occupationData.employeeLineTwoValue !== '' &&
+                occupationData.employeeZipCodeValue !== '') {
                 this.manageEmployeeInformations();
             }
-        } else {
-            if (this.state.dropDownPrimarySourceValue === '') {
-                this.setState({
+        } else if (occupationData.dropDownPrimarySourceValue === '') {
+            this.setState({
+                occupationData: {
+                    ...occupationData,
                     dropDownPrimarySourceFlag: true,
                     dropDownPrimarySourceMsg: 'Please select primary source of income'
-                });
-            } else {
-                this.manageEmployeeRetired();
-            }
+                }
+            });
+        } else {
+            this.manageEmployeeRetired();
         }
     }
 
     manageEmployeeInformations = () => {
+        const { saveProfileData, navigation } = this.props;
         const payloadData = this.getProfilePayloadData();
-        this.props.saveProfileData("editEmploymentInformations", payloadData);
-        this.props.navigation.navigate('profileSettings');
+        saveProfileData("editEmploymentInformations", payloadData);
+        navigation.navigate('profileSettings');
     }
 
     getProfilePayloadData = () => {
+        const { profileState } = this.props;
+        const { occupationData } = this.state;
         let profilePayload = {};
-        if (this.props && this.props.profileState) {
+        if (this.props && profileState) {
             profilePayload = {
-                ...this.props.profileState,
+                ...profileState,
                 "profileIsRetired": false,
                 "employmentInformations": {
-                    profileEmploymentStatus: this.state.dropDownEmployeeValue,
-                    profileEmpIndustry: this.state.dropDownIndustryValue,
-                    profileEmpOccupation: this.state.employeeOccupationValue,
-                    profileEmpEmployer: this.state.employeeNameValue,
-                    profileEmpLineOne: this.state.employeeLineOneValue,
-                    profileEmpLineTwo: this.state.employeeLineTwoValue,
-                    profileEmpZipCode: this.state.employeeZipCodeValue,
-                    profileEmpCityValue: this.state.employeeCityValue,
-                    profileEmpStateValue: this.state.employeeStateValue,
+                    profileEmploymentStatus: occupationData.dropDownEmployeeValue,
+                    profileEmpIndustry: occupationData.dropDownIndustryValue,
+                    profileEmpOccupation: occupationData.employeeOccupationValue,
+                    profileEmpEmployer: occupationData.employeeNameValue,
+                    profileEmpLineOne: occupationData.employeeLineOneValue,
+                    profileEmpLineTwo: occupationData.employeeLineTwoValue,
+                    profileEmpZipCode: occupationData.employeeZipCodeValue,
+                    profileEmpCityValue: occupationData.employeeCityValue,
+                    profileEmpStateValue: occupationData.employeeStateValue,
                     profileSourceOfIncome: ''
                 }
             };
@@ -461,19 +596,22 @@ class editOccupationInfoComponent extends Component {
     }
 
     manageEmployeeRetired = () => {
+        const { saveProfileData, navigation } = this.props;
         const payloadIsRetired = this.getRetiredStatus();
-        this.props.saveProfileData('addEmploymentStatus', payloadIsRetired);
-        this.props.navigation.navigate('profileSettings');
+        saveProfileData('addEmploymentStatus', payloadIsRetired);
+        navigation.navigate('profileSettings');
     }
 
     getRetiredStatus = () => {
+        const { profileState } = this.props;
+        const { occupationData } = this.state;
         let retiredPayload = {};
-        if (this.props && this.props.profileState) {
+        if (this.props && profileState) {
             retiredPayload = {
-                ...this.props.profileState,
+                ...profileState,
                 "profileIsRetired": true,
                 "employmentInformations": {
-                    profileEmploymentStatus: this.state.dropDownEmployeeValue,
+                    profileEmploymentStatus: occupationData.dropDownEmployeeValue,
                     profileEmpIndustry: '',
                     profileEmpOccupation: '',
                     profileEmpEmployer: '',
@@ -482,7 +620,7 @@ class editOccupationInfoComponent extends Component {
                     profileEmpZipCode: '',
                     profileEmpCityValue: '',
                     profileEmpStateValue: '',
-                    profileSourceOfIncome: this.state.dropDownPrimarySourceValue
+                    profileSourceOfIncome: occupationData.dropDownPrimarySourceValue
                 }
             };
         }
@@ -491,47 +629,53 @@ class editOccupationInfoComponent extends Component {
 
     render() {
 
-        let primarySourceOfIncome = [];
+        const { navigation, stateCityData, profileSettingsLookup } = this.props;
+        const { occupationData, isOccupationRetired } = this.state;
 
-        if (this.props && this.props.profileSettingsLookup &&
-            this.props.profileSettingsLookup.employment_status &&
-            this.props.profileSettingsLookup.employment_status.value) {
-            tempEmploymentClass = this.props.profileSettingsLookup.employment_status.value;
+        const tempEmpStatus = 'employment_status';
+        const tempIndustry = 'industry';
+        const tempSrcIncome = 'prim_src_income';
+
+        if (this.props && profileSettingsLookup &&
+            profileSettingsLookup[tempEmpStatus] &&
+            profileSettingsLookup[tempEmpStatus].value) {
+            tempEmploymentClass = profileSettingsLookup[tempEmpStatus].value;
         }
 
-        if (this.props && this.props.profileSettingsLookup &&
-            this.props.profileSettingsLookup.industry &&
-            this.props.profileSettingsLookup.industry.value) {
-            tempDataDropDown = this.props.profileSettingsLookup.industry.value;
+        if (this.props && profileSettingsLookup &&
+            profileSettingsLookup[tempIndustry] &&
+            profileSettingsLookup[tempIndustry].value) {
+            tempDataDropDown = profileSettingsLookup[tempIndustry].value;
         }
 
-        if (this.props && this.props.profileSettingsLookup &&
-            this.props.profileSettingsLookup.prim_src_income &&
-            this.props.profileSettingsLookup.prim_src_income.value) {
-            primarySourceOfIncome = this.props.profileSettingsLookup.prim_src_income.value;
+        if (this.props && profileSettingsLookup &&
+            profileSettingsLookup[tempSrcIncome] &&
+            profileSettingsLookup[tempSrcIncome].value) {
+            primarySourceOfIncome = profileSettingsLookup[tempSrcIncome].value;
         }
 
         return (
             <View style={styles.container}>
                 {
-                    this.props.stateCityData.isLoading && <GLoadingSpinner />
+                    stateCityData.isLoading && <GLoadingSpinner />
                 }
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={navigation}
+                />
 
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.occupationFlex}>
 
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
                             {globalString.editProfilePageValue.editAddressInfoHead}
                         </Text>
-                        <Text style={[styles.settingsInfo, styles.editLabelBold]}>
+                        <Text style={styles.occupationTitleLabel}>
                             {globalString.editOccupationInfo.occupationTitle}
                         </Text>
                     </View>
 
                     <View style={styles.settingsView}>
-                        <Text style={[styles.editTitleBold, styles.editTitleBold]}>
+                        <Text style={styles.editTitleBold}>
                             {globalString.editOccupationInfo.occupationTitle}
                         </Text>
                     </View>
@@ -549,27 +693,28 @@ class editOccupationInfoComponent extends Component {
                         dropDownName={globalString.editOccupationInfo.occupationEmployment}
                         data={tempEmploymentClass}
                         changeState={this.dropDownOccupationClick}
-                        showDropDown={this.state.dropDownEmployeeState}
-                        dropDownValue={this.state.dropDownEmployeeValue}
+                        showDropDown={occupationData.dropDownEmployeeState}
+                        dropDownValue={occupationData.dropDownEmployeeValue}
                         selectedDropDownValue={this.dropDownOccupationSelect}
-                        itemToDisplay={"value"}
-                        errorFlag={this.state.dropDownEmployeeFlag}
-                        errorText={this.state.dropDownEmployeeMsg}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(290) }} />
+                        itemToDisplay="value"
+                        errorFlag={occupationData.dropDownEmployeeFlag}
+                        errorText={occupationData.dropDownEmployeeMsg}
+                    />
 
-                    {!this.state.isOccupationRetired ? (
+                    {!isOccupationRetired ? (
                         <View>
                             <GDropDownComponent
                                 dropDownTextName={styles.occupationEmploymentLabel}
                                 dropDownName={globalString.editOccupationInfo.occupationIndustry}
                                 data={tempDataDropDown}
                                 changeState={this.dropDownIndustryClick}
-                                showDropDown={this.state.dropDownIndustryState}
-                                dropDownValue={this.state.dropDownIndustryValue}
+                                showDropDown={occupationData.dropDownIndustryState}
+                                dropDownValue={occupationData.dropDownIndustryValue}
                                 selectedDropDownValue={this.dropDownIndustrySelect}
-                                itemToDisplay={"value"}
-                                errorFlag={this.state.dropDownIndustryFlag}
-                                errorText={this.state.dropDownIndustryMsg} />
+                                itemToDisplay="value"
+                                errorFlag={occupationData.dropDownIndustryFlag}
+                                errorText={occupationData.dropDownIndustryMsg}
+                            />
 
                             <View style={styles.editFlexDirectionColumn}>
                                 <Text style={styles.occupationIndustryLabel}>
@@ -579,12 +724,13 @@ class editOccupationInfoComponent extends Component {
                                 <View style={styles.occupationMarginTop}>
                                     <GInputComponent
                                         propInputStyle={styles.editAddressInput}
-                                        placeholder={""}
+                                        placeholder=""
                                         onChangeText={this.setValidOccupation}
-                                        value={this.state.employeeOccupationValue}
+                                        value={occupationData.employeeOccupationValue}
                                         maxLength={30}
-                                        errorFlag={!this.state.isValidOccupation}
-                                        errorText={this.state.validOccupationMsg} />
+                                        errorFlag={!occupationData.isValidOccupation}
+                                        errorText={occupationData.validOccupationMsg}
+                                    />
                                 </View>
                             </View>
 
@@ -596,12 +742,13 @@ class editOccupationInfoComponent extends Component {
                                 <View style={styles.occupationMarginTop}>
                                     <GInputComponent
                                         propInputStyle={styles.editAddressInput}
-                                        placeholder={""}
+                                        placeholder=""
                                         onChangeText={this.setValidEmpName}
-                                        value={this.state.employeeNameValue}
+                                        value={occupationData.employeeNameValue}
                                         maxLength={30}
-                                        errorFlag={!this.state.isValidName}
-                                        errorText={this.state.validNameMsg} />
+                                        errorFlag={!occupationData.isValidName}
+                                        errorText={occupationData.validNameMsg}
+                                    />
                                 </View>
                             </View>
 
@@ -613,11 +760,12 @@ class editOccupationInfoComponent extends Component {
                                 <View style={styles.occupationMarginTop}>
                                     <GInputComponent
                                         propInputStyle={styles.editAddressInput}
-                                        placeholder={""}
+                                        placeholder=""
                                         onChangeText={this.setValidEmpLineOne}
-                                        value={this.state.employeeLineOneValue}
-                                        errorFlag={!this.state.isValidLineOne}
-                                        errorText={globalString.profileValidationMessages.validateEmpLineOne} />
+                                        value={occupationData.employeeLineOneValue}
+                                        errorFlag={!occupationData.isValidLineOne}
+                                        errorText={globalString.profileValidationMessages.validateEmpLineOne}
+                                    />
                                 </View>
                             </View>
 
@@ -629,9 +777,10 @@ class editOccupationInfoComponent extends Component {
                                 <View style={styles.occupationMarginTop}>
                                     <GInputComponent
                                         propInputStyle={styles.editAddressInput}
-                                        placeholder={""}
+                                        placeholder=""
                                         onChangeText={this.setValidEmpLineTwo}
-                                        value={this.state.employeeLineTwoValue} />
+                                        value={occupationData.employeeLineTwoValue}
+                                    />
                                 </View>
                             </View>
 
@@ -643,12 +792,13 @@ class editOccupationInfoComponent extends Component {
                                 <View style={styles.occupationMarginTop}>
                                     <GInputComponent
                                         propInputStyle={styles.editAddressInput}
-                                        placeholder={""}
+                                        placeholder=""
                                         onChangeText={this.setValidEmpZipcode}
-                                        value={this.state.employeeZipCodeValue}
+                                        value={occupationData.employeeZipCodeValue}
                                         onBlur={this.validateZipCodeValue}
-                                        errorFlag={!this.state.isValidZipCode}
-                                        errorText={globalString.profileValidationMessages.validateZipcode} />
+                                        errorFlag={!occupationData.isValidZipCode}
+                                        errorText={globalString.profileValidationMessages.validateZipcode}
+                                    />
                                 </View>
                             </View>
 
@@ -658,7 +808,7 @@ class editOccupationInfoComponent extends Component {
                                 </Text>
 
                                 <Text style={styles.occupationCityStateLabel}>
-                                    {this.state.employeeCityValue}
+                                    {occupationData.employeeCityValue}
                                 </Text>
                             </View>
 
@@ -668,30 +818,31 @@ class editOccupationInfoComponent extends Component {
                                 </Text>
 
                                 <Text style={styles.occupationCityStateLabel}>
-                                    {this.state.employeeStateValue}
+                                    {occupationData.employeeStateValue}
                                 </Text>
                             </View>
 
                         </View>
                     ) : null}
 
-                    {this.state.isOccupationRetired ? (
+                    {isOccupationRetired ? (
                         <View>
                             <GDropDownComponent
                                 dropDownTextName={styles.occupationEmploymentLabel}
                                 dropDownName={globalString.editOccupationInfo.occupationPrimarySource}
                                 data={primarySourceOfIncome}
                                 changeState={this.dropDownSourceClick}
-                                showDropDown={this.state.dropDownPrimarySourceState}
-                                dropDownValue={this.state.dropDownPrimarySourceValue}
+                                showDropDown={occupationData.dropDownPrimarySourceState}
+                                dropDownValue={occupationData.dropDownPrimarySourceValue}
                                 selectedDropDownValue={this.dropDownSourceSelect}
-                                itemToDisplay={"value"}
-                                errorFlag={this.state.dropDownPrimarySourceFlag}
-                                errorText={this.state.dropDownPrimarySourceMsg} />
+                                itemToDisplay="value"
+                                errorFlag={occupationData.dropDownPrimarySourceFlag}
+                                errorText={occupationData.dropDownPrimarySourceMsg}
+                            />
                         </View>
                     ) : null}
 
-                    <Text style={[styles.occupationHint, styles.editFlexDirectionColumn]}>
+                    <Text style={styles.occupationHintLabel}>
                         {globalString.editOccupationInfo.occupationHint}
                     </Text>
 
@@ -700,7 +851,8 @@ class editOccupationInfoComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.cancel}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.editOccupationOnCancel} />
+                            onPress={this.editOccupationOnCancel}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -708,7 +860,8 @@ class editOccupationInfoComponent extends Component {
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.validate}
                             textStyle={styles.saveButtonText}
-                            onPress={this.validateZipAddress} />
+                            onPress={this.validateZipAddress}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -716,7 +869,8 @@ class editOccupationInfoComponent extends Component {
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
                             textStyle={styles.saveButtonText}
-                            onPress={this.validateEmploymentValues} />
+                            onPress={this.validateEmploymentValues}
+                        />
                     </View>
 
                     <View style={styles.newVictorySection}>
@@ -766,4 +920,25 @@ class editOccupationInfoComponent extends Component {
     }
 }
 
-export default editOccupationInfoComponent;
+EditOccupationInfoComponent.propTypes = {
+    navigation: PropTypes.instanceOf(Object).isRequired,
+    profileState: PropTypes.instanceOf(Object),
+    stateCityData: PropTypes.instanceOf(Object),
+    profileSettingsLookup: PropTypes.instanceOf(Object),
+    getProfileCompositeData: PropTypes.func,
+    saveProfileData: PropTypes.func,
+    getStateCity: PropTypes.func,
+    getAddressFormat: PropTypes.func
+};
+
+EditOccupationInfoComponent.defaultProps = {
+    profileState: {},
+    stateCityData: {},
+    profileSettingsLookup: {},
+    getProfileCompositeData: null,
+    saveProfileData: null,
+    getStateCity: null,
+    getAddressFormat: null
+};
+
+export default EditOccupationInfoComponent;

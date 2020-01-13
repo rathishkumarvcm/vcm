@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
-import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GDropDownComponent } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
+import { Text, View, Image, ScrollView } from 'react-native';
+import PropTypes from "prop-types";
+import styles from './styles';
+import { GButtonComponent, GHeaderComponent, GDropDownComponent } from '../../CommonComponents';
 import globalStrings from '../../Constants/GlobalStrings';
+import ImagesLoad from '../../Images/ImageIndex';
 
 const annualIncomeData = [
     {
@@ -53,30 +54,11 @@ const taxFillingStatusData = [
     }
 ];
 
-const newData = [
-    {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'First State',
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        title: 'Second State',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        title: 'Third State',
-    },
-];
-
-class editAddFinancialInfoComponent extends Component {
+class EditAddFinancialInfoComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
-            enableBiometric: false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false,
             taxBracketValue: '',
 
             dropDownFinancialState: false,
@@ -97,25 +79,26 @@ class editAddFinancialInfoComponent extends Component {
     }
 
     dropDownFinancialClick = () => {
+        const { dropDownFinancialState } = this.state;
         this.setState({
-            dropDownFinancialState: !this.state.dropDownFinancialState
+            dropDownFinancialState: !dropDownFinancialState
         });
     }
 
     dropDownFinancialSelect = (value, index, data) => {
-        let item = data[index];
+        const item = data[index];
         this.setState({
             dropDownFinancialValue: item.key,
             dropDownFinancialState: false,
             taxBracketValue: item.taxbracket,
             dropDownFinancialFlag: false
         });
-        console.log('@@@@@@ Financial Values ::', this.state.dropDownFinancialValue + ' ' + this.state.taxBracketValue);
     }
 
     dropDownNetClick = () => {
+        const { dropDownNetState } = this.state;
         this.setState({
-            dropDownNetState: !this.state.dropDownNetState
+            dropDownNetState: !dropDownNetState
         });
     }
 
@@ -125,12 +108,12 @@ class editAddFinancialInfoComponent extends Component {
             dropDownNetState: false,
             dropDownNetFlag: false
         });
-        console.log('@@@@@@ Financial Values ::', this.state.dropDownNetValue);
     }
 
     dropDownTaxFillClick = () => {
+        const { dropDownTaxFillState } = this.state;
         this.setState({
-            dropDownTaxFillState: !this.state.dropDownTaxFillState
+            dropDownTaxFillState: !dropDownTaxFillState
         });
     }
 
@@ -140,38 +123,42 @@ class editAddFinancialInfoComponent extends Component {
             dropDownTaxFillState: false,
             dropDownTaxFillFlag: false
         });
-        console.log('@@@@@@ Financial Values ::', this.state.dropDownTaxFillValue);
     }
 
     componentDidMount() {
+        this.financialDidMount();
+    }
+
+    financialDidMount = () => {
+        const { getProfileCompositeData, profileSettingsLookup, profileState } = this.props;
 
         //  Financial Informations 
 
-        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileAnnualIncome) {
+        if (this.props && profileState && profileState.financialInformations && profileState.financialInformations.profileAnnualIncome) {
             this.setState({
-                dropDownFinancialValue: this.props.profileState.financialInformations.profileAnnualIncome
+                dropDownFinancialValue: profileState.financialInformations.profileAnnualIncome
             });
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileTaxBracket) {
+        if (this.props && profileState && profileState.financialInformations && profileState.financialInformations.profileTaxBracket) {
             this.setState({
-                taxBracketValue: this.props.profileState.financialInformations.profileTaxBracket
+                taxBracketValue: profileState.financialInformations.profileTaxBracket
             });
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileNetWorth) {
+        if (this.props && profileState && profileState.financialInformations && profileState.financialInformations.profileNetWorth) {
             this.setState({
-                dropDownNetValue: this.props.profileState.financialInformations.profileNetWorth
+                dropDownNetValue: profileState.financialInformations.profileNetWorth
             });
         }
 
-        if (this.props && this.props.profileState && this.props.profileState.financialInformations && this.props.profileState.financialInformations.profileTaxFilling) {
+        if (this.props && profileState && profileState.financialInformations && profileState.financialInformations.profileTaxFilling) {
             this.setState({
-                dropDownTaxFillValue: this.props.profileState.financialInformations.profileTaxFilling
+                dropDownTaxFillValue: profileState.financialInformations.profileTaxFilling
             });
         }
 
-        let payload = [];
+        const payload = [];
 
         const compositePayloadData = [
             "annual_income",
@@ -179,109 +166,124 @@ class editAddFinancialInfoComponent extends Component {
             "tax_filling_status"
         ];
 
-        for (let i = 0; i < compositePayloadData.length; i++) {
-            let tempkey = compositePayloadData[i];
-            if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
+        for (let i = 0; i < compositePayloadData.length; i += 1) {
+            const tempkey = compositePayloadData[i];
+            if (this.props && profileSettingsLookup && !profileSettingsLookup[tempkey]) {
                 payload.push(tempkey);
             }
         }
 
-        this.props.getProfileCompositeData(payload);
+        getProfileCompositeData(payload);
     }
 
     navigationSuccess = () => {
 
-        if (this.state.dropDownFinancialValue === '') {
+        const { dropDownFinancialValue, dropDownNetValue, dropDownTaxFillValue } = this.state;
+
+        if (dropDownFinancialValue === '') {
             this.setState({
                 dropDownFinancialFlag: true,
-                dropDownFinancialMsg: globalString.profileValidationMessages.validateFinancialInformation
+                dropDownFinancialMsg: globalStrings.profileValidationMessages.validateFinancialInformation
             });
         }
 
-        if (this.state.dropDownNetValue === '') {
+        if (dropDownNetValue === '') {
             this.setState({
                 dropDownNetFlag: true,
                 dropDownNetMsg: globalStrings.profileValidationMessages.validateNetWorth
             });
         }
 
-        if (this.state.dropDownTaxFillValue === '') {
+        if (dropDownTaxFillValue === '') {
             this.setState({
                 dropDownTaxFillFlag: true,
                 dropDownTaxFillMsg: globalStrings.profileValidationMessages.validateTaxFilling
             });
         }
 
-        if (this.state.dropDownFinancialValue != ''
-            && this.state.dropDownNetValue != ''
-            && this.state.dropDownTaxFillValue != '') {
-                this.manageFinancialInformations();
+        if (dropDownFinancialValue !== '' && dropDownNetValue !== '' && dropDownTaxFillValue !== '') {
+            this.manageFinancialInformations();
         }
     }
 
     manageFinancialInformations = () => {
+        const { saveProfileData, navigation } = this.props;
         const payloadData = this.getProfilePayloadData();
-        console.log("&&&&&&&&&&&&&&&&&&&& Financial Manage ::: ", payloadData);
-        this.props.saveProfileData("editFinancialInformations", payloadData);
-        this.props.navigation.navigate('profileSettings');
+        saveProfileData("editFinancialInformations", payloadData);
+        navigation.navigate('profileSettings');
     }
 
     getProfilePayloadData = () => {
+        const { profileState } = this.props;
+        const { dropDownFinancialValue, taxBracketValue, dropDownNetValue, dropDownTaxFillValue } = this.state;
         let profilePayload = {};
-        if (this.props && this.props.profileState) {
+        if (this.props && profileState) {
             profilePayload = {
-                ...this.props.profileState,
+                ...profileState,
                 "financialInformations": {
-                    profileAnnualIncome: this.state.dropDownFinancialValue,
-                    profileTaxBracket: this.state.taxBracketValue,
-                    profileNetWorth: this.state.dropDownNetValue,
-                    profileTaxFilling: this.state.dropDownTaxFillValue
+                    profileAnnualIncome: dropDownFinancialValue,
+                    profileTaxBracket: taxBracketValue,
+                    profileNetWorth: dropDownNetValue,
+                    profileTaxFilling: dropDownTaxFillValue
                 }
             };
         }
         return profilePayload;
     }
 
-    addFinancialOnCancel = () => this.props.navigation.navigate('profileSettings');
+    addFinancialOnCancel = () => {
+        const { navigation } = this.props;
+        navigation.navigate('profileSettings');
+    }
 
     render() {
-
-        console.log("Financial Data", JSON.stringify(this.props.profileSettingsLookup));
 
         let userAnnualIncome = annualIncomeData;
         let userNetWorth = netWorthData;
         let userTaxFilling = taxFillingStatusData;
 
-        if (this.props && this.props.profileSettingsLookup &&
-            this.props.profileSettingsLookup.annual_income &&
-            this.props.profileSettingsLookup.annual_income.value) {
-            userAnnualIncome = this.props.profileSettingsLookup.annual_income.value;
+        const tempAnnualIncome = 'annual_income';
+        const tempNetWorth = 'net_worth';
+        const tempTaxFilling = 'tax_filling_status';
+
+        const { profileSettingsLookup } = this.props;
+
+        if (this.props && profileSettingsLookup &&
+            profileSettingsLookup[tempAnnualIncome] &&
+            profileSettingsLookup[tempAnnualIncome].value) {
+            userAnnualIncome = profileSettingsLookup[tempAnnualIncome].value;
         }
 
-        if (this.props && this.props.profileSettingsLookup &&
-            this.props.profileSettingsLookup.net_worth &&
-            this.props.profileSettingsLookup.net_worth.value) {
-            userNetWorth = this.props.profileSettingsLookup.net_worth.value;
+        if (this.props && profileSettingsLookup &&
+            profileSettingsLookup[tempNetWorth] &&
+            profileSettingsLookup[tempNetWorth].value) {
+            userNetWorth = profileSettingsLookup[tempNetWorth].value;
         }
 
-        if (this.props && this.props.profileSettingsLookup &&
-            this.props.profileSettingsLookup.tax_filling_status &&
-            this.props.profileSettingsLookup.tax_filling_status.value) {
-            userTaxFilling = this.props.profileSettingsLookup.tax_filling_status.value;
+        if (this.props && profileSettingsLookup &&
+            profileSettingsLookup[tempTaxFilling] &&
+            profileSettingsLookup[tempTaxFilling].value) {
+            userTaxFilling = profileSettingsLookup[tempTaxFilling].value;
         }
+
+        const { navigation } = this.props;
+        const { dropDownFinancialState, dropDownFinancialValue, dropDownFinancialFlag, dropDownFinancialMsg,
+            dropDownNetState, dropDownNetValue, dropDownNetFlag, dropDownNetMsg, dropDownTaxFillState,
+            dropDownTaxFillValue, dropDownTaxFillFlag, dropDownTaxFillMsg, taxBracketValue } = this.state;
 
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={navigation}
+                />
 
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.addFinancialFlexDirection}>
 
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
                             {globalStrings.editProfilePageValue.editAddressInfoHead}
                         </Text>
-                        <Text style={[styles.settingsInfo, styles.editLabelBold]}>
+                        <Text style={styles.addFinancialTitle}>
                             {globalStrings.addFinancialInformations.addFinancialTitle}
                         </Text>
                     </View>
@@ -299,20 +301,20 @@ class editAddFinancialInfoComponent extends Component {
                         dropDownName={globalStrings.addFinancialInformations.annualIncome}
                         data={userAnnualIncome}
                         changeState={this.dropDownFinancialClick}
-                        showDropDown={this.state.dropDownFinancialState}
-                        dropDownValue={this.state.dropDownFinancialValue}
+                        showDropDown={dropDownFinancialState}
+                        dropDownValue={dropDownFinancialValue}
                         selectedDropDownValue={this.dropDownFinancialSelect}
-                        itemToDisplay={"value"}
-                        errorFlag={this.state.dropDownFinancialFlag}
-                        errorText={this.dropDownFinancialMsg}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(200) }} />
+                        itemToDisplay="value"
+                        errorFlag={dropDownFinancialFlag}
+                        errorText={dropDownFinancialMsg}
+                    />
 
                     <View style={styles.financialViewNormal}>
                         <Text style={styles.financialTextLabel}>
                             {globalStrings.addFinancialInformations.taxBracket}
                         </Text>
                         <Text style={styles.financialValueLabel}>
-                            {this.state.taxBracketValue + '%'}
+                            {`${taxBracketValue}%`}
                         </Text>
                     </View>
 
@@ -321,26 +323,26 @@ class editAddFinancialInfoComponent extends Component {
                         dropDownName={globalStrings.addFinancialInformations.netWorth}
                         data={userNetWorth}
                         changeState={this.dropDownNetClick}
-                        showDropDown={this.state.dropDownNetState}
-                        dropDownValue={this.state.dropDownNetValue}
+                        showDropDown={dropDownNetState}
+                        dropDownValue={dropDownNetValue}
                         selectedDropDownValue={this.dropDownNetSelect}
-                        itemToDisplay={"value"}
-                        errorFlag={this.state.dropDownNetFlag}
-                        errorText={this.dropDownNetMsg}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(380) }} />
- 
+                        itemToDisplay="value"
+                        errorFlag={dropDownNetFlag}
+                        errorText={dropDownNetMsg}
+                    />
+
                     <GDropDownComponent
                         dropDownTextName={styles.financialTextLabel}
                         dropDownName={globalStrings.addFinancialInformations.taxFillingStatus}
                         data={userTaxFilling}
                         changeState={this.dropDownTaxFillClick}
-                        showDropDown={this.state.dropDownTaxFillState}
-                        dropDownValue={this.state.dropDownTaxFillValue}
+                        showDropDown={dropDownTaxFillState}
+                        dropDownValue={dropDownTaxFillValue}
                         selectedDropDownValue={this.dropDownTaxFillSelect}
-                        itemToDisplay={"value"}
-                        errorFlag={this.state.dropDownTaxFillFlag}
-                        errorText={this.dropDownTaxFillMsg}
-                        dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(500) }} />
+                        itemToDisplay="value"
+                        errorFlag={dropDownTaxFillFlag}
+                        errorText={dropDownTaxFillMsg}
+                    />
 
                     <View style={styles.editFlexDirectionColumn}>
                         <GButtonComponent
@@ -356,11 +358,12 @@ class editAddFinancialInfoComponent extends Component {
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalStrings.common.save}
                             onPress={this.navigationSuccess}
-                            textStyle={styles.saveButtonText} />
+                            textStyle={styles.saveButtonText}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
-                        <Text style={[styles.openInvestment, lineHeight = 40]}>
+                        <Text style={styles.openInvestmentLarge}>
                             {globalStrings.addFinancialInformations.financialSecurity}
                         </Text>
                     </View>
@@ -369,14 +372,15 @@ class editAddFinancialInfoComponent extends Component {
                         <Text style={styles.termsofuseText1}>
                             {globalStrings.addFinancialInformations.financialInvesting}
                         </Text>
-                        <Text style={[styles.openInvestment, lineHeight = 30]}>
+                        <Text style={styles.openInvestmentNormal}>
                             {globalStrings.addFinancialInformations.financialOpenInvestment}
                         </Text>
                     </View>
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={ImagesLoad.applicationLogo}
+                        />
                     </View>
 
                     <View style={styles.whiteBackground}>
@@ -387,10 +391,10 @@ class editAddFinancialInfoComponent extends Component {
 
                     <View style={styles.whiteBackground}>
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/twitterlogo.png")}
+                            source={ImagesLoad.twitterlogo}
                         />
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/linkedinlogo.png")}
+                            source={ImagesLoad.linkedinlogo}
                         />
                     </View>
 
@@ -422,9 +426,23 @@ class editAddFinancialInfoComponent extends Component {
 
                 </ScrollView>
             </View>
-
         );
     }
 }
 
-export default editAddFinancialInfoComponent;
+EditAddFinancialInfoComponent.propTypes = {
+    navigation: PropTypes.instanceOf(Object).isRequired,
+    profileState: PropTypes.instanceOf(Object),
+    profileSettingsLookup: PropTypes.instanceOf(Object),
+    getProfileCompositeData: PropTypes.func,
+    saveProfileData: PropTypes.func
+};
+
+EditAddFinancialInfoComponent.defaultProps = {
+    profileState: {},
+    profileSettingsLookup: {},
+    getProfileCompositeData: null,
+    saveProfileData: null
+};
+
+export default EditAddFinancialInfoComponent;

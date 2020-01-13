@@ -3,7 +3,7 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 const { width } = Dimensions.get('window');
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F7FAFF',
@@ -307,10 +307,17 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#486D89'
     },
-    openInvestment: {
+    openInvestmentNormal: {
         fontSize: scaledHeight(16),
         color: '#56565A',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        lineHeight: 30
+    },
+    openInvestmentLarge: {
+        fontSize: scaledHeight(16),
+        color: '#56565A',
+        justifyContent: 'center',
+        lineHeight: 40
     },
     lineBorder: {
         marginTop: scaledHeight(15),
@@ -415,5 +422,13 @@ export const styles = StyleSheet.create({
     financialFlexRow: {
         flexDirection: 'row'
     },
+    addFinancialFlexDirection: { flex: 0.85 },
     editDropDownSelect: { height: 100, borderWidth: 1, marginRight: '4%', marginTop: '1%', width: '92%', borderColor: "#DEDEDF", backgroundColor: 'white'},
+    addFinancialTitle: {
+        color: '#B2B2B2',
+        fontWeight: "bold",
+        fontSize: scaledHeight(16)
+    }
 });
+
+export default styles;

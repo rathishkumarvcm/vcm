@@ -7,7 +7,7 @@ const mapStateToProps = (state /* , props */) => (
   {
     profileState: state.profileInformationData,
     profileSettingsLookup: state.masterLookUpData,
-    stateCityData:state.addressFormatData
+    stateCityData: state.addressFormatData
   }
 );
 
