@@ -46,11 +46,12 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
     constructor(props) {
         super(props);
         const systematicSchedule =  myInstance.getSystematicWithdrawalEditMode()? (myInstance.getScreenStateData().systematicSchedule || {}):{};
+        console.log('constructor***************',this.props.navigation.getParam('itemToEdit'))
         this.state = {
             typeDropDown: false,
             valueTypeDropDown: '',
             dateDropDown: false,
-            valueDateDropDown: '',
+            valueDateDropDown: 'null',
             dateBeginDropDown: false,
             valueDateBeginDropDown: '',
             startDateDropDown: false,
@@ -59,7 +60,7 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
             valueStartYearDropDown:'',
             selectedFrequency:-1,
             systematicWithdrawalJson:{},
-            itemToEdit: `${this.props.navigation.getParam('ItemToEdit', -1)}`,
+            itemToEdit: this.props.navigation.getParam('ItemToEdit'),
             acc_name:`${this.props.navigation.getParam('acc_name')}`,
             acc_no:`${this.props.navigation.getParam('acc_no')}`,
             accountType:`${this.props.navigation.getParam('accountType')}`,
@@ -79,17 +80,46 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
          }
 
          
-        let itemToEdit = this.state.itemToEdit;
-        if (itemToEdit > -1) {
+        let itemEdit = this.state.itemToEdit;
+        console.log('itemToEdit***************if***',this.state.itemToEdit)
+        if (itemEdit > -1) {
             if (this.props && this.props.systematicWithdrawalState) {
+                switch(this.state.accountType)
+                {
+                    case 'General':
                 this.setState({
-                    systematicWithdrawalJson: this.props.systematicWithdrawalState.general[itemToEdit],
-                    valueTypeDropDown: this.props.systematicWithdrawalState.general[itemToEdit].invest,
-                    valueDateDropDown: this.props.systematicWithdrawalState.general[itemToEdit].dateToInvest.replace('th', '').trim(),
-                    valueDateBeginDropDown: this.props.systematicWithdrawalState.general[itemToEdit].dateFromInvest.replace('th', '').trim(),
-                    valueStartYearDropDown: this.props.systematicWithdrawalState.general[itemToEdit].startYear,
-                    valueStartDateDropDown:this.props.systematicWithdrawalState.general[itemToEdit].startDate,
+                    systematicWithdrawalJson: this.props.systematicWithdrawalState.general[itemEdit],
+                    valueTypeDropDown: this.props.systematicWithdrawalState.general[itemEdit].invest,
+                    valueDateDropDown: this.props.systematicWithdrawalState.general[itemEdit].dateToInvest.replace('th', '').trim(),
+                    valueDateBeginDropDown: this.props.systematicWithdrawalState.general[itemEdit].dateFromInvest.replace('th', '').trim(),
+                    valueStartYearDropDown: this.props.systematicWithdrawalState.general[itemEdit].startYear,
+                    valueStartDateDropDown:this.props.systematicWithdrawalState.general[itemEdit].startDate,
+                    selectedFrequency:typeJson.findIndex(obj => obj.value === this.props.systematicWithdrawalState.general[itemEdit].invest)
                 });
+                break;
+                    case 'Ira':
+                        this.setState({
+                            systematicWithdrawalJson: this.props.systematicWithdrawalState.ira[itemEdit],
+                            valueTypeDropDown: this.props.systematicWithdrawalState.ira[itemEdit].invest,
+                            valueDateDropDown: this.props.systematicWithdrawalState.ira[itemEdit].dateToInvest.replace('th', '').trim(),
+                            valueDateBeginDropDown: this.props.systematicWithdrawalState.ira[itemEdit].dateFromInvest.replace('th', '').trim(),
+                            valueStartYearDropDown: this.props.systematicWithdrawalState.ira[itemEdit].startYear,
+                            valueStartDateDropDown:this.props.systematicWithdrawalState.ira[itemEdit].startDate,
+                            selectedFrequency:typeJson.findIndex(obj => obj.value === this.props.systematicWithdrawalState.ira[itemEdit].invest)
+                        });
+                        break;
+                        case 'Utma':
+                        this.setState({
+                            systematicWithdrawalJson: this.props.systematicWithdrawalState.utma[itemEdit],
+                            valueTypeDropDown: this.props.systematicWithdrawalState.utma[itemEdit].invest,
+                            valueDateDropDown: this.props.systematicWithdrawalState.utma[itemEdit].dateToInvest.replace('th', '').trim(),
+                            valueDateBeginDropDown: this.props.systematicWithdrawalState.utma[itemEdit].dateFromInvest.replace('th', '').trim(),
+                            valueStartYearDropDown: this.props.systematicWithdrawalState.utma[itemEdit].startYear,
+                            valueStartDateDropDown:this.props.systematicWithdrawalState.utma[itemEdit].startDate,
+                            selectedFrequency:typeJson.findIndex(obj => obj.value === this.props.systematicWithdrawalState.utma[itemEdit].invest)
+                        });
+                        break;
+                    }
             }
         }
     }
@@ -102,13 +132,19 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
     }
 
     navigationBack = () => this.props.navigation.goBack();
-    navigationCancel = () => this.props.navigation.navigate('systematicWithdrawal');
+    navigationCancel = () => {
+        if(this.state.itemToEdit>-1)
+            this.props.navigation.goBack('systematicWithdrawalAdd');
+        else
+            this.props.navigation.goBack('systematicWithdrawalAccount');
+    }
 
     selectedDropDownTypeValue = (valueType) => {
         let selectedValue=valueType;
         let index=selectedValue.toLowerCase()==='twice a month'?0:1;
+        let date2=selectedValue.toLowerCase()==='twice a month'?'':'null';
         this.setState({
-            
+            valueDateDropDown:date2,
             selectedFrequency:index,
             valueTypeDropDown: selectedValue,
             typeDropDown: false
@@ -352,11 +388,11 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
                         />
                         <GButtonComponent
                              buttonStyle={this.state.valueTypeDropDown!='' && this.state.valueDateBeginDropDown!='' && this.state.valueStartDateDropDown!='' &&
-                             this.state.valueStartYearDropDown!='' ?styles.continueButtonSelected:styles.continueButton}
+                             this.state.valueStartYearDropDown!='' && this.state.valueDateDropDown!='' ?styles.continueButtonSelected:styles.continueButton}
                             buttonText={globalString.common.next}
                             textStyle={styles.continueButtonText}
                             onPress={this.state.valueTypeDropDown!='' && this.state.valueDateBeginDropDown!='' && this.state.valueStartDateDropDown!='' &&
-                            this.state.valueStartYearDropDown!='' ?this.navigationNext:null}
+                            this.state.valueStartYearDropDown!='' && this.state.valueDateDropDown!='' ?this.navigationNext:null}
                         />
                     </View>
                     <GFooterComponent />

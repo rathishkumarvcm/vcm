@@ -68,31 +68,31 @@ class SystematicWithdrawalComponent extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        const{refresh} = this.state;
-        if (this.props && this.props.systematicWithdrawalState) {
-            if(this.props.systematicWithdrawalState.savedAccData)
-            {
-                console.log('componentDidMount#####################',this.props.systematicWithdrawalState.savedAccData)
-                this.setState({
-                    generalySystematicWithdrawal: this.props.systematicWithdrawalState.savedAccData.general,
-                    iraSystematicWithdrawal: this.props.systematicWithdrawalState.savedAccData.ira,
-                    utmaSystematicWithdrawal:this.props.systematicWithdrawalState.savedAccData.utma,
-                    refresh: !refresh
-                });
-            }
-            // else
-            // {
-            //     this.setState({
-            //         generalySystematicWithdrawal: this.props.systematicWithdrawalState.general,
-            //         iraSystematicWithdrawal: this.props.systematicWithdrawalState.ira,
-            //         utmaSystematicWithdrawal:this.props.systematicWithdrawalState.utma,
-            //         refresh: !refresh
-            //     });
-            // }
-        }
+    // componentDidUpdate(prevProps, prevState) {
+    //     const{refresh} = this.state;
+    //     if (this.props && this.props.systematicWithdrawalState) {
+    //         if(this.props.systematicWithdrawalState.savedAccData)
+    //         {
+    //             console.log('componentDidMount#####################',this.props.systematicWithdrawalState.savedAccData)
+    //             this.setState({
+    //                 generalySystematicWithdrawal: this.props.systematicWithdrawalState.savedAccData.general,
+    //                 iraSystematicWithdrawal: this.props.systematicWithdrawalState.savedAccData.ira,
+    //                 utmaSystematicWithdrawal:this.props.systematicWithdrawalState.savedAccData.utma,
+    //                 refresh: !refresh
+    //             });
+    //         }
+    //         // else
+    //         // {
+    //         //     this.setState({
+    //         //         generalySystematicWithdrawal: this.props.systematicWithdrawalState.general,
+    //         //         iraSystematicWithdrawal: this.props.systematicWithdrawalState.ira,
+    //         //         utmaSystematicWithdrawal:this.props.systematicWithdrawalState.utma,
+    //         //         refresh: !refresh
+    //         //     });
+    //         // }
+    //     }
         
-    }
+    // }
 
     setCollapsableUpdates = index => e => {
         const{arr_expand} =this.state;
@@ -176,7 +176,7 @@ class SystematicWithdrawalComponent extends Component {
                         </View>
                         <View style={styles.verifyContentMain}>
                             <Text style={styles.verifyConent1}>{"On the date"}</Text>
-                            <Text style={styles.verifyConent2}>{item.dateToInvest}</Text>
+                            <Text style={styles.verifyConent2}>{item.dateToInvest === ''?item.dateFromInvest:(item.dateFromInvest+' & '+item.dateToInvest)}</Text>
                         </View>
                         <View style={styles.verifyContentMain}>
                             <Text style={styles.verifyConent1}>{"Amount"}</Text>
@@ -358,6 +358,8 @@ class SystematicWithdrawalComponent extends Component {
                             <Text style={styles.addInvest} onPress={this.navigationInvestmentAccount}>{'Add'}</Text>
                         </View>
                         <View style={styles.seperator_line} />
+                        
+                        {this.state.generalySystematicWithdrawal.length>0?<View>
                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(0)}>
                             <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>
                                 {this.state.arr_expand[0] ?
@@ -385,7 +387,8 @@ class SystematicWithdrawalComponent extends Component {
                             keyExtractor={this.generateKeyExtractor}
                             extraData={this.state.refresh}
                         />:null} 
-
+                        </View>:null}
+                    {this.state.iraSystematicWithdrawal.length>0?<View>
                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(1)}>
                             <View style={{ flexDirection: 'row', flex: 1, alignItems: "center" }}>
                                 {this.state.arr_expand[1] ?
@@ -413,6 +416,7 @@ class SystematicWithdrawalComponent extends Component {
                             keyExtractor={this.generateKeyExtractor}
                             extraData={this.state.refresh}
                         />:null} 
+                        </View>:null}
 
                     {this.props.systematicWithdrawalState.utma?<View>
                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(2)}>

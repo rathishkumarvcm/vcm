@@ -214,7 +214,7 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
     }
 
     navigationBack = () => this.props.navigation.goBack();
-    navigationCancel = () => this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
+    navigationCancel = () => this.props.navigation.goBack('automaticInvestment');
 
     render() {
         const date = new Date().getDate(); //Current Date

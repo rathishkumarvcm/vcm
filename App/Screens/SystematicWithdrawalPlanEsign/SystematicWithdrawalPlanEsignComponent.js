@@ -53,7 +53,7 @@ class SystematicWithdrawalPlanEsignComponent extends Component {
                             //endDate:item.endDate,
                             nextWithdrawalDate:'',//item.nextWithdrawalDate
                         }
-                        switch ((this.state.accountType)) {
+                        switch ((this.state.accountType.toLowerCase())) {
                             case "general":
                                 if(this.props.systematicWithdrawalState.general){
                                         
@@ -141,7 +141,13 @@ navigationSubmit = () => {
     this.setState({errorTextMsg:'Please select the above checkbox'})
 }
     navigationBack = () => this.props.navigation.goBack();
-    navigationCancel = () => this.props.navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
+    navigationCancel = () => 
+    {
+        if(this.state.itemToEdit>-1)
+            this.props.navigation.goBack('systematicWithdrawalAdd');
+        else
+            this.props.navigation.goBack('systematicWithdrawalAccount');
+    }
     // this.props.navigation.navigate('systematicWithdrawal');
 
     render() {
