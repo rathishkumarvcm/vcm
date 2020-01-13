@@ -1,23 +1,28 @@
 import { connect } from "react-redux";
 import CollegePlanESAComponent from './CollegePlanESAComponent';
-import { getLogin } from "../../Shared/Reducers";
-import { loginActions } from "../../Shared/Actions";
+import { accOpeningActions, addressFormatActions } from "../../Shared/Actions";
+
 
 /*----------------------
                                   Redux Methods
                                                              -------------------------- */
 
 const mapStateToProps = (state /* , props */) => (
-    {
-      dashboardData: getLogin(state)
-    }
-  );
+  {
+    accOpeningData: state.accOpeningReducerData,
+    initialState: state.initialAppData,
+    masterLookupStateData: state.masterLookUpData,
+    addressFormatData: state.addressFormatData
+
+  }
+);
 
 const mapDispatchToProps = {
-    ...loginActions
-  };
+  ...accOpeningActions,
+  ...addressFormatActions
+};
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(CollegePlanESAComponent);
+  mapStateToProps,
+  mapDispatchToProps
+)(CollegePlanESAComponent);

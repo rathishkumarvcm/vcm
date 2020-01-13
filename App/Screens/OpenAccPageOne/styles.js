@@ -255,8 +255,6 @@ const styles = StyleSheet.create({
         color: '#61285F',
         fontSize: scaledHeight(6)
     },
-
-
     scrollView: {
         flex: .85
     },
@@ -358,7 +356,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#535353',
         lineHeight: 22
-    }
+    },
 
 });
 

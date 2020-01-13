@@ -79,6 +79,40 @@ const styles = StyleSheet.create({
         lineHeight: 25
 
     },
+    dropDownLayout: {
+        //  alignItems: "flex-start",
+        //  justifyContent: "flex-start",
+         marginLeft: '0%',
+         marginRight: '0%',
+         marginTop: scaledHeight(25),
+         width: '100%'
+     },
+
+
+    dropDownPostition: {
+        marginLeft: scaledHeight(0),
+        marginRight: scaledHeight(0),
+        width: '100%',
+        //  position: 'absolute',
+        //  left: 0
+    },
+    dropDownTextName: {
+         borderColor:'blue',
+         color: 'rgba(51, 51, 51, 0.87)',
+         fontSize: scaledHeight(16),
+         fontWeight: 'bold',
+         marginBottom: scaledHeight(9),
+         marginLeft: '0%',
+         marginRight: '0%',
+         paddingLeft: '0%',
+         paddingRight: '0%',
+         width: '100%'
+ 
+     },
+
+
+
+
     explainDotteBorderTxt: {
 
         color: '#333333DE',
@@ -87,6 +121,7 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(10)
 
     },
+
 
 
     explainDottedBorder: {
@@ -105,9 +140,6 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(10)
     },
 
-
-
-
     explainUnderline: {
         alignItems: "center",
         borderBottomColor: '#56565A',
@@ -116,9 +148,6 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start"
 
     },
-
-
-
     explainUnderlineTxt: {
 
         color: '#56565A',
@@ -135,7 +164,6 @@ const styles = StyleSheet.create({
         textAlign: 'left',
         width: '100%'
     },
-
     hintLabelTxt: {
         color: '#000000DE',
         fontSize: scaledHeight(15),
@@ -143,6 +171,7 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(5),
         opacity: .65
     },
+
     lblLine: {
         //  width:"100%",
         flexGrow: 1,
@@ -178,12 +207,12 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(25)
 
     },
+
     moreTxt: {
         color: '#61285F',
         fontSize: scaledHeight(16),
         fontWeight: 'bold'
     },
-
     newVictorySection: {
         //   marginTop: scaledHeight(150),
         padding: scaledHeight(12),
@@ -208,7 +237,6 @@ const styles = StyleSheet.create({
 
 
     },
-
     normalBlackBtnDisabledTxt: {
         color: '#fff',
         fontSize: scaledHeight(16),
@@ -234,6 +262,9 @@ const styles = StyleSheet.create({
         marginVertical: scaledHeight(7.5),
         marginHorizontal: scaledHeight(37)
     },
+
+
+
     normalWhiteBtn: {
         //   width: '90%',
         borderWidth: 1,
@@ -248,6 +279,8 @@ const styles = StyleSheet.create({
         marginHorizontal: scaledHeight(37)
 
     },
+
+
     normalWhiteBtnTxt: {
         color: '#544A54',
         fontSize: scaledHeight(16),
@@ -265,16 +298,20 @@ const styles = StyleSheet.create({
         width: "100%"
 
     },
-
-
-
     radioBtnGrp: {
         flexDirection: 'row',
         flexGrow: 1,
         marginTop: scaledHeight(0)
     },
-
-
+    radioCol1: {
+        marginBottom: scaledHeight(0),
+        marginTop: scaledHeight(24),
+        width:"30%" 
+    },
+    radioCol2: {
+        marginBottom: scaledHeight(0),
+        marginTop: scaledHeight(24)
+    },
     regulatoryQuestTxt: {
         color: '#333333DE',
         fontSize: scaledHeight(16),
@@ -283,7 +320,10 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(23)
 
     },
-    sectionDescTxt: {
+    scrollView: {
+        flex: .85
+    },
+     sectionDescTxt: {
         color: '#333333DE',
         fontSize: scaledHeight(14),
         lineHeight: 22,
@@ -291,7 +331,7 @@ const styles = StyleSheet.create({
         opacity: .75
 
     },
-    sectionGrp: {
+     sectionGrp: {
         flexGrow: 1,
         marginHorizontal: scaledHeight(12),
         marginTop: scaledHeight(31),

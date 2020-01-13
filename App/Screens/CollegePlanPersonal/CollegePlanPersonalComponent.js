@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import PropTypes from "prop-types";
 import styles from './styles';
 import { GButtonComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import { scaledHeight } from '../../Utils/Resolution';
-import PropTypes from "prop-types";
+import AppUtils from '../../Utils/AppUtils';
 
 
 class CollegePlanPersonalComponent extends Component {
@@ -13,43 +14,55 @@ class CollegePlanPersonalComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
-            itemID: "",
-            selectedItemID: "",
-            selectedItemName: "",
+          
 
 
         };
     }
+
     /*----------------------
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
     componentDidMount() {
 
     }
+
     /*----------------------
                                  Button Events 
                                                                  -------------------------- */
     onClickHeader = () => {
-        console.log("#TODO : onClickHeader");
+        AppUtils.debugLog("#TODO : onClickHeader");
     }
+
     goBack = () => {
-        this.props.navigation.goBack();
+        const { navigation } = this.props;
+        const { goBack } = navigation;
+        goBack();
     }
+
     onClickCancel = () => {
-        this.props.navigation.goBack('termsAndConditions');
+        const { navigation } = this.props;
+        const { goBack } = navigation;
+        goBack('termsAndConditions');
     }
-    onClickDownloadPDF = () => {
-        alert("#TODO : Download");
-    }
-    onSelected = (item) => () => {
-        console.log("item: " + item.id);
-        this.setState({ selectedItemID: item.id });
-        this.setState({ selectedItemName: item.name });
-    }
+
     onClickNext = () => {
-        this.props.navigation.navigate('collegePlanBeneficiary', { key: 'collegePlanBeneficiary' });
+        this.validateFields();
+        const { navigation } = this.props;
+        const { navigate } = navigation;
+        navigate('collegePlanBeneficiary', { key: 'collegePlanBeneficiary' });
     }
+
+    onClickDownloadPDF = () => {
+        AppUtils.debugLog("#TODO : Download");
+    }
+
+    onSelected = (item) => () => {
+        AppUtils.debugLog(`item: ${ item.id}`);
+        this.setState({ selectedItemID: item.id });
+    }
+
+
     onClickSave = () => {
     }
 
@@ -59,68 +72,71 @@ class CollegePlanPersonalComponent extends Component {
                                                                  -------------------------- */
     render() {
 
-        let currentPage = 4;
+        const currentPage = 4;
+        const { navigation} = this.props;
+        const {selectedItemID} = this.state;
+
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} onPress={this.onClickHeader} />
-                <ScrollView style={{ flex: .85 }}>
-                    <CustomPageWizard currentPage={currentPage} pageName={(currentPage) + " " + gblStrings.accManagement.personalInformation} />
+                <GHeaderComponent navigation={navigation} onPress={this.onClickHeader} />
+                <ScrollView style={styles.scrollView}>
+                    <CustomPageWizard currentPage={currentPage} pageName={`${currentPage } ${ gblStrings.accManagement.personalInformation}`} />
 
 
 
-                    { /*-----------Personal information -------------------*/}
-                    <View style={[styles.sectionGrp]}>
+                    { /* -----------Personal information -------------------*/}
+                    <View style={styles.sectionGrp}>
                         <TouchableOpacity
                             //  onPress={() => { alert("#TODO:: Edit") }}
                             activeOpacity={0.8}
-                            accessibilityRole={'button'}
+                            accessibilityRole="button"
                             style={styles.editBtn}
                         >
                             <Text style={styles.editBtnTxt}>
                                 {gblStrings.common.edit}
                             </Text>
                         </TouchableOpacity>
-                        <View style={styles.editDetailsGrp} >
+                        <View style={styles.editDetailsGrp}>
 
                             <Text style={styles.lblLeftColTxt}>
                                 {gblStrings.accManagement.name}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"John Due"}
+                                John Due
                             </Text>
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.socialSecurityNo}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"000-00-1234"}
+                                000-00-1234
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.mailingAddress}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"287 Hillcrest Lane"}
+                                287 Hillcrest Lane
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.physicalAddress}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"287 Hillcrest Lane"}
+                                287 Hillcrest Lane
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.homeTelephone}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"(555) 555-1234      (Optional)"}
+                                (555) 555-1234      (Optional)
                             </Text>
 
                             <Text style={styles.lblNameTxt}>
                                 {gblStrings.accManagement.workPhoneNo}
                             </Text>
                             <Text style={styles.lblNameValueTxt}>
-                                {"(555) 555-1234      (Optional)"}
+                                (555) 555-1234      (Optional)
                             </Text>
 
                             <Text style={styles.regulatoryQuestTxt}>
@@ -131,28 +147,28 @@ class CollegePlanPersonalComponent extends Component {
 
                             <View style={styles.radioBtnGrp}>
                                 <CustomRadio
-                                    componentStyle={{ width: "30%", marginBottom: scaledHeight(0), marginTop: scaledHeight(24) }}
+                                    componentStyle={styles.radioCol1}
                                     size={30}
-                                    outerCicleColor={"#DEDEDF"}
-                                    innerCicleColor={"#61285F"}
+                                    outerCicleColor="#DEDEDF"
+                                    innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
-                                    label={"Yes"}
+                                    label="Yes"
                                     descLabelStyle={styles.lblRadioDescTxt}
-                                    descLabel={""}
-                                    selected={(this.state.selectedItemID !== "" && "Y" == this.state.selectedItemID) ? true : false}
+                                    descLabel=""
+                                    selected={!!((this.state.selectedItemID !== "" && this.state.selectedItemID == "Y"))}
                                     onPress={this.onSelected({ name: 'Yes', id: 'Y' })}
                                 />
                                 <CustomRadio
 
                                     size={30}
-                                    componentStyle={{ width: "30%", marginBottom: scaledHeight(0), marginTop: scaledHeight(24) }}
-                                    outerCicleColor={"#DEDEDF"}
-                                    innerCicleColor={"#61285F"}
+                                    componentStyle={styles.radioCol1}
+                                    outerCicleColor="#DEDEDF"
+                                    innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
-                                    label={"No"}
+                                    label="No"
                                     descLabelStyle={styles.lblRadioDescTxt}
-                                    descLabel={""}
-                                    selected={(this.state.selectedItemID !== "" && "N" == this.state.selectedItemID) ? true : false}
+                                    descLabel=""
+                                    selected={!!((this.state.selectedItemID !== "" && this.state.selectedItemID == "N"))}
                                     onPress={this.onSelected({ name: 'No', id: 'N' })}
                                 />
                             </View>
@@ -165,7 +181,7 @@ class CollegePlanPersonalComponent extends Component {
                         </View>
                     </View>
 
-                    { /*----------- Buttons Group -------------------*/}
+                    { /* ----------- Buttons Group -------------------*/}
 
                     <View style={styles.btnGrp}>
 
@@ -198,7 +214,7 @@ class CollegePlanPersonalComponent extends Component {
 
                         />
                     </View>
-                    { /*----------- Disclaimer -------------------*/}
+                    { /* ----------- Disclaimer -------------------*/}
 
                     <View style={styles.newVictorySection}>
                         <Text style={styles.disclaimerTitleTxt}>

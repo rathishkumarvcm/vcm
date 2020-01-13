@@ -286,6 +286,24 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
 
+    scrollView: {
+        flex: .85
+    },
+     commonColView:{
+        flexGrow:1
+    },
+     radioCol1: {
+        marginBottom: scaledHeight(0),
+        marginTop: scaledHeight(24),
+        width:"30%" 
+    },
+    radioCol2: {
+        marginBottom: scaledHeight(0),
+        marginTop: scaledHeight(24)
+    },
+
+
+
 });
 
 export default styles;

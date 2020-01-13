@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import PropTypes from "prop-types";
 import styles from './styles';
 import { GButtonComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
-import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
-import PropTypes from "prop-types";
+import AppUtils from '../../Utils/AppUtils';
 
 
 
@@ -15,32 +15,44 @@ class CollegePlanESAComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
         };
     }
+
     /*----------------------
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
     componentDidMount() {
 
     }
+
     /*----------------------
                                  Button Events 
                                                                  -------------------------- */
-    onClickHeader = () => {
-        console.log("#TODO : onClickHeader");
-    }
     goBack = () => {
-        this.props.navigation.goBack();
+        const { navigation } = this.props;
+        const { goBack } = navigation;
+        goBack();
     }
+
     onClickCancel = () => {
-        this.props.navigation.goBack('termsAndConditions');
+        const { navigation } = this.props;
+        const { goBack } = navigation;
+        goBack('termsAndConditions');
     }
+
+    onClickNext = () => {
+        this.validateFields();
+    }
+
+
     onClickAgree = () => {
-        this.props.navigation.navigate({ routeName: 'collegePlanPartOneTwo', key: 'collegePlanPartOneTwo', params: { pageNo: 3 } });
+        const { navigation } = this.props;
+        const { navigate } = navigation;
+        navigate({ routeName: 'collegePlanPartOneTwo', key: 'collegePlanPartOneTwo', params: { pageNo: 3 } });
     }
+
     onClickSignDoc = () => {
-        alert("#TODO:::  onClickSignDoc");
+        AppUtils.debugLog("#TODO:::  onClickSignDoc");
     }
 
 
@@ -49,20 +61,21 @@ class CollegePlanESAComponent extends Component {
                                  Render Methods
                                                                  -------------------------- */
     render() {
-        let currentPage = 2;
+        const currentPage = 2;
+        const { navigation} = this.props;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation}
+                <GHeaderComponent navigation={navigation}
                     onPress={this.onClickHeader}
                 />
-                <ScrollView style={{ flex: .85 }}>
-                    <CustomPageWizard currentPage={currentPage} pageName={""} />
+                <ScrollView style={styles.scrollView}>
+                    <CustomPageWizard currentPage={currentPage} pageName="" />
 
-                    { /*-----------General Account Preferences -------------------*/}
-                    <View style={[styles.headerGrp]}>
+                    { /* -----------General Account Preferences -------------------*/}
+                    <View style={styles.headerGrp}>
 
                         <Text style={styles.headings}>
-                            {(currentPage) + " " + gblStrings.accManagement.ESA}
+                            {`${currentPage} ${gblStrings.accManagement.ESA}`}
                         </Text>
                         <Text style={styles.subHeadings}>
                             {gblStrings.accManagement.ElectronicSErviceAgreement}
@@ -73,7 +86,7 @@ class CollegePlanESAComponent extends Component {
 
                     </View>
 
-                    <View style={[styles.sectionGrp]}>
+                    <View style={styles.sectionGrp}>
                         <Text style={styles.headingDescTxt}>
                             {gblStrings.accManagement.ESADescription}
                         </Text>
@@ -83,25 +96,25 @@ class CollegePlanESAComponent extends Component {
                     </View>
 
 
-                    <View style={{ flexGrow: 1, marginVertical: scaledHeight(66), marginHorizontal: scaledHeight(12) }}>
+                    <View style={styles.ESANoteContainer}>
                         <Text style={styles.titleBoldTxt}>
                             {gblStrings.accManagement.ESANote}
                         </Text>
                     </View>
 
-                    <View style={[styles.ESASignGrp]}>
-                        <Text style={{ fontSize: scaledHeight(15), color: '#333333DE', lineHeight: 20, marginBottom: scaledHeight(24) }}>
+                    <View style={styles.ESASignGrp}>
+                        <Text style={styles.txtVCMElectronicService}>
                             {gblStrings.accManagement.VCMElectronicService}
                         </Text>
                         <Text style={styles.titleDescTxt}>
                             {gblStrings.accManagement.VCMElectronicServiceDesc}
                         </Text>
                         <Text style={styles.lblLine} />
-                        <View style={{ flexGrow: 1, marginTop: scaledHeight(35), flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', alignContent: 'center' }}>
+                        <View style={styles.btnSavePrintDocGrp}>
                             <TouchableOpacity
                                 //   onPress={() => { alert("#TODO:: Print Version") }}
                                 activeOpacity={0.8}
-                                accessibilityRole={'button'}
+                                accessibilityRole="button"
                                 style={styles.printSaveBtn}
                             >
                                 <Text style={styles.printSaveBtnTxt}>
@@ -113,7 +126,7 @@ class CollegePlanESAComponent extends Component {
                             <TouchableOpacity
                                 //  onPress={() => { alert("#TODO:: Print Version") }}
                                 activeOpacity={0.8}
-                                accessibilityRole={'button'}
+                                accessibilityRole="button"
                                 style={styles.printSaveBtn}
                             >
                                 <Text style={styles.printSaveBtnTxt}>
@@ -124,19 +137,19 @@ class CollegePlanESAComponent extends Component {
 
                         <View style={styles.ESASignContentSection}>
                             <Text style={styles.titleBoldTxt}>
-                                {"VCM Investment Management Company (IMCO) Electronic Service Agreement"}
+                                VCM Investment Management Company (IMCO) Electronic Service Agreement
                             </Text>
                             <Text style={styles.titleDescTxt}>
-                                {"YOU MUST READ AND SIGN THIS AGREEMENT BEFORE USING THE ELECTRONIC SERVICE OF VCM INVESTMENT MANAGEMENT. THIS AGREEMENT IS BETWEEN YOU AND USAA IMCO"}
+                                YOU MUST READ AND SIGN THIS AGREEMENT BEFORE USING THE ELECTRONIC SERVICE OF VCM INVESTMENT MANAGEMENT. THIS AGREEMENT IS BETWEEN YOU AND USAA IMCO
                             </Text>
                             <Text style={styles.titleBoldTxt}>
-                                {"VCM IMCO ELECTRONIC SERVICES"}
+                                VCM IMCO ELECTRONIC SERVICES
                             </Text>
                             <Text style={styles.titleDescTxt}>
-                                {"You may use your telephone or personal computer to enter orders for securities transactions through VCM IMCO Electronic Services. VCM IMCO Electronics, you to obtain account information, quotes etc. Lorem ipsum, The actual content will need to be pulled from the content document. Lorem ipsum , The actual content will need to be pulled from the content document. Lorem ipsum, The actual content will need to be pulled from the content document. Lorem ipsum, The actual content will need to be pulled from the content document. The actual content will need to be pulled from the content document. Lorem ipsum, The actual content will need to be pulled from the content document. The actual content will need to be pulled from the content document. Lorem ipsum, The actual content will need to be pulled from the content document. The actual content will need to be pulled from the content document. Lorem ipsum, The actual content will need to be pulled from the content document."}
+                                You may use your telephone or personal computer to enter orders for securities transactions through VCM IMCO Electronic Services. VCM IMCO Electronics, you to obtain account information, quotes etc. Lorem ipsum, The actual content will need to be pulled from the content document. Lorem ipsum , The actual content will need to be pulled from the content document. Lorem ipsum, The actual content will need to be pulled from the content document. Lorem ipsum, The actual content will need to be pulled from the content document. The actual content will need to be pulled from the content document. Lorem ipsum, The actual content will need to be pulled from the content document. The actual content will need to be pulled from the content document. Lorem ipsum, The actual content will need to be pulled from the content document. The actual content will need to be pulled from the content document. Lorem ipsum, The actual content will need to be pulled from the content document.
                             </Text>
                         </View>
-                        <View style={{ flexGrow: 1, justifyContent: "center", alignContent: 'center', alignItems: 'center', marginVertical: scaledHeight(30) }}>
+                        <View style={styles.signDocBtnView}>
                             <GButtonComponent
                                 buttonStyle={styles.signBlackBtn}
                                 buttonText={gblStrings.accManagement.signThisDocument}
@@ -147,7 +160,7 @@ class CollegePlanESAComponent extends Component {
                     </View>
 
 
-                    { /*----------- Buttons Group -------------------*/}
+                    { /* ----------- Buttons Group -------------------*/}
 
                     <View style={styles.btnGrp}>
                         <Text style={styles.agreeTxt}>
@@ -168,7 +181,7 @@ class CollegePlanESAComponent extends Component {
 
                     </View>
 
-                    { /*----------- Disclaimer -------------------*/}
+                    { /* ----------- Disclaimer -------------------*/}
 
                     <View style={styles.newVictorySection}>
                         <Text style={styles.disclaimerTitleTxt}>

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
-import styles from './styles';
-import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
-import { CustomPageWizard, CustomRadio, CustomDropDown } from '../../AppComponents';
-import gblStrings from '../../Constants/GlobalStrings';
+import { Text, View, ScrollView } from 'react-native';
 import PropTypes from "prop-types";
-import { scaledHeight } from '../../Utils/Resolution';
+import styles from './styles';
+import { GButtonComponent, GInputComponent, GHeaderComponent, GFooterComponent, showAlert, GDropDownComponent } from '../../CommonComponents';
+import { CustomPageWizard, CustomRadio } from '../../AppComponents';
+import gblStrings from '../../Constants/GlobalStrings';
+import AppUtils from '../../Utils/AppUtils';
 
 
 
@@ -14,83 +14,6 @@ const dummyData = [
     { "key": "key2", "value": "Option2" }
 ];
 
-const relationShipData = [
-    {
-        "key": '1',
-        "value": 'Aunt Uncle ',
-    },
-    {
-        "key": '2',
-        "value": 'Brother/Sister',
-    },
-    {
-        "key": '3',
-        "value": 'Brother/Sister In Law',
-    },
-    {
-        "key": '4',
-        "value": 'Child',
-    },
-    {
-        "key": '5',
-        "value": 'Cohabitant',
-    },
-    {
-        "key": '6',
-        "value": 'Cohabitant Child',
-    },
-    {
-        "key": '7',
-        "value": 'Cousin ',
-    },
-    {
-        "key": '8',
-        "value": 'Father/Mother In Law',
-    },
-    {
-        "key": '9',
-        "value": 'Fiance',
-    },
-    {
-        "key": '10',
-        "value": 'Spouse',
-    },
-    {
-        "key": '11',
-        "value": 'Parent',
-    },
-    {
-        "key": '12',
-        "value": 'Grandparent',
-    },
-    {
-        "key": '13',
-        "value": 'Grandchild',
-    },
-    {
-        "key": '14',
-        "value": 'Son/Daughter In Law ',
-    },
-    {
-        "key": '15',
-        "value": 'Step Child',
-    },
-    {
-        "key": '16',
-        "value": 'Step Mother/Father',
-    },
-    {
-        "key": '17',
-        "value": 'Step Sister/Brother',
-    },
-    {
-        "key": '18',
-        "value": 'Legal Guardian',
-    },
-
-
-
-];
 
 
 class CollegePlanBeneficiaryComponent extends Component {
@@ -129,6 +52,7 @@ class CollegePlanBeneficiaryComponent extends Component {
 
         };
     }
+
     /*----------------------
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
@@ -140,31 +64,41 @@ class CollegePlanBeneficiaryComponent extends Component {
                                                                  -------------------------- */
 
     onClickHeader = () => {
-        console.log("#TODO : onClickHeader");
+        AppUtils.debugLog("#TODO : onClickHeader");
     }
+
     goBack = () => {
-        this.props.navigation.goBack();
+        const { navigation } = this.props;
+        const { goBack } = navigation;
+        goBack();
     }
+
     onClickCancel = () => {
-        this.props.navigation.goBack('termsAndConditions');
+        const { navigation } = this.props;
+        const { goBack } = navigation;
+        goBack('termsAndConditions');
     }
+
     onClickNext = () => {
         this.validateFields();
     }
+
     onClickSave = () => {
         this.validateFields();
     }
+
     onClickDownloadPDF = () => {
-        alert("#TODO : Download");
+        AppUtils.debugLog("#TODO : Download");
     }
+
     onSelected = (item) => {
-        console.log("item: " + item.id);
+        AppUtils.debugLog(`item: ${item.id}`);
         this.setState({ selectedItemID: item.id });
         this.setState({ selectedItemName: item.name });
         //  alert("You selected :: " + item.name)
     }
 
-    selectedDropDownValue = (dropDownName, value) =>()=> {
+    selectedDropDownValue = (dropDownName, value) => () => {
         switch (dropDownName) {
             case "beneficiaryDropDown":
                 this.setState({
@@ -188,80 +122,114 @@ class CollegePlanBeneficiaryComponent extends Component {
         }
 
     }
+
     onSubmitEditing = (input) => text => {
-        console.log("onSubmitEditing:::>"+text);
+        AppUtils.debugLog(`onSubmitEditing:::>${text}`);
         input.focus();
     }
 
     onChangeText = (keyName) => text => {
-        console.log("onChangeText:::>");
+        AppUtils.debugLog("onChangeText:::>");
         this.setState({
             [keyName]: text
         });
 
     }
+
     onPressDropDown = (keyName) => () => this.setState({
-            [keyName]: !this.state[keyName]
+        [keyName]: !this.state[keyName]
     });
 
-    onPressRadio = ( keyName, text) => () => this.setState ({
+    onPressRadio = (keyName, text) => () => this.setState({
         [keyName]: text
     });
-    setInputRef = (inputComp)=> (ref) => {
-        this[inputComp]= ref;
-    }
-    setInputRef = (inputComp)=> (ref) => {
-        this[inputComp]= ref;
+
+    setInputRef = (inputComp) => (ref) => {
+        this[inputComp] = ref;
     }
 
-    generateKeyExtractor = (item) => item.key ;
-    renderDropDownListItem = (keyName, dropDownName) => ({ item }) =>
-        (<TouchableOpacity
-            style={{ height: 33 }}
-            onPress={this.selectedDropDownValue(dropDownName, item[keyName])}
-         >
-            <Text> {item[keyName]} </Text>
-         </TouchableOpacity>
-        );
-    renderDropDown = (dropDownName, data, width = '100%') => {
-        console.log("renderDropDown::: " + dropDownName);
-        var dropDownCompState = false;
-        let keyName = "value";
+    setInputRef = (inputComp) => (ref) => {
+        this[inputComp] = ref;
+    }
+
+    generateKeyExtractor = (item) => item.key;
+
+
+
+    renderCustomDropDown = ({ stateKey = "", dropDownName = "", lblDropdownName = "", isOptional = false }) => {
+        const validationKey = `${stateKey}Validation`;
+        const { errMsg } = this.state;
+        const validationKeyValue = this.state[validationKey] !== undefined ? !this.state[validationKey] : false;
+
+
+        const dropDownData = dummyData;
+
         switch (dropDownName) {
+
             case "beneficiaryDropDown":
-                dropDownCompState = this.state.beneficiaryDropDown;
                 break;
             case "relationshipDropDown":
-                dropDownCompState = this.state.relationshipDropDown;
                 break;
-
             default:
                 break;
 
         }
-        if (dropDownCompState) {
-            return (
-                <View style={{ height: 100, width: width, borderWidth: 1, borderColor: "#DEDEDF", backgroundColor: 'white' }}>
-                    <FlatList
-                        data={data}
-                        renderItem={this.renderDropDownListItem(keyName,dropDownName)}
-                        keyExtractor={this.generateKeyExtractor}
-                    />
-                </View>
-            );
 
-        }
+
+
+
+
+        return (
+            <GDropDownComponent
+                inputref={this.setInputRef(`${stateKey}`)}
+                dropDownLayout={styles.dropDownLayout}
+                dropDownTextName={styles.dropDownTextName}
+                dropDownName={lblDropdownName}
+                data={dropDownData}
+                dropDownValue={this.state[stateKey]}
+                selectedDropDownValue={this.onSelectedDropDownValue(stateKey, dropDownName)}
+                dropDownPostition={styles.dropDownPostition}
+                errorFlag={isOptional ? false : validationKeyValue}
+                errorText={errMsg}
+                isOptional={isOptional}
+                disabled={stateKey === "taxBracket"}
+            />
+        );
+
+    }
+
+    onSelectedDropDownValue = (stateKey, dropDownName) => (value, index, data) => {
+        AppUtils.debugLog(`onSelectedDropDownValue:${dropDownName}`);
+        const item = data[index];
+
+        this.setState(({
+            [stateKey]: item.value,
+            [`${stateKey}Validation`]: true,
+
+        }));
+
+
     }
 
     isEmpty = (str) => {
-        if (str == "" || str == undefined || str == "null" || str == "undefined") {
+        if (str === "" || str === undefined || str === "null" || str === "undefined") {
             return true;
-        } else {
-            return false;
         }
+        return false;
+
     }
+
     validateFields = () => {
-        console.log("validateFields::: ");
+        AppUtils.debugLog("validateFields::: ");
+        const { navigation } = this.props;
+        const { push } = navigation;
+        const {
+            beneficiary,
+            accountOwnerSelected,
+            firstName,
+            lastName,
+            dob,
+            relationship } = this.state;
 
         this.setState({
             beneficiaryValidation: true,
@@ -280,20 +248,20 @@ class CollegePlanBeneficiaryComponent extends Component {
 
 
 
-        if (this.isEmpty(this.state.beneficiary)) {
+        if (this.isEmpty(beneficiary)) {
             errMsg = gblStrings.accManagement.confirmBeneficiaryforThePlanMsg;
-        } else if (this.isEmpty(this.state.accountOwnerSelected)) {
+        } else if (this.isEmpty(accountOwnerSelected)) {
             errMsg = gblStrings.accManagement.emptySuccessOwnerMsg;
-        } else if (this.isEmpty(this.state.firstName)) {
+        } else if (this.isEmpty(firstName)) {
             errMsg = gblStrings.accManagement.emptyFirstNameMsg;
             input = 'firstName';
-        } else if (this.isEmpty(this.state.lastName)) {
+        } else if (this.isEmpty(lastName)) {
             errMsg = gblStrings.accManagement.emptyLastNameMsg;
             input = 'lastName';
-        } else if (this.isEmpty(this.state.dob)) {
+        } else if (this.isEmpty(dob)) {
             errMsg = gblStrings.accManagement.emptyDOBMsg;
             input = 'dob';
-        } else if (this.isEmpty(this.state.relationship)) {
+        } else if (this.isEmpty(relationship)) {
             errMsg = gblStrings.accManagement.emptyRelationShipMsg;
             input = 'relationship';
         } else {
@@ -303,14 +271,15 @@ class CollegePlanBeneficiaryComponent extends Component {
 
 
         if (isValidationSuccess) {
-            this.props.navigation.push('collegePlanPartOneTwo', { pageNo: 6 });
+            push('collegePlanPartOneTwo', { pageNo: 6 });
 
         } else {
             this.setState({
-                [input + 'Validation']: false
+                [`${input}Validation`]: false
             });
-           //  var temp = input !== "" ? this[input].focus() : ""
-            alert(errMsg);
+            //  var temp = input !== "" ? this[input].focus() : ""
+            showAlert(gblStrings.common.appName, errMsg, gblStrings.common.ok);
+
 
         }
 
@@ -320,17 +289,32 @@ class CollegePlanBeneficiaryComponent extends Component {
                                  Render Methods
                                                                  -------------------------- */
     render() {
-        let currentPage = 5;
+        const currentPage = 5;
+        const { navigation } = this.props;
+
+        const {
+           // beneficiary,
+            accountOwnerSelected,
+            // firstName,
+            // lastName,
+            // dob,
+           // relationship,
+            firstNameValidation,
+            lastNameValidation,
+            dobValidation,
+           // relationshipValidation
+
+        } = this.state;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} onPress={this.onClickHeader} />
-                <ScrollView style={{ flex: .85 }}>
-                    <CustomPageWizard currentPage={currentPage} pageName={(currentPage) + " " + gblStrings.accManagement.beneficiaryInfo} />
+                <GHeaderComponent navigation={navigation} onPress={this.onClickHeader} />
+                <ScrollView style={styles.scrollView}>
+                    <CustomPageWizard currentPage={currentPage} pageName={`${currentPage} ${gblStrings.accManagement.beneficiaryInfo}`} />
 
 
-                    { /*-----------Plan Beneficiary -------------------*/}
+                    { /* -----------Plan Beneficiary -------------------*/}
 
-                    <View style={[styles.sectionGrp]}>
+                    <View style={styles.sectionGrp}>
                         <View style={styles.accTypeSelectSection}>
                             <Text style={styles.headings}>
                                 {gblStrings.accManagement.planBeneficiary}
@@ -343,20 +327,13 @@ class CollegePlanBeneficiaryComponent extends Component {
                         </Text>
 
 
-                        <Text style={styles.lblTxt}>
-                            {gblStrings.accManagement.whoWillBeTheBeneficiary}
-                        </Text>
-
-                        <CustomDropDown
-                            inputref ={this.setInputRef("beneficiary")}
-                            onPress={this.onPressDropDown("beneficiaryDropDown")}
-                            value={this.state.beneficiary}
-                            propInputStyle={styles.customTxtBox}
-                            placeholder={"Client"}
-
-                        />
-                        {this.renderDropDown('beneficiaryDropDown', dummyData)}
-
+                        {this.renderCustomDropDown({
+                            stateKey: "beneficiary",
+                            dropDownName: "beneficiaryDropDown",
+                            lblDropdownName: gblStrings.accManagement.whoWillBeTheBeneficiaryy,
+                            isOptional: true
+                        })
+                        }
 
                         <GButtonComponent
                             buttonStyle={styles.addBeneficiaryBtn}
@@ -365,9 +342,9 @@ class CollegePlanBeneficiaryComponent extends Component {
                         />
 
                     </View>
-                    { /*-----------Successor Account Owner Information -------------------*/}
+                    { /* -----------Successor Account Owner Information -------------------*/}
 
-                    <View style={[styles.sectionGrp]}>
+                    <View style={styles.sectionGrp}>
                         <View style={styles.accTypeSelectSection}>
                             <Text style={styles.headings}>
                                 {gblStrings.accManagement.successorAccOwnerInfo}
@@ -384,48 +361,47 @@ class CollegePlanBeneficiaryComponent extends Component {
                         <View style={styles.radioBtnGrp}>
                             <CustomRadio
                                 size={30}
-                                componentStyle={{width:"30%", marginBottom: scaledHeight(0), marginTop: scaledHeight(24) }}
-                                outerCicleColor={"#DEDEDF"}
-                                innerCicleColor={"#61285F"}
+                                componentStyle={styles.radioCol1}
+                                outerCicleColor="#DEDEDF"
+                                innerCicleColor="#61285F"
                                 labelStyle={styles.lblRadioBtnTxt}
-                                label={"Yes"}
+                                label="Yes"
                                 descLabelStyle={styles.lblRadioDescTxt}
-                                descLabel={""}
-                                selected={(this.state.accountOwnerSelected !== "" && this.state.accountOwnerSelected == true ) ? true : false}
-                                onPress={this.onPressRadio("accountOwnerSelected",true)}  
+                                descLabel=""
+                                selected={!!((accountOwnerSelected !== "" && accountOwnerSelected === true))}
+                                onPress={this.onPressRadio("accountOwnerSelected", true)}
 
                             />
                             <CustomRadio
-
                                 size={30}
-                                componentStyle={{marginBottom: scaledHeight(0), marginTop: scaledHeight(24) }}
-                                outerCicleColor={"#DEDEDF"}
-                                innerCicleColor={"#61285F"}
+                                componentStyle={styles.radioCol2}
+                                outerCicleColor="#DEDEDF"
+                                innerCicleColor="#61285F"
                                 labelStyle={styles.lblRadioBtnTxt}
-                                label={"No"}
+                                label="No"
                                 descLabelStyle={styles.lblRadioDescTxt}
-                                descLabel={""}
-                                selected={(this.state.accountOwnerSelected !== "" && this.state.accountOwnerSelected != true ) ? true : false}
-                                onPress={this.onPressRadio("accountOwnerSelected",false)}  
+                                descLabel=""
+                                selected={!!((accountOwnerSelected !== "" && accountOwnerSelected !== true))}
+                                onPress={this.onPressRadio("accountOwnerSelected", false)}
                             />
                         </View>
 
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.firstName}
                         </Text>
-                       
+
 
                         <GInputComponent
-                            inputref ={this.setInputRef("firstName")}
-                            propInputStyle={this.state.firstNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                            placeholder={""}
+                            inputref={this.setInputRef("firstName")}
+                            propInputStyle={firstNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder=""
                             maxLength={gblStrings.maxLength.firstName}
-                          /*  onChangeText={(text) => {
-                                this.setState({ firstName: text });
-                            }}
-                            */
-                            onChangeText = {this.onChangeText("firstName")}
-                           //  onSubmitEditing={() => this.middleInitial.focus()}
+                            /*  onChangeText={(text) => {
+                                  this.setState({ firstName: text });
+                              }}
+                              */
+                            onChangeText={this.onChangeText("firstName")}
+                            //  onSubmitEditing={() => this.middleInitial.focus()}
                             onSubmitEditing={this.onSubmitEditing(this.middleInitial)}
 
                         />
@@ -434,11 +410,11 @@ class CollegePlanBeneficiaryComponent extends Component {
                             {gblStrings.accManagement.middleInitial}
                         </Text>
                         <GInputComponent
-                            inputref ={this.setInputRef("middleInitial")}
+                            inputref={this.setInputRef("middleInitial")}
                             propInputStyle={styles.customTxtBox}
-                            placeholder={""}
+                            placeholder=""
                             maxLength={gblStrings.maxLength.middleInitial}
-                            onChangeText = {this.onChangeText("middleInitial")}
+                            onChangeText={this.onChangeText("middleInitial")}
                             onSubmitEditing={this.onSubmitEditing(this.lastName)}
                         />
 
@@ -446,11 +422,11 @@ class CollegePlanBeneficiaryComponent extends Component {
                             {gblStrings.accManagement.lastName}
                         </Text>
                         <GInputComponent
-                            inputref ={this.setInputRef("lastName")}
-                            propInputStyle={this.state.lastNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                            placeholder={""}
+                            inputref={this.setInputRef("lastName")}
+                            propInputStyle={lastNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder=""
                             maxLength={gblStrings.maxLength.dob}
-                            onChangeText = {this.onChangeText("lastName")}
+                            onChangeText={this.onChangeText("lastName")}
                             onSubmitEditing={this.onSubmitEditing(this.dob)}
                         />
 
@@ -460,36 +436,32 @@ class CollegePlanBeneficiaryComponent extends Component {
                             {gblStrings.accManagement.dob}
                         </Text>
                         <GInputComponent
-                          
-                            inputref ={this.setInputRef("dob")}
-                            propInputStyle={this.state.dobValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                            placeholder={""}
+
+                            inputref={this.setInputRef("dob")}
+                            propInputStyle={dobValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder=""
                             maxLength={gblStrings.maxLength.dob}
-                            onChangeText = {this.onChangeText("dob")}
+                            onChangeText={this.onChangeText("dob")}
                             onSubmitEditing={this.onSubmitEditing(this.relationship)}
-                           
+
                         />
                         <Text style={styles.hintLabelTxt}>
-                            {"MM/DD/YYYY"}
+                            MM/DD/YYYY
                         </Text>
 
-                        <Text style={styles.lblTxt}>
-                            {gblStrings.accManagement.relationship}
-                        </Text>
-                        <CustomDropDown
-                            inputref ={this.setInputRef("relationship")}
-                            onPress={this.onPressDropDown("relationshipDropDown")}
-                            value={this.state.relationship}
-                            propInputStyle={this.state.relationshipValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                            placeholder={"Select Relationship"}
-
-                        />
-                        {this.renderDropDown('relationshipDropDown', relationShipData)}
+                      
+                        {this.renderCustomDropDown({
+                            stateKey: "relationship",
+                            dropDownName: "relationshipDropDown",
+                            lblDropdownName: gblStrings.accManagement.relationship,
+                            isOptional: false
+                        })
+                        }
 
 
                     </View>
 
-                    { /*----------- Buttons Group -------------------*/}
+                    { /* ----------- Buttons Group -------------------*/}
 
                     <View style={styles.btnGrp}>
 
@@ -522,7 +494,7 @@ class CollegePlanBeneficiaryComponent extends Component {
 
                         />
                     </View>
-                    { /*----------- Disclaimer -------------------*/}
+                    { /* ----------- Disclaimer -------------------*/}
 
                     <View style={styles.newVictorySection}>
                         <Text style={styles.disclaimerTitleTxt}>
@@ -548,5 +520,5 @@ class CollegePlanBeneficiaryComponent extends Component {
 
 CollegePlanBeneficiaryComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
-  };
+};
 export default CollegePlanBeneficiaryComponent;
