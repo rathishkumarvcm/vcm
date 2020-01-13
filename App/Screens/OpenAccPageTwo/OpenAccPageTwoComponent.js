@@ -9,7 +9,6 @@ import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import AppUtils from '../../Utils/AppUtils';
-//  import { Header } from 'react-navigation';
 
 const imagePickerOptions = {
     title: 'Select Image',

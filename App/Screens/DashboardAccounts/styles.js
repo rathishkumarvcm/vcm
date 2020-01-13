@@ -5,16 +5,15 @@ import {scaledHeight} from '../../Utils/Resolution';
 
 const styles = StyleSheet.create({
     accountItem: {
-        backgroundColor: '#FFFFFF',
-       //  padding: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
         alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
         borderColor:'#5D83AE99',
-        borderWidth:1,
         borderStyle:'solid',
-        width:scaledHeight(250),
+        borderWidth:1,
         height:scaledHeight(250),
+        justifyContent: 'center',
+        width:scaledHeight(250),
       
     },
     accountItemDescTxt: {
@@ -29,16 +28,15 @@ const styles = StyleSheet.create({
 
  
     accountItemSelected: {
-        backgroundColor: '#FFFFFF',
-        //  padding: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
         alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
         borderColor:'#5D83AE99',
-        borderWidth:1,
         borderStyle:'solid',
-        width:'100%',
+        borderWidth:1,
         height:scaledHeight(250),
+        justifyContent: 'center',
+        width:'100%',
     },
     accountItemTxt: {
         color: '#56565A',
@@ -49,12 +47,11 @@ const styles = StyleSheet.create({
         textAlign:'center'
     },
     accountSection: {
-        width: '80%',
-        marginHorizontal:"10%",
-       //  flexGrow: 1,
-        justifyContent: 'center',
+        alignContent: 'center',
         alignItems: 'center',
-        alignContent: 'center'
+        justifyContent: 'center',
+        marginHorizontal:"10%",
+        width: '80%'
        
     },
     commonColView:{
@@ -76,12 +73,12 @@ const styles = StyleSheet.create({
         fontSize:scaledHeight(12)
 
     },
-    disclaimerTitleTxt:{ //  termsofuseText
-        fontSize : scaledHeight(16),
-        marginBottom : scaledHeight(10),
-        fontWeight : 'bold',
+    disclaimerTitleTxt:{ 
         color:'#56565A',
-        lineHeight: 25
+        fontSize : scaledHeight(16),
+        fontWeight : 'bold',
+        lineHeight: 25,
+        marginBottom : scaledHeight(10)
     },
     disclaimerTxt:{
         color:'#56565A',
@@ -112,7 +109,6 @@ const styles = StyleSheet.create({
         flexGrow:1,
         width:'100%',
  
-        //  backgroundColor:'yellow',
  
      },
     pageHeader: {
@@ -125,31 +121,27 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     privacyAgreement:{
-        //  marginTop:convertToDeviceResolution(4),
-        marginVertical:scaledHeight(19),
-        padding:scaledHeight(12),
         alignItems:'center',
-        justifyContent:'center',
-        width:'100%',
         backgroundColor:'white',
         flexDirection:'row',
+        flexGrow:1,
         flexWrap:'wrap',
-        flexGrow:1
+        justifyContent:'center',
+        marginVertical:scaledHeight(19),
+        padding:scaledHeight(12),
+        width:'100%'
     },
     privacyText:{
-        width:'50%',
-        //  paddingLeft:'4%',
-        marginVertical:'2%',
         color:'#61285F',
+        fontSize:scaledHeight(16),
         fontWeight:'bold',
-        fontSize:scaledHeight(16)
+        marginVertical:'2%',
+        width:'50%'
     },
     scrollView: {
         flex: .85
     },
     touchItem: {
-       //  width:scaledHeight(250),
-      //   height:scaledHeight(250),
       marginVertical:"5%"
 
     },

@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         lineHeight: scaledHeight(19),
         textAlign: 'left',
-        // marginTop:scaledHeight(5)
 
     },
     btnGrp: {
@@ -41,12 +40,12 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%'
     },
-    disclaimerTitleTxt: { // termsofuseText
-        fontSize: scaledHeight(16),
-        marginBottom: scaledHeight(10),
-        fontWeight: 'bold',
+    disclaimerTitleTxt: { 
         color: '#56565A',
-        lineHeight: 25
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        lineHeight: 25,
+        marginBottom: scaledHeight(10)
     },
     disclaimerTxt: {
         color: '#56565A',
@@ -72,24 +71,21 @@ const styles = StyleSheet.create({
         width: '80%',
     },
     lblLine: {
-        //  width:"100%",
-        flexGrow: 1,
-        marginTop: scaledHeight(9.5),
-        height: scaledHeight(1),
         backgroundColor: '#707070',
+        flexGrow: 1,
+        height: scaledHeight(1),
+        marginTop: scaledHeight(9.5),
         opacity: 0.5
     },
     lblLine1: {
-        // width:"100%",
 
-        height: scaledHeight(1),
-        backgroundColor: '#696069'
+        backgroundColor: '#696069',
+        height: scaledHeight(1)
     },
     lblRadioBtnTxt: {
         color: '#333333DE',
-        fontSize: scaledHeight(16),
-        //  lineHeight:22,
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        fontSize: scaledHeight(16)
     },
 
     lblRadioDescTxt: {
@@ -113,25 +109,23 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     newVictorySection: {
-        //   marginTop: scaledHeight(150),
+        backgroundColor: '#FFFFFF',
+        flexGrow: 1,
         padding: scaledHeight(12),
         width: '100%',
-        flexGrow: 1,
-        backgroundColor: '#FFFFFF',
 
 
     },
     normalBlackBtn: {
-        //   width: '90%',
-        borderWidth: 1,
-        borderColor: "#61285F45",
-        height: scaledHeight(50),
-        backgroundColor: '#544A54',
-        alignItems: 'center',
         alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#544A54',
+        borderColor: "#61285F45",
+        borderWidth: 1,
+        height: scaledHeight(50),
         justifyContent: 'center',
-        marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
+        marginHorizontal: scaledHeight(37),
+        marginVertical: scaledHeight(7.5)
 
 
     },
@@ -151,28 +145,26 @@ const styles = StyleSheet.create({
 
 
     normalBlackDisabledBtn: {
-        //   width: '90%',
-        borderWidth: 1,
-        borderColor: "#61285F45",
-        height: scaledHeight(50),
-        backgroundColor: '#544A54',
-        alignItems: 'center',
         alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#544A54',
+        borderColor: "#61285F45",
+        borderWidth: 1,
+        height: scaledHeight(50),
         justifyContent: 'center',
-        marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
+        marginHorizontal: scaledHeight(37),
+        marginVertical: scaledHeight(7.5)
     },
     normalWhiteBtn: {
-        //   width: '90%',
-        borderWidth: 1,
-        borderColor: "#61285F45",
-        height: scaledHeight(50),
-        backgroundColor: '#fff',
-        alignItems: 'center',
         alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderColor: "#61285F45",
+        borderWidth: 1,
+        height: scaledHeight(50),
         justifyContent: 'center',
-        marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
+        marginHorizontal: scaledHeight(37),
+        marginVertical: scaledHeight(7.5)
 
     },
     normalWhiteBtnTxt: {
@@ -187,7 +179,6 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         lineHeight: scaledHeight(19),
         textAlign: 'left',
-        // marginTop:scaledHeight(5)
     },
     pdfFileNameTxt: {
         color: '#0D7CB5DE',

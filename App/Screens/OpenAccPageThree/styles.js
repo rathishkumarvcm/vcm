@@ -5,26 +5,23 @@ import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
 
 const styles = StyleSheet.create({
     accTypeSelectSection: {
-        marginTop: scaledHeight(20),
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        //  marginHorizontal: scaledHeight(12),
         alignItems: "center",
-        flexGrow: 1
+        flexDirection: 'row',
+        flexGrow: 1,
+        justifyContent: 'space-between',
+        marginTop: scaledHeight(20)
     },
 
     accountItem: {
-        flexDirection: 'row',
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'flex-start',
-        alignItems: "center",
         alignContent: 'center',
+        alignItems: "center",
+        backgroundColor: '#FFFFFF',
         borderColor: '#5D83AE99',
-        borderWidth: 1,
         borderStyle: 'solid',
-        //  width:'75%',
+        borderWidth: 1,
+        flexDirection: 'row',
         height: scaledHeight(80),
-        //  flexWrap:"wrap"
+        justifyContent: 'flex-start',
 
     },
     accountItemImg: {
@@ -46,18 +43,16 @@ const styles = StyleSheet.create({
 
 
     accountItemSelected: {
-        flexDirection: 'row',
-
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'flex-start',
-        alignItems: "center",
         alignContent: 'center',
+
+        alignItems: "center",
+        backgroundColor: '#FFFFFF',
         borderColor: '#B5E198',
-        borderWidth: 6,
         borderStyle: 'solid',
-        //  width:'75%',
+        borderWidth: 6,
+        flexDirection: 'row',
         height: scaledHeight(92),
-        //  flexWrap:"wrap"
+        justifyContent: 'flex-start',
     },
     accountItemTxt: {
         color: '#56565A',
@@ -132,10 +127,9 @@ const styles = StyleSheet.create({
 
     },
     compareFundsBtnTxt: {
-        fontSize: scaledHeight(16),
         color: '#5D83AE',
+        fontSize: scaledHeight(16),
         fontWeight: 'bold',
-        //  width: '80%',
         textAlign: 'center'
     },
     contactMSR: {
@@ -160,12 +154,12 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(9),
         width: '100%'
     },
-    disclaimerTitleTxt: { //  termsofuseText
-        fontSize: scaledHeight(16),
-        marginBottom: scaledHeight(10),
-        fontWeight: 'bold',
+    disclaimerTitleTxt: { 
         color: '#56565A',
-        lineHeight: 25
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        lineHeight: 25,
+        marginBottom: scaledHeight(10)
     },
 
     disclaimerTxt: {
@@ -180,8 +174,6 @@ const styles = StyleSheet.create({
     },
 
     dropDownLayout: {
-        //  alignItems: "flex-start",
-        //  justifyContent: "flex-start",
         marginLeft: '0%',
         marginRight: '0%',
         marginTop: scaledHeight(25),
@@ -244,10 +236,9 @@ const styles = StyleSheet.create({
 
     },
     filterFundsBtnTxt: {
-        fontSize: scaledHeight(16),
         color: '#5D83AE',
+        fontSize: scaledHeight(16),
         fontWeight: 'bold',
-        //  width: '80%',
         textAlign: 'center'
     },
     fundListGrp: {
@@ -287,7 +278,6 @@ const styles = StyleSheet.create({
         borderTopColor: "#FFFFFF",
         borderWidth: 1,
         flexGrow: 1,
-        //   padding: scaledHeight(20)
 
     },
     labOR: {
@@ -306,18 +296,16 @@ const styles = StyleSheet.create({
 
     },
     lblLine: {
-        //  width:"100%",
-        flexGrow: 1,
-        marginTop: scaledHeight(9.5),
-        height: scaledHeight(1),
         backgroundColor: '#707070',
+        flexGrow: 1,
+        height: scaledHeight(1),
+        marginTop: scaledHeight(9.5),
         opacity: 0.5
     },
     lblLine1: {
-        //  width:"100%",
 
-        height: scaledHeight(1),
-        backgroundColor: '#696069'
+        backgroundColor: '#696069',
+        height: scaledHeight(1)
     },
     lblMSRDescTxt: {
         color: '#333333DE',
@@ -374,14 +362,11 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(22),
         fontWeight: 'bold',
         width: '90%',
-        //   lineHeight:20
     },
     lblSelectedCountTxt: {
         color: '#56565A',
         fontSize: scaledHeight(13),
         opacity: .65,
-        //  marginTop: scaledHeight(25),
-        //  marginBottom: scaledHeight(15)
     },
     lblSpecimen: {
         color: 'rgba(51, 51, 51, 0.87)',
@@ -534,25 +519,23 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     newVictorySection: {
-        //   marginTop: scaledHeight(150),
+        backgroundColor: '#FFFFFF',
+        flexGrow: 1,
         padding: scaledHeight(12),
         width: '100%',
-        flexGrow: 1,
-        backgroundColor: '#FFFFFF',
 
 
     },
     normalBlackBtn: {
-        //   width: '90%',
-        borderWidth: 1,
-        borderColor: "#61285F45",
-        height: scaledHeight(50),
-        backgroundColor: '#544A54',
-        alignItems: 'center',
         alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#544A54',
+        borderColor: "#61285F45",
+        borderWidth: 1,
+        height: scaledHeight(50),
         justifyContent: 'center',
-        marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
+        marginHorizontal: scaledHeight(37),
+        marginVertical: scaledHeight(7.5)
 
 
     },
@@ -569,28 +552,26 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     normalBlackDisabledBtn: {
-        //   width: '90%',
-        borderWidth: 1,
-        borderColor: "#61285F45",
-        height: scaledHeight(50),
-        backgroundColor: '#544A54',
-        alignItems: 'center',
         alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#544A54',
+        borderColor: "#61285F45",
+        borderWidth: 1,
+        height: scaledHeight(50),
         justifyContent: 'center',
-        marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
+        marginHorizontal: scaledHeight(37),
+        marginVertical: scaledHeight(7.5)
     },
     normalWhiteBtn: {
-        //   width: '90%',
-        borderWidth: 1,
-        borderColor: "#61285F45",
-        height: scaledHeight(50),
-        backgroundColor: '#fff',
-        alignItems: 'center',
         alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderColor: "#61285F45",
+        borderWidth: 1,
+        height: scaledHeight(50),
         justifyContent: 'center',
-        marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
+        marginHorizontal: scaledHeight(37),
+        marginVertical: scaledHeight(7.5)
 
     },
     normalWhiteBtnTxt: {
@@ -633,21 +614,17 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     rowHeaderItem: {
-        flexDirection: 'row',
         alignItems: 'flex-start',
-        justifyContent: 'flex-end',
+        flexDirection: 'row',
         flexGrow: 1,
-        //  borderColor:'#afabb0',
-        //   borderWidth:1 ,
+        justifyContent: 'flex-end',
         marginTop: scaledHeight(0)
     },
     rowItem: {
-        flexDirection: 'row',
         alignItems: 'flex-start',
-        justifyContent: 'flex-end',
+        flexDirection: 'row',
         flexGrow: 1,
-        //  borderColor:'#afabb0',
-        //   borderWidth:1 ,
+        justifyContent: 'flex-end',
         marginTop: scaledHeight(22)
     },
     saveButtonStyle: {
@@ -701,17 +678,12 @@ const styles = StyleSheet.create({
     showPagesNosTxt: {
         color: '#584f58',
         fontSize: scaledHeight(15),
-        //    marginTop: scaledHeight(25),
         letterSpacing: 1
-        //  marginBottom: scaledHeight(7)
     },
     showPagesTxt: {
         color: '#61285F',
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
-
-        //   marginTop: scaledHeight(25),
-        //  marginBottom: scaledHeight(7)
     },
     specimenImg: {
         height: scaledHeight(176)
@@ -744,8 +716,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     touchItem: {
-        //  width:scaledHeight(250),
-        //   height:scaledHeight(250),
         marginVertical: scaledHeight(14),
     }
 });

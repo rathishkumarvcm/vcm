@@ -7,20 +7,18 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
     accTypeSelectSection: {
         flexDirection: 'row',
-       //  marginHorizontal: scaledHeight(12),
         flexGrow: 1
     },
     accountItem: {
-        backgroundColor: '#FFFFFF',
-        //  padding: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
         alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
         borderColor: '#5d83ae',
-        borderWidth: 6,
         borderStyle: 'solid',
-        width: scaledHeight(250),
+        borderWidth: 6,
         height: scaledHeight(250),
+        justifyContent: 'center',
+        width: scaledHeight(250),
 
     },
     accountItemTxt: {
@@ -60,12 +58,12 @@ const styles = StyleSheet.create({
         width : '100%'
         
     },
-    disclaimerTitleTxt: { //  termsofuseText
-        fontSize: scaledHeight(16),
-        marginBottom: scaledHeight(10),
-        fontWeight: 'bold',
+    disclaimerTitleTxt: { 
         color: '#56565A',
-        lineHeight: 25
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        lineHeight: 25,
+        marginBottom: scaledHeight(10)
     },
     disclaimerTxt: {
         color: '#56565A',
@@ -88,19 +86,17 @@ const styles = StyleSheet.create({
         width: '80%'
     },
     lblLine: {
-        //  width:"100%",
-        flexGrow: 1,
-        marginTop: scaledHeight(9.5),
-        height: scaledHeight(1),
         backgroundColor: '#707070',
+        flexGrow: 1,
+        height: scaledHeight(1),
+        marginTop: scaledHeight(9.5),
         opacity:0.5
     },
 
     lblLine1:{
-         //  width:"100%",
         
-         height:scaledHeight(1),
-         backgroundColor:'#696069'
+         backgroundColor:'#696069',
+         height:scaledHeight(1)
      },
     lblRadioBtnTxt:{
         color:'#333333DE',
@@ -137,25 +133,23 @@ const styles = StyleSheet.create({
         marginVertical: "5%"
     },
     newVictorySection: {
-      //   marginTop: scaledHeight(150),
+        backgroundColor: '#FFFFFF',
+        flexGrow: 1,
         padding: scaledHeight(12),
         width: '100%',
-        flexGrow: 1,
-        backgroundColor: '#FFFFFF',
 
 
     },
     normalBlackBtn: {
-         //   width: '90%',
-         borderWidth : 1,
-         borderColor : "#61285F45",
-         height: scaledHeight(50),
-         backgroundColor: '#544A54',
-         alignItems: 'center',
          alignContent: 'center',
+         alignItems: 'center',
+         backgroundColor: '#544A54',
+         borderColor : "#61285F45",
+         borderWidth : 1,
+         height: scaledHeight(50),
          justifyContent: 'center',
-         marginVertical:scaledHeight(7.5),
-         marginHorizontal:scaledHeight(37)
+         marginHorizontal:scaledHeight(37),
+         marginVertical:scaledHeight(7.5)
         
 
     },
@@ -166,16 +160,15 @@ const styles = StyleSheet.create({
         width: '100%'
     },
      normalWhiteBtn: {
-      //   width: '90%',
-        borderWidth : 1,
-        borderColor : "#61285F45",
-        height: scaledHeight(50),
-        backgroundColor: '#fff',
-        alignItems: 'center',
         alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderColor : "#61285F45",
+        borderWidth : 1,
+        height: scaledHeight(50),
         justifyContent: 'center',
-        marginVertical:scaledHeight(7.5),
-        marginHorizontal:scaledHeight(37)
+        marginHorizontal:scaledHeight(37),
+        marginVertical:scaledHeight(7.5)
 
     },
     normalWhiteBtnTxt: {
@@ -190,7 +183,6 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         width: '100%',
 
-        //  backgroundColor:'yellow',
 
     },
     pageHeader: {
@@ -203,24 +195,22 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     privacyAgreement: {
-        //  marginTop:convertToDeviceResolution(4),
-        marginVertical: scaledHeight(19),
-        padding: scaledHeight(12),
         alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
         backgroundColor: 'white',
         flexDirection: 'row',
+        flexGrow: 1,
         flexWrap: 'wrap',
-        flexGrow: 1
+        justifyContent: 'center',
+        marginVertical: scaledHeight(19),
+        padding: scaledHeight(12),
+        width: '100%'
     },
     privacyText: {
-        width: '50%',
-        //  paddingLeft:'4%',
-        marginVertical: '2%',
         color: '#61285F',
+        fontSize: scaledHeight(16),
         fontWeight: 'bold',
-        fontSize: scaledHeight(16)
+        marginVertical: '2%',
+        width: '50%'
     },
     radioBtnGrp:{
         flexGrow:1,
@@ -272,8 +262,6 @@ const styles = StyleSheet.create({
         overflow: 'hidden'
     },
     touchItem: {
-        //  width:scaledHeight(250),
-        //   height:scaledHeight(250),
         marginVertical: "5%"
 
     },
@@ -327,12 +315,11 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     wizardPageSection: {
-        flexDirection: 'row',
-        width: '100%',
-        justifyContent: 'space-around',
         alignItems: 'center',
-       //  marginVertical: scaledHeight(25)
-       marginTop:scaledHeight(41),
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop:scaledHeight(41),
+       width: '100%',
 
     },
     wizardPageTxt: {
@@ -348,14 +335,12 @@ const styles = StyleSheet.create({
 
     },
     wizardTitleTxt: {
-        fontSize: scaledHeight(20),
-      //   fontFamily:'Roboto',
-        marginHorizontal: scaledHeight(12),
-       //  marginVertical: scaledHeight(5),
-        marginTop: scaledHeight(34),
-        fontWeight: 'bold',
         color: '#535353',
-        lineHeight: 22
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold',
+        lineHeight: 22,
+        marginHorizontal: scaledHeight(12),
+        marginTop: scaledHeight(34)
     },
 
 });
