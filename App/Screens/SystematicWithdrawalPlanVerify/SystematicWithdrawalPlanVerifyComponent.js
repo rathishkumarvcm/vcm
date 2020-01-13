@@ -35,12 +35,30 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
         let payload = {};
         if (this.state.skip) {
             if (this.props && this.props.systematicWithdrawalState) {
-                payload = {
-                    ...this.props.systematicWithdrawalState.general
-                };
+                switch(this.state.accountType.toLowerCase())
+                {
+                    case 'general':
+                        payload = {
+                            ...this.props.systematicWithdrawalState.general
+                        };
+                        break;
+                    case 'ira':
+                        payload = {
+                            ...this.props.systematicWithdrawalState.ira
+                        };
+                        break;
+                    case 'utma':
+                        payload = {
+                            ...this.props.systematicWithdrawalState.utma
+                        };
+                        break;
+                }
                 this.setState({
                     systematicWithdrawalJson: payload[this.state.indexSelected],
                 });
+                // ,() => {
+                //     this.afterSetStateFinished();
+                // }
             }
         }
         else {
@@ -72,9 +90,18 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
             });
         }
     navigationBack = () => this.props.navigation.goBack();
-    navigationCancel = () => this.props.navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
+    navigationCancel = () => {
+        if(this.state.skip)
+            this.props.navigation.goBack(); 
+        else if(this.state.indexSelected>-1)
+            this.props.navigation.goBack('systematicWithdrawalAdd');
+        else
+            this.props.navigation.goBack('systematicWithdrawalAccount');
+    }
+    //this.props.navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
     navigationNext = () => this.props.navigation.navigate({routeName:'systematicWithdrawalEsign',key:'systematicWithdrawalEsign',params:{accountType:this.state.accountType,indexSelected:this.state.indexSelected}});
-    navigationSubmit = () => this.props.navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
+    navigationSubmit = () => this.props.navigation.goBack();
+    //this.props.navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
     
     editAddedAccount=()=>
     {
@@ -88,8 +115,19 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
         const year = new Date().getFullYear(); //Current Year
         const currentdate = month + "-" + date + "-" + year;
         const item = this.state.systematicWithdrawalJson;
-        console.log('************************',item)
-        let fundlist="";
+        console.log('item*****************top*******',item.dateToInvest)
+        let fundlist=" ";
+        let twiceMonth=" ";
+        if(item.valueDateDropDown!='' && item.valueDateDropDown!='null')
+        {
+            twiceMonth=' & '+item.valueDateDropDown;
+        }
+
+        if(item.dateToInvest!=='')
+        {
+            twiceMonth=' & '+item.dateToInvest;
+            console.log('item************************',item.dateToInvest)
+        }
         if(item.account || item.acc_name)//if(this.state.autoInvestmentJson.account)
         {
             item.investedIn.map((fund)=>{
@@ -173,7 +211,7 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
                         </View>
                         <View style={styles.verifyContentView}>
                             <Text style={styles.verifyConent1}>{"Date"}</Text>
-                            <Text style={styles.verifyConent2}>{item.valueDateBeginDropDown?item.valueDateBeginDropDown:item.dateToInvest}</Text>
+                            <Text style={styles.verifyConent2}>{item.valueDateBeginDropDown?(item.valueDateBeginDropDown.toString()+twiceMonth.toString()):item.dateFromInvest+twiceMonth.toString()}</Text>
                         </View>
                         <View style={styles.verifyContentView}>
                             <Text style={styles.verifyConent1}>{"Beginning on"}</Text>

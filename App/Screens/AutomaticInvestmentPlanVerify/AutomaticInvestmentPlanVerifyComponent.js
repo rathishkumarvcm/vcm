@@ -105,9 +105,10 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
         this.props.navigation.navigate({routeName:'automaticInvestmentEsign',key:'automaticInvestmentEsign',params:{accountType:this.state.accountType,indexSelected:this.state.indexSelected}});
     }
 
-    navigationSubmit = () => this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
+    navigationSubmit = () => this.props.navigation.goBack();
+    //this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
     navigationBack = () => this.props.navigation.goBack();
-    navigationCancel = () => this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
+    navigationCancel = () => this.props.navigation.goBack('automaticInvestment');
     editAddedAccount=()=>
     {
         myInstance.setAutomaticInvestmentEditMode(true);

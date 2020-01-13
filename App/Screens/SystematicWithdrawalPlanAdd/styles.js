@@ -421,6 +421,7 @@ export const styles = StyleSheet.create({
     //     left: 0
 
     // },
+
     errMsg: {
         color: 'red',
         fontSize: scaledHeight(12),

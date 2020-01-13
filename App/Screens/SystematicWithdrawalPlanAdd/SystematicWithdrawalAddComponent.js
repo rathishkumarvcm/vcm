@@ -191,6 +191,10 @@ class SystematicWithdrawalComponent extends Component {
                 federalTaxInDollars: '',
                 taxHoldingOption: globalString.liquidation.withholdTaxes,
             },
+
+            validateFundTo:true,
+            validateFundFrom:true,
+            validateVcmFunds:true,
             ...systematicAdd
         };
     }
@@ -221,11 +225,11 @@ class SystematicWithdrawalComponent extends Component {
             }
         }
         this.props.getCompositeLookUpData(payload);
-
+        console.log('ItemToEdit*************',this.state.accountType)
         if (this.state.ItemToEdit > -1) {
             if (this.props && this.props.systematicWithdrawalState) {
                 let valueToEdit;
-                switch (this.state.accountType) {
+                switch (this.state.accountType.toLowerCase()) {
                     case 'general':
                         valueToEdit = this.props.systematicWithdrawalState.general[this.state.ItemToEdit];
                         break;
@@ -236,7 +240,7 @@ class SystematicWithdrawalComponent extends Component {
                         valueToEdit = this.props.systematicWithdrawalState.utma[this.state.ItemToEdit];
                         break;
                 }
-
+                console.log('valueToEdit**********************',valueToEdit)
                 let strTotal = valueToEdit.totalAmount.replace('$', '').trim();
                 let bankIndex = 0;
                 this.props.bankAccountInfo.map((bank, index) => {
@@ -312,6 +316,7 @@ class SystematicWithdrawalComponent extends Component {
                             addressTwo: tempAddressResponse.Address2 || "",
                             validationAddressOne: true
                         });
+                        //this.moveToNext();
                     } else {
                         this.setState({
                             addressOne: '',
@@ -536,12 +541,11 @@ class SystematicWithdrawalComponent extends Component {
         });
     }
 
-    addAddressOnValidate = (validationType) => () => {
+    addAddressOnValidate(validationType){
 
         switch (validationType) {
 
             case 'validateAddressValueOne':
-
                 if (this.state.payeeName === "") {
                     this.setState({
                         validationPayeeName: false
@@ -608,30 +612,83 @@ class SystematicWithdrawalComponent extends Component {
         }
 
         this.setState({
-            isAddressApiCalling: true
+            isAddressApiCalling: true,
+            validateFundTo:true,
         })
         this.props.getAddressFormat(addNewAddressPayload);
     }
 
-    navigationNext = () => {
-
-        const payload = this.getPayload();
-        console.log('########################',payload)
-        const stateData = myInstance.getScreenStateData();
-        myInstance.setSavedSystematicData(payload);
-        const screenState = {
-            ...stateData,
-            "systematicAdd": { ...this.state }
-        }
-        myInstance.setScreenStateData(screenState);
-        this.props.navigation.navigate({
-            routeName: 'systematicWithdrawalSchedule', key: 'systematicWithdrawalSchedule', params: {
-                ItemToEdit: this.state.ItemToEdit,
-                acc_name: this.state.acc_name,
-                acc_no: this.state.acc_no,
-                accountType: this.state.accountType
+    navigationNext = () => () =>{
+        if(this.state.totalFund >= 50)
+        {    
+            if(this.state.fundConsumed == this.state.totalFund)
+            {
+                this.setState({validateFundFrom:true})
+                if(this.state.onlineMethod>-1)
+                {
+                    this.setState({validateFundTo:true})
+                    this.moveToNext()
+                }
+                else if(this.state.offlineMethod == 1)
+                {
+                    
+                    if(this.state.valueaddressDropDown==='Current mailing address')
+                        this.moveToNext();
+                    else{
+                        this.addAddressOnValidate('validateAddressValueOne');
+                        //if(this.state.validationAddressOne)
+                        this.moveToNext();
+                    }
+                }
+                else if(this.state.offlineMethod ==2 )
+                {
+                    if(this.state.totalFund==this.state.totalInitialInvestment.replace('$','').trim())
+                    {
+                        this.setState({validateVcmFunds:true})
+                        this.moveToNext()
+                    }
+                    
+                    else
+                    {
+                        this.setState({validateVcmFunds:false})
+                    }
+                }
+                else{
+                    this.setState({validateFundTo:false})
+                }
             }
-        });
+            else
+            {
+                this.setState({validateFundFrom:false})
+            }
+        }
+        else
+        {
+            this.setState({IsNotValidAmount:true})
+        }
+
+        
+    }
+
+    moveToNext()
+    {
+        const payload = this.getPayload();
+                        const stateData = myInstance.getScreenStateData();
+                        myInstance.setSavedSystematicData(payload);
+                        const screenState = {
+                            ...stateData,
+                            "systematicAdd": { ...this.state }
+                        }
+                        console.log('moveToNext****************',this.state.ItemToEdit)
+                        myInstance.setScreenStateData(screenState);
+                        this.props.navigation.navigate({
+                            routeName: 'systematicWithdrawalSchedule', key: 'systematicWithdrawalSchedule', params: {
+                                ItemToEdit: this.state.ItemToEdit,
+                                acc_name: this.state.acc_name,
+                                acc_no: this.state.acc_no,
+                                accountType: this.state.accountType
+                            }
+                        });
     }
     onSelected = (item) => () => {
         this.setState({ selectedItemID: item.id });
@@ -786,7 +843,13 @@ class SystematicWithdrawalComponent extends Component {
     }
 
     navigationBack = () => this.props.navigation.goBack();
-    navigationCancel = () => this.props.navigation.navigate('systematicWithdrawal');
+    navigationCancel = () => 
+    {
+        if(this.state.ItemToEdit>-1)
+            this.props.navigation.goBack();
+        else
+            this.props.navigation.goBack('systematicWithdrawalAccount');
+    }
 
     generateAmountKeyExtractor = (item) => item.fundNumber.toString()
     renderAmount = () => ({ item, index }) =>
@@ -1304,7 +1367,12 @@ class SystematicWithdrawalComponent extends Component {
                                 <Text style={styles.auto_invest_to_top}>{'Amount Consumed'}</Text>
                                 <View style={styles.auto_invest_to_top_view}>
                                     <Text style={styles.auto_invest_to_top}>{'$'}</Text>
-                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} value={this.state.fundConsumed.toString()} />
+                                    <View style={{flexDirection:'column',width:'100%'}}>
+                                        <GInputComponent style={{ marginLeft: scaledWidth(10) }} 
+                                        value={this.state.fundConsumed.toString()}
+                                        errorFlag={!this.state.validateFundFrom}
+                                        errorText={'Please consume full total amount'}/>
+                                    </View>
                                 </View>
                             </View>
 
@@ -1486,7 +1554,7 @@ class SystematicWithdrawalComponent extends Component {
                             <Text style={styles.autoInvestCont}>{'Choose how you will fund your account and indicate your initial investment amount.'}</Text>
                             <Text style={styles.autoInvest_sub_title_text}>{'Offline Method'}</Text>
                             <Text style={styles.autoInvestCont}>{'Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcittet'}</Text>
-
+                            {!this.state.validateFundTo ? <Text style={styles.errMsg}>{'Select a method to transfer Funds'}</Text>:null}
                             <TouchableOpacity onPress={this.offlineMethodFuc(1)}>
 
                                 <View style={this.state.offlineMethod === 1 ? styles.bankViewSelected : styles.bankView}>
@@ -1757,14 +1825,17 @@ class SystematicWithdrawalComponent extends Component {
                                                 })}
 
                                                 <View style={styles.investmentSectionFooter}>
-                                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: scaledHeight(20) }}>
-
-                                                        <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                                            {globalString.accManagement.total}
-                                                        </Text>
-                                                        <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
-                                                            {this.state.totalInitialInvestment}
-                                                        </Text>
+                                                    <View style={{ flexDirection: 'column'}}>
+                                                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: scaledHeight(20) }}>
+                                                            <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
+                                                                {globalString.accManagement.total}
+                                                            </Text>
+                                                            <Text style={{ color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold' }}>
+                                                                {this.state.totalInitialInvestment}
+                                                            </Text>
+                                                        </View>
+                                                            {!this.state.validateVcmFunds ? <Text style={styles.errMsg}>{'Fund from amount does not match with fund to'}</Text>:null}
+                                                        
                                                     </View>
                                                 </View>
                                             </View>
@@ -1787,18 +1858,25 @@ class SystematicWithdrawalComponent extends Component {
                         textStyle={styles.cancelButtonText}
                         onPress={this.navigationLogin}
                     />
-                    {this.state.valueaddressDropDown === 'Payee and address' ?
+                    {/* {this.state.valueaddressDropDown === 'Payee and address' ?
                         <GButtonComponent
                             buttonStyle={styles.continueButtonSelected}//this.state.selectedBank>-1 && 
                             buttonText={globalString.common.validate}
                             textStyle={styles.continueButtonText}
                             onPress={this.addAddressOnValidate('validateAddressValueOne')}
-                        /> : null}
-                    <GButtonComponent
+                        /> : null} */}
+                    {/* <GButtonComponent
                         buttonStyle={this.state.totalFund >= 50 && this.state.fundRemaining === 0 ? styles.continueButtonSelected : styles.continueButton}//this.state.selectedBank>-1 && 
                         buttonText={globalString.common.next}
                         textStyle={styles.continueButtonText}
                         onPress={this.state.totalFund >= 50 && this.state.fundRemaining === 0 ? this.navigationNext : null}//this.state.selectedBank>-1 && 
+                    /> */}
+
+                    <GButtonComponent
+                        buttonStyle={styles.continueButtonSelected}//this.state.selectedBank>-1 && 
+                        buttonText={globalString.common.next}
+                        textStyle={styles.continueButtonText}
+                        onPress={this.navigationNext()}//this.state.selectedBank>-1 && 
                     />
                     <GFooterComponent />
 

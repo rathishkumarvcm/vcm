@@ -161,7 +161,7 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
         else
             this.setState({errorTextMsg:'Please select the above checkbox'})
     }
-    navigationCancel=()=>this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
+    navigationCancel=()=>this.props.navigation.goBack('automaticInvestment');
     navigationBack = () => this.props.navigation.goBack();
 
     render() {

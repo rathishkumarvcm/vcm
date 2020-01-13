@@ -161,7 +161,13 @@ class AutomaticInvestmentAddComponent extends Component {
         this.setState({ selectedItemName: item.name });
     }
     navigationBack = () => this.props.navigation.goBack();
-    navigationCancel = () => this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
+    navigationCancel = () => 
+    { 
+        if(this.state.ItemToEdit>-1)
+            this.props.navigation.goBack('automaticInvestment');
+        else
+            this.props.navigation.goBack();
+    }
 
     generateKeyExtractor = (item) => item.bankName;
     renderInvestment = () => ({ item, index }) =>
