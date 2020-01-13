@@ -330,7 +330,7 @@ class CollegePlanBeneficiaryComponent extends Component {
                         {this.renderCustomDropDown({
                             stateKey: "beneficiary",
                             dropDownName: "beneficiaryDropDown",
-                            lblDropdownName: gblStrings.accManagement.whoWillBeTheBeneficiaryy,
+                            lblDropdownName: gblStrings.accManagement.whoWillBeTheBeneficiary,
                             isOptional: true
                         })
                         }

@@ -5,7 +5,6 @@ import styles from './styles';
 import { GButtonComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import { CustomPageWizard, CustomRadio } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-import { scaledHeight } from '../../Utils/Resolution';
 import AppUtils from '../../Utils/AppUtils';
 
 
@@ -47,7 +46,7 @@ class CollegePlanPersonalComponent extends Component {
     }
 
     onClickNext = () => {
-        this.validateFields();
+       // this.validateFields();
         const { navigation } = this.props;
         const { navigate } = navigation;
         navigate('collegePlanBeneficiary', { key: 'collegePlanBeneficiary' });
@@ -155,7 +154,7 @@ class CollegePlanPersonalComponent extends Component {
                                     label="Yes"
                                     descLabelStyle={styles.lblRadioDescTxt}
                                     descLabel=""
-                                    selected={!!((this.state.selectedItemID !== "" && this.state.selectedItemID == "Y"))}
+                                    selected={!!((selectedItemID !== "" && selectedItemID === "Y"))}
                                     onPress={this.onSelected({ name: 'Yes', id: 'Y' })}
                                 />
                                 <CustomRadio
@@ -168,13 +167,13 @@ class CollegePlanPersonalComponent extends Component {
                                     label="No"
                                     descLabelStyle={styles.lblRadioDescTxt}
                                     descLabel=""
-                                    selected={!!((this.state.selectedItemID !== "" && this.state.selectedItemID == "N"))}
+                                    selected={!!((selectedItemID !== "" && selectedItemID === "N"))}
                                     onPress={this.onSelected({ name: 'No', id: 'N' })}
                                 />
                             </View>
 
 
-                            <Text style={{ textAlign: "left", fontSize: scaledHeight(16), textDecorationLine: 'underline', color: '#333333DE' }}>
+                            <Text style={styles.whyWeedThisTxt}>
                                 {gblStrings.accManagement.whyWeNeedThis}
                             </Text>
 

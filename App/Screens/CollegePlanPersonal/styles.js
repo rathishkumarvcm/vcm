@@ -26,11 +26,16 @@ const styles = StyleSheet.create({
         marginVertical: scaledHeight(50)
     },
 
+    commonColView:{
+        flexGrow:1
+    },
     container: {
         backgroundColor: '#F7FAFF',
         flex: 1,
         width: '100%'
     },
+
+
     detailsRow: {
         alignItems: 'flex-start',
         flexDirection: 'row',
@@ -39,14 +44,12 @@ const styles = StyleSheet.create({
         marginVertical: scaledHeight(12)
 
     },
-
-
-    disclaimerTitleTxt: { //  termsofuseText
-        fontSize: scaledHeight(16),
-        marginBottom: scaledHeight(10),
-        fontWeight: 'bold',
+    disclaimerTitleTxt: { 
         color: '#56565A',
-        lineHeight: 25
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        lineHeight: 25,
+        marginBottom: scaledHeight(10)
     },
     disclaimerTxt: {
         color: '#56565A',
@@ -54,13 +57,13 @@ const styles = StyleSheet.create({
         lineHeight: 25
 
     },
+
     editBtn: {
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'flex-end',
         marginTop: scaledHeight(0)
     },
-
     editBtnTxt: {
         color: '#61285F',
         fontSize: scaledHeight(16),
@@ -69,6 +72,7 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         width: '100%'
     },
+
     editDetailsGrp: {
         backgroundColor: '#FFFFFF',
         borderColor: '#7070701A',
@@ -79,7 +83,6 @@ const styles = StyleSheet.create({
         paddingVertical: scaledHeight(25)
 
     },
-
     editSeletedFundsDetailsGrp: {
         backgroundColor: '#FFFFFF',
         borderColor: '#7070701A',
@@ -90,6 +93,7 @@ const styles = StyleSheet.create({
         paddingTop: scaledHeight(16)
 
     },
+
     explainDotteBorderTxt: {
 
         color: '#333333DE',
@@ -99,6 +103,8 @@ const styles = StyleSheet.create({
 
     },
 
+
+
     explainDottedBorder:{
         alignItems:"center",
         borderBottomColor:'#56565A',
@@ -107,9 +113,6 @@ const styles = StyleSheet.create({
         justifyContent:"flex-start"
        
     },
-
-
-
     explainTxt:{
 
         color: '#000000DE',
@@ -117,6 +120,7 @@ const styles = StyleSheet.create({
         lineHeight: 28,
         marginTop:scaledHeight(10)
     },
+
     explainUnderline:{
         alignItems:"center",
         borderBottomColor:'#56565A',
@@ -125,7 +129,6 @@ const styles = StyleSheet.create({
         justifyContent:"flex-start"
        
     },
-
     explainUnderlineTxt: {
 
         color: '#56565A',
@@ -147,13 +150,12 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(30)
 
     },
+    
     lblNameValueTxt: {
-        fontSize: scaledHeight(16),
-        //  width: '50%',
         color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
         marginTop: scaledHeight(12)
     },
-    
     lblRadioBtnTxt:{
         color:'#333333DE',
         flexWrap:'wrap',
@@ -168,40 +170,38 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(14),
         opacity:.75
     },
+
     lblRightColTxt: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
         width: '50%'
 
     },
-
     moreTxt: {
         color: '#61285F',
         fontSize: scaledHeight(16),
         fontWeight: 'bold'
     },
+
     newVictorySection: {
-        //   marginTop: scaledHeight(150),
+        backgroundColor: '#FFFFFF',
+        flexGrow: 1,
         padding: scaledHeight(12),
         width: '100%',
-        flexGrow: 1,
-        backgroundColor: '#FFFFFF',
 
 
     },
-
     normalBlackBtn: {
-        //   width: '90%',
-        borderWidth: 1,
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#544A54',
         borderColor: "#61285F45",
         borderRadius: scaledHeight(24),
+        borderWidth: 1,
         height: scaledHeight(50),
-        backgroundColor: '#544A54',
-        alignItems: 'center',
-        alignContent: 'center',
         justifyContent: 'center',
-        marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
+        marginHorizontal: scaledHeight(37),
+        marginVertical: scaledHeight(7.5)
 
 
     },
@@ -218,32 +218,33 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     normalBlackDisabledBtn: {
-        //   width: '90%',
-        borderWidth: 1,
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#544A54',
         borderColor: "#61285F45",
         borderRadius: scaledHeight(24),
+        borderWidth: 1,
         height: scaledHeight(50),
-        backgroundColor: '#544A54',
-        alignItems: 'center',
-        alignContent: 'center',
         justifyContent: 'center',
-        marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
+        marginHorizontal: scaledHeight(37),
+        marginVertical: scaledHeight(7.5)
     },
     normalWhiteBtn: {
-        //   width: '90%',
-        borderWidth: 1,
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
         borderColor: "#61285F45",
         borderRadius: scaledHeight(24),
+        borderWidth: 1,
         height: scaledHeight(50),
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        alignContent: 'center',
         justifyContent: 'center',
-        marginVertical: scaledHeight(7.5),
-        marginHorizontal: scaledHeight(37)
+        marginHorizontal: scaledHeight(37),
+        marginVertical: scaledHeight(7.5)
 
     },
+
+
+
     normalWhiteBtnTxt: {
         color: '#544A54',
         fontSize: scaledHeight(16),
@@ -251,7 +252,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         width: '100%'
     },
-
 
 
     noteTxt: {
@@ -264,14 +264,22 @@ const styles = StyleSheet.create({
         width:"100%"
 
     },
-
-
     radioBtnGrp:{
         flexDirection:'row',
         flexGrow:1,
         marginTop:scaledHeight(0)
     },
-    regulatoryQuestTxt: {
+    radioCol1: {
+        marginBottom: scaledHeight(0),
+        marginTop: scaledHeight(24),
+        width:"30%" 
+    },
+
+    radioCol2: {
+        marginBottom: scaledHeight(0),
+        marginTop: scaledHeight(24)
+    },
+     regulatoryQuestTxt: {
         color: '#333333DE',
         fontSize: scaledHeight(16),
         fontWeight:'bold',
@@ -279,28 +287,20 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(23)
 
     },
+     scrollView: {
+        flex: .85
+    },
     sectionGrp: {
         flexGrow: 1,
         marginHorizontal: scaledHeight(12),
         marginTop: scaledHeight(31),
         overflow: 'hidden'
     },
-
-    scrollView: {
-        flex: .85
-    },
-     commonColView:{
-        flexGrow:1
-    },
-     radioCol1: {
-        marginBottom: scaledHeight(0),
-        marginTop: scaledHeight(24),
-        width:"30%" 
-    },
-    radioCol2: {
-        marginBottom: scaledHeight(0),
-        marginTop: scaledHeight(24)
-    },
+    whyWeedThisTxt:{ 
+    color: '#333333DE', 
+    fontSize: scaledHeight(16), 
+    textAlign: "left",
+     textDecorationLine: 'underline' },
 
 
 
