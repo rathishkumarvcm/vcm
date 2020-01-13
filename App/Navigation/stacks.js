@@ -11,24 +11,40 @@ import EditPhoneInformation from '../Screens/EditPhoneInformations/';
 import EditOccupationInfo from '../Screens/EditOccupationInformation/';
 import EditMilitaryInfo from '../Screens/EditMilitaryInformation/';
 import EditRelationshipInfo from '../Screens/EditRelationshipInformation/';
+
 // Drawer User Management Componenet
-// import MarketingandPrivacySettings from './Screens/MarketingandPrivacy/'; —> marketingandPrivacySettings
-// import EditProfileSettings from './Screens/EditProfileSettings/'; —> editProfileSettings
-// import EditAddressSettings from './Screens/EditAddressInformation/'; —> editAddressSettings
-// import EditAddressAddNew from './Screens/EditAddressAddNew/'; —> editAddressAddNew
-// import EditPhoneInformation from './Screens/EditPhoneInformations/'; —> editPhoneInformation
-// import EditAddPhoneNumber from './Screens/EditAddNewPhoneNumber/'; —> editAddPhoneNumber
-// import EditEmailInformation from './Screens/EditEmailInformation/'; —> editEmailInformation
-// import EditEmailAddNew from './Screens/EditEmailInfoAddNew/'; —> editEmailAddNew
-// import EditAddFinancialInfo from './Screens/EditAddFinancialInformation/'; —> editAddFinancialInfo
-// import EditOccupationInfo from './Screens/EditOccupationInformation/'; —> editOccupationInfo
-// import EditMilitaryInfo from './Screens/EditMilitaryInformation/'; —> editMilitaryInfo
-// import EditRelationshipInfo from './Screens/EditRelationshipInformation/'; —> editRelationshipInfo
-// import EditFamilyMemberInfo from './Screens/EditFamilyMemberInformation/'; —> editFamilyMemberInfo
-// import EditFamilyDetail from './Screens/EditFamilyMemberDetails/'; —> editFamilyDetail
+ import MarketingandPrivacySettings from '../Screens/MarketingandPrivacy/';
+ import EditProfileSettings from '../Screens/EditProfileSettings/';
+ import EditAddressSettings from '../Screens/EditAddressInformation/';
+ import EditAddressAddNew from '../Screens/EditAddressAddNew/';
+ import EditAddPhoneNumber from '../Screens/EditAddNewPhoneNumber/';
+ import EditEmailInformation from '../Screens/EditEmailInformation/';
+ import EditEmailAddNew from '../Screens/EditEmailInfoAddNew/';
+ import EditAddFinancialInfo from '../Screens/EditAddFinancialInformation/';
+ import EditFamilyMemberInfo from '../Screens/EditFamilyMemberInformation/';
+ import EditFamilyDetail from '../Screens/EditFamilyMemberDetails/';
+
+ // Account Manangement 
+ import Dashboard from '../Screens/Dashboard/DashboardComponent';
+ import TermsAndConditions from '../Screens/TermsAndConditions/TermsAndConditionsComponent';
+ import DashboardAccounts from '../Screens/DashboardAccounts/';
+ import OpenAccPageOne from '../Screens/OpenAccPageOne/';
+ import OpenAccPageTwo from '../Screens/OpenAccPageTwo/';
+ import OpenAccPageThree from '../Screens/OpenAccPageThree/';
+ import OpenAccPageFour from '../Screens/OpenAccPageFour/';
+ import OpenAccPageFive from '../Screens/OpenAccPageFive/';
+ import OpenAccPageSix from '../Screens/OpenAccPageSix/';
+ import SpecialtyAccPage from '../Screens/SpecialtyAccPage/SpecialtyAccPageComponent';
+ import SpecialtyAccSubmit from '../Screens/SpecialtyAccSubmit/';
+ import CollegePlanESA from '../Screens/CollegePlanESA/CollegePlanESAComponent';
+ import CollegePlanPartOneTwo from '../Screens/CollegePlanPartOneTwo/CollegePlanPartOneTwoComponent';
+ import CollegePlanPersonal from '../Screens/CollegePlanPersonal/CollegePlanPersonalComponent';
+ import CollegePlanBeneficiary from '../Screens/CollegePlanBeneficiary/CollegePlanBeneficiaryComponent';
+
+ // Others
+ import InvestmentPlanInfo from '../Screens/InvestmentPlanInfo';
 
 // Menu
-import TermsAndConditions from '../Screens/TermsAndConditions/TermsAndConditionsComponent';
 import AccountServicesComponent from '../Screens/AccountServices';
 import DrawerComponent from '../Screens/Menu/DrawerComponent';
 import TabMoreComponent from '../Screens/Menu/TabMoreComponent';
@@ -70,25 +86,123 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
         },
     }
 );
+
+const AccountStack=createStackNavigator({
+    dashboard: {
+        screen: Dashboard,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    termsAndConditions: {
+        screen: TermsAndConditions,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    dashboardAccounts: {
+        screen: DashboardAccounts,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    openAccPageOne: {
+        screen: OpenAccPageOne,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    openAccPageTwo: {
+        screen: OpenAccPageTwo,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    openAccPageThree: {
+        screen: OpenAccPageThree,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    openAccPageFour: {
+        screen: OpenAccPageFour,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    openAccPageFive: {
+        screen: OpenAccPageFive,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    openAccPageSix: {
+        screen: OpenAccPageSix,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    specialtyAccPage: {
+        screen: SpecialtyAccPage,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    specialtyAccSubmit: {
+        screen: SpecialtyAccSubmit,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    collegePlanESA: {
+        screen: CollegePlanESA,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    collegePlanPartOneTwo: {
+        screen: CollegePlanPartOneTwo,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    collegePlanPersonal: {
+        screen: CollegePlanPersonal,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    collegePlanBeneficiary: {
+        screen: CollegePlanBeneficiary,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    investmentPlanInfo: {
+        screen: InvestmentPlanInfo,
+        navigationOptions: {
+            header: null,
+        }
+    },
+});
+
 //  Bottom Tabs
 const BottomTabNavigator = createBottomTabNavigator({
     myVCM: {
-        screen: AccountServicesComponent,
+        screen: AccountStack,
         navigationOptions:{
             tabBarLabel: 'MyVCM',
         },
     },
     portfolio: {
-        screen: TermsAndConditions,
+        screen: AccountServicesComponent,
         navigationOptions: {
-            title: 'Port',
             tabBarLabel: 'Portfolio',
         },
     },
     invest: {
-        screen: AccountServicesComponent,
+        screen: InvestmentPlanInfo,
         navigationOptions: {
-            title: 'Ivesting',
             tabBarLabel: 'Invest',
         },
     },
@@ -99,7 +213,7 @@ const BottomTabNavigator = createBottomTabNavigator({
         },
     },
     more: {
-        screen: () => TermsAndConditions,
+        screen:TermsAndConditions,
         navigationOptions: {
             tabBarLabel: 'More',
         },
@@ -122,17 +236,19 @@ const BottomTabNavigator = createBottomTabNavigator({
                 } else {
                     iconName = 'more';
                 }
-                return <GIcon
-                    name={iconName}
-                    type="material"
-                    size={20}
-                    color={tintColor}
-                />
+                return (
+                    <GIcon
+                        name={iconName}
+                        type="material"
+                        size={20}
+                        color={tintColor}
+                    />
+                );
             },
             tabBarOnPress: ({ defaultHandler }) => {
                 const { routeName, key } = navigation.state;
                 if (routeName === 'more') {
-                    console.warn('onPress:', navigation);
+                   // console.warn('onPress:', navigation);
                     navigation.goBack();
                 }
                 defaultHandler();
@@ -177,6 +293,69 @@ const DrawerNavigator = createDrawerNavigator({
             title: "Relationship Info"
         }
     },
+    // child screens of drawer menu
+    editAddPhoneNumber: {
+        screen: EditAddPhoneNumber,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    marketingandPrivacySettings: {
+        screen: MarketingandPrivacySettings,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editProfileSettings: {
+        screen: EditProfileSettings,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editAddressSettings: {
+        screen: EditAddressSettings,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editAddressAddNew: {
+        screen: EditAddressAddNew,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editEmailInformation: {
+        screen: EditEmailInformation,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editEmailAddNew: {
+        screen: EditEmailAddNew,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editAddFinancialInfo: {
+        screen: EditAddFinancialInfo,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    editFamilyMemberInfo: {
+        screen: EditFamilyMemberInfo,
+        navigationOptions: {
+            header: null
+        }
+    },
+    editFamilyDetail: {
+        screen: EditFamilyDetail,
+        navigationOptions: {
+            header: null
+        }
+    },
+    // Account Management screens
+
 }, {
     navigationOptions:{
         header:null
