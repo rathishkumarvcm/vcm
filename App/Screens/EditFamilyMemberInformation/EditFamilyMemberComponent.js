@@ -1,34 +1,37 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
+import { Text, View, Image, ScrollView } from 'react-native';
+import PropTypes from "prop-types";
+import styles from './styles';
+import { GButtonComponent, GHeaderComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
+import ImagesLoad from '../../Images/ImageIndex';
 
-class editFamilyMemberComponent extends Component {
+class EditFamilyMemberComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        const { navigation } = this.props;
         this.state = {
-            isLoading: false,
-            enableBiometric: false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false,
-
-            pressedPosition: this.props.navigation.getParam('pressedPosition', -1),
-            isRelation: this.props.navigation.getParam('isRelation', false),
+            pressedPosition: navigation.getParam('pressedPosition', -1),
+            isRelation: navigation.getParam('isRelation', false),
             profileInformationValues: {}
         };
     }
 
     componentDidMount() {
+        this.familyMemberDidMount();
+    }
+
+    familyMemberDidMount = () => {
+        const { profileState } = this.props;
+        const { pressedPosition } = this.state;
         let familyMembersData = [];
         if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileRelationShipDetails) {
-            familyMembersData = [...this.props.profileState.profileRelationShipDetails];
+            profileState &&
+            profileState.profileRelationShipDetails) {
+            familyMembersData = [...profileState.profileRelationShipDetails];
             this.setState({
-                profileInformationValues: familyMembersData[this.state.pressedPosition]
+                profileInformationValues: familyMembersData[pressedPosition]
             });
         }
     }
@@ -36,47 +39,62 @@ class editFamilyMemberComponent extends Component {
     //  Go Back to Profile Home Screen
 
     editFamilyDetailOnCancel = () => {
-        this.props.navigation.navigate('profileSettings');
+        const { navigation } = this.props;
+        navigation.navigate('profileSettings');
     }
 
     //  Edit Relationship Personal Details
 
-    editFamilyDetailManage = () => this.props.navigation.navigate('editFamilyDetail',
-        {
-            contactPosition: this.state.pressedPosition,
-            isRelation: true
-        });
-
+    editFamilyDetailManage = () => {
+        const { navigation } = this.props;
+        const { pressedPosition } = this.state;
+        navigation.navigate('editFamilyDetail',
+            {
+                contactPosition: pressedPosition,
+                isRelation: true
+            });
+    }
 
     //  Edit Relationship Contact Details
 
-    editFamilyContactDetail = () => this.props.navigation.navigate('editAddressSettings',
-        {
-            contactPosition: this.state.pressedPosition,
-            isRelation: true
-        });
+    editFamilyContactDetail = () => {
+        const { navigation } = this.props;
+        const { pressedPosition } = this.state;
+        navigation.navigate('editAddressSettings',
+            {
+                contactPosition: pressedPosition,
+                isRelation: true
+            });
+    }
 
     //  Edit Relationship Phone Details
 
-    editFamilyPhoneDetails = () => this.props.navigation.navigate('editPhoneInformation',
-        {
-            contactPosition: this.state.pressedPosition,
-            isRelation: true
-        });
+    editFamilyPhoneDetails = () => {
+        const { navigation } = this.props;
+        const { pressedPosition } = this.state;
+        navigation.navigate('editPhoneInformation',
+            {
+                contactPosition: pressedPosition,
+                isRelation: true
+            });
+    }
 
     render() {
+        const { navigation } = this.props;
+        const { profileInformationValues } = this.state;
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={navigation}
+                />
 
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.familyMemberFlex}>
 
                     {/* Header Section - Tree Structure */}
 
                     <View style={styles.settingsView}>
                         <Text style={styles.editFamilyMemberHead}>
-                            {"Pro.."}
+                            Pro..
                         </Text>
 
                         <Text style={styles.editFamilyMemberOne}>
@@ -84,7 +102,7 @@ class editFamilyMemberComponent extends Component {
                         </Text>
 
                         <Text style={styles.editFamilyMemberHead}>
-                            {"Bas.."}
+                            Bas..
                         </Text>
 
                         <Text style={styles.editFamilyMemberOne}>
@@ -92,7 +110,7 @@ class editFamilyMemberComponent extends Component {
                         </Text>
 
                         <Text style={styles.editFamilyMemberView}>
-                            {"Relationship Information"}
+                            Relationship Information
                         </Text>
                     </View>
 
@@ -100,13 +118,14 @@ class editFamilyMemberComponent extends Component {
 
                     <View>
 
-                        <View style={[styles.settingsView, styles.editFamilyMemberDivideOne]}>
+                        <View style={styles.familyMemberRegulatory}>
                             <Text style={styles.editFamilyDivideTwo}>
                                 {globalString.profileSettingsPage.profileRelationInfoLabel}
                             </Text>
 
                             <Text style={styles.editFamilyDivideThree}
-                                onPress={this.editFamilyDetailManage}>
+                                onPress={this.editFamilyDetailManage}
+                            >
                                 {globalString.profileSettingsPage.profileManage}
                             </Text>
                         </View>
@@ -125,7 +144,7 @@ class editFamilyMemberComponent extends Component {
 
                                 <View style={styles.signInView}>
                                     <Text style={styles.editFamilyNameLabel}>
-                                        {this.state.profileInformationValues.relationShipName}
+                                        {profileInformationValues.relationShipName}
                                     </Text>
                                 </View>
 
@@ -137,7 +156,7 @@ class editFamilyMemberComponent extends Component {
 
                                 <View style={styles.signInView}>
                                     <Text style={styles.editFamilyValue}>
-                                        {this.state.profileInformationValues.relationPrefix}
+                                        {profileInformationValues.relationPrefix}
                                     </Text>
                                 </View>
 
@@ -149,7 +168,7 @@ class editFamilyMemberComponent extends Component {
 
                                 <View style={styles.signInView}>
                                     <Text style={styles.editFamilyValue}>
-                                        {this.state.profileInformationValues.relationSuffix}
+                                        {profileInformationValues.relationSuffix}
                                     </Text>
                                 </View>
 
@@ -161,7 +180,7 @@ class editFamilyMemberComponent extends Component {
 
                                 <View style={styles.signInView}>
                                     <Text style={styles.editFamilyValue}>
-                                        {this.state.profileInformationValues.relationShipType}
+                                        {profileInformationValues.relationShipType}
                                     </Text>
                                 </View>
 
@@ -173,7 +192,7 @@ class editFamilyMemberComponent extends Component {
 
                                 <View style={styles.signInView}>
                                     <Text style={styles.editFamilyValue}>
-                                        {this.state.profileInformationValues.relationSecurityNumber}
+                                        {profileInformationValues.relationSecurityNumber}
                                     </Text>
                                 </View>
 
@@ -185,7 +204,7 @@ class editFamilyMemberComponent extends Component {
 
                                 <View style={styles.signInView}>
                                     <Text style={styles.editFamilyValue}>
-                                        {this.state.profileInformationValues.relationDob}
+                                        {profileInformationValues.relationDob}
                                     </Text>
                                 </View>
 
@@ -197,7 +216,7 @@ class editFamilyMemberComponent extends Component {
 
                                 <View style={styles.signInView}>
                                     <Text style={styles.editFamilyValue}>
-                                        {this.state.profileInformationValues.relationShipGender}
+                                        {profileInformationValues.relationShipGender}
                                     </Text>
                                 </View>
 
@@ -209,7 +228,7 @@ class editFamilyMemberComponent extends Component {
 
                                 <View style={styles.signInView}>
                                     <Text style={styles.editFamilyValue}>
-                                        {this.state.profileInformationValues.relationShipStatus}
+                                        {profileInformationValues.relationShipStatus}
                                     </Text>
                                 </View>
 
@@ -221,7 +240,7 @@ class editFamilyMemberComponent extends Component {
 
                                 <View style={styles.signInView}>
                                     <Text style={styles.editFamilyValue}>
-                                        {this.state.profileInformationValues.relationCitizenship}
+                                        {profileInformationValues.relationCitizenship}
                                     </Text>
                                 </View>
                             </View>
@@ -230,13 +249,14 @@ class editFamilyMemberComponent extends Component {
                         {/* Contact Information with Manage Options */}
 
                         <View>
-                            <View style={[styles.settingsView, styles.editFamilyMemberDivideOne]}>
+                            <View style={styles.familyMemberRegulatory}>
                                 <Text style={styles.editFamilyDivideTwo}>
                                     {globalString.profileSettingsPage.profileContactLabel}
                                 </Text>
 
                                 <Text style={styles.editFamilyDivideThree}
-                                    onPress={this.editFamilyContactDetail}>
+                                    onPress={this.editFamilyContactDetail}
+                                >
                                     {globalString.profileSettingsPage.profileManage}
                                 </Text>
                             </View>
@@ -252,7 +272,7 @@ class editFamilyMemberComponent extends Component {
 
                                 <View style={styles.signInView}>
                                     <Text style={styles.editFamilyValue}>
-                                        {"5400 N Black Oak Lake Rd"}
+                                        5400 N Black Oak Lake Rd
                                     </Text>
                                 </View>
 
@@ -264,7 +284,7 @@ class editFamilyMemberComponent extends Component {
 
                                 <View style={styles.signInView}>
                                     <Text style={styles.editFamilyValue}>
-                                        {"Same as mailing"}
+                                        Same as mailing
                                     </Text>
                                 </View>
                             </View>
@@ -273,13 +293,14 @@ class editFamilyMemberComponent extends Component {
                         {/* Phone Information with Manage Options */}
 
                         <View>
-                            <View style={[styles.settingsView, styles.editFamilyMemberDivideOne]}>
+                            <View style={styles.familyMemberRegulatory}>
                                 <Text style={styles.editFamilyDivideTwo}>
                                     {globalString.profileSettingsPage.profilePhoneInfoLabel}
                                 </Text>
 
                                 <Text style={styles.editFamilyDivideThree}
-                                    onPress={this.editFamilyPhoneDetails}>
+                                    onPress={this.editFamilyPhoneDetails}
+                                >
                                     {globalString.profileSettingsPage.profileManage}
                                 </Text>
                             </View>
@@ -295,7 +316,7 @@ class editFamilyMemberComponent extends Component {
 
                                 <View style={styles.signInView}>
                                     <Text style={styles.editFamilyValue}>
-                                        {"+1(xxx) xxx - 7890"}
+                                        +1(xxx) xxx - 7890
                                     </Text>
                                 </View>
                             </View>
@@ -304,7 +325,7 @@ class editFamilyMemberComponent extends Component {
                         {/* Email Information with Manage Options */}
 
                         <View>
-                            <View style={[styles.settingsView, styles.editFamilyMemberDivideOne]}>
+                            <View style={styles.familyMemberRegulatory}>
                                 <Text style={styles.editFamilyDivideTwo}>
                                     {globalString.profileSettingsPage.profileMailLabel}
                                 </Text>
@@ -325,7 +346,7 @@ class editFamilyMemberComponent extends Component {
 
                                 <View style={styles.signInView}>
                                     <Text style={styles.editFamilyValue}>
-                                        {"paxxxxx@example.com"}
+                                        paxxxxx@example.com
                                     </Text>
                                 </View>
                             </View>
@@ -338,7 +359,8 @@ class editFamilyMemberComponent extends Component {
                             buttonStyle={styles.cancelButtonStyle}
                             buttonText={globalString.common.back}
                             textStyle={styles.cancelButtonText}
-                            onPress={this.editFamilyDetailOnCancel} />
+                            onPress={this.editFamilyDetailOnCancel}
+                        />
                     </View>
 
                     <View style={styles.editFlexDirectionColumn}>
@@ -358,7 +380,8 @@ class editFamilyMemberComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")} />
+                            source={ImagesLoad.applicationLogo}
+                        />
                     </View>
 
                     <View style={styles.privacyAgreement}>
@@ -393,4 +416,13 @@ class editFamilyMemberComponent extends Component {
     }
 }
 
-export default editFamilyMemberComponent;
+EditFamilyMemberComponent.propTypes = {
+    navigation: PropTypes.instanceOf(Object).isRequired,
+    profileState: PropTypes.instanceOf(Object)
+};
+
+EditFamilyMemberComponent.defaultProps = {
+    profileState: {}
+};
+
+export default EditFamilyMemberComponent;

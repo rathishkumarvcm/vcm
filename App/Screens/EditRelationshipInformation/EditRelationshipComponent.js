@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity, FlatList } from 'react-native';
-import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent, GDropDownComponent, GDateComponent } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
+import { Text, View, Image, ScrollView } from 'react-native';
+import PropTypes from "prop-types";
+import { GButtonComponent, GHeaderComponent, GInputComponent, GDropDownComponent, GDateComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
+import styles from './styles';
+import ImagesLoad from '../../Images/ImageIndex';
 
 const profileSettingsTempData = [
     {
@@ -20,60 +21,62 @@ const profileSettingsTempData = [
     },
 ];
 
-class editRelationshipComponent extends Component {
+class EditRelationshipComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
-            enableBiometric: false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false,
+            relationShipInfoData: {
+                dateOfBirthValue: '',
+                isValidDateOfBirth: false,
+                dateOfBirthFlag: false,
+                dateOfBirthMsg: '',
 
-            dateOfBirthValue: '',
-            isValidDateOfBirth: false,
-            dateOfBirthFlag: false,
-            dateOfBirthMsg: '',
+                relationFirstNameValue: '',
+                isValidRelationFirstName: false,
+                relationFirstNameFlag: false,
+                relationFirstNameMsg: '',
 
-            relationFirstNameValue: '',
-            isValidRelationFirstName: false,
-            relationFirstNameFlag: false,
-            relationFirstNameMsg: '',
+                relationSecurityValue: '',
+                isValidRelationSecurity: false,
+                relationSecurityFlag: false,
+                relationSecurityMsg: '',
 
-            relationSecurityValue: '',
-            isValidRelationSecurity: false,
-            relationSecurityFlag: false,
-            relationSecurityMsg: '',
+                dropDownRelationState: false,
+                dropDownRelationValue: '',
+                dropDownRelationFlag: false,
+                dropDownRelationMsg: '',
 
-            dropDownRelationState: false,
-            dropDownRelationValue: '',
-            dropDownRelationFlag: false,
-            dropDownRelationMsg: '',
+                dropDownState: false,
+                dropDownValue: '',
+                dropDownFlag: false,
+                dropDownMsg: '',
 
-            dropDownState: false,
-            dropDownValue: '',
-            dropDownFlag: false,
-            dropDownMsg: '',
+                dropDownSuffixState: false,
+                dropDownSuffixValue: '',
+                dropDownSuffixFlag: false,
+                dropDownSuffixMsg: '',
 
-            dropDownSuffixState: false,
-            dropDownSuffixValue: '',
-            dropDownSuffixFlag: false,
-            dropDownSuffixMsg: '',
+                dropDownGenderState: false,
+                dropDownGenderValue: '',
+                dropDownGenderFlag: false,
+                dropDownGenderMsg: '',
 
-            dropDownGenderState: false,
-            dropDownGenderValue: '',
-            dropDownGenderFlag: false,
-            dropDownGenderMsg: '',
-
-            dropDownStatusState: false,
-            dropDownStatusValue: '',
-            dropDownStatusFlag: false,
-            dropDownStatusMsg: '',
+                dropDownStatusState: false,
+                dropDownStatusValue: '',
+                dropDownStatusFlag: false,
+                dropDownStatusMsg: '',
+            }
         };
     }
 
     componentDidMount() {
-        let payload = [];
+        this.relationShipInfoMount();
+    }
+
+    relationShipInfoMount = () => {
+        const { getProfileCompositeData, profileSettingsLookup } = this.props;
+        const payload = [];
 
         const compositePayloadData = [
             "prefix",
@@ -82,210 +85,293 @@ class editRelationshipComponent extends Component {
             "marital_status"
         ];
 
-        for (let i = 0; i < compositePayloadData.length; i++) {
-            let tempkey = compositePayloadData[i];
-            if (this.props && this.props.profileSettingsLookup && !this.props.profileSettingsLookup[tempkey]) {
+        for (let i = 0; i < compositePayloadData.length; i += 1) {
+            const tempkey = compositePayloadData[Number(i)];
+            if (this.props && profileSettingsLookup && !profileSettingsLookup[tempkey]) {
                 payload.push(tempkey);
             }
         }
 
-        this.props.getProfileCompositeData(payload);
+        getProfileCompositeData(payload);
     }
 
     dropDownRelationOnClick = () => {
+        const { relationShipInfoData } = this.state;
         this.setState({
-            dropDownRelationState: !this.state.dropDownRelationState
+            relationShipInfoData: {
+                ...relationShipInfoData,
+                dropDownRelationState: !relationShipInfoData.dropDownRelationState
+            }
         });
     }
 
-    dropDownRelationOnSelect = (valueRelation) => {
+    dropDownRelationOnSelect = (value, index, data) => {
+        const { relationShipInfoData } = this.state;
         this.setState({
-            dropDownRelationValue: valueRelation.value,
-            dropDownRelationState: false,
-            dropDownRelationFlag: false
+            relationShipInfoData: {
+                ...relationShipInfoData,
+                dropDownRelationValue: data[index].value,
+                dropDownRelationState: false,
+                dropDownRelationFlag: false
+            }
         });
     }
 
     dropDownOnClick = () => {
+        const { relationShipInfoData } = this.state;
         this.setState({
-            dropDownState: !this.state.dropDownState
+            relationShipInfoData: {
+                ...relationShipInfoData,
+                dropDownState: !relationShipInfoData.dropDownState
+            }
         });
     }
 
-    dropDownOnSelect = (valuePrefix) => {
+    dropDownOnSelect = (value, index, data) => {
+        const { relationShipInfoData } = this.state;
         this.setState({
-            dropDownValue: valuePrefix.value,
-            dropDownState: false,
-            dropDownFlag: false
+            relationShipInfoData: {
+                ...relationShipInfoData,
+                dropDownValue: data[index].value,
+                dropDownState: false,
+                dropDownFlag: false
+            }
         });
     }
 
     dropDownSuffixClick = () => {
+        const { relationShipInfoData } = this.state;
         this.setState({
-            dropDownSuffixState: !this.state.dropDownSuffixState
+            relationShipInfoData: {
+                ...relationShipInfoData,
+                dropDownSuffixState: !relationShipInfoData.dropDownSuffixState
+            }
         });
     }
 
-    dropDownSuffixSelect = (valueSuffix) => {
+    dropDownSuffixSelect = (value, index, data) => {
+        const { relationShipInfoData } = this.state;
         this.setState({
-            dropDownSuffixValue: valueSuffix.value,
-            dropDownSuffixState: false,
-            dropDownSuffixFlag: false
+            relationShipInfoData: {
+                ...relationShipInfoData,
+                dropDownSuffixValue: data[index].value,
+                dropDownSuffixState: false,
+                dropDownSuffixFlag: false
+            }
         });
     }
 
     dropDownGenderClick = () => {
+        const { relationShipInfoData } = this.state;
         this.setState({
-            dropDownGenderState: !this.state.dropDownGenderState
+            relationShipInfoData: {
+                ...relationShipInfoData,
+                dropDownGenderState: !relationShipInfoData.dropDownGenderState
+            }
         });
     }
 
-    dropDownGenderSelect = (valueGender) => {
+    dropDownGenderSelect = (value, index, data) => {
+        const { relationShipInfoData } = this.state;
         this.setState({
-            dropDownGenderValue: valueGender.value,
-            dropDownGenderState: false,
-            dropDownGenderFlag: false
+            relationShipInfoData: {
+                ...relationShipInfoData,
+                dropDownGenderValue: data[index].value,
+                dropDownGenderState: false,
+                dropDownGenderFlag: false
+            }
         });
     }
 
     dropDownStatusClick = () => {
+        const { relationShipInfoData } = this.state;
         this.setState({
-            dropDownStatusState: !this.state.dropDownStatusState
+            relationShipInfoData: {
+                ...relationShipInfoData,
+                dropDownStatusState: !relationShipInfoData.dropDownStatusState
+            }
         });
     }
 
-    dropDownStatusSelect = (valueStatus) => {
+    dropDownStatusSelect = (value, index, data) => {
+        const { relationShipInfoData } = this.state;
         this.setState({
-            dropDownStatusValue: valueStatus.value,
-            dropDownStatusState: false,
-            dropDownStatusFlag: false
+            relationShipInfoData: {
+                ...relationShipInfoData,
+                dropDownStatusValue: data[index].value,
+                dropDownStatusState: false,
+                dropDownStatusFlag: false
+            }
         });
     }
 
     onChangeDateValue = (date) => {
+        const { relationShipInfoData } = this.state;
         this.setState({
-            dateOfBirthValue: date,
-            isValidDateOfBirth: false,
-            dateOfBirthFlag: false
+            relationShipInfoData: {
+                ...relationShipInfoData,
+                dateOfBirthValue: date,
+                isValidDateOfBirth: false,
+                dateOfBirthFlag: false
+            }
         });
     }
 
     setRelationshipFirstName = (text) => {
+        const { relationShipInfoData } = this.state;
         this.setState({
-            relationFirstNameValue: text,
-            isValidRelationFirstName: false,
-            relationFirstNameFlag: false
+            relationShipInfoData: {
+                ...relationShipInfoData,
+                relationFirstNameValue: text,
+                isValidRelationFirstName: false,
+                relationFirstNameFlag: false
+            }
         });
     }
 
     setRelationSecurity = (text) => {
+        const { relationShipInfoData } = this.state;
         this.setState({
-            relationSecurityValue: text,
-            isValidRelationSecurity: false,
-            relationSecurityFlag: false
-        })
+            relationShipInfoData: {
+                ...relationShipInfoData,
+                relationSecurityValue: text,
+                isValidRelationSecurity: false,
+                relationSecurityFlag: false
+            }
+        });
     }
 
-    relationCancelOnClick = () => this.props.navigation.navigate('profileSettings');
+    relationCancelOnClick = () => {
+        const { navigation } = this.props;
+        navigation.navigate('profileSettings');
+    }
 
     relationShipOnSave = () => {
-        if (this.state.dropDownRelationValue === '') {
+        const { relationShipInfoData } = this.state;
+        if (relationShipInfoData.dropDownRelationValue === '') {
             this.setState({
-                dropDownRelationFlag: !this.state.dropDownRelationFlag,
-                dropDownRelationMsg: globalString.editRelationShipInformation.validRelationType
+                relationShipInfoData: {
+                    ...relationShipInfoData,
+                    dropDownRelationFlag: !relationShipInfoData.dropDownRelationFlag,
+                    dropDownRelationMsg: globalString.editRelationShipInformation.validRelationType
+                }
             });
         }
 
-        if (this.state.relationFirstNameValue === '') {
+        if (relationShipInfoData.relationFirstNameValue === '') {
             this.setState({
-                relationFirstNameFlag: !this.state.relationFirstNameFlag,
-                relationFirstNameMsg: globalString.editRelationShipInformation.validRelationFirstName
-            })
+                relationShipInfoData: {
+                    ...relationShipInfoData,
+                    relationFirstNameFlag: !relationShipInfoData.relationFirstNameFlag,
+                    relationFirstNameMsg: globalString.editRelationShipInformation.validRelationFirstName
+                }
+            });
         }
 
-        if (this.state.dropDownValue === '') {
+        if (relationShipInfoData.dropDownValue === '') {
             this.setState({
-                dropDownFlag: !this.state.dropDownFlag,
-                dropDownMsg: globalString.editRelationShipInformation.validRelationPrefix
-            })
+                relationShipInfoData: {
+                    ...relationShipInfoData,
+                    dropDownFlag: !relationShipInfoData.dropDownFlag,
+                    dropDownMsg: globalString.editRelationShipInformation.validRelationPrefix
+                }
+            });
         }
 
-        if (this.state.dropDownSuffixValue === '') {
+        if (relationShipInfoData.dropDownSuffixValue === '') {
             this.setState({
-                dropDownSuffixFlag: !this.state.dropDownSuffixFlag,
-                dropDownSuffixMsg: globalString.editRelationShipInformation.validRelationSuffix
-            })
+                relationShipInfoData: {
+                    ...relationShipInfoData,
+                    dropDownSuffixFlag: !relationShipInfoData.dropDownSuffixFlag,
+                    dropDownSuffixMsg: globalString.editRelationShipInformation.validRelationSuffix
+                }
+            });
         }
 
-        if (this.state.dropDownGenderValue === '') {
+        if (relationShipInfoData.dropDownGenderValue === '') {
             this.setState({
-                dropDownGenderFlag: !this.state.dropDownGenderFlag,
-                dropDownGenderMsg: globalString.editRelationShipInformation.validRelationGender
-            })
+                relationShipInfoData: {
+                    ...relationShipInfoData,
+                    dropDownGenderFlag: !relationShipInfoData.dropDownGenderFlag,
+                    dropDownGenderMsg: globalString.editRelationShipInformation.validRelationGender
+                }
+            });
         }
 
-        if (this.state.dropDownStatusValue === '') {
+        if (relationShipInfoData.dropDownStatusValue === '') {
             this.setState({
-                dropDownStatusFlag: !this.state.dropDownStatusFlag,
-                dropDownStatusMsg: globalString.editRelationShipInformation.validRelationMarital
-            })
+                relationShipInfoData: {
+                    ...relationShipInfoData,
+                    dropDownStatusFlag: !relationShipInfoData.dropDownStatusFlag,
+                    dropDownStatusMsg: globalString.editRelationShipInformation.validRelationMarital
+                }
+            });
         }
 
-        if (this.state.dateOfBirthValue === '') {
+        if (relationShipInfoData.dateOfBirthValue === '') {
             this.setState({
-                dateOfBirthFlag: !this.state.dateOfBirthFlag,
-                dateOfBirthMsg: globalString.editRelationShipInformation.validRelationDOB
-            })
+                relationShipInfoData: {
+                    ...relationShipInfoData,
+                    dateOfBirthFlag: !relationShipInfoData.dateOfBirthFlag,
+                    dateOfBirthMsg: globalString.editRelationShipInformation.validRelationDOB
+                }
+            });
         }
 
-        if (this.state.relationSecurityValue === '') {
+        if (relationShipInfoData.relationSecurityValue === '') {
             this.setState({
-                relationSecurityFlag: !this.state.relationSecurityFlag,
-                relationSecurityMsg: globalString.editRelationShipInformation.validRelationSecurity
-            })
+                relationShipInfoData: {
+                    ...relationShipInfoData,
+                    relationSecurityFlag: !relationShipInfoData.relationSecurityFlag,
+                    relationSecurityMsg: globalString.editRelationShipInformation.validRelationSecurity
+                }
+            });
         }
 
-        if (this.state.dropDownRelationValue != '' &&
-            this.state.relationFirstNameValue != '' &&
-            this.state.dropDownValue != '' &&
-            this.state.dropDownSuffixValue != '' &&
-            this.state.dropDownGenderValue != '' &&
-            this.state.dropDownStatusValue != '' &&
-            this.state.dateOfBirthValue != '' &&
-            this.state.relationSecurityValue != '') {
+        if (relationShipInfoData.dropDownRelationValue !== '' &&
+            relationShipInfoData.relationFirstNameValue !== '' &&
+            relationShipInfoData.dropDownValue !== '' &&
+            relationShipInfoData.dropDownSuffixValue !== '' &&
+            relationShipInfoData.dropDownGenderValue !== '' &&
+            relationShipInfoData.dropDownStatusValue !== '' &&
+            relationShipInfoData.dateOfBirthValue !== '' &&
+            relationShipInfoData.relationSecurityValue !== '') {
             this.addNewRelationShipDetails();
         }
     }
 
     addNewRelationShipDetails = () => {
+        const { saveProfileData, navigation } = this.props;
         const payloadData = this.getRelationShipPayload();
-        this.props.saveProfileData("addRelationShipInformation", payloadData);
-        this.props.navigation.navigate('profileSettings');
+        saveProfileData("addRelationShipInformation", payloadData);
+        navigation.navigate('profileSettings');
     }
 
     getRelationShipPayload = () => {
+        const { profileState } = this.props;
+        const { relationShipInfoData } = this.state;
         let relationShipPayload = {};
         let relationShipDetails = [];
-        if (this.props && this.props.profileState) {
+        if (this.props && profileState) {
             const addRelationShipDetails = {
-                "relationShipName": this.state.relationFirstNameValue,
-                "relationShipType": this.state.dropDownRelationValue,
-                "relationShipGender": this.state.dropDownGenderValue,
+                "relationShipName": relationShipInfoData.relationFirstNameValue,
+                "relationShipType": relationShipInfoData.dropDownRelationValue,
+                "relationShipGender": relationShipInfoData.dropDownGenderValue,
                 "relationShipEmail": '',
-                "relationShipStatus": this.state.dropDownStatusValue,
-                "relationSecurityNumber": this.state.relationSecurityValue,
-                "relationPrefix": this.state.dropDownValue,
-                "relationSuffix": this.state.dropDownSuffixValue,
-                "relationDob": this.state.dateOfBirthValue,
+                "relationShipStatus": relationShipInfoData.dropDownStatusValue,
+                "relationSecurityNumber": relationShipInfoData.relationSecurityValue,
+                "relationPrefix": relationShipInfoData.dropDownValue,
+                "relationSuffix": relationShipInfoData.dropDownSuffixValue,
+                "relationDob": relationShipInfoData.dateOfBirthValue,
                 "relationCitizenship": '',
                 "relationAddress": [],
                 "relationPhoneNumber": [],
                 "relationEmailId": []
             };
-            relationShipDetails = this.props.profileState.profileRelationShipDetails;
+            relationShipDetails = profileState.profileRelationShipDetails;
             relationShipDetails.push(addRelationShipDetails);
             relationShipPayload = {
-                ...this.props.profileState,
+                ...profileState,
                 profileRelationShipDetails: relationShipDetails,
             };
         }
@@ -297,50 +383,59 @@ class editRelationshipComponent extends Component {
         const date = new Date().getDate(); // Current Date
         const month = new Date().getMonth() + 1; // Current Month
         const year = new Date().getFullYear(); // Current Year
-        const currentdate = month + "-" + date + "-" + year;
+        const currentdate = `${month }-${ date }-${ year}`;
 
-        let profileRelationData = profileSettingsTempData;
+        const { navigation, profileSettingsLookup } = this.props;
+        const { relationShipInfoData } = this.state;
+        const profileRelationData = profileSettingsTempData;
+
         let profilePrefixData = profileSettingsTempData;
         let profileSuffixData = profileSettingsTempData;
         let profileGenderData = profileSettingsTempData;
         let profileStatusData = profileSettingsTempData;
 
-        if (this.props && this.props.profileSettingsLookup &&
-            this.props.profileSettingsLookup.prefix &&
-            this.props.profileSettingsLookup.prefix.value) {
-            profilePrefixData = this.props.profileSettingsLookup.prefix.value;
+        const tempPrefixData = 'prefix';
+        const tempSuffixData = 'suffix';
+        const tempGenderData = 'gender';
+        const tempStatusData = 'marital_status';
+
+        if (this.props && profileSettingsLookup &&
+            profileSettingsLookup[tempPrefixData] &&
+            profileSettingsLookup[tempPrefixData].value) {
+            profilePrefixData = profileSettingsLookup[tempPrefixData].value;
         }
 
-        if (this.props && this.props.profileSettingsLookup &&
-            this.props.profileSettingsLookup.suffix &&
-            this.props.profileSettingsLookup.suffix.value) {
-            profileSuffixData = this.props.profileSettingsLookup.suffix.value;
+        if (this.props && profileSettingsLookup &&
+            profileSettingsLookup[tempSuffixData] &&
+            profileSettingsLookup[tempSuffixData].value) {
+            profileSuffixData = profileSettingsLookup[tempSuffixData].value;
         }
 
-        if (this.props && this.props.profileSettingsLookup &&
-            this.props.profileSettingsLookup.gender &&
-            this.props.profileSettingsLookup.gender.value) {
-            profileGenderData = this.props.profileSettingsLookup.gender.value;
+        if (this.props && profileSettingsLookup &&
+            profileSettingsLookup[tempGenderData] &&
+            profileSettingsLookup[tempGenderData].value) {
+            profileGenderData = profileSettingsLookup[tempGenderData].value;
         }
 
-        if (this.props && this.props.profileSettingsLookup &&
-            this.props.profileSettingsLookup.marital_status &&
-            this.props.profileSettingsLookup.marital_status.value) {
-            profileStatusData = this.props.profileSettingsLookup.marital_status.value;
+        if (this.props && profileSettingsLookup &&
+            profileSettingsLookup[tempStatusData] &&
+            profileSettingsLookup[tempStatusData].value) {
+            profileStatusData = profileSettingsLookup[tempStatusData].value;
         }
 
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation} />
+                    navigation={navigation}
+                />
 
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.relationshipInfoFlex}>
 
                     {/* Header Section - Tree Structure */}
 
                     <View style={styles.settingsView}>
                         <Text style={styles.relationHeadView}>
-                            {"Pro.."}
+                            Pro..
                         </Text>
 
                         <Text style={styles.relationHeadOne}>
@@ -348,7 +443,7 @@ class editRelationshipComponent extends Component {
                         </Text>
 
                         <Text style={styles.relationHeadView}>
-                            {"Bas.."}
+                            Bas..
                         </Text>
 
                         <Text style={styles.relationHeadOne}>
@@ -356,7 +451,7 @@ class editRelationshipComponent extends Component {
                         </Text>
 
                         <Text style={styles.relationHeadView}>
-                            {"Man.."}
+                            Man..
                         </Text>
 
                         <Text style={styles.relationHeadOne}>
@@ -364,7 +459,7 @@ class editRelationshipComponent extends Component {
                         </Text>
 
                         <Text style={styles.relationHeadTwo}>
-                            {"Manage Relationship In.."}
+                            Manage Relationship In..
                         </Text>
                     </View>
 
@@ -386,13 +481,13 @@ class editRelationshipComponent extends Component {
                                 dropDownName={globalString.editRelationShipInformation.relationShipFamilyLabel}
                                 data={profileRelationData}
                                 changeState={this.dropDownRelationOnClick}
-                                showDropDown={this.state.dropDownRelationState}
-                                dropDownValue={this.state.dropDownRelationValue}
+                                showDropDown={relationShipInfoData.dropDownRelationState}
+                                dropDownValue={relationShipInfoData.dropDownRelationValue}
                                 selectedDropDownValue={this.dropDownRelationOnSelect}
-                                itemToDisplay={"value"}
-                                errorFlag={this.state.dropDownRelationFlag}
-                                errorText={this.state.dropDownRelationMsg}
-                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(90) }} />
+                                itemToDisplay="value"
+                                errorFlag={relationShipInfoData.dropDownRelationFlag}
+                                errorText={relationShipInfoData.dropDownRelationMsg}
+                            />
 
                             {/* First Name */}
 
@@ -406,9 +501,10 @@ class editRelationshipComponent extends Component {
                                     placeholder=""
                                     onChangeText={this.setRelationshipFirstName}
                                     maxLength={50}
-                                    value={this.state.relationFirstNameValue}
-                                    errorFlag={this.state.relationFirstNameFlag}
-                                    errorText={this.state.relationFirstNameMsg} />
+                                    value={relationShipInfoData.relationFirstNameValue}
+                                    errorFlag={relationShipInfoData.relationFirstNameFlag}
+                                    errorText={relationShipInfoData.relationFirstNameMsg}
+                                />
                             </View>
 
                             {/* Prefix */}
@@ -418,13 +514,13 @@ class editRelationshipComponent extends Component {
                                 dropDownName={globalString.editRelationShipInformation.relationPrefix}
                                 data={profilePrefixData}
                                 changeState={this.dropDownOnClick}
-                                showDropDown={this.state.dropDownState}
-                                dropDownValue={this.state.dropDownValue}
+                                showDropDown={relationShipInfoData.dropDownState}
+                                dropDownValue={relationShipInfoData.dropDownValue}
                                 selectedDropDownValue={this.dropDownOnSelect}
-                                itemToDisplay={"value"}
-                                errorFlag={this.state.dropDownFlag}
-                                errorText={this.state.dropDownMsg}
-                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(310) }} />
+                                itemToDisplay="value"
+                                errorFlag={relationShipInfoData.dropDownFlag}
+                                errorText={relationShipInfoData.dropDownMsg}
+                            />
 
                             {/* Suffix */}
 
@@ -433,13 +529,13 @@ class editRelationshipComponent extends Component {
                                 dropDownName={globalString.editRelationShipInformation.relationSuffix}
                                 data={profileSuffixData}
                                 changeState={this.dropDownSuffixClick}
-                                showDropDown={this.state.dropDownSuffixState}
-                                dropDownValue={this.state.dropDownSuffixValue}
+                                showDropDown={relationShipInfoData.dropDownSuffixState}
+                                dropDownValue={relationShipInfoData.dropDownSuffixValue}
                                 selectedDropDownValue={this.dropDownSuffixSelect}
-                                itemToDisplay={"value"}
-                                errorFlag={this.state.dropDownSuffixFlag}
-                                errorText={this.state.dropDownSuffixMsg}
-                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(400) }} />
+                                itemToDisplay="value"
+                                errorFlag={relationShipInfoData.dropDownSuffixFlag}
+                                errorText={relationShipInfoData.dropDownSuffixMsg}
+                            />
 
                             {/* Date of Birth */}
 
@@ -451,10 +547,11 @@ class editRelationshipComponent extends Component {
                                 <GDateComponent
                                     minDate={currentdate}
                                     placeholder="MM/DD/YYYY"
-                                    date={this.state.dateOfBirthValue}
+                                    date={relationShipInfoData.dateOfBirthValue}
                                     onDateChange={this.onChangeDateValue}
-                                    errorFlag={this.state.dateOfBirthFlag}
-                                    errorMsg={this.state.dateOfBirthMsg} />
+                                    errorFlag={relationShipInfoData.dateOfBirthFlag}
+                                    errorMsg={relationShipInfoData.dateOfBirthMsg}
+                                />
                             </View>
 
                             {/* Gender */}
@@ -464,13 +561,13 @@ class editRelationshipComponent extends Component {
                                 dropDownName={globalString.editRelationShipInformation.relationGender}
                                 data={profileGenderData}
                                 changeState={this.dropDownGenderClick}
-                                showDropDown={this.state.dropDownGenderState}
-                                dropDownValue={this.state.dropDownGenderValue}
+                                showDropDown={relationShipInfoData.dropDownGenderState}
+                                dropDownValue={relationShipInfoData.dropDownGenderValue}
                                 selectedDropDownValue={this.dropDownGenderSelect}
-                                itemToDisplay={"value"}
-                                errorFlag={this.state.dropDownGenderFlag}
-                                errorText={this.state.dropDownGenderMsg}
-                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(620) }} />
+                                itemToDisplay="value"
+                                errorFlag={relationShipInfoData.dropDownGenderFlag}
+                                errorText={relationShipInfoData.dropDownGenderMsg}
+                            />
 
                             {/* Marital Status */}
 
@@ -479,13 +576,13 @@ class editRelationshipComponent extends Component {
                                 dropDownName={globalString.editRelationShipInformation.relationStatus}
                                 data={profileStatusData}
                                 changeState={this.dropDownStatusClick}
-                                showDropDown={this.state.dropDownStatusState}
-                                dropDownValue={this.state.dropDownStatusValue}
+                                showDropDown={relationShipInfoData.dropDownStatusState}
+                                dropDownValue={relationShipInfoData.dropDownStatusValue}
                                 selectedDropDownValue={this.dropDownStatusSelect}
-                                itemToDisplay={"value"}
-                                errorFlag={this.state.dropDownStatusFlag}
-                                errorText={this.state.dropDownStatusMsg}
-                                dropDownPostition={{ position: 'absolute', right: 0, top: scaledHeight(710) }} />
+                                itemToDisplay="value"
+                                errorFlag={relationShipInfoData.dropDownStatusFlag}
+                                errorText={relationShipInfoData.dropDownStatusMsg}
+                            />
 
                             {/* Social Security Number */}
 
@@ -498,10 +595,11 @@ class editRelationshipComponent extends Component {
                                     propInputStyle={styles.editAddressInput}
                                     placeholder=""
                                     onChangeText={this.setRelationSecurity}
-                                    value={this.state.relationSecurityValue}
+                                    value={relationShipInfoData.relationSecurityValue}
                                     maxLength={10}
-                                    errorFlag={this.state.relationSecurityFlag}
-                                    errorText={this.state.relationSecurityMsg} />
+                                    errorFlag={relationShipInfoData.relationSecurityFlag}
+                                    errorText={relationShipInfoData.relationSecurityMsg}
+                                />
                             </View>
 
                             <View style={styles.editFlexDirectionColumn}>
@@ -509,7 +607,8 @@ class editRelationshipComponent extends Component {
                                     buttonStyle={styles.cancelButtonStyle}
                                     buttonText={globalString.common.cancel}
                                     textStyle={styles.cancelButtonText}
-                                    onPress={this.relationCancelOnClick} />
+                                    onPress={this.relationCancelOnClick}
+                                />
                             </View>
 
                             <View style={styles.editFlexDirectionColumn}>
@@ -517,7 +616,8 @@ class editRelationshipComponent extends Component {
                                     buttonStyle={styles.saveButtonStyle}
                                     buttonText={globalString.common.save}
                                     textStyle={styles.saveButtonText}
-                                    onPress={this.relationShipOnSave} />
+                                    onPress={this.relationShipOnSave}
+                                />
                             </View>
                         </View>
                     </View>
@@ -541,7 +641,7 @@ class editRelationshipComponent extends Component {
                             <View style={styles.column}>
                                 <View style={styles.row}>
                                     <Text style={styles.bullet}>
-                                        {"" + '\u2022' + ""}
+                                        {'\u2022'}
                                     </Text>
                                     <Text style={styles.bulletText}>
                                         {globalString.editRelationShipInformation.relationInstOne}
@@ -550,7 +650,7 @@ class editRelationshipComponent extends Component {
 
                                 <View style={styles.row}>
                                     <Text style={styles.bullet}>
-                                        {"" + '\u2022' + ""}
+                                        {'\u2022'}
                                     </Text>
                                     <Text style={styles.bulletText}>
                                         {globalString.editRelationShipInformation.relationInstTwo}
@@ -559,7 +659,7 @@ class editRelationshipComponent extends Component {
 
                                 <View style={styles.row}>
                                     <Text style={styles.bullet}>
-                                        {"" + '\u2022' + ""}
+                                        {'\u2022'}
                                     </Text>
                                     <Text style={styles.bulletText}>
                                         {globalString.editRelationShipInformation.relationInstThree}
@@ -583,7 +683,8 @@ class editRelationshipComponent extends Component {
 
                         <View style={styles.connectWithUs}>
                             <Image
-                                source={require("../../Images/logo.png")} />
+                                source={ImagesLoad.applicationLogo}
+                            />
                         </View>
 
                         <View style={styles.privacyAgreement}>
@@ -619,4 +720,19 @@ class editRelationshipComponent extends Component {
     }
 }
 
-export default editRelationshipComponent;
+EditRelationshipComponent.propTypes = {
+    navigation: PropTypes.instanceOf(Object).isRequired,
+    profileState: PropTypes.instanceOf(Object),
+    profileSettingsLookup: PropTypes.instanceOf(Object),
+    getProfileCompositeData: PropTypes.func,
+    saveProfileData: PropTypes.func
+};
+
+EditRelationshipComponent.defaultProps = {
+    profileState: {},
+    profileSettingsLookup: {},
+    getProfileCompositeData: null,
+    saveProfileData: null
+};
+
+export default EditRelationshipComponent;
