@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { withNavigation } from 'react-navigation';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { GIcon } from '../../CommonComponents';
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
     iconContainer: {
