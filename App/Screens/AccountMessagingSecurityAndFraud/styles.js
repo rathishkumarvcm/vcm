@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { scaledHeight } from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
         backgroundColor: '#F7FAFF',
         flex: 1,
@@ -100,3 +100,5 @@ export const styles = StyleSheet.create({
         position: 'relative',
     },
 });
+
+export default styles;

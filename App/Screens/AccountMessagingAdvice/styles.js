@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { scaledHeight } from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     adviceAlertsContent: {
         color: '#56565A',
         fontSize: scaledHeight(14),
@@ -131,3 +131,5 @@ export const styles = StyleSheet.create({
     },
 
 });
+
+export default styles;

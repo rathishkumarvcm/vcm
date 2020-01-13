@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight} from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     callPreferenceContainer: {
         borderColor: '#B7B7B7',
         borderWidth: 0.8,
@@ -433,3 +433,5 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(10)
     }
 });
+
+export default styles;

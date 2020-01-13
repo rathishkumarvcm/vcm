@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     backToInvestpage: {
         color: '#0D7CB5',
         fontSize: scaledHeight(16),
@@ -337,3 +337,5 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between' 
     },    
 });
+
+export default styles;

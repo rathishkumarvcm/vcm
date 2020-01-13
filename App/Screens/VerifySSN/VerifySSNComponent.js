@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
-import { styles } from './styles';
+import styles from './styles';
 import { GInputComponent,GButtonComponent, GHeaderComponent, GFooterSettingsComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 

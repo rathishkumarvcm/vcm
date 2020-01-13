@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     btnGroup:{
           alignItems:'center',
           marginBottom:scaledHeight(10),
@@ -93,3 +93,5 @@ export const styles = StyleSheet.create({
         flex: 0.85
     }
 });
+
+export default styles;

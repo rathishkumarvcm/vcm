@@ -3,7 +3,7 @@ import { Text, View, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import { Auth } from "aws-amplify";
 import { NavigationActions } from 'react-navigation';
-import { styles } from './styles';
+import styles from './styles';
 import { GButtonComponent, GInputComponent, GFooterSettingsComponent, GHeaderComponent, showAlert } from '../../CommonComponents';
 import globalStrings from '../../Constants/GlobalStrings';
 import { ValidatePassword } from '../../Utils/ValidatePassword';

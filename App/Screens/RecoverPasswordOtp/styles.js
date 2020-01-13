@@ -5,10 +5,10 @@ import { scaledHeight} from '../../Utils/Resolution';
 const {width} = Dimensions.get('window');
 
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container:{
-        flex:1,
         backgroundColor:'#F7FAFF',
+        flex:1,
         width:'100%'
     },
     loginHeader:{
@@ -21,28 +21,26 @@ export const styles = StyleSheet.create({
         alignItems:'center'
     },
     registernowButton:{
-       borderColor:'#56565A',
-       borderWidth:1,
-       width:width/3.3,
-      //  borderRadius:scaledHeight(14),
-       height:scaledHeight(28),
-       backgroundColor:'#FFFFFF',
        alignItems:'center',
-       justifyContent:'center'
+       backgroundColor:'#FFFFFF',
+       borderColor:'#56565A',     
+       borderWidth:1,
+       height:scaledHeight(28),
+       justifyContent:'center',
+       width:width/3.3
     },
     registernowButton1:{
-        borderColor:'#56565A',
-       borderWidth:1,
-       width:width/2,
-       // borderRadius:scaledHeight(24),
-       height:scaledHeight(48),
+        alignSelf:'center',
        backgroundColor:'#FFFFFF',
-       alignSelf:'center',
-       justifyContent:'center'
+       borderColor:'#56565A',      
+       borderWidth:1,
+       height:scaledHeight(48),
+       justifyContent:'center',
+       width:width/2
      },
     registernowText:{
-        fontSize:scaledHeight(10),
-        color:'#56565A'
+        color:'#56565A',
+        fontSize:scaledHeight(10)
     },
     
     signInUser:{
@@ -51,9 +49,9 @@ export const styles = StyleSheet.create({
         paddingRight:'4%',
     },
     passwordView:{
+        marginTop:scaledHeight(28),
         paddingLeft:'4%',
-        paddingRight:'4%',
-        marginTop:scaledHeight(28)
+        paddingRight:'4%'
     },
     
     userIDText:{
@@ -65,49 +63,47 @@ export const styles = StyleSheet.create({
 
     userIDTextBox:{
         marginLeft:'4%',
-        marginRight:'4%',
-        // marginBottom:scaledHeight(10)
+        marginRight:'4%',       
     },
     userIDTextBoxError:{
-        marginLeft:'4%',
-        marginRight:'4%',
-        // marginBottom:scaledHeight(10),
-        borderColor : 'red'
+        borderColor : 'red',
+        marginLeft:'4%',      
+        marginRight:'4%'
     },
     forgotLineText:{
+        flexDirection:'row',
+        fontSize:scaledHeight(18),
         marginTop:scaledHeight(14),
         paddingLeft:'4%',
-        paddingRight:'4%',
-        flexDirection:'row',
-        fontSize:scaledHeight(18)
+        paddingRight:'4%'
     },
     forgotLineTextColor:{
-        fontSize : scaledHeight(18),
         color:'#56565A',
+        fontSize : scaledHeight(18),
         fontWeight:'bold'
     },
     termsofuse:{
-        flexWrap:'wrap',
         flexDirection:'row',
+        flexWrap:'wrap',
+        marginTop:scaledHeight(25),
         paddingLeft:'4%',
-        paddingRight:'4%',
-        marginTop:scaledHeight(25)
+        paddingRight:'4%'
     },
     termsofuseText:{
-        fontSize : scaledHeight(18),
-        color:'#56565A'
+        color:'#56565A',
+        fontSize : scaledHeight(18)
     },
     
     newVictoryButton:{
+        alignItems:'center',
+        backgroundColor:'#FFFFFF',
         borderColor:'#56565A',
         borderRadius:scaledHeight(25),
-        height:scaledHeight(50),
         borderWidth:1,
+        height:scaledHeight(50),
+        justifyContent:'center',
         marginTop:scaledHeight(25),
-        width:'60%',
-        backgroundColor:'#FFFFFF',
-        alignItems:'center',
-        justifyContent:'center'
+        width:'60%'
 
     },
     newVictoryButtonText:{
@@ -116,112 +112,109 @@ export const styles = StyleSheet.create({
         fontWeight:'bold'
     },
     newVictorySection:{
+        backgroundColor:'#FFFFFF',
+        height:scaledHeight(450),
         marginLeft:'4%',
         marginRight:'4%',
+        marginTop:scaledHeight(29),
         padding:scaledHeight(15),
-        width:'92%',
-        height:scaledHeight(450),
-        backgroundColor:'#FFFFFF',
-        marginTop:scaledHeight(29)
+        width:'92%'
     },
     newVictory:{
+        color:'#56565A',
+        fontSize:scaledHeight(30),
         height:scaledHeight(30),
         lineHeight:scaledHeight(30),
-        fontSize:scaledHeight(30),
-        marginTop:scaledHeight(20),
-        color:'#56565A'
+        marginTop:scaledHeight(20)
     },
     usaaMembersText:{
-        height:scaledHeight(50),
-        lineHeight:scaledHeight(50),
+        color:'#56565A',
         fontSize:scaledHeight(16),
-        color:'#56565A'
+        height:scaledHeight(50),
+        lineHeight:scaledHeight(50)
     },
     openInvestment:{
-        marginTop:scaledHeight(10),
+        color:'#56565A',
         fontSize:scaledHeight(20),
-        color:'#56565A'
+        marginTop:scaledHeight(10)
     },
     lineBorder:{
-        marginTop:scaledHeight(25),
+        borderColor:'#DEDEDF',
         borderTopWidth:1,
-        borderColor:'#DEDEDF'
+        marginTop:scaledHeight(25)
     },
     usaaMemberSection:{
         flexDirection:'row',
         marginTop:scaledHeight(15)
     },
     privacyAgreement:{
-        marginTop:scaledHeight(15),
         alignItems:'center',
-        justifyContent:'center',
-        width:'100%',
         backgroundColor:'white',
+        flexDirection:'row',
         height:scaledHeight(50),
-        flexDirection:'row'
+        justifyContent:'center',
+        marginTop:scaledHeight(15),
+        width:'100%'
     },
     privacyText:{
-        width:'50%',
-        paddingLeft:'4%',
         color:'#56565A',
+        fontSize:scaledHeight(16),
         fontWeight:'bold',
-        fontSize:scaledHeight(16)
+        paddingLeft:'4%',
+        width:'50%'
     },
     copyRightSection:{
-        height:scaledHeight(50),
-        backgroundColor:'#56565A',
         alignItems:'center',
+        backgroundColor:'#56565A',
+        height:scaledHeight(50),
         justifyContent:'center'
     },
     copyRightText:{
         color:'#FFFFFF'
     },
     faceIDlogo:{
-        marginTop:'5%',
+        alignSelf:'center',
         marginBottom:'5%',
-        alignSelf:'center'
+        marginTop:'5%'
     },
     faceIDtextStyle:{
-        height:scaledHeight(20),
-        alignItems:'center'
+        alignItems:'center',
+        height:scaledHeight(20)
     },
 
-    /*recovery*/
+    /* recovery */
     cancelButton:{
+        alignItems:'center',
+        backgroundColor:'#FFFFFF',
         borderColor:'#61285F45',
         borderWidth:1,
-        width:'80%',
-        marginLeft:'10%',
-        marginRight:'10%',
-        // marginTop:scaledHeight(42),
-       //  borderRadius:scaledHeight(25),
-        height:scaledHeight(50),
-        backgroundColor:'#FFFFFF',
-        alignItems:'center',
+        height:scaledHeight(50),       
         justifyContent:'center',
-        marginTop:scaledHeight(15)
-     },
-     cancelButtonText:{
-        fontSize:scaledHeight(16),
-        color:'#544A54',
-        fontWeight:'bold'
-    },
-    continueButton:{
-        borderColor:'#56565A',
-        borderWidth:1,
-        width:'80%',
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       //  borderRadius:scaledHeight(25),
-        height:scaledHeight(50),
-        backgroundColor:'#56565A',
+        width:'80%'
+     },
+     cancelButtonText:{
+        color:'#544A54',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold'
+    },
+    continueButton:{
         alignItems:'center',
-        justifyContent:'center'
+        backgroundColor:'#56565A',
+        borderColor:'#56565A',
+        borderWidth:1,
+        height:scaledHeight(50),
+        justifyContent:'center',   
+        marginLeft:'10%',
+        marginRight:'10%',
+        marginTop:scaledHeight(15),
+        width:'80%'
      },
      continueButtonText:{
-        fontSize:scaledHeight(16),
         color:'#FFFFFF',
+        fontSize:scaledHeight(16),
         fontWeight:'bold'
     },
     retrievePasswordText:{
@@ -230,48 +223,47 @@ export const styles = StyleSheet.create({
     },
     securityCheck:
     {
-        width:'92%',
+        backgroundColor:'#878280',
+        height:scaledHeight(70),
         marginLeft:'4%',
         marginRight:'4%',
-        height:scaledHeight(70),
-        // backgroundColor:'#aeb3b4'
-        backgroundColor:'#878280'
+        width:'92%'
     },
     refreshSecurity:
     {
         alignSelf:'flex-end',
         color:'blue',
-        textDecorationLine:"underline",
-        fontSize:scaledHeight(16)
+        fontSize:scaledHeight(16),
+        textDecorationLine:"underline"
     },
     notifOuter: {
-        flex: 1,
-        height: scaledHeight(100),
-        width: '92%',
+        alignItems: 'center',
         backgroundColor: "#E9E9E9",
+        borderRadius: scaledHeight(25),
+        flex: 1,
+        flexDirection: "row",
+        height: scaledHeight(100),
         justifyContent: "center",
-        marginTop: scaledHeight(30),
         marginLeft: '4%',
         marginRight: '4%',
-        borderRadius: scaledHeight(25),
-        flexDirection: "row",
-        alignItems: 'center'
+        marginTop: scaledHeight(30),
+        width: '92%'
     },
     notifInner: {
-        flex: 0.8,
         alignItems: 'center',
+        flex: 0.8,
         marginLeft:'4%',
     },
     notifInnerText:{
-        fontSize: scaledHeight(17),
         color: '#56565A',
+        fontSize: scaledHeight(17),
         lineHeight:scaledHeight(29),
     },
     notifClose: {
-        flex: 0.2,
-        fontSize: scaledHeight(25),
-        color: '#56565A',       
-        alignItems: 'center'
+        alignItems: 'center',
+        color: '#56565A',
+        flex: 0.2,       
+        fontSize: scaledHeight(25)
     },
 
     signInView:{
@@ -281,9 +273,9 @@ export const styles = StyleSheet.create({
     },
     optTextMsg:{
         color:'#333333DE',
+        fontSize:scaledHeight(14),
         fontWeight:'bold',
-        marginBottom:scaledHeight(8),
-        fontSize:scaledHeight(14)
+        marginBottom:scaledHeight(8)
     },
     enterOpt:{
         color:'#333333DE',
@@ -295,42 +287,42 @@ export const styles = StyleSheet.create({
     {
         
         color:'#2C8DBF',
-        textDecorationLine:"underline",
         fontSize:scaledHeight(16),
         fontWeight:'bold',
+        textDecorationLine:"underline",
         
 
     },
     refreshOtpView:{       
-         marginRight:'4%', 
-        alignSelf:'flex-end',
-        marginBottom:scaledHeight(42)
+         alignSelf:'flex-end', 
+        marginBottom:scaledHeight(42),
+        marginRight:'4%'
         
     },
     errorMessage: {
-        fontSize: scaledHeight(14),
         color:"red",
+        fontSize: scaledHeight(14),
         paddingLeft:'4%',
         paddingRight:'4%',
       },
       pagerContainer:{
-        flexDirection:'row',   
-        marginTop:scaledHeight(30),       
-        alignItems: 'center',
+        alignItems: 'center',   
+        flexDirection:'row',       
         justifyContent: 'center',
         marginLeft: '4%',
         marginRight: '4%',
+        marginTop:scaledHeight(30),
     },
     pagerOne:{
+        backgroundColor:'#56565A',
         flex:0.4,
-        height:scaledHeight(8),
-        backgroundColor:'#56565A',       
+        height:scaledHeight(8),       
         marginRight:'1%'
     },
     pagerTwo:{
-        height:scaledHeight(8),
         backgroundColor:'#E6E6E6',
         flex:0.4,
+        height:scaledHeight(8),
         marginRight:'1%'
     },
     scrollViewFlex:{
@@ -338,3 +330,5 @@ export const styles = StyleSheet.create({
     }
     
 });
+
+export default styles;
