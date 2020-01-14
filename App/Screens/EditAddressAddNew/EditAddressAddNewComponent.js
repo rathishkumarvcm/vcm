@@ -21,6 +21,7 @@ class EditAddressAddNewComponent extends Component {
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         const { navigation } = this.props;
         this.state = {
+            isLoading: false,
             isRelationShipScreen: navigation.getParam('isRelationShipScreen'),
             relationShipPosition: navigation.getParam('relationShipPosition'),
             // relationShipContactData: [],
@@ -338,8 +339,8 @@ class EditAddressAddNewComponent extends Component {
     }
 
     getRelationContactPayload = () => {
-        const {profileState} = this.props;
-        const { radioButtonValue, addressOne, addressTwo, userCity, userState, zipCodeValue , relationShipPosition} = this.state;
+        const { profileState } = this.props;
+        const { radioButtonValue, addressOne, addressTwo, userCity, userState, zipCodeValue, relationShipPosition } = this.state;
         let relationContactPayload = {};
         let relationAddressPayload = [];
         if (this.props && profileState) {
@@ -379,9 +380,9 @@ class EditAddressAddNewComponent extends Component {
     }
 
     render() {
-        const { navigation, stateCityData} = this.props;
-        const {radioButtonIndex, addressOne, validationAddressOne, validAddressOneMessage, addressTwo, validationAddressTwo,
-            validAddressTwoMessage, zipCodeValue, isZipCodeValid, validZipCodeMessage, userCity, userState} = this.state;
+        const { navigation, stateCityData } = this.props;
+        const { radioButtonIndex, addressOne, validationAddressOne, validAddressOneMessage, addressTwo, validationAddressTwo,
+            validAddressTwoMessage, zipCodeValue, isZipCodeValid, validZipCodeMessage, userCity, userState } = this.state;
         return (
             <View style={styles.container}>
                 {
@@ -607,7 +608,7 @@ EditAddressAddNewComponent.propTypes = {
     getStateCity: PropTypes.func,
     getAddressFormat: PropTypes.func,
     saveProfileData: PropTypes.func,
-    stateCityData: PropTypes.func
+    stateCityData: PropTypes.instanceOf(Object)
 };
 
 EditAddressAddNewComponent.defaultProps = {
@@ -615,7 +616,7 @@ EditAddressAddNewComponent.defaultProps = {
     getStateCity: null,
     getAddressFormat: null,
     saveProfileData: null,
-    stateCityData: null
+    stateCityData: {}
 };
 
 export default EditAddressAddNewComponent;

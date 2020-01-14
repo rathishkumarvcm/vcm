@@ -31,7 +31,7 @@ class EditFamilyMemberComponent extends Component {
             profileState.profileRelationShipDetails) {
             familyMembersData = [...profileState.profileRelationShipDetails];
             this.setState({
-                profileInformationValues: familyMembersData[pressedPosition]
+                profileInformationValues: familyMembersData[Number(pressedPosition)]
             });
         }
     }
@@ -47,11 +47,11 @@ class EditFamilyMemberComponent extends Component {
 
     editFamilyDetailManage = () => {
         const { navigation } = this.props;
-        const { pressedPosition } = this.state;
+        const { pressedPosition, isRelation } = this.state;
         navigation.navigate('editFamilyDetail',
             {
                 contactPosition: pressedPosition,
-                isRelation: true
+                isRelation: !isRelation
             });
     }
 
@@ -59,11 +59,11 @@ class EditFamilyMemberComponent extends Component {
 
     editFamilyContactDetail = () => {
         const { navigation } = this.props;
-        const { pressedPosition } = this.state;
+        const { pressedPosition, isRelation } = this.state;
         navigation.navigate('editAddressSettings',
             {
                 contactPosition: pressedPosition,
-                isRelation: true
+                isRelation: !isRelation
             });
     }
 
@@ -71,11 +71,11 @@ class EditFamilyMemberComponent extends Component {
 
     editFamilyPhoneDetails = () => {
         const { navigation } = this.props;
-        const { pressedPosition } = this.state;
+        const { pressedPosition, isRelation } = this.state;
         navigation.navigate('editPhoneInformation',
             {
                 contactPosition: pressedPosition,
-                isRelation: true
+                isRelation: !isRelation
             });
     }
 
