@@ -54,6 +54,11 @@ export default class Accordian extends Component {
 
     }
 
+    toggleExpand = () => {
+        this.setState({ expanded: !this.state.expanded });
+        this.props.selectDataIndex(this.props.data, this.props.title, this.props.index);
+    }
+
     render() {
         return (
 
@@ -76,87 +81,95 @@ export default class Accordian extends Component {
                 <View />
                 {
                     this.state.expanded &&
-                    <View style={styles.accordianView}>
-                        {this.state.ammend ? (<View style={styles.shadowView}>
-                            <TouchableOpacity onPress={this.showModal}>
-                                <Text style={styles.lblTxtInnerAmmend}>Ammend
-                                </Text>
-                            </TouchableOpacity>
-                            <Text style={styles.lblLine} />
-                            <TouchableOpacity onPress={this.hideAmmend}>
-                                <Text style={styles.lblTxtInnerCancel}>Cancel</Text>
-                            </TouchableOpacity>
-                    </View>) : null}
-                        <View style={styles.flexAccDetails1}>
-                            <GIcon
-                                name="closesquareo"
-                                type="antdesign"
-                                size={22}
-                                color="#BBB3B3"
-                            />
-                            <View style={styles.marginTopView}>
-                                <Text style={styles.lblTxt}>{gblStrings.liquidation.accountName} {this.props.data.selectedAccountData.accountName}</Text>
-                                <Text style={styles.lblTxt}>{gblStrings.liquidation.accountNumber}</Text>
-                                <Text style={styles.lblTxt}>{this.props.data.selectedAccountData.accountNumber}</Text>
-                            </View>
-                        </View>
-                        <View style={styles.viewRow}>
-                            <Text style={styles.lblTxtInner}>{this.props.data.selectedFundData.fundName}</Text>
-                            <Text style={styles.lblCountText}>{this.props.data.count}</Text>
-                        </View>
-
-                        <View style={styles.viewRow}>
-                            <Text style={styles.lblTxtSmall}>Date added:</Text>
-                            <Text style={styles.lblTxtSmall}>{this.props.data.Dateadded}</Text>
-                        </View>
-                        <Text style={styles.lblLine} />
-                        <View style={styles.viewColum}>
-                            <Text style={styles.lblTxtInner}>CurrentValue</Text>
-                            <Text style={styles.lblTxtMedium}>{this.props.data.selectedAccountData.currentValue}</Text>
-                        </View>
-                        <View style={styles.viewColum}>
-                            <Text style={styles.lblTxtInner}>TransactionType</Text>
-                            <Text style={styles.lblTxtMedium}>{this.props.data.TransactionType}</Text>
-                        </View>
-                        <View style={styles.viewColum}>
-                            <Text style={styles.lblTxtInner}>PaymentMode</Text>
-                            <Text style={styles.lblTxtMedium}>{this.props.data.selectedFundSourceData.paymentMode}</Text>
-                        </View>
-                        <View style={styles.viewColum}>
-                            <Text style={styles.lblTxtInner}>OrderStatus</Text>
-                            <Text style={styles.lblTxtMedium}>{this.props.data.OrderStatus}</Text>
-                        </View>
-                    </View>
-                }
-                {this.state.modalVisible ?
-                    (<Modal
-                        transparent={true}
-                        visible={this.state.modalVisible
-                        }
-                    >
-                        <View style={styles.modalView}>
-                            <View style={styles.modalInsideView}>
-                                <Text style={styles.modalText}>Are you Sure you want to Amend {this.props.selectedTitle}
-                                    (Purchase of {this.props.selectedValue} of UAUX fund)
-                                </Text>
-                                <View style={styles.buttonView}>
-                                    <GButtonComponent
-                                        buttonStyle={styles.cancelButton}
-                                        buttonText={gblStrings.common.cancel}
-                                        textStyle={styles.cancelButtonText}
-                                        onPress={this.hideModal}
-                                    />
-                                    <GButtonComponent
-                                        buttonStyle={styles.saveButton}
-                                        buttonText="Proceed"
-                                        textStyle={styles.saveButtonText}
-                                        onPress={this.moveToFundSelection}
-                                    />
+                    (
+                        <View style={styles.accordianView}>
+                            {this.state.ammend ?
+                                (
+                                    <View style={styles.shadowView}>
+                                        <TouchableOpacity onPress={this.showModal}>
+                                            <Text style={styles.lblTxtInnerAmmend}>Ammend
+                                            </Text>
+                                        </TouchableOpacity>
+                                        <Text style={styles.lblLine} />
+                                        <TouchableOpacity onPress={this.hideAmmend}>
+                                            <Text style={styles.lblTxtInnerCancel}>Cancel</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                ) : null
+                            }
+                            <View style={styles.flexAccDetails1}>
+                                <GIcon
+                                    name="closesquareo"
+                                    type="antdesign"
+                                    size={22}
+                                    color="#BBB3B3"
+                                />
+                                <View style={styles.marginTopView}>
+                                    <Text style={styles.lblTxt}>{gblStrings.liquidation.accountName} {this.props.data.selectedAccountData.accountName}</Text>
+                                    <Text style={styles.lblTxt}>{gblStrings.liquidation.accountNumber}</Text>
+                                    <Text style={styles.lblTxt}>{this.props.data.selectedAccountData.accountNumber}</Text>
                                 </View>
                             </View>
-                        </View>
+                            <View style={styles.viewRow}>
+                                <Text style={styles.lblTxtInner}>{this.props.data.selectedFundData.fundName}</Text>
+                                <Text style={styles.lblCountText}>{this.props.data.count}</Text>
+                            </View>
 
-                     </Modal>) : null}
+                            <View style={styles.viewRow}>
+                                <Text style={styles.lblTxtSmall}>Date added:</Text>
+                                <Text style={styles.lblTxtSmall}>{this.props.data.Dateadded}</Text>
+                            </View>
+                            <Text style={styles.lblLine} />
+                            <View style={styles.viewColum}>
+                                <Text style={styles.lblTxtInner}>CurrentValue</Text>
+                                <Text style={styles.lblTxtMedium}>{this.props.data.selectedAccountData.currentValue}</Text>
+                            </View>
+                            <View style={styles.viewColum}>
+                                <Text style={styles.lblTxtInner}>TransactionType</Text>
+                                <Text style={styles.lblTxtMedium}>{this.props.data.TransactionType}</Text>
+                            </View>
+                            <View style={styles.viewColum}>
+                                <Text style={styles.lblTxtInner}>PaymentMode</Text>
+                                <Text style={styles.lblTxtMedium}>{this.props.data.selectedFundSourceData.paymentMode}</Text>
+                            </View>
+                            <View style={styles.viewColum}>
+                                <Text style={styles.lblTxtInner}>OrderStatus</Text>
+                                <Text style={styles.lblTxtMedium}>{this.props.data.OrderStatus}</Text>
+                            </View>
+                        </View>
+                    )
+                }
+                {this.state.modalVisible ?
+                    (
+                        <Modal
+                            transparent
+                            visible={this.state.modalVisible}
+                        >
+                            <View style={styles.modalView}>
+                                <View style={styles.modalInsideView}>
+                                    <Text style={styles.modalText}>Are you Sure you want to Amend {this.props.selectedTitle}
+                                        (Purchase of {this.props.selectedValue} of UAUX fund)
+                                    </Text>
+                                    <View style={styles.buttonView}>
+                                        <GButtonComponent
+                                            buttonStyle={styles.cancelButton}
+                                            buttonText={gblStrings.common.cancel}
+                                            textStyle={styles.cancelButtonText}
+                                            onPress={this.hideModal}
+                                        />
+                                        <GButtonComponent
+                                            buttonStyle={styles.saveButton}
+                                            buttonText="Proceed"
+                                            textStyle={styles.saveButtonText}
+                                            onPress={this.moveToFundSelection}
+                                        />
+                                    </View>
+                                </View>
+                            </View>
+
+                        </Modal>
+                    ) : null
+                }
             </View>
         );
     }
@@ -168,10 +181,7 @@ export default class Accordian extends Component {
         this.setState({ selectedIndex: item.Key });
     } */
 
-    toggleExpand = () => {
-        this.setState({ expanded: !this.state.expanded });
-        this.props.selectDataIndex(this.props.data, this.props.title, this.props.index);
-    }
+
 }
 
 Accordian.propTypes = {

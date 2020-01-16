@@ -48,7 +48,7 @@ class CSMOtp extends Component {
     }
 
     getInitialValues = () => {
-        const{initialState,signInMethodsData}=this.props;
+        const { initialState, signInMethodsData } = this.props;
         if (this.props && initialState && initialState.email && initialState.phone) {
             this.renderMaskedInput();
         }
@@ -78,30 +78,30 @@ class CSMOtp extends Component {
 
     }
 
-  getUpdatedValues = () => {
-    const{signInMethodsData}=this.props;
-    if (this.props && signInMethodsData && signInMethodsData.saveCurrentDevice) {
-        this.setState({
-            saveCurrentDevice: signInMethodsData.saveCurrentDevice
-        });
+    getUpdatedValues = () => {
+        const { signInMethodsData } = this.props;
+        if (this.props && signInMethodsData && signInMethodsData.saveCurrentDevice) {
+            this.setState({
+                saveCurrentDevice: signInMethodsData.saveCurrentDevice
+            });
+        }
+        if (this.props && signInMethodsData && signInMethodsData.otpMethodType &&
+            signInMethodsData.otpMethodType === "Email") {
+            this.setState({
+                radioButtonIndex: 0
+            });
+        } else if (this.props && signInMethodsData && signInMethodsData.otpMethodType &&
+            signInMethodsData.otpMethodType === "Mobile") {
+            this.setState({
+                radioButtonIndex: 1
+            });
+        } else if (this.props && signInMethodsData && signInMethodsData.otpMethodType &&
+            signInMethodsData.otpMethodType === "Security") {
+            this.setState({
+                radioButtonIndex: 2
+            });
+        }
     }
-    if (this.props && signInMethodsData && signInMethodsData.otpMethodType &&
-        signInMethodsData.otpMethodType === "Email") {
-        this.setState({
-            radioButtonIndex: 0
-        });
-    } else if (this.props && signInMethodsData && signInMethodsData.otpMethodType &&
-        signInMethodsData.otpMethodType === "Mobile") {
-        this.setState({
-            radioButtonIndex: 1
-        });
-    } else if (this.props && signInMethodsData && signInMethodsData.otpMethodType &&
-        signInMethodsData.otpMethodType === "Security") {
-        this.setState({
-            radioButtonIndex: 2
-        });
-    }
-  }
 
 
     renderMaskedInput = () => {
@@ -109,7 +109,7 @@ class CSMOtp extends Component {
             email : this.props.initialState.email,
             mobileNo : this.props.initialState.phone,
           }); */
-          const{initialState}=this.props;
+        const { initialState } = this.props;
         const strmobile = initialState.phone;
         //  console.log("------>mobbbbbnext", strmobile);
         //  var maskmobile = strmobile.substring(0,2)+strmobile.substring(2,8).replace(/\d/g,"*")+strmobile.substring(8,10)
@@ -154,14 +154,15 @@ class CSMOtp extends Component {
     }
 
     onClickCancel = () => {
-        const{navigation}=this.props;
-       navigation.navigate('ChangeSignInMethod');
+        const { navigation } = this.props;
+        navigation.navigate('ChangeSignInMethod');
     }
 
     onClickSave = () => {
-        const{radioButtonIndex,saveCurrentDevice}=this.state;
-        const{signInMethods,navigation}=this.props;
+        const { radioButtonIndex, saveCurrentDevice } = this.state;
+        const { signInMethods, navigation } = this.props;
         let payloadData = {};
+        const tempData=saveCurrentDevice;
         const date = new Date().getDate();
         const month = new Date().getMonth() + 1;
         const year = new Date().getFullYear();
@@ -169,7 +170,7 @@ class CSMOtp extends Component {
         const min = new Date().getMinutes();
         const sec = new Date().getSeconds();
         let otpType = '';
-        const updatedDate=`${date} / ${month} / ${year} ${hours} : ${min} : ${sec}`;
+        const updatedDate = `${date} / ${month} / ${year} ${hours} : ${min} : ${sec}`;
         if (radioButtonIndex === 0) {
             otpType = 'Email';
         }
@@ -182,7 +183,7 @@ class CSMOtp extends Component {
         payloadData = {
             selectedMethod: 'OTP',
             lastUpdatedTime: updatedDate,
-            saveCurrentDevice: saveCurrentDevice,
+            saveCurrentDevice: tempData,
             otpMethodType: otpType
         };
         signInMethods("signInMethodsData", payloadData);
@@ -194,8 +195,8 @@ class CSMOtp extends Component {
         });
     }
 
-    radioButtonClicked = (index) =>()=> {
-        const{radioButtonIndex}=this.state;
+    radioButtonClicked = (index) => () => {
+        const { radioButtonIndex } = this.state;
         if (index !== radioButtonIndex) {
             this.setState({
                 radioButtonIndex: index,
@@ -225,82 +226,89 @@ class CSMOtp extends Component {
     }
 
     render() {
-        const{radioButtonIndex,signInMethods,saveCurrentDevice}=this.state;
-        const{navigation}=this.props;
+        const { radioButtonIndex, signInMethods, saveCurrentDevice } = this.state;
+        const { navigation } = this.props;
         return (
             <View style={styles.container}>
-            <GHeaderComponent navigation={navigation} /> 
-            <ScrollView style={styles.scrollViewFlex}>
-                <View style={styles.signInView}>
-                    <Text style={styles.signIntext}> {gblStrings.userManagement.changeSignInHeadingOTP} 
-                    </Text> 
-                    <Text style={styles.lblLine} /> 
-                    <View style={styles.widthView}>
-                    <Text style={styles.lblTxt}> {gblStrings.userManagement.otpSignon} </Text> 
-                    </View> 
-                    {
-                    signInMethods.map((item, index) =>
-                    index === radioButtonIndex ?
-                    <GRadioButtonComponent onPress={this.radioButtonClicked(index)}
-                     selected questions={item.question}
-                     additionalText={item.additionalText}
-                    /> : 
-                    <GRadioButtonComponent onPress={this.radioButtonClicked(index)}
-                    selected={false}
-                    questions={item.question}
-                    additionalText={item.additionalText}
-                    />)
-                    } 
-                    <Text style={styles.lblTxtSmall}> {gblStrings.userManagement.checkTheOption} 
-                    </Text> 
-                    <View style={styles.agreeSectionGrp}>
-                    <CustomCheckBox size={24}
-                     itemBottom={0}
-                     itemTop={0}
-                     outerCicleColor="#707070"
-                     innerCicleColor="#61285F"
-                     labelStyle={styles.agreeTermsTxt}
-                     label={gblStrings.userManagement.saveCurrentDevice}
-                     selected={saveCurrentDevice}
-                    onPress={this.onCheckBoxCheck}
-                    />
-                    </View> 
-                    <GButtonComponent 
-                    buttonStyle={styles.cancelButton}
-                    buttonText={gblStrings.common.back}
-                    textStyle={styles.cancelButtonText}
-                    onPress={this.onClickCancel}
-                    /> 
-                    <GButtonComponent 
-                    buttonStyle={styles.cancelButton}
-                    buttonText={gblStrings.common.cancel}
-                    textStyle={styles.cancelButtonText}
-                    onPress={this.onClickCancel}
-                    /> 
-                    <GButtonComponent 
-                    buttonStyle={styles.saveButton}
-                    buttonText={gblStrings.common.save}
-                    textStyle={styles.saveButtonText}
-                    onPress={this.onClickSave}
-                    /> 
-                </View>
-                            
-            <GFooterComponent />
-            </ScrollView> 
+                <GHeaderComponent navigation={navigation} />
+                <ScrollView style={styles.scrollViewFlex}>
+                    <View style={styles.signInView}>
+                        <Text style={styles.signIntext}> {gblStrings.userManagement.changeSignInHeadingOTP}
+                        </Text>
+                        <Text style={styles.lblLine} />
+                        <View style={styles.widthView}>
+                            <Text style={styles.lblTxt}> {gblStrings.userManagement.otpSignon} </Text>
+                        </View>
+                        {
+                            signInMethods.map((item, index) =>
+                                index === radioButtonIndex ?
+                                    (
+                                        <GRadioButtonComponent onPress={this.radioButtonClicked(index)}
+                                            selected questions={item.question}
+                                            additionalText={item.additionalText}
+                                        />
+                                    )
+                                    :
+                                    (
+                                        <GRadioButtonComponent onPress={this.radioButtonClicked(index)}
+                                            selected={false}
+                                            questions={item.question}
+                                            additionalText={item.additionalText}
+                                        />
+                                    )
+                            )
+                        }
+                        <Text style={styles.lblTxtSmall}> {gblStrings.userManagement.checkTheOption}
+                        </Text>
+                        <View style={styles.agreeSectionGrp}>
+                            <CustomCheckBox size={24}
+                                itemBottom={0}
+                                itemTop={0}
+                                outerCicleColor="#707070"
+                                innerCicleColor="#61285F"
+                                labelStyle={styles.agreeTermsTxt}
+                                label={gblStrings.userManagement.saveCurrentDevice}
+                                selected={saveCurrentDevice}
+                                onPress={this.onCheckBoxCheck}
+                            />
+                        </View>
+                        <GButtonComponent
+                            buttonStyle={styles.cancelButton}
+                            buttonText={gblStrings.common.back}
+                            textStyle={styles.cancelButtonText}
+                            onPress={this.onClickCancel}
+                        />
+                        <GButtonComponent
+                            buttonStyle={styles.cancelButton}
+                            buttonText={gblStrings.common.cancel}
+                            textStyle={styles.cancelButtonText}
+                            onPress={this.onClickCancel}
+                        />
+                        <GButtonComponent
+                            buttonStyle={styles.saveButton}
+                            buttonText={gblStrings.common.save}
+                            textStyle={styles.saveButtonText}
+                            onPress={this.onClickSave}
+                        />
+                    </View>
+
+                    <GFooterComponent />
+                </ScrollView>
             </View>
-                                    );
-                                }
-                            }
+        );
+    }
+}
 CSMOtp.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     initialState: PropTypes.instanceOf(Object),
     signInMethodsData: PropTypes.instanceOf(Object),
     signInMethods: PropTypes.func
-                };
+};
 CSMOtp.defaultProps = {
     navigation: {},
     initialState: {},
     signInMethodsData: {},
-    signInMethods: () => {}};
-                                        
+    signInMethods: () => { }
+};
+
 export default CSMOtp;

@@ -22,32 +22,35 @@ export default class TAmmendComponent extends Component {
     }
 
     componentDidMount() {
-
-        if (this.props && this.props.amendReducerData && this.props.amendReducerData.menu) {
+        const{amendReducerData}=this.props;
+        if (this.props && amendReducerData && amendReducerData.menu) {
             //  console.log("---->menu",this.props.amendReducerData.menu)
             //  this.setState({ menu : this.props.amendReducerData.menu}) ;
-            menuList = this.props.amendReducerData.menu;
+            menuList = amendReducerData.menu;
         }
         //  console.log("state menu",this.state.menuList);
         this.filterPendingItems();
     }
 
     componentDidUpdate(prevProps) {
+        const{amendReducerData}=this.props;
         if (prevProps !== this.props) {
-            if (this.props && this.props.amendReducerData && this.props.amendReducerData.menu) {
-                menuList = this.props.amendReducerData.menu;
+            if (this.props && amendReducerData && amendReducerData.menu) {
+                menuList = amendReducerData.menu;
             }
             this.filterPendingItems();
         }
     }
 
     filterPendingItems = () => {
-        const items = [];
-        for (item of menuList) {
+        let items = [];
+        /*for (item of menuList) {
             if (item.data.OrderStatus === "Pending") {
                 items.push(item);
             }
-        }
+        }*/
+
+        items=menuList.filter((item)=>item.data.OrderStatus==='Pending' ? item:'');
         this.setState({ pendingItems: items });
     }
 
@@ -64,16 +67,57 @@ export default class TAmmendComponent extends Component {
 
     }
 
+    
+    navigatetoFundSelection = () => {
+        const{data,selectedIndex}=this.state;
+        const{navigation}=this.props;
+        if (data.TransactionType === "Liquidation") {
+            navigation.navigate('LiquidationPageTwo',
+                { index: selectedIndex, data: data, ammend: true });
+        }
+        if (data.TransactionType === "Purchase") {
+            navigation.navigate('purchaseScreenTwo',
+                { index: selectedIndex, data: data, ammend: true });
+        }
+        /* if(this.state.data.TransactionType=="Exchange")
+         {
+         this.props.navigation.navigate('LiquidationPageTwo',
+         {index:this.state.selectedIndex,data:this.state.data,ammend:true});
+         } */
+    }
+
+    renderAccordians = () => {
+        const items = [];
+        
+        for (item of this.state.pendingItems) {
+            items.push(
+                <Accordian
+                    title={item.title}
+                    index={item.key}
+                    data={item.data}
+                    selectDataIndex={this.selectIndex}
+                    selectedIndex={this.state.selectedIndex}
+                    selectedTitle={this.state.selectedTitle}
+                    selectedValue={this.state.selectedValue}
+                    navigate={this.navigatetoFundSelection}
+                />
+            );
+        }
+        return items;
+
+    }
+
     render() {
+        const{navigation}=this.props;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.signInView}>
                         <View style={styles.rowFlex}>
                             <Text style={styles.signIntext}>
                                 Transactions
-            </Text>
+                            </Text>
                             { /* <Text style={styles.sorttext}>
                         Sort By :
                         </Text> */}
@@ -102,41 +146,6 @@ export default class TAmmendComponent extends Component {
         );
     }
 
-    navigatetoFundSelection = () => {
-        if (this.state.data.TransactionType === "Liquidation") {
-            this.props.navigation.navigate('LiquidationPageTwo',
-                { index: this.state.selectedIndex, data: this.state.data, ammend: true });
-        }
-        if (this.state.data.TransactionType === "Purchase") {
-            this.props.navigation.navigate('purchaseScreenTwo',
-                { index: this.state.selectedIndex, data: this.state.data, ammend: true });
-        }
-        /* if(this.state.data.TransactionType=="Exchange")
-         {
-         this.props.navigation.navigate('LiquidationPageTwo',
-         {index:this.state.selectedIndex,data:this.state.data,ammend:true});
-         } */
-    }
-
-    renderAccordians = () => {
-        const items = [];
-        for (item of this.state.pendingItems) {
-            items.push(
-                <Accordian
-                    title={item.title}
-                    index={item.key}
-                    data={item.data}
-                    selectDataIndex={this.selectIndex}
-                    selectedIndex={this.state.selectedIndex}
-                    selectedTitle={this.state.selectedTitle}
-                    selectedValue={this.state.selectedValue}
-                    navigate={this.navigatetoFundSelection}
-                />
-            );
-        }
-        return items;
-
-    }
 }
 
 TAmmendComponent.propTypes = {
