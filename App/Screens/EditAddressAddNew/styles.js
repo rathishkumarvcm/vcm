@@ -402,9 +402,6 @@ const styles = StyleSheet.create({
     editAddressTypeLabel: {
         color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', marginBottom: '4%'
     },
-    editAddressInput: {
-        flexDirection: 'column', width: '100%', paddingLeft: '4%', paddingRight: '4%', marginBottom: '2%'
-    },
     editAddressWidth: {
         width: '100%'
     },
