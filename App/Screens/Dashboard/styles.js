@@ -59,7 +59,9 @@ const styles = StyleSheet.create({
 
     dashboardSection: {
         alignItems: 'center',
-        width: '100%',
+        marginLeft :'4%',
+        marginRight : '4%',
+        width: '92%'
     },
     dashboardText: {
         color: '#5D83AE',
@@ -115,7 +117,7 @@ const styles = StyleSheet.create({
         
         height: scaledHeight(50),
         justifyContent: 'center',
-        marginBottom:scaledHeight(157),
+        marginBottom:scaledHeight(15),
         marginTop:scaledHeight(26),
         width: 260,
 

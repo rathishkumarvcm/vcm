@@ -6,6 +6,7 @@ import styles from './styles';
 import { GButtonComponent, GHeaderComponent, GFooterSettingsComponent, GModalComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import AppUtils from '../../Utils/AppUtils';
+import { scaledHeight } from '../../Utils/Resolution';
 
 class DashboardComponent extends Component {
     constructor(props) {
@@ -13,7 +14,10 @@ class DashboardComponent extends Component {
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             memberId: '',
-            modalVisible:true
+            modalVisible:true,
+            idToken:'',
+            accessToken:'',
+            refreshToken: ''
         };
     }
 
@@ -29,6 +33,41 @@ class DashboardComponent extends Component {
                 });
             }, (err) => {
                AppUtils.debugLog(err);
+            });
+        
+            RNSecureKeyStore.get("jwtToken")
+            .then((value) => {
+                this.setState({
+                    idToken: value
+                })
+            }).catch((error) => {
+                this.setState({
+                    idToken: ""
+                })
+            });
+
+        
+            RNSecureKeyStore.get("accessToken")
+            .then((value) => {
+                this.setState({
+                    accessToken: value
+                })
+            }).catch((error) => {
+                this.setState({
+                    accessToken: ""
+                })
+            });
+
+        
+            RNSecureKeyStore.get("refreshToken")
+            .then((value) => {
+                this.setState({
+                    refreshToken: value
+                })
+            }).catch((error) => {
+                this.setState({
+                    refreshToken: ""
+                })
             });
 
     }
@@ -92,6 +131,17 @@ class DashboardComponent extends Component {
                             textStyle={styles.openAccBtnTxt}
                             onPress={this.onClickOpenAnAccount}
                         />
+
+                        <GButtonComponent
+                            buttonStyle={styles.openAccBtn}
+                            buttonText="Get Token"
+                            textStyle={styles.openAccBtnTxt}
+                            onPress={this.tokenDetails}
+                        />
+
+    <Text style={{marginBottom:scaledHeight(50)}}>ID Token: {this.state.idToken}</Text>
+    <Text style={{marginBottom:scaledHeight(50)}}>ACCESS Token: {this.state.accessToken}</Text>
+    <Text style={{marginBottom:scaledHeight(50)}}>REFRESH Token: {this.state.refreshToken}</Text>
                     </View>                  
 
                     {(specialMFAUserType !== "" && (specialMFAUserType === "UserForm" || specialMFAUserType === "NewUser"))? (
@@ -113,7 +163,7 @@ class DashboardComponent extends Component {
                     :null
                     }
 
-                    <GFooterSettingsComponent />
+                  {/*  <GFooterSettingsComponent /> */}
                 </ScrollView>
                 
             </View>
