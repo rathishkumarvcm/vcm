@@ -79,11 +79,11 @@ export default class TAmmendComponent extends Component {
             navigation.navigate('purchaseScreenTwo',
                 { index: selectedIndex, data: data, ammend: true });
         }
-        /* if(this.state.data.TransactionType=="Exchange")
+         if(data.TransactionType === "Exchange")
          {
-         this.props.navigation.navigate('LiquidationPageTwo',
-         {index:this.state.selectedIndex,data:this.state.data,ammend:true});
-         } */
+         navigation.navigate('exchangeScreenTwo',
+         {index:selectedIndex,data:data,ammend:true});
+         } 
     }
 
     renderAccordians = () => {

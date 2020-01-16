@@ -418,6 +418,7 @@ export default {
 
         verifyInfo: "Verify",
         selectedMutualFunds: "Selected Mutual Funds",
+        sellingFunds: "Selling Funds",
         fundingInfo: "Funding Information",
         fundingSource: "Funding Source",
         totalInitInvestment: "Total Initial Investment",

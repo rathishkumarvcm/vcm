@@ -74,7 +74,7 @@ class ExchangeScreenThreeComponent extends Component {
         if (this.props !== prevProps) {
             const { accOpeningData } = this.props;
             let tempFundListData = [];
-            this.updateAmendData();
+           // this.updateAmendData();
             if (accOpeningData[ActionTypes.GET_FUNDLIST] !== undefined && accOpeningData[ActionTypes.GET_FUNDLIST].Items !== null) {
                 tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST].Items;
                 this.setState({
@@ -366,6 +366,7 @@ class ExchangeScreenThreeComponent extends Component {
     }
 
     onClickSave = () => {
+
         const { selectedFundInvestmentData, ammend, totalInitialInvestment } = this.state;
         const { saveData, navigation } = this.props;
         if (ammend) {
@@ -390,8 +391,8 @@ class ExchangeScreenThreeComponent extends Component {
                 }
             };
             saveData(ammendPayloadData);
-            console.log("saved Data after screen three ammend", payload);
-            //   navigation.navigate('purchaseScreenThree', { ammend: true, index: ammendIndex, data: ammendData });
+            console.log("saved Data after screen three ammend", ammendPayloadData);
+            navigation.navigate('exchangeScreenFour', { ammend: true, index: ammendIndex, data: ammendData });
         }
         else {
             const payloadData = {
@@ -410,8 +411,8 @@ class ExchangeScreenThreeComponent extends Component {
                 }
             };
             saveData(payloadData);
-            console.log("saved Data after screen three", payload);
-            //  navigation.navigate('purchaseScreenThree', { ammend: false });
+            console.log("saved Data after screen three", payloadData);
+            navigation.navigate('exchangeScreenFour', { ammend: false });
         }
     }
 
@@ -565,11 +566,11 @@ class ExchangeScreenThreeComponent extends Component {
         const { isLoading, ammend, fundList, selectedFundIndex, selectedFundInvestmentData, totalInitialInvestment, disableNextButton, modalVisible, filterMinData, filterRiskData, filterFundData } = this.state;
         const { exchangeData, accOpeningData, masterLookupStateData, navigation } = this.props;
 
-        let currentPage = 2;
+        let currentPage = 3;
         let pageName = `${currentPage} - ${gblStrings.purchase.investmentSelection}`;
         let totalCount = 4;
         if (ammend) {
-            currentPage = 1;
+            currentPage = 2;
             pageName = `${currentPage} - ${gblStrings.purchase.investmentSelection}`;
             totalCount = 3;
         }
