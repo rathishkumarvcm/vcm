@@ -22,9 +22,8 @@ class manageIntrestedPartiesComponent extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { navigation } = this.props;
         if (this.props !== prevProps) {
-            this.setState({ isSavedSuccess: navigation.getParam("showMsg"), successMsg: navigation.getParam("successMsg") });
+            this.updateNavigationProps();
         }
     }
 

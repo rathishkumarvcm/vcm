@@ -12,14 +12,14 @@ const fundingOptionsData = [
     { "key": "init_mon", "value": "Initial and Monthly Investment" }
 ];
 
-const filterMinData = [
+const tempFilterMinData = [
     { key: '3000', value: '3000' },
     { key: '1000', value: '1000' },
     { key: '500', value: '500' },
     { key: '50', value: '50 initial and 50 monthly' },
 ];
 
-const filterRiskData = [
+const tempFilterRiskData = [
     { key: 'pre_cap', value: 'Preservation of Capital' },
     { key: 'con', value: 'Conservative' },
     { key: 'mod_con', value: 'Moderately Conservative' },
@@ -29,7 +29,7 @@ const filterRiskData = [
     { key: 'very_agg', value: 'Very Aggressive' },
 ];
 
-const filterFundData = [
+const tempFilterFundData = [
     { key: 'sta_fund', value: 'Starters Funds' },
     { key: 'tar_risk', value: 'Target Risk Funds' },
     { key: 'tar_ret', value: 'Target Retirement Funds' },
@@ -55,13 +55,13 @@ class PurchaseScreenTwoComponent extends Component {
             selectedFundIndex: null,
             disableNextButton: true,
             modalVisible: false,
-            filterMinData: [...filterMinData.map(v => ({ ...v, isActive: false }))],
-            filterRiskData: [...filterRiskData.map(v => ({ ...v, isActive: false }))],
-            filterFundData: [...filterFundData.map(v => ({ ...v, isActive: false }))],
+            filterMinData: [...tempFilterMinData.map(v => ({ ...v, isActive: false }))],
+            filterRiskData: [...tempFilterRiskData.map(v => ({ ...v, isActive: false }))],
+            filterFundData: [...tempFilterFundData.map(v => ({ ...v, isActive: false }))],
             applyFilterState: false,
             fundList: [],
             totalInitialInvestment: "",
-            isFilterApplied: false,
+            // isFilterApplied: false,
             ammend: false
         };
     }
@@ -72,7 +72,7 @@ class PurchaseScreenTwoComponent extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props !== prevProps) {
-            const { accOpeningData ,navigation} = this.props;
+            const { accOpeningData, navigation } = this.props;
             const { ammend } = this.state;
             let tempFundListData = [];
             if (navigation.getParam('ammend')) {
@@ -87,7 +87,7 @@ class PurchaseScreenTwoComponent extends Component {
                 tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST].Items;
                 this.setState({
                     fundList: [...tempFundListData],
-                    isFilterApplied: false,
+                    // isFilterApplied: false,
                     isLoading: false
                 });
                 if (ammend) {
@@ -107,9 +107,10 @@ class PurchaseScreenTwoComponent extends Component {
     getLookUpData = () => {
         const { navigation, getFundListData, masterLookupStateData, getCompositeLookUpData } = this.props;
         const { fundList } = this.state;
-        ammendData = navigation.getParam('data');
-        ammendIndex = navigation.getParam('index');
+
         if (navigation.getParam('ammend')) {
+            ammendData = navigation.getParam('data');
+            ammendIndex = navigation.getParam('index');
             this.setState({ ammend: true });
         }
         else {
@@ -141,6 +142,7 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     /* ---------------Button Events ------------------- */
+
     goBack = () => {
         const { navigation } = this.props;
         navigation.goBack();
@@ -335,7 +337,7 @@ class PurchaseScreenTwoComponent extends Component {
                 this.onClickSave();
             }
         } catch (err) {
-           // console.log(`Error::: ${err}`);
+            // console.log(`Error::: ${err}`);
         }
     }
 
@@ -451,7 +453,8 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     updateAmendDataToReducer = () => {
-        let data = ammendData;
+        const { saveData } = this.props;
+        const data = ammendData;
         const payloadData = {
             savePurchaseSelectedData: {
                 "selectedFundData": data.selectedFundData,
@@ -462,7 +465,7 @@ class PurchaseScreenTwoComponent extends Component {
                 "estimated": data.estimated
             }
         };
-        this.props.saveData(payloadData);
+        saveData(payloadData);
     }
 
     onAmendFund = () => {
@@ -699,48 +702,46 @@ class PurchaseScreenTwoComponent extends Component {
                                                     errorText=""
                                                 />
                                             </View>
-                                            {!this.state.selectedFundInvestmentData.initialInvestmentValidation &&
+                                            {!selectedFundInvestmentData.initialInvestmentValidation &&
                                                 <Text style={styles.errMsg}>{gblStrings.accManagement.emptyInitInvestmentMsg}</Text>
                                             }
                                             <Text style={styles.helpText}>
                                                 {`Minimum $${selectedFundInvestmentData.mininitialInvestment}`}
                                             </Text>
                                             {selectedFundInvestmentData.fundingOption === "Initial and Monthly Investment" &&
-                                                (
-                                                    <View style={styles.marginBottomStyle}>
-                                                        <Text style={styles.fundInvestTitle}>{gblStrings.purchase.monthlyInvestment}</Text>
-                                                        <View style={styles.iconFrontStyle}>
-                                                            <Text style={styles.dollerIconTxt}>{"$"}</Text>
-                                                            <GInputComponent
-                                                                inputref={this.setInputRef("monthlyInvestment")}
-                                                                propInputStyle={styles.amountBox}
-                                                                maxLength={gblStrings.maxLength.monthlyInvestment}
-                                                                placeholder="Monthly Investment"
-                                                                value={selectedFundInvestmentData.monthlyInvestment}
-                                                                keyboardType="decimal-pad"
-                                                                onChangeText={this.onChangeTextForInvestment("monthlyInvestment")}
-                                                                errorFlag={!selectedFundInvestmentData.monthlyInvestmentValidation}
-                                                                errorText=""
-                                                            />
-                                                        </View>
-                                                        {!selectedFundInvestmentData.monthlyInvestmentValidation &&
-                                                            <Text style={styles.errMsg}>{gblStrings.accManagement.emptyMonthlyInvestmentMsg}</Text>
-                                                        }
-                                                        <Text style={styles.helpText}>
-                                                            {`Minimum $${selectedFundInvestmentData.minmonthlyInvestment}`}
-                                                        </Text>
-                                                        <Text style={styles.fundInvestTitle}>{gblStrings.purchase.startDate}</Text>
-                                                        <GDateComponent
-                                                            inputref={this.setInputRef("startDate")}
-                                                            date={selectedFundInvestmentData.startDate}
-                                                            minDate={currentDate}
-                                                            placeholder="MM-DD-YYYY"
-                                                            errorFlag={!selectedFundInvestmentData.startDateValidation}
-                                                            errorMsg={gblStrings.accManagement.emptyStartDate}
-                                                            onDateChange={this.onChangeDateForInvestment("startDate")}
+                                                <View style={styles.marginBottomStyle}>
+                                                    <Text style={styles.fundInvestTitle}>{gblStrings.purchase.monthlyInvestment}</Text>
+                                                    <View style={styles.iconFrontStyle}>
+                                                        <Text style={styles.dollerIconTxt}>{"$"}</Text>
+                                                        <GInputComponent
+                                                            inputref={this.setInputRef("monthlyInvestment")}
+                                                            propInputStyle={styles.amountBox}
+                                                            maxLength={gblStrings.maxLength.monthlyInvestment}
+                                                            placeholder="Monthly Investment"
+                                                            value={selectedFundInvestmentData.monthlyInvestment}
+                                                            keyboardType="decimal-pad"
+                                                            onChangeText={this.onChangeTextForInvestment("monthlyInvestment")}
+                                                            errorFlag={!selectedFundInvestmentData.monthlyInvestmentValidation}
+                                                            errorText=""
                                                         />
                                                     </View>
-                                                )
+                                                    {!selectedFundInvestmentData.monthlyInvestmentValidation &&
+                                                        <Text style={styles.errMsg}>{gblStrings.accManagement.emptyMonthlyInvestmentMsg}</Text>
+                                                    }
+                                                    <Text style={styles.helpText}>
+                                                        {`Minimum $${selectedFundInvestmentData.minmonthlyInvestment}`}
+                                                    </Text>
+                                                    <Text style={styles.fundInvestTitle}>{gblStrings.purchase.startDate}</Text>
+                                                    <GDateComponent
+                                                        inputref={this.setInputRef("startDate")}
+                                                        date={selectedFundInvestmentData.startDate}
+                                                        minDate={currentDate}
+                                                        placeholder="MM-DD-YYYY"
+                                                        errorFlag={!selectedFundInvestmentData.startDateValidation}
+                                                        errorMsg={gblStrings.accManagement.emptyStartDate}
+                                                        onDateChange={this.onChangeDateForInvestment("startDate")}
+                                                    />
+                                                </View>
                                             }
                                         </View>
                                         <View style={styles.line} />
@@ -795,7 +796,7 @@ class PurchaseScreenTwoComponent extends Component {
                                         <Text style={styles.modalTitleText}>
                                             {gblStrings.purchase.fillerFund}
                                         </Text>
-                                        <TouchableOpacity onPress={this.setModalVisible(!this.state.modalVisible)}>
+                                        <TouchableOpacity onPress={this.setModalVisible(!modalVisible)}>
                                             <GIcon name="close" type="antdesign" size={30} color="black" />
                                         </TouchableOpacity>
                                     </View>
@@ -807,7 +808,7 @@ class PurchaseScreenTwoComponent extends Component {
                                         {filterMinData.map((item, index) => {
                                             let temp = item.value;
                                             if (item.key === 50) {
-                                                temp = temp.replace(new RegExp('50', 'g'), gblStrings.common.dollar + '50');
+                                                temp = temp.replace(new RegExp('50', 'g'), `${gblStrings.common.dollar} 50`);
                                             } else {
                                                 temp = gblStrings.common.dollar + item.value;
                                             }

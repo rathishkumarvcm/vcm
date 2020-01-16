@@ -51,20 +51,6 @@ const styles = StyleSheet.create({
         color: '#56565A',
         fontSize: scaledHeight(15),
         fontWeight: 'bold'
-    },
-    tNcBody: {
-        color: '#56565A',
-        fontSize: scaledHeight(16)
-    },
-    tNCFlex: {
-        marginLeft: "4%",
-        marginTop: scaledHeight(41),
-        width: "92%"
-    },
-    tNcHeader: {
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold'
     }
 });
 

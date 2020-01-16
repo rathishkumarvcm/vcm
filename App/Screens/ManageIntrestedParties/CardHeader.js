@@ -47,14 +47,14 @@ class CardHeader extends Component {
                     showModal ?
                         (
                             <View style={styles.shadowView}>
-                            <TouchableOpacity onPress={this.edit}>
-                                <Text style={styles.lblTxtInner}>{gblStrings.common.edit}</Text>
-                            </TouchableOpacity>
-                            <Text style={styles.lblLine} />
-                            <TouchableOpacity onPress={this.delete}>
-                                <Text style={styles.lblTxtInner}>{gblStrings.common.delete}</Text>
-                            </TouchableOpacity>
-                        </View>
+                                <TouchableOpacity onPress={this.edit}>
+                                    <Text style={styles.lblTxtInner}>{gblStrings.common.edit}</Text>
+                                </TouchableOpacity>
+                                <Text style={styles.lblLine} />
+                                <TouchableOpacity onPress={this.delete}>
+                                    <Text style={styles.lblTxtInner}>{gblStrings.common.delete}</Text>
+                                </TouchableOpacity>
+                            </View>
                         ) : null
                 }
             </View>

@@ -127,7 +127,7 @@ class PurchaseFourComponent extends Component {
             navigation.navigate('tAmmendComponent');
         }
         else {
-            const orderId = `Order ID - PUR${year}${month}${date}${finalKey}`;
+            const orderIdNew = `Order ID - PUR${year}${month}${date}${finalKey}`;
             const payloadData = {
                 "key": finalKey,
                 "title": orderId,
@@ -148,7 +148,7 @@ class PurchaseFourComponent extends Component {
             };
             menuList.push(payloadData);
             ammendActions(menuList);
-            navigation.navigate('purchaseFinish', { orderId: orderId });
+            navigation.navigate('purchaseFinish', { orderId: orderIdNew });
         }
     }
 

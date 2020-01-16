@@ -338,7 +338,7 @@ class EditManageBenificiariesComponent extends Component {
     if (todBeneficiaryData) {
       const data = [...todBeneficiaryData, ...newPrimaryBene];
       totTod = data.reduce((prev, cur) => {
-        let dist = parseInt(cur.distribution_Per);
+        let dist = parseInt(cur.distribution_Per,10);
         if (this.isEmpty(cur.distribution_Per)) {
           dist = 0;
         }
@@ -347,13 +347,13 @@ class EditManageBenificiariesComponent extends Component {
     }
     if (primaryBeneficiaryData) {
       totalPri = primaryBeneficiaryData.reduce((prev, cur) => {
-        return prev + parseInt(cur.distribution_Per);
+        return prev + parseInt(cur.distribution_Per,10);
       }, 0);
     }
     if (contingentBeneficiaryData) {
       const data = contingentBeneficiaryData.concat(newContingentBene);
       totalCon = data.reduce((prev, cur) => {
-        let dist = parseInt(cur.distribution_Per);
+        let dist = parseInt(cur.distribution_Per,10);
         if (this.isEmpty(cur.distribution_Per)) {
           dist = 0;
         }
@@ -1237,7 +1237,7 @@ class EditManageBenificiariesComponent extends Component {
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0;
             } else {
-              distributionValue = parseInt(item.distribution_Per);
+              distributionValue = parseInt(item.distribution_Per,10);
             }
             return (
               <View key={this.generateEditPrimaryBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
@@ -1327,7 +1327,7 @@ class EditManageBenificiariesComponent extends Component {
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0;
             } else {
-              distributionValue = parseInt(item.distribution_Per);
+              distributionValue = parseInt(item.distribution_Per,10);
             }
             return (
               <View key={this.generateContingentBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
@@ -1416,7 +1416,7 @@ class EditManageBenificiariesComponent extends Component {
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0;
             } else {
-              distributionValue = parseInt(item.distribution_Per);
+              distributionValue = parseInt(item.distribution_Per,10);
             }
             return (
               <View key={this.generateNewContingentBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
@@ -1558,7 +1558,7 @@ class EditManageBenificiariesComponent extends Component {
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0;
             } else {
-              distributionValue = parseInt(item.distribution_Per);
+              distributionValue = parseInt(item.distribution_Per,10);
             }
             return (
               <View key={this.generateTodBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
@@ -1648,7 +1648,7 @@ class EditManageBenificiariesComponent extends Component {
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0;
             } else {
-              distributionValue = parseInt(item.distribution_Per);
+              distributionValue = parseInt(item.distribution_Per,10);
             }
             return (
               <View key={this.generateNewTodBeneficiaryKeyExtractor} style={styles.blockMarginTop}>

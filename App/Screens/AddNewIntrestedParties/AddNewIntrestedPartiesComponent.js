@@ -143,7 +143,7 @@ class addNewIntrestedPartiesComponent extends Component {
         const { personal } = this.state;
         const { getAddressFormat } = this.props;
         if (personal.addressLine1 !== "" && personal.addressLine2 !== "") {
-            if (this.state.personal.zipCode !== '') {
+            if (personal.zipCode !== '') {
                 addAddressPayload = {
                     "Address1": personal.addressLine1,
                     "Address2": personal.addressLine2,
@@ -371,7 +371,7 @@ class addNewIntrestedPartiesComponent extends Component {
         const { personal, accountData } = this.state;
         const { navigation } = this.props;
         const data = personal;
-        const key = parseInt(accountData.interestedParty.length) + 1;
+        const key = parseInt(accountData.interestedParty.length,10) + 1;
         const obj = {
             "key": key,
             "fname": data.firstName,
