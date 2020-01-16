@@ -102,11 +102,11 @@ class PurchaseFourComponent extends Component {
 
         if (ammend) {
             const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
-            const amndObj = menuList[pIndex];
+            const amendObj = menuList[pIndex];
             const transType = `${ammendData.TransactionType} Amended `;
             const ammendPayloadData = {
-                "key": amndObj.key,
-                "title": amndObj.title,
+                "key": amendObj.key,
+                "title": amendObj.title,
                 "data": {
                     "count": ammendData.count,
                     "Dateadded": updatedDate,
@@ -127,7 +127,7 @@ class PurchaseFourComponent extends Component {
             navigation.navigate('tAmmendComponent');
         }
         else {
-            const orderIdNew = `Order ID - PUR${year}${month}${date}${finalKey}`;
+            const orderId = `Order ID - PUR${year}${month}${date}${finalKey}`;
             const payloadData = {
                 "key": finalKey,
                 "title": orderId,
@@ -148,7 +148,7 @@ class PurchaseFourComponent extends Component {
             };
             menuList.push(payloadData);
             ammendActions(menuList);
-            navigation.navigate('purchaseFinish', { orderId: orderIdNew });
+            navigation.navigate('purchaseFinish', { orderId: orderId });
         }
     }
 

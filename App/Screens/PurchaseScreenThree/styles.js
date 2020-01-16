@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         marginBottom: "4%"
     },
     innerContainerStyle: {
-        marginTop: "6%",
+        marginTop: scaledHeight(25),
         paddingLeft: "4%",
         paddingRight: "4%"
     },
@@ -286,12 +286,12 @@ const styles = StyleSheet.create({
         lineHeight: scaledHeight(22),
         marginTop: '4%',
     },
-    addressText:{
+    addressText: {
         color: '#707070',
         fontSize: scaledHeight(16),
         lineHeight: scaledHeight(22),
         marginTop: '4%',
-        width:'60%'
+        width: '60%'
     },
     btnGrp: {
         marginHorizontal: scaledHeight(12),
@@ -357,28 +357,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         width: '100%',
         textAlign: 'center'
-    },
-    fullLine: {
-        backgroundColor: '#7B8288',
-        opacity: 0.4,
-        height: scaledHeight(1),
-        marginTop: scaledHeight(40),
-    },
-    tNCFlex: {
-        marginLeft: "4%",
-        marginTop: scaledHeight(41),
-        width: "92%",
-    },
-    tNcHeader: {
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold'
-    },
-    tNcBody: {
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-    },
-
+    }
 });
 
 export default styles;

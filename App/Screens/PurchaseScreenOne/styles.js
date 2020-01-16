@@ -230,26 +230,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: scaledHeight(16),
     },
-    fullLine: {
-        backgroundColor: '#7B8288',
-        opacity: 0.4,
-        height: scaledHeight(1),
-        marginTop: scaledHeight(40),
-    },
-    tNCFlex: {
-        marginLeft: "4%",
-        marginTop: scaledHeight(41),
-        width: "92%",
-    },
-    tNcHeader: {
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold'
-    },
-    tNcBody: {
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-    },
 });
 
 export default styles;

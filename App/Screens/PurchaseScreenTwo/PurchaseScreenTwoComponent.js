@@ -6,6 +6,7 @@ import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { CustomCheckBox, PageNumber } from '../../AppComponents';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+import AppUtils from '../../Utils/AppUtils';
 
 const fundingOptionsData = [
     { "key": "init", "value": "Initial Investment" },
@@ -72,35 +73,7 @@ class PurchaseScreenTwoComponent extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props !== prevProps) {
-            const { accOpeningData, navigation } = this.props;
-            const { ammend } = this.state;
-            let tempFundListData = [];
-            if (navigation.getParam('ammend')) {
-                this.setState({ ammend: true });
-                ammendData = navigation.getParam('data');
-                ammendIndex = navigation.getParam('index');
-            }
-            else {
-                this.setState({ ammend: false });
-            }
-            if (accOpeningData[ActionTypes.GET_FUNDLIST] !== undefined && accOpeningData[ActionTypes.GET_FUNDLIST].Items !== null) {
-                tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST].Items;
-                this.setState({
-                    fundList: [...tempFundListData],
-                    // isFilterApplied: false,
-                    isLoading: false
-                });
-                if (ammend) {
-                    tempFundListData.map((item, k) => {
-                        if (item.fundName === ammendData.selectedFundData.fundName) {
-                            this.setState({ selectedFundIndex: k });
-                        }
-                        return 0;
-                    });
-                    //this.updateAmendDataToReducer();
-                    this.onAmendFund();
-                }
-            }
+            this.updatePropsChange();
         }
     }
 
@@ -141,6 +114,39 @@ class PurchaseScreenTwoComponent extends Component {
         getCompositeLookUpData(payload);
     }
 
+    updatePropsChange = () => {
+        const { accOpeningData, navigation } = this.props;
+        const { ammend } = this.state;
+        let tempFundListData = [];
+
+        if (navigation.getParam('ammend')) {
+            this.setState({ ammend: true });
+            ammendData = navigation.getParam('data');
+            ammendIndex = navigation.getParam('index');
+        }
+        else {
+            this.setState({ ammend: false });
+        }
+        
+        if (accOpeningData[ActionTypes.GET_FUNDLIST] !== undefined && accOpeningData[ActionTypes.GET_FUNDLIST].Items !== null) {
+            tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST].Items;
+            this.setState({
+                fundList: [...tempFundListData],
+                // isFilterApplied: false,
+                isLoading: false
+            });
+            if (ammend) {
+                tempFundListData.map((item, k) => {
+                    if (item.fundName === ammendData.selectedFundData.fundName) {
+                        this.setState({ selectedFundIndex: k });
+                    }
+                    return 0;
+                });
+                //this.updateAmendDataToReducer();
+                this.onAmendFund();
+            }
+        }
+    }
     /* ---------------Button Events ------------------- */
 
     goBack = () => {
@@ -337,7 +343,7 @@ class PurchaseScreenTwoComponent extends Component {
                 this.onClickSave();
             }
         } catch (err) {
-            // console.log(`Error::: ${err}`);
+            AppUtils.debugLog(err);
         }
     }
 
@@ -446,10 +452,6 @@ class PurchaseScreenTwoComponent extends Component {
         tempData.monthlyInvestmentValidation = true;
         tempData.startDateValidation = true;
         this.setState({ disableNextButton: false, selectedFundIndex: index, selectedFundInvestmentData: tempData });
-
-        // if (this.state.ammend) {
-        //     this.onAmendFund(item);
-        // }
     }
 
     updateAmendDataToReducer = () => {
@@ -651,7 +653,7 @@ class PurchaseScreenTwoComponent extends Component {
                         </View>
                     </View>
 
-                    {selectedFundIndex ?
+                    {selectedFundIndex >= 0 ?
                         (
                             <View style={styles.innerContainerStyle}>
                                 <Text style={styles.headerText}>{gblStrings.purchase.fundYourAcc}</Text>

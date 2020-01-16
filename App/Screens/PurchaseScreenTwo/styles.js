@@ -275,28 +275,6 @@ const styles = StyleSheet.create({
     marginTop: scaledHeight(19),
     opacity: 0.5
   },
-
-  fullLine: {
-    backgroundColor: "#7B8288",
-    opacity: 0.4,
-    height: scaledHeight(1),
-    marginTop: scaledHeight(40)
-  },
-  tNCFlex: {
-    marginLeft: "4%",
-    marginTop: scaledHeight(41),
-    width: "92%"
-  },
-  tNcHeader: {
-    color: "#56565A",
-    fontSize: scaledHeight(16),
-    fontWeight: "bold"
-  },
-  tNcBody: {
-    color: "#56565A",
-    fontSize: scaledHeight(16)
-  },
-
   dropDownLayout: {
     width: "100%",
     marginLeft: "0%",

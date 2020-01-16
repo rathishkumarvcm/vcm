@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, Image, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
-import { GHeaderComponent, GFooterComponent, GButtonComponent, GDropDownComponent, GSwitchComponent } from '../../CommonComponents';
+import { GHeaderComponent, GFooterSettingsComponent, GButtonComponent, GDropDownComponent, GSwitchComponent } from '../../CommonComponents';
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
@@ -74,7 +74,6 @@ class PurchaseScreenThreeComponent extends Component {
             this.setState({ ammend: false });
         }
         if (savedData) {
-            this.setState({ disableNextButton: false });
             if (savedData.selectedFundSourceData) {
                 this.setState({
                     fundingSourceName: savedData.selectedFundSourceData.paymentMode,
@@ -83,11 +82,11 @@ class PurchaseScreenThreeComponent extends Component {
                     bankAccountNumber: savedData.selectedFundSourceData.bankAccountNumber
                 });
                 if (savedData.selectedFundSourceData.paymentMode === 'Check') {
-                    this.setState({ showCheckMsg: true, showWireTransferMsg: false });
+                    this.setState({ showCheckMsg: true, disableNextButton: false, showWireTransferMsg: false });
                 } else if (savedData.selectedFundSourceData.paymentMode === 'Wire Transfer') {
-                    this.setState({ showWireTransferMsg: true, showCheckMsg: false });
+                    this.setState({ showWireTransferMsg: true, disableNextButton: false, showCheckMsg: false });
                 } else if (savedData.selectedFundSourceData.paymentMode === 'NetBanking') {
-                    this.setState({ showWireTransferMsg: false, showCheckMsg: false });
+                    this.setState({ showWireTransferMsg: false, disableNextButton: false, showCheckMsg: false });
                 }
                 if (savedData.selectedFundSourceData.bankAccountName) {
                     bankAccounts.map((m, n) => {
@@ -489,14 +488,9 @@ class PurchaseScreenThreeComponent extends Component {
                         />
                     </View>
 
-                    {/* ------------------------- Footer ----------------------------- */}
+                    { /* ----------- Disclaimer -------------------*/}
 
-                    <View style={styles.fullLine} />
-                    <View style={styles.tNCFlex}>
-                        <Text style={styles.tNcHeader}>{gblStrings.userManagement.VCDiscalimerTitle}{"\n"}</Text>
-                        <Text style={styles.tNcBody}>{gblStrings.userManagement.VCDiscalimerDesc}{"\n"}{"\n"}{gblStrings.userManagement.VCPrivacyNoticeDesc} </Text>
-                    </View>
-                    <GFooterComponent />
+                    <GFooterSettingsComponent />
                 </ScrollView>
             </View>
 
