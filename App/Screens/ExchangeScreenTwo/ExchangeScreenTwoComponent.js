@@ -346,9 +346,14 @@ class ExchangeScreenTwoComponent extends Component {
     }
 
     render() {
-        const currentPage = 2;
-        const totalCount = 4;
-        const pageName = gblStrings.liquidation.fundSelectionScreenName;
+        let currentPage = 2;
+        let totalCount = 4;
+        let pageName = gblStrings.liquidation.fundSelectionScreenName;
+        if (ammend) {
+            currentPage = 1;
+            pageName = '1 - Fund Selection';
+            totalCount = 3;
+        }
         const { navigation, exchangeData } = this.props;
         const { collapseExchangeFundIcon, collapseExchangeFund, fundListData, disableNextButton,ammend } = this.state;
         if (exchangeData && exchangeData.saveExchangeSelectedData) {
@@ -421,12 +426,14 @@ class ExchangeScreenTwoComponent extends Component {
 ExchangeScreenTwoComponent.propTypes = {
     exchangeData: PropTypes.instanceOf(Object),
     navigation: PropTypes.instanceOf(Object),
+    amendReducerData: PropTypes.instanceOf(Object),
     saveData: PropTypes.func
 };
 
 ExchangeScreenTwoComponent.defaultProps = {
     exchangeData: {},
     navigation: {},
+    amendReducerData: {},
     saveData: () => { }
 };
 export default ExchangeScreenTwoComponent;
