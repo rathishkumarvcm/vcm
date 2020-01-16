@@ -29,19 +29,18 @@ const profileSettingsTempData = [
 class EditProfileSettingsComponent extends Component {
     constructor(props) {
         super(props);
-        const { profileState } = this.props;
         this.state = {
             countryNonUS: false,
             radioButtonIndex: 0,
             editProfileSettingsData: {
-                profileName: profileState.firstName,
-                profileVcm: profileState.profileVcmID,
-                profileSsn: profileState.profileSsnNumber,
-                profileDob: profileState.profileDob,
-                profilePrefix: profileState.profilePrefix,
-                profileSuffix: profileState.profileSuffix,
-                profileGender: profileState.profileGender,
-                profileMaritalStatus: profileState.profileMaritalStatus,
+                profileName: '',
+                profileVcm: '',
+                profileSsn: '',
+                profileDob: '',
+                profilePrefix: '',
+                profileSuffix: '',
+                profileGender: '',
+                profileMaritalStatus: '',
 
                 dropDownState: false,
                 dropDownValue: '',
@@ -72,8 +71,30 @@ class EditProfileSettingsComponent extends Component {
     }
 
     componentDidMount() {
+        this.profileInformationDidMount();
+    }
+
+    profileInformationDidMount = () => {
         const payload = [];
-        const { profileSettingsLookup, getProfileCompositeData } = this.props;
+        const { profileSettingsLookup, getProfileCompositeData, profileState } = this.props;
+        const { editProfileSettingsData} = this.state;
+        
+        if(profileState) {
+            this.setState({
+                editProfileSettingsData: {
+                    ...editProfileSettingsData,
+                    profileName: profileState.firstName,
+                    profileVcm: profileState.profileVcmID,
+                    profileSsn: profileState.profileSsnNumber,
+                    profileDob: profileState.profileDob,
+                    profilePrefix: profileState.profilePrefix,
+                    profileSuffix: profileState.profileSuffix,
+                    profileGender: profileState.profileGender,
+                    profileMaritalStatus: profileState.profileMaritalStatus,
+                }
+            });
+        }
+
         const compositePayloadData = [
             "prefix",
             "suffix",

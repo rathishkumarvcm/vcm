@@ -23,7 +23,6 @@ class EditPhoneInfoComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
-        const { navigation } = this.props;
         this.state = {
             selectedMobileIndex: -1,
             selectedHomeIndex: -1,
@@ -37,8 +36,8 @@ class EditPhoneInfoComponent extends Component {
             userHomeNumber: [],
             userWorkNumber: [],
 
-            contactPosition: navigation.getParam('contactPosition'),
-            isRelation: navigation.getParam('isRelation')
+            contactPosition: '',
+            isRelation: ''
         };
     }
 
@@ -52,7 +51,15 @@ class EditPhoneInfoComponent extends Component {
 
     phoneInformationMount = () => {
         const { isRelation, isMobileRefreshed, isHomeRefreshed, isWorkRefreshed, contactPosition } = this.state;
-        const { profileState } = this.props;
+        const { profileState, navigation } = this.props;
+
+        if (this.props) {
+            this.setState({
+                contactPosition: navigation.getParam('contactPosition'),
+                isRelation: navigation.getParam('isRelation')
+            });
+        }
+
         if (!isRelation) {
             if (this.props &&
                 profileState &&
@@ -857,12 +864,13 @@ class EditPhoneInfoComponent extends Component {
 }
 
 EditPhoneInfoComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object).isRequired,
+    navigation: PropTypes.instanceOf(Object),
     profileState: PropTypes.instanceOf(Object),
     saveProfileData: PropTypes.func
 };
 
 EditPhoneInfoComponent.defaultProps = {
+    navigation: {},
     profileState: {},
     saveProfileData: null
 };

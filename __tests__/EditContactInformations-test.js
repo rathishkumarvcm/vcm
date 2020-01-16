@@ -1,9 +1,9 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import {shallow} from 'enzyme';
+import { shallow } from 'enzyme';
 import EditContactInformations from '../App/Screens/EditAddressInformation/EditAddressInfoComponent';
 
-const navigation = { navigate: jest.fn(), getParam: jest.fn()};
+const navigation = { navigate: jest.fn(), getParam: jest.fn() };
 
 describe('Edit Contact Informations', () => {
 
@@ -14,8 +14,16 @@ describe('Edit Contact Informations', () => {
     });
 
     // Application Render
-    test('render',()=>{
-        const component = shallow(<EditContactInformations navigation={navigation} />);  
+    test('render', () => {
+        const component = shallow(<EditContactInformations navigation={navigation} />);
         component.render();
-      });
+    });
+
+    // Application Function Calls
+    test('function test', () => {
+        const component = shallow(<EditContactInformations navigation={navigation} />);
+        const wrapper = new EditContactInformations();
+        component.render();
+        wrapper.renderAddressInformation();
+    });
 });

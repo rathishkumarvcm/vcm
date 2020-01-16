@@ -208,6 +208,7 @@ class LoginComponent extends Component {
                 email,
                 phone_number
             }).then(data => {
+                
                 console.log("Data", JSON.stringify(data.signInUserSession.idToken.jwtToken));
 
                 RNSecureKeyStore.set("jwtToken", data.signInUserSession.idToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
@@ -311,9 +312,22 @@ class LoginComponent extends Component {
             email,
             phone_number
         }).then(data => {
-            console.log("Data", JSON.stringify(data.signInUserSession.idToken.jwtToken));
+            console.log("ACCESS Token-----", JSON.stringify(data.signInUserSession.accessToken.jwtToken));
+            console.log("ID Token-----", JSON.stringify(data.signInUserSession.idToken.jwtToken));
 
             RNSecureKeyStore.set("jwtToken", data.signInUserSession.idToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
+                console.log("token saved suuccessfully", res)
+            }, (err) => {
+                console.log("Error", err);
+            });
+
+            RNSecureKeyStore.set("accessToken", data.signInUserSession.accessToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
+                console.log("token saved suuccessfully", res)
+            }, (err) => {
+                console.log("Error", err);
+            })
+
+            RNSecureKeyStore.set("refreshToken", data.signInUserSession.refreshToken.token, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
                 console.log("token saved suuccessfully", res)
             }, (err) => {
                 console.log("Error", err);

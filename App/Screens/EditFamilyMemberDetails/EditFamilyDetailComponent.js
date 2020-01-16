@@ -36,11 +36,10 @@ class EditFamilyDetailComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
-        const { navigation } = this.props;
         this.state = {
             familyDetailData: {
-                contactPosition: navigation.getParam('contactPosition'),
-                isRelation: navigation.getParam('isRelation'),
+                contactPosition: '',
+                isRelation: '',
                 relationShipDetails: {},
 
                 profileRelationName: '',
@@ -88,7 +87,17 @@ class EditFamilyDetailComponent extends Component {
 
     familyDetailMount = () => {
         const { familyDetailData } = this.state;
-        const { profileState, profileSettingsLookup, getProfileCompositeData } = this.props;
+        const { profileState, profileSettingsLookup, getProfileCompositeData, navigation } = this.props;
+        if (this.props) {
+            this.setState({
+                familyDetailData: {
+                    ...familyDetailData,
+                    contactPosition: navigation.getParam('contactPosition'),
+                    isRelation: navigation.getParam('isRelation'),
+                }
+            });
+        }
+
         if (familyDetailData.isRelation) {
             let familyMembersData = [];
             if (this.props &&
@@ -506,7 +515,7 @@ class EditFamilyDetailComponent extends Component {
                                         errorText={familyDetailData.dropDownProofMsg}
                                     />
                                 </View>
-) : null}
+                            ) : null}
 
                             {familyDetailData.profileSocialSecurity ? (
                                 <View style={styles.editFlexDirectionColumn}>
@@ -519,7 +528,7 @@ class EditFamilyDetailComponent extends Component {
                                         editable={false}
                                     />
                                 </View>
-) : null}
+                            ) : null}
                         </View>
 
                         <View style={styles.editFlexDirectionColumn}>
