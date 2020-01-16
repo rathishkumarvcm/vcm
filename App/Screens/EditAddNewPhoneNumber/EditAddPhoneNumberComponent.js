@@ -316,12 +316,13 @@ class EditAddPhoneNumberComponent extends Component {
 }
 
 EditAddPhoneNumberComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object).isRequired,
+    navigation: PropTypes.instanceOf(Object),
     profileState: PropTypes.instanceOf(Object),
     saveProfileData: PropTypes.func
 };
 
 EditAddPhoneNumberComponent.defaultProps = {
+    navigation: {},
     profileState: {},
     saveProfileData: null
 };

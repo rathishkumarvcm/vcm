@@ -16,67 +16,132 @@ const editDeleteMenuOption = [
 class ProfileSettingsComponent extends Component {
     constructor(props) {
         super(props);
-        const { initialState, profileState } = this.props;
         this.state = {
             show: false,
-            profileRelationShipData: profileState.profileRelationShipDetails,
+            profileRelationShipData: '',
             isRelationRefreshed: false,
-            isProfileRetired: profileState.profileIsRetired,
-            isServingMilitary: profileState.profileServingMilitary,
+            isProfileRetired: '',
+            isServingMilitary: '',
             selectedIndex: -1,
 
             //  Profile Information
             personalInformations: {
-                profileName: initialState.firstName,
-                profilePrefix: profileState.profilePrefix,
-                profileSuffix: profileState.profileSuffix,
-                profileVcmID: profileState.profileVcmID,
-                profileSsnNumber: profileState.profileSsnNumber,
-                profileDob: profileState.profileDob,
-                profileGender: profileState.profileGender,
-                profileMaritalStatus: profileState.profileMaritalStatus,
-                profileCitizenship: profileState.profileCitizenship,
+                profileName: '',
+                profilePrefix: '',
+                profileSuffix: '',
+                profileVcmID: '',
+                profileSsnNumber: '',
+                profileDob: '',
+                profileGender: '',
+                profileMaritalStatus: '',
+                profileCitizenship: '',
             },
 
             //  Contact Information
             contactInformations: {
-                profileMailingAddress: profileState.profileMailingAddress,
-                profilePhysicalAddress: profileState.profilePhysicalAddress,
+                profileMailingAddress: '',
+                profilePhysicalAddress: '',
             },
 
             //  Phone Information
-            profilePrimaryMobile: profileState.profilePrimaryMobile,
+            profilePrimaryMobile: '',
 
             //  Email Information
-            profilePrimayMail: profileState.profilePrimayMail,
+            profilePrimayMail: '',
 
             //  Finanicial Information
             financialInformationData: {
-                profileAnnualIncome: `$ ${profileState.financialInformations.profileAnnualIncome}`,
-                profileTaxBracket: `${profileState.financialInformations.profileTaxBracket} %`,
-                profileNetWorth: `$ ${profileState.financialInformations.profileNetWorth}`,
-                profileTaxFilling: profileState.financialInformations.profileTaxFilling,
+                profileAnnualIncome: '',
+                profileTaxBracket: '',
+                profileNetWorth: '',
+                profileTaxFilling: '',
             },
 
             //  Employment Information
             employmentInformationData: {
-                profileEmploymentStatus: profileState.employmentInformations.profileEmploymentStatus,
-                profileEmpIndustry: profileState.employmentInformations.profileEmpIndustry,
-                profileEmpOccupation: profileState.employmentInformations.profileEmpOccupation,
-                profileEmpEmployer: profileState.employmentInformations.profileEmpEmployer,
-                profilePrimarySourceIncome: profileState.employmentInformations.profileSourceOfIncome,
+                profileEmploymentStatus: '',
+                profileEmpIndustry: '',
+                profileEmpOccupation: '',
+                profileEmpEmployer: '',
+                profilePrimarySourceIncome: '',
             },
 
             //  Military Information
-            profileMilitaryBranch: profileState.profileMilitaryInformation.profileMilitaryBranch,
-            profileMilitaryRank: profileState.profileMilitaryInformation.profileMilitaryRank,
+            profileMilitaryBranch: '',
+            profileMilitaryRank: ''
         };
     }
 
-    componentDidMount() { }
+    componentDidMount() {
+        this.profileSettingsMount();
+    }
 
     componentDidUpdate(prevProps) {
         this.profileSettingsUpdateScreen(prevProps);
+    }
+
+    profileSettingsMount = () => {
+        const { initialState, profileState } = this.props;
+        const { personalInformations, contactInformations, financialInformationData, employmentInformationData } = this.state;
+        if (this.props) {
+            this.setState({
+                profileRelationShipData: profileState.profileRelationShipDetails,
+                isRelationRefreshed: false,
+                isProfileRetired: profileState.profileIsRetired,
+                isServingMilitary: profileState.profileServingMilitary,
+                selectedIndex: -1,
+
+                // Profile Information
+                personalInformations: {
+                    ...personalInformations,
+                    profileName: initialState.firstName,
+                    profilePrefix: profileState.profilePrefix,
+                    profileSuffix: profileState.profileSuffix,
+                    profileVcmID: profileState.profileVcmID,
+                    profileSsnNumber: profileState.profileSsnNumber,
+                    profileDob: profileState.profileDob,
+                    profileGender: profileState.profileGender,
+                    profileMaritalStatus: profileState.profileMaritalStatus,
+                    profileCitizenship: profileState.profileCitizenship,
+                },
+
+                // Contact Information
+                contactInformations: {
+                    ...contactInformations,
+                    profileMailingAddress: profileState.profileMailingAddress,
+                    profilePhysicalAddress: profileState.profilePhysicalAddress,
+                },
+
+                // Phone Information
+                profilePrimaryMobile: profileState.profilePrimaryMobile,
+
+                // Email Information
+                profilePrimayMail: profileState.profilePrimayMail,
+
+                // Finanicial Information
+                financialInformationData: {
+                    ...financialInformationData,
+                    profileAnnualIncome: `$ ${profileState.financialInformations.profileAnnualIncome}`,
+                    profileTaxBracket: `${profileState.financialInformations.profileTaxBracket} %`,
+                    profileNetWorth: `$ ${profileState.financialInformations.profileNetWorth}`,
+                    profileTaxFilling: profileState.financialInformations.profileTaxFilling,
+                },
+
+                // Employment Information
+                employmentInformationData: {
+                    ...employmentInformationData,
+                    profileEmploymentStatus: profileState.employmentInformations.profileEmploymentStatus,
+                    profileEmpIndustry: profileState.employmentInformations.profileEmpIndustry,
+                    profileEmpOccupation: profileState.employmentInformations.profileEmpOccupation,
+                    profileEmpEmployer: profileState.employmentInformations.profileEmpEmployer,
+                    profilePrimarySourceIncome: profileState.employmentInformations.profileSourceOfIncome,
+                },
+
+                // Military Information
+                profileMilitaryBranch: profileState.profileMilitaryInformation.profileMilitaryBranch,
+                profileMilitaryRank: profileState.profileMilitaryInformation.profileMilitaryRank,
+            });
+        }
     }
 
     profileSettingsUpdateScreen = (prevProps) => {
@@ -1009,12 +1074,13 @@ class ProfileSettingsComponent extends Component {
 }
 
 ProfileSettingsComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object).isRequired,
+    navigation: PropTypes.instanceOf(Object),
     profileState: PropTypes.instanceOf(Object),
     initialState: PropTypes.instanceOf(Object)
 };
 
 ProfileSettingsComponent.defaultProps = {
+    navigation: {},
     profileState: {},
     initialState: {}
 };

@@ -10,10 +10,9 @@ class EditFamilyMemberComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
-        const { navigation } = this.props;
         this.state = {
-            pressedPosition: navigation.getParam('pressedPosition', -1),
-            isRelation: navigation.getParam('isRelation', false),
+            pressedPosition: '',
+            isRelation: '',
             profileInformationValues: {}
         };
     }
@@ -23,9 +22,17 @@ class EditFamilyMemberComponent extends Component {
     }
 
     familyMemberDidMount = () => {
-        const { profileState } = this.props;
+        const { profileState, navigation } = this.props;
         const { pressedPosition } = this.state;
         let familyMembersData = [];
+
+        if (this.props) {
+            this.setState({
+                pressedPosition: navigation.getParam('pressedPosition'),
+                isRelation: navigation.getParam('isRelation'),
+            });
+        }
+        
         if (this.props &&
             profileState &&
             profileState.profileRelationShipDetails) {
@@ -417,11 +424,12 @@ class EditFamilyMemberComponent extends Component {
 }
 
 EditFamilyMemberComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object).isRequired,
+    navigation: PropTypes.instanceOf(Object),
     profileState: PropTypes.instanceOf(Object)
 };
 
 EditFamilyMemberComponent.defaultProps = {
+    navigation: {},
     profileState: {}
 };
 
