@@ -20,10 +20,10 @@ class EditAddressAddNewComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
+            // isLoading: false,
             isRelationShipScreen: '',
             relationShipPosition: '',
-            relationShipContactData: [],
+            // relationShipContactData: [],
 
             isZipApiCalling: false,
             isAddressApiCalling: false,
@@ -59,16 +59,15 @@ class EditAddressAddNewComponent extends Component {
 
     addNewContactMount = () => {
         const { profileState, navigation } = this.props;
-        
+        // const { isRelationShipScreen, relationShipPosition } = this.state;
+
         if (this.props) {
             this.setState({
                 isRelationShipScreen: navigation.getParam('isRelationShipScreen'),
                 relationShipPosition: navigation.getParam('relationShipPosition'),
             });
         }
-        
-        const { isRelationShipScreen, relationShipPosition } = this.state;
-        
+
         if (this.props && profileState && profileState.profileUserCity) {
             this.setState({
                 userCity: profileState.profileUserCity
@@ -81,17 +80,17 @@ class EditAddressAddNewComponent extends Component {
             });
         }
 
-        if (isRelationShipScreen) {
-            let relationshipContacts = [];
-            if (this.props &&
-                profileState &&
-                profileState.profileRelationShipDetails) {
-                relationshipContacts = [...profileState.profileRelationShipDetails];
-                this.setState({
-                    relationShipContactData: relationshipContacts[relationShipPosition]
-                });
-            }
-        }
+        // if (isRelationShipScreen) {
+        //     let relationshipContacts = [];
+        //     if (this.props &&
+        //         profileState &&
+        //         profileState.profileRelationShipDetails) {
+        //         relationshipContacts = [...profileState.profileRelationShipDetails];
+        //         this.setState({
+        //             relationShipContactData: relationshipContacts[relationShipPosition]
+        //         });
+        //     }
+        // }
     }
 
     addNewContactUpdate = (prevProps) => {
