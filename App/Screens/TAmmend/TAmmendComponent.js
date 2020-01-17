@@ -44,11 +44,11 @@ export default class TAmmendComponent extends Component {
 
     filterPendingItems = () => {
         let items = [];
-        /*for (item of menuList) {
+        /* for (item of menuList) {
             if (item.data.OrderStatus === "Pending") {
                 items.push(item);
             }
-        }*/
+        } */
 
         items=menuList.filter((item)=>item.data.OrderStatus==='Pending' ? item:'');
         this.setState({ pendingItems: items });
@@ -69,17 +69,20 @@ export default class TAmmendComponent extends Component {
 
     
     navigatetoFundSelection = () => {
+       
         const{data,selectedIndex}=this.state;
+       
         const{navigation}=this.props;
-        if (data.TransactionType === "Liquidation") {
+        if (data.TransactionType === "Liquidation"||data.TransactionType === "Liquidation Amended") {
             navigation.navigate('LiquidationPageTwo',
                 { index: selectedIndex, data: data, ammend: true });
         }
-        if (data.TransactionType === "Purchase") {
+        if (data.TransactionType === "Purchase"||data.TransactionType === "Purchase Amended") {
+            
             navigation.navigate('purchaseScreenTwo',
                 { index: selectedIndex, data: data, ammend: true });
         }
-         if(data.TransactionType === "Exchange")
+         if(data.TransactionType === "Exchange"||data.TransactionType === "Exchange Amended")
          {
          navigation.navigate('exchangeScreenTwo',
          {index:selectedIndex,data:data,ammend:true});
