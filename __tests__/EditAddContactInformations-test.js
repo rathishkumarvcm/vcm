@@ -28,4 +28,10 @@ describe('Add Contact Information', () => {
         component.render();
         wrapper.radioButtonClicked();
     });
+
+    it('Input text matches with length', () => {
+        const instanceOf = renderer.create(<EditAddContactInformations {...props} navigation={navigation} />).getInstance();
+        instanceOf.setAddressOne('text');
+        expect(instanceOf.state.addressOne).toHaveLength(4);
+    });
 });

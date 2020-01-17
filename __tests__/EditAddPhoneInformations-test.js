@@ -27,4 +27,10 @@ describe('Add Phone Informations', () => {
           component.render();
           wrapper.dropDownPhoneClick();
       });
+
+      it('Input text matches with length', () => {
+        const instanceOf = renderer.create(<EditAddPhoneInformations {...props} navigation={navigation} />).getInstance();
+        instanceOf.setContactNumber('1234567890');
+        expect(instanceOf.state.contactNumber).toHaveLength(10);
+    });
 });

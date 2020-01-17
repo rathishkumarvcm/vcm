@@ -29,5 +29,8 @@ describe('Edit Profile Settings', () => {
         wrapper.radioButtonClicked(1);
         wrapper.navigationSuccess();
         wrapper.dropDownOnClick();
+        wrapper.dropDownSuffixClick();
+        wrapper.dropDownGenderClick();
+        wrapper.dropDownStatusClick();
     });
 });
