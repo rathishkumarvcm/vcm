@@ -128,10 +128,16 @@ export default class Accordian extends Component {
                                 <Text style={styles.lblTxtInner}>TransactionType</Text>
                                 <Text style={styles.lblTxtMedium}>{this.props.data.TransactionType}</Text>
                             </View>
+                            {(this.props.data.TransactionType === "Exchange"||this.props.data.TransactionType === "Exchange Amended")?
+                            <View style={styles.viewColum}>
+                                <Text style={styles.lblTxtInner}>FundName</Text>
+                                <Text style={styles.lblTxtMedium}>{this.props.data.selectedFundData.fundName}}</Text>
+                            </View>:
                             <View style={styles.viewColum}>
                                 <Text style={styles.lblTxtInner}>PaymentMode</Text>
                                 <Text style={styles.lblTxtMedium}>{this.props.data.selectedFundSourceData.paymentMode}</Text>
                             </View>
+                            }
                             <View style={styles.viewColum}>
                                 <Text style={styles.lblTxtInner}>OrderStatus</Text>
                                 <Text style={styles.lblTxtMedium}>{this.props.data.OrderStatus}</Text>

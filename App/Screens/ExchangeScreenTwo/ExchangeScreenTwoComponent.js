@@ -27,7 +27,9 @@ class ExchangeScreenTwoComponent extends Component {
     componentDidMount() {
         const { navigation,exchangeData } = this.props;
         const { getParam } = navigation;
+       
         if (getParam('ammend')) {
+          
             ammendData = getParam('data');
             ammendIndex = getParam('index');
             this.setState({ ammend: true });
@@ -215,29 +217,49 @@ class ExchangeScreenTwoComponent extends Component {
         this.setState({
             fundListData: funds
         });
-        const payloadData = {
-            saveExchangeSelectedData: {
-                ...savedData,
-                "selectedFundData": {
-                    "fundName": "",
-                    "fundNumber": "",
-                    "fundingOption": "",
-                    "initialInvestment": "",
-                    "monthlyInvestment": "",
-                    "startDate": "",
-                    "count": "",
-                    "total": "",
-                    "funds": fundListData
-                },
-            },
-        };
-        saveData(payloadData);
+        
         if (ammend) {
             const { amendReducerData } = this.props;
             ammendData = amendReducerData.menu[ammendIndex - 1].data;
+            
+            const payloadData = {
+                saveExchangeSelectedData: {
+                    ...ammendData,
+                    "selectedFundData": {
+                        "fundName": "",
+                        "fundNumber": "",
+                        "fundingOption": "",
+                        "initialInvestment": "",
+                        "monthlyInvestment": "",
+                        "startDate": "",
+                        "count": "",
+                        "total": "",
+                        "funds": fundListData
+                    },
+                },
+            };
+            saveData(payloadData);
+
             navigate('exchangeScreenThree', { ammend: true, data: ammendData, index: ammendIndex });
         }
         else {
+            const payloadData = {
+                saveExchangeSelectedData: {
+                    ...savedData,
+                    "selectedFundData": {
+                        "fundName": "",
+                        "fundNumber": "",
+                        "fundingOption": "",
+                        "initialInvestment": "",
+                        "monthlyInvestment": "",
+                        "startDate": "",
+                        "count": "",
+                        "total": "",
+                        "funds": fundListData
+                    },
+                },
+            };
+            saveData(payloadData);
             navigate('exchangeScreenThree', { ammend: false });
         }
     }
@@ -349,13 +371,14 @@ class ExchangeScreenTwoComponent extends Component {
         let currentPage = 2;
         let totalCount = 4;
         let pageName = gblStrings.liquidation.fundSelectionScreenName;
+       
+        const { navigation, exchangeData } = this.props;
+        const { collapseExchangeFundIcon, collapseExchangeFund, fundListData, disableNextButton,ammend } = this.state;
         if (ammend) {
             currentPage = 1;
             pageName = '1 - Fund Selection';
             totalCount = 3;
         }
-        const { navigation, exchangeData } = this.props;
-        const { collapseExchangeFundIcon, collapseExchangeFund, fundListData, disableNextButton,ammend } = this.state;
         if (exchangeData && exchangeData.saveExchangeSelectedData) {
             savedData = exchangeData.saveExchangeSelectedData;
         }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList, Modal } from 'react-native';
 import PropTypes from "prop-types";
-import { GIcon, GInputComponent, GHeaderComponent, GDateComponent, GDropDownComponent, GButtonComponent, GFooterSettingsComponent, GLoadingSpinner } from '../../CommonComponents';
+import { GIcon, GInputComponent, GHeaderComponent, GDateComponent,GSwitchComponent, GDropDownComponent, GButtonComponent, GFooterSettingsComponent, GLoadingSpinner } from '../../CommonComponents';
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { CustomCheckBox, PageNumber } from '../../AppComponents';
@@ -54,6 +54,8 @@ class ExchangeScreenThreeComponent extends Component {
             selectedFundInvestmentData: {},
             selectedFundIndex: null,
             disableNextButton: true,
+            switchOff: false,
+            switchOn: true,
             modalVisible: false,
             filterMinData: [...filterMinData.map(v => ({ ...v, isActive: false }))],
             filterRiskData: [...filterRiskData.map(v => ({ ...v, isActive: false }))],
@@ -74,7 +76,7 @@ class ExchangeScreenThreeComponent extends Component {
         if (this.props !== prevProps) {
             const { accOpeningData } = this.props;
             let tempFundListData = [];
-           // this.updateAmendData();
+             this.updateAmendData();
             if (accOpeningData[ActionTypes.GET_FUNDLIST] !== undefined && accOpeningData[ActionTypes.GET_FUNDLIST].Items !== null) {
                 tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST].Items;
                 this.setState({
@@ -92,7 +94,7 @@ class ExchangeScreenThreeComponent extends Component {
             this.setState({ ammend: true });
             ammendData = navigation.getParam('data');
             ammendIndex = navigation.getParam('index');
-            fundList.map((item, k) => {
+            this.state.fundList.map((item, k) => {
                 if (item.fundName === ammendData.selectedFundData.fundName) {
                     this.setState({ selectedFundIndex: k });
                 }
@@ -382,7 +384,7 @@ class ExchangeScreenThreeComponent extends Component {
                         "startDate": selectedFundInvestmentData.startDate,
                         "count": '',
                         "total": totalInitialInvestment,
-                        "funds": selectedFundInvestmentData.fundListData
+                        "funds": savedData.selectedFundData.funds
                     },
                     "selectedFundSourceData": ammendData.selectedFundSourceData,
                     "currentSecurities": ammendData.currentSecurities,
@@ -391,7 +393,6 @@ class ExchangeScreenThreeComponent extends Component {
                 }
             };
             saveData(ammendPayloadData);
-            console.log("saved Data after screen three ammend", ammendPayloadData);
             navigation.navigate('exchangeScreenFour', { ammend: true, index: ammendIndex, data: ammendData });
         }
         else {
@@ -406,17 +407,27 @@ class ExchangeScreenThreeComponent extends Component {
                         "monthlyInvestment": selectedFundInvestmentData.monthlyInvestment,
                         "startDate": selectedFundInvestmentData.startDate,
                         "count": '',
-                        "total": totalInitialInvestment
+                        "total": totalInitialInvestment,
+                        "funds": savedData.selectedFundData.funds
                     },
                 }
             };
             saveData(payloadData);
-            console.log("saved Data after screen three", payloadData);
             navigation.navigate('exchangeScreenFour', { ammend: false });
         }
     }
 
     /* ----------------- Fund List Events -------------------------- */
+
+    switchMethod = () => {
+        //     const { fundingMethod } = this.state;
+        //     if (fundingMethod === 'Online') {
+        this.setState(prevState => ({
+            switchOff: !prevState.switchOff,
+            switchOn: !prevState.switchOn,
+        }));
+        //  }
+    }
 
     onPressRemoveInvestment = () => {
         this.setState({ selectedFundIndex: null });
@@ -442,10 +453,6 @@ class ExchangeScreenThreeComponent extends Component {
         tempData.monthlyInvestmentValidation = true;
         tempData.startDateValidation = true;
         this.setState({ disableNextButton: false, selectedFundIndex: index, selectedFundInvestmentData: tempData });
-
-        // if (this.state.ammend) {
-        //     this.onAmendFund(item);
-        // }
     }
 
     onAmendFund = () => {
@@ -563,7 +570,7 @@ class ExchangeScreenThreeComponent extends Component {
     }
 
     render() {
-        const { isLoading, ammend, fundList, selectedFundIndex, selectedFundInvestmentData, totalInitialInvestment, disableNextButton, modalVisible, filterMinData, filterRiskData, filterFundData } = this.state;
+        const { isLoading, ammend, fundList, switchOff, switchOn, selectedFundIndex, selectedFundInvestmentData, totalInitialInvestment, disableNextButton, modalVisible, filterMinData, filterRiskData, filterFundData } = this.state;
         const { exchangeData, accOpeningData, masterLookupStateData, navigation } = this.props;
 
         let currentPage = 3;
@@ -597,6 +604,7 @@ class ExchangeScreenThreeComponent extends Component {
                             <Text style={styles.topContainerTxtBold}>{ammend ? ammendData.selectedAccountData.accountNumber : savedData.selectedAccountData.accountNumber}</Text>
                         </View>
                     </View>
+
 
                     {/* -------------Select VCM Funds ----------------------- */}
 
@@ -640,7 +648,7 @@ class ExchangeScreenThreeComponent extends Component {
                         </View>
                     </View>
 
-                    {selectedFundIndex ?
+                    {selectedFundIndex >= 0 ?
                         (
                             <View style={styles.innerContainerStyle}>
                                 <Text style={styles.headerText}>{gblStrings.purchase.fundYourAcc}</Text>
@@ -747,6 +755,46 @@ class ExchangeScreenThreeComponent extends Component {
                         : null
                     }
 
+                    {/* ------------------------- Dividends and Capital Gain Preferences ----------------------------- */}
+
+                    <View style={styles.innerContainerStyle}>
+                        <Text style={styles.headerText}>{gblStrings.purchase.dividendsCapitalGain}</Text>
+                        <View style={styles.line} />
+                        <Text style={styles.stmtSmallTextStyle}>{gblStrings.purchase.reinvestStmt}</Text>
+                        <Text style={styles.stmtBoldTxtStyle}>{gblStrings.purchase.cashOrderWireTransferStmt}</Text>
+                        <View style={styles.switchContainer}>
+                            <GSwitchComponent
+                                switchOffText="No"
+                                switchOnText="Yes"
+                                switchOff={switchOff}
+                                switchOn={switchOn}
+                                switchOnMethod={this.switchMethod}
+                                switchOffMethod={this.switchMethod}
+                                onStyle={styles.onButtonStyle}
+                                offStyle={styles.offButtonStyle}
+                                onStyleDisabled={styles.onButtonStyleDisable}
+                                offStyleDisabled={styles.offButtonStyleDisable}
+                                textOnStyle={styles.TextOnStyle}
+                                textOffStyle={switchOn ? styles.TextOffStyle : styles.TextOffStyleBold}
+                            />
+                            <View style={styles.switchTextStyle}>
+                                <Text style={styles.switchTxt}>{gblStrings.purchase.notReinvest}</Text>
+                                <Text style={styles.switchTxt}>{gblStrings.purchase.reinvest}</Text>
+                            </View>
+                        </View>
+
+                    </View>
+
+                    {/* ------------------------- Tax Accounting Method ----------------------------- */}
+
+                    <View style={styles.innerContainerStyle}>
+                        <Text style={styles.headerText}> - Tax Accounting Method</Text>
+                        <View style={styles.line} />
+                        <Text style={styles.stmtSmallTextStyle}>You will have to call the MSR for any change to the method, If the user has set up alternate method through MSR.</Text>
+                        <Text style={styles.stmtBoldTxtStyle}>Current method</Text>
+                        <Text style={styles.stmtSmallTextStyle}>Average Cost Basis</Text>
+                    </View>
+
                     {/* ----------------- Button Group -------------------- */}
 
                     <View style={styles.btnGrp}>
@@ -799,7 +847,7 @@ class ExchangeScreenThreeComponent extends Component {
                                         {filterMinData.map((item, index) => {
                                             let temp = item.value;
                                             if (item.key === 50) {
-                                                temp = temp.replace(new RegExp('50', 'g'), gblStrings.common.dollar + '50');
+                                                temp = temp.replace(new RegExp('50', 'g'), `${gblStrings.common.dollar} 50`);
                                             } else {
                                                 temp = gblStrings.common.dollar + item.value;
                                             }

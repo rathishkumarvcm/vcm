@@ -103,7 +103,7 @@ class ExchangeScreenFourComponent extends Component {
         if (ammend) {
             const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
             const amndObj = menuList[pIndex];
-            const transType = `${ammendData.TransactionType} Amended `;
+            const transType = `Exchange Amended`;
             const ammendPayloadData = {
                 "key": amndObj.key,
                 "title": amndObj.title,
@@ -116,10 +116,8 @@ class ExchangeScreenFourComponent extends Component {
                     "worth": ammendData.worth,
                     "selectedAccountData": savedData.selectedAccountData,
                     "selectedFundData": savedData.selectedFundData,
-                    "selectedFundSourceData": savedData.selectedFundSourceData,
-                    "currentSecurities": savedData.currentSecurities,
                     "contribution": savedData.contribution,
-                    "estimated": ammendData.estimated
+                    
                 }
             };
             menuList.splice(pIndex, 1, ammendPayloadData);
@@ -127,29 +125,32 @@ class ExchangeScreenFourComponent extends Component {
             navigation.navigate('tAmmendComponent');
         }
         else {
-            const orderId = `Order ID - PUR${year}${month}${date}${finalKey}`;
+            const orderId = `Order ID - EXC${year}${month}${date}${finalKey}`;
             const payloadData = {
                 "key": finalKey,
                 "title": orderId,
                 "data": {
                     "count": 5,
                     "Dateadded": updatedDate,
-                    "TransactionType": "Purchase",
+                    "TransactionType": "Exchange",
                     "OrderStatus": "Pending",
                     "totalSHares": "",
                     "worth": "",
                     "selectedAccountData": savedData.selectedAccountData,
                     "selectedFundData": savedData.selectedFundData,
-                    "selectedFundSourceData": savedData.selectedFundSourceData,
-                    "currentSecurities": savedData.currentSecurities,
-                    "contribution": savedData.contribution,
-                    "estimated": {}
+                      "contribution": savedData.contribution,
+                    
                 }
             };
             menuList.push(payloadData);
             ammendActions(menuList);
             navigation.navigate('tAmmendComponent', { orderId: orderId });
         }
+    }
+
+    formatAmount = (amount) => {
+        const amt = parseInt(amount).toLocaleString();
+        return amt;
     }
 
     render() {
@@ -201,10 +202,10 @@ class ExchangeScreenFourComponent extends Component {
                         <View style={styles.line} />
 
                         <View style={styles.govtSecuritiesFund}>
-                            <Text style={styles.blackTextBold22px}>FundName</Text>
+                            <Text style={styles.blackTextBold22px}>{savedData.selectedFundData.funds[0].fundName}</Text>
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>Selling Amount</Text>
-                                <Text style={styles.greyText16px}>{`$ ${savedData.selectedFundData.sellingAmount}`}</Text>
+                                <Text style={styles.greyText16px}>{`$ ${this.formatAmount(savedData.selectedFundData.funds[0].sellingAmount)}`}</Text>
                             </View>
                         </View>
                         
@@ -231,7 +232,7 @@ class ExchangeScreenFourComponent extends Component {
                         </View>
 
                      
-                        <View style={styles.govtSecuritiesFund}>
+                        {/* <View style={styles.govtSecuritiesFund}>
 
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>Estimated Fee</Text>
@@ -245,7 +246,8 @@ class ExchangeScreenFourComponent extends Component {
                                 <Text style={styles.greyTextBold16px}>Effective Date</Text>
                                 <Text style={styles.greyText16px}>{}</Text>
                             </View>
-                        </View>
+                        </View> */}
+
                         <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>Dividents and Capital Gains Preferences </Text>
                             <Text style={styles.edit} onPress={this.onClickEditFundingSource}>{gblStrings.common.edit}</Text>

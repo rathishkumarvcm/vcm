@@ -103,7 +103,7 @@ class PurchaseFourComponent extends Component {
         if (ammend) {
             const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
             const amendObj = menuList[pIndex];
-            const transType = `${ammendData.TransactionType} Amended `;
+            const transType = `Purchase Amended`;
             const ammendPayloadData = {
                 "key": amendObj.key,
                 "title": amendObj.title,

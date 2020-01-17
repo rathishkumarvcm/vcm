@@ -276,27 +276,100 @@ const styles = StyleSheet.create({
     opacity: 0.5
   },
 
-  fullLine: {
-    backgroundColor: "#7B8288",
-    opacity: 0.4,
-    height: scaledHeight(1),
-    marginTop: scaledHeight(40)
+  offButtonStyle: {
+    borderColor: '#56565A',
+    borderRadius: 30,
+    height: scaledHeight(60),
+    borderWidth: scaledHeight(1),
+    width: "50%",
+    backgroundColor: '#B7B7B7',
   },
-  tNCFlex: {
-    marginLeft: "4%",
-    marginTop: scaledHeight(41),
-    width: "92%"
+  onButtonStyleDisable: {
+    borderColor: '#56565A',
+    borderRadius: 30,
+    height: scaledHeight(60),
+    borderWidth: 1,
+    marginLeft: "10%",
+    width: "67%",
+    backgroundColor: '#FFFFFF',
   },
-  tNcHeader: {
-    color: "#56565A",
-    fontSize: scaledHeight(16),
-    fontWeight: "bold"
+  offButtonStyleDisable: {
+    borderColor: '#56565A',
+    borderRadius: 30,
+    height: scaledHeight(60),
+    borderWidth: scaledHeight(1),
+    width: "60%",
+    marginLeft: "0%",
+    backgroundColor: '#FFFFFF',
   },
-  tNcBody: {
-    color: "#56565A",
-    fontSize: scaledHeight(16)
+  onButtonStyle: {
+    borderColor: '#56565A',
+    borderRadius: 30,
+    height: scaledHeight(60),
+    borderWidth: scaledHeight(1),
+    width: "40%",
+    marginLeft: "30%",
+    backgroundColor: '#B7B7B7',
   },
-
+  TextOnStyle: {
+    color: '#56565A',
+    fontSize: scaledHeight(14),
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    textAlign: 'center',
+    marginRight: '30%',
+    paddingLeft: "10%"
+  },
+  TextOffStyle: {
+    color: '#544A54',
+    opacity: 0.5,
+    fontSize: scaledHeight(14),
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingLeft: "8%"
+  },
+  TextOffStyleBold: {
+    color: '#544A54',
+    opacity: 0.5,
+    fontSize: scaledHeight(14),
+    fontWeight: 'bold',
+    textAlign: 'center',
+    paddingLeft: "3%"
+  },
+  switchContainer: {
+    width: '90%',
+    marginTop: scaledHeight(20),
+  },
+  switchTextStyle: {
+    justifyContent: 'space-around',
+    marginTop: '2%',
+    marginHorizontal: '2%',
+    flexDirection: 'row'
+  },
+  switchTxt: {
+    color: '#54565B',
+    fontSize: scaledHeight(13),
+    fontWeight: '400'
+  },
+  stmtTxtStyle: {
+    color: "#333333DE",
+    fontSize: scaledHeight(18),
+    width: "92%",
+    marginTop: '2%'
+},
+stmtSmallTextStyle: {
+    color: "#54565B",
+    fontSize: scaledHeight(15),
+    width: "92%",
+    marginTop: '2%',
+},
+stmtBoldTxtStyle: {
+    color: "#54565B",
+    fontSize: scaledHeight(18),
+    width: "92%",
+    marginTop: '2%',
+    fontWeight: 'bold'
+},
   dropDownLayout: {
     width: "100%",
     marginLeft: "0%",
