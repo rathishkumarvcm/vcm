@@ -57,6 +57,7 @@ pipeline {
                 {
                     sh 'echo AndroidBuild'
                     sh '/usr/local/bin/bundle install'
+                    sh '/usr/local/bin/bundle update fastlane'
                     sh '/usr/local/bin/bundle exec /usr/local/bin/fastlane beta'
                 }
                 dir('ios')
@@ -64,6 +65,7 @@ pipeline {
                     sh 'echo iOSBuild'
                     sh '/usr/local/bin/pod install'
                     sh '/usr/local/bin/bundle install'
+                    sh '/usr/local/bin/bundle update fastlane'
                     sh '/usr/local/bin/bundle exec /usr/local/bin/fastlane beta'
                 }
             }
