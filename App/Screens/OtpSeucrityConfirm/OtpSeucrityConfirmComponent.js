@@ -25,7 +25,7 @@ class OtpSeucrityConfirmComponent extends Component {
 
     navigatePassword = ()=>{
 
-        RNSecureKeyStore.set("authProcessCompleted",true, {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
+        RNSecureKeyStore.set("authProcessCompleted","true", {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
       .then((res) => {
           console.log("stored",res);
       }, (err) => {

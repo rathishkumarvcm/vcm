@@ -219,7 +219,7 @@ class LoginComponent extends Component {
 
                 let currentSessionTime = new Date();
 
-                RNSecureKeyStore.set("currentSession", currentSessionTime.getTime(), { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
+                RNSecureKeyStore.set("currentSession", currentSessionTime.getTime().toString(), { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
                     .then((res) => {
                         console.log("*****currentSession******", res);
                     }, (err) => {
@@ -277,7 +277,7 @@ class LoginComponent extends Component {
     }
 
     enableBioMetric = () => {
-        RNSecureKeyStore.set("enableBioMetric", true, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
+        RNSecureKeyStore.set("enableBioMetric", "true", { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
             .then((res) => {
                 alert("Registered Bio Metric Successfully.")
             }, (err) => {
@@ -318,24 +318,25 @@ class LoginComponent extends Component {
             RNSecureKeyStore.set("jwtToken", data.signInUserSession.idToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
                 console.log("token saved suuccessfully", res)
             }, (err) => {
-                console.log("Error", err);
+                // console.log("Error", err);
             });
 
             RNSecureKeyStore.set("accessToken", data.signInUserSession.accessToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
                 console.log("token saved suuccessfully", res)
             }, (err) => {
-                console.log("Error", err);
+               // console.log("Error", err);
             })
 
             RNSecureKeyStore.set("refreshToken", data.signInUserSession.refreshToken.token, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
                 console.log("token saved suuccessfully", res)
             }, (err) => {
-                console.log("Error", err);
+                // console.log("Error", err);
             })
 
             let currentSessionTime = new Date();
+            
 
-            RNSecureKeyStore.set("currentSession", currentSessionTime.getTime(), { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
+            RNSecureKeyStore.set("currentSession", currentSessionTime.getTime().toString(), { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
                 .then((res) => {
                     console.log("*****currentSession******", res);
                 }, (err) => {
@@ -369,7 +370,7 @@ class LoginComponent extends Component {
                     console.log("authProcessCompleted------->", value);
                     this.props.navigation.navigate('dashboard');
                 }).catch((error) => {
-                    console.log("Error", error)
+                    // console.log("Error", error)
                     this.props.navigation.navigate('otpAuth');
                 });
 
@@ -379,7 +380,7 @@ class LoginComponent extends Component {
             // this.props.navigation.navigate('dashboard');
         }).catch(error => {
             alert("Username and Password Incorrect.");
-            console.log(error);
+            // console.log(error);
         });
     }
 
