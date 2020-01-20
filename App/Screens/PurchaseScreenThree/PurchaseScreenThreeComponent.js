@@ -242,9 +242,11 @@ class PurchaseScreenThreeComponent extends Component {
     }
 
     onClickAddBankAccount = () => {
-
+        const { navigation } = this.props;
+        const { navigate } = navigation;
+        navigate('bankAccount');
     }
-
+    
     switchMethod = () => {
         const { fundingMethod } = this.state;
         if (fundingMethod === 'Online') {

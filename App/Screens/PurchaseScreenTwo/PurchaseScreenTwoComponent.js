@@ -127,7 +127,7 @@ class PurchaseScreenTwoComponent extends Component {
         else {
             this.setState({ ammend: false });
         }
-        
+
         if (accOpeningData[ActionTypes.GET_FUNDLIST] !== undefined && accOpeningData[ActionTypes.GET_FUNDLIST].Items !== null) {
             tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST].Items;
             this.setState({
@@ -653,7 +653,7 @@ class PurchaseScreenTwoComponent extends Component {
                         </View>
                     </View>
 
-                    {selectedFundIndex >= 0 ?
+                    {selectedFundIndex !== null ?
                         (
                             <View style={styles.innerContainerStyle}>
                                 <Text style={styles.headerText}>{gblStrings.purchase.fundYourAcc}</Text>

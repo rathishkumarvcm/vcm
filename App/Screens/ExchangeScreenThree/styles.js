@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     color: "#56565A",
     fontSize: scaledHeight(20),
     fontWeight: "bold",
-    marginTop: scaledHeight(15)
+    //marginTop: scaledHeight(15)
   },
   marginTopStyle: {
     marginTop: "4%"

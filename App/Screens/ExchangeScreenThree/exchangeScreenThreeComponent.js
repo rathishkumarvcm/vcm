@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList, Modal } from 'react-native';
 import PropTypes from "prop-types";
-import { GIcon, GInputComponent, GHeaderComponent, GDateComponent,GSwitchComponent, GDropDownComponent, GButtonComponent, GFooterSettingsComponent, GLoadingSpinner } from '../../CommonComponents';
+import { GIcon, GInputComponent, GHeaderComponent, GDateComponent, GSwitchComponent, GDropDownComponent, GButtonComponent, GFooterSettingsComponent, GLoadingSpinner } from '../../CommonComponents';
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { CustomCheckBox, PageNumber } from '../../AppComponents';
@@ -70,13 +70,14 @@ class ExchangeScreenThreeComponent extends Component {
 
     componentDidMount() {
         this.getLookUpData();
+        this.updateAmendData();
     }
 
     componentDidUpdate(prevProps) {
         if (this.props !== prevProps) {
             const { accOpeningData } = this.props;
             let tempFundListData = [];
-             this.updateAmendData();
+            this.updateAmendData();
             if (accOpeningData[ActionTypes.GET_FUNDLIST] !== undefined && accOpeningData[ActionTypes.GET_FUNDLIST].Items !== null) {
                 tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST].Items;
                 this.setState({
@@ -89,12 +90,13 @@ class ExchangeScreenThreeComponent extends Component {
     }
 
     updateAmendData = () => {
-        const { navigation, fundList } = this.props;
+        const { navigation, } = this.props;
+        const { fundList } = this.state;
         if (navigation.getParam('ammend')) {
             this.setState({ ammend: true });
             ammendData = navigation.getParam('data');
             ammendIndex = navigation.getParam('index');
-            this.state.fundList.map((item, k) => {
+            fundList.map((item, k) => {
                 if (item.fundName === ammendData.selectedFundData.fundName) {
                     this.setState({ selectedFundIndex: k });
                 }
@@ -648,7 +650,7 @@ class ExchangeScreenThreeComponent extends Component {
                         </View>
                     </View>
 
-                    {selectedFundIndex >= 0 ?
+                    {selectedFundIndex !== null ?
                         (
                             <View style={styles.innerContainerStyle}>
                                 <Text style={styles.headerText}>{gblStrings.purchase.fundYourAcc}</Text>
@@ -792,7 +794,7 @@ class ExchangeScreenThreeComponent extends Component {
                         <View style={styles.line} />
                         <Text style={styles.stmtSmallTextStyle}>You will have to call the MSR for any change to the method, If the user has set up alternate method through MSR.</Text>
                         <Text style={styles.stmtBoldTxtStyle}>Current method</Text>
-                        <Text style={styles.stmtSmallTextStyle}>Average Cost Basis</Text>
+                        {/* <Text style={styles.stmtSmallTextStyle}>Average Cost Basis</Text> */}
                     </View>
 
                     {/* ----------------- Button Group -------------------- */}
