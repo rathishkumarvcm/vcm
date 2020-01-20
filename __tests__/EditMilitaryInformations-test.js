@@ -26,5 +26,8 @@ describe('Edit Military Informations', () => {
     const wrapper = new EditMilitaryInformations();
     component.render();
     wrapper.radioButtonClicked();
+    wrapper.dropDownMilitaryOnClick();
+    wrapper.dropDownBranchOnClick();
+    wrapper.dropDownMarineOnClick();
   });
 });

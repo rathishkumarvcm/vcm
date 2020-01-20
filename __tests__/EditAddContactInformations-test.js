@@ -31,7 +31,19 @@ describe('Add Contact Information', () => {
 
     it('Input text matches with length', () => {
         const instanceOf = renderer.create(<EditAddContactInformations {...props} navigation={navigation} />).getInstance();
-        instanceOf.setAddressOne('text');
-        expect(instanceOf.state.addressOne).toHaveLength(4);
+        instanceOf.setAddressOne('abcdedghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgdbc');
+        expect(instanceOf.state.addressOne).toHaveLength(49);
+    });
+
+    it('Input text matches with length', () => {
+        const instanceOf = renderer.create(<EditAddContactInformations {...props} navigation={navigation} />).getInstance();
+        instanceOf.setAddressTwo('abcdedghijklmnopqrstuvwxyzzyxwvutsrqponmlkjihgdbc');
+        expect(instanceOf.state.addressTwo).toHaveLength(49);
+    });
+
+    it('Input text for Zip Code', () => {
+        const instanceOf = renderer.create(<EditAddContactInformations {...props} navigation={navigation} />).getInstance();
+        instanceOf.setZipcodeValue('11722');
+        expect(instanceOf.state.zipCodeValue).toHaveLength(5);
     });
 });

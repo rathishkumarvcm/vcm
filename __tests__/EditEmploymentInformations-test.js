@@ -26,5 +26,7 @@ describe('Edit Employment Informations', () => {
         const wrapper = new EditEmploymentInformations();
         component.render();
         wrapper.dropDownOccupationClick();
+        wrapper.dropDownSourceClick();
+        wrapper.dropDownIndustryClick();
     });
 });
