@@ -37,6 +37,30 @@ const newData = [
     title: 'Marketing and Privacy',
   },
   {
+    naviagteTo: 'tAmmendComponent',
+    title: 'Ammend',
+  },
+  {
+    naviagteTo: 'purchaseScreenOne',
+    title: 'Purchase',
+  },
+  {
+    naviagteTo: 'exchangeScreenOne',
+    title: 'Exchange',
+  },
+  {
+    naviagteTo: 'liquidationScreenOne',
+    title: 'Liquidation',
+  },
+  {
+    naviagteTo: "manageBeneficaries",
+    title: 'Manage Beneficiaries',
+  },
+  {
+    naviagteTo: 'manageIntrestedParties',
+    title: 'Manage Interested Parties',
+  },
+  {
     //  navigateTo:'Logout'
     title: 'Sign Out',
   }
