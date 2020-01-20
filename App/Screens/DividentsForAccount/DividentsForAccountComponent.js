@@ -29,11 +29,9 @@ class DividentsForAccountComponent extends Component {
         navigation.goBack();
     }
 
-    navigateDividents = (requestSubmitted) => () => {
+    navigateAccountServices = (requestSubmitted) => () => {
         const { navigation } = this.props;
-        navigation.navigate('dividentsAndCapitalGainsPref', {
-            requestSubmited: requestSubmitted
-        });
+        navigation.navigate('accountService', { message: requestSubmitted ? gblStrings.dividents.request_submit_dividents : "" });
     }
 
     updateStateChanged = () => { 
@@ -239,14 +237,14 @@ class DividentsForAccountComponent extends Component {
                         buttonStyle={styles.backBtn}
                         buttonText={gblStrings.common.cancel}
                         textStyle={styles.backButtonText}
-                        onPress={this.navigateDividents(false)}
+                        onPress={this.navigateAccountServices(false)}
                     />
 
                     <GButtonComponent
                         buttonStyle={styles.submitBtn}
                         buttonText={gblStrings.common.submit}
                         textStyle={styles.submitButtonText}
-                        onPress={this.navigateDividents(true)}
+                        onPress={this.navigateAccountServices(true)}
                     />
 
                     <GCollapseComponent

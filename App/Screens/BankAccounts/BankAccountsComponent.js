@@ -8,6 +8,7 @@ import gblStrings from '../../Constants/GlobalStrings';
 class BankAccountsComponent extends Component {
     constructor(props) {
         super(props);
+        this.scrollRef = React.createRef();
         this.updateBankDetails = true;
         this.showAlert = true;
         this.confirmDelete = false;
@@ -28,13 +29,17 @@ class BankAccountsComponent extends Component {
     navigateAddBankAccount = () => {
         this.updateBankDetails = true;
         this.showAlert = true;
-        const { navigation } = this.props;
-        navigation.navigate('addBankAccount');
+        if (this.props) {
+            const { navigation } = this.props;
+            navigation.navigate('addBankAccount');
+        }
     }
 
     navigateBack = () => {
-        const { navigation } = this.props;
-        navigation.goBack();
+        if (this.props) {
+            const { navigation } = this.props;
+            navigation.goBack();
+        }
     }
 
     updateView = () => this.setState({ stateUpdated: !this.state.stateUpdated });
@@ -46,7 +51,7 @@ class BankAccountsComponent extends Component {
                 if (showDeleteOption) {
                     let tmpData = [];
                     tmpData = bankAccountInfo;
-                    tmpData.map((item, i) => () => {
+                    tmpData.map((item, i) => {
                         if (item.Id === itemId) {
                             bankAccountInfo[i].showDeleteOption = showDeleteOption;
                         } else {
@@ -75,7 +80,7 @@ class BankAccountsComponent extends Component {
         } else {
             let tmpData = [];
             tmpData = bankAccountInfo;
-            tmpData.map((item, i) => () => {
+            tmpData.map((item, i) => {
                 if (item.Id === this.deleteId) {
                     bankAccountInfo[i].showDeleteOption = false;
                 }
@@ -102,6 +107,7 @@ class BankAccountsComponent extends Component {
     }
 
     updateConfirmDelete = (confirmDelete, item) => () => {
+        this.scrollRef.current.scrollTo(0, 0);
         this.confirmDelete = confirmDelete;
         this.deleteId = item.Id;
         this.accountNumber = item.accountNumber;
@@ -207,7 +213,7 @@ class BankAccountsComponent extends Component {
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
 
-                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={styles.contentStyle}>
+                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={styles.contentStyle} ref={this.scrollRef}>
                     {this.confirmDelete && (
                         <View style={styles.bankInfoContainer}>
                             <Text style={styles.accountNameHeaderText}>
