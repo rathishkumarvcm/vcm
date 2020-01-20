@@ -15,35 +15,26 @@ class DeliverySettingsComponent extends Component {
             // isLoading: false,
 
             emailReadMoreUrgentMessages: false,
-            emailReadMoreNotification: false,
-            emailReadMoreGuidance: false,
+            emailReadMoreNotification: false,          
             pushNotifyReadMoreUrgentMessages: false,
-            pushNotifyReadMoreNotification: false,
-            pushNotifyReadMoreGuidance: false,
+            pushNotifyReadMoreNotification: false,         
             textReadMoreUrgentMessages: false,
-            textReadMoreNotification: false,
-            textReadMoreGuidance: false,
+            textReadMoreNotification: false,           
 
             emailUrgentSwitchOn: false,
             emailUrgentSwitchOff: true,
             emailNotificationSwitchOn: false,
-            emailNotificationSwitchOff: true,
-            emailGuidanceSwitchOn: false,
-            emailGuidanceSwitchOff: true,
+            emailNotificationSwitchOff: true,           
 
             notificationUrgentSwitchOn: false,
             notificationUrgentSwitchOff: true,
             notificationNotificationSwitchOn: false,
-            notificationNotificationSwitchOff: true,
-            notificationGuidanceSwitchOn: false,
-            notificationGuidanceSwitchOff: true,
+            notificationNotificationSwitchOff: true,           
 
             textUrgentSwitchOn: false,
             textUrgentSwitchOff: true,
             textNotificationSwitchOn: false,
-            textNotificationSwitchOff: true,
-            textGuidanceSwitchOn: false,
-            textGuidanceSwitchOff: true,
+            textNotificationSwitchOff: true,           
 
             preferenceMorning: false,
             preferenceMidDay: false,
@@ -77,33 +68,24 @@ class DeliverySettingsComponent extends Component {
                     emailUrgentSwitchOff: deliverySettingsinitialState.emailUrgentSwitchOff, 
                
                     emailNotificationSwitchOn: deliverySettingsinitialState.emailNotificationSwitchOn, 
-                    emailNotificationSwitchOff: deliverySettingsinitialState.emailNotificationSwitchOff, 
-           
-                    emailGuidanceSwitchOn:deliverySettingsinitialState.emailGuidanceSwitchOn, 
-                    emailGuidanceSwitchOff: deliverySettingsinitialState.emailGuidanceSwitchOff,
-              
+                    emailNotificationSwitchOff: deliverySettingsinitialState.emailNotificationSwitchOff,           
+                                 
                     notificationUrgentSwitchOn: deliverySettingsinitialState.notificationUrgentSwitchOn, 
                     notificationUrgentSwitchOff: deliverySettingsinitialState.notificationUrgentSwitchOff,
               
                     notificationNotificationSwitchOn: deliverySettingsinitialState.notificationNotificationSwitchOn, 
                     notificationNotificationSwitchOff: deliverySettingsinitialState.notificationNotificationSwitchOff,
-               
-                    notificationGuidanceSwitchOn: deliverySettingsinitialState.notificationGuidanceSwitchOn, 
-                    notificationGuidanceSwitchOff: deliverySettingsinitialState.notificationGuidanceSwitchOff,
-               
+                             
                     textUrgentSwitchOn: deliverySettingsinitialState.textUrgentSwitchOn, 
                     textUrgentSwitchOff: deliverySettingsinitialState.textUrgentSwitchOff,
                
                     textNotificationSwitchOn: deliverySettingsinitialState.textNotificationSwitchOn, 
                     textNotificationSwitchOff: deliverySettingsinitialState.textNotificationSwitchOff,
                
-                    textGuidanceSwitchOn: deliverySettingsinitialState.textGuidanceSwitchOn, 
-                    textGuidanceSwitchOff: deliverySettingsinitialState.textGuidanceSwitchOff,
-                
-                   preferenceMorning: deliverySettingsinitialState.preferenceMorning,
-                   preferenceMidDay:deliverySettingsinitialState.preferenceMidDay, 
-                   preferenceEarlyEvening: deliverySettingsinitialState.preferenceEarlyEvening, 
-                   preferenceNight: deliverySettingsinitialState.preferenceNight,                  
+                    preferenceMorning: deliverySettingsinitialState.preferenceMorning,
+                    preferenceMidDay:deliverySettingsinitialState.preferenceMidDay, 
+                    preferenceEarlyEvening: deliverySettingsinitialState.preferenceEarlyEvening, 
+                    preferenceNight: deliverySettingsinitialState.preferenceNight,                  
         });
     }
 }
@@ -159,11 +141,7 @@ class DeliverySettingsComponent extends Component {
             case 'emailNotification':
                 if (flag) this.setState({ emailNotificationSwitchOn: true, emailNotificationSwitchOff: false });
                 else this.setState({ emailNotificationSwitchOn: false, emailNotificationSwitchOff: true });
-                break;
-            case 'emailGuidance':
-                if (flag) this.setState({ emailGuidanceSwitchOn: true, emailGuidanceSwitchOff: false });
-                else this.setState({ emailGuidanceSwitchOn: false, emailGuidanceSwitchOff: true });
-                break;
+                break;           
             //  Notification Section Switch
             case 'pushNotifyUrgentMessage':
                 if (flag) this.setState({ notificationUrgentSwitchOn: true, notificationUrgentSwitchOff: false });
@@ -172,11 +150,7 @@ class DeliverySettingsComponent extends Component {
             case 'pushNotifyNotification':
                 if (flag) this.setState({ notificationNotificationSwitchOn: true, notificationNotificationSwitchOff: false });
                 else this.setState({ notificationNotificationSwitchOn: false, notificationNotificationSwitchOff: true });
-                break;
-            case 'pushNotifyGuidance':
-                if (flag) this.setState({ notificationGuidanceSwitchOn: true, notificationGuidanceSwitchOff: false });
-                else this.setState({ notificationGuidanceSwitchOn: false, notificationGuidanceSwitchOff: true });
-                break;
+                break;            
             //  Text Message Section Switch
             case 'textUrgentMessage':
                 if (flag) this.setState({ textUrgentSwitchOn: true, textUrgentSwitchOff: false });
@@ -185,11 +159,7 @@ class DeliverySettingsComponent extends Component {
             case 'textNotification':
                 if (flag) this.setState({ textNotificationSwitchOn: true, textNotificationSwitchOff: false });
                 else this.setState({ textNotificationSwitchOn: false, textNotificationSwitchOff: true });
-                break;
-            case 'textGuidance':
-                if (flag) this.setState({ textGuidanceSwitchOn: true, textGuidanceSwitchOff: false });
-                else this.setState({ textGuidanceSwitchOn: false, textGuidanceSwitchOff: true });
-                break;
+                break;            
             default:
                 break;    
         }
@@ -200,66 +170,39 @@ class DeliverySettingsComponent extends Component {
             case 'emailUrgentMessage':
                 this.setState({
                     emailReadMoreUrgentMessages: true,
-                    emailReadMoreNotification: false,
-                    emailReadMoreGuidance: false,
+                    emailReadMoreNotification: false,                    
                 });
                 break;
             case 'emailNotification':
                 this.setState({
                     emailReadMoreUrgentMessages: false,
-                    emailReadMoreNotification: true,
-                    emailReadMoreGuidance: false,
+                    emailReadMoreNotification: true,                  
                 });
-                break;
-            case 'emailGuidance':
-                this.setState({
-                    emailReadMoreUrgentMessages: false,
-                    emailReadMoreNotification: false,
-                    emailReadMoreGuidance: true,
-                });
-                break;
+                break;           
             case 'pushNotifyUrgentMessage':
                 this.setState({
                     pushNotifyReadMoreUrgentMessages: true,
-                    pushNotifyReadMoreNotification: false,
-                    pushNotifyReadMoreGuidance: false,
+                    pushNotifyReadMoreNotification: false,                   
                 });
                 break;
             case 'pushNotifyNotification':
                 this.setState({
                     pushNotifyReadMoreUrgentMessages: false,
-                    pushNotifyReadMoreNotification: true,
-                    pushNotifyReadMoreGuidance: false,
+                    pushNotifyReadMoreNotification: true,                  
                 });
-                break;
-            case 'pushNotifyGuidance':
-                this.setState({
-                    pushNotifyReadMoreUrgentMessages: false,
-                    pushNotifyReadMoreNotification: false,
-                    pushNotifyReadMoreGuidance: true,
-                });
-                break;
+                break;           
             case 'textUrgentMessage':
                 this.setState({
                     textReadMoreUrgentMessages: true,
-                    textReadMoreNotification: false,
-                    textReadMoreGuidance: false,
+                    textReadMoreNotification: false,                    
                 });
                 break;
             case 'textNotification':
                 this.setState({
                     textReadMoreUrgentMessages: false,
-                    textReadMoreNotification: true,
-                    textReadMoreGuidance: false,
+                    textReadMoreNotification: true,                    
                 });
-                break;
-            case 'textGuidance':
-                this.setState({
-                    textReadMoreUrgentMessages: false,
-                    textReadMoreNotification: false,
-                    textReadMoreGuidance: true,
-                });
-                break;
+                break;           
             default:
                 break;     
         }
@@ -312,13 +255,10 @@ class DeliverySettingsComponent extends Component {
         const {
             emailUrgentSwitchOn,emailUrgentSwitchOff,
             emailNotificationSwitchOn,emailNotificationSwitchOff,
-            emailGuidanceSwitchOn,emailGuidanceSwitchOff,
             notificationUrgentSwitchOn,notificationUrgentSwitchOff,
             notificationNotificationSwitchOn,notificationNotificationSwitchOff,
-            notificationGuidanceSwitchOn,notificationGuidanceSwitchOff,
             textUrgentSwitchOn,textUrgentSwitchOff,
             textNotificationSwitchOn,textNotificationSwitchOff,
-            textGuidanceSwitchOn,textGuidanceSwitchOff,
             preferenceMorning,preferenceMidDay,preferenceEarlyEvening,preferenceNight
 
         } = this.state;
@@ -331,28 +271,19 @@ class DeliverySettingsComponent extends Component {
             emailUrgentSwitchOff,   
 
             emailNotificationSwitchOn,    
-            emailNotificationSwitchOff,  
+            emailNotificationSwitchOff,              
             
-            emailGuidanceSwitchOn,    
-            emailGuidanceSwitchOff, 
-
             notificationUrgentSwitchOn,    
             notificationUrgentSwitchOff, 
 
             notificationNotificationSwitchOn,    
-            notificationNotificationSwitchOff, 
-
-            notificationGuidanceSwitchOn,    
-            notificationGuidanceSwitchOff,
+            notificationNotificationSwitchOff,            
 
             textUrgentSwitchOn,    
             textUrgentSwitchOff,   
 
             textNotificationSwitchOn,    
-            textNotificationSwitchOff,  
-            
-            textGuidanceSwitchOn,    
-            textGuidanceSwitchOff, 
+            textNotificationSwitchOff,                         
 
             preferenceMorning,
             preferenceMidDay,
@@ -367,11 +298,11 @@ class DeliverySettingsComponent extends Component {
         const {navigation} = this.props;
         const {
             email,emailReadMoreUrgentMessages,emailUrgentSwitchOn,emailUrgentSwitchOff,emailReadMoreNotification,
-            emailNotificationSwitchOn,emailNotificationSwitchOff,emailReadMoreGuidance,emailGuidanceSwitchOn,emailGuidanceSwitchOff,
+            emailNotificationSwitchOn,emailNotificationSwitchOff,
             pushNotifyReadMoreUrgentMessages,notificationUrgentSwitchOn,notificationUrgentSwitchOff,pushNotifyReadMoreNotification,
-            notificationNotificationSwitchOn,notificationNotificationSwitchOff,pushNotifyReadMoreGuidance,notificationGuidanceSwitchOn,
-            notificationGuidanceSwitchOff,phoneno,textReadMoreUrgentMessages,textUrgentSwitchOn,textUrgentSwitchOff,textReadMoreNotification,
-            textNotificationSwitchOn,textNotificationSwitchOff,textReadMoreGuidance,textGuidanceSwitchOn,textGuidanceSwitchOff,
+            notificationNotificationSwitchOn,notificationNotificationSwitchOff,
+            phoneno,textReadMoreUrgentMessages,textUrgentSwitchOn,textUrgentSwitchOff,textReadMoreNotification,
+            textNotificationSwitchOn,textNotificationSwitchOff,
             preferenceMorning,preferenceMidDay,preferenceEarlyEvening,preferenceNight,modalVisible,resendPinCode,enterCorrectCode,resendSuccessVisible,
         } = this.state;
 
@@ -498,40 +429,7 @@ class DeliverySettingsComponent extends Component {
                                 switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                             />
                         </View>
-                    </View>
-
-                    <View style={styles.emailPreferenceContainer}>
-                        <View style={styles.emailPreferenceUrgentContainer}>
-                            <GIcon
-                                name="clock"
-                                type="feather"
-                                size={30}
-                                color="black"
-                            />
-                            <Text style={styles.emailPreferenceUrgentText}>
-                                {gblStrings.settingsDeliveryPreference.deliveryPreferenceUrgentGuidanceGoals}
-                            </Text>
-                            <Text style={styles.readMoreText} onPress={this.setReadMoreStateUpdates('emailGuidance')}>
-                                {gblStrings.settingsDeliveryPreference.deliveryPreferenceReadMore}
-                            </Text>
-                        </View>
-                        {emailReadMoreGuidance ? (
-                            <Text style={styles.emailPreferenceDescTitle}>
-                                {gblStrings.settingsDeliveryPreference.deliveryPreferenceReadMoreGuidance}
-                            </Text>
-                          )
-                            : null}
-                        <View style={styles.switchContainer}>
-                            <GSwitchComponent
-                                switchOnMethod={this.switchOnOffStateUpdates('emailGuidance', true)}
-                                switchOffMethod={this.switchOnOffStateUpdates('emailGuidance', false)}
-                                switchOn={emailGuidanceSwitchOn}
-                                switchOff={emailGuidanceSwitchOff}
-                                switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
-                                switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
-                            />
-                        </View>
-                    </View>
+                    </View>                   
 
                     {/* Push Notification - Category */}
                     <View style={styles.pushNotificationContainer}>
@@ -621,40 +519,7 @@ class DeliverySettingsComponent extends Component {
                             />
                         </View>
                     </View>
-
-                    <View style={styles.emailPreferenceContainer}>
-                        <View style={styles.emailPreferenceUrgentContainer}>
-                            <GIcon
-                                name="clock"
-                                type="feather"
-                                size={30}
-                                color="black"
-                            />
-                            <Text style={styles.emailPreferenceUrgentText}>
-                                {gblStrings.settingsDeliveryPreference.deliveryPreferenceUrgentGuidanceGoals}
-                            </Text>
-                            <Text style={styles.readMoreText} onPress={this.setReadMoreStateUpdates('pushNotifyGuidance')}>
-                                {gblStrings.settingsDeliveryPreference.deliveryPreferenceReadMore}
-                            </Text>
-                        </View>
-                        {pushNotifyReadMoreGuidance ? (
-                            <Text style={styles.emailPreferenceDescTitle}>
-                                {gblStrings.settingsDeliveryPreference.deliveryPreferenceReadMoreGuidance}
-                            </Text>
-                          )
-                            : null}
-                        <View style={styles.switchContainer}>
-                            <GSwitchComponent
-                                switchOnMethod={this.switchOnOffStateUpdates('pushNotifyGuidance', true)}
-                                switchOffMethod={this.switchOnOffStateUpdates('pushNotifyGuidance', false)}
-                                switchOn={notificationGuidanceSwitchOn}
-                                switchOff={notificationGuidanceSwitchOff}
-                                switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
-                                switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
-                            />
-                        </View>
-                    </View>
-
+                    
                     {/* Text Message - Category */}
                     <View style={styles.textMessageContainer}>
                         <TouchableOpacity style={styles.touchOpacity}>
@@ -748,40 +613,7 @@ class DeliverySettingsComponent extends Component {
                                 switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                             />
                         </View>
-                    </View>
-
-                    <View style={styles.emailPreferenceContainer}>
-                        <View style={styles.emailPreferenceUrgentContainer}>
-                            <GIcon
-                                name="clock"
-                                type="feather"
-                                size={30}
-                                color="black"
-                            />
-                            <Text style={styles.emailPreferenceUrgentText}>
-                                {gblStrings.settingsDeliveryPreference.deliveryPreferenceUrgentGuidanceGoals}
-                            </Text>
-                            <Text style={styles.readMoreText} onPress={this.setReadMoreStateUpdates('textGuidance')}>
-                                {gblStrings.settingsDeliveryPreference.deliveryPreferenceReadMore}
-                            </Text>
-                        </View>
-                        {textReadMoreGuidance ? (
-                            <Text style={styles.emailPreferenceDescTitle}>
-                                {gblStrings.settingsDeliveryPreference.deliveryPreferenceReadMoreGuidance}
-                            </Text>
-                          )
-                            : null}
-                        <View style={styles.switchContainer}>
-                            <GSwitchComponent
-                                switchOnMethod={this.switchOnOffStateUpdates('textGuidance', true)}
-                                switchOffMethod={this.switchOnOffStateUpdates('textGuidance', false)}
-                                switchOn={textGuidanceSwitchOn}
-                                switchOff={textGuidanceSwitchOff}
-                                switchOnText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOn}
-                                switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
-                            />
-                        </View>
-                    </View>
+                    </View>                    
 
                     {/*  Call Preference Section */}
                     <View style={styles.callPreferenceContainer}>
