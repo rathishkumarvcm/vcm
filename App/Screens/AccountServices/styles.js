@@ -39,7 +39,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
         marginTop: scaledHeight(20),
-        marginHorizontal: '4%'
+        marginHorizontal: '4%',
     },
     optionHeaderText: {
         fontSize: scaledHeight(14),
@@ -96,8 +96,9 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         left: 6,
         top: 4,
+        right: 6,
         marginTop: scaledHeight(15),
-        marginRight: scaledHeight(6),
+        marginRight: '4%',
         flexDirection: 'row',
         alignItems: 'center'
     },
@@ -105,5 +106,20 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#B2B2B2',
         marginTop: scaledHeight(60)
-    }
+    },
+    alertBox: {
+        alignItems: 'center',
+        backgroundColor: '#F2F2F2',
+        borderColor: '#C7C7C7',
+        borderWidth: 1,
+        justifyContent: 'center',
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(20),
+        paddingHorizontal: '4%',
+        paddingVertical: scaledHeight(15)
+    },
+    alertText: {
+        color: '#54565B',
+        fontSize: scaledHeight(15),
+    },
 });

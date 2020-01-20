@@ -76,7 +76,6 @@ class DividentsForAccountComponent extends Component {
                             tmpData[i].currentSecuritiesSwitchOn = true;
                             tmpData[i].currentSecuritiesSwitchOff = false;
                             this.updateStateChanged();
-
                         }
                     });
                     this.setState({ accountInfo: tmpData });
@@ -104,7 +103,7 @@ class DividentsForAccountComponent extends Component {
                     this.setState({ accountInfo: tmpData });
                 }
                 else {
-                    tmpData.map((item) => {
+                    tmpData.map((item, i) => {
                         if (item.Id === itemId) {
                             tmpData[i].futureSecuritiesSwitchOn = false;
                             tmpData[i].futureSecuritiesSwitchOff = true;

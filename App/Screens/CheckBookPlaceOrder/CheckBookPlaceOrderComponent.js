@@ -9,7 +9,7 @@ class CheckBookPlaceOrder extends Component {
 
     navigateBack = (isSuccess) => () => {
         const { navigation } = this.props;
-        navigation.navigate('orderCheckBook', { isSuccess});
+        navigation.navigate('accountService', { message: isSuccess ? gblStrings.orderCheckBook.request_received : "" });
     }
 
     render() {
@@ -34,9 +34,9 @@ class CheckBookPlaceOrder extends Component {
                     <View style={styles.infoContainer}>
 
                         <Text style={styles.accountNameText}>
-                            {gblStrings.orderCheckBook.accountNumber}
+                            {gblStrings.orderCheckBook.account_name}
                         </Text>
-                        <Text style={styles.accountNumberText}>
+                        <Text style={styles.checkLeavesText}>
                             {accountName}
                         </Text>
                         <Text style={styles.accountNumberText}>
@@ -48,7 +48,7 @@ class CheckBookPlaceOrder extends Component {
                         <Text style={styles.accountNameText}>
                             {gblStrings.orderCheckBook.number_of_checkleaves}
                         </Text>
-                        <Text style={styles.accountNumberText}>
+                        <Text style={styles.checkLeavesText}>
                             {noOfCheckLeaves}
                         </Text>
                     </View>
@@ -57,7 +57,7 @@ class CheckBookPlaceOrder extends Component {
                         <Text style={styles.accountNameText}>
                             {gblStrings.orderCheckBook.delivery_address}
                         </Text>
-                        <Text style={styles.accountNumberText}>
+                        <Text style={styles.checkLeavesText}>
                             {deliveryAddress}
                         </Text>
 

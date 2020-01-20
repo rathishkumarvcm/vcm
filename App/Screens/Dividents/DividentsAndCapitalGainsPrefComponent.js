@@ -256,18 +256,19 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
 )
 
     render() {
-        const { dividentsInfo } = this.props;
-        const { navigation } = this.props;
-        const {dividentsData} = this.state;
-        const { generalAccCollapsedState } = this.state;
-        const { iraAccCollapsedState } = this.state;
-        const { utmaAccCollapsedState } = this.state;
-        const { generalAccount } = this.state;
-        const { utmaAccount } = this.state;
-        const { iraAccount } = this.state;
-        const { requestSubmited } = this.state;
-        const { stateChanged } = this.state;
-        const { collapsedState } = this.state;
+        const { dividentsInfo,
+            navigation } = this.props;
+            
+        const { dividentsData,
+            generalAccCollapsedState,
+            iraAccCollapsedState,
+            utmaAccCollapsedState,
+            generalAccount,
+            utmaAccount,
+            iraAccount,
+            requestSubmited,
+            stateChanged,
+            collapsedState } = this.state;
 
 
         if (this.props && dividentsInfo && dividentsInfo !== dividentsData) {

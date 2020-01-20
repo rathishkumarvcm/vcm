@@ -77,7 +77,7 @@ export const styles = StyleSheet.create({
         width: '78.6%',
         marginLeft: '10.7%',
         marginRight: '10.7%',
-        marginTop: scaledHeight(19),
+        marginTop: scaledHeight(40),
         borderRadius: scaledHeight(1),
         height: scaledHeight(50),
         backgroundColor: '#FFFFFF',
@@ -104,6 +104,12 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         color: '#56565A',
         alignSelf: 'flex-start',
+    },
+    checkLeavesText: {
+        fontSize: scaledHeight(16),
+        color: '#56565A',
+        alignSelf: 'flex-start',
+        marginTop: scaledHeight(5)
     },
     deleteBtn: {
         position: 'absolute',

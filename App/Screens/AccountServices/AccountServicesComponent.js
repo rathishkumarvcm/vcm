@@ -7,6 +7,13 @@ import gblStrings from '../../Constants/GlobalStrings';
 
 class AccountServicesComponent extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            showAlert: true,
+        };
+    }
+
     componentDidMount() { }
 
     navigateDividents = () => { 
@@ -33,15 +40,30 @@ class AccountServicesComponent extends Component {
         const { navigation } = this.props;
         navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
     }
- 
+
+    updateIsScuccess = (showAlert) => () => {
+        this.setState({ showAlert });
+    } 
 
     render() {
         const { navigation } = this.props;
+        const messageToDisplay = navigation.getParam('message', "");
+        const { showAlert } = this.state;
+
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
 
                 <ScrollView style={styles.scrollviewStyle} contentContainerStyle={styles.contentStyle}>
+
+                    {messageToDisplay.length > 0 && showAlert && (
+                        <TouchableOpacity style={styles.alertBox} onPress={this.updateIsScuccess(false)}>
+                            <Text style={styles.alertText}>
+                                {messageToDisplay}
+                            </Text>
+                        </TouchableOpacity>
+                    )}
+
                     <View style={styles.profileHeader}>
                         <Text style={styles.profileHeadline}>
                             {gblStrings.accountServices.account_services}
