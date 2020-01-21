@@ -6,12 +6,14 @@ import { GHeaderComponent, GFooterSettingsComponent, GButtonComponent } from '..
 import gblStrings from '../../Constants/GlobalStrings';
 
 let tempData = {};
+let beneData = {};
+let newFlag = false;
 
 class VerifyManageBenificiariesComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      beneData: {},
+      // beneData: {},
       totalPrimaryDistribution: 0,
       totalContingentDistribution: 0,
       totalDistribution: 0
@@ -19,13 +21,27 @@ class VerifyManageBenificiariesComponent extends Component {
   }
 
   componentDidMount() {
-    const { manageBeneficiaryData } = this.props;
+    this.setData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.setData();
+    }
+  }
+
+  setData = () => {
+    const { manageBeneficiaryData, navigation } = this.props;
+    if (this.props && navigation.getParam('newFlag')) {
+      newFlag = true;
+    }
     if (this.props && manageBeneficiaryData && manageBeneficiaryData.savedBeneficiaryData) {
       tempData = manageBeneficiaryData.savedBeneficiaryData;
-      if (tempData.primary_Bene && tempData.primary_Bene.length <= 0 && tempData.contingent_Bene && tempData.contingent_Bene.length <= 0 && tempData.transfer_on_Death_Bene && tempData.transfer_on_Death_Bene.length > 0) {
+
+      if (this.props && navigation.getParam('newFlag')) {
         let priArr = [];
         let conArr = [];
-        if (tempData.new_Primary_Bene && tempData.new_Contingent_Bene.length) {
+        if (tempData.new_Primary_Bene && tempData.new_Primary_Bene.length) {
           priArr = tempData.new_Primary_Bene;
         }
         if (tempData.new_Contingent_Bene && tempData.new_Contingent_Bene.length) {
@@ -34,59 +50,40 @@ class VerifyManageBenificiariesComponent extends Component {
         tempData.primary_Bene = priArr;
         tempData.contingent_Bene = conArr;
       } else {
-        let todArr = tempData.transfer_on_Death_Bene;
-        let conArr = tempData.contingent_Bene;
-        if (tempData.new_Primary_Bene && tempData.new_Primary_Bene.length) {
-          todArr = tempData.transfer_on_Death_Bene.concat(tempData.transfer_on_Death_Bene);
-        }
-        if (tempData.new_Contingent_Bene && tempData.new_Contingent_Bene.length) {
-          conArr = tempData.contingent_Bene.concat(tempData.new_Contingent_Bene);
-        }
-        tempData.transfer_on_Death_Bene = todArr;
-        tempData.contingent_Bene = conArr;
-
-      }
-      this.updateInitialData(tempData);
-    }
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps !== this.props) {
-      const { manageBeneficiaryData } = this.props;
-      if (this.props && manageBeneficiaryData && manageBeneficiaryData.savedBeneficiaryData) {
-        tempData = manageBeneficiaryData.savedBeneficiaryData;
-        if (tempData.primary_Bene && tempData.primary_Bene.length <= 0 && tempData.contingent_Bene && tempData.contingent_Bene.length <= 0 && tempData.transfer_on_Death_Bene && tempData.transfer_on_Death_Bene.length > 0) {
+        if (tempData.primary_Bene && tempData.primary_Bene.length > 0 && tempData.contingent_Bene && tempData.contingent_Bene.length > 0 && tempData.transfer_on_Death_Bene && tempData.transfer_on_Death_Bene.length < 0) {
           let priArr = [];
           let conArr = [];
-          if (tempData.new_Primary_Bene && tempData.new_Contingent_Bene.length) {
-            priArr = tempData.new_Primary_Bene;
+          if (tempData.new_Primary_Bene && tempData.new_Primary_Bene.length) {
+            priArr = tempData.primary_Bene.concat(tempData.new_Primary_Bene);
           }
           if (tempData.new_Contingent_Bene && tempData.new_Contingent_Bene.length) {
-            conArr = tempData.new_Contingent_Bene;
+            conArr = tempData.contingent_Bene.concat(tempData.new_Contingent_Bene);
           }
           tempData.primary_Bene = priArr;
           tempData.contingent_Bene = conArr;
-        } else {
+        } else if (tempData.transfer_on_Death_Bene && tempData.transfer_on_Death_Bene.length > 0) {
           let todArr = tempData.transfer_on_Death_Bene;
           let conArr = tempData.contingent_Bene;
           if (tempData.new_Primary_Bene && tempData.new_Primary_Bene.length) {
-            todArr = tempData.transfer_on_Death_Bene.concat(tempData.transfer_on_Death_Bene);
+            todArr = tempData.transfer_on_Death_Bene.concat(tempData.new_Primary_Bene);
           }
           if (tempData.new_Contingent_Bene && tempData.new_Contingent_Bene.length) {
             conArr = tempData.contingent_Bene.concat(tempData.new_Contingent_Bene);
           }
           tempData.transfer_on_Death_Bene = todArr;
           tempData.contingent_Bene = conArr;
-
         }
-        this.updateInitialData(tempData);
       }
+      this.updateInitialData(tempData);
     }
+
   }
 
   updateInitialData = (data) => {
     if (data) {
-      this.setState({ beneData: data }, () => this.setInitialValue());
+      beneData = data;
+      this.setInitialValue()
+      // this.setState({ beneData: data }, () => this.setInitialValue());
     }
   }
 
@@ -95,7 +92,7 @@ class VerifyManageBenificiariesComponent extends Component {
     let totalCon = 0;
     let totalTod = 0;
     let total = 0;
-    const { beneData } = this.state;
+    // const { beneData } = this.state;
     if (beneData.transfer_on_Death_Bene) {
       const tot = beneData.transfer_on_Death_Bene.reduce((prev, cur) => {
         let dist = parseInt(cur.distribution_Per);
@@ -175,14 +172,20 @@ class VerifyManageBenificiariesComponent extends Component {
 
   onClickSubmit = () => {
     const { saveBeneficiaryData, navigation } = this.props;
-    const payloadData = this.getData();
-    saveBeneficiaryData("verifyBeneficiary", payloadData);
-    this.clearData();
+
+    if (newFlag) {
+      const payloadData = this.addNewBeneData();
+      saveBeneficiaryData(payloadData);
+    } else {
+      const payloadData = this.getData();
+      saveBeneficiaryData(payloadData);
+    }
+    // this.clearData();
     navigation.navigate("manageBeneficiaries", { showMsg: true, successMsg: "Data has been added Successfully" });
   }
 
   getData = () => {
-    const { beneData } = this.state;
+    // const { beneData } = this.state;
     const { manageBeneficiaryData } = this.props;
     let updateBeneData = {};
     let list = [];
@@ -199,6 +202,26 @@ class VerifyManageBenificiariesComponent extends Component {
     return list;
   }
 
+  addNewBeneData = () => {
+    const { manageBeneficiaryData } = this.props;
+    let updateBeneData = {};
+    let list = [];
+    let tempObj = {};
+    updateBeneData = beneData;
+    if (this.props && manageBeneficiaryData && manageBeneficiaryData.manage_beneficiary) {
+      list = manageBeneficiaryData.manage_beneficiary;
+    }
+    list.map((m, n) => {
+      if (m.account_Type === updateBeneData.account_Type) {
+        tempObj = m;
+        tempObj.primary_Bene = tempObj.primary_Bene.concat(updateBeneData.primary_Bene);
+        tempObj.contingent_Bene = tempObj.contingent_Bene.concat(updateBeneData.contingent_Bene);
+        list.splice(n, 1, tempObj);
+      }
+      return 0;
+    });
+    return list;
+  }
   /* ------------------ Render Functions for FlatList -------------------------- */
 
   renderContingentBeneficiary = ({ item }) => (
@@ -330,11 +353,7 @@ class VerifyManageBenificiariesComponent extends Component {
   generateKeyExtractor = (item) => item.key;
 
   render() {
-    const { beneData, totalPrimaryDistribution, totalContingentDistribution, totalDistribution, navigation } = this.state;
-    // const { manageBeneficiaryData } = this.props;
-    // if (manageBeneficiaryData && manageBeneficiaryData.savedBeneficiaryData) {
-    //   this.setData();
-    // }
+    const { totalPrimaryDistribution, totalContingentDistribution, totalDistribution, navigation } = this.state;
     return (
       <View style={styles.container}>
         <GHeaderComponent navigation={navigation} />

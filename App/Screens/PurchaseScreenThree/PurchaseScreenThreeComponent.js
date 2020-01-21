@@ -224,6 +224,8 @@ class PurchaseScreenThreeComponent extends Component {
             switchOff: true,
             switchOn: false,
             selectedBankAccountIndex: null,
+            bankAccountNumber: "",
+            bankAccountName: "",
             disableNextButton: false
         });
     }
@@ -237,6 +239,8 @@ class PurchaseScreenThreeComponent extends Component {
             switchOff: true,
             switchOn: false,
             selectedBankAccountIndex: null,
+            bankAccountNumber: "",
+            bankAccountName: "",
             disableNextButton: false
         });
     }
