@@ -758,6 +758,7 @@ class OpenAccPageTwoComponent extends Component {
                 }
             }
 
+
             const stateCityKey = ActionTypes.GET_STATECITY;
             if (addressFormatData[stateCityKey]) {
                 if (addressFormatData[stateCityKey] !== prevProps.addressFormatData[stateCityKey]) {
@@ -967,6 +968,7 @@ class OpenAccPageTwoComponent extends Component {
                     }
                 }
             }
+            
 
             const uploadImgKey = ActionTypes.UPLOAD_AVATAR;
             if (accOpeningData[uploadImgKey]) {
@@ -988,7 +990,247 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
+    /*
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const { accOpeningData,addressFormatData} = nextProps;
 
+        const {currentZipCodeRef,estate} = prevState;
+         const { 
+             //  stateKey = "",
+             keyName = "",
+             objIndex = -1
+         } = currentZipCodeRef;
+ 
+        const stateCityKey = ActionTypes.GET_STATECITY;
+        if (addressFormatData[stateCityKey]) {
+                const tempResponse = addressFormatData[stateCityKey];
+               
+                if (tempResponse && tempResponse.City) {
+                    if (keyName === "empZipcode") {
+                        return {
+                            [prevState.currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey],
+                                empCity: tempResponse.City,
+                                empStateCity: tempResponse.State
+
+                            }
+                        };
+                    }
+                 if (keyName === "zipcode_Phy" && objIndex !== -1) {
+                        const newItems = [...estate.trusteeData];
+                        newItems[objIndex].city_Phy = tempResponse.City;
+                        newItems[objIndex].stateCity_Phy = tempResponse.State;
+                      
+                      
+                       return {
+                            [prevState.currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey],
+                                trusteeData:newItems
+    
+                            }
+                        };
+                    } 
+                 if (keyName === "zipcode" && objIndex !== -1) {
+                        const newItems = [...estate.trusteeData];
+                        newItems[objIndex].city = tempResponse.City;
+                        newItems[objIndex].stateCity = tempResponse.State;
+                     
+                                          
+                      return {
+                            [prevState.currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey],
+                                trusteeData:newItems
+    
+                            }
+                        };
+                    } 
+                 if (keyName === "zipcode_Phy" && objIndex === -1) {
+                       return {
+                            [prevState.currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey],
+                                city_Phy: tempResponse.City,
+                                stateCity_Phy: tempResponse.State
+
+                            }
+                        };
+                    } 
+                 if (keyName === "zipcode" && objIndex === -1){
+                      return {
+                            [prevState.currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey],
+                                city: tempResponse.City,
+                                stateCity: tempResponse.State
+
+                            }
+                        };
+                    }
+                }
+            
+        }
+
+        const addressKey = ActionTypes.GET_ADDRESSFORMAT;
+        if (addressFormatData[addressKey]) {
+            const tempResponse = addressFormatData[addressKey];
+            if (tempResponse && tempResponse.City) {
+                if (keyName === "empZipcode") {
+                    return {
+                        [prevState.currentZipCodeRef.stateKey]: {
+                            ...prevState[prevState.currentZipCodeRef.stateKey],
+                            empCity: tempResponse.City,
+                            empStateCity: tempResponse.State,
+                            empAddrLine1: tempResponse.Address1 || "",
+                            empAddrLine2: tempResponse.Address2 || ""
+
+                        }
+                    };
+                }
+                if (keyName === "zipcode_Phy" && objIndex !== -1) {
+                    const newItems = [...estate.trusteeData];
+                    newItems[objIndex].city_Phy = tempResponse.City;
+                    newItems[objIndex].stateCity_Phy = tempResponse.State;
+                    newItems[objIndex].addrLine1_Phy = tempResponse.Address1 || "";
+                    newItems[objIndex].addrLine2_Phy = tempResponse.Address2 || "";
+                    newItems[objIndex].addrLine1_PhyValidation = true;
+                    newItems[objIndex].addrLine2_PhyValidation = true;
+
+                    return {
+                        [prevState.currentZipCodeRef.stateKey]: {
+                            ...prevState[prevState.currentZipCodeRef.stateKey],
+                            trusteeData: newItems
+
+                        }
+                    };
+                };
+                if (keyName === "zipcode" && objIndex !== -1) {
+                    const newItems = [...estate.trusteeData];
+                    newItems[objIndex].city = tempResponse.City;
+                    newItems[objIndex].stateCity = tempResponse.State;
+                    newItems[objIndex].addrLine1 = tempResponse.Address1 || "";
+                    newItems[objIndex].addrLine2 = tempResponse.Address2 || "";
+                    newItems[objIndex].addrLine1Validation = true;
+                    newItems[objIndex].addrLine2Validation = true;
+
+                    return {
+                        [prevState.currentZipCodeRef.stateKey]: {
+                            ...prevState[prevState.currentZipCodeRef.stateKey],
+                            trusteeData: newItems
+
+                        }
+                    };
+                }
+                if (keyName === "zipcode_Phy" && objIndex === -1) {
+                    return {
+                        [prevState.currentZipCodeRef.stateKey]: {
+                            ...prevState[prevState.currentZipCodeRef.stateKey],
+                            city_Phy: tempResponse.City,
+                            stateCity_Phy: tempResponse.State,
+                            addrLine1_Phy: tempResponse.Address1 || "",
+                            addrLine2_Phy: tempResponse.Address2 || "",
+                            addrLine1_PhyValidation: true,
+                            addrLine2_PhyValidation: true
+                        }
+                    };
+                }
+                if (keyName === "zipcode" && objIndex === -1) {
+                    return {
+                        [prevState.currentZipCodeRef.stateKey]: {
+                            ...prevState[prevState.currentZipCodeRef.stateKey],
+                            city: tempResponse.City,
+                            stateCity: tempResponse.State,
+                            addrLine1: tempResponse.Address1 || "",
+                            addrLine2: tempResponse.Address2 || "",
+                            addrLine1Validation: true,
+                            addrLine2Validation: true
+                        }
+                    };
+                }
+
+            }
+            /// 
+            if (tempResponse && tempResponse.ErrorNumber) {
+                if (currentZipCodeRef.keyName === "empZipcode") {
+                    return {
+                        [prevState.currentZipCodeRef.stateKey]: {
+                            ...prevState[prevState.currentZipCodeRef.stateKey],
+                            empAddrLine1: "",
+                            empAddrLine2: ""
+
+                        }
+                    };
+                }
+                if (currentZipCodeRef.keyName === "zipcode_Phy" && objIndex !== -1) {
+                    const newItems = [...estate.trusteeData];
+                    newItems[objIndex].addrLine1_Phy = "";
+                    newItems[objIndex].addrLine2_Phy = "";
+                    newItems[objIndex].addrLine1_PhyValidation = false;
+                    newItems[objIndex].addrLine2_PhyValidation = false;
+
+                    return {
+                        [prevState.currentZipCodeRef.stateKey]: {
+                            ...prevState[prevState.currentZipCodeRef.stateKey],
+                            trusteeData: newItems
+
+                        },
+                        errMsg: "Invalid address"
+
+                    };
+                }
+                if (currentZipCodeRef.keyName === "zipcode" && objIndex !== -1) {
+                    const newItems = [...estate.trusteeData];
+                    newItems[objIndex].addrLine1 = "";
+                    newItems[objIndex].addrLine2 = "";
+                    newItems[objIndex].addrLine1Validation = false;
+                    newItems[objIndex].addrLine2Validation = false;
+
+                    return {
+                        [prevState.currentZipCodeRef.stateKey]: {
+                            ...prevState[prevState.currentZipCodeRef.stateKey],
+                            trusteeData: newItems
+
+                        },
+                        errMsg: "Invalid address"
+
+                    };
+                }
+                if (currentZipCodeRef.keyName === "zipcode_Phy" && objIndex === -1) {
+                    return {
+                        [prevState.currentZipCodeRef.stateKey]: {
+                            ...prevState[prevState.currentZipCodeRef.stateKey],
+                            addrLine1_Phy: "",
+                            addrLine2_Phy: "",
+                            addrLine1_PhyValidation: false,
+                            addrLine2_PhyValidation: false
+                        },
+                        errMsg: "Invalid address"
+                    };
+                }
+                if (currentZipCodeRef.keyName === "zipcode" && objIndex === -1) {
+                    return {
+                        [prevState.currentZipCodeRef.stateKey]: {
+                            ...prevState[prevState.currentZipCodeRef.stateKey],
+
+                            addrLine1: "",
+                            addrLine2: "",
+                            addrLine1Validation: false,
+                            addrLine2Validation: false
+                        },
+                        errMsg: "Invalid address"
+                    };
+                }
+            }
+        }
+        return null;
+
+
+    }
+
+    */
+
+        
+       
+
+
+    
     /*----------------------
                                  Button Events 
                                                                  -------------------------- */
@@ -7677,6 +7919,7 @@ class OpenAccPageTwoComponent extends Component {
         );
     }
 }
+
 
 OpenAccPageTwoComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
