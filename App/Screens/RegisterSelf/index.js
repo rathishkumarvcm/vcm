@@ -1,3 +1,3 @@
-import RegisterSelfComponent from './RegisterSelfComponent';
+import RegisterSelfComponent from './RegisterSelfContainer';
 
 export default RegisterSelfComponent;

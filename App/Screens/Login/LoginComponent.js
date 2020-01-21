@@ -46,13 +46,13 @@ class LoginComponent extends Component {
             validationEmail: true,
             validationPassword: true,
             //  password: '',
-            email: 'rathish.kumar2@cognizant.com',
+            email: '',
             registeredOnlineID: '',
             switchOn: true,
             switchOff: false,
             registeredSuccess: false,
             name: '',
-            password: 'Radhi@12345',
+            password: '',
             phone: '',
             inActivityAccount: false
         };

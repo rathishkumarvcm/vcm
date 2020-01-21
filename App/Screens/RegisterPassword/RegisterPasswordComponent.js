@@ -93,7 +93,9 @@ class RegisterPasswordComponent extends Component {
             AppUtils.debugLog(`Data ${data}`);          
             showAlert(globalStrings.common.appName ,"Signed Up Successfully. OTP received.",globalStrings.common.ok);   
             navigation.navigate('emailVerify', { passwordData: registerSelfData });
-        });
+        }).catch(err => {alert(err.message)
+            console.log(err)})
+            ;
         //  this.props.navigation.navigate('emailVerify');   
     }
 

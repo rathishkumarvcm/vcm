@@ -68,7 +68,7 @@ class RegisterSelfComponent extends Component {
             phone : this.state.phone
         };
         
-        
+        this.props.updatePhoneNumber(this.state.phone);
         this.props.navigation.navigate('registerPassword',{selfData:passingData});
     }
 
@@ -264,7 +264,7 @@ class RegisterSelfComponent extends Component {
                 onBlur={this.checkPhone}
                 errorFlag={this.state.phoneFlag}
                 errorText={"Enter a Valid Phone Number"}
-                keyboardType="number-pad"
+                keyboardType="numeric"
                 maxLength={13}
             />
 

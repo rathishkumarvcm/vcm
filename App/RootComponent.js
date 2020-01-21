@@ -42,8 +42,7 @@ class RootComponent extends Component {
   }
 
   componentDidMount() {
-    console.log("sessionId", sessionId);
-    AppState.addEventListener('change', this._handleAppStateChange);
+   // AppState.addEventListener('change', this._handleAppStateChange);
 
     setInterval(() => {
       RNSecureKeyStore.get("jwtToken")
@@ -94,9 +93,9 @@ class RootComponent extends Component {
     }, 300000);
   }
 
-  componentWillMount() {
+  /*componentWillMount() {
     AppState.removeEventListener('change', this._handleAppStateChange);
-  }
+  }*/
 
   _handleAppStateChange = (nextAppState) => {
     if (
