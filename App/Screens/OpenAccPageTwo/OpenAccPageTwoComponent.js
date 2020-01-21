@@ -1826,8 +1826,7 @@ class OpenAccPageTwoComponent extends Component {
 
         let payload = {};
         let addressPayload = {};
-        if (this.state[stateKey].citizenship === "U.S" || this.state[stateKey].citizenship === undefined ) {
-          
+       // if (this.state[stateKey].citizenship === "U.S" || this.state[stateKey].citizenship === undefined ) {    
             if (keyName === "zipcode_Phy") {
                 payload = {
                     "Zip": this.state[stateKey][keyName]
@@ -1854,7 +1853,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
 
-        }
+        
 
 
         getStateCity(payload);
@@ -1867,6 +1866,7 @@ class OpenAccPageTwoComponent extends Component {
 
     onSubmitEmpZipEditing = (stateKey, keyName, nextInputFocus) => text => {
         AppUtils.debugLog(`onSubmitEmpZipEditing:::>${nextInputFocus} ${text}`);
+        const {getStateCity,getAddressFormat} = this.props;
 
         const { currentZipCodeRef} = this.state;
         const newItems = { ...currentZipCodeRef };
@@ -1876,6 +1876,29 @@ class OpenAccPageTwoComponent extends Component {
 
         //  alert("onSubmitEmpZipEditing::"+JSON.stringify(newItems));
         this.setState({ currentZipCodeRef: newItems });
+        let payload = {};
+        let addressPayload = {};
+
+               
+                payload = {
+                    "Zip": this.state[stateKey][keyName]
+                };
+                addressPayload = {
+                    ...payload,
+                    "Address1": this.state[stateKey].empAddrLine1,
+                    "Address2": this.state[stateKey].empAddrLine2,
+                    "City": this.state[stateKey].empCity,
+                    "State": this.state[stateKey].empStateCity
+                };
+            
+
+
+            getStateCity(payload);
+            getAddressFormat(addressPayload);
+    
+    
+
+        
 
         //  nextInputFocus.focus();
     }
