@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Linking,View, ScrollView, Text } from 'react-native';
-import { NavigationActions } from 'react-navigation';
-import { styles } from './styles';
+// import { NavigationActions } from 'react-navigation';
+import PropTypes from 'prop-types';
+import styles from './styles';
 import {
     GHeaderComponent,
     GFooterComponent,
@@ -9,7 +10,6 @@ import {
     GSingletonClass
 } from '../../CommonComponents';
 import { CustomCheckBox } from '../../AppComponents';
-import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
 
 const myInstance = GSingletonClass.getInstance();
@@ -17,198 +17,220 @@ const url = 'https://content.usaa.com/mcontent/static_assets/Mstar/Morningstar_F
 class AutomaticInvestmentPlanEsignComponent extends Component {
     constructor(props) {
         super(props);
+        const{navigation}=this.props;
         this.state = {
             acceptPolicy: false,
-            accountType:`${this.props.navigation.getParam('accountType')}`,
-            itemToEdit: `${this.props.navigation.getParam('indexSelected')}`,
+            accountType:`${navigation.getParam('accountType')}`,
+            itemToEdit: `${navigation.getParam('indexSelected')}`,
             errorTextMsg:''
         };
     }
 
-    onCheckBoxCheck = ()  => {
-        
-        this.setState({ acceptPolicy: !this.state.acceptPolicy });
-    }
-
     componentDidUpdate(){
-        console.log('%%%%%%%%%%%%%%%%%%%%%%%%',this.state.itemToEdit)
-        if(this.props.automaticInvestmentState.savedAccData){
-            console.log('Esign$$$$$$$$$$$$$$$$$$$$',this.props.automaticInvestmentState.savedAccData)
+        const{automaticInvestmentState,navigation}=this.props;
+        const{itemToEdit}=this.state;
+        if(automaticInvestmentState.savedAccData){
             myInstance.setAutomaticInvestmentEditMode(false);
-            myInstance.setSavedAutomaticData('')
-            // this.props.navigation.reset([
+            myInstance.setSavedAutomaticData('');
+            // navigation.reset([
             //     NavigationActions.navigate({ routeName: 'dashboard' }),
             //     NavigationActions.navigate({ routeName: 'accountService' }),
             //     NavigationActions.navigate({ routeName: 'automaticInvestment' })
             //   ],2);
-            
-            if(this.state.itemToEdit==-1)
-                this.props.navigation.goBack('automaticInvestmentAccount')
+            if(itemToEdit == -1)
+                navigation.goBack('automaticInvestmentAccount');
             else
-                this.props.navigation.goBack('automaticInvestmentAdd')
+                navigation.goBack('automaticInvestmentAdd');
         }
 
     }
 
+    onCheckBoxCheck = () => {
+        const{acceptPolicy}=this.state;
+        this.setState({ acceptPolicy: !acceptPolicy });
+    }
+
+   
+
     getPayload = () => {
+        const{automaticInvestmentState}=this.props;
+        const{itemToEdit,accountType}=this.state;
         let payload = {};
         const item=myInstance.getSavedAutomaticData();
-        if (this.props && this.props.automaticInvestmentState && item)
+        if (this.props && automaticInvestmentState && item)
         {
             let planJson=[];
-             let selected={id:this.state.itemToEdit==='-1'?'3':this.state.itemToEdit,
-                account:item.acc_name+"|"+item.acc_no ,
+             const selected={id:itemToEdit==='-1'?'3':itemToEdit,
+                account:`${item.accName}|${item.accNumber}` ,
                 totalAmount:item.totalFund,
                             fundFrom:item.fundFrom,investedIn:item.investedIn,
                             invest:item.valueTypeDropDown,dateToInvest:item.valueDateDropDown,
                             dateAdded:item.dateAdded,endDate:item.endDate,
-                            nextInvestementDate:item.nextInvestementDate
-                        }
+                            nextInvestementDate:item.nextInvestementDate,
+                            accountType
+                        };
             
-            switch ((this.state.accountType.toString())) {
+            switch ((accountType.toLowerCase())) {
                 case "general":
-                    if(this.props.automaticInvestmentState.general){
+                    if(automaticInvestmentState.general){
                             
-                            planJson=[...this.props.automaticInvestmentState.general];
-                            console.log('planJson*********',planJson)
-                            if(this.state.itemToEdit==='-1')
+                            planJson=[...automaticInvestmentState.general];
+                            if(itemToEdit==='-1')
                             {
                                 
                                 planJson.push(selected);
                             }
                             else{
-                                planJson[this.state.itemToEdit]=selected
-                                console.log('planJson***itemToEdit******',planJson)
+                                planJson[Number(itemToEdit)]=selected;
                             }
                             payload = {
-                                ...this.props.automaticInvestmentState,
+                                ...automaticInvestmentState,
                                 general:planJson
                             };
-                            console.log('payload*********',payload)
                             
                         }
                         else{
-                            let newObj = { "general" : selected}
-                            Object.assign(this.props.automaticInvestmentState,newObj)
+                            const newObj = { "general" : selected};
+                            Object.assign(automaticInvestmentState,newObj);
                             payload = {
-                                ...this.props.automaticInvestmentState,
+                                ...automaticInvestmentState,
                             };
                         }
                     
                     break;
                 case "ira":
-                    if(this.props.automaticInvestmentState.ira){
-                        planJson=[...this.props.automaticInvestmentState.ira];
-                            if(this.state.itemToEdit==='-1')
+                    if(automaticInvestmentState.ira){
+                        planJson=[...automaticInvestmentState.ira];
+                            if(itemToEdit==='-1')
                             {
                                 planJson.push(selected);
                             }
                             else{
-                                planJson[this.state.itemToEdit]=selected
+                                planJson[Number(itemToEdit)]=selected;
                                 
                             }
                             payload = {
-                                ...this.props.automaticInvestmentState,
+                                ...automaticInvestmentState,
                                 ira:planJson
                             };
                         
                     }
                     else{
-                        let newObj = { "ira" : selected}
-                        Object.assign(this.props.automaticInvestmentState,newObj)
+                        const newObj = { "ira" : selected};
+                        Object.assign(automaticInvestmentState,newObj);
                         payload = {
-                            ...this.props.automaticInvestmentState,
+                            ...automaticInvestmentState,
                         };
                     }
                     break;
                 case "utma":
-                    if(this.props.automaticInvestmentState.utma){
-                        planJson=[...this.props.automaticInvestmentState.utma];
-                        if(this.state.itemToEdit==='-1')
+                    if(automaticInvestmentState.utma){
+                        planJson=[...automaticInvestmentState.utma];
+                        if(itemToEdit==='-1')
                         {
                             planJson.push(selected);
                         }
                         else{
-                            planJson[this.state.itemToEdit]=selected
+                            planJson[Number(itemToEdit)]=selected;
                             
                         }
                         payload = {
-                            ...this.props.automaticInvestmentState,
+                            ...automaticInvestmentState,
                             utma:planJson
                         };
                         
                     }
                     else{
-                        let newObj = { "utma" : [selected]}
-                        Object.assign(this.props.automaticInvestmentState,newObj)
+                        const newObj = { "utma" : [selected]};
+                        Object.assign(automaticInvestmentState,newObj);
                         payload = {
-                            ...this.props.automaticInvestmentState,
+                            ...automaticInvestmentState,
                         };
                     }
                     break;
+                default:
+                    break;
         }
-        return payload;
+        // return payload;
 
     }
+    return payload;
 }
 
     navigationSubmit = () => {
-        if(this.state.acceptPolicy){
-            this.setState({errorTextMsg:''})
+        const{saveData}=this.props;
+        const{acceptPolicy}=this.state;
+        if(acceptPolicy){
+            this.setState({errorTextMsg:''});
             const payload = this.getPayload();
-            this.props.saveData("automaticInvestmentEsign", payload); 
+            saveData("automaticInvestmentEsign", payload); 
         }
         else
-            this.setState({errorTextMsg:'Please select the above checkbox'})
+            this.setState({errorTextMsg:'Please select the above checkbox'});
     }
-    navigationCancel=()=>this.props.navigation.goBack('automaticInvestment');
-    navigationBack = () => this.props.navigation.goBack();
+
+    navigationCancel=()=>{
+        const{navigation}=this.props;
+        navigation.goBack('automaticInvestment');
+    }
+
+    navigationBack = () => {
+        const{navigation}=this.props;
+        navigation.goBack();
+    }
+
+    navigatePdf = () => {
+        Linking.openURL(url);
+    }
 
     render() {
+        const{navigation}=this.props;
+        const{acceptPolicy,errorTextMsg}=this.state;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
-                <ScrollView style={{ flex: 0.85 }}>
-                    <Text style={styles.autoInvestHead}>{'Create Automatic Investment Plan'}</Text>
+                <GHeaderComponent navigation={navigation} />
+                <ScrollView style={styles.scrollViewStyle}>
+                    <Text style={styles.autoInvestHead}>Create Automatic Investment Plan</Text>
                     <View style={styles.seperator_line} />
                     <View style={styles.circle_view}>
                         <View style={styles.circle_Completed}>
-                            <Text style={styles.circleTextNew}>{'1'}</Text>
+                            <Text style={styles.circleTextNew}>1</Text>
                         </View>
                         <View style={styles.circle_connect} />
                         <View style={styles.circle_Completed}>
-                            <Text style={styles.circleTextNew}>{'2'}</Text>
+                            <Text style={styles.circleTextNew}>2</Text>
                         </View>
                         <View style={styles.circle_connect} />
                         <View style={styles.circle_Completed}>
-                            <Text style={styles.circleTextNew}>{'3'}</Text>
+                            <Text style={styles.circleTextNew}>3</Text>
                         </View>
                         <View style={styles.circle_connect} />
                         <View style={styles.circle_Completed}>
-                            <Text style={styles.circleText}>{'4'}</Text>
+                            <Text style={styles.circleText}>4</Text>
                         </View>
                         <View style={styles.circle_connect} />
                         <View style={styles.circle_Inprogress}>
-                            <Text style={styles.circleText}>{'5'}</Text>
+                            <Text style={styles.circleText}>5</Text>
                         </View>
                     </View>
 
                     <View style={styles.autoInvest_title_view}>
-                        <Text style={styles.autoInvest_title_text}>{'5 - E-sign'}</Text>
+                        <Text style={styles.autoInvest_title_text}>5 - E-sign</Text>
                     </View>
                     <View style={styles.body}>
                         <View style={styles.autoInvest_sub_title_view}>
-                            <Text style={styles.autoInvest_sub_title_text}>{'- E-Signature'}</Text>
+                            <Text style={styles.autoInvest_sub_title_text}>- E-Signature</Text>
 
                         </View>
                         <View style={styles.seperator_line} />
                         <View style={styles.esignBody}>
                             <View style={styles.esignBody1}>
-                                <Text style={styles.esignTitle}>{'Documents to Sign'}</Text>
+                                <Text style={styles.esignTitle}>Documents to Sign</Text>
                                 <View style={styles.seperator_line} />
-                                <Text style={styles.esignHeading} onPress={()=>{Linking.openURL(url);}}>{'USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES'}</Text>
-                                <Text style={styles.esignContent1}>{'This document contains the information provided by you as part of your automatic investment plan, including Terms and Conditions.'}</Text>
-                                <Text style={styles.esignContent2}>{'By selecting "Submit", I agree to the documents and terms above and certify that any information I provided is accurate, up-to-date and complete.'}</Text>
+                                <Text style={styles.esignHeading} onPress={this.navigatePdf}>USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES</Text>
+                                {/* <Text style={styles.esignHeading}>USSPX VCM 500 INDEX FUND MEMBER CLASS SHARES</Text> */}
+                                <Text style={styles.esignContent1}>This document contains the information provided by you as part of your automatic investment plan, including Terms and Conditions.</Text>
+                                <Text style={styles.esignContent2}>By selecting &quot;Submit&quot;, I agree to the documents and terms above and certify that any information I provided is accurate, up-to-date and complete.</Text>
                             </View>
                             
                             <View style={styles.esignBottomView}>
@@ -216,14 +238,14 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
                                     size={24}
                                     itemBottom={0}
                                     itemTop={0}
-                                    outerCicleColor={"#707070"}
-                                    innerCicleColor={"#2C8DBF"}
+                                    outerCicleColor="#707070"
+                                    innerCicleColor="#2C8DBF"
                                     labelStyle={styles.agreeTermsTxt}
-                                    label={'I, Agree that i have received, read, understood, and agree to the documents linked above.'}
-                                    selected={this.state.acceptPolicy}
+                                    label="I, Agree that i have received, read, understood, and agree to the documents linked above."
+                                    selected={acceptPolicy}
                                     onPress={this.onCheckBoxCheck}
                                 />
-                               <Text style={styles.errorText}>{this.state.errorTextMsg}</Text>
+                               <Text style={styles.errorText}>{errorTextMsg}</Text>
                             </View>
                         </View>
                         <GButtonComponent
@@ -254,11 +276,13 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
 AutomaticInvestmentPlanEsignComponent.propTypes = {
 
     navigation: PropTypes.instanceOf(Object),
+    automaticInvestmentState:PropTypes.instanceOf(Object),
     saveData:PropTypes.func
 };
 
 AutomaticInvestmentPlanEsignComponent.defaultProps = {
     navigation:{},
+    automaticInvestmentState:{},
     saveData:null
 };
 

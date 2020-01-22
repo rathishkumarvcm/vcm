@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import autoInvestmentAddComponent from './AutomaticInvestmentAddComponent';
-import { accOpeningActions,bankAccountAction } from "../../Shared/Actions";//addAutomaticInvestmentActions
+import { accOpeningActions,bankAccountAction } from "../../Shared/Actions";// addAutomaticInvestmentActions
 
 
 
@@ -13,7 +13,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   ...accOpeningActions,
-  //...addAutomaticInvestmentActions,
+  // ...addAutomaticInvestmentActions,
   ...bankAccountAction
   };
 

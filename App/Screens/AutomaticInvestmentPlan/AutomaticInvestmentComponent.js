@@ -25,38 +25,39 @@ const editDeleteJson = [
 class AutomaticInvestmentComponent extends Component {
     constructor(props) {
         super(props);
-        this.showDeletePopup=false;
-        this.selectedIndex= -1;
+        this.showDeletePopup = false;
+        this.selectedIndex = -1;
         this.state = {
-            
+
             expand: false,
             generalAutoInvestment: {},
             iraAutoInvestment: {},
             utmaAutoInvest: {},
-            arr_expand: [true, false, false],
+            arrExpand: [true, false, false],
             expandIndex: 0,
             refresh: false,
             popupIndex: -1,
-            
+
         };
     }
 
     componentDidMount() {
-        const{refresh} = this.state;
-        if (this.props && this.props.automaticInvestmentState) {
-            if (this.props.automaticInvestmentState.savedAccData) {
+        const { refresh } = this.state;
+        const { automaticInvestmentState } = this.props;
+        if (automaticInvestmentState) {
+            if (automaticInvestmentState.savedAccData) {
                 this.setState({
-                    generalAutoInvestment: this.props.automaticInvestmentState.savedAccData.general,
-                    iraAutoInvestment: this.props.automaticInvestmentState.savedAccData.ira,
-                    utmaAutoInvest: this.props.automaticInvestmentState.savedAccData.utma,
+                    generalAutoInvestment: automaticInvestmentState.savedAccData.general,
+                    iraAutoInvestment: automaticInvestmentState.savedAccData.ira,
+                    utmaAutoInvest: automaticInvestmentState.savedAccData.utma,
                     refresh: !refresh
                 });
             }
             else {
                 this.setState({
-                    generalAutoInvestment: this.props.automaticInvestmentState.general,
-                    iraAutoInvestment: this.props.automaticInvestmentState.ira,
-                    utmaAutoInvest: this.props.automaticInvestmentState.utma,
+                    generalAutoInvestment: automaticInvestmentState.general,
+                    iraAutoInvestment: automaticInvestmentState.ira,
+                    utmaAutoInvest: automaticInvestmentState.utma,
                     refresh: !refresh
                 });
             }
@@ -64,22 +65,23 @@ class AutomaticInvestmentComponent extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const{refresh} = this.state;
+        const { refresh } = this.state;
+        const { automaticInvestmentState } = this.props;
         if (this.props !== prevProps) {
-            if (this.props && this.props.automaticInvestmentState) {
-                if (this.props.automaticInvestmentState.savedAccData) {
+            if (automaticInvestmentState) {
+                if (automaticInvestmentState.savedAccData) {
                     this.setState({
-                        generalAutoInvestment: this.props.automaticInvestmentState.savedAccData.general,
-                        iraAutoInvestment: this.props.automaticInvestmentState.savedAccData.ira,
-                        utmaAutoInvest: this.props.automaticInvestmentState.savedAccData.utma,
+                        generalAutoInvestment: automaticInvestmentState.savedAccData.general,
+                        iraAutoInvestment: automaticInvestmentState.savedAccData.ira,
+                        utmaAutoInvest: automaticInvestmentState.savedAccData.utma,
                         refresh: !refresh
                     });
                 }
                 else {
                     this.setState({
-                        generalAutoInvestment: this.props.automaticInvestmentState.general,
-                        iraAutoInvestment: this.props.automaticInvestmentState.ira,
-                        utmaAutoInvest: this.props.automaticInvestmentState.utma,
+                        generalAutoInvestment: automaticInvestmentState.general,
+                        iraAutoInvestment: automaticInvestmentState.ira,
+                        utmaAutoInvest: automaticInvestmentState.utma,
                         refresh: !refresh
                     });
                 }
@@ -89,37 +91,42 @@ class AutomaticInvestmentComponent extends Component {
     }
 
     setCollapsableUpdates = index => () => {
-        const{arr_expand} =this.state;
-        const array = [...arr_expand]; 
-        const indexExpand = this.state.expandIndex;
+        const { arrExpand } = this.state;
+        const array = [...arrExpand];
+        const { expandIndex } = this.state;
+        const indexExpand = expandIndex;
         if (index !== indexExpand) {
             array[Number(indexExpand)] = false;
         }
         array[Number(index)] = !array[Number(index)];
-        this.setState({ arr_expand: array, expandIndex: index });
+        this.setState({ arrExpand: array, expandIndex: index });
     }
 
-    generateSelectedFunds= item => item.id;
+    generateSelectedFunds = item => item.id;
 
-    renderSelectedFunds =()=>({ item }) =>
-    (<View style={styles.editDropdown}>
-        <Text style={styles.editDropdownText}> {item.name} </Text>
-        <Text style={styles.editDropdownText}> {item.amount} </Text>
-     </View>)
+    renderSelectedFunds = () => ({ item }) =>
+        (
+            <View style={styles.editDropdown}>
+                <Text style={styles.editDropdownText}> {item.name} </Text>
+                <Text style={styles.editDropdownText}> {item.amount} </Text>
+            </View>
+        )
 
     generateEditDelete = item => item.id;
 
-    renderEditDeleteOption =()=>({ item, index }) =>
-    (
-    <TouchableOpacity style={styles.editDropdown}>
-        <Text style={styles.editDropdownText} onPress={this.navigationInvestmentEdit(index)}> {item.name} </Text>
-    </TouchableOpacity>
-     )
+    renderEditDeleteOption = () => ({ item, index }) =>
+        (
+            <TouchableOpacity style={styles.editDropdown}>
+                <Text style={styles.editDropdownText} onPress={this.navigationInvestmentEdit(index)}> {item.name} </Text>
+            </TouchableOpacity>
+        )
 
     generateKeyExtractor = item => item.id;
 
-    renderInvestment = () => ({ item, index }) =>
-        (
+    renderInvestment = () => ({ item, index }) => {
+
+        const { popupIndex } = this.state;
+        return (
 
             <View style={styles.flatHeader}>
 
@@ -128,23 +135,24 @@ class AutomaticInvestmentComponent extends Component {
                         <Text style={styles.flatHeaderValue}>{item.account}</Text>
                     </View>
                     <View style={styles.editMenu}>
-                        <TouchableOpacity onPress={this.editDelete(index,item.accountType)}>
+                        <TouchableOpacity onPress={this.editDelete(index, item.accountType)}>
                             <GIcon
                                 name="dots-vertical"
                                 type="material-community"
-                                size={30}
+                                size={20}
                             />
                         </TouchableOpacity>
                     </View>
                 </View>
 
                 {
-                    index === this.selectedIndex ?
+                    index === this.selectedIndex ? (
                         <FlatList style={styles.editFlatList}
                             data={editDeleteJson}
                             renderItem={this.renderEditDeleteOption()}
                             keyExtractor={this.generateEditDelete}
-                        /> : null}
+                        />
+                    ) : null}
 
                 <View style={styles.flatBody}>
 
@@ -154,15 +162,15 @@ class AutomaticInvestmentComponent extends Component {
                     </View>
 
                     {
-                        index === this.state.popupIndex ?
-                        
+                        index === popupIndex ? (
                             <FlatList style={styles.editFlatList}
                                 data={item.investedIn}
                                 renderItem={this.renderSelectedFunds()}
                                 keyExtractor={this.generateSelectedFunds}
-                            /> : null}
+                            />
+                        ) : null}
 
-                    <Text style={styles.flatBodyDate}>{`Date added ${ item.dateAdded}`}</Text>
+                    <Text style={styles.flatBodyDate}>{`Date added ${item.dateAdded}`}</Text>
                     <View style={styles.seperator_line} />
                     <View style={styles.verifyContentMain}>
                         <View style={styles.verifyContentMain}>
@@ -190,7 +198,7 @@ class AutomaticInvestmentComponent extends Component {
                                 buttonStyle={styles.skipButton}
                                 buttonText={globalString.common.skip}
                                 textStyle={styles.skipButtonText}
-                                onPress={this.navigationInvestmentVerify(index,item.accountType)}
+                                onPress={this.navigationInvestmentVerify(index, item.accountType)}
                             />
                         </View>
                     </View>
@@ -199,30 +207,33 @@ class AutomaticInvestmentComponent extends Component {
                 </View>
             </View>
 
-        )
+        );
 
-    editDelete = (index,type) => () => {
-        const{refresh} = this.state;
-        if(index === this.selectedIndex) {
-            this.selectedIndex= -1;
+    }
+
+    editDelete = (index, type) => () => {
+        const { refresh } = this.state;
+        if (index === this.selectedIndex) {
+            this.selectedIndex = -1;
             this.setState({
                 refresh: !refresh,
-                accountType:type,
+                accountType: type,
             });
         }
-        else{
-            this.selectedIndex= index;
+        else {
+            this.selectedIndex = index;
             this.setState({
                 refresh: !refresh,
-                accountType:type,
+                accountType: type,
             });
         }
 
     }
 
     popupInvestedIn = index => () => {
-        const{refresh} = this.state;
-        if(index === this.state.popupIndex)
+        const { refresh } = this.state;
+        const { popupIndex } = this.state;
+        if (index === popupIndex)
             this.setState({
                 popupIndex: -1,
                 refresh: !refresh
@@ -236,78 +247,87 @@ class AutomaticInvestmentComponent extends Component {
     }
 
     setStateUpdates = () => {
-        const{expand1} = this.state;
+        const { expand } = this.state;
         this.setState({
-            expand: !expand1,
+            expand: !expand,
         });
     }
 
-    deleteAccount=(option)=>()=>{
-        const{refresh} = this.state;
-        this.showDeletePopup=false;
+    deleteAccount = (option) => () => {
+        const { refresh } = this.state;
+        const { accountType } = this.state;
+        const { generalAutoInvestment } = this.state;
+        const { iraAutoInvestment } = this.state;
+        const { utmaAutoInvest } = this.state;
+        this.showDeletePopup = false;
         const indexDelete = this.selectedIndex;
-        this.selectedIndex=-1;
-        if(option)
-        {
+        this.selectedIndex = -1;
+        if (option) {
             let array;
-                switch (this.state.accountType.toLowerCase()) {
-                    case 'general':
-                        array = [...this.state.generalAutoInvestment];
-                        if (indexDelete !== -1) {
-                            array.splice(indexDelete, 1);
-                            this.setState({ generalAutoInvestment: array});
-                        }
-                        break;
-                    case 'ira':
-                        array = [...this.state.iraAutoInvestment];
-                        if (indexDelete !== -1) {
-                            array.splice(indexDelete, 1);
-                            this.setState({ iraAutoInvestment: array});
-                        }
-                        break;
-                    case 'utma':
-                        array = [...this.state.utmaAutoInvest];
-                        if (indexDelete !== -1) {
-                            array.splice(indexDelete, 1);
-                            this.setState({ utmaAutoInvest: array});
-                        }
-                        break;
-                    default:
-                        array = [...this.state.generalAutoInvestment];
-                        if (indexDelete !== -1) {
-                            array.splice(indexDelete, 1);
-                            this.setState({ generalAutoInvestment: array});
-                        }
-                        break;
+            switch (accountType.toLowerCase()) {
+                case 'general':
+                    array = [...generalAutoInvestment];
+                    if (indexDelete !== -1) {
+                        array.splice(indexDelete, 1);
+                        this.setState({ generalAutoInvestment: array });
+                    }
+                    break;
+                case 'ira':
+                    array = [...iraAutoInvestment];
+                    if (indexDelete !== -1) {
+                        array.splice(indexDelete, 1);
+                        this.setState({ iraAutoInvestment: array });
+                    }
+                    break;
+                case 'utma':
+                    array = [...utmaAutoInvest];
+                    if (indexDelete !== -1) {
+                        array.splice(indexDelete, 1);
+                        this.setState({ utmaAutoInvest: array });
+                    }
+                    break;
+                default:
+                    array = [...generalAutoInvestment];
+                    if (indexDelete !== -1) {
+                        array.splice(indexDelete, 1);
+                        this.setState({ generalAutoInvestment: array });
+                    }
+                    break;
 
-                }
+            }
         }
-        else{
-            this.setState({refresh:!refresh});
+        else {
+            this.setState({ refresh: !refresh });
         }
     }
 
-    deleteConfirm=()=> 
-    {
-        const{refresh} = this.state;
-        this.showDeletePopup=true;
-        this.setState({refresh:!refresh});
+    deleteConfirm = () => {
+        const { refresh } = this.state;
+        this.showDeletePopup = true;
+        this.setState({ refresh: !refresh });
     }
 
-    navigationBack = () => this.props.navigation.goBack();
+    navigationBack = () => {
+        const { navigation } = this.props;
+        navigation.goBack();
+    }
 
-    navigationInvestmentAccount = () =>
-        this.props.navigation.navigate({ routeName: 'automaticInvestmentAccount', key: 'automaticInvestmentAccount', params: { newEdit: false } });
+    navigationInvestmentAccount = () => {
+        const { navigation } = this.props;
+        navigation.navigate({ routeName: 'automaticInvestmentAccount', key: 'automaticInvestmentAccount', params: { newEdit: false } });
+    }
 
-    navigationInvestmentVerify = (index,type) => () => 
-    {
-        this.props.navigation.navigate({ routeName: 'automaticInvestmentVerify', key: 'automaticInvestmentVerify', params: { skip: true, indexSelected: index ,accountType: type} });
+    navigationInvestmentVerify = (index, type) => () => {
+        const { navigation } = this.props;
+        navigation.navigate({ routeName: 'automaticInvestmentVerify', key: 'automaticInvestmentVerify', params: { skip: true, indexSelected: index, accountType: type } });
     }
 
     navigationInvestmentEdit = (index) => () => {
+        const { accountType } = this.state;
+        const { navigation } = this.props;
         switch ((index)) {
             case 0:
-                this.props.navigation.navigate({ routeName: 'automaticInvestmentAdd', key: 'automaticInvestmentAdd', params: { option: index, ItemToEdit: this.selectedIndex, accountType: this.state.accountType} });
+                navigation.navigate({ routeName: 'automaticInvestmentAdd', key: 'automaticInvestmentAdd', params: { option: index, ItemToEdit: this.selectedIndex, accountType } });
                 break;
             case 1:
                 this.deleteConfirm();
@@ -319,40 +339,48 @@ class AutomaticInvestmentComponent extends Component {
     }
 
     render() {
-
+        const { expand, arrExpand, generalAutoInvestment, iraAutoInvestment, utmaAutoInvest, refresh } = this.state;
+        // const{arrExpand}=this.state;
+        // const{generalAutoInvestment}=this.state;
+        // const{iraAutoInvestment}=this.state;
+        // const{utmaAutoInvest}=this.state;
+        // const{refresh}=this.state;
+        const { navigation, automaticInvestmentState } = this.props;
         return (
 
             <View style={styles.container}>
 
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
 
-                {this.showDeletePopup?<View style={styles.bankInfoContainer}>
-                            <Text style={styles.accountNameHeaderText}>
-                                Delete Automatic Investment Plan
-                            </Text>
+                {this.showDeletePopup ? (
+                    <View style={styles.bankInfoContainer}>
+                        <Text style={styles.accountNameHeaderText}>
+                            Delete Automatic Investment Plan
+                        </Text>
 
-                            <Text style={styles.accountNameSubHeaderText}>
-                                Are you sure you want to delete selected Automatic Investment Plan
-                            </Text>
+                        <Text style={styles.accountNameSubHeaderText}>
+                            Are you sure you want to delete selected Automatic Investment Plan
+                        </Text>
 
-                            <View style={styles.confirmDeleteView}>
-                                <GButtonComponent
-                                    buttonStyle={styles.cancelBtn}
-                                    buttonText={globalString.common.cancel}
-                                    textStyle={styles.cancelBtnText}
-                                    onPress={this.deleteAccount(false)}
-                                />
-                                <GButtonComponent
-                                    buttonStyle={styles.deleteBtn}
-                                    buttonText={globalString.common.delete}
-                                    textStyle={styles.deleteBtnText}
-                                    onPress={this.deleteAccount(true)}
-                                />
-                            </View>
-                                      </View>:null}
+                        <View style={styles.confirmDeleteView}>
+                            <GButtonComponent
+                                buttonStyle={styles.cancelBtn}
+                                buttonText={globalString.common.cancel}
+                                textStyle={styles.cancelBtnText}
+                                onPress={this.deleteAccount(false)}
+                            />
+                            <GButtonComponent
+                                buttonStyle={styles.deleteBtn}
+                                buttonText={globalString.common.delete}
+                                textStyle={styles.deleteBtnText}
+                                onPress={this.deleteAccount(true)}
+                            />
+                        </View>
+                    </View>
+                ) : null}
 
                 <ScrollView style={styles.scrollStyle}>
-                
+
                     <TouchableWithoutFeedback onPress={this.editDelete(-1)}>
                         <View>
                             <View style={styles.headerView}>
@@ -364,113 +392,122 @@ class AutomaticInvestmentComponent extends Component {
                                 <View style={styles.seperator_line} />
                                 <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(0)}>
                                     <View style={styles.expandView}>
-                                        {this.state.arr_expand[0] ?
+                                        {arrExpand[0] ? (
                                             <GIcon
                                                 name="minus"
                                                 type="antdesign"
-                                                size={30}
-                                                color="#088ACC"
-                                            /> :
-                                            <GIcon
-                                                name="plus"
-                                                type="antdesign"
-                                                size={30}
-                                                color="#088ACC"
+                                                size={20}
+                                                color="#56565A"
                                             />
-                                        }
+                                        ) : (
+                                                <GIcon
+                                                    name="plus"
+                                                    type="antdesign"
+                                                    size={20}
+                                                    color="#56565A"
+                                                />
+                                            )}
                                         <Text style={styles.autoInvest_sub_title_text}>General Account</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <View style={styles.seperator_line} />
-                                {this.state.arr_expand[0] ?
+                                {arrExpand[0] ? (
                                     <FlatList
-                                        data={this.state.generalAutoInvestment}
+                                        data={generalAutoInvestment}
                                         renderItem={this.renderInvestment()}
                                         keyExtractor={this.generateKeyExtractor}
-                                        extraData={this.state.refresh}
-                                    /> : null}
+                                        extraData={refresh}
+                                    />
+                                ) : null}
 
                                 <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(1)}>
                                     <View style={styles.expandView}>
-                                        {this.state.arr_expand[1] ?
+                                        {arrExpand[1] ? (
                                             <GIcon
                                                 name="minus"
                                                 type="antdesign"
-                                                size={30}
-                                                color="#088ACC"
-                                            /> :
-                                            <GIcon
-                                                name="plus"
-                                                type="antdesign"
-                                                size={30}
-                                                color="#088ACC"
+                                                size={20}
+                                                color="#56565A"
                                             />
-                                        }
+                                        ) : (
+                                                <GIcon
+                                                    name="plus"
+                                                    type="antdesign"
+                                                    size={20}
+                                                    color="#56565A"
+                                                />
+                                            )}
                                         <Text style={styles.autoInvest_sub_title_text}>IRA Account</Text>
                                     </View>
                                 </TouchableOpacity>
                                 <View style={styles.seperator_line} />
-                                {this.state.arr_expand[1] ?
+                                {arrExpand[1] ? (
                                     <FlatList
-                                        data={this.state.iraAutoInvestment}
+                                        data={iraAutoInvestment}
                                         renderItem={this.renderInvestment()}
                                         keyExtractor={this.generateKeyExtractor}
-                                        extraData={this.state.refresh}
-                                    /> : null}
+                                        extraData={refresh}
+                                    />
+                                ) : null}
 
-                                {this.props.automaticInvestmentState.utma ? <View>
-                                    <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(2)}>
-                                        <View style={styles.expandView}>
-                                            {this.state.arr_expand[2] ?
-                                                <GIcon
-                                                    name="minus"
-                                                    type="antdesign"
-                                                    size={30}
-                                                    color="#088ACC"
-                                                /> :
-                                                <GIcon
-                                                    name="plus"
-                                                    type="antdesign"
-                                                    size={30}
-                                                    color="#088ACC"
-                                                />
-                                            }
-                                            <Text style={styles.autoInvest_sub_title_text}>UTMA Account</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                    <View style={styles.seperator_line} />
-                                    {this.state.arr_expand[2] ?
-                                        <FlatList
-                                            data={this.state.utmaAutoInvest}
-                                            renderItem={this.renderInvestment()}
-                                            keyExtractor={this.generateKeyExtractor}
-                                            extraData={this.state.refresh}
-                                        /> : null}
-                                                                            </View> : null}
+                                {automaticInvestmentState.utma ? (
+                                    <View>
+                                        <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(2)}>
+                                            <View style={styles.expandView}>
+                                                {arrExpand[2] ? (
+                                                    <GIcon
+                                                        name="minus"
+                                                        type="antdesign"
+                                                        size={20}
+                                                        color="#56565A"
+                                                    />
+                                                ) : (
+                                                        <GIcon
+                                                            name="plus"
+                                                            type="antdesign"
+                                                            size={20}
+                                                            color="#56565A"
+                                                        />
+                                                    )}
+                                                <Text style={styles.autoInvest_sub_title_text}>UTMA Account</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                        <View style={styles.seperator_line} />
+                                        {arrExpand[2] ? (
+                                            <FlatList
+                                                data={utmaAutoInvest}
+                                                renderItem={this.renderInvestment()}
+                                                keyExtractor={this.generateKeyExtractor}
+                                                extraData={refresh}
+                                            />
+                                        ) : null}
+                                    </View>
+                                ) : null}
 
 
 
                                 <View style={styles.instructionView}>
                                     <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setStateUpdates}>
                                         <View style={styles.expandView}>
-                                            {this.state.expand ?
+                                            {expand ? (
                                                 <GIcon
                                                     name="minus"
                                                     type="antdesign"
-                                                    size={30}
-                                                    color="#088ACC"
-                                                /> :
-                                                <GIcon
-                                                    name="plus"
-                                                    type="antdesign"
-                                                    size={30}
-                                                    color="#088ACC"
+                                                    size={20}
+                                                    color="#56565A"
                                                 />
-                                            }
+                                            ) : (
+                                                    <GIcon
+                                                        name="plus"
+                                                        type="antdesign"
+                                                        size={20}
+                                                        color="#56565A"
+                                                    />
+                                                )}
                                             <Text style={styles.addInvestFooterTitle}>Instructions to Setup and manage Automatic Mutual Fund Purchases</Text>
                                         </View>
                                     </TouchableOpacity>
-                                    {this.state.expand ?
+                                    {expand ? (
                                         <View>
                                             <Text style={styles.addInvestFooterText}>Setup and manage Automatic Mutual Fund Purchases</Text>
                                             <Text style={styles.addInvestFooterText}>When you make a habit of investing regularly, it can make it easier to achieve your financial goals. Get started in three easy steps</Text>
@@ -478,9 +515,10 @@ class AutomaticInvestmentComponent extends Component {
                                             <Text style={styles.addInvestFooterList}>Enter an amount of $50 or more</Text>
                                             <Text style={styles.addInvestFooterList}>Select how often you want to invest</Text>
                                             <Text style={styles.addInvestFooterText}>There are no fees to setup an automatic investment and if your plans change, you can cancel at any time.</Text>
-                                            <Text style={styles.addInvestFooterText}>{'For IRA accounts the annual contribution limit for 2019 is $6,000 or $7,000 if you are over age 50. '}</Text>
-                                            <Text style={styles.addInvestFooterText}>{'Note: If you don\'t see your account below, you may need to use our Transfer Funds Tool.'}</Text>
+                                            <Text style={styles.addInvestFooterText}>For IRA accounts the annual contribution limit for 2019 is $6,000 or $7,000 if you are over age 50.</Text>
+                                            <Text style={styles.addInvestFooterText}>Note: If you don&apos;t see your account below, you may need to use our Transfer Funds Tool.</Text>
                                         </View>
+                                    )
                                         : null}
                                 </View>
                                 <GButtonComponent
@@ -503,12 +541,12 @@ class AutomaticInvestmentComponent extends Component {
 AutomaticInvestmentComponent.propTypes = {
 
     navigation: PropTypes.instanceOf(Object),
-    automaticInvestmentState:PropTypes.instanceOf(Object),
+    automaticInvestmentState: PropTypes.instanceOf(Object),
 };
 
 AutomaticInvestmentComponent.defaultProps = {
-    navigation:{},
-    automaticInvestmentState:{}
+    navigation: {},
+    automaticInvestmentState: {}
 };
 
 export default AutomaticInvestmentComponent;

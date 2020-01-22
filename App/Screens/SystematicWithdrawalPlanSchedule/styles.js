@@ -1,11 +1,9 @@
-import { StyleSheet,Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 import { scaledHeight,scaledWidth} from '../../Utils/Resolution';
-//import { Colors } from "react-native/Libraries/NewAppScreen";
-
-const {width} = Dimensions.get('window');
 
 
 export const styles = StyleSheet.create({
+    scrollStyle:{ flex: 0.85 },
     container:{
         flex:1,
         backgroundColor:'#F7FAFF',
@@ -106,6 +104,19 @@ export const styles = StyleSheet.create({
         borderTopColor:'#C1C1C1',
        
     },
+    twiceAMonth:{
+        flex:0.5,width:'100%',marginRight:scaledWidth(20)
+    },
+    monthly:
+    {width:'100%'},
+    selectSchedule:
+    {flexDirection:'row',flex:1},
+    selectTwiceMonth:
+    {flex:0.5,width:'100%'},
+    selectBegin:
+    { width: scaledWidth(130),marginRight:scaledWidth(20) },
+    selectBeginYear:
+    { width: scaledWidth(150) },
     financialTextLabel: {
         color: '#333333DE', 
         fontSize: scaledHeight(18), 
