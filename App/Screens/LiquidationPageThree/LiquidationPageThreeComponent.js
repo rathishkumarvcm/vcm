@@ -428,6 +428,12 @@ class LiquidationPageThreeComponent extends Component {
         const { fundingSource, taxAccountingMethodData, ammend } = this.state;
         const { saveData, navigation } = this.props;
         const { navigate } = navigation;
+        let paymentMethod = "";
+        if(fundingSource.checkOrderSelected){
+            paymentMethod = "01";
+        }else{
+            paymentMethod = "05";
+        }
         const payloadData = {
             saveLiquidationSelectedData: {
                 ...savedData,
@@ -437,6 +443,7 @@ class LiquidationPageThreeComponent extends Component {
                     "bankAccountName": fundingSource.selectedBankAccountName,
                     "taxWithHoldingOption": taxAccountingMethodData.taxHoldingOption,
                     "requestedAmountType": taxAccountingMethodData.requestedAmountType,
+                    "PaymentMethod": paymentMethod,
                     "amountBeforeTaxes": taxAccountingMethodData.amountBeforeTaxes,
                     "amountAfterTaxes": taxAccountingMethodData.amountAfterTaxes,
                     "federalTaxInPerc": taxAccountingMethodData.federalTax,
@@ -598,6 +605,8 @@ class LiquidationPageThreeComponent extends Component {
                             <View>
                                 <View style={styles.flex2}>
                                     <Text style={styles.fundSourceContent}>{gblStrings.liquidation.taxAccountingMethodContext}</Text>
+                                    <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.currentMethod}</Text>
+                                    <Text style={styles.fundSourceContent}>{gblStrings.liquidation.averageCostBasis}</Text>
                                 </View>
 
                                 {/* -----------------------------Tax Accounting Method ends here ------------------------*/}
