@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',       
         marginLeft:'10%',
         marginRight:'10%',
-        marginTop:scaledHeight(28),
+        marginTop:scaledHeight(35),
         width:'80%',          
      },
     cancelButtonText:{
@@ -49,10 +49,10 @@ const styles = StyleSheet.create({
         fontWeight:'bold'
     },
     confirmationText:{
-        color: '#707070',
-        fontSize: scaledHeight(14),       
+        color: '#56565A',
+        fontSize: scaledHeight(16),       
         fontWeight:'bold',
-        marginTop: scaledHeight(12)
+        marginTop: scaledHeight(12),            
     },      
     container: {
         backgroundColor: '#F7FAFF',
@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
         marginLeft: '4%',
         marginRight:'4%',
         paddingBottom:scaledHeight(14),
-        paddingTop:scaledHeight(14),               
+        paddingTop:scaledHeight(14),   
+        marginBottom:scaledHeight(20)
     },
     generalDocumentDisclaimerViewFaq: {       
         color: '#2A92EE',
@@ -95,18 +96,20 @@ const styles = StyleSheet.create({
         opacity:.75
     },
     lineBorder: {       
-        borderColor: '#EBEDEF',          
-        borderWidth: 0.6,       
-        marginBottom: scaledHeight(18),       
-        marginTop: scaledHeight(18),       
+        borderColor: '#707070',          
+        borderWidth: 0.4,       
+        marginBottom: scaledHeight(5),       
+        marginTop: scaledHeight(5),       
     },
     radioBtnGrp:{
+        flexDirection:"row", 
         flexGrow:1,         
         marginTop:scaledHeight(14)   
     },
     radioBtnGrpConfirm:{        
         flexDirection:"row", 
-        width:'30%',       
+        width:'30%',  
+        marginTop:scaledHeight(25)     
     },
     saveButton:{
         alignItems:'center',
@@ -160,43 +163,39 @@ const styles = StyleSheet.create({
         paddingRight: '4%',    
     },
     taxDocumentAlertsContent: {
-        color: '#707070',
-        fontSize: scaledHeight(14),       
+        color: '#56565A',
+        fontSize: scaledHeight(16),       
         fontWeight:'bold',
         marginTop: scaledHeight(5)
     },
     taxDocumentHeaderViewTitle: {
-        color: '#707070',
-        fontSize: scaledHeight(16),
-        marginLeft: '3%',       
+        color: '#56565A',
+        fontSize: scaledHeight(18),
+        fontWeight:'bold',          
     },
-    taxDocumentHeaderview: {
-        alignItems: 'center',
-        backgroundColor: '#F1F1F2',
-        flexDirection: 'row',
-        paddingBottom:scaledHeight(14),
-        paddingLeft: '2%',
+    taxDocumentHeaderview: {      
+        // backgroundColor: '#F1F1F2',       
+        paddingBottom:scaledHeight(14),       
         paddingTop:scaledHeight(14),
         width: '100%',
     },
      taxDocumentcontainer: { 
-        backgroundColor: '#FFFFFF',
-        borderColor: '#EBEDEF',      
-        borderWidth: 0.5,
+        // backgroundColor: '#FFFFFF',
+        // borderColor: '#EBEDEF',      
+        // borderWidth: 0.5,
         marginLeft: '4%',       
         marginRight: '4%',       
-        marginTop: scaledHeight(18),
-        width: '92%',
+        marginTop: scaledHeight(18),        
     },
     taxDocumentcontainerBottom: {       
         backgroundColor: '#FFFFFF',
-        borderColor: '#EBEDEF',
-        borderTopWidth:0.5,
+        borderColor: '#EBEDEF',       
         borderWidth: 1,      
         marginLeft: '4%',       
         marginRight: '4%',
-        padding:'4%',
-        width: '92%'
+        paddingHorizontal:'6%', 
+        paddingVertical:scaledHeight(20),       
+        marginTop: scaledHeight(20)
     },
      tooltipContainer:{                               
         marginLeft:'8%', 

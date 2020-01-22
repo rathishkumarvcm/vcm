@@ -154,14 +154,14 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
 
                     <View style={styles.settingsInfoHead}>
                         <Text style={styles.settingsInfoHeadTilte}>
-                            {gblStrings.settingAccountMessaging.generalDocumentsTitle}
+                            {gblStrings.settingAccountMessaging.generalDocumentsHeadTitle}
                         </Text>
                         <Text style={styles.settingsInfo}>
                             {gblStrings.settingAccountMessaging.accountMessagingGeneralTitleDesc}
                         </Text>
                     </View>                 
                     
-                    <View style={styles.alertsForDocumentsContainer}>
+                    {/* <View style={styles.alertsForDocumentsContainer}>
                         <Text style={styles.alertsForDocumentTitle}>
                             {gblStrings.settingAccountMessaging.accountMessagingGeneralAlertForDocument}
                         </Text>
@@ -177,27 +177,28 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                 {gblStrings.settingAccountMessaging.accountMessagingGeneralAlertNoAlerts}
                             </Text>
                         </View>
-                    </View>
+                    </View> */}
 
                     <View style={styles.taxDocumentcontainer}>
                         <View style={styles.taxDocumentHeaderview}>
-                            <GIcon
+                            {/* <GIcon
                                 name="minus"
                                 type="antdesign"
                                 size={30}
                                 color="#088ACC"
-                            />
+                            /> */}
                             <Text style={styles.taxDocumentHeaderViewTitle}>
                                 {gblStrings.settingAccountMessaging.accountMessagingGeneralTaxDocuments}
                             </Text>
                         </View>
+                        <View style={styles.lineBorder} />
                     </View>   
                     <View style={styles.taxDocumentcontainerBottom}> 
                         <Text style={styles.taxDocumentAlertsContent}>
                             {gblStrings.settingAccountMessaging.accountMessagingGeneralHowLike}
                         </Text> 
 
-                        <View style={styles.radioBtnGrp}>
+                        <View style={styles.radioBtnGrpConfirm}>
                             {
                                 documentsTypes.map((item) => {
                                 return (
@@ -216,11 +217,11 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                             selected={!!((selectedTaxDocumentsItemID !== "" && item.key === selectedTaxDocumentsItemID))}
                                             onPress={this.onSelected(item,'taxDocuments')}
                                         />
-                                        {
+                                        {/* {
                                         (selectedTaxDocumentsItemID !== "" && (item.key === selectedTaxDocumentsItemID && item.key === 'online')) ? 
                                             this.renderToolTip()
                                         : null
-                                        }                                 
+                                        }                                  */}
                                     </View>                                   
                                 );                                
                             })}
@@ -252,7 +253,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                         </View>
                     </View>
 
-                    <View style={styles.taxDocumentcontainer}>
+                    {/* <View style={styles.taxDocumentcontainer}>
                         <View style={styles.taxDocumentHeaderview}>
                             <GIcon
                                 name="minus"
@@ -333,7 +334,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                     );
                                 })}
                             </View>                          
-                    </View>
+                    </View> */}
 
                         <View style={styles.generalDocumentDisclaimerView}>                                                           
                             <Text style={styles.generalDocumentDisclaimerViewTitle}>

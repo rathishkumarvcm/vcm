@@ -787,7 +787,8 @@ export default {
         goalTitleDesc: "Lorem Ipsum has been the industrys standard dummy text ever since the 1500s",
         adviceTitle: "Advice",
         adviceTitleDesc: "Lorem Ipsum has been the industrys standard dummy text ever since the 1500s",
-        generalDocumentsTitle: "General Documents",
+        generalDocumentsTitle: "Tax Documents",
+        generalDocumentsHeadTitle: "General Account Preferences",
         generalDocumentsTitleDesc: "Lorem Ipsum has been the industrys standard dummy text ever since the 1500s",
         securityAndFraudAlertsTitle: "Security And Fraud Alerts",
         securityAndFraudAlertsTitleDesc: "Lorem Ipsum has been the industrys standard dummy text ever since the 1500s",
@@ -838,12 +839,12 @@ export default {
         accountMessagingAdviceLeavingMilitary: "Leaving the Military",
 
         //  Title and Title Descriptions Settings > Account Messaging > General Documents
-        accountMessagingGeneralArrow: ">     General Documents",
+        accountMessagingGeneralArrow: ">     Tax Documents",
         accountMessagingGeneralTitleDesc: "Lorem Ipsum is dummy text of the typesetting industry.",
         accountMessagingGeneralAlertForDocument: "Alerts for All Documents",
         accountMessagingGeneralAlertNoAlerts: "There are no alerts available for Documents",
         accountMessagingGeneralTaxDocuments: "Tax Documents",
-        accountMessagingGeneralHowLike: "How would you like to receive documents for all tax accounts?",
+        accountMessagingGeneralHowLike: "How would you like to receive tax documents for all accounts?",
         accountMessagingGeneralWouldLike: "Would you like all of your other documents from VCM Delivered the same way?",
         accountMessagingGeneralHowLikeGeneral: "How would you like to receive documents for all general accounts?",
         accountMessagingGeneralAnnualReport: "Annual Reports",
