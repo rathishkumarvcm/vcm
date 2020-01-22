@@ -47,7 +47,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
     }
 
     navigateDividentsForAccount = (item) => {
-        this.updateShowRequestOption(item.accountType, false, item.Id);
+        this.updateShowRequestOption(item.accountType, item.Id);
         const { navigation } = this.props;
        navigation.navigate('dividentsForAccount', {
             accountName: item.accountName,
@@ -185,7 +185,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
         }
     }
 
-    updateShowRequestOption = (fromView, showRequestOption, itemId) => {
+    updateShowRequestOption = (fromView, itemId) => {
         let tmpData = {};
         switch (fromView) {            
             case 'General Account': {
@@ -193,7 +193,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                 tmpData = generalAccount;
                 tmpData.map((item, i) => {
                     if (item.Id === itemId) {
-                        tmpData[i].showRequestOption = showRequestOption;
+                        const tmpOption = !tmpData[i].showRequestOption;
+                        tmpData[i].showRequestOption = tmpOption;
                     }
                 });
                 this.setState({ generalAccount: tmpData });
@@ -205,7 +206,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                 tmpData = iraAccount;
                 tmpData.map((item, i) => {
                     if (item.Id === itemId) {
-                        tmpData[i].showRequestOption = showRequestOption;
+                        const tmpOption = !tmpData[i].showRequestOption;
+                        tmpData[i].showRequestOption = tmpOption;
                     }
                 });
                 this.setState({ iraAccount: tmpData });
@@ -217,7 +219,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                 tmpData = utmaAccount;
                 tmpData.map((item, i) => {
                     if (item.Id === itemId) {
-                        tmpData[i].showRequestOption = showRequestOption;
+                        const tmpOption = !tmpData[i].showRequestOption;
+                        tmpData[i].showRequestOption = tmpOption;
                     }
                 });
                 this.updateStateChanged();
@@ -520,7 +523,7 @@ const ViewAccountItem = (props) => {
                     {`${item.accountName}`}
                 </Text>
 
-                <TouchableOpacity style={styles.editInfo} key={item.Id} onPress={() => props.updateShowRequestOption(item.accountType, true, item.Id)}>
+                <TouchableOpacity style={styles.editInfo} key={item.Id} onPress={() => props.updateShowRequestOption(item.accountType, item.Id)}>
                     <GIcon
                         name="dots-vertical"
                         type="material-community"

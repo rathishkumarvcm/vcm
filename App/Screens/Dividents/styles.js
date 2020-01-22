@@ -380,14 +380,18 @@ export const styles = StyleSheet.create({
     requestBtn: {
         position: 'absolute',
         borderColor: '#FFFFFF',
-        marginLeft: '36%',
-        marginRight: '8%',
+        marginLeft: '50%',
+        marginRight: '4%',
         marginTop: scaledHeight(45),
         borderRadius: scaledHeight(1),
         height: scaledHeight(50),
+        width: '40%',
         backgroundColor: '#FFFFFF',
         paddingHorizontal: '4%',
-        zIndex: 5
+        elevation: 6,
+        shadowColor: '#00000029',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 1.0,
     },
     linkBreak2: {
         backgroundColor: '#9DB4CE',

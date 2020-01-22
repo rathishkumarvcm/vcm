@@ -38,7 +38,7 @@ class CheckBookComponent extends Component {
 
     getKey = (item) => item.Id
 
-    updateShowRequestOption = (fromView, showRequestOption, itemId) => () => {
+    updateShowRequestOption = (fromView, itemId) => {
         let tmpData = [];
         const { generalAccount } = this.state;
         const { iraAccount } = this.state;
@@ -49,7 +49,8 @@ class CheckBookComponent extends Component {
                 tmpData = generalAccount;
                 tmpData.map((item, index) => {
                     if (item.Id === itemId) {
-                        tmpData[index].showRequestOption = showRequestOption;
+                        const tmpVal = tmpData[index].showRequestOption;
+                        tmpData[index].showRequestOption = !tmpVal;
                     }
                 });
                 this.updateStateChanged();
@@ -59,7 +60,8 @@ class CheckBookComponent extends Component {
                 tmpData = iraAccount;
                 tmpData.map((item, index) => {
                     if (item.Id === itemId) {
-                        tmpData[index].showRequestOption = showRequestOption;
+                        const tmpVal = tmpData[index].showRequestOption;
+                        tmpData[index].showRequestOption = !tmpVal;
                     }
                 });
                 this.updateStateChanged();
@@ -69,7 +71,8 @@ class CheckBookComponent extends Component {
                 tmpData = utmaAccount;
                 tmpData.map((item, index) => {
                     if (item.Id === itemId) {
-                        tmpData[index].showRequestOption = showRequestOption;
+                        const tmpVal = tmpData[index].showRequestOption;
+                        tmpData[index].showRequestOption = !tmpVal;
                     }
                 });
                 this.updateStateChanged();
@@ -82,7 +85,7 @@ class CheckBookComponent extends Component {
 
     navigatePlaceCheckBookOrder = (fromView, item) => () => {
         this.updateIsScuccess(true);
-        this.updateShowRequestOption(fromView, false, item.Id);
+        this.updateShowRequestOption(fromView, item.Id);
         const { navigation } = this.props;
         navigation.navigate('checkBookPlaceOrder', {
             accountName: item.AccountName,
@@ -115,7 +118,7 @@ class CheckBookComponent extends Component {
                     {`${item.AccountName}`}
                 </Text>
 
-                <TouchableOpacity style={styles.editInfo} key={item.Id} onPress={this.updateShowRequestOption(fromView, true, item.Id)}>
+                <TouchableOpacity style={styles.editInfo} key={item.Id} onPress={() => this.updateShowRequestOption(fromView, item.Id)}>
                     <GIcon
                         name="dots-vertical"
                         type="material-community"
@@ -124,21 +127,11 @@ class CheckBookComponent extends Component {
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.accountName}>
+            <View style={styles.accountNumber}>
                 <Text style={styles.accountNameText}>
                     {`Account Number ${item.AccountNumber}`}
                 </Text>
             </View>
-
-            {item.showRequestOption && (
-                <GButtonComponent
-                    buttonStyle={styles.requestBtn}
-                    buttonText="Checkbook Request"
-                    textStyle={styles.requestButtonText}
-                    onPress={this.navigatePlaceCheckBookOrder(fromView, item)}
-                />
-            )}
-
 
             {(item.CheckBookRequestedOn != null) && (
                 <>
@@ -149,6 +142,16 @@ class CheckBookComponent extends Component {
                     </Text>
                 </>
             )}
+
+            {item.showRequestOption && (
+                <GButtonComponent
+                    buttonStyle={styles.requestBtn}
+                    buttonText="Checkbook Request"
+                    textStyle={styles.requestButtonText}
+                    onPress={this.navigatePlaceCheckBookOrder(fromView, item)}
+                />
+            )}
+            
         </View>
     );
 
@@ -225,13 +228,13 @@ class CheckBookComponent extends Component {
                                             <GIcon
                                                 name="plus"
                                                 type="antdesign"
-                                                size={22}
+                                                size={18}
                                             />
                                         ) : (
                                                 <GIcon
                                                     name="minus"
                                                     type="antdesign"
-                                                    size={22}
+                                                    size={18}
                                                 />
                                             )}
                                     </View>
@@ -267,13 +270,13 @@ class CheckBookComponent extends Component {
                                             <GIcon
                                                 name="plus"
                                                 type="antdesign"
-                                                size={22}
+                                                size={18}
                                             />
                                           ) : (
                                             <GIcon
                                                 name="minus"
                                                 type="antdesign"
-                                                size={22}
+                                                size={18}
                                             />
                                           )}
                                     </View>
@@ -309,13 +312,13 @@ class CheckBookComponent extends Component {
                                             <GIcon
                                                 name="plus"
                                                 type="antdesign"
-                                                size={22}
+                                                size={18}
                                             />
                                         ) : (
                                                 <GIcon
                                                     name="minus"
                                                     type="antdesign"
-                                                    size={22}
+                                                    size={18}
                                                 />
                                             )}
                                     </View>
