@@ -266,7 +266,7 @@ export default {
         address: "Address",
         phoneType: "Phone Type",
         phoneNo: "Phone Number",
-        phoneNoFormat: "******1234",
+        phoneNoFormat: "12346789",
         emailAddress: "Email Address",
         socialSecurityNo: "Social Security Number",
         ssnNoFormat: "**********",

@@ -106,7 +106,7 @@ class OpenAccPageSixComponent extends Component {
             if (accOpeningData[submitResKey]) {
                 if (accOpeningData[submitResKey] !== prevProps.accOpeningData[submitResKey]) {
                     const tempResponse = accOpeningData[submitResKey];
-                    if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
+                   /* if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
                         const msg = `${tempResponse.message}  :${tempResponse.accountId}`;
                         AppUtils.debugLog(`Account Created ::: :: ${msg}`);
                         showAlert(gblStrings.common.appName, msg, gblStrings.common.ok);
@@ -117,7 +117,11 @@ class OpenAccPageSixComponent extends Component {
                         AppUtils.debugLog(`Account Created failed::: :: ${tempResponse.message}`);
                         showAlert(gblStrings.common.appName, tempResponse.message, gblStrings.common.ok);
                         myInstance.setAccOpeningEditMode(false);
-                    }
+                    } */
+
+                        showAlert(gblStrings.common.appName, "Your application is successfully submited and Waiting for MSR Review ", gblStrings.common.ok);
+                        myInstance.setAccOpeningEditMode(false);
+                        goBack('termsAndConditions');
                 }
             }
         }
