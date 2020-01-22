@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
 
- const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     accountFlex: {
         borderColor: '#9DB4CE',
         borderWidth: scaledHeight(1),
@@ -112,6 +112,13 @@ import { scaledHeight } from '../../Utils/Resolution';
         height: scaledHeight(45),
         width: scaledHeight(43),
     },
+    blackTextBold16: {
+        color: '#333333DE',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        height: scaledHeight(19),
+        marginTop: scaledHeight(13)
+    },
     blackTextBold16px: {
         color: '#333333DE',
         fontSize: scaledHeight(16),
@@ -141,7 +148,7 @@ import { scaledHeight } from '../../Utils/Resolution';
         flex: 1,
         width: '100%'
     },
-    
+
     dollarSkin: {
         color: '#333333DE',
         fontSize: scaledHeight(16),
@@ -157,10 +164,10 @@ import { scaledHeight } from '../../Utils/Resolution';
         paddingLeft: '0%',
         width: "100%",
     },
-    dropDownText:{
+    dropDownText: {
         marginLeft: "0%",
-        paddingLeft: "2%", 
-        width: "98%", 
+        paddingLeft: "2%",
+        width: "98%",
     },
     emptyFlex: {
         height: scaledHeight(50)
@@ -225,11 +232,16 @@ import { scaledHeight } from '../../Utils/Resolution';
         fontSize: scaledHeight(14),
         marginTop: scaledHeight(21),
     },
-    
+
     greyText14pxRegular: {
         color: '#56565A',
         fontSize: scaledHeight(14),
         padding: "2%"
+    },
+    greyTextRegular14px: {
+        color: '#54565B',
+        fontSize: scaledHeight(14),
+        marginTop: scaledHeight(13),
     },
     headerFlex: {
         flexDirection: 'row',

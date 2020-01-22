@@ -605,8 +605,8 @@ class LiquidationPageThreeComponent extends Component {
                             <View>
                                 <View style={styles.flex2}>
                                     <Text style={styles.fundSourceContent}>{gblStrings.liquidation.taxAccountingMethodContext}</Text>
-                                    <Text style={styles.blackTextBold16px}>{gblStrings.liquidation.currentMethod}</Text>
-                                    <Text style={styles.fundSourceContent}>{gblStrings.liquidation.averageCostBasis}</Text>
+                                    <Text style={styles.blackTextBold16}>{gblStrings.liquidation.currentMethod}</Text>
+                                    <Text style={styles.greyTextRegular14px}>{gblStrings.liquidation.averageCostBasis}</Text>
                                 </View>
 
                                 {/* -----------------------------Tax Accounting Method ends here ------------------------*/}

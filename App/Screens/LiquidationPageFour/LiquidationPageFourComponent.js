@@ -131,7 +131,7 @@ class LiquidationPageFourComponent extends Component {
     }
 
     submitButtonAction = () => {
-        const { navigation,ammendActions} = this.props;
+        const { navigation,ammendActions,saveData } = this.props;
         const { navigate } = navigation;
         const { ammend,ammendData,ammendIndex } = this.state;
         const date = new Date().getDate();
@@ -190,6 +190,28 @@ class LiquidationPageFourComponent extends Component {
             };
             menuList.push(payloadData);
             ammendActions(menuList);
+
+            const liquidationData = {
+                    "saveLiquidateFundsData": {
+                        "customerId": "45435",
+                        "CompanyNumber": "591",
+                        "FundNumber": selectedFundData.FundNumber,
+                        "AccountNumber": savedData.selectedAccountData.accountNumber,
+                        "TypeValueReq": selectedFundData.TypeValueReq,
+                        "liquidateAmount": selectedFundData.sellingAmount,
+                        "PaymentMethod": savedData.selectedFundWithdrawalData.PaymentMethod,
+                        "TaxWithholdingCode": "P",
+                        "AmountBeforeTaxes": savedData.selectedFundWithdrawalData.amountBeforeTaxes,
+                        "AmountAfterTaxes": savedData.selectedFundWithdrawalData.amountAfterTaxes,
+                        "FederalTax": savedData.selectedFundWithdrawalData.federalTaxInPerc,
+                        "StateTax": savedData.selectedFundWithdrawalData.stateTaxInPerc,
+                        "TotalTaxestobewithhold": savedData.selectedFundWithdrawalData.totalTaxToBeWithHold,
+                        "Totalyouwillreceive": savedData.selectedFundWithdrawalData.totalYouWillReceive,
+                        "TotalWithdrawal": savedData.selectedFundWithdrawalData.totalWithdrawal
+                    },
+            };
+            saveData(liquidationData);
+
             navigate('LiquidationFinish', { orderId: orderId });
         }
 
@@ -396,12 +418,14 @@ LiquidationPageFourComponent.propTypes = {
     liquidationInitialState: PropTypes.instanceOf(Object),
     amendReducerData: PropTypes.instanceOf(Object),
     ammendActions: PropTypes.func,
+    saveData: PropTypes.func,
 };
 
 LiquidationPageFourComponent.defaultProps = {
-    navigation: {},
-    liquidationInitialState: {},
-    amendReducerData: {},
-    ammendActions: () => { }
+    navigation:{},
+    liquidationInitialState:{},
+    amendReducerData:{},
+    ammendActions:()=>{},
+    saveData:()=>{},
 };
 export default LiquidationPageFourComponent;
