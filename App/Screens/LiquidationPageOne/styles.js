@@ -124,6 +124,10 @@ import { scaledHeight } from '../../Utils/Resolution';
         fontSize:scaledHeight(22),
         fontWeight:'bold',
     },
+    headerTextView: {
+        marginLeft: '4%',
+        marginRight: '4%'
+    },
     iconStyle:{
         alignItems: 'flex-start',
         justifyContent: 'flex-start', 
@@ -179,6 +183,11 @@ import { scaledHeight } from '../../Utils/Resolution';
     tNcHeader: {
         color: '#56565A',
         fontSize: scaledHeight(16),
+        fontWeight: 'bold'
+    },
+    titleHeaderTextStyle: {
+        color: '#56565A',
+        fontSize: scaledHeight(24),
         fontWeight: 'bold'
     },
     toggleOffCircle:{

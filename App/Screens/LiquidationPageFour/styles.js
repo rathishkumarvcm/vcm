@@ -82,6 +82,10 @@ import { scaledHeight } from '../../Utils/Resolution';
         fontSize:scaledHeight(20),
         fontWeight:'bold',
     },
+    headerTextView: {
+        marginLeft: '4%',
+        marginRight: '4%'
+    },
     horizontalFlex:{
         alignItems:'center',
         flexDirection: 'row',
@@ -136,6 +140,11 @@ import { scaledHeight } from '../../Utils/Resolution';
     tNcHeader: {
         color: '#56565A',
         fontSize: scaledHeight(16),
+        fontWeight: 'bold'
+    },
+    titleHeaderTextStyle: {
+        color: '#56565A',
+        fontSize: scaledHeight(24),
         fontWeight: 'bold'
     },
     text5:{

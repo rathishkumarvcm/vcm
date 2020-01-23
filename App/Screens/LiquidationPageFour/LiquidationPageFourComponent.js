@@ -139,6 +139,12 @@ class LiquidationPageFourComponent extends Component {
         const year = new Date().getFullYear();
         const updatedDate = `${date} / ${month} / ${year}`;
         const finalKey = menuList[menuList.length - 1];
+        let paymentMode = "";
+            if(savedData.selectedFundWithdrawalData.PaymentMethod === "05"){
+                paymentMode = "NetBanking";
+            }else{
+                paymentMode = "Check";
+            }
         if (ammend) {
             const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
             const amndObj = menuList[pIndex];
@@ -157,7 +163,13 @@ class LiquidationPageFourComponent extends Component {
                     "selectedAccountData": ammendData.selectedAccountData,
                     "selectedFundData": savedData.selectedFundData,
                     "selectedFundWithdrawalData": savedData.selectedFundWithdrawalData,
-                    "selectedFundSourceData": ammendData.selectedFundSourceData,
+                    "selectedFundSourceData": {
+                        "paymentMode": paymentMode,
+                        "fundSourceType": "",
+                        "totalInvestment": "",
+                        "bankAccountName": "",
+                        "bankAccountNumber": "",
+                    },
                     "currentSecurities": ammendData.currentSecurities,
                     "contribution": ammendData.contribution,
                     "estimated": ammendData.estimated,
@@ -170,12 +182,6 @@ class LiquidationPageFourComponent extends Component {
         }
         else {
             const orderId = `Order ID - LIQ0${year}${month}${date}`;
-            let paymentMode = "";
-            if(savedData.selectedFundWithdrawalData.PaymentMethod === "05"){
-                paymentMode = "NetBanking";
-            }else{
-                paymentMode = "Check";
-            }
             const payloadData = {
                 "key": finalKey,
                 "title": orderId,
@@ -196,9 +202,6 @@ class LiquidationPageFourComponent extends Component {
                         "bankAccountName": "",
                         "bankAccountNumber": "",
                     },
-                    // "currentSecurities": savedData.currentSecurities,
-                   //  "contribution": savedData.contribution,
-                    // "estimated": {},
                 }
             };
             menuList.push(payloadData);
@@ -275,14 +278,10 @@ class LiquidationPageFourComponent extends Component {
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
-                    <TouchableOpacity>
-                        <GIcon
-                            name="left"
-                            type="antdesign"
-                            size={25}
-                            color="#707070"
-                        />
-                    </TouchableOpacity>
+                    <View style={styles.headerTextView}>
+                        <Text style={styles.titleHeaderTextStyle}>{gblStrings.liquidation.liquidation}</Text>
+                        <View style={styles.line} />
+                    </View>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.flexContainer}>
                         <Text style={styles.subHeading}>{gblStrings.liquidation.tradeType}</Text>
