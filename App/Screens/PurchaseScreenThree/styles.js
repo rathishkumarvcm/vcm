@@ -35,6 +35,15 @@ const styles = StyleSheet.create({
         paddingLeft: "4%",
         paddingRight: "4%"
     },
+    titleHeaderTextStyle: {
+        color: '#56565A',
+        fontSize: scaledHeight(24),
+        fontWeight: 'bold'
+    },
+    headerTextView: {
+        marginLeft: '4%',
+        marginRight: '4%'
+    },
     headerText: {
         color: "#56565A",
         fontSize: scaledHeight(20),

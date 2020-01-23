@@ -32,6 +32,15 @@ const styles = StyleSheet.create({
   contentView: {
     flexGrow: 1
   },
+  titleHeaderTextStyle: {
+    color: '#56565A',
+    fontSize: scaledHeight(24),
+    fontWeight: 'bold'
+},
+headerTextView: {
+    marginLeft: '4%',
+    marginRight: '4%'
+},
   filterFundsBtn: {
     width: "50%",
     borderWidth: 1,

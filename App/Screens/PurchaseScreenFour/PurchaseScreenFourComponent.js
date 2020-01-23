@@ -124,7 +124,7 @@ class PurchaseFourComponent extends Component {
             };
             menuList.splice(pIndex, 1, ammendPayloadData);
             ammendActions(menuList);
-            navigation.navigate('tAmmendComponent',{ orderId : amendObj.title,transactionType:"Purchase",amend:true});
+            navigation.navigate('tAmmendComponent', { orderId: amendObj.title, transactionType: "Purchase", amend: true });
         }
         else {
             const orderId = `Order ID - PUR${year}${month}${date}${finalKey}`;
@@ -147,11 +147,40 @@ class PurchaseFourComponent extends Component {
                 }
             };
             menuList.push(payloadData);
+            this.submitMethod();
             ammendActions(menuList);
             navigation.navigate('purchaseFinish', { orderId: orderId });
         }
     }
 
+
+    submitMethod = () => {
+        // console.log("in component")
+        const { submitPurchaseData } = this.props;
+        const payload = {
+            "customerId": "V850504704",
+            "companyNumber": "591",
+            "vcmAccountNumber": "123456",
+            "fundNumber": "330",
+            "accountNumber": "947",
+            "fundingOption": 'init',
+            "purchaseAmount": "3000",
+            "newAccountFlag": "N",
+            "fundingSource": {
+                "method": "existingBank",
+                "payeeId": "01",
+                "bankAccount": {
+                    "accountType": "C",
+                    "financialInstitutionName": "KBC",
+                    "accountOwnerNames": "owners",
+                    "transitRoutingNumber": "1234567",
+                    "accountNumber": "1234566746"
+                }
+            }
+        }
+        submitPurchaseData(payload);
+        return 0;
+    }
     render() {
         const { ammend } = this.state;
         const { purchaseData, navigation } = this.props;
@@ -172,6 +201,10 @@ class PurchaseFourComponent extends Component {
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
+                    <View style={styles.headerTextView}>
+                        <Text style={styles.titleHeaderTextStyle}>Purchase</Text>
+                        <View style={styles.line} />
+                    </View>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.flexContainer}>
                         <Text style={styles.subHeading}>{gblStrings.liquidation.tradeType}</Text>
@@ -205,19 +238,19 @@ class PurchaseFourComponent extends Component {
                                 <Text style={styles.greyTextBold16px}>Initial Investment</Text>
                                 <Text style={styles.greyText16px}>{`$ ${savedData.selectedFundData.initialInvestment}`}</Text>
                             </View>
-                            {!savedData.selectedFundData.fundingOption === "Initial Investment"?
-                            (
-                            <View>
-                            <View style={styles.section}>
-                                <Text style={styles.greyTextBold16px}>Monthly Investment</Text>
-                                <Text style={styles.greyText16px}>{`$ ${savedData.selectedFundData.monthlyInvestment}`}</Text>
-                            </View>
-                            <View style={styles.section}>
-                                <Text style={styles.greyTextBold16px}>Start Date</Text>
-                                <Text style={styles.greyText16px}>{savedData.selectedFundData.startDate}</Text>
-                            </View>
-                            </View>
-                            ):null}
+                            {!savedData.selectedFundData.fundingOption === "Initial Investment" ?
+                                (
+                                    <View>
+                                        <View style={styles.section}>
+                                            <Text style={styles.greyTextBold16px}>Monthly Investment</Text>
+                                            <Text style={styles.greyText16px}>{`$ ${savedData.selectedFundData.monthlyInvestment}`}</Text>
+                                        </View>
+                                        <View style={styles.section}>
+                                            <Text style={styles.greyTextBold16px}>Start Date</Text>
+                                            <Text style={styles.greyText16px}>{savedData.selectedFundData.startDate}</Text>
+                                        </View>
+                                    </View>
+                                ) : null}
                         </View>
 
                         <View style={styles.horizontalFlex}>
@@ -283,9 +316,6 @@ class PurchaseFourComponent extends Component {
                                 <Text style={styles.greyText16px}>{}</Text>
                             </View>
                     </View> */}
-
-
-
                     </View>
 
                     {/* ----------------------------------- Button Fields -------------------------------- */}
@@ -320,14 +350,16 @@ PurchaseFourComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     purchaseData: PropTypes.instanceOf(Object),
     amendReducerData: PropTypes.instanceOf(Object),
-    ammendActions: PropTypes.func
+    ammendActions: PropTypes.func,
+    submitPurchaseData: PropTypes.func
 };
 
 PurchaseFourComponent.defaultProps = {
     navigation: {},
     purchaseData: {},
     amendReducerData: {},
-    ammendActions: () => { }
+    ammendActions: () => { },
+    submitPurchaseData: () => { }
 };
 
 export default PurchaseFourComponent;

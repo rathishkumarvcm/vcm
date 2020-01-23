@@ -26,6 +26,15 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(20),
         fontWeight: 'bold',
     },
+    titleHeaderTextStyle: {
+        color: '#56565A',
+        fontSize: scaledHeight(24),
+        fontWeight: 'bold'
+    },
+    headerTextView: {
+        marginLeft: '4%',
+        marginRight: '4%'
+    },
     flex1: {
         marginLeft: "4%",
         marginRight: "4%",

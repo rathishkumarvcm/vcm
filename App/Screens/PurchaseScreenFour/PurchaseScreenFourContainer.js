@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import PurchaseFourComponent from './PurchaseScreenFourComponent';
-import { ammendActions } from "../../Shared/Actions";
+import { ammendActions,purchaseActions } from "../../Shared/Actions";
 
 /*----------------------
                                   Redux Methods
@@ -12,7 +12,8 @@ const mapStateToProps = (state /* , props */) => ({
 });
 
 const mapDispatchToProps = {
-  ...ammendActions
+  ...ammendActions,
+  ...purchaseActions
 };
 
 export default connect(
