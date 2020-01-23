@@ -1122,6 +1122,8 @@ class OpenAccPageFiveComponent extends Component {
                             <View
                                 key={key}
                             >
+                                {index !== 0 && <Text style={styles.lblLine} />}
+
 
                                 <Text style={styles.lblNameTxt}>
                                     {gblStrings.accManagement.beneficiary_type}

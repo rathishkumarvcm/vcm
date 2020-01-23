@@ -119,9 +119,23 @@ class OpenAccPageSixComponent extends Component {
                         myInstance.setAccOpeningEditMode(false);
                     } */
 
-                        showAlert(gblStrings.common.appName, "Your application is successfully submited and Waiting for MSR Review ", gblStrings.common.ok);
+                    if (tempResponse.accountId) {
+                        // const msg = `${tempResponse.message}  :${tempResponse.accountId}`;
+                        const msg = `Your application is successfully submited and Waiting for MSR Review  :${tempResponse.accountId}`;
+                        AppUtils.debugLog(`Account Created ::: :: ${msg}`);
+                        showAlert(gblStrings.common.appName, msg, gblStrings.common.ok);
+
                         myInstance.setAccOpeningEditMode(false);
                         goBack('termsAndConditions');
+                    } else {
+                        AppUtils.debugLog(`Account Created failed::: :: ${tempResponse.message}`);
+                        showAlert(gblStrings.common.appName, tempResponse.message, gblStrings.common.ok);
+                        myInstance.setAccOpeningEditMode(false);
+                    } 
+
+                        // showAlert(gblStrings.common.appName, "Your application is successfully submited and Waiting for MSR Review ", gblStrings.common.ok);
+                        // myInstance.setAccOpeningEditMode(false);
+                        // goBack('termsAndConditions');
                 }
             }
         }

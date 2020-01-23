@@ -702,7 +702,7 @@ class OpenAccPageTwoComponent extends Component {
     componentDidMount() {
 
         AppUtils.debugLog(`componentDidMount::::> ${this.props}`);
-        const { masterLookupStateData, getCompositeLookUpData } = this.props;
+        const { masterLookupStateData, getPersonalCompositeData,getCompositeLookUpData } = this.props;
         const payload = [];
         const compositePayloadData = [
             "prefix",
@@ -733,7 +733,7 @@ class OpenAccPageTwoComponent extends Component {
             }
         }
 
-        getCompositeLookUpData(payload);
+        getPersonalCompositeData(payload);
 
 
     }
@@ -8316,7 +8316,6 @@ class OpenAccPageTwoComponent extends Component {
 
 OpenAccPageTwoComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    getCompositeLookUpData: PropTypes.instanceOf(Object),
     addressFormatData: PropTypes.instanceOf(Object),
     accOpeningData: PropTypes.instanceOf(Object),
     initialState: PropTypes.instanceOf(Object),
@@ -8325,11 +8324,14 @@ OpenAccPageTwoComponent.propTypes = {
     getStateCity: PropTypes.func,
     saveAccountOpening: PropTypes.func,
     getRankData: PropTypes.func,
-    getAddressFormat: PropTypes.func
+    getAddressFormat: PropTypes.func,
+    getCompositeLookUpData: PropTypes.func,
+    getPersonalCompositeData: PropTypes.func,
+
+
 };
 OpenAccPageTwoComponent.defaultProps = {
     navigation: {},
-    getCompositeLookUpData: {},
     addressFormatData: {},
     accOpeningData: {},
     initialState: {},
@@ -8338,7 +8340,10 @@ OpenAccPageTwoComponent.defaultProps = {
     getStateCity: null,
     saveAccountOpening: null,
     getRankData: null,
-    getAddressFormat: null
+    getAddressFormat: null,
+    getPersonalCompositeData:null,
+    getCompositeLookUpData: null,
+
 
 };
 
