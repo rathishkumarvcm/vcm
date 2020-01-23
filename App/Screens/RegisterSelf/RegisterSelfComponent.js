@@ -183,8 +183,8 @@ class RegisterSelfComponent extends Component {
                 onChangeText={this.setMiddleName}
                 value={this.state.middleName}
                 onBlur={this.checkMiddleName}
-                errorFlag={this.state.middleNameFlag}
-                errorText={"Enter a Valid Middle Name"}
+                //errorFlag={this.state.middleNameFlag}
+                //errorText={"Enter a Valid Middle Name"}
             />
 
             <View style={styles.signInView}>
