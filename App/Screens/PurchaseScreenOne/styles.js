@@ -135,7 +135,11 @@ const styles = StyleSheet.create({
         width: "100%",
         marginTop: '4%',
     },
-
+    iconStyle: {
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        width: "20%"
+    },
     accountDetailsFlex: {
         height: "100%",
         flexDirection: 'column',
@@ -159,10 +163,18 @@ const styles = StyleSheet.create({
         borderWidth: scaledHeight(3),
         backgroundColor: '#FFFFFF',
     },
-
+    titleHeaderTextStyle: {
+        color: '#56565A',
+        fontSize: scaledHeight(24),
+        fontWeight: 'bold'
+    },
+    headerTextView: {
+        marginLeft: '4%',
+        marginRight: '4%'
+    },
     flexAccDetails1: {
         height: scaledHeight(73),
-        marginLeft: '4%',
+        marginLeft: '2%',
         marginRight: "4%",
         marginTop: "4%",
         flexDirection: 'row',
@@ -229,6 +241,10 @@ const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontWeight: 'bold',
         fontSize: scaledHeight(16),
+    },
+    noRecordsFlex: {
+        marginLeft: "8%",
+        marginTop: "2%"
     },
 });
 
