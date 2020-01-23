@@ -2760,6 +2760,16 @@ class OpenAccPageTwoComponent extends Component {
                 const tempObj = retirementBeneficiaryData[i];
                 AppUtils.debugLog(`tempObj::${JSON.stringify(tempObj)}`);
 
+                /*
+                    let beneficiaryTotal = 0;
+                    if (!isNaN(tempObj.beneficiaryDistPercent) && tempObj.beneficiaryDistPercent !== "") {
+                        beneficiaryTotal += parseFloat(tempObj.beneficiaryDistPercent);
+                    }
+                */
+        
+        
+                
+
 
                 let tempValidation = false;
                 if (this.isEmpty(tempObj.beneficiaryType)) {
@@ -3836,7 +3846,7 @@ class OpenAccPageTwoComponent extends Component {
        // newItems[index].beneficiaryDistPercent = text;
        
 
-        /*
+        
           newItems[index].firstNameValidation = true;
           newItems[index].lastNameValidation = true;
           newItems[index].dobValidation = true;
@@ -3844,8 +3854,8 @@ class OpenAccPageTwoComponent extends Component {
           newItems[index].socialSecurityNoValidation = true;
           newItems[index].beneficiaryTypeValidation = true;
           newItems[index].relationshipToAccValidation = true;
-          newItems[index].beneficiaryDistPercentValidation = true;
-  */
+         // newItems[index].beneficiaryDistPercentValidation = true;
+  
 
         let total = 0;
         let errMsg = "";
@@ -3857,7 +3867,7 @@ class OpenAccPageTwoComponent extends Component {
 
         AppUtils.debugLog(`beneficiaryDistPercent total:::>${total}`);
 
-        if (total > 100) {
+        if (total > 100 || total < 100 ) {
             errMsg = gblStrings.accManagement.beneficiariesCond;
             newItems[index].beneficiaryDistPercentValidation = false;
         }else{

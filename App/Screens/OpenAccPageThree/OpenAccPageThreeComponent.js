@@ -149,7 +149,7 @@ class OpenAccPageThreeComponent extends Component {
                                                                  -------------------------- */
     componentDidMount() {
         AppUtils.debugLog("componentDidMount::::> ");
-        const { getFundListData,getCompositeLookUpData,masterLookupStateData} = this.props;
+        const { getFundListData,getCompositeLookUpData,getPersonalCompositeData,masterLookupStateData} = this.props;
         const {fundList} = this.state;
 
         if (this.state && fundList && !fundList.length > 0) {
@@ -172,7 +172,7 @@ class OpenAccPageThreeComponent extends Component {
                 payload.push(tempkey);
             }
         }
-        getCompositeLookUpData(payload);
+        getPersonalCompositeData(payload);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -545,12 +545,25 @@ class OpenAccPageThreeComponent extends Component {
 
         }
 
+        let total = 0;
+        for (let i = 0; i < newSelectedData.length; i +=1) {
+            if (!isNaN(newSelectedData[i].initialInvestment) && newSelectedData[i].initialInvestment !== "") {
+                total += parseFloat(newSelectedData[i].initialInvestment);
+
+            }
+        }
+
+        AppUtils.debugLog(`total:::>${ total}`);
+
+
         // newSelectedData[index].isActive = false;
         // newSelectedData.splice(index, 1);
         this.setState({
             fundList: newItems,
             selectedFundInvestmentsData: newSelectedData,
-            selectedCount: this.getSelectedItems().length
+            selectedCount: this.getSelectedItems().length,
+            totalInitialInvestment: `$ ${ total}`,
+
 
         });
     }
@@ -1827,6 +1840,7 @@ OpenAccPageThreeComponent.propTypes = {
     saveAccountOpening:PropTypes.func,
     getFundListData:PropTypes.func,
     getCompositeLookUpData:PropTypes.func,
+    getPersonalCompositeData:PropTypes.func,
     addBankAccountAction:PropTypes.func
 
 };
@@ -1838,6 +1852,7 @@ OpenAccPageThreeComponent.defaultProps = {
     getFundListData: null,
     saveAccountOpening: null,
     getCompositeLookUpData: null,
+    getPersonalCompositeData:null,
     addBankAccountAction: null
 
 };

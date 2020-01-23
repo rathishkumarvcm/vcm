@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         lineHeight: scaledHeight(20),
         marginLeft: scaledHeight(26),
-        textAlign: 'left'
+        textAlign: 'left',
+        width:"60%"
 
     },
     btnGrp: {
