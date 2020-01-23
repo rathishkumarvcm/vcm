@@ -7,7 +7,7 @@ import store from './Shared/Store/index';
 import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
 import { Auth } from "aws-amplify";
 import { scaledHeight } from './Utils/Resolution';
-import { showAlertWithCancelButton } from './CommonComponents'
+import { showAlertWithCancelButton,GErrorBoundaries } from './CommonComponents'
 import { NavigationActions } from 'react-navigation';
 
 /*
@@ -111,10 +111,11 @@ class RootComponent extends Component {
 
   render() {
     return (
-      <Provider store={store}>
-        <AppNavigator ref={nav => {this.navigator = nav; }} />
+    <GErrorBoundaries>
+        <Provider store={store}>
+          <AppNavigator ref={nav => {this.navigator = nav; }} />
       </Provider>
-
+    </GErrorBoundaries>
     );
   }
 }

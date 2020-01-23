@@ -35,6 +35,8 @@ import {
     RemoveKeyValueFromStore
   } from "./GPersistantStore";
 
+import GErrorBoundaries from './GErrorBoundaries';
+
 export {
     GLoadingSpinner,
     GButtonComponent,
@@ -69,5 +71,6 @@ export {
     GCollapseComponent,
     GSingletonClass,
     GBankAccValidateComponent,
-    GAddressValidateComponent
+    GAddressValidateComponent,
+    GErrorBoundaries
 };
