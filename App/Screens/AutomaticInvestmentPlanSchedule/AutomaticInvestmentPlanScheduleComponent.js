@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text } from 'react-native';
-import { styles } from './styles';
+import PropTypes from 'prop-types';
+import styles from './styles';
 import {
     GHeaderComponent,
     GFooterComponent,
@@ -9,10 +10,7 @@ import {
     GDateComponent,
     GSingletonClass
 } from '../../CommonComponents';
-import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
-import { scaledHeight } from '../../Utils/Resolution';
-
 
 const typeJson = [
     {
@@ -41,7 +39,8 @@ const myInstance = GSingletonClass.getInstance();
 class AutomaticInvestmentPlanScheduleComponent extends Component {
     constructor(props) {
         super(props);
-        const automaticSchedule =  myInstance.getAutomaticInvestmentEditMode()? (myInstance.getScreenStateData().automaticSchedule || {}):{};
+        const automaticSchedule = myInstance.getAutomaticInvestmentEditMode()? (myInstance.getScreenStateData().automaticSchedule || {}):{};
+        const{navigation}=this.props;
         this.state = {
             typeDropDown: false,
             valueTypeDropDown: '',
@@ -52,53 +51,56 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
             customDateValue: '',
             errorDate:false,
             autoInvestmentAddAmountJson: {},
-            itemToEdit: `${this.props.navigation.getParam('ItemToEdit', -1)}`,
-            acc_name:`${this.props.navigation.getParam('acc_name')}`,
-            acc_no:`${this.props.navigation.getParam('acc_no')}`,
-            accountType:`${this.props.navigation.getParam('accountType')}`,
+            itemToEdit: `${navigation.getParam('ItemToEdit', -1)}`,
+            accName:`${navigation.getParam('accName')}`,
+            accNumber:`${navigation.getParam('accNumber')}`,
+            accountType:`${navigation.getParam('accountType')}`,
             ...automaticSchedule
         };
     }
 
     componentDidMount() {
-        for(var i=1; i<=30; i++) {
-            dateJson.push({["id"]:i.toString(),["value"]: i.toString()});
+        for(let i=1; i<=30; i += 1) {
+            dateJson.push({"id":i.toString(),"value": i.toString()});
          }
-         
-        let itemToEdit = this.state.itemToEdit;
+         const{automaticInvestmentState}=this.props;
+         const{accountType}=this.state;
+        const {itemToEdit} = this.state;
         if (itemToEdit > -1) {
-            if (this.props && this.props.automaticInvestmentState) {
-                switch(this.state.accountType)
+            if (this.props && automaticInvestmentState) {
+                switch(accountType)
                 {
                     case 'General':
                         this.setState({
-                            autoInvestmentAddAmountJson: this.props.automaticInvestmentState.general[itemToEdit],
-                            valueTypeDropDown: this.props.automaticInvestmentState.general[itemToEdit].invest,
-                            valueDateDropDown: this.props.automaticInvestmentState.general[itemToEdit].dateToInvest.replace('th', '').trim(),
-                            valueEndDropDown: this.props.automaticInvestmentState.general[itemToEdit].ending,
-                            customDateValue:this.props.automaticInvestmentState.general[itemToEdit].ending==='Custom'?
-                                            this.props.automaticInvestmentState.general[itemToEdit].endDate:null
+                            autoInvestmentAddAmountJson: automaticInvestmentState.general[Number(itemToEdit)],
+                            valueTypeDropDown: automaticInvestmentState.general[Number(itemToEdit)].invest,
+                            valueDateDropDown: automaticInvestmentState.general[Number(itemToEdit)].dateToInvest.replace('th', '').trim(),
+                            valueEndDropDown: automaticInvestmentState.general[Number(itemToEdit)].ending,
+                            customDateValue:automaticInvestmentState.general[Number(itemToEdit)].ending==='Custom'?
+                                            automaticInvestmentState.general[Number(itemToEdit)].endDate:null
                         });
                         break;
                     case 'Ira':
                         this.setState({
-                            autoInvestmentAddAmountJson: this.props.automaticInvestmentState.ira[itemToEdit],
-                            valueTypeDropDown: this.props.automaticInvestmentState.ira[itemToEdit].invest,
-                            valueDateDropDown: this.props.automaticInvestmentState.ira[itemToEdit].dateToInvest.replace('th', '').trim(),
-                            valueEndDropDown: this.props.automaticInvestmentState.ira[itemToEdit].ending,
-                            customDateValue:this.props.automaticInvestmentState.ira[itemToEdit].ending==='Custom'?
-                                            this.props.automaticInvestmentState.ira[itemToEdit].endDate:null
+                            autoInvestmentAddAmountJson: automaticInvestmentState.ira[Number(itemToEdit)],
+                            valueTypeDropDown: automaticInvestmentState.ira[Number(itemToEdit)].invest,
+                            valueDateDropDown: automaticInvestmentState.ira[Number(itemToEdit)].dateToInvest.replace('th', '').trim(),
+                            valueEndDropDown: automaticInvestmentState.ira[Number(itemToEdit)].ending,
+                            customDateValue:automaticInvestmentState.ira[Number(itemToEdit)].ending==='Custom'?
+                                            automaticInvestmentState.ira[Number(itemToEdit)].endDate:null
                         });
                         break;
                     case 'Utma':
                         this.setState({
-                            autoInvestmentAddAmountJson: this.props.automaticInvestmentState.utma[itemToEdit],
-                            valueTypeDropDown: this.props.automaticInvestmentState.utma[itemToEdit].invest,
-                            valueDateDropDown: this.props.automaticInvestmentState.utma[itemToEdit].dateToInvest.replace('th', '').trim(),
-                            valueEndDropDown: this.props.automaticInvestmentState.utma[itemToEdit].ending,
-                            customDateValue:this.props.automaticInvestmentState.utma[itemToEdit].ending==='Custom'?
-                                            this.props.automaticInvestmentState.utma[itemToEdit].endDate:null
+                            autoInvestmentAddAmountJson: automaticInvestmentState.utma[Number(itemToEdit)],
+                            valueTypeDropDown: automaticInvestmentState.utma[Number(itemToEdit)].invest,
+                            valueDateDropDown: automaticInvestmentState.utma[Number(itemToEdit)].dateToInvest.replace('th', '').trim(),
+                            valueEndDropDown: automaticInvestmentState.utma[Number(itemToEdit)].ending,
+                            customDateValue:automaticInvestmentState.utma[Number(itemToEdit)].ending==='Custom'?
+                                            automaticInvestmentState.utma[Number(itemToEdit)].endDate:null
                         });
+                        break;
+                    default:
                         break;
                 }
                 
@@ -107,49 +109,60 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
     }
 
     getPayload = () => {
+        const{valueEndDropDown,customDateValue,typeDropDown,valueTypeDropDown,dateDropDown,
+                endDropDown,errorDate,autoInvestmentAddAmountJson,itemToEdit,accName,accNumber,accountType,valueDateDropDown}=this.state;
+        const date = new Date().getDate(); // Current Date
+        const month = new Date().getMonth() + 1; // Current Month
+        const year = new Date().getFullYear(); // Current Year
+        const currentdate = `${month }/${ date }/${ year}`;
 
-        const date = new Date().getDate(); //Current Date
-        const month = new Date().getMonth() + 1; //Current Month
-        const year = new Date().getFullYear(); //Current Year
-        const currentdate = month + "/" + date + "/" + year;
-
-        /*Calculate Next Month */
+        /* Calculate Next Month */
         const nextMonth = new Date();
-        nextMonth.setMonth(nextMonth.getMonth() + 1);
-        const nextMonthDate = (nextMonth.getMonth()+1) + "/" + nextMonth.getDate() + "/" + nextMonth.getFullYear();
-        
+        if(date>=valueDateDropDown)
+        {
+            if(valueTypeDropDown === 'Monthly')
+                nextMonth.setMonth(nextMonth.getMonth() + 1);
+            else
+                nextMonth.setMonth(nextMonth.getMonth() + 3);
+        }
+        // const nextMonthDate = `${nextMonth.getMonth()+1 }/${ nextMonth.getDate() }/${ nextMonth.getFullYear()}`;
+        const nextMonthDate = `${nextMonth.getMonth()+1 }/${ valueDateDropDown }/${ nextMonth.getFullYear()}`;
+
+
         /* Calculate quarter */
-        const today = new Date();
-        const quarter = Math.floor((today.getMonth() / 3));
-        const startFullQuarter = new Date(today.getFullYear(), quarter * 3 + 3, 1);
-        const endFullQuarter = new Date(startFullQuarter.getFullYear(), startFullQuarter.getMonth() + 3, 0);
+        // const today = new Date();
+        // const quarter = Math.floor((today.getMonth() / 3));
+       // const startFullQuarter = new Date(today.getFullYear(), quarter * 3 + 3, 1);
+        // const endFullQuarter = new Date(startFullQuarter.getFullYear(), startFullQuarter.getMonth() + 3, 0);
         
         const savedAutoData = myInstance.getSavedAutomaticData();
-        let payload = {
+        const payload = {
             ...savedAutoData,
             dateAdded: currentdate,
-            endDate: this.state.valueEndDropDown.toLowerCase()==="custom"?this.state.customDateValue:"Never",
+            endDate: valueEndDropDown.toLowerCase()==="custom"?customDateValue:"Never",
             nextInvestementDate: nextMonthDate,
-            typeDropDown: this.state.typeDropDown,
-            valueTypeDropDown: this.state.valueTypeDropDown,
-            dateDropDown: this.state.dateDropDown,
-            valueDateDropDown: this.state.valueDateDropDown,
-            endDropDown: this.state.endDropDown,
-            valueEndDropDown: this.state.valueEndDropDown,
-            customDateValue: this.state.customDateValue,
-            errorDate:this.state.errorDate,
-            autoInvestmentAddAmountJson: this.state.autoInvestmentAddAmountJson,
-            itemToEdit: this.state.itemToEdit,
-            acc_name:this.state.acc_name,
-            acc_no:this.state.acc_no,
-            accountType:this.state.accountType,
+            typeDropDown,
+            valueTypeDropDown,
+            dateDropDown,
+            valueDateDropDown,
+            endDropDown,
+            valueEndDropDown,
+            customDateValue,
+            errorDate,
+            autoInvestmentAddAmountJson,
+            itemToEdit,
+            accName,
+            accNumber,
+            accountType,
         };
         return payload;
 
     }
 
     navigationNext = () => {
-        if(this.state.customDateValue!='' || this.state.valueEndDropDown==='Never')
+        const{navigation}=this.props;
+        const{customDateValue,valueEndDropDown,accountType,itemToEdit}=this.state;
+        if(customDateValue!=='' || valueEndDropDown==='Never')
         {
             const payload = this.getPayload();
             const stateData = myInstance.getScreenStateData();
@@ -157,17 +170,18 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
             const screenState = {
                 ...stateData,
                 "automaticSchedule":{...this.state}
-            }
+            };
             myInstance.setScreenStateData(screenState);
-            this.props.navigation.navigate({routeName:'automaticInvestmentVerify',key:'automaticInvestmentVerify',params: { skip: false ,accountType:this.state.accountType,indexSelected:this.state.itemToEdit}});
+            navigation.navigate({routeName:'automaticInvestmentVerify',key:'automaticInvestmentVerify',params: { skip: false ,accountType,indexSelected:itemToEdit}});
         }
         else
-            this.setState({errorDate:true})
+            this.setState({errorDate:true});
     }
 
     selectTheType = () => {
+        const{typeDropDown}=this.state;
         this.setState({
-            typeDropDown: !this.state.typeDropDown
+            typeDropDown: !typeDropDown
         });
     }
 
@@ -179,14 +193,16 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
     }
 
     selectTheDate = () => {
+        const{dateDropDown}=this.state;
         this.setState({
-            dateDropDown: !this.state.dateDropDown
+            dateDropDown: !dateDropDown
         });
     }
 
     selectEnding = () => {
+        const{endDropDown}=this.state;
         this.setState({
-            endDropDown: !this.state.endDropDown,
+            endDropDown: !endDropDown,
 
         });
     }
@@ -213,55 +229,65 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
         });
     }
 
-    navigationBack = () => this.props.navigation.goBack();
-    navigationCancel = () => this.props.navigation.goBack('automaticInvestment');
+    navigationBack = () => {
+        const{navigation}=this.props;
+        navigation.goBack();
+    }
+
+    navigationCancel = () => {
+        const{navigation}=this.props;
+        navigation.goBack('automaticInvestment');
+    }
 
     render() {
-        const date = new Date().getDate(); //Current Date
-        const month = new Date().getMonth() + 1; //Current Month
-        const year = new Date().getFullYear(); //Current Year
-        const currentdate = month + "/" + date + "/" + year;
+        const{navigation}=this.props;
+        const{accName,accNumber,typeDropDown,valueTypeDropDown,dateDropDown,valueDateDropDown,
+        endDropDown,valueEndDropDown,customDateValue,errorDate}=this.state;
+        const date = new Date().getDate(); // Current Date
+        const month = new Date().getMonth() + 1; // Current Month
+        const year = new Date().getFullYear(); // Current Year
+        const currentdate = `${month }/${ date }/${ year}`;
         return (
             <View style={styles.container}>
-                <GHeaderComponent register navigation={this.props.navigation} />
-                <ScrollView style={{ flex: 0.85 }}>
-                    <Text style={styles.autoInvestHead}>{'Create Automatic Investment Plan'}</Text>
+                <GHeaderComponent register navigation={navigation} />
+                <ScrollView style={styles.scrollStyle}>
+                    <Text style={styles.autoInvestHead}>Create Automatic Investment Plan</Text>
                     <View style={styles.seperator_line} />
                     <View style={styles.circle_view}>
                         <View style={styles.circle_Completed}>
-                            <Text style={styles.circleTextNew}>{'1'}</Text>
+                            <Text style={styles.circleTextNew}>1</Text>
                         </View>
                         <View style={styles.circle_connect} />
                         <View style={styles.circle_Completed}>
-                            <Text style={styles.circleTextNew}>{'2'}</Text>
+                            <Text style={styles.circleTextNew}>2</Text>
                         </View>
                         <View style={styles.circle_connect} />
                         <View style={styles.circle_Inprogress}>
-                            <Text style={styles.circleText}>{'3'}</Text>
+                            <Text style={styles.circleText}>3</Text>
                         </View>
                         <View style={styles.circle_connect} />
                         <View style={styles.circle_NotStarted}>
-                            <Text style={styles.circleText}>{'4'}</Text>
+                            <Text style={styles.circleText}>4</Text>
                         </View>
                         <View style={styles.circle_connect} />
                         <View style={styles.circle_NotStarted}>
-                            <Text style={styles.circleText}>{'5'}</Text>
+                            <Text style={styles.circleText}>5</Text>
                         </View>
                     </View>
 
                     <View style={styles.autoInvest_title_view}>
-                        <Text style={styles.autoInvest_title_text}>{'3 - Schedule'}</Text>
+                        <Text style={styles.autoInvest_title_text}>3 - Schedule</Text>
                     </View>
                     <View style={styles.body}>
                         <View style={styles.account_view}>
 
-                            <Text style={styles.account_txt}>{this.state.acc_name}</Text>
-                            <Text style={styles.account_txt}>{'Account Number '+this.state.acc_no}</Text>
+                            <Text style={styles.account_txt}>{accName}</Text>
+                            <Text style={styles.account_txt}>{`Account Number ${accNumber}`}</Text>
 
 
                         </View>
                         <View style={styles.autoInvest_sub_title_view}>
-                            <Text style={styles.autoInvest_sub_title_text}>{'Schedule'}</Text>
+                            <Text style={styles.autoInvest_sub_title_text}>Schedule</Text>
                         </View>
                         <View style={styles.seperator_line} />
 
@@ -270,13 +296,13 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                             dropDownTextName={styles.financialTextLabel}
                             data={typeJson}
                             textInputStyle={styles.dropdownTextInput}
-                            itemToDisplay={"value"}
+                            itemToDisplay="value"
                             dropDownLayout={styles.dropDownLayout}
                             changeState={this.selectTheType}
-                            showDropDown={this.state.typeDropDown}
-                            dropDownValue={this.state.valueTypeDropDown}
+                            showDropDown={typeDropDown}
+                            dropDownValue={valueTypeDropDown}
                             selectedDropDownValue={this.selectedDropDownTypeValue}
-                            dropdownOffset={{ 'top': 5,'left':0 }}
+                            dropdownOffset={styles.dropDownLayout}
                         />
                         <GDropDownComponent
                             dropDownTextName={styles.financialTextLabel}
@@ -284,12 +310,12 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                             data={dateJson}
                             textInputStyle={styles.dropdownTextInput}
                             changeState={this.selectTheDate}
-                            showDropDown={this.state.dateDropDown}
+                            showDropDown={dateDropDown}
                             dropDownLayout={styles.dropDownLayout}
-                            dropDownValue={this.state.valueDateDropDown}
+                            dropDownValue={valueDateDropDown}
                             selectedDropDownValue={this.selectedDropDownDateValue}
-                            itemToDisplay={"value"}
-                            dropdownOffset={{ 'top': 5,'left':0  }}
+                            itemToDisplay="value"
+                            dropdownOffset={styles.dropDownLayout}
                             
                         />
 
@@ -300,27 +326,28 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                             textInputStyle={styles.dropdownTextInput}
                             dropDownLayout={styles.dropDownLayout}
                             changeState={this.selectEnding}
-                            showDropDown={this.state.endDropDown}
-                            dropDownValue={this.state.valueEndDropDown}
+                            showDropDown={endDropDown}
+                            dropDownValue={valueEndDropDown}
                             selectedDropDownValue={this.selectedDropDownEndValue}
-                            itemToDisplay={"value"}
-                            dropdownOffset={{ 'top': 5,'left':0  }}
+                            itemToDisplay="value"
+                            dropdownOffset={styles.dropDownLayout}
                         />
-                        {this.state.valueEndDropDown.toLowerCase() === "custom" ?
-
+                        {valueEndDropDown.toLowerCase() === "custom" ? (
                             <GDateComponent
                             dateTitleName={styles.financialTextLabel}
                             dateTextName="End Date"
                             minDate={currentdate}
                             placeholder="MM/DD/YYYY"
-                            date={this.state.customDateValue}
+                            date={customDateValue}
                             onDateChange={this.onChangeDateValue} 
-                            errorFlag={this.state.errorDate}
-                            errorMsg={'Please select a valid date'}/>
+                            errorFlag={errorDate}
+                            errorMsg="Please select a valid date"
+                            />
+                          )
                             
                             : null}
                         <Text style={styles.scheduleContent}>
-                            {'NOTE: If draft day is not specified (1st-31st), the account will be debited on the 15th of each month. Draft date will be the prior business day depending on market availability (when stock market is open).'}
+                            NOTE: If draft day is not specified (1st-31st), the account will be debited on the 15th of each month. Draft date will be the prior business day depending on market availability (when stock market is open).
                         </Text>
                         <GButtonComponent
                             buttonStyle={styles.cancelButton}
@@ -335,10 +362,10 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                             onPress={this.navigationBack}
                         />
                         <GButtonComponent
-                            buttonStyle={this.state.valueTypeDropDown!='' && this.state.valueDateDropDown!='' && this.state.valueEndDropDown!='' ?styles.continueButtonSelected:styles.continueButton}
+                            buttonStyle={valueTypeDropDown!=='' && valueDateDropDown!=='' && valueEndDropDown!=='' ?styles.continueButtonSelected:styles.continueButton}
                             buttonText={globalString.common.next}
                             textStyle={styles.continueButtonText}
-                            onPress={this.state.valueTypeDropDown!='' && this.state.valueDateDropDown!='' && this.state.valueEndDropDown!='' ?this.navigationNext:null}
+                            onPress={valueTypeDropDown!=='' && valueDateDropDown!=='' && valueEndDropDown!=='' ?this.navigationNext:null}
                         />
                     </View>
                     <GFooterComponent />
@@ -349,11 +376,13 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
 }
 AutomaticInvestmentPlanScheduleComponent.propTypes = {
 
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    automaticInvestmentState: PropTypes.instanceOf(Object),
 };
 
 AutomaticInvestmentPlanScheduleComponent.defaultProps = {
-
+    navigation:{},
+    automaticInvestmentState:{}
 };
 
 export default AutomaticInvestmentPlanScheduleComponent;

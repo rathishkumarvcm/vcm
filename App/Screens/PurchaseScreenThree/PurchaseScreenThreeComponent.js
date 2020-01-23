@@ -224,6 +224,8 @@ class PurchaseScreenThreeComponent extends Component {
             switchOff: true,
             switchOn: false,
             selectedBankAccountIndex: null,
+            bankAccountNumber: "",
+            bankAccountName: "",
             disableNextButton: false
         });
     }
@@ -237,6 +239,8 @@ class PurchaseScreenThreeComponent extends Component {
             switchOff: true,
             switchOn: false,
             selectedBankAccountIndex: null,
+            bankAccountNumber: "",
+            bankAccountName: "",
             disableNextButton: false
         });
     }
@@ -246,7 +250,7 @@ class PurchaseScreenThreeComponent extends Component {
         const { navigate } = navigation;
         navigate('bankAccount');
     }
-    
+
     switchMethod = () => {
         const { fundingMethod } = this.state;
         if (fundingMethod === 'Online') {
@@ -320,6 +324,10 @@ class PurchaseScreenThreeComponent extends Component {
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
+                    <View style={styles.headerTextView}>
+                        <Text style={styles.titleHeaderTextStyle}>Purchase</Text>
+                        <View style={styles.line} />
+                    </View>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.topContainer}>
                         <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountName} {savedData.selectedAccountData.accountName}</Text>

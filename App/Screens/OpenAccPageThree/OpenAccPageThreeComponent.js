@@ -149,7 +149,7 @@ class OpenAccPageThreeComponent extends Component {
                                                                  -------------------------- */
     componentDidMount() {
         AppUtils.debugLog("componentDidMount::::> ");
-        const { getFundListData,getCompositeLookUpData,masterLookupStateData} = this.props;
+        const { getFundListData,getCompositeLookUpData,getPersonalCompositeData,masterLookupStateData} = this.props;
         const {fundList} = this.state;
 
         if (this.state && fundList && !fundList.length > 0) {
@@ -172,7 +172,7 @@ class OpenAccPageThreeComponent extends Component {
                 payload.push(tempkey);
             }
         }
-        getCompositeLookUpData(payload);
+        getPersonalCompositeData(payload);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -242,6 +242,40 @@ class OpenAccPageThreeComponent extends Component {
                         this.setState({
                             isValidBankAccount: false,
                             validBankAccountMsg:tempResponse.message
+
+                        });
+                    }
+                }
+            }
+
+
+            
+
+            const validateBankAccKey = ActionTypes.VALIDATE_BANK_ACCOUNT;
+            if (accOpeningData[validateBankAccKey]) {
+                if (accOpeningData[validateBankAccKey] !== prevProps.accOpeningData[validateBankAccKey]) {
+                    const tempResponse = accOpeningData[validateBankAccKey];
+                    if (tempResponse.accountVerified) {
+                        if(tempResponse.accountVerified === "true"){
+                            this.setState({
+                                isValidBankAccount: true,
+                                validBankAccountMsg:"AccountVerification Successfully"
+                            });
+                            showAlert(gblStrings.common.appName ,tempResponse.bankName,gblStrings.common.ok);
+                        }else{
+                            this.setState({
+                                isValidBankAccount: false,
+                                validBankAccountMsg:"AccountVerification failure"
+                            });
+                        }
+                        AppUtils.debugLog(`Valid bank account::${tempResponse.accountVerified}`);
+                        
+                    } else {
+                        AppUtils.debugLog(`Not Valid bank account::${tempResponse.message}`);
+
+                        this.setState({
+                            isValidBankAccount: false,
+                            validBankAccountMsg:`AccountVerification failure :${tempResponse.message}`
 
                         });
                     }
@@ -365,8 +399,10 @@ class OpenAccPageThreeComponent extends Component {
             accountOwner,
             transitRoutingNumber,
             accountNumber } = this.state;
-        const { addBankAccountAction} = this.props;
+        const { addBankAccountAction,validateBankAccInfo} = this.props;
      
+        /*
+
         const validateBankAccountPayload = {
             "accountType": accountType || "",
             "financialInstitutionName": financialInstitutionName || "",
@@ -376,7 +412,36 @@ class OpenAccPageThreeComponent extends Component {
 
         };
 
-        addBankAccountAction(validateBankAccountPayload);
+                addBankAccountAction(validateBankAccountPayload);
+
+        */
+
+        const validateBankAccountPayload = {
+            "bankAccount": {
+                "routingNumber": transitRoutingNumber || "",
+                "accountNumber": accountNumber || "",
+                "accountType": accountType || "",
+                "financialInstitutionName": financialInstitutionName || "",
+                "accountOwner": accountOwner || "",
+            },
+            "customer": {
+                "firstName": "Jane",
+                "lastName": "doe",
+                "phoneNumber": "1722234010",
+                "ssnTin": "123456777",
+                "emailAddress": "Jane.doe@gmail.com",
+                "addressLine2": "ss",
+                "addressLine1": "ss",
+                "city": "McKinney",
+                "state": "TX",
+                "dateOfBirth": "08-04-1972",
+                "zip": "75050"
+            }
+
+        };
+        validateBankAccInfo(validateBankAccountPayload);
+
+
     }
 
     getSelectedFundsList = () => {
@@ -545,12 +610,25 @@ class OpenAccPageThreeComponent extends Component {
 
         }
 
+        let total = 0;
+        for (let i = 0; i < newSelectedData.length; i +=1) {
+            if (!isNaN(newSelectedData[i].initialInvestment) && newSelectedData[i].initialInvestment !== "") {
+                total += parseFloat(newSelectedData[i].initialInvestment);
+
+            }
+        }
+
+        AppUtils.debugLog(`total:::>${ total}`);
+
+
         // newSelectedData[index].isActive = false;
         // newSelectedData.splice(index, 1);
         this.setState({
             fundList: newItems,
             selectedFundInvestmentsData: newSelectedData,
-            selectedCount: this.getSelectedItems().length
+            selectedCount: this.getSelectedItems().length,
+            totalInitialInvestment: `$ ${ total}`,
+
 
         });
     }
@@ -1827,6 +1905,7 @@ OpenAccPageThreeComponent.propTypes = {
     saveAccountOpening:PropTypes.func,
     getFundListData:PropTypes.func,
     getCompositeLookUpData:PropTypes.func,
+    getPersonalCompositeData:PropTypes.func,
     addBankAccountAction:PropTypes.func
 
 };
@@ -1838,6 +1917,7 @@ OpenAccPageThreeComponent.defaultProps = {
     getFundListData: null,
     saveAccountOpening: null,
     getCompositeLookUpData: null,
+    getPersonalCompositeData:null,
     addBankAccountAction: null
 
 };

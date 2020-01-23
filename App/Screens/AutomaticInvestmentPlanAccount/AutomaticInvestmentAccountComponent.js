@@ -16,7 +16,7 @@ class AutomaticInvestmentAccountComponent extends Component {
     constructor(props) {
         super(props);
         const automaticAccount = myInstance.getAutomaticInvestmentEditMode()? (myInstance.getScreenStateData().automaticAccount || {}):{};
-        
+        const{navigation}=this.props;
         this.state = {
             generalAccountJson: {},
             iraAccountJson: {},
@@ -27,29 +27,43 @@ class AutomaticInvestmentAccountComponent extends Component {
             expandIndex: 0,
             accountType:"",
             newItemId:"",
-            newEdit:`${this.props.navigation.getParam('newEdit',false)}`,
+            newEdit:`${navigation.getParam('newEdit',false)}`,
 
             ...automaticAccount
         };
 
     }
 
+    componentDidMount() {
+        const{accountState}=this.props;
+        if (accountState) {
+
+            this.setState({
+                generalAccountJson: accountState.general,
+                iraAccountJson: accountState.ira,
+                utmaAccountJson: accountState.utma,
+
+            });
+        }
+    }
+
     selectedAccount = (index,type) => () => {
-        
+        const{generalAccountJson,iraAccountJson,utmaAccountJson} =this.state;
+        const{automaticInvestmentState}=this.props;
         let json={};
         let id=0;
         switch (type) {
             case "general":
-                json=this.state.generalAccountJson[Number(index)];
-                id=this.props.automaticInvestmentState.general?this.props.automaticInvestmentState.general.length+1:0;
+                json=generalAccountJson[Number(index)];
+                id=automaticInvestmentState.general?automaticInvestmentState.general.length+1:0;
                 break;
             case "ira":
-                json=this.state.iraAccountJson[Number(index)];
-                id=this.props.automaticInvestmentState.ira?this.props.automaticInvestmentState.ira.length+1:0;
+                json=iraAccountJson[Number(index)];
+                id=automaticInvestmentState.ira?automaticInvestmentState.ira.length+1:0;
                 break;
             case "utma":
-                json=this.state.utmaAccountJson[Number(index)];
-                id=this.props.automaticInvestmentState.utma?this.props.automaticInvestmentState.utma.length+1:0;
+                json=utmaAccountJson[Number(index)];
+                id=automaticInvestmentState.utma?automaticInvestmentState.utma.length+1:0;
                 break;
             default:
                 break;
@@ -59,9 +73,9 @@ class AutomaticInvestmentAccountComponent extends Component {
     }
 
     setStateUpdates = index => () => {
-        const{expand} = this.state;
+        const{expand,expandIndex} = this.state;
         const array = [...expand]; 
-        const IndexExpand = this.state.expandIndex;
+        const IndexExpand = expandIndex;
 
 
         if (index !== IndexExpand) {
@@ -75,46 +89,38 @@ class AutomaticInvestmentAccountComponent extends Component {
 
 
     }
-
-    componentDidMount() {
-        
-        if (this.props && this.props.accountState) {
-
-            this.setState({
-                generalAccountJson: this.props.accountState.general,
-                iraAccountJson: this.props.accountState.ira,
-                utmaAccountJson: this.props.accountState.utma,
-
-            });
-        }
-    }
-    
    
-    navigationCancel = () => this.props.navigation.goBack();
+    navigationCancel = () => {
+        const{navigation}=this.props;
+        navigation.goBack();
+    }
 
     getPayload = () => {
-        
+        const{generalAccountJson,iraAccountJson,utmaAccountJson,selectedAccountJson,
+            selectedAccount,expand,expandIndex,accountType,newItemId,newEdit} = this.state;
         const savedAutoData = myInstance.getSavedAutomaticData();
         const payload = {
             ...savedAutoData,
-            generalAccountJson: this.state.generalAccountJson,
-            iraAccountJson: this.state.iraAccountJson,
-            utmaAccountJson: this.state.utmaAccountJson,
-            selectedAccountJson:this.state.selectedAccountJson,
-            selectedAccount: this.state.selectedAccount,
-            expand: this.state.expand,
-            expandIndex: this.state.expandIndex,
-            accountType:this.state.accountType,
-            newItemId:this.state.newItemId,
-            newEdit:this.state.newEdit,
+            generalAccountJson,
+            iraAccountJson,
+            utmaAccountJson,
+            selectedAccountJson,
+            selectedAccount,
+            expand,
+            expandIndex,
+            accountType,
+            newItemId,
+            newEdit,
         };
         return payload;
 
     }
 
     navigationNext = () => {
+            const{selectedAccountJson,accountType} =this.state;
+            const{navigation}=this.props;
             const payload = this.getPayload();
-            // this.props.saveData("automaticInvestmentAccount", payload); 
+            // saveData("automaticInvestmentAccount", payload); 
             const stateData = myInstance.getScreenStateData();
             myInstance.setSavedAutomaticData(payload);
             const screenState = {
@@ -122,21 +128,22 @@ class AutomaticInvestmentAccountComponent extends Component {
                 "automaticAccount":{...this.state}
             };
             myInstance.setScreenStateData(screenState);
-            this.props.navigation.navigate({routeName:'automaticInvestmentAdd',key:'automaticInvestmentAdd',  
+            navigation.navigate({routeName:'automaticInvestmentAdd',key:'automaticInvestmentAdd',  
                         params:{ ItemToEdit: -1,
-                        acc_name:this.state.selectedAccountJson.accountName,
-                        acc_no:this.state.selectedAccountJson.accountNumber,
-                        accountType:this.state.accountType}});
+                        accName:selectedAccountJson.accountName,
+                        accNumber:selectedAccountJson.accountNumber,
+                        accountType}});
     }
 
     generateGeneralKeyExtractor = (item) => item.accountName;
 
-    renderGeneralAccount = () => ({ item, index }) =>
-        (
+    renderGeneralAccount = () => ({ item, index }) =>{
+        const{selectedAccount}=this.state;
+        return(
             
             <TouchableOpacity onPress={this.selectedAccount(index,globalString.automaticInvestment.general)}>
                 
-                <View style={this.state.selectedAccount === index ? styles.selectedAccount : styles.accountList}>
+                <View style={selectedAccount === index ? styles.selectedAccount : styles.accountList}>
                     <View style={styles.displayAccView}>
                         <Text style={styles.displayAcc}>{item.accountName}</Text>
                         <Text style={styles.displayAcc}>{item.accountNumber}</Text>
@@ -159,15 +166,16 @@ class AutomaticInvestmentAccountComponent extends Component {
 
                 </View>
             </TouchableOpacity>
-        )
+        );}
 
 
         generateIraKeyExtractor = (item) => item.accountName;
 
-    renderIraAccount = () => ({ item, index }) =>
-        (
+    renderIraAccount = () => ({ item, index }) =>{
+        const{selectedAccount}=this.state;
+        return(
             <TouchableOpacity onPress={this.selectedAccount(index,globalString.automaticInvestment.ira)}>
-                <View style={this.state.selectedAccount === index ? styles.selectedAccount : styles.accountList}>
+                <View style={selectedAccount === index ? styles.selectedAccount : styles.accountList}>
                     <View style={styles.displayAccView}>
                         <Text style={styles.displayAcc}>{item.accountName}</Text>
                         <Text style={styles.displayAcc}>{item.accountNumber}</Text>
@@ -190,14 +198,16 @@ class AutomaticInvestmentAccountComponent extends Component {
 
                 </View>
             </TouchableOpacity>
-        )
+        );}
 
         generateUtmaKeyExtractor = (item) => item.accountName;
 
-        renderUtmaAccount = () => ({ item, index }) =>
-            (
+        renderUtmaAccount = () => ({ item, index }) =>{
+            const{selectedAccount}=this.state;
+        
+            return(
                 <TouchableOpacity onPress={this.selectedAccount(index,globalString.automaticInvestment.utma)}>
-                <View style={this.state.selectedAccount === index ? styles.selectedAccount : styles.accountList}>
+                <View style={selectedAccount === index ? styles.selectedAccount : styles.accountList}>
                     <View style={styles.displayAccView}>
                         <Text style={styles.displayAcc}>{item.accountName}</Text>
                         <Text style={styles.displayAcc}>{item.accountNumber}</Text>
@@ -220,15 +230,16 @@ class AutomaticInvestmentAccountComponent extends Component {
 
                 </View>
                 </TouchableOpacity>
-            )
+            );}
 
 
 
     render() {
-
+        const{selectedAccount,expand,generalAccountJson,iraAccountJson,utmaAccountJson}=this.state;
+        const{navigation}=this.props;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.scrollStyle}>
                     <View>
                         <Text style={styles.autoInvestHead}>{globalString.automaticInvestment.create_invest_plan}</Text>
@@ -264,20 +275,21 @@ class AutomaticInvestmentAccountComponent extends Component {
 
                             <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setStateUpdates(0)}>
                                 <View style={styles.expandView}>
-                                    {this.state.expand[0] ?
+                                    {expand[0] ? (
                                         <GIcon
                                             name="minus"
                                             type="antdesign"
-                                            size={30}
-                                            color="#088ACC"
-                                        /> :
+                                            size={20}
+                                            color="#56565A"
+                                        />
+                                      ) : (
                                         <GIcon
                                             name="plus"
                                             type="antdesign"
-                                            size={30}
-                                            color="#088ACC"
+                                            size={20}
+                                            color="#56565A"
                                         />
-                                    }
+                                      )}
                                     <Text style={styles.autoInvest_sub_title_text}>General Account</Text>
                                 </View>
                             </TouchableOpacity>
@@ -285,73 +297,78 @@ class AutomaticInvestmentAccountComponent extends Component {
 
 
                             <View style={styles.seperator_line} />
-                            {this.state.expand[0] ?
+                            {expand[0] ? (
                                 <FlatList style={styles.topSpace}
-                                    data={this.state.generalAccountJson}
+                                    data={generalAccountJson}
                                     renderItem={this.renderGeneralAccount()}
                                     keyExtractor={this.generateGeneralKeyExtractor}
-                                    extraData={this.state.selectedAccount}
-                                /> : null}
+                                    extraData={selectedAccount}
+                                />
+                              ) : null}
 
                             <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setStateUpdates(1)}>
                                 <View style={styles.expandView}>
-                                    {this.state.expand[1] ?
+                                    {expand[1] ? (
                                         <GIcon
                                             name="minus"
                                             type="antdesign"
-                                            size={30}
-                                            color="#088ACC"
-                                        /> :
+                                            size={20}
+                                            color="#56565A"
+                                        />
+                                      ) : (
                                         <GIcon
                                             name="plus"
                                             type="antdesign"
-                                            size={30}
-                                            color="#088ACC"
+                                            size={20}
+                                            color="#56565A"
                                         />
-                                    }
+                                      )}
                                     <Text style={styles.autoInvest_sub_title_text}>IRA Account</Text>
                                 </View>
                             </TouchableOpacity>
 
 
                             <View style={styles.seperator_line} />
-                              {this.state.expand[1] ?
+                              {expand[1] ? (
                                 <FlatList style={styles.topSpace}
-                                data={this.state.iraAccountJson}
+                                data={iraAccountJson}
                                 renderItem={this.renderIraAccount()}
                                 keyExtractor={this.generateIraKeyExtractor}
-                                extraData={this.state.selectedAccount}
-                                /> : null} 
+                                extraData={selectedAccount}
+                                />
+                              ) : null} 
 
                             <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setStateUpdates(2)}>
                                 <View style={styles.expandView}>
-                                    {this.state.expand[2] ?
+                                    {expand[2] ? (
                                         <GIcon
                                             name="minus"
                                             type="antdesign"
-                                            size={30}
-                                            color="#088ACC"
-                                        /> :
+                                            size={20}
+                                            color="#56565A"
+                                        />
+                                      ) : (
                                         <GIcon
                                             name="plus"
                                             type="antdesign"
-                                            size={30}
-                                            color="#088ACC"
+                                            size={20}
+                                            color="#56565A"
                                         />
-                                    }
+                                      )}
                                     <Text style={styles.autoInvest_sub_title_text}>UTMA Account</Text>
                                 </View>
                             </TouchableOpacity>
 
                             <View style={styles.seperator_line} />
 
-                             {this.state.expand[2] ?
+                             {expand[2] ? (
                                  <FlatList style={styles.topSpace}
-                                 data={this.state.utmaAccountJson}
+                                 data={utmaAccountJson}
                                  renderItem={this.renderUtmaAccount()}
                                  keyExtractor={this.generateUtmaKeyExtractor}
-                                 extraData={this.state.selectedAccount}
-                                 /> : null}
+                                 extraData={selectedAccount}
+                                 />
+                               ) : null}
                         </View>
                     </View>
                     <GButtonComponent
@@ -361,10 +378,10 @@ class AutomaticInvestmentAccountComponent extends Component {
                         onPress={this.navigationCancel}
                     />
                     <GButtonComponent
-                        buttonStyle={this.state.selectedAccount>-1?styles.continueButtonSelected:styles.continueButton}
+                        buttonStyle={selectedAccount>-1?styles.continueButtonSelected:styles.continueButton}
                         buttonText={globalString.common.next}
                         textStyle={styles.continueButtonText}
-                        onPress={this.state.selectedAccount>-1?this.navigationNext:null}
+                        onPress={selectedAccount>-1?this.navigationNext:null}
                         
                     />
                     <GFooterComponent />

@@ -49,11 +49,11 @@ const newData = [
     title: 'Exchange',
   },
   {
-    naviagteTo: 'liquidationScreenOne',
+    naviagteTo: 'LiquidationPageOne',
     title: 'Liquidation',
   },
   {
-    naviagteTo: "manageBeneficaries",
+    naviagteTo: "manageBeneficiaries",
     title: 'Manage Beneficiaries',
   },
   {

@@ -8,7 +8,7 @@ import { GIcon } from './CommonComponents/GIcon';
 import LoginComponent from "./Screens/Login";
 import RegisterEmail from './Screens/RegisterEmail/RegisterEmailComponent';
 import RegisterPassword from './Screens/RegisterPassword/RegisterPasswordComponent';
-import RegisterSelf from './Screens/RegisterSelf/RegisterSelfComponent';
+import RegisterSelf from './Screens/RegisterSelf';
 import RegisterAddress from './Screens/RegisterAddress/RegisterAddressComponent';
 import CommonUIComponent from './Screens/CommonUI/CommonUIComponent';
 import ListView from './Screens/ListView';

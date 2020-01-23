@@ -4,6 +4,10 @@ import { scaledHeight } from '../../Utils/Resolution';
 export const styles = StyleSheet.create({
     accountName: {
         flexDirection: 'row',
+        marginHorizontal: '4%'
+    },
+    accountNumber: {
+        flexDirection: 'row',
         marginBottom: scaledHeight(15),
         marginHorizontal: '4%'
     },
@@ -129,7 +133,11 @@ export const styles = StyleSheet.create({
         marginRight: '4%',
         marginTop: scaledHeight(45),
         position: 'absolute',        
-        zIndex: 5
+        elevation: 6,
+        shadowColor: '#00000029',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 1.0,
+        paddingHorizontal: '4%'
     },
     requestButtonText: {
         alignSelf: 'flex-start',
@@ -167,11 +175,12 @@ export const styles = StyleSheet.create({
         flex: 1,
     },
     accountHeaderText: {
-        fontSize: scaledHeight(22),
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold',
         color: '#56565A',
         marginRight: '4%',
-        flex: 0.8,
+        flex: 0.9,
         alignSelf: 'center'
     },
-    iconStyle: { flex: 0.2, alignSelf: 'center' }
+    iconStyle: { flex: 0.1, alignSelf: 'center' }
 });

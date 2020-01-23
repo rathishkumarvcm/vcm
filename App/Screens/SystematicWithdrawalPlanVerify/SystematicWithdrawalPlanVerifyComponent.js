@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text } from 'react-native';
-import { styles } from './styles';
+import PropTypes from 'prop-types';
+import styles from './styles';
 import {
     GHeaderComponent,
     GFooterComponent,
@@ -8,53 +9,53 @@ import {
     GSingletonClass,
     GDateComponent
 } from '../../CommonComponents';
-import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
 
-import * as regEx from '../../Constants/RegexConstants';
-import { FlatList } from 'react-native-gesture-handler';
-import { scaledHeight } from '../../Utils/Resolution';
 
 
 const myInstance = GSingletonClass.getInstance();
 class SystematicWithdrawalPlanVerifyComponent extends Component {
     constructor(props) {
         super(props);
+        const{navigation}=this.props;
         this.state = {
-            skip: this.props.navigation.getParam('skip', false),
-            indexSelected: `${this.props.navigation.getParam('indexSelected')}`,
+            skip: navigation.getParam('skip', false),
+            indexSelected: `${navigation.getParam('indexSelected')}`,
             systematicWithdrawalJson: {},
             dateFromValue: '',
             dateToValue: '',
-            accountType: `${this.props.navigation.getParam('accountType')}`,
+            accountType: `${navigation.getParam('accountType')}`,
         };
     }
 
     componentDidMount() {
-
+        const{systematicWithdrawalState}=this.props;
+        const{skip,accountType,indexSelected}=this.state;
         let payload = {};
-        if (this.state.skip) {
-            if (this.props && this.props.systematicWithdrawalState) {
-                switch(this.state.accountType.toLowerCase())
+        if (skip) {
+            if (this.props && systematicWithdrawalState) {
+                switch(accountType.toLowerCase())
                 {
                     case 'general':
                         payload = {
-                            ...this.props.systematicWithdrawalState.general
+                            ...systematicWithdrawalState.general
                         };
                         break;
                     case 'ira':
                         payload = {
-                            ...this.props.systematicWithdrawalState.ira
+                            ...systematicWithdrawalState.ira
                         };
                         break;
                     case 'utma':
                         payload = {
-                            ...this.props.systematicWithdrawalState.utma
+                            ...systematicWithdrawalState.utma
                         };
+                        break;
+                    default:
                         break;
                 }
                 this.setState({
-                    systematicWithdrawalJson: payload[this.state.indexSelected],
+                    systematicWithdrawalJson: payload[Number(indexSelected)],
                 });
                 // ,() => {
                 //     this.afterSetStateFinished();
@@ -62,13 +63,14 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
             }
         }
         else {
-             this.setState({ systematicWithdrawalJson: myInstance.getSavedSystematicData() })
+             this.setState({ systematicWithdrawalJson: myInstance.getSavedSystematicData() });
             
         }
 
     }
 
     generateKeyExtractor = (item) => item.id;
+
     renderInvestment = () => ({ item }) =>
         (
 
@@ -78,6 +80,7 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
             </View>
 
         )
+
         onChangeFromDateValue = (date) => {
             this.setState({
                 dateFromValue: date
@@ -89,97 +92,140 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
                 dateToValue: date
             });
         }
-    navigationBack = () => this.props.navigation.goBack();
-    navigationCancel = () => {
-        if(this.state.skip)
-            this.props.navigation.goBack(); 
-        else if(this.state.indexSelected>-1)
-            this.props.navigation.goBack('systematicWithdrawalAdd');
-        else
-            this.props.navigation.goBack('systematicWithdrawalAccount');
+
+    navigationBack = () => {
+        const{navigation}=this.props;
+        navigation.goBack();
     }
-    //this.props.navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
-    navigationNext = () => this.props.navigation.navigate({routeName:'systematicWithdrawalEsign',key:'systematicWithdrawalEsign',params:{accountType:this.state.accountType,indexSelected:this.state.indexSelected}});
-    navigationSubmit = () => this.props.navigation.goBack();
-    //this.props.navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
+
+    navigationCancel = () => {
+        const{navigation}=this.props;
+        const{skip,indexSelected}=this.state;
+        if(skip)
+            navigation.goBack(); 
+        else if(indexSelected>-1)
+            navigation.goBack('systematicWithdrawalAdd');
+        else
+            navigation.goBack('systematicWithdrawalAccount');
+    }
+
+    // navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
+    navigationNext = () => {
+        const{navigation}=this.props;
+        const{accountType,indexSelected}=this.state;
+    navigation.navigate({routeName:'systematicWithdrawalEsign',key:'systematicWithdrawalEsign',params:{accountType,indexSelected}});
+    }
+
+    navigationSubmit = () => 
+    {
+        const{navigation}=this.props;
+        navigation.goBack();
+    }
+    // navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
     
     editAddedAccount=()=>
     {
+        const{navigation}=this.props;
         myInstance.setSystematicWithdrawalEditMode(true);
-        this.props.navigation.goBack('systematicWithdrawalAdd')
+        navigation.goBack('systematicWithdrawalAdd');
     }
 
-    render() {
-        const date = new Date().getDate(); //Current Date
-        const month = new Date().getMonth() + 1; //Current Month
-        const year = new Date().getFullYear(); //Current Year
-        const currentdate = month + "-" + date + "-" + year;
-        const item = this.state.systematicWithdrawalJson;
-        console.log('item*****************top*******',item.dateToInvest)
-        let fundlist=" ";
-        let twiceMonth=" ";
-        if(item.valueDateDropDown!='' && item.valueDateDropDown!='null')
-        {
-            twiceMonth=' & '+item.valueDateDropDown;
-        }
+    getNumberWithOrdinal(n) {
+            var s=["th","st","nd","rd"],
+            v=n%100;
+            return n+(s[(v-20)%10]||s[v]||s[0]);
+     }
 
-        if(item.dateToInvest!=='')
+    render() {
+        const{systematicWithdrawalJson,skip,dateFromValue,dateToValue}=this.state;
+        const date = new Date().getDate(); // Current Date
+        const month = new Date().getMonth() + 1; // Current Month
+        const year = new Date().getFullYear(); // Current Year
+        const currentdate = `${month }-${ date }-${ year}`;
+        const item = systematicWithdrawalJson;
+        let fundlist=" ";
+        let twiceMonth='null';
+        let ordinalDate='';
+        if(item.dateToInvest)
         {
-            twiceMonth=' & '+item.dateToInvest;
-            console.log('item************************',item.dateToInvest)
+            
+            twiceMonth=` & ${item.dateToInvest}`;
+            
         }
-        if(item.account || item.acc_name)//if(this.state.autoInvestmentJson.account)
+        else if(item.valueDateDropDown!=='null')
         {
-            item.investedIn.map((fund)=>{
-                fundlist=fund.name+','+fundlist;
-            })
+            twiceMonth=` & ${item.valueDateDropDown}`;
         }
+        if(item.valueDateBeginDropDown)
+        {
+            ordinalDate=this.getNumberWithOrdinal(item.valueDateBeginDropDown);
+            if(twiceMonth !== 'null')
+            {
+                ordinalDate=ordinalDate+this.getNumberWithOrdinal(twiceMonth);
+            }
+        }
+        else
+        {
+            ordinalDate=this.getNumberWithOrdinal(item.dateFromInvest);
+            if(twiceMonth !== 'null')
+                ordinalDate=ordinalDate+this.getNumberWithOrdinal(twiceMonth);
+        }
+        //item.valueDateBeginDropDown?(this.getNumberWithOrdinal(item.valueDateBeginDropDown)+this.getNumberWithOrdinal(twiceMonth)):this.getNumberWithOrdinal(item.dateFromInvest)+this.getNumberWithOrdinal(twiceMonth)
+
+        
+        if(item.account || item.accName)// if(autoInvestmentJson.account)
+        {
+            item.investedIn.forEach(fund=>{
+                fundlist=`${fund.name}\n${fundlist}`;
+            });
+        }
+        const{navigation}=this.props;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
-                <ScrollView style={{ flex: 0.85 }}>
-                {this.state.skip ? null :
+                <GHeaderComponent navigation={navigation} />
+                <ScrollView style={styles.scrollStyle}>
+                {skip ? null : (
                         <View>
-                    <Text style={styles.autoInvestHead}>{'Create Systematic Withdrawal Plan'}</Text>
+                    <Text style={styles.autoInvestHead}>Create Systematic Withdrawal Plan</Text>
                     <View style={styles.seperator_line} />
                     <View style={styles.circle_view}>
                         <View style={styles.circle_Completed}>
-                            <Text style={styles.circleTextNew}>{'1'}</Text>
+                            <Text style={styles.circleTextNew}>1</Text>
                         </View>
                         <View style={styles.circle_connect} />
                         <View style={styles.circle_Completed}>
-                            <Text style={styles.circleTextNew}>{'2'}</Text>
+                            <Text style={styles.circleTextNew}>2</Text>
                         </View>
                         <View style={styles.circle_connect} />
                         <View style={styles.circle_Completed}>
-                            <Text style={styles.circleTextNew}>{'3'}</Text>
+                            <Text style={styles.circleTextNew}>3</Text>
                         </View>
                         <View style={styles.circle_connect} />
                         <View style={styles.circle_Inprogress}>
-                            <Text style={styles.circleText}>{'4'}</Text>
+                            <Text style={styles.circleText}>4</Text>
                         </View>
                         <View style={styles.circle_connect} />
                         <View style={styles.circle_NotStarted}>
-                            <Text style={styles.circleText}>{'5'}</Text>
+                            <Text style={styles.circleText}>5</Text>
                         </View>
                     </View>
 
                     <View style={styles.autoInvest_title_view}>
-                        <Text style={styles.autoInvest_title_text}>{'4 - Verify'}</Text>
+                        <Text style={styles.autoInvest_title_text}>4 - Verify</Text>
                     </View>
-                    </View>
-                    }
+                        </View>
+                      )}
                     <View style={styles.body}>
                         <View style={styles.autoInvestTitleBody}>
                             {
-                                this.state.skip ?
-                                    <Text style={styles.autoInvest_sub_title_text}>{'Skip the Investment Plan'}</Text>
-                                    :
+                                skip ?
+                                    <Text style={styles.autoInvest_sub_title_text}>Skip the Investment Plan</Text>
+                                    : (
                                     <View style={styles.autoInvest_sub_title_view}>
-                                        <Text style={styles.autoInvest_sub_title_text}>{'Verify the Investment Plan'}</Text>
-                                        <Text style={styles.autoInvest_sub_edit} onPress={this.editAddedAccount}>{'Edit'}</Text>
+                                        <Text style={styles.autoInvest_sub_title_text}>Verify the Investment Plan</Text>
+                                        <Text style={styles.autoInvest_sub_edit} onPress={this.editAddedAccount}>Edit</Text>
                                     </View>
-                            }
+                                  )}
 
 
                         </View>
@@ -187,64 +233,67 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
                          <View style={styles.verifyContentMain}>
 
                         <View style={styles.verifyContentView}>
-                            <Text style={styles.verifyConent1}>{"Account"}</Text>
-                            <Text style={styles.verifyConent2}>{item.account?item.account:item.acc_name+'|'+item.acc_no}</Text>
+                            <Text style={styles.verifyConent1}>Account</Text>
+                            <Text style={styles.verifyConent2}>{item.account?item.account:`${item.accName}|${item.accNumber}`}</Text>
                         </View>
                         <View style={styles.verifyContentView}>
-                            <Text style={styles.verifyConent1}>{"Withdrawal From"}</Text>
+                            <Text style={styles.verifyConent1}>Withdrawal From</Text>
 
-                            <Text style={styles.verifyConent2}>{fundlist.replace(/,$/," ").trim()}</Text>
+                            <Text style={styles.verifyConent2}>{fundlist.trim()}</Text>
                             
                         </View>
                         <View style={styles.verifyContentView}>
-                            <Text style={styles.verifyConent1}>{"Total Amount"}</Text>
+                            <Text style={styles.verifyConent1}>Total Amount</Text>
                             <Text style={styles.verifyConent2}>{item.totalFund?item.totalFund:item.totalAmount}</Text>
                         </View>
                         <View style={styles.verifyContentView}>
-                            <Text style={styles.verifyConent1}>{"Fund To"}</Text>
+                            <Text style={styles.verifyConent1}>Fund To</Text>
                             <Text style={styles.verifyConent2}>{item.fundTo}</Text>
                         </View>
 
                         <View style={styles.verifyContentView}>
-                            <Text style={styles.verifyConent1}>{"Frequency"}</Text>
+                            <Text style={styles.verifyConent1}>Frequency</Text>
                             <Text style={styles.verifyConent2}>{item.valueTypeDropDown?item.valueTypeDropDown:item.invest}</Text>
                         </View>
                         <View style={styles.verifyContentView}>
-                            <Text style={styles.verifyConent1}>{"Date"}</Text>
-                            <Text style={styles.verifyConent2}>{item.valueDateBeginDropDown?(item.valueDateBeginDropDown.toString()+twiceMonth.toString()):item.dateFromInvest+twiceMonth.toString()}</Text>
+                            <Text style={styles.verifyConent1}>Date</Text>
+                            <Text style={styles.verifyConent2}>{ordinalDate}</Text>
                         </View>
                         <View style={styles.verifyContentView}>
-                            <Text style={styles.verifyConent1}>{"Beginning on"}</Text>
-                            <Text style={styles.verifyConent2}>{item.valueStartDateDropDown+'/'+item.valueStartYearDropDown}</Text>
+                            <Text style={styles.verifyConent1}>Beginning on</Text>
+                            <Text style={styles.verifyConent2}>{item.valueStartMonthDropDown?`${item.valueStartMonthDropDown}/${item.valueStartYearDropDown}`:`${item.startDate}/${item.startYear}`}</Text>
                         </View>
-                        </View>
+                         </View>
                         <View style={styles.verifyBottomView}>
                             <Text style={styles.verifyBottomText}>
-                                {'Note : If the day you selected falls on a weekend or holiday, your Fund Transfer on next business day'}
+                                Note : If the day you selected falls on a weekend or holiday, your Fund Transfer on next business day
                             </Text>
                         </View>
-                        {this.state.skip ?
+                        {skip ? (
                             <View>
-                                <Text style={styles.autoInvest_sub_title_skip}>{'Skip the Investment'}</Text>
+                                <Text style={styles.autoInvest_sub_title_skip}>Skip the Investment</Text>
                                 <View style={styles.seperator_line} />
                                 <GDateComponent
                                     dateTitleName={styles.financialTextLabel}
                                     dateTextName="Skip from date"
                                     minDate={currentdate}
                                     placeholder="MM/DD/YYYY"
-                                    date={this.state.dateFromValue}
-                                    onDateChange={this.onChangeFromDateValue} />
+                                    date={dateFromValue}
+                                    onDateChange={this.onChangeFromDateValue}
+                                />
 
                                 <GDateComponent
                                     dateTitleName={styles.financialTextLabel}
                                     dateTextName="Skip to date"
                                     minDate={currentdate}
                                     placeholder="MM/DD/YYYY"
-                                    date={this.state.dateToValue}
-                                    onDateChange={this.onChangeToDateValue} />
+                                    date={dateToValue}
+                                    onDateChange={this.onChangeToDateValue}
+                                />
 
 
                             </View>
+                          )
                             : null
                         }
                         <GButtonComponent
@@ -253,26 +302,30 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
                             textStyle={styles.cancelButtonText}
                             onPress={this.navigationCancel}
                         />
-                         {!this.state.skip ?
+                         {!skip ? (
                         <GButtonComponent
                             buttonStyle={styles.cancelButton}
                             buttonText={globalString.common.back}
                             textStyle={styles.cancelButtonText}
                             onPress={this.navigationBack}
-                        />: null}
-                         {!this.state.skip ?
+                        />
+                      ): null}
+                         {!skip ? (
                         <GButtonComponent
-                            buttonStyle={styles.continueButton}
+                            buttonStyle={styles.continueButtonSelected}
                             buttonText={globalString.common.next}
                             textStyle={styles.continueButtonText}
                             onPress={this.navigationNext}
                         />
-                        : <GButtonComponent
-                        buttonStyle={styles.continueButton}
+                      )
+                        : (
+                    <GButtonComponent
+                        buttonStyle={dateFromValue!=='' && dateToValue!==''? styles.continueButtonSelected:styles.continueButton}
                         buttonText={globalString.common.submit}
                         textStyle={styles.continueButtonText}
-                        onPress={this.navigationSubmit}
-                    />}
+                        onPress={dateFromValue!=='' && dateToValue!==''?this.navigationSubmit:null}
+/>
+)}
                         <GFooterComponent />
                     </View>
                 </ScrollView>
@@ -282,11 +335,13 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
 }
 SystematicWithdrawalPlanVerifyComponent.propTypes = {
 
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    systematicWithdrawalState: PropTypes.instanceOf(Object),
 };
 
 SystematicWithdrawalPlanVerifyComponent.defaultProps = {
-
+    navigation:{},
+    systematicWithdrawalState:{}
 };
 
 export default SystematicWithdrawalPlanVerifyComponent;

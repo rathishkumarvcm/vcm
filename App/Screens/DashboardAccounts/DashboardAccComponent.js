@@ -203,10 +203,13 @@ class DashboardAccComponent extends Component {
         const tempkey = ActionTypes.GET_ACCOUNT_TYPES;
         if (this.props && accOpeningData && accOpeningData[tempkey]) {
             const tempResponse = accOpeningData[tempkey];
+            /*
             if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
                 accList = tempResponse.result;
                 accList = accList.value;
             }
+            */
+           accList = tempResponse.value;
         }
 
         //  let tempPendingAppData = this.state.retrivePendingAppData;

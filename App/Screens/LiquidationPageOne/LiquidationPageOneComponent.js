@@ -314,15 +314,10 @@ class LiquidationPageOneComponent extends Component {
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
-                    <TouchableOpacity onPress={this.goBack}>
-                        <GIcon
-                            name="left"
-                            type="antdesign"
-                            size={25}
-                            color="#707070"
-                        />
-                    </TouchableOpacity>
-
+                    <View style={styles.headerTextView}>
+                        <Text style={styles.titleHeaderTextStyle}>{gblStrings.liquidation.liquidation}</Text>
+                        <View style={styles.line} />
+                    </View>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.flex1}>
 

@@ -49,6 +49,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginRight: "6%"
     },
+    iconStyle: {
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+        width: "20%"
+    },
+    titleHeaderTextStyle: {
+        color: '#56565A',
+        fontSize: scaledHeight(24),
+        fontWeight: 'bold'
+    },
+    headerTextView: {
+        marginLeft: '4%',
+        marginRight: '4%'
+    },
     toggleOnGreyBg: {
         backgroundColor: '#444444',
         borderColor: '#707070',
@@ -162,7 +176,7 @@ const styles = StyleSheet.create({
 
     flexAccDetails1: {
         height: scaledHeight(73),
-        marginLeft: '4%',
+        marginLeft: '2%',
         marginRight: "4%",
         marginTop: "4%",
         flexDirection: 'row',

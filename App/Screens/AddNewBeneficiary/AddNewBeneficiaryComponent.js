@@ -142,7 +142,7 @@ class AddNewBeneficiaryComponent extends Component {
     const { newPrimaryBene, newContingentBene } = this.state;
     if (newPrimaryBene) {
       totalPri = newPrimaryBene.reduce((prev, cur) => {
-        let dist = parseInt(cur.distribution_Per,10);
+        let dist = parseInt(cur.distribution_Per, 10);
         if (this.isEmpty(cur.distribution_Per)) {
           dist = 0;
         }
@@ -151,7 +151,7 @@ class AddNewBeneficiaryComponent extends Component {
     }
     if (newContingentBene) {
       totalCon = newContingentBene.reduce((prev, cur) => {
-        let dist = parseInt(cur.distribution_Per,10);
+        let dist = parseInt(cur.distribution_Per, 10);
         if (this.isEmpty(cur.distribution_Per)) {
           dist = 0;
         }
@@ -174,7 +174,7 @@ class AddNewBeneficiaryComponent extends Component {
     let newPrimaryBeneData = [];
     let newConBeneData = [];
 
-    if (newContingentBene && newContingentBene.length > 0) {
+    if (newContingentBene && newContingentBene.length >= 0) {
       const tempArr = [];
       const len = newContingentBene.length;
       for (let i = 0; i < len; i += 1) {
@@ -201,7 +201,7 @@ class AddNewBeneficiaryComponent extends Component {
       newConBeneData = tempArr;
     }
 
-    if (newPrimaryBene && newPrimaryBene.length > 0) {
+    if (newPrimaryBene && newPrimaryBene.length >= 0) {
       const tempArr = [];
       const len = newPrimaryBene.length;
       for (let i = 0; i < len; i += 1) {
@@ -250,8 +250,9 @@ class AddNewBeneficiaryComponent extends Component {
   onClickSave = () => {
     const { saveBeneficiaryData, navigation } = this.props;
     const payload = this.getPayloadData();
+    // console.log("payload", payload);
     saveBeneficiaryData(payload);
-    navigation.navigate("verifyManageBeneficiaries");
+    navigation.navigate("verifyManageBeneficiaries",{newFlag:true});
   }
 
   goBack = () => {
@@ -637,7 +638,7 @@ class AddNewBeneficiaryComponent extends Component {
   }
 
   generatePrimaryBene = (item) => item.key;
-  
+
   generateContingentKey = (item) => item.key;
 
   render() {
@@ -779,7 +780,7 @@ class AddNewBeneficiaryComponent extends Component {
                   <View style={styles.distributionView}>
                     <View style={styles.sliderView}>
                       <Slider
-                        value={parseInt(item.distribution_Per,10) / 100}
+                        value={parseInt(item.distribution_Per, 10) / 100}
                         onValueChange={this.onAddedNewPriTextChange(index, 'distribution_Per')}
                       />
                     </View>
@@ -797,7 +798,7 @@ class AddNewBeneficiaryComponent extends Component {
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0;
             } else {
-              distributionValue = parseInt(item.distribution_Per,10);
+              distributionValue = parseInt(item.distribution_Per, 10);
             }
             return (
               <View key={this.generateContingentKey} style={styles.blockMarginTop}>

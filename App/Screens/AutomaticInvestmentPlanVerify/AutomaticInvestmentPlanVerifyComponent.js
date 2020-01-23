@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, InteractionManager } from 'react-native';
-import { styles } from './styles';
+import { View, ScrollView, Text } from 'react-native';
+import PropTypes from 'prop-types';
+import styles from './styles';
 import {
     GHeaderComponent,
     GFooterComponent,
@@ -8,7 +9,6 @@ import {
     GDateComponent,
     GSingletonClass
 } from '../../CommonComponents';
-import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
 
 
@@ -17,47 +17,51 @@ const myInstance = GSingletonClass.getInstance();
 class AutomaticInvestmentPlanVerifyComponent extends Component {
     constructor(props) {
         super(props);
-
+        const{navigation}=this.props;
 
         this.state = {
-            skip: this.props.navigation.getParam('skip', false),
-            indexSelected: `${this.props.navigation.getParam('indexSelected')}`,
+            skip: navigation.getParam('skip', false),
+            indexSelected: `${navigation.getParam('indexSelected')}`,
             autoInvestmentJson: {},
             dateFromValue: '',
             dateToValue: '',
-            accountType: `${this.props.navigation.getParam('accountType')}`,
+            accountType: `${navigation.getParam('accountType')}`,
         };
     }
-    componentDidMount() {
 
+    componentDidMount() {
+        const{automaticInvestmentState}=this.props;
+        const{skip,accountType,indexSelected}=this.state;
         let payload = {};
-        if (this.state.skip) {
-            if (this.props && this.props.automaticInvestmentState) {
-                switch(this.state.accountType.toLowerCase())
+        if (skip) {
+            if (this.props && automaticInvestmentState) {
+                switch(accountType.toLowerCase())
                 {
                     case 'general':
                         payload = {
-                            ...this.props.automaticInvestmentState.general
+                            ...automaticInvestmentState.general
                         };
                         break;
                     case 'ira':
                         payload = {
-                            ...this.props.automaticInvestmentState.ira
+                            ...automaticInvestmentState.ira
                         };
                         break;
                     case 'utma':
                         payload = {
-                            ...this.props.automaticInvestmentState.utma
+                            ...automaticInvestmentState.utma
                         };
                         break;
+                        default:
+                            break;
                 }
                 this.setState({
-                    autoInvestmentJson: payload[this.state.indexSelected],
+                    autoInvestmentJson: payload[Number(indexSelected)],
                 });
             }
         }
         else {
-            this.setState({ autoInvestmentJson: myInstance.getSavedAutomaticData() })
+            this.setState({ autoInvestmentJson: myInstance.getSavedAutomaticData() });
             
         }
 
@@ -65,6 +69,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
 
 
     generateKeyExtractor = (item) => item.id;
+
     renderInvestment = () => ({ item }) =>
         (
 
@@ -79,16 +84,17 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
 
     getPayload = () => {
 
-
+        const{automaticInvestmentState}=this.props;
         let payload = {};
-        if (this.props && this.props.automaticInvestmentState && this.props.automaticInvestmentState.savedAccData) {
+        if (this.props && automaticInvestmentState && automaticInvestmentState.savedAccData) {
             payload = {
-                ...this.props.automaticInvestmentState.savedAccData
+                ...automaticInvestmentState.savedAccData
             };
         }
         return payload;
 
     }
+
     onChangeFromDateValue = (date) => {
         this.setState({
             dateFromValue: date
@@ -102,84 +108,103 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
     }
 
     navigationNext = () => {
-        this.props.navigation.navigate({routeName:'automaticInvestmentEsign',key:'automaticInvestmentEsign',params:{accountType:this.state.accountType,indexSelected:this.state.indexSelected}});
+        const{navigation}=this.props;
+        const{accountType,indexSelected}=this.state;
+        navigation.navigate({routeName:'automaticInvestmentEsign',key:'automaticInvestmentEsign',params:{accountType,indexSelected}});
     }
 
-    navigationSubmit = () => this.props.navigation.goBack();
-    //this.props.navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
-    navigationBack = () => this.props.navigation.goBack();
-    navigationCancel = () => this.props.navigation.goBack('automaticInvestment');
+    navigationSubmit = () => 
+    {
+        const{navigation}=this.props;
+        navigation.goBack();
+    }
+
+    // navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
+    navigationBack = () => {
+        const{navigation}=this.props;
+        navigation.goBack();
+        //'automaticInvestment',{skipFrom:dateFromValue,skipTo:dateToValue,index:}
+    }
+
+    navigationCancel = () => {
+        const{navigation}=this.props;
+        navigation.goBack('automaticInvestment');
+    }
+
     editAddedAccount=()=>
     {
+        const{navigation}=this.props;
+        // const{indexSelected}=this.state;
         myInstance.setAutomaticInvestmentEditMode(true);
-        //if(this.state.indexSelected>-1)
-            this.props.navigation.goBack('automaticInvestmentSchedule')
-        //else
-            //this.props.navigation.goBack('automaticInvestmentAdd')
+        // if(indexSelected>-1)
+            navigation.goBack('automaticInvestmentSchedule');
+        // else
+            // navigation.goBack('automaticInvestmentAdd')
     }
 
     render() {
-
-        const date = new Date().getDate(); //Current Date
-        const month = new Date().getMonth() + 1; //Current Month
-        const year = new Date().getFullYear(); //Current Year
-        const currentdate = month + "-" + date + "-" + year;
-        const item = this.state.autoInvestmentJson;
+        const{navigation}=this.props;
+        const{autoInvestmentJson,skip,dateToValue,dateFromValue}=this.state;
+        const date = new Date().getDate(); // Current Date
+        const month = new Date().getMonth() + 1; // Current Month
+        const year = new Date().getFullYear(); // Current Year
+        const currentdate = `${month }-${ date }-${ year}`;
+        const item = autoInvestmentJson;
         
         let fundlist="";
        
-        if(item.account || item.acc_name)
+        if(item.account || item.accName)
         {
-            item.investedIn.map((fund)=>{
-                fundlist=fund.name+','+fundlist;
-            })
+            item.investedIn.forEach(fund=>{
+                fundlist=`${fund.name}\n${fundlist}`;
+            });
         }
         return (
             <View style={styles.container}>
-                <GHeaderComponent register navigation={this.props.navigation} />
-                <ScrollView style={{ flex: 0.85 }}>
-                    {this.state.skip ? null :
+                <GHeaderComponent register navigation={navigation} />
+                <ScrollView style={styles.scrollStyle}>
+                    {skip ? null : (
                         <View>
-                            <Text style={styles.autoInvestHead}>{'Create Automatic Investment Plan'}</Text>
+                            <Text style={styles.autoInvestHead}>Create Automatic Investment Plan</Text>
                             <View style={styles.seperator_line} />
                             <View style={styles.circle_view}>
                                 <View style={styles.circle_Completed}>
-                                    <Text style={styles.circleTextNew}>{'1'}</Text>
+                                    <Text style={styles.circleTextNew}>1</Text>
                                 </View>
                                 <View style={styles.circle_connect} />
                                 <View style={styles.circle_Completed}>
-                                    <Text style={styles.circleTextNew}>{'2'}</Text>
+                                    <Text style={styles.circleTextNew}>2</Text>
                                 </View>
                                 <View style={styles.circle_connect} />
                                 <View style={styles.circle_Completed}>
-                                    <Text style={styles.circleTextNew}>{'3'}</Text>
+                                    <Text style={styles.circleTextNew}>3</Text>
                                 </View>
                                 <View style={styles.circle_connect} />
                                 <View style={styles.circle_Inprogress}>
-                                    <Text style={styles.circleText}>{'4'}</Text>
+                                    <Text style={styles.circleText}>4</Text>
                                 </View>
                                 <View style={styles.circle_connect} />
                                 <View style={styles.circle_NotStarted}>
-                                    <Text style={styles.circleText}>{'5'}</Text>
+                                    <Text style={styles.circleText}>5</Text>
                                 </View>
                             </View>
 
                             <View style={styles.autoInvest_title_view}>
-                                <Text style={styles.autoInvest_title_text}>{'4 - Verify'}</Text>
+                                <Text style={styles.autoInvest_title_text}>4 - Verify</Text>
                             </View>
                         </View>
-                    }
+                      )}
                     <View style={styles.body}>
                         <View style={styles.autoInvestTitleBody}>
                             {
-                                this.state.skip ?
-                                    <Text style={styles.autoInvest_sub_title_text}>{'Skip the Investment Plan'}</Text>
-                                    :
+                                skip ?
+                                    <Text style={styles.autoInvest_sub_title_text}>Skip the Investment Plan</Text>
+                                    : (
                                     <View style={styles.autoInvest_sub_title_view}>
-                                        <Text style={styles.autoInvest_sub_title_text}>{'Verify the Investment Plan'}</Text>
-                                        <Text style={styles.autoInvest_sub_edit} onPress={this.editAddedAccount}>{'Edit'}</Text>
+                                        <Text style={styles.autoInvest_sub_title_text}>Verify the Investment Plan</Text>
+                                        <Text style={styles.autoInvest_sub_edit} onPress={this.editAddedAccount}>Edit</Text>
                                     </View>
-                            }
+                                  )}
 
 
                         </View>
@@ -188,50 +213,50 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                         <View style={styles.verifyContentMain}>
 
                             <View style={styles.verifyContentView}>
-                                <Text style={styles.verifyConent1}>{"Account"}</Text>
-                                <Text style={styles.verifyConent2}>{item.account?item.account:item.acc_name+'|'+item.acc_no}</Text>
+                                <Text style={styles.verifyConent1}>Account</Text>
+                                <Text style={styles.verifyConent2}>{item.account?item.account:`${item.accName}|${item.accNumber}`}</Text>
                             </View>
                             <View style={styles.verifyContentView}>
-                                <Text style={styles.verifyConent1}>{"Invested In"}</Text>
+                                <Text style={styles.verifyConent1}>Invested In</Text>
                             
-                                <Text style={styles.verifyConent2}>{fundlist.replace(/,$/," ").trim()}</Text>
+                                <Text style={styles.verifyConent2}>{fundlist.trim()}</Text>
                                 
                             </View>
                             <View style={styles.verifyContentView}>
-                                <Text style={styles.verifyConent1}>{"Total Amount"}</Text>
+                                <Text style={styles.verifyConent1}>Total Amount</Text>
                                 <Text style={styles.verifyConent2}>{item.totalFund?item.totalFund:item.totalAmount}</Text>
                             </View>
                             <View style={styles.verifyContentView}>
-                                <Text style={styles.verifyConent1}>{"Fund From"}</Text>
+                                <Text style={styles.verifyConent1}>Fund From</Text>
                                 <Text style={styles.verifyConent2}>{item.fundFrom}</Text>
                             </View>
 
                             <View style={styles.verifyContentView}>
-                                <Text style={styles.verifyConent1}>{"Invest"}</Text>
+                                <Text style={styles.verifyConent1}>Invest</Text>
                                 <Text style={styles.verifyConent2}>{item.valueTypeDropDown?item.valueTypeDropDown:item.invest}</Text>
                             </View>
                             <View style={styles.verifyContentView}>
-                                <Text style={styles.verifyConent1}>{"Date to Invest"}</Text>
+                                <Text style={styles.verifyConent1}>Date to Invest</Text>
                                 <Text style={styles.verifyConent2}>{item.valueDateDropDown?item.valueDateDropDown:item.dateToInvest}</Text>
                             </View>
                             <View style={styles.verifyContentView}>
-                                <Text style={styles.verifyConent1}>{"End Date"}</Text>
+                                <Text style={styles.verifyConent1}>End Date</Text>
                                 <Text style={styles.verifyConent2}>{item.endDate}</Text>
                             </View>
                             <View style={styles.verifyContentView}>
-                                <Text style={styles.verifyConent1}>{"Next Investement Date"}</Text>
+                                <Text style={styles.verifyConent1}>Next Investement Date</Text>
                                 <Text style={styles.verifyConent2}>{item.nextInvestementDate}</Text>
                             </View>
                         </View>
 
                         <View style={styles.verifyBottomView}>
                             <Text style={styles.verifyBottomText}>
-                                {'Note : If the day you selected falls on a weekend or holiday, your draft will occur the next business day'}
+                                Note : If the day you selected falls on a weekend or holiday, your draft will occur the next business day
                             </Text>
                         </View>
-                        {this.state.skip ?
+                        {skip ? (
                             <View>
-                                <Text style={styles.autoInvest_sub_title_skip}>{'Skip the Investment'}</Text>
+                                <Text style={styles.autoInvest_sub_title_skip}>Skip the Investment</Text>
                                 <View style={styles.seperator_line} />
 
                                 <GDateComponent
@@ -239,19 +264,22 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                                     dateTextName="Skip from date"
                                     minDate={currentdate}
                                     placeholder="MM/DD/YYYY"
-                                    date={this.state.dateFromValue}
-                                    onDateChange={this.onChangeFromDateValue} />
+                                    date={dateFromValue}
+                                    onDateChange={this.onChangeFromDateValue}
+                                />
 
                                 <GDateComponent
                                     dateTitleName={styles.financialTextLabel}
                                     dateTextName="Skip to date"
                                     minDate={currentdate}
                                     placeholder="MM/DD/YYYY"
-                                    date={this.state.dateToValue}
-                                    onDateChange={this.onChangeToDateValue} />
+                                    date={dateToValue}
+                                    onDateChange={this.onChangeToDateValue}
+                                />
 
 
                             </View>
+                          )
                             : null
                         }
                         <GButtonComponent
@@ -260,26 +288,30 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                             textStyle={styles.cancelButtonText}
                             onPress={this.navigationCancel}
                         />
-                        {!this.state.skip ?
+                        {!skip ? (
                             <GButtonComponent
                                 buttonStyle={styles.cancelButton}
                                 buttonText={globalString.common.back}
                                 textStyle={styles.cancelButtonText}
                                 onPress={this.navigationBack}
-                            /> : null}
-                        {!this.state.skip ?
+                            />
+                          ) : null}
+                        {!skip ? (
                             <GButtonComponent
-                                buttonStyle={styles.continueButton}
+                                buttonStyle={styles.continueButtonSelected}
                                 buttonText={globalString.common.next}
                                 textStyle={styles.continueButtonText}
                                 onPress={this.navigationNext}
                             />
-                            : <GButtonComponent
-                                buttonStyle={styles.continueButton}
+                          )
+                            : (
+                            <GButtonComponent
+                                buttonStyle={dateFromValue!=='' && dateToValue!==''?styles.continueButtonSelected:styles.continueButton}
                                 buttonText={globalString.common.submit}
                                 textStyle={styles.continueButtonText}
-                                onPress={this.navigationSubmit}
-                            />}
+                                onPress={dateFromValue!=='' && dateToValue!==''?this.navigationSubmit:null}
+                            />
+)}
                         <GFooterComponent />
                     </View>
                 </ScrollView>
@@ -289,11 +321,13 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
 }
 AutomaticInvestmentPlanVerifyComponent.propTypes = {
 
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    automaticInvestmentState: PropTypes.instanceOf(Object),
 };
 
 AutomaticInvestmentPlanVerifyComponent.defaultProps = {
-
+    navigation:{},
+    automaticInvestmentState:{}
 };
 
 export default AutomaticInvestmentPlanVerifyComponent;

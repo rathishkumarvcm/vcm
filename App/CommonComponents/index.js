@@ -26,12 +26,16 @@ import GDateComponent from './GDateComponent';
 import GModalComponent from './GModalComponent';
 import GCollapseComponent from './GCollapseComponent';
 import GSingletonClass from './GSingletonClass';
+import GBankAccValidateComponent from './GBankAccValidateComponent';
+import GAddressValidateComponent from './GAddressValidateComponent';
 
 import {
     SetKeyValueToStore,
     GetKeyValueFromStore,
     RemoveKeyValueFromStore
   } from "./GPersistantStore";
+
+import GErrorBoundaries from './GErrorBoundaries';
 
 export {
     GLoadingSpinner,
@@ -65,5 +69,8 @@ export {
     GDateComponent,
     GModalComponent,
     GCollapseComponent,
-    GSingletonClass
+    GSingletonClass,
+    GBankAccValidateComponent,
+    GAddressValidateComponent,
+    GErrorBoundaries
 };

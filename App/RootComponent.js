@@ -7,7 +7,7 @@ import store from './Shared/Store/index';
 import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
 import { Auth } from "aws-amplify";
 import { scaledHeight } from './Utils/Resolution';
-import { showAlertWithCancelButton } from './CommonComponents'
+import { showAlertWithCancelButton,GErrorBoundaries } from './CommonComponents'
 import { NavigationActions } from 'react-navigation';
 
 /*
@@ -42,8 +42,7 @@ class RootComponent extends Component {
   }
 
   componentDidMount() {
-    console.log("sessionId", sessionId);
-    AppState.addEventListener('change', this._handleAppStateChange);
+   // AppState.addEventListener('change', this._handleAppStateChange);
 
     setInterval(() => {
       RNSecureKeyStore.get("jwtToken")
@@ -94,9 +93,9 @@ class RootComponent extends Component {
     }, 300000);
   }
 
-  componentWillMount() {
+  /*componentWillMount() {
     AppState.removeEventListener('change', this._handleAppStateChange);
-  }
+  }*/
 
   _handleAppStateChange = (nextAppState) => {
     if (
@@ -112,10 +111,11 @@ class RootComponent extends Component {
 
   render() {
     return (
-      <Provider store={store}>
-        <AppNavigator ref={nav => {this.navigator = nav; }} />
+    <GErrorBoundaries>
+        <Provider store={store}>
+          <AppNavigator ref={nav => {this.navigator = nav; }} />
       </Provider>
-
+    </GErrorBoundaries>
     );
   }
 }

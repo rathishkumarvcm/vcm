@@ -588,7 +588,7 @@ class PurchaseScreenTwoComponent extends Component {
             totalCount = 3;
         }
 
-        const date = new Date().getDate();
+        const date = new Date().getDate() + 1;
         const month = new Date().getMonth() + 1;
         const year = new Date().getFullYear();
         const currentDate = `${month}-${date}-${year}`;
@@ -602,6 +602,10 @@ class PurchaseScreenTwoComponent extends Component {
                 {(accOpeningData.isLoading || masterLookupStateData.isLoading || isLoading) && <GLoadingSpinner />}
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
+                    <View style={styles.headerTextView}>
+                        <Text style={styles.titleHeaderTextStyle}>Purchase</Text>
+                        <View style={styles.line} />
+                    </View>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.topContainer}>
                         <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountName} {ammend ? ammendData.selectedAccountData.accountName : savedData.selectedAccountData.accountName}</Text>
@@ -656,8 +660,10 @@ class PurchaseScreenTwoComponent extends Component {
                     {selectedFundIndex !== null ?
                         (
                             <View style={styles.innerContainerStyle}>
-                                <Text style={styles.headerText}>{gblStrings.purchase.fundYourAcc}</Text>
-                                <View style={styles.line} />
+                                <View onClick={this.onClickExpandFundInvestment}>
+                                    <Text style={styles.headerText}>{gblStrings.purchase.fundYourAcc}</Text>
+                                    <View style={styles.line} />
+                                </View>
                                 <Text style={styles.stmtTxtStyle}>{gblStrings.purchase.fundAccStmt}</Text>
                                 <View>
                                     <TouchableOpacity

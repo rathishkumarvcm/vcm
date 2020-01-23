@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, FlatList, Switch, TouchableOpacity } from 'react-native';
-import { styles } from './styles';
+import PropTypes from 'prop-types';
+import styles from './styles';
 import {
     GHeaderComponent,
     GFooterComponent,
@@ -9,28 +10,27 @@ import {
     GSingletonClass
 } from '../../CommonComponents';
 import { CustomRadio } from '../../AppComponents';
-import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
-import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 
-
+const switchStyle={ flase: '#DBDBDB', true: '#444444' };
 const myInstance = GSingletonClass.getInstance();
 let isValidScreen=true;
 class AutomaticInvestmentAddComponent extends Component {
     constructor(props) {
         super(props);
-        const automaticAdd =  myInstance.getAutomaticInvestmentEditMode()? (myInstance.getScreenStateData().automaticAdd || {}):{};
+        const automaticAdd = myInstance.getAutomaticInvestmentEditMode()? (myInstance.getScreenStateData().automaticAdd || {}):{};
+        const{navigation}=this.props;
         this.state = {
 
             selectedItemID: "D",
             selectedItemName: "Doller",
             fundList: [],
-            ItemToEdit: `${this.props.navigation.getParam('ItemToEdit', -1)}`,
-            acc_name: `${this.props.navigation.getParam('acc_name')}`,
-            acc_no: `${this.props.navigation.getParam('acc_no')}`,
-            accountType: `${this.props.navigation.getParam('accountType')}`,
+            ItemToEdit: `${navigation.getParam('ItemToEdit', -1)}`,
+            accName: `${navigation.getParam('accName')}`,
+            accNumber: `${navigation.getParam('accNumber')}`,
+            accountType: `${navigation.getParam('accountType')}`,
             selectedBank: -1,
             fundRemaining: 0,
             totalFund: 0,
@@ -39,44 +39,53 @@ class AutomaticInvestmentAddComponent extends Component {
             refresh:false,
             errorMsg:'Please enter amount greater than or equal to 50',
             IsNotValidAmount:false,
-            bankAccountInfo: [],
+            bankAccountDetails: [],
             ...automaticAdd
         };
     }
 
 
     componentDidMount() {
-        if (this.state && this.state.fundList && !this.state.fundList.length > 0) {
+        const{getFundListData,getBankAccountInfo,automaticInvestmentState,bankAccountInfo}=this.props;
+        const{fundList,ItemToEdit,accountType}=this.state;
+        if (fundList && !fundList.length > 0) {
             const fundListPayload = {};
-            this.props.getFundListData(fundListPayload);
+            getFundListData(fundListPayload);
         }
-        this.props.getBankAccountInfo();
-        if (this.state.ItemToEdit > -1) {
-            if (this.props && this.props.automaticInvestmentState) {
+        getBankAccountInfo();
+        if (ItemToEdit > -1) {
+            if (this.props && automaticInvestmentState) {
                 let valueToEdit;
-                switch(this.state.accountType)
+                switch(accountType)
                 {
                     case 'General':
-                        valueToEdit = this.props.automaticInvestmentState.general[this.state.ItemToEdit];
+                        valueToEdit = automaticInvestmentState.general[Number(ItemToEdit)];
                         break;
                     case 'Ira':
-                        valueToEdit = this.props.automaticInvestmentState.ira[this.state.ItemToEdit];
+                        valueToEdit = automaticInvestmentState.ira[Number(ItemToEdit)];
                         break;
                     case 'Utma':
-                        valueToEdit = this.props.automaticInvestmentState.utma[this.state.ItemToEdit];
+                        valueToEdit = automaticInvestmentState.utma[Number(ItemToEdit)];
+                        break;
+                    default:
                         break;
                 }
-                let strTotal = valueToEdit.totalAmount.replace('$', '').trim();
+                const strTotal = valueToEdit.totalAmount.replace('$', '').trim();
                 let bankIndex = 0;
-                this.props.bankAccountInfo.map((bank, index) => {
+                bankAccountInfo.forEach((bank, index) => {
                     if (bank.bankName === valueToEdit.fundFrom) {
                         bankIndex = index;
                     }
-                })
+                });
+                // bankAccountInfo.map((bank, index) => () => {
+                //     if (bank.bankName === valueToEdit.fundFrom) {
+                //         bankIndex = index;
+                //     }
+                // });
                 
                 this.setState({
-                    acc_name: valueToEdit.account.split('|')[0],
-                    acc_no: valueToEdit.account.split('|')[1],
+                    accName: valueToEdit.account.split('|')[0],
+                    accNumber: valueToEdit.account.split('|')[1],
                     totalFund: Number(strTotal),
                     investedIn: valueToEdit.investedIn,
                     fundConsumed: Number(strTotal),
@@ -87,16 +96,19 @@ class AutomaticInvestmentAddComponent extends Component {
         }
         
     }
-    componentDidUpdate(prevProps, prevState) {
+
+    componentDidUpdate(prevProps) {
+        const{fundListState,bankAccountInfo}=this.props;
+        const{bankAccountDetails} = this.state;
         if (this.props !== prevProps) {
             let tempFundListData = [];
-            if (this.props.fundListState[ActionTypes.GET_FUNDLIST] != undefined && this.props.fundListState[ActionTypes.GET_FUNDLIST].Items != null) 
+            if (fundListState[ActionTypes.GET_FUNDLIST] !== undefined && fundListState[ActionTypes.GET_FUNDLIST].Items !== null) 
             {
-                tempFundListData = this.props.fundListState[ActionTypes.GET_FUNDLIST].Items;
-                if (this.props && this.props.bankAccountInfo && this.props.bankAccountInfo != this.state.bankAccountInfo) {
+                tempFundListData = fundListState[ActionTypes.GET_FUNDLIST].Items;
+                if (bankAccountInfo && bankAccountInfo !== bankAccountDetails) {
                     this.setState({
                         fundList: [...tempFundListData.map(v => ({ ...v, isActive: false, fundAmount: 0,IsNotValidAmount:false,errorMsg:'Please enter amount greater than or equal to 50' }))],
-                        bankAccountInfo: this.props.bankAccountInfo 
+                        bankAccountDetails: bankAccountInfo 
                     });
                 }   
             }
@@ -106,52 +118,58 @@ class AutomaticInvestmentAddComponent extends Component {
 
     getPayload = () => {
 
-
-        let selected = [];
-        this.state.fundList.map((item) => {
+const{fundList,ItemToEdit,accName,accNumber,accountType,
+    fundRemaining,totalFund,bankAccountDetails,selectedBank,fundConsumed,refresh} =this.state;
+        const selected = [];
+        fundList.forEach(item => {
             if (item.fundAmount>=50) {
-                
-                selected.push({ name: item.fundName, amount: item.fundAmount })
+                selected.push({ name: item.fundName, amount: item.fundAmount });
             }
-        })
+        });
+        // fundList.map((item) => {
+        //     if (item.fundAmount>=50) {
+        //         selected.push({ name: item.fundName, amount: item.fundAmount });
+        //     }
+        // });
 
         const savedAutoData = myInstance.getSavedAutomaticData();
-        let payload = {
+        const payload = {
             ...savedAutoData,
             selectedItemID: "D",
             selectedItemName: "Doller",
-            fundList: this.state.fundList,
-            ItemToEdit: this.state.ItemToEdit,
-            acc_name: this.state.acc_name,
-            acc_no: this.state.acc_no,
-            accountType: this.state.accountType,
-            selectedBank: this.state.selectedBank,
-            fundRemaining: this.state.fundRemaining,
-            totalFund: '$' +this.state.totalFund,
-            fundFrom: this.state.bankAccountInfo[this.state.selectedBank].bankName,
+            fundList,
+            ItemToEdit,
+            accName,
+            accNumber,
+            accountType,
+            selectedBank,
+            fundRemaining,
+            totalFund: `$${ totalFund}`,
+            fundFrom: bankAccountDetails[Number(selectedBank)].bankName,
             investedIn: selected,
-            fundConsumed: this.state.fundConsumed,
-            refresh:this.state.refresh,
+            fundConsumed,
+            refresh,
         };
         return payload;
 
     }
 
     navigationNext = () => {
-
+        const{navigation}=this.props;
+        const{ItemToEdit,accName,accNumber,accountType} = this.state;
         const payload = this.getPayload();
         const stateData = myInstance.getScreenStateData();
             myInstance.setSavedAutomaticData(payload);
             const screenState = {
                 ...stateData,
                 "automaticAdd":{...this.state}
-            }
+            };
             myInstance.setScreenStateData(screenState);
-        this.props.navigation.navigate({routeName:'automaticInvestmentSchedule',key:'automaticInvestmentSchedule',params: {
-            ItemToEdit: this.state.ItemToEdit,
-            acc_name: this.state.acc_name,
-            acc_no: this.state.acc_no,
-            accountType: this.state.accountType
+        navigation.navigate({routeName:'automaticInvestmentSchedule',key:'automaticInvestmentSchedule',params: {
+            ItemToEdit,
+            accName,
+            accNumber,
+            accountType
         }});
     }
     
@@ -160,22 +178,32 @@ class AutomaticInvestmentAddComponent extends Component {
         this.setState({ selectedItemID: item.id });
         this.setState({ selectedItemName: item.name });
     }
-    navigationBack = () => this.props.navigation.goBack();
+
+    navigationBack = () => 
+    {
+        const{navigation}=this.props;
+        navigation.goBack();
+    }
+
     navigationCancel = () => 
     { 
-        if(this.state.ItemToEdit>-1)
-            this.props.navigation.goBack('automaticInvestment');
+        const{navigation}=this.props;
+        const{ItemToEdit}=this.state;
+        if(ItemToEdit>-1)
+            navigation.goBack();
         else
-            this.props.navigation.goBack();
+            navigation.goBack('automaticInvestmentAccount');
     }
 
     generateKeyExtractor = (item) => item.bankName;
-    renderInvestment = () => ({ item, index }) =>
-        (
-            <TouchableOpacity onPress={this.selectedBank(index)}>
 
-                <View style={this.state.selectedBank === index ? styles.bankViewSelected : styles.bankView}>
-                    <View style={styles.bankTopView}></View>
+    renderInvestment = () => ({ item, index }) =>{
+        const{selectedBank} =this.state;
+        return(
+            <TouchableOpacity onPress={this.selectedBankItem(index)}>
+
+                <View style={selectedBank === index ? styles.bankViewSelected : styles.bankView}>
+                    <View style={styles.bankTopView} />
                     <View style={styles.bankMidView}>
 
                         <Text style={styles.bankNameText}>{item.bankName}</Text>
@@ -183,109 +211,126 @@ class AutomaticInvestmentAddComponent extends Component {
                     </View>
                 </View>
             </TouchableOpacity>
-        )
-    toggleSwitch = index => e => {
+        );
+    }
+        
 
-        if(this.state.totalFund>=50)
+    toggleSwitch = index => () => {
+        const{totalFund,fundList,fundRemaining,fundConsumed}= this.state;
+        if(totalFund>=50)
         {
-            var array = [...this.state.fundList]; 
+            const array = [...fundList]; 
             if (index !== -1) {
                 
-                let switchVal = array[index].isActive;
-                array[index].isActive = !switchVal;
-                array[index].IsNotValidAmount=false;
-                array[index].errorMsg='';
-                let remining=this.state.fundRemaining;
-                let consumed=this.state.fundConsumed;
-                if (!array[index].isActive) {
-                    remining=Number(this.state.fundRemaining)+Number(array[index].fundAmount)
-                    consumed=Number(this.state.fundConsumed)-Number(array[index].fundAmount)
-                    array[index].fundAmount = 0;
+                const switchVal = array[Number(index)].isActive;
+                array[Number(index)].isActive = !switchVal;
+                array[Number(index)].IsNotValidAmount=false;
+                array[Number(index)].errorMsg='';
+                let remining=fundRemaining;
+                let consumed=fundConsumed;
+                if (!array[Number(index)].isActive) {
+                    remining=Number(fundRemaining)+Number(array[Number(index)].fundAmount);
+                    consumed=Number(fundConsumed)-Number(array[Number(index)].fundAmount);
+                    array[Number(index)].fundAmount = 0;
                     
                 }
-                else if (array[index].isActive) {
-                    array[index].fundAmount=array[index].fundAmount === 0?'':array[index].fundAmount
+                else if (array[Number(index)].isActive) {
+                    array[Number(index)].fundAmount=array[Number(index)].fundAmount === 0?'':array[Number(index)].fundAmount;
                 }
                 this.setState({ fundList: array,fundRemaining:remining,fundConsumed:consumed,IsNotValidAmount:false,investedIn:[] });
             }
         }
         else{
-                this.setState({IsNotValidAmount:true})
+                this.setState({IsNotValidAmount:true});
         }
     }
 
-    selectedBank = index => e => {
-
-        this.setState({ selectedBank: index })
+    selectedBankItem = index => () => {
+        const{refresh} =this.state;
+        console.log('index**********************',index)
+        this.setState({ selectedBank: index,refresh:!refresh });
     }
 
     getFundAmount = (value, index) => {
-        var array = [...this.state.fundList]; 
-        if (index !== -1) {
-            array[index].fundAmount = value;
+        const{fundList,ItemToEdit,investedIn} =this.state;
+        const array = [...fundList]; 
+        
+        if(ItemToEdit>-1 && index !== -1)
+        {
+            const arrayInvest=[...investedIn];
+            arrayInvest[Number(index)].amount = value;
+            array[Number(index)].fundAmount = value;
+            this.setState({ investedIn: arrayInvest,fundList: array });
+        }
+        else if (index !== -1) {
+            array[Number(index)].fundAmount = value;
             this.setState({ fundList: array });
         }
     }
 
-    changeRemaining = e => {
-        let remaining = this.state.totalFund;
-        this.state.fundList.map((item,index) => {
+    changeRemaining = () => {
+        const{totalFund,fundList,refresh}=this.state;
+        let remaining = totalFund;
+       
+        fundList.forEach((item,index) => {
             let msg="Please enter amount greater than or equal to 50";
             
-            var array = [...this.state.fundList];
-            array[index].IsNotValidAmount = false;
-            array[index].errorMsg='';
+            const array = [...fundList];
+            array[Number(index)].IsNotValidAmount = false;
+            array[Number(index)].errorMsg='';
             if(Number(item.fundAmount)>=50)
             {
                 isValidScreen=true;
-                if (Number(item.fundAmount) <= remaining)//this.state.fundRemaining
-                    remaining = remaining - Number(item.fundAmount);
+                if (Number(item.fundAmount) <= remaining)// fundRemaining
+                    remaining -= Number(item.fundAmount);
                 else {
-                    msg="Amount is greater than Remining amount"
-                    array[index].IsNotValidAmount = true;
-                    array[index].errorMsg=msg;
+                    msg="Amount is greater than Remining amount";
+                    array[Number(index)].IsNotValidAmount = true;
+                    array[Number(index)].errorMsg=msg;
                     isValidScreen=false;
                 }
-                array[index].fundAmount=item.fundAmount;
-                array[index].isActive=true;
+                array[Number(index)].fundAmount=item.fundAmount;
+                array[Number(index)].isActive=true;
                 
-                 this.setState({ fundList: array,refresh:!this.state.refresh,
-                    fundRemaining:  remaining, fundConsumed: this.state.totalFund -remaining});
+                 this.setState({ fundList: array,refresh:!refresh,
+                    fundRemaining:  remaining, fundConsumed: totalFund -remaining});
             }
             else if(item.isActive){
-                var array = [...this.state.fundList]; // make a separate copy of the array
-                array[index].IsNotValidAmount = true;
-                array[index].errorMsg=msg;
-                 this.setState({ fundList: array,refresh:!this.state.refresh });
+                // let array = [...fundList]; // make a separate copy of the array
+                array[Number(index)].IsNotValidAmount = true;
+                array[Number(index)].errorMsg=msg;
+                 this.setState({ fundList: array,refresh:!refresh });
             }
-        })
+        });
     }
 
 
 
     setTotalFund = (value) => {
         let remaining=0;
-        
-        if(value>this.state.fundConsumed)
-            remaining=value-this.state.fundConsumed;
-        this.setState({ totalFund: Number(value), fundRemaining: Number(remaining)})
+        const{fundConsumed}=this.state;
+        if(value>fundConsumed)
+            remaining=value-fundConsumed;
+        this.setState({ totalFund: Number(value), fundRemaining: Number(remaining)});
     }
 
     checkFundAmount=()=>{
-        this.setState({IsNotValidAmount:this.state.totalFund>=50?false:true })
+        const{totalFund}=this.state;
+        this.setState({IsNotValidAmount:!(totalFund>=50) });
     }
 
     generateAmountKeyExtractor = (item) => item.fundNumber.toString()
-    renderAmount = () => ({ item, index }) =>
-        (
+
+    renderAmount = () => ({ item, index }) =>{
+        const{investedIn,ItemToEdit}=this.state;
+        return(
 
             <View style={styles.fundListView}>
-                {this.state.investedIn.map((fund) => {
+                {investedIn.forEach(fund => {
 
                     if (fund.name === item.fundName) {
                         item.isActive = true;
-                        item.fundAmount = fund.amount.replace('$', '');
-                        return;
+                        item.fundAmount = fund.amount.replace('$', '');   
                     }
                 })}
                 <View style={styles.fundListHeader}>
@@ -293,132 +338,141 @@ class AutomaticInvestmentAddComponent extends Component {
                         <Text style={styles.fundNameText}>{item.fundName}</Text>
                     </View>
                     <View style={styles.fundNameSwitch}>
-                        <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                        {ItemToEdit>-1?null:
+                        <Switch trackColor={switchStyle}
                             onValueChange={this.toggleSwitch(index)}
                             value={item.isActive}
                         />
+                        }
                     </View>
                 </View>
                 <View style={styles.auto_invest_to_flat} pointerEvents={item.isActive ? 'auto' : 'none'}>
-                    <Text style={styles.auto_invest_to_top}>{'Amount'}</Text>
+                    <Text style={styles.auto_invest_to_top}>Amount</Text>
                     <View style={styles.auto_invest_to_top_view}>
-                        <Text style={styles.auto_invest_to_top}>{'$'}</Text>
-                        <View style={{flexDirection:'column',width:'100%'}}>
+                        <Text style={styles.auto_invest_to_top}>$</Text>
+                        <View style={styles.inputError}>
                             <GInputComponent style={styles.leftSpace} 
                             onChangeText={(value) => this.getFundAmount(value, index)} 
                             onEndEditing={this.changeRemaining}
                             value={item.fundAmount.toString()} 
                             errorFlag={item.IsNotValidAmount}
-                            errorText={item.errorMsg}/>
+                            errorText={item.errorMsg}
+                            />
                         </View>
                     </View>
-                    <Text style={styles.auto_invest_flat_min}>{'Min $50'}</Text>
+                    <Text style={styles.auto_invest_flat_min}>Min $50</Text>
                 </View>
 
             </View>
-        )
+        );
+    }
+        
 
 
 
     render() {
+        const{navigation}=this.props;
+        const{accName,accNumber,bankAccountDetails,totalFund,IsNotValidAmount,errorMsg,
+        selectedItemID,fundConsumed,fundRemaining,fundList,refresh,selectedBank} = this.state;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.scrollView}>
                     <View>
-                        <Text style={styles.autoInvestHead}>{'Create Automatic Investment Plan'}</Text>
+                        <Text style={styles.autoInvestHead}>Create Automatic Investment Plan</Text>
                         <View style={styles.seperator_line} />
                         <View style={styles.circle_view}>
                             <View style={styles.circle_Completed}>
-                                <Text style={styles.circleTextNew}>{'1'}</Text>
+                                <Text style={styles.circleTextNew}>1</Text>
                             </View>
                             <View style={styles.circle_connect} />
                             <View style={styles.circle_Inprogress}>
-                                <Text style={styles.circleText}>{'2'}</Text>
+                                <Text style={styles.circleText}>2</Text>
                             </View>
                             <View style={styles.circle_connect} />
                             <View style={styles.circle_NotStarted}>
-                                <Text style={styles.circleText}>{'3'}</Text>
+                                <Text style={styles.circleText}>3</Text>
                             </View>
                             <View style={styles.circle_connect} />
                             <View style={styles.circle_NotStarted}>
-                                <Text style={styles.circleText}>{'4'}</Text>
+                                <Text style={styles.circleText}>4</Text>
                             </View>
                             <View style={styles.circle_connect} />
                             <View style={styles.circle_NotStarted}>
-                                <Text style={styles.circleText}>{'5'}</Text>
+                                <Text style={styles.circleText}>5</Text>
                             </View>
 
                         </View>
                         <View style={styles.autoInvest_title_view}>
-                            <Text style={styles.autoInvest_title_text}>{'2 - Plan Details'}</Text>
+                            <Text style={styles.autoInvest_title_text}>2 - Plan Details</Text>
                         </View>
                         <View style={styles.body}>
 
-                            <View style={{ flexDirection: 'column', justifyContent: "center", borderColor: '#9DB4CE', borderWidth: 1, padding: scaledHeight(20), marginTop: scaledHeight(20) }}>
+                            <View style={styles.accountBlock}>
 
-                                <Text style={{ color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' }}>{this.state.acc_name}</Text>
-                                <Text style={{ color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' }}>{'Account Number ' + this.state.acc_no}</Text>
+                                <Text style={styles.accountText}>{accName}</Text>
+                                <Text style={styles.accountText}>{`Account Number ${ accNumber}`}</Text>
 
 
                             </View>
 
-                            <Text style={styles.autoInvest_sub_title_text}>{'- Fund To'}</Text>
+                            <Text style={styles.autoInvest_sub_title_text}>- Fund To</Text>
 
 
                             <View style={styles.seperator_line} />
-                            <Text style={styles.autoInvestCont}>{'Choose how you will fund your account and indicate your initial investment amount.'}</Text>
-                            <FlatList style={{ marginTop: scaledHeight(20) }}
-                                data={this.state.bankAccountInfo}
+                            <Text style={styles.autoInvestCont}>Choose how you will fund your account and indicate your initial investment amount.</Text>
+                            <FlatList style={styles.fundListStyle}
+                                data={bankAccountDetails}
                                 renderItem={this.renderInvestment()}
                                 keyExtractor={this.generateKeyExtractor}
-
+                                extraData={refresh}
                             />
-                            <Text style={styles.autoInvest_sub_title_text}>{'- Invest To'}</Text>
+                            <Text style={styles.autoInvest_sub_title_text}>- Invest To</Text>
                             <View style={styles.seperator_line} />
 
                             <View style={styles.auto_invest_to}>
-                                <Text style={styles.auto_invest_to_top}>{'Total Amount'}</Text>
+                                <Text style={styles.auto_invest_to_top}>Total Amount</Text>
                                 <View style={styles.auto_invest_to_top_view}>
-                                    <Text style={styles.auto_invest_to_top}>{'$'}</Text>
-                                    <View style={{flexDirection:'column',width:'100%'}}>
-                                        <GInputComponent style={{ marginLeft: scaledWidth(10) }} 
+                                    <Text style={styles.auto_invest_to_top}>$</Text>
+                                    <View style={styles.inputError}>
+                                        <GInputComponent style={styles.fundRemainStyle} 
                                         onChangeText={this.setTotalFund} 
                                         onEndEditing={this.checkFundAmount}
-                                        value={this.state.totalFund.toString()} 
-                                        errorFlag={this.state.IsNotValidAmount}
-                                        errorText={this.state.errorMsg}/>
+                                        value={totalFund.toString()} 
+                                        errorFlag={IsNotValidAmount}
+                                        errorText={errorMsg}
+                                        />
                                     </View>
                                 </View>
                             </View>
 
                             <View style={styles.auto_invest_to}>
-                                <Text style={styles.auto_invest_to_top}>{'In'}</Text>
+                                <Text style={styles.auto_invest_to_top}>In</Text>
                                 <View style={styles.auto_invest_to_top_view}>
                                     <View style={styles.radioBtnGrp}>
                                         <CustomRadio
-                                            componentStyle={{ width: "30%", marginBottom: scaledHeight(0), marginTop: scaledHeight(24) }}
+                                            componentStyle={styles.radioStyle}
                                             size={30}
-                                            outerCicleColor={"#DEDEDF"}
-                                            innerCicleColor={"#61285F"}
+                                            outerCicleColor="#DEDEDF"
+                                            innerCicleColor="#61285F"
                                             labelStyle={styles.lblRadioBtnTxt}
-                                            label={"$"}
+                                            label="$"
                                             descLabelStyle={styles.lblRadioDescTxt}
-                                            descLabel={""}
-                                            selected={(this.state.selectedItemID !== "" && "D" == this.state.selectedItemID) ? true : false}
+                                            descLabel=""
+                                            selected={!!((selectedItemID !== "" && selectedItemID === "D"))}
                                             onPress={this.onSelected({ name: 'Doller', id: 'D' })}
                                         />
                                         <CustomRadio
 
                                             size={30}
-                                            componentStyle={{ width: "30%", marginBottom: scaledHeight(0), marginTop: scaledHeight(24) }}
-                                            outerCicleColor={"#DEDEDF"}
-                                            innerCicleColor={"#61285F"}
+                                            componentStyle={styles.radioStyle}
+                                            outerCicleColor="#DEDEDF"
+                                            innerCicleColor="#61285F"
                                             labelStyle={styles.lblRadioBtnTxt}
-                                            label={"%"}
+                                            label="%"
                                             descLabelStyle={styles.lblRadioDescTxt}
-                                            descLabel={""}
-                                            selected={(this.state.selectedItemID !== "" && "P" == this.state.selectedItemID) ? true : false}
+                                            descLabel=""
+                                            selected={!!((selectedItemID !== "" && selectedItemID === "P"))}
                                             onPress={this.onSelected({ name: 'Percentage', id: 'P' })}
                                         />
                                     </View>
@@ -426,27 +480,28 @@ class AutomaticInvestmentAddComponent extends Component {
                             </View>
 
                             <View style={styles.auto_invest_to} pointerEvents="none">
-                                <Text style={styles.auto_invest_to_top}>{'Amount Consumed'}</Text>
+                                <Text style={styles.auto_invest_to_top}>Amount Consumed</Text>
                                 <View style={styles.auto_invest_to_top_view}>
-                                    <Text style={styles.auto_invest_to_top}>{'$'}</Text>
-                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} value={this.state.fundConsumed.toString()} />
+                                    <Text style={styles.auto_invest_to_top}>$</Text>
+                                    <GInputComponent style={styles.fundRemainStyle} 
+                                    value={fundConsumed.toString()} />
                                 </View>
                             </View>
 
                             <View style={styles.auto_invest_to} pointerEvents="none">
-                                <Text style={styles.auto_invest_to_top}>{'Amount Remaining'}</Text>
+                                <Text style={styles.auto_invest_to_top}>Amount Remaining</Text>
                                 <View style={styles.auto_invest_to_top_view}>
-                                    <Text style={styles.auto_invest_to_top}>{'$'}</Text>
-                                    <GInputComponent style={{ marginLeft: scaledWidth(10) }} value={this.state.fundRemaining.toString()} />
+                                    <Text style={styles.auto_invest_to_top}>$</Text>
+                                    <GInputComponent style={styles.fundRemainStyle} value={fundRemaining.toString()} />
                                 </View>
                             </View>
 
 
-                            <FlatList style={{ marginTop: scaledHeight(20) }}
-                                data={this.state.fundList}
+                            <FlatList style={styles.fundListStyle}
+                                data={fundList}
                                 renderItem={this.renderAmount()}
                                 keyExtractor={this.generateAmountKeyExtractor}
-                                extraData={this.state.refresh}
+                                extraData={refresh}
                             />
                         </View>
                     </View>
@@ -464,10 +519,10 @@ class AutomaticInvestmentAddComponent extends Component {
                         onPress={this.navigationBack}
                     />
                     <GButtonComponent
-                        buttonStyle={this.state.selectedBank>-1 && this.state.totalFund>=50 && this.state.fundRemaining===0 && isValidScreen? styles.continueButtonSelected:styles.continueButton}
+                        buttonStyle={selectedBank>-1 && totalFund>=50 && fundRemaining===0 && isValidScreen? styles.continueButtonSelected:styles.continueButton}
                         buttonText={globalString.common.next}
                         textStyle={styles.continueButtonText}
-                        onPress={this.state.selectedBank>-1 && this.state.totalFund>=50 && this.state.fundRemaining===0 && isValidScreen?this.navigationNext:null}
+                        onPress={selectedBank>-1 && totalFund>=50 && fundRemaining===0 && isValidScreen?this.navigationNext:null}
                     />
 
 

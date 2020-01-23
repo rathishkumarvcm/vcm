@@ -539,7 +539,7 @@ class DeliverySettingsComponent extends Component {
                     </View>
                     <Text style={styles.explainTextMessage}>Explain Text Message</Text>
                     <Text style={styles.userRegisterNumberText}>{phoneno}</Text>
-                    <View style={styles.registerNumberContainer}>
+                    {/* <View style={styles.registerNumberContainer}>
                         <GIcon
                             name="alert-circle"
                             type="material-community"
@@ -547,7 +547,7 @@ class DeliverySettingsComponent extends Component {
                             color="#56565A"
                         />
                         <Text style={styles.registerNumberText} onPress={this.setModalVisible(true)}>Register this number</Text>
-                    </View>
+                    </View> */}
 
                     <View style={styles.emailPreferenceContainer}>
                         <View style={styles.emailPreferenceUrgentContainer}>

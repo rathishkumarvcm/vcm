@@ -44,7 +44,7 @@ class OpenAccPageFourComponent extends Component {
             "stmt_pros_rep"
         ];
 
-        const { masterLookupStateData,getCompositeLookUpData } = this.props;
+        const { masterLookupStateData,getCompositeLookUpData,getPersonalCompositeData } = this.props;
 
         for (let i = 0; i < compositePayloadData.length; i+=1) {
             const tempkey = compositePayloadData[i];
@@ -52,7 +52,7 @@ class OpenAccPageFourComponent extends Component {
                 payload.push(tempkey);
             }
         }
-        getCompositeLookUpData(payload);
+        getPersonalCompositeData(payload);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -406,14 +406,17 @@ OpenAccPageFourComponent.propTypes = {
     masterLookupStateData: PropTypes.instanceOf(Object),
    
     saveAccountOpening:PropTypes.func,
-    getCompositeLookUpData:PropTypes.func
+    getCompositeLookUpData:PropTypes.func,
+    getPersonalCompositeData:PropTypes.func
+
 };
 OpenAccPageFourComponent.defaultProps = {
     navigation: {},
     accOpeningData: {},
     masterLookupStateData: {},
     getCompositeLookUpData: null,
-    saveAccountOpening: null
+    saveAccountOpening: null,
+    getPersonalCompositeData:null
     
 
 };

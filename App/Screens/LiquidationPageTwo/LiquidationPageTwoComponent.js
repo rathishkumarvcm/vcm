@@ -97,7 +97,6 @@ class LiquidationPageTwoComponent extends Component {
             funds[i].percentageValue = '';
             funds[i].dollarSelected = false;
             funds[i].dollarValue = '';
-
         }
         this.setState({
             fundListData: funds,
@@ -210,11 +209,16 @@ class LiquidationPageTwoComponent extends Component {
             if (funds[i].isSelected) {
                 if (funds[i].allSharesSelected) {
                     funds[i].sellingAmount = funds[i].worthAmount;
+                    funds[i].TypeValueReq = 'A';
                 } else if (this.isEmpty(funds[i].percentageValue)) {
                     funds[i].sellingAmount = funds[i].dollarValue;
+                    funds[i].TypeValueReq = 'D';
                 } else {
                     funds[i].sellingAmount = (funds[i].percentageValue / 100) * funds[i].worthAmount;
+                    funds[i].TypeValueReq = 'P';
                 }
+            }else{
+                funds[i].TypeValueReq = '';
             }
         }
         this.setState({
@@ -339,6 +343,8 @@ class LiquidationPageTwoComponent extends Component {
                                 editable={(item.percentageSelected)}
                                 keyboardType="decimal-pad"
                                 maxLength={3}
+                                errorFlag={item.percentageValue > 100}
+                                errorText="Percentage cannot be greater than 100"
                             />
                         </View>
                     </View>
@@ -366,15 +372,10 @@ class LiquidationPageTwoComponent extends Component {
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
-                    <TouchableOpacity onPress={this.goBack}>
-                        <GIcon
-                            name="left"
-                            type="antdesign"
-                            size={25}
-                            color="#707070"
-                        />
-                    </TouchableOpacity>
-
+                    <View style={styles.headerTextView}>
+                        <Text style={styles.titleHeaderTextStyle}>{gblStrings.liquidation.liquidation}</Text>
+                        <View style={styles.line} />
+                    </View>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.flexHead}>
                         <View style={styles.accountFlex}>

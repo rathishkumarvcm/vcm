@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-native-collapsible';
-import { GHeaderComponent, GFooterSettingsComponent } from '../../CommonComponents';
+import { GIcon, GHeaderComponent, GFooterSettingsComponent } from '../../CommonComponents';
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
@@ -138,6 +138,14 @@ class ExchangeScreenOneComponent extends Component {
         });
     }
 
+    noItemDisplay = () => {
+        return (
+            <View style={styles.noRecordsFlex}>
+                <Text style={styles.blackText14px}>No accounts available</Text>
+            </View>
+        );
+    }
+
     nextButtonAction = () => {
         const { selectedAccountData } = this.state;
         const { saveData, navigation } = this.props;
@@ -166,6 +174,14 @@ class ExchangeScreenOneComponent extends Component {
             <View style={(selectedGeneralAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectGeneralAccount(item, index)}>
                 <View style={styles.accountDetailsFlex}>
                     <View style={styles.flexAccDetails1}>
+                        <View style={styles.iconStyle}>
+                            <GIcon
+                                name="closesquareo"
+                                type="antdesign"
+                                size={40}
+                                color="#BBB3B3"
+                            />
+                        </View>
                         <View style={styles.accountNumberFlex}>
                             <Text style={styles.blackTextBold18px}>{gblStrings.purchase.accountName} {item.accName}</Text>
                             <Text style={styles.blackTextBold18px}>{gblStrings.purchase.accountNumber}</Text>
@@ -198,6 +214,14 @@ class ExchangeScreenOneComponent extends Component {
             <View style={(selectedIRAAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectIRAAccount(item, index)}>
                 <View style={styles.accountDetailsFlex}>
                     <View style={styles.flexAccDetails1}>
+                        <View style={styles.iconStyle}>
+                            <GIcon
+                                name="closesquareo"
+                                type="antdesign"
+                                size={40}
+                                color="#BBB3B3"
+                            />
+                        </View>
                         <View style={styles.accountNumberFlex}>
                             <Text style={styles.blackTextBold18px}>{gblStrings.purchase.accountName} {item.accName}</Text>
                             <Text style={styles.blackTextBold18px}>{gblStrings.purchase.accountNumber}</Text>
@@ -230,6 +254,14 @@ class ExchangeScreenOneComponent extends Component {
             <View style={(selectedUTMAAccIndex === index) ? styles.accountDetailsFlexSelected : styles.accountDetailsFlexUnSelected} onTouchStart={this.onClickSelectUTMAAccount(item, index)}>
                 <View style={styles.accountDetailsFlex}>
                     <View style={styles.flexAccDetails1}>
+                        <View style={styles.iconStyle}>
+                            <GIcon
+                                name="closesquareo"
+                                type="antdesign"
+                                size={40}
+                                color="#BBB3B3"
+                            />
+                        </View>
                         <View style={styles.accountNumberFlex}>
                             <Text style={styles.blackTextBold18px}>{gblStrings.purchase.accountName} {item.accName}</Text>
                             <Text style={styles.blackTextBold18px}>{gblStrings.purchase.accountNumber}</Text>
@@ -279,6 +311,10 @@ class ExchangeScreenOneComponent extends Component {
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
+                    <View style={styles.headerTextView}>
+                        <Text style={styles.titleHeaderTextStyle}>Exchange</Text>
+                        <View style={styles.line} />
+                    </View>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.mainContainer}>
                         <Text style={styles.greyText16px}>{gblStrings.liquidation.fundSourceContext}</Text>
@@ -300,6 +336,7 @@ class ExchangeScreenOneComponent extends Component {
                                 renderItem={this.renderGeneralAccount}
                                 keyExtractor={this.generateKeyGeneral}
                                 extraData={this.state}
+                                ListEmptyComponent={this.noItemDisplay}
                             />
                         </Collapsible>
 
@@ -317,6 +354,7 @@ class ExchangeScreenOneComponent extends Component {
                                 renderItem={this.renderIraAccount}
                                 keyExtractor={this.generateKeyIRA}
                                 extraData={this.state}
+                                ListEmptyComponent={this.noItemDisplay}
                             />
                         </Collapsible>
 
@@ -334,6 +372,7 @@ class ExchangeScreenOneComponent extends Component {
                                 renderItem={this.renderUtmaAccount}
                                 keyExtractor={this.generateKeyUTMA}
                                 extraData={this.state}
+                                ListEmptyComponent={this.noItemDisplay}
                             />
                         </Collapsible>
                     </View>
