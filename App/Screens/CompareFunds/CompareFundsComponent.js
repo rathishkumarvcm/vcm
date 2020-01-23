@@ -19,9 +19,9 @@ class CompareFundsComponent extends Component {
     componentDidMount() {
         const { navigation,getFundDetailsData } = this.props;
 
-        const payload = navigation.getParam('fundDetails', '');       
-        getFundDetailsData(payload);
-        AppUtils.debugLog('Payload:',payload);
+         const payload = navigation.getParam('fundDetails', '');          
+         AppUtils.debugLog(`Payload: ${JSON.stringify(payload)}`);        
+         getFundDetailsData(payload);       
     }
 
     goBack = () => {
@@ -33,9 +33,9 @@ class CompareFundsComponent extends Component {
         let compareFundsData = [];
         const { fundDetailsData,navigation } = this.props;
 
-        if (fundDetailsData && fundDetailsData[ActionTypes.GET_FUNDDETAILS] && fundDetailsData[ActionTypes.GET_FUNDDETAILS].result) {
-            compareFundsData = fundDetailsData[ActionTypes.GET_FUNDDETAILS].result;
-            AppUtils.debugLog('Fund Data : ' , JSON.stringify(compareFundsData));
+        if (fundDetailsData && fundDetailsData[ActionTypes.GET_FUNDDETAILS]) {
+            compareFundsData = fundDetailsData[ActionTypes.GET_FUNDDETAILS];          
+            AppUtils.debugLog(`Fund Data: ${JSON.stringify(compareFundsData)}`);
         }
         return (
             <View style={styles.container}>

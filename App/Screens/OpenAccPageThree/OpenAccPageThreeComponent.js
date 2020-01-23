@@ -1154,9 +1154,10 @@ class OpenAccPageThreeComponent extends Component {
         const { push } = navigation;  
         if(selectedFundInvestmentsData.length > 1){
             if(selectedFundInvestmentsData.length < 5){
-                let fundSelectedCompare = "";
+                const fundSelectedCompare = {};
                 selectedFundInvestmentsData.map((item,index)=>{                   
-                    fundSelectedCompare = `${fundSelectedCompare.concat(`fundNumber${index+1}=${item.fundNumber}`)}&`;
+                    // fundSelectedCompare = `${fundSelectedCompare.concat(`fundNumber${index+1}=${item.fundNumber}`)}&`;
+                    fundSelectedCompare[`fundNumber${index+1}`] = item.fundNumber;
                 });                                               
                // AppUtils.debugLog("Selected Funds:"+fundSelectedCompare);
                if (fundSelectedCompare !== null && fundSelectedCompare !== "") {

@@ -26,7 +26,10 @@ class InvestmentPlanInfoComponent extends Component {
     
     componentDidMount() {
         const { navigation,getFundDetailsData } = this.props;
-        const payload = `fundNumber1=${navigation.getParam('fundDetails', '')}`;        
+        const fundNumber = navigation.getParam('fundDetails', '');     
+        const payload = {
+            "fundNumber1": fundNumber,          
+        };          
         getFundDetailsData(payload);       
     }
 
@@ -217,8 +220,10 @@ class InvestmentPlanInfoComponent extends Component {
             morningstarRating :  morningstarRating_values = {},
             performanceDetails: performanceDetailsVal = {},
             moreInfoPDFs: moreInfoPDFsval = [],
-        } = (fundDetailsData && fundDetailsData[ActionTypes.GET_FUNDDETAILS] && fundDetailsData[ActionTypes.GET_FUNDDETAILS].result && fundDetailsData[ActionTypes.GET_FUNDDETAILS].result[0]) ? fundDetailsData[ActionTypes.GET_FUNDDETAILS].result[0]: {};
+        } = (fundDetailsData && fundDetailsData[ActionTypes.GET_FUNDDETAILS]) ? fundDetailsData[ActionTypes.GET_FUNDDETAILS][0]: {};
 
+         
+      
         // var {
         //     value = ""
         // } = (nav_values && nav_values.value) ? nav_values : {};
