@@ -165,10 +165,17 @@ class LiquidationPageFourComponent extends Component {
             };
             menuList.splice(pIndex, 1, ammendPayloadData);
             ammendActions(menuList);
-            navigate({ routeName: 'tAmmendComponent', key: 'tAmmendComponent' });
+            // navigate({ routeName: 'tAmmendComponent', key: 'tAmmendComponent' });
+            navigation.navigate('tAmmendComponent',{ orderId : amndObj.title,transactionType:"Liquidation",amend:true});
         }
         else {
             const orderId = `Order ID - LIQ0${year}${month}${date}`;
+            let paymentMode = "";
+            if(savedData.selectedFundWithdrawalData.PaymentMethod === "05"){
+                paymentMode = "NetBanking";
+            }else{
+                paymentMode = "Check";
+            }
             const payloadData = {
                 "key": finalKey,
                 "title": orderId,
@@ -182,10 +189,16 @@ class LiquidationPageFourComponent extends Component {
                     "selectedAccountData": savedData.selectedAccountData,
                     "selectedFundData": savedData.selectedFundData,
                     "selectedFundWithdrawalData": savedData.selectedFundWithdrawalData,
-                    "selectedFundSourceData": savedData.selectedFundSourceData,
-                    "currentSecurities": savedData.currentSecurities,
-                    "contribution": savedData.contribution,
-                    "estimated": {}
+                    "selectedFundSourceData": {
+                        "paymentMode": paymentMode,
+                        "fundSourceType": "",
+                        "totalInvestment": "",
+                        "bankAccountName": "",
+                        "bankAccountNumber": "",
+                    },
+                    // "currentSecurities": savedData.currentSecurities,
+                   //  "contribution": savedData.contribution,
+                    // "estimated": {},
                 }
             };
             menuList.push(payloadData);
@@ -377,7 +390,7 @@ class LiquidationPageFourComponent extends Component {
 
                         {/* -----------------------------------Tax Accounting Method ends here-------------------------------- */}
                         <View style={styles.flex5}>
-                            <Text style={styles.text5}>{gblStrings.liquidation.confirmationMsg1}{"\n"}{"\n"}{gblStrings.liquidation.confirmationMsg2}</Text>
+                            <Text style={styles.text5}>{gblStrings.liquidation.reviewAndConfirmMsg}</Text>
 
                         </View>
 

@@ -124,7 +124,7 @@ class PurchaseFourComponent extends Component {
             };
             menuList.splice(pIndex, 1, ammendPayloadData);
             ammendActions(menuList);
-            navigation.navigate('tAmmendComponent');
+            navigation.navigate('tAmmendComponent',{ orderId : amendObj.title,transactionType:"Purchase",amend:true});
         }
         else {
             const orderId = `Order ID - PUR${year}${month}${date}${finalKey}`;
@@ -205,6 +205,9 @@ class PurchaseFourComponent extends Component {
                                 <Text style={styles.greyTextBold16px}>Initial Investment</Text>
                                 <Text style={styles.greyText16px}>{`$ ${savedData.selectedFundData.initialInvestment}`}</Text>
                             </View>
+                            {!savedData.selectedFundData.fundingOption === "Initial Investment"?
+                            (
+                            <View>
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>Monthly Investment</Text>
                                 <Text style={styles.greyText16px}>{`$ ${savedData.selectedFundData.monthlyInvestment}`}</Text>
@@ -213,6 +216,8 @@ class PurchaseFourComponent extends Component {
                                 <Text style={styles.greyTextBold16px}>Start Date</Text>
                                 <Text style={styles.greyText16px}>{savedData.selectedFundData.startDate}</Text>
                             </View>
+                            </View>
+                            ):null}
                         </View>
 
                         <View style={styles.horizontalFlex}>
@@ -257,7 +262,7 @@ class PurchaseFourComponent extends Component {
                             <Text style={styles.greyTextBold16px}>Contribution for IRA account</Text>
                             <Text style={styles.greyText16px}>{savedData.contribution.contribution}</Text>
                         </View>
-                        <View style={styles.horizontalFlex}>
+                        {/* <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>Estimated</Text>
                             <Text style={styles.edit} onPress={this.onClickEditSelectedFund}>{gblStrings.common.edit}</Text>
                         </View>
@@ -277,7 +282,7 @@ class PurchaseFourComponent extends Component {
                                 <Text style={styles.greyTextBold16px}>Effective Date</Text>
                                 <Text style={styles.greyText16px}>{}</Text>
                             </View>
-                        </View>
+                    </View> */}
 
 
 

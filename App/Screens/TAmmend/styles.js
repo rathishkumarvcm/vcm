@@ -227,10 +227,36 @@ const styles = StyleSheet.create({
         marginTop: "0%"
     },
     rowFlex:{
-        flexDirection:'row'
+        flexDirection:'row',
+        marginTop:scaledHeight(20),
     },
     scrollViewFlex:{
          flex: 0.85 
+    },
+    transactionStatusFlex: {
+        backgroundColor: '#F2F2F2',
+        borderColor: '#E0E1E2',
+        borderRadius:scaledHeight(5),
+        borderWidth: scaledHeight(1),
+        
+        height: scaledHeight(92),
+        // marginLeft: "4%",
+        // marginRight: "4%",
+        marginTop: scaledHeight(5)
+    },
+    transactionStatusMessageFlex: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        margin: "4%"
+    },
+    transactionStatusText: {
+        color: '#56565A',
+        fontSize: scaledHeight(15)
+    },
+    transactionStatusTextBold: {
+        color: '#56565A',
+        fontSize: scaledHeight(15),
+        fontWeight: 'bold'
     }
 
 

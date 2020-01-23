@@ -122,7 +122,8 @@ class ExchangeScreenFourComponent extends Component {
             };
             menuList.splice(pIndex, 1, ammendPayloadData);
             ammendActions(menuList);
-            navigation.navigate('tAmmendComponent');
+            // navigation.navigate('tAmmendComponent');
+            navigation.navigate('tAmmendComponent',{ orderId : amndObj.title,transactionType:"Exchange",amend:true});
         }
         else {
             const orderId = `Order ID - EXC${year}${month}${date}${finalKey}`;
