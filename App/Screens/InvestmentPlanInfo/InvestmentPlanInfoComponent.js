@@ -1,128 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { styles } from './styles';
-import { GButtonComponent, GIcon, GHeaderComponent, GFooterComponent, GRatingStarsComponent, GLoadingSpinner } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
-import gblStrings from '../../Constants/GlobalStrings';
 import PropTypes from "prop-types";
+import styles from './styles';
+import Table from './Table';
+import { GButtonComponent, GIcon, GHeaderComponent, GFooterComponent, GRatingStarsComponent, GLoadingSpinner } from '../../CommonComponents';
+import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
-
-
-const Table = (props) => {
-    console.log("TableRowItem:: " + props);
-
-    return (
-        <View style={[styles.summarySectionGrp]}>
-            <Text style={styles.tableHeading}>
-                {props.tableName}
-            </Text>
-            <View style={styles.table}>
-                <View style={styles.tableRow}>
-                    <View style={styles.rowContainer}>
-                        <View style={styles.column1}>
-                            <Text style={styles.column1Txt}>
-                                {gblStrings.accManagement.YTD}
-                            </Text>
-                        </View>
-                        <View style={styles.column2}>
-                            <Text style={styles.column2Txt}>
-                                {props.YTD}
-                            </Text>
-                        </View>
-                    </View>
-                    <Text style={styles.rowSep} />
-                </View>
-
-                <View style={styles.tableRow}>
-                    <View style={styles.rowContainer}>
-                        <View style={styles.column1}>
-                            <Text style={styles.column1Txt}>
-                                {gblStrings.accManagement.oneYear}
-                            </Text>
-                        </View>
-                        <View style={styles.column2}>
-                            <Text style={styles.column2Txt}>
-                                {props.oneYear}
-                            </Text>
-                        </View>
-                    </View>
-                    <Text style={styles.rowSep} />
-                </View>
-
-
-                <View style={styles.tableRow}>
-                    <View style={styles.rowContainer}>
-                        <View style={styles.column1}>
-                            <Text style={styles.column1Txt}>
-                                {gblStrings.accManagement.fiveYear}
-                            </Text>
-                        </View>
-                        <View style={styles.column2}>
-                            <Text style={styles.column2Txt}>
-                                {props.fiveYear}
-                            </Text>
-                        </View>
-                    </View>
-                    <Text style={styles.rowSep} />
-                </View>
-
-
-                <View style={styles.tableRow}>
-                    <View style={styles.rowContainer}>
-                        <View style={styles.column1}>
-                            <Text style={styles.column1Txt}>
-                                {gblStrings.accManagement.tenYear}
-                            </Text>
-                        </View>
-                        <View style={styles.column2}>
-                            <Text style={styles.column2Txt}>
-                                {props.tenYear}
-                            </Text>
-                        </View>
-                    </View>
-                    <Text style={styles.rowSep} />
-                </View>
-
-
-
-                <View style={styles.tableRow}>
-                    <View style={styles.rowContainer}>
-                        <View style={styles.column1}>
-                            <Text style={styles.column1Txt}>
-                                {gblStrings.accManagement.sinceInception}
-                            </Text>
-                            <Text style={styles.lblSubNameTxt}>
-                                {props.sinceInceptionYear}
-                            </Text>
-                        </View>
-                        <View style={styles.column2}>
-                            <Text style={styles.column2Txt}>
-                                {props.sinceInception}
-                            </Text>
-                        </View>
-                    </View>
-                </View>
-
-
-            </View>
-        </View>
-    );
-
-};
-
-Table.propTypes = {
-    propInputStyle: PropTypes.instanceOf(Object),
-    tableName: PropTypes.string,
-    YTD: PropTypes.string,
-    oneYear: PropTypes.string,
-    fiveYear: PropTypes.string,
-    tenYear: PropTypes.string,
-    sinceInceptionYear: PropTypes.string,
-    sinceInception: PropTypes.string,
-
-};
-
-
 
 class InvestmentPlanInfoComponent extends Component {
     constructor(props) {
@@ -130,7 +13,7 @@ class InvestmentPlanInfoComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
+            // isLoading: false,
             isSummarySelected: true,
             isQuickFactSelected: false,
             isPerformanceSelected: false,
@@ -140,20 +23,24 @@ class InvestmentPlanInfoComponent extends Component {
     /*----------------------
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
+    
     componentDidMount() {
-        const payload = "fundNumber1="+this.props.navigation.getParam('fundDetails', '');
-        this.props.getFundDetailsData(payload);
+        const { navigation,getFundDetailsData } = this.props;
+        const payload = `fundNumber1=${navigation.getParam('fundDetails', '')}`;        
+        getFundDetailsData(payload);       
     }
+
     /*----------------------
                                  Button Events 
                                                                  -------------------------- */
     goBack = () => {
-        this.props.navigation.goBack();
+        const { navigation } = this.props;
+        navigation.goBack();
     }
 
-    renderSummary = (risk, initialInvestment, monthlyInvestment, moreInfo_PDFs) => {
+    renderSummary = (risk, initialInvestment, monthlyInvestment, moreInfoPDFsval) => {
         return (
-            <View style={[styles.summarySectionGrp]}>
+            <View style={styles.summarySectionGrp}>
                 <View style={styles.riskContainer}>
 
                     <Text style={styles.riskLevel}>
@@ -181,10 +68,10 @@ class InvestmentPlanInfoComponent extends Component {
 
                 <Text style={styles.headingUnderline}>{gblStrings.accManagement.moreInfo}</Text>
                 {
-                    (moreInfo_PDFs!==null && moreInfo_PDFs.length > 0) ?
+                    (moreInfoPDFsval!==null && moreInfoPDFsval.length > 0) ? (
                         <View style={styles.pdfDisclosureContainer}>
                             {
-                                moreInfo_PDFs.map((item) => {
+                                moreInfoPDFsval.map((item) => {
                                     return (
                                         <View style={styles.pdfDisclosure} key={item.key}>
                                             <Text style={styles.pdfFileNameTxt}>
@@ -195,14 +82,16 @@ class InvestmentPlanInfoComponent extends Component {
                                 })
                             }
                         </View>
+                      )
                     : null 
                 }
             </View>
         );
     }
+
     renderQuickfacts = (nav, expenseRatio, morningstarRating, morningstarCategory, categoryFunds) => {
         return (
-            <View style={[styles.summarySectionGrp]}>
+            <View style={styles.summarySectionGrp}>
 
 
                 <Text style={styles.lblNameFirstTxt}>
@@ -226,10 +115,10 @@ class InvestmentPlanInfoComponent extends Component {
                     {gblStrings.accManagement.overallMrngStarRating}
                 </Text>
                 <Text style={styles.lblSubNameTxt}>
-                    {"(as of "+morningstarRating.asOfDate+")"}
+                    {`(as of ${morningstarRating.asOfDate})`}
                 </Text>
-                <View style={{ marginTop: scaledHeight(8) }}>
-                    <GRatingStarsComponent rating={parseInt(morningstarRating.value)}
+                <View style={styles.ratingContainer}>
+                    <GRatingStarsComponent rating={parseInt(morningstarRating.value,10)}
                         ratedStarColor="#393535"
                         unRatedStarColor="#DCDCDC"
                     />
@@ -254,9 +143,9 @@ class InvestmentPlanInfoComponent extends Component {
         );
     }
 
-    renderPerformnace = (monthly, quarterly) => {
+    renderPerformnace = (monthly, quarterly) => {     
         return (
-            <View >
+            <View>
                 <Table
                     tableName={gblStrings.accManagement.monthEndAvgAnnualReturns + monthly.asOfDate}
                     YTD={monthly.ytd}
@@ -280,64 +169,96 @@ class InvestmentPlanInfoComponent extends Component {
             </View>
         );
     }
+
+    summarySelected = () =>{
+        this.setState({
+            isSummarySelected: true,
+            isQuickFactSelected: false,
+            isPerformanceSelected: false
+        });
+        this.tabBar.scrollTo({ x: 0, y: 0, animated: true });
+    }
+
+    quickFactsSelected = () =>{
+        this.setState({
+            isSummarySelected: false,
+            isQuickFactSelected: true,
+            isPerformanceSelected: false
+        });
+    }
+
+    performanceSelected = () =>{
+        this.setState({
+            isSummarySelected: false,
+            isQuickFactSelected: false,
+            isPerformanceSelected: true
+        });
+        this.tabBar.scrollToEnd();
+    }
+
+
+
     /*----------------------
                                  Render Methods
                                                                  -------------------------- */
     render() {      
-        var {
+
+        const {fundDetailsData,navigation } = this.props;
+        const {isSummarySelected, isQuickFactSelected, isPerformanceSelected} = this.state;
+        const {
             nav : nav_values = {},
             fundName = "",
             risk = "",
             monthlyInvestment = "",
             initialInvestment = "",
-            expenseRatio: expense_Ratio = {},
+            expenseRatio: expenseRatioVal = {},
             morningstarCategory = "",
             categoryFunds = "",
             morningstarRating :  morningstarRating_values = {},
-            performanceDetails: performance_Details = {},
-            moreInfoPDFs: moreInfo_PDFs = [],
-        } = (this.props && this.props.fundDetailsData && this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS] && this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS].result && this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS].result[0]) ? this.props.fundDetailsData[ActionTypes.GET_FUNDDETAILS].result[0]: {};
+            performanceDetails: performanceDetailsVal = {},
+            moreInfoPDFs: moreInfoPDFsval = [],
+        } = (fundDetailsData && fundDetailsData[ActionTypes.GET_FUNDDETAILS] && fundDetailsData[ActionTypes.GET_FUNDDETAILS].result && fundDetailsData[ActionTypes.GET_FUNDDETAILS].result[0]) ? fundDetailsData[ActionTypes.GET_FUNDDETAILS].result[0]: {};
 
-        var {
-            value = ""
-        } = (nav_values && nav_values.value) ? nav_values : {};
+        // var {
+        //     value = ""
+        // } = (nav_values && nav_values.value) ? nav_values : {};
 
-        var {
-            value = ""
-        } = (morningstarRating_values && morningstarRating_values.value) ? morningstarRating_values : {};
+        // var {
+        //     value = ""
+        // } = (morningstarRating_values && morningstarRating_values.value) ? morningstarRating_values : {};
 
-        var {
+        const {
             expenseRatio = ""
-        } = (expense_Ratio && expense_Ratio.expenseRatio) ? expense_Ratio : {};
+        } = (expenseRatioVal && expenseRatioVal.expenseRatio) ? expenseRatioVal : {};
 
-        var {
-            totalReturns: total_Returns = {}
-        } = (performance_Details && performance_Details.totalReturns) ? performance_Details : {};
+        const {
+            totalReturns: totalReturnsVal = {}
+        } = (performanceDetailsVal && performanceDetailsVal.totalReturns) ? performanceDetailsVal : {};
 
-        var {
+        const {
             monthly: monthly_Returns = {},
             quarterly: quarterly_Returns = {}
-        } = (total_Returns && total_Returns.monthly && total_Returns.quarterly) ? total_Returns : {};
-
+        } = (totalReturnsVal && totalReturnsVal.monthly && totalReturnsVal.quarterly) ? totalReturnsVal : {};
+      
         return (
+            
             <View style={styles.container}>
                 {
-                    this.props.fundDetailsData.isLoading && <GLoadingSpinner />
+                    fundDetailsData.isLoading && <GLoadingSpinner />
                 }
                 <GHeaderComponent
-                    navigation={this.props.navigation}
-                    onPress={() => { }}
+                    navigation={navigation}                    
                 />
-                <ScrollView style={{ flex: .85 }}>
+                <ScrollView style={styles.scrollViewContainer}>
 
 
-                    { /*-----------Investment Plan Info -------------------*/}
-                    <View style={[styles.sectionGrp]}>
-                        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}
-                            onPress={() => this.goBack()}
+                    { /* -----------Investment Plan Info -------------------*/}
+                    <View style={styles.sectionGrp}>
+                        <TouchableOpacity style={styles.investmentPlanContainer}
+                            onPress={this.goBack}
                             activeOpacity={0.2}
                         >
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <View style={styles.investmentPlanBack}>
 
                                 <GIcon
                                     name="left"
@@ -352,7 +273,7 @@ class InvestmentPlanInfoComponent extends Component {
 
                         </TouchableOpacity>
 
-                        <View style={styles.accTypeSelectSection} >
+                        <View style={styles.accTypeSelectSection}>
                             <Text style={styles.headings}>
                                 {fundName}
                             </Text>
@@ -368,68 +289,48 @@ class InvestmentPlanInfoComponent extends Component {
                         horizontal
                         sc={false}
                         showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={{ paddingHorizontal: scaledHeight(12), alignItems: 'center', justifyContent: 'center', alignContent: 'center' }}
+                        contentContainerStyle={styles.horizontalScrollContainer}
                     >
                         <TouchableOpacity
-                            style={this.state.isSummarySelected === true ? styles.tabItemSelected : styles.tabItem}
-                            onPress={() => {
-                                this.setState({
-                                    isSummarySelected: true,
-                                    isQuickFactSelected: false,
-                                    isPerformanceSelected: false
-                                });
-                                this.tabBar.scrollTo({ x: 0, y: 0, animated: true });
-                            }}
+                            style={isSummarySelected === true ? styles.tabItemSelected : styles.tabItem}
+                            onPress={this.summarySelected}
                             activeOpacity={0.2}
                         >
-                            <Text style={this.state.isSummarySelected === true ? styles.tabItemSelectedTxt : styles.tabItemTxt}>
+                            <Text style={isSummarySelected === true ? styles.tabItemSelectedTxt : styles.tabItemTxt}>
                                 {gblStrings.accManagement.summary}
                             </Text>
 
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            style={this.state.isQuickFactSelected === true ? styles.tabItemSelected : styles.tabItem}
-                            onPress={() => {
-                                this.setState({
-                                    isSummarySelected: false,
-                                    isQuickFactSelected: true,
-                                    isPerformanceSelected: false
-                                });
-                            }}
+                            style={isQuickFactSelected === true ? styles.tabItemSelected : styles.tabItem}
+                            onPress={this.quickFactsSelected}
                             activeOpacity={0.2}
                         >
-                            <Text style={this.state.isQuickFactSelected === true ? styles.tabItemSelectedTxt : styles.tabItemTxt}>
+                            <Text style={isQuickFactSelected === true ? styles.tabItemSelectedTxt : styles.tabItemTxt}>
                                 {gblStrings.accManagement.quickFacts}
                             </Text>
 
                         </TouchableOpacity>
 
                         <TouchableOpacity
-                            style={this.state.isPerformanceSelected === true ? styles.tabItemSelected : styles.tabItem}
-                            onPress={() => {
-                                this.setState({
-                                    isSummarySelected: false,
-                                    isQuickFactSelected: false,
-                                    isPerformanceSelected: true
-                                });
-                                this.tabBar.scrollToEnd();
-                            }}
+                            style={isPerformanceSelected === true ? styles.tabItemSelected : styles.tabItem}
+                            onPress={this.performanceSelected}
                             activeOpacity={0.2}
                         >
-                            <Text style={this.state.isPerformanceSelected === true ? styles.tabItemSelectedTxt : styles.tabItemTxt}>
+                            <Text style={isPerformanceSelected === true ? styles.tabItemSelectedTxt : styles.tabItemTxt}>
                                 {gblStrings.accManagement.performance}
                             </Text>
 
                         </TouchableOpacity>
                     </ScrollView>
 
-                    { /*----------- Summary,QuickFacts,Performance  -------------------*/}
-                    {this.state.isSummarySelected && this.renderSummary(risk, gblStrings.common.dollar + initialInvestment, gblStrings.common.dollar + monthlyInvestment, moreInfo_PDFs)}
-                    {this.state.isQuickFactSelected && this.renderQuickfacts(nav_values, expenseRatio, morningstarRating_values, morningstarCategory, categoryFunds)}
-                    {this.state.isPerformanceSelected && this.renderPerformnace(monthly_Returns, quarterly_Returns)}
+                    { /* ----------- Summary,QuickFacts,Performance  -------------------*/}
+                    {isSummarySelected && this.renderSummary(risk, gblStrings.common.dollar + initialInvestment, gblStrings.common.dollar + monthlyInvestment, moreInfoPDFsval)}
+                    {isQuickFactSelected && this.renderQuickfacts(nav_values, expenseRatio, morningstarRating_values, morningstarCategory, categoryFunds)}
+                    {isPerformanceSelected && this.renderPerformnace(monthly_Returns, quarterly_Returns)}
 
-                    { /*----------- Buttons Grp  -------------------*/}
+                    { /* ----------- Buttons Grp  -------------------*/}
 
                     <View style={styles.btnGrp}>
 
@@ -437,12 +338,12 @@ class InvestmentPlanInfoComponent extends Component {
                             buttonStyle={styles.normalWhiteBtn}
                             buttonText={gblStrings.common.back}
                             textStyle={styles.normalWhiteBtnTxt}
-                            onPress={() => this.goBack()}
+                            onPress={this.goBack}
                         />
 
                     </View>
 
-                    { /*----------- Disclaimer -------------------*/}
+                    { /* ----------- Disclaimer -------------------*/}
 
                     <View style={styles.newVictorySection}>
                         <Text style={styles.disclaimerTitleTxt}>
@@ -463,8 +364,16 @@ class InvestmentPlanInfoComponent extends Component {
         );
     }
 }
+
 InvestmentPlanInfoComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object).isRequired,
-    fundDetailsData: PropTypes.instanceOf(Object).isRequired,
+    navigation: PropTypes.instanceOf(Object),
+    fundDetailsData: PropTypes.instanceOf(Object),
+    getFundDetailsData:PropTypes.func,
+};
+InvestmentPlanInfoComponent.defaultProps = {
+    navigation : {},
+    fundDetailsData : {},
+    getFundDetailsData : () => { }
+
 };
 export default InvestmentPlanInfoComponent;
