@@ -1,7 +1,18 @@
 import { StyleSheet } from "react-native";
 import {scaledHeight,scaledWidth } from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
+    tabMoreContainer:{ backgroundColor: 'rgba(0,0,0,0.3)',
+     flex: 1,width: '100%',
+     // justifyContent: 'center'
+     },
+    modalViewStyle:{
+     flexDirection: 'column',flex:1,
+     marginLeft:'30%', 
+     padding:scaledHeight(5),
+       // marginHorizontal: 20, marginVertical: 50,
+        backgroundColor:"pink"
+    },
     container: { flex: 1, width: '100%', justifyContent: 'center', alignItems: 'flex-start', backgroundColor: 'white' },
     scrollViewStyle:{ flex: 1, width: "100%" },
     columnContainer:{ flexDirection: 'column', marginHorizontal: 10 },
@@ -59,6 +70,18 @@ export const styles = StyleSheet.create({
         marginLeft:'2%',   
         marginRight:'2%',
     },
+    buttonLogoutStyle:{
+        width: scaledWidth(100),      
+        height: scaledHeight(50),
+        borderColor:'#544A54',
+        borderWidth:1,
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        alignContent: 'center',
+        // justifyContent: 'center',
+        // marginLeft:'2%',   
+        // marginRight:'2%',
+    },
     modalContainerStyle: {
         backgroundColor: '#FFFFFF',       
         paddingRight: '4%',
@@ -77,3 +100,5 @@ export const styles = StyleSheet.create({
     dividerLine:{ height: 1, backgroundColor: 'lightgray', marginHorizontal: 15 }
 
 });
+
+export default styles;

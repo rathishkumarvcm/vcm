@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, Modal } from 'react-native';
-import { styles } from './styles';
+import PropTypes from 'prop-types';
+import styles from './styles';
 import { GButtonComponent} from '../../CommonComponents';
 
 class TabMoreComponent extends Component {
@@ -8,42 +9,52 @@ class TabMoreComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
             modalVisible: true
         };
     }
 
+    closeButton = () => {
+        const {navigation}=this.props;
+        this.setState({ modalVisible: false });
+        navigation.goBack();
+    }
+
     render() {
+        const {modalVisible}=this.state;
+       
         return (
-            <View style={{ backgroundColor: 'rgba(0,0,0,0.5)', flex: 1, justifyContent: 'center' }}>
-                <ScrollView style={{ flex: 1 }}>
+            <View style={styles.tabMoreContainer}>
                     <Modal
                         animationType="slide"
                         backdropOpacity={.5}
                         transparent
-                        visible={this.state.modalVisible}
-                        onRequestClose={!this.state.modalVisible}
+                        presentationStyle="fullScreen"
+                        visible={modalVisible}
+                        onRequestClose={!modalVisible}
                     >
-                        <View style={{
-                            flex: .5, flexDirection: 'column',
-                            marginHorizontal: 20, marginVertical: 50
-                        }}>
+                        <View style={styles.modalViewStyle}>
                             <Text>More Optionss</Text>
                             <GButtonComponent buttonText="More"
                                 buttonStyle={styles.buttonGoActionStyle} />
                             <GButtonComponent buttonText="Close"
-                                onPress={() => {
-                                    this.setState({ modalVisible: false })
-                                    this.props.navigation.goBack()
-                                }}
+                                onPress={this.closeButton}
                                 buttonStyle={styles.buttonCancelActionStyle} />
                         </View>
+                        <View style={styles.dividerLine}/>
+                        <GButtonComponent buttonText="Logout"
+                                onPress={this.closeButton}
+                                buttonStyle={styles.buttonCancelActionStyle} />
                     </Modal>
-
-                </ScrollView>
             </View>
 
         );
     }
 }
+
+TabMoreComponent.propTypes = {
+    navigation: PropTypes.instanceOf(Object),
+};
+TabMoreComponent.defaultProps={
+navigation:{}
+};
 export default TabMoreComponent;
