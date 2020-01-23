@@ -5020,6 +5020,7 @@ class OpenAccPageTwoComponent extends Component {
                                             maxLength={gblStrings.maxLength.zipCode}
                                             value={personal.empZipcode}
                                             keyboardType="number-pad"
+                                            returnKeyType="done"
                                             onChangeText={this.onChangeText("personal", "empZipcode")}
                                             onSubmitEditing={this.onSubmitEmpZipEditing("personal", "empZipcode", this.empCity)}
                                             errorFlag={!personal.empZipcodeValidation}
@@ -6232,6 +6233,7 @@ class OpenAccPageTwoComponent extends Component {
                                             propInputStyle={styles.customTxtBox}
                                             placeholder={gblStrings.accManagement.enterZip}
                                             maxLength={gblStrings.maxLength.zipCode}
+                                            returnKeyType="done"
                                             value={jointOwner.empZipcode}
                                             keyboardType="number-pad"
                                             onChangeText={this.onChangeText("jointOwner", "empZipcode")}

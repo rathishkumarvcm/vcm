@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import PropTypes from "prop-types";
 import styles from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterComponent, GSingletonClass, showAlert } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent, GSingletonClass,GLoadingSpinner, showAlert } from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import AppUtils from '../../Utils/AppUtils';
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 
 
@@ -23,6 +24,29 @@ class OpenAccPageFiveComponent extends Component {
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
     componentDidMount() {
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        AppUtils.debugLog(`componentDidUpdate::::> ${prevState}`);
+        const { accOpeningData} = this.props;
+
+        if (this.props !== prevProps) {
+            const responseKey = ActionTypes.PREFERENCE_SAVE_OPENING_ACCT;
+            if (accOpeningData[responseKey]) {
+                if (accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
+                    const tempResponse = accOpeningData[responseKey];
+                    if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
+                        const msg = tempResponse.message;
+                        AppUtils.debugLog(`Account Type Saved ::: :: ${ msg}`);
+                        showAlert(gblStrings.common.appName ,tempResponse.result,"OK");
+                        AppUtils.debugLog(tempResponse.result);
+                    } else {
+                        showAlert(gblStrings.common.appName ,tempResponse.message,"OK");
+                        AppUtils.debugLog(tempResponse.message);
+                    }
+                }
+            }
+        }
     }
 
     /*----------------------
@@ -54,8 +78,23 @@ class OpenAccPageFiveComponent extends Component {
         this.validateFields();
     }
 
+    
+    getPayload = () => {
+        const savedAccData = myInstance.getSavedAccData();
+        const payload = {
+            ...savedAccData
+        };
+
+        return payload;
+
+    }
+
     onClickSave = () => {
-        this.validateFields();
+        AppUtils.debugLog("onClickSave::::> ");
+        const { saveAccountOpening } = this.props;
+        const payload = this.getPayload();
+        saveAccountOpening("OpenAccPageFive", payload);
+
     }
 
     validateFields = () => {
@@ -1759,16 +1798,16 @@ class OpenAccPageFiveComponent extends Component {
     render() {
         //  const tempInfoData = (this.props && this.props.accOpeningData && this.props.accOpeningData.savedAccData) ? this.props.accOpeningData.savedAccData : {};
         const tempInfoData = myInstance.getSavedAccData();
-        const { navigation} = this.props;
+        const { navigation,accOpeningData} = this.props;
         const { getParam } = navigation;  
         
         const currentPage = 5;
         const specialMFAUserType = `${this.props && getParam('SpecialMFA', '')}`;
         return (
             <View style={styles.container}>
-                {
-                    //  this.props.accOpeningData.isLoading && <GLoadingSpinner />
-                }
+                 {
+                    (accOpeningData.isLoading) && <GLoadingSpinner />
+                 }
                 <GHeaderComponent
                     navigation={navigation}
                     onPress={this.onClickHeader}
@@ -1847,12 +1886,15 @@ class OpenAccPageFiveComponent extends Component {
 
 OpenAccPageFiveComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-   // accOpeningData: PropTypes.instanceOf(Object)
+    accOpeningData: PropTypes.instanceOf(Object),
+    saveAccountOpening:PropTypes.func,
+
 };
 OpenAccPageFiveComponent.defaultProps = {
     navigation: {},
-   //  accOpeningData: {}
-   
+    accOpeningData: {},
+    saveAccountOpening:null
+
     
 
 };
