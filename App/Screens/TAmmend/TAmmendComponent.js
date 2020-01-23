@@ -17,7 +17,7 @@ export default class TAmmendComponent extends Component {
             selectedTitle: '',
             selectedValue: '',
             pendingItems: [],
-            data: {}
+            data: {},
         };
     }
 
@@ -111,12 +111,28 @@ export default class TAmmendComponent extends Component {
     }
 
     render() {
+       
         const{navigation}=this.props;
+        const amend = navigation.getParam('amend');
+        console.log("insideamend",navigation.getParam('amend'));
+        const orderId = navigation.getParam('orderId');
+        const transactionType = navigation.getParam('transactionType');
         return (
+            
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.signInView}>
+                        {amend?
+                    (
+                        
+                    <View style={styles.transactionStatusFlex}>
+                            <View style={styles.transactionStatusMessageFlex}>
+                                <Text style={styles.transactionStatusText}>The {transactionType} Transaction <Text style={styles.transactionStatusTextBold}>{orderId}</Text> is been successfully Amended.</Text>
+                            </View>
+                    </View>
+                    ):null
+    }
                         <View style={styles.rowFlex}>
                             <Text style={styles.signIntext}>
                                 Transactions
