@@ -61,11 +61,11 @@ const styles = StyleSheet.create({
     },
     generalDocumentDisclaimerView:{        
         backgroundColor: '#F1F1F2',
+        marginBottom:scaledHeight(20),
         marginLeft: '4%',
         marginRight:'4%',
-        paddingBottom:scaledHeight(14),
-        paddingTop:scaledHeight(14),   
-        marginBottom:scaledHeight(20)
+        paddingBottom:scaledHeight(14),   
+        paddingTop:scaledHeight(14)
     },
     generalDocumentDisclaimerViewFaq: {       
         color: '#2A92EE',
@@ -108,8 +108,8 @@ const styles = StyleSheet.create({
     },
     radioBtnGrpConfirm:{        
         flexDirection:"row", 
-        width:'30%',  
-        marginTop:scaledHeight(25)     
+        marginTop:scaledHeight(25),  
+        width:'30%'     
     },
     saveButton:{
         alignItems:'center',
@@ -127,6 +127,27 @@ const styles = StyleSheet.create({
         color:'#FFFFFF',
         fontSize:scaledHeight(16),
         fontWeight:'bold'
+    },
+    saveSuccessContainer:{
+        backgroundColor:'#E9E9E9',
+        borderRadius:scaledHeight(10),
+        elevation: 4,   
+        flexDirection:'row',        
+        marginLeft:'4%',    
+        marginRight:'4%',
+        paddingHorizontal:'5%',
+        paddingVertical:scaledHeight(15),
+        position: 'absolute',        
+        top:10,
+        width:'92%', 
+        zIndex: 5,         
+    },
+    saveSuccessText:{
+        color:'#56565A',
+        flex:0.95,
+        fontSize:scaledHeight(16),        
+        marginLeft:'2%',    
+        marginRight:'2%',
     },
     scrollViewFlex:{
         flex: 0.85 
@@ -193,9 +214,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,      
         marginLeft: '4%',       
         marginRight: '4%',
-        paddingHorizontal:'6%', 
-        paddingVertical:scaledHeight(20),       
-        marginTop: scaledHeight(20)
+        marginTop: scaledHeight(20), 
+        paddingHorizontal:'6%',       
+        paddingVertical:scaledHeight(20)
     },
      tooltipContainer:{                               
         marginLeft:'8%', 

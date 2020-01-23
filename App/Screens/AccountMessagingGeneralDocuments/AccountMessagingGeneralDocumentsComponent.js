@@ -20,6 +20,7 @@ const documentsTypesConfirm = [
 class AccountMessagingGeneralDocumentsComponent extends Component {
     constructor(props) {
         super(props);
+        this.scrollRef = React.createRef();
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
            // isLoading: false,            
@@ -28,6 +29,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
             selectedConfirmItemID:'1',           
             selectedGeneralDocumentsAnnualItemID: '1',          
             selectedGeneralDocumentsPrivacyItemID: '1',
+            saveSuccess:false
            
         };
     }        
@@ -95,7 +97,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
     saveButtonAction = () => {
         AppUtils.debugLog('Save Button Clicked...');    
         const{ selectedTaxDocumentsItemID,selectedConfirmItemID,selectedGeneralDocumentsAnnualItemID,selectedGeneralDocumentsPrivacyItemID }=this.state;
-        const{ navigation,saveData }=this.props;
+        const{ saveData }=this.props;
         const payloadData = {
             selectedTaxDocumentsItemID, 
             selectedConfirmItemID,
@@ -103,7 +105,11 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
             selectedGeneralDocumentsPrivacyItemID,
         };        
         saveData(payloadData);
-        navigation.goBack();        
+        this.scrollRef.current.scrollTo({y:0, x:0,animated: true });       
+        this.setState({
+            saveSuccess: true                       
+        });  
+        // navigation.goBack();        
     }
 
     navigateFAQPage=()=>{       
@@ -128,14 +134,14 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
 
     render() {
         const{ navigation }=this.props;
-        const{ selectedTaxDocumentsItemID,selectedConfirmItemID,selectedGeneralDocumentsAnnualItemID,selectedGeneralDocumentsPrivacyItemID }=this.state;
+        const{ selectedTaxDocumentsItemID,selectedConfirmItemID,saveSuccess,selectedGeneralDocumentsAnnualItemID,selectedGeneralDocumentsPrivacyItemID }=this.state;
         
         return (
             <View style={styles.container}>
                 <GHeaderComponent
                     navigation={navigation}
                 />
-                <ScrollView style={styles.scrollViewFlex}>
+                <ScrollView style={styles.scrollViewFlex} ref={this.scrollRef}>
                     <View style={styles.settingsView}>
                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.navigategeneralSettings}>
                             <Text style={styles.settingsInfo}>
@@ -160,6 +166,31 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                             {gblStrings.settingAccountMessaging.accountMessagingGeneralTitleDesc}
                         </Text>
                     </View>                 
+                    
+                    {                    
+                    (saveSuccess) ? (
+                        <View style={styles.saveSuccessContainer}>
+                            <GIcon
+                                name="check"
+                                type="antdesign"
+                                size={30}
+                                color="#707070"
+                            />
+                            <Text style={styles.saveSuccessText}>
+                                Delivery Preference for Tax Documents has been updated successfully
+                            </Text>
+                            <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.goBack}>
+                                <GIcon
+                                    name="close"
+                                    type="evilicon"
+                                    size={40}
+                                    color="#707070"
+                                />
+                            </TouchableOpacity>
+                        </View>
+                     )     
+                     : null
+                     }  
                     
                     {/* <View style={styles.alertsForDocumentsContainer}>
                         <Text style={styles.alertsForDocumentTitle}>
