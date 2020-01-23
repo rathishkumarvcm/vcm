@@ -118,6 +118,7 @@ import ExchangeScreenOneComponent from './Screens/ExchangeScreenOne';
 import ExchangeScreenTwoComponent from './Screens/ExchangeScreenTwo';
 import ExchangeScreenThreeComponent from './Screens/ExchangeScreenThree';
 import ExchangeScreenFourComponent from './Screens/ExchangeScreenFour';
+import ExchangeFinishComponent from './Screens/ExchangeScreenFinish'
 
 import EditRelationshipInfo from "./Screens/EditRelationshipInformation";
 import EditRegulatoryInfo from './Screens/EditRegulatoryInformations/EditRegulatoryComponent';
@@ -1123,6 +1124,12 @@ const AppNavigator = createStackNavigator({
     },
     exchangeScreenFour: {
         screen: ExchangeScreenFourComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    exchangeScreenFinish: {
+        screen: ExchangeFinishComponent,
         navigationOptions: {
             header: null,
         }

@@ -145,7 +145,7 @@ class ExchangeScreenFourComponent extends Component {
             };
             menuList.push(payloadData);
             ammendActions(menuList);
-            navigation.navigate('tAmmendComponent', { orderId: orderId });
+            navigation.navigate('exchangeScreenFinish', { orderId: orderId });
         }
     }
 

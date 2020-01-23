@@ -7,6 +7,7 @@ import styles from './styles';
 
 
 let menuList = [];
+
 //  let selectedFunds =[]
 export default class TAmmendComponent extends Component {
 
@@ -18,11 +19,12 @@ export default class TAmmendComponent extends Component {
             selectedValue: '',
             pendingItems: [],
             data: {},
+            showMsg : true,
         };
     }
 
     componentDidMount() {
-        const{amendReducerData}=this.props;
+        const { amendReducerData } = this.props;
         if (this.props && amendReducerData && amendReducerData.menu) {
             //  console.log("---->menu",this.props.amendReducerData.menu)
             //  this.setState({ menu : this.props.amendReducerData.menu}) ;
@@ -33,12 +35,13 @@ export default class TAmmendComponent extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const{amendReducerData}=this.props;
+        const { amendReducerData } = this.props;
         if (prevProps !== this.props) {
             if (this.props && amendReducerData && amendReducerData.menu) {
                 menuList = amendReducerData.menu;
             }
             this.filterPendingItems();
+            this.notificationView();
         }
     }
 
@@ -50,7 +53,7 @@ export default class TAmmendComponent extends Component {
             }
         } */
 
-        items=menuList.filter((item)=>item.data.OrderStatus==='Pending' ? item:'');
+        items = menuList.filter((item) => item.data.OrderStatus === 'Pending' ? item : '');
         this.setState({ pendingItems: items });
     }
 
@@ -67,31 +70,31 @@ export default class TAmmendComponent extends Component {
 
     }
 
-    
+
+
     navigatetoFundSelection = () => {
-       
-        const{data,selectedIndex}=this.state;
-       
-        const{navigation}=this.props;
-        if (data.TransactionType === "Liquidation"||data.TransactionType === "Liquidation Amended") {
+
+        const { data, selectedIndex } = this.state;
+
+        const { navigation } = this.props;
+        if (data.TransactionType === "Liquidation" || data.TransactionType === "Liquidation Amended") {
             navigation.navigate('LiquidationPageTwo',
                 { index: selectedIndex, data: data, ammend: true });
         }
-        if (data.TransactionType === "Purchase"||data.TransactionType === "Purchase Amended") {
-            
+        if (data.TransactionType === "Purchase" || data.TransactionType === "Purchase Amended") {
+
             navigation.navigate('purchaseScreenTwo',
                 { index: selectedIndex, data: data, ammend: true });
         }
-         if(data.TransactionType === "Exchange"||data.TransactionType === "Exchange Amended")
-         {
-         navigation.navigate('exchangeScreenTwo',
-         {index:selectedIndex,data:data,ammend:true});
-         } 
+        if (data.TransactionType === "Exchange" || data.TransactionType === "Exchange Amended") {
+            navigation.navigate('exchangeScreenTwo',
+                { index: selectedIndex, data: data, ammend: true });
+        }
     }
 
     renderAccordians = () => {
         const items = [];
-        
+
         for (item of this.state.pendingItems) {
             items.push(
                 <Accordian
@@ -110,29 +113,38 @@ export default class TAmmendComponent extends Component {
 
     }
 
+    notificationView = () => {
+        const { navigation } = this.props;
+        if (navigation.getParam('amend')) {
+            console.log("amend timeout");
+            setTimeout(() => {
+                this.setState({showMsg : false});
+
+            }, 5000);
+        }
+    }
+
     render() {
-       
-        const{navigation}=this.props;
-        const amend = navigation.getParam('amend');
-        console.log("insideamend",navigation.getParam('amend'));
+
+        const { navigation } = this.props;
+        const {showMsg} = this.state;
+        // const amend = navigation.getParam('amend');
+        // console.log("insideamend",navigation.getParam('amend'));
         const orderId = navigation.getParam('orderId');
         const transactionType = navigation.getParam('transactionType');
         return (
-            
+
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.scrollViewFlex}>
                     <View style={styles.signInView}>
-                        {amend?
-                    (
-                        
-                    <View style={styles.transactionStatusFlex}>
-                            <View style={styles.transactionStatusMessageFlex}>
-                                <Text style={styles.transactionStatusText}>The {transactionType} Transaction <Text style={styles.transactionStatusTextBold}>{orderId}</Text> is been successfully Amended.</Text>
+                        {showMsg ? (
+                            <View style={styles.transactionStatusFlex}>
+                                <View style={styles.transactionStatusMessageFlex}>
+                                    <Text style={styles.transactionStatusText}>The {transactionType} Transaction <Text style={styles.transactionStatusTextBold}>{orderId}</Text> is been successfully Amended.</Text>
+                                </View>
                             </View>
-                    </View>
-                    ):null
-    }
+                        ) : null}
                         <View style={styles.rowFlex}>
                             <Text style={styles.signIntext}>
                                 Transactions
