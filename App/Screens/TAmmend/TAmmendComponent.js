@@ -19,7 +19,7 @@ export default class TAmmendComponent extends Component {
             selectedValue: '',
             pendingItems: [],
             data: {},
-            showMsg : true,
+            showMsg : false,
         };
     }
 
@@ -116,7 +116,7 @@ export default class TAmmendComponent extends Component {
     notificationView = () => {
         const { navigation } = this.props;
         if (navigation.getParam('amend')) {
-            console.log("amend timeout");
+            this.setState({showMsg : true});
             setTimeout(() => {
                 this.setState({showMsg : false});
 
