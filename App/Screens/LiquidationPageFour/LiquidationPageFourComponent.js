@@ -205,6 +205,7 @@ class LiquidationPageFourComponent extends Component {
                 }
             };
             menuList.push(payloadData);
+            //this.submitMethod();
             ammendActions(menuList);
 
             const liquidationData = {
@@ -231,6 +232,30 @@ class LiquidationPageFourComponent extends Component {
             navigate('LiquidationFinish', { orderId: orderId });
         }
 
+    }
+
+    submitMethod = () => {
+         console.log("in component submitMethod")
+        const { submitLiquidationData } = this.props;
+        const payload = {
+            "customerId": "45435",
+            "CompanyNumber": "591",
+            "FundNumber": "30",
+            "AccountNumber": "30900035576",
+            "TypeValueReq": "D",
+            "liquidateAmount": "10000",
+            "PaymentMethod": "05",
+             "TaxWithholdingCode": "X",
+            "AmountBeforeTaxes": "1000",
+            "AmountAfterTaxes": "43",
+            "FederalTax": "10",
+            "StateTax": "10",
+            "TotalTaxestobewithhold": "5",
+            "Totalyouwillreceive": "1000",
+            "TotalWithdrawal": "2000"
+          }
+        submitLiquidationData(payload);
+        return 0;
     }
 
 
@@ -426,6 +451,7 @@ LiquidationPageFourComponent.propTypes = {
     amendReducerData: PropTypes.instanceOf(Object),
     ammendActions: PropTypes.func,
     saveData: PropTypes.func,
+    submitLiquidationData: PropTypes.func,
 };
 
 LiquidationPageFourComponent.defaultProps = {
@@ -434,5 +460,6 @@ LiquidationPageFourComponent.defaultProps = {
     amendReducerData:{},
     ammendActions:()=>{},
     saveData:()=>{},
+    submitLiquidationData:()=>{},
 };
 export default LiquidationPageFourComponent;
