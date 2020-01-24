@@ -74,16 +74,15 @@ class DashboardAccComponent extends Component {
             if (accOpeningData[responseKey]) {
                 if (accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
                     const tempResponse = accOpeningData[responseKey];
-                    if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
-                        const msg = tempResponse.message;
-                       AppUtils.debugLog(`Account  Saved ::: :: ${ msg}`);
-                        //  alert( JSON.stringify(tempResponse.result));
+                    if (tempResponse.savedPages) {
+                       
                         this.setState({
-                            retrivePendingAppData: tempResponse.result.Item
+                            retrivePendingAppData: tempResponse
                         });
 
                     } else {
-                        //  alert(tempResponse.message)
+                        const msg = tempResponse.message;
+                        AppUtils.debugLog(`Account  Saved ::: :: ${ msg}`);
                     }
                 }
             }

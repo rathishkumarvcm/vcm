@@ -1520,7 +1520,6 @@ class OpenAccPageTwoComponent extends Component {
         };
 
         const investChildPayload = {
-            "beneficiaryInfo": {
                 "childBeneficiary": {
                     "beneficiaryDetails": {
                         "firstName": childBeneficiary.firstName || "",
@@ -1531,7 +1530,6 @@ class OpenAccPageTwoComponent extends Component {
                         "relation": childBeneficiary.relationshipToAcc || "",
                     }
                 }
-            },
         };
 
         /* const retirementAccPayload = {

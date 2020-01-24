@@ -179,10 +179,11 @@ class OpenAccPageThreeComponent extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         AppUtils.debugLog(`componentDidUpdate::::> ${prevState}`);
-        const { accOpeningData,masterLookupStateData,addBankAccount} = this.props;
+        const { accOpeningData,masterLookupStateData} = this.props;
         const { fundingSourceList,offLineMethods,onLineMethods} = this.state;
 
         if (this.props !== prevProps) {
+           
             let tempFundListData = [];
                 if (accOpeningData[ActionTypes.GET_FUNDLIST] ) {
                     tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST];
@@ -209,49 +210,7 @@ class OpenAccPageThreeComponent extends Component {
                         }
                 }
             }
-           
 
-            const responseKey = ActionTypes.INVEST_SELECT_SAVE_OPENING_ACCT;
-            if (accOpeningData[responseKey]) {
-                if (accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
-                    const tempResponse = accOpeningData[responseKey];
-                    if (tempResponse.status) {
-                        const msg = tempResponse.status;
-                        AppUtils.debugLog(`Account Type Saved ::: :: ${ msg}`);
-                        showAlert(gblStrings.common.appName ,tempResponse.status,gblStrings.common.ok);
-                        AppUtils.debugLog(tempResponse.result);
-                    } else {
-                        showAlert(gblStrings.common.appName ,tempResponse.message,gblStrings.common.ok);
-                        AppUtils.debugLog(tempResponse.message);
-                    }
-                }
-            }
-
-            const addBankAccKey = ActionTypes.ADD_BANK_ACCOUNT;
-            if (addBankAccount[addBankAccKey]) {
-                if (addBankAccount[addBankAccKey] !== prevProps.addBankAccount[addBankAccKey]) {
-                    const tempResponse = addBankAccount[addBankAccKey];
-                    if (tempResponse.statusCode === 200 && tempResponse.statusType === "S") {
-                        AppUtils.debugLog(`Valid bank account::${tempResponse.message}`);
-                            this.setState({
-                                isValidBankAccount: true,
-                                validBankAccountMsg:tempResponse.message
-                            });
-                        
-                    } else {
-                        AppUtils.debugLog(`Not Valid bank account::${tempResponse.message}`);
-
-                        this.setState({
-                            isValidBankAccount: false,
-                            validBankAccountMsg:tempResponse.message
-
-                        });
-                    }
-                }
-            }
-
-
-            
 
             const validateBankAccKey = ActionTypes.VALIDATE_BANK_ACCOUNT;
             if (accOpeningData[validateBankAccKey]) {
@@ -284,10 +243,122 @@ class OpenAccPageThreeComponent extends Component {
                 }
             }
 
+            
+           
+
+            const responseKey = ActionTypes.INVEST_SELECT_SAVE_OPENING_ACCT;
+            if (accOpeningData[responseKey]) {
+                if (accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
+                    const tempResponse = accOpeningData[responseKey];
+                    if (tempResponse.status) {
+                        const msg = tempResponse.status;
+                        AppUtils.debugLog(`Account Type Saved ::: :: ${ msg}`);
+                        showAlert(gblStrings.common.appName ,tempResponse.status,gblStrings.common.ok);
+                        AppUtils.debugLog(tempResponse.result);
+                    } else {
+                        showAlert(gblStrings.common.appName ,tempResponse.message,gblStrings.common.ok);
+                        AppUtils.debugLog(tempResponse.message);
+                    }
+                }
+            }
+
+           
+            // const addBankAccKey = ActionTypes.ADD_BANK_ACCOUNT;
+            // if (addBankAccount[addBankAccKey]) {
+            //     if (addBankAccount[addBankAccKey] !== prevProps.addBankAccount[addBankAccKey]) {
+            //         const tempResponse = addBankAccount[addBankAccKey];
+            //         if (tempResponse.statusCode === 200 && tempResponse.statusType === "S") {
+            //             AppUtils.debugLog(`Valid bank account::${tempResponse.message}`);
+            //                 this.setState({
+            //                     isValidBankAccount: true,
+            //                     validBankAccountMsg:tempResponse.message
+            //                 });
+                        
+            //         } else {
+            //             AppUtils.debugLog(`Not Valid bank account::${tempResponse.message}`);
+
+            //             this.setState({
+            //                 isValidBankAccount: false,
+            //                 validBankAccountMsg:tempResponse.message
+
+            //             });
+            //         }
+            //     }
+            // }
+
+        
+
 
         }
 
     }
+
+    /*
+    static getDerivedStateFromProps(nextProps, prevState) {
+
+        const { accOpeningData, masterLookupStateData } = nextProps;
+        const { fundingSourceList, offLineMethods, onLineMethods } = prevState;
+
+        let tempFundListData = [];
+        if (accOpeningData[ActionTypes.GET_FUNDLIST]) {
+            tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST];
+            return {
+                fundList: [...tempFundListData.map(v => ({ ...v, isActive: false }))],
+                isFilterApplied: false
+            };
+        }
+
+
+        let tempFundingSourceList = [];
+        if (fundingSourceList.length === 0) {
+            if (masterLookupStateData && masterLookupStateData.fund_source && masterLookupStateData.fund_source.value) {
+                tempFundingSourceList = masterLookupStateData.fund_source.value;
+                AppUtils.debugLog(`tempFundingSourceList:: ${JSON.stringify(tempFundingSourceList)}`);
+                if (tempFundingSourceList.length > 0) {
+                    const tempOffLineSubtypes = tempFundingSourceList[0].subtypes;
+                    const tempOnLineSubtypes = tempFundingSourceList[1].subtypes;
+                    return {
+                        offLineMethods: [...tempOffLineSubtypes.map(v => ({ ...v, isActive: false }))],
+                        onLineMethods: [...tempOnLineSubtypes.map(v => ({ ...v, isActive: false }))],
+                        fundingSourceList: [...offLineMethods.map(v => ({ ...v, isActive: false })), ...onLineMethods.map(v => ({ ...v, isActive: false }))]
+                    };
+                }
+            }
+        }
+
+        const validateBankAccKey = ActionTypes.VALIDATE_BANK_ACCOUNT;
+        if (accOpeningData[validateBankAccKey]) {
+            const tempResponse = accOpeningData[validateBankAccKey];
+            if (tempResponse.accountVerified) {
+                if (tempResponse.accountVerified === "true") {
+                    showAlert(gblStrings.common.appName, tempResponse.bankName, gblStrings.common.ok);
+                    return {
+                        isValidBankAccount: true,
+                        validBankAccountMsg: "AccountVerification Successfully"
+                    };
+                }
+                AppUtils.debugLog(`Valid bank account::${tempResponse.accountVerified}`);
+
+            } else {
+                AppUtils.debugLog(`Not Valid bank account::${tempResponse.message}`);
+
+                return {
+                    isValidBankAccount: false,
+                    validBankAccountMsg: `AccountVerification failure :${tempResponse.message}`
+
+                };
+            }
+
+            return {
+                isValidBankAccount: false,
+                validBankAccountMsg: "AccountVerification failure"
+            };
+        }
+
+        return prevState;
+    }
+
+    */
 
 
     /*----------------------
