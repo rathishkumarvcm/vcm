@@ -155,7 +155,7 @@ class OpenAccPageThreeComponent extends Component {
         if (this.state && fundList && !fundList.length > 0) {
             const fundListPayload = {
                 "companyId":"" // "591"
-            };            
+            };
             getFundListData(fundListPayload);
         }
 
@@ -184,7 +184,7 @@ class OpenAccPageThreeComponent extends Component {
 
         if (this.props !== prevProps) {
             let tempFundListData = [];
-                if (accOpeningData[ActionTypes.GET_FUNDLIST]) {
+                if (accOpeningData[ActionTypes.GET_FUNDLIST] ) {
                     tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST];
                     this.setState({
                         fundList: [...tempFundListData.map(v => ({ ...v, isActive: false }))],
@@ -219,8 +219,9 @@ class OpenAccPageThreeComponent extends Component {
                         const msg = tempResponse.status;
                         AppUtils.debugLog(`Account Type Saved ::: :: ${ msg}`);
                         showAlert(gblStrings.common.appName ,tempResponse.status,gblStrings.common.ok);
+                        AppUtils.debugLog(tempResponse.result);
                     } else {
-                        showAlert(gblStrings.common.appName ,tempResponse.status,gblStrings.common.ok);
+                        showAlert(gblStrings.common.appName ,tempResponse.message,gblStrings.common.ok);
                         AppUtils.debugLog(tempResponse.message);
                     }
                 }
@@ -1057,11 +1058,10 @@ class OpenAccPageThreeComponent extends Component {
         AppUtils.debugLog("risk=", riskkey);
         AppUtils.debugLog("fundData=", funddatakey);
 
-        const fundListPayload = {
-             'minInvestment': mininvestkey,
-             "companyId":"591",
-
-             };
+        const fundListPayload = { 
+            'minInvestment': mininvestkey ,
+            "companyId":"591",
+        };
         getFundListData(fundListPayload);
     }
 
