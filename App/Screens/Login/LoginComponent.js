@@ -1,23 +1,22 @@
 /* global require */
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, Linking, TouchableOpacity } from 'react-native';
-import { styles } from './styles';
-import { GButtonComponent, GInputComponent, GBiometricAuthentication, GHeaderComponent, GFooterSettingsComponent, GLoadingSpinner, showAlertWithCancelButton } from '../../CommonComponents';
 import TouchID from 'react-native-touch-id';
 import PropTypes from 'prop-types';
 import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
+import Amplify, { Auth } from 'aws-amplify';
+import { styles } from './styles';
+import { GButtonComponent, GInputComponent, GBiometricAuthentication, GHeaderComponent, GFooterSettingsComponent, GLoadingSpinner, showAlertWithCancelButton } from '../../CommonComponents';
 import * as reGex from '../../Constants/RegexConstants';
-import Amplify from 'aws-amplify';
-import { Auth } from "aws-amplify";
 
-const awsmobile = {
-    "aws_project_region": "us-east-2",
-    "aws_cognito_identity_pool_id": "us-east-2:47948e7d-eb40-4622-918a-a5682bb6796f",
-    "aws_cognito_region": "us-east-2",
-    "aws_user_pools_id": "us-east-2_AFKupYHWn",
-    "aws_user_pools_web_client_id": "2vl5oiufeh9c1dpfcm8qmj7v1i",
-    "oauth": {}
-};
+// const awsmobile = {
+//     "aws_project_region": "us-east-2",
+//     "aws_cognito_identity_pool_id": "us-east-2:47948e7d-eb40-4622-918a-a5682bb6796f",
+//     "aws_cognito_region": "us-east-2",
+//     "aws_user_pools_id": "us-east-2_AFKupYHWn",
+//     "aws_user_pools_web_client_id": "2vl5oiufeh9c1dpfcm8qmj7v1i",
+//     "oauth": {}
+// };
 
 // Amplify.configure(awsmobile);
 
@@ -133,6 +132,7 @@ class LoginComponent extends Component {
                     touchIdEnrolled: false,
                     faceIdEnrolled: false
                 });
+                console.log("Touch ID error occured !! ==>", error);
             });
 
         if (this.props && this.props.initialState && this.props.initialState.verifiedEmail) {
@@ -164,8 +164,8 @@ class LoginComponent extends Component {
 
         console.log('componentDidUpdate', emailVerify);
 
-        let validEmail = 'vcm.com';
-        let validPassword = 'Vcm123';
+        const validEmail = 'vcm.com';
+        const validPassword = 'Vcm123';
         let test = validEmail.localeCompare(this.state.email);
         let test1 = validPassword.localeCompare(this.state.password);
 
@@ -470,7 +470,7 @@ class LoginComponent extends Component {
                     <ScrollView style={{ flex: 0.85 }}>
                         {this.state.registeredSuccess ?
                             <View style={styles.onlineIDSuccess}>
-                                <Text> {"Your Online ID successfully created."}</Text>
+                                <Text> Your Online ID successfully created.</Text>
                             </View>
                             :
                             null
@@ -478,13 +478,13 @@ class LoginComponent extends Component {
 
                         <View style={styles.signInView}>
                             <Text style={styles.signIntext}>
-                                {"Sign In"}
+                                Sign In
                             </Text>
                         </View>
 
                         {this.state.inActivityAccount ? <View style={styles.inActivityView}>
                             <Text style={styles.inActivitytext}>
-                                {"Your online account has been locked for 90 days of inactivity. Please contact Victory Capital Management service Rep at +1 (000) 000-0000"}
+                                Your online account has been locked for 90 days of inactivity. Please contact Victory Capital Management service Rep at +1 (000) 000-0000
                             </Text>
                         </View>
                             :
@@ -493,7 +493,7 @@ class LoginComponent extends Component {
 
                         <View style={styles.signInUser}>
                             <Text style={styles.userIDText}>
-                                {"Online ID"}
+                                Online ID
                             </Text>
                         </View>
                         <GInputComponent
@@ -504,13 +504,13 @@ class LoginComponent extends Component {
                             value={this.state.email}
                             // validateError={this.state.validateEmail}
                             errorFlag={!this.state.validationEmail}
-                            errorText={"Enter a valid email."}
+                            errorText="Enter a valid email."
                             maxLength={30}
                         />
 
                         <View style={styles.passwordView}>
                             <Text style={styles.userIDText}>
-                                {"Password"}
+                                Password
                             </Text>
                         </View>
 
@@ -523,7 +523,7 @@ class LoginComponent extends Component {
                             value={this.state.password}
                             secureTextEntry
                             errorFlag={!this.state.validationPassword}
-                            errorText={"Enter a valid password."}
+                            errorText="Enter a valid password."
                             maxLength={30}
                         />
 
@@ -533,13 +533,13 @@ class LoginComponent extends Component {
                                 {"I forgot my "}
                             </Text>
                             <Text style={styles.forgotLineTextColor} onPress={this.navigationRetrieveOnlineID}>
-                                {"Online ID"}
+                                Online ID
                             </Text>
                             <Text style={styles.termsofuseText}>
                                 {" or "}
                             </Text>
                             <Text style={styles.forgotLineTextColor} onPress={this.navigationResetPassword}>
-                                {"Password."}
+                                Password.
                             </Text>
                         </View>
 
@@ -548,7 +548,7 @@ class LoginComponent extends Component {
                                 {"By clicking “Sign In” I agree to the Victory Capital "}
 
                                 <Text style={styles.forgotLineTextColor}>
-                                    {"Terms of Use."}
+                                    Terms of Use.
                                 </Text>
                             </Text>
                         </View>
@@ -564,7 +564,7 @@ class LoginComponent extends Component {
                             {
                                 !this.state.registeredBioMetric ? null :
 
-                                    this.state.faceIdEnrolled ?
+                                    this.state.faceIdEnrolled ? (
                                         <TouchableOpacity onPress={this.enableBiometricMethod}>
                                             <Image
                                                 resizeMode="contain"
@@ -575,11 +575,12 @@ class LoginComponent extends Component {
 
                                             <TouchableOpacity style={styles.faceIDtextStyle}>
                                                 <Text>
-                                                    {"Sign In with Face ID"}
+                                                    Sign In with Face ID
                                                 </Text>
                                             </TouchableOpacity>
                                         </TouchableOpacity>
-                                        :
+                                      )
+                                        : (
                                         <TouchableOpacity onPress={this.enableBiometricMethod}>
                                             <Image
                                                 resizeMode="contain"
@@ -588,13 +589,13 @@ class LoginComponent extends Component {
                                                 onPress={this.enableBiometricMethod}
                                             />
 
-                                            <TouchableOpacity style={styles.faceIDtextStyle} >
+                                            <TouchableOpacity style={styles.faceIDtextStyle}>
                                                 <Text>
-                                                    {"Sign In with Touch ID"}
+                                                    Sign In with Touch ID
                                                 </Text>
                                             </TouchableOpacity>
                                         </TouchableOpacity>
-                            }
+                                      )}
                         </View>
 
                         <GButtonComponent
@@ -608,11 +609,11 @@ class LoginComponent extends Component {
 
                         <View style={styles.newVictorySection}>
                             <Text style={styles.newVictory}>
-                                {"New to Victory Capital?"}
+                               New to Victory Capital?
                             </Text>
 
                             <Text style={styles.openInvestment}>
-                                {"It’s easy to open your investment"}
+                                It’s easy to open your investment
                             </Text>
 
                             <GButtonComponent
@@ -622,7 +623,7 @@ class LoginComponent extends Component {
                                 onPress={this.navigateEmail}
                             />
 
-                            {/*}  <View style={styles.lineBorder} />
+                            {/* }  <View style={styles.lineBorder} />
 
                 <View style={styles.usaaMemberSection}>
                     <Text style={styles.newVictory}>
@@ -633,7 +634,7 @@ class LoginComponent extends Component {
 
                 <Text style={styles.openInvestment}>
                     {"USAA Members has been backed by the investment expertise of Victory Capital Management since July 2019. Your USAA online login credentials have not changed. They are the same details you used to you create your USAA online account."}
-        </Text>*/}
+        </Text> */}
 
                         </View>
 

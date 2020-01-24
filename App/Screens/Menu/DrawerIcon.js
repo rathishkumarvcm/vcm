@@ -3,7 +3,7 @@ import {Platform,StyleSheet} from 'react-native';
 import PropTypes, { func } from "prop-types";
 import { withNavigation } from 'react-navigation';
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { GIcon } from '../../CommonComponents';
+import { GIcon } from '../../CommonComponents/GIcon';
 
 
 const styles = StyleSheet.create({

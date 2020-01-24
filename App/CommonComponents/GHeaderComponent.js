@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Dimensions, Image, FlatList, Modal } from 'react-native';
 import PropTypes from "prop-types";
 import { Auth } from "aws-amplify";
-import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
+import RNSecureKeyStore from 'react-native-secure-key-store';
+// { ACCESSIBLE } from 'react-native-secure-key-store';
 import { GIcon } from './GIcon';
 import { scaledHeight, scaledWidth } from '../Utils/Resolution';
 import DrawerIcon from '../Screens/Menu/DrawerIcon'
