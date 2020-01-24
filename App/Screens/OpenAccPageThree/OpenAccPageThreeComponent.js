@@ -153,7 +153,9 @@ class OpenAccPageThreeComponent extends Component {
         const {fundList} = this.state;
 
         if (this.state && fundList && !fundList.length > 0) {
-            const fundListPayload = {};
+            const fundListPayload = {
+                "companyId":"" // "591"
+            };            
             getFundListData(fundListPayload);
         }
 
@@ -182,8 +184,8 @@ class OpenAccPageThreeComponent extends Component {
 
         if (this.props !== prevProps) {
             let tempFundListData = [];
-                if (accOpeningData[ActionTypes.GET_FUNDLIST] !== undefined && accOpeningData[ActionTypes.GET_FUNDLIST].Items !== null) {
-                    tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST].Items;
+                if (accOpeningData[ActionTypes.GET_FUNDLIST]) {
+                    tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST];
                     this.setState({
                         fundList: [...tempFundListData.map(v => ({ ...v, isActive: false }))],
                         isFilterApplied: false
@@ -213,13 +215,12 @@ class OpenAccPageThreeComponent extends Component {
             if (accOpeningData[responseKey]) {
                 if (accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
                     const tempResponse = accOpeningData[responseKey];
-                    if (tempResponse.statusCode === 200) {
-                        const msg = tempResponse.message;
+                    if (tempResponse.status) {
+                        const msg = tempResponse.status;
                         AppUtils.debugLog(`Account Type Saved ::: :: ${ msg}`);
-                        showAlert(gblStrings.common.appName ,tempResponse.result,gblStrings.common.ok);
-                        AppUtils.debugLog(tempResponse.result);
+                        showAlert(gblStrings.common.appName ,tempResponse.status,gblStrings.common.ok);
                     } else {
-                        showAlert(gblStrings.common.appName ,tempResponse.message,gblStrings.common.ok);
+                        showAlert(gblStrings.common.appName ,tempResponse.status,gblStrings.common.ok);
                         AppUtils.debugLog(tempResponse.message);
                     }
                 }
@@ -1056,7 +1057,11 @@ class OpenAccPageThreeComponent extends Component {
         AppUtils.debugLog("risk=", riskkey);
         AppUtils.debugLog("fundData=", funddatakey);
 
-        const fundListPayload = { 'minInvestment': mininvestkey };
+        const fundListPayload = {
+             'minInvestment': mininvestkey,
+             "companyId":"591",
+
+             };
         getFundListData(fundListPayload);
     }
 
