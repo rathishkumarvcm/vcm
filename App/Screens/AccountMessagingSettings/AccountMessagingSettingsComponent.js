@@ -35,6 +35,11 @@ class AccountMessagingSettingsComponent extends Component {
         navigation.navigate('accountMessagingGeneralDocuments');
     }
 
+    navigateaccountMessagingInvestmentAccounts = () =>{
+        const {navigation} = this.props;
+        navigation.navigate('accountMessagingInvestmentAccounts');
+    }
+
     navigateAccountMessagingSecurityAndFraud = () =>{
         const {navigation} = this.props;
         navigation.navigate('AccountMessagingSecurityAndFraud');
@@ -140,6 +145,30 @@ class AccountMessagingSettingsComponent extends Component {
                                 />
                                 <Text style={styles.listContainerItemTextTitle}>
                                     {gblStrings.settingAccountMessaging.generalDocumentsTitle}
+                                </Text>
+                            </View>
+                            <View>
+                                <Text style={styles.listContainerItemTextSubtitle}>
+                                    {gblStrings.settingAccountMessaging.generalDocumentsTitleDesc}
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={styles.listContainer}>
+                        <TouchableOpacity
+                            style={styles.touchOpacityPosition}
+                            onPress={this.navigateaccountMessagingInvestmentAccounts}
+                        >
+                            <View style={styles.listContainerItem}>
+                                <GIcon
+                                    name="appstore1"
+                                    type="antdesign"
+                                    size={35}
+                                    color="#000000"
+                                />
+                                <Text style={styles.listContainerItemTextTitle}>
+                                    {gblStrings.settingAccountMessaging.investmentAccountsTitle}
                                 </Text>
                             </View>
                             <View>

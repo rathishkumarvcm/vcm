@@ -40,6 +40,7 @@ import AccountMessagingSettings from './Screens/AccountMessagingSettings/Account
 import AccountMessagingGoals from './Screens/AccountMessagingGoals/AccountMessagingGoalsComponent';
 import AccountMessagingAdvice from "./Screens/AccountMessagingAdvice";
 import AccountMessagingGeneralDocuments from "./Screens/AccountMessagingGeneralDocuments";
+import accountMessagingInvestmentAccounts from "./Screens/AccountMessagingInvestmentAccount";
 import AccountMessagingSecurityAndFraud from './Screens/AccountMessagingSecurityAndFraud/AccountMessagingSecurityAndFraudComponent';
 import AccountMessagingDeviceManagement from "./Screens/AccountMessagingDeviceManagement";
 // Dashboard
@@ -752,6 +753,12 @@ const AppNavigator = createStackNavigator({
     },
     accountMessagingGeneralDocuments: {
         screen: AccountMessagingGeneralDocuments,
+        navigationOptions: {
+            header: null
+        }
+    },
+    accountMessagingInvestmentAccounts: {
+        screen: accountMessagingInvestmentAccounts,
         navigationOptions: {
             header: null
         }

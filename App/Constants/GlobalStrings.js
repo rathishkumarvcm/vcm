@@ -788,6 +788,7 @@ export default {
         adviceTitle: "Advice",
         adviceTitleDesc: "Lorem Ipsum has been the industrys standard dummy text ever since the 1500s",
         generalDocumentsTitle: "Tax Documents",
+        investmentAccountsTitle: "Investment Accounts",
         generalDocumentsHeadTitle: "General Account Preferences",
         generalDocumentsTitleDesc: "Lorem Ipsum has been the industrys standard dummy text ever since the 1500s",
         securityAndFraudAlertsTitle: "Security And Fraud Alerts",
@@ -859,6 +860,9 @@ export default {
         accountMessagingGeneralLargePrint: "Large Print & Paper",
         accountMessagingGeneralBraillePaper: "Braille & Paper",
         accountMessagingGeneralScreenReader: "Screen Reader Compatible & Online",
+
+        // Title and Title Descriptions Settings > Account Messaging > Investment Accounts
+        accountMessagingInvestmentArrow: ">     Investment Accounts",
 
         //  Title and Title Descriptions Settings > Account Messaging > Alerts for Security and Fraud
         accountMessagingSecurityFraudArrow: ">     Alerts for Security and Fraud",
