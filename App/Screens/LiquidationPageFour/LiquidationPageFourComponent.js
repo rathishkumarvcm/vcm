@@ -205,7 +205,7 @@ class LiquidationPageFourComponent extends Component {
                 }
             };
             menuList.push(payloadData);
-            //this.submitMethod();
+            this.submitMethod();
             ammendActions(menuList);
 
             const liquidationData = {
@@ -242,17 +242,17 @@ class LiquidationPageFourComponent extends Component {
             "CompanyNumber": "591",
             "FundNumber": "30",
             "AccountNumber": "30900035576",
-            "TypeValueReq": "D",
-            "liquidateAmount": "10000",
-            "PaymentMethod": "05",
+            "TypeValueReq": selectedFundData.TypeValueReq,
+            "liquidateAmount": selectedFundData.sellingAmount,
+            "PaymentMethod": savedData.selectedFundWithdrawalData.PaymentMethod,
              "TaxWithholdingCode": "X",
             "AmountBeforeTaxes": "1000",
             "AmountAfterTaxes": "43",
-            "FederalTax": "10",
-            "StateTax": "10",
-            "TotalTaxestobewithhold": "5",
-            "Totalyouwillreceive": "1000",
-            "TotalWithdrawal": "2000"
+            "FederalTax": savedData.selectedFundWithdrawalData.federalTaxInPerc,
+            "StateTax": savedData.selectedFundWithdrawalData.stateTaxInPerc,
+            "TotalTaxestobewithhold": savedData.selectedFundWithdrawalData.totalTaxToBeWithHold,
+            "Totalyouwillreceive": savedData.selectedFundWithdrawalData.totalYouWillReceive,
+            "TotalWithdrawal": savedData.selectedFundWithdrawalData.totalWithdrawal
           }
         submitLiquidationData(payload);
         return 0;
