@@ -149,7 +149,7 @@ class LiquidationPageFourComponent extends Component {
             const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
             const amndObj = menuList[pIndex];
 
-            const transType = `${ammendData.TransactionType} Amended`;
+            const transType = `Liquidation Amended`;
             const ammendPayloadData = {
                 "key": amndObj.key,
                 "title": amndObj.title,
