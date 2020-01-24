@@ -228,7 +228,8 @@ class LiquidationPageTwoComponent extends Component {
             saveLiquidationSelectedData: {
                 ...savedData,
                 "selectedFundData": {
-                    "fundName": "",
+                    // "fundName": "",
+                    "fundName": fundListData[0].fundName,
                     "fundNumber": "",
                     "fundingOption": "",
                     "initialInvestment": "",
