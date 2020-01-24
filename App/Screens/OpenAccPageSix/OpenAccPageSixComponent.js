@@ -64,7 +64,7 @@ class OpenAccPageSixComponent extends Component {
                                                                  -------------------------- */
     componentDidMount() {
         AppUtils.debugLog("componentDidMount::::> ");
-        const { masterLookupStateData, getCompositeLookUpData } = this.props;
+        const { masterLookupStateData, getCompositeLookUpData,getPersonalCompositeData } = this.props;
         const payload = [];
         const compositePayloadData = [
             "backup_withholding",
@@ -78,7 +78,7 @@ class OpenAccPageSixComponent extends Component {
                 payload.push(tempkey);
             }
         }
-        getCompositeLookUpData(payload);
+        getPersonalCompositeData(payload);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -534,7 +534,9 @@ OpenAccPageSixComponent.propTypes = {
     masterLookupStateData: PropTypes.instanceOf(Object),
     submitAccountOpening: PropTypes.func,
     saveAccountOpening: PropTypes.func,
-    getCompositeLookUpData: PropTypes.func
+    getCompositeLookUpData: PropTypes.func,
+    getPersonalCompositeData: PropTypes.func
+
 };
 OpenAccPageSixComponent.defaultProps = {
     navigation: {},
@@ -542,7 +544,9 @@ OpenAccPageSixComponent.defaultProps = {
     masterLookupStateData: {},
     getCompositeLookUpData: null,
     saveAccountOpening: null,
-    submitAccountOpening: null
+    submitAccountOpening: null,
+    getPersonalCompositeData: null
+
 
 
 };

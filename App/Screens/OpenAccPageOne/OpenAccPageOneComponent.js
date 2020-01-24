@@ -298,8 +298,9 @@ class OpenAccPageOneComponent extends Component {
         let sectionData = [];
         let result = [];
         let accSubTypes = [];
+        
         if (accOpeningData[ActionTypes.GET_ACCOUNT_SUBTYPES] !== undefined && accOpeningData[ActionTypes.GET_ACCOUNT_SUBTYPES] !== null) {
-            result = accOpeningData[ActionTypes.GET_ACCOUNT_SUBTYPES].result;
+            result = accOpeningData[ActionTypes.GET_ACCOUNT_SUBTYPES];
             if (result.subtypes !== undefined && result.subtypes !== null) {
                 accSubTypes = result.subtypes;
             } else {
@@ -307,6 +308,7 @@ class OpenAccPageOneComponent extends Component {
                 isSectionAvailable = true;
             }
         }
+        
 
         if (isSectionAvailable) {
             return (
