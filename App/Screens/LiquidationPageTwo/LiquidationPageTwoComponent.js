@@ -264,6 +264,13 @@ class LiquidationPageTwoComponent extends Component {
     getFundList = () => {
         const { navigation, liquidationInitialState } = this.props;
         const { getParam } = navigation;
+        const savedFundData = liquidationInitialState.saveLiquidationSelectedData.selectedFundData.funds;
+        let disable = false;
+        for(let i=0;i<savedFundData.length;i+=1){
+            if(savedFundData[i].isSelected){
+                disable = !(savedFundData[i].allSharesSelected || savedFundData[i].percentageSelected || savedFundData[i].dollarSelected);
+            }
+        }
         if (getParam('ammend')) {
             this.setState({
                 fundListData: ammendData.selectedFundData.funds,
@@ -272,6 +279,7 @@ class LiquidationPageTwoComponent extends Component {
         } else {
             this.setState({
                 fundListData: liquidationInitialState.fundsListData.funds,
+                 disableNextButton:disable
             });
         }
     }

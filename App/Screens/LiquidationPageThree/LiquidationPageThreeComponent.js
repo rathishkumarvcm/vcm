@@ -45,7 +45,7 @@ class LiquidationPageThreeComponent extends Component {
             collapseDeliveryAddress: false,
             collapseTaxAccounting: false,
             collapseTaxWithHoldingOption: false,
-            selectedBankAccountIndex: null,
+           // selectedBankAccountIndex: null,
             fundingSource: {
                 selectedBankAccountNo: '',
                 selectedBankAccountName: '',
@@ -79,8 +79,9 @@ class LiquidationPageThreeComponent extends Component {
     }
 
     updateState = () => {
-        const { navigation } = this.props;
+        const { navigation, liquidationInitialState } = this.props;
         const { getParam } = navigation;
+        const savedFundWithdrawalData = liquidationInitialState.saveLiquidationSelectedData.selectedFundWithdrawalData;
         if (getParam('ammend')) {
             ammendData = getParam('data');
             ammendIndex = getParam('index');
@@ -113,14 +114,22 @@ class LiquidationPageThreeComponent extends Component {
                     selectedBankAccountName: ammendData.selectedFundWithdrawalData.bankAccountName,
                     checkOrderSelected: ammendData.selectedFundWithdrawalData.checkSelectedOrder
                 },
-                selectedBankAccountIndex: selectedBankAccount,
+               // selectedBankAccountIndex: selectedBankAccount,
                 showMessageFlex: false,
                 disableNextButton: false
 
             });
         }
         else {
-            this.setState({ ammend: false });
+            this.setState({ 
+                ammend: false,
+                fundingSource: {
+                    selectedBankAccountNo: savedFundWithdrawalData.bankAccountNo,
+                    selectedBankAccountName: savedFundWithdrawalData.bankAccountName,
+                    checkOrderSelected: savedFundWithdrawalData.checkSelectedOrder
+                },
+                disableNextButton:!(savedFundWithdrawalData.checkSelectedOrder || (savedFundWithdrawalData.bankAccountNo !== ""))
+             });
         }
     }
 
@@ -219,7 +228,7 @@ class LiquidationPageThreeComponent extends Component {
                 selectedBankAccountNo: '',
                 selectedBankAccountName: '',
             },
-            selectedBankAccountIndex: null,
+            // selectedBankAccountIndex: null,
             disableNextButton: false
 
         }));
@@ -232,7 +241,7 @@ class LiquidationPageThreeComponent extends Component {
                 selectedBankAccountName: item.bankAccName,
                 checkOrderSelected: false
             },
-            selectedBankAccountIndex: index,
+           // selectedBankAccountIndex: index,
             showMessageFlex: item.status,
             disableNextButton: false
         });
@@ -367,9 +376,9 @@ class LiquidationPageThreeComponent extends Component {
     generatekeyBankAccNo = (a) => a.bankAccountNo;
 
     renderBankAccounts = ({ item, index }) => {
-        const { selectedBankAccountIndex } = this.state;
+        const { fundingSource } = this.state;
         return (
-            <View style={(selectedBankAccountIndex === index) ? styles.selectedBankAccountFlex : styles.unSelectedBankAccountFlex} onTouchStart={() => this.onSelectBankAccount(item, index)}>
+            <View style={(item.bankAccountNo === fundingSource.selectedBankAccountNo) ? styles.selectedBankAccountFlex : styles.unSelectedBankAccountFlex} onTouchStart={() => this.onSelectBankAccount(item, index)}>
                 <View style={styles.bankAccountFlex}>
                     <View style={styles.bankIconFlex}>
                         <Image style={styles.bankIconStyle}

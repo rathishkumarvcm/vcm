@@ -332,12 +332,7 @@ class LiquidationPageFourComponent extends Component {
                         </View>
 
                         {(fundingSource === gblStrings.liquidation.check) ?
-                            (
-                                <View style={styles.section}>
-                                    <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalInvestment}</Text>
-                                    <Text style={styles.greyText16px}>{fundWithdrawalData.bankAccountNo}</Text>
-                                </View>
-                            ) :
+                            null :
                             (
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountNumber}</Text>
