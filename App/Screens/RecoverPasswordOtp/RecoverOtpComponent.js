@@ -67,7 +67,7 @@ navigationLogin = () =>{
 
   navigationPasswordNew = () => {
     const { otpString } = this.state;
-    const validOtp=regEx.allow_Four_Numeric.test(otpString);
+    const validOtp=regEx.allowFourNumeric.test(otpString);
     this.setState({
       boolOtp: !validOtp,
       errorOtp: !validOtp ? globalStrings.recoverPassword.otp_err : '',

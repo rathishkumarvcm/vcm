@@ -1427,7 +1427,6 @@ export default {
         checkOrderStmt2: "Please make the check payable to USAA Mutual Funds and include the account number of the mutual fund in the memo section.",
         checkOrderStmt3: "Note: We do not accept 3rd party checks, traveler’s checks and money orders..",
         checkOrderStmt4: "The transaction will be processed only after receiving the check. Please wait for 3-5 business days for completion of your transaction.",
-        wireTransfer: "Wire Transfer",
         print: "Print",
         usaaFundName: "USAA Fund Name",
         usaaAccNum: "USAA Account Number",

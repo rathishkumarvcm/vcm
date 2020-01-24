@@ -53,7 +53,7 @@ class RecoveryComponent extends Component {
   }
   navigationResetOpt = () => {
 
-    let validSSn=regEx.allow_Nine_Numeric.test(this.state.ssn);
+    let validSSn=regEx.allowNineNumeric.test(this.state.ssn);
     this.setState({
       boo_OnlineId: this.state.onlineId == "" ? true : false,
       err_onlineId: this.state.onlineId == "" ? globalString.recoverPassword.err_onlineId: '',

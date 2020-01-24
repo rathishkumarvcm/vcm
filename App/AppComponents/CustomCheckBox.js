@@ -72,7 +72,8 @@ CustomCheckBox.defaultProps = {
         marginLeft: scaledHeight(12)
         //  width: '100%',
     },
-
+    selected: false,
+    onPress: PropTypes.func,
 };
 
 export default CustomCheckBox;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
+import PropTypes from "prop-types";
 import { scaledHeight } from '../Utils/Resolution';
 import { GInputComponent, GIcon} from '../CommonComponents';
-import PropTypes from "prop-types";
 
 
 

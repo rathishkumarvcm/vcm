@@ -35,19 +35,22 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
     }        
 
     componentDidMount() {
-        const{ accMessageDocumentinitialState }=this.props;
-        if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedTaxDocumentsItemID) {
-            this.setState({ selectedTaxDocumentsItemID: accMessageDocumentinitialState.selectedTaxDocumentsItemID });
-        }
-        if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedConfirmItemID) {
-            this.setState({ selectedConfirmItemID: accMessageDocumentinitialState.selectedConfirmItemID });
-        }
-        if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedGeneralDocumentsAnnualItemID) {
-            this.setState({ selectedGeneralDocumentsAnnualItemID: accMessageDocumentinitialState.selectedGeneralDocumentsAnnualItemID });
-        }
-        if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedGeneralDocumentsPrivacyItemID) {
-            this.setState({ selectedGeneralDocumentsPrivacyItemID: accMessageDocumentinitialState.selectedGeneralDocumentsPrivacyItemID });
-        }
+        this.onMount(function callback(){
+            const{ accMessageDocumentinitialState }=this.props;
+            if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedTaxDocumentsItemID) {
+                this.setState({ selectedTaxDocumentsItemID: accMessageDocumentinitialState.selectedTaxDocumentsItemID });
+            }
+            if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedConfirmItemID) {
+                this.setState({ selectedConfirmItemID: accMessageDocumentinitialState.selectedConfirmItemID });
+            }
+            if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedGeneralDocumentsAnnualItemID) {
+                this.setState({ selectedGeneralDocumentsAnnualItemID: accMessageDocumentinitialState.selectedGeneralDocumentsAnnualItemID });
+            }
+            if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedGeneralDocumentsPrivacyItemID) {
+                this.setState({ selectedGeneralDocumentsPrivacyItemID: accMessageDocumentinitialState.selectedGeneralDocumentsPrivacyItemID });
+            }
+        });
+        
     }
 
     goBack = () => {

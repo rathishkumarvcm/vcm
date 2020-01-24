@@ -18,11 +18,13 @@ class AccountMessagingDeviceManagementComponent extends Component {
     }
 
     componentDidMount() {
+        this.onMount(function callback() {
         const {accMessageDeviceinitialState} = this.props;
         if (accMessageDeviceinitialState){
             if(accMessageDeviceinitialState.deviceSelected)
                 this.setState({ deviceSelected : accMessageDeviceinitialState.deviceSelected });
-        }        
+            }        
+        });
     }
 
     goBack = () => {
