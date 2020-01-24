@@ -2,10 +2,58 @@ import { StyleSheet } from 'react-native';
 import { scaledHeight } from '../../Utils/Resolution';
 
 const styles = StyleSheet.create({
+    accountContainer:{
+       marginHorizontal:'4%',
+       marginVertical:scaledHeight(20),       
+    },
+    accountDetailContainer: {
+       backgroundColor:'#ECECEC',
+       borderColor:'#5D83AE99',      
+       borderWidth:0.5,
+       marginTop:scaledHeight(10),
+       paddingVertical:scaledHeight(10),          
+    },
+    accountIndvContainer:{
+        marginHorizontal:'4%',
+        marginVertical:scaledHeight(20),       
+     },
+    accountInfoContainer:{
+        flexDirection:'row',
+        paddingHorizontal:'4%'
+    },
+    accountNameText:{
+        fontWeight:'bold'
+    },
+    accountNamecontainer:{
+        borderRightWidth:0.5,
+        flexDirection:'column',
+        paddingRight:'4%'
+    },
+    accountNumberContainer:{
+        flexDirection:'column',
+        marginLeft:'4%'
+    },
+    accountTypeTitle: {
+        color: '#56565A',
+        fontSize: scaledHeight(18),
+        fontWeight: 'bold',        
+    },
+    accountTypeTitleDesc: {
+        color: '#707070',
+        fontSize: scaledHeight(18),
+        fontWeight: 'bold',    
+        marginLeft:'3%'           
+    },
     container: {
         backgroundColor: '#F7FAFF',
         flex: 1,
         width: '100%'
+    },
+    lineBorder: {       
+        borderColor: '#707070',          
+        borderWidth: 0.4,       
+        marginBottom: scaledHeight(5),       
+        marginTop: scaledHeight(5),       
     },
     scrollViewFlex:{
         flex: 0.85 
@@ -43,8 +91,7 @@ const styles = StyleSheet.create({
     },
     touchOpacityPosition: {
         position: 'relative',
-    },
-
+    }
 
 
 });
