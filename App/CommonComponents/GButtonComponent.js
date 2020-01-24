@@ -56,7 +56,8 @@ GButtonComponent.propTypes = {
 GButtonComponent.defaultProps = {
   disabled : false,
   buttonStyle: {},
-  textStyle: {}
+  textStyle: {},
+  onPress: PropTypes.func
 };
 
 export default GButtonComponent;

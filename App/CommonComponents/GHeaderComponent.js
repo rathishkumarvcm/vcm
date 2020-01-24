@@ -7,7 +7,7 @@ import RNSecureKeyStore from 'react-native-secure-key-store';
 // { ACCESSIBLE } from 'react-native-secure-key-store';
 import { GIcon } from './GIcon';
 import { scaledHeight, scaledWidth } from '../Utils/Resolution';
-import DrawerIcon from '../Screens/Menu/DrawerIcon'
+import DrawerIcon from '../Screens/Menu/DrawerIcon';
 
 const { width } = Dimensions.get('window');
 
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   modalImage: {
-    width: 30, height: 30, marginTop: 20
+    height: 30, marginTop: 20, width: 30
   },
   modalInsideView: {
     alignItems: 'center',
@@ -100,24 +100,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   registernowButton: {
-    borderColor: '#61285F',
-    borderWidth: 1,
-    width: width / 3.3,
-    borderRadius: scaledHeight(14),
-    height: scaledHeight(28),
-    backgroundColor: '#FFFFFF',
     alignItems: 'center',
-    justifyContent: 'center'
+    backgroundColor: '#FFFFFF',
+    borderColor: '#61285F',
+    borderRadius: scaledHeight(14),
+    borderWidth: 1,
+    height: scaledHeight(28),
+    justifyContent: 'center',
+    width: width / 3.3
   },
   registernowText: {
-    fontSize: scaledHeight(10),
-    color: '#56565A'
+    color: '#56565A',
+    fontSize: scaledHeight(10)
   },
   signIntext: {
-    textAlign: 'left',
-    fontSize: scaledHeight(25),
     color: '#535353',
     flexWrap: 'wrap',
+    fontSize: scaledHeight(25),
+    textAlign: 'left',
   }
 });
 
@@ -131,6 +131,7 @@ class GHeaderComponent extends Component {
       ModalVisibleStatus: true,
     };
   }
+
   showModal = () => {
     this.setState({
       ModalVisibleStatus: true,

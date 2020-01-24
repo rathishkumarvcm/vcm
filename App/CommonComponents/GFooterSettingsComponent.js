@@ -3,20 +3,29 @@ import { View, StyleSheet, Text, Image } from 'react-native';
 import PropTypes from "prop-types";
 import { scaledHeight } from '../Utils/Resolution';
 import gblStrings from '../Constants/GlobalStrings';
-import { GIcon } from '../CommonComponents';
+import { GIcon } from "./GIcon";
 
 export const styles = StyleSheet.create({
-    lineBorder: {
-        marginTop: scaledHeight(40),
-        borderTopWidth: 1,
-        borderColor: '#DEDEDF'
-    },
     backgroundColor:{
         backgroundColor:'#FFFFFF'
     },
+    connectWithUs: {
+        marginLeft: '4%',
+        marginTop: scaledHeight(20)
+    },
+    copyRightSection: {
+        alignItems: 'center',
+        backgroundColor: '#56565A',
+        height: scaledHeight(60),
+        justifyContent: 'center',
+        marginTop: scaledHeight(20)
+    },
+    copyRightText: {
+        color: '#FFFFFF'
+    },
     disclaimerView: {
-        marginTop: scaledHeight(25),
         marginBottom: scaledHeight(25),
+        marginTop: scaledHeight(25),
         paddingLeft: '4%',
         paddingRight: '4%',
     },
@@ -26,53 +35,44 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     disclaimerViewTitleContent: {
-        marginTop: scaledHeight(15),
         color: '#56565A',
         fontSize: scaledHeight(16),
         lineHeight: scaledHeight(20),
+        marginTop: scaledHeight(15),
     },
-    connectWithUs: {
-        marginLeft: '4%',
-        marginTop: scaledHeight(20)
+    lineBorder: {
+        borderColor: '#DEDEDF',
+        borderTopWidth: 1,
+        marginTop: scaledHeight(40)
     },
     logoImageView: {
-        marginTop: scaledHeight(20),
         marginBottom: scaledHeight(25),
+        marginTop: scaledHeight(20),
         paddingLeft: '4%',
         paddingRight: '4%',
     },
-    settingsSocial: {
-        flexDirection: 'row',
-        marginLeft: '2%',
-        marginTop: scaledHeight(10),
-        marginBottom: scaledHeight(20)
-    },
     privacyAgreement: {
+        alignItems: 'center',
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        height: scaledHeight(40),
+        justifyContent: 'center',
         marginLeft: '2%',
         marginTop: scaledHeight(15),
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        backgroundColor: 'white',
-        height: scaledHeight(40),
-        flexDirection: 'row'
+        width: '100%'
     },
     privacyText: {
-        width: '50%',
-        paddingLeft: '2%',
         color: '#5D83AE',
-        fontWeight: 'bold',
         fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        paddingLeft: '2%',
+        width: '50%',
     },
-    copyRightSection: {
-        marginTop: scaledHeight(20),
-        height: scaledHeight(60),
-        backgroundColor: '#56565A',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    copyRightText: {
-        color: '#FFFFFF'
+    settingsSocial: {
+        flexDirection: 'row',
+        marginBottom: scaledHeight(20),
+        marginLeft: '2%',
+        marginTop: scaledHeight(10)
     },
 });
 
@@ -90,7 +90,7 @@ export const GFooterSettingsComponent = props => (
                     {gblStrings.accManagement.VCDiscalimerDescContent}
                 </Text>
             </View>
-
+           
             <View style={styles.logoImageView}>
                 <Image
                     resizeMode="contain"
@@ -100,7 +100,7 @@ export const GFooterSettingsComponent = props => (
 
             <View style={styles.connectWithUs}>
                 <Text style={styles.disclaimerViewTitleContent}>
-                    {'Connect with Us'}
+                    Connect with Us
                 </Text>
             </View>
 
@@ -121,25 +121,25 @@ export const GFooterSettingsComponent = props => (
 
             <View style={styles.privacyAgreement}>
                 <Text style={styles.privacyText}>
-                    {"Privacy Policy"}
+                    Privacy Policy
                 </Text>
                 <Text style={styles.privacyText}>
-                    {"Fund Documents"}
+                    Fund Documents
                 </Text>
             </View>
 
             <View style={styles.privacyAgreement}>
                 <Text style={styles.privacyText}>
-                    {"User Agreements"}
+                    User Agreements
                 </Text>
                 <Text style={styles.privacyText}>
-                    {"Support"}
+                    Support
                 </Text>
             </View>
 
             <View style={styles.copyRightSection}>
                 <Text style={styles.copyRightText}>
-                    {"Copyright Victory Capital Management Inc. ©2020"}
+                    Copyright Victory Capital Management Inc. ©2020
                 </Text>
             </View>
         </View>
