@@ -214,6 +214,11 @@ class OpenAccPageTwoComponent extends Component {
                 isFinancialInfoExpanded: false,
                 isMilitaryInfoExpanded: false,
                 isRegulatoryInfoExpanded: false,
+                isContactInfoExpanded: false,
+                isPhoneInfoExpanded: false,
+                isEmailInfoExpanded: false
+               
+
 
             },
 
@@ -377,6 +382,9 @@ class OpenAccPageTwoComponent extends Component {
                 isFinancialInfoExpanded: false,
                 isMilitaryInfoExpanded: false,
                 isRegulatoryInfoExpanded: false,
+                isContactInfoExpanded: false,
+                isPhoneInfoExpanded: false,
+                isEmailInfoExpanded: false
             },
 
             childBeneficiary: {
@@ -427,6 +435,9 @@ class OpenAccPageTwoComponent extends Component {
                 isFinancialInfoExpanded: false,
                 isMilitaryInfoExpanded: false,
                 isRegulatoryInfoExpanded: false,
+                isContactInfoExpanded: false,
+                isPhoneInfoExpanded: false,
+                isEmailInfoExpanded: false
 
             },
 
@@ -596,45 +607,16 @@ class OpenAccPageTwoComponent extends Component {
             },
 
             retirement: {
-                beneficiaryType: "",
-                beneficiaryTypeDropDown: false,
-                beneficiaryDistPercent: "",
-
-                prefix: "",
-                prefixDropDown: false,
-                firstName: "",
-                middleInitial: "",
-                lastName: "",
-                suffix: "",
-                suffixDropDown: false,
-                dob: "",
-                gender: "",
-
-                mobileNo: "",
-                emailAddress: "",
-                socialSecurityNo: "",
-                relationshipToAcc: "",
-                relationshipToAccDropDown: false,
-                phoneType: "",
-                phoneTypeDropDown: false,
-
-
-                phoneTypeValidation: true,
-                firstNameValidation: true,
-                lastNameValidation: true,
-                dobValidation: true,
-                emailAddressValidation: true,
-                socialSecurityNoValidation: true,
-                beneficiaryTypeValidation: true,
-                relationshipToAccValidation: true,
-                beneficiaryDistPercentValidation: true,
-
+                
 
                 isPersonalInfoExpanded: false,
                 isEmploymentInfoExpanded: false,
                 isFinancialInfoExpanded: false,
                 isMilitaryInfoExpanded: false,
                 isRegulatoryInfoExpanded: false,
+                isContactInfoExpanded: false,
+                isPhoneInfoExpanded: false,
+                isEmailInfoExpanded: false
 
 
             },
@@ -3417,7 +3399,7 @@ class OpenAccPageTwoComponent extends Component {
                 <View style={styles.radioBtnGrp}>
                     <CustomRadio
                         componentStyle={styles.radioCol1}
-                        size={30}
+                        size={28}
                         outerCicleColor="#DEDEDF"
                         innerCicleColor="#61285F"
                         labelStyle={styles.lblRadioBtnTxt}
@@ -3429,7 +3411,7 @@ class OpenAccPageTwoComponent extends Component {
                     />
                     <CustomRadio
                         componentStyle={styles.radioCol2}
-                        size={30}
+                        size={28}
                         outerCicleColor="#DEDEDF"
                         innerCicleColor="#61285F"
                         labelStyle={styles.lblRadioBtnTxt}
@@ -4190,6 +4172,9 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View>
                 <this.renderPersonalInfo />
+                <this.renderContactInfo />
+                <this.renderPhoneInfo />
+                <this.renderEmailInfo />
                 <this.renderEmploymentInfo />
                 <this.renderFinancialInfo />
                 <this.renderMilitaryInfo />
@@ -4208,17 +4193,21 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                    <Text style={styles.headings}>
-                        {gblStrings.accManagement.personalInformation}
-                    </Text>
+                   
                     <TouchableOpacity
                         activeOpacity={0.8}
                         accessibilityRole="button"
                         onPress={this.onClickExpandCollpaseEvent("personal", "isPersonalInfoExpanded")}
                     >
-                        <Text style={styles.expandCollpaseTxt}>
-                            {personal.isPersonalInfoExpanded ? "[ - ]" : "[ + ]"}
+                        <Text>
+                            <Text style={styles.headings}>
+                                {personal.isPersonalInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.personalInformation}
+                            </Text>
                         </Text>
+
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.lblLine} />
@@ -4242,8 +4231,12 @@ class OpenAccPageTwoComponent extends Component {
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.firstName}
                             </Text>
-                            <GInputComponent
-                                //  inputref={(ref)=> this.firstName = ref}
+                            <Text style={styles.lblValueTxt}>
+                                {personal.firstName}
+                            </Text>
+                           
+                           
+                            {/* <GInputComponent
                                 inputref={this.setInputRef("firstName")}
                                 value={personal.firstName}
                                 editable={personal.firstName === ""}
@@ -4254,7 +4247,9 @@ class OpenAccPageTwoComponent extends Component {
                                 onSubmitEditing={this.onSubmitEditing(this.middleInitial)}
                                 errorFlag={!personal.firstNameValidation}
                                 errorText={errMsg}
-                            />
+                            /> */}
+
+                            
 
                             <Text style={styles.lblTxt}>
                                 <Text style={styles.lblTxt}>
@@ -4264,7 +4259,10 @@ class OpenAccPageTwoComponent extends Component {
                                     {` ${gblStrings.accManagement.optional}`}
                                 </Text>
                             </Text>
-                            <GInputComponent
+                            <Text style={styles.lblValueTxt}>
+                                {personal.middleInitial || "-"}
+                            </Text>
+                            {/* <GInputComponent
                                 //  inputref={(ref)=> this.middleInitial = ref}
                                 inputref={this.setInputRef("middleInitial")}
                                 value={personal.middleInitial}
@@ -4275,12 +4273,15 @@ class OpenAccPageTwoComponent extends Component {
                                 onChangeText={this.onChangeText("personal", "middleInitial")}
                                 onSubmitEditing={this.onSubmitEditing(this.lastName)}
 
-                            />
+                            /> */}
 
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.lastName}
                             </Text>
-                            <GInputComponent
+                            <Text style={styles.lblValueTxt}>
+                                {personal.lastName}
+                            </Text>
+                            {/* <GInputComponent
                                 //  inputref={ref => this.lastName = ref}
                                 inputref={this.setInputRef("lastName")}
                                 value={personal.lastName}
@@ -4294,10 +4295,11 @@ class OpenAccPageTwoComponent extends Component {
                                 errorFlag={!personal.lastNameValidation}
                                 errorText={errMsg}
 
-                            />
+                            /> */}
 
-                            <View style={styles.dropDownViewPrefix}>
-                                {this.renderCustomDropDown({
+                            {/* <View style={styles.dropDownViewPrefix}>
+                                {
+                                this.renderCustomDropDown({
                                     section: "personal",
                                     stateKey: "suffix",
                                     dropDownName: "suffixDropDown",
@@ -4305,7 +4307,14 @@ class OpenAccPageTwoComponent extends Component {
                                     isOptional: true
                                 })
                                 }
-                            </View>
+                            </View> */}
+
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.accManagement.suffix}
+                            </Text>
+                            <Text style={styles.lblValueTxt}>
+                                {personal.suffix || "-"}
+                            </Text>
 
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.dob}
@@ -4323,7 +4332,7 @@ class OpenAccPageTwoComponent extends Component {
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.gender}
                             </Text>
-                            {this.renderRadio("personal", "gender", 30, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
+                            {this.renderRadio("personal", "gender", 28, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
                             {!personal.genderValidation && (
                                 <Text style={styles.errMsg}>
                                     {errMsg}
@@ -4343,7 +4352,7 @@ class OpenAccPageTwoComponent extends Component {
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.citizenship}
                             </Text>
-                            {this.renderRadio("personal", "citizenship", 30, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
+                            {this.renderRadio("personal", "citizenship", 28, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
 
                             {
                                 /*
@@ -4392,119 +4401,176 @@ class OpenAccPageTwoComponent extends Component {
                                         </View>
 
                                         <Text style={styles.lblTxt}>
-                                            {gblStrings.accManagement.residenceStatus}
+                                            {"(or)"}
                                         </Text>
-                                        <View style={styles.radioBtnColGrp}>
-                                            <CustomRadio
-                                                //  componentStyle={styles.radioCol1}
-                                                size={30}
-                                                outerCicleColor="#DEDEDF"
-                                                innerCicleColor="#61285F"
-                                                labelStyle={styles.lblRadioBtnTxt}
-                                                label="Resident Alien"
-                                                descLabelStyle={styles.lblRadioDescTxt}
-                                                descLabel=""
-                                                selected={!!((personal.residenceStatus !== null && personal.residenceStatus === "Resident Alien"))}
-                                                onPress={this.onPressRadio("personal", "residenceStatus", "Resident Alien")}
-                                            />
-                                            <CustomRadio
-                                                //  componentStyle={styles.radioCol2}
-                                                size={30}
-                                                outerCicleColor="#DEDEDF"
-                                                innerCicleColor="#61285F"
-                                                labelStyle={styles.lblRadioBtnTxt}
-                                                label="Non-resident Alien"
-                                                descLabelStyle={styles.lblRadioDescTxt}
-                                                descLabel="Please call 800-235-8396."
-                                                selected={!!((personal.residenceStatus !== null && personal.residenceStatus === "Non-resident Alien"))}
-                                                onPress={this.onPressRadio("personal", "residenceStatus", "Non-resident Alien")}
 
-                                            />
-                                        </View>
-                                        {!personal.residenceStatusValidation && (
-                                            <Text style={styles.errMsg}>
-                                                {errMsg}
+                                        <View style={styles.mailToCSRGrp}>
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.mailToCSR}
                                             </Text>
-                                        )}
-
-                                        {this.renderCustomDropDown({
-                                            section: "personal",
-                                            stateKey: "countryOfCitizenship",
-                                            dropDownName: "countryOfCitizenshipDropDown",
-                                            lblDropdownName: gblStrings.accManagement.countryOfCitizenship,
-                                            isOptional: false
-                                        })
-                                        }
-
-                                        <Text style={styles.lblTxt}>
-                                            {gblStrings.accManagement.USResidentCardNo}
-                                        </Text>
-                                        <GInputComponent
-                                            inputref={this.setInputRef("USResidentCardNo")}
-                                            propInputStyle={personal.USResidentCardNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                            placeholder={gblStrings.accManagement.ssnNoFormat}
-                                            value={personal.USResidentCardNo}
-                                            keyboardType="number-pad"
-                                            maxLength={gblStrings.maxLength.ssnNo}
-                                            onChangeText={this.onChangeText("personal", "USResidentCardNo")}
-                                            errorFlag={!personal.USResidentCardNoValidation}
-                                            errorText={errMsg}
-                                            secureTextEntry
-
-                                        />
-
-                                        <Text style={styles.lblTxt}>
-                                            {gblStrings.accManagement.USResidentCardNoExpiryDate}
-                                        </Text>
-                                        <GDateComponent
-                                            inputref={this.setInputRef("USResidentCardNoExpiryDate")}
-                                            date={personal.USResidentCardNoExpiryDate}
-                                            placeholder="Select Date"
-                                            errorFlag={!personal.USResidentCardNoExpiryDateValidation}
-                                            errorMsg={errMsg}
-                                            minDate={prevDate}
-                                            onDateChange={this.onChangeDate("personal", "USResidentCardNoExpiryDate")}
-                                        />
+                                            <Text style={styles.headings}>
+                                                {gblStrings.common.victoryCapital}
+                                            </Text>
+                                            <Text style={styles.lblValueTxt}>
+                                                {gblStrings.common.victoryCapitalAddress}
+                                            </Text>
+                                        </View>
 
 
-                                        <Text style={styles.lblTxt}>
-                                            {gblStrings.accManagement.passportNumber}
-                                        </Text>
-                                        <GInputComponent
-                                            inputref={this.setInputRef("passportNumber")}
-                                            propInputStyle={personal.passportNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                            placeholder={gblStrings.accManagement.ssnNoFormat}
-                                            value={personal.passportNumber}
-                                            keyboardType="number-pad"
-                                            maxLength={gblStrings.maxLength.ssnNo}
-                                            onChangeText={this.onChangeText("personal", "passportNumber")}
-                                            errorFlag={!personal.passportNumberValidation}
-                                            errorText={errMsg}
-                                            secureTextEntry
+                                        {/* <View>
 
-                                        />
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.residenceStatus}
+                                            </Text>
+                                            <View style={styles.radioBtnColGrp}>
+                                                <CustomRadio
+                                                    //  componentStyle={styles.radioCol1}
+                                                    size={28}
+                                                    outerCicleColor="#DEDEDF"
+                                                    innerCicleColor="#61285F"
+                                                    labelStyle={styles.lblRadioBtnTxt}
+                                                    label="Resident Alien"
+                                                    descLabelStyle={styles.lblRadioDescTxt}
+                                                    descLabel=""
+                                                    selected={!!((personal.residenceStatus !== null && personal.residenceStatus === "Resident Alien"))}
+                                                    onPress={this.onPressRadio("personal", "residenceStatus", "Resident Alien")}
+                                                />
+                                                <CustomRadio
+                                                    //  componentStyle={styles.radioCol2}
+                                                    size={28}
+                                                    outerCicleColor="#DEDEDF"
+                                                    innerCicleColor="#61285F"
+                                                    labelStyle={styles.lblRadioBtnTxt}
+                                                    label="Non-resident Alien"
+                                                    descLabelStyle={styles.lblRadioDescTxt}
+                                                    descLabel="Please call 800-235-8396."
+                                                    selected={!!((personal.residenceStatus !== null && personal.residenceStatus === "Non-resident Alien"))}
+                                                    onPress={this.onPressRadio("personal", "residenceStatus", "Non-resident Alien")}
 
-                                        <Text style={styles.lblTxt}>
-                                            {gblStrings.accManagement.passportNoExpiryDate}
-                                        </Text>
-                                        <GDateComponent
-                                            inputref={this.setInputRef("passportNoExpiryDate")}
-                                            date={personal.passportNoExpiryDate}
-                                            placeholder="Select Date"
-                                            errorFlag={!personal.passportNoExpiryDateValidation}
-                                            errorMsg={errMsg}
-                                            minDate={prevDate}
-                                            onDateChange={this.onChangeDate("personal", "passportNoExpiryDate")}
-                                        />
+                                                />
+                                            </View>
+                                            {!personal.residenceStatusValidation && (
+                                                <Text style={styles.errMsg}>
+                                                    {errMsg}
+                                                </Text>
+                                            )}
+
+                                            {this.renderCustomDropDown({
+                                                section: "personal",
+                                                stateKey: "countryOfCitizenship",
+                                                dropDownName: "countryOfCitizenshipDropDown",
+                                                lblDropdownName: gblStrings.accManagement.countryOfCitizenship,
+                                                isOptional: false
+                                            })
+                                            }
+
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.USResidentCardNo}
+                                            </Text>
+                                            <GInputComponent
+                                                inputref={this.setInputRef("USResidentCardNo")}
+                                                propInputStyle={personal.USResidentCardNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                                placeholder={gblStrings.accManagement.ssnNoFormat}
+                                                value={personal.USResidentCardNo}
+                                                keyboardType="number-pad"
+                                                maxLength={gblStrings.maxLength.ssnNo}
+                                                onChangeText={this.onChangeText("personal", "USResidentCardNo")}
+                                                errorFlag={!personal.USResidentCardNoValidation}
+                                                errorText={errMsg}
+                                                secureTextEntry
+
+                                            />
+
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.USResidentCardNoExpiryDate}
+                                            </Text>
+                                            <GDateComponent
+                                                inputref={this.setInputRef("USResidentCardNoExpiryDate")}
+                                                date={personal.USResidentCardNoExpiryDate}
+                                                placeholder="Select Date"
+                                                errorFlag={!personal.USResidentCardNoExpiryDateValidation}
+                                                errorMsg={errMsg}
+                                                minDate={prevDate}
+                                                onDateChange={this.onChangeDate("personal", "USResidentCardNoExpiryDate")}
+                                            />
+
+
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.passportNumber}
+                                            </Text>
+                                            <GInputComponent
+                                                inputref={this.setInputRef("passportNumber")}
+                                                propInputStyle={personal.passportNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                                placeholder={gblStrings.accManagement.ssnNoFormat}
+                                                value={personal.passportNumber}
+                                                keyboardType="number-pad"
+                                                maxLength={gblStrings.maxLength.ssnNo}
+                                                onChangeText={this.onChangeText("personal", "passportNumber")}
+                                                errorFlag={!personal.passportNumberValidation}
+                                                errorText={errMsg}
+                                                secureTextEntry
+
+                                            />
+
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.passportNoExpiryDate}
+                                            </Text>
+                                            <GDateComponent
+                                                inputref={this.setInputRef("passportNoExpiryDate")}
+                                                date={personal.passportNoExpiryDate}
+                                                placeholder="Select Date"
+                                                errorFlag={!personal.passportNoExpiryDateValidation}
+                                                errorMsg={errMsg}
+                                                minDate={prevDate}
+                                                onDateChange={this.onChangeDate("personal", "passportNoExpiryDate")}
+                                            />
+                                        </View> */}
 
 
                                     </View>
                                 )}
 
+                        </View>
+                    )}
+            </View>
+
+        );
+    }
+
+    renderContactInfo = () => {
+        const { personal, errMsg } = this.state;
+        const { initialState } = this.props;
+
+        return (
+            <View style={styles.sectionGrp}>
+                <View style={styles.accTypeSelectSection}>
+                   
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                        onPress={this.onClickExpandCollpaseEvent("personal", "isContactInfoExpanded")}
+                    >
+                        <Text>
+                            <Text style={styles.headings}>
+                                {personal.isContactInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.contactInfo}
+                            </Text>
+                        </Text>
+
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.lblLine} />
+
+                {
+                    personal.isContactInfoExpanded && (
+                        <View style={styles.childSectionGrp}>
+                
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.addressType}
                             </Text>
-                            {this.renderRadio("personal", "mailingAddressType", 30, { marginBottom: scaledHeight(13) }, styles.radioBtnColGrp)}
+                            {this.renderRadio("personal", "mailingAddressType", 28, { marginBottom: scaledHeight(13) }, styles.radioBtnColGrp)}
                             {!personal.mailingAddressTypeValidation && (
                                 <Text style={styles.errMsg}>
                                     {errMsg}
@@ -4568,7 +4634,7 @@ class OpenAccPageTwoComponent extends Component {
                             </Text>
                             <GInputComponent
                                 inputref={this.setInputRef("city")}
-                                propInputStyle={personal.cityValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                propInputStyle={personal.cityValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
                                 placeholder={gblStrings.accManagement.enterCity}
                                 maxLength={gblStrings.maxLength.city}
                                 value={personal.city}
@@ -4576,12 +4642,13 @@ class OpenAccPageTwoComponent extends Component {
                                 onSubmitEditing={this.onSubmitEditing(this.stateCity)}
                                 errorFlag={!personal.cityValidation}
                                 errorText={errMsg}
-                                editable={personal.citizenship !== "U.S"}
+                               //  editable={personal.citizenship !== "U.S"}
+                               editable={false}
 
                             />
                             <GInputComponent
                                 inputref={this.setInputRef("stateCity")}
-                                propInputStyle={personal.stateCityValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                propInputStyle={personal.stateCityValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
                                 placeholder={gblStrings.accManagement.enterState}
                                 returnKeyType="done"
                                 maxLength={gblStrings.maxLength.state}
@@ -4590,7 +4657,8 @@ class OpenAccPageTwoComponent extends Component {
                                 onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
                                 errorFlag={!personal.stateCityValidation}
                                 errorText={errMsg}
-                                editable={personal.citizenship !== "U.S"}
+                                // editable={personal.citizenship !== "U.S"}
+                                editable={false}
 
                             />
 
@@ -4600,7 +4668,7 @@ class OpenAccPageTwoComponent extends Component {
                             <View style={styles.radioBtnGrp}>
                                 <CustomRadio
                                     componentStyle={styles.radioCol1}
-                                    size={30}
+                                    size={28}
                                     outerCicleColor="#DEDEDF"
                                     innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
@@ -4612,7 +4680,7 @@ class OpenAccPageTwoComponent extends Component {
                                 />
                                 <CustomRadio
                                     componentStyle={styles.radioCol2}
-                                    size={30}
+                                    size={28}
                                     outerCicleColor="#DEDEDF"
                                     innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
@@ -4688,7 +4756,7 @@ class OpenAccPageTwoComponent extends Component {
                                         </Text>
                                         <GInputComponent
                                             inputref={this.setInputRef("city_Phy")}
-                                            propInputStyle={personal.city_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                            propInputStyle={personal.city_PhyValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
                                             placeholder={gblStrings.accManagement.enterCity}
                                             maxLength={gblStrings.maxLength.city}
                                             value={personal.city_Phy}
@@ -4696,13 +4764,13 @@ class OpenAccPageTwoComponent extends Component {
                                             onSubmitEditing={this.onSubmitEditing(this.stateCity_Phy)}
                                             errorFlag={!personal.city_PhyValidation}
                                             errorText={errMsg}
-                                            editable={personal.citizenship !== "U.S"}
+                                            editable={false}
 
 
                                         />
                                         <GInputComponent
                                             inputref={this.setInputRef("stateCity_Phy")}
-                                            propInputStyle={personal.stateCity_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                            propInputStyle={personal.stateCity_PhyValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
                                             placeholder={gblStrings.accManagement.enterState}
                                             returnKeyType="done"
                                             maxLength={gblStrings.maxLength.state}
@@ -4711,13 +4779,55 @@ class OpenAccPageTwoComponent extends Component {
                                             onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
                                             errorFlag={!personal.stateCity_PhyValidation}
                                             errorText={errMsg}
-                                            editable={personal.citizenship !== "U.S"}
+                                            editable={false}
 
                                         />
 
                                     </View>
-                                )}
+                                )} 
+                        </View>
+                    )}
+            </View>
 
+        );
+
+    }
+
+    renderPhoneInfo = () => {
+        const { personal, errMsg } = this.state;
+        const { initialState } = this.props;
+
+        return (
+            <View style={styles.sectionGrp}>
+                <View style={styles.accTypeSelectSection}>
+                   
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                        onPress={this.onClickExpandCollpaseEvent("personal", "isPhoneInfoExpanded")}
+                    >
+                        <Text>
+                            <Text style={styles.headings}>
+                                {personal.isPhoneInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.phoneInfo}
+                            </Text>
+                        </Text>
+
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.lblLine} />
+
+                {
+                    personal.isPhoneInfoExpanded && (
+                        <View style={styles.childSectionGrp}>
+
+                            <View style={styles.lblHeader} >
+                                <Text style={styles.lblHeaderTxt}>
+                                    {gblStrings.accManagement.phoneNo}
+                                </Text>
+                            </View>
                             {this.renderCustomDropDown({
                                 section: "personal",
                                 stateKey: "phoneType",
@@ -4727,7 +4837,8 @@ class OpenAccPageTwoComponent extends Component {
                             })
                             }
 
-
+                           
+                            
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.phoneNo}
                             </Text>
@@ -4831,6 +4942,43 @@ class OpenAccPageTwoComponent extends Component {
                             })
                             }
 
+                           
+                        </View>
+                    )}
+            </View>
+
+        );
+    }
+
+    renderEmailInfo = () => {
+        const { personal, errMsg } = this.state;
+        const { initialState } = this.props;
+        return (
+            <View style={styles.sectionGrp}>
+                <View style={styles.accTypeSelectSection}>
+                   
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                        onPress={this.onClickExpandCollpaseEvent("personal", "isEmailInfoExpanded")}
+                    >
+                        <Text>
+                            <Text style={styles.headings}>
+                                {personal.isEmailInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.emailInfo}
+                            </Text>
+                        </Text>
+
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.lblLine} />
+
+                {
+                    personal.isEmailInfoExpanded && (
+                        <View style={styles.childSectionGrp}>
+              
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.emailAddress}
                             </Text>
@@ -4872,21 +5020,27 @@ class OpenAccPageTwoComponent extends Component {
         );
     }
 
+
+
     renderEmploymentInfo = () => {
         const { personal, errMsg } = this.state;
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                    <Text style={styles.headings}>
-                        {gblStrings.accManagement.employmentInformation}
-                    </Text>
+                 
                     <TouchableOpacity
                         onPress={this.onClickExpandCollpaseEvent("personal", "isEmploymentInfoExpanded")}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-                        <Text style={styles.expandCollpaseTxt}>
-                            {personal.isEmploymentInfoExpanded ? "[ - ]" : "[ + ]"}
+                    
+                        <Text>
+                            <Text style={styles.headings}>
+                                {personal.isEmploymentInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.employmentInformation}
+                            </Text>
                         </Text>
                     </TouchableOpacity>
 
@@ -5093,17 +5247,20 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                    <Text style={styles.headings}>
-                        {gblStrings.accManagement.militaryInformation}
-                    </Text>
                     <TouchableOpacity
                         onPress={this.onClickExpandCollpaseEvent("personal", "isMilitaryInfoExpanded")}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-                        <Text style={styles.expandCollpaseTxt}>
-                            {personal.isMilitaryInfoExpanded ? "[ - ]" : "[ + ]"}
+                        <Text>
+                            <Text style={styles.headings}>
+                                {personal.isMilitaryInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.militaryInformation}
+                            </Text>
                         </Text>
+
                     </TouchableOpacity>
 
 
@@ -5120,7 +5277,7 @@ class OpenAccPageTwoComponent extends Component {
                             <View style={styles.radioBtnGrp}>
                                 <CustomRadio
                                     componentStyle={styles.radioCol1}
-                                    size={30}
+                                    size={28}
                                     outerCicleColor="#DEDEDF"
                                     innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
@@ -5133,7 +5290,7 @@ class OpenAccPageTwoComponent extends Component {
                                 />
                                 <CustomRadio
                                     componentStyle={styles.radioCol2}
-                                    size={30}
+                                    size={28}
                                     outerCicleColor="#DEDEDF"
                                     innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
@@ -5249,21 +5406,20 @@ class OpenAccPageTwoComponent extends Component {
 
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                    <Text style={styles.headings}>
-                        {gblStrings.accManagement.financialInformation}
-                    </Text>
                     <TouchableOpacity
                         onPress={this.onClickExpandCollpaseEvent("personal", "isFinancialInfoExpanded")}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-                        <Text style={styles.expandCollpaseTxt}>
-                            {personal.isFinancialInfoExpanded ? "[ - ]" : "[ + ]"}
+                        <Text>
+                            <Text style={styles.headings}>
+                                {personal.isFinancialInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.financialInformation}
+                            </Text>
                         </Text>
                     </TouchableOpacity>
-
-
-
                 </View>
                 <Text style={styles.lblLine} />
                 {
@@ -5320,17 +5476,20 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                    <Text style={styles.headings}>
-                        {gblStrings.accManagement.regulatoryQuestion}
-                    </Text>
                     <TouchableOpacity
                         onPress={this.onClickExpandCollpaseEvent("personal", "isRegulatoryInfoExpanded")}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-                        <Text style={styles.expandCollpaseTxt}>
-                            {personal.isRegulatoryInfoExpanded ? "[ - ]" : "[ + ]"}
+                        <Text>
+                            <Text style={styles.headings}>
+                                {personal.isRegulatoryInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.regulatoryQuestion}
+                            </Text>
                         </Text>
+
                     </TouchableOpacity>
 
                 </View>
@@ -5362,7 +5521,7 @@ class OpenAccPageTwoComponent extends Component {
                             <View style={styles.radioBtnGrp}>
                                 <CustomRadio
                                     componentStyle={styles.radioCol1}
-                                    size={30}
+                                    size={28}
                                     outerCicleColor="#DEDEDF"
                                     innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
@@ -5375,7 +5534,7 @@ class OpenAccPageTwoComponent extends Component {
                                 />
                                 <CustomRadio
                                     componentStyle={styles.radioCol2}
-                                    size={30}
+                                    size={28}
                                     outerCicleColor="#DEDEDF"
                                     innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
@@ -5443,17 +5602,21 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                    <Text style={styles.headings}>
-                        {gblStrings.accManagement.personalInformationJoint}
-                    </Text>
                     <TouchableOpacity
                         onPress={this.onClickExpandCollpaseEvent("jointOwner", "isPersonalInfoExpanded")}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-                        <Text style={styles.expandCollpaseTxt}>
-                            {jointOwner.isPersonalInfoExpanded ? "[ - ]" : "[ + ]"}
+                      
+                        <Text>
+                            <Text style={styles.headings}>
+                                {jointOwner.isPersonalInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.personalInformationJoint}
+                            </Text>
                         </Text>
+                        
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.lblLine} />
@@ -5561,7 +5724,7 @@ class OpenAccPageTwoComponent extends Component {
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.gender}
                             </Text>
-                            {this.renderRadio("jointOwner", "gender", 30, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
+                            {this.renderRadio("jointOwner", "gender", 28, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
                             {!jointOwner.genderValidation && (
                                 <Text style={styles.errMsg}>
                                     {errMsg}
@@ -5580,7 +5743,7 @@ class OpenAccPageTwoComponent extends Component {
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.citizenship}
                             </Text>
-                            {this.renderRadio("jointOwner", "citizenship", 30, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
+                            {this.renderRadio("jointOwner", "citizenship", 28, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
                             {
                                 /* <View style={styles.uploadW8View}>
                                  <Text>
@@ -5612,7 +5775,7 @@ class OpenAccPageTwoComponent extends Component {
                                         <View style={styles.radioBtnColGrp}>
                                             <CustomRadio
                                                 //  componentStyle={styles.radioCol1}
-                                                size={30}
+                                                size={28}
                                                 outerCicleColor="#DEDEDF"
                                                 innerCicleColor="#61285F"
                                                 labelStyle={styles.lblRadioBtnTxt}
@@ -5624,7 +5787,7 @@ class OpenAccPageTwoComponent extends Component {
                                             />
                                             <CustomRadio
                                                 //  componentStyle={styles.radioCol2}
-                                                size={30}
+                                                size={28}
                                                 outerCicleColor="#DEDEDF"
                                                 innerCicleColor="#61285F"
                                                 labelStyle={styles.lblRadioBtnTxt}
@@ -5718,7 +5881,7 @@ class OpenAccPageTwoComponent extends Component {
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.mailingAddressType}
                             </Text>
-                            {this.renderRadio("jointOwner", "mailingAddressType", 30, { marginBottom: scaledHeight(13) }, styles.radioBtnColGrp)}
+                            {this.renderRadio("jointOwner", "mailingAddressType", 28, { marginBottom: scaledHeight(13) }, styles.radioBtnColGrp)}
                             {!jointOwner.mailingAddressTypeValidation && (
                                 <Text style={styles.errMsg}>
                                     {errMsg}
@@ -5814,7 +5977,7 @@ class OpenAccPageTwoComponent extends Component {
                             <View style={styles.radioBtnGrp}>
                                 <CustomRadio
                                     componentStyle={styles.radioCol1}
-                                    size={30}
+                                    size={28}
                                     outerCicleColor="#DEDEDF"
                                     innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
@@ -5825,7 +5988,7 @@ class OpenAccPageTwoComponent extends Component {
                                     onPress={this.onPressRadio("jointOwner", "isYourPhysicalAddresSame", "Yes")}
                                 />
                                 <CustomRadio
-                                    size={30}
+                                    size={28}
                                     componentStyle={styles.radioCol2}
                                     outerCicleColor="#DEDEDF"
                                     innerCicleColor="#61285F"
@@ -6092,16 +6255,18 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                    <Text style={styles.headings}>
-                        {gblStrings.accManagement.employmentInformationJoint}
-                    </Text>
                     <TouchableOpacity
                         onPress={this.onClickExpandCollpaseEvent("jointOwner", "isEmploymentInfoExpanded")}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-                        <Text style={styles.expandCollpaseTxt}>
-                            {jointOwner.isEmploymentInfoExpanded ? "[ - ]" : "[ + ]"}
+                        <Text>
+                            <Text style={styles.headings}>
+                                {jointOwner.isEmploymentInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.employmentInformationJoint}
+                            </Text>
                         </Text>
                     </TouchableOpacity>
 
@@ -6308,17 +6473,20 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                    <Text style={styles.headings}>
-                        {gblStrings.accManagement.militaryInformationJoint}
-                    </Text>
                     <TouchableOpacity
                         onPress={this.onClickExpandCollpaseEvent("jointOwner", "isMilitaryInfoExpanded")}
                         activeOpacity={0.8}
                         accessibilityRole="button"
 
                     >
-                        <Text style={styles.expandCollpaseTxt}>
-                            [ - ]
+
+                        <Text>
+                            <Text style={styles.headings}>
+                                {jointOwner.isMilitaryInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.militaryInformationJoint}
+                            </Text>
                         </Text>
                     </TouchableOpacity>
 
@@ -6337,7 +6505,7 @@ class OpenAccPageTwoComponent extends Component {
                             <View style={styles.radioBtnGrp}>
                                 <CustomRadio
                                     componentStyle={styles.radioCol1}
-                                    size={30}
+                                    size={28}
                                     outerCicleColor="#DEDEDF"
                                     innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
@@ -6350,7 +6518,7 @@ class OpenAccPageTwoComponent extends Component {
                                 />
                                 <CustomRadio
                                     componentStyle={styles.radioCol2}
-                                    size={30}
+                                    size={28}
                                     outerCicleColor="#DEDEDF"
                                     innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
@@ -6466,17 +6634,22 @@ class OpenAccPageTwoComponent extends Component {
 
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                    <Text style={styles.headings}>
-                        {gblStrings.accManagement.financialInformationJoint}
-                    </Text>
+                   
                     <TouchableOpacity
                         onPress={this.onClickExpandCollpaseEvent("jointOwner", "isFinancialInfoExpanded")}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-                        <Text style={styles.expandCollpaseTxt}>
-                            [ - ]
+            
+                        <Text>
+                            <Text style={styles.headings}>
+                                {jointOwner.isFinancialInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.financialInformationJoint}
+                            </Text>
                         </Text>
+
                     </TouchableOpacity>
 
 
@@ -6578,7 +6751,7 @@ class OpenAccPageTwoComponent extends Component {
                     <View style={styles.radioBtnGrp}>
                         <CustomRadio
                             componentStyle={styles.radioCol1}
-                            size={30}
+                            size={28}
                             outerCicleColor="#DEDEDF"
                             innerCicleColor="#61285F"
                             labelStyle={styles.lblRadioBtnTxt}
@@ -6590,7 +6763,7 @@ class OpenAccPageTwoComponent extends Component {
 
                         />
                         <CustomRadio
-                            size={30}
+                            size={28}
                             componentStyle={styles.radioCol2}
                             outerCicleColor="#DEDEDF"
                             innerCicleColor="#61285F"
@@ -6652,123 +6825,133 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                    <Text style={styles.headings}>
-                        {gblStrings.accManagement.personalInformationChild}
-                    </Text>
+                  
                     <TouchableOpacity
-                        //  onPress={() => { alert("Expand/Cllapse") }}
+                        onPress={this.onClickExpandCollpaseEvent("childBeneficiary", "isPersonalInfoExpanded")}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-                        <Text style={styles.expandCollpaseTxt}>
-                            [ - ]
+
+                        <Text>
+                            <Text style={styles.headings}>
+                                {childBeneficiary.isPersonalInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.personalInformationChild}
+                            </Text>
                         </Text>
+
                     </TouchableOpacity>
                 </View>
 
                 <Text style={styles.lblLine} />
-                <View style={styles.childSectionGrp}>
+                {
+                    childBeneficiary.isPersonalInfoExpanded && (
+                        <View style={styles.childSectionGrp}>
 
-                    <Text style={styles.regulatoryQuestTxt}>
-                        {gblStrings.accManagement.childBeneficiaryNote}
-                    </Text>
-
-
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.accManagement.firstName}
-                    </Text>
-                    <GInputComponent
-                        inputref={this.setInputRef("firstName_childben")}
-                        propInputStyle={childBeneficiary.firstNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                        placeholder=""
-                        maxLength={gblStrings.maxLength.firstName}
-                        value={childBeneficiary.firstName}
-                        onChangeText={this.onChangeText("childBeneficiary", "firstName")}
-                        onSubmitEditing={this.onSubmitEditing(this.middleInitial_childben)}
-                        errorFlag={!childBeneficiary.firstNameValidation}
-                        errorText={errMsg}
-                    />
-
-                    <Text style={styles.lblTxt}>
+                        <Text style={styles.regulatoryQuestTxt}>
+                            {gblStrings.accManagement.childBeneficiaryNote}
+                        </Text>
+    
+    
                         <Text style={styles.lblTxt}>
-                            {gblStrings.accManagement.middleInitial}
+                            {gblStrings.accManagement.firstName}
                         </Text>
-                        <Text style={styles.optionalTxt}>
-                            {` ${gblStrings.accManagement.optional}`}
+                        <GInputComponent
+                            inputref={this.setInputRef("firstName_childben")}
+                            propInputStyle={childBeneficiary.firstNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder=""
+                            maxLength={gblStrings.maxLength.firstName}
+                            value={childBeneficiary.firstName}
+                            onChangeText={this.onChangeText("childBeneficiary", "firstName")}
+                            onSubmitEditing={this.onSubmitEditing(this.middleInitial_childben)}
+                            errorFlag={!childBeneficiary.firstNameValidation}
+                            errorText={errMsg}
+                        />
+    
+                        <Text style={styles.lblTxt}>
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.accManagement.middleInitial}
+                            </Text>
+                            <Text style={styles.optionalTxt}>
+                                {` ${gblStrings.accManagement.optional}`}
+                            </Text>
                         </Text>
-                    </Text>
-                    <GInputComponent
-                        inputref={this.setInputRef("middleInitial_childben")}
-                        propInputStyle={styles.customTxtBox}
-                        value={childBeneficiary.middleInitial}
-                        placeholder=""
-                        maxLength={gblStrings.maxLength.middleInitial}
-                        onChangeText={this.onChangeText("childBeneficiary", "middleInitial")}
-
-                        onSubmitEditing={this.onSubmitEditing(this.lastName_childben)}
-
-                    />
-
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.accManagement.lastName}
-                    </Text>
-                    <GInputComponent
-                        inputref={this.setInputRef("lastName_childben")}
-                        propInputStyle={childBeneficiary.lastNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                        placeholder=""
-                        value={childBeneficiary.lastName}
-                        maxLength={gblStrings.maxLength.lastName}
-                        returnKeyType="done"
-                        onChangeText={this.onChangeText("childBeneficiary", "lastName")}
-                        onSubmitEditing={this.onSubmitEditing(this.socialSecurityNo_childben)}
-                        errorFlag={!childBeneficiary.lastNameValidation}
-                        errorText={errMsg}
-                    />
-
-
-
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.accManagement.socialSecurityNo}
-                    </Text>
-                    <GInputComponent
-                        inputref={this.setInputRef("socialSecurityNo_childben")}
-                        propInputStyle={childBeneficiary.socialSecurityNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                        placeholder={gblStrings.accManagement.ssnNoFormat}
-                        value={childBeneficiary.socialSecurityNo}
-                        keyboardType="number-pad"
-                        returnKeyType="done"
-                        maxLength={gblStrings.maxLength.ssnNo}
-                        onChangeText={this.onChangeText("childBeneficiary", "socialSecurityNo")}
-                        onSubmitEditing={this.onSubmitEditing(this.dob_childben)}
-                        errorFlag={!childBeneficiary.socialSecurityNoValidation}
-                        errorText={errMsg}
-
-                    />
-
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.accManagement.dob}
-                    </Text>
-                    <GDateComponent
-                        inputref={this.setInputRef("dob_childben")}
-                        date={childBeneficiary.dob}
-                        placeholder="Select Date"
-                        errorFlag={!childBeneficiary.dobValidation}
-                        errorMsg={errMsg}
-                        maxDate={prevDate}
-                        onDateChange={this.onChangeDate("childBeneficiary", "dob")}
-
-                    />
-
-                    {this.renderCustomDropDown({
-                        section: "childBeneficiary",
-                        stateKey: "relationshipToAcc",
-                        dropDownName: "relationshipToAccDropDown",
-                        lblDropdownName: gblStrings.accManagement.relationshipCustodian,
-                        isOptional: false
-                    })
-                    }
-
-                </View>
+                        <GInputComponent
+                            inputref={this.setInputRef("middleInitial_childben")}
+                            propInputStyle={styles.customTxtBox}
+                            value={childBeneficiary.middleInitial}
+                            placeholder=""
+                            maxLength={gblStrings.maxLength.middleInitial}
+                            onChangeText={this.onChangeText("childBeneficiary", "middleInitial")}
+    
+                            onSubmitEditing={this.onSubmitEditing(this.lastName_childben)}
+    
+                        />
+    
+                        <Text style={styles.lblTxt}>
+                            {gblStrings.accManagement.lastName}
+                        </Text>
+                        <GInputComponent
+                            inputref={this.setInputRef("lastName_childben")}
+                            propInputStyle={childBeneficiary.lastNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder=""
+                            value={childBeneficiary.lastName}
+                            maxLength={gblStrings.maxLength.lastName}
+                            returnKeyType="done"
+                            onChangeText={this.onChangeText("childBeneficiary", "lastName")}
+                            onSubmitEditing={this.onSubmitEditing(this.socialSecurityNo_childben)}
+                            errorFlag={!childBeneficiary.lastNameValidation}
+                            errorText={errMsg}
+                        />
+    
+    
+    
+                        <Text style={styles.lblTxt}>
+                            {gblStrings.accManagement.socialSecurityNo}
+                        </Text>
+                        <GInputComponent
+                            inputref={this.setInputRef("socialSecurityNo_childben")}
+                            propInputStyle={childBeneficiary.socialSecurityNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            placeholder={gblStrings.accManagement.ssnNoFormat}
+                            value={childBeneficiary.socialSecurityNo}
+                            keyboardType="number-pad"
+                            returnKeyType="done"
+                            maxLength={gblStrings.maxLength.ssnNo}
+                            onChangeText={this.onChangeText("childBeneficiary", "socialSecurityNo")}
+                            onSubmitEditing={this.onSubmitEditing(this.dob_childben)}
+                            errorFlag={!childBeneficiary.socialSecurityNoValidation}
+                            errorText={errMsg}
+    
+                        />
+    
+                        <Text style={styles.lblTxt}>
+                            {gblStrings.accManagement.dob}
+                        </Text>
+                        <GDateComponent
+                            inputref={this.setInputRef("dob_childben")}
+                            date={childBeneficiary.dob}
+                            placeholder="Select Date"
+                            errorFlag={!childBeneficiary.dobValidation}
+                            errorMsg={errMsg}
+                            maxDate={prevDate}
+                            onDateChange={this.onChangeDate("childBeneficiary", "dob")}
+    
+                        />
+    
+                        {this.renderCustomDropDown({
+                            section: "childBeneficiary",
+                            stateKey: "relationshipToAcc",
+                            dropDownName: "relationshipToAccDropDown",
+                            lblDropdownName: gblStrings.accManagement.relationshipCustodian,
+                            isOptional: false
+                        })
+                        }
+    
+                        </View>
+                
+                    )}
+              
             </View>
         );
 
@@ -6822,7 +7005,7 @@ class OpenAccPageTwoComponent extends Component {
                     <View style={styles.radioBtnGrp}>
                         <CustomRadio
                             componentStyle={styles.radioCol1}
-                            size={30}
+                            size={28}
                             outerCicleColor="#DEDEDF"
                             innerCicleColor="#61285F"
                             labelStyle={styles.lblRadioBtnTxt}
@@ -6835,7 +7018,7 @@ class OpenAccPageTwoComponent extends Component {
                         />
                         <CustomRadio
 
-                            size={30}
+                            size={28}
                             componentStyle={styles.radioCol2}
                             outerCicleColor="#DEDEDF"
                             innerCicleColor="#61285F"
@@ -6881,7 +7064,7 @@ class OpenAccPageTwoComponent extends Component {
 
     renderBeneficiaryRetirement = () => {
         const { masterLookupStateData } = this.props;
-        const { retirementBeneficiaryData, errMsg } = this.state;
+        const { retirementBeneficiaryData, errMsg ,retirement} = this.state;
         let tempBeneficiaryData = dummyData;
         let tempRelationShipData = dummyData;
 
@@ -6902,16 +7085,21 @@ class OpenAccPageTwoComponent extends Component {
 
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                    <Text style={styles.headings}>
-                        {gblStrings.accManagement.beneficiariesOpt}
-                    </Text>
+                
                     <TouchableOpacity
-                        //   onPress={() => { alert("Expand/Cllapse") }}
+                        onPress={this.onClickExpandCollpaseEvent("retirement", "isPersonalInfoExpanded")}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-                        <Text style={styles.expandCollpaseTxt}>
-                            [ - ]
+                      
+
+                        <Text>
+                            <Text style={styles.headings}>
+                                {retirement.isPersonalInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.beneficiariesOpt}
+                            </Text>
                         </Text>
                     </TouchableOpacity>
 
@@ -6919,6 +7107,8 @@ class OpenAccPageTwoComponent extends Component {
 
                 <Text style={styles.lblLine} />
 
+                {
+                    retirement.isPersonalInfoExpanded && (
                 <View style={styles.childSectionGrp}>
                     <Text style={styles.regulatoryNoteTxt}>
                         {gblStrings.accManagement.beneficiariesNote}
@@ -7127,20 +7317,23 @@ class OpenAccPageTwoComponent extends Component {
                         );
                     }
                     )}
-                </View>
+                    <View>
 
-
-
-
-
-                { retirementBeneficiaryData.length < 3 && (
+                    {retirementBeneficiaryData.length < 3 && (
                     <GButtonComponent
                         onPress={this.onPressAddIRABeneficiary}
                         buttonStyle={styles.addBeneficiaryBtn}
                         buttonText={gblStrings.accManagement.addAnotherBeneficiary}
                         textStyle={styles.addBeneficiaryBtnTxt}
                     />
-                  )}
+                )}
+                    </View>
+                </View>
+
+                    )}
+
+
+
             </View>
 
         );
@@ -7320,7 +7513,7 @@ class OpenAccPageTwoComponent extends Component {
                             <View style={styles.radioBtnGrp}>
                                 <CustomRadio
                                     componentStyle={styles.radioCol1}
-                                    size={30}
+                                    size={28}
                                     outerCicleColor="#DEDEDF"
                                     innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
@@ -7332,7 +7525,7 @@ class OpenAccPageTwoComponent extends Component {
                                 />
                                 <CustomRadio
                                     componentStyle={styles.radioCol2}
-                                    size={30}
+                                    size={28}
                                     outerCicleColor="#DEDEDF"
                                     innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
@@ -7441,7 +7634,7 @@ class OpenAccPageTwoComponent extends Component {
                             <View style={styles.radioBtnGrp}>
                                 <CustomRadio
                                     componentStyle={styles.radioCol1}
-                                    size={30}
+                                    size={28}
                                     outerCicleColor="#DEDEDF"
                                     innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
@@ -7453,7 +7646,7 @@ class OpenAccPageTwoComponent extends Component {
                                 />
                                 <CustomRadio
                                     componentStyle={styles.radioCol2}
-                                    size={30}
+                                    size={28}
                                     outerCicleColor="#DEDEDF"
                                     innerCicleColor="#61285F"
                                     labelStyle={styles.lblRadioBtnTxt}
@@ -7826,7 +8019,7 @@ class OpenAccPageTwoComponent extends Component {
                                         <Text style={styles.lblTxt}>
                                             {gblStrings.accManagement.citizenship}
                                         </Text>
-                                        {this.renderRadioForEstateTrust("citizenship", 30, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp, index)}
+                                        {this.renderRadioForEstateTrust("citizenship", 28, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp, index)}
 
                                         {
                                             item.citizenship !== "U.S" && (
@@ -7941,7 +8134,7 @@ class OpenAccPageTwoComponent extends Component {
                                         <View style={styles.radioBtnGrp}>
                                             <CustomRadio
                                                 componentStyle={styles.radioCol1}
-                                                size={30}
+                                                size={28}
                                                 outerCicleColor="#DEDEDF"
                                                 innerCicleColor="#61285F"
                                                 labelStyle={styles.lblRadioBtnTxt}
@@ -7954,7 +8147,7 @@ class OpenAccPageTwoComponent extends Component {
                                             />
                                             <CustomRadio
                                                 componentStyle={styles.radioCol2}
-                                                size={30}
+                                                size={28}
                                                 outerCicleColor="#DEDEDF"
                                                 innerCicleColor="#61285F"
                                                 labelStyle={styles.lblRadioBtnTxt}
@@ -8190,6 +8383,13 @@ class OpenAccPageTwoComponent extends Component {
 
                     <CustomPageWizard currentPage={currentPage} pageName={`${currentPage} Personal Info`} />
 
+                
+                    <View style={styles.allFieldsMandatoryView}>
+                        <Text style={styles.allFieldsMandatoryTxt}>
+                            {gblStrings.accManagement.allFieldsMandatory}
+                        </Text>
+                    </View>
+                  
 
 
                     { /* -----------Personalize -------------------*/}
@@ -8218,26 +8418,26 @@ class OpenAccPageTwoComponent extends Component {
                         />
                         <View style={styles.uploadImgView}>
                             <View>
-                                <Text style={styles.lblTxt}>
+                                <Text style={styles.uploadImgViewlbl}>
                                     {gblStrings.accManagement.uploadImage}
                                 </Text>
                                 <Text style={styles.optionalTxt}>
                                     {gblStrings.accManagement.optional}
                                 </Text>
-                                <GButtonComponent
+                              
+                                
+                            </View>
+                            <GButtonComponent
                                     buttonStyle={styles.browseBtn}
                                     buttonText={gblStrings.common.browse}
                                     textStyle={styles.normalBlackBtnTxt}
                                     onPress={this.uploadImage}
-
-                                />
-                            </View>
-
-
-                            {
-                                userAvatar !== "" && <Image source={userAvatar} style={styles.userAvatar} />
-                            }
+                            />
+                          
                         </View>
+                        {
+                                userAvatar !== "" && <Image source={userAvatar} style={styles.userAvatar} />
+                        }
                     </View>
 
                     {

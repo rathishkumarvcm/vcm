@@ -33,9 +33,9 @@ const CustomRadio = props => (
             {
                 props.selected ?
                     <View style={{
-                        height: props.size / 4,
-                        width: props.size / 4,
-                        borderRadius: props.size / 4,
+                        height: props.size / 2,
+                        width: props.size / 2,
+                        borderRadius: props.size / 2,
                         backgroundColor: props.innerCicleColor
                     }}
                     />

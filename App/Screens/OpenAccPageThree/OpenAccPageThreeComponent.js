@@ -88,7 +88,7 @@ class OpenAccPageThreeComponent extends Component {
             isLoading: false,
             isValidationSuccess: true,
             errMsg:"",
-            minCount: 5,
+            minCount: 10,
             fundList: [],
             fundingSourceList: [],
             method: "",
@@ -179,11 +179,10 @@ class OpenAccPageThreeComponent extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         AppUtils.debugLog(`componentDidUpdate::::> ${prevState}`);
-        const { accOpeningData,masterLookupStateData} = this.props;
+        const { accOpeningData,masterLookupStateData,clearReduxKeyData,isSuccess,isError} = this.props;
         const { fundingSourceList,offLineMethods,onLineMethods} = this.state;
 
-        if (this.props !== prevProps) {
-           
+        if (this.props !== prevProps) {         
             let tempFundListData = [];
                 if (accOpeningData[ActionTypes.GET_FUNDLIST] ) {
                     tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST];
@@ -286,27 +285,48 @@ class OpenAccPageThreeComponent extends Component {
             //     }
             // }
 
-        
+
 
 
         }
+
+
+       
+       if (isSuccess || isError) {
+          //  clearReduxKeyData(ActionTypes.GET_FUNDLIST);
+        }
+        
+
 
     }
 
     /*
+
     static getDerivedStateFromProps(nextProps, prevState) {
 
-        const { accOpeningData, masterLookupStateData } = nextProps;
-        const { fundingSourceList, offLineMethods, onLineMethods } = prevState;
+        AppUtils.debugLog("getDerivedStateFromProps::"+nextProps);
+        AppUtils.debugLog("getDerivedStateFromProps::"+prevState);
 
+
+        const { accOpeningData, masterLookupStateData ,isSuccess,isError} = nextProps;
+        const { fundList,fundingSourceList, offLineMethods, onLineMethods,isFilterApplied } = prevState;
+
+
+       
         let tempFundListData = [];
-        if (accOpeningData[ActionTypes.GET_FUNDLIST]) {
-            tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST];
-            return {
-                fundList: [...tempFundListData.map(v => ({ ...v, isActive: false }))],
-                isFilterApplied: false
-            };
+        if (fundList.length === 0) {
+            if (accOpeningData[ActionTypes.GET_FUNDLIST]) {
+                tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST];
+                return {
+                    fundList: [...tempFundListData.map(v => ({ ...v, isActive: false }))],
+                    isFilterApplied: false
+                };
+            }
         }
+            
+        
+
+       
 
 
         let tempFundingSourceList = [];
@@ -359,6 +379,8 @@ class OpenAccPageThreeComponent extends Component {
     }
 
     */
+
+    
 
 
     /*----------------------
@@ -1130,7 +1152,7 @@ class OpenAccPageThreeComponent extends Component {
         AppUtils.debugLog("fundData=", funddatakey);
 
         const fundListPayload = { 
-            'minInvestment': mininvestkey ,
+            'minInvestment': mininvestkey,
             "companyId":"591",
         };
         getFundListData(fundListPayload);
@@ -1983,7 +2005,8 @@ OpenAccPageThreeComponent.propTypes = {
     getFundListData:PropTypes.func,
     getCompositeLookUpData:PropTypes.func,
     getPersonalCompositeData:PropTypes.func,
-    addBankAccountAction:PropTypes.func
+    addBankAccountAction:PropTypes.func,
+    clearReduxKeyData:PropTypes.func
 
 };
 OpenAccPageThreeComponent.defaultProps = {
@@ -1995,7 +2018,9 @@ OpenAccPageThreeComponent.defaultProps = {
     saveAccountOpening: null,
     getCompositeLookUpData: null,
     getPersonalCompositeData:null,
-    addBankAccountAction: null
+    addBankAccountAction: null,
+    clearReduxKeyData:PropTypes.null
+
 
 };
 export default OpenAccPageThreeComponent;

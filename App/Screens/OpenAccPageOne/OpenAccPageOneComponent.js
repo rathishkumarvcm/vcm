@@ -326,7 +326,7 @@ class OpenAccPageOneComponent extends Component {
                                         return (
                                             <CustomRadio
                                                 key={subItem.key}
-                                                size={36}
+                                                size={28}
                                                 componentStyle={styles.radioRow}
                                                 outerCicleColor="#DEDEDF"
                                                 innerCicleColor="#61285F"
@@ -358,7 +358,7 @@ class OpenAccPageOneComponent extends Component {
                         return (
                             <CustomRadio
                                 key={item.key}
-                                size={36}
+                                size={28}
                                 componentStyle={styles.radioRow}
                                 outerCicleColor="#DEDEDF"
                                 innerCicleColor="#61285F"

@@ -44,11 +44,30 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
         textDecorationLine:"underline"
     },
+    allFieldsMandatoryTxt: {
+        color: '#6F7070',
+        fontSize: scaledHeight(14),
+        fontWeight: 'normal',
+        opacity:.60,  
+        textAlign:"right",
+        width: '70%',
+
+    },
+    allFieldsMandatoryView: {
+        flexDirection:'row',
+        alignItems: 'center',
+        backgroundColor: '#F7FAFF',
+        flexWrap: 'wrap',
+        justifyContent: 'flex-end',
+        marginHorizontal: scaledHeight(25),
+        marginTop: scaledHeight(20)
+    },
     browseBtn: {
         alignContent: 'center',
         alignItems: 'center',
         backgroundColor: '#544A54',
         borderColor: "#61285F45",
+        borderRadius:scaledHeight(5),
         borderWidth: scaledHeight(1),
         height: scaledHeight(50),
         justifyContent: 'center',
@@ -66,12 +85,12 @@ const styles = StyleSheet.create({
         marginHorizontal: scaledHeight(12),
         marginVertical: scaledHeight(50)
     },
+
     childSectionGrp: {
         flexGrow: 1,
         overflow: 'hidden',
 
     },
-
     commonColView:{
         flexGrow:1
     },
@@ -80,23 +99,28 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%'
     },
+
     customListTxtBox: {
         width: '100%'
     },
-
     customListTxtBoxError: {
         borderColor: 'red',
+        width: '100%'
+    },
+    customPopulatedTxtBox: {
+        backgroundColor: "#F0F1F2",
+        marginTop: scaledHeight(9),
         width: '100%'
     },
     customRowTxtBox: {
         width: '30%'
 
     },
+
     customTxtBox: {
         marginTop: scaledHeight(9),
         width: '100%'
     },
-
     customTxtBoxError: {
         borderColor: 'red',
         marginTop: scaledHeight(9),
@@ -234,6 +258,20 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(5),
         opacity: .65
     },
+    lblHeader: {
+        backgroundColor: "#F2F2F2",
+        marginBottom: scaledHeight(10),
+        marginTop: scaledHeight(9),
+        padding:scaledHeight(10)
+    },
+    lblHeaderTxt: {
+        color: '#56565A',
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold',
+        lineHeight: 35
+       
+    },
+
     lblLine: {
         backgroundColor: '#707070',
         flexGrow: 1,
@@ -241,7 +279,6 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(9.5),
         opacity: .25
     },
-
     lblLine1: {
         backgroundColor: '#696069',
         height: scaledHeight(1),
@@ -265,12 +302,22 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
     },
+
     lblTxt: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
         marginTop: scaledHeight(25)
 
+    },
+    lblValueTxt: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        marginTop: scaledHeight(9)
+    },
+    mailToCSRGrp: {
+        flexGrow: 1,
+        marginTop: scaledHeight(19)
     },
 
     militaryLblDate1: {
@@ -279,17 +326,17 @@ const styles = StyleSheet.create({
         fontWeight: 'normal',
         width: '20%'
     },
+
+
     militaryLblDate2: {
         marginLeft: '0%',
         width: '80%'
     },
-
     militaryServiceView: {
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'flex-start'
     },
-
 
     moreTxt: {
         color: '#61285F',
@@ -304,6 +351,7 @@ const styles = StyleSheet.create({
 
 
     },
+
 
     nonUSView: {
         flexGrow: 1,
@@ -322,7 +370,6 @@ const styles = StyleSheet.create({
 
 
     },
-
 
     normalBlackBtnDisabledTxt: {
         color: '#fff',
@@ -363,7 +410,6 @@ const styles = StyleSheet.create({
         marginVertical: scaledHeight(7.5)
 
     },
-
     normalWhiteBtnTxt: {
         color: '#544A54',
         fontSize: scaledHeight(16),
@@ -383,12 +429,12 @@ const styles = StyleSheet.create({
         lineHeight: 32,
 
     },
+   
     privacyNoticeTitleTxt: {
         color: '#486D89',
         fontSize: scaledHeight(26),
         lineHeight: 35
     },
-   
     privacyNoticeTxt: {
         color: '#56565A',
         fontSize: scaledHeight(16),
@@ -494,7 +540,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'row',
         flexGrow: 1,
-        justifyContent: 'flex-start'
+        justifyContent: 'space-between',
+        marginTop: scaledHeight(25)
+
+    },
+    uploadImgViewlbl: {
+        alignItems: 'center',
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
     },
     uploadW8View: {
         flexGrow: 1,

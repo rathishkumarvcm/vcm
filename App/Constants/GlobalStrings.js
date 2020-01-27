@@ -141,7 +141,6 @@ export default {
         retirementAcc: "Retirement Accounts",
         investingChildrenAcc: "Investing for Children",
         specialtyAcc: "Specialty Accounts",
-
         personalize: "Personalize",
         nickname: "Nick Name",
         optional: "(Optional)",
@@ -236,6 +235,12 @@ export default {
         beneficiariesNote: "You may name one or more people or entities as beneficiaries",
         beneficiariesCond: "Primary distributions must total 100 percent",
 
+
+        contactInfo:"Contact Information",
+        phoneInfo:"Phone Information",
+        emailInfo:"Email Information",
+        allFieldsMandatory: "All fields are required except mentioned optional",
+        mailToCSR: "Mail To CSR @",
 
         suffix: "Suffix",
         prefix: "Prefix",
