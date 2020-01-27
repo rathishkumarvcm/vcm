@@ -131,7 +131,7 @@ class AccountMessagingSettingsComponent extends Component {
                         </TouchableOpacity>
                     </View>
 
-                    <View style={styles.listContainer}>
+                    {/* <View style={styles.listContainer}>
                         <TouchableOpacity
                             style={styles.touchOpacityPosition}
                             onPress={this.navigateaccountMessagingGeneralDocuments}
@@ -153,7 +153,7 @@ class AccountMessagingSettingsComponent extends Component {
                                 </Text>
                             </View>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
 
                     <View style={styles.listContainer}>
                         <TouchableOpacity

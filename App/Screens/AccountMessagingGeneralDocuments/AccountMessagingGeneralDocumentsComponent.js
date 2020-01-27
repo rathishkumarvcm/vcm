@@ -35,7 +35,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
     }        
 
     componentDidMount() {
-        this.onMount(function callback(){
+               
             const{ accMessageDocumentinitialState }=this.props;
             if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedTaxDocumentsItemID) {
                 this.setState({ selectedTaxDocumentsItemID: accMessageDocumentinitialState.selectedTaxDocumentsItemID });
@@ -49,7 +49,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
             if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedGeneralDocumentsPrivacyItemID) {
                 this.setState({ selectedGeneralDocumentsPrivacyItemID: accMessageDocumentinitialState.selectedGeneralDocumentsPrivacyItemID });
             }
-        });
+      
         
     }
 
@@ -137,7 +137,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
 
     render() {
         const{ navigation }=this.props;
-        const{ selectedTaxDocumentsItemID,selectedConfirmItemID,saveSuccess,selectedGeneralDocumentsAnnualItemID,selectedGeneralDocumentsPrivacyItemID }=this.state;
+        const{ selectedTaxDocumentsItemID,selectedConfirmItemID,saveSuccess }=this.state;
         
         return (
             <View style={styles.container}>
