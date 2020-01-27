@@ -58,12 +58,12 @@ platform :ios do
     )
 
     firebase_app_distribution(
-        app: "1:777050578604:ios:8ba8d9881e2f57a0730909",
-        testers: "shamshudein.syedkareem@cognizant.com",
+        app: "1:416732411627:ios:04fa18a32f33664539b0ae",
+        testers: "shamshudein.syedkareem@cognizant.com, manikandan.k34a613@cognizant.com",
         groups: "ctsdevelopers, ctstesters",
         release_notes: "VCM Member Services IOS App New Release",
         firebase_cli_path: "/usr/local/bin/firebase",
-        firebase_cli_token: "1//0gZoiIQ7Fx3LACgYIARAAGBASNwF-L9IrzzrV4B8Dw_BFL7NByOqErkCfg0tzS5F3RchhgGxGCyIjcErCrUzsQQFu4SCFm5cpKYU"
+        firebase_cli_token: "1//0gha-Fvu6nePDCgYIARAAGBASNwF-L9IrkIRZJHOdiTUt1vClPdpBQOAvc_NXdUpSebB1y9Ho_4FA38BDEJjZ7UB45G2-KQonjao"
     )
     # enable_automatic_code_signing(path: "my_project.xcodeproj")
 
