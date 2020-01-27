@@ -32,6 +32,7 @@ export default class TAmmendComponent extends Component {
         }
         //  console.log("state menu",this.state.menuList);
         this.filterPendingItems();
+        this.getPendingTransactions();
     }
 
     componentDidUpdate(prevProps) {
@@ -43,6 +44,19 @@ export default class TAmmendComponent extends Component {
             this.filterPendingItems();
             this.notificationView();
         }
+    }
+
+    getPendingTransactions = () => {
+         console.log("in component");
+        const { getTransactionData } = this.props;
+        const payload = {
+                "customerId":"123",
+                "companyNumber": "591",
+                "fundNumber": "330",
+                "accountNumber": "3000000107"
+        };
+        getTransactionData(payload);
+        return 0;
     }
 
     filterPendingItems = () => {
@@ -182,9 +196,11 @@ export default class TAmmendComponent extends Component {
 TAmmendComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     amendReducerData: PropTypes.instanceOf(Object),
+    getTransactionData: PropTypes.func
 };
 
 TAmmendComponent.defaultProps = {
     navigation: {},
-    amendReducerData: {}
+    amendReducerData: {},
+    getTransactionData : () => {}
 };
