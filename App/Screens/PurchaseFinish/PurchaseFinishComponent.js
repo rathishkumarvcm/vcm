@@ -15,7 +15,7 @@ class PurchaseFinishComponent extends Component {
     }
 
     render() {
-        const {navigation}=this.props;
+        const { navigation } = this.props;
         orderId = navigation.getParam('orderId');
         return (
             <View style={styles.container}>
@@ -31,7 +31,7 @@ class PurchaseFinishComponent extends Component {
                     </View>
                     { /* ----------- Disclaimer -------------------*/}
 
-          <GFooterSettingsComponent />
+                    <GFooterSettingsComponent />
                 </ScrollView>
 
             </View>

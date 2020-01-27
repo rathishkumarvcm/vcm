@@ -36,11 +36,11 @@ const styles = StyleSheet.create({
     color: '#56565A',
     fontSize: scaledHeight(24),
     fontWeight: 'bold'
-},
-headerTextView: {
+  },
+  headerTextView: {
     marginLeft: '4%',
     marginRight: '4%'
-},
+  },
   filterFundsBtn: {
     width: "50%",
     borderWidth: 1,
@@ -83,18 +83,18 @@ headerTextView: {
     borderColor: "#9DB4CE",
     borderWidth: scaledHeight(1),
     backgroundColor: "#FFFFFF",
-    width: "100%",
     marginBottom: "4%"
   },
   fundItemStyleSelected: {
     backgroundColor: "#FFFFFF",
-    width: "100%",
     marginBottom: "4%",
     borderColor: "#B5E198",
-    borderWidth: scaledHeight(3)
+    borderWidth: scaledHeight(3),
   },
   fundItemHeaderView: {
-    margin: "4%"
+    margin: "4%",
+    flexDirection:'row',
+    flexWrap:'wrap'
   },
   lineStyle: {
     backgroundColor: "#9DB4CE",
@@ -106,7 +106,7 @@ headerTextView: {
   fundItemHeaderTxt: {
     fontSize: scaledHeight(18),
     color: "#54565B",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   fundItemContntView: {
     margin: "4%"
@@ -117,11 +117,19 @@ headerTextView: {
     lineHeight: scaledHeight(19),
     fontWeight: "bold"
   },
+  noteTextStyle: {
+    fontSize: scaledHeight(13),
+    color: "#56565A",
+    lineHeight: scaledHeight(19),
+    fontWeight: "400",
+    marginTop: scaledHeight(5)
+  },
   fundItemValueTxt: {
     fontSize: scaledHeight(14),
     color: "#56565A",
     lineHeight: scaledHeight(17),
-    fontWeight: "400"
+    fontWeight: "400",
+    marginTop: scaledHeight(5)
   },
   existingFundStyle: {
     borderColor: "#B8B8B8",

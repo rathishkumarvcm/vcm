@@ -91,6 +91,56 @@ class PurchaseFourComponent extends Component {
         }
     }
 
+    clearReducer = () => {
+        const { saveData } = this.props;
+        const data = {
+            "savePurchaseSelectedData": {
+                "key": "",
+                "order_Id": "",
+                "transactionType": "",
+                "lastModified": "",
+                "orderStatus": "",
+                "selectedAccountData": {
+                    "accountType": "",
+                    "accountName": "",
+                    "accountNumber": "",
+                    "currentValue": "",
+                    "holdingValue": "",
+                    "AutomaticInvestmentPlan": ""
+                },
+                "selectedFundData": {
+                    "fundName": "",
+                    "fundNumber": "",
+                    "fundingOption": "",
+                    "initialInvestment": "",
+                    "monthlyInvestment": "",
+                    "startDate": "",
+                    "count": "",
+                    "total": "",
+                },
+                "selectedFundSourceData": {
+                    "paymentMode": "",
+                    "fundSourceType": "",
+                    "totalInvestment": "",
+                    "bankAccountName": "",
+                    "bankAccountNumber": "",
+                },
+                "currentSecurities": {
+                    "reinvest": false
+                },
+                "contribution": {
+                    "contribution": ""
+                },
+                "estimated": {
+                    "estimatedFee": "",
+                    "estimatedNetTradeAmt": "",
+                    "effectiveDate": ""
+                }
+            }
+        };
+        saveData(data);
+    }
+
     onClickSave = () => {
         const { navigation, ammendActions } = this.props;
         const { ammend, ammendData, ammendIndex } = this.state;
@@ -124,6 +174,7 @@ class PurchaseFourComponent extends Component {
             };
             menuList.splice(pIndex, 1, ammendPayloadData);
             ammendActions(menuList);
+            this.clearReducer();
             navigation.navigate('tAmmendComponent', { orderId: amendObj.title, transactionType: "Purchase", amend: true });
         }
         else {
@@ -149,13 +200,12 @@ class PurchaseFourComponent extends Component {
             menuList.push(payloadData);
             this.submitMethod();
             ammendActions(menuList);
+            this.clearReducer();
             navigation.navigate('purchaseFinish', { orderId: orderId });
         }
     }
 
-
     submitMethod = () => {
-        // console.log("in component")
         const { submitPurchaseData } = this.props;
         const payload = {
             "customerId": "V850504704",
@@ -181,6 +231,7 @@ class PurchaseFourComponent extends Component {
         submitPurchaseData(payload);
         return 0;
     }
+
     render() {
         const { ammend } = this.state;
         const { purchaseData, navigation } = this.props;
@@ -351,7 +402,8 @@ PurchaseFourComponent.propTypes = {
     purchaseData: PropTypes.instanceOf(Object),
     amendReducerData: PropTypes.instanceOf(Object),
     ammendActions: PropTypes.func,
-    submitPurchaseData: PropTypes.func
+    submitPurchaseData: PropTypes.func,
+    saveData: PropTypes.func
 };
 
 PurchaseFourComponent.defaultProps = {
@@ -359,7 +411,8 @@ PurchaseFourComponent.defaultProps = {
     purchaseData: {},
     amendReducerData: {},
     ammendActions: () => { },
-    submitPurchaseData: () => { }
+    submitPurchaseData: () => { },
+    saveData: () => { }
 };
 
 export default PurchaseFourComponent;

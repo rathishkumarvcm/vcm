@@ -78,7 +78,7 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     getLookUpData = () => {
-        const { navigation, getFundListData, masterLookupStateData, getCompositeLookUpData } = this.props;
+        const { navigation, getFunds, masterLookupStateData, getCompositeLookUpData } = this.props;
         const { fundList } = this.state;
 
         if (navigation.getParam('ammend')) {
@@ -92,8 +92,10 @@ class PurchaseScreenTwoComponent extends Component {
 
         this.setState({ isLoading: true });
         if (this.state && fundList && !fundList.length > 0) {
-            const fundListPayload = {};
-            getFundListData(fundListPayload);
+            const fundListPayload = {
+                companyId: "591"
+            };
+            getFunds(fundListPayload);
         }
 
         const payload = [];
@@ -115,7 +117,8 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     updatePropsChange = () => {
-        const { accOpeningData, navigation } = this.props;
+        const { purchaseData, navigation } = this.props;
+
         const { ammend } = this.state;
         let tempFundListData = [];
 
@@ -128,8 +131,8 @@ class PurchaseScreenTwoComponent extends Component {
             this.setState({ ammend: false });
         }
 
-        if (accOpeningData[ActionTypes.GET_FUNDLIST] !== undefined && accOpeningData[ActionTypes.GET_FUNDLIST].Items !== null) {
-            tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST].Items;
+        if (purchaseData[ActionTypes.GET_FUNDLIST] !== undefined && purchaseData[ActionTypes.GET_FUNDLIST] !== null) {
+            tempFundListData = purchaseData[ActionTypes.GET_FUNDLIST];
             this.setState({
                 fundList: [...tempFundListData],
                 // isFilterApplied: false,
@@ -142,7 +145,6 @@ class PurchaseScreenTwoComponent extends Component {
                     }
                     return 0;
                 });
-                //this.updateAmendDataToReducer();
                 this.onAmendFund();
             }
         }
@@ -245,7 +247,7 @@ class PurchaseScreenTwoComponent extends Component {
 
     applyFilterAction = (visible) => () => {
         const { filterMinData, filterRiskData, filterFundData } = this.state;
-        const { getFundListData } = this.props;
+        const { getFunds } = this.props;
         this.setState({
             modalVisible: visible,
             applyFilterState: true,
@@ -290,7 +292,7 @@ class PurchaseScreenTwoComponent extends Component {
         });
 
         const fundListPayload = { 'minInvestment': minInvestKey };
-        getFundListData(fundListPayload);
+        getFunds(fundListPayload);
     }
 
     navigateCompareFunds = () => {
@@ -438,7 +440,6 @@ class PurchaseScreenTwoComponent extends Component {
 
     onChangeIndex = (item, index) => () => {
         const tempData = {};
-
         tempData.fundName = item.fundName;
         tempData.fundNumber = item.fundNumber;
         tempData.fundingOption = "";
@@ -555,20 +556,24 @@ class PurchaseScreenTwoComponent extends Component {
                 <View style={styles.lineStyle} />
                 <View style={styles.fundItemContntView}>
                     <View style={styles.marginBottomStyle}>
-                        <Text style={styles.fundItemValueHeading}>Last NAV (Previous day close</Text>
-                        <Text style={styles.fundItemValueTxt}>$ 143</Text>
+                        <Text style={styles.fundItemValueHeading}>Min. / Max. Amount w/ Auto Investing</Text>
+                        <Text style={styles.fundItemValueTxt}>{`$ ${item.initialInvestment} / $ ${item.maxInvestment} w/ $ ${item.monthlyInvestment} monthly`}</Text>
                     </View>
                     <View style={styles.marginBottomStyle}>
-                        <Text style={styles.fundItemValueHeading}>NAV in %</Text>
-                        <Text style={styles.fundItemValueTxt}>14.3</Text>
+                        <Text style={styles.fundItemValueHeading}>NAV<Text style={styles.noteTextStyle}> (Change in Percentage)</Text></Text>
+                        <Text style={styles.fundItemValueTxt}>{item.changeInNav}</Text>
                     </View>
                     <View style={styles.marginBottomStyle}>
-                        <Text style={styles.fundItemValueHeading}>Min. / Max. Amount</Text>
-                        <Text style={styles.fundItemValueTxt}>$ 300/ $ 5000</Text>
+                        <Text style={styles.fundItemValueHeading}>Last Nav<Text style={styles.noteTextStyle}> (Previous day close)</Text></Text>
+                        <Text style={styles.fundItemValueTxt}>{`$ ${item.lastNav}`}</Text>
                     </View>
                     <View style={styles.marginBottomStyle}>
                         <Text style={styles.fundItemValueHeading}>52 week Min. / Max. Values</Text>
-                        <Text style={styles.fundItemValueTxt}>$ 3000 / $ 5000</Text>
+                        <Text style={styles.fundItemValueTxt}>{`$ ${item.min52W} / $ ${item.max52W}`}</Text>
+                    </View>
+                    <View style={styles.marginBottomStyle}>
+                        <Text style={styles.fundItemValueHeading}>Risk</Text>
+                        <Text style={styles.fundItemValueTxt}>{item.risk}</Text>
                     </View>
                 </View>
             </View>
@@ -920,7 +925,7 @@ class PurchaseScreenTwoComponent extends Component {
 PurchaseScreenTwoComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     accOpeningData: PropTypes.instanceOf(Object),
-    getFundListData: PropTypes.func,
+    getFunds: PropTypes.func,
     masterLookupStateData: PropTypes.instanceOf(Object),
     getCompositeLookUpData: PropTypes.func,
     saveData: PropTypes.func,
@@ -931,7 +936,7 @@ PurchaseScreenTwoComponent.defaultProps = {
     saveData: () => { },
     getCompositeLookUpData: () => { },
     masterLookupStateData: {},
-    getFundListData: () => { },
+    getFunds: () => { },
     accOpeningData: {},
     navigation: {},
     purchaseData: {}
