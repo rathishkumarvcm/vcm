@@ -36,7 +36,7 @@ platform :ios do
         adhoc: true,
         # force: true,
         username: "shamshudein.syedkareem@cognizant.com",
-        app_identifier: "com.vcmmemberportal.memberservices"
+        app_identifier: "com.vcmmemberportal.*"
     )
 
 
