@@ -178,10 +178,10 @@ class PurchaseFourComponent extends Component {
             navigation.navigate('tAmmendComponent', { orderId: amendObj.title, transactionType: "Purchase", amend: true });
         }
         else {
-            const orderId = `Order ID - PUR${year}${month}${date}${finalKey}`;
+            const orderId1 = `Order ID - PUR${year}${month}${date}${finalKey}`;
             const payloadData = {
                 "key": finalKey,
-                "title": orderId,
+                "title": orderId1,
                 "data": {
                     "count": 5,
                     "Dateadded": updatedDate,
@@ -201,7 +201,7 @@ class PurchaseFourComponent extends Component {
             this.submitMethod();
             ammendActions(menuList);
             this.clearReducer();
-            navigation.navigate('purchaseFinish', { orderId: orderId });
+            navigation.navigate('purchaseFinish', { orderId: orderId1 });
         }
     }
 
@@ -227,7 +227,7 @@ class PurchaseFourComponent extends Component {
                     "accountNumber": "1234566746"
                 }
             }
-        }
+        };
         submitPurchaseData(payload);
         return 0;
     }

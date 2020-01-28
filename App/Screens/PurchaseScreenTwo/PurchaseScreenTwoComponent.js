@@ -532,10 +532,10 @@ class PurchaseScreenTwoComponent extends Component {
         newData.startDateValidation = true;
 
         if (!isNaN(newData.initialInvestment) && newData.initialInvestment !== "") {
-            total = total + parseFloat(newData.initialInvestment);
+            total += parseFloat(newData.initialInvestment);
         }
         if (!isNaN(newData.monthlyInvestment) && newData.monthlyInvestment !== "") {
-            total = total + parseFloat(newData.monthlyInvestment);
+            total += parseFloat(newData.monthlyInvestment);
         }
         this.setState({
             totalInitialInvestment: `$ ${total}`,
@@ -722,39 +722,40 @@ class PurchaseScreenTwoComponent extends Component {
                                                 {`Minimum $${selectedFundInvestmentData.mininitialInvestment}`}
                                             </Text>
                                             {selectedFundInvestmentData.fundingOption === "Initial and Monthly Investment" &&
-                                                <View style={styles.marginBottomStyle}>
-                                                    <Text style={styles.fundInvestTitle}>{gblStrings.purchase.monthlyInvestment}</Text>
-                                                    <View style={styles.iconFrontStyle}>
-                                                        <Text style={styles.dollerIconTxt}>{"$"}</Text>
-                                                        <GInputComponent
-                                                            inputref={this.setInputRef("monthlyInvestment")}
-                                                            propInputStyle={styles.amountBox}
-                                                            maxLength={gblStrings.maxLength.monthlyInvestment}
-                                                            placeholder="Monthly Investment"
-                                                            value={selectedFundInvestmentData.monthlyInvestment}
-                                                            keyboardType="decimal-pad"
-                                                            onChangeText={this.onChangeTextForInvestment("monthlyInvestment")}
-                                                            errorFlag={!selectedFundInvestmentData.monthlyInvestmentValidation}
-                                                            errorText=""
+                                                (
+                                                    <View style={styles.marginBottomStyle}>
+                                                        <Text style={styles.fundInvestTitle}>{gblStrings.purchase.monthlyInvestment}</Text>
+                                                        <View style={styles.iconFrontStyle}>
+                                                            <Text style={styles.dollerIconTxt}>$</Text>
+                                                            <GInputComponent
+                                                                inputref={this.setInputRef("monthlyInvestment")}
+                                                                propInputStyle={styles.amountBox}
+                                                                maxLength={gblStrings.maxLength.monthlyInvestment}
+                                                                placeholder="Monthly Investment"
+                                                                value={selectedFundInvestmentData.monthlyInvestment}
+                                                                keyboardType="decimal-pad"
+                                                                onChangeText={this.onChangeTextForInvestment("monthlyInvestment")}
+                                                                errorFlag={!selectedFundInvestmentData.monthlyInvestmentValidation}
+                                                                errorText=""
+                                                            />
+                                                        </View>
+                                                        {!selectedFundInvestmentData.monthlyInvestmentValidation &&
+                                                            <Text style={styles.errMsg}>{gblStrings.accManagement.emptyMonthlyInvestmentMsg}</Text>
+                                                        }
+                                                        <Text style={styles.helpText}>
+                                                            {`Minimum $${selectedFundInvestmentData.minmonthlyInvestment}`}
+                                                        </Text>
+                                                        <Text style={styles.fundInvestTitle}>{gblStrings.purchase.startDate}</Text>
+                                                        <GDateComponent
+                                                            date={selectedFundInvestmentData.startDate}
+                                                            minDate={currentDate}
+                                                            placeholder="MM-DD-YYYY"
+                                                            errorFlag={!selectedFundInvestmentData.startDateValidation}
+                                                            errorMsg={gblStrings.accManagement.emptyStartDate}
+                                                            onDateChange={this.onChangeDateForInvestment("startDate")}
                                                         />
                                                     </View>
-                                                    {!selectedFundInvestmentData.monthlyInvestmentValidation &&
-                                                        <Text style={styles.errMsg}>{gblStrings.accManagement.emptyMonthlyInvestmentMsg}</Text>
-                                                    }
-                                                    <Text style={styles.helpText}>
-                                                        {`Minimum $${selectedFundInvestmentData.minmonthlyInvestment}`}
-                                                    </Text>
-                                                    <Text style={styles.fundInvestTitle}>{gblStrings.purchase.startDate}</Text>
-                                                    <GDateComponent
-                                                        inputref={this.setInputRef("startDate")}
-                                                        date={selectedFundInvestmentData.startDate}
-                                                        minDate={currentDate}
-                                                        placeholder="MM-DD-YYYY"
-                                                        errorFlag={!selectedFundInvestmentData.startDateValidation}
-                                                        errorMsg={gblStrings.accManagement.emptyStartDate}
-                                                        onDateChange={this.onChangeDateForInvestment("startDate")}
-                                                    />
-                                                </View>
+                                                )
                                             }
                                         </View>
                                         <View style={styles.line} />
