@@ -241,6 +241,14 @@ export default {
         emailInfo:"Email Information",
         allFieldsMandatory: "All fields are required except mentioned optional",
         mailToCSR: "Mail To CSR @",
+        home:"Home",
+        work:"Work",
+        mobile:"Mobile",
+        fax:"Fax",
+        addAnotherNumer:"+ Add Another Number",
+        addAnotherEmail:"+ Add Another Email Address",
+        stateTerritory:"State/Territory",
+
 
         suffix: "Suffix",
         prefix: "Prefix",

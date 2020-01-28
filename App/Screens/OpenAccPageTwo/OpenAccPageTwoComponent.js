@@ -2463,6 +2463,10 @@ class OpenAccPageTwoComponent extends Component {
                     isFinancialInfoExpanded: true,
                     isMilitaryInfoExpanded: true,
                     isRegulatoryInfoExpanded: true,
+                    isContactInfoExpanded: true,
+                    isPhoneInfoExpanded: true,
+                    isEmailInfoExpanded: true
+                   
                 },
                 isValidationSuccess,
                 errMsg: isValidationSuccess === false ? errMsg : ""
@@ -2631,6 +2635,9 @@ class OpenAccPageTwoComponent extends Component {
                     isFinancialInfoExpanded: true,
                     isMilitaryInfoExpanded: true,
                     isRegulatoryInfoExpanded: true,
+                    isContactInfoExpanded: true,
+                    isPhoneInfoExpanded: true,
+                    isEmailInfoExpanded: true
                 },
                 isValidationSuccess,
                 errMsg: isValidationSuccess === false ? errMsg : ""
@@ -2707,6 +2714,14 @@ class OpenAccPageTwoComponent extends Component {
                     [`${input}Validation`]: false
 
                 },
+                isPersonalInfoExpanded: true,
+                isEmploymentInfoExpanded: true,
+                isFinancialInfoExpanded: true,
+                isMilitaryInfoExpanded: true,
+                isRegulatoryInfoExpanded: true,
+                isContactInfoExpanded: true,
+                isPhoneInfoExpanded: true,
+                isEmailInfoExpanded: true,
                 isValidationSuccess,
                 errMsg: isValidationSuccess === false ? errMsg : ""
             }));
@@ -2802,7 +2817,15 @@ class OpenAccPageTwoComponent extends Component {
                     this.setState({
                         retirementBeneficiaryData: newItems,
                         isValidationSuccess,
-                        errMsg: isValidationSuccess === false ? errMsg : ""
+                        errMsg: isValidationSuccess === false ? errMsg : "",
+                        isPersonalInfoExpanded: true,
+                        isEmploymentInfoExpanded: true,
+                        isFinancialInfoExpanded: true,
+                        isMilitaryInfoExpanded: true,
+                        isRegulatoryInfoExpanded: true,
+                        isContactInfoExpanded: true,
+                        isPhoneInfoExpanded: true,
+                        isEmailInfoExpanded: true
                     });
 
                     if (inputField !== "" && inputField !== null && inputField !== undefined) {
@@ -4768,6 +4791,9 @@ class OpenAccPageTwoComponent extends Component {
 
 
                                         />
+                                        <Text style={styles.lblTxt}>
+                                            {gblStrings.accManagement.cityAndState}
+                                        </Text>
                                         <GInputComponent
                                             inputref={this.setInputRef("stateCity_Phy")}
                                             propInputStyle={personal.stateCity_PhyValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
