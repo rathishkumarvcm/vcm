@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import AccountMessagingGeneralDocumentsComponent from './AccountMessagingGeneralDocumentsComponent';
-import { accMessagingDocumentsActions } from "../../Shared/Actions";
+import { accMessagingDocumentsActions,addressFormatActions } from "../../Shared/Actions";
+
 
 /*----------------------
                                   Redux Methods
@@ -8,10 +9,13 @@ import { accMessagingDocumentsActions } from "../../Shared/Actions";
 
 const mapStateToProps = (state /* , props */) => ({  
   accMessageDocumentinitialState: state.accMessagingDocumentsData,  
+  addressFormatData:state.addressFormatData,
+  initialState :state.initialAppData,
 });
 
 const mapDispatchToProps = {
-  ...accMessagingDocumentsActions
+  ...accMessagingDocumentsActions,
+  ...addressFormatActions
 };
 
 export default connect(

@@ -2,12 +2,54 @@ import { StyleSheet } from 'react-native';
 import { scaledHeight } from '../../Utils/Resolution';
 
 const styles = StyleSheet.create({
+    accountInfoContainer:{
+        backgroundColor:'#ECECEC',
+        borderColor:'#5D83AE99',
+        borderWidth:1,
+        flexDirection:'row',
+        marginLeft:'4%',       
+        marginRight:'4%',
+        marginVertical:scaledHeight(10),
+        paddingHorizontal:'4%',      
+        paddingVertical:scaledHeight(10),        
+    },
+    accountNameContainer:{             
+        flexDirection:'column',       
+        marginRight:'4%', 
+        width:'40%' 
+    },
+    accountNameText:{
+        borderColor:'#C4C3C3',
+        borderRightWidth:1, 
+        color:'#56565A',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold',
+        marginRight:'8%',
+        paddingRight:'6%' 
+    },
+    accountNameValueText:{
+        borderColor:'#C4C3C3',
+        borderRightWidth:1, 
+        color:'#56565A',
+        fontSize:scaledHeight(16),
+        marginRight:'8%',
+        paddingRight:'6%',       
+    },
+    accountNumberText:{
+        color:'#56565A',
+        fontSize:scaledHeight(16),   
+        fontWeight:'bold'    
+    },
+    accountNumberValueText:{
+        color:'#56565A',
+        fontSize:scaledHeight(16),            
+    },
     alertIconText: {
         color: '#707070',
         fontSize: scaledHeight(14),
         marginLeft: '4%',
         width:'80%',            
-    },
+    },      
     alertIconView: {
         alignItems: 'center',
         flexDirection: 'row',       
@@ -53,11 +95,28 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),       
         fontWeight:'bold',
         marginTop: scaledHeight(12),            
-    },      
+    },
     container: {
         backgroundColor: '#F7FAFF',
         flex: 1,
         width: '100%',
+    },
+    customPopulatedTxtBox: {
+        backgroundColor: "#F0F1F2",
+        marginTop: scaledHeight(9),
+        width: '100%'
+    },
+    customTxtBox: {
+        marginTop: scaledHeight(9),
+        width: '100%'
+    },
+    customTxtBoxError: {
+        borderColor: 'red',
+        marginTop: scaledHeight(9),
+        width: '100%'
+    },
+    deliveryPreferenceOptions:{     
+        marginTop:scaledHeight(25),              
     },
     generalDocumentDisclaimerView:{        
         backgroundColor: '#F1F1F2',
@@ -80,6 +139,11 @@ const styles = StyleSheet.create({
         paddingRight:'6%',
         paddingTop:scaledHeight(4),            
     },
+    investmentTypeText:{
+        color:'#56565A',
+        fontSize:scaledHeight(15),   
+        fontWeight:'bold'    
+    },
     lblRadioBtnTxt:{
         color:'#333333DE',
         flexWrap:'wrap',
@@ -95,11 +159,18 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(5),
         opacity:.75
     },
+    lblTxt: {
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginTop: scaledHeight(25)
+
+    },
     lineBorder: {       
         borderColor: '#707070',          
         borderWidth: 0.4,       
         marginBottom: scaledHeight(5),       
-        marginTop: scaledHeight(5),       
+        marginTop: scaledHeight(3),             
     },
     radioBtnGrp:{
         flexDirection:"row", 
@@ -123,7 +194,7 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(25),
         width:'80%',              
      },
-    saveButtonText:{
+     saveButtonText:{
         color:'#FFFFFF',
         fontSize:scaledHeight(16),
         fontWeight:'bold'
@@ -142,7 +213,7 @@ const styles = StyleSheet.create({
         width:'92%', 
         zIndex: 5,         
     },
-    saveSuccessText:{
+     saveSuccessText:{
         color:'#56565A',
         flex:0.95,
         fontSize:scaledHeight(16),        
@@ -151,12 +222,12 @@ const styles = StyleSheet.create({
     },
     scrollViewFlex:{
         flex: 0.85 
-    },
+    },    
     settingsInfo: {
         color: '#B2B2B2',
         fontSize: scaledHeight(13),
         marginRight: '4%',   
-    },
+    },    
     settingsInfoCurrent: {
         color: '#707070',
         fontSize: scaledHeight(14),
@@ -185,7 +256,7 @@ const styles = StyleSheet.create({
     },
     taxDocumentAlertsContent: {
         color: '#56565A',
-        fontSize: scaledHeight(16),       
+        fontSize: scaledHeight(18),       
         fontWeight:'bold',
         marginTop: scaledHeight(5)
     },
@@ -194,13 +265,14 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(18),
         fontWeight:'bold',          
     },
-    taxDocumentHeaderview: {      
-        // backgroundColor: '#F1F1F2',       
-        paddingBottom:scaledHeight(14),       
+    taxDocumentHeaderview: {              
+        alignItems:'center',       
+        flexDirection:'row',
+        paddingBottom:scaledHeight(14),
         paddingTop:scaledHeight(14),
-        width: '100%',
+        width: '100%'
     },
-     taxDocumentcontainer: { 
+    taxDocumentcontainer: { 
         // backgroundColor: '#FFFFFF',
         // borderColor: '#EBEDEF',      
         // borderWidth: 0.5,
@@ -218,7 +290,20 @@ const styles = StyleSheet.create({
         paddingHorizontal:'6%',       
         paddingVertical:scaledHeight(20)
     },
-     tooltipContainer:{                               
+    toggleOptionscontainer:{
+        flexDirection:'row',
+        marginHorizontal:'4%',
+        marginTop:scaledHeight(10),
+        paddingLeft:'6%',   
+    },
+    toggleText:{
+        color:'#56565A',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold',
+        marginRight:'15%',   
+        width:'50%'    
+    },
+    tooltipContainer:{                               
         marginLeft:'8%', 
         marginTop:scaledHeight(2)       
     },
@@ -230,15 +315,16 @@ const styles = StyleSheet.create({
         marginRight:'1%',
         marginTop:scaledHeight(2),
         padding:'3%'
-    },    
+    },
     tooltipContainerText:{       
         color:'#56565A',
         fontSize:scaledHeight(16), 
         marginRight:'10%'               
-    },    
+    },
     touchOpacityPosition: {
         position: 'relative',
     },
+
 
 });
 
