@@ -55,6 +55,54 @@ const styles = StyleSheet.create({
         flex: 1,
         marginTop: scaledHeight(20)
     },
+    downloadContainer: {
+        borderColor: '#D8D8D8',
+        borderWidth: scaledHeight(1),
+        marginTop: '4%',
+        shadowColor: "#0000000F",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.2,
+    },
+    downloadDescTxt: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        fontWeight: '400',
+        lineHeight: 22,
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop: scaledHeight(17),
+        textAlign: 'left',
+    },
+    downloadHeadingTxt: {
+        color: '#56565A',
+        fontSize: scaledHeight(25),
+        fontWeight: "200",
+        lineHeight: scaledHeight(35),
+        marginHorizontal: scaledHeight(15),
+        marginTop: scaledHeight(25)
+    },
+    downloadPdfBtn: {
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderColor: "#5D83AE",
+        borderWidth: 1,
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginHorizontal: scaledHeight(15),
+        marginVertical: scaledHeight(25),
+        width:'50%'
+    },
+    downloadPdfBtnTxt: {
+        color: '#5D83AE',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        lineHeight: 20,
+        textAlign: 'center'
+    },
     fileDescTextStyle: {
         color: '#707070',
         flex: 0.5,
@@ -226,7 +274,7 @@ const styles = StyleSheet.create({
             height: 2
         },
         shadowOpacity: 0.2,
-        width:'30%',
+        width: '30%',
     },
     selectedFileDescContainer: {
         backgroundColor: '#FFFFFF',

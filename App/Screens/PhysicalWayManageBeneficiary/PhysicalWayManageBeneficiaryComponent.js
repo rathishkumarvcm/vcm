@@ -160,10 +160,16 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
                             <Text style={styles.mainHeadingStyles}>Upload/ Mail Supporting Docs</Text>
                         </View>
                         <View style={styles.line} />
-                        <View style={styles.marginTopStyle}>
-                            <Text style={styles.normalTextTitle}>
-                                Download and complete the “Mutual Fund Designation of Beneficiary -<Text style={styles.highlightedTextTitle}>Traditional</Text>, <Text style={styles.highlightedTextTitle}>Roth</Text>, <Text style={styles.highlightedTextTitle}>SEP</Text> and <Text style={styles.highlightedTextTitle}>Simple</Text> IRAs” form
+                        <View style={styles.downloadContainer}>
+                            <Text style={styles.downloadHeadingTxt}>Download the Completed Online Forms</Text>
+                            <Text style={styles.downloadDescTxt}>
+                                “Mutual Fund Designation of Beneficiary -<Text style={styles.highlightedTextTitle}>Traditional</Text>, <Text style={styles.highlightedTextTitle}>Roth</Text>, <Text style={styles.highlightedTextTitle}>SEP</Text> and <Text style={styles.highlightedTextTitle}>Simple</Text> IRAs” form
                             </Text>
+                            <GButtonComponent
+                                buttonStyle={styles.downloadPdfBtn}
+                                buttonText="Download PDFs"
+                                textStyle={styles.downloadPdfBtnTxt}
+                            />
                         </View>
                         <View style={styles.marginTopStyle}>
                             <Text style={styles.contentTextStyle}>You may also upload the required docs or mail/fax to the address and number mentioned below</Text>
