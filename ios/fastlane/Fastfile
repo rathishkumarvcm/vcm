@@ -28,14 +28,14 @@ platform :ios do
 
     # invokes cert
     get_certificates(
-      username: "shamshudein@gmail.com"
+      username: "Manikandan.K34a613@cognizant.com"
     )
 
     # invokes sigh
     get_provisioning_profile(
         adhoc: true,
         # force: true,
-        username: "shamshudein@gmail.com",
+        username: "Manikandan.K34a613@cognizant.com",
         app_identifier: "com.vcm.app.memberservices"
     )
 
