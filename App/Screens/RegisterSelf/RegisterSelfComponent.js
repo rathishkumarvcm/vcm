@@ -264,7 +264,7 @@ class RegisterSelfComponent extends Component {
                 onBlur={this.checkPhone}
                 errorFlag={this.state.phoneFlag}
                 errorText={"Enter a Valid Phone Number"}
-                keyboardType="numeric"
+                keyboardType="phone-pad"
                 maxLength={13}
             />
 
