@@ -110,7 +110,13 @@ class OpenAccPageTwoComponent extends Component {
                 phoneType3DropDown: false,
                 primarySourceIncome: "",
                 primarySourceIncomeDropDown: false,
+                phoneType4: "",
+                phoneType4DropDown: false,
+                telePhoneNo4: "",
+                contactDuringTelePhone4: "",
+                contactDuringTelePhone4DropDown: false,
 
+                phoneType4Validation: true,
                 primarySourceIncomeValidation: true,
                 phoneTypeValidation: true,
                 phoneType2Validation: true,
@@ -281,7 +287,13 @@ class OpenAccPageTwoComponent extends Component {
                 phoneType3DropDown: false,
                 primarySourceIncome: "",
                 primarySourceIncomeDropDown: false,
+                phoneType4: "",
+                phoneType4DropDown: false,
+                telePhoneNo4: "",
+                contactDuringTelePhone4: "",
+                contactDuringTelePhone4DropDown: false,
 
+                phoneType4Validation: true,
                 primarySourceIncomeValidation: true,
                 phoneTypeValidation: true,
                 phoneType2Validation: true,
@@ -2415,6 +2427,9 @@ class OpenAccPageTwoComponent extends Component {
         } else if (personal.mobileNo.length < gblStrings.maxLength.workPhone && personal.phoneType === "Work") {
             errMsg = gblStrings.accManagement.invalidWorkPhoneNoMsg;
             input = 'mobileNo';
+        } else if (this.isEmpty(personal.contactDuringMobNo)) {
+            errMsg = gblStrings.accManagement.emptyCallTimePreference;
+            input = 'contactDuringMobNo';
         } else if (this.isEmpty(personal.emailAddress)) {
             errMsg = gblStrings.accManagement.emptyEmailAddressMsg;
             input = 'emailAddress';
@@ -2587,6 +2602,9 @@ class OpenAccPageTwoComponent extends Component {
         } else if (jointOwner.mobileNo.length < gblStrings.maxLength.workPhone && jointOwner.phoneType === "Work") {
             errMsg = gblStrings.accManagement.invalidWorkPhoneNoMsg;
             input = 'mobileNo';
+        } else if (this.isEmpty(jointOwner.contactDuringMobNo)) {
+            errMsg = gblStrings.accManagement.emptyCallTimePreference;
+            input = 'contactDuringMobNo';
         } else if (this.isEmpty(jointOwner.emailAddress)) {
             errMsg = gblStrings.accManagement.emptyEmailAddressMsg;
             input = 'emailAddress';
@@ -3624,6 +3642,7 @@ class OpenAccPageTwoComponent extends Component {
             case "contactDuringMobNoDropDown":
             case "contactDuringTelePhone2DropDown":
             case "contactDuringTelePhone3DropDown":
+            case "contactDuringTelePhone4DropDown":
 
 
                 tempkey = "contact_time";
@@ -3689,6 +3708,8 @@ class OpenAccPageTwoComponent extends Component {
             case "phoneTypeDropDown":
             case "phoneType2DropDown":
             case "phoneType3DropDown":
+            case "phoneType4DropDown":
+
                 tempkey = "phone_type";
                 break;
             case "countryOfCitizenshipDropDown":
@@ -4424,7 +4445,7 @@ class OpenAccPageTwoComponent extends Component {
                                         </View>
 
                                         <Text style={styles.lblTxt}>
-                                            {"(or)"}
+                                            (or)
                                         </Text>
 
                                         <View style={styles.mailToCSRGrp}>
@@ -4553,6 +4574,25 @@ class OpenAccPageTwoComponent extends Component {
                                     </View>
                                 )}
 
+
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.accManagement.socialSecurityNo}
+                            </Text>
+                            <GInputComponent
+                                inputref={this.setInputRef("socialSecurityNo")}
+                                propInputStyle={personal.socialSecurityNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                placeholder={gblStrings.accManagement.ssnNoFormat}
+                                value={personal.socialSecurityNo}
+                                keyboardType="number-pad"
+                                returnKeyType="done"
+                                maxLength={gblStrings.maxLength.ssnNo}
+                                onChangeText={this.onChangeText("personal", "socialSecurityNo")}
+                                errorFlag={!personal.socialSecurityNoValidation}
+                                errorText={errMsg}
+                                secureTextEntry
+
+                            />
+
                         </View>
                     )}
             </View>
@@ -4653,12 +4693,12 @@ class OpenAccPageTwoComponent extends Component {
                             />
 
                             <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.cityAndState}
+                                {gblStrings.accManagement.city}
                             </Text>
                             <GInputComponent
                                 inputref={this.setInputRef("city")}
                                 propInputStyle={personal.cityValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
-                                placeholder={gblStrings.accManagement.enterCity}
+                                // placeholder={gblStrings.accManagement.enterCity}
                                 maxLength={gblStrings.maxLength.city}
                                 value={personal.city}
                                 onChangeText={this.onChangeText("personal", "city")}
@@ -4669,10 +4709,13 @@ class OpenAccPageTwoComponent extends Component {
                                editable={false}
 
                             />
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.accManagement.stateTerritory}
+                            </Text>
                             <GInputComponent
                                 inputref={this.setInputRef("stateCity")}
                                 propInputStyle={personal.stateCityValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
-                                placeholder={gblStrings.accManagement.enterState}
+                               // placeholder={gblStrings.accManagement.enterState}
                                 returnKeyType="done"
                                 maxLength={gblStrings.maxLength.state}
                                 value={personal.stateCity}
@@ -4775,12 +4818,12 @@ class OpenAccPageTwoComponent extends Component {
                                         />
 
                                         <Text style={styles.lblTxt}>
-                                            {gblStrings.accManagement.cityAndState}
+                                            {gblStrings.accManagement.city}
                                         </Text>
                                         <GInputComponent
                                             inputref={this.setInputRef("city_Phy")}
                                             propInputStyle={personal.city_PhyValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
-                                            placeholder={gblStrings.accManagement.enterCity}
+                                          //  placeholder={gblStrings.accManagement.enterCity}
                                             maxLength={gblStrings.maxLength.city}
                                             value={personal.city_Phy}
                                             onChangeText={this.onChangeText("personal", "city_Phy")}
@@ -4792,12 +4835,12 @@ class OpenAccPageTwoComponent extends Component {
 
                                         />
                                         <Text style={styles.lblTxt}>
-                                            {gblStrings.accManagement.cityAndState}
+                                            {gblStrings.accManagement.stateTerritory}
                                         </Text>
                                         <GInputComponent
                                             inputref={this.setInputRef("stateCity_Phy")}
                                             propInputStyle={personal.stateCity_PhyValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
-                                            placeholder={gblStrings.accManagement.enterState}
+                                           // placeholder={gblStrings.accManagement.enterState}
                                             returnKeyType="done"
                                             maxLength={gblStrings.maxLength.state}
                                             value={personal.stateCity_Phy}
@@ -4849,25 +4892,21 @@ class OpenAccPageTwoComponent extends Component {
                     personal.isPhoneInfoExpanded && (
                         <View style={styles.childSectionGrp}>
 
-                            <View style={styles.lblHeader} >
+                            <View style={styles.lblHeader}>
                                 <Text style={styles.lblHeaderTxt}>
-                                    {gblStrings.accManagement.phoneNo}
+                                    {gblStrings.accManagement.mobile}
                                 </Text>
                             </View>
-                            {this.renderCustomDropDown({
-                                section: "personal",
-                                stateKey: "phoneType",
-                                dropDownName: "phoneTypeDropDown",
-                                lblDropdownName: gblStrings.accManagement.phoneType,
-                                isOptional: false
-                            })
-                            }
-
-                           
-                            
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.phoneNo}
-                            </Text>
+                            <View style={styles.dropDownViewPrefix}>
+                                {this.renderCustomDropDown({
+                                    section: "personal",
+                                    stateKey: "phoneType",
+                                    dropDownName: "phoneTypeDropDown",
+                                    lblDropdownName: gblStrings.accManagement.mobile,
+                                    isOptional: false
+                                })
+                                }
+                            </View>
                             <GInputComponent
                                 inputref={this.setInputRef("mobileNo")}
                                 propInputStyle={personal.mobileNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
@@ -4881,35 +4920,31 @@ class OpenAccPageTwoComponent extends Component {
                                 errorFlag={!personal.mobileNoValidation}
                                 errorText={errMsg}
                             />
-
-
                             {this.renderCustomDropDown({
                                 section: "personal",
                                 stateKey: "contactDuringMobNo",
                                 dropDownName: "contactDuringMobNoDropDown",
                                 lblDropdownName: gblStrings.accManagement.contactMeDuring,
-                                isOptional: true
+                                isOptional: false
                             })
                             }
 
 
-                            {this.renderCustomDropDown({
-                                section: "personal",
-                                stateKey: "phoneType2",
-                                dropDownName: "phoneType2DropDown",
-                                lblDropdownName: gblStrings.accManagement.phoneType,
-                                isOptional: true
-                            })
-                            }
-
-                            <Text style={styles.lblTxt}>
-                                <Text>
-                                    {gblStrings.accManagement.telePhoneNo2}
+                            <View style={styles.lblHeader}>
+                                <Text style={styles.lblHeaderTxt}>
+                                    {gblStrings.accManagement.home}
                                 </Text>
-                                <Text style={styles.optionalTxt}>
-                                    {` ${gblStrings.accManagement.optional}`}
-                                </Text>
-                            </Text>
+                            </View>
+                            <View style={styles.dropDownViewPrefix}>
+                                {this.renderCustomDropDown({
+                                    section: "personal",
+                                    stateKey: "phoneType2",
+                                    dropDownName: "phoneType2DropDown",
+                                    lblDropdownName: gblStrings.accManagement.home,
+                                    isOptional: true
+                                })
+                                }
+                            </View>
                             <GInputComponent
                                 inputref={this.setInputRef("telePhoneNo2")}
                                 propInputStyle={styles.customTxtBox}
@@ -4921,33 +4956,30 @@ class OpenAccPageTwoComponent extends Component {
                                 onSubmitEditing={this.onSubmitEditing(this.contactDuringTelePhone2)}
 
                             />
-
                             {this.renderCustomDropDown({
                                 section: "personal",
                                 stateKey: "contactDuringTelePhone2",
                                 dropDownName: "contactDuringTelePhone2DropDown",
                                 lblDropdownName: gblStrings.accManagement.contactMeDuring,
-                                isOptional: true
+                                isOptional: false
                             })
                             }
 
-
-                            {this.renderCustomDropDown({
-                                section: "personal",
-                                stateKey: "phoneType3",
-                                dropDownName: "phoneType3DropDown",
-                                lblDropdownName: gblStrings.accManagement.phoneType,
-                                isOptional: true
-                            })
-                            }
-                            <Text style={styles.lblTxt}>
-                                <Text>
-                                    {gblStrings.accManagement.telePhoneNo3}
+                            <View style={styles.lblHeader}>
+                                <Text style={styles.lblHeaderTxt}>
+                                    {gblStrings.accManagement.work}
                                 </Text>
-                                <Text style={styles.optionalTxt}>
-                                    {` ${gblStrings.accManagement.optional}`}
-                                </Text>
-                            </Text>
+                            </View>
+                            <View style={styles.dropDownViewPrefix}>
+                                {this.renderCustomDropDown({
+                                    section: "personal",
+                                    stateKey: "phoneType3",
+                                    dropDownName: "phoneType3DropDown",
+                                    lblDropdownName: gblStrings.accManagement.phoneType,
+                                    isOptional: true
+                                })
+                                }
+                            </View>
                             <GInputComponent
                                 inputref={this.setInputRef("telePhoneNo3")}
                                 propInputStyle={styles.customTxtBox}
@@ -4964,7 +4996,43 @@ class OpenAccPageTwoComponent extends Component {
                                 stateKey: "contactDuringTelePhone3",
                                 dropDownName: "contactDuringTelePhone3DropDown",
                                 lblDropdownName: gblStrings.accManagement.contactMeDuring,
-                                isOptional: true
+                                isOptional: false
+                            })
+                            }
+
+
+                            <View style={styles.lblHeader}>
+                                <Text style={styles.lblHeaderTxt}>
+                                    {gblStrings.accManagement.fax}
+                                </Text>
+                            </View>
+                            <View style={styles.dropDownViewPrefix}>
+                                {this.renderCustomDropDown({
+                                    section: "personal",
+                                    stateKey: "phoneType4",
+                                    dropDownName: "phoneType4DropDown",
+                                    lblDropdownName: gblStrings.accManagement.phoneType,
+                                    isOptional: true
+                                })
+                                }
+                            </View>
+                            <GInputComponent
+                                inputref={this.setInputRef("telePhoneNo4")}
+                                propInputStyle={styles.customTxtBox}
+                                placeholder=""
+                                value={personal.telePhoneNo3}
+                                maxLength={gblStrings.maxLength.phoneNo}
+                                keyboardType="phone-pad"
+                                onChangeText={this.onChangeText("personal", "telePhoneNo4")}
+                                onSubmitEditing={this.onSubmitEditing(this.contactDuringTelePhone3)}
+
+                            />
+                            {this.renderCustomDropDown({
+                                section: "personal",
+                                stateKey: "contactDuringTelePhone4",
+                                dropDownName: "contactDuringTelePhone4DropDown",
+                                lblDropdownName: gblStrings.accManagement.contactMeDuring,
+                                isOptional: false
                             })
                             }
 
@@ -5019,24 +5087,6 @@ class OpenAccPageTwoComponent extends Component {
                                 errorFlag={!personal.emailAddressValidation}
                                 errorText={errMsg}
                                 value={personal.emailAddress}
-
-                            />
-
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.socialSecurityNo}
-                            </Text>
-                            <GInputComponent
-                                inputref={this.setInputRef("socialSecurityNo")}
-                                propInputStyle={personal.socialSecurityNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                placeholder={gblStrings.accManagement.ssnNoFormat}
-                                value={personal.socialSecurityNo}
-                                keyboardType="number-pad"
-                                returnKeyType="done"
-                                maxLength={gblStrings.maxLength.ssnNo}
-                                onChangeText={this.onChangeText("personal", "socialSecurityNo")}
-                                errorFlag={!personal.socialSecurityNoValidation}
-                                errorText={errMsg}
-                                secureTextEntry
 
                             />
                         </View>
@@ -5604,12 +5654,16 @@ class OpenAccPageTwoComponent extends Component {
         );
     }
 
+
     renderJointOwnerSection = () => {
         // const { jointOwner } = this.state;
 
         return (
             <View>
                 <this.renderPersonalInfoJointOwner />
+                <this.renderContactInfoJointOwner />
+                <this.renderPhoneInfoJointOwner />
+                <this.renderEmailInfoJointOwner />
                 <this.renderEmploymentInfoJointOwner />
                 <this.renderFinancialInfoJointOwner />
                 <this.renderMilitaryInfoJointOwner />
@@ -5622,6 +5676,7 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
+    
     renderPersonalInfoJointOwner = () => {
         const { jointOwner, errMsg } = this.state;
 
@@ -5771,142 +5826,212 @@ class OpenAccPageTwoComponent extends Component {
                             </Text>
                             {this.renderRadio("jointOwner", "citizenship", 28, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
                             {
-                                /* <View style={styles.uploadW8View}>
-                                 <Text>
-                                     <Text style={styles.lblTxt}>
-                                         {gblStrings.accManagement.uploadW8Form}
-                                     </Text>
-                                     <Text style={styles.optionalTxt}>
-                                         {`  ${gblStrings.accManagement.whatISW8Form}`}
-                                     </Text>
-                                 </Text>
-     
-     
-                                 <GButtonComponent
-                                     buttonStyle={styles.browseBtn}
-                                     buttonText={gblStrings.common.browse}
-                                     textStyle={styles.normalBlackBtnTxt}
-                                     onPress={this.uploadForm}
-     
-                                 />
-                             </View>
-                             */
+                                
                                 jointOwner.citizenship !== "U.S" &&
                                 (
                                     <View style={styles.nonUSView}>
+                                        <View style={styles.uploadW8View}>
+                                            <Text>
+                                                <Text style={styles.lblTxt}>
+                                                    {gblStrings.accManagement.uploadW8Form}
+                                                </Text>
+                                                <Text style={styles.optionalTxt}>
+                                                    {`  ${gblStrings.accManagement.whatISW8Form}`}
+                                                </Text>
+                                            </Text>
 
-                                        <Text style={styles.lblTxt}>
-                                            {gblStrings.accManagement.residenceStatus}
-                                        </Text>
-                                        <View style={styles.radioBtnColGrp}>
-                                            <CustomRadio
-                                                //  componentStyle={styles.radioCol1}
-                                                size={28}
-                                                outerCicleColor="#DEDEDF"
-                                                innerCicleColor="#61285F"
-                                                labelStyle={styles.lblRadioBtnTxt}
-                                                label="Resident Alien"
-                                                descLabelStyle={styles.lblRadioDescTxt}
-                                                descLabel=""
-                                                selected={!!((jointOwner.residenceStatus !== null && jointOwner.residenceStatus === "Resident Alien"))}
-                                                onPress={this.onPressRadio("jointOwner", "residenceStatus", "Resident Alien")}
-                                            />
-                                            <CustomRadio
-                                                //  componentStyle={styles.radioCol2}
-                                                size={28}
-                                                outerCicleColor="#DEDEDF"
-                                                innerCicleColor="#61285F"
-                                                labelStyle={styles.lblRadioBtnTxt}
-                                                label="Non-resident Alien"
-                                                descLabelStyle={styles.lblRadioDescTxt}
-                                                descLabel="Please call 800-235-8396."
-                                                selected={!!((jointOwner.residenceStatus !== null && jointOwner.residenceStatus === "Non-resident Alien"))}
-                                                onPress={this.onPressRadio("jointOwner", "residenceStatus", "Non-resident Alien")}
+
+                                            <GButtonComponent
+                                                buttonStyle={styles.browseBtn}
+                                                buttonText={gblStrings.common.browse}
+                                                textStyle={styles.normalBlackBtnTxt}
+                                                onPress={this.uploadForm}
 
                                             />
                                         </View>
-                                        {!jointOwner.residenceStatusValidation && (
-                                            <Text style={styles.errMsg}>
-                                                {errMsg}
+
+                                        <Text style={styles.lblTxt}>
+                                            (or)
+                                        </Text>
+
+                                        <View style={styles.mailToCSRGrp}>
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.mailToCSR}
                                             </Text>
-                                        )}
+                                            <Text style={styles.headings}>
+                                                {gblStrings.common.victoryCapital}
+                                            </Text>
+                                            <Text style={styles.lblValueTxt}>
+                                                {gblStrings.common.victoryCapitalAddress}
+                                            </Text>
+                                        </View>
+                                    {
+                                    /* 
+                                        <View>
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.residenceStatus}
+                                            </Text>
+                                            <View style={styles.radioBtnColGrp}>
+                                                <CustomRadio
+                                                    //  componentStyle={styles.radioCol1}
+                                                    size={28}
+                                                    outerCicleColor="#DEDEDF"
+                                                    innerCicleColor="#61285F"
+                                                    labelStyle={styles.lblRadioBtnTxt}
+                                                    label="Resident Alien"
+                                                    descLabelStyle={styles.lblRadioDescTxt}
+                                                    descLabel=""
+                                                    selected={!!((jointOwner.residenceStatus !== null && jointOwner.residenceStatus === "Resident Alien"))}
+                                                    onPress={this.onPressRadio("jointOwner", "residenceStatus", "Resident Alien")}
+                                                />
+                                                <CustomRadio
+                                                    //  componentStyle={styles.radioCol2}
+                                                    size={28}
+                                                    outerCicleColor="#DEDEDF"
+                                                    innerCicleColor="#61285F"
+                                                    labelStyle={styles.lblRadioBtnTxt}
+                                                    label="Non-resident Alien"
+                                                    descLabelStyle={styles.lblRadioDescTxt}
+                                                    descLabel="Please call 800-235-8396."
+                                                    selected={!!((jointOwner.residenceStatus !== null && jointOwner.residenceStatus === "Non-resident Alien"))}
+                                                    onPress={this.onPressRadio("jointOwner", "residenceStatus", "Non-resident Alien")}
+
+                                                />
+                                            </View>
+                                            {!jointOwner.residenceStatusValidation && (
+                                                <Text style={styles.errMsg}>
+                                                    {errMsg}
+                                                </Text>
+                                            )}
 
 
-                                        {this.renderCustomDropDown({
-                                            section: "jointOwner",
-                                            stateKey: "countryOfCitizenship",
-                                            dropDownName: "countryOfCitizenshipDropDown",
-                                            lblDropdownName: gblStrings.accManagement.countryOfCitizenship,
-                                            isOptional: false
-                                        })
-                                        }
+                                            {this.renderCustomDropDown({
+                                                section: "jointOwner",
+                                                stateKey: "countryOfCitizenship",
+                                                dropDownName: "countryOfCitizenshipDropDown",
+                                                lblDropdownName: gblStrings.accManagement.countryOfCitizenship,
+                                                isOptional: false
+                                            })
+                                            }
 
-                                        <Text style={styles.lblTxt}>
-                                            {gblStrings.accManagement.USResidentCardNo}
-                                        </Text>
-                                        <GInputComponent
-                                            inputref={this.setInputRef("USResidentCardNo")}
-                                            propInputStyle={jointOwner.USResidentCardNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                            placeholder={gblStrings.accManagement.ssnNoFormat}
-                                            value={jointOwner.USResidentCardNo}
-                                            keyboardType="number-pad"
-                                            maxLength={gblStrings.maxLength.ssnNo}
-                                            onChangeText={this.onChangeText("jointOwner", "USResidentCardNo")}
-                                            errorFlag={!jointOwner.USResidentCardNoValidation}
-                                            errorText={errMsg}
-                                            secureTextEntry
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.USResidentCardNo}
+                                            </Text>
+                                            <GInputComponent
+                                                inputref={this.setInputRef("USResidentCardNo")}
+                                                propInputStyle={jointOwner.USResidentCardNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                                placeholder={gblStrings.accManagement.ssnNoFormat}
+                                                value={jointOwner.USResidentCardNo}
+                                                keyboardType="number-pad"
+                                                maxLength={gblStrings.maxLength.ssnNo}
+                                                onChangeText={this.onChangeText("jointOwner", "USResidentCardNo")}
+                                                errorFlag={!jointOwner.USResidentCardNoValidation}
+                                                errorText={errMsg}
+                                                secureTextEntry
 
-                                        />
+                                            />
 
-                                        <Text style={styles.lblTxt}>
-                                            {gblStrings.accManagement.USResidentCardNoExpiryDate}
-                                        </Text>
-                                        <GDateComponent
-                                            inputref={this.setInputRef("USResidentCardNoExpiryDate")}
-                                            date={jointOwner.USResidentCardNoExpiryDate}
-                                            placeholder="Select Date"
-                                            errorFlag={!jointOwner.USResidentCardNoExpiryDateValidation}
-                                            errorMsg={errMsg}
-                                            minDate={prevDate}
-                                            onDateChange={this.onChangeDate("jointOwner", "USResidentCardNoExpiryDate")}
-                                        />
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.USResidentCardNoExpiryDate}
+                                            </Text>
+                                            <GDateComponent
+                                                inputref={this.setInputRef("USResidentCardNoExpiryDate")}
+                                                date={jointOwner.USResidentCardNoExpiryDate}
+                                                placeholder="Select Date"
+                                                errorFlag={!jointOwner.USResidentCardNoExpiryDateValidation}
+                                                errorMsg={errMsg}
+                                                minDate={prevDate}
+                                                onDateChange={this.onChangeDate("jointOwner", "USResidentCardNoExpiryDate")}
+                                            />
 
 
-                                        <Text style={styles.lblTxt}>
-                                            {gblStrings.accManagement.passportNumber}
-                                        </Text>
-                                        <GInputComponent
-                                            inputref={this.setInputRef("passportNumber")}
-                                            propInputStyle={jointOwner.passportNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                            placeholder={gblStrings.accManagement.ssnNoFormat}
-                                            value={jointOwner.passportNumber}
-                                            keyboardType="number-pad"
-                                            maxLength={gblStrings.maxLength.ssnNo}
-                                            onChangeText={this.onChangeText("jointOwner", "passportNumber")}
-                                            errorFlag={!jointOwner.passportNumberValidation}
-                                            errorText={errMsg}
-                                            secureTextEntry
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.passportNumber}
+                                            </Text>
+                                            <GInputComponent
+                                                inputref={this.setInputRef("passportNumber")}
+                                                propInputStyle={jointOwner.passportNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                                placeholder={gblStrings.accManagement.ssnNoFormat}
+                                                value={jointOwner.passportNumber}
+                                                keyboardType="number-pad"
+                                                maxLength={gblStrings.maxLength.ssnNo}
+                                                onChangeText={this.onChangeText("jointOwner", "passportNumber")}
+                                                errorFlag={!jointOwner.passportNumberValidation}
+                                                errorText={errMsg}
+                                                secureTextEntry
 
-                                        />
+                                            />
 
-                                        <Text style={styles.lblTxt}>
-                                            {gblStrings.accManagement.passportNoExpiryDate}
-                                        </Text>
-                                        <GDateComponent
-                                            inputref={this.setInputRef("passportNoExpiryDate")}
-                                            date={jointOwner.passportNoExpiryDate}
-                                            placeholder="Select Date"
-                                            errorFlag={!jointOwner.passportNoExpiryDateValidation}
-                                            errorMsg={errMsg}
-                                            minDate={prevDate}
-                                            onDateChange={this.onChangeDate("jointOwner", "passportNoExpiryDate")}
-                                        />
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.passportNoExpiryDate}
+                                            </Text>
+                                            <GDateComponent
+                                                inputref={this.setInputRef("passportNoExpiryDate")}
+                                                date={jointOwner.passportNoExpiryDate}
+                                                placeholder="Select Date"
+                                                errorFlag={!jointOwner.passportNoExpiryDateValidation}
+                                                errorMsg={errMsg}
+                                                minDate={prevDate}
+                                                onDateChange={this.onChangeDate("jointOwner", "passportNoExpiryDate")}
+                                            />
+                                        </View> */}
+
                                     </View>
                                 )}
 
                             <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.mailingAddressType}
+                                {gblStrings.accManagement.socialSecurityNo}
                             </Text>
+                            <GInputComponent
+                                inputref={this.setInputRef("socialSecurityNo_joint")}
+                                propInputStyle={jointOwner.socialSecurityNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                placeholder={gblStrings.accManagement.ssnNoFormat}
+                                value={jointOwner.socialSecurityNo}
+                                keyboardType="number-pad"
+                                returnKeyType="done"
+                                maxLength={gblStrings.maxLength.ssnNo}
+                                onChangeText={this.onChangeText("jointOwner", "socialSecurityNo")}
+                                errorFlag={!jointOwner.socialSecurityNoValidation}
+                                errorText={errMsg}
+                                secureTextEntry
+
+                            />
+                           
+                        </View>
+                    )}
+            </View>
+
+        );
+    }
+    
+    
+
+    renderContactInfoJointOwner = () => {
+        const { jointOwner, errMsg } = this.state;
+        return (
+            <View style={styles.sectionGrp}>
+                <View style={styles.accTypeSelectSection}>
+                    <TouchableOpacity
+                        onPress={this.onClickExpandCollpaseEvent("jointOwner", "isContactInfoExpanded")}
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                    >
+                      
+                        <Text>
+                            <Text style={styles.headings}>
+                                {jointOwner.isContactInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.contactInfoJoint}
+                            </Text>
+                        </Text>
+                        
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.lblLine} />
+                {
+                    jointOwner.isContactInfoExpanded && (
+                        <View style={styles.childSectionGrp}>
                             {this.renderRadio("jointOwner", "mailingAddressType", 28, { marginBottom: scaledHeight(13) }, styles.radioBtnColGrp)}
                             {!jointOwner.mailingAddressTypeValidation && (
                                 <Text style={styles.errMsg}>
@@ -5964,12 +6089,12 @@ class OpenAccPageTwoComponent extends Component {
                             />
 
                             <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.cityAndState}
+                                {gblStrings.accManagement.city}
                             </Text>
                             <GInputComponent
                                 inputref={this.setInputRef("city_joint")}
-                                propInputStyle={jointOwner.cityValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                placeholder={gblStrings.accManagement.enterCity}
+                                propInputStyle={jointOwner.cityValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
+                               // placeholder={gblStrings.accManagement.enterCity}
                                 returnKeyType="done"
                                 maxLength={gblStrings.maxLength.city}
                                 value={jointOwner.city}
@@ -5977,15 +6102,18 @@ class OpenAccPageTwoComponent extends Component {
                                 onSubmitEditing={this.onSubmitEditing(this.stateCity_joint)}
                                 errorFlag={!jointOwner.cityValidation}
                                 errorText={errMsg}
-                                editable={jointOwner.citizenship !== "U.S"}
+                                editable={false}
 
 
 
                             />
+                             <Text style={styles.lblTxt}>
+                                {gblStrings.accManagement.stateTerritory}
+                             </Text>
                             <GInputComponent
                                 inputref={this.setInputRef("stateCity")}
-                                propInputStyle={jointOwner.stateCityValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                placeholder={gblStrings.accManagement.enterState}
+                                propInputStyle={jointOwner.stateCityValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
+                               // placeholder={gblStrings.accManagement.enterState}
                                 returnKeyType="done"
                                 maxLength={gblStrings.maxLength.state}
                                 value={jointOwner.stateCity}
@@ -5993,7 +6121,7 @@ class OpenAccPageTwoComponent extends Component {
                                 onSubmitEditing={this.onSubmitEditing(this.mobileNo_joint)}
                                 errorFlag={!jointOwner.stateCityValidation}
                                 errorText={errMsg}
-                                editable={jointOwner.citizenship !== "U.S"}
+                                editable={false}
 
                             />
 
@@ -6084,26 +6212,29 @@ class OpenAccPageTwoComponent extends Component {
                                         />
 
                                         <Text style={styles.lblTxt}>
-                                            {gblStrings.accManagement.cityAndState}
+                                            {gblStrings.accManagement.city}
                                         </Text>
                                         <GInputComponent
                                             inputref={this.setInputRef("city_Phy_joint")}
-                                            propInputStyle={jointOwner.city_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                            placeholder={gblStrings.accManagement.enterCity}
+                                            propInputStyle={jointOwner.city_PhyValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
+                                           // placeholder={gblStrings.accManagement.enterCity}
                                             maxLength={gblStrings.maxLength.city}
                                             value={jointOwner.city_Phy}
                                             onChangeText={this.onChangeText("jointOwner", "city_Phy")}
                                             onSubmitEditing={this.onSubmitEditing(this.stateCity_Phy_joint)}
                                             errorFlag={!jointOwner.city_PhyValidation}
                                             errorText={errMsg}
-                                            editable={jointOwner.citizenship !== "U.S"}
+                                            editable={false}
 
 
                                         />
+                                        <Text style={styles.lblTxt}>
+                                            {gblStrings.accManagement.stateTerritory}
+                                        </Text>
                                         <GInputComponent
                                             inputref={this.setInputRef("stateCity_Phy_joint")}
-                                            propInputStyle={jointOwner.stateCity_PhyValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                            placeholder={gblStrings.accManagement.enterState}
+                                            propInputStyle={jointOwner.stateCity_PhyValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
+                                          //  placeholder={gblStrings.accManagement.enterState}
                                             returnKeyType="done"
                                             maxLength={gblStrings.maxLength.state}
                                             value={jointOwner.stateCity_Phy}
@@ -6111,7 +6242,7 @@ class OpenAccPageTwoComponent extends Component {
                                             onSubmitEditing={this.onSubmitEditing(this.mobileNo_joint)}
                                             errorFlag={!jointOwner.stateCity_PhyValidation}
                                             errorText={errMsg}
-                                            editable={jointOwner.citizenship !== "U.S"}
+                                            editable={false}
 
                                         />
 
@@ -6121,19 +6252,54 @@ class OpenAccPageTwoComponent extends Component {
 
 
 
+                        </View>
+                    )}
+            </View>
+
+        );
+
+    }
+
+    renderPhoneInfoJointOwner = () => {
+        const { jointOwner, errMsg } = this.state;
+
+        return (
+            <View style={styles.sectionGrp}>
+                <View style={styles.accTypeSelectSection}>
+                    <TouchableOpacity
+                        onPress={this.onClickExpandCollpaseEvent("jointOwner", "isPhoneInfoExpanded")}
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                    >
+                      
+                        <Text>
+                            <Text style={styles.headings}>
+                                {jointOwner.isPhoneInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.phoneInfoJoint}
+                            </Text>
+                        </Text>
+                        
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.lblLine} />
+                {
+                    jointOwner.isPhoneInfoExpanded && (
+                        <View style={styles.childSectionGrp}>
+                            <View style={styles.lblHeader}>
+                                <Text style={styles.lblHeaderTxt}>
+                                    {gblStrings.accManagement.mobile}
+                                </Text>
+                            </View>
                             {this.renderCustomDropDown({
                                 section: "jointOwner",
                                 stateKey: "phoneType",
                                 dropDownName: "phoneTypeDropDown",
-                                lblDropdownName: gblStrings.accManagement.phoneType,
+                                lblDropdownName: gblStrings.accManagement.mobile,
                                 isOptional: false
                             })
                             }
-
-
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.phoneNo}
-                            </Text>
                             <GInputComponent
                                 inputref={this.setInputRef("mobileNo_joint")}
                                 propInputStyle={jointOwner.mobileNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
@@ -6155,28 +6321,24 @@ class OpenAccPageTwoComponent extends Component {
                                 stateKey: "contactDuringMobNo",
                                 dropDownName: "contactDuringMobNoDropDown",
                                 lblDropdownName: gblStrings.accManagement.contactMeDuring,
-                                isOptional: true
+                                isOptional: false
                             })
                             }
 
 
+                            <View style={styles.lblHeader}>
+                                <Text style={styles.lblHeaderTxt}>
+                                    {gblStrings.accManagement.home}
+                                </Text>
+                            </View>
                             {this.renderCustomDropDown({
                                 section: "jointOwner",
                                 stateKey: "phoneType2",
                                 dropDownName: "phoneType2DropDown",
-                                lblDropdownName: gblStrings.accManagement.phoneType,
-                                isOptional: true
+                                lblDropdownName: gblStrings.accManagement.home,
+                                isOptional: false
                             })
                             }
-
-                            <Text style={styles.lblTxt}>
-                                <Text>
-                                    {gblStrings.accManagement.telePhoneNo2}
-                                </Text>
-                                <Text style={styles.optionalTxt}>
-                                    {` ${gblStrings.accManagement.optional}`}
-                                </Text>
-                            </Text>
                             <GInputComponent
                                 inputref={this.setInputRef("telePhoneNo2_joint")}
                                 propInputStyle={styles.customTxtBox}
@@ -6194,27 +6356,25 @@ class OpenAccPageTwoComponent extends Component {
                                 stateKey: "contactDuringTelePhone2",
                                 dropDownName: "contactDuringTelePhone2DropDown",
                                 lblDropdownName: gblStrings.accManagement.contactMeDuring,
-                                isOptional: true
+                                isOptional: false
                             })
                             }
 
+                            <View style={styles.lblHeader}>
+                                <Text style={styles.lblHeaderTxt}>
+                                    {gblStrings.accManagement.work}
+                                </Text>
+                            </View>
 
                             {this.renderCustomDropDown({
                                 section: "jointOwner",
                                 stateKey: "phoneType3",
                                 dropDownName: "phoneType3DropDown",
-                                lblDropdownName: gblStrings.accManagement.phoneType,
-                                isOptional: true
+                                lblDropdownName: gblStrings.accManagement.work,
+                                isOptional: false
                             })
                             }
-                            <Text style={styles.lblTxt}>
-                                <Text>
-                                    {gblStrings.accManagement.telePhoneNo3}
-                                </Text>
-                                <Text style={styles.optionalTxt}>
-                                    {` ${gblStrings.accManagement.optional}`}
-                                </Text>
-                            </Text>
+                           
                             <GInputComponent
                                 inputref={this.setInputRef("telePhoneNo3")}
                                 propInputStyle={styles.customTxtBox}
@@ -6231,9 +6391,80 @@ class OpenAccPageTwoComponent extends Component {
                                 stateKey: "contactDuringTelePhone3",
                                 dropDownName: "contactDuringTelePhone3DropDown",
                                 lblDropdownName: gblStrings.accManagement.contactMeDuring,
-                                isOptional: true
+                                isOptional: false
                             })
                             }
+
+                            <View style={styles.lblHeader}>
+                                <Text style={styles.lblHeaderTxt}>
+                                    {gblStrings.accManagement.fax}
+                                </Text>
+                            </View>
+
+                            {this.renderCustomDropDown({
+                                section: "jointOwner",
+                                stateKey: "phoneType4",
+                                dropDownName: "phoneType4DropDown",
+                                lblDropdownName: gblStrings.accManagement.fax,
+                                isOptional: false
+                            })
+                            }
+                           
+                            <GInputComponent
+                                inputref={this.setInputRef("telePhoneNo4")}
+                                propInputStyle={styles.customTxtBox}
+                                placeholder=""
+                                value={jointOwner.telePhoneNo3}
+                                maxLength={gblStrings.maxLength.phoneNo}
+                                keyboardType="phone-pad"
+                                onChangeText={this.onChangeText("jointOwner", "telePhoneNo4")}
+                                onSubmitEditing={this.onSubmitEditing(this.emailAddress_joint)}
+
+                            />
+                            {this.renderCustomDropDown({
+                                section: "jointOwner",
+                                stateKey: "contactDuringTelePhone4",
+                                dropDownName: "contactDuringTelePhone4DropDown",
+                                lblDropdownName: gblStrings.accManagement.contactMeDuring,
+                                isOptional: false
+                            })
+                            }
+                            
+                            
+                        </View>
+                    )}
+            </View>
+
+        );
+    }
+
+    renderEmailInfoJointOwner = () => {
+        const { jointOwner, errMsg } = this.state;
+        return (
+            <View style={styles.sectionGrp}>
+                <View style={styles.accTypeSelectSection}>
+                    <TouchableOpacity
+                        onPress={this.onClickExpandCollpaseEvent("jointOwner", "isEmailInfoExpanded")}
+                        activeOpacity={0.8}
+                        accessibilityRole="button"
+                    >
+                      
+                        <Text>
+                            <Text style={styles.headings}>
+                                {jointOwner.isEmailInfoExpanded ? "- " : "+ "}
+                            </Text>
+                            <Text style={styles.headings}>
+                                {gblStrings.accManagement.emailInfoJoint}
+                            </Text>
+                        </Text>
+                        
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.lblLine} />
+                {
+                    jointOwner.isEmailInfoExpanded && (
+                        <View style={styles.childSectionGrp}>
+
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.emailAddress}
                             </Text>
@@ -6248,24 +6479,6 @@ class OpenAccPageTwoComponent extends Component {
                                 onSubmitEditing={this.onSubmitEditing(this.socialSecurityNo_joint)}
                                 errorFlag={!jointOwner.emailAddressValidation}
                                 errorText={errMsg}
-
-                            />
-
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.socialSecurityNo}
-                            </Text>
-                            <GInputComponent
-                                inputref={this.setInputRef("socialSecurityNo_joint")}
-                                propInputStyle={jointOwner.socialSecurityNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                placeholder={gblStrings.accManagement.ssnNoFormat}
-                                value={jointOwner.socialSecurityNo}
-                                keyboardType="number-pad"
-                                returnKeyType="done"
-                                maxLength={gblStrings.maxLength.ssnNo}
-                                onChangeText={this.onChangeText("jointOwner", "socialSecurityNo")}
-                                errorFlag={!jointOwner.socialSecurityNoValidation}
-                                errorText={errMsg}
-                                secureTextEntry
 
                             />
                         </View>

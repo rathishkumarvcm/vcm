@@ -671,9 +671,11 @@ export default {
         emptyUSResidentCardNoExpiryDateMsg: "Please select expiration date of U.S. Permanent Resident Card Number",
         emptyPassportNumberMsg: "Please select Passport Number",
         emptyPassportNoExpiryDateMsg: "Please select expiration date of Passport Number",
-        validateCompareFundsMsg: "Please select minimum 2 or maximum 4 funds to compare"
-
-        
+        validateCompareFundsMsg: "Please select minimum 2 or maximum 4 funds to compare",
+        emptyCallTimePreference:"Please select Call Time Preference",
+        contactInfoJoint:"Contact Information - Joint Owner",
+        phoneInfoJoint:"Phone Information - Joint Owner",
+        emailInfoJoint:"Email Information - Joint Owner",
         
 
 
