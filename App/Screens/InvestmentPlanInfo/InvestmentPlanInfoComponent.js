@@ -28,7 +28,9 @@ class InvestmentPlanInfoComponent extends Component {
         const { navigation,getFundDetailsData } = this.props;
         const fundNumber = navigation.getParam('fundDetails', '');     
         const payload = {
-            "fundNumber1": fundNumber,          
+            "fundNumber1": parseFloat(fundNumber),     
+           // "fundNumber1": 331,          
+     
         };          
         getFundDetailsData(payload);       
     }
@@ -220,7 +222,8 @@ class InvestmentPlanInfoComponent extends Component {
             morningstarRating :  morningstarRating_values = {},
             performanceDetails: performanceDetailsVal = {},
             moreInfoPDFs: moreInfoPDFsval = [],
-        } = (fundDetailsData && fundDetailsData[ActionTypes.GET_FUNDDETAILS]) ? fundDetailsData[ActionTypes.GET_FUNDDETAILS][0]: {};
+            result = ""
+        } = (fundDetailsData && fundDetailsData[ActionTypes.GET_FUNDDETAILS] && !fundDetailsData[ActionTypes.GET_FUNDDETAILS].result ) ? fundDetailsData[ActionTypes.GET_FUNDDETAILS][0]:{};
 
          
       
@@ -280,60 +283,66 @@ class InvestmentPlanInfoComponent extends Component {
 
                         <View style={styles.accTypeSelectSection}>
                             <Text style={styles.headings}>
-                                {fundName}
+                                {fundName || "No Records Found"}
                             </Text>
                         </View>
                         <Text style={styles.lblLine} />
                     </View>
                     { /* ------------Tab Views------------------*/}
 
-                    <ScrollView
-                        ref={input => this.tabBar = input}
+                    {result !=="" && (
+                    <View>
 
-                        style={styles.tabBar}
-                        horizontal
-                        sc={false}
-                        showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={styles.horizontalScrollContainer}
-                    >
-                        <TouchableOpacity
-                            style={isSummarySelected === true ? styles.tabItemSelected : styles.tabItem}
-                            onPress={this.summarySelected}
-                            activeOpacity={0.2}
+                        <ScrollView
+                            ref={input => this.tabBar = input}
+
+                            style={styles.tabBar}
+                            horizontal
+                            sc={false}
+                            showsHorizontalScrollIndicator={false}
+                            contentContainerStyle={styles.horizontalScrollContainer}
                         >
-                            <Text style={isSummarySelected === true ? styles.tabItemSelectedTxt : styles.tabItemTxt}>
-                                {gblStrings.accManagement.summary}
-                            </Text>
+                            <TouchableOpacity
+                                style={isSummarySelected === true ? styles.tabItemSelected : styles.tabItem}
+                                onPress={this.summarySelected}
+                                activeOpacity={0.2}
+                            >
+                                <Text style={isSummarySelected === true ? styles.tabItemSelectedTxt : styles.tabItemTxt}>
+                                    {gblStrings.accManagement.summary}
+                                </Text>
 
-                        </TouchableOpacity>
+                            </TouchableOpacity>
 
-                        <TouchableOpacity
-                            style={isQuickFactSelected === true ? styles.tabItemSelected : styles.tabItem}
-                            onPress={this.quickFactsSelected}
-                            activeOpacity={0.2}
-                        >
-                            <Text style={isQuickFactSelected === true ? styles.tabItemSelectedTxt : styles.tabItemTxt}>
-                                {gblStrings.accManagement.quickFacts}
-                            </Text>
+                            <TouchableOpacity
+                                style={isQuickFactSelected === true ? styles.tabItemSelected : styles.tabItem}
+                                onPress={this.quickFactsSelected}
+                                activeOpacity={0.2}
+                            >
+                                <Text style={isQuickFactSelected === true ? styles.tabItemSelectedTxt : styles.tabItemTxt}>
+                                    {gblStrings.accManagement.quickFacts}
+                                </Text>
 
-                        </TouchableOpacity>
+                            </TouchableOpacity>
 
-                        <TouchableOpacity
-                            style={isPerformanceSelected === true ? styles.tabItemSelected : styles.tabItem}
-                            onPress={this.performanceSelected}
-                            activeOpacity={0.2}
-                        >
-                            <Text style={isPerformanceSelected === true ? styles.tabItemSelectedTxt : styles.tabItemTxt}>
-                                {gblStrings.accManagement.performance}
-                            </Text>
+                            <TouchableOpacity
+                                style={isPerformanceSelected === true ? styles.tabItemSelected : styles.tabItem}
+                                onPress={this.performanceSelected}
+                                activeOpacity={0.2}
+                            >
+                                <Text style={isPerformanceSelected === true ? styles.tabItemSelectedTxt : styles.tabItemTxt}>
+                                    {gblStrings.accManagement.performance}
+                                </Text>
 
-                        </TouchableOpacity>
-                    </ScrollView>
+                            </TouchableOpacity>
+                        </ScrollView>
 
-                    { /* ----------- Summary,QuickFacts,Performance  -------------------*/}
-                    {isSummarySelected && this.renderSummary(risk, gblStrings.common.dollar + initialInvestment, gblStrings.common.dollar + monthlyInvestment, moreInfoPDFsval)}
-                    {isQuickFactSelected && this.renderQuickfacts(nav_values, expenseRatio, morningstarRating_values, morningstarCategory, categoryFunds)}
-                    {isPerformanceSelected && this.renderPerformnace(monthly_Returns, quarterly_Returns)}
+                        { /* ----------- Summary,QuickFacts,Performance  -------------------*/}
+                        {isSummarySelected && this.renderSummary(risk, gblStrings.common.dollar + initialInvestment, gblStrings.common.dollar + monthlyInvestment, moreInfoPDFsval)}
+                        {isQuickFactSelected && this.renderQuickfacts(nav_values, expenseRatio, morningstarRating_values, morningstarCategory, categoryFunds)}
+                        {isPerformanceSelected && this.renderPerformnace(monthly_Returns, quarterly_Returns)}
+
+                    </View>
+                  )}
 
                     { /* ----------- Buttons Grp  -------------------*/}
 
@@ -361,6 +370,7 @@ class InvestmentPlanInfoComponent extends Component {
                             {gblStrings.common.more}
                         </Text>
                     </View>
+                    
                     <GFooterComponent />
 
                 </ScrollView>
@@ -378,7 +388,7 @@ InvestmentPlanInfoComponent.propTypes = {
 InvestmentPlanInfoComponent.defaultProps = {
     navigation : {},
     fundDetailsData : {},
-    getFundDetailsData : () => { }
+    getFundDetailsData : null
 
 };
 export default InvestmentPlanInfoComponent;

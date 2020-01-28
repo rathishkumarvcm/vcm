@@ -1155,7 +1155,8 @@ class OpenAccPageThreeComponent extends Component {
             'minInvestment': mininvestkey,
             "companyId":"591",
         };
-        getFundListData(fundListPayload);
+
+        getFundListData(AppUtils.getCleanedPayload(fundListPayload));
     }
 
     // Clear Filter Actions  
