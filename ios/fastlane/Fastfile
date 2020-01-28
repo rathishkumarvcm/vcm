@@ -52,7 +52,7 @@ platform :ios do
       #export_options: {
       #  method: "ad-hoc",
       #  provisioningProfiles: { 
-      #    "com.vcm.app.memberservices" => "com.vcm.app.memberservices AdHoc"
+      #    "com.vcmmemberportal.memberservices" => "com.vcmmemberportal.memberservices AdHoc"
       #  }
       #}
     )
