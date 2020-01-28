@@ -6,6 +6,7 @@ import { GIcon, GHeaderComponent, GFooterSettingsComponent } from '../../CommonC
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 let accSelectionData = {};
 let savedData = {};
@@ -33,13 +34,35 @@ class PurchaseScreenOneComponent extends Component {
                 holdingValue: "",
                 AutoInvPlan: "",
                 accType: "",
-            }
+            },
+            accountList: []
         };
     }
 
     componentDidMount() {
+        const { getAccountList } = this.props;
+        const accountListPayload = {
+            "companyNumber": "591",
+            "memberId": "V122221212",
+            "customerId": "V1234567"
+        };
+        getAccountList(accountListPayload);
     }
 
+    componentDidUpdate(prevProps) {
+        const { purchaseData } = this.props;
+        if (prevProps !== this.props) {
+            let tempAccountList = []
+            if (purchaseData[ActionTypes.GET_ACCOUNT_DETAILS] !== undefined && purchaseData[ActionTypes.GET_ACCOUNT_DETAILS] !== null) {
+                tempAccountList = purchaseData[ActionTypes.GET_ACCOUNT_DETAILS];
+                console.log("Account List in:::::::::", tempAccountList);
+                this.setState({
+                    accountList: [...tempAccountList],
+                    isLoading: false
+                });
+            }
+        }
+    }
     /* -----------------Button Events --------------------- */
 
     onClickExpand = (type) => () => {
@@ -413,13 +436,15 @@ class PurchaseScreenOneComponent extends Component {
 PurchaseScreenOneComponent.propTypes = {
     purchaseData: PropTypes.instanceOf(Object),
     navigation: PropTypes.instanceOf(Object),
-    saveData: PropTypes.func
+    saveData: PropTypes.func,
+    getAccountList: PropTypes.func
 };
 
 
 PurchaseScreenOneComponent.defaultProps = {
     purchaseData: {},
     navigation: {},
-    saveData: () => { }
+    saveData: () => { },
+    getAccountList: () => { }
 };
 export default PurchaseScreenOneComponent;
