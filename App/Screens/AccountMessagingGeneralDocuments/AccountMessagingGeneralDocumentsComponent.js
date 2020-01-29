@@ -2,23 +2,18 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity,Switch } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
-import { GHeaderComponent, GFooterSettingsComponent, GIcon, GButtonComponent, showAlert ,GInputComponent } from '../../CommonComponents';
-import { CustomRadio } from '../../AppComponents';
+import { GHeaderComponent, GFooterSettingsComponent, GIcon, GButtonComponent, showAlert ,GInputComponent, GDateComponent } from '../../CommonComponents';
+import { CustomRadio, CustomCheckBox } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import AppUtils from '../../Utils/AppUtils';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
-// const documentsTypes = [
-//     { key: 'online', name: gblStrings.settingAccountMessaging.accountMessagingGeneralOnline },
-//     { key: 'paper', name: gblStrings.settingAccountMessaging.accountMessagingGeneralPaper }    
-// ];
-
-// const documentsTypesConfirm = [
-//     { key: 'confirm_yes', name: gblStrings.common.yes },
-//     { key: 'confirm_no', name: gblStrings.common.no }   
-// ];
-
 const swithcStyle = { flase: '#DBDBDB', true: '#444444' };
+const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
+const date = new Date().getDate(); //  Current Date
+const month = new Date().getMonth() + 1; //  Current Month
+const year = new Date().getFullYear(); //  Current Year
+const currentdate = `${month}-${date}-${year}`;
 
 const accountsPreference = 
     {       
@@ -73,8 +68,7 @@ const accountsPreference =
                 ]
             }
         ]
-    };
-
+};
 
 class AccountMessagingGeneralDocumentsComponent extends Component {
     constructor(props) {
@@ -100,8 +94,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                 zipcode: "",
                 city: "",
                 stateCity: "",
-                emailAddress: initialState.email || "",
-                addressTypeValidation: true,
+                emailAddress: initialState.email || "",               
                 addrLine1Validation: true,
                 addrLine2Validation: true,
                 zipcodeValidation: true,
@@ -109,33 +102,24 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                 stateCityValidation: true,
                 stateValidation: true,
                 emailAddressValidation: true,
+                startDate: "",
+                endDate: "",                
+                startDateValidation: true,              
+                endDateValidation: true,
+                endDateValiMsg: ""
             },
             currentZipCodeRef: {
                 stateKey: "",
                 keyName: "",
                 objIndex: ""
             },
-           
+            applySelected: false,
+            applySelectedError: false           
         };
     }        
 
-    componentDidMount() {
-               
-            const{ accMessageDocumentinitialState }=this.props;
-            if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedTaxDocumentsItemID) {
-                this.setState({ selectedTaxDocumentsItemID: accMessageDocumentinitialState.selectedTaxDocumentsItemID });
-            }
-            if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedConfirmItemID) {
-                this.setState({ selectedConfirmItemID: accMessageDocumentinitialState.selectedConfirmItemID });
-            }
-            if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedGeneralDocumentsAnnualItemID) {
-                this.setState({ selectedGeneralDocumentsAnnualItemID: accMessageDocumentinitialState.selectedGeneralDocumentsAnnualItemID });
-            }
-            if (this.props && accMessageDocumentinitialState && accMessageDocumentinitialState.selectedGeneralDocumentsPrivacyItemID) {
-                this.setState({ selectedGeneralDocumentsPrivacyItemID: accMessageDocumentinitialState.selectedGeneralDocumentsPrivacyItemID });
-            }
-      
-        
+    componentDidMount() {              
+     
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -157,36 +141,12 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                 if (addressFormatData[stateCityKey] !== prevProps.addressFormatData[stateCityKey]) {
                     const tempResponse = addressFormatData[stateCityKey];
 
-
                     if (tempResponse && tempResponse.City) {
-                        if (keyName === "empZipcode") {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    empCity: tempResponse.City,
-                                    empStateCity: tempResponse.State
-
-                                }
-                            }));
-                        } else if (keyName === "zipcode_Phy" && objIndex !== -1) {
-                            const newItems = [...estate.trusteeData];
-                            newItems[objIndex].city_Phy = tempResponse.City;
-                            newItems[objIndex].stateCity_Phy = tempResponse.State;
-
-
-                            this.setState(() => (() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    trusteeData: newItems
-
-                                }
-                            })));
-                        } else if (keyName === "zipcode" && objIndex !== -1) {
+                        if (keyName === "zipcode" && objIndex !== -1) {
                             const newItems = [...estate.trusteeData];
                             newItems[objIndex].city = tempResponse.City;
                             newItems[objIndex].stateCity = tempResponse.State;
 
-
                             this.setState(() => (() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
@@ -194,16 +154,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
 
                                 }
                             })));
-                        } else if (keyName === "zipcode_Phy" && objIndex !== -1) {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    city_Phy: tempResponse.City,
-                                    stateCity_Phy: tempResponse.State
-
-                                }
-                            }));
-                        } else {
+                        }else {
                             this.setState(() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
@@ -223,35 +174,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                     const tempResponse = addressFormatData[addressKey];
 
                     if (tempResponse && tempResponse.City) {
-                        if (keyName === "empZipcode") {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    empCity: tempResponse.City,
-                                    empStateCity: tempResponse.State,
-                                    empAddrLine1: tempResponse.Address1 || "",
-                                    empAddrLine2: tempResponse.Address2 || "",
-                                    empAddrLine1Validation: true,
-                                    empAddrLine2Validation: true
-                                }
-                            }));
-                        } else if (keyName === "zipcode_Phy" && objIndex !== -1) {
-                            const newItems = [...estate.trusteeData];
-                            newItems[objIndex].city_Phy = tempResponse.City;
-                            newItems[objIndex].stateCity_Phy = tempResponse.State;
-                            newItems[objIndex].addrLine1_Phy = tempResponse.Address1 || "";
-                            newItems[objIndex].addrLine2_Phy = tempResponse.Address2 || "";
-                            newItems[objIndex].addrLine1_PhyValidation = true;
-                            newItems[objIndex].addrLine2_PhyValidation = true;
-
-                            this.setState(() => (() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    trusteeData: newItems
-
-                                }
-                            })));
-                        } else if (keyName === "zipcode" && objIndex !== -1) {
+                        if (keyName === "zipcode" && objIndex !== -1) {
                             const newItems = [...estate.trusteeData];
                             newItems[objIndex].city = tempResponse.City;
                             newItems[objIndex].stateCity = tempResponse.State;
@@ -264,22 +187,10 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                 [prevState.currentZipCodeRef.stateKey]: {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
                                     trusteeData: newItems
-
                                 }
                             })));
-                        } else if (keyName === "zipcode_Phy") {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    city_Phy: tempResponse.City,
-                                    stateCity_Phy: tempResponse.State,
-                                    addrLine1_Phy: tempResponse.Address1 || "",
-                                    addrLine2_Phy: tempResponse.Address2 || "",
-                                    addrLine1_PhyValidation: true,
-                                    addrLine2_PhyValidation: true
-                                }
-                            }));
-                        } else {
+                        } 
+                        else {
                             this.setState(() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
@@ -292,37 +203,8 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                 }
                             }));
                         }
-
                     } else if (tempResponse && tempResponse.ErrorNumber) {
-                        if (currentZipCodeRef.keyName === "empZipcode") {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    // empAddrLine1: "",
-                                    // empAddrLine2: ""
-                                    empAddrLine1Validation: false,
-                                    empAddrLine2Validation: false
-                                },
-                                errMsg: "Invalid address"
-
-                            }));
-                        } else if (currentZipCodeRef.keyName === "zipcode_Phy" && objIndex !== -1) {
-                            const newItems = [...estate.trusteeData];
-                            newItems[objIndex].addrLine1_Phy = "";
-                            newItems[objIndex].addrLine2_Phy = "";
-                            newItems[objIndex].addrLine1_PhyValidation = false;
-                            newItems[objIndex].addrLine2_PhyValidation = false;
-
-                            this.setState(() => (() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    trusteeData: newItems
-
-                                },
-                                errMsg: "Invalid address"
-
-                            })));
-                        } else if (currentZipCodeRef.keyName === "zipcode" && objIndex !== -1) {
+                        if (currentZipCodeRef.keyName === "zipcode" && objIndex !== -1) {
                             const newItems = [...estate.trusteeData];
                             newItems[objIndex].addrLine1 = "";
                             newItems[objIndex].addrLine2 = "";
@@ -333,27 +215,14 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                 [prevState.currentZipCodeRef.stateKey]: {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
                                     trusteeData: newItems
-
                                 },
                                 errMsg: "Invalid address"
 
                             })));
-                        } else if (currentZipCodeRef.keyName === "zipcode_Phy") {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    // addrLine1_Phy: "",
-                                    // addrLine2_Phy: "",
-                                    addrLine1_PhyValidation: false,
-                                    addrLine2_PhyValidation: false
-                                },
-                                errMsg: "Invalid address"
-                            }));
                         } else {
                             this.setState(() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
                                     ...prevState[prevState.currentZipCodeRef.stateKey],
-
                                     // addrLine1: "",
                                     // addrLine2: "",
                                     addrLine1Validation: false,
@@ -366,9 +235,14 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                 }
             }
         }
-    }
+    }    
 
-    
+    isEmpty = (str) => {
+        if (str === "" || str === undefined || str === null || str === "null" || str === "undefined" || str.replace(/^\s+|\s+$/gm, '') === "") {
+            return true;
+        }
+        return false;
+    } 
 
     goBack = () => {
         const{ navigation }=this.props;
@@ -424,34 +298,6 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
         this.setState({ accountPreferenceData: newItm });       
     }
 
-
-
-    onSelected = (item,fromType) =>()=> {        
-        switch(fromType){
-            case 'taxDocuments':
-            this.setState({
-                    selectedTaxDocumentsItemID: item.key                          
-                }
-            );             
-            break;
-            case 'generalDocumentsAnnual':
-            this.setState({
-                    selectedGeneralDocumentsAnnualItemID: item.key
-                }
-            );  
-            break;
-            case 'generalDocumentsPrivacy':
-            this.setState({
-                    selectedGeneralDocumentsPrivacyItemID: item.key
-                                
-                }
-            );  
-            break;
-            default:
-                break;
-        }           
-    }
-
     onSelectedConfirm = (item) => () =>{        
         this.setState({
                 selectedConfirmItemID: item.key                       
@@ -459,34 +305,22 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
         );     
     }
 
-    toggleSwitch = (value) => {
-        // onValueChange of the switch this function will be called
-        this.setState({switchValue: value});
-        // state changes according to switch
-        // which will result in re-render the text
+    toggleSwitch = (value) => {       
+        this.setState({switchValue: value});      
      }
 
-    saveButtonAction = () => {
-        AppUtils.debugLog('Save Button Clicked...');    
-        const{ selectedTaxDocumentsItemID,selectedConfirmItemID,selectedGeneralDocumentsAnnualItemID,selectedGeneralDocumentsPrivacyItemID }=this.state;
-        const{ saveData }=this.props;
-        const payloadData = {
-            selectedTaxDocumentsItemID, 
-            selectedConfirmItemID,
-            selectedGeneralDocumentsAnnualItemID,
-            selectedGeneralDocumentsPrivacyItemID,
-        };        
-        saveData(payloadData);
-        this.scrollRef.current.scrollTo({y:0, x:0,animated: true });       
-        this.setState({
-            saveSuccess: true                       
-        });  
-        // navigation.goBack();        
+     setInputRef = (inputComp) => (ref) => {
+        this[inputComp] = ref;
     }
+
+    setApplyState = () => {     
+        const {applySelected} = this.state;    
+        this.setState({applySelected : !applySelected });
+    }   
 
     navigateFAQPage=()=>{       
         showAlert(gblStrings.common.appName ,"Navigate to Faq",gblStrings.common.ok);       
-     }
+    }
 
     onChangeText = (stateKey, keyName) => text => {
         AppUtils.debugLog("onChangeText:::>");
@@ -498,12 +332,19 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
             }
         }));
 
+        if(keyName === "startDate"){
+            this.setState(prevState => ({               
+                    personal: {
+                        ...prevState.personal, 
+                        endDate : ""
+            }
+         }));
+
+        }
     }
 
     onSubmitEditing = (input) => text => {
-
         AppUtils.debugLog(`onSubmitEditing:::>${text}`);
-
         input.focus();
     }
 
@@ -512,7 +353,6 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
 
         const { getStateCity, getAddressFormat } = this.props;
         const { currentZipCodeRef } = this.state;
-
 
         const newItems = { ...currentZipCodeRef };
         //   const newItems = { ...this.state.currentZipCodeRef };
@@ -526,68 +366,159 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
             currentZipCodeRef: newItems,
             isUSPSAddrFormatAPICalled: true,
             isUSPSStateAPICalled: true
-
         });
 
         let payload = {};
-        let addressPayload = {};
-        // if (this.state[stateKey].citizenship === "U.S" || this.state[stateKey].citizenship === undefined ) {    
-        if (keyName === "zipcode_Phy") {
+        let addressPayload = {};        
+        
+        payload = {
+            "Zip": this.state[stateKey][keyName]
+        };
 
-            payload = {
-                "Zip": this.state[stateKey][keyName]
-            };
-
-            addressPayload = {
-                ...payload,
-                "Address1": this.state[stateKey].addrLine1_Phy,
-                "Address2": this.state[stateKey].addrLine2_Phy,
-                "City": this.state[stateKey].city_Phy,
-                "State": this.state[stateKey].stateCity_Phy,
-                "Zip": this.state[stateKey][keyName]
-
-            };
-        } else {
-
-            payload = {
-                "Zip": this.state[stateKey][keyName]
-            };
-
-            addressPayload = {
-                ...payload,
-                "Address1": this.state[stateKey].addrLine1,
-                "Address2": this.state[stateKey].addrLine2,
-                "City": this.state[stateKey].city,
-                "State": this.state[stateKey].stateCity,
-                "Zip": this.state[stateKey][keyName]
-
-            };
-        }
+        addressPayload = {
+            ...payload,
+            "Address1": this.state[stateKey].addrLine1,
+            "Address2": this.state[stateKey].addrLine2,
+            "City": this.state[stateKey].city,
+            "State": this.state[stateKey].stateCity,
+            "Zip": this.state[stateKey][keyName]
+        };
+        
         getStateCity(payload);
         getAddressFormat(addressPayload);
+    }   
 
-        //  nextInputFocus.focus();
+    validateFileds = () =>{
+        let isValidationSuccess = false;     
+        try {       
+            this.setState(prevState => ({
+                personal: {
+                    ...prevState.personal,                      
+                    addrLine1Validation: true,
+                    addrLine2Validation: true,
+                    zipcodeValidation: true,
+                    cityValidation: true,
+                    stateCityValidation: true,
+                    stateValidation: true,                    
+                }                    
+            }));
+            if (!this.validateInfoFields()) {
+                isValidationSuccess = false;
+            }else {
+                isValidationSuccess = true;
+            }        
+        } catch (err) {
+            AppUtils.debugLog(`Error:::${JSON.stringify(err)}`);
+        }
+        return isValidationSuccess;
     }
 
-    renderToolTip=()=>{       
-        return(
-            <View>                
-                <View style={styles.tooltipContainerIcon}>               
-                    <GIcon
-                        name="alert-circle"
-                        type="material-community"
-                        size={20}
-                        color="#56565A"
-                    />                       
-                    <Text style={styles.tooltipContainerText}>{gblStrings.settingAccountMessaging.accountMessagingGeneralStillReceive}</Text>                   
-                </View>
-            </View>
-        );        
+    validateInfoFields = () => {
+        const { personal } = this.state;
+
+        let errMsg = "";
+        let isValidationSuccess = false;
+        let input = "";       
+        
+        if(this.isEmpty(personal.addrLine1)) {
+            errMsg = gblStrings.accManagement.emptyAddressLine1Msg;
+            input = 'addrLine1';
+        } else if (this.isEmpty(personal.addrLine2)) {
+            errMsg = gblStrings.accManagement.emptyAddressLine2Msg;
+            input = 'addrLine2';
+        } else if (this.isEmpty(personal.zipcode)) {
+            errMsg = gblStrings.accManagement.emptyZipCodeMsg;
+            input = 'zipcode';
+        } else if (personal.zipcode.length < gblStrings.maxLength.zipCode) {
+            errMsg = gblStrings.accManagement.invalidZipCodeMsg;
+            input = 'zipcode';
+        } else if (this.isEmpty(personal.city)) {
+            errMsg = gblStrings.accManagement.emptyCityMsg;
+            input = 'city';
+        } else if (this.isEmpty(personal.stateCity)) {
+            errMsg = gblStrings.accManagement.emptyStateMsg;
+            input = 'stateCity';
+        } else if (!emailRegex.test(personal.emailAddress)) {
+            errMsg = gblStrings.accManagement.invalidEmailMasg;
+            input = 'emailAddress';
+        }else if (this.isEmpty(personal.startDate)) {
+            errMsg = gblStrings.accManagement.emptyStartDate;
+            input = 'startDate';
+        }else if (this.isEmpty(personal.endDate)) {
+            errMsg = gblStrings.accManagement.emptyEndDate;
+            input = 'endDate';
+        }
+        else {
+            isValidationSuccess = true;
+        }
+
+        if (!isValidationSuccess) {
+            AppUtils.debugLog(`Personal Info errMsg:: ${errMsg}`);
+
+            this.setState(prevState => ({
+                personal: {
+                    ...prevState.personal,
+                    [`${input}Validation`]: false,                 
+                },
+                isValidationSuccess,
+                errMsg: isValidationSuccess === false ? errMsg : ""
+            }));
+
+            if (input !== "" && input !== null && input !== undefined) {
+                if (this[input] !== null && this[input] !== undefined) {
+                    if (typeof this[input].focus === 'function') {
+                        this[input].focus();
+                    }
+                }
+            }            
+        }
+        return isValidationSuccess;
     }
+
+    saveButtonAction = () => {      
+        const {switchValue} = this.state;       
+
+        if(!switchValue){
+            this.scrollRef.current.scrollTo({y:0, x:0,animated: true });       
+            this.setState({
+                saveSuccess: true                       
+            }); 
+        }else if(switchValue && this.validateFileds()){
+            AppUtils.debugLog('Save Button Clicked...');   
+
+            const{ selectedTaxDocumentsItemID,selectedConfirmItemID,selectedGeneralDocumentsAnnualItemID,selectedGeneralDocumentsPrivacyItemID }=this.state;
+            const{ saveData }=this.props;
+            const payloadData = {
+                selectedTaxDocumentsItemID, 
+                selectedConfirmItemID,
+                selectedGeneralDocumentsAnnualItemID,
+                selectedGeneralDocumentsPrivacyItemID,
+            };        
+            saveData(payloadData);
+            this.scrollRef.current.scrollTo({y:0, x:0,animated: true });       
+            this.setState({
+                saveSuccess: true                       
+            });              
+        }  
+    }
+
+    submitButtonAction =() =>{
+        const {applySelected} = this.state;
+        if(applySelected){
+            this.setState({
+                applySelectedError : false                       
+            }); 
+            this.saveButtonAction();
+        }else{
+            this.setState({
+                applySelectedError : true                       
+            });  
+        }
+    }    
 
     render() {
         const{ navigation }=this.props;
-        const{ saveSuccess,accountPreferenceData,switchValue,personal, errMsg }=this.state;
+        const{ saveSuccess,accountPreferenceData,switchValue,personal,errMsg,applySelected,applySelectedError }=this.state;
         
         return (
             <View style={styles.container}>
@@ -630,7 +561,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                 color="#707070"
                             />
                             <Text style={styles.saveSuccessText}>
-                                Delivery Preference for Tax Documents has been updated successfully
+                                Delivery Preference settings has been updated successfully
                             </Text>
                             <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.goBack}>
                                 <GIcon
@@ -828,25 +759,29 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                         </View>
                     </View>              
 
-                    <View style={{marginHorizontal:'4%'}}>
-                            
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.addAddressInfo.addressLineOne}
-                    </Text>
-                            <GInputComponent                              
+                    {
+                        (switchValue)? (
+                        <View style={styles.seasonalAddressContainer}>                            
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.addAddressInfo.addressLineOne}
+                            </Text>
+                            <GInputComponent         
+                                inputref={this.setInputRef("addrLine1")}                     
                                 propInputStyle={personal.addrLine1Validation ? styles.customTxtBox : styles.customTxtBoxError}
                                 maxLength={gblStrings.maxLength.emplAddress1}
                                 value={personal.addrLine1}
                                 onChangeText={this.onChangeText("personal", "addrLine1")}                               
                                 onSubmitEditing={this.onSubmitZipEditing("personal", "zipcode", this.addrLine2)}
-                               
+                                
                                 errorFlag={!personal.addrLine1Validation}
                                 errorText={errMsg}
                             />
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.addAddressInfo.addressLineTwo}
-                    </Text>
-                            <GInputComponent                                
+
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.addAddressInfo.addressLineTwo}
+                            </Text>
+                            <GInputComponent          
+                                inputref={this.setInputRef("addrLine2")}                      
                                 propInputStyle={personal.addrLine2Validation ? styles.customTxtBox : styles.customTxtBoxError}                                
                                 maxLength={gblStrings.maxLength.addressLine2}
                                 value={personal.addrLine2}
@@ -856,10 +791,11 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                 errorText={errMsg}
                             />
 
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.addAddressInfo.zipCode}
-                    </Text>
-                            <GInputComponent                                
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.addAddressInfo.zipCode}
+                            </Text>
+                            <GInputComponent          
+                                inputref={this.setInputRef("zipcode")}                      
                                 propInputStyle={personal.zipcodeValidation ? styles.customTxtBox : styles.customTxtBoxError}                           
                                 value={personal.zipcode}
                                 maxLength={gblStrings.maxLength.zipCode}
@@ -872,10 +808,11 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                 errorText={errMsg}
                             />
 
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.addAddressInfo.cityLabel}
-                    </Text>
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.addAddressInfo.cityLabel}
+                            </Text>
                             <GInputComponent
+                                inputref={this.setInputRef("city")}
                                 propInputStyle={personal.cityValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}                               
                                 maxLength={gblStrings.maxLength.city}
                                 value={personal.city}
@@ -883,14 +820,14 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                 onSubmitEditing={this.onSubmitEditing(this.stateCity)}
                                 errorFlag={!personal.cityValidation}
                                 errorText={errMsg}                               
-                               editable={false}
-
+                                editable={false}
                             />
 
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.addAddressInfo.stateLabel}
-                    </Text>        
-                            <GInputComponent                                
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.addAddressInfo.stateLabel}
+                            </Text>      
+                            <GInputComponent          
+                                inputref={this.setInputRef("stateCity")}                      
                                 propInputStyle={personal.stateCityValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}                             
                                 returnKeyType="done"
                                 maxLength={gblStrings.maxLength.state}
@@ -902,22 +839,67 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                 editable={false}
                             />
 
-                    <Text style={styles.lblTxt}>
-                        {gblStrings.marketingPrivacyLabel.marketingProductEmail}
-                    </Text>
-                        <GInputComponent                           
-                            propInputStyle={personal.emailAddressValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                            placeholder= {gblStrings.marketingPrivacyLabel.marketingProductEmail}
-                            keyboardType="email-address"
-                            maxLength={gblStrings.maxLength.emailID}
-                            onChangeText={this.onChangeText("personal", "emailAddress")}
-                            onSubmitEditing={this.onSubmitEditing(this.socialSecurityNo)}
-                            errorFlag={!personal.emailAddressValidation}
-                            errorText={errMsg}
-                            value={personal.emailAddress}
-                        />
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.marketingPrivacyLabel.marketingProductEmail}
+                            </Text>
+                            <GInputComponent                           
+                                propInputStyle={personal.emailAddressValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                placeholder= {gblStrings.marketingPrivacyLabel.marketingProductEmail}
+                                keyboardType="email-address"
+                                maxLength={gblStrings.maxLength.emailID}
+                                onChangeText={this.onChangeText("personal", "emailAddress")}
+                                onSubmitEditing={this.onSubmitEditing(this.socialSecurityNo)}
+                                errorFlag={!personal.emailAddressValidation}
+                                errorText={errMsg}
+                                value={personal.emailAddress}
+                            />                 
 
-                    </View>    
+                            <View style={styles.dateContainer}>
+                                                                                    
+                                <Text style={styles.taxDocumentHeaderViewTitle}>
+                                    Effective Start & End Dates
+                                </Text>       
+                            
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.from}
+                                </Text>
+                                <GDateComponent                                    
+                                    inputref={this.setInputRef("startDate")}
+                                    date={personal.startDate}
+                                    placeholder="MM-DD-YYYY"
+                                    dateTextLayout={styles.dateTextLayout}
+                                    componentStyle={styles.dateStyle}
+                                    minDate={currentdate}                                   
+                                    errorFlag={!personal.startDateValidation}
+                                    errorMsg={errMsg}
+                                    onDateChange={this.onChangeText("personal", "startDate")}
+                                />
+                                <Text style={styles.lblTxtCalender}>
+                                    {gblStrings.common.calender}
+                                </Text>
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.to}
+                                </Text>
+                                <GDateComponent
+                                    inputref={this.setInputRef("endDate")}
+                                    date={personal.endDate}
+                                    placeholder="MM-DD-YYYY"
+                                    dateTextLayout={styles.dateTextLayout}
+                                    componentStyle={styles.dateStyle}
+                                    minDate={personal.startDate ? personal.startDate : currentdate}
+                                    errorFlag={!personal.endDateValidation}
+                                    errorMsg={errMsg}
+                                    onDateChange={this.onChangeText("personal", "endDate")}
+                                />
+                                <Text style={styles.lblTxtCalender}>
+                                    {gblStrings.common.calender}
+                                </Text>                      
+                            </View>  
+                        </View>
+                      )                                                   
+                       :null
+                   }
 
                         <GButtonComponent
                             buttonStyle={styles.cancelButton}
@@ -927,12 +909,40 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                         />
 
                         <GButtonComponent
-                            buttonStyle={styles.saveButton}
-                            buttonText={gblStrings.common.save}  
+                            buttonStyle={styles.applyButton}
+                            buttonText={gblStrings.common.apply}  
                             textStyle={styles.saveButtonText}
                             onPress={this.saveButtonAction}
                         />
 
+                         {
+                            (applySelectedError)? (
+                                <Text style={styles.errTxtSubmit}>
+                                    Please select the settings to proceed
+                                </Text>
+                              )
+                            : null
+                         }                     
+                    
+                        <View style={styles.applySectionGrp}>
+                            <CustomCheckBox
+                                size={20}
+                                itemBottom={0}
+                                itemTop={0}
+                                outerCicleColor="#707070"
+                                innerCicleColor="#61285F"
+                                labelStyle={styles.applySectionTxt}
+                                label="Apply the settings to all of your purchased Accounts"
+                                selected={applySelected}
+                                onPress={this.setApplyState}
+                            />   
+                            <GButtonComponent
+                                buttonStyle={styles.saveButton}
+                                buttonText={gblStrings.common.submit}  
+                                textStyle={styles.saveButtonText}
+                                onPress={this.submitButtonAction}
+                            />
+                        </View>         
                     <GFooterSettingsComponent />
                 </ScrollView>
             </View>
@@ -942,7 +952,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
 
 AccountMessagingGeneralDocumentsComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),    
-    accMessageDocumentinitialState: PropTypes.instanceOf(Object),
+   // accMessageDocumentinitialState: PropTypes.instanceOf(Object),
     getAddressFormat: PropTypes.func,
     saveData:PropTypes.func,
     initialState: PropTypes.instanceOf(Object),
@@ -952,7 +962,7 @@ AccountMessagingGeneralDocumentsComponent.propTypes = {
 
 AccountMessagingGeneralDocumentsComponent.defaultProps = {
     navigation : {},
-    accMessageDocumentinitialState : {},
+  //  accMessageDocumentinitialState : {},
     getAddressFormat: null,
     getStateCity: null,
     initialState: {},

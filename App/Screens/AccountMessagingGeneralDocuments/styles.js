@@ -73,6 +73,33 @@ const styles = StyleSheet.create({
         paddingRight:'4%',
         paddingTop:scaledHeight(15)
     },
+    applyButton:{
+        alignItems:'center',
+        backgroundColor:'#56565A',
+        borderColor:'#56565A',
+        borderWidth:1,
+        height:scaledHeight(55),        
+        justifyContent:'center',       
+        marginLeft:'10%',
+        marginRight:'10%',
+        marginTop:scaledHeight(25),
+        width:'80%',              
+     },
+    applySectionGrp: {
+        backgroundColor:'#F3F3F3',
+        flexGrow: 1,
+        marginLeft: '4%',   
+        marginRight:'4%',
+        marginTop:scaledHeight(30),
+        paddingHorizontal:'6%',
+        paddingVertical:scaledHeight(20)     
+    },
+    applySectionTxt: {
+        color: '#333333DE',
+        fontSize: scaledHeight(18),       
+        marginLeft: '4%',       
+        textAlign: 'left',     
+    },
     cancelButton:{
         alignItems:'center',
         backgroundColor:'#FFFFFF',
@@ -115,8 +142,22 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(9),
         width: '100%'
     },
+    dateContainer:{
+        marginTop: scaledHeight(30),  
+    },
+    dateStyle: {
+        marginLeft: 0,
+        marginRight: 0,
+        width: '100%'
+      },
     deliveryPreferenceOptions:{     
         marginTop:scaledHeight(25),              
+    },
+    errTxtSubmit: {
+        color: '#e60000',
+        fontSize: scaledHeight(12),      
+        marginHorizontal:'4%',
+        marginTop:scaledHeight(20),        
     },
     generalDocumentDisclaimerView:{        
         backgroundColor: '#F1F1F2',
@@ -125,7 +166,7 @@ const styles = StyleSheet.create({
         marginRight:'4%',
         paddingBottom:scaledHeight(14),   
         paddingTop:scaledHeight(14)
-    },
+    },  
     generalDocumentDisclaimerViewFaq: {       
         color: '#2A92EE',
         textDecorationLine: 'underline',        
@@ -164,9 +205,13 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
         marginTop: scaledHeight(25)
-
     },
-    lineBorder: {       
+    lblTxtCalender: {
+        color: '#6F7070',
+        fontSize: scaledHeight(12),       
+        marginTop: scaledHeight(5)
+    },
+     lineBorder: {       
         borderColor: '#707070',          
         borderWidth: 0.4,       
         marginBottom: scaledHeight(5),       
@@ -177,7 +222,7 @@ const styles = StyleSheet.create({
         flexGrow:1,         
         marginTop:scaledHeight(14)   
     },
-    radioBtnGrpConfirm:{        
+     radioBtnGrpConfirm:{        
         flexDirection:"row", 
         marginTop:scaledHeight(25),  
         width:'30%'     
@@ -192,13 +237,13 @@ const styles = StyleSheet.create({
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(25),
-        width:'80%',              
-     },
-     saveButtonText:{
+        width:'50%',              
+     },    
+    saveButtonText:{
         color:'#FFFFFF',
         fontSize:scaledHeight(16),
         fontWeight:'bold'
-    },
+    },    
     saveSuccessContainer:{
         backgroundColor:'#E9E9E9',
         borderRadius:scaledHeight(10),
@@ -213,7 +258,7 @@ const styles = StyleSheet.create({
         width:'92%', 
         zIndex: 5,         
     },
-     saveSuccessText:{
+    saveSuccessText:{
         color:'#56565A',
         flex:0.95,
         fontSize:scaledHeight(16),        
@@ -222,12 +267,16 @@ const styles = StyleSheet.create({
     },
     scrollViewFlex:{
         flex: 0.85 
-    },    
+    },
+    seasonalAddressContainer:{
+        marginBottom:scaledHeight(16),
+        marginHorizontal:'4%',        
+    },
     settingsInfo: {
         color: '#B2B2B2',
         fontSize: scaledHeight(13),
         marginRight: '4%',   
-    },    
+    },
     settingsInfoCurrent: {
         color: '#707070',
         fontSize: scaledHeight(14),
@@ -302,7 +351,7 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         marginRight:'15%',   
         width:'50%'    
-    },
+    },    
     tooltipContainer:{                               
         marginLeft:'8%', 
         marginTop:scaledHeight(2)       
@@ -316,7 +365,7 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(2),
         padding:'3%'
     },
-    tooltipContainerText:{       
+      tooltipContainerText:{       
         color:'#56565A',
         fontSize:scaledHeight(16), 
         marginRight:'10%'               

@@ -60,7 +60,9 @@ export default {
         supportVCMFaxNumber: "800-292-8177",
         victoryCapitalAddress: "P.O. Box 659453\nSan Antonio, TX 78265-9009",
         deleteAlertMsg: "Are you sure to delete?",
-        vcmMemberService: "VCM Memeber Services"
+        vcmMemberService: "VCM Memeber Services",
+        apply: "Apply",
+        calender:"MM/DD/YYYY"
     },
     login: {
         imageRequest: "imageRequest",
@@ -624,6 +626,7 @@ export default {
 
         invalidMonthlyInvestmentMsg: "‘Please enter a valid monthly investment value",
         emptyStartDate: "Please select a start date",
+        emptyEndDate: "Please select an end date",
         emptyDividendCapitalGainsMsg: "Please select any type of Dividend/Capital Gains",
         emptyProspectusReportsRefMsg: "Please select any type of Prospectus & Reports reference",
         confirmTINBackupWithholdingMsg: "Please conirm TIN / Backup Holding Certification",
