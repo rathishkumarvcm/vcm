@@ -17,12 +17,6 @@ class CardHeader extends Component {
         this.setState(prevState => ({ showModal: !prevState.showModal }));
     }
 
-    edit = () => {
-        const { navigate } = this.props;
-        this.setState({ showModal: false });
-        navigate();
-    }
-
     delete = () => {
         const { onDelete } = this.props;
         this.setState({ showModal: false });
@@ -33,30 +27,40 @@ class CardHeader extends Component {
         const { showModal } = this.state;
         const { item } = this.props;
         return (
-            <View>
-                <View style={styles.innerHeaderView}>
-                    <View style={styles.flexDirectionStyle}>
-                        <Text style={styles.shortContentText}>{gblStrings.accManagement.contractNumber} <Text style={styles.shortContentValueText}>{item.contract_Number}</Text></Text>
-
+            <View key={item.key} style={styles.innerContainerView}>
+                <View style={styles.contentContainerStyle}>
+                    <View style={styles.marginTopStyle}>
+                        <Text style={styles.shortContentText}>Account Type</Text>
+                        <Text style={styles.shortContentValueText}>{item.account_Type}</Text>
                     </View>
-                    <TouchableOpacity style={styles.sideBtn} onPress={this.updateState}>
-                        <GIcon name="dots-three-vertical" type="entypo" size={30} color="black" />
-                    </TouchableOpacity>
+                    <View style={styles.marginTopStyle}>
+                        <Text style={styles.shortContentText}>Account Name</Text>
+                        <Text style={styles.shortContentValueText}>{item.account_Name}</Text>
+                    </View>
+                    <View style={styles.marginTopStyle}>
+                        <Text style={styles.shortContentText}>Account Number</Text>
+                        <Text style={styles.shortContentValueText}>{item.account_Number}</Text>
+                    </View>
+                    <View style={styles.marginTopStyle}>
+                        <Text style={styles.shortContentText}>Effective Start & End Date</Text>
+                        <Text style={styles.shortContentValueText}>{`${item.startDate} - ${item.endDate}`}</Text>
+                    </View>
                 </View>
-                {
-                    showModal ?
-                        (
-                            <View style={styles.shadowView}>
-                                <TouchableOpacity onPress={this.edit}>
-                                    <Text style={styles.lblTxtInner}>{gblStrings.common.edit}</Text>
-                                </TouchableOpacity>
-                                <Text style={styles.lblLine} />
-                                <TouchableOpacity onPress={this.delete}>
-                                    <Text style={styles.lblTxtInner}>{gblStrings.common.delete}</Text>
-                                </TouchableOpacity>
-                            </View>
-                        ) : null
-                }
+                <View style={styles.iconSideViewStyle}>
+                    <TouchableOpacity style={styles.sideBtn} onPress={this.updateState}>
+                        <GIcon name="dots-three-vertical" type="entypo" size={30} color="#56565A" />
+                    </TouchableOpacity>
+                    {
+                        showModal ?
+                            (
+                                <View style={styles.shadowView}>
+                                    <TouchableOpacity onPress={this.delete}>
+                                        <Text style={styles.lblTxtInner}>{gblStrings.common.delete}</Text>
+                                    </TouchableOpacity>
+                                </View>
+                            ) : null
+                    }
+                </View>
             </View>
         );
     }
@@ -64,12 +68,10 @@ class CardHeader extends Component {
 
 CardHeader.propTypes = {
     item: PropTypes.instanceOf(Object).isRequired,
-    navigate: PropTypes.func,
     onDelete: PropTypes.func
 };
 
 CardHeader.defaultProps = {
-    navigate: () => { },
     onDelete: () => { }
 };
 

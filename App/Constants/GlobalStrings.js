@@ -194,9 +194,8 @@ export default {
 
         // manageIntrestedParties
         manageIntrestedParties: "Manage Interested Parties",
-        addNew: "Add",
+        addInterestedParty: "Add Interested Party",
         statements: "Statements",
-        addNewIntParty: "Add - New Interested Party -",
         intrestedPartiesAddedSuccessMeg: "Interested Party Added Successfully",
         relationToAccountHolder: "Relationship To Account Holder",
         noOfAccTagged: "Number of Accounts Tagged",

@@ -2,6 +2,11 @@ import { StyleSheet } from "react-native";
 import { scaledHeight } from "../../Utils/Resolution";
 
 const styles = StyleSheet.create({
+  contactUsLink: {
+    color: "#0000FF",
+    fontSize: scaledHeight(15),
+    textDecorationLine: "underline"
+  },
   container: {
     flex: 1,
     backgroundColor: "#F9FBFC",
@@ -17,8 +22,7 @@ const styles = StyleSheet.create({
     color: "#54565B",
     fontWeight: "bold",
     fontSize: scaledHeight(22),
-    lineHeight: 27,
-    textTransform: "uppercase"
+    lineHeight: 27
   },
   subHeadlineText: {
     color: "#54565B",
@@ -27,20 +31,23 @@ const styles = StyleSheet.create({
     marginTop: scaledHeight(15),
     lineHeight: 29
   },
-  contactUsLink: {
-    color: "#0000FF",
-    fontSize: scaledHeight(15),
-    textDecorationLine: "underline"
-  },
   addBtn: {
-    alignSelf: "flex-end",
-    paddingRight: "4%",
+    alignSelf: "flex-start",
+    marginTop: scaledHeight(5)
+  },
+  addAccountView: {
+    alignSelf: "flex-start",
+    marginBottom: scaledHeight(20),
     marginTop: scaledHeight(10),
-    marginBottom: scaledHeight(5)
+    paddingLeft: '4%'
   },
   contentText: {
     color: "#56565A",
     fontSize: scaledHeight(15)
+  },
+  editBtn: {
+    alignSelf: "flex-end",
+    paddingRight: '4%'
   },
   blockMarginTop: {
     marginTop: scaledHeight(25)
@@ -62,7 +69,9 @@ const styles = StyleSheet.create({
     color: "#56565A"
   },
   contentContainerStyle: {
+    alignSelf: 'flex-start',
     paddingLeft: "4%",
+    width:'60%',
     marginBottom: scaledHeight(20)
   },
   flexMainView: {
@@ -74,12 +83,16 @@ const styles = StyleSheet.create({
   },
   titleHeadingView: {
     flexDirection: "row",
-    paddingLeft: "4%"
+    justifyContent: 'space-between'
   },
   titleHeaderText: {
     color: "#56565A",
     fontSize: scaledHeight(18),
     fontWeight: "bold"
+  },
+  titleView: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   },
   titleIconView: {
     color: "#56565A",
@@ -89,46 +102,54 @@ const styles = StyleSheet.create({
     paddingRight: '4%'
   },
   line: {
-    backgroundColor: "#535353",
-    opacity: 0.25,
-    height: scaledHeight(1),
-    width: "90%",
     alignSelf: "center",
+    backgroundColor: "#707070",
+    height: scaledHeight(1),
+    marginBottom: scaledHeight(10),
     marginTop: scaledHeight(10),
-    marginBottom: scaledHeight(10)
+    opacity: 0.5,
+    width: "92%",
   },
   containerView: {
-    width: "90%",
+    alignSelf: "center",
     borderColor: "#5D83AE99",
     borderWidth: scaledHeight(1),
-    alignSelf: "center",
-    marginBottom: scaledHeight(15)
+    marginBottom: scaledHeight(15),
+    width: "92%",
   },
   containerHeaderView: {
-    backgroundColor: "#ECECEC",
+    backgroundColor: "#F1F1F1",
     borderBottomColor: "#5D83AE99",
     borderBottomWidth: scaledHeight(1),
-    paddingTop: "2%",
-    paddingLeft: "4%",
-    marginBottom: scaledHeight(5)
+    height: scaledHeight(100),
+    justifyContent: 'center',
+    paddingLeft: "4%"
   },
   containerHeaderText: {
-    color: "#54565B",
-    fontSize: scaledHeight(12),
-    fontWeight: "400"
+    color: "#56565A",
+    fontSize: scaledHeight(18),
+    fontWeight: "bold"
+  },
+  containerHeaderTextValue: {
+    color: "#56565A",
+    fontSize: scaledHeight(27),
+    fontWeight: "bold"
   },
   editBtnText: {
     color: "#5D83AE",
-    fontSize: scaledHeight(15),
-    fontWeight: "400"
+    fontSize: scaledHeight(16),
+    fontWeight: "600",
+    lineHeight: scaledHeight(22)
   },
   innerContainerView: {
+    alignSelf: "center",
     borderColor: "#5D83AE99",
     borderWidth: scaledHeight(1),
-    alignSelf: "center",
-    width: "95%",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: scaledHeight(10),
     marginTop: scaledHeight(10),
-    marginBottom: scaledHeight(10)
+    width: "90%"
   },
   innerHeaderView: {
     paddingVertical: "4%",
@@ -153,10 +174,6 @@ const styles = StyleSheet.create({
   },
   marginTopStyle: {
     marginTop: scaledHeight(15)
-  },
-  beneNameStyle: {
-    fontSize: scaledHeight(36),
-    color: "#56565A"
   },
   flexDirectionStyle: {
     flexDirection: "row"
@@ -186,6 +203,12 @@ const styles = StyleSheet.create({
   sideBtn: {
     width: scaledHeight(20)
   },
+  iconSideViewStyle: {
+    marginTop: '4%',
+    paddingRight:'4%',
+    alignItems:'flex-end',
+    width:'40%'
+  },
   borderInternal: {
     marginTop: scaledHeight(10),
     marginBottom: scaledHeight(10),
@@ -210,17 +233,16 @@ const styles = StyleSheet.create({
     margin: scaledHeight(10)
   },
   shadowView: {
+    flexDirection:'row',
     backgroundColor: "white",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 1
     },
-    shadowOpacity: 0.2,
+    shadowOpacity: 0.4,
     shadowRadius: 1.41,
-    elevation: 5,
-    width: "40%",
-    alignSelf: 'flex-end'
+    elevation: 5
   },
   dateTextLayout: {
     marginTop: 0

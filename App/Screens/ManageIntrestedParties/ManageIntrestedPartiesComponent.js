@@ -7,18 +7,21 @@ import gblStrings from '../../Constants/GlobalStrings';
 import CardHeader from './CardHeader';
 
 let newInterestedParties = [];
+
 class manageIntrestedPartiesComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isSavedSuccess: false,
             successMsg: "",
-            collapseIcon: "-"
+            collapseIcon: "-",
+            interestedPartyData: []
         };
     }
 
     componentDidMount() {
         this.updateNavigationProps();
+        this.getInterestedParties();
     }
 
     componentDidUpdate(prevProps) {
@@ -27,19 +30,26 @@ class manageIntrestedPartiesComponent extends Component {
         }
     }
 
+    getInterestedParties = () => {
+        const { manageInterestedPartiesData } = this.props;
+        if (this.props && manageInterestedPartiesData && manageInterestedPartiesData.data) {
+            this.setState({ interestedPartyData: manageInterestedPartiesData.data });
+        }
+    }
+
     updateNavigationProps = () => {
         const { navigation } = this.props;
         this.setState({ isSavedSuccess: navigation.getParam("showMsg"), successMsg: navigation.getParam("successMsg") });
     }
 
-    addInterestedParty = (data) => () => {
+    addInterestedParty = () => {
         const { navigation } = this.props;
-        navigation.navigate("addIntrestedParties", { acc_Data: data });
+        navigation.navigate("addIntrestedParties");
     }
 
     onClickEdit = (pObj, pKey, data) => () => {
-        const { navigation } = this.props;
-        navigation.navigate("editIntrestedParty", { acc_Data: data, parent_Obj: pObj, parent_Key: pKey });
+        // const { navigation } = this.props;
+        // navigation.navigate("editIntrestedParty", { acc_Data: data, parent_Obj: pObj, parent_Key: pKey });
     }
 
     getDeleteData = (item, obj) => {
@@ -58,10 +68,16 @@ class manageIntrestedPartiesComponent extends Component {
         return newArr;
     }
 
-    onDeleteFunc = (item, data) => () => {
-        const { deleteInterestedParties } = this.props;
-        const payloadData = this.getDeleteData(item, data);
-        deleteInterestedParties(payloadData);
+    onDeleteFunc = (item) => () => {
+        // const { deleteInterestedParties } = this.props;
+        // const payloadData = this.getDeleteData(item, data);
+        // deleteInterestedParties(payloadData);
+    }
+
+    renderAccountData = ({ item }) => {
+        return (
+            <CardHeader item={item} onDelete={this.onDeleteFunc(item)} />
+        );
     }
 
     renderData = ({ item }) => {
@@ -69,41 +85,31 @@ class manageIntrestedPartiesComponent extends Component {
         return (
             <View style={styles.blockMarginTop}>
                 <View style={styles.titleHeadingView}>
-                    <Text style={styles.titleIconView}>{collapseIcon}</Text>
-                    <Text style={styles.titleHeaderText}>{item.account_Type}</Text>
+                    <View style={styles.titleView}>
+                        <Text style={styles.titleIconView}>{collapseIcon}</Text>
+                        <Text style={styles.titleHeaderText}>{`${item.fname} ${item.lname}`}</Text>
+                    </View>
+                    <View style={styles.editBtn}>
+                        <TouchableOpacity>
+                            <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
                 <View style={styles.line} />
                 <View style={styles.containerView}>
                     <View style={styles.containerHeaderView}>
-                        <Text style={styles.containerHeaderText}>{` - Acc Name - ${item.account_Name} | Acc Number - ${item.account_Number}`}</Text>
-                        <View style={styles.addBtn}>
-                            <TouchableOpacity onPress={this.addInterestedParty(item)}>
-                                <Text style={styles.editBtnText}>{gblStrings.accManagement.addNew}</Text>
-                            </TouchableOpacity>
-                        </View>
+                        <Text style={styles.containerHeaderText}>{gblStrings.accManagement.noOfAccTagged} <Text style={styles.containerHeaderTextValue}>{item.accounts_Tagged}</Text></Text>
                     </View>
-                    {item.interestedParty && item.interestedParty.map((data, k) => {
-                        return (
-                            <View key={data.key} style={styles.innerContainerView}>
-                                <CardHeader item={data} navigate={this.onClickEdit(item, k, data)} onDelete={this.onDeleteFunc(item, data)} />
-                                <View style={styles.contentContainerStyle}>
-                                    <View style={styles.marginTopStyle}>
-                                        <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
-                                        <Text style={styles.beneNameStyle}>{`${data.fname} ${data.mname} ${data.lname}`}</Text>
-                                    </View>
-                                    <View style={styles.marginTopStyle}>
-                                        <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToAccountHolder}</Text>
-                                        <Text style={styles.shortContentValueText}>{data.relationship_To_Account_holder}</Text>
-                                    </View>
-                                    <View style={styles.marginTopStyle}>
-                                        <Text style={styles.shortContentText}>{gblStrings.accManagement.noOfAccTagged}</Text>
-                                        <Text style={styles.shortContentValueText}>{`# ${data.accounts_Tagged}`}</Text>
-                                    </View>
-                                </View>
-                            </View>
-                        );
-                    })
-                    }
+                    <FlatList
+                        data={item.interestedParties}
+                        keyExtractor={this.generateKeyExtractor}
+                        renderItem={this.renderAccountData}
+                    />
+                    <View style={styles.addAccountView}>
+                        <TouchableOpacity>
+                            <Text style={styles.editBtnText}>+ Add Account</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         );
@@ -113,7 +119,7 @@ class manageIntrestedPartiesComponent extends Component {
 
     render() {
         const { navigation, manageInterestedPartiesData } = this.props;
-        const { successMsg, isSavedSuccess } = this.state;
+        const { successMsg, isSavedSuccess, interestedPartyData } = this.state;
         if (this.props && manageInterestedPartiesData && manageInterestedPartiesData.list_manage_interested_parties) {
             newInterestedParties = manageInterestedPartiesData.list_manage_interested_parties;
         }
@@ -150,10 +156,16 @@ class manageIntrestedPartiesComponent extends Component {
                         <Text style={styles.mainHeadlineText}>
                             {gblStrings.accManagement.manageIntrestedParties}
                         </Text>
+                        <View style={styles.addBtn}>
+                            <TouchableOpacity onPress={this.addInterestedParty}>
+                                <Text style={styles.editBtnText}>{gblStrings.accManagement.addInterestedParty}</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
+                    <View style={styles.line} />
                     <FlatList
-                        data={newInterestedParties}
-                        extraData={this.props}
+                        data={interestedPartyData}
+                        extraData={this.state}
                         keyExtractor={this.generateKeyExtractor}
                         renderItem={this.renderData}
                     />
