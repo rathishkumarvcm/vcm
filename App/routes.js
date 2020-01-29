@@ -57,7 +57,7 @@ import RetrieveOnlineId from './Screens/RetrieveOnlineId/RetrieveOnlineIdCompone
 import OnlineIDVerification from './Screens/OnlineIDVerification/OnlineIDVerificationComponent';
 
 //  Acc Management
-import Dashboard from './Screens/Dashboard/DashboardComponent';
+import Dashboard from './Screens/Dashboard';
 import TermsAndConditions from './Screens/TermsAndConditions/TermsAndConditionsComponent';
 import DashboardAccounts from './Screens/DashboardAccounts';
 import OpenAccPageOne from './Screens/OpenAccPageOne';

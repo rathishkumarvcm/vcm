@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import DashboardComponent from './DashboardComponent';
-import { accOpeningActions } from "../../Shared/Actions";
+import { accOpeningActions, loginActions } from "../../Shared/Actions";
 
 /*----------------------
                                   Redux Methods
@@ -13,7 +13,7 @@ const mapStateToProps = (state /* , props */) => (
   );
 
 const mapDispatchToProps = {
-  ...accOpeningActions
+  ...accOpeningActions, ...loginActions
 };
 
 export default connect(

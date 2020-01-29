@@ -314,7 +314,11 @@ class LoginComponent extends Component {
         }).then(data => {
             console.log("ACCESS Token-----", JSON.stringify(data.signInUserSession.accessToken.jwtToken));
             console.log("ID Token-----", JSON.stringify(data.signInUserSession.idToken.jwtToken));
+
             this.props.setJWTToken(data.signInUserSession.idToken.jwtToken);
+
+            this.props.setEnvironment("LIVE");
+
             RNSecureKeyStore.set("jwtToken", data.signInUserSession.idToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
                 console.log("token saved suuccessfully", res)
             }, (err) => {
@@ -394,7 +398,7 @@ class LoginComponent extends Component {
             password: this.state.password
         };
 
-        this.props.signInAction(payload, "Mobile");
+        this.props.signInAction(payload);
 
 
     }
@@ -557,8 +561,8 @@ class LoginComponent extends Component {
                             buttonStyle={styles.signInButton}
                             buttonText="Sign In"
                             textStyle={styles.signInButtonText}
-                            onPress={this.navigateDashboard}
-                        // onPress={this.navigateDashboard}
+                            //onPress={this.callSignIn}
+                         onPress={this.navigateDashboard}
                         />
                         <View>
                             {

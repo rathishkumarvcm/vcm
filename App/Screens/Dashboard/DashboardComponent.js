@@ -17,7 +17,8 @@ class DashboardComponent extends Component {
             modalVisible:true,
             idToken:'',
             accessToken:'',
-            refreshToken: ''
+            refreshToken: '',
+            mockApi : true
         };
     }
 
@@ -81,6 +82,19 @@ class DashboardComponent extends Component {
         goBack();
     }
 
+    tokenDetails = () => {
+        if(this.state.mockApi){
+            this.props.setEnvironment("MOCK");
+        }
+        else{
+            this.props.setEnvironment("LIVE");
+        }
+        this.setState({
+            mockApi : !this.state.mockApi
+        });
+
+    }
+
     onClickOpenAnAccount = () => {
         const { navigation} = this.props;
         const { navigate } = navigation;  
@@ -134,7 +148,7 @@ class DashboardComponent extends Component {
 
                         <GButtonComponent
                             buttonStyle={styles.openAccBtn}
-                            buttonText="Get Token"
+                            buttonText={this.state.mockApi ? "CONFIGURE MOCK API" : "CONFIGURE LIVE API"}
                             textStyle={styles.openAccBtnTxt}
                             onPress={this.tokenDetails}
                         />
