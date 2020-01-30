@@ -10,8 +10,8 @@ import {
     GSingletonClass
 } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
-
-
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+//import AppUtils from '../../Utils/AppUtils';
 
 const myInstance = GSingletonClass.getInstance();
 class AutomaticInvestmentPlanVerifyComponent extends Component {
@@ -67,6 +67,39 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
 
     }
 
+    componentDidUpdate(preProps,nextProps){
+        const{navigation,automaticInvestmentState} = this.props;
+        const{dateFromValue,dateToValue} =this.state;
+        const skipRespKey = ActionTypes.SKIP_INVEST_WITHDRAW_PLAN;
+
+        if(automaticInvestmentState.isSuccess)
+        {
+            navigation.goBack();
+            //navigation.goBack('automaticInvestmentPlan',{'dateFromValue':dateFromValue,'dateToValue':dateToValue});
+        }
+        else if(automaticInvestmentState.isError)
+        {
+            console.log(automaticInvestmentState[skipRespKey])
+        }
+
+            // if (automaticInvestmentState[skipRespKey]) {
+            //     //if (automaticInvestmentState[skipRespKey] !== prevProps.automaticInvestmentState[skipRespKey]) {
+            //         const tempResponse = automaticInvestmentState[skipRespKey];
+            //         if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
+            //             const msg = `${tempResponse.message}`;
+            //             AppUtils.debugLog(`Account Skipped ::: :: ${msg}`);
+            //             showAlert(gblStrings.common.appName, msg, gblStrings.common.ok);
+
+            //             navigation.goBack();
+            //         } else {
+            //             AppUtils.debugLog(`Account Skipped failed::: :: ${tempResponse.message}`);
+            //             showAlert(gblStrings.common.appName, tempResponse.message, gblStrings.common.ok);
+                       
+            //         }
+            //     }
+            // }
+    }
+
 
     generateKeyExtractor = (item) => item.id;
 
@@ -107,6 +140,17 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
         });
     }
 
+    getNumberWithOrdinal(n) {
+        var s=["th","st","nd","rd"],
+        v=n%100;
+        return n+(s[(v-20)%10]||s[v]||s[0]);
+ }
+
+  getAmountWithSymbol(n){
+        var s=["$"];
+        return s+n;
+    }
+
     navigationNext = () => {
         const{navigation}=this.props;
         const{accountType,indexSelected}=this.state;
@@ -115,8 +159,25 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
 
     navigationSubmit = () => 
     {
-        const{navigation}=this.props;
-        navigation.goBack();
+        const{skipAutoInvestPlan}=this.props;
+        const{dateFromValue,dateToValue}=this.state;
+        const payload={
+            "customerId":"123",
+             "PADId":"001",
+             "investTo":{
+                "fundNumber": "30"
+               },
+             "accountSelection":{
+                "companyNumber": "591",
+                "accountNumber":"430"
+                },
+             "skip":{
+                "dateSuspendedFrom":dateFromValue,
+                "dateSuspendedTo":dateToValue
+              }
+            }
+        skipAutoInvestPlan(payload);
+        
     }
 
     // navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
@@ -156,7 +217,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
         if(item.account || item.accName)
         {
             item.investedIn.forEach(fund=>{
-                fundlist=`${fund.name}\n${fundlist}`;
+                fundlist=`${fund.fundName}\n${fundlist}`;
             });
         }
         return (
@@ -224,7 +285,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                             </View>
                             <View style={styles.verifyContentView}>
                                 <Text style={styles.verifyConent1}>Total Amount</Text>
-                                <Text style={styles.verifyConent2}>{item.totalFund?item.totalFund:item.totalAmount}</Text>
+                                <Text style={styles.verifyConent2}>{item.totalFund?this.getAmountWithSymbol(item.totalFund):this.getAmountWithSymbol(item.totalAmount)}</Text>
                             </View>
                             <View style={styles.verifyContentView}>
                                 <Text style={styles.verifyConent1}>Fund From</Text>
@@ -237,7 +298,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                             </View>
                             <View style={styles.verifyContentView}>
                                 <Text style={styles.verifyConent1}>Date to Invest</Text>
-                                <Text style={styles.verifyConent2}>{item.valueDateDropDown?item.valueDateDropDown:item.dateToInvest}</Text>
+                                <Text style={styles.verifyConent2}>{item.valueDateDropDown?this.getNumberWithOrdinal(item.valueDateDropDown):this.getNumberWithOrdinal(item.dateToInvest)}</Text>
                             </View>
                             <View style={styles.verifyContentView}>
                                 <Text style={styles.verifyConent1}>End Date</Text>
@@ -323,11 +384,13 @@ AutomaticInvestmentPlanVerifyComponent.propTypes = {
 
     navigation: PropTypes.instanceOf(Object),
     automaticInvestmentState: PropTypes.instanceOf(Object),
+    skipAutoInvestPlan:PropTypes.func,
 };
 
 AutomaticInvestmentPlanVerifyComponent.defaultProps = {
     navigation:{},
-    automaticInvestmentState:{}
+    automaticInvestmentState:{},
+    skipAutoInvestPlan:{},
 };
 
 export default AutomaticInvestmentPlanVerifyComponent;

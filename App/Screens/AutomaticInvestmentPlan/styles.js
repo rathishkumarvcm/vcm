@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
         color:'#56565A',
         fontSize:scaledHeight(16),
         fontWeight:'bold',
-        marginLeft:scaledWidth(20)
+        marginLeft:scaledWidth(20),
     },
     editFlatList:{ 
         elevation: 4, 
@@ -313,10 +313,52 @@ const styles = StyleSheet.create({
        borderColor:'#D6D8DC',
        borderWidth:1,
        flexDirection:'column',
-       
        paddingBottom:scaledHeight(10),
        paddingTop:scaledHeight(10), 
    },
+   selectFunds:{
+        flexDirection:'column',
+        elevation: 4, 
+        position: 'absolute', 
+        shadowColor: "#000", 
+        shadowOffset: { width: 0, height: 1, }, 
+        shadowOpacity: 0.23, 
+        shadowRadius: 2.62, 
+        top: 55, 
+        width: '100%', 
+        zIndex: 5, 
+   },
+   investTitle:{
+    color:'#56565A',
+    fontSize:scaledHeight(16),
+    fontWeight:'bold',
+    padding:scaledHeight(10),
+    backgroundColor:'#E9E9E9'
+   },
+   investDropdown:{
+    flexDirection:'row',
+    backgroundColor:'#FFFFFF',
+    borderBottomWidth:1,
+    borderColor:'#00000029',
+    height:scaledHeight(60),
+    justifyContent:'center',
+    flex:1,
+    alignItems:'center'
+},
+investDropdownText:{
+    color:'#56565A',
+    fontSize:scaledHeight(16),
+    fontWeight:'bold',
+    marginLeft:scaledWidth(20),
+    flex:0.8,
+},
+investDropdownText1:{
+    color:'#56565A',
+    fontSize:scaledHeight(16),
+    fontWeight:'bold',
+    marginLeft:scaledWidth(20),
+    flex:0.2,
+},
 
 });
 
