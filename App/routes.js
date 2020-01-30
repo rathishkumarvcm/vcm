@@ -1,7 +1,7 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation-tabs';
-import { createDrawerNavigator } from 'react-navigation-drawer';
+import { createDrawerNavigator, DrawerActions } from 'react-navigation-drawer';
 import React from 'react';
 import { GIcon } from './CommonComponents/GIcon';
 
@@ -57,7 +57,7 @@ import RetrieveOnlineId from './Screens/RetrieveOnlineId/RetrieveOnlineIdCompone
 import OnlineIDVerification from './Screens/OnlineIDVerification/OnlineIDVerificationComponent';
 
 //  Acc Management
-import Dashboard from './Screens/Dashboard';
+import Dashboard from './Screens/Dashboard/DashboardComponent';
 import TermsAndConditions from './Screens/TermsAndConditions/TermsAndConditionsComponent';
 import DashboardAccounts from './Screens/DashboardAccounts';
 import OpenAccPageOne from './Screens/OpenAccPageOne';
@@ -119,7 +119,7 @@ import ExchangeScreenOneComponent from './Screens/ExchangeScreenOne';
 import ExchangeScreenTwoComponent from './Screens/ExchangeScreenTwo';
 import ExchangeScreenThreeComponent from './Screens/ExchangeScreenThree';
 import ExchangeScreenFourComponent from './Screens/ExchangeScreenFour';
-import ExchangeFinishComponent from './Screens/ExchangeScreenFinish'
+import ExchangeFinishComponent from './Screens/ExchangeScreenFinish';
 
 import EditRelationshipInfo from "./Screens/EditRelationshipInformation";
 import EditRegulatoryInfo from './Screens/EditRegulatoryInformations/EditRegulatoryComponent';
@@ -174,13 +174,12 @@ import VerifySSNComponent from './Screens/VerifySSN/VerifySSNComponent';
 import VerifyMobileComponent from './Screens/VerifyMobile/VerifyMobileComponent';
 // Menu
 import DrawerComponent from './Screens/Menu/DrawerComponent';
-import TabMoreComponent from './Screens/Menu/TabMoreComponent';
 import Screen1Component from './Screens/NotificationTab/Screen1';
 import Screen2Component from './Screens/NotificationTab/Screen2';
-import MoreModalComponent from './Screens/Menu/MoreModalComponent';
+import LineChartComponent from './Screens/Charts/LineChartComponent';
+import ChartComponent from './Screens/Charts';
+import TabBar from './Screens/Menu/TabBar';
 
-// Dashboard
-import AccountPositions from './Screens/AccountPositions';
 
 // Notification Tabs
 const NotificationTabNavigator = createMaterialTopTabNavigator(
@@ -200,11 +199,6 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
             title: 'TabExample',
         },
         tabBarOptions: {
-            // activeTintColor: '#FFFFFF',
-            // inactiveTintColor: '#F8F8F8',
-            style: {
-                // backgroundColor: '#633689',
-            },
             labelStyle: {
                 textAlign: 'center',
             },
@@ -215,82 +209,136 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
         },
     }
 );
+// //  Bottom Tabs
+// const BottomTabNavigator = createBottomTabNavigator({
+//     myVCM: {
+//         screen: AccountServicesComponent,
+//         navigationOptions: {
+//             tabBarLabel: 'MyVCM',
+//         },
+//     },
+//     portfolio: {
+//         screen: TermsAndConditions,
+//         navigationOptions: {
+//             tabBarLabel: 'Portfolio',
+//         },
+//     },
+//     invest: {
+//         screen: AccountServicesComponent,
+//         navigationOptions: {
+//             tabBarLabel: 'Invest',
+//         },
+//     },
+//     learn: {
+//         screen: LineChartComponent,
+//         navigationOptions: {
+//             tabBarLabel: 'Learn',
+//         },
+//     },
+//     // more: {
+//     //     screen: TabMoreComponent,
+//     //     navigationOptions: ({ navigation }) => ({
+//     //         tabBarOnPress: ({ defaultHandler }) => {
+//     //             defaultHandler();
+//     //             store.dispatch(tabMoreActions.setModalVisible(true));
+//     //            // navigation.goBack();
+//     //            // navigation.toggleRightDrawer();
+//     //         },
+//     //         tabBarLabel: 'More',
+//     //     }),
+//     // },
+// },
+//     {
+//         defaultNavigationOptions: ({ navigation }) => ({
+//             tabBarIcon: ({ focused, horizontal, tintColor }) => {
+//                 const { routeName } = navigation.state;
+//                 let iconName;
+//                 if (routeName === 'myVCM') {
+//                     iconName = 'home';
+//                 } else if (routeName === 'portfolio') {
+//                     iconName = 'note';
+//                 } else if (routeName === 'invest') {
+//                     iconName = 'insert-chart';
+//                 }
+//                 else if (routeName === 'learn') {
+//                     iconName = 'library-books';
+//                 } else {
+//                     iconName = 'more';
+//                 }
+//                 return (
+//                     <GIcon
+//                         name={iconName}
+//                         type="material"
+//                         size={20}
+//                         color={tintColor}
+//                     />
+//                 );
+//             },
+//         }),
+
+//     }
+// );
 //  Bottom Tabs
 const BottomTabNavigator = createBottomTabNavigator({
     myVCM: {
-        screen: AccountServicesComponent,
+        screen: Screen1Component, // AccountStack,
         navigationOptions: {
+            tabBarIcon: ({ tintColor }) => <GIcon name={'home'}
+                type="material"
+                size={20}
+                color={tintColor} />,
             tabBarLabel: 'MyVCM',
-        },
+        }
+
     },
     portfolio: {
-        screen: TermsAndConditions,
+        screen: LineChartComponent,
         navigationOptions: {
+            tabBarIcon: ({ tintColor }) => <GIcon name={'note'}
+            type="material"
+            size={20}
+            color={tintColor} />,
             tabBarLabel: 'Portfolio',
         },
     },
     invest: {
         screen: AccountServicesComponent,
         navigationOptions: {
+            tabBarIcon: ({ tintColor }) => <GIcon name={'insert-chart'}
+            type="material"
+            size={20}
+            color={tintColor} />,
             tabBarLabel: 'Invest',
         },
     },
     learn: {
-        screen: ListView,
+        screen: ChartComponent,
         navigationOptions: {
+            tabBarIcon: ({ tintColor }) => <GIcon name={'library-books'}
+            type="material"
+            size={20}
+            color={tintColor} />,
             tabBarLabel: 'Learn',
         },
     },
-    more: {
-        screen: () => TermsAndConditions,
-        navigationOptions: {
-            tabBarLabel: 'More',
-        },
-    },
+    // more: {
+    //     screen: MoreModalComponent,
+    //     navigationOptions: ({ navigation }) => ({
+    //         tabBarOnPress: ({ defaultHandler }) => {
+    //             defaultHandler();
+    //             // navigation.navigate('more')
+    //             store.dispatch(tabMoreActions.setModalVisible(true));
+    //         },
+    //         tabBarLabel: 'More',
+    //     }),
+    // },
 },
     {
-        defaultNavigationOptions: ({ navigation }) => ({
-            tabBarIcon: ({ focused, horizontal, tintColor }) => {
-                const { routeName } = navigation.state;
-                let iconName;
-                if (routeName === 'myVCM') {
-                    iconName = 'home';
-                } else if (routeName === 'portfolio') {
-                    iconName = 'note';
-                } else if (routeName === 'invest') {
-                    iconName = 'insert-chart';
-                }
-                else if (routeName === 'learn') {
-                    iconName = 'library-books';
-                } else {
-                    iconName = 'more';
-                }
-                return (
-                    <GIcon
-                        name={iconName}
-                        type="material"
-                        size={20}
-                        color={tintColor}
-                    />
-                );
-            },
-            tabBarOnPress: ({ defaultHandler }) => {
-                const { routeName } = navigation.state;
-                if (routeName === 'more') {
-                    console.warn('onPress:', navigation);
-                    navigation.goBack();
-                    navigation.navigate('learn');
-                } else {
-                    defaultHandler();
-                }
-
-                if (navigation && navigation.isFocused()) {
-                    //  console.warn('isFocused:', navigation.state);
-                }
-
-            }
-        }),
-
+        tabBarComponent: TabBar,
+        tabBarOptions: {
+            activeTintColor: "skyblue",
+            inactiveTintColor: "#4F4F4F"
+          }
     }
 );
 
@@ -303,8 +351,15 @@ const DrawerNavigator = createDrawerNavigator({
 }, {
     initialRouteName: 'Home',
     contentComponent: DrawerComponent,
-    drawerWidth: 250
+    drawerWidth: 250,
+    getCustomActionCreators: (route, stateKey) => {
+        console.log('Left: ', stateKey);
+        return {
+            toggleLeftDrawer: () => DrawerActions.toggleDrawer({ key: stateKey })
+        };
+    },
 });
+
 const AppNavigator = createStackNavigator({
     login: {
         screen: LoginComponent,
@@ -318,11 +373,14 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
+    // drawerMore: {
+    //     screen: MoreDrawerNavigator,
+    //     navigationOptions: {
+    //         header: null,
+    //     }
+    // },
     draweriOS: {
         screen: DrawerComponent,
-    },
-    moreModal: {
-        screen: MoreModalComponent,
     },
     Common: {
         screen: CommonUIComponent,
@@ -1149,13 +1207,7 @@ const AppNavigator = createStackNavigator({
         navigationOptions: {
             header: null,
         }
-    },
-    accountPositions: {
-        screen: AccountPositions,
-        navigationOptions: {
-            header: null,
-        }
-    },
+    }
 },
     {
         initialRouteName: "login"

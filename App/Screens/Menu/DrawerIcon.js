@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform,StyleSheet} from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import PropTypes, { func } from "prop-types";
 import { withNavigation } from 'react-navigation';
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -12,9 +12,9 @@ const styles = StyleSheet.create({
         marginEnd: 10
     }
 });
-const openSideDrawer=(navigation)=>{
+const openSideDrawer = (navigation) => {
     if (Platform.OS === 'android')
-        navigation.openDrawer();    
+        navigation.openDrawer();
     else
         navigation.navigate("draweriOS");
 };
@@ -24,14 +24,8 @@ const DrawerIcon = ({ navigation }) =>
     (
         <TouchableOpacity
             style={styles.iconContainer}
-            // onPress={()=>this.openSideDrawer}
-            onPress={()=>{
-                if (Platform.OS === 'android')
-                    navigation.openDrawer();    
-                else
-                    navigation.navigate("draweriOS");
-            }}
-            >
+            onPress={openSideDrawer}
+        >
             {(Platform.OS === 'android') ?
                 <GIcon
                     name="menu"

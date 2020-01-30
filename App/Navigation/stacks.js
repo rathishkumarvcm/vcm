@@ -1,7 +1,9 @@
 import { createStackNavigator } from 'react-navigation-stack';
-import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import { createBottomTabNavigator, createMaterialTopTabNavigator, BottomTabBar } from 'react-navigation-tabs';
 import { createDrawerNavigator } from 'react-navigation-drawer';
+import { Modal } from 'react-native-modal';
 import React from 'react';
+import { Text, View } from 'react-native';
 import { GIcon } from '../CommonComponents/GIcon';
 import ListView from '../Screens/ListView';
 
@@ -13,45 +15,51 @@ import EditMilitaryInfo from '../Screens/EditMilitaryInformation/';
 import EditRelationshipInfo from '../Screens/EditRelationshipInformation/';
 
 // Drawer User Management Componenet
- import MarketingandPrivacySettings from '../Screens/MarketingandPrivacy/';
- import EditProfileSettings from '../Screens/EditProfileSettings/';
- import EditAddressSettings from '../Screens/EditAddressInformation/';
- import EditAddressAddNew from '../Screens/EditAddressAddNew/';
- import EditAddPhoneNumber from '../Screens/EditAddNewPhoneNumber/';
- import EditEmailInformation from '../Screens/EditEmailInformation/';
- import EditEmailAddNew from '../Screens/EditEmailInfoAddNew/';
- import EditAddFinancialInfo from '../Screens/EditAddFinancialInformation/';
- import EditFamilyMemberInfo from '../Screens/EditFamilyMemberInformation/';
- import EditFamilyDetail from '../Screens/EditFamilyMemberDetails/';
+import MarketingandPrivacySettings from '../Screens/MarketingandPrivacy/';
+import EditProfileSettings from '../Screens/EditProfileSettings/';
+import EditAddressSettings from '../Screens/EditAddressInformation/';
+import EditAddressAddNew from '../Screens/EditAddressAddNew/';
+import EditAddPhoneNumber from '../Screens/EditAddNewPhoneNumber/';
+import EditEmailInformation from '../Screens/EditEmailInformation/';
+import EditEmailAddNew from '../Screens/EditEmailInfoAddNew/';
+import EditAddFinancialInfo from '../Screens/EditAddFinancialInformation/';
+import EditFamilyMemberInfo from '../Screens/EditFamilyMemberInformation/';
+import EditFamilyDetail from '../Screens/EditFamilyMemberDetails/';
 
- // Account Manangement 
- import Dashboard from '../Screens/Dashboard/DashboardComponent';
- import TermsAndConditions from '../Screens/TermsAndConditions/TermsAndConditionsComponent';
- import DashboardAccounts from '../Screens/DashboardAccounts/';
- import OpenAccPageOne from '../Screens/OpenAccPageOne/';
- import OpenAccPageTwo from '../Screens/OpenAccPageTwo/';
- import OpenAccPageThree from '../Screens/OpenAccPageThree/';
- import OpenAccPageFour from '../Screens/OpenAccPageFour/';
- import OpenAccPageFive from '../Screens/OpenAccPageFive/';
- import OpenAccPageSix from '../Screens/OpenAccPageSix/';
- import SpecialtyAccPage from '../Screens/SpecialtyAccPage/SpecialtyAccPageComponent';
- import SpecialtyAccSubmit from '../Screens/SpecialtyAccSubmit/';
- import CollegePlanESA from '../Screens/CollegePlanESA/CollegePlanESAComponent';
- import CollegePlanPartOneTwo from '../Screens/CollegePlanPartOneTwo/CollegePlanPartOneTwoComponent';
- import CollegePlanPersonal from '../Screens/CollegePlanPersonal/CollegePlanPersonalComponent';
- import CollegePlanBeneficiary from '../Screens/CollegePlanBeneficiary/CollegePlanBeneficiaryComponent';
+// Account Manangement 
+import Dashboard from '../Screens/Dashboard/DashboardComponent';
+import TermsAndConditions from '../Screens/TermsAndConditions/TermsAndConditionsComponent';
+import DashboardAccounts from '../Screens/DashboardAccounts/';
+import OpenAccPageOne from '../Screens/OpenAccPageOne/';
+import OpenAccPageTwo from '../Screens/OpenAccPageTwo/';
+import OpenAccPageThree from '../Screens/OpenAccPageThree/';
+import OpenAccPageFour from '../Screens/OpenAccPageFour/';
+import OpenAccPageFive from '../Screens/OpenAccPageFive/';
+import OpenAccPageSix from '../Screens/OpenAccPageSix/';
+import SpecialtyAccPage from '../Screens/SpecialtyAccPage/SpecialtyAccPageComponent';
+import SpecialtyAccSubmit from '../Screens/SpecialtyAccSubmit/';
+import CollegePlanESA from '../Screens/CollegePlanESA/CollegePlanESAComponent';
+import CollegePlanPartOneTwo from '../Screens/CollegePlanPartOneTwo/CollegePlanPartOneTwoComponent';
+import CollegePlanPersonal from '../Screens/CollegePlanPersonal/CollegePlanPersonalComponent';
+import CollegePlanBeneficiary from '../Screens/CollegePlanBeneficiary/CollegePlanBeneficiaryComponent';
 
- // Others
- import InvestmentPlanInfo from '../Screens/InvestmentPlanInfo';
+// Others
+import InvestmentPlanInfo from '../Screens/InvestmentPlanInfo';
 
 // Menu
 import AccountServicesComponent from '../Screens/AccountServices';
 import DrawerComponent from '../Screens/Menu/DrawerComponent';
-import TabMoreComponent from '../Screens/Menu/TabMoreComponent';
 import Screen1Component from '../Screens/NotificationTab/Screen1';
 import Screen2Component from '../Screens/NotificationTab/Screen2';
-import MoreModalComponent from '../Screens/Menu/MoreModalComponent';
 import { GHeaderComponent } from '../CommonComponents';
+import TabBar from '../Screens/Menu/TabBar';
+
+import { store } from '../Shared/Store/index';
+import { setModalVisible } from '../Shared/Actions/TabMoreAction';
+import { tabMoreActions } from '../Shared/Actions';
+import LineChartComponent from '../Screens/Charts/LineChartComponent';
+import ChartComponent from '../Screens/Charts';
+
 
 // Notification Tabs
 const NotificationTabNavigator = createMaterialTopTabNavigator(
@@ -81,13 +89,13 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
                 borderBottomWidth: 2,
             },
         },
-        navigationOptions:{
-            header:null
+        navigationOptions: {
+            header: null
         },
     }
 );
 
-const AccountStack=createStackNavigator({
+const AccountStack = createStackNavigator({
     dashboard: {
         screen: Dashboard,
         navigationOptions: {
@@ -185,80 +193,94 @@ const AccountStack=createStackNavigator({
         }
     },
 });
-
+    
 //  Bottom Tabs
 const BottomTabNavigator = createBottomTabNavigator({
     myVCM: {
-        screen: AccountStack,
-        navigationOptions:{
+        screen: Screen1Component, // AccountStack,
+        navigationOptions: {
+            tabBarIcon: ({ tintColor }) => <GIcon name={'home'}
+                type="material"
+                size={20}
+                color={tintColor} />,
             tabBarLabel: 'MyVCM',
-        },
+        }
+
     },
     portfolio: {
-        screen: AccountServicesComponent,
+        screen: LineChartComponent,
         navigationOptions: {
+            tabBarIcon: ({ tintColor }) => <GIcon name={'note'}
+            type="material"
+            size={20}
+            color={tintColor} />,
             tabBarLabel: 'Portfolio',
         },
     },
     invest: {
-        screen: InvestmentPlanInfo,
+        screen: AccountServicesComponent,
         navigationOptions: {
+            tabBarIcon: ({ tintColor }) => <GIcon name={'insert-chart'}
+            type="material"
+            size={20}
+            color={tintColor} />,
             tabBarLabel: 'Invest',
         },
     },
     learn: {
-        screen: ListView,
+        screen: ChartComponent,
         navigationOptions: {
+            tabBarIcon: ({ tintColor }) => <GIcon name={'library-books'}
+            type="material"
+            size={20}
+            color={tintColor} />,
             tabBarLabel: 'Learn',
         },
     },
-    more: {
-        screen:TermsAndConditions,
-        navigationOptions: {
-            tabBarLabel: 'More',
-        },
-    },
+    // more: {
+    //     screen: MoreModalComponent,
+    //     navigationOptions: ({ navigation }) => ({
+    //         tabBarOnPress: ({ defaultHandler }) => {
+    //             defaultHandler();
+    //             // navigation.navigate('more')
+    //             store.dispatch(tabMoreActions.setModalVisible(true));
+    //         },
+    //         tabBarLabel: 'More',
+    //     }),
+    // },
 },
     {
-        defaultNavigationOptions: ({ navigation }) => ({
-            tabBarIcon: ({ focused, horizontal, tintColor }) => {
-                const { routeName } = navigation.state;
-                let iconName;
-                if (routeName === 'myVCM') {
-                    iconName = 'home';
-                } else if (routeName === 'portfolio') {
-                    iconName = 'note';
-                } else if (routeName === 'invest') {
-                    iconName = 'insert-chart';
-                }
-                else if (routeName === 'learn') {
-                    iconName = 'library-books';
-                } else {
-                    iconName = 'more';
-                }
-                return (
-                    <GIcon
-                        name={iconName}
-                        type="material"
-                        size={20}
-                        color={tintColor}
-                    />
-                );
-            },
-            tabBarOnPress: ({ defaultHandler }) => {
-                const { routeName, key } = navigation.state;
-                if (routeName === 'more') {
-                   // console.warn('onPress:', navigation);
-                    navigation.goBack();
-                }
-                defaultHandler();
-
-                if (navigation && navigation.isFocused()) {
-                    //  console.warn('isFocused:', navigation.state);
-                }
-
-            }
-        }),
+        tabBarComponent: TabBar,
+        tabBarOptions: {
+            activeTintColor: "#4F4F4F",
+            inactiveTintColor: "#ddd"
+          }
+        // defaultNavigationOptions: ({ navigation }) => ({
+        //     tabBarIcon: ({ focused, horizontal, tintColor }) => {
+        //         const { routeName } = navigation.state;
+        //         let iconName;
+        //         if (routeName === 'myVCM') {
+        //             iconName = 'home';
+        //         } else if (routeName === 'portfolio') {
+        //             iconName = 'note';
+        //         } else if (routeName === 'invest') {
+        //             iconName = 'insert-chart';
+        //         }
+        //         else if (routeName === 'learn') {
+        //             iconName = 'library-books';
+        //         } else {
+        //             iconName = 'more';
+        //         }
+        //         return (
+        //             <GIcon
+        //                 name={iconName}
+        //                 type="material"
+        //                 size={20}
+        //                 color={tintColor}
+        //             />
+        //         );
+        //     }
+        // }),
     }
 );
 const DrawerNavigator = createDrawerNavigator({
@@ -357,8 +379,8 @@ const DrawerNavigator = createDrawerNavigator({
     // Account Management screens
 
 }, {
-    navigationOptions:{
-        header:null
+    navigationOptions: {
+        header: null
     },
     initialRouteName: 'Home',
     contentComponent: DrawerComponent,
@@ -369,9 +391,9 @@ const DashboardStack = createStackNavigator({
     notificationTabs: NotificationTabNavigator,
     draweriOS: {
         screen: DrawerComponent,
-    },
-    moreModal: {
-        screen: MoreModalComponent,
+        navigationOptions: {
+            header: null,
+        }
     },
     listView: {
         screen: ListView,

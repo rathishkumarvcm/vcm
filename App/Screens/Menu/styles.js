@@ -1,23 +1,27 @@
 import { StyleSheet } from "react-native";
-import {scaledHeight,scaledWidth } from '../../Utils/Resolution';
+import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
 
 const styles = StyleSheet.create({
-    tabMoreContainer:{ backgroundColor: 'rgba(0,0,0,0.3)',
-     flex: 1,width: '100%',
-     // justifyContent: 'center'
-     },
-    modalViewStyle:{
-     flexDirection: 'column',flex:1,
-     marginLeft:'30%', 
-     padding:scaledHeight(5),
-       // marginHorizontal: 20, marginVertical: 50,
-        backgroundColor:"pink"
+    rightModalStyle: {
+        backgroundColor: 'transparent', flex: 1,
+        margin: 0
+    },
+    rightModalViewStyle: {
+        alignSelf: 'flex-end', width: '60%', backgroundColor: 'white', height: '100%',
+        bottom: 0, left: 0, right: 0
+    },
+    modalViewStyle: {
+        flexDirection: 'column', flex: 1,
+        marginLeft: '30%',
+        padding: scaledHeight(5),
+        // marginHorizontal: 20, marginVertical: 50,
+        backgroundColor: "pink"
     },
     container: { flex: 1, width: '100%', justifyContent: 'center', alignItems: 'flex-start', backgroundColor: 'white' },
-    scrollViewStyle:{ flex: 1, width: "100%" },
-    columnContainer:{ flexDirection: 'column', marginHorizontal: 10 },
+    scrollViewStyle: { flex: 1, width: "100%" },
+    columnContainer: { flexDirection: 'column', marginHorizontal: 10 },
     headerContainer: {
-        marginHorizontal: 20,marginVertical:25,
+        marginHorizontal: 20, marginVertical: 25,
         flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'
     },
     menuContainer: {
@@ -39,42 +43,42 @@ const styles = StyleSheet.create({
     menuIcon: {
         width: 25,
         height: 25,
-        marginHorizontal:5,
+        marginHorizontal: 5,
         padding: 5
     },
-    buttonGoActionStyle: {        
-        width: scaledWidth(100),      
+    buttonGoActionStyle: {
+        width: scaledWidth(100),
         height: scaledHeight(50),
         backgroundColor: '#544A54',
         alignItems: 'center',
         alignContent: 'center',
-        justifyContent: 'center',       
-        marginLeft:'2%',   
-        marginRight:'2%',       
-    },   
+        justifyContent: 'center',
+        marginLeft: '2%',
+        marginRight: '2%',
+    },
     buttonGoTextStyle: {
         fontSize: scaledHeight(16),
-        color: '#544A54',      
+        color: '#544A54',
         width: '100%',
-        textAlign: 'center',        
+        textAlign: 'center',
     },
-    buttonCancelActionStyle:{
-        width: scaledWidth(100),      
+    buttonCancelActionStyle: {
+        width: scaledWidth(100),
         height: scaledHeight(50),
-        borderColor:'#544A54',
-        borderWidth:1,
+        borderColor: '#544A54',
+        borderWidth: 1,
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
         alignContent: 'center',
         justifyContent: 'center',
-        marginLeft:'2%',   
-        marginRight:'2%',
+        marginLeft: '2%',
+        marginRight: '2%',
     },
-    buttonLogoutStyle:{
-        width: scaledWidth(100),      
+    buttonLogoutStyle: {
+        width: scaledWidth(100),
         height: scaledHeight(50),
-        borderColor:'#544A54',
-        borderWidth:1,
+        borderColor: '#544A54',
+        borderWidth: 1,
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
         alignContent: 'center',
@@ -83,21 +87,21 @@ const styles = StyleSheet.create({
         // marginRight:'2%',
     },
     modalContainerStyle: {
-        backgroundColor: '#FFFFFF',       
+        backgroundColor: '#FFFFFF',
         paddingRight: '4%',
         paddingLeft: '4%',
         paddingTop: scaledHeight(15),
-        paddingBottom: scaledHeight(15), 
-        marginTop:scaledHeight(80), 
+        paddingBottom: scaledHeight(15),
+        marginTop: scaledHeight(80),
 
     },
     buttonCancelTextStyle: {
         fontSize: scaledHeight(16),
-        color: '#FFFFFF',      
+        color: '#FFFFFF',
         width: '100%',
-        textAlign: 'center',       
+        textAlign: 'center',
     },
-    dividerLine:{ height: 1, backgroundColor: 'lightgray', marginHorizontal: 15 }
+    dividerLine: { height: 1, backgroundColor: 'lightgray', marginHorizontal: 15 }
 
 });
 

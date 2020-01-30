@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import { Provider } from "react-redux";
 import { Text, AppState } from 'react-native';
-import AppNavigator from './routes';
-// import AppStackNavigator from './Navigation/index';
-import store from './Shared/Store/index';
 import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
 import { Auth } from "aws-amplify";
+// import { NavigationActions } from 'react-navigation';
+ import AppNavigator from './routes';
+import AppStackNavigator from './Navigation/index';
+import store from './Shared/Store/index';
+import { setTopLevelNavigator, setPreviousScreen } from './Navigation/navigationService';
 import { scaledHeight } from './Utils/Resolution';
-import { showAlertWithCancelButton,GErrorBoundaries } from './CommonComponents'
-import { NavigationActions } from 'react-navigation';
+import { showAlertWithCancelButton, GErrorBoundaries } from './CommonComponents';
 
 /*
 Create application store and its inital value when app launch
@@ -42,16 +43,16 @@ class RootComponent extends Component {
   }
 
   componentDidMount() {
-   // AppState.addEventListener('change', this._handleAppStateChange);
+    // AppState.addEventListener('change', this._handleAppStateChange);
 
     setInterval(() => {
       RNSecureKeyStore.get("jwtToken")
         .then((setValue) => {
           RNSecureKeyStore.get("currentSession")
             .then((res) => {
-              if (sessionId == undefined) {
+              if (sessionId === undefined) {
                 sessionId = res;
-              } else if (sessionId == res) {
+              } else if (sessionId === res) {
                 showAlertWithCancelButton(
                   "Session Time Out",
                   "Your session is about to expire. Please click Cancel to avoid being Sign out.",
@@ -59,7 +60,7 @@ class RootComponent extends Component {
                   "Sign Out",
                   null,
                   () => this.signOut()
-                )
+                );
                 // alert("TIME OUT IS CALLING");
                 this.setState({
                   timeOut: true
@@ -108,14 +109,40 @@ class RootComponent extends Component {
     this.setState({ appState: nextAppState });
   };
 
+  getActiveRouteName(navigationState) {
+    if (!navigationState) {
+      return null;
+    }
+    const route = navigationState.routes[navigationState.index];
+    // dive into nested navigators
+    if (route.routes) {
+      return this.getActiveRouteName(route);
+    }
+    return route.routeName;
+  }
+
+  navigationStateChange = (prevState, currentState, action) => {
+    const currentScreen = this.getActiveRouteName(currentState);
+    const prevScreen = this.getActiveRouteName(prevState);
+
+    if (prevScreen !== currentScreen) {
+      setPreviousScreen(currentScreen);
+    }
+  }
 
   render() {
     return (
-    <GErrorBoundaries>
+      <GErrorBoundaries>
         <Provider store={store}>
-          <AppNavigator ref={nav => {this.navigator = nav; }} />
-      </Provider>
-    </GErrorBoundaries>
+          <AppNavigator
+            ref={navigatorRef => {
+              this.navigator = navigatorRef;
+              setTopLevelNavigator(navigatorRef);
+            }}
+            onNavigationStateChange={this.navigationStateChange}
+          />
+        </Provider>
+      </GErrorBoundaries>
     );
   }
 }
