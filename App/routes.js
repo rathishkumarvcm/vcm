@@ -180,6 +180,8 @@ import LineChartComponent from './Screens/Charts/LineChartComponent';
 import ChartComponent from './Screens/Charts';
 import TabBar from './Screens/Menu/TabBar';
 
+// Dashboard
+import AccountPositions from './Screens/AccountPositions/AccountPositionsComponent';
 
 // Notification Tabs
 const NotificationTabNavigator = createMaterialTopTabNavigator(
@@ -1204,6 +1206,12 @@ const AppNavigator = createStackNavigator({
     },
     physicalWayManageBeneficiary: {
         screen: PhysicalWayManageBeneficiaryComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    accountPositions: {
+        screen: AccountPositions,
         navigationOptions: {
             header: null,
         }

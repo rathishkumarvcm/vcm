@@ -118,6 +118,11 @@ class DashboardComponent extends Component {
         navigate('openAccPageFive',{SpecialMFA:specialMFAUserType});
     }
 
+    navigateAccountPositions = () => {                     
+        const {navigation} = this.props;
+        navigation.navigate('accountPositions'); 
+    }
+
     /*----------------------
                                  Render Methods
                                                                  -------------------------- */
@@ -157,7 +162,7 @@ class DashboardComponent extends Component {
                         </Text>                       
                     </View>
                     <View style={styles.dashboardItemContainer}>
-                        <Text style={styles.dashboardTileText} onPress={this.selectTheState}>
+                        <Text style={styles.dashboardTileText} onPress={this.navigateAccountPositions}>
                             Account Positions
                         </Text>                       
                     </View>
