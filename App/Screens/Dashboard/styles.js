@@ -57,6 +57,28 @@ const styles = StyleSheet.create({
 
     },
 
+    dashboardItemContainer: {
+        alignItems:'center',
+        backgroundColor:'#FFFFFF',
+        borderColor:'#5D83AE99',        
+        borderRadius:6,
+        borderWidth:0.8,
+        flexDirection:'row',
+        height:scaledHeight(90),
+        justifyContent: 'center',
+        marginBottom:scaledHeight(5),
+        marginHorizontal:'2%',
+        marginTop:scaledHeight(10),      
+        paddingHorizontal:'6%',
+        paddingVertical:scaledHeight(10),        
+        width:'45%',         
+    },
+    dashboardListContainer:{
+        alignSelf:'center',
+        flexDirection:'row',
+        justifyContent:'center',
+        width:'90%'
+    },
     dashboardSection: {
         alignItems: 'center',
         marginLeft :'4%',
@@ -67,9 +89,14 @@ const styles = StyleSheet.create({
         color: '#5D83AE',
         fontSize: scaledHeight(44),
         fontWeight: 'bold',
-        marginTop: scaledHeight(116),
+        marginTop: scaledHeight(16),
         opacity:0.25
 
+    },
+    dashboardTileText:{
+        color: '#56565A',
+        fontSize: scaledHeight(14),
+        fontWeight: 'bold',       
     },
     disclaimerTitleTxt: { 
         color: '#56565A',
@@ -171,7 +198,10 @@ const styles = StyleSheet.create({
     scrollView: {
         flex: .85
     },
-
+    welcomeText:{        
+        alignItems:'center',
+        marginVertical: scaledHeight(15),
+    },   
 });
 
 

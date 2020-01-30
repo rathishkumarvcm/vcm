@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView,} from 'react-native';
 import RNSecureKeyStore from 'react-native-secure-key-store';
 import PropTypes from "prop-types";
 import styles from './styles';
-import { GButtonComponent, GHeaderComponent, GFooterSettingsComponent, GModalComponent } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GModalComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import AppUtils from '../../Utils/AppUtils';
 import { scaledHeight } from '../../Utils/Resolution';
@@ -40,11 +40,11 @@ class DashboardComponent extends Component {
             .then((value) => {
                 this.setState({
                     idToken: value
-                })
+                });
             }).catch((error) => {
                 this.setState({
                     idToken: ""
-                })
+                });
             });
 
         
@@ -52,11 +52,11 @@ class DashboardComponent extends Component {
             .then((value) => {
                 this.setState({
                     accessToken: value
-                })
+                });
             }).catch((error) => {
                 this.setState({
                     accessToken: ""
-                })
+                });
             });
 
         
@@ -64,11 +64,11 @@ class DashboardComponent extends Component {
             .then((value) => {
                 this.setState({
                     refreshToken: value
-                })
+                });
             }).catch((error) => {
                 this.setState({
                     refreshToken: ""
-                })
+                });
             });
 
     }
@@ -134,11 +134,49 @@ class DashboardComponent extends Component {
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.scrollView}>          
                 
-                    <View style={styles.dashboardSection}>
-                        <Text>{`welcome ${memberId}`}</Text>
-                        <Text style={styles.dashboardText}>
-                            {gblStrings.dashBoard.dashboard}
-                        </Text>
+                <View style={styles.welcomeText}>
+                    <Text>{`Welcome ${memberId}`}</Text>       
+                </View>                  
+
+                <View style={styles.dashboardListContainer}>                                  
+                        <View style={styles.dashboardItemContainer}>
+                            <Text style={styles.dashboardTileText} onPress={this.selectTheState}>
+                                Portfolio Analysis
+                            </Text>                       
+                        </View>
+                    <View style={styles.dashboardItemContainer}>
+                        <Text style={styles.dashboardTileText} onPress={this.selectTheState}>
+                            Account Summary
+                        </Text>                       
+                    </View>
+                </View>
+                <View style={styles.dashboardListContainer}>               
+                    <View style={styles.dashboardItemContainer}>
+                        <Text style={styles.dashboardTileText} onPress={this.selectTheState}>
+                            Money & Asset Movement
+                        </Text>                       
+                    </View>
+                    <View style={styles.dashboardItemContainer}>
+                        <Text style={styles.dashboardTileText} onPress={this.selectTheState}>
+                            Account Positions
+                        </Text>                       
+                    </View>
+                </View>
+                <View style={styles.dashboardListContainer}>               
+                    <View style={styles.dashboardItemContainer}>
+                        <Text style={styles.dashboardTileText} onPress={this.selectTheState}>
+                            Transactions 
+                        </Text>                       
+                    </View>
+                    <View style={styles.dashboardItemContainer}>
+                        <Text style={styles.dashboardTileText} onPress={this.selectTheState}>
+                            Add Holding Group
+                        </Text>                       
+                    </View>
+                </View>
+
+                    <View style={styles.dashboardSection}>            
+
                         <GButtonComponent
                             buttonStyle={styles.openAccBtn}
                             buttonText={gblStrings.dashBoard.openAnAccount}

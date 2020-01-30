@@ -179,6 +179,9 @@ import Screen1Component from './Screens/NotificationTab/Screen1';
 import Screen2Component from './Screens/NotificationTab/Screen2';
 import MoreModalComponent from './Screens/Menu/MoreModalComponent';
 
+// Dashboard
+import AccountPositions from './Screens/AccountPositions';
+
 // Notification Tabs
 const NotificationTabNavigator = createMaterialTopTabNavigator(
     {
@@ -1146,7 +1149,13 @@ const AppNavigator = createStackNavigator({
         navigationOptions: {
             header: null,
         }
-    }
+    },
+    accountPositions: {
+        screen: AccountPositions,
+        navigationOptions: {
+            header: null,
+        }
+    },
 },
     {
         initialRouteName: "login"
