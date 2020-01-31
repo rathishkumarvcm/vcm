@@ -103,6 +103,8 @@ import ManageIntrestedPartiesComponent from './Screens/ManageIntrestedParties';
 import AddNewIntrestedPartiesComponent from './Screens/AddNewIntrestedParties';
 import VerifyIntrestedPartiesComponent from './Screens/VerifyIntrestedParties';
 import EditManageIntrestedPartiesComponent from './Screens/EditManageIntrestedParties';
+import addAccToInterestedParty from './Screens/AddAccToInterestedParty';
+
 import ManageBeneficiariesComponent from './Screens/ManageBeneficiaries';
 import AddNewBeneficiaryComponent from './Screens/AddNewBeneficiary';
 import EditManageBeneficiariesComponent from './Screens/EditManageBeneficiaries';
@@ -1148,6 +1150,12 @@ const AppNavigator = createStackNavigator({
         screen: RMDCalculatorComponent,
         navigationOptions: {
             header: null,
+        }
+    },
+    addAccToInterestedParty: {
+        screen: AddAccToInterestedPartyComponent,
+        navigationOptions: {
+            header: null
         }
     }
 },
