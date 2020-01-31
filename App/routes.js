@@ -182,7 +182,10 @@ import TabBar from './Screens/Menu/TabBar';
 import FloatingButtonComponent from './Screens/ServiceRequest/FloatingButtonScreen';
 
 // Dashboard
-import AccountPositions from './Screens/AccountPositions';  
+import AccountPositions from './Screens/AccountPositions';
+
+//RMD Calculator
+import RMDCalculatorComponent from './Screens/RMDCalculator';
 
 // Notification Tabs
 const NotificationTabNavigator = createMaterialTopTabNavigator(
@@ -1137,6 +1140,12 @@ const AppNavigator = createStackNavigator({
     },
     accountPositions: {
         screen: AccountPositions,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    rmdCalculator: {
+        screen: RMDCalculatorComponent,
         navigationOptions: {
             header: null,
         }

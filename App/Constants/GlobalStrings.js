@@ -1464,6 +1464,10 @@ export default {
         automaticInvPlan: "Automatic Investment Plan",
         exchangeYourFund:"Exchange your Fund"
 
+    },
+    rmdCalculator: {
+        rmdCalculator_header: "RMD Calculator",
+        rmdCalculator_info: "Use this calculator to determine your Required Minimum Distribution."
     }
 
 };
