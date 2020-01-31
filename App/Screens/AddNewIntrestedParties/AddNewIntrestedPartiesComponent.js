@@ -66,18 +66,6 @@ class addNewIntrestedPartiesComponent extends Component {
     }
 
     componentDidMount() {
-        // const { masterLookupStateData, getCompositeLookUpData } = this.props;
-        // const payload = [];
-        // const compositePayloadData = [
-        // ];
-        // for (let i = 0; i < compositePayloadData.length; i += 1) {
-        //     const tempKey = compositePayloadData[i];
-        //     if (this.props && masterLookupStateData && !masterLookupStateData[tempKey]) {
-        //         payload.push(tempKey);
-        //     }
-        // }
-        // getCompositeLookUpData(payload);
-        // this.updateState();
     }
 
     componentDidUpdate(prevProps) {
@@ -123,8 +111,9 @@ class addNewIntrestedPartiesComponent extends Component {
     }
 
     addTaggedAccount = () => {
-        let accList = this.state.accountList;
-        let accountDetails = {
+        const { accountList } = this.state;
+        const accList = accountList;
+        const accountDetails = {
             accountType: "",
             accountTypeFlag: false,
             accountTypeMsg: "",
@@ -132,8 +121,8 @@ class addNewIntrestedPartiesComponent extends Component {
             accountNameFlag: false,
             accountNameMsg: "",
             accountNumber: "",
-            accountNameFlag: true,
-            accountNameMsg: "",
+            accountNumberFlag: true,
+            accountNumberMsg: "",
             startDate: "",
             startDateFlag: true,
             startDateMsg: "",
@@ -364,12 +353,8 @@ class addNewIntrestedPartiesComponent extends Component {
         }));
     }
 
-    selectedRelationDropDownValue = (value) => {
-        this.onUpdateField("personal", "relation", value);
-    }
-
     selectedDropDownValue = (value) => {
-        // this.onUpdateField("personal", "relation", value);
+        this.onUpdateField("personal", "relation", value);
     }
 
     /* -------------------------- Button Events --------------------------------- */
@@ -409,9 +394,8 @@ class addNewIntrestedPartiesComponent extends Component {
             "state": personal.stateValue,
             "accountTagged": accountList
         };
-        // removed isAPi calling from if
         if (personal.addValidation && personal.addressLine1 && personal.addressLine2) {
-            //   navigation.navigate("verifyIntrestedParties", { addedData: obj, add: true });
+            navigation.navigate("verifyIntrestedParties", { addedData: obj, add: true });
         }
     }
 
@@ -419,7 +403,7 @@ class addNewIntrestedPartiesComponent extends Component {
 
     render() {
         const { stateCityData, navigation } = this.props;
-        const { personal, accountList } = this.state;
+        const { personal, accountList, taggedAccountText } = this.state;
         return (
             <View style={styles.container}>
                 {
@@ -567,8 +551,8 @@ class addNewIntrestedPartiesComponent extends Component {
                                 value={personal.city}
                                 maxLength={gblStrings.maxLength.city}
                                 onChangeText={this.onChangeText("personal", "city")}
-                            // errorFlag={!personal.zipCodeValidation}
-                            // errorText={personal.zipCodeValiMsg}
+                                errorFlag={!personal.zipCodeValidation}
+                                errorText={personal.zipCodeValiMsg}
                             />
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.stateTerritory}
@@ -580,56 +564,9 @@ class addNewIntrestedPartiesComponent extends Component {
                                 value={personal.stateValue}
                                 maxLength={gblStrings.maxLength.state}
                                 onChangeText={this.onChangeText("personal", "stateValue")}
-                            // errorFlag={!personal.zipCodeValidation}
-                            // errorText={personal.zipCodeValiMsg}
+                                errorFlag={!personal.zipCodeValidation}
+                                errorText={personal.zipCodeValiMsg}
                             />
-                            {/* <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.cityAndState}
-                            </Text> */}
-                            {/* <View style={styles.stateCityView}>
-                                <View style={styles.customCityView}>
-                                    <GInputComponent
-                                        propInputStyle={styles.customTxtBox}
-                                        placeholder={gblStrings.accManagement.enterCity}
-                                        value={personal.city}
-                                        editable={false}
-                                    />
-                                </View>
-                                <View style={styles.customStateView}>
-                                    <GInputComponent
-                                        propInputStyle={styles.customTxtBox}
-                                        placeholder={gblStrings.accManagement.enterState}
-                                        value={personal.stateValue}
-                                        editable={false}
-                                    />
-                                </View>
-                            </View> */}
-                            {/* <View style={styles.blockMarginTop}>
-                                <Text style={styles.preferdTimeTxt}>{gblStrings.accManagement.preferredTimePeriod}</Text>
-                                <Text style={styles.lblTxt}>{gblStrings.accManagement.from}</Text>
-                                <GDateComponent
-                                    inputref={this.setInputRef("startDate")}
-                                    date={personal.startDate}
-                                    placeholder="MM-DD-YYYY"
-                                    dateTextLayout={styles.dateTextStyle}
-                                    componentStyle={styles.dateStyle}
-                                    maxDate={personal.endDate ? personal.endDate : ""}
-                                    errorFlag={!personal.startDateValidation}
-                                    onDateChange={this.onChangeText("personal", "startDate")}
-                                />
-                                <Text style={styles.lblTxt}>{gblStrings.accManagement.to}</Text>
-                                <GDateComponent
-                                    inputref={this.setInputRef("endDate")}
-                                    date={personal.endDate}
-                                    placeholder="MM-DD-YYYY"
-                                    dateTextLayout={styles.dateTextStyle}
-                                    componentStyle={styles.dateStyle}
-                                    minDate={personal.startDate ? personal.startDate : ""}
-                                    errorFlag={!personal.endDateValidation}
-                                    onDateChange={this.onChangeText("personal", "endDate")}
-                                />
-                                {!personal.startDateValidation && <Text style={styles.errMsg}>{gblStrings.accManagement.validDateSelect}</Text>}
-                            </View> */}
                         </View>
                     </View>
 
@@ -708,11 +645,11 @@ class addNewIntrestedPartiesComponent extends Component {
                                         </View>
                                     </View>
                                 </View>
-                            )
+                            );
                         })}
                         <View style={styles.addAccountView}>
                             <TouchableOpacity onPress={this.addTaggedAccount}>
-                                <Text style={styles.editBtnText}>{`+ ${this.state.taggedAccountText}`}</Text>
+                                <Text style={styles.editBtnText}>{`+ ${taggedAccountText}`}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -746,18 +683,14 @@ class addNewIntrestedPartiesComponent extends Component {
 
 addNewIntrestedPartiesComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    masterLookupStateData: PropTypes.instanceOf(Object),
     stateCityData: PropTypes.instanceOf(Object),
-    getCompositeLookUpData: PropTypes.func,
     getAddressFormat: PropTypes.func,
     getStateCity: PropTypes.func
 };
 
 addNewIntrestedPartiesComponent.defaultProps = {
     navigation: {},
-    masterLookupStateData: {},
     stateCityData: {},
-    getCompositeLookUpData: () => { },
     getAddressFormat: () => { },
     getStateCity: () => { }
 };

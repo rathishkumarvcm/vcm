@@ -35,13 +35,6 @@ const styles = StyleSheet.create({
     fontSize: scaledHeight(27),
     fontWeight: "bold"
   },
-  containerView: {
-    alignSelf: "center",
-    borderColor: "#5D83AE99",
-    borderWidth: scaledHeight(1),
-    marginBottom: scaledHeight(15),
-    width: "92%",
-  },
   containerHeaderView: {
     backgroundColor: "#F1F1F1",
     borderBottomColor: "#5D83AE99",
@@ -49,6 +42,13 @@ const styles = StyleSheet.create({
     height: scaledHeight(100),
     justifyContent: 'center',
     paddingLeft: "4%"
+  },
+  containerView: {
+    alignSelf: "center",
+    borderColor: "#5D83AE99",
+    borderWidth: scaledHeight(1),
+    marginBottom: scaledHeight(15),
+    width: "92%",
   },
   contentContainerStyle: {
     alignSelf: 'flex-start',
@@ -92,15 +92,6 @@ const styles = StyleSheet.create({
     color: "#A7A7A7",
     fontSize: scaledHeight(14)
   },
-  innerHeaderView: {
-    borderBottomColor: "#5D83AE99",
-    borderBottomWidth: scaledHeight(1),
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingLeft: "4%",
-    paddingRight: "4%",
-    paddingVertical: "4%",
-  },
   innerContainerView: {
     alignSelf: "center",
     borderColor: "#5D83AE99",
@@ -110,6 +101,15 @@ const styles = StyleSheet.create({
     marginBottom: scaledHeight(10),
     marginTop: scaledHeight(10),
     width: "95%"
+  },
+  innerHeaderView: {
+    borderBottomColor: "#5D83AE99",
+    borderBottomWidth: scaledHeight(1),
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingLeft: "4%",
+    paddingRight: "4%",
+    paddingVertical: "4%",
   },
   lblLine: {
     backgroundColor: "#707070",
@@ -174,12 +174,12 @@ const styles = StyleSheet.create({
   },
   shadowView: {
     backgroundColor: "white",
-    flexDirection: 'row',
     elevation: 5,
+    flexDirection: 'row',
     shadowColor: "#000",
     shadowOffset: {
+      height: 1,
       width: 0,
-      height: 1
     },
     shadowOpacity: 0.4,
     shadowRadius: 1.41
@@ -192,8 +192,8 @@ const styles = StyleSheet.create({
   },
   shortContentValueText: {
     color: "#54565B",
-    fontWeight: "400",
     fontSize: scaledHeight(16),
+    fontWeight: "400",
     lineHeight: 24
   },
   subHeadlineText: {

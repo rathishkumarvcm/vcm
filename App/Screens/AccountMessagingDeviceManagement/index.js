@@ -1,2 +1,3 @@
 import AccountMessagingDeviceManagementComponent from './AccountMessagingDeviceManagementContainer';
+
 export default AccountMessagingDeviceManagementComponent;
