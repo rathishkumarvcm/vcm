@@ -2,10 +2,21 @@ import { StyleSheet } from "react-native";
 import { scaledHeight } from "../../Utils/Resolution";
 
 const styles = StyleSheet.create({
+  addAccountView: {
+    alignSelf: "flex-start",
+    marginTop: scaledHeight(25),
+    paddingLeft:'4%'
+  },
   container: {
     flex: 1,
     backgroundColor: "#F9FBFC",
     width: "100%"
+  },
+  editBtnText: {
+    color: "#5D83AE",
+    fontSize: scaledHeight(16),
+    fontWeight: "600",
+    lineHeight: scaledHeight(22)
   },
   mainHeadingView: {
     width: "100%",
@@ -71,9 +82,12 @@ const styles = StyleSheet.create({
   flexMainView: {
     flex: 0.85
   },
-  footerView: {
-    marginTop: scaledHeight(15),
-    marginBottom: scaledHeight(15)
+  tagAccHeadingView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+   // marginTop:'4%',
+    paddingLeft: '4%',
+    paddingRight: '4%',
   },
   titleHeadingView: {
     paddingLeft: "4%"
@@ -118,8 +132,8 @@ const styles = StyleSheet.create({
   },
   editBtnText: {
     color: "#5D83AE",
-    fontSize: scaledHeight(15),
-    fontWeight: "400"
+    fontSize: scaledHeight(16),
+    fontWeight: "600"
   },
   innerContainerView: {
     borderColor: "#5D83AE99",
@@ -205,39 +219,10 @@ const styles = StyleSheet.create({
     marginTop: scaledHeight(9),
     width: '100%',
   },
-  customCompTxtBox: {
-    marginTop: scaledHeight(9),
-    width: '85%',
-  },
-  circleView: {
-    borderColor: "#DEDEDF",
-    borderWidth: scaledHeight(1),
-    borderRadius: scaledHeight(25),
-    width: scaledHeight(30),
-    height: scaledHeight(30),
-    marginTop: scaledHeight(15),
-    marginLeft: '4%',
-    paddingTop: '1%',
-    alignItems: 'center'
-  },
-  customStateView: {
-    marginTop: scaledHeight(9),
-    width: '40%',
-  },
-  customCityView: {
-    marginTop: scaledHeight(9),
-    width: '50%',
-  },
   optionalTxt: {
     color: '#6F7070',
     fontSize: scaledHeight(14),
     fontWeight: 'normal',
-  },
-  stateCityView: {
-    flexDirection: 'row',
-    width: '100%',
-    justifyContent: 'space-between',
-    flex: 1,
   },
   preferdTimeTxt: {
     color: '#333333DE',
@@ -319,7 +304,7 @@ const styles = StyleSheet.create({
     marginLeft: 0
   },
   dropDownLayout: {
-    marginTop: scaledHeight(18),
+    //marginTop: scaledHeight(18),
     paddingLeft: 0,
     marginLeft:0,
     marginRight:0

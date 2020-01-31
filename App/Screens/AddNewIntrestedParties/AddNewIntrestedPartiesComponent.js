@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import PropTypes from "prop-types";
 import styles from './styles';
-import { GIcon, GHeaderComponent, GLoadingSpinner, GFooterSettingsComponent, GInputComponent, GDateComponent, GDropDownComponent, GButtonComponent } from '../../CommonComponents';
+import { GHeaderComponent, GLoadingSpinner, GFooterSettingsComponent, GInputComponent, GDateComponent, GDropDownComponent, GButtonComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 import { nameRegex, emailRegex, zipCodeRegex } from '../../Constants/RegexConstants';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
-let relationData = [
-    { "key": "child", "value": "Child" },
-    { "key": "fiance", "value": "Fiancé" },
-    { "key": "spouse", "value": "Spouse" }
+const accountTypeData = [
+    { "key": "1", "value": "Traditional" },
+    { "key": "2", "value": "Roth" },
+    { "key": "3", "value": "Individual" },
+    { "key": "4", "value": "UTMA" }
+];
+
+const accountNameData = [
+    { "key": "1", "value": "Lorem Ispum" },
+    { "key": "2", "value": "Lorem Ispum" }
 ];
 
 class addNewIntrestedPartiesComponent extends Component {
@@ -19,17 +25,12 @@ class addNewIntrestedPartiesComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isSavedSuccess: false,
-            isCollapsable: false,
-            collapseIcon: "-",
-            accountData: {},
             isZipApiCalling: false,
             isAddressApiCalling: false,
             personal: {
                 firstName: "",
                 middleName: "",
                 lastName: "",
-                relation: "",
                 email: "",
                 company: "",
                 addressLine1: "",
@@ -37,15 +38,10 @@ class addNewIntrestedPartiesComponent extends Component {
                 zipCode: "",
                 city: "",
                 stateValue: "",
-                startDate: "",
-                endDate: "",
                 fnameValidation: true,
                 fnameValiMsg: "",
                 lnameValidation: true,
                 lnameValiMsg: "",
-                relationValidation: false,
-                relationDropDown: false,
-                relationValiMsg: '',
                 emailValidation: true,
                 companyValidation: true,
                 addressLine1Validation: true,
@@ -54,28 +50,34 @@ class addNewIntrestedPartiesComponent extends Component {
                 addressValiMsg: "",
                 zipCodeValidation: true,
                 zipCodeValiMsg: "",
-                startDateValidation: true,
-                startDateValiMsg: "",
-                endDateValidation: true,
-                endDateValiMsg: "",
-            }
+                accounts: []
+            },
+            addedAccount: {
+                accountType: "",
+                accountName: "",
+                accountNumber: "",
+                startDate: "",
+                endDate: ""
+            },
+            tagAccountTextCount: 0,
+            taggedAccountText: "Tag Account",
+            accountList: []
         };
     }
 
     componentDidMount() {
-        const { masterLookupStateData, getCompositeLookUpData } = this.props;
-        const payload = [];
-        const compositePayloadData = [
-            "relationship"
-        ];
-        for (let i = 0; i < compositePayloadData.length; i += 1) {
-            const tempKey = compositePayloadData[i];
-            if (this.props && masterLookupStateData && !masterLookupStateData[tempKey]) {
-                payload.push(tempKey);
-            }
-        }
-        getCompositeLookUpData(payload);
-        this.updateState();
+        // const { masterLookupStateData, getCompositeLookUpData } = this.props;
+        // const payload = [];
+        // const compositePayloadData = [
+        // ];
+        // for (let i = 0; i < compositePayloadData.length; i += 1) {
+        //     const tempKey = compositePayloadData[i];
+        //     if (this.props && masterLookupStateData && !masterLookupStateData[tempKey]) {
+        //         payload.push(tempKey);
+        //     }
+        // }
+        // getCompositeLookUpData(payload);
+        // this.updateState();
     }
 
     componentDidUpdate(prevProps) {
@@ -120,11 +122,30 @@ class addNewIntrestedPartiesComponent extends Component {
         }
     }
 
-    updateState = () => {
-        const { navigation } = this.props;
-        const data = navigation.getParam('acc_Data');
-        this.setState({ accountData: data });
+    addTaggedAccount = () => {
+        let accList = this.state.accountList;
+        let accountDetails = {
+            accountType: "",
+            accountTypeFlag: false,
+            accountTypeMsg: "",
+            accountName: "",
+            accountNameFlag: false,
+            accountNameMsg: "",
+            accountNumber: "",
+            accountNameFlag: true,
+            accountNameMsg: "",
+            startDate: "",
+            startDateFlag: true,
+            startDateMsg: "",
+            endDate: "",
+            endDateFlag: true,
+            endDateMsg: ""
+        };
+        accList.push(accountDetails);
+        this.setState(prevState => ({ accountList: accList, tagAccountTextCount: prevState.tagAccountTextCount, taggedAccountText: "Tag Another Account" }));
     }
+
+    /* -------------------------- Validation Events--------------------------------- */
 
     getZipCodeValue = () => {
         const { getStateCity } = this.props;
@@ -165,63 +186,11 @@ class addNewIntrestedPartiesComponent extends Component {
 
     }
 
-    setScrollViewRef = (element) => {
-        this.scrollViewRef = element;
-    };
-
-    setInputRef = (inputComp) => (ref) => {
-        this[inputComp] = ref;
-    }
-
     isEmpty = (str) => {
         if (str === "" || str === undefined || str === null || str === "null" || str === "undefined") {
             return true;
         }
         return false;
-    }
-
-    onChangeText = (stateKey, keyName) => text => {
-        this.setState(prevState => ({
-            [stateKey]: {
-                ...prevState[stateKey],
-                [keyName]: text
-            }
-        }));
-    }
-
-    onUpdateField = (stateKey, keyName, val) => {
-        this.setState(prevState => ({
-            [stateKey]: {
-                ...prevState[stateKey],
-                [keyName]: val
-            }
-        }));
-    }
-
-    selectedRelationDropDownValue = (value) => {
-        this.onUpdateField("personal", "relation", value);
-    }
-
-    onCancelClick = () => {
-        const { navigation } = this.props;
-        this.setState({
-            personal: {
-                firstName: "",
-                middleName: "",
-                lastName: "",
-                relation: "",
-                email: "",
-                company: "",
-                addressLine1: "",
-                addressLine2: "",
-                zipCode: "",
-                city: "",
-                stateValue: "",
-                startDate: "",
-                endDate: ""
-            }
-        });
-        navigation.goBack();
     }
 
     validateZipCode = () => {
@@ -367,45 +336,90 @@ class addNewIntrestedPartiesComponent extends Component {
         return isValidationSuccess;
     }
 
-    onClickSave = () => {
-        const { personal, accountData } = this.state;
-        const { navigation } = this.props;
-        const data = personal;
-        const key = parseInt(accountData.interestedParty.length,10) + 1;
-        const obj = {
-            "key": key,
-            "fname": data.firstName,
-            "mname": data.middleName,
-            "lname": data.lastName,
-            "contract_Number": "123456789",
-            "relationship_To_Account_holder": data.relation,
-            "email": data.email,
-            "addressLine1": data.addressLine1,
-            "addressLine2": data.addressLine2,
-            "company": data.company,
-            "zipCode": data.zipCode,
-            "city": data.city,
-            "state": data.stateValue,
-            "startDate": data.startDate,
-            "endDate": data.endDate,
-            "accounts_Tagged": '1'
-        };
-        //  removed isAPi calling from if
-        if (personal.addValidation && personal.addressLine1 && personal.addressLine2) {
-            navigation.navigate("verifyIntrestedParties", { acc_Data: accountData, added_obj: obj });
-        }
+    /* -------------------------- Update Events --------------------------------- */
 
+    setScrollViewRef = (element) => {
+        this.scrollViewRef = element;
+    };
+
+    setInputRef = (inputComp) => (ref) => {
+        this[inputComp] = ref;
+    }
+
+    onChangeText = (stateKey, keyName) => text => {
+        this.setState(prevState => ({
+            [stateKey]: {
+                ...prevState[stateKey],
+                [keyName]: text
+            }
+        }));
+    }
+
+    onUpdateField = (stateKey, keyName, val) => {
+        this.setState(prevState => ({
+            [stateKey]: {
+                ...prevState[stateKey],
+                [keyName]: val
+            }
+        }));
+    }
+
+    selectedRelationDropDownValue = (value) => {
+        this.onUpdateField("personal", "relation", value);
+    }
+
+    selectedDropDownValue = (value) => {
+        // this.onUpdateField("personal", "relation", value);
+    }
+
+    /* -------------------------- Button Events --------------------------------- */
+    onCancelClick = () => {
+        const { navigation } = this.props;
+        this.setState({
+            personal: {
+                firstName: "",
+                middleName: "",
+                lastName: "",
+                email: "",
+                company: "",
+                addressLine1: "",
+                addressLine2: "",
+                zipCode: "",
+                city: "",
+                stateValue: ""
+            },
+            accountList: []
+        });
+        navigation.goBack();
+    }
+
+    onClickSave = () => {
+        const { personal, accountList } = this.state;
+        const { navigation } = this.props;
+        const obj = {
+            "fname": personal.firstName,
+            "mname": personal.middleName,
+            "lname": personal.lastName,
+            "email": personal.email,
+            "addressLine1": personal.addressLine1,
+            "addressLine2": personal.addressLine2,
+            "company": personal.company,
+            "zipCode": personal.zipCode,
+            "city": personal.city,
+            "state": personal.stateValue,
+            "accountTagged": accountList
+        };
+        // removed isAPi calling from if
+        if (personal.addValidation && personal.addressLine1 && personal.addressLine2) {
+            //   navigation.navigate("verifyIntrestedParties", { addedData: obj, add: true });
+        }
     }
 
     generateKeyExtractor = (item) => item.key;
 
     render() {
-        const { masterLookupStateData, stateCityData, navigation } = this.props;
-        const { accountData, personal } = this.state;
-        if (this.props && masterLookupStateData && masterLookupStateData.relationship && masterLookupStateData.relationship.value) {
-            relationData = masterLookupStateData.relationship.value;
-        }
-
+        const { stateCityData, navigation } = this.props;
+        const { personal, accountList } = this.state;
         return (
             <View style={styles.container}>
                 {
@@ -415,21 +429,12 @@ class addNewIntrestedPartiesComponent extends Component {
                 <ScrollView style={styles.flexMainView} keyboardShouldPersistTaps="always" ref={this.setScrollViewRef}>
                     <View style={styles.mainHeadingView}>
                         <Text style={styles.mainHeadlineText}>
-                            {gblStrings.accManagement.manageIntrestedParties}
+                            {gblStrings.accManagement.addInterestedParty}
                         </Text>
                     </View>
                     <View style={styles.blockMarginTop}>
                         <View style={styles.titleHeadingView}>
-                            <Text style={styles.titleHeaderText}>{accountData.account_Type}</Text>
-                        </View>
-                        <View style={styles.line} />
-                        <View style={styles.containerView}>
-                            <Text style={styles.containerHeaderText}>{`Acc Name - ${accountData.account_Name} | Acc Number - ${accountData.account_Number}`}</Text>
-                        </View>
-                        <View style={styles.blockMarginTop} />
-                        <View style={styles.titleHeadingView}>
-                            <Text style={styles.titleHeaderText}>{gblStrings.accManagement.addNewIntParty}</Text>
-                            <Text style={styles.titleHeaderText}>{gblStrings.accManagement.personalInformation}</Text>
+                            <Text style={styles.titleHeaderText}>Add - New Interested Party</Text>
                         </View>
                         <View style={styles.line} />
 
@@ -473,17 +478,6 @@ class addNewIntrestedPartiesComponent extends Component {
                                 errorFlag={!personal.lnameValidation}
                                 errorText={personal.lnameValiMsg}
                             />
-                            <GDropDownComponent
-                                dropDownName={gblStrings.accManagement.relationToAccountHolder}
-                                dropDownTextName={styles.lblTxt}
-                                data={relationData}
-                                textInputStyle={styles.dropdownTextInput}
-                                dropDownLayout={styles.dropDownLayout}
-                                errorFlag={personal.relationValidation}
-                                errorText={personal.relationValiMsg}
-                                dropDownValue={personal.relation}
-                                selectedDropDownValue={this.selectedRelationDropDownValue}
-                            />
                             <Text style={styles.lblTxt}>
                                 <Text style={styles.lblTxt}>
                                     {gblStrings.accManagement.emailAddress}
@@ -503,20 +497,20 @@ class addNewIntrestedPartiesComponent extends Component {
                                 errorText={gblStrings.accManagement.emailformat}
                             />
                             <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.company}
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.company}
+                                </Text>
+                                <Text style={styles.optionalTxt}>
+                                    {` ${gblStrings.accManagement.optional}`}
+                                </Text>
                             </Text>
-                            <View style={styles.flexDirectionStyle}>
-                                <GInputComponent
-                                    inputref={this.setInputRef("company")}
-                                    propInputStyle={styles.customCompTxtBox}
-                                    placeholder=""
-                                    maxLength={gblStrings.maxLength.company}
-                                    onChangeText={this.onChangeText("personal", "company")}
-                                />
-                                <View style={styles.circleView}>
-                                    <GIcon name="question" type="antdesign" size={16} color="#333333DE" />
-                                </View>
-                            </View>
+                            <GInputComponent
+                                inputref={this.setInputRef("company")}
+                                propInputStyle={styles.customTxtBox}
+                                placeholder=""
+                                maxLength={gblStrings.maxLength.company}
+                                onChangeText={this.onChangeText("personal", "company")}
+                            />
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.address}
                             </Text>
@@ -564,9 +558,35 @@ class addNewIntrestedPartiesComponent extends Component {
                                 errorText={personal.zipCodeValiMsg}
                             />
                             <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.cityAndState}
+                                {gblStrings.accManagement.city}
                             </Text>
-                            <View style={styles.stateCityView}>
+                            <GInputComponent
+                                inputref={this.setInputRef("city")}
+                                propInputStyle={styles.customTxtBox}
+                                placeholder=""
+                                value={personal.city}
+                                maxLength={gblStrings.maxLength.city}
+                                onChangeText={this.onChangeText("personal", "city")}
+                            // errorFlag={!personal.zipCodeValidation}
+                            // errorText={personal.zipCodeValiMsg}
+                            />
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.accManagement.stateTerritory}
+                            </Text>
+                            <GInputComponent
+                                inputref={this.setInputRef("stateTerritory")}
+                                propInputStyle={styles.customTxtBox}
+                                placeholder=""
+                                value={personal.stateValue}
+                                maxLength={gblStrings.maxLength.state}
+                                onChangeText={this.onChangeText("personal", "stateValue")}
+                            // errorFlag={!personal.zipCodeValidation}
+                            // errorText={personal.zipCodeValiMsg}
+                            />
+                            {/* <Text style={styles.lblTxt}>
+                                {gblStrings.accManagement.cityAndState}
+                            </Text> */}
+                            {/* <View style={styles.stateCityView}>
                                 <View style={styles.customCityView}>
                                     <GInputComponent
                                         propInputStyle={styles.customTxtBox}
@@ -583,8 +603,8 @@ class addNewIntrestedPartiesComponent extends Component {
                                         editable={false}
                                     />
                                 </View>
-                            </View>
-                            <View style={styles.blockMarginTop}>
+                            </View> */}
+                            {/* <View style={styles.blockMarginTop}>
                                 <Text style={styles.preferdTimeTxt}>{gblStrings.accManagement.preferredTimePeriod}</Text>
                                 <Text style={styles.lblTxt}>{gblStrings.accManagement.from}</Text>
                                 <GDateComponent
@@ -609,10 +629,94 @@ class addNewIntrestedPartiesComponent extends Component {
                                     onDateChange={this.onChangeText("personal", "endDate")}
                                 />
                                 {!personal.startDateValidation && <Text style={styles.errMsg}>{gblStrings.accManagement.validDateSelect}</Text>}
-                            </View>
+                            </View> */}
                         </View>
                     </View>
-                    
+
+                    {/* -------------------------- Add Tagged Accounts --------------------------------- */}
+
+                    <View style={styles.blockMarginTop}>
+                        {accountList && accountList.map((item, index) => {
+                            return (
+                                <View style={styles.paddingHorizontalStyle}>
+                                    <View style={styles.tagAccHeadingView}>
+                                        <Text style={styles.titleHeaderText}>{`Tagged Account # ${index + 1} `}</Text>
+                                        <View style={styles.addBtn}>
+                                            <TouchableOpacity>
+                                                <Text style={styles.editBtnText}>{gblStrings.common.delete}</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                    <View style={styles.marginTopStyle}>
+                                        <GDropDownComponent
+                                            dropDownName="Account Type"
+                                            dropDownTextName={styles.lblTxt}
+                                            data={accountTypeData}
+                                            textInputStyle={styles.dropdownTextInput}
+                                            dropDownLayout={styles.dropDownLayout}
+                                            dropDownValue={item.account_Type}
+                                            selectedDropDownValue={this.selectedDropDownValue(index, "account_Type")}
+                                            errorFlag={item.accountTypeFlag}
+                                            errorText={item.accountTypeMsg}
+                                        />
+                                        <GDropDownComponent
+                                            dropDownName="Account Name"
+                                            dropDownTextName={styles.lblTxt}
+                                            data={accountNameData}
+                                            textInputStyle={styles.dropdownTextInput}
+                                            dropDownLayout={styles.dropDownLayout}
+                                            dropDownValue={item.account_Name}
+                                            selectedDropDownValue={this.selectedDropDownValue(index, "account_Name")}
+                                            errorFlag={item.accountNameFlag}
+                                            errorText={item.accountNameMsg}
+                                        />
+                                        <Text style={styles.lblTxt}>Account Number</Text>
+                                        <GInputComponent
+                                            inputref={this.setInputRef("accountNumber")}
+                                            propInputStyle={styles.customTxtBox}
+                                            value={item.account_Number}
+                                            maxLength={gblStrings.maxLength.company}
+                                            onChangeText={this.onChangeText("personal", "company")}
+                                            errorFlag={item.accountNumberFlag}
+                                            errorText={item.accountNumberMsg}
+                                        />
+                                        <View style={styles.blockMarginTop}>
+                                            <Text style={styles.preferdTimeTxt}>Effective Start & End Date</Text>
+                                            <Text style={styles.lblTxt}>{gblStrings.accManagement.from}</Text>
+                                            <GDateComponent
+                                                inputref={this.setInputRef("startDate")}
+                                                date={item.startDate}
+                                                placeholder="MM-DD-YYYY"
+                                                dateTextLayout={styles.dateTextLayout}
+                                                componentStyle={styles.dateStyle}
+                                                maxDate={item.endDate ? item.endDate : ""}
+                                                errorFlag={!item.startDateFlag}
+                                                onDateChange={this.onChangeText("personal", "startDate")}
+                                            />
+                                            <Text style={styles.lblTxt}>{gblStrings.accManagement.to}</Text>
+                                            <GDateComponent
+                                                inputref={this.setInputRef("endDate")}
+                                                date={item.endDate}
+                                                placeholder="MM-DD-YYYY"
+                                                dateTextLayout={styles.dateTextLayout}
+                                                componentStyle={styles.dateStyle}
+                                                minDate={item.startDate ? item.startDate : ""}
+                                                errorFlag={!item.endDateFlag}
+                                                onDateChange={this.onChangeText("personal", "endDate")}
+                                            />
+                                            {!item.startDateFlag && <Text style={styles.errMsg}>{gblStrings.accManagement.validDateSelect}</Text>}
+                                        </View>
+                                    </View>
+                                </View>
+                            )
+                        })}
+                        <View style={styles.addAccountView}>
+                            <TouchableOpacity onPress={this.addTaggedAccount}>
+                                <Text style={styles.editBtnText}>{`+ ${this.state.taggedAccountText}`}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+
                     {/* ----------------- Button Group -------------------- */}
 
                     <View style={styles.btnGrp}>
@@ -631,6 +735,7 @@ class addNewIntrestedPartiesComponent extends Component {
                     </View>
 
                     {/* ---------------------- Footer View -------------------- */}
+
                     <GFooterSettingsComponent />
                 </ScrollView>
             </View>
