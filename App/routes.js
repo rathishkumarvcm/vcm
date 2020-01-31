@@ -181,6 +181,8 @@ import ChartComponent from './Screens/Charts';
 import TabBar from './Screens/Menu/TabBar';
 import FloatingButtonComponent from './Screens/ServiceRequest/FloatingButtonScreen';
 
+// Dashboard
+import AccountPositions from './Screens/AccountPositions';  
 
 // Notification Tabs
 const NotificationTabNavigator = createMaterialTopTabNavigator(
@@ -1129,6 +1131,12 @@ const AppNavigator = createStackNavigator({
     },
     physicalWayManageBeneficiary: {
         screen: PhysicalWayManageBeneficiaryComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    accountPositions: {
+        screen: AccountPositions,
         navigationOptions: {
             header: null,
         }
