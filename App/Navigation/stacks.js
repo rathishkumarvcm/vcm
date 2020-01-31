@@ -51,12 +51,7 @@ import AccountServicesComponent from '../Screens/AccountServices';
 import DrawerComponent from '../Screens/Menu/DrawerComponent';
 import Screen1Component from '../Screens/NotificationTab/Screen1';
 import Screen2Component from '../Screens/NotificationTab/Screen2';
-import { GHeaderComponent } from '../CommonComponents';
 import TabBar from '../Screens/Menu/TabBar';
-
-import { store } from '../Shared/Store/index';
-import { setModalVisible } from '../Shared/Actions/TabMoreAction';
-import { tabMoreActions } from '../Shared/Actions';
 import LineChartComponent from '../Screens/Charts/LineChartComponent';
 import ChartComponent from '../Screens/Charts';
 

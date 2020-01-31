@@ -15,7 +15,7 @@
     "react": "^16.9",
     "react-dom": "^16.9",
     "react-native": "0.60.5",
-    "react-native-chart-kit": "^4.4.1",
+    "react-native-action-button": "^2.8.5",
     "react-native-collapsible": "^1.5.1",
     "react-native-datepicker": "^1.7.2",
     "react-native-document-picker": "^3.2.4",

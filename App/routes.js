@@ -179,9 +179,8 @@ import Screen2Component from './Screens/NotificationTab/Screen2';
 import LineChartComponent from './Screens/Charts/LineChartComponent';
 import ChartComponent from './Screens/Charts';
 import TabBar from './Screens/Menu/TabBar';
+import FloatingButtonComponent from './Screens/ServiceRequest/FloatingButtonScreen';
 
-// Dashboard
-import AccountPositions from './Screens/AccountPositions/AccountPositionsComponent';
 
 // Notification Tabs
 const NotificationTabNavigator = createMaterialTopTabNavigator(
@@ -211,84 +210,18 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
         },
     }
 );
-// //  Bottom Tabs
-// const BottomTabNavigator = createBottomTabNavigator({
-//     myVCM: {
-//         screen: AccountServicesComponent,
-//         navigationOptions: {
-//             tabBarLabel: 'MyVCM',
-//         },
-//     },
-//     portfolio: {
-//         screen: TermsAndConditions,
-//         navigationOptions: {
-//             tabBarLabel: 'Portfolio',
-//         },
-//     },
-//     invest: {
-//         screen: AccountServicesComponent,
-//         navigationOptions: {
-//             tabBarLabel: 'Invest',
-//         },
-//     },
-//     learn: {
-//         screen: LineChartComponent,
-//         navigationOptions: {
-//             tabBarLabel: 'Learn',
-//         },
-//     },
-//     // more: {
-//     //     screen: TabMoreComponent,
-//     //     navigationOptions: ({ navigation }) => ({
-//     //         tabBarOnPress: ({ defaultHandler }) => {
-//     //             defaultHandler();
-//     //             store.dispatch(tabMoreActions.setModalVisible(true));
-//     //            // navigation.goBack();
-//     //            // navigation.toggleRightDrawer();
-//     //         },
-//     //         tabBarLabel: 'More',
-//     //     }),
-//     // },
-// },
-//     {
-//         defaultNavigationOptions: ({ navigation }) => ({
-//             tabBarIcon: ({ focused, horizontal, tintColor }) => {
-//                 const { routeName } = navigation.state;
-//                 let iconName;
-//                 if (routeName === 'myVCM') {
-//                     iconName = 'home';
-//                 } else if (routeName === 'portfolio') {
-//                     iconName = 'note';
-//                 } else if (routeName === 'invest') {
-//                     iconName = 'insert-chart';
-//                 }
-//                 else if (routeName === 'learn') {
-//                     iconName = 'library-books';
-//                 } else {
-//                     iconName = 'more';
-//                 }
-//                 return (
-//                     <GIcon
-//                         name={iconName}
-//                         type="material"
-//                         size={20}
-//                         color={tintColor}
-//                     />
-//                 );
-//             },
-//         }),
 
-//     }
-// );
 //  Bottom Tabs
 const BottomTabNavigator = createBottomTabNavigator({
     myVCM: {
         screen: Screen1Component, // AccountStack,
         navigationOptions: {
-            tabBarIcon: ({ tintColor }) => <GIcon name={'home'}
-                type="material"
-                size={20}
-                color={tintColor} />,
+            tabBarIcon: ({ tintColor }) => (
+                <GIcon name="home"
+                    type="material"
+                    size={20}
+                    color={tintColor}
+                />),
             tabBarLabel: 'MyVCM',
         }
 
@@ -297,19 +230,20 @@ const BottomTabNavigator = createBottomTabNavigator({
         screen: LineChartComponent,
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => <GIcon name={'note'}
-            type="material"
-            size={20}
-            color={tintColor} />,
+                type="material"
+                size={20}
+                color={tintColor}
+            />,
             tabBarLabel: 'Portfolio',
         },
     },
     invest: {
-        screen: AccountServicesComponent,
+        screen: FloatingButtonComponent,
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => <GIcon name={'insert-chart'}
-            type="material"
-            size={20}
-            color={tintColor} />,
+                type="material"
+                size={20}
+                color={tintColor} />,
             tabBarLabel: 'Invest',
         },
     },
@@ -317,30 +251,19 @@ const BottomTabNavigator = createBottomTabNavigator({
         screen: ChartComponent,
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => <GIcon name={'library-books'}
-            type="material"
-            size={20}
-            color={tintColor} />,
+                type="material"
+                size={20}
+                color={tintColor} />,
             tabBarLabel: 'Learn',
         },
     },
-    // more: {
-    //     screen: MoreModalComponent,
-    //     navigationOptions: ({ navigation }) => ({
-    //         tabBarOnPress: ({ defaultHandler }) => {
-    //             defaultHandler();
-    //             // navigation.navigate('more')
-    //             store.dispatch(tabMoreActions.setModalVisible(true));
-    //         },
-    //         tabBarLabel: 'More',
-    //     }),
-    // },
 },
     {
         tabBarComponent: TabBar,
         tabBarOptions: {
             activeTintColor: "skyblue",
             inactiveTintColor: "#4F4F4F"
-          }
+        }
     }
 );
 
@@ -1206,12 +1129,6 @@ const AppNavigator = createStackNavigator({
     },
     physicalWayManageBeneficiary: {
         screen: PhysicalWayManageBeneficiaryComponent,
-        navigationOptions: {
-            header: null,
-        }
-    },
-    accountPositions: {
-        screen: AccountPositions,
         navigationOptions: {
             header: null,
         }
