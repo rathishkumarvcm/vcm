@@ -65,26 +65,7 @@ class LineChartComponent extends React.PureComponent {
                     />
                 </View>
             </View>
-        )
+        );
     }
 }
 export default LineChartComponent;
-
-const styles = StyleSheet.create({
-    buttonStyle: {
-        height: '15%',
-        width: '50%',
-        justifyContent: "center",
-        alignItems: 'center',
-        borderRadius: 1,
-        backgroundColor: "#06748C",
-        marginTop: '2%',
-        alignSelf: 'center',
-        marginBottom: '5%'
-    },
-    buttonTextStyle: {
-        fontSize: scaledHeight(14),
-        fontWeight: "bold",
-        lineHeight: scaledHeight(20),
-    },
-});
