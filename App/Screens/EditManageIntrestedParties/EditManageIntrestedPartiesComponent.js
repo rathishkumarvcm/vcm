@@ -125,7 +125,7 @@ class editManageIntrestedPartiesComponent extends Component {
                 endDateValidationMsg: ""
             };
             tagAccounts.push(accountItem);
-            this.setState({taggedAccData:tagAccounts});
+            this.setState({ taggedAccData: tagAccounts });
         });
         this.setState(prevState => ({
             interestedPartyData: mainObj,
@@ -267,9 +267,6 @@ class editManageIntrestedPartiesComponent extends Component {
                     addressLine1Validation: true,
                     addressLine2Validation: true,
                     zipCodeValidation: true,
-                    relationValidation: false,
-                    startDateValidation: true,
-                    endDateValidation: true,
                     addValidation: true
                 }
             }));
@@ -328,19 +325,6 @@ class editManageIntrestedPartiesComponent extends Component {
             isErrMsg = !validate;
         }
 
-        if (!this.isEmpty(personal.startDate) && !this.isEmpty(personal.endDate)) {
-            if (new Date(personal.startDate) > new Date(personal.endDate)) {
-                this.onUpdateField("personal", "startDateValidation", false);
-                this.onUpdateField("personal", "endDateValidation", false);
-                isErrMsg = true;
-            }
-        }
-
-        if (personal.relation === '') {
-            this.onUpdateField("personal", "relationValidation", true);
-            this.onUpdateField("personal", "relationValiMsg", gblStrings.accManagement.emptyRelationShipMsg);
-        }
-
         if (!isErrMsg) {
             isValidationSuccess = true;
         }
@@ -371,12 +355,13 @@ class editManageIntrestedPartiesComponent extends Component {
 
     onClickSave = () => {
         const { editInterestedParties, navigation } = this.props;
-        const { personal, isAddressApiCalling, interestedPartyObj } = this.state;
-        const payloadData = this.getPayloadData();
-        editInterestedParties(payloadData);
-        const notificationMsg = `${interestedPartyObj.fname} ${interestedPartyObj.lname} 's data has been Updated Successfully`;
-        if (personal.addValidation && personal.addressLine1 && personal.addressLine2 && isAddressApiCalling) {
-           // navigation.navigate("manageIntrestedParties", { showMsg: true, successMsg: notificationMsg });
+        const { personal, isAddressApiCalling, interestedPartyObj, interestedPartyData } = this.state;
+        // const payloadData = this.getPayloadData();
+        // editInterestedParties(payloadData);
+        // const notificationMsg = `${interestedPartyObj.fname} ${interestedPartyObj.lname} 's data has been Updated Successfully`;
+        if (personal.addressLine1 && personal.addressLine2 ) {
+            //    navigation.navigate("manageIntrestedParties", { showMsg: true, successMsg: notificationMsg });
+            navigation.navigate("verifyIntrestedParties", { addedData: interestedPartyData, edit: true });
         }
     }
 

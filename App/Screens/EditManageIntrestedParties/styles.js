@@ -23,25 +23,25 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline"
   },
   container: {
-    flex: 1,
     backgroundColor: "#F9FBFC",
+    flex: 1,
     width: "100%"
   },
   containerHeaderText: {
     color: "#54565B",
     fontSize: scaledHeight(12),
     fontWeight: "400",
-    paddingLeft: '4%',
     marginBottom: scaledHeight(8),
-    marginTop: scaledHeight(8)
+    marginTop: scaledHeight(8),
+    paddingLeft: '4%',
   },
   containerHeaderView: {
     backgroundColor: "#ECECEC",
     borderBottomColor: "#5D83AE99",
     borderBottomWidth: scaledHeight(1),
     marginBottom: scaledHeight(5),
-    paddingTop: "2%",
-    paddingLeft: '4%'
+    paddingLeft: '4%',
+    paddingTop: "2%"
   },
   containerView: {
     alignSelf: "center",
@@ -71,17 +71,6 @@ const styles = StyleSheet.create({
     marginTop: scaledHeight(9),
     width: '100%',
   },
-  circleView: {
-    alignItems: 'center',
-    borderColor: "#DEDEDF",
-    borderWidth: scaledHeight(1),
-    borderRadius: scaledHeight(25),
-    height: scaledHeight(30),
-    marginTop: scaledHeight(15),
-    marginLeft: '4%',
-    paddingTop: '1%',
-    width: scaledHeight(30),
-  },
   dateStyle: {
     marginLeft: 0,
     marginRight: 0,
@@ -91,8 +80,8 @@ const styles = StyleSheet.create({
     color: "#56565A",
     fontSize: scaledHeight(16),
     fontWeight: "800",
-    marginBottom: scaledHeight(10),
-    lineHeight: scaledHeight(23)
+    lineHeight: scaledHeight(23),
+    marginBottom: scaledHeight(10)
   },
   disclaimerTxt: {
     color: "#56565A",
@@ -115,8 +104,8 @@ const styles = StyleSheet.create({
   },
   errMsg: {
     color: 'red',
+    fontSize: scaledHeight(12),
     paddingLeft: '4%',
-    fontSize: scaledHeight(12)
   },
   flexDirectionStyle: {
     flexDirection: "row"
@@ -181,14 +170,14 @@ const styles = StyleSheet.create({
   },
   mainHeadlineText: {
     color: '#54565B',
-    fontWeight: 'bold',
     fontSize: scaledHeight(22),
+    fontWeight: 'bold',
     lineHeight: 27,
   },
   manageBenificiariesHeadline: {
     color: "#54565B",
-    fontWeight: "bold",
     fontSize: scaledHeight(22),
+    fontWeight: "bold",
     lineHeight: scaledHeight(29),
     marginTop: scaledHeight(20)
   },
@@ -277,8 +266,8 @@ const styles = StyleSheet.create({
   },
   shortContentValueText: {
     color: "#54565B",
-    fontWeight: "400",
     fontSize: scaledHeight(16),
+    fontWeight: "400",
     lineHeight: 24,
     paddingLeft: '4%'
   },

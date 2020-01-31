@@ -5,12 +5,99 @@ const styles = StyleSheet.create({
   addAccountView: {
     alignSelf: "flex-start",
     marginTop: scaledHeight(25),
-    paddingLeft:'4%'
+    paddingLeft: '4%'
+  },
+  addBtn: {
+    alignSelf: "flex-end",
+    marginBottom: scaledHeight(5),
+    marginTop: scaledHeight(10),
+    paddingRight: "4%",
+  },
+  beneNameStyle: {
+    color: "#56565A",
+    fontSize: scaledHeight(36)
+  },
+  blockMarginTop: {
+    marginTop: scaledHeight(25)
+  },
+  btnGrp: {
+    alignContent: 'center',
+    alignItems: 'center',
+    flexGrow: 1,
+    justifyContent: 'center',
+    marginHorizontal: scaledHeight(12),
+    marginVertical: scaledHeight(50),
+  },
+  contactUsLink: {
+    color: "#0000FF",
+    fontSize: scaledHeight(15),
+    textDecorationLine: "underline"
   },
   container: {
-    flex: 1,
     backgroundColor: "#F9FBFC",
+    flex: 1,
     width: "100%"
+  },
+  containerHeaderText: {
+    color: "#54565B",
+    fontSize: scaledHeight(12),
+    fontWeight: "400",
+    marginBottom: scaledHeight(8),
+    marginTop: scaledHeight(8),
+    paddingLeft: '4%'
+  },
+  containerHeaderView: {
+    backgroundColor: "#ECECEC",
+    borderBottomColor: "#5D83AE99",
+    borderBottomWidth: scaledHeight(1),
+    marginBottom: scaledHeight(5),
+    paddingLeft: '4%',
+    paddingTop: "2%"
+  },
+  containerView: {
+    alignSelf: "center",
+    backgroundColor: "#ECECEC",
+    borderColor: "#5D83AE99",
+    borderWidth: scaledHeight(1),
+    marginBottom: scaledHeight(15),
+    width: "90%"
+  },
+  contentText: {
+    color: "#56565A",
+    fontSize: scaledHeight(15)
+  },
+  customTxtBox: {
+    marginTop: scaledHeight(9),
+    width: '100%',
+  },
+  dateStyle: {
+    marginLeft: 0,
+    marginRight: 0,
+    width: '100%'
+  },
+  dateTextStyle: {
+    marginTop: 0
+  },
+  disclaimerTextHeading: {
+    color: "#56565A",
+    fontSize: scaledHeight(16),
+    fontWeight: "800",
+    lineHeight: scaledHeight(23),
+    marginBottom: scaledHeight(10)
+  },
+  disclaimerTxt: {
+    color: "#56565A",
+    fontSize: scaledHeight(16),
+    lineHeight: scaledHeight(23)
+  },
+  dropdownTextInput: {
+    marginLeft: 0,
+    width: '100%'
+  },
+  dropDownLayout: {
+    marginLeft: 0,
+    marginRight: 0,
+    paddingLeft: 0
   },
   editBtnText: {
     color: "#5D83AE",
@@ -18,74 +105,164 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     lineHeight: scaledHeight(22)
   },
-  mainHeadingView: {
-    width: "100%",
-    marginTop: scaledHeight(20),
-    paddingLeft: "4%",
-    paddingRight: "4%"
+  errMsg: {
+    color: 'red',
+    fontSize: scaledHeight(12),
+    paddingLeft: '4%',
   },
-  mainHeadlineText: {
-    color: '#54565B',
-    fontWeight: 'bold',
-    fontSize: scaledHeight(22),
-    lineHeight: 27,
-    textTransform: 'uppercase',
+  flexDirectionStyle: {
+    flexDirection: "row"
   },
-  subHeadlineText: {
-    color: '#54565B',
-    fontWeight: 'bold',
-    fontSize: scaledHeight(22),
-    marginTop: scaledHeight(15),
-    lineHeight: 29,
+  flexMainView: {
+    flex: 0.85
   },
-  contactUsLink: {
-    color: "#0000FF",
-    fontSize: scaledHeight(15),
-    textDecorationLine: "underline"
-  },
-  addBtn: {
-    alignSelf: "flex-end",
-    paddingRight: "4%",
-    marginTop: scaledHeight(10),
-    marginBottom: scaledHeight(5)
-  },
-  contentText: {
-    color: "#56565A",
-    fontSize: scaledHeight(15)
-  },
-  blockMarginTop: {
-    marginTop: scaledHeight(25)
+  flexSmall: {
+    flex: 0.12
   },
   infoShortText: {
     color: "#A7A7A7",
     fontSize: scaledHeight(14)
   },
-  disclaimerTextHeading: {
-    fontSize: scaledHeight(16),
+  innerContainerView: {
+    alignSelf: "center",
+    borderColor: "#5D83AE99",
+    borderWidth: scaledHeight(1),
     marginBottom: scaledHeight(10),
-    fontWeight: "800",
+    marginTop: scaledHeight(10),
+    width: "95%"
+  },
+  innerHeaderView: {
+    borderBottomColor: "#5D83AE99",
+    borderBottomWidth: scaledHeight(1),
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingLeft: "4%",
+    paddingRight: "2%",
+    paddingVertical: "4%"
+  },
+  line: {
+    alignSelf: "center",
+    backgroundColor: "#535353",
+    height: scaledHeight(1),
+    marginBottom: scaledHeight(10),
+    marginTop: scaledHeight(10),
+    opacity: 0.25,
+    width: "90%",
+  },
+  mainHeadingView: {
+    marginTop: scaledHeight(20),
+    paddingLeft: "4%",
+    paddingRight: "4%",
+    width: "100%",
+  },
+  mainHeadlineText: {
+    color: '#54565B',
+    fontSize: scaledHeight(22),
+    fontWeight: 'bold',
+    lineHeight: 27
+  },
+  marginBottomStyle: {
+    marginBottom: scaledHeight(20)
+  },
+  marginTopStyle: {
+    marginTop: scaledHeight(15)
+  },
+  notificationTxt: {
     color: "#56565A",
-    lineHeight: scaledHeight(23)
+    fontSize: scaledHeight(16)
   },
-  disclaimerTxt: {
+  notificationView: {
+    backgroundColor: "#E9E9E9",
+    borderRadius: scaledHeight(15),
+    flexDirection: "row",
+    height: scaledHeight(60),
+    justifyContent: "space-between",
+    marginBottom: scaledHeight(20),
+    marginTop: scaledHeight(10),
+    padding: "4%",
+    width: "100%",
+  },
+  normalBlackBtn: {
+    alignContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#544A54',
+    borderColor: "#61285F45",
+    borderWidth: 1,
+    height: scaledHeight(50),
+    justifyContent: 'center',
+    marginHorizontal: scaledHeight(37),
+    marginVertical: scaledHeight(7.5)
+  },
+  normalBlackBtnTxt: {
+    color: '#fff',
     fontSize: scaledHeight(16),
-    lineHeight: scaledHeight(23),
-    color: "#56565A"
+    textAlign: 'center',
+    width: '100%'
   },
-  paddingStyleLeft: {
-    paddingLeft: "4%"
+  normalWhiteBtn: {
+    alignContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    borderColor: "#61285F45",
+    borderWidth: 1,
+    height: scaledHeight(50),
+    justifyContent: 'center',
+    marginHorizontal: scaledHeight(37),
+    marginVertical: scaledHeight(7.5)
+  },
+  normalWhiteBtnTxt: {
+    color: '#544A54',
+    fontSize: scaledHeight(16),
+    lineHeight: 22,
+    textAlign: 'center',
+    width: '100%'
+  },
+  optionalTxt: {
+    color: '#6F7070',
+    fontSize: scaledHeight(14),
+    fontWeight: 'normal',
   },
   paddingHorizontalStyle: {
     paddingLeft: "4%",
     paddingRight: "4%"
   },
-  flexMainView: {
-    flex: 0.85
+  paddingStyleLeft: {
+    paddingLeft: "4%"
+  },
+  preferdTimeTxt: {
+    color: '#333333DE',
+    fontSize: scaledHeight(16),
+    fontWeight: 'bold'
+  },
+  saveSuccessMsgTxt: {
+    flex: 0.7,
+    height: scaledHeight(50)
+  },
+  shortContentText: {
+    color: "#56565A",
+    fontSize: scaledHeight(16),
+    fontWeight: "bold",
+    marginTop: scaledHeight(3)
+  },
+  shortContentValueText: {
+    color: "#54565B",
+    fontSize: scaledHeight(16),
+    fontWeight: "400",
+    lineHeight: 24
+  },
+  sideBtn: {
+    width: scaledHeight(20)
+  },
+  subHeadlineText: {
+    color: '#54565B',
+    fontSize: scaledHeight(22),
+    fontWeight: 'bold',
+    lineHeight: 29,
+    marginTop: scaledHeight(15)
   },
   tagAccHeadingView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-   // marginTop:'4%',
     paddingLeft: '4%',
     paddingRight: '4%',
   },
@@ -97,225 +274,24 @@ const styles = StyleSheet.create({
     fontSize: scaledHeight(18),
     fontWeight: "bold"
   },
-  line: {
-    backgroundColor: "#535353",
-    opacity: 0.25,
-    height: scaledHeight(1),
-    width: "90%",
-    alignSelf: "center",
-    marginTop: scaledHeight(10),
-    marginBottom: scaledHeight(10)
-  },
-  containerView: {
-    width: "90%",
-    borderColor: "#5D83AE99",
-    backgroundColor: "#ECECEC",
-    borderWidth: scaledHeight(1),
-    alignSelf: "center",
-    marginBottom: scaledHeight(15)
-  },
-  containerHeaderView: {
-    backgroundColor: "#ECECEC",
-    borderBottomColor: "#5D83AE99",
-    borderBottomWidth: scaledHeight(1),
-    paddingTop: "2%",
-    paddingLeft: '4%',
-    marginBottom: scaledHeight(5)
-  },
-  containerHeaderText: {
-    color: "#54565B",
-    fontSize: scaledHeight(12),
-    fontWeight: "400",
-    paddingLeft: '4%',
-    marginBottom: scaledHeight(8),
-    marginTop: scaledHeight(8)
-  },
-  editBtnText: {
-    color: "#5D83AE",
-    fontSize: scaledHeight(16),
-    fontWeight: "600"
-  },
-  innerContainerView: {
-    borderColor: "#5D83AE99",
-    borderWidth: scaledHeight(1),
-    alignSelf: "center",
-    width: "95%",
-    marginTop: scaledHeight(10),
-    marginBottom: scaledHeight(10)
-  },
-  innerHeaderView: {
-    paddingVertical: "4%",
-    paddingLeft: "4%",
-    paddingRight: "2%",
-    flexDirection: "row",
-    borderBottomWidth: scaledHeight(1),
-    borderBottomColor: "#5D83AE99",
-    justifyContent: "space-between"
-  },
-  shortContentText: {
-    color: "#56565A",
-    fontSize: scaledHeight(16),
-    fontWeight: "bold",
-    marginTop: scaledHeight(3)
-  },
-  shortContentValueText: {
-    color: "#54565B",
-    fontWeight: "400",
-    fontSize: scaledHeight(16),
-    lineHeight: 24
-  },
-  marginTopStyle: {
-    marginTop: scaledHeight(15)
-  },
-  marginBottomStyle: {
-    marginBottom: scaledHeight(20)
-  },
-  beneNameStyle: {
-    fontSize: scaledHeight(36),
-    color: "#56565A"
-  },
-  flexDirectionStyle: {
-    flexDirection: "row"
-  },
-  notificationView: {
-    width: "100%",
-    height: scaledHeight(60),
-    flexDirection: "row",
-    marginTop: scaledHeight(10),
-    marginBottom: scaledHeight(20),
-    borderRadius: scaledHeight(15),
-    backgroundColor: "#E9E9E9",
-    padding: "4%",
-    justifyContent: "space-between"
-  },
-  notificationTxt: {
-    fontSize: scaledHeight(16),
-    color: "#56565A"
-  },
-  flexSmall: {
-    flex: 0.12
-  },
-  saveSuccessMsgTxt: {
-    flex: 0.7,
-    height: scaledHeight(50)
-  },
-  sideBtn: {
-    width: scaledHeight(20)
-  },
-
-  lblTxt: {
-    color: '#333333DE',
-    fontSize: scaledHeight(16),
-    fontWeight: '600',
-    marginTop: scaledHeight(25),
-  },
-  lblLargeTxt: {
-    color: '#333333DE',
-    fontSize: scaledHeight(18),
-    fontWeight: 'bold',
-    marginTop: scaledHeight(25),
-  },
-  customTxtBox: {
-    marginTop: scaledHeight(9),
-    width: '100%',
-  },
-  optionalTxt: {
-    color: '#6F7070',
-    fontSize: scaledHeight(14),
-    fontWeight: 'normal',
-  },
-  preferdTimeTxt: {
-    color: '#333333DE',
-    fontSize: scaledHeight(16),
-    fontWeight: 'bold'
-  },
-  btnGrp: {
-    marginHorizontal: scaledHeight(12),
-    marginVertical: scaledHeight(50),
-    flexGrow: 1,
-    alignContent: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  normalWhiteBtn: {
-    borderWidth: 1,
-    borderColor: '#61285F45',
-    borderRadius: scaledHeight(5),
-    height: scaledHeight(50),
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    alignContent: 'center',
-    justifyContent: 'center',
-    marginVertical: scaledHeight(7.5),
-    marginHorizontal: scaledHeight(37),
-  },
-  normalWhiteBtnTxt: {
-    fontSize: scaledHeight(16),
-    color: '#544A54',
-    width: '100%',
-    textAlign: 'center',
-    lineHeight: 22,
-  },
-  normalBlackBtn: {
-    borderWidth: 1,
-    borderColor: '#61285F45',
-    borderRadius: scaledHeight(5),
-    height: scaledHeight(50),
-    backgroundColor: '#544A54',
-    alignItems: 'center',
-    alignContent: 'center',
-    justifyContent: 'center',
-    marginVertical: scaledHeight(7.5),
-    marginHorizontal: scaledHeight(37),
-  },
   validateBtn: {
-    borderWidth: 1,
+    alignContent: 'flex-end',
+    alignItems: 'flex-end',
+    backgroundColor: '#fff',
     borderColor: '#61285F45',
     borderRadius: scaledHeight(5),
+    borderWidth: 1,
     height: scaledHeight(40),
-    width: '30%',
-    backgroundColor: '#fff',
-    alignItems: 'flex-end',
-    alignContent: 'flex-end',
     justifyContent: 'flex-end',
     marginVertical: scaledHeight(7.5),
-    //  marginHorizontal: scaledHeight(37),
+    width: '30%',
   },
   validateBtnTxt: {
-    fontSize: scaledHeight(14),
     color: '#544A54',
-    width: '100%',
-    textAlign: 'center',
+    fontSize: scaledHeight(14),
     lineHeight: 22,
-  },
-  normalBlackBtnTxt: {
-    fontSize: scaledHeight(16),
-    color: '#fff',
-    width: '100%',
     textAlign: 'center',
-  },
-  errMsg: {
-    color: 'red',
-    paddingLeft: '4%',
-    fontSize: scaledHeight(12)
-  },
-  dropdownTextInput: {
-    width: '100%',
-    marginLeft: 0
-  },
-  dropDownLayout: {
-    //marginTop: scaledHeight(18),
-    paddingLeft: 0,
-    marginLeft:0,
-    marginRight:0
-  },
-  dateStyle: {
-    width: '100%',
-    marginLeft: 0,
-    marginRight: 0
-  },
-  dateTextStyle: {
-    marginTop: 0
+    width: '100%'
   }
 });
 
