@@ -137,9 +137,6 @@ import PasswordSuccess from "./Screens/RecoverPasswordSuccess";
 
 // Transactions  
 import TAmmendComponent from "./Screens/TAmmend";
-import FundSelectionComponent from './Screens/TAmmendFundSelection';
-import FundWithdrawlComponent from './Screens/TAmmendFundWithdrawl';
-import ReviewConfirmComponent from './Screens/TAmmendReviewAndConfirm';
 
 
 // Account Services
@@ -972,12 +969,6 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
-    FundSelectionComponent: {
-        screen: FundSelectionComponent,
-        navigationOptions: {
-            header: null,
-        }
-    },
     compareFunds: {
         screen: CompareFunds,
         navigationOptions: {
@@ -1022,18 +1013,6 @@ const AppNavigator = createStackNavigator({
     },
     verifyMobileNumber: {
         screen: VerifyMobileComponent,
-        navigationOptions: {
-            header: null,
-        }
-    },
-    FundWithdrawlComponent: {
-        screen: FundWithdrawlComponent,
-        navigationOptions: {
-            header: null,
-        }
-    },
-    ReviewConfirmComponent: {
-        screen: ReviewConfirmComponent,
         navigationOptions: {
             header: null,
         }
