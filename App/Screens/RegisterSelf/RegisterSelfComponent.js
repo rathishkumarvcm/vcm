@@ -54,7 +54,7 @@ class RegisterSelfComponent extends Component {
 
 
     navigateAddress = ()=>{
-        const {navigation} = this.props;
+        const {navigation,updatePhoneNumber} = this.props;
         const {newState} = this.state;
         const passingData = {
             emailID : navigation.getParam('emailID'),
@@ -64,12 +64,13 @@ class RegisterSelfComponent extends Component {
             phone : newState.phone
         };
         
-        this.props.updatePhoneNumber(newState.phone);
+        updatePhoneNumber(newState.phone);
         navigation.navigate('registerPassword',{selfData:passingData});
     }
 
     checkFirstName = () =>{
-        if(this.state.firstName != ""){
+        const {firstName} = this.state;
+        if(firstName !== ""){
             this.setState({
                 firstNameFlag : false
             });
@@ -80,20 +81,6 @@ class RegisterSelfComponent extends Component {
             });
         }
     }
-
-    checkMiddleName = () =>{
-        if(this.state.middleName != ""){
-            this.setState({
-                middleNameFlag : false
-            });
-        }
-        else{
-            this.setState({
-                middleNameFlag : true
-            });
-        }
-    }
-
 
     checkLastName = () =>{
         const { lastNameData } = this.state;
@@ -128,7 +115,7 @@ class RegisterSelfComponent extends Component {
  
     render(){
         const{ navigation }=this.props;
-        
+        const {phone,firstName,middleName,firstNameFlag,lastName,lastNameFlag,phoneFlag} = this.state;
         return (
             <View style={styles.container}>
              <GHeaderComponent 
@@ -143,20 +130,20 @@ class RegisterSelfComponent extends Component {
 
             <View style={styles.signInView}>
                 <Text style={styles.signIntext}>
-                    {"Enter your Personal details."}
+                    Enter your Personal details.
                 </Text>
             </View>
 
             <View style={styles.newVictorySection1}>
                 <Text style={styles.openInvestment}>
-                        {"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type."}
+                        Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type.
                 </Text>  
             </View>
 
 
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"First name"}       
+                    First name       
                 </Text>
             </View>
             <GInputComponent 
@@ -164,39 +151,37 @@ class RegisterSelfComponent extends Component {
                 // placeholder={"First name"}
                 onChangeText={this.setFirstName}
                 onBlur={this.checkFirstName}
-                value={this.state.firstName}
-                errorFlag={this.state.firstNameFlag}
-                errorText={"Enter a Valid First Name"}
+                value={firstName}
+                errorFlag={firstNameFlag}
+                errorText="Enter a Valid First Name"
             />
 
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"Middle Name(Optional)"}       
+                    Middle Name(Optional)       
                 </Text>
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
                 // placeholder={"Middle Name"}
                 onChangeText={this.setMiddleName}
-                value={this.state.middleName}
+                value={middleName}
                 onBlur={this.checkMiddleName}
-                //errorFlag={this.state.middleNameFlag}
-                //errorText={"Enter a Valid Middle Name"}
             />
 
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"Last name"}       
+                    Last name       
                 </Text>
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
                 // placeholder={"Last name"}
                 onChangeText={this.setLastName}
-                value={this.state.lastName}
+                value={lastName}
                 onBlur={this.checkLastName}
-                errorFlag={this.state.lastNameFlag}
-                errorText={"Enter a Valid Last Name"}
+                errorFlag={lastNameFlag}
+                errorText="Enter a Valid Last Name"
             />
 
 
@@ -204,18 +189,18 @@ class RegisterSelfComponent extends Component {
 
            <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"Prefix (Optional)"}       
+                    Prefix (Optional)       
                 </Text>
            </View>
 
-            <View style={{flexDirection:'row'}}>
+            <View style={styles.flexRow}>
                 <GInputComponent 
                     propInputStyle={styles.userIDTextBox} 
-                    placeholder={""}
+                    placeholder=""
                     secureTextEntry
                 />
 
-                <View style={{position:'absolute',right:0,left:365,top:14}}>
+                <View style={styles.flexAbsol}>
                     <GIcon 
                         name="md-arrow-dropdown"
                         type="ionicon"
@@ -227,18 +212,18 @@ class RegisterSelfComponent extends Component {
 
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"Suffix (Optional)"}       
+                    Suffix (Optional)       
                 </Text>
             </View>
 
-            <View style={{flexDirection:'row'}}>
+            <View style={styles.flexRow}>
                 <GInputComponent 
                     propInputStyle={styles.userIDTextBox} 
-                    placeholder={""}
+                    placeholder=""
                     secureTextEntry
                 />
 
-                <View style={{position:'absolute',right:0,left:365,top:14}}>
+                <View style={styles.arrowDrop}>
                     <GIcon 
                         name="md-arrow-dropdown"
                         type="ionicon"
@@ -250,17 +235,17 @@ class RegisterSelfComponent extends Component {
 
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"Mobile Number (Optional)"}       
+                    Mobile Number (Optional)       
                 </Text>
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
                 // placeholder={"Phone"}
                 onChangeText={this.setPhone}
-                value={this.state.phone}
+                value={phone}
                 onBlur={this.checkPhone}
-                errorFlag={this.state.phoneFlag}
-                errorText={"Enter a Valid Phone Number"}
+                errorFlag={phoneFlag}
+                errorText="Enter a Valid Phone Number"
                 keyboardType="phone-pad"
                 maxLength={13}
             />
@@ -276,17 +261,6 @@ class RegisterSelfComponent extends Component {
                     {"I serve or have served in U.S. Military Service."}
                 </Text>
     </View> */}
-           
-
-            
-
-           {/* <Picker
-                style={{marginLeft:'4%',marginRight:'4%',width: '92%'}}
-                selectedValue='java'
-                onValueChange={(lang) => this.setState({language: lang})}>
-          <Picker.Item label="Java" value="java" />
-          <Picker.Item label="JavaScript" value="js" />
-           </Picker>*/}
 
 
             <GButtonComponent 
@@ -335,31 +309,6 @@ class RegisterSelfComponent extends Component {
         <GFooterSettingsComponent />
             
 
-            {/*<View style={styles.newVictorySection}>
-                <Text style={styles.termsofuseText}>
-                    {"Investments for USAA Members"}
-                </Text>
-                <Text style={styles.openInvestment}>
-                        {"For USAA Members USAA Investments has been backed by the investment expertise of Victory Capital Management since July 2019. Your USAA online login credentials have not changed. They are the same details you used to you create your USAA online account.Your USAA online login credentials have not changed. They are the same details you used to you create your USAA online account."}
-                </Text> 
-            </View>
-
-            <View style={styles.privacyAgreement}>
-                <Text style={styles.privacyText}>
-                    {"Privacy Policy"}
-                </Text>
-
-                <Text style={styles.privacyText}>
-                    {"User Agreement"}
-                </Text>
-            </View>
-
-            <View style={styles.copyRightSection}>
-                <Text style={styles.copyRightText}>
-                    {"Copyright Victory Capital Management Inc. ©2020"}
-                </Text>
-    </View> */}
-
             </ScrollView>
             </View>
     
@@ -368,10 +317,13 @@ class RegisterSelfComponent extends Component {
 }
 
 RegisterSelfComponent.propTypes = {
-    navigation : PropTypes.instanceOf(Object)
+    navigation : PropTypes.instanceOf(Object),
+    updatePhoneNumber : PropTypes.func
   };
   
   RegisterSelfComponent.defaultProps = {
+    navigation : {},
+    updatePhoneNumber : () => { },
  
   };
 export default RegisterSelfComponent;

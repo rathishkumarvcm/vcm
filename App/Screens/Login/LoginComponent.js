@@ -47,8 +47,6 @@ class LoginComponent extends Component {
             //  password: '',
             email: '',
             registeredOnlineID: '',
-            switchOn: true,
-            switchOff: false,
             registeredSuccess: false,
             name: '',
             password: '',
@@ -68,12 +66,12 @@ class LoginComponent extends Component {
                 console.log("value------->", value);
                 this.setState({
                     registeredBioMetric: true
-                })
+                });
             }).catch((error) => {
-                console.log("Error", error)
+                console.log("Error", error);
                 this.setState({
                     registeredBioMetric: false
-                })
+                });
             });
 
         RNSecureKeyStore.get("bioMetricUserName")
@@ -81,12 +79,12 @@ class LoginComponent extends Component {
                 console.log("username------->", value);
                 this.setState({
                     registeredBioMetricUsername: value
-                })
+                });
             }).catch((error) => {
-                console.log("Error", error)
+                console.log("Error", error);
                 this.setState({
                     registeredBioMetricUsername: ''
-                })
+                });
             });
 
 
@@ -95,12 +93,12 @@ class LoginComponent extends Component {
                 console.log("password------->", value);
                 this.setState({
                     registeredBioMeticPassword: value
-                })
+                });
             }).catch((error) => {
-                console.log("Error", error)
+                console.log("Error", error);
                 this.setState({
                     registeredBioMeticPassword: false
-                })
+                });
             });
 
         console.log("componentDidMount");
@@ -145,8 +143,8 @@ class LoginComponent extends Component {
     componentDidUpdate() {
 
 
-        let emailVerify = this.props.navigation.getParam('emailVerified');
-        let onlineID = this.props.navigation.getParam('emailVerifiedData');
+        const emailVerify = this.props.navigation.getParam('emailVerified');
+        const onlineID = this.props.navigation.getParam('emailVerifiedData');
         if (emailVerify !== undefined && !this.state.registeredSuccess) {
             this.setState({
                 registeredSuccess: true,
@@ -155,7 +153,7 @@ class LoginComponent extends Component {
         }
 
         //  Special MFA Requirements
-        let onlineIdVerify = this.props.navigation.getParam('onlineIdCreated');
+        const onlineIdVerify = this.props.navigation.getParam('onlineIdCreated');
         if (onlineIdVerify !== undefined) {
             this.setState({
                 registeredSuccess: true
@@ -166,8 +164,8 @@ class LoginComponent extends Component {
 
         const validEmail = 'vcm.com';
         const validPassword = 'Vcm123';
-        let test = validEmail.localeCompare(this.state.email);
-        let test1 = validPassword.localeCompare(this.state.password);
+        const test = validEmail.localeCompare(this.state.email);
+        const test1 = validPassword.localeCompare(this.state.password);
 
         if (!test && !test1) {
             RNSecureKeyStore.set("EmailAddress", validEmail, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
@@ -198,10 +196,10 @@ class LoginComponent extends Component {
         if (result) {
             alert("Authentication Successfull");
 
-            let username = this.state.registeredBioMetricUsername;
-            let password = this.state.registeredBioMeticPassword;
-            let email = this.state.registeredBioMetricUsername;
-            let phone_number = "+918754499334";
+            const username = this.state.registeredBioMetricUsername;
+            const password = this.state.registeredBioMeticPassword;
+            const email = this.state.registeredBioMetricUsername;
+            const phone_number = "+918754499334";
             Auth.signIn({
                 username,
                 password,
@@ -212,12 +210,12 @@ class LoginComponent extends Component {
                 console.log("Data", JSON.stringify(data.signInUserSession.idToken.jwtToken));
 
                 RNSecureKeyStore.set("jwtToken", data.signInUserSession.idToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
-                    console.log("token saved suuccessfully", res)
+                    console.log("token saved suuccessfully", res);
                 }, (err) => {
                     console.log("Error", err);
-                })
+                });
 
-                let currentSessionTime = new Date();
+                const currentSessionTime = new Date();
 
                 RNSecureKeyStore.set("currentSession", currentSessionTime.getTime().toString(), { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
                     .then((res) => {
@@ -251,7 +249,7 @@ class LoginComponent extends Component {
     }
 
     validateEmail = () => {
-        let validate = reGex.emailRegex.test(this.state.email);
+        const validate = reGex.emailRegex.test(this.state.email);
         this.setState({
             validationEmail: validate
         });
@@ -279,7 +277,7 @@ class LoginComponent extends Component {
     enableBioMetric = () => {
         RNSecureKeyStore.set("enableBioMetric", "true", { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
             .then((res) => {
-                alert("Registered Bio Metric Successfully.")
+                alert("Registered Bio Metric Successfully.");
             }, (err) => {
                 console.log(err);
             });
@@ -294,23 +292,22 @@ class LoginComponent extends Component {
 
         RNSecureKeyStore.set("bioMetricPassword", this.state.password, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
             .then((res) => {
-                console.log("Bio Metric password saved.")
+                console.log("Bio Metric password saved.");
             }, (err) => {
                 console.log(err);
             });
     }
 
     signIn = () => {
-        console.log("test");
-        let username = this.state.email;
-        let password = this.state.password;
-        let email = this.state.email;
-        let phone_number = "+918754499334";
+        const {email} = this.state;
+        const username = email;
+        const {password} = this.state;;
+        const phoneNumber = "+918754499334";
         Auth.signIn({
             username,
             password,
             email,
-            phone_number
+            phoneNumber
         }).then(data => {
             console.log("ACCESS Token-----", JSON.stringify(data.signInUserSession.accessToken.jwtToken));
             console.log("ID Token-----", JSON.stringify(data.signInUserSession.idToken.jwtToken));
@@ -320,24 +317,24 @@ class LoginComponent extends Component {
             this.props.setEnvironment("LIVE");
 
             RNSecureKeyStore.set("jwtToken", data.signInUserSession.idToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
-                console.log("token saved suuccessfully", res)
+                console.log("token saved suuccessfully", res);
             }, (err) => {
                 // console.log("Error", err);
             });
 
             RNSecureKeyStore.set("accessToken", data.signInUserSession.accessToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
-                console.log("token saved suuccessfully", res)
+                console.log("token saved suuccessfully", res);
             }, (err) => {
                // console.log("Error", err);
-            })
+            });
 
             RNSecureKeyStore.set("refreshToken", data.signInUserSession.refreshToken.token, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
-                console.log("token saved suuccessfully", res)
+                console.log("token saved suuccessfully", res);
             }, (err) => {
                 // console.log("Error", err);
-            })
+            });
 
-            let currentSessionTime = new Date();
+            const currentSessionTime = new Date();
             
 
             RNSecureKeyStore.set("currentSession", currentSessionTime.getTime().toString(), { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
@@ -355,7 +352,7 @@ class LoginComponent extends Component {
                     "Enable",
                     null,
                     () => this.enableBioMetric()
-                )
+                );
             }
 
 
@@ -384,31 +381,39 @@ class LoginComponent extends Component {
             // this.props.navigation.navigate('dashboard');
         }).catch(error => {
             alert("Username and Password Incorrect.");
-            // console.log(error);
+             console.log(error);
         });
     }
 
 
     callSignIn = () => {
+        const {signInAction} = this.props;
+        const {email,password} = this.state;
         const payload = {
             "companyNumber": 591,
             "fundNumber": 30,
             "accountNumber": 30900780183,
-            email: this.state.email,
-            password: this.state.password
+            email,
+            password
         };
-
-        this.props.signInAction(payload);
-
-
+        signInAction(payload);
     }
 
 
-    navigateEmail = () => this.props.navigation.navigate('registerEmail');
+    navigateEmail = () => {
+        const {navigation} = this.props;
+        navigation.navigate('registerEmail');
+    }
 
-    navigateDashboard = () => this.props.navigation.navigate('dashboard');
-    // Menu
-    navigateToDashBoard = () => this.props.navigation.navigate('dashboardScreen')
+    navigateDashboard = () => {
+        const {navigation} = this.props;
+        navigation.navigate('dashboard');
+    }
+
+    navigateToDashBoard = () => {
+        const {navigation} = this.props;
+        navigation.navigate('dashboardScreen');
+    }
 
     navigateCommonUI = () => {
 
@@ -430,22 +435,14 @@ class LoginComponent extends Component {
     }
 
     // Recover password navigation
-    navigationResetPassword = () => this.props.navigation.navigate('passwordRecovery')
-
-    navigationRetrieveOnlineID = () => this.props.navigation.navigate("retrieveOnlineId")
-
-    switchOn = () => {
-        this.setState({
-            switchOn: true,
-            switchOff: false
-        });
+    navigationResetPassword = () => {
+        const {navigation} = this.props;
+        navigation.navigate('passwordRecovery');
     }
 
-    switchOff = () => {
-        this.setState({
-            switchOn: false,
-            switchOff: true
-        });
+    navigationRetrieveOnlineID = () => {
+        const {navigation} = this.props;
+        navigation.navigate("retrieveOnlineId");
     }
 
 
@@ -472,10 +469,11 @@ class LoginComponent extends Component {
 
 
                     <ScrollView style={{ flex: 0.85 }}>
-                        {this.state.registeredSuccess ?
+                        {this.state.registeredSuccess ? (
                             <View style={styles.onlineIDSuccess}>
                                 <Text> Your Online ID successfully created.</Text>
                             </View>
+                          )
                             :
                             null
                         }
@@ -486,11 +484,13 @@ class LoginComponent extends Component {
                             </Text>
                         </View>
 
-                        {this.state.inActivityAccount ? <View style={styles.inActivityView}>
+                        {this.state.inActivityAccount ? (
+<View style={styles.inActivityView}>
                             <Text style={styles.inActivitytext}>
                                 Your online account has been locked for 90 days of inactivity. Please contact Victory Capital Management service Rep at +1 (000) 000-0000
                             </Text>
-                        </View>
+</View>
+)
                             :
                             null}
 
@@ -561,8 +561,7 @@ class LoginComponent extends Component {
                             buttonStyle={styles.signInButton}
                             buttonText="Sign In"
                             textStyle={styles.signInButtonText}
-                            //onPress={this.callSignIn}
-                         onPress={this.navigateDashboard}
+                            onPress={this.navigateDashboard}
                         />
                         <View>
                             {
@@ -671,11 +670,14 @@ LoginComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     loginState: PropTypes.instanceOf(Object),
     initialState: PropTypes.instanceOf(Object),
-    signInAction: PropTypes.func,
+    signInAction: PropTypes.func
 };
 
 LoginComponent.defaultProps = {
-
+    navigation : {},
+    loginState : {},
+    initialState : {},
+    signInAction : () => {}
 };
 
 export default LoginComponent;

@@ -5,6 +5,12 @@ const {width} = Dimensions.get('window');
 
 
 const styles = StyleSheet.create({
+    arrowDrop:{
+        left:365,
+        position:'absolute',
+        right:0,
+        top:14
+    },
     cancelButton:{
         alignItems:'center',
         backgroundColor:'#FFFFFF',
@@ -49,8 +55,17 @@ const styles = StyleSheet.create({
         alignItems:'center',
         height:scaledHeight(20)
     },
+    flexAbsol:{
+        left:365,
+        position:'absolute',
+        right:0,
+        top:14
+    },
     flexContainer:{
         flex:0.85
+    },
+    flexRow:{
+        flexDirection:'row'
     },
     forgotLineText:{
         flexDirection:'row',
