@@ -17,6 +17,9 @@ const offlinemethod2 = require("../../Images/offlinemethod2.png");
 const offlinemethod3 = require("../../Images/offlinemethod3.png");
 const onlinemethod1 = require("../../Images/onlinemethod1.png");
 const specimen = require("../../Images/specimen.png");
+const lowRisk = require("../../Images/riskLow.png");
+const mediumRisk = require("../../Images/riskMedium.png");
+const highRisk = require("../../Images/riskHigh.png");
 
 
 
@@ -28,7 +31,10 @@ const images = {
     ],
     online:[
         onlinemethod1
-    ]
+    ],
+    Low: lowRisk,
+    Medium: mediumRisk,
+    High: highRisk
       
     };
 
@@ -941,7 +947,13 @@ class OpenAccPageThreeComponent extends Component {
                 fundName={item.fundName}
                 minimum={`$ ${item.initialInvestment}`}
                 autoInvesting={`$ ${item.initialInvestment} w/ $ ${item.monthlyInvestment} monthly`}
+                minMaxInvestMonthly={`$ ${item.initialInvestment} / $ ${item.maxInvestment} w/ $ ${item.monthlyInvestment} monthly`}
+                nav={item.changeInNav}
+                lastNav={`$ ${item.lastNav}`}
+                minMax52week={`$ ${item.min52W} / $ ${item.max52W} `}
                 risk={item.risk}
+                riskImg={images[item.risk]}
+                item= {item}
                 onClickCheckbox={this.onSelectFundList(item, index)}
                 onClickItem={this.onClickRowItem(item, index)}
             />

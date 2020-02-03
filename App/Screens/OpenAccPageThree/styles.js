@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         lineHeight: scaledHeight(20),
         marginLeft: scaledHeight(26),
         textAlign: 'left',
-        width:"60%"
+        width: "60%"
 
     },
     btnGrp: {
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         justifyContent: 'center',
         marginVertical: scaledHeight(15),
-        padding: scaledHeight(15)
+      // padding: scaledHeight(15)
     },
     commonColView: {
         flexGrow: 1
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(9),
         width: '100%'
     },
-    disclaimerTitleTxt: { 
+    disclaimerTitleTxt: {
         color: '#56565A',
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
@@ -242,9 +242,91 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center'
     },
+    fundItemContntView: {
+        margin: "4%"
+    },
+    fundItemHeaderTxt: {
+        color: "#54565B",
+        fontSize: scaledHeight(18),
+        fontWeight: "bold"
+    },
+    fundItemHeaderView: {
+        margin: "4%"
+    },
+    fundItemStyle: {
+        backgroundColor: "#FFFFFF",
+        width: "100%"
+    },
+    fundItemSwitch: {
+        alignItems: 'flex-end',
+        flex: 0.3,
+        marginRight: '4%'
+    },
+    fundItemTitle:
+    {
+        flex: 0.7
+    },
+    fundItemTopView:
+    {
+        flexDirection: 'row',
+        flex: 1, justifyContent: "center",
+        alignItems: 'center',
+        borderBottomColor: '#61285F45',
+        borderBottomWidth: 1,
+        padding: scaledHeight(20)
+    },
+    fundItemValueHeading: {
+        color: "#56565A",
+        fontSize: scaledHeight(14),
+        fontWeight: "bold",
+        lineHeight: scaledHeight(19)
+    },
+    fundItemValueTxt: {
+        color: "#56565A",
+        fontSize: scaledHeight(14),
+        fontWeight: "400",
+        lineHeight: scaledHeight(17)
+    },
     fundListGrp: {
         flexGrow: 1,
         marginTop: scaledHeight(27)
+    },
+    fundListHeader:
+    {
+        flexDirection: 'row',
+        flex: 1, justifyContent: "center",
+        alignItems: 'center',
+        borderBottomColor: '#61285F45',
+        borderBottomWidth: 1,
+        padding: scaledHeight(20)
+    },
+
+    fundListHeaderView: {
+        flex: 0.7
+    },
+    fundListStyle: {
+        marginTop: scaledHeight(20)
+    },
+    fundListView: {
+        borderColor: '#5D83AE99',
+        borderWidth: 1,
+        marginTop: scaledHeight(10)
+    },
+    fundNameSwitch:
+    {
+        alignItems: 'flex-end',
+        flex: 0.3,
+        marginRight: '4%'
+    },
+
+    fundNameText:
+    {
+        color: '#544A54',
+        fontSize: scaledHeight(13),
+        fontWeight: 'bold'
+    },
+    fundRemainStyle: {
+        marginLeft: scaledWidth(10)
     },
     headings: {
         color: '#000000',
@@ -263,6 +345,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         marginTop: scaledHeight(7)
     },
+
     investmentSection: {
         backgroundColor: '#FFFFFF',
         borderColor: '#70707080',
@@ -281,6 +364,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
 
     },
+
     labOR: {
         color: '#333333DE',
         fontSize: scaledHeight(18),
@@ -331,6 +415,10 @@ const styles = StyleSheet.create({
         marginBottom: scaledHeight(25),
         marginTop: scaledHeight(12)
     },
+
+
+
+
     lblOfflineTxt: {
         color: '#56565A',
         fontSize: scaledHeight(18),
@@ -343,6 +431,7 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         lineHeight: 28
     },
+
 
     lblRadioDescTxt: {
         color: '#333333DE',
@@ -379,7 +468,6 @@ const styles = StyleSheet.create({
         textDecorationStyle: 'solid'
 
     },
-
     lblSpecimenDesc: {
         color: '#333333DE',
         fontSize: scaledHeight(11),
@@ -393,7 +481,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: scaledHeight(25)
     },
-
+    marginBottomStyle: {
+        marginBottom: "4%"
+      },
     mininitialInvestment: {
         color: '#56565A',
         fontSize: scaledHeight(12),
@@ -428,7 +518,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.5)',
         height: '100%',
     },
-
     modalCancelBtnTxt: {
         color: '#5D83AE',
         fontSize: scaledHeight(18),
@@ -442,10 +531,6 @@ const styles = StyleSheet.create({
         marginBottom: scaledHeight(18),
 
     },
-
-
-
-
     modalClearFilterBtn: {
         alignContent: 'center',
         alignItems: 'center',
@@ -469,8 +554,6 @@ const styles = StyleSheet.create({
         paddingRight: '4%',
         paddingTop: scaledHeight(15),
     },
-
-
     modalFundCheckBoxContainer: {
         marginLeft: '4%',
         marginRight: '4%',
@@ -621,6 +704,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginTop: scaledHeight(0)
     },
+
     rowItem: {
         alignItems: 'flex-start',
         flexDirection: 'row',
@@ -628,6 +712,12 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginTop: scaledHeight(22)
     },
+   riskLevelImg: {
+        height: scaledHeight(54),
+        width: scaledHeight(110)
+
+    },
+
     saveButtonStyle: {
         alignItems: 'center',
         backgroundColor: '#56565A',
@@ -653,12 +743,14 @@ const styles = StyleSheet.create({
         lineHeight: 25,
         marginTop: scaledHeight(12)
     },
+
     sectionGrp: {
         flexGrow: 1,
         marginHorizontal: scaledHeight(12),
         marginTop: scaledHeight(31),
         overflow: 'hidden'
     },
+
     settingsBorder: {
         borderBottomWidth: 1,
         borderColor: '#B2B2B2',
@@ -718,7 +810,7 @@ const styles = StyleSheet.create({
     },
     touchItem: {
         marginVertical: scaledHeight(14),
-    }
+    },
 });
 
 export default styles;

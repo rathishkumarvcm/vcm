@@ -362,6 +362,10 @@ export default {
         contactMSR: "Contact MSR",
         callTollFee: "Call toll-free",
         callTollFeeNo: "(855) 756-7520",
+        minMaxAmtAutoInvesting: "Min. / Max. Amount w/ Auto Investing",
+        navInPercentage: "NAV in %",
+        lastNav: "Last NAV (Previous day close)",
+        minMax52Week: "52 week Min. / Max. Values",
 
         contactMSRDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcittet",
         offlineMethod: "Offline Method",
