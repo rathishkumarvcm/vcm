@@ -5,61 +5,6 @@ import styles from './styles';
 import { GHeaderComponent, GFooterSettingsComponent, GIcon } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
-const accountsOpened = [
-    {       
-        "accountType": "Traditional IRA",       
-        "accounts":[ 
-            { 
-               "accName":"Lorem Ipsum",
-               "accNumber":"7667-3345-1111",
-               "deliveryPreference":"Paper & Online",
-               "SeasonalAddress": "No"
-            },
-            { 
-                "accName":"Lorem Ipsum",
-                "accNumber":"7667-3345-1112",
-                "deliveryPreference":"Online",
-                "SeasonalAddress": "Yes"
-             }
-        ]
-    },
-    {     
-        "accountType": "Roth IRA",        
-        "accounts":[ 
-            { 
-               "accName":"Lorem Ipsum",
-               "accNumber":"7667-3345-2222",
-               "deliveryPreference":"Online",
-               "SeasonalAddress": "No"
-            },            
-            { 
-                "accName":"Lorem Ipsum",
-                "accNumber":"7667-3345-2223",
-                "deliveryPreference":"Online & Paper",
-                "SeasonalAddress": "Yes"
-             },
-            { 
-                "accName":"Lorem Ipsum",
-                "accNumber":"7667-3345-2224",
-                "deliveryPreference":"Online",
-                "SeasonalAddress": "No"
-             }
-        ]      
-    },
-    {     
-        "accountType": "Individual Mutual Fund Account",     
-        "accountDesc":"Transfer on Death Beneficiaries",
-        "accounts":[ 
-            { 
-               "accName":"Lorem Ipsum",
-               "accNumber":"7667-3345-3333",
-               "deliveryPreference":"Paper",
-               "SeasonalAddress": "No"
-            }
-        ]
-    }
-];
-
 class AccountMessagingInvestmentAccountComponent extends Component {
     constructor(props) {
         super(props);
@@ -67,10 +12,33 @@ class AccountMessagingInvestmentAccountComponent extends Component {
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
            // isLoading: false,            
-           openedAccounts: [...accountsOpened.map(v => ({ ...v, isExpand: true }))],                    
+           openedAccounts: [],                    
         };
     }  
 
+    static getDerivedStateFromProps(props, prevState){
+        // initialize state variable and return. If no changes required for state
+        // variable then return empty object. return {}
+
+        const {accountPreferenceinitialState} = props;      
+        const {openedAccounts} = prevState;    
+
+        let newItm = [];             
+        if (accountPreferenceinitialState && openedAccounts.length === 0 ){
+            if(accountPreferenceinitialState.accountsOpened){               
+                newItm = [...accountPreferenceinitialState.accountsOpened.map(v => ({ ...v, isExpand: true }))]; 
+                return {
+                    openedAccounts: newItm
+                };                                                                    
+            }       
+        }else {
+            return {
+                openedAccounts: prevState.openedAccounts
+            };
+        }   
+        return {};     
+    }    
+    
     goBack = () => {
         const{ navigation }=this.props;
         navigation.goBack();
@@ -264,10 +232,14 @@ class AccountMessagingInvestmentAccountComponent extends Component {
 
 AccountMessagingInvestmentAccountComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),     
+    accountPreferenceinitialState : PropTypes.instanceOf(Object)
+
 };
 
 AccountMessagingInvestmentAccountComponent.defaultProps = {
     navigation : {},   
+    accountPreferenceinitialState:{}
+
 };
 
 export default AccountMessagingInvestmentAccountComponent;

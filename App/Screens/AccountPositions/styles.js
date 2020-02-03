@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     gainText:{            
         color: '#56565A',        
         fontSize: scaledHeight(12),
-        fontWeight:'200'    
+        fontWeight:'400'    
     },  
     lineBorder: {       
         borderColor: '#707070',          
@@ -158,12 +158,12 @@ const styles = StyleSheet.create({
     },
     performanceValueDownText:{
         color: '#ab3120',
-        fontSize: scaledHeight(14),
+        fontSize: scaledHeight(12),
         textAlign:'center',        
     },
     performanceValueUpText:{
         color: '#159638',
-        fontSize: scaledHeight(14),
+        fontSize: scaledHeight(12),
         textAlign:'center',        
     },
     performanceYearContainer:{
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
     },
     performanceYearText:{
         color: '#56565A',
-        fontSize: scaledHeight(14),
+        fontSize: scaledHeight(12),
         marginLeft:'2%'       
     },
     saveButton:{
