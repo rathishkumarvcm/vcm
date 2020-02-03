@@ -9,17 +9,11 @@ class RegisterSelfComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
-            isLoading:false,
-            enableBiometric:false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false,
-            language :'java',
             lastName : '',
             firstName : '',
             middleName : '',
             phone : '',
             firstNameFlag :false,
-            middleNameFlag : false,
             lastNameFlag : false,
             phoneFlag : false
         };

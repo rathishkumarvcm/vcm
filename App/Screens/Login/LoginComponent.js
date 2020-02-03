@@ -5,7 +5,7 @@ import TouchID from 'react-native-touch-id';
 import PropTypes from 'prop-types';
 import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
 import Amplify, { Auth } from 'aws-amplify';
-import { styles } from './styles';
+import styles from './styles';
 import { GButtonComponent, GInputComponent, GBiometricAuthentication, GHeaderComponent, GFooterSettingsComponent, GLoadingSpinner, showAlertWithCancelButton } from '../../CommonComponents';
 import * as reGex from '../../Constants/RegexConstants';
 

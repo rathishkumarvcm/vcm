@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text,View,ScrollView,TouchableOpacity } from 'react-native';
-import {styles} from './styles';
+import styles from './styles';
 import {GButtonComponent,GInputComponent,GIcon,GHeaderComponent,GFooterComponent,GDropDownComponent} from '../../CommonComponents';
 import PropTypes from 'prop-types';
 import { scaledHeight } from '../../Utils/Resolution';

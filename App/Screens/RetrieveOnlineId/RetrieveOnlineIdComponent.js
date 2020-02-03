@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Text,View,ScrollView } from 'react-native';
-import {styles} from './styles';
-import {GButtonComponent,GInputComponent,GHeaderComponent,GFooterSettingsComponent} from '../../CommonComponents';
 import PropTypes from 'prop-types';
+import styles from './styles';
+import {GButtonComponent,GInputComponent,GHeaderComponent,GFooterSettingsComponent} from '../../CommonComponents';
 
 
 const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/;
@@ -12,7 +12,6 @@ class RetrieveOnlineIdComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
-            isLoading:false,
             email:'',
             validationEmail: true
         };
@@ -23,7 +22,8 @@ class RetrieveOnlineIdComponent extends Component {
     }
 
     validateEmail = () => {
-        let validate = emailRegex.test(this.state.email);
+        const {passEamil} = this.state;
+        const validate = emailRegex.test(passEamil.email);
         this.setState({
             validationEmail : validate
         });
@@ -35,7 +35,10 @@ class RetrieveOnlineIdComponent extends Component {
         });
     }
 
-    navigatePassword = ()=>this.props.navigation.navigate('onlineIDVerification');
+    navigatePassword = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('onlineIDVerification');
+    }
     
  
     render(){

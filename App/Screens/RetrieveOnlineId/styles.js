@@ -4,11 +4,62 @@ import { scaledHeight} from '../../Utils/Resolution';
 const {width} = Dimensions.get('window');
 
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
+    cancelButton:{
+        borderColor:'#61285F45',
+        borderWidth:1,
+        width:'72%',
+        marginLeft:'14%',
+        marginRight:'14%',
+        marginTop:scaledHeight(12),
+        height:scaledHeight(50),
+        backgroundColor:'#FFFFFF',
+        alignItems:'center',
+        justifyContent:'center'
+     },
+    cancelButtonText:{
+        color:'#544A54',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold'
+    },
     container:{
-        flex:1,
         backgroundColor:'#F7FAFF',
+        flex:1,
         width:'100%'
+    },
+    copyRightSection:{
+        alignItems:'center',
+        backgroundColor:'#56565A',
+        height:scaledHeight(50),
+        justifyContent:'center'
+    },
+    copyRightText:{
+        color:'#FFFFFF'
+    },
+    faceIDlogo:{
+        alignSelf:'center',
+        marginBottom:'5%',
+        marginTop:'5%'
+    },
+    faceIDtextStyle:{
+        alignItems:'center',
+        height:scaledHeight(20)
+    },
+    forgotLineText:{
+        flexDirection:'row',
+        fontSize:scaledHeight(18),
+        paddingLeft:'4%',
+        paddingRight:'4%'
+    },
+    forgotLineTextColor:{
+        color:'#56565A',
+        fontSize : scaledHeight(18),
+        fontWeight:'bold'
+    },
+    lineBorder:{
+        borderTopWidth:1,
+        color:'#707070',
+        marginTop:scaledHeight(15)
     },
     loginHeader:{
         flex:.15,
@@ -19,42 +70,93 @@ export const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center'
     },
-    registernowButton:{
-       borderColor:'#56565A',
-       borderWidth:1,
-       width:width/3.3,
-       borderRadius:scaledHeight(14),
-       height:scaledHeight(28),
-       backgroundColor:'#FFFFFF',
-       alignItems:'center',
-       justifyContent:'center'
+    newVictory:{
+        color:'#486D89',
+        fontSize:scaledHeight(20),
+        height:scaledHeight(20),
+        lineHeight:scaledHeight(20)
     },
-    registernowButton1:{
+    newVictoryButton:{
+        alignItems:'center',
+        backgroundColor:'#FFFFFF',
         borderColor:'#56565A',
-       borderWidth:1,
-       width:width/2,
-       borderRadius:scaledHeight(24),
-       height:scaledHeight(48),
-       backgroundColor:'#FFFFFF',
-       alignSelf:'center',
-       justifyContent:'center'
-     },
-    registernowText:{
-        fontSize:scaledHeight(10),
-        color:'#56565A'
+        borderRadius:scaledHeight(25),
+        borderWidth:1,
+        height:scaledHeight(50),
+        justifyContent:'center',
+        marginTop:scaledHeight(10),
+        width:'70%'
+
     },
-    signInView:{
-        marginTop:scaledHeight(18),
+    newVictoryButtonText:{
+        color:'#56565A',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold'
+    },
+    newVictorySection:{
+        backgroundColor:'#FFFFFF',
+        height:scaledHeight(190),
+        marginLeft:'4%',
+        marginRight:'4%',
+        marginTop:scaledHeight(29),
+        padding:scaledHeight(15),
+        width:'92%'
+    },
+    newVictorySection1:{
+        height:scaledHeight(70),
+        marginTop:scaledHeight(20),
         paddingLeft:'4%',
         paddingRight:'4%',
+        width:'100%'
+    },
+    openInvestment:{
+        color:'#56565A',
+        fontSize:scaledHeight(14)
     },
     passwordView:{
         paddingLeft:'4%',
         paddingRight:'4%'
     },
-    signIntext:{
+    privacyAgreement:{
+        alignItems:'center',
+        backgroundColor:'white',
+        flexDirection:'row',
+        height:scaledHeight(50),
+        justifyContent:'center',
+        marginTop:scaledHeight(15),
+        width:'100%'
+    },
+     privacyText:{
+        color:'#61285F',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold',
+        paddingLeft:'4%',
+        width:'50%'
+    },
+
+    registernowButton:{
+       alignItems:'center',
+       backgroundColor:'#FFFFFF',
+       borderColor:'#56565A',
+       borderRadius:scaledHeight(14),
+       borderWidth:1,
+       height:scaledHeight(28),
+       justifyContent:'center',
+       width:width/3.3
+    },
+     registernowButton1:{
+        alignSelf:'center',
+       backgroundColor:'#FFFFFF',
+       borderColor:'#56565A',
+       borderRadius:scaledHeight(24),
+       borderWidth:1,
+       height:scaledHeight(48),
+       justifyContent:'center',
+       width:width/2
+     },
+    registernowText:{
         color:'#56565A',
-        fontSize:scaledHeight(32)
+        fontSize:scaledHeight(10)
     },
     retrieveSection: {
         marginLeft:'4%',
@@ -66,50 +168,6 @@ export const styles = StyleSheet.create({
         fontSize:scaledHeight(16)
 
     },
-    userIDText:{
-        color:'#000000',
-        fontSize:scaledHeight(16),
-        fontWeight:'bold',
-        marginBottom:scaledHeight(8)
-    },
-    userIDTextBox:{
-        marginLeft:'4%',
-        marginRight:'4%',
-        marginBottom:scaledHeight(18)
-    },
-    userIDTextBoxError:{
-        marginLeft:'4%',
-        marginRight:'4%',
-        marginBottom:scaledHeight(18),
-        borderColor:'red'
-    },
-    forgotLineText:{
-        paddingLeft:'4%',
-        paddingRight:'4%',
-        flexDirection:'row',
-        fontSize:scaledHeight(18)
-    },
-    forgotLineTextColor:{
-        fontSize : scaledHeight(18),
-        color:'#56565A',
-        fontWeight:'bold'
-    },
-    termsofuse:{
-        flexWrap:'wrap',
-        flexDirection:'row',
-        paddingLeft:'4%',
-        paddingRight:'4%',
-        marginTop:scaledHeight(10)
-    },
-    termsofuseText:{
-        fontSize : scaledHeight(18),
-        color:'#56565A'
-    },
-    termsofuseText1:{
-        fontSize : scaledHeight(18),
-        color:'#486D89',
-        marginBottom:scaledHeight(5)
-    },
     signInButton:{
         borderColor:'#56565A',
         borderWidth:1,
@@ -117,139 +175,81 @@ export const styles = StyleSheet.create({
         marginLeft:'14%',
         marginRight:'14%',
         marginTop:scaledHeight(12),
-        // borderRadius:scaledHeight(25),
         height:scaledHeight(50),
         backgroundColor:'#56565A',
         alignItems:'center',
         justifyContent:'center'
      },
-     signInButtonText:{
-        fontSize:scaledHeight(16),
+    signInButtonText:{
         color:'#FFFFFF',
-        fontWeight:'bold'
-    },
-
-    cancelButton:{
-        borderColor:'#61285F45',
-        borderWidth:1,
-        width:'72%',
-        marginLeft:'14%',
-        marginRight:'14%',
-        marginTop:scaledHeight(12),
-        // borderRadius:scaledHeight(25),
-        height:scaledHeight(50),
-        backgroundColor:'#FFFFFF',
-        alignItems:'center',
-        justifyContent:'center'
-     },
-     cancelButtonText:{
         fontSize:scaledHeight(16),
-        color:'#544A54',
         fontWeight:'bold'
     },
-    newVictoryButton:{
-        borderColor:'#56565A',
-        borderRadius:scaledHeight(25),
-        height:scaledHeight(50),
-        borderWidth:1,
-        marginTop:scaledHeight(10),
-        width:'70%',
-        backgroundColor:'#FFFFFF',
-        alignItems:'center',
-        justifyContent:'center'
-
+    signInView:{
+        marginTop:scaledHeight(18),
+        paddingLeft:'4%',
+        paddingRight:'4%',
     },
-    newVictoryButtonText:{
+    signIntext:{
         color:'#56565A',
-        fontSize:scaledHeight(16),
-        fontWeight:'bold'
+        fontSize:scaledHeight(32)
     },
-    newVictorySection:{
+    stepsInner:{
+        backgroundColor:'#56565A',
+        height: scaledHeight(8),
+        width:'20%'
+    },
+    stepsOuter :{
+        backgroundColor: "#E6E6E6",
+        height: scaledHeight(8),
+        justifyContent: "center",
         marginLeft:'4%',
         marginRight:'4%',
-        padding:scaledHeight(15),
-        width:'92%',
-        height:scaledHeight(190),
-        backgroundColor:'#FFFFFF',
-        marginTop:scaledHeight(29)
+        marginTop:scaledHeight(30),
+        width: '92%'
     },
-    newVictory:{
-        height:scaledHeight(20),
-        lineHeight:scaledHeight(20),
-        fontSize:scaledHeight(20),
-        color:'#486D89'
+    termsofuse:{
+        flexDirection:'row',
+        flexWrap:'wrap',
+        marginTop:scaledHeight(10),
+        paddingLeft:'4%',
+        paddingRight:'4%'
     },
-    usaaMembersText:{
-        height:scaledHeight(50),
-        lineHeight:scaledHeight(50),
-        fontSize:scaledHeight(16),
-        color:'#486D89'
+    termsofuseText:{
+        color:'#56565A',
+        fontSize : scaledHeight(18)
     },
-    openInvestment:{
-        fontSize:scaledHeight(14),
-        color:'#56565A'
-    },
-    lineBorder:{
-        marginTop:scaledHeight(15),
-        borderTopWidth:1,
-        color:'#707070'
+    termsofuseText1:{
+        color:'#486D89',
+        fontSize : scaledHeight(18),
+        marginBottom:scaledHeight(5)
     },
     usaaMemberSection:{
         flexDirection:'row',
         marginTop:scaledHeight(15)
     },
-    privacyAgreement:{
-        marginTop:scaledHeight(15),
-        alignItems:'center',
-        justifyContent:'center',
-        width:'100%',
-        backgroundColor:'white',
+    usaaMembersText:{
+        color:'#486D89',
+        fontSize:scaledHeight(16),
         height:scaledHeight(50),
-        flexDirection:'row'
-    },
-    privacyText:{
-        width:'50%',
-        paddingLeft:'4%',
-        color:'#61285F',
+        lineHeight:scaledHeight(50)
+    }, userIDText:{
+        color:'#000000',
+        fontSize:scaledHeight(16),
         fontWeight:'bold',
-        fontSize:scaledHeight(16)
+        marginBottom:scaledHeight(8)
     },
-    copyRightSection:{
-        height:scaledHeight(50),
-        backgroundColor:'#56565A',
-        alignItems:'center',
-        justifyContent:'center'
-    },
-    copyRightText:{
-        color:'#FFFFFF'
-    },
-    faceIDlogo:{
-        marginTop:'5%',
-        marginBottom:'5%',
-        alignSelf:'center'
-    },
-    faceIDtextStyle:{
-        height:scaledHeight(20),
-        alignItems:'center'
-    }, stepsOuter :{
-        height: scaledHeight(8),
-        width: '92%',
-        backgroundColor: "#E6E6E6",
-        justifyContent: "center",
-        marginTop:scaledHeight(30),
+    userIDTextBox:{
+        marginBottom:scaledHeight(18),
         marginLeft:'4%',
         marginRight:'4%'
     },
-    stepsInner:{
-        height: scaledHeight(8),
-        width:'20%',
-        backgroundColor:'#56565A'
-    },
-    newVictorySection1:{
-        paddingLeft:'4%',
-        paddingRight:'4%',
-        width:'100%',
-        height:scaledHeight(70),
-        marginTop:scaledHeight(20)
+    userIDTextBoxError:{
+        borderColor:'red',
+        marginBottom:scaledHeight(18),
+        marginLeft:'4%',
+        marginRight:'4%'
     },
 });
+
+export default styles;

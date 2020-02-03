@@ -3,11 +3,9 @@ import RegisterEmailComponent from './RegisterEmailComponent';
 import { loginActions } from "../../Shared/Actions";
 
 
-const mapStateToProps = (state /* , props */) => (
-    {
-      // loginData: getLogin(state)
-    }
-  );
+const mapStateToProps = ( /* , props */) => {
+  return ({});
+};
 
 const mapDispatchToProps = {
     ...loginActions
