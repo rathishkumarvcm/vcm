@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Text,View,ScrollView,TouchableOpacity } from 'react-native';
-import {styles} from './styles';
-import {GButtonComponent,GInputComponent,GIcon,GHeaderComponent,GFooterSettingsComponent} from '../../CommonComponents';
+import { Text,View,ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
+import styles from './styles';
+import {GButtonComponent,GInputComponent,GIcon,GHeaderComponent,GFooterSettingsComponent} from '../../CommonComponents';
 
 class RegisterSelfComponent extends Component {
     constructor(props){
@@ -24,7 +24,8 @@ class RegisterSelfComponent extends Component {
     }
 
     goBack = () =>{
-        this.props.navigation.goBack();
+        const {navigation} = this.props;
+        navigation.goBack();
     }
 
     setFirstName = text => {
@@ -53,17 +54,18 @@ class RegisterSelfComponent extends Component {
 
 
     navigateAddress = ()=>{
-        
+        const {navigation} = this.props;
+        const {newState} = this.state;
         const passingData = {
-            emailID : this.props.navigation.getParam('emailID'),
-            lastName : this.state.lastName,
-            firstName : this.state.firstName,
-            middleName : this.state.middleName,
-            phone : this.state.phone
+            emailID : navigation.getParam('emailID'),
+            lastName : newState.lastName,
+            firstName : newState.firstName,
+            middleName : newState.middleName,
+            phone : newState.phone
         };
         
-        this.props.updatePhoneNumber(this.state.phone);
-        this.props.navigation.navigate('registerPassword',{selfData:passingData});
+        this.props.updatePhoneNumber(newState.phone);
+        navigation.navigate('registerPassword',{selfData:passingData});
     }
 
     checkFirstName = () =>{
@@ -94,7 +96,8 @@ class RegisterSelfComponent extends Component {
 
 
     checkLastName = () =>{
-        if(this.state.lastName != ""){
+        const { lastNameData } = this.state;
+        if(lastNameData.lastName !== ""){
             this.setState({
                 lastNameFlag : false
             });
@@ -107,7 +110,8 @@ class RegisterSelfComponent extends Component {
     }
 
     checkPhone = () => {
-        if(this.state.phone != ""){
+        const { getPhoneData } = this.state;
+        if(getPhoneData.phone !== ""){
             this.setState({
                 phoneFlag : false
             });
@@ -123,20 +127,19 @@ class RegisterSelfComponent extends Component {
 
  
     render(){
+        const{ navigation }=this.props;
         
         return (
-           
-           
             <View style={styles.container}>
              <GHeaderComponent 
-             navigation={this.props.navigation}
+             navigation={navigation}
              register
              />
-            <ScrollView style={{flex:0.85}}>
+            <ScrollView style={styles.flexContainer}>
 
             <View style={styles.stepsOuter}>
                 <View style={styles.stepsInner} />
-        </View>
+            </View>
 
             <View style={styles.signInView}>
                 <Text style={styles.signIntext}>
