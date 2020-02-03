@@ -26,17 +26,17 @@ const styles = StyleSheet.create({
         paddingBottom: "5%"
     },
     cancelButton: {
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
         borderColor: '#61285F45',
         borderWidth: 1,
-        width: '80%',
+        height: scaledHeight(50),
+        justifyContent: 'center',
         marginLeft: '10%',
         marginRight: '10%',
         marginTop: scaledHeight(12),
         //  borderRadius:scaledHeight(25),
-        height: scaledHeight(50),
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'center'
+        width: '80%',
     },
     cancelButtonText: {
         color: '#544A54',
@@ -50,10 +50,10 @@ const styles = StyleSheet.create({
     },
     lblLine: {
         //  width:"100%",
-        flexGrow: 1,
-        marginTop: scaledHeight(9.5),
-        height: scaledHeight(1),
         backgroundColor: '#707070',
+        flexGrow: 1,
+        height: scaledHeight(1),
+        marginTop: scaledHeight(9.5),
         opacity: .25
     },
     lblTxt: {
@@ -109,17 +109,17 @@ const styles = StyleSheet.create({
     flexDirection:'row'
     },
     saveButton: {
+        alignItems: 'center',
+        backgroundColor: '#56565A',
         borderColor: '#56565A',
         borderWidth: 1,
-        width: '80%',
+        height: scaledHeight(50),
+        justifyContent: 'center',
         marginLeft: '10%',
         marginRight: '10%',
         marginTop: scaledHeight(12),
         //  borderRadius:scaledHeight(25),
-        height: scaledHeight(50),
-        backgroundColor: '#56565A',
-        alignItems: 'center',
-        justifyContent: 'center'
+        width: '80%',
     },
     saveButtonText: {
         color: '#FFFFFF',
