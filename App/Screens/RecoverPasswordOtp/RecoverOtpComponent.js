@@ -24,28 +24,32 @@ class RecoveryOtpComponent extends Component {
       phoneNo:'',     
     };
     //  set true to isLoading if data for this screen yet to be received and wanted to show loader.    
-  }
+  }  
 
-  
+  static getDerivedStateFromProps(props,prevState){
+     // if(props.initialState)
 
-//    static getDerivedStateFromProps(props){
-//      // if(props.initialState)
-//      if(this.props && this.props.initialState && this.props.initialState.phone){
-//        this.setState({
-//          phoneNo : this.protectPhone(this.props.initialState.phone)
-//        });
-//      }
-//      else 
-//        return null;
-//   } 
+    const {initialState} = props;
+    const {phoneNo} = prevState; 
+    AppUtils.debugLog(`initialState====>${JSON.stringify(initialState)}`);    
+    if(initialState && phoneNo===''){   
+      let maskPhone='';
+      const x = initialState.phone.replace(/\D/g, '').match(/(\d{2})(\d{6})(\d{2})/);
+      maskPhone=`${x[1] }******${ x[3]}`;                 
+      return {
+        phoneNo: maskPhone
+      };  
+     }    
+     return {phoneNo:prevState.phone};
+  } 
 
 componentDidMount(){ 
-  const {initialState} = this.props;
-  if(initialState &&initialState.phone){
-    this.setState({
-      phoneNo : this.protectPhone(initialState.phone)
-    });
-  }  
+  // const {initialState} = this.props;
+  // if(initialState &&initialState.phone){
+  //   this.setState({
+  //     phoneNo : this.protectPhone(initialState.phone)
+  //   });
+  // }  
 } 
 
 isEmpty = (str) => {

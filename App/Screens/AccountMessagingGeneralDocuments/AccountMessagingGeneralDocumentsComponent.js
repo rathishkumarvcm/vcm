@@ -90,7 +90,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
         AppUtils.debugLog(`componentDidUpdate::::> ${prevState}`);
         const { addressFormatData } = this.props;
 
-        const { currentZipCodeRef, estate } = this.state;
+        const { currentZipCodeRef } = this.state;
         const {
             //  stateKey = "",
             keyName = "",
@@ -100,20 +100,19 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
         if (this.props !== prevProps) {           
 
             const stateCityKey = ActionTypes.GET_STATECITY;
-            if (addressFormatData[stateCityKey]) {
-                if (addressFormatData[stateCityKey] !== prevProps.addressFormatData[stateCityKey]) {
-                    const tempResponse = addressFormatData[stateCityKey];
+            if (addressFormatData[`${stateCityKey}`]) {
+                if (addressFormatData[`${stateCityKey}`] !== prevProps.addressFormatData[`${stateCityKey}`]) {
+                    const tempResponse = addressFormatData[`${stateCityKey}`];
 
                     if (tempResponse && tempResponse.City) {
                         if (keyName === "zipcode" && objIndex !== -1) {
-                            const newItems = [...estate.trusteeData];
-                            newItems[objIndex].city = tempResponse.City;
-                            newItems[objIndex].stateCity = tempResponse.State;
+                            const newItems = [];
+                            newItems[parseInt(objIndex,10)].city = tempResponse.City;
+                            newItems[parseInt(objIndex,10)].stateCity = tempResponse.State;
 
                             this.setState(() => (() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    trusteeData: newItems
+                                    ...prevState[prevState.currentZipCodeRef.stateKey]                                   
 
                                 }
                             })));
@@ -132,24 +131,23 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
             }
 
             const addressKey = ActionTypes.GET_ADDRESSFORMAT;
-            if (addressFormatData[addressKey]) {
-                if (addressFormatData[addressKey] !== prevProps.addressFormatData[addressKey]) {
-                    const tempResponse = addressFormatData[addressKey];
+            if (addressFormatData[`${addressKey}`]) {
+                if (addressFormatData[`${addressKey}`] !== prevProps.addressFormatData[`${addressKey}`]) {
+                    const tempResponse = addressFormatData[`${addressKey}`];
 
                     if (tempResponse && tempResponse.City) {
                         if (keyName === "zipcode" && objIndex !== -1) {
-                            const newItems = [...estate.trusteeData];
-                            newItems[objIndex].city = tempResponse.City;
-                            newItems[objIndex].stateCity = tempResponse.State;
-                            newItems[objIndex].addrLine1 = tempResponse.Address1 || "";
-                            newItems[objIndex].addrLine2 = tempResponse.Address2 || "";
-                            newItems[objIndex].addrLine1Validation = true;
-                            newItems[objIndex].addrLine2Validation = true;
+                            const newItems = [];
+                            newItems[parseInt(objIndex,10)].city = tempResponse.City;
+                            newItems[parseInt(objIndex,10)].stateCity = tempResponse.State;
+                            newItems[parseInt(objIndex,10)].addrLine1 = tempResponse.Address1 || "";
+                            newItems[parseInt(objIndex,10)].addrLine2 = tempResponse.Address2 || "";
+                            newItems[parseInt(objIndex,10)].addrLine1Validation = true;
+                            newItems[parseInt(objIndex,10)].addrLine2Validation = true;
 
                             this.setState(() => (() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    trusteeData: newItems
+                                    ...prevState[prevState.currentZipCodeRef.stateKey]                                    
                                 }
                             })));
                         } 
@@ -168,16 +166,15 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                         }
                     } else if (tempResponse && tempResponse.ErrorNumber) {
                         if (currentZipCodeRef.keyName === "zipcode" && objIndex !== -1) {
-                            const newItems = [...estate.trusteeData];
-                            newItems[objIndex].addrLine1 = "";
-                            newItems[objIndex].addrLine2 = "";
-                            newItems[objIndex].addrLine1Validation = false;
-                            newItems[objIndex].addrLine2Validation = false;
+                            const newItems = [];
+                            newItems[parseInt(objIndex,10)].addrLine1 = "";
+                            newItems[parseInt(objIndex,10)].addrLine2 = "";
+                            newItems[parseInt(objIndex,10)].addrLine1Validation = false;
+                            newItems[parseInt(objIndex,10)].addrLine2Validation = false;
 
                             this.setState(() => (() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    trusteeData: newItems
+                                    ...prevState[prevState.currentZipCodeRef.stateKey]                                   
                                 },
                                 errMsg: "Invalid address"
 
@@ -226,12 +223,12 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
         newItm = accountPreferenceData;               
 
         for(let i = 0; i < newItm.preferences.length; i +=1) {
-            if(newItm.preferences[i].preferenceType === preferenceType){               
-                for(let j = 0; j < newItm.preferences[i].investmentStatements.length; j +=1) {
-                    if(newItm.preferences[i].investmentStatements[j].key === key){                      
-                        newItm.preferences[i].investmentStatements[j].selected = !selected;
+            if(newItm.preferences[parseInt(i,10)].preferenceType === preferenceType){               
+                for(let j = 0; j < newItm.preferences[parseInt(i,10)].investmentStatements.length; j +=1) {
+                    if(newItm.preferences[parseInt(i,10)].investmentStatements[parseInt(j,10)].key === key){                      
+                        newItm.preferences[parseInt(i,10)].investmentStatements[parseInt(j,10)].selected = !selected;
                     }else{
-                        newItm.preferences[i].investmentStatements[j].selected = selected;
+                        newItm.preferences[parseInt(i,10)].investmentStatements[parseInt(j,10)].selected = selected;
                     }
                 }
             }
@@ -248,12 +245,12 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
         newItm = accountPreferenceData;               
 
         for(let i = 0; i < newItm.taxDocuments.length; i +=1) {
-            if(newItm.taxDocuments[i].documentType === documentType){               
-                for(let j = 0; j < newItm.taxDocuments[i].documentStatements.length; j +=1) {
-                    if(newItm.taxDocuments[i].documentStatements[j].key === key){                      
-                        newItm.taxDocuments[i].documentStatements[j].selected = !selected;
+            if(newItm.taxDocuments[parseInt(i,10)].documentType === documentType){               
+                for(let j = 0; j < newItm.taxDocuments[parseInt(i,10)].documentStatements.length; j +=1) {
+                    if(newItm.taxDocuments[parseInt(i,10)].documentStatements[parseInt(j,10)].key === key){                      
+                        newItm.taxDocuments[parseInt(i,10)].documentStatements[parseInt(j,10)].selected = !selected;
                     }else{
-                        newItm.taxDocuments[i].documentStatements[j].selected = selected;
+                        newItm.taxDocuments[parseInt(i,10)].documentStatements[parseInt(j,10)].selected = selected;
                     }
                 }
             }
@@ -273,7 +270,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
      }
 
      setInputRef = (inputComp) => (ref) => {
-        this[inputComp] = ref;
+        this[`${inputComp}`] = ref;
     }
 
     setApplyState = () => {     
@@ -289,7 +286,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
         AppUtils.debugLog("onChangeText:::>");
         this.setState(prevState => ({
             [stateKey]: {
-                ...prevState[stateKey],
+                ...prevState[`${stateKey}`],
                 [keyName]: text,
                 [`${keyName}Validation`]: true,
             }
@@ -334,17 +331,18 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
         let payload = {};
         let addressPayload = {};        
         
+        const { [stateKey]: stateKeyVal } = this.state;
         payload = {
-            "Zip": this.state[stateKey][keyName]
+            "Zip": stateKeyVal[`${keyName}`]
         };
-
+        
         addressPayload = {
             ...payload,
-            "Address1": this.state[stateKey].addrLine1,
-            "Address2": this.state[stateKey].addrLine2,
-            "City": this.state[stateKey].city,
-            "State": this.state[stateKey].stateCity,
-            "Zip": this.state[stateKey][keyName]
+            "Address1": stateKeyVal.addrLine1,
+            "Address2": stateKeyVal.addrLine2,
+            "City": stateKeyVal.city,
+            "State": stateKeyVal.stateCity,
+            "Zip": stateKeyVal[`${keyName}`]
         };
         
         getStateCity(payload);
@@ -428,9 +426,9 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
             }));
 
             if (input !== "" && input !== null && input !== undefined) {
-                if (this[input] !== null && this[input] !== undefined) {
-                    if (typeof this[input].focus === 'function') {
-                        this[input].focus();
+                if (this[`${input}`] !== null && this[`${input}`] !== undefined) {
+                    if (typeof this[`${input}`].focus === 'function') {
+                        this[`${input}`].focus();
                     }
                 }
             }            

@@ -27,11 +27,26 @@ class RegisterPasswordComponent extends Component {
     }
 
     componentDidMount() {    
-        const { navigation } = this.props;   
-        const registerSelfData = navigation.getParam('selfData', '');
-        if (!this.isEmpty(registerSelfData) && !this.isEmpty(registerSelfData.emailID)) {
-            this.setState({ email: registerSelfData.emailID });
-        }
+        // const { navigation } = this.props;   
+        // const registerSelfData = navigation.getParam('selfData', '');
+        // if (!this.isEmpty(registerSelfData) && !this.isEmpty(registerSelfData.emailID)) {
+        //     this.setState({ email: registerSelfData.emailID });
+        // }
+    }   
+
+    static getDerivedStateFromProps(props,prevState){         
+       const {navigation} = props;
+       const {email} = prevState;
+
+       const registerSelfData = navigation.getParam('selfData', '');
+       if (!this.isEmpty(registerSelfData) && !this.isEmpty(registerSelfData.emailID) && email==='') {
+       return{
+            email: registerSelfData.emailID
+         }; 
+        }      
+       return{
+            email:prevState.email
+       };
     }
 
     goBack = () => {        
@@ -93,9 +108,9 @@ class RegisterPasswordComponent extends Component {
             AppUtils.debugLog(`Data ${data}`);          
             showAlert(globalStrings.common.appName ,"Signed Up Successfully. OTP received.",globalStrings.common.ok);   
             navigation.navigate('emailVerify', { passwordData: registerSelfData });
-        }).catch(err => {alert(err.message)
-            console.log(err)})
-            ;
+        }).catch(err => {showAlert(globalStrings.common.appName,err.message,globalStrings.common.ok);
+            AppUtils.debugLog(err);}
+            );
         //  this.props.navigation.navigate('emailVerify');   
     }
 

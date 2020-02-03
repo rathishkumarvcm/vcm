@@ -63,7 +63,7 @@ class AccountPositionsComponent extends Component {
         const { openedAccounts } = this.state;
         newItm = [...openedAccounts];        
 
-        newItm[index].isExpand = !newItm[index].isExpand;
+        newItm[parseInt(index,10)].isExpand = !newItm[parseInt(index,10)].isExpand;
         this.setState({ openedAccounts: newItm }); 
     }
 

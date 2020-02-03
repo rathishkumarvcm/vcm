@@ -5,7 +5,7 @@ import VerifySSNComponent from './VerifySSNComponent';
                                   Redux Methods
                                                              -------------------------- */
 
-const mapStateToProps = (state /* , props */) => (
+const mapStateToProps = (/* state , props */) => (
   {
    
   }

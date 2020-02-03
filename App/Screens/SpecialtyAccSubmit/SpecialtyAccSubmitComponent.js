@@ -17,11 +17,11 @@ class SpecialtyAccSubmitComponent extends Component {
         super(props);
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
-            itemID: "",
-            pageName: "",
-            selectedItemID: "",
-            selectedItemName: "",
+            // isLoading: false,
+            // itemID: "",
+            // pageName: "",
+            // selectedItemID: "",
+            // selectedItemName: "",
             multipleFile: [], 
             fileSelected:false,
             errorMessage:"",
@@ -64,18 +64,18 @@ class SpecialtyAccSubmitComponent extends Component {
        //  this.validateFields();
     }
 
-    onPressCheck = (keyName) => () => {       
-        this.setState({        
-            [keyName]: !this.state[keyName]
-        });
-    }
+    // onPressCheck = (keyName) => () => {       
+    //     this.setState({        
+    //         [keyName]: !this.state[keyName]
+    //     });
+    // }
 
-    onSelected = (item) => {
-        AppUtils.debugLog(`item: ${ item.id}`);
-        this.setState({ selectedItemID: item.id });
-        this.setState({ selectedItemName: item.name });
-        //   alert("You selected :: " + item.name)
-    }
+    // onSelected = (item) => {
+    //     AppUtils.debugLog(`item: ${ item.id}`);
+    //     this.setState({ selectedItemID: item.id });
+    //     this.setState({ selectedItemName: item.name });
+    //     //   alert("You selected :: " + item.name)
+    // }
 
     uploadSelectedFiles = () => {
         const{multipleFile} = this.state;

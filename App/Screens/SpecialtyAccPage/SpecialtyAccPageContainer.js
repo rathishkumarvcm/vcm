@@ -1,20 +1,20 @@
 import { connect } from "react-redux";
 import SpecialtyAccPageComponent from './SpecialtyAccPageComponent';
-import { getLogin } from "../../Shared/Reducers";
-import { loginActions } from "../../Shared/Actions";
+// import { getLogin } from "../../Shared/Reducers";
+// import { loginActions } from "../../Shared/Actions";
 
 /*----------------------
                                   Redux Methods
                                                              -------------------------- */
 
-const mapStateToProps = (state /* , props */) => (
+const mapStateToProps = (/* state  , props */) => (
     {
-      dashboardData: getLogin(state)
+      // dashboardData: getLogin(state)
     }
   );
 
 const mapDispatchToProps = {
-    ...loginActions
+    // ...loginActions
   };
 
 export default connect(

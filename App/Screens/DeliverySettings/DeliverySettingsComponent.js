@@ -11,6 +11,9 @@ class DeliverySettingsComponent extends Component {
     constructor(props) {
         super(props);
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
+
+        const{ initialState,deliverySettingsinitialState }=props;
+
         this.state = {
             // isLoading: false,
 
@@ -21,25 +24,28 @@ class DeliverySettingsComponent extends Component {
             textReadMoreUrgentMessages: false,
             textReadMoreNotification: false,           
 
-            emailUrgentSwitchOn: false,
-            emailUrgentSwitchOff: true,
-            emailNotificationSwitchOn: false,
-            emailNotificationSwitchOff: true,           
-
-            notificationUrgentSwitchOn: false,
-            notificationUrgentSwitchOff: true,
-            notificationNotificationSwitchOn: false,
-            notificationNotificationSwitchOff: true,           
-
-            textUrgentSwitchOn: false,
-            textUrgentSwitchOff: true,
-            textNotificationSwitchOn: false,
-            textNotificationSwitchOff: true,           
-
-            preferenceMorning: false,
-            preferenceMidDay: false,
-            preferenceEarlyEvening: false,
-            preferenceNight: false,
+            emailUrgentSwitchOn: deliverySettingsinitialState.emailUrgentSwitchOn, 
+            emailUrgentSwitchOff: deliverySettingsinitialState.emailUrgentSwitchOff, 
+        
+            emailNotificationSwitchOn: deliverySettingsinitialState.emailNotificationSwitchOn, 
+            emailNotificationSwitchOff: deliverySettingsinitialState.emailNotificationSwitchOff,           
+                            
+            notificationUrgentSwitchOn: deliverySettingsinitialState.notificationUrgentSwitchOn, 
+            notificationUrgentSwitchOff: deliverySettingsinitialState.notificationUrgentSwitchOff,
+        
+            notificationNotificationSwitchOn: deliverySettingsinitialState.notificationNotificationSwitchOn, 
+            notificationNotificationSwitchOff: deliverySettingsinitialState.notificationNotificationSwitchOff,
+                        
+            textUrgentSwitchOn: deliverySettingsinitialState.textUrgentSwitchOn, 
+            textUrgentSwitchOff: deliverySettingsinitialState.textUrgentSwitchOff,
+        
+            textNotificationSwitchOn: deliverySettingsinitialState.textNotificationSwitchOn, 
+            textNotificationSwitchOff: deliverySettingsinitialState.textNotificationSwitchOff,
+        
+            preferenceMorning: deliverySettingsinitialState.preferenceMorning,
+            preferenceMidDay:deliverySettingsinitialState.preferenceMidDay, 
+            preferenceEarlyEvening: deliverySettingsinitialState.preferenceEarlyEvening, 
+            preferenceNight: deliverySettingsinitialState.preferenceNight,         
 
             modalVisible: false,
             resendSuccessVisible: false,
@@ -47,47 +53,47 @@ class DeliverySettingsComponent extends Component {
             resendPinCode: '',
             enterCorrectCode: false,
 
-            email: '',
-            phoneno: '',
+            email: initialState.email,
+            phoneno: initialState.phone,
         };
     }
 
     componentDidMount() {
-        const{ initialState,deliverySettingsinitialState }=this.props;
+    //     const{ initialState,deliverySettingsinitialState }=this.props;
 
-        if (initialState && initialState.email) {
-            this.setState({ email: initialState.email});
-        }
-        if (initialState && initialState.phone) {
-            this.setState({ phoneno: initialState.phone});
-        }
+    //     if (initialState && initialState.email) {
+    //         this.setState({ email: initialState.email});
+    //     }
+    //     if (initialState && initialState.phone) {
+    //         this.setState({ phoneno: initialState.phone});
+    //     }
 
-        if (deliverySettingsinitialState){            
-                this.setState({ 
-                    emailUrgentSwitchOn: deliverySettingsinitialState.emailUrgentSwitchOn, 
-                    emailUrgentSwitchOff: deliverySettingsinitialState.emailUrgentSwitchOff, 
+    //     if (deliverySettingsinitialState){            
+    //             this.setState({ 
+    //                 emailUrgentSwitchOn: deliverySettingsinitialState.emailUrgentSwitchOn, 
+    //                 emailUrgentSwitchOff: deliverySettingsinitialState.emailUrgentSwitchOff, 
                
-                    emailNotificationSwitchOn: deliverySettingsinitialState.emailNotificationSwitchOn, 
-                    emailNotificationSwitchOff: deliverySettingsinitialState.emailNotificationSwitchOff,           
+    //                 emailNotificationSwitchOn: deliverySettingsinitialState.emailNotificationSwitchOn, 
+    //                 emailNotificationSwitchOff: deliverySettingsinitialState.emailNotificationSwitchOff,           
                                  
-                    notificationUrgentSwitchOn: deliverySettingsinitialState.notificationUrgentSwitchOn, 
-                    notificationUrgentSwitchOff: deliverySettingsinitialState.notificationUrgentSwitchOff,
+    //                 notificationUrgentSwitchOn: deliverySettingsinitialState.notificationUrgentSwitchOn, 
+    //                 notificationUrgentSwitchOff: deliverySettingsinitialState.notificationUrgentSwitchOff,
               
-                    notificationNotificationSwitchOn: deliverySettingsinitialState.notificationNotificationSwitchOn, 
-                    notificationNotificationSwitchOff: deliverySettingsinitialState.notificationNotificationSwitchOff,
+    //                 notificationNotificationSwitchOn: deliverySettingsinitialState.notificationNotificationSwitchOn, 
+    //                 notificationNotificationSwitchOff: deliverySettingsinitialState.notificationNotificationSwitchOff,
                              
-                    textUrgentSwitchOn: deliverySettingsinitialState.textUrgentSwitchOn, 
-                    textUrgentSwitchOff: deliverySettingsinitialState.textUrgentSwitchOff,
+    //                 textUrgentSwitchOn: deliverySettingsinitialState.textUrgentSwitchOn, 
+    //                 textUrgentSwitchOff: deliverySettingsinitialState.textUrgentSwitchOff,
                
-                    textNotificationSwitchOn: deliverySettingsinitialState.textNotificationSwitchOn, 
-                    textNotificationSwitchOff: deliverySettingsinitialState.textNotificationSwitchOff,
+    //                 textNotificationSwitchOn: deliverySettingsinitialState.textNotificationSwitchOn, 
+    //                 textNotificationSwitchOff: deliverySettingsinitialState.textNotificationSwitchOff,
                
-                    preferenceMorning: deliverySettingsinitialState.preferenceMorning,
-                    preferenceMidDay:deliverySettingsinitialState.preferenceMidDay, 
-                    preferenceEarlyEvening: deliverySettingsinitialState.preferenceEarlyEvening, 
-                    preferenceNight: deliverySettingsinitialState.preferenceNight,                  
-        });
-    }
+    //                 preferenceMorning: deliverySettingsinitialState.preferenceMorning,
+    //                 preferenceMidDay:deliverySettingsinitialState.preferenceMidDay, 
+    //                 preferenceEarlyEvening: deliverySettingsinitialState.preferenceEarlyEvening, 
+    //                 preferenceNight: deliverySettingsinitialState.preferenceNight,                  
+    //     });
+    // }
 }
 
     goBack = () => {

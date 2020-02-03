@@ -10,6 +10,7 @@ class AccountMessagingAdviceComponent extends Component {
     constructor(props) {
         super(props);
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        const {accMessageAdviceinitialState} = this.props;
         this.state = {
             // isLoading: false,
 
@@ -25,139 +26,72 @@ class AccountMessagingAdviceComponent extends Component {
             militaryExpand: false,
             militaryTouchDisabled: false,
 
-            gettingStartedSwitchOn: false,
-            gettingStartedSwitchOff: true,
-
-            livingSwitchOn: false,
-            livingSwitchOff: true,
-
-            growingSwitchOn: false,
-            growingSwitchOff: true,
-
-            eastPlanningSwitchOn: false,
-            eastPlanningSwitchOff: true,
-
-            taxCenterSwitchOn: false,
-            taxCenterSwitchOff: true,
-
-            understandingInvestSwitchOn: false,
-            understandingInvestSwitchOff: true,
-
-            saveBudgetSwitchOn: false,
-            saveBudgetSwitchOff: true,
-
-            debtCreditSwitchOn: false,
-            debtCreditSwitchOff: true,
-
-            financialSetSwitchOn: false,
-            financialSetSwitchOff: true,
-
-            getMarriedSwitchOn: false,
-            getMarriedSwitchOff: true,
-
-            becomeParentSwitchOn: false,
-            becomeParentSwitchOff: true,
-
-            parentingSwitchOn: false,
-            parentingSwitchOff: true,
-
-            youngAdultSwitchOn: false,
-            youngAdultSwitchOff: true,
-
-            getDivorceSwitchOn: false,
-            getDivorceSwitchOff: true,
-
-            lossOfLovedSwitchOn: false,
-            lossOfLovedSwitchOff: true,
-
-            lifeInsuranceSwitchOn: false,
-            lifeInsuranceSwitchOff: true,
-
-            healthInsuranceSwitchOn: false,
-            healthInsuranceSwitchOff: true,
-
-            joiningMilitarySwitchOn: false,
-            joiningMilitarySwitchOff: true,
-
-            deploymentSwitchOn: false,
-            deploymentSwitchOff: true,
-
-            pcsSwitchOn: false,
-            pcsSwitchOff: true,
-
-            leaveMilitarySwitchOn: false,
-            leaveMilitarySwitchOff: true,
+            gettingStartedSwitchOff: accMessageAdviceinitialState.gettingStartedSwitchOff, 
+            gettingStartedSwitchOn: accMessageAdviceinitialState.gettingStartedSwitchOn, 
+        
+            livingSwitchOff: accMessageAdviceinitialState.livingSwitchOff, 
+            livingSwitchOn: accMessageAdviceinitialState.livingSwitchOn,
+        
+            growingSwitchOff: accMessageAdviceinitialState.growingSwitchOff, 
+            growingSwitchOn: accMessageAdviceinitialState.growingSwitchOn, 
+        
+            eastPlanningSwitchOff: accMessageAdviceinitialState.eastPlanningSwitchOff,
+            eastPlanningSwitchOn: accMessageAdviceinitialState.eastPlanningSwitchOn,
+        
+            taxCenterSwitchOff: accMessageAdviceinitialState.taxCenterSwitchOff,
+            taxCenterSwitchOn: accMessageAdviceinitialState.taxCenterSwitchOn,
+        
+            understandingInvestSwitchOff: accMessageAdviceinitialState.understandingInvestSwitchOff,
+            understandingInvestSwitchOn: accMessageAdviceinitialState.understandingInvestSwitchOn,
+        
+            saveBudgetSwitchOff: accMessageAdviceinitialState.saveBudgetSwitchOff,
+            saveBudgetSwitchOn: accMessageAdviceinitialState.saveBudgetSwitchOn,
+        
+            debtCreditSwitchOff: accMessageAdviceinitialState.debtCreditSwitchOff,
+            debtCreditSwitchOn: accMessageAdviceinitialState.debtCreditSwitchOn,
+        
+            financialSetSwitchOff: accMessageAdviceinitialState.financialSetSwitchOff,
+            financialSetSwitchOn: accMessageAdviceinitialState.financialSetSwitchOn,
+        
+            getMarriedSwitchOff: accMessageAdviceinitialState.getMarriedSwitchOff, 
+            getMarriedSwitchOn: accMessageAdviceinitialState.getMarriedSwitchOn, 
+            
+            becomeParentSwitchOff: accMessageAdviceinitialState.becomeParentSwitchOff,
+            becomeParentSwitchOn: accMessageAdviceinitialState.becomeParentSwitchOn,
+        
+            parentingSwitchOff: accMessageAdviceinitialState.parentingSwitchOff, 
+            parentingSwitchOn: accMessageAdviceinitialState.parentingSwitchOn,
+            
+            youngAdultSwitchOff:accMessageAdviceinitialState.youngAdultSwitchOff,
+            youngAdultSwitchOn: accMessageAdviceinitialState.youngAdultSwitchOn, 
+        
+            getDivorceSwitchOff: accMessageAdviceinitialState.getDivorceSwitchOff,
+            getDivorceSwitchOn: accMessageAdviceinitialState.getDivorceSwitchOn,
+        
+            lossOfLovedSwitchOff: accMessageAdviceinitialState.lossOfLovedSwitchOff, 
+            lossOfLovedSwitchOn: accMessageAdviceinitialState.lossOfLovedSwitchOn,
+        
+            lifeInsuranceSwitchOff: accMessageAdviceinitialState.lifeInsuranceSwitchOff, 
+            lifeInsuranceSwitchOn: accMessageAdviceinitialState.lifeInsuranceSwitchOn, 
+        
+            healthInsuranceSwitchOff: accMessageAdviceinitialState.healthInsuranceSwitchOff,
+            healthInsuranceSwitchOn: accMessageAdviceinitialState.healthInsuranceSwitchOn,  
+        
+            joiningMilitarySwitchOff: accMessageAdviceinitialState.joiningMilitarySwitchOff,
+            joiningMilitarySwitchOn: accMessageAdviceinitialState.joiningMilitarySwitchOn,
+        
+            deploymentSwitchOff: accMessageAdviceinitialState.deploymentSwitchOff,
+            deploymentSwitchOn: accMessageAdviceinitialState.deploymentSwitchOn,
+            
+            pcsSwitchOff: accMessageAdviceinitialState.pcsSwitchOff,
+            pcsSwitchOn: accMessageAdviceinitialState.pcsSwitchOn,
+        
+            leaveMilitarySwitchOff: accMessageAdviceinitialState.leaveMilitarySwitchOff, 
+            leaveMilitarySwitchOn: accMessageAdviceinitialState.leaveMilitarySwitchOn,
         };
     }      
 
-    componentDidMount() {     
-        const {accMessageAdviceinitialState} = this.props;
-        if (accMessageAdviceinitialState){            
-                this.setState({ 
-                    gettingStartedSwitchOff: accMessageAdviceinitialState.gettingStartedSwitchOff, 
-                    gettingStartedSwitchOn: accMessageAdviceinitialState.gettingStartedSwitchOn, 
-                
-                    livingSwitchOff: accMessageAdviceinitialState.livingSwitchOff, 
-                    livingSwitchOn: accMessageAdviceinitialState.livingSwitchOn,
-               
-                    growingSwitchOff: accMessageAdviceinitialState.growingSwitchOff, 
-                    growingSwitchOn: accMessageAdviceinitialState.growingSwitchOn, 
-                
-                    eastPlanningSwitchOff: accMessageAdviceinitialState.eastPlanningSwitchOff,
-                    eastPlanningSwitchOn: accMessageAdviceinitialState.eastPlanningSwitchOn,
-                
-                    taxCenterSwitchOff: accMessageAdviceinitialState.taxCenterSwitchOff,
-                    taxCenterSwitchOn: accMessageAdviceinitialState.taxCenterSwitchOn,
-                
-                    understandingInvestSwitchOff: accMessageAdviceinitialState.understandingInvestSwitchOff,
-                    understandingInvestSwitchOn: accMessageAdviceinitialState.understandingInvestSwitchOn,
-                
-                    saveBudgetSwitchOff: accMessageAdviceinitialState.saveBudgetSwitchOff,
-                    saveBudgetSwitchOn: accMessageAdviceinitialState.saveBudgetSwitchOn,
-                
-                    debtCreditSwitchOff: accMessageAdviceinitialState.debtCreditSwitchOff,
-                    debtCreditSwitchOn: accMessageAdviceinitialState.debtCreditSwitchOn,
-               
-                    financialSetSwitchOff: accMessageAdviceinitialState.financialSetSwitchOff,
-                    financialSetSwitchOn: accMessageAdviceinitialState.financialSetSwitchOn,
-               
-                     getMarriedSwitchOff: accMessageAdviceinitialState.getMarriedSwitchOff, 
-                     getMarriedSwitchOn: accMessageAdviceinitialState.getMarriedSwitchOn, 
-                  
-                    becomeParentSwitchOff: accMessageAdviceinitialState.becomeParentSwitchOff,
-                    becomeParentSwitchOn: accMessageAdviceinitialState.becomeParentSwitchOn,
-                
-                     parentingSwitchOff: accMessageAdviceinitialState.parentingSwitchOff, 
-                     parentingSwitchOn: accMessageAdviceinitialState.parentingSwitchOn,
-                  
-                    youngAdultSwitchOff:accMessageAdviceinitialState.youngAdultSwitchOff,
-                    youngAdultSwitchOn: accMessageAdviceinitialState.youngAdultSwitchOn, 
-               
-                    getDivorceSwitchOff: accMessageAdviceinitialState.getDivorceSwitchOff,
-                    getDivorceSwitchOn: accMessageAdviceinitialState.getDivorceSwitchOn,
-               
-                    lossOfLovedSwitchOff: accMessageAdviceinitialState.lossOfLovedSwitchOff, 
-                    lossOfLovedSwitchOn: accMessageAdviceinitialState.lossOfLovedSwitchOn,
-               
-                    lifeInsuranceSwitchOff: accMessageAdviceinitialState.lifeInsuranceSwitchOff, 
-                    lifeInsuranceSwitchOn: accMessageAdviceinitialState.lifeInsuranceSwitchOn, 
-               
-                    healthInsuranceSwitchOff: accMessageAdviceinitialState.healthInsuranceSwitchOff,
-                    healthInsuranceSwitchOn: accMessageAdviceinitialState.healthInsuranceSwitchOn,  
-               
-                    joiningMilitarySwitchOff: accMessageAdviceinitialState.joiningMilitarySwitchOff,
-                    joiningMilitarySwitchOn: accMessageAdviceinitialState.joiningMilitarySwitchOn,
-                
-                     deploymentSwitchOff: accMessageAdviceinitialState.deploymentSwitchOff,
-                     deploymentSwitchOn: accMessageAdviceinitialState.deploymentSwitchOn,
-                    
-                    pcsSwitchOff: accMessageAdviceinitialState.pcsSwitchOff,
-                    pcsSwitchOn: accMessageAdviceinitialState.pcsSwitchOn,
-                
-                    leaveMilitarySwitchOff: accMessageAdviceinitialState.leaveMilitarySwitchOff, 
-                    leaveMilitarySwitchOn: accMessageAdviceinitialState.leaveMilitarySwitchOn,
-                });
-        }                 
+    componentDidMount() {            
     }
 
     goBack = () => {

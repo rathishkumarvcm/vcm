@@ -5,7 +5,7 @@ import AccountMessagingSettingsComponent from './AccountMessagingSettingsCompone
                                   Redux Methods
                                                              -------------------------- */
 
-const mapStateToProps = (state /* , props */) => (
+const mapStateToProps = (/* state  , props */) => (
   {
    
   }

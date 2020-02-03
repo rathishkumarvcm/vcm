@@ -89,6 +89,20 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(15),
         textAlign: 'center'
     },
+    fileDesctextStyle:{    
+        color: '#707070',          
+        flex:0.5,       
+        fontSize: scaledHeight(14),
+        marginHorizontal: scaledHeight(20), 
+        marginLeft:scaledHeight(30)            
+    },
+    fileDesctextStyleError:{      
+        color: '#de421b',  
+        flex:0.5,       
+        fontSize: scaledHeight(14),
+        marginHorizontal: scaledHeight(20), 
+        marginLeft:scaledHeight(30)            
+    },
     headings: {
         color: '#56565A',
         fontSize: scaledHeight(20),
@@ -226,25 +240,6 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(10),
         paddingVertical:scaledHeight(10)        
     },
-    selectedFileDescContainer:{  
-        flexDirection:'row',      
-        backgroundColor: '#FFFFFF',              
-        paddingVertical:scaledHeight(10),
-    },
-    fileDesctextStyle:{    
-        flex:0.5,          
-        fontSize: scaledHeight(14),       
-        color: '#707070',
-        marginHorizontal: scaledHeight(20), 
-        marginLeft:scaledHeight(30)            
-    },
-    fileDesctextStyleError:{      
-        flex:0.5,  
-        fontSize: scaledHeight(14),       
-        color: '#de421b',
-        marginHorizontal: scaledHeight(20), 
-        marginLeft:scaledHeight(30)            
-    },
     selectFilesBtn: {                   
         backgroundColor: '#B2B2B2',             
         borderColor: "#61285F45",
@@ -262,6 +257,11 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(14),     
         textAlign: 'center',
         width: '100%'
+    },
+    selectedFileDescContainer:{  
+        backgroundColor: '#FFFFFF',      
+        flexDirection:'row',              
+        paddingVertical:scaledHeight(10),
     },
     uploadFileContainer:{
         flexDirection:'row',

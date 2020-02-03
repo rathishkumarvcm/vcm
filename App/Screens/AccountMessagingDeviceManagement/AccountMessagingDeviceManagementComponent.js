@@ -11,19 +11,20 @@ class AccountMessagingDeviceManagementComponent extends Component {
     constructor(props) {
         super(props);
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
+        const {accMessageDeviceinitialState} = props;
         this.state = {
             // isLoading: false,
-            deviceSelected: false
+            deviceSelected: accMessageDeviceinitialState.deviceSelected
         };
     }
 
     componentDidMount() {       
-        const {accMessageDeviceinitialState} = this.props;
-        if (accMessageDeviceinitialState){
-            if(accMessageDeviceinitialState.deviceSelected){
-                this.setState({ deviceSelected : accMessageDeviceinitialState.deviceSelected });
-            }        
-        }
+        // const {accMessageDeviceinitialState} = this.props;
+        // if (accMessageDeviceinitialState){
+        //     if(accMessageDeviceinitialState.deviceSelected){
+        //         this.setState({ deviceSelected : accMessageDeviceinitialState.deviceSelected });
+        //     }        
+        // }
     }
 
     goBack = () => {
