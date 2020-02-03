@@ -1,9 +1,8 @@
 import GLoadingSpinner from './GLoadingSpinner';
-import GButtonComponent from './GButtonComponent';
 import GAnimatedModal from './GAnimatedModal';
-import GInputComponent from './GInputComponent';
 import GBiometricAuthentication from './GBiometricAuthentication';
-import GFloatingInputComponent from './GFloatingInputComponent';
+import GButtonComponent from './GButtonComponent';
+import GInputComponent from './GInputComponent';
 import GRadioButtonComponent from './GRadioButtonComponent';
 import GCheckBoxComponent from './GCheckBoxComponent';
 import GCardTileComponent from './GCardTileComponent';
@@ -43,7 +42,6 @@ export {
     GAnimatedModal,
     GInputComponent,
     GBiometricAuthentication,
-    GFloatingInputComponent,
     GRadioButtonComponent,
     GCheckBoxComponent,
     GCardTileComponent,

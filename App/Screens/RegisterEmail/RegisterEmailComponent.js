@@ -22,7 +22,8 @@ class RegisterEmailComponent extends Component {
     }
 
     validateEmail = () => {
-        const validate = emailRegex.test(this.state.email);
+        const {email} = this.state;
+        const validate = emailRegex.test(email);
         this.setState({
             validationEmail : validate
         });
@@ -35,44 +36,47 @@ class RegisterEmailComponent extends Component {
     }
     
     goBack = () =>{
-        this.props.navigation.goBack();
+        const {navigation} = this.props;
+        navigation.goBack();
     }
 
-    navigatePassword = ()=>this.props.navigation.navigate('registerSelf',{emailID:this.state.email});
+    navigatePassword = ()=>{
+        const {email} = this.state;
+        const {navigation} = this.props;
+        navigation.navigate('registerSelf',{emailID:email});
+    }
     
  
     render(){
+        const {navigation} = this.props;
+        const {email,validationEmail} = this.state;
         
         return (
            
            
             <View style={styles.container}>
              <GHeaderComponent 
-             navigation={this.props.navigation}
+             navigation={navigation}
              register
              />
         
-            <ScrollView style={{flex:0.85}}>
-
-            {/*<View style={styles.stepsOuter}>
-                <View style={styles.stepsInner} />
-        </View> */}
+            <ScrollView style={styles.flexContainer}>
 
             <View style={styles.signInView}>
                 <Text style={styles.signIntext}>
-                    {"Great, let's start with your email address."}
+                    Great, let start with your email address.
                 </Text>
             </View>
 
             <View style={styles.newVictorySection1}>
                 <Text style={styles.openInvestment}>
-                        {"Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type."}
+                        Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type.
                 </Text> 
             </View>
              
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"E-mail"}       
+                    E-mail       
                 </Text>
             </View>
             <GInputComponent 
@@ -80,20 +84,11 @@ class RegisterEmailComponent extends Component {
                 // placeholder={"Email"}
                 onChangeText={this.setEmail}
                 onBlur={this.validateEmail}
-                value={this.state.email}
-                errorFlag={!this.state.validationEmail}
-                errorText={"Enter a valid email."}
+                value={email}
+                errorFlag={!validationEmail}
+                errorText="Enter a valid email."
                 maxLength={30}
             />
-
-
-            {/*<GButtonComponent 
-                    buttonStyle={styles.cancelButton}
-                    buttonText="Back"
-                    textStyle={styles.cancelButtonText}
-                    onPress={this.goBack}
-                    
-            />*/}
 
             <GButtonComponent 
                     buttonStyle={styles.cancelButton}
@@ -109,7 +104,7 @@ class RegisterEmailComponent extends Component {
                     buttonText="Next"
                     textStyle={styles.signInButtonText}
                     onPress={this.navigatePassword}
-                    disabled={this.state.email === '' || !this.state.validationEmail}
+                    disabled={email === '' || !validationEmail}
             />
 
            
@@ -169,6 +164,7 @@ RegisterEmailComponent.propTypes = {
   };
   
   RegisterEmailComponent.defaultProps = {
+    navigation :{}
  
   };
 export default RegisterEmailComponent;

@@ -81,9 +81,13 @@ class PaginationComponent extends Component {
         });
       }
     
-    goBack = ()=>this.props.navigation.goBack();
+    goBack = ()=>{
+      const {navigation} = this.props;
+      navigation.goBack();
+    }
     
     render(){
+      const {pageNumber} = this.state;
         return (
         <>
           <GButtonComponent 
@@ -97,7 +101,7 @@ class PaginationComponent extends Component {
             horizontal 
             data={data} 
             onScroll={(e) => this.onScrollEnd(e)}  
-            pageNumber={this.state.pageNumber} 
+            pageNumber={pageNumber} 
             />
         </>
         );
@@ -112,6 +116,7 @@ PaginationComponent.propTypes = {
   };
   
   PaginationComponent.defaultProps = {
+    navigation : {}
  
   };
 

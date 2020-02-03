@@ -52,11 +52,20 @@ class PdfRNFetchblob extends Component {
         // Linking.openURL(url);
     }
 
-    pdfCache = ()=>this.props.navigation.navigate('PdfRNFetchblobDownload',{ cache: true });
+    pdfCache = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('PdfRNFetchblobDownload',{ cache: true });
+    }
 
-    pdfWithoutCache = ()=>this.props.navigation.navigate('PdfRNFetchblobDownload',{ cache: false });
+    pdfWithoutCache = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('PdfRNFetchblobDownload',{ cache: false });
+    }
 
-    goBack = ()=>this.props.navigation.goBack();
+    goBack = ()=>{
+        const {navigation} = this.props;
+        navigation.goBack();
+    }
 
     render(){
         return (
@@ -98,6 +107,7 @@ PdfRNFetchblob.propTypes = {
   };
   
   PdfRNFetchblob.defaultProps = {
+    navigation : {}
  
   };
 

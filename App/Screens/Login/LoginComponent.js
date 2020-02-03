@@ -287,7 +287,7 @@ class LoginComponent extends Component {
 
         RNSecureKeyStore.set("bioMetricUserName", this.state.email, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
             .then((res) => {
-                console.log("Bio Metric username saved.")
+                console.log("Bio Metric username saved.");
             }, (err) => {
                 console.log(err);
             });

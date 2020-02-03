@@ -5,26 +5,26 @@ import {
   StyleSheet
 } from 'react-native';
 
-import {GButtonComponent} from '../../CommonComponents';
 import { WebView } from 'react-native-webview';
-import { scaledHeight } from '../../Utils/Resolution';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import {GButtonComponent} from '../../CommonComponents';
+import { scaledHeight } from '../../Utils/Resolution';
 
 const styles=StyleSheet.create({
     buttonStyle:{
-        height:'5%',
-        width:'50%',
-        justifyContent: "center",
         alignItems:'center',
-        borderRadius:1,
         backgroundColor:"#06748C",
-        marginTop:'10%'
+        borderRadius:1,
+        height:'5%',
+        justifyContent: "center",
+        marginTop:'10%',
+        width:'50%'
     },
     buttonTextStyle:{
+      color:'red',
       fontSize: scaledHeight(14),
       fontWeight: "bold",
-      lineHeight:scaledHeight(20),
-      color:'red'
+      lineHeight:scaledHeight(20)
     }
 });
 export default class PdfComponent extends Component {
@@ -36,13 +36,13 @@ export default class PdfComponent extends Component {
     }
 
   async createPDF(){
-    let options = {
+    const options = {
       html: '<h1>PDF TEST</h1>',
       fileName: 'test',
       directory: 'Documents',
     };
  
-    let file = await RNHTMLtoPDF.convert(options);
+    const file = await RNHTMLtoPDF.convert(options);
     this.setState({
         filePath: file.filePath,
         pdfCreated : true
@@ -55,19 +55,21 @@ export default class PdfComponent extends Component {
   
   render() {
     return(
-        !this.state.pdfCreated ? 
+        !this.state.pdfCreated ? (
       <View style={{flex:1,alignItems:'center'}}>
             <GButtonComponent 
-            buttonText={"Create PDF"} 
+            buttonText="Create PDF" 
             onPress={this.pdfCall} 
             buttonStyle={styles.buttonStyle}
             textStyle={styles.buttonTextStyle}
             />
            {/* <GButtonComponent buttonText={"View PDF"} buttonStyle={styles.buttonStyle}/> */}
-      </View> :
+      </View>
+    ) : (
       <WebView
       source={{ uri: this.state.filePath }}
-      /> 
+      />
+    ) 
     );
   }
 }

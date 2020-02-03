@@ -40,9 +40,9 @@ class registerAddressComponent extends Component {
     }
 
     selectTheState = () => {
-        const {newState} = this.state;
+        const {stateDropDown} = this.state;
         this.setState({
-            stateDropDown : !newState.stateDropDown
+            stateDropDown : !stateDropDown
         });
     }
 
@@ -65,6 +65,7 @@ class registerAddressComponent extends Component {
 
     render(){
         const {navigation} = this.props;
+        const {stateDropDown,valueDropDown} = this.state;
         return (
            
            
@@ -137,8 +138,8 @@ class registerAddressComponent extends Component {
     dropDownName="state" 
     data={newData} 
     changeState={this.selectTheState}
-    showDropDown={this.state.stateDropDown}
-    dropDownValue={this.state.valueDropDown}
+    showDropDown={stateDropDown}
+    dropDownValue={valueDropDown}
     selectedDropDownValue={this.selectedDropDownValue}
     itemToDisplay="title"
     dropDownPostition={styles.addressDropown}
@@ -236,8 +237,8 @@ class registerAddressComponent extends Component {
                 </Text>
             </View>
 
-            <View style={{paddingLeft:'4%',paddingRight:'4%',marginTop:20}}>
-                 <View style={{borderBottomWidth:1,borderBottomColor:'#56565A'}} />  
+            <View style={styles.investUsaa}>
+                 <View style={styles.investInnerUsaa} />  
             </View>
             
 
@@ -264,7 +265,7 @@ registerAddressComponent.propTypes = {
   };
   
   registerAddressComponent.defaultProps = {
- 
+    navigation : {}
   };
 
 

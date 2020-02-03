@@ -53,6 +53,15 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         marginTop:scaledHeight(15)
     },
+    investInnerUsaa:{
+        borderBottomColor:'#56565A',
+        borderBottomWidth:1
+    },
+    investUsaa:{
+        marginTop:20,
+        paddingLeft:'4%',
+        paddingRight:'4%'
+    },
     lineBorder:{
         borderTopWidth:1,
         color:'#707070',

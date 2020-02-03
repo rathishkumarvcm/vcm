@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { View,Text,StyleSheet,Platform, Share } from 'react-native';
-import { scaledHeight } from '../../Utils/Resolution';
-import {GButtonComponent} from '../../CommonComponents';
+import { View,Text,StyleSheet,Platform, Share, PermissionsAndroid } from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob';
-import {PermissionsAndroid} from 'react-native';
 import PropTypes from 'prop-types';
+import {GButtonComponent} from '../../CommonComponents';
+import { scaledHeight } from '../../Utils/Resolution';
 
 const url = 'http:// www.africau.edu/Images/default/sample.pdf';
 
@@ -16,6 +15,21 @@ const { fs: { dirs } } = RNFetchBlob;
 // const tmpPath = `${dest}.download`;
 
 const styles = StyleSheet.create({
+    buttonStyle:{
+        alignItems:'center',
+        backgroundColor:"#06748C",
+        borderRadius:scaledHeight(5),
+        height:scaledHeight(40),
+        justifyContent: "center",
+        marginTop:scaledHeight(10),
+        width:'90%' 
+        
+    },
+    buttonTextStyle:{
+        fontSize: scaledHeight(14),
+        fontWeight: "bold",
+        lineHeight:scaledHeight(20),
+    },
     containerStyle:{
         flex:1,
         flexDirection: 'column',
@@ -29,24 +43,6 @@ const styles = StyleSheet.create({
         marginBottom:'2%',
         height:30,
         color:'green'
-    },
-    button:{
-        fontSize:scaledHeight(5)
-    },
-    buttonStyle:{
-        height:scaledHeight(40),
-        width:'90%',
-        justifyContent: "center",
-        alignItems:'center',
-        borderRadius:scaledHeight(5),
-        backgroundColor:"#06748C",
-        marginTop:scaledHeight(10) 
-        
-    },
-    buttonTextStyle:{
-        fontSize: scaledHeight(14),
-        fontWeight: "bold",
-        lineHeight:scaledHeight(20),
     },
 });
 
@@ -100,7 +96,8 @@ class PdfRNFetchblobDownload extends Component {
   }
 
     async downloadPDF () {
-      const setCache = this.props.navigation.getParam('cache');
+      const {navigation} = this.props;
+      const setCache = navigation.getParam('cache');
       const granted = await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {   
           const { dirs } = RNFetchBlob.fs;
@@ -126,24 +123,27 @@ class PdfRNFetchblobDownload extends Component {
           }
     }
     
-    goback = ()=>this.props.navigation.goBack();
+    goback = ()=>{
+        const {navigation} = this.props;
+        navigation.goBack();
+    }
 
     render(){
         return (
             <View style={styles.containerStyle}>
-                <Text style={styles.labeltext}>{"RN FETCH BLOB DOWNLOAD:"}</Text>
+                <Text style={styles.labeltext}>RN FETCH BLOB DOWNLOAD:</Text>
 
                 <GButtonComponent 
                     buttonStyle={styles.buttonStyle} 
                     textStyle={styles.buttonTextStyle}
-                    buttonText= {"Download PDF"}
+                    buttonText= "Download PDF"
                     onPress={()=>Platform.OS === 'android' ? this.downloadPDF() : this.downloadPDFIOS()}
                 />
 
                  <GButtonComponent 
                     buttonStyle={styles.buttonStyle} 
                     textStyle={styles.buttonTextStyle}
-                    buttonText= {"Back"}
+                    buttonText= "Back"
                     onPress={this.goback}
                  />
 
@@ -161,7 +161,7 @@ PdfRNFetchblobDownload.propTypes = {
   };
   
   PdfRNFetchblobDownload.defaultProps = {
- 
+    navigation : {}
   };
 
 
