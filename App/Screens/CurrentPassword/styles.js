@@ -3,29 +3,23 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 
  const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F7FAFF',
-        width: '100%'
+    backButtonFlex: {
+        alignItems: 'center',
+        backgroundColor:'#FFFFFF',
+        borderColor: '#61285F45',
+        borderWidth: scaledHeight(1),
+        height: scaledHeight(50),
+        justifyContent: 'center',
     },
-    mainFlex:{
-        flex: 0.85
-    },
-    resetYourPasswordText: {
-        marginLeft: "4%",
+    backButtonText: {
+        color: '#544A54',
+        fontSize: scaledHeight(16),
         fontWeight: 'bold',
-        color: '#535353',
-        fontSize: scaledHeight(20),
-        marginTop: '4%'
     },
-    line: {
-        backgroundColor: '#535353',
-        opacity: 0.25,
-        height: scaledHeight(1),
-        width: "92%",
-        marginTop: '4%',
-        marginLeft: "4%",
-        marginRight: "4%"
+    container: {
+        backgroundColor: '#F7FAFF',
+        flex: 1,
+        width: '100%'
     },
     enterPasswordFlex: {
         marginTop: scaledHeight(34),
@@ -38,70 +32,76 @@ import { scaledHeight } from '../../Utils/Resolution';
         fontWeight: 'bold',
         marginBottom: scaledHeight(8)
     },
-    passwordTextBox: {
-        marginLeft: "4%",
-        marginBottom: scaledHeight(18),
-        color: '#56565A'
-    },
-    passwordTextBoxError: {
-        marginLeft: "4%",
-        marginBottom: scaledHeight(5),
-        borderColor: 'red',
-        color: 'red'
-    },
     flex6:{
-        height:scaledHeight(118),
         flexDirection: 'column',
+        height:scaledHeight(118),
         marginLeft: "10%",
         marginRight: "10%",
         marginTop:"10%",
     },
-    backButtonFlex: {
-        height: scaledHeight(50),
-        borderColor: '#61285F45',
-        borderWidth: scaledHeight(1),
-        backgroundColor:'#FFFFFF',
-        justifyContent: 'center',
-        alignItems: 'center',
+    fullLine: {
+        backgroundColor: '#7B8288',
+        height: scaledHeight(1),
+        marginTop: scaledHeight(40),
+        opacity: 0.4,
     },
-    backButtonText: {
-        color: '#544A54',
+    line: {
+        backgroundColor: '#535353',
+        height: scaledHeight(1),
+        marginLeft: "4%",
+        marginRight: "4%",
+        marginTop: '4%',
+        opacity: 0.25,
+        width: "92%"
+    },
+    mainFlex:{
+        flex: 0.85
+    },
+    passwordTextBox: {
+        color: '#56565A',
+        marginBottom: scaledHeight(18),
+        marginLeft: "4%"
+    },
+    passwordTextBoxError: {
+        borderColor: 'red',
+        color: 'red',
+        marginBottom: scaledHeight(5),
+        marginLeft: "4%"
+    },
+    resetYourPasswordText: {
+        color: '#535353',
+        fontSize: scaledHeight(20),
         fontWeight: 'bold',
-        fontSize: scaledHeight(16),
+        marginLeft: "4%",
+        marginTop: '4%'
     },
     submitFlex: {
-        height: scaledHeight(50),
+        alignItems: 'center',
+        backgroundColor:'#544A54',
         borderColor: '#61285F45',
         borderWidth: scaledHeight(1),
-        backgroundColor:'#544A54',
+        height: scaledHeight(50),
         justifyContent: 'center',
-        alignItems: 'center',
         marginTop:scaledHeight(18)
     },
     submitText: {
         color: '#FFFFFF',
-        fontWeight: 'bold',
         fontSize: scaledHeight(16),
-    },
-    fullLine: {
-        backgroundColor: '#7B8288',
-        opacity: 0.4,
-        height: scaledHeight(1),
-        marginTop: scaledHeight(40),
+        fontWeight: 'bold',
     },
     tNCFlex: {
         marginLeft: "4%",
         marginTop: scaledHeight(41),
         width: "92%",
     },
+    tNcBody: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+    },
     tNcHeader: {
         color: '#56565A',
         fontSize: scaledHeight(16),
         fontWeight: 'bold'
-    },
-    tNcBody: {
-        color: '#56565A',
-        fontSize: scaledHeight(16),
     },
 });
 

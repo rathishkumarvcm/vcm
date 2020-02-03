@@ -152,6 +152,10 @@ const styles = StyleSheet.create({
   marginTopStyle: {
     marginTop: scaledHeight(15)
   },
+  notificationTxt: {
+    color: "#56565A",
+    fontSize: scaledHeight(16)
+  },
   notificationView: {
     backgroundColor: "#E9E9E9",
     borderRadius: scaledHeight(15),
@@ -162,15 +166,8 @@ const styles = StyleSheet.create({
     padding: "4%",
     width: "100%",
   },
-  notificationTxt: {
-    color: "#56565A",
-    fontSize: scaledHeight(16)
-  },
   saveSuccessMsgTxt: {
     flex: 0.7
-  },
-  sideBtn: {
-    width: scaledHeight(20)
   },
   shadowView: {
     backgroundColor: "white",
@@ -195,6 +192,9 @@ const styles = StyleSheet.create({
     fontSize: scaledHeight(16),
     fontWeight: "400",
     lineHeight: 24
+  },
+  sideBtn: {
+    width: scaledHeight(20)
   },
   subHeadlineText: {
     color: "#54565B",

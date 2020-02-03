@@ -253,6 +253,37 @@ const styles = StyleSheet.create({
     { marginLeft: scaledHeight(10), marginRight: scaledHeight(10) },
     instructionView:
     { backgroundColor: '#F2F2F2', borderColor: '#C7C7C7', borderWidth: 1, paddingLeft: scaledWidth(10), paddingRight: scaledWidth(10) },
+    investDropdown:{
+    alignItems:'center',
+    backgroundColor:'#FFFFFF',
+    borderBottomWidth:1,
+    borderColor:'#00000029',
+    flexDirection:'row',
+    flex:1,
+    height:scaledHeight(60),
+    justifyContent:'center'
+},
+    investDropdownText:{
+    color:'#56565A',
+    flex:0.8,
+    fontSize:scaledHeight(16),
+    fontWeight:'bold',
+    marginLeft:scaledWidth(20),
+},
+    investDropdownText1:{
+    color:'#56565A',
+    flex:0.2,
+    fontSize:scaledHeight(16),
+    fontWeight:'bold',
+    marginLeft:scaledWidth(20),
+},
+    investTitle:{
+    backgroundColor:'#E9E9E9',
+    color:'#56565A',
+    fontSize:scaledHeight(16),
+    fontWeight:'bold',
+    padding:scaledHeight(10)
+   },
     loginHeader: {
         flex: .15,
         flexDirection: 'row',
@@ -265,6 +296,18 @@ const styles = StyleSheet.create({
     scrollStyle:{
          flex: 0.85 
     },
+    selectFunds:{
+        elevation: 4,
+        flexDirection:'column', 
+        position: 'absolute', 
+        shadowColor: "#000", 
+        shadowOffset: { width: 0, height: 1, }, 
+        shadowOpacity: 0.23, 
+        shadowRadius: 2.62, 
+        top: 55, 
+        width: '100%', 
+        zIndex: 5, 
+   },
     seperator_line:{
         borderTopColor:'#C1C1C1',
         borderTopWidth:1,
@@ -286,10 +329,10 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         fontWeight:'500'
     },
-    touchOpacityPosition: {
+   touchOpacityPosition: {
         position: 'relative',
     },
-    verifyConent1:
+   verifyConent1:
    {
        color:'#333333DE',
        fontSize:scaledHeight(16),
@@ -297,68 +340,25 @@ const styles = StyleSheet.create({
        marginBottom: scaledHeight(10), 
        marginTop: scaledHeight(5)
    },
-    verifyConent2:
+   verifyConent2:
    {
        color:'#333333DE',
        fontSize:scaledHeight(16),
        
    },
-    verifyContentMain:{
+verifyContentMain:{
         flexDirection: "column", 
         marginBottom:scaledHeight(10),
         marginTop: scaledHeight(10),
         paddingLeft: scaledWidth(10) 
    },
-    verifyContentView:{
+verifyContentView:{
        borderColor:'#D6D8DC',
        borderWidth:1,
        flexDirection:'column',
        paddingBottom:scaledHeight(10),
        paddingTop:scaledHeight(10), 
    },
-   selectFunds:{
-        flexDirection:'column',
-        elevation: 4, 
-        position: 'absolute', 
-        shadowColor: "#000", 
-        shadowOffset: { width: 0, height: 1, }, 
-        shadowOpacity: 0.23, 
-        shadowRadius: 2.62, 
-        top: 55, 
-        width: '100%', 
-        zIndex: 5, 
-   },
-   investTitle:{
-    color:'#56565A',
-    fontSize:scaledHeight(16),
-    fontWeight:'bold',
-    padding:scaledHeight(10),
-    backgroundColor:'#E9E9E9'
-   },
-   investDropdown:{
-    flexDirection:'row',
-    backgroundColor:'#FFFFFF',
-    borderBottomWidth:1,
-    borderColor:'#00000029',
-    height:scaledHeight(60),
-    justifyContent:'center',
-    flex:1,
-    alignItems:'center'
-},
-investDropdownText:{
-    color:'#56565A',
-    fontSize:scaledHeight(16),
-    fontWeight:'bold',
-    marginLeft:scaledWidth(20),
-    flex:0.8,
-},
-investDropdownText1:{
-    color:'#56565A',
-    fontSize:scaledHeight(16),
-    fontWeight:'bold',
-    marginLeft:scaledWidth(20),
-    flex:0.2,
-},
 
 });
 

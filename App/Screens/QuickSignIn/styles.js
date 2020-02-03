@@ -3,74 +3,24 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F7FAFF',
-        width: '100%'
-    },
-    signInView:{
-        marginTop:scaledHeight(30),
-        paddingLeft:'4%',
-        paddingRight:'4%',
-    },
-    signIntext:{
-        textAlign: 'left',
-        fontSize: scaledHeight(20),
-        fontWeight: 'bold',
-        color: '#535353',
-        flexWrap: 'wrap',
-    },
-    lblLine: {
-        //  width:"100%",
-        flexGrow: 1,
-        marginTop: scaledHeight(9.5),
-        height: scaledHeight(1),
-        backgroundColor: '#707070',
-        opacity: .25
-    },
-    lblTxt:{
-        color:'#333333DE',
-        fontSize:scaledHeight(16),
-        marginTop: scaledHeight(15)
-        
-    },
-offButtonStyle: {
-    borderColor: '#56565A',
-    borderRadius: 30,
-    height: scaledHeight(50),
-    borderWidth: scaledHeight(1),
-    width: '60%',
-    marginLeft:"-4%",
-    backgroundColor: '#B7B7B7',
+    TextOffStyle: {
+    color:'#544A54',
+    fontSize: scaledHeight(14),
+    fontWeight: 'bold',
+    opacity:0.5,
+    paddingLeft:"8%",
+    textAlign:'center'
 },
-onButtonStyleDisable: {
-    borderColor: '#56565A',
-    borderRadius: 30,
-    height: scaledHeight(50),
-    borderWidth: 1,
-    marginLeft:"10%",
-    width: '72%',
-    backgroundColor: '#FFFFFF',
+    TextOffStyleWithholdtax:{
+    color:'#544A54',
+    fontSize: scaledHeight(14),
+    fontWeight: 'bold',
+    marginLeft:"0%",
+    opacity:0.5,
+    paddingLeft:"3%",
+    textAlign:'center'
 },
-offButtonStyleDisable: {
-    borderColor:'#56565A',
-    borderRadius: 30,
-    height: scaledHeight(50),
-    borderWidth: 1,
-    width: '60%',
-    marginLeft:"-4%",
-    backgroundColor: '#FFFFFF',
-},
-onButtonStyle: {
-    borderColor: '#56565A',
-    borderRadius: 30,
-    height: scaledHeight(50),
-    borderWidth: 1,
-    marginLeft:"30%",
-    width: '48%',
-    backgroundColor: '#B7B7B7',
-},
-TextOnStyle: {
+    TextOnStyle: {
     color:'#56565A',
     fontSize: scaledHeight(14),
     fontWeight: 'bold',
@@ -78,24 +28,7 @@ TextOnStyle: {
     marginLeft:"0%",
     paddingLeft:"10%"
 },
-TextOffStyle: {
-    color:'#544A54',
-    opacity:0.5,
-    fontSize: scaledHeight(14),
-    fontWeight: 'bold',
-    textAlign:'center',
-    paddingLeft:"8%"
-},
-TextOffStyleWithholdtax:{
-    color:'#544A54',
-    opacity:0.5,
-    fontSize: scaledHeight(14),
-    fontWeight: 'bold',
-    marginLeft:"0%",
-    textAlign:'center',
-    paddingLeft:"3%"
-},
-cancelButton:{
+    cancelButton:{
     borderColor:'#61285F45',
     borderWidth:1,
     width:'80%',
@@ -108,22 +41,89 @@ cancelButton:{
     alignItems:'center',
     justifyContent:'center'
  },
- cancelButtonText:{
-    fontSize:scaledHeight(16),
+    cancelButtonText:{
     color:'#544A54',
+    fontSize:scaledHeight(16),
     fontWeight:'bold'
+},
+container: {
+        backgroundColor: '#F7FAFF',
+        flex: 1,
+        width: '100%'
+    },
+lblLine: {
+        //  width:"100%",
+        flexGrow: 1,
+        marginTop: scaledHeight(9.5),
+        height: scaledHeight(1),
+        backgroundColor: '#707070',
+        opacity: .25
+    },
+lblTxt:{
+        color:'#333333DE',
+        fontSize:scaledHeight(16),
+        marginTop: scaledHeight(15)
+        
+    },
+offButtonStyle: {
+    backgroundColor: '#B7B7B7',
+    borderColor: '#56565A',
+    borderRadius: 30,
+    borderWidth: scaledHeight(1),
+    height: scaledHeight(50),
+    marginLeft:"-4%",
+    width: '60%',
+},
+offButtonStyleDisable: {
+    backgroundColor: '#FFFFFF',
+    borderColor:'#56565A',
+    borderRadius: 30,
+    borderWidth: 1,
+    height: scaledHeight(50),
+    marginLeft:"-4%",
+    width: '60%',
+},
+onButtonStyle: {
+    backgroundColor: '#B7B7B7',
+    borderColor: '#56565A',
+    borderRadius: 30,
+    borderWidth: 1,
+    height: scaledHeight(50),
+    marginLeft:"30%",
+    width: '48%',
+},
+onButtonStyleDisable: {
+    backgroundColor: '#FFFFFF',
+    borderColor: '#56565A',
+    borderRadius: 30,
+    borderWidth: 1,
+    height: scaledHeight(50),
+    marginLeft:"10%",
+    width: '72%',
 },
 scrollView:{
      flex: 0.85 
 },
+ signInView:{
+        marginTop:scaledHeight(30),
+        paddingLeft:'4%',
+        paddingRight:'4%',
+    },
+signIntext:{
+        color: '#535353',
+        flexWrap: 'wrap',
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold',
+        textAlign: 'left',
+    },
 switchBoxView:{
-    padding:"4%",
-    marginTop:"5%",
-    marginLeft:"5%",
-    width:"90%",
     backgroundColor:"white",
-    borderWidth:0.5,
+    borderColor:"#61285F45",
     borderRadius:10,
-    borderColor:"#61285F45"}
+    borderWidth:0.5,
+    marginLeft:"5%",
+    marginTop:"5%",
+    padding:"4%",
+    width:"90%"}
 });
 export default styles;

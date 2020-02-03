@@ -3,10 +3,100 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 
 export const styles = StyleSheet.create({
+    accRecPrefText: {
+        color: '#535353',
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold',
+        marginLeft: "4%",
+        marginRight: "4%",
+        marginTop: '4%'
+        // fontFamily:'Roboto'
+    },
+    accRecoveryOptionsFlex: {
+        flexDirection: 'row',
+        height: scaledHeight(80),
+        marginLeft: "4%",
+        marginRight: "4%",
+        marginTop: scaledHeight(30),
+        width: "92%",
+    },
+    backButtonFlex: {
+        alignItems: 'center',
+        borderColor: '#61285F45',
+        borderWidth: scaledHeight(1),
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginTop: scaledHeight(16)
+    },
+    backButtonText: {
+        color: '#544A54',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+    },
+    buttonsFlex: {
+        flexDirection: 'column',
+        marginLeft: "10%",
+        marginRight: "10%",
+        marginTop: scaledHeight(20),
+        width: "80%"
+    },
+    checkBoxFlex: {
+        alignSelf: 'flex-start',
+        marginTop: 6,
+        width: "15%"
+    },
+    chooseAccRecPref: {
+        color: '#535353',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginLeft: "4%",
+        marginRight: "4%",
+        marginTop: '4%',
+        width: "92%"
+        // fontFamily:'Roboto'
+    },
     container: {
-        flex: 1,
         backgroundColor: '#F7FAFF',
+        flex: 1,
         width: '100%'
+    },
+    emailIdOption: {
+        justifyContent: 'space-around',
+        width: "77%"
+    },
+    emailIdText: {
+        color: '#333333DE',
+        fontSize: scaledHeight(16),
+        textAlignVertical: 'center',
+    },
+    fullLine: {
+        backgroundColor: '#7B8288',
+        height: scaledHeight(1),
+        marginTop: scaledHeight(45),
+        opacity: 0.4,
+    },
+    greyText: {
+        color: '#333333DE',
+        fontSize: scaledHeight(14),
+        opacity: 0.75,
+        textAlignVertical: "center",
+    },
+    lastUpdateText: {
+        color: '#333333DE',
+        fontSize: scaledHeight(14),
+        marginLeft: "4%",
+        marginTop: '4%',
+        opacity: 0.75,
+        textAlignVertical: "center",
+    },
+    line: {
+        backgroundColor: '#535353',
+        height: scaledHeight(1),
+        marginLeft: "4%",
+        marginRight: "4%",
+        marginTop: '4%',
+        opacity: 0.25,
+        width: "92%",
     },
     mainFlex:{ 
         flex: 0.85 
@@ -14,120 +104,30 @@ export const styles = StyleSheet.create({
     messageFlex:{
         backgroundColor: '#EEEEEE', 
         borderColor: '#A4A4A4DD', 
-        borderWidth: scaledHeight(1), 
-        borderRadius: scaledHeight(3),
-         width: "92%", 
+        borderRadius: scaledHeight(3), 
+        borderWidth: scaledHeight(1),
          marginLeft: "4%", 
          marginRight: "4%", 
-         paddingLeft: "2%" 
+         paddingLeft: "2%", 
+         width: "92%" 
     },
     messageText:{
-        padding: "3%", 
         color: '#333333DE', 
-        fontSize: scaledHeight(14),
+        fontSize: scaledHeight(14), 
+        padding: "3%",
         textAlignVertical: "center"
     },
-    accRecPrefText: {
-        marginLeft: "4%",
-        marginRight: "4%",
-        fontWeight: 'bold',
-        color: '#535353',
-        fontSize: scaledHeight(20),
-        marginTop: '4%'
-        // fontFamily:'Roboto'
-    },
-    chooseAccRecPref: {
-        marginLeft: "4%",
-        marginRight: "4%",
-        width: "92%",
-        fontWeight: 'bold',
-        color: '#535353',
-        fontSize: scaledHeight(16),
-        marginTop: '4%'
-        // fontFamily:'Roboto'
-    },
-    line: {
-        backgroundColor: '#535353',
-        opacity: 0.25,
-        height: scaledHeight(1),
-        width: "92%",
-        marginTop: '4%',
-        marginLeft: "4%",
-        marginRight: "4%",
-    },
-    lastUpdateText: {
-        color: '#333333DE',
-        opacity: 0.75,
-        fontSize: scaledHeight(14),
-        textAlignVertical: "center",
-        marginLeft: "4%",
-        marginTop: '4%',
-    },
-    accRecoveryOptionsFlex: {
-        height: scaledHeight(80),
-        width: "92%",
-        marginLeft: "4%",
-        marginRight: "4%",
-        marginTop: scaledHeight(30),
-        flexDirection: 'row',
-    },
-    checkBoxFlex: {
-        alignSelf: 'flex-start',
-        marginTop: 6,
-        width: "15%"
-    },
-    emailIdOption: {
-        width: "77%",
-        justifyContent: 'space-around'
-    },
-    emailIdText: {
-        color: '#333333DE',
-        fontSize: scaledHeight(16),
-        textAlignVertical: 'center',
-    },
-    greyText: {
-        color: '#333333DE',
-        opacity: 0.75,
-        fontSize: scaledHeight(14),
-        textAlignVertical: "center",
-    },
-    fullLine: {
-        backgroundColor: '#7B8288',
-        opacity: 0.4,
-        height: scaledHeight(1),
-        marginTop: scaledHeight(45),
-    },
-    buttonsFlex: {
-        flexDirection: 'column',
-        marginTop: scaledHeight(20),
-        marginLeft: "10%",
-        marginRight: "10%",
-        width: "80%"
-    },
-    backButtonFlex: {
-        height: scaledHeight(50),
-        borderColor: '#61285F45',
-        borderWidth: scaledHeight(1),
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: scaledHeight(16)
-    },
-    backButtonText: {
-        color: '#544A54',
-        fontWeight: 'bold',
-        fontSize: scaledHeight(16),
-    },
     saveFlex: {
+        alignItems: 'center',
         backgroundColor: '#544A54',
         height: scaledHeight(50),
         justifyContent: 'center',
-        alignItems: 'center',
         marginTop: scaledHeight(16)
     },
     saveText: {
         color: '#FFFFFF',
-        fontWeight: 'bold',
         fontSize: scaledHeight(16),
+        fontWeight: 'bold',
     },
 
     tNCFlex: {
@@ -135,13 +135,13 @@ export const styles = StyleSheet.create({
         marginTop: "4%",
         width: "92%",
     },
+    tNcBody: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+    },
     tNcHeader: {
         color: '#56565A',
         fontSize: scaledHeight(16),
         fontWeight: 'bold'
-    },
-    tNcBody: {
-        color: '#56565A',
-        fontSize: scaledHeight(16),
     },
 });

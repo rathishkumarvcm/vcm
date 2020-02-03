@@ -5,6 +5,21 @@ import { scaledHeight, scaledWidth} from '../../Utils/Resolution';
 const styles = StyleSheet.create({
     accountBlock:{ borderColor: '#9DB4CE', borderWidth: 1, flexDirection: 'column', justifyContent: "center", marginTop: scaledHeight(20), padding: scaledHeight(20) },
     accountText:{ color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' },
+    addressInput:
+    { marginTop: scaledHeight(9),width:'100%' },
+    addressInputError: {
+        borderColor: 'red',
+        marginTop: scaledHeight(9),
+        width: '100%'
+    },
+    addressPopulatedTxtBox: {
+        backgroundColor: "#F0F1F2",
+        marginTop: scaledHeight(9),
+        width: '100%'
+    },
+    addressStyle:
+    { flexDirection: 'column', marginLeft: scaledWidth(15), marginTop: scaledHeight(15), width: '100%' },
+
     autoInvestCont:
     {
         color:'#56565A',
@@ -32,7 +47,6 @@ const styles = StyleSheet.create({
         color:'#4D79F6',
         fontSize:scaledHeight(20),
     },
-
     autoInvest_title_view:{
         alignItems:'center',
         backgroundColor:'#E4EBFE',
@@ -93,6 +107,7 @@ const styles = StyleSheet.create({
         marginLeft:'4%',
         marginRight:'4%'
     },
+    
     cancelButton:{
         alignItems:'center',
         backgroundColor:'#FFFFFF',
@@ -110,6 +125,12 @@ const styles = StyleSheet.create({
         fontSize:scaledHeight(16),
         fontWeight:'bold'
     },
+    checkingtxt:
+    { marginBottom: scaledHeight(0), width: "50%" },
+    childSectionGrp: {
+        flexGrow: 1,
+        marginHorizontal: '4%'
+    },
     circleText:{      
         fontSize:scaledHeight(15)
     },
@@ -117,7 +138,6 @@ const styles = StyleSheet.create({
        fontSize:scaledHeight(15),
         fontWeight:'bold'
     },
-    
     circle_Completed: {
         alignItems:'center',
         backgroundColor: '#A7E993',
@@ -156,12 +176,20 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         marginTop:scaledHeight(30),
     },
-    container:{
+    cityStateBlock:
+    { flexDirection: 'row', flex: 1, marginBottom: scaledHeight(20) },
+     cityStateError:{
+        borderColor: 'red',
+        flex: 0.5, marginRight: scaledWidth(30)
+    },
+    cityStateStyle:
+    { flex: 0.5, marginRight: scaledWidth(30) },
+     container:{
         backgroundColor:'#F7FAFF',
         flex:1,
         width:'100%'
     },
-    continueButton:{
+     continueButton:{
         alignItems:'center',
         backgroundColor:"rgba(84,74,84,0.5)",
         borderColor:'#61285F45',
@@ -190,22 +218,47 @@ const styles = StyleSheet.create({
         fontSize:scaledHeight(16),
         fontWeight:'bold'
     },
-    fundListHeader:
+    customTxtBox: {
+        marginTop: scaledHeight(9),
+        width: '100%'
+    },
+     customTxtBoxError: {
+        borderColor: 'red',
+        marginTop: scaledHeight(9),
+        width: '100%'
+    },
+     errMsg: {
+        color: 'red',
+        fontSize: scaledHeight(12),
+        marginVertical: scaledHeight(12),
+
+    },
+     financialTextLabel: {
+        color: '#333333DE', fontSize: scaledHeight(18), fontWeight: 'bold', marginBottom: '4%'
+    },
+     fundListHeader:
      { flexDirection: 'row', flex: 1, justifyContent: "center", alignItems: 'center', borderBottomColor: '#61285F45', borderBottomWidth: 1, padding: scaledHeight(20) },
-    fundListHeaderView:{ flex: 0.7 },
-    fundListStyle:{ marginTop: scaledHeight(20) },
-     fundListView:{ borderColor: '#5D83AE99', borderWidth: 1, marginTop: scaledHeight(10) },
+     fundListHeaderView:{ flex: 0.7 },
+     
+     fundListStyle:{ marginTop: scaledHeight(20) },
+    fundListView:{ borderColor: '#5D83AE99', borderWidth: 1, marginTop: scaledHeight(10) },
     fundNameSwitch:
      { alignItems: 'flex-end', flex: 0.3, marginRight: '4%' },
-     fundNameText:
+    fundNameText:
      { color: '#544A54', fontSize: scaledHeight(13), fontWeight: 'bold' },
-     fundRemainStyle:{ marginLeft: scaledWidth(10) },
+    fundRemainStyle:{ marginLeft: scaledWidth(10) },
     inputError:{flexDirection:'column',width:'100%'},
     lblRadioBtnTxt:{
         color:'#333333DE',
         flexWrap:'wrap',
         fontSize:scaledHeight(16),
         lineHeight:28
+    },
+    lblRadioBtnTxt: {
+        color: '#333333DE',
+        flexWrap: 'wrap',
+        fontSize: scaledHeight(16),
+        lineHeight: 28
     },
     lblRadioDescTxt:{
         color:'#333333DE',
@@ -215,10 +268,41 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(14),
         opacity:.75
     },
-     leftSpace:{ 
+    lblRadioDescTxt: {
+        color: '#333333DE',
+        flexWrap: 'wrap',
+        fontSize: scaledHeight(14),
+        lineHeight: 22,
+        marginTop: scaledHeight(14),
+        opacity: .75
+    },
+    lblSpecimen: {
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginTop: scaledHeight(58),
+        textAlign: 'center',
+        textDecorationLine: 'underline',
+        textDecorationStyle: 'solid'
+
+    },
+    lblSpecimenDesc: {
+        color: '#333333DE',
+        fontSize: scaledHeight(11),
+        marginTop: scaledHeight(58),
+        textAlign: 'left'
+
+    },
+    lblTxt: {
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginTop: scaledHeight(25)
+    },
+    leftSpace:{ 
         marginLeft: scaledWidth(10)
      },
-     loginHeader:{
+    loginHeader:{
         flex:.15,
         flexDirection:'row',
         backgroundColor:'#FFFFFF',
@@ -227,111 +311,27 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center'
     },
-     radioBtnGrp:{
+    radioBtnGrp:{
         flexDirection:'row',
         flexGrow:1,
         marginTop:scaledHeight(0)
-    },
-     radioStyle:{ marginBottom: scaledHeight(0), marginTop: scaledHeight(24), width: "30%" },
-     scrollView:
-     { flex: 0.85 },
-     
-     seperator_line:{
-        borderTopColor:'#C1C1C1',
-        borderTopWidth:1,
-       
-    },
-    childSectionGrp: {
-        flexGrow: 1,
-        marginHorizontal: '4%'
-    },
-    lblTxt: {
-        color: 'rgba(51, 51, 51, 0.87)',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold',
-        marginTop: scaledHeight(25)
     },
     radioBtnGrp: {
         flexGrow: 1,
         marginTop: scaledHeight(19),
     },
-    lblRadioBtnTxt: {
-        color: '#333333DE',
-        fontSize: scaledHeight(16),
-        lineHeight: 28,
-        flexWrap: 'wrap'
-    },
-    lblRadioDescTxt: {
-        marginTop: scaledHeight(14),
-        color: '#333333DE',
-        fontSize: scaledHeight(14),
-        lineHeight: 22,
-        flexWrap: 'wrap',
-        opacity: .75
-    },
-    customTxtBoxError: {
-        marginTop: scaledHeight(9),
-        width: '100%',
-        borderColor: 'red'
-    },
-    customTxtBox: {
-        marginTop: scaledHeight(9),
-        width: '100%'
-    },
-    errMsg: {
-        color: 'red',
-        fontSize: scaledHeight(12),
-        marginVertical: scaledHeight(12),
-
-    },
-    lblSpecimen: {
-        color: 'rgba(51, 51, 51, 0.87)',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginTop: scaledHeight(58),
-        textDecorationStyle: 'solid',
-        textDecorationLine: 'underline'
-
-    },
-    lblSpecimenDesc: {
-        color: '#333333DE',
-        fontSize: scaledHeight(11),
-        textAlign: 'left',
-        marginTop: scaledHeight(58)
-
+    radioStyle:{ marginBottom: scaledHeight(0), marginTop: scaledHeight(24), width: "30%" },
+    savingtxt:
+    { marginBottom: scaledHeight(15), width: "50%" },
+    scrollView:
+     { flex: 0.85 },
+    seperator_line:{
+        borderTopColor:'#C1C1C1',
+        borderTopWidth:1,
+       
     },
     specimenImg: {
         height: scaledHeight(176)
-    },
-    savingtxt:
-    { width: "50%", marginBottom: scaledHeight(15) },
-    checkingtxt:
-    { width: "50%", marginBottom: scaledHeight(0) },
-    addressStyle:
-    { flexDirection: 'column', marginLeft: scaledWidth(15), marginTop: scaledHeight(15), width: '100%' },
-    addressInput:
-    { marginTop: scaledHeight(9),width:'100%' },
-    addressPopulatedTxtBox: {
-        backgroundColor: "#F0F1F2",
-        marginTop: scaledHeight(9),
-        width: '100%'
-    },
-    addressInputError: {
-        borderColor: 'red',
-        marginTop: scaledHeight(9),
-        width: '100%'
-    },
-    financialTextLabel: {
-        color: '#333333DE', fontSize: scaledHeight(18), fontWeight: 'bold', marginBottom: '4%'
-    },
-    cityStateBlock:
-    { flexDirection: 'row', flex: 1, marginBottom: scaledHeight(20) },
-    cityStateStyle:
-    { flex: 0.5, marginRight: scaledWidth(30) },
-    cityStateError:{
-        borderColor: 'red',
-        flex: 0.5, marginRight: scaledWidth(30)
     }
     
 });

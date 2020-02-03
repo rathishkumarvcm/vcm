@@ -142,16 +142,16 @@ import { scaledHeight } from '../../Utils/Resolution';
         fontSize: scaledHeight(16),
         fontWeight: 'bold'
     },
-    titleHeaderTextStyle: {
-        color: '#56565A',
-        fontSize: scaledHeight(24),
-        fontWeight: 'bold'
-    },
     text5:{
         color:'#333333DE',
         fontSize:scaledHeight(16),
         fontWeight:'bold',
         margin:"4%"
+    },
+    titleHeaderTextStyle: {
+        color: '#56565A',
+        fontSize: scaledHeight(24),
+        fontWeight: 'bold'
     },
 });
 

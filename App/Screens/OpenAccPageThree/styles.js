@@ -697,6 +697,12 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         width: '100%'
     },
+    riskLevelImg: {
+        height: scaledHeight(54),
+        width: scaledHeight(110)
+
+    },
+
     rowHeaderItem: {
         alignItems: 'flex-start',
         flexDirection: 'row',
@@ -704,18 +710,12 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         marginTop: scaledHeight(0)
     },
-
-    rowItem: {
+   rowItem: {
         alignItems: 'flex-start',
         flexDirection: 'row',
         flexGrow: 1,
         justifyContent: 'flex-end',
         marginTop: scaledHeight(22)
-    },
-   riskLevelImg: {
-        height: scaledHeight(54),
-        width: scaledHeight(110)
-
     },
 
     saveButtonStyle: {

@@ -242,12 +242,12 @@ const styles = StyleSheet.create({
     fontSize: scaledHeight(14),
     fontWeight: 'normal',
   },
-  paddingStyleLeft: {
-    paddingLeft: "4%"
-  },
   paddingHorizontalStyle: {
     paddingLeft: "4%",
     paddingRight: "4%"
+  },
+  paddingStyleLeft: {
+    paddingLeft: "4%"
   },
   preferdTimeTxt: {
     color: '#333333DE',

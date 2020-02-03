@@ -2,6 +2,31 @@ import { StyleSheet } from "react-native";
 import { scaledHeight, scaledWidth } from "../../Utils/Resolution";
 
 const styles = StyleSheet.create({
+  TextOffStyle: {
+    color: '#544A54',
+    fontSize: scaledHeight(14),
+    fontWeight: 'bold',
+    opacity: 0.5,
+    paddingLeft: "8%",
+    textAlign: 'center'
+  },
+  TextOffStyleBold: {
+    color: '#544A54',
+    fontSize: scaledHeight(14),
+    fontWeight: 'bold',
+    opacity: 0.5,
+    paddingLeft: "3%",
+    textAlign: 'center'
+  },
+  TextOnStyle: {
+    color: '#56565A',
+    fontSize: scaledHeight(14),
+    fontWeight: 'bold',
+    justifyContent: 'center',
+    marginRight: '30%',
+    paddingLeft: "10%",
+    textAlign: 'center'
+  },
   amountBox: {
     width: '90%'
   },
@@ -323,24 +348,6 @@ const styles = StyleSheet.create({
   modalTitleView: {
     flexDirection: "row"
   },
-  normalBlackDisabledBtn: {
-    alignContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#544A54',
-    borderColor: "#61285F45",
-    borderWidth: 1,
-    height: scaledHeight(50),
-    justifyContent: 'center',
-    marginHorizontal: scaledHeight(37),
-    marginVertical: scaledHeight(7.5),
-    opacity: 0.5,
-  },
-  normalBlackBtnDisabledTxt: {
-    color: '#fff',
-    fontSize: scaledHeight(16),
-    textAlign: 'center',
-    width: '100%'
-  },
   normalBlackBtn: {
     alignContent: 'center',
     alignItems: 'center',
@@ -352,11 +359,29 @@ const styles = StyleSheet.create({
     marginHorizontal: scaledHeight(37),
     marginVertical: scaledHeight(7.5)
   },
+  normalBlackBtnDisabledTxt: {
+    color: '#fff',
+    fontSize: scaledHeight(16),
+    textAlign: 'center',
+    width: '100%'
+  },
   normalBlackBtnTxt: {
     color: '#fff',
     fontSize: scaledHeight(16),
     textAlign: 'center',
     width: '100%'
+  },
+  normalBlackDisabledBtn: {
+    alignContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#544A54',
+    borderColor: "#61285F45",
+    borderWidth: 1,
+    height: scaledHeight(50),
+    justifyContent: 'center',
+    marginHorizontal: scaledHeight(37),
+    marginVertical: scaledHeight(7.5),
+    opacity: 0.5,
   },
   normalWhiteBtn: {
     alignContent: 'center',
@@ -413,8 +438,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     borderColor: '#56565A',
     borderRadius: 30,
-    height: scaledHeight(60),
     borderWidth: 1,
+    height: scaledHeight(60),
     marginLeft: "10%",
     width: "67%"
   },
@@ -438,15 +463,15 @@ const styles = StyleSheet.create({
     marginTop: '2%',
     width: "92%"
   },
-  stmtTxtStyle: {
-    color: "#333333DE",
-    fontSize: scaledHeight(18),
-    width: "92%",
-    marginTop: '2%'
-  },
   stmtSmallTextStyle: {
     color: "#54565B",
     fontSize: scaledHeight(15),
+    marginTop: '2%',
+    width: "92%"
+  },
+  stmtTxtStyle: {
+    color: "#333333DE",
+    fontSize: scaledHeight(18),
     marginTop: '2%',
     width: "92%"
   },
@@ -457,8 +482,8 @@ const styles = StyleSheet.create({
   switchTextStyle: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: '2%',
-    marginHorizontal: '2%'
+    marginHorizontal: '2%',
+    marginTop: '2%'
   },
   switchTxt: {
     color: '#54565B',
@@ -494,31 +519,6 @@ const styles = StyleSheet.create({
   totalView: {
     flexDirection: 'row',
     justifyContent: "space-between"
-  },
-  TextOnStyle: {
-    color: '#56565A',
-    fontSize: scaledHeight(14),
-    fontWeight: 'bold',
-    justifyContent: 'center',
-    textAlign: 'center',
-    marginRight: '30%',
-    paddingLeft: "10%"
-  },
-  TextOffStyle: {
-    color: '#544A54',
-    opacity: 0.5,
-    fontSize: scaledHeight(14),
-    fontWeight: 'bold',
-    textAlign: 'center',
-    paddingLeft: "8%"
-  },
-  TextOffStyleBold: {
-    color: '#544A54',
-    opacity: 0.5,
-    fontSize: scaledHeight(14),
-    fontWeight: 'bold',
-    textAlign: 'center',
-    paddingLeft: "3%"
   }
 });
 

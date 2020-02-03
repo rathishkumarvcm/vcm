@@ -2,276 +2,12 @@ import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
 export const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F7FAFF',
-        width: '100%'
-    },
-    scrollviewStyle: {
-        flex: 0.85
-    },
-    contentStyle: { justifyContent: 'center' },
-    header: {
-        marginTop: scaledHeight(22),
-        alignItems: 'flex-start',
-        marginHorizontal: '4%'
-    },
-    optionHeaderView: {
-        marginTop: scaledHeight(20),
-        borderWidth: 1,
-        borderColor: '#DDDDDD',
-        backgroundColor: '#FFFFFF',
-        paddingVertical: scaledHeight(15),
-        marginHorizontal: '4%'
-    },
-    accountView: {
-        borderWidth: 1,
-        borderColor: '#DDDDDD',
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        marginTop: scaledHeight(21),
-        marginHorizontal: '4%',
-        paddingHorizontal: '4%',
-        paddingVertical: scaledHeight(15)
-    },
-    reinvestContainer: {
-        borderWidth: 1,
-        borderColor: '#DCDCDC',
-        backgroundColor: '#FFFFFF',
-        borderRadius: scaledHeight(10),
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: scaledHeight(25),
-        paddingHorizontal: '4%',
-        marginHorizontal: '4%',
-        paddingBottom: scaledHeight(20)
-    },
-    fundContainer: {
-        flexDirection: 'row',
-        borderWidth: 1,
-        borderColor: '#5D83AE99',
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        marginTop: scaledHeight(20),
-        paddingLeft: '4%',
-        paddingRight: '6%',
-        paddingVertical: scaledHeight(15)
-    },
-    fundAmtContainer: {
-        borderWidth: 1,
-        borderColor: '#5D83AE99',
-        backgroundColor: '#FFFFFF',
-        height: scaledHeight(150),
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        paddingHorizontal: '4%',
-        width: '84%',
-    },
-    ammountView: {
-        flexDirection: 'row',
-        height: scaledHeight(15),
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        backgroundColor: '#FFFFFF',
-        marginVertical: scaledHeight(10)
-    },
-    amountHeader: {
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        paddingVertical: scaledHeight(20)
-    },
-    fundText: {
-        flex: 0.80,
-        fontSize: scaledHeight(13),
+    TextOffStyle: {
         color: '#544A54',
-        fontWeight: 'bold',
-        marginRight: '16%',
-        alignSelf: 'center'
-    },
-    amtText: {
-
-        fontSize: scaledHeight(16),
-        color: '#333333DE',
-        fontWeight: 'bold',
-        alignSelf: 'flex-start'
-    },
-    amtText2: {
-        flex: 0.10,
-        fontSize: scaledHeight(16),
-        color: '#333333DE',
-        fontWeight: 'bold',
-        alignSelf: 'flex-start'
-    },
-    minText: {
-        fontSize: scaledHeight(13),
-        color: '#333333DE',
-        alignSelf: 'flex-start',
-        marginTop: scaledHeight(19)
-    },
-    optionHeaderText: {
-        fontSize: scaledHeight(20),
-        color: '#000000',
-        fontWeight: 'bold',
-        marginHorizontal: '4%'
-    },
-    accountText: {
-        fontSize: scaledHeight(18),
-        color: '#54565B',
-        fontWeight: 'bold',
-        marginTop: scaledHeight(5)
-    },
-    subHeaderText: {
-        fontSize: scaledHeight(15),
-        color: '#333333DE',
-        marginHorizontal: '6%',
-        marginTop: scaledHeight(30)
-    },
-    optionSubHeaderText: {
-        fontSize: scaledHeight(15),
-        color: '#54565B',
-        marginHorizontal: '4%',
-        marginTop: scaledHeight(23.5)
-    },
-    contactText: {
-        fontSize: scaledHeight(15),
-        color: '#2B8CBE',
-        marginHorizontal: '4%',
-        fontWeight: 'bold',
-        marginTop: scaledHeight(7)
-    },
-    headerText: {
-        color: '#56565A',
         fontSize: scaledHeight(18),
         fontWeight: 'bold',
-    },
-    fullLine: {
-        backgroundColor: '#7B8288',
-        opacity: 0.4,
-        height: scaledHeight(1),
-        marginTop: scaledHeight(45),
-    },
-    tNCFlex: {
-        marginLeft: "4%",
-        marginTop: "4%",
-        width: "92%",
-    },
-    tNcHeader: {
-        color: '#56565A',
-        fontWeight: 'bold',
-        fontSize: scaledHeight(16),
-    },
-    tNcBody: {
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-    },
-    linkBreak1: {
-        backgroundColor: '#7B8288',
-        opacity: 0.4,
-        height: scaledHeight(1),
-        marginTop: scaledHeight(10),
-        marginHorizontal: '4%'
-    },
-    instructionText: {
-        fontSize: scaledHeight(15),
-        color: '#54565B',
-        marginRight: '4%',
-        flex: 0.8,
-        alignSelf: 'center'
-    },
-    submitButtonText: {
-        fontSize: scaledHeight(16),
-        color: '#FFFFFF'
-    },
-    backButtonText: {
-        fontSize: scaledHeight(16),
-        color: '#544A54'
-    },
-    submitBtn: {
-        borderColor: '#61285F45',
-        borderWidth: 1,
-        width: '78.6%',
-        marginLeft: '10.7%',
-        marginRight: '10.7%',
-        marginTop: scaledHeight(19),
-        borderRadius: scaledHeight(1),
-        height: scaledHeight(50),
-        backgroundColor: '#544A54',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    backBtn: {
-        borderColor: '#61285F45',
-        borderWidth: 1,
-        width: '78.6%',
-        marginLeft: '10.7%',
-        marginRight: '10.7%',
-        marginTop: scaledHeight(50),
-        borderRadius: scaledHeight(1),
-        height: scaledHeight(50),
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    switchContainer: {
-        marginHorizontal: '4%',
-        marginTop: scaledHeight(20)
-    },
-    switchStyle: {
-        flex: 0.20,
-        marginHorizontal: '3%',
-        height: scaledHeight(21),
-        alignSelf: 'center',
-    },
-    offButtonStyle: {
-        borderColor: '#56565A',
-        borderRadius: 30,
-        height: scaledHeight(61),
-        borderWidth: 1,
-        marginTop: scaledHeight(12),
-        width: '50%',
-        backgroundColor: '#B7B7B7',
-        alignItems: 'flex-start',
-        justifyContent: 'center'
-    },
-    offButtonStyleDisable: {
-        borderColor: '#56565A',
-        borderRadius: 30,
-        height: scaledHeight(61),
-        borderWidth: 1,
-        marginTop: scaledHeight(12),
-        width: '70%',
-        backgroundColor: '#FFFFFF',
-        alignItems: 'flex-start',
-        justifyContent: 'center'
-    },
-    onButtonStyle: {
-        borderColor: '#56565A',
-        position: 'absolute',
-        left: '50%',
-        borderRadius: 30,
-        height: scaledHeight(61),
-        borderWidth: 1,
-        marginTop: scaledHeight(12),
-        width: '50%',
-        backgroundColor: '#B7B7B7',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    onButtonStyleDisable: {
-        borderColor: '#56565A',
-        borderRadius: 30,
-        height: scaledHeight(61),
-        position: 'absolute',
-        zIndex: -1,
-        left: '30%',
-        borderWidth: 1,
-        marginTop: scaledHeight(12),
-        width: '70%',
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'center'
+        marginLeft: '30%',
+        marginRight: '10%'
     },
     TextOnStyle: {
         color: '#56565A',
@@ -280,33 +16,315 @@ export const styles = StyleSheet.create({
         marginLeft: '30%',
         marginRight: '10%'
     },
-    TextOffStyle: {
-        color: '#544A54',
+    accountIconStyle: { alignSelf: 'center', flex: 0.2 },
+    accountName: {
+        flexDirection: 'row',
+        marginBottom: scaledHeight(15),
+        marginHorizontal: '4%'
+    },
+    accountNameHeaderText: {
+        alignSelf: 'flex-start',
+        color: '#56565A',
+        fontSize: scaledHeight(14),
+        fontWeight: 'bold',
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(20)
+    },
+    accountNameSubHeaderText: {
+        alignSelf: 'flex-start',
+        color: '#56565A',
+        fontSize: scaledHeight(14),
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(8),
+    },
+    accountNameText: {
+        alignSelf: 'flex-start',
+        color: '#54565B',
+        flex: 0.9,
         fontSize: scaledHeight(18),
         fontWeight: 'bold',
-        marginLeft: '30%',
-        marginRight: '10%'
+    },
+    accountText: {
+        color: '#54565B',
+        fontSize: scaledHeight(18),
+        fontWeight: 'bold',
+        marginTop: scaledHeight(5)
+    },
+    accountView: {
+        alignItems: 'flex-start',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#DDDDDD',
+        borderWidth: 1,
+        justifyContent: 'center',
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(21),
+        paddingHorizontal: '4%',
+        paddingVertical: scaledHeight(15)
+    },
+    ammountView: {
+        alignItems: 'flex-start',
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row',
+        height: scaledHeight(15),
+        justifyContent: 'flex-start',
+        marginVertical: scaledHeight(10)
+    },
+    amountHeader: {
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        paddingVertical: scaledHeight(20)
     },
     amountTextBox: {
-        flex: 0.90,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        flex: 0.90
     },
-    switchFlexView: {
-        flexDirection: 'row',
-        marginTop: scaledHeight(14),
-        marginHorizontal: '6%'
+    amtText: {
+
+        alignSelf: 'flex-start',
+        color: '#333333DE',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold'
     },
-    switchInlineTex: {
-        flex: 0.50,
-        fontSize: scaledHeight(13),
-        color: '#54565B',
-        textAlign: 'center'
+    amtText2: {
+        alignSelf: 'flex-start',
+        color: '#333333DE',
+        flex: 0.10,
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold'
     },
-    touchOpacityPosition: {
-        marginVertical: scaledHeight(15),
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+    backBtn: {
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#61285F45',
+        borderRadius: scaledHeight(1),
+        borderWidth: 1,
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginLeft: '10.7%',
+        marginRight: '10.7%',
+        marginTop: scaledHeight(50),
+        width: '78.6%'
+    },
+    backButtonText: {
+        color: '#544A54',
+        fontSize: scaledHeight(16)
+    },
+    contactText: {
+        color: '#2B8CBE',
+        fontSize: scaledHeight(15),
+        fontWeight: 'bold',
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(7)
+    },
+    container: {
+        backgroundColor: '#F7FAFF',
         flex: 1,
+        width: '100%'
+    },
+    contentStyle: { justifyContent: 'center' },
+    editInfo: {
+        alignSelf: 'flex-end',
+        flex: 0.1,
+        justifyContent: 'flex-end'
+    },
+    fullLine: {
+        backgroundColor: '#7B8288',
+        height: scaledHeight(1),
+        marginTop: scaledHeight(45),
+        opacity: 0.4,
+    },
+    fundAmtContainer: {
+        alignItems: 'flex-start',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#5D83AE99',
+        borderWidth: 1,
+        height: scaledHeight(150),
+        justifyContent: 'center',
+        paddingHorizontal: '4%',
+        width: '84%',
+    },
+    fundContainer: {
+        alignItems: 'flex-start',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#5D83AE99',
+        borderWidth: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: scaledHeight(20),
+        paddingLeft: '4%',
+        paddingRight: '6%',
+        paddingVertical: scaledHeight(15)
+    },
+    fundText: {
+        alignSelf: 'center',
+        color: '#544A54',
+        flex: 0.80,
+        fontSize: scaledHeight(13),
+        fontWeight: 'bold',
+        marginRight: '16%'
+    },
+    header: {
+        alignItems: 'flex-start',
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(22)
+    },
+    headerText: {
+        color: '#56565A',
+        fontSize: scaledHeight(18),
+        fontWeight: 'bold',
+    },
+    infoContainer: {
+        alignItems: 'flex-start',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#B5B5B6',
+        borderWidth: 1,
+        justifyContent: 'flex-start',
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(20),
+        paddingBottom: scaledHeight(15),
+        paddingTop: scaledHeight(15)
+    },
+    instructionText: {
+        alignSelf: 'center',
+        color: '#54565B',
+        flex: 0.8,
+        fontSize: scaledHeight(15),
+        marginRight: '4%'
+    },
+    instructionsView: {
+        alignItems: 'center',
+        backgroundColor: '#F2F2F2',
+        borderColor: '#C7C7C7',
+        borderRadius: scaledHeight(4),
+        borderWidth: 1,
+        flexDirection: 'row',
+        flex: 1,
+        justifyContent: 'space-between',
+        marginBottom: scaledHeight(30),
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(50),
+        paddingVertical: scaledHeight(15),
+    },
+    linkBreak1: {
+        backgroundColor: '#7B8288',
+        height: scaledHeight(1),
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(10),
+        opacity: 0.4
+    },
+    linkBreak2: {
+        alignSelf: "stretch",
+        backgroundColor: '#9DB4CE',
+        height: scaledHeight(1),
+    },
+    minText: {
+        alignSelf: 'flex-start',
+        color: '#333333DE',
+        fontSize: scaledHeight(13),
+        marginTop: scaledHeight(19)
+    },
+    offButtonStyle: {
+        alignItems: 'flex-start',
+        backgroundColor: '#B7B7B7',
+        borderColor: '#56565A',
+        borderRadius: 30,
+        borderWidth: 1,
+        height: scaledHeight(61),
+        justifyContent: 'center',
+        marginTop: scaledHeight(12),
+        width: '50%'
+    },
+    offButtonStyleDisable: {
+        alignItems: 'flex-start',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#56565A',
+        borderRadius: 30,
+        borderWidth: 1,
+        height: scaledHeight(61),
+        justifyContent: 'center',
+        marginTop: scaledHeight(12),
+        width: '70%'
+    },
+    onButtonStyle: {
+        alignItems: 'center',
+        backgroundColor: '#B7B7B7',
+        borderColor: '#56565A',
+        borderRadius: 30,
+        borderWidth: 1,
+        height: scaledHeight(61),
+        justifyContent: 'center',
+        left: '50%',
+        marginTop: scaledHeight(12),
+        position: 'absolute',
+        width: '50%'
+    },
+    onButtonStyleDisable: {
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#56565A',
+        borderRadius: 30,
+        borderWidth: 1,
+        height: scaledHeight(61),
+        justifyContent: 'center',
+        left: '30%',
+        marginTop: scaledHeight(12),
+        position: 'absolute',
+        width: '70%',
+        zIndex: -1
+    },
+    optionHeaderText: {
+        color: '#000000',
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold',
+        marginHorizontal: '4%'
+    },
+    optionHeaderView: {
+        backgroundColor: '#FFFFFF',
+        borderColor: '#DDDDDD',
+        borderWidth: 1,
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(20),
+        paddingVertical: scaledHeight(15)
+    },
+    optionSubHeaderText: {
+        color: '#54565B',
+        fontSize: scaledHeight(15),
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(23.5)
+    },
+    reinvestContainer: {
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#DCDCDC',
+        borderRadius: scaledHeight(10),
+        borderWidth: 1,
+        justifyContent: 'center',
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(25),
+        paddingBottom: scaledHeight(20),
+        paddingHorizontal: '4%'
+    },
+    requestBtn: {
+        backgroundColor: '#FFFFFF',
+        borderColor: '#FFFFFF',
+        borderRadius: scaledHeight(1),
+        borderWidth: 1,
+        height: scaledHeight(50),
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop: scaledHeight(45),
+        position: 'absolute',
+        zIndex: 5
+    },
+    requestButtonText: {
+        alignSelf: 'flex-start',
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold'
+
+    },
+    scrollviewStyle: {
+        flex: 0.85
     },
     setupInstructionText: {
         color: '#54565B',
@@ -314,86 +332,68 @@ export const styles = StyleSheet.create({
         marginHorizontal: '4%',
         marginVertical: scaledHeight(20),
     },
-    accountNameHeaderText: {
-        fontSize: scaledHeight(14),
-        color: '#56565A',
-        alignSelf: 'flex-start',
-        marginTop: scaledHeight(20),
-        marginHorizontal: '4%',
-        fontWeight: 'bold'
+    subHeaderText: {
+        color: '#333333DE',
+        fontSize: scaledHeight(15),
+        marginHorizontal: '6%',
+        marginTop: scaledHeight(30)
     },
-    accountNameSubHeaderText: {
-        fontSize: scaledHeight(14),
-        color: '#56565A',
-        alignSelf: 'flex-start',
-        marginTop: scaledHeight(8),
-        marginHorizontal: '4%',
-    },
-    infoContainer: {
-        borderWidth: 1,
-        borderColor: '#B5B5B6',
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        paddingTop: scaledHeight(15),
-        marginTop: scaledHeight(20),
-        marginHorizontal: '4%',
-        paddingBottom: scaledHeight(15)
-    },
-    accountName: {
-        marginHorizontal: '4%',
-        marginBottom: scaledHeight(15),
-        flexDirection: 'row'
-    },
-    accountNameText: {
-        fontSize: scaledHeight(18),
-        color: '#54565B',
-        alignSelf: 'flex-start',
-        flex: 0.9,
-        fontWeight: 'bold',
-    },
-    requestButtonText: {
-        fontSize: scaledHeight(16),
-        color: '#56565A',
-        fontWeight: 'bold',
-        alignSelf: 'flex-start'
-
-    },
-    requestBtn: {
-        position: 'absolute',
-        borderColor: '#FFFFFF',
-        borderWidth: 1,
-        marginLeft: '4%',
-        marginRight: '4%',
-        marginTop: scaledHeight(45),
-        borderRadius: scaledHeight(1),
-        height: scaledHeight(50),
-        backgroundColor: '#FFFFFF',
-        zIndex: 5
-    },
-    linkBreak2: {
-        backgroundColor: '#9DB4CE',
-        alignSelf: "stretch",
-        height: scaledHeight(1),
-    },
-    editInfo: {
-        justifyContent: 'flex-end',
-        alignSelf: 'flex-end',
-        flex: 0.1
-    },
-    instructionsView: {
-        borderWidth: 1,
-        backgroundColor: '#F2F2F2',
-        borderColor: '#C7C7C7',
-        borderRadius: scaledHeight(4),
-        marginHorizontal: '4%',
-        marginTop: scaledHeight(50),
-        marginBottom: scaledHeight(30),
-        paddingVertical: scaledHeight(15),
+    submitBtn: {
         alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        flex: 1,
+        backgroundColor: '#544A54',
+        borderColor: '#61285F45',
+        borderRadius: scaledHeight(1),
+        borderWidth: 1,
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginLeft: '10.7%',
+        marginRight: '10.7%',
+        marginTop: scaledHeight(19),
+        width: '78.6%'
     },
-    accountIconStyle: { flex: 0.2, alignSelf: 'center' },
+    submitButtonText: {
+        color: '#FFFFFF',
+        fontSize: scaledHeight(16)
+    },
+    switchContainer: {
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(20)
+    },
+    switchFlexView: {
+        flexDirection: 'row',
+        marginHorizontal: '6%',
+        marginTop: scaledHeight(14)
+    },
+    switchInlineTex: {
+        color: '#54565B',
+        flex: 0.50,
+        fontSize: scaledHeight(13),
+        textAlign: 'center'
+    },
+    switchStyle: {
+        alignSelf: 'center',
+        flex: 0.20,
+        height: scaledHeight(21),
+        marginHorizontal: '3%',
+    },
+    tNCFlex: {
+        marginLeft: "4%",
+        marginTop: "4%",
+        width: "92%",
+    },
+    tNcBody: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+    },
+    tNcHeader: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+    },
+    touchOpacityPosition: {
+        flexDirection: 'row',
+        flex: 1,
+        justifyContent: 'space-between',
+        marginVertical: scaledHeight(15),
+    },
 });

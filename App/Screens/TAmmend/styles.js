@@ -4,31 +4,82 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 
 const styles = StyleSheet.create({
+    accordianView: {
+        backgroundColor: "#ffffff",
+        paddingBottom: "5%"
+    },
+    bottomView: {
+        backgroundColor: "#EEEEEE",
+        marginTop: "10%",
+        paddingBottom: "5%"
+    },
+    buttonView: {
+        flexDirection: 'row',
+        marginTop: "5%"
+    },
+    cancelButton: {
+        borderColor: '#61285F45',
+        borderWidth: 1,
+        width: '35%',
+        marginLeft: scaledHeight(15),
+        //  marginRight:'10%',
+        marginTop: scaledHeight(10),
+        //  borderRadius:scaledHeight(25),
+        height: scaledHeight(50),
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    cancelButtonText: {
+        color: '#544A54',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold'
+    },
     container: {
-        flex: 1,
         backgroundColor: '#F7FAFF',
+        flex: 1,
         width: '100%'
     },
-    signInView: {
-        marginTop: scaledHeight(30),
-        paddingLeft: '4%',
-        paddingRight: '4%',
+    dropdownTextInput: {
+        height: "30%",
+        width: "50%"
     },
-    signIntext: {
-        textAlign: 'left',
-        fontSize: scaledHeight(20),
-        fontWeight: 'bold',
-        color: '#535353',
-        flexWrap: 'wrap',
+    ellipseImage: {
+        flexDirection: "column",
+        justifyContent: "center",
+        marginLeft: "25%"
     },
-    sorttext: {
-        textAlign: 'right',
-        //  color:'rgba(51, 51, 51, 0.87)',
+
+    expandImage: {
+        marginLeft: "3%", marginRight: "5%"
+    },
+    filterButton: {
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#61285F45',
+        borderWidth: 1,
+        height: scaledHeight(40),
+        justifyContent: 'center',
+        marginLeft: scaledHeight(100),
+        marginTop: scaledHeight(-5),
+        width: scaledHeight(120)
+    },
+    filterButtonText: {
+        color: '#5D83AE',
         fontSize: scaledHeight(14),
-        color: '#535353',
-        flexWrap: 'wrap',
-        marginTop: scaledHeight(6),
-        marginLeft: scaledHeight(70)
+        //  fontWeight:'bold'
+    },
+    flexAccDetails1: {
+        //  height:scaledHeight(73),
+        marginTop: "4%",
+        flexDirection: 'row',
+    }, lblCountText: {
+        color: "#0000FF",
+        fontSize: scaledHeight(18),
+        fontWeight: 'bold',
+        marginLeft: "10%",
+        marginTop: scaledHeight(15),
+
     },
     lblLine: {
         //  width:"100%",
@@ -47,50 +98,44 @@ const styles = StyleSheet.create({
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(14),
         fontWeight: 'bold',
-        marginTop: scaledHeight(25),
         marginLeft: "2%",
         marginRight: "2%",
+        marginTop: scaledHeight(25),
         //  marginTop:"4%"     
     },
-    lblCountText: {
-        color: "#0000FF",
-        fontSize: scaledHeight(18),
+    lblTxtInnerAmmend: {
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(14),
         fontWeight: 'bold',
-        marginTop: scaledHeight(15),
-        marginLeft: "10%",
-
-    },
-
-    bottomView: {
-        backgroundColor: "#EEEEEE",
-        marginTop: "10%",
-        paddingBottom: "5%"
-    },
-    lblTxtSmall: {
-        fontSize: scaledHeight(10),
-        marginTop: scaledHeight(10),
-        color: '#333333DE',
+        //  marginTop: scaledHeight(25),
         marginLeft: "2%",
+        marginRight: "2%",
+        marginTop: "4%",
+       
+    },
+    lblTxtInnerCancel: {
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(14),
+        fontWeight: 'bold',
+        marginBottom: "2%",
+        marginLeft: "2%",
+        marginRight: "2%",
+        marginTop: "3%",
     },
     lblTxtMedium: {
-        fontSize: scaledHeight(15),
-        marginTop: scaledHeight(10),
         color: '#333333DE',
+        fontSize: scaledHeight(15),
         marginLeft: "2%",
+        marginTop: scaledHeight(10),
     },
-    row: {
-        flexDirection: 'row',
-        marginTop: scaledHeight(18),
-        height: 50,
-        alignItems: 'center',
-        backgroundColor: "#EEEEEE"
-
-    }, modalView: {
-        //  justifyContent: 'center',
-        //  alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.1)',
-        height: "100%",
-        marginTop: scaledHeight(10)
+    lblTxtSmall: {
+        color: '#333333DE',
+        fontSize: scaledHeight(10),
+        marginLeft: "2%",
+        marginTop: scaledHeight(10),
+    },
+    marginTopView: {
+        marginTop: "0%"
     },
     modalInsideView: {
         //  justifyContent: 'center',
@@ -101,46 +146,31 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(52)
     },
     modalText: {
-        textAlign: 'left',
-        fontSize: scaledHeight(18),
         color: '#535353',
         flexWrap: 'wrap',
+        fontSize: scaledHeight(18),
         marginLeft: scaledHeight(15),
-        marginTop: scaledHeight(5)
+        marginTop: scaledHeight(5),
+        textAlign: 'left'
     },
-    cancelButton: {
-        borderColor: '#61285F45',
-        borderWidth: 1,
-        width: '35%',
-        marginLeft: scaledHeight(15),
-        //  marginRight:'10%',
-        marginTop: scaledHeight(10),
-        //  borderRadius:scaledHeight(25),
-        height: scaledHeight(50),
-        backgroundColor: '#FFFFFF',
+    modalView: {
+        //  justifyContent: 'center',
+        //  alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.1)',
+        height: "100%",
+        marginTop: scaledHeight(10)
+    },
+    row: {
         alignItems: 'center',
-        justifyContent: 'center'
+        backgroundColor: "#EEEEEE",
+        flexDirection: 'row',
+        height: 50,
+        marginTop: scaledHeight(18)
+
     },
-    cancelButtonText: {
-        fontSize: scaledHeight(16),
-        color: '#544A54',
-        fontWeight: 'bold'
-    },
-    filterButton: {
-        borderColor: '#61285F45',
-        borderWidth: 1,
-        width: scaledHeight(120),
-        marginLeft: scaledHeight(100),
-        marginTop: scaledHeight(-5),
-        height: scaledHeight(40),
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    filterButtonText: {
-        fontSize: scaledHeight(14),
-        color: '#5D83AE',
-        //  fontWeight:'bold'
+    rowFlex:{
+        flexDirection:'row',
+        marginTop:scaledHeight(20),
     },
     saveButton: {
         borderColor: '#56565A',
@@ -156,82 +186,45 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     saveButtonText: {
-        fontSize: scaledHeight(16),
         color: '#FFFFFF',
+        fontSize: scaledHeight(16),
         fontWeight: 'bold'
     },
-    expandImage: {
-        marginLeft: "3%", marginRight: "5%"
-    },
-    ellipseImage: {
-        flexDirection: "column",
-        marginLeft: "25%",
-        justifyContent: "center"
+    scrollViewFlex:{
+         flex: 0.85 
     },
     shadowView: {
-        flexDirection: 'column',
         backgroundColor: "white",
+        elevation: 5,
+        flexDirection: 'column',
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
             height: 1,
         },
         shadowOpacity: 0.20,
-        shadowRadius: 1.41,
-        elevation: 5
+        shadowRadius: 1.41
     },
-    viewColum: {
-        flexDirection: 'column'
+    signInView: {
+        marginTop: scaledHeight(30),
+        paddingLeft: '4%',
+        paddingRight: '4%',
     },
-    viewRow: {
-        flexDirection: 'row',
-        width: "90%"
-    },
-    dropdownTextInput: {
-        width: "50%",
-        height: "30%"
-    },
-    flexAccDetails1: {
-        //  height:scaledHeight(73),
-        marginTop: "4%",
-        flexDirection: 'row',
-    },
-    buttonView: {
-        flexDirection: 'row',
-        marginTop: "5%"
-    },
-    accordianView: {
-        backgroundColor: "#ffffff",
-        paddingBottom: "5%"
-    },
-    lblTxtInnerCancel: {
-        color: 'rgba(51, 51, 51, 0.87)',
-        fontSize: scaledHeight(14),
+    signIntext: {
+        color: '#535353',
+        flexWrap: 'wrap',
+        fontSize: scaledHeight(20),
         fontWeight: 'bold',
-        marginLeft: "2%",
-        marginRight: "2%",
-        marginBottom: "2%",
-        marginTop: "3%",
+        textAlign: 'left',
     },
-    lblTxtInnerAmmend: {
-        color: 'rgba(51, 51, 51, 0.87)',
+    sorttext: {
+        textAlign: 'right',
+        //  color:'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(14),
-        fontWeight: 'bold',
-        //  marginTop: scaledHeight(25),
-        marginLeft: "2%",
-        marginRight: "2%",
-        marginTop: "4%",
-       
-    },
-    marginTopView: {
-        marginTop: "0%"
-    },
-    rowFlex:{
-        flexDirection:'row',
-        marginTop:scaledHeight(20),
-    },
-    scrollViewFlex:{
-         flex: 0.85 
+        color: '#535353',
+        flexWrap: 'wrap',
+        marginTop: scaledHeight(6),
+        marginLeft: scaledHeight(70)
     },
     transactionStatusFlex: {
         backgroundColor: '#F2F2F2',
@@ -257,6 +250,13 @@ const styles = StyleSheet.create({
         color: '#56565A',
         fontSize: scaledHeight(15),
         fontWeight: 'bold'
+    },
+    viewColum: {
+        flexDirection: 'column'
+    },
+    viewRow: {
+        flexDirection: 'row',
+        width: "90%"
     }
 
 

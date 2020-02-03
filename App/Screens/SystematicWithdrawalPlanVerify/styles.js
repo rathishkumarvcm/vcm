@@ -133,16 +133,16 @@ const styles = StyleSheet.create({
         justifyContent:'center',
      },
      continueButtonSelected:{
+        alignItems:'center',
+        backgroundColor:'#56565A',
         borderColor:'#61285F45',
         borderWidth:1,
-        width:'80%',
+        height:scaledHeight(50),
+        justifyContent:'center',
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-        height:scaledHeight(50),
-        backgroundColor:'#56565A',
-        alignItems:'center',
-        justifyContent:'center'
+        width:'80%'
      },
     continueButtonText:{
         color:'#FFFFFF',

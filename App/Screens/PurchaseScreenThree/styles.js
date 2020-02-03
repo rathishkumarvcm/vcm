@@ -3,6 +3,31 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 
 const styles = StyleSheet.create({
+    TextOffStyle: {
+        color: '#544A54',
+        fontSize: scaledHeight(14),
+        fontWeight: 'bold',
+        opacity: 0.5,
+        paddingLeft: "8%",
+        textAlign: 'center'
+    },
+    TextOffStyleBold: {
+        color: '#544A54',
+        fontSize: scaledHeight(14),
+        fontWeight: 'bold',
+        opacity: 0.5,
+        paddingLeft: "3%",
+        textAlign: 'center'
+    },
+    TextOnStyle: {
+        color: '#56565A',
+        fontSize: scaledHeight(14),
+        fontWeight: 'bold',
+        justifyContent: 'center',
+        marginRight: '30%',
+        paddingLeft: "10%",
+        textAlign: 'center'
+    },
     addressText: {
         color: '#707070',
         fontSize: scaledHeight(16),
@@ -10,17 +35,17 @@ const styles = StyleSheet.create({
         marginTop: '4%',
         width: '60%'
     },
-    bankTitle: {
-        color: "#56565A",
-        fontSize: scaledHeight(16),
-        fontWeight: "bold",
-        paddingLeft: '4%'
-    },
     bankDisc: {
         color: "#56565A",
         fontSize: scaledHeight(14),
         opacity: 0.5,
         paddingTop: scaledHeight(2)
+    },
+    bankTitle: {
+        color: "#56565A",
+        fontSize: scaledHeight(16),
+        fontWeight: "bold",
+        paddingLeft: '4%'
     },
     boxStyleView: {
         backgroundColor: '#FFFFFF',
@@ -58,10 +83,10 @@ const styles = StyleSheet.create({
     },
     checkOrderText: {
         color: '#333333DE',
-        marginTop: '4%',
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
         lineHeight: scaledHeight(22),
+        marginTop: '4%',
         width: '90%',
     },
     checkOrderTitle: {
@@ -147,10 +172,10 @@ const styles = StyleSheet.create({
     line: {
         backgroundColor: "#535353",
         height: scaledHeight(1),
-        opacity: 0.25,
         marginBottom: "4%",
         marginRight: "4%",
         marginTop: "4%",
+        opacity: 0.25,
         width: "100%"
     },
     mainFlex: {
@@ -245,16 +270,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderColor: '#56565A',
         borderRadius: 30,
-        height: scaledHeight(60),
         borderWidth: 1,
+        height: scaledHeight(60),
         marginLeft: "10%",
         width: "67%"
-    },
-    subHeadingTxtStyle: {
-        color: "#56565A",
-        fontSize: scaledHeight(18),
-        fontWeight: "bold",
-        lineHeight: scaledHeight(22)
     },
     stmtBoldTxtStyle: {
         color: "#54565B",
@@ -275,6 +294,12 @@ const styles = StyleSheet.create({
         marginTop: '2%',
         width: "92%",
     },
+    subHeadingTxtStyle: {
+        color: "#56565A",
+        fontSize: scaledHeight(18),
+        fontWeight: "bold",
+        lineHeight: scaledHeight(22)
+    },
     switchContainer: {
         marginTop: scaledHeight(20),
         width: '90%'
@@ -282,8 +307,8 @@ const styles = StyleSheet.create({
     switchTextStyle: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: '2%',
-        marginHorizontal: '2%'
+        marginHorizontal: '2%',
+        marginTop: '2%'
     },
     switchTxt: {
         color: '#54565B',
@@ -291,65 +316,40 @@ const styles = StyleSheet.create({
         fontWeight: '400'
     },
     textInputStyle: {
-        width: "100%",
         marginLeft: "0%",
         marginRight: "0%",
-        marginTop: scaledHeight(0)
+        marginTop: scaledHeight(0),
+        width: "100%"
     },
-    TextOnStyle: {
-        color: '#56565A',
-        fontSize: scaledHeight(14),
-        fontWeight: 'bold',
+    titleContainerView: {
+        alignItems: 'center',
         justifyContent: 'center',
-        textAlign: 'center',
-        marginRight: '30%',
-        paddingLeft: "10%"
-    },
-    TextOffStyle: {
-        color: '#544A54',
-        opacity: 0.5,
-        fontSize: scaledHeight(14),
-        fontWeight: 'bold',
-        textAlign: 'center',
-        paddingLeft: "8%"
-    },
-    TextOffStyleBold: {
-        color: '#544A54',
-        opacity: 0.5,
-        fontSize: scaledHeight(14),
-        fontWeight: 'bold',
-        textAlign: 'center',
-        paddingLeft: "3%"
-    },
-    topContainer: {
-        marginLeft: "4%",
-        marginRight: "4%",
-        width: "90%",
-        borderColor: "#9DB4CE",
-        borderWidth: scaledHeight(1),
-        paddingLeft: "4%",
-        paddingRight: "4%"
-    },
-    topContainerTxtBold: {
-        color: "#54565B",
-        fontSize: scaledHeight(18),
-        fontWeight: "bold",
-        marginTop: "4%"
     },
     titleHeaderTextStyle: {
         color: '#56565A',
         fontSize: scaledHeight(24),
         fontWeight: 'bold'
     },
-    titleContainerView: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
     titleTxtStyle: {
         color: "#56565A",
         fontSize: scaledHeight(18),
         fontWeight: "bold",
         paddingLeft: '4%'
+    },
+    topContainer: {
+        borderColor: "#9DB4CE",
+        borderWidth: scaledHeight(1),
+        marginLeft: "4%",
+        marginRight: "4%",
+        paddingLeft: "4%",
+        paddingRight: "4%",
+        width: "90%"
+    },
+    topContainerTxtBold: {
+        color: "#54565B",
+        fontSize: scaledHeight(18),
+        fontWeight: "bold",
+        marginTop: "4%"
     },
     verifiedText: {
         color: '#EE3F5D',

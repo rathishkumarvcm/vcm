@@ -4,455 +4,47 @@ import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
 const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F7FAFF',
-        width: '100%'
-    },
-    loginHeader: {
-        flex: .15,
-        flexDirection: 'row',
-        backgroundColor: '#FFFFFF',
-        paddingLeft: '4%',
-        paddingRight: '4%',
-        marginBottom: scaledHeight(18)
-    },
-    editLabelBold: {
-        color: '#B2B2B2',
-        fontWeight: "bold",
-        fontSize: scaledHeight(16)
-    },
-    editTitleBold: {
-        color: '#707070',
-        fontWeight: "bold",
-        fontSize: scaledHeight(20)
-    },
-    editLabelText: {
-        color: '#333333DE',
-        fontWeight: 'bold',
-        fontSize: scaledHeight(20)
-    },
-    editLabelInput: {
-        color: '#5D83AE',
-        fontWeight: 'bold',
-        fontSize: scaledHeight(20)
-    },
-    editLabelInputNormal: {
-        color: '#56565A',
-        fontSize: scaledHeight(20)
-    },
-    editLabelInputMedium: {
-        color: '#56565A',
-        fontSize: scaledHeight(18)
-    },
-    editFlexDirectionColumn: {
-        flexDirection: 'column',
-        width: '100%',
-        marginTop: scaledHeight(20),
-        paddingLeft: '4%',
-        paddingRight: '4%',
-    },
-    inputTextBox: {
-        width: '92%',
-        marginTop: scaledHeight(20),
-        marginLeft: '4%',
-        marginRight: '4%',
-        paddingRight: '4%',
-        paddingLeft: '4%',
-    },
-    registernowButton: {
-        borderColor: '#56565A',
-        borderWidth: 1,
-        width: width / 3.3,
-        borderRadius: scaledHeight(14),
-        height: scaledHeight(28),
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    registernowButton1: {
-        borderColor: '#56565A',
-        borderWidth: 1,
-        width: width / 2,
-        borderRadius: scaledHeight(24),
-        height: scaledHeight(48),
-        backgroundColor: '#FFFFFF',
-        alignSelf: 'center',
-        justifyContent: 'center'
-    },
-    registernowText: {
-        fontSize: scaledHeight(10),
-        color: '#56565A'
-    },
-    settingsView: {
-        flexDirection: 'row',
-        width: '100%',
-        marginTop: scaledHeight(18),
-        paddingLeft: '4%',
-        paddingRight: '4%',
-    },
-    settingsBorder: {
-        marginTop: scaledHeight(10),
-        marginLeft: '4%',
-        marginRight: '4%',
-        borderBottomWidth: 1,
-        borderColor: '#B2B2B2'
-    },
-    settingsView1: {
-        marginTop: scaledHeight(18),
-        paddingLeft: '4%',
-        paddingRight: '4%',
-    },
-    signInView: {
-        marginTop: scaledHeight(2),
-        paddingLeft: '4%',
-        paddingRight: '4%',
-    },
-    passwordView: {
-        paddingLeft: '4%',
-        paddingRight: '4%'
-    },
-    settingsHeadline: {
-        width: '90%',
-        color: '#707070',
-        fontSize: scaledHeight(20)
-    },
-    settingsInfo: {
-        color: '#B2B2B2',
-        fontSize: scaledHeight(16)
-    },
-    settingsHeadIdentity: {
-        width: '50%',
-        color: '#707070',
-        fontSize: scaledHeight(20)
-    },
-    listContainer: {
-        borderWidth: 1,
-        borderColor: '#D4D4D4',
-        backgroundColor: '#FFFFFF',
-        marginTop: scaledHeight(20),
-        width: '92%',
-        height: scaledHeight(440),
-        marginLeft: '4%',
-        marginRight: '4%'
-    },
-    settingsPhone: {
-        borderWidth: 1,
-        borderColor: '#D4D4D4',
-        backgroundColor: '#FFFFFF',
-        marginTop: scaledHeight(20),
-        width: '92%',
-        height: scaledHeight(90),
-        marginLeft: '4%',
-        marginRight: '4%'
-    },
-    settingsOccupation: {
-        borderWidth: 1,
-        borderColor: '#D4D4D4',
-        backgroundColor: '#FFFFFF',
-        marginTop: scaledHeight(20),
-        width: '92%',
-        height: scaledHeight(210),
-        marginLeft: '4%',
-        marginRight: '4%'
-    },
-    settingsAddress: {
-        borderWidth: 1,
-        borderColor: '#D4D4D4',
-        backgroundColor: '#FFFFFF',
-        marginTop: scaledHeight(20),
-        width: '92%',
-        height: scaledHeight(140),
-        marginLeft: '4%',
-        marginRight: '4%'
-    },
-    settingsSocialContainer: {
-        borderWidth: 1,
-        borderColor: '#D4D4D4',
-        backgroundColor: '#FFFFFF',
-        marginTop: scaledHeight(20),
-        width: '92%',
-        height: scaledHeight(100),
-        marginLeft: '4%',
-        marginRight: '4%'
-    },
-    settingsSocial: {
-        flexDirection: 'row',
-        marginLeft: scaledHeight(10),
-        marginTop: scaledHeight(10)
-    },
-    signIntext: {
-        color: '#486D89',
-        fontSize: scaledHeight(14)
-    },
-    userIDText: {
-        color: '#000000',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold',
-        marginBottom: scaledHeight(8)
-    },
-    userIDTextBox: {
-        marginLeft: '4%',
-        marginRight: '4%',
-        marginBottom: scaledHeight(18)
-    },
-    forgotLineText: {
-        paddingLeft: '4%',
-        paddingRight: '4%',
-        flexDirection: 'row',
-        fontSize: scaledHeight(18)
-    },
-    forgotLineTextColor: {
-        fontSize: scaledHeight(18),
-        color: '#56565A',
-        fontWeight: 'bold'
-    },
-    termsofuse: {
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-        paddingLeft: '4%',
-        paddingRight: '4%',
-        marginTop: scaledHeight(10)
-    },
-    termsofuseText: {
-        fontSize: scaledHeight(18),
-        color: '#56565A'
-    },
-    termsofuseText1: {
-        fontSize: scaledHeight(18),
-        color: '#56565A',
-        marginBottom: scaledHeight(5)
-    },
-    signInButton: {
-        borderColor: '#56565A',
-        borderWidth: 1,
-        width: '92%',
-        marginLeft: '4%',
-        marginRight: '4%',
-        marginTop: scaledHeight(12),
-        borderRadius: scaledHeight(25),
-        height: scaledHeight(50),
-        backgroundColor: '#56565A',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    signInButtonText: {
-        fontSize: scaledHeight(16),
-        color: '#FFFFFF',
-        fontWeight: 'bold'
-    },
-    saveButtonStyle: {
-        borderColor: '#56565A',
-        borderWidth: 1,
-        width: '92%',
-        marginLeft: '4%',
-        marginRight: '4%',
-        marginTop: scaledHeight(12),
-        height: scaledHeight(50),
-        backgroundColor: '#56565A',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    saveButtonText: {
-        fontSize: scaledHeight(16),
-        color: '#FFFFFF'
-    },
     cancelButtonStyle: {
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
         borderColor: '#56565A',
         borderWidth: 1,
-        width: '92%',
+        height: scaledHeight(50),
+        justifyContent: 'center',
         marginLeft: '4%',
         marginRight: '4%',
         marginTop: scaledHeight(12),
-        height: scaledHeight(50),
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'center'
+        width: '92%'
     },
     cancelButtonText: {
-        fontSize: scaledHeight(16),
-        color: '#56565A'
-    },
-    newVictoryButton: {
-        borderColor: '#56565A',
-        borderRadius: scaledHeight(25),
-        height: scaledHeight(50),
-        borderWidth: 1,
-        marginTop: scaledHeight(10),
-        width: '70%',
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'center'
-
-    },
-    newVictoryButtonText: {
         color: '#56565A',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold'
-    },
-    newVictorySection: {
-        padding: scaledHeight(15),
-        width: '100%',
-        backgroundColor: '#FFFFFF',
-        marginTop: scaledHeight(24)
-    },
-    newVictory: {
-        height: scaledHeight(20),
-        lineHeight: scaledHeight(20),
-        fontSize: scaledHeight(20),
-        color: '#486D89'
-    },
-    usaaMembersText: {
-        height: scaledHeight(50),
-        lineHeight: scaledHeight(50),
-        fontSize: scaledHeight(16),
-        color: '#486D89'
-    },
-    openInvestment: {
-        fontSize: scaledHeight(16),
-        color: '#56565A',
-        justifyContent: 'center',
-        lineHeight: 30
-    },
-    lineBorder: {
-        marginTop: scaledHeight(15),
-        borderTopWidth: 1,
-        color: '#707070'
-    },
-    usaaMemberSection: {
-        flexDirection: 'row',
-        marginTop: scaledHeight(15)
+        fontSize: scaledHeight(16)
     },
     connectWithUs: {
         backgroundColor: 'white',
         flexDirection: 'column',
-        paddingLeft: '5%',
-        paddingBottom: '5%'
+        paddingBottom: '5%',
+        paddingLeft: '5%'
     },
-    whiteBackground: {
-        flexDirection: 'row',
-        backgroundColor: 'white',
-        paddingLeft: '5%',
-        paddingRight: '5%'
-    },
-    imageWidthHeight: {
-        width: 40,
-        height: 40,
-        margin: '4%',
-        resizeMode: 'contain'
-    },
-    privacyAgreement: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '100%',
-        backgroundColor: 'white',
-        height: scaledHeight(50),
-        flexDirection: 'row'
-    },
-    privacyText: {
-        width: '50%',
-        paddingLeft: '4%',
-        color: '#5D83AE',
-        fontSize: scaledHeight(16)
+    container: {
+        backgroundColor: '#F7FAFF',
+        flex: 1,
+        width: '100%'
     },
     copyRightSection: {
-        height: scaledHeight(50),
-        backgroundColor: '#56565A',
         alignItems: 'center',
+        backgroundColor: '#56565A',
+        height: scaledHeight(50),
         justifyContent: 'center'
     },
     copyRightText: {
         color: '#FFFFFF'
     },
-    faceIDlogo: {
-        marginTop: '5%',
-        marginBottom: '5%',
-        alignSelf: 'center'
-    },
-    faceIDtextStyle: {
-        height: scaledHeight(20),
-        alignItems: 'center'
-    }, stepsOuter: {
-        height: scaledHeight(8),
-        width: '92%',
-        backgroundColor: "#E6E6E6",
-        justifyContent: "center",
-        marginTop: scaledHeight(30),
-        marginLeft: '4%',
-        marginRight: '4%'
-    },
-    stepsInner: {
-        height: scaledHeight(8),
-        width: '20%',
-        backgroundColor: '#4B8D62'
-    },
-    newVictorySection1: {
-        paddingLeft: '4%',
-        paddingRight: '4%',
-        width: '100%',
-        height: scaledHeight(70),
-        marginTop: scaledHeight(20)
-    },
-    editEmailSecurityView: {
-        color: '#56565A', fontSize: scaledHeight(18), lineHeight: 30
-    },
-    editEmailInfoView: {
-        lineHeight: 30, color: '#56565A', fontSize: scaledHeight(18), width: '92%', marginRight: '4%', marginTop: '4%', marginLeft: '4%', marginBottom: '2%'
-    },
-    editEmailInformations: {
-        flexDirection: 'row', alignSelf: 'baseline'
-    },
-    editEmailMargin: {
-        marginLeft: '4%'
-    },
-    editEmailPrimary: {
-        color: '#333333DE', fontSize: scaledHeight(18), fontWeight: 'bold', margin: '4%'
-    },
-    editEmailTitle: {
-        color: '#707070', fontSize: scaledHeight(18), width: '70%', marginRight: '4%', fontWeight: 'bold'
-    },
-    editEmailAddNew: {
-        color: '#5D83AE', fontSize: scaledHeight(18), width: '30%', marginRight: '2%', fontWeight: 'bold'
-    },
-    editEmailHolder: {
-        width: '92%', marginLeft: '4%', marginRight: '4%', marginTop: '4%', borderColor: '#CCCCCC', borderWidth: 1, backgroundColor: '#fff'
-    },
-    editEmailType: {
-        color: '#707070', fontSize: scaledHeight(16), fontWeight: 'bold', marginLeft: '3%', marginBottom: '2%', marginTop: '4%'
-    },
-    editEmailId: {
-        color: '#707070', fontSize: scaledHeight(16), marginLeft: '3%', marginBottom: '2%'
-    },
-    editEmailBorder: {
-        borderBottomWidth: 1, borderColor: '#B2B2B2', marginTop: '4%', marginBottom: '4%'
-    },
-    editEmailPrimaryContent: {
-        marginTop: '2%', marginBottom: '2%', flexDirection: 'row'
+    editAddressLabel: {
+        color: '#707070', fontSize: scaledHeight(16), marginBottom: '2%', marginLeft: '3%', width: '70%'
     },
     editAddressView: {
-        width: '100%', marginLeft: '3%', marginTop: '2%', marginBottom: '2%', flexDirection: 'row', alignItems: "center", justifyContent: 'center'
-    },
-    editAddressLabel: {
-        width: '70%', color: '#707070', fontSize: scaledHeight(16), marginLeft: '3%', marginBottom: '2%'
-    },
-    editSwitchButton: {
-        width: '30%', marginTop: '2%', marginBottom: '2%'
-    },
-    profileSettingViewOne: { width: '70%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },
-    profileSettingViewTwo: { width: '30%', color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right' },
-    profileDivideIcon: { width: '100%', margin: '3%', flexDirection: 'row' },
-    profileDivideIconOne: { width: '80%', color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold' },
-    profileDivideIconTwo: { width: '20%', color: '#0000FF', fontSize: scaledHeight(14) },
-    editFlatList: {
-        position: 'absolute',
-        zIndex: 5,
-        top: 55,
-        width: '100%',
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 1, },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
-        elevation: 4,
+        alignItems: "center", flexDirection: 'row', justifyContent: 'center', marginBottom: '2%', marginLeft: '3%', marginTop: '2%', width: '100%'
     },
     editDropdown: {
         height: scaledHeight(60),
@@ -463,28 +55,436 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     editDropdownText: {
-        fontSize: scaledHeight(16),
         color: '#56565A',
+        fontSize: scaledHeight(16),
         fontWeight: 'bold',
         marginLeft: scaledWidth(20)
     },
+    editEmailAddNew: {
+        color: '#5D83AE', fontSize: scaledHeight(18), fontWeight: 'bold', marginRight: '2%', width: '30%'
+    },
+    editEmailBorder: {
+        borderBottomWidth: 1, borderColor: '#B2B2B2', marginBottom: '4%', marginTop: '4%'
+    },
+    editEmailHolder: {
+        backgroundColor: '#fff', borderColor: '#CCCCCC', borderWidth: 1, marginLeft: '4%', marginRight: '4%', marginTop: '4%', width: '92%'
+    },
     editEmailHolderNoFile: {
-        width: '96%', marginLeft: '2%', marginRight: '2%', marginTop: '2%', marginBottom: '2%', borderColor: '#CCCCCC', borderWidth: 1, backgroundColor: '#fff', padding: '4%'
+        backgroundColor: '#fff', borderColor: '#CCCCCC', borderWidth: 1, marginBottom: '2%', marginLeft: '2%', marginRight: '2%', marginTop: '2%', padding: '4%', width: '96%'
     },
-    marketingPadding: {
-        padding: '4%'
+    editEmailId: {
+        color: '#707070', fontSize: scaledHeight(16), marginBottom: '2%', marginLeft: '3%'
     },
-    marketingHomeBold: {
-        color: '#56565A', fontSize: scaledHeight(16), width: '92%', marginRight: '4%', marginLeft: '4%', marginTop: '4%', marginBottom: '2%', fontWeight: 'bold'
+    editEmailInfoView: {
+        color: '#56565A', fontSize: scaledHeight(18), lineHeight: 30, marginBottom: '2%', marginLeft: '4%', marginRight: '4%', marginTop: '4%', width: '92%'
     },
-    marketingHomeNormal: {
-        color: '#56565A', fontSize: scaledHeight(16), width: '92%', marginRight: '4%', marginLeft: '4%', marginTop: '4%', marginBottom: '2%'
+    editEmailInformations: {
+        alignSelf: 'baseline', flexDirection: 'row'
+    },
+    editEmailMargin: {
+        marginLeft: '4%'
+    },
+    editEmailPrimary: {
+        color: '#333333DE', fontSize: scaledHeight(18), fontWeight: 'bold', margin: '4%'
+    },
+    editEmailPrimaryContent: {
+        flexDirection: 'row', marginBottom: '2%', marginTop: '2%'
+    },
+    editEmailSecurityView: {
+        color: '#56565A', fontSize: scaledHeight(18), lineHeight: 30
+    },
+    editEmailTitle: {
+        color: '#707070', fontSize: scaledHeight(18), fontWeight: 'bold', marginRight: '4%', width: '70%'
+    },
+    editEmailType: {
+        color: '#707070', fontSize: scaledHeight(16), fontWeight: 'bold', marginBottom: '2%', marginLeft: '3%', marginTop: '4%'
+    },
+    editFlatList: {
+        elevation: 4,
+        position: 'absolute',
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 1, },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        top: 55,
+        width: '100%',
+        zIndex: 5,
+    },
+    editFlexDirectionColumn: {
+        flexDirection: 'column',
+        marginTop: scaledHeight(20),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+        width: '100%',
+    },
+    editLabelBold: {
+        color: '#B2B2B2',
+        fontSize: scaledHeight(16),
+        fontWeight: "bold"
+    },
+    editLabelInput: {
+        color: '#5D83AE',
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold'
+    },
+    editLabelInputMedium: {
+        color: '#56565A',
+        fontSize: scaledHeight(18)
+    },
+    editLabelInputNormal: {
+        color: '#56565A',
+        fontSize: scaledHeight(20)
+    },
+    editLabelText: {
+        color: '#333333DE',
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold'
+    },
+    editSwitchButton: {
+        marginBottom: '2%', marginTop: '2%', width: '30%'
+    },
+    editTitleBold: {
+        color: '#707070',
+        fontSize: scaledHeight(20),
+        fontWeight: "bold"
     },
     emailInformationFlex: { flex: 0.85 },
     emailInformationTitle: {
         color: '#B2B2B2',
-        fontWeight: "bold",
+        fontSize: scaledHeight(16),
+        fontWeight: "bold"
+    },
+    faceIDlogo: {
+        alignSelf: 'center',
+        marginBottom: '5%',
+        marginTop: '5%'
+    },
+    faceIDtextStyle: {
+        alignItems: 'center',
+        height: scaledHeight(20)
+    },
+    forgotLineText: {
+        flexDirection: 'row',
+        fontSize: scaledHeight(18),
+        paddingLeft: '4%',
+        paddingRight: '4%'
+    },
+    forgotLineTextColor: {
+        color: '#56565A',
+        fontSize: scaledHeight(18),
+        fontWeight: 'bold'
+    },
+    imageWidthHeight: {
+        height: 40,
+        margin: '4%',
+        resizeMode: 'contain',
+        width: 40
+    },
+    inputTextBox: {
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop: scaledHeight(20),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+        width: '92%',
+    },
+    lineBorder: {
+        borderTopWidth: 1,
+        color: '#707070',
+        marginTop: scaledHeight(15)
+    },
+    listContainer: {
+        backgroundColor: '#FFFFFF',
+        borderColor: '#D4D4D4',
+        borderWidth: 1,
+        height: scaledHeight(440),
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop: scaledHeight(20),
+        width: '92%'
+    },
+    loginHeader: {
+        flex: .15,
+        flexDirection: 'row',
+        backgroundColor: '#FFFFFF',
+        paddingLeft: '4%',
+        paddingRight: '4%',
+        marginBottom: scaledHeight(18)
+    },
+    marketingHomeBold: {
+        color: '#56565A', fontSize: scaledHeight(16), fontWeight: 'bold', marginBottom: '2%', marginLeft: '4%', marginRight: '4%', marginTop: '4%', width: '92%'
+    },
+    marketingHomeNormal: {
+        color: '#56565A', fontSize: scaledHeight(16), marginBottom: '2%', marginLeft: '4%', marginRight: '4%', marginTop: '4%', width: '92%'
+    },
+    marketingPadding: {
+        padding: '4%'
+    },
+    newVictory: {
+        color: '#486D89',
+        fontSize: scaledHeight(20),
+        height: scaledHeight(20),
+        lineHeight: scaledHeight(20)
+    },
+    newVictoryButton: {
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#56565A',
+        borderRadius: scaledHeight(25),
+        borderWidth: 1,
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginTop: scaledHeight(10),
+        width: '70%'
+
+    },
+    newVictoryButtonText: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold'
+    },
+    newVictorySection: {
+        backgroundColor: '#FFFFFF',
+        marginTop: scaledHeight(24),
+        padding: scaledHeight(15),
+        width: '100%'
+    },
+    newVictorySection1: {
+        height: scaledHeight(70),
+        marginTop: scaledHeight(20),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+        width: '100%'
+    },
+    openInvestment: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        justifyContent: 'center',
+        lineHeight: 30
+    },
+    passwordView: {
+        paddingLeft: '4%',
+        paddingRight: '4%'
+    },
+    privacyAgreement: {
+        alignItems: 'center',
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        width: '100%'
+    },
+    privacyText: {
+        color: '#5D83AE',
+        fontSize: scaledHeight(16),
+        paddingLeft: '4%',
+        width: '50%'
+    },
+    profileDivideIcon: { flexDirection: 'row', margin: '3%', width: '100%' },
+    profileDivideIconOne: { color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold', width: '80%' },
+    profileDivideIconTwo: { color: '#0000FF', fontSize: scaledHeight(14), width: '20%' }, profileSettingViewOne: { color: '#56565A', fontSize: scaledHeight(18), fontWeight: 'bold', width: '70%' },
+    profileSettingViewTwo: { color: '#0000FF', fontSize: scaledHeight(14), textAlign: 'right', width: '30%' },
+    registernowButton: {
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#56565A',
+        borderRadius: scaledHeight(14),
+        borderWidth: 1,
+        height: scaledHeight(28),
+        justifyContent: 'center',
+        width: width / 3.3
+    },
+    registernowButton1: {
+        alignSelf: 'center',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#56565A',
+        borderRadius: scaledHeight(24),
+        borderWidth: 1,
+        height: scaledHeight(48),
+        justifyContent: 'center',
+        width: width / 2
+    },
+    registernowText: {
+        color: '#56565A',
+        fontSize: scaledHeight(10)
+    },
+    saveButtonStyle: {
+        alignItems: 'center',
+        backgroundColor: '#56565A',
+        borderColor: '#56565A',
+        borderWidth: 1,
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop: scaledHeight(12),
+        width: '92%'
+    },
+    saveButtonText: {
+        color: '#FFFFFF',
         fontSize: scaledHeight(16)
+    },
+    settingsAddress: {
+        backgroundColor: '#FFFFFF',
+        borderColor: '#D4D4D4',
+        borderWidth: 1,
+        height: scaledHeight(140),
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop: scaledHeight(20),
+        width: '92%'
+    },
+    settingsBorder: {
+        borderBottomWidth: 1,
+        borderColor: '#B2B2B2',
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop: scaledHeight(10)
+    },
+    settingsHeadIdentity: {
+        color: '#707070',
+        fontSize: scaledHeight(20),
+        width: '50%'
+    },
+    settingsHeadline: {
+        color: '#707070',
+        fontSize: scaledHeight(20),
+        width: '90%'
+    },
+    settingsInfo: {
+        color: '#B2B2B2',
+        fontSize: scaledHeight(16)
+    },
+    settingsOccupation: {
+        backgroundColor: '#FFFFFF',
+        borderColor: '#D4D4D4',
+        borderWidth: 1,
+        height: scaledHeight(210),
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop: scaledHeight(20),
+        width: '92%'
+    },
+    settingsPhone: {
+        backgroundColor: '#FFFFFF',
+        borderColor: '#D4D4D4',
+        borderWidth: 1,
+        height: scaledHeight(90),
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop: scaledHeight(20),
+        width: '92%'
+    },
+    settingsSocial: {
+        flexDirection: 'row',
+        marginLeft: scaledHeight(10),
+        marginTop: scaledHeight(10)
+    },
+    settingsSocialContainer: {
+        backgroundColor: '#FFFFFF',
+        borderColor: '#D4D4D4',
+        borderWidth: 1,
+        height: scaledHeight(100),
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop: scaledHeight(20),
+        width: '92%'
+    },
+    settingsView: {
+        flexDirection: 'row',
+        marginTop: scaledHeight(18),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+        width: '100%',
+    },
+    settingsView1: {
+        marginTop: scaledHeight(18),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+    },
+    signInButton: {
+        alignItems: 'center',
+        backgroundColor: '#56565A',
+        borderColor: '#56565A',
+        borderRadius: scaledHeight(25),
+        borderWidth: 1,
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop: scaledHeight(12),
+        width: '92%'
+    },
+    signInButtonText: {
+        color: '#FFFFFF',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold'
+    },
+    signInView: {
+        marginTop: scaledHeight(2),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+    },
+    signIntext: {
+        color: '#486D89',
+        fontSize: scaledHeight(14)
+    },
+    stepsInner: {
+        backgroundColor: '#4B8D62',
+        height: scaledHeight(8),
+        width: '20%'
+    },
+    stepsOuter: {
+        backgroundColor: "#E6E6E6",
+        height: scaledHeight(8),
+        justifyContent: "center",
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop: scaledHeight(30),
+        width: '92%'
+    },
+    termsofuse: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginTop: scaledHeight(10),
+        paddingLeft: '4%',
+        paddingRight: '4%'
+    },
+    termsofuseText: {
+        color: '#56565A',
+        fontSize: scaledHeight(18)
+    },
+    termsofuseText1: {
+        color: '#56565A',
+        fontSize: scaledHeight(18),
+        marginBottom: scaledHeight(5)
+    },
+    usaaMemberSection: {
+        flexDirection: 'row',
+        marginTop: scaledHeight(15)
+    },
+    usaaMembersText: {
+        color: '#486D89',
+        fontSize: scaledHeight(16),
+        height: scaledHeight(50),
+        lineHeight: scaledHeight(50)
+    },
+    userIDText: {
+        color: '#000000',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginBottom: scaledHeight(8)
+    },
+    userIDTextBox: {
+        marginBottom: scaledHeight(18),
+        marginLeft: '4%',
+        marginRight: '4%'
+    },
+    whiteBackground: {
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        paddingLeft: '5%',
+        paddingRight: '5%'
     }
 });
 

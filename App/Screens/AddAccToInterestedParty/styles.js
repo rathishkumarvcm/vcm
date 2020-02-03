@@ -90,14 +90,14 @@ const styles = StyleSheet.create({
     fontSize: scaledHeight(16),
     lineHeight: scaledHeight(23)
   },
-  dropdownTextInput: {
-    marginLeft: 0,
-    width: '100%'
-  },
   dropDownLayout: {
     marginLeft: 0,
     marginRight: 0,
     paddingLeft: 0
+  },
+  dropdownTextInput: {
+    marginLeft: 0,
+    width: '100%'
   },
   editBtnText: {
     color: "#5D83AE",
@@ -167,21 +167,6 @@ const styles = StyleSheet.create({
   marginTopStyle: {
     marginTop: scaledHeight(15)
   },
-  notificationTxt: {
-    color: "#56565A",
-    fontSize: scaledHeight(16)
-  },
-  notificationView: {
-    backgroundColor: "#E9E9E9",
-    borderRadius: scaledHeight(15),
-    flexDirection: "row",
-    height: scaledHeight(60),
-    justifyContent: "space-between",
-    marginBottom: scaledHeight(20),
-    marginTop: scaledHeight(10),
-    padding: "4%",
-    width: "100%",
-  },
   normalBlackBtn: {
     alignContent: 'center',
     alignItems: 'center',
@@ -216,6 +201,21 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     textAlign: 'center',
     width: '100%'
+  },
+  notificationTxt: {
+    color: "#56565A",
+    fontSize: scaledHeight(16)
+  },
+  notificationView: {
+    backgroundColor: "#E9E9E9",
+    borderRadius: scaledHeight(15),
+    flexDirection: "row",
+    height: scaledHeight(60),
+    justifyContent: "space-between",
+    marginBottom: scaledHeight(20),
+    marginTop: scaledHeight(10),
+    padding: "4%",
+    width: "100%",
   },
   optionalTxt: {
     color: '#6F7070',
@@ -266,13 +266,13 @@ const styles = StyleSheet.create({
     paddingLeft: '4%',
     paddingRight: '4%',
   },
-  titleHeadingView: {
-    paddingLeft: "4%"
-  },
   titleHeaderText: {
     color: "#56565A",
     fontSize: scaledHeight(18),
     fontWeight: "bold"
+  },
+  titleHeadingView: {
+    paddingLeft: "4%"
   },
   validateBtn: {
     alignContent: 'flex-end',

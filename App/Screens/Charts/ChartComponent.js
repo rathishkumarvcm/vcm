@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { PieChart, BarChart, Grid, YAxis, XAxis } from 'react-native-svg-charts';
-import { Circle, G, Line, Text } from 'react-native-svg';
+import { PieChart, BarChart, Grid } from 'react-native-svg-charts';
+import { Text } from 'react-native-svg';
+import PropTypes from 'prop-types';
 import { scaledHeight } from '../../Utils/Resolution';
 import { GButtonComponent } from '../../CommonComponents';
-import PropTypes from 'prop-types';
 
 const data1 = [14, -1, 100, -95, -94, -24, -8, 85, -91, 35, -53, 53, -78, 66, 96, 33, -26, -32, 73, 8]
     .map((value) => ({ value }));
@@ -23,15 +23,15 @@ const barData = [
 ];
 const styles = StyleSheet.create({
     buttonStyle: {
-        height: '15%',
-        width: '50%',
-        justifyContent: "center",
         alignItems: 'center',
-        borderRadius: 1,
-        backgroundColor: "#06748C",
-        marginTop: '2%',
         alignSelf: 'center',
-        marginBottom: '5%'
+        backgroundColor: "#06748C",
+        borderRadius: 1,
+        height: '15%',
+        justifyContent: "center",
+        marginBottom: '5%',
+        marginTop: '2%',
+        width: '50%'
     },
     buttonTextStyle: {
         fontSize: scaledHeight(14),
@@ -40,12 +40,12 @@ const styles = StyleSheet.create({
     },
 });
 
-const Labels = ({ slices, height, width }) => {
+const Labels = ({ slices }) => {
     return slices.map((slice, index) => {
-        const { labelCentroid, pieCentroid, data } = slice;
+        const { pieCentroid, data } = slice;
         return (
             <Text
-                key={index}
+                // key={index}
                 x={pieCentroid[0]}
                 y={pieCentroid[1]}
                 fill="white"

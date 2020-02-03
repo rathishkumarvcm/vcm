@@ -7,8 +7,8 @@ const {width} = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
     container:{
-        flex:1,
         backgroundColor:'#F7FAFF',
+        flex:1,
         width:'100%'
     },
     loginHeader:{
@@ -41,8 +41,8 @@ export const styles = StyleSheet.create({
        justifyContent:'center'
      },
     registernowText:{
-        fontSize:scaledHeight(10),
-        color:'#56565A'
+        color:'#56565A',
+        fontSize:scaledHeight(10)
     },
     
     signInUser:{
@@ -51,9 +51,9 @@ export const styles = StyleSheet.create({
         paddingRight:'4%',
     },
     passwordView:{
+        marginTop:scaledHeight(28),
         paddingLeft:'4%',
-        paddingRight:'4%',
-        marginTop:scaledHeight(28)
+        paddingRight:'4%'
     },
     
     userIDText:{
@@ -74,39 +74,39 @@ export const styles = StyleSheet.create({
         borderColor : 'red'
     },
     forgotLineText:{
+        flexDirection:'row',
+        fontSize:scaledHeight(18),
         marginTop:scaledHeight(14),
         paddingLeft:'4%',
-        paddingRight:'4%',
-        flexDirection:'row',
-        fontSize:scaledHeight(18)
+        paddingRight:'4%'
     },
     forgotLineTextColor:{
-        fontSize : scaledHeight(18),
         color:'#56565A',
+        fontSize : scaledHeight(18),
         fontWeight:'bold'
     },
     termsofuse:{
-        flexWrap:'wrap',
         flexDirection:'row',
+        flexWrap:'wrap',
+        marginTop:scaledHeight(25),
         paddingLeft:'4%',
-        paddingRight:'4%',
-        marginTop:scaledHeight(25)
+        paddingRight:'4%'
     },
     termsofuseText:{
-        fontSize : scaledHeight(18),
-        color:'#56565A'
+        color:'#56565A',
+        fontSize : scaledHeight(18)
     },
     
     newVictoryButton:{
+        alignItems:'center',
+        backgroundColor:'#FFFFFF',
         borderColor:'#56565A',
         borderRadius:scaledHeight(25),
-        height:scaledHeight(50),
         borderWidth:1,
+        height:scaledHeight(50),
+        justifyContent:'center',
         marginTop:scaledHeight(25),
-        width:'60%',
-        backgroundColor:'#FFFFFF',
-        alignItems:'center',
-        justifyContent:'center'
+        width:'60%'
 
     },
     newVictoryButtonText:{
@@ -115,77 +115,77 @@ export const styles = StyleSheet.create({
         fontWeight:'bold'
     },
     newVictorySection:{
+        backgroundColor:'#FFFFFF',
+        height:scaledHeight(450),
         marginLeft:'4%',
         marginRight:'4%',
+        marginTop:scaledHeight(29),
         padding:scaledHeight(15),
-        width:'92%',
-        height:scaledHeight(450),
-        backgroundColor:'#FFFFFF',
-        marginTop:scaledHeight(29)
+        width:'92%'
     },
     newVictory:{
+        color:'#56565A',
+        fontSize:scaledHeight(30),
         height:scaledHeight(30),
         lineHeight:scaledHeight(30),
-        fontSize:scaledHeight(30),
-        marginTop:scaledHeight(20),
-        color:'#56565A'
+        marginTop:scaledHeight(20)
     },
     usaaMembersText:{
-        height:scaledHeight(50),
-        lineHeight:scaledHeight(50),
+        color:'#56565A',
         fontSize:scaledHeight(16),
-        color:'#56565A'
+        height:scaledHeight(50),
+        lineHeight:scaledHeight(50)
     },
     openInvestment:{
-        marginTop:scaledHeight(10),
+        color:'#56565A',
         fontSize:scaledHeight(20),
-        color:'#56565A'
+        marginTop:scaledHeight(10)
     },
     lineBorder:{
-        marginTop:scaledHeight(25),
+        borderColor:'#DEDEDF',
         borderTopWidth:1,
-        borderColor:'#DEDEDF'
+        marginTop:scaledHeight(25)
     },
     usaaMemberSection:{
         flexDirection:'row',
         marginTop:scaledHeight(15)
     },
     privacyAgreement:{
-        marginTop:scaledHeight(15),
         alignItems:'center',
-        justifyContent:'center',
-        width:'100%',
         backgroundColor:'white',
+        flexDirection:'row',
         height:scaledHeight(50),
-        flexDirection:'row'
+        justifyContent:'center',
+        marginTop:scaledHeight(15),
+        width:'100%'
     },
     privacyText:{
-        width:'50%',
-        paddingLeft:'4%',
         color:'#56565A',
+        fontSize:scaledHeight(16),
         fontWeight:'bold',
-        fontSize:scaledHeight(16)
+        paddingLeft:'4%',
+        width:'50%'
     },
     copyRightSection:{
-        height:scaledHeight(50),
-        backgroundColor:'#56565A',
         alignItems:'center',
+        backgroundColor:'#56565A',
+        height:scaledHeight(50),
         justifyContent:'center'
     },
     copyRightText:{
         color:'#FFFFFF'
     },
     faceIDlogo:{
-        marginTop:'5%',
+        alignSelf:'center',
         marginBottom:'5%',
-        alignSelf:'center'
+        marginTop:'5%'
     },
     faceIDtextStyle:{
-        height:scaledHeight(20),
-        alignItems:'center'
+        alignItems:'center',
+        height:scaledHeight(20)
     },
 
-    /*recovery*/
+    /* recovery */
     cancelButton:{
         borderColor:'#61285F45',
         borderWidth:1,
@@ -200,8 +200,8 @@ export const styles = StyleSheet.create({
         justifyContent:'center'
      },
      cancelButtonText:{
-        fontSize:scaledHeight(16),
         color:'#544A54',
+        fontSize:scaledHeight(16),
         fontWeight:'bold'
     },
     continueButton:{
@@ -218,8 +218,8 @@ export const styles = StyleSheet.create({
         justifyContent:'center'
      },
      continueButtonText:{
-        fontSize:scaledHeight(16),
         color:'#FFFFFF',
+        fontSize:scaledHeight(16),
         fontWeight:'bold'
     },
     retrievePasswordText:{
@@ -237,11 +237,11 @@ export const styles = StyleSheet.create({
     },
     
     refreshSecurityView: {
+        alignSelf: 'flex-end',
         borderBottomColor: '#0000FF',
         borderBottomWidth: 1,
-        alignSelf: 'flex-end',
-        marginTop:scaledHeight(20),
         marginRight:'4%',
+        marginTop:scaledHeight(20),
       },
       refreshSecurity: {
         color: '#0000FF',
@@ -250,33 +250,33 @@ export const styles = StyleSheet.create({
         fontWeight: '500',
       },
     notifOuter: {
-        flex: 1,
-        height: scaledHeight(100),
-        width: '92%',
+        alignItems: 'center',
         backgroundColor: "#E9E9E9",
+        borderRadius: scaledHeight(25),
+        flex: 1,
+        flexDirection: "row",
+        height: scaledHeight(100),
         justifyContent: "center",
-        marginTop: scaledHeight(30),
         marginLeft: '4%',
         marginRight: '4%',
-        borderRadius: scaledHeight(25),
-        flexDirection: "row",
-        alignItems: 'center'
+        marginTop: scaledHeight(30),
+        width: '92%'
     },
     notifInner: {
-        flex: 0.8,
         alignItems: 'center',
+        flex: 0.8,
         marginLeft:'4%',
     },
     notifInnerText:{
-        fontSize: scaledHeight(17),
         color: '#56565A',
+        fontSize: scaledHeight(17),
         lineHeight:scaledHeight(29),
     },
     notifClose: {
-        flex: 0.2,
-        fontSize: scaledHeight(25),
-        color: '#56565A',       
-        alignItems: 'center'
+        alignItems: 'center',
+        color: '#56565A',
+        flex: 0.2,       
+        fontSize: scaledHeight(25)
     },
     signInView:{
         marginTop:scaledHeight(50),
@@ -284,8 +284,8 @@ export const styles = StyleSheet.create({
         paddingRight:'4%',
     },
     errorMessage: {
-        fontSize: scaledHeight(14),
         color:"red",
+        fontSize: scaledHeight(14),
         paddingLeft:'4%',
         paddingRight:'4%',
       }

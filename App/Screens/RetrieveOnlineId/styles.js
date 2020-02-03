@@ -6,16 +6,16 @@ const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     cancelButton:{
+        alignItems:'center',
+        backgroundColor:'#FFFFFF',
         borderColor:'#61285F45',
         borderWidth:1,
-        width:'72%',
+        height:scaledHeight(50),
+        justifyContent:'center',
         marginLeft:'14%',
         marginRight:'14%',
         marginTop:scaledHeight(12),
-        height:scaledHeight(50),
-        backgroundColor:'#FFFFFF',
-        alignItems:'center',
-        justifyContent:'center'
+        width:'72%'
      },
     cancelButtonText:{
         color:'#544A54',
@@ -169,16 +169,16 @@ const styles = StyleSheet.create({
 
     },
     signInButton:{
+        alignItems:'center',
+        backgroundColor:'#56565A',
         borderColor:'#56565A',
         borderWidth:1,
-        width:'72%',
+        height:scaledHeight(50),
+        justifyContent:'center',
         marginLeft:'14%',
         marginRight:'14%',
         marginTop:scaledHeight(12),
-        height:scaledHeight(50),
-        backgroundColor:'#56565A',
-        alignItems:'center',
-        justifyContent:'center'
+        width:'72%'
      },
     signInButtonText:{
         color:'#FFFFFF',

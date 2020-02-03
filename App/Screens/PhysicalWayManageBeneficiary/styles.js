@@ -276,15 +276,29 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         width: '30%',
     },
+    selectFileText: {
+        color: '#FFFFFF',
+        fontSize: scaledHeight(14),
+        lineHeight: 20
+    },
     selectedFileDescContainer: {
         backgroundColor: '#FFFFFF',
         flexDirection: 'row',
         paddingVertical: scaledHeight(10),
     },
-    selectFileText: {
-        color: '#FFFFFF',
-        fontSize: scaledHeight(14),
-        lineHeight: 20
+    tNCFlex: {
+        marginLeft: "4%",
+        marginTop: scaledHeight(41),
+        width: "92%"
+    },
+    tNcBody: {
+        color: '#56565A',
+        fontSize: scaledHeight(16)
+    },
+    tNcHeader: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold'
     },
     uploadBtnContainer: {
         flexDirection: 'row',
@@ -303,20 +317,6 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         marginTop: '2%',
         textDecorationLine: 'underline'
-    },
-    tNCFlex: {
-        marginLeft: "4%",
-        marginTop: scaledHeight(41),
-        width: "92%"
-    },
-    tNcHeader: {
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold'
-    },
-    tNcBody: {
-        color: '#56565A',
-        fontSize: scaledHeight(16)
     }
 });
 

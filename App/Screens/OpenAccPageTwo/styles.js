@@ -54,9 +54,9 @@ const styles = StyleSheet.create({
 
     },
     allFieldsMandatoryView: {
-        flexDirection:'row',
         alignItems: 'center',
         backgroundColor: '#F7FAFF',
+        flexDirection:'row',
         flexWrap: 'wrap',
         justifyContent: 'flex-end',
         marginHorizontal: scaledHeight(25),

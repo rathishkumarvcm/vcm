@@ -4,22 +4,49 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#F7FAFF',
-        width: '100%'
+    agreeSectionGrp: {
+        flexGrow: 1,
+        marginTop: scaledHeight(10),
+        paddingHorizontal: scaledHeight(12),
+        paddingVertical: scaledHeight(12)
+
     },
-    signInView: {
-        marginTop: scaledHeight(18),
-        paddingLeft: '4%',
-        paddingRight: '4%',
-    },
-    signIntext: {
+    agreeTermsTxt: {
+        color: '#333333DE',
+        fontSize: scaledHeight(16),
+        lineHeight: scaledHeight(19),
+        marginTop: scaledHeight(2),
         textAlign: 'left',
-        fontSize: scaledHeight(20),
-        fontWeight: 'bold',
-        color: '#535353',
-        flexWrap: 'wrap',
+        //  marginTop:scaledHeight(5)
+
+    },
+    bottomView: {
+        backgroundColor: "#EEEEEE",
+        marginTop: "10%",
+        paddingBottom: "5%"
+    },
+    cancelButton: {
+        borderColor: '#61285F45',
+        borderWidth: 1,
+        width: '80%',
+        marginLeft: '10%',
+        marginRight: '10%',
+        marginTop: scaledHeight(12),
+        //  borderRadius:scaledHeight(25),
+        height: scaledHeight(50),
+        backgroundColor: '#FFFFFF',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    cancelButtonText: {
+        color: '#544A54',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold'
+    },
+    container: {
+        backgroundColor: '#F7FAFF',
+        flex: 1,
+        width: '100%'
     },
     lblLine: {
         //  width:"100%",
@@ -36,6 +63,23 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(25),
 
     },
+    lblTxtBottom: {
+        color: '#333333DE',
+        fontSize: scaledHeight(16),
+        marginLeft: scaledHeight(20),
+        marginTop: scaledHeight(25),
+        width: '80%'
+
+    },
+    lblTxtBottomTxt: {
+        color: '#333333DE',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginLeft: scaledHeight(20),
+        marginTop: scaledHeight(25),
+        width: '80%'
+
+    },
     lblTxtSmall: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
@@ -43,23 +87,26 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(25),
 
     },
-    cancelButton: {
-        borderColor: '#61285F45',
-        borderWidth: 1,
-        width: '80%',
-        marginLeft: '10%',
-        marginRight: '10%',
-        marginTop: scaledHeight(12),
-        //  borderRadius:scaledHeight(25),
-        height: scaledHeight(50),
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    cancelButtonText: {
+    lblTxtToken: {
+        color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
-        color: '#544A54',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginTop: scaledHeight(25),
+        width: scaledHeight(120)
+
+    },
+    messageFlex:{
+        backgroundColor:"#EEEEEE",
+        marginTop:scaledHeight(20),
+    },
+    messageText:{
+        marginBottom:"5%",
+        marginLeft:"5%",
+        marginTop:"5%",
+        width:"80%"
+    },
+    rowFlex:{
+    flexDirection:'row'
     },
     saveButton: {
         borderColor: '#56565A',
@@ -75,89 +122,42 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     saveButtonText: {
-        fontSize: scaledHeight(16),
         color: '#FFFFFF',
+        fontSize: scaledHeight(16),
         fontWeight: 'bold'
     },
-    bottomView: {
-        backgroundColor: "#EEEEEE",
-        marginTop: "10%",
-        paddingBottom: "5%"
+    scrollViewFlex: {
+        flex: 0.85
     },
-    lblTxtBottom: {
-        fontSize: scaledHeight(16),
-        marginTop: scaledHeight(25),
-        color: '#333333DE',
-        width: '80%',
-        marginLeft: scaledHeight(20)
-
+    signInView: {
+        marginTop: scaledHeight(18),
+        paddingLeft: '4%',
+        paddingRight: '4%',
     },
-    lblTxtBottomTxt: {
-        fontSize: scaledHeight(16),
+    signIntext: {
+        color: '#535353',
+        flexWrap: 'wrap',
+        fontSize: scaledHeight(20),
         fontWeight: 'bold',
-        marginTop: scaledHeight(25),
-        color: '#333333DE',
-        width: '80%',
-        marginLeft: scaledHeight(20)
-
+        textAlign: 'left',
     },
     touchableOpacityStyle: {
         marginTop: "5%",
 
     },
     txtUnderline: {
-        textDecorationLine: 'underline',
         color: "#0000FF",
         height: scaledHeight(20),
-    },
-    lblTxtToken: {
-        color: 'rgba(51, 51, 51, 0.87)',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold',
-        marginTop: scaledHeight(25),
-        width: scaledHeight(120)
-
-    },
-    agreeSectionGrp: {
-        flexGrow: 1,
-        marginTop: scaledHeight(10),
-        paddingHorizontal: scaledHeight(12),
-        paddingVertical: scaledHeight(12)
-
-    },
-    agreeTermsTxt: {
-        textAlign: 'left',
-        fontSize: scaledHeight(16),
-        marginTop: scaledHeight(2),
-        color: '#333333DE',
-        lineHeight: scaledHeight(19),
-        //  marginTop:scaledHeight(5)
-
+        textDecorationLine: 'underline',
     },
     userIDTextBox: {
 
         marginBottom: scaledHeight(18),
-        width: '60%',
-        marginTop: scaledHeight(15)
-    },
-    scrollViewFlex: {
-        flex: 0.85
-    },
-    messageFlex:{
-        backgroundColor:"#EEEEEE",
-        marginTop:scaledHeight(20),
-    },
-    messageText:{
-        marginTop:"5%",
-        marginBottom:"5%",
-        width:"80%",
-        marginLeft:"5%"
+        marginTop: scaledHeight(15),
+        width: '60%'
     },
     widthView:{ 
         width: "100%" 
-    },
-    rowFlex:{
-    flexDirection:'row'
     }
 
 

@@ -2,13 +2,26 @@ import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
 export const styles = StyleSheet.create({
+    accountHeaderText: {
+        alignSelf: 'center',
+        color: '#56565A',
+        flex: 0.9,
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold',
+        marginRight: '4%'
+    },
+    accountHeaderView: {
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row',
+        flex: 1,
+        justifyContent: 'space-between',
+        marginHorizontal: '4%',
+        marginTop: scaledHeight(11),
+        paddingVertical: scaledHeight(5),
+    },
     accountName: {
         flexDirection: 'row',
-        marginHorizontal: '4%'
-    },
-    accountNumber: {
-        flexDirection: 'row',
-        marginBottom: scaledHeight(15),
         marginHorizontal: '4%'
     },
     accountNameText: {
@@ -17,6 +30,11 @@ export const styles = StyleSheet.create({
         flex: 0.9,
         fontSize: scaledHeight(18),
         fontWeight: 'bold',
+    },
+    accountNumber: {
+        flexDirection: 'row',
+        marginBottom: scaledHeight(15),
+        marginHorizontal: '4%'
     },
     alertBox: {
         alignItems: 'center',
@@ -55,6 +73,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         width: '100%'
     },
+    contentStyle: { justifyContent: 'center' },
     deleteBtn: {
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
@@ -91,6 +110,7 @@ export const styles = StyleSheet.create({
         fontSize: scaledHeight(18),
         fontWeight: 'bold',
     },
+    iconStyle: { alignSelf: 'center', flex: 0.1 },
     infoContainer: {
         alignItems: 'flex-start',
         backgroundColor: '#FFFFFF',
@@ -128,16 +148,16 @@ export const styles = StyleSheet.create({
         borderColor: '#FFFFFF',
         borderRadius: scaledHeight(1),
         borderWidth: 1,
+        elevation: 6,
         height: scaledHeight(50),
         marginLeft: '4%',
         marginRight: '4%',
-        marginTop: scaledHeight(45),
-        position: 'absolute',        
-        elevation: 6,
+        marginTop: scaledHeight(45),        
+        paddingHorizontal: '4%',
+        position: 'absolute',
         shadowColor: '#00000029',
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 1.0,
-        paddingHorizontal: '4%'
+        shadowOpacity: 1.0
     },
     requestButtonText: {
         alignSelf: 'flex-start',
@@ -149,7 +169,6 @@ export const styles = StyleSheet.create({
     scrollviewStyle: {
         flex: 0.85
     },
-    contentStyle: { justifyContent: 'center' },
     tNCFlex: {
         marginLeft: "4%",
         marginTop: "4%",
@@ -163,24 +182,5 @@ export const styles = StyleSheet.create({
         color: '#56565A',
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
-    },
-    accountHeaderView: {
-        backgroundColor: '#FFFFFF',
-        marginHorizontal: '4%',
-        marginTop: scaledHeight(11),
-        paddingVertical: scaledHeight(5),
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        flex: 1,
-    },
-    accountHeaderText: {
-        fontSize: scaledHeight(20),
-        fontWeight: 'bold',
-        color: '#56565A',
-        marginRight: '4%',
-        flex: 0.9,
-        alignSelf: 'center'
-    },
-    iconStyle: { flex: 0.1, alignSelf: 'center' }
+    }
 });

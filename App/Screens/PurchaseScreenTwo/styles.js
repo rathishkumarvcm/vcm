@@ -324,12 +324,6 @@ const styles = StyleSheet.create({
   modalTitleView: {
     flexDirection: "row"
   },
-  normalBlackBtnDisabledTxt: {
-    color: '#fff',
-    fontSize: scaledHeight(16),
-    textAlign: 'center',
-    width: '100%'
-  },
   normalBlackBtn: {
     alignContent: 'center',
     alignItems: 'center',
@@ -340,6 +334,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginHorizontal: scaledHeight(37),
     marginVertical: scaledHeight(7.5)
+  },
+  normalBlackBtnDisabledTxt: {
+    color: '#fff',
+    fontSize: scaledHeight(16),
+    textAlign: 'center',
+    width: '100%'
   },
   normalBlackBtnTxt: {
     color: '#fff',

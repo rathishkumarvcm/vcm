@@ -3,6 +3,30 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 
 const styles = StyleSheet.create({
+    TextOffStyle: {
+        color: '#544A54',
+        fontSize: scaledHeight(14),
+        fontWeight: 'bold',
+        marginLeft: "4%",
+        opacity: 0.5,
+        textAlign: 'left',
+    },
+    TextOffStyleWithholdtax: {
+        color: '#544A54',
+        fontSize: scaledHeight(14),
+        fontWeight: 'bold',
+        marginLeft: "38%",
+        opacity: 0.5,
+        textAlign: 'right',
+    },
+    TextOnStyle: {
+        color: '#56565A',
+        fontSize: scaledHeight(14),
+        fontWeight: 'bold',
+        justifyContent: 'flex-start',
+        marginLeft: "0%",
+        paddingLeft: "10%"
+    },
     accountFlex: {
         borderColor: '#9DB4CE',
         borderWidth: scaledHeight(1),
@@ -125,6 +149,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         height: scaledHeight(19),
     },
+
     city: {
         backgroundColor: '#F1F1F1',
         borderColor: '#DEDEDF',
@@ -148,7 +173,6 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%'
     },
-
     dollarSkin: {
         color: '#333333DE',
         fontSize: scaledHeight(16),
@@ -218,6 +242,7 @@ const styles = StyleSheet.create({
         height: scaledHeight(78),
         marginTop: scaledHeight(10)
     },
+
     flexTaxAccounting: {
         height: scaledHeight(40),
     },
@@ -232,7 +257,6 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(14),
         marginTop: scaledHeight(21),
     },
-
     greyText14pxRegular: {
         color: '#56565A',
         fontSize: scaledHeight(14),
@@ -359,6 +383,33 @@ const styles = StyleSheet.create({
         height: scaledHeight(82),
         marginTop: scaledHeight(26),
     },
+    stateTaxInputStyle: {
+        borderColor: '#DEDEDF',
+        borderWidth: scaledHeight(1),
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        height: scaledHeight(48),
+        marginTop: scaledHeight(15),
+        width: "45%",
+    },
+    stateTaxToDollarFlex: {
+        flexDirection: 'row',
+        marginLeft: "10%",
+        marginTop: "4%"
+    },
+    stateTaxToDollarText: {
+        backgroundColor: '#F1F1F1',
+        borderColor: '#DEDEDF',
+        borderWidth: scaledHeight(1),
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        height: scaledHeight(48),
+        marginLeft: "6%",
+        opacity: 0.8,
+        paddingLeft: "4%",
+        paddingTop: scaledHeight(15),
+        width: "58%",
+    },
     stateTaxVal: {
         backgroundColor: '#FFFFFF',
         borderColor: '#DEDEDF',
@@ -385,33 +436,6 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(12),
         paddingBottom: scaledHeight(1),
         paddingTop: scaledHeight(1),
-    },
-    stateTaxToDollarFlex: {
-        flexDirection: 'row',
-        marginLeft: "10%",
-        marginTop: "4%"
-    },
-    stateTaxToDollarText: {
-        backgroundColor: '#F1F1F1',
-        borderColor: '#DEDEDF',
-        borderWidth: scaledHeight(1),
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-        height: scaledHeight(48),
-        marginLeft: "6%",
-        opacity: 0.8,
-        paddingLeft: "4%",
-        paddingTop: scaledHeight(15),
-        width: "58%",
-    },
-    stateTaxInputStyle: {
-        borderColor: '#DEDEDF',
-        borderWidth: scaledHeight(1),
-        color: '#56565A',
-        fontSize: scaledHeight(16),
-        height: scaledHeight(48),
-        marginTop: scaledHeight(15),
-        width: "45%",
     },
     subHeadingText: {
         color: '#56565A',
@@ -464,30 +488,6 @@ const styles = StyleSheet.create({
         color: '#56565A',
         fontSize: scaledHeight(24),
         fontWeight: 'bold'
-    },
-    TextOffStyle: {
-        color: '#544A54',
-        fontSize: scaledHeight(14),
-        fontWeight: 'bold',
-        marginLeft: "4%",
-        opacity: 0.5,
-        textAlign: 'left',
-    },
-    TextOffStyleWithholdtax: {
-        color: '#544A54',
-        fontSize: scaledHeight(14),
-        fontWeight: 'bold',
-        marginLeft: "38%",
-        opacity: 0.5,
-        textAlign: 'right',
-    },
-    TextOnStyle: {
-        color: '#56565A',
-        fontSize: scaledHeight(14),
-        fontWeight: 'bold',
-        justifyContent: 'flex-start',
-        marginLeft: "0%",
-        paddingLeft: "10%"
     },
     totalWithdrawalFlex: {
         flexDirection: 'row',

@@ -2,13 +2,89 @@ import { StyleSheet } from "react-native";
 import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
 
 const styles = StyleSheet.create({
-    rightModalStyle: {
-        backgroundColor: 'transparent', flex: 1,
-        margin: 0
+    buttonCancelActionStyle: {
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#544A54',
+        borderWidth: 1,
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginLeft: '2%',
+        marginRight: '2%',
+        width: scaledWidth(100),
     },
-    rightModalViewStyle: {
-        alignSelf: 'flex-end', width: '60%', backgroundColor: 'white', height: '100%',
-        bottom: 0, left: 0, right: 0
+    buttonCancelTextStyle: {
+        color: '#FFFFFF',
+        fontSize: scaledHeight(16),
+        textAlign: 'center',
+        width: '100%',
+    },
+    buttonGoActionStyle: {
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#544A54',
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginLeft: '2%',
+        marginRight: '2%',
+        width: scaledWidth(100),
+    },
+    buttonGoTextStyle: {
+        color: '#544A54',
+        fontSize: scaledHeight(16),
+        textAlign: 'center',
+        width: '100%',
+    },
+    buttonLogoutStyle: {
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#544A54',
+        borderWidth: 1,
+        height: scaledHeight(50),
+        width: scaledWidth(100),
+        // justifyContent: 'center',
+        // marginLeft:'2%',   
+        // marginRight:'2%',
+    },
+    columnContainer: { flexDirection: 'column', marginHorizontal: 10 },
+    container: { alignItems: 'flex-start', backgroundColor: 'white', flex: 1, justifyContent: 'center', width: '100%' },
+    dividerLine: { backgroundColor: 'lightgray', height: 1, marginHorizontal: 15 },
+    headerContainer: {
+        alignItems: 'center', flexDirection: 'row',
+        justifyContent: 'space-around', marginHorizontal: 20, marginVertical: 25
+    },
+    heading: {
+        fontSize: 20,
+    },
+    menuContainer: {
+        flex: 1, flexDirection: 'row', justifyContent: 'center',
+        padding: 5,
+        marginTop: 10
+    },
+    menuIcon: {
+        height: 25,
+        marginHorizontal: 5,
+        padding: 5,
+        width: 25
+    },
+    menuItem: {
+        borderColor: '#d6d7da',
+        borderWidth: 0.5,
+        padding: 10
+    },
+    menuName: {
+        flex: 1,
+    },
+    modalContainerStyle: {
+        backgroundColor: '#FFFFFF',
+        marginTop: scaledHeight(80),
+        paddingBottom: scaledHeight(15),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+        paddingTop: scaledHeight(15),
+
     },
     modalViewStyle: {
         flexDirection: 'column', flex: 1,
@@ -17,91 +93,15 @@ const styles = StyleSheet.create({
         // marginHorizontal: 20, marginVertical: 50,
         backgroundColor: "pink"
     },
-    container: { flex: 1, width: '100%', justifyContent: 'center', alignItems: 'flex-start', backgroundColor: 'white' },
-    scrollViewStyle: { flex: 1, width: "100%" },
-    columnContainer: { flexDirection: 'column', marginHorizontal: 10 },
-    headerContainer: {
-        marginHorizontal: 20, marginVertical: 25,
-        flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center'
+    rightModalStyle: {
+        backgroundColor: 'transparent', flex: 1,
+        margin: 0
     },
-    menuContainer: {
-        flex: 1, flexDirection: 'row', justifyContent: 'center',
-        padding: 5,
-        marginTop: 10
+    rightModalViewStyle: {
+        alignSelf: 'flex-end', backgroundColor: 'white', bottom: 0, height: '100%',
+        left: 0, right: 0, width: '60%'
     },
-    menuName: {
-        flex: 1,
-    },
-    heading: {
-        fontSize: 20,
-    },
-    menuItem: {
-        padding: 10,
-        borderWidth: 0.5,
-        borderColor: '#d6d7da'
-    },
-    menuIcon: {
-        width: 25,
-        height: 25,
-        marginHorizontal: 5,
-        padding: 5
-    },
-    buttonGoActionStyle: {
-        width: scaledWidth(100),
-        height: scaledHeight(50),
-        backgroundColor: '#544A54',
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
-        marginLeft: '2%',
-        marginRight: '2%',
-    },
-    buttonGoTextStyle: {
-        fontSize: scaledHeight(16),
-        color: '#544A54',
-        width: '100%',
-        textAlign: 'center',
-    },
-    buttonCancelActionStyle: {
-        width: scaledWidth(100),
-        height: scaledHeight(50),
-        borderColor: '#544A54',
-        borderWidth: 1,
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        alignContent: 'center',
-        justifyContent: 'center',
-        marginLeft: '2%',
-        marginRight: '2%',
-    },
-    buttonLogoutStyle: {
-        width: scaledWidth(100),
-        height: scaledHeight(50),
-        borderColor: '#544A54',
-        borderWidth: 1,
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        alignContent: 'center',
-        // justifyContent: 'center',
-        // marginLeft:'2%',   
-        // marginRight:'2%',
-    },
-    modalContainerStyle: {
-        backgroundColor: '#FFFFFF',
-        paddingRight: '4%',
-        paddingLeft: '4%',
-        paddingTop: scaledHeight(15),
-        paddingBottom: scaledHeight(15),
-        marginTop: scaledHeight(80),
-
-    },
-    buttonCancelTextStyle: {
-        fontSize: scaledHeight(16),
-        color: '#FFFFFF',
-        width: '100%',
-        textAlign: 'center',
-    },
-    dividerLine: { height: 1, backgroundColor: 'lightgray', marginHorizontal: 15 }
+    scrollViewStyle: { flex: 1, width: "100%" }
 
 });
 
