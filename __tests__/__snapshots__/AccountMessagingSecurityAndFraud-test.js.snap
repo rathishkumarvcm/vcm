@@ -1,0 +1,854 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Account Messaging Security and Fraud Match Snapshot 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#F7FAFF",
+      "flex": 1,
+      "width": "100%",
+    }
+  }
+>
+  <View
+    accessible={true}
+    clickable={false}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#FFFFFF",
+        "flex": 0.12,
+        "flexDirection": "row",
+        "opacity": 1,
+        "paddingLeft": "4%",
+        "paddingRight": "4%",
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      accessible={true}
+      clickable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "height": 100.5,
+          "opacity": 1,
+          "width": "25%",
+        }
+      }
+    >
+      <Image
+        resizeMode="contain"
+        source={
+          Object {
+            "testUri": "../../../App/Images/logo.png",
+          }
+        }
+        style={
+          Object {
+            "alignItems": "flex-start",
+            "justifyContent": "flex-start",
+            "width": "100%",
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "width": "12%",
+        }
+      }
+    />
+    <View
+      accessible={true}
+      clickable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "marginTop": 24.5,
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "height": 40,
+            "width": 56,
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "color": "black",
+                "fontSize": 40,
+              },
+              Object {
+                "backgroundColor": "transparent",
+                "marginHorizontal": 5,
+              },
+              Object {
+                "fontFamily": "EvilIcons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+          testID="iconIcon"
+        >
+          
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "width": "10%",
+        }
+      }
+    />
+    <View
+      accessible={true}
+      clickable={false}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "height": 30,
+            "width": 44,
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "color": "black",
+                "fontSize": 30,
+              },
+              Object {
+                "backgroundColor": "transparent",
+                "marginHorizontal": 5,
+              },
+              Object {
+                "fontFamily": "Ionicons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+          testID="iconIcon"
+        >
+          
+        </Text>
+      </View>
+    </View>
+    <View
+      accessible={true}
+      clickable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "height": 30,
+            "width": 44,
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "color": "black",
+                "fontSize": 30,
+              },
+              Object {
+                "backgroundColor": "transparent",
+                "marginHorizontal": 5,
+              },
+              Object {
+                "fontFamily": "Ionicons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+          testID="iconIcon"
+        >
+          
+        </Text>
+      </View>
+    </View>
+    <View
+      accessible={true}
+      clickable={false}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "flex-end",
+          "justifyContent": "center",
+          "opacity": 1,
+        }
+      }
+    >
+      <RNGestureHandlerButton
+        collapsable={false}
+        onGestureEvent={[Function]}
+        onGestureHandlerEvent={[Function]}
+        onGestureHandlerStateChange={[Function]}
+        onHandlerStateChange={[Function]}
+        rippleColor={0}
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          accessible={true}
+          style={
+            Object {
+              "alignItems": "flex-end",
+              "justifyContent": "center",
+              "marginEnd": 10,
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 40,
+                "width": 56,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "black",
+                    "fontSize": 40,
+                  },
+                  Object {
+                    "backgroundColor": "transparent",
+                    "marginHorizontal": 5,
+                  },
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+              testID="iconIcon"
+            >
+              
+            </Text>
+          </View>
+        </View>
+      </RNGestureHandlerButton>
+    </View>
+  </View>
+  <RCTScrollView
+    style={
+      Object {
+        "flex": 0.85,
+      }
+    }
+  >
+    <View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "marginTop": 29.5,
+            "paddingLeft": "4%",
+            "paddingRight": "4%",
+            "width": "100%",
+          }
+        }
+      >
+        <View
+          accessible={true}
+          clickable={true}
+          isTVSelectable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+              "position": "relative",
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#B2B2B2",
+                "fontSize": 21.5,
+                "marginRight": "4%",
+              }
+            }
+          >
+            Setting
+          </Text>
+        </View>
+        <View
+          accessible={true}
+          clickable={true}
+          isTVSelectable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+              "position": "relative",
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#B2B2B2",
+                "fontSize": 21.5,
+                "marginRight": "4%",
+              }
+            }
+          >
+            &gt;    Account Messaging
+          </Text>
+        </View>
+        <Text
+          style={
+            Object {
+              "color": "#707070",
+              "fontSize": 23,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          &gt;     Alerts for Security and Fraud
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "marginTop": 29.5,
+            "paddingLeft": "4%",
+            "paddingRight": "4%",
+            "width": "100%",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#56565A",
+              "fontSize": 33,
+              "fontWeight": "bold",
+              "paddingBottom": 6.5,
+            }
+          }
+        >
+          Alerts for Security and Fraud
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#B2B2B2",
+              "fontSize": 21.5,
+              "marginRight": "4%",
+            }
+          }
+        >
+          Lorem Ipsum is dummy text of the typesetting industry.
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#EBEDEF",
+            "borderWidth": 0.5,
+            "marginLeft": "4%",
+            "marginRight": "4%",
+            "marginTop": 39.5,
+            "width": "92%",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#F1F1F2",
+              "flexDirection": "row",
+              "paddingBottom": 23,
+              "paddingLeft": "2%",
+              "paddingTop": 23,
+              "width": "100%",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 30,
+                "width": 44,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#088ACC",
+                    "fontSize": 30,
+                  },
+                  Object {
+                    "backgroundColor": "transparent",
+                    "marginHorizontal": 5,
+                  },
+                  Object {
+                    "fontFamily": "anticon",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+              testID="iconIcon"
+            >
+              
+            </Text>
+          </View>
+          <Text
+            style={
+              Object {
+                "color": "#707070",
+                "fontSize": 29.5,
+                "marginLeft": "3%",
+              }
+            }
+          >
+            Alerts for Security and Fraud
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#EBEDEF",
+            "borderTopWidth": 0.5,
+            "borderWidth": 1,
+            "marginLeft": "4%",
+            "marginRight": "4%",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#707070",
+              "fontSize": 23,
+              "marginBottom": 23,
+              "marginLeft": "4%",
+              "marginRight": "4%",
+              "marginTop": 23,
+            }
+          }
+        >
+          If suspicious activity occurs on your account, you will receive an alert. Responding to it as soon as possible helps us prevent financial loss and minimize any impact on you.
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#707070",
+              "fontSize": 23,
+              "marginBottom": 23,
+              "marginLeft": "4%",
+              "marginRight": "4%",
+            }
+          }
+        >
+          Learn more about how we safeguard your accounts and what you can do to help at our 
+          <Text
+            onPress={[Function]}
+            style={
+              Object {
+                "color": "#2A92EE",
+                "textDecorationLine": "underline",
+              }
+            }
+          >
+            Security Center
+          </Text>
+           on VCM.com
+        </Text>
+      </View>
+      <View>
+        <View
+          style={
+            Object {
+              "borderColor": "#DEDEDF",
+              "borderTopWidth": 1,
+              "marginTop": 65.5,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "backgroundColor": "#FFFFFF",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "marginBottom": 41,
+                "marginTop": 41,
+                "paddingLeft": "4%",
+                "paddingRight": "4%",
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#56565A",
+                  "fontSize": 29.5,
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              Investing involves risk including loss of principal.
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#56565A",
+                  "fontSize": 26.5,
+                  "lineHeight": 33,
+                  "marginTop": 24.5,
+                }
+              }
+            >
+              Victory Mutual Funds and USAA Mutual Funds are distributed by Victory Capital Advisers, Inc. (VCA). VictoryShares ETFs and VictoryShares USAA ETFs are distributed by Foreside Fund Services, LLC (Foreside). VCA and Foreside are members of FINRA and SIPC. Victory Capital Management Inc. (VCM) is the investment adviser to the Victory Mutual Funds, USAA Mutual Funds, VictoryShares ETFs and VictoryShares USAA ETFs. VCA and VCM are not affiliated with Foreside. USAA is not affiliated with Foreside, VCM, or VCA. USAA and the USAA logos are registered trademarks and the USAA Mutual Funds and USAA Investments logos are trademarks of United Services Automobile Association and are being used by Victory Capital and its affiliates under license. Victory Capital means Victory Capital Management Inc., the investment manager of the USAA 529 College Savings Plan (Plan). The Plan is distributed by Victory Capital Advisers, Inc., a broker dealer registered with FINRA and an affiliate of Victory Capital. Victory Capital and its affiliates are not affiliated with United Services Automobile Association or its affiliates. USAA and the USAA logo are registered trademarks and the USAA 529 College Savings Plan logo is a trademark of United Services Automobile Association and are being used by Victory Capital and its affiliates under license.
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "marginBottom": 41,
+                "marginTop": 33,
+                "paddingLeft": "4%",
+                "paddingRight": "4%",
+              }
+            }
+          >
+            <Image
+              resizeMode="contain"
+              source={
+                Object {
+                  "testUri": "../../../App/Images/logo.png",
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              Object {
+                "marginLeft": "4%",
+                "marginTop": 33,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#56565A",
+                  "fontSize": 26.5,
+                  "lineHeight": 33,
+                  "marginTop": 24.5,
+                }
+              }
+            >
+              Connect with Us
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "flexDirection": "row",
+                "marginBottom": 33,
+                "marginLeft": "2%",
+                "marginTop": 16.5,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "height": 35,
+                  "width": 50,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#56565A",
+                      "fontSize": 35,
+                    },
+                    Object {
+                      "backgroundColor": "transparent",
+                      "marginHorizontal": 5,
+                    },
+                    Object {
+                      "fontFamily": "anticon",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+                testID="iconIcon"
+              >
+                
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 35,
+                  "width": 50,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#56565A",
+                      "fontSize": 35,
+                    },
+                    Object {
+                      "backgroundColor": "transparent",
+                      "marginHorizontal": 5,
+                    },
+                    Object {
+                      "fontFamily": "anticon",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+                testID="iconIcon"
+              >
+                
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "flexDirection": "row",
+                "height": 65.5,
+                "justifyContent": "center",
+                "marginLeft": "2%",
+                "marginTop": 24.5,
+                "width": "100%",
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#5D83AE",
+                  "fontSize": 26.5,
+                  "fontWeight": "bold",
+                  "paddingLeft": "2%",
+                  "width": "50%",
+                }
+              }
+            >
+              Privacy Policy
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#5D83AE",
+                  "fontSize": 26.5,
+                  "fontWeight": "bold",
+                  "paddingLeft": "2%",
+                  "width": "50%",
+                }
+              }
+            >
+              Fund Documents
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "flexDirection": "row",
+                "height": 65.5,
+                "justifyContent": "center",
+                "marginLeft": "2%",
+                "marginTop": 24.5,
+                "width": "100%",
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#5D83AE",
+                  "fontSize": 26.5,
+                  "fontWeight": "bold",
+                  "paddingLeft": "2%",
+                  "width": "50%",
+                }
+              }
+            >
+              User Agreements
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#5D83AE",
+                  "fontSize": 26.5,
+                  "fontWeight": "bold",
+                  "paddingLeft": "2%",
+                  "width": "50%",
+                }
+              }
+            >
+              Support
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#56565A",
+                "height": 98.5,
+                "justifyContent": "center",
+                "marginTop": 33,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#FFFFFF",
+                }
+              }
+            >
+              Copyright Victory Capital Management Inc. ©2020
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;

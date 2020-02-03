@@ -1,0 +1,3286 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Delivery Settings Match Snapshot 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#F7FAFF",
+      "flex": 1,
+      "width": "100%",
+    }
+  }
+>
+  <View
+    accessible={true}
+    clickable={false}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "backgroundColor": "#FFFFFF",
+        "flex": 0.12,
+        "flexDirection": "row",
+        "opacity": 1,
+        "paddingLeft": "4%",
+        "paddingRight": "4%",
+        "width": "100%",
+      }
+    }
+  >
+    <View
+      accessible={true}
+      clickable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "height": 100.5,
+          "opacity": 1,
+          "width": "25%",
+        }
+      }
+    >
+      <Image
+        resizeMode="contain"
+        source={
+          Object {
+            "testUri": "../../../App/Images/logo.png",
+          }
+        }
+        style={
+          Object {
+            "alignItems": "flex-start",
+            "justifyContent": "flex-start",
+            "width": "100%",
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "width": "12%",
+        }
+      }
+    />
+    <View
+      accessible={true}
+      clickable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "marginTop": 24.5,
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "height": 40,
+            "width": 56,
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "color": "black",
+                "fontSize": 40,
+              },
+              Object {
+                "backgroundColor": "transparent",
+                "marginHorizontal": 5,
+              },
+              Object {
+                "fontFamily": "EvilIcons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+          testID="iconIcon"
+        >
+          
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "width": "10%",
+        }
+      }
+    />
+    <View
+      accessible={true}
+      clickable={false}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "height": 30,
+            "width": 44,
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "color": "black",
+                "fontSize": 30,
+              },
+              Object {
+                "backgroundColor": "transparent",
+                "marginHorizontal": 5,
+              },
+              Object {
+                "fontFamily": "Ionicons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+          testID="iconIcon"
+        >
+          
+        </Text>
+      </View>
+    </View>
+    <View
+      accessible={true}
+      clickable={true}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "justifyContent": "center",
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "height": 30,
+            "width": 44,
+          }
+        }
+      >
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "color": "black",
+                "fontSize": 30,
+              },
+              Object {
+                "backgroundColor": "transparent",
+                "marginHorizontal": 5,
+              },
+              Object {
+                "fontFamily": "Ionicons",
+                "fontStyle": "normal",
+                "fontWeight": "normal",
+              },
+              Object {},
+            ]
+          }
+          testID="iconIcon"
+        >
+          
+        </Text>
+      </View>
+    </View>
+    <View
+      accessible={true}
+      clickable={false}
+      isTVSelectable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "flex-end",
+          "justifyContent": "center",
+          "opacity": 1,
+        }
+      }
+    >
+      <RNGestureHandlerButton
+        collapsable={false}
+        onGestureEvent={[Function]}
+        onGestureHandlerEvent={[Function]}
+        onGestureHandlerStateChange={[Function]}
+        onHandlerStateChange={[Function]}
+        rippleColor={0}
+        style={
+          Array [
+            Object {
+              "overflow": "hidden",
+            },
+            undefined,
+          ]
+        }
+      >
+        <View
+          accessible={true}
+          style={
+            Object {
+              "alignItems": "flex-end",
+              "justifyContent": "center",
+              "marginEnd": 10,
+              "opacity": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 40,
+                "width": 56,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "black",
+                    "fontSize": 40,
+                  },
+                  Object {
+                    "backgroundColor": "transparent",
+                    "marginHorizontal": 5,
+                  },
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+              testID="iconIcon"
+            >
+              
+            </Text>
+          </View>
+        </View>
+      </RNGestureHandlerButton>
+    </View>
+  </View>
+  <RCTScrollView
+    style={
+      Object {
+        "flex": 0.85,
+      }
+    }
+  >
+    <View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "marginTop": 29.5,
+            "paddingLeft": "4%",
+            "paddingRight": "4%",
+            "width": "100%",
+          }
+        }
+      >
+        <View
+          accessible={true}
+          clickable={true}
+          isTVSelectable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#B2B2B2",
+                "fontSize": 23,
+                "marginRight": "4%",
+              }
+            }
+          >
+            Settings
+          </Text>
+        </View>
+        <Text
+          style={
+            Object {
+              "color": "#707070",
+              "fontSize": 23,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          &gt;    My Profile and preference
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "marginTop": 29.5,
+            "paddingLeft": "4%",
+            "paddingRight": "4%",
+            "width": "100%",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#56565A",
+              "fontSize": 33,
+              "fontWeight": "bold",
+              "paddingBottom": 6.5,
+            }
+          }
+        >
+          Delivery Settings
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#B2B2B2",
+              "fontSize": 23,
+              "marginRight": "4%",
+            }
+          }
+        >
+          Lorem Ipsum is dummy text of the typesetting industry.
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "marginLeft": "4%",
+            "marginRight": "4%",
+            "marginTop": 33,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#56565A",
+              "fontSize": 33,
+              "fontWeight": "bold",
+              "marginBottom": 33,
+              "marginTop": 11.5,
+            }
+          }
+        >
+          Get Notified By :
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "marginLeft": "2%",
+            "marginTop": 24.5,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          clickable={false}
+          isTVSelectable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+              "width": "10%",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 30,
+                "width": 44,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#56565A",
+                    "fontSize": 30,
+                  },
+                  Object {
+                    "backgroundColor": "transparent",
+                    "marginHorizontal": 5,
+                  },
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+              testID="iconIcon"
+            >
+              
+            </Text>
+          </View>
+        </View>
+        <Text
+          style={
+            Object {
+              "color": "#56565A",
+              "fontSize": 33,
+              "fontWeight": "bold",
+              "marginLeft": "2%",
+              "marginTop": 5,
+              "width": "75%",
+            }
+          }
+        >
+          Email
+        </Text>
+        <Text
+          onPress={[Function]}
+          style={
+            Object {
+              "color": "#0000FF",
+              "fontSize": 33,
+              "marginTop": 5,
+              "textDecorationLine": "underline",
+            }
+          }
+        >
+          Edit
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "marginLeft": "4%",
+            "marginRight": "4%",
+            "marginTop": 16.5,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#707070",
+              "fontSize": 33,
+              "fontWeight": "bold",
+            }
+          }
+        >
+          
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "marginTop": 8,
+            "width": "100%",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignContent": "center",
+              "alignItems": "center",
+              "flexDirection": "row",
+              "marginLeft": "2%",
+              "marginTop": 24.5,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 30,
+                "width": 44,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "black",
+                    "fontSize": 30,
+                  },
+                  Object {
+                    "backgroundColor": "transparent",
+                    "marginHorizontal": 5,
+                  },
+                  Object {
+                    "fontFamily": "Feather",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+              testID="iconIcon"
+            >
+              
+            </Text>
+          </View>
+          <Text
+            style={
+              Object {
+                "color": "#56565A",
+                "fontSize": 39.5,
+                "fontWeight": "bold",
+                "marginLeft": "2%",
+                "width": "64%",
+              }
+            }
+          >
+            Urgent Messages
+          </Text>
+          <Text
+            onPress={[Function]}
+            style={
+              Object {
+                "color": "#228AE5",
+                "fontSize": 23,
+                "textDecorationLine": "underline",
+              }
+            }
+          >
+            Read more...
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "marginLeft": "2%",
+              "marginTop": 10,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "flexDirection": "row",
+                "marginBottom": 16.5,
+                "marginLeft": "4%",
+              }
+            }
+          >
+            <View
+              accessible={true}
+              clickable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "flex-start",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#56565A",
+                  "borderRadius": 30,
+                  "borderWidth": 1,
+                  "height": 57.5,
+                  "justifyContent": "center",
+                  "marginTop": 19.5,
+                  "opacity": 1,
+                  "width": "22%",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "color": "#A2A2A2",
+                        "fontSize": 19.5,
+                        "fontWeight": "bold",
+                        "marginLeft": "30%",
+                        "marginRight": "10%",
+                      },
+                      Object {},
+                    ],
+                  ]
+                }
+              >
+                Off
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              clickable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#56565A",
+                  "borderRadius": 30,
+                  "borderWidth": 1,
+                  "height": 57.5,
+                  "justifyContent": "center",
+                  "left": "16%",
+                  "marginTop": 19.5,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "width": "18%",
+                  "zIndex": -1,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "color": "#A2A2A2",
+                        "fontSize": 19.5,
+                        "fontWeight": "bold",
+                        "marginLeft": "30%",
+                        "marginRight": "10%",
+                      },
+                      Object {},
+                    ],
+                  ]
+                }
+              >
+                On
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "marginTop": 8,
+            "width": "100%",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignContent": "center",
+              "alignItems": "center",
+              "flexDirection": "row",
+              "marginLeft": "2%",
+              "marginTop": 24.5,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 30,
+                "width": 44,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "black",
+                    "fontSize": 30,
+                  },
+                  Object {
+                    "backgroundColor": "transparent",
+                    "marginHorizontal": 5,
+                  },
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+              testID="iconIcon"
+            >
+              
+            </Text>
+          </View>
+          <Text
+            style={
+              Object {
+                "color": "#56565A",
+                "fontSize": 39.5,
+                "fontWeight": "bold",
+                "marginLeft": "2%",
+                "width": "64%",
+              }
+            }
+          >
+            Notifications
+          </Text>
+          <Text
+            onPress={[Function]}
+            style={
+              Object {
+                "color": "#228AE5",
+                "fontSize": 23,
+                "textDecorationLine": "underline",
+              }
+            }
+          >
+            Read more...
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "marginLeft": "2%",
+              "marginTop": 10,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "flexDirection": "row",
+                "marginBottom": 16.5,
+                "marginLeft": "4%",
+              }
+            }
+          >
+            <View
+              accessible={true}
+              clickable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "flex-start",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#56565A",
+                  "borderRadius": 30,
+                  "borderWidth": 1,
+                  "height": 57.5,
+                  "justifyContent": "center",
+                  "marginTop": 19.5,
+                  "opacity": 1,
+                  "width": "22%",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "color": "#A2A2A2",
+                        "fontSize": 19.5,
+                        "fontWeight": "bold",
+                        "marginLeft": "30%",
+                        "marginRight": "10%",
+                      },
+                      Object {},
+                    ],
+                  ]
+                }
+              >
+                Off
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              clickable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#56565A",
+                  "borderRadius": 30,
+                  "borderWidth": 1,
+                  "height": 57.5,
+                  "justifyContent": "center",
+                  "left": "16%",
+                  "marginTop": 19.5,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "width": "18%",
+                  "zIndex": -1,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "color": "#A2A2A2",
+                        "fontSize": 19.5,
+                        "fontWeight": "bold",
+                        "marginLeft": "30%",
+                        "marginRight": "10%",
+                      },
+                      Object {},
+                    ],
+                  ]
+                }
+              >
+                On
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "marginLeft": "2%",
+            "marginTop": 57.5,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "height": 30,
+              "width": 44,
+            }
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "black",
+                  "fontSize": 30,
+                },
+                Object {
+                  "backgroundColor": "transparent",
+                  "marginHorizontal": 5,
+                },
+                Object {
+                  "fontFamily": "Material Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+            testID="iconIcon"
+          >
+            
+          </Text>
+        </View>
+        <Text
+          style={
+            Object {
+              "color": "#56565A",
+              "fontSize": 33,
+              "fontWeight": "bold",
+              "marginLeft": "2%",
+              "marginTop": 5,
+              "width": "75%",
+            }
+          }
+        >
+          Push Notification
+        </Text>
+      </View>
+      <Text
+        style={
+          Object {
+            "color": "#707070",
+            "fontSize": 29.5,
+            "marginLeft": "4%",
+            "marginTop": 13,
+          }
+        }
+      >
+        Explain Push notifications
+      </Text>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "marginLeft": "2%",
+            "marginTop": 24.5,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#707070",
+              "fontSize": 33,
+              "fontWeight": "bold",
+              "marginLeft": "2%",
+              "marginTop": 5,
+              "width": "86%",
+            }
+          }
+        >
+          iphone XR
+        </Text>
+        <Text
+          onPress={[Function]}
+          style={
+            Object {
+              "color": "#0000FF",
+              "fontSize": 33,
+              "marginTop": 5,
+              "textDecorationLine": "underline",
+            }
+          }
+        >
+          Edit
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "marginTop": 8,
+            "width": "100%",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignContent": "center",
+              "alignItems": "center",
+              "flexDirection": "row",
+              "marginLeft": "2%",
+              "marginTop": 24.5,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 30,
+                "width": 44,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "black",
+                    "fontSize": 30,
+                  },
+                  Object {
+                    "backgroundColor": "transparent",
+                    "marginHorizontal": 5,
+                  },
+                  Object {
+                    "fontFamily": "Feather",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+              testID="iconIcon"
+            >
+              
+            </Text>
+          </View>
+          <Text
+            style={
+              Object {
+                "color": "#56565A",
+                "fontSize": 39.5,
+                "fontWeight": "bold",
+                "marginLeft": "2%",
+                "width": "64%",
+              }
+            }
+          >
+            Urgent Messages
+          </Text>
+          <Text
+            onPress={[Function]}
+            style={
+              Object {
+                "color": "#228AE5",
+                "fontSize": 23,
+                "textDecorationLine": "underline",
+              }
+            }
+          >
+            Read more...
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "marginLeft": "2%",
+              "marginTop": 10,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "flexDirection": "row",
+                "marginBottom": 16.5,
+                "marginLeft": "4%",
+              }
+            }
+          >
+            <View
+              accessible={true}
+              clickable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "flex-start",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#56565A",
+                  "borderRadius": 30,
+                  "borderWidth": 1,
+                  "height": 57.5,
+                  "justifyContent": "center",
+                  "marginTop": 19.5,
+                  "opacity": 1,
+                  "width": "22%",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "color": "#A2A2A2",
+                        "fontSize": 19.5,
+                        "fontWeight": "bold",
+                        "marginLeft": "30%",
+                        "marginRight": "10%",
+                      },
+                      Object {},
+                    ],
+                  ]
+                }
+              >
+                Off
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              clickable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#56565A",
+                  "borderRadius": 30,
+                  "borderWidth": 1,
+                  "height": 57.5,
+                  "justifyContent": "center",
+                  "left": "16%",
+                  "marginTop": 19.5,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "width": "18%",
+                  "zIndex": -1,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "color": "#A2A2A2",
+                        "fontSize": 19.5,
+                        "fontWeight": "bold",
+                        "marginLeft": "30%",
+                        "marginRight": "10%",
+                      },
+                      Object {},
+                    ],
+                  ]
+                }
+              >
+                On
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "marginTop": 8,
+            "width": "100%",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignContent": "center",
+              "alignItems": "center",
+              "flexDirection": "row",
+              "marginLeft": "2%",
+              "marginTop": 24.5,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 30,
+                "width": 44,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "black",
+                    "fontSize": 30,
+                  },
+                  Object {
+                    "backgroundColor": "transparent",
+                    "marginHorizontal": 5,
+                  },
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+              testID="iconIcon"
+            >
+              
+            </Text>
+          </View>
+          <Text
+            style={
+              Object {
+                "color": "#56565A",
+                "fontSize": 39.5,
+                "fontWeight": "bold",
+                "marginLeft": "2%",
+                "width": "64%",
+              }
+            }
+          >
+            Notifications
+          </Text>
+          <Text
+            onPress={[Function]}
+            style={
+              Object {
+                "color": "#228AE5",
+                "fontSize": 23,
+                "textDecorationLine": "underline",
+              }
+            }
+          >
+            Read more...
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "marginLeft": "2%",
+              "marginTop": 10,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "flexDirection": "row",
+                "marginBottom": 16.5,
+                "marginLeft": "4%",
+              }
+            }
+          >
+            <View
+              accessible={true}
+              clickable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "flex-start",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#56565A",
+                  "borderRadius": 30,
+                  "borderWidth": 1,
+                  "height": 57.5,
+                  "justifyContent": "center",
+                  "marginTop": 19.5,
+                  "opacity": 1,
+                  "width": "22%",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "color": "#A2A2A2",
+                        "fontSize": 19.5,
+                        "fontWeight": "bold",
+                        "marginLeft": "30%",
+                        "marginRight": "10%",
+                      },
+                      Object {},
+                    ],
+                  ]
+                }
+              >
+                Off
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              clickable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#56565A",
+                  "borderRadius": 30,
+                  "borderWidth": 1,
+                  "height": 57.5,
+                  "justifyContent": "center",
+                  "left": "16%",
+                  "marginTop": 19.5,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "width": "18%",
+                  "zIndex": -1,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "color": "#A2A2A2",
+                        "fontSize": 19.5,
+                        "fontWeight": "bold",
+                        "marginLeft": "30%",
+                        "marginRight": "10%",
+                      },
+                      Object {},
+                    ],
+                  ]
+                }
+              >
+                On
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "marginLeft": "2%",
+            "marginTop": 57.5,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          clickable={false}
+          isTVSelectable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+              "width": "10%",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 30,
+                "width": 44,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#56565A",
+                    "fontSize": 30,
+                  },
+                  Object {
+                    "backgroundColor": "transparent",
+                    "marginHorizontal": 5,
+                  },
+                  Object {
+                    "fontFamily": "Material Design Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+              testID="iconIcon"
+            >
+              
+            </Text>
+          </View>
+        </View>
+        <Text
+          style={
+            Object {
+              "color": "#56565A",
+              "fontSize": 33,
+              "fontWeight": "bold",
+              "marginLeft": "2%",
+              "marginTop": 5,
+              "width": "75%",
+            }
+          }
+        >
+          Text Message
+        </Text>
+        <Text
+          onPress={[Function]}
+          style={
+            Object {
+              "color": "#0000FF",
+              "fontSize": 33,
+              "marginTop": 5,
+              "textDecorationLine": "underline",
+            }
+          }
+        >
+          Edit
+        </Text>
+      </View>
+      <Text
+        style={
+          Object {
+            "color": "#707070",
+            "fontSize": 26.5,
+            "marginLeft": "15%",
+            "marginTop": 16.5,
+          }
+        }
+      >
+        Explain Text Message
+      </Text>
+      <Text
+        style={
+          Object {
+            "color": "#707070",
+            "fontSize": 26.5,
+            "fontWeight": "bold",
+            "marginLeft": "15%",
+            "marginTop": 16.5,
+          }
+        }
+      >
+        
+      </Text>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "marginTop": 8,
+            "width": "100%",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignContent": "center",
+              "alignItems": "center",
+              "flexDirection": "row",
+              "marginLeft": "2%",
+              "marginTop": 24.5,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 30,
+                "width": 44,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "black",
+                    "fontSize": 30,
+                  },
+                  Object {
+                    "backgroundColor": "transparent",
+                    "marginHorizontal": 5,
+                  },
+                  Object {
+                    "fontFamily": "Feather",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+              testID="iconIcon"
+            >
+              
+            </Text>
+          </View>
+          <Text
+            style={
+              Object {
+                "color": "#56565A",
+                "fontSize": 39.5,
+                "fontWeight": "bold",
+                "marginLeft": "2%",
+                "width": "64%",
+              }
+            }
+          >
+            Urgent Messages
+          </Text>
+          <Text
+            onPress={[Function]}
+            style={
+              Object {
+                "color": "#228AE5",
+                "fontSize": 23,
+                "textDecorationLine": "underline",
+              }
+            }
+          >
+            Read more...
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "marginLeft": "2%",
+              "marginTop": 10,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "flexDirection": "row",
+                "marginBottom": 16.5,
+                "marginLeft": "4%",
+              }
+            }
+          >
+            <View
+              accessible={true}
+              clickable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "flex-start",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#56565A",
+                  "borderRadius": 30,
+                  "borderWidth": 1,
+                  "height": 57.5,
+                  "justifyContent": "center",
+                  "marginTop": 19.5,
+                  "opacity": 1,
+                  "width": "22%",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "color": "#A2A2A2",
+                        "fontSize": 19.5,
+                        "fontWeight": "bold",
+                        "marginLeft": "30%",
+                        "marginRight": "10%",
+                      },
+                      Object {},
+                    ],
+                  ]
+                }
+              >
+                Off
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              clickable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#56565A",
+                  "borderRadius": 30,
+                  "borderWidth": 1,
+                  "height": 57.5,
+                  "justifyContent": "center",
+                  "left": "16%",
+                  "marginTop": 19.5,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "width": "18%",
+                  "zIndex": -1,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "color": "#A2A2A2",
+                        "fontSize": 19.5,
+                        "fontWeight": "bold",
+                        "marginLeft": "30%",
+                        "marginRight": "10%",
+                      },
+                      Object {},
+                    ],
+                  ]
+                }
+              >
+                On
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "backgroundColor": "#FFFFFF",
+            "marginTop": 8,
+            "width": "100%",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignContent": "center",
+              "alignItems": "center",
+              "flexDirection": "row",
+              "marginLeft": "2%",
+              "marginTop": 24.5,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "height": 30,
+                "width": 44,
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              style={
+                Array [
+                  Object {
+                    "color": "black",
+                    "fontSize": 30,
+                  },
+                  Object {
+                    "backgroundColor": "transparent",
+                    "marginHorizontal": 5,
+                  },
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+              testID="iconIcon"
+            >
+              
+            </Text>
+          </View>
+          <Text
+            style={
+              Object {
+                "color": "#56565A",
+                "fontSize": 39.5,
+                "fontWeight": "bold",
+                "marginLeft": "2%",
+                "width": "64%",
+              }
+            }
+          >
+            Notifications
+          </Text>
+          <Text
+            onPress={[Function]}
+            style={
+              Object {
+                "color": "#228AE5",
+                "fontSize": 23,
+                "textDecorationLine": "underline",
+              }
+            }
+          >
+            Read more...
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "marginLeft": "2%",
+              "marginTop": 10,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flex": 1,
+                "flexDirection": "row",
+                "marginBottom": 16.5,
+                "marginLeft": "4%",
+              }
+            }
+          >
+            <View
+              accessible={true}
+              clickable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "flex-start",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#56565A",
+                  "borderRadius": 30,
+                  "borderWidth": 1,
+                  "height": 57.5,
+                  "justifyContent": "center",
+                  "marginTop": 19.5,
+                  "opacity": 1,
+                  "width": "22%",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "color": "#A2A2A2",
+                        "fontSize": 19.5,
+                        "fontWeight": "bold",
+                        "marginLeft": "30%",
+                        "marginRight": "10%",
+                      },
+                      Object {},
+                    ],
+                  ]
+                }
+              >
+                Off
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              clickable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#56565A",
+                  "borderRadius": 30,
+                  "borderWidth": 1,
+                  "height": 57.5,
+                  "justifyContent": "center",
+                  "left": "16%",
+                  "marginTop": 19.5,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "width": "18%",
+                  "zIndex": -1,
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Array [
+                      Object {
+                        "color": "#A2A2A2",
+                        "fontSize": 19.5,
+                        "fontWeight": "bold",
+                        "marginLeft": "30%",
+                        "marginRight": "10%",
+                      },
+                      Object {},
+                    ],
+                  ]
+                }
+              >
+                On
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "borderColor": "#B7B7B7",
+            "borderWidth": 0.8,
+            "marginLeft": "4%",
+            "marginRight": "4%",
+            "marginTop": 49.5,
+            "paddingBottom": 41,
+            "paddingLeft": "4%",
+            "paddingRight": "4%",
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#56565A",
+              "fontSize": 33,
+              "fontWeight": "bold",
+              "marginTop": 24.5,
+            }
+          }
+        >
+          Call Preference
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#707070",
+              "fontSize": 26.5,
+              "fontWeight": "bold",
+              "lineHeight": 41,
+              "marginTop": 16.5,
+            }
+          }
+        >
+          What is your preferred availability? 
+          <Text
+            style={
+              Object {
+                "color": "#707070",
+                "fontSize": 26.5,
+                "fontWeight": "normal",
+                "lineHeight": 41,
+                "marginTop": 16.5,
+              }
+            }
+          >
+            optional This selection will apply to all of the phone numbers listed on your profile.
+          </Text>
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#707070",
+              "fontSize": 26.5,
+              "fontWeight": "normal",
+              "lineHeight": 41,
+              "marginTop": 16.5,
+            }
+          }
+        >
+          if a preferred time to call you is not selected, we will continue to call you during VCM business hours and as permitted by law.
+        </Text>
+        <View
+          style={
+            Object {
+              "flexGrow": 1,
+              "marginLeft": "2%",
+              "marginTop": 33,
+            }
+          }
+        >
+          <View
+            accessible={true}
+            clickable={true}
+            isTVSelectable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "flex-start",
+                "flexDirection": "row",
+                "flexGrow": 1,
+                "justifyContent": "flex-start",
+                "marginBottom": 0,
+                "marginTop": 0,
+                "opacity": 1,
+                "width": "100%",
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "borderColor": "#4D4D4D",
+                  "borderWidth": 2,
+                  "height": 20,
+                  "justifyContent": "center",
+                  "marginTop": 3.5,
+                  "width": 20,
+                }
+              }
+            />
+            <Text
+              style={
+                Array [
+                  Object {
+                    "marginLeft": 19.5,
+                    "width": "80%",
+                  },
+                  Object {
+                    "color": "#228AE5",
+                    "fontSize": 23,
+                    "fontWeight": "bold",
+                    "marginLeft": "4%",
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              Morning 8:00 AM - 10:00 AM
+            </Text>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flexGrow": 1,
+              "marginLeft": "2%",
+              "marginTop": 33,
+            }
+          }
+        >
+          <View
+            accessible={true}
+            clickable={true}
+            isTVSelectable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "flex-start",
+                "flexDirection": "row",
+                "flexGrow": 1,
+                "justifyContent": "flex-start",
+                "marginBottom": 0,
+                "marginTop": 0,
+                "opacity": 1,
+                "width": "100%",
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "borderColor": "#4D4D4D",
+                  "borderWidth": 2,
+                  "height": 20,
+                  "justifyContent": "center",
+                  "marginTop": 3.5,
+                  "width": 20,
+                }
+              }
+            />
+            <Text
+              style={
+                Array [
+                  Object {
+                    "marginLeft": 19.5,
+                    "width": "80%",
+                  },
+                  Object {
+                    "color": "#228AE5",
+                    "fontSize": 23,
+                    "fontWeight": "bold",
+                    "marginLeft": "4%",
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              Mid-Day 10:00 AM - 04:00 PM
+            </Text>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flexGrow": 1,
+              "marginLeft": "2%",
+              "marginTop": 33,
+            }
+          }
+        >
+          <View
+            accessible={true}
+            clickable={true}
+            isTVSelectable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "flex-start",
+                "flexDirection": "row",
+                "flexGrow": 1,
+                "justifyContent": "flex-start",
+                "marginBottom": 0,
+                "marginTop": 0,
+                "opacity": 1,
+                "width": "100%",
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "borderColor": "#4D4D4D",
+                  "borderWidth": 2,
+                  "height": 20,
+                  "justifyContent": "center",
+                  "marginTop": 3.5,
+                  "width": 20,
+                }
+              }
+            />
+            <Text
+              style={
+                Array [
+                  Object {
+                    "marginLeft": 19.5,
+                    "width": "80%",
+                  },
+                  Object {
+                    "color": "#228AE5",
+                    "fontSize": 23,
+                    "fontWeight": "bold",
+                    "marginLeft": "4%",
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              Early Evening 04:00 PM - 06:00 PM
+            </Text>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "flexGrow": 1,
+              "marginLeft": "2%",
+              "marginTop": 33,
+            }
+          }
+        >
+          <View
+            accessible={true}
+            clickable={true}
+            isTVSelectable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "flex-start",
+                "flexDirection": "row",
+                "flexGrow": 1,
+                "justifyContent": "flex-start",
+                "marginBottom": 0,
+                "marginTop": 0,
+                "opacity": 1,
+                "width": "100%",
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "borderColor": "#4D4D4D",
+                  "borderWidth": 2,
+                  "height": 20,
+                  "justifyContent": "center",
+                  "marginTop": 3.5,
+                  "width": 20,
+                }
+              }
+            />
+            <Text
+              style={
+                Array [
+                  Object {
+                    "marginLeft": 19.5,
+                    "width": "80%",
+                  },
+                  Object {
+                    "color": "#228AE5",
+                    "fontSize": 23,
+                    "fontWeight": "bold",
+                    "marginLeft": "4%",
+                    "textAlign": "left",
+                  },
+                ]
+              }
+            >
+              Night 06:00 PM - 09:00 PM
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        accessible={true}
+        clickable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#FFFFFF",
+            "borderColor": "#7B8288",
+            "borderRadius": 1,
+            "borderWidth": 1,
+            "height": 90.5,
+            "justifyContent": "center",
+            "marginLeft": "10%",
+            "marginRight": "10%",
+            "marginTop": 69,
+            "opacity": 1,
+            "width": "80%",
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#544A54",
+                "fontSize": 26.5,
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          Cancel
+        </Text>
+      </View>
+      <View
+        accessible={true}
+        clickable={true}
+        isTVSelectable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#56565A",
+            "borderColor": "#56565A",
+            "borderRadius": 1,
+            "borderWidth": 1,
+            "height": 90.5,
+            "justifyContent": "center",
+            "marginLeft": "10%",
+            "marginRight": "10%",
+            "marginTop": 49.5,
+            "opacity": 1,
+            "width": "80%",
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#FFFFFF",
+                "fontSize": 26.5,
+                "fontWeight": "bold",
+              },
+            ]
+          }
+        >
+          Save
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "borderColor": "#DEDEDF",
+            "borderTopWidth": 1,
+            "marginBottom": 33,
+            "marginTop": 65.5,
+          }
+        }
+      />
+      <View
+        style={
+          Object {
+            "alignContent": "center",
+            "alignItems": "center",
+            "flexDirection": "row",
+            "marginLeft": "4%",
+            "marginTop": 16.5,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "height": 30,
+              "width": 44,
+            }
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            style={
+              Array [
+                Object {
+                  "color": "black",
+                  "fontSize": 30,
+                },
+                Object {
+                  "backgroundColor": "transparent",
+                  "marginHorizontal": 5,
+                },
+                Object {
+                  "fontFamily": "Material Design Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+            testID="iconIcon"
+          >
+            
+          </Text>
+        </View>
+        <Text
+          style={
+            Object {
+              "color": "#56565A",
+              "fontSize": 33,
+              "fontWeight": "bold",
+              "marginLeft": "2%",
+            }
+          }
+        >
+          Quiet Time
+        </Text>
+      </View>
+      <Text
+        style={
+          Object {
+            "color": "#707070",
+            "fontSize": 26.5,
+            "marginLeft": "16%",
+            "marginRight": "10%",
+          }
+        }
+      >
+        You can delay text messages when using Quiet Time. To enable this feature, navigate to "Delivery Settings" in your VCM Mobile App.
+      </Text>
+      <View
+        style={
+          Object {
+            "borderColor": "#DEDEDF",
+            "borderTopWidth": 1,
+            "marginBottom": 33,
+            "marginTop": 65.5,
+          }
+        }
+      />
+      <Text
+        style={
+          Object {
+            "color": "#707070",
+            "fontSize": 26.5,
+            "marginLeft": "4%",
+            "marginRight": "4%",
+            "marginTop": 33,
+          }
+        }
+      >
+        During the plot phase, certain limited alerts and notification related to specific programs and products will take priority above the preferences set in inbox.
+      </Text>
+      <Text
+        style={
+          Object {
+            "color": "#707070",
+            "fontSize": 26.5,
+            "marginLeft": "4%",
+            "marginRight": "4%",
+            "marginTop": 33,
+          }
+        }
+      >
+        Message categorization is provided as a tool but should not be relied on to determine which message need to be reviewed. All messages provided in inbox should be reviewed.
+      </Text>
+      <Text
+        style={
+          Object {
+            "color": "#707070",
+            "fontSize": 26.5,
+            "marginLeft": "4%",
+            "marginRight": "4%",
+            "marginTop": 33,
+          }
+        }
+      >
+        Text message frequency depends on your service selections. To cancel text message services at any time text
+        <Text
+          style={
+            Object {
+              "color": "#404040",
+              "fontSize": 33,
+              "fontWeight": "bold",
+              "marginLeft": "4%",
+              "marginRight": "4%",
+              "marginTop": 33,
+            }
+          }
+        >
+           STOP
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#707070",
+              "fontSize": 26.5,
+              "marginLeft": "4%",
+              "marginRight": "4%",
+              "marginTop": 33,
+            }
+          }
+        >
+           to
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#404040",
+              "fontSize": 33,
+              "fontWeight": "bold",
+              "marginLeft": "4%",
+              "marginRight": "4%",
+              "marginTop": 33,
+            }
+          }
+        >
+           My VCM 
+          (XXXXXX)
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#707070",
+              "fontSize": 26.5,
+              "marginLeft": "4%",
+              "marginRight": "4%",
+              "marginTop": 33,
+            }
+          }
+        >
+           from your mobile device. For more information, text
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#404040",
+              "fontSize": 33,
+              "fontWeight": "bold",
+              "marginLeft": "4%",
+              "marginRight": "4%",
+              "marginTop": 33,
+            }
+          }
+        >
+           HELP
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#707070",
+              "fontSize": 26.5,
+              "marginLeft": "4%",
+              "marginRight": "4%",
+              "marginTop": 33,
+            }
+          }
+        >
+           to
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#404040",
+              "fontSize": 33,
+              "fontWeight": "bold",
+              "marginLeft": "4%",
+              "marginRight": "4%",
+              "marginTop": 33,
+            }
+          }
+        >
+           My VCM 
+          (XXXXXX)
+        </Text>
+        <Text
+          style={
+            Object {
+              "color": "#707070",
+              "fontSize": 33,
+              "fontWeight": "bold",
+              "marginLeft": "4%",
+              "marginRight": "4%",
+              "marginTop": 33,
+            }
+          }
+        >
+          . Message and Data Rates May Apply.
+        </Text>
+      </Text>
+      <Text
+        style={
+          Object {
+            "color": "#707070",
+            "fontSize": 26.5,
+            "marginLeft": "4%",
+            "marginRight": "4%",
+            "marginTop": 33,
+          }
+        }
+      >
+        For VCM text messaging support call 
+        <Text
+          style={
+            Object {
+              "color": "#404040",
+              "fontSize": 33,
+              "fontWeight": "bold",
+              "marginLeft": "4%",
+              "marginRight": "4%",
+              "marginTop": 33,
+              "textDecorationLine": "underline",
+            }
+          }
+        >
+          1-877-632-3002.
+        </Text>
+      </Text>
+      <Text
+        style={
+          Object {
+            "color": "#707070",
+            "fontSize": 26.5,
+            "marginLeft": "4%",
+            "marginRight": "4%",
+            "marginTop": 33,
+          }
+        }
+      >
+        Support mobile carriers include AT&T, Sprint, T-Mobile, U.S. Cellular, Verizon Wireless - and more. View the entire list of 
+        <Text
+          style={
+            Object {
+              "color": "#228AE5",
+              "fontSize": 26.5,
+              "marginLeft": "4%",
+              "marginRight": "4%",
+              "marginTop": 33,
+              "textDecorationLine": "underline",
+            }
+          }
+        >
+          Supported Mobile Carriers
+        </Text>
+      </Text>
+      <Modal
+        hardwareAccelerated={false}
+        onRequestClose={[Function]}
+        transparent={true}
+        visible={false}
+      >
+        <View
+          style={
+            Object {
+              "backgroundColor": "rgba(0,0,0,0.5)",
+              "height": "100%",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "flex-end",
+                "marginTop": 98.5,
+              }
+            }
+          >
+            <View
+              accessible={true}
+              clickable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "height": 30,
+                    "width": 44,
+                  }
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "black",
+                        "fontSize": 30,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "marginHorizontal": 5,
+                      },
+                      Object {
+                        "fontFamily": "anticon",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                  testID="iconIcon"
+                >
+                  
+                </Text>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "backgroundColor": "#FFFFFF",
+                "marginLeft": 33,
+                "marginRight": 33,
+                "paddingBottom": 24.5,
+                "paddingLeft": "4%",
+                "paddingRight": "4%",
+                "paddingTop": 24.5,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#707070",
+                  "fontSize": 36,
+                  "fontWeight": "bold",
+                  "lineHeight": 30,
+                  "width": "80%",
+                }
+              }
+            >
+              Text Messaging Registration
+            </Text>
+            <View
+              style={
+                Object {
+                  "borderColor": "grey",
+                  "borderTopWidth": 1,
+                  "marginBottom": 33,
+                  "marginTop": 33,
+                }
+              }
+            />
+            <Text
+              style={
+                Object {
+                  "color": "#56565A",
+                  "fontSize": 26.5,
+                  "lineHeight": 25,
+                }
+              }
+            >
+              We just sent you a text message with your registration code to 
+              <Text
+                style={
+                  Object {
+                    "color": "#707070",
+                    "fontSize": 36,
+                    "fontWeight": "bold",
+                    "lineHeight": 30,
+                    "width": "80%",
+                  }
+                }
+              >
+                
+              </Text>
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#544A54",
+                  "fontSize": 26.5,
+                  "fontWeight": "bold",
+                  "marginBottom": 16.5,
+                  "marginTop": 33,
+                }
+              }
+            >
+              Enter Registration Code
+            </Text>
+            <View
+              style={
+                Array [
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "borderColor": "#DEDEDF",
+                    "borderRadius": 6.5,
+                    "borderWidth": 1,
+                    "height": 79,
+                    "justifyContent": "center",
+                    "width": "92%",
+                  },
+                  Object {
+                    "fontSize": 26.5,
+                    "width": "100%",
+                  },
+                ]
+              }
+            >
+              <TextInput
+                allowFontScaling={true}
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoFocus={false}
+                editable={true}
+                inputStyle={Object {}}
+                keyboardType="default"
+                maxLength={100}
+                multiline={false}
+                numberOfLines={1}
+                onBlur={null}
+                onChange={null}
+                onChangeText={[Function]}
+                onSubmitEditing={null}
+                placeholder="XXXX"
+                placeholderTextColor={null}
+                propInputStyle={
+                  Object {
+                    "fontSize": 26.5,
+                    "width": "100%",
+                  }
+                }
+                rejectResponderTermination={true}
+                returnKeyType="next"
+                selectionColor={null}
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "color": "#B5B5B5",
+                      "fontSize": 26.5,
+                      "justifyContent": "center",
+                      "marginLeft": 23,
+                    },
+                    Object {},
+                  ]
+                }
+                underlineColorAndroid="transparent"
+                value=""
+              />
+            </View>
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "flexWrap": "wrap",
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#707070",
+                    "fontSize": 26.5,
+                    "lineHeight": 20,
+                    "marginTop": 49.5,
+                  }
+                }
+              >
+                Didn't receive a registration code within 10 minutes? 
+              </Text>
+              <View
+                style={
+                  Object {
+                    "height": 15,
+                    "width": 26,
+                  }
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "black",
+                        "fontSize": 15,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                        "marginHorizontal": 5,
+                      },
+                      Object {
+                        "fontFamily": "FontAwesome",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                  testID="iconIcon"
+                >
+                  
+                </Text>
+              </View>
+              <Text
+                onPress={[Function]}
+                style={
+                  Object {
+                    "color": "#0000FF",
+                    "fontSize": 26.5,
+                    "marginTop": 5,
+                    "textDecorationLine": "underline",
+                  }
+                }
+              >
+                Resend Code
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              clickable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#FFFFFF",
+                  "borderColor": "#DEDEDF",
+                  "borderRadius": 1,
+                  "borderWidth": 1,
+                  "height": 90.5,
+                  "justifyContent": "center",
+                  "marginLeft": "5%",
+                  "marginRight": "5%",
+                  "marginTop": 33,
+                  "opacity": 1,
+                  "width": "90%",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#544A54",
+                      "fontSize": 26.5,
+                      "fontWeight": "bold",
+                    },
+                  ]
+                }
+              >
+                Cancel
+              </Text>
+            </View>
+            <View
+              accessible={true}
+              clickable={true}
+              isTVSelectable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "#B7B7B7",
+                  "borderColor": "#B7B7B7",
+                  "borderRadius": 1,
+                  "borderWidth": 1,
+                  "height": 90.5,
+                  "justifyContent": "center",
+                  "marginBottom": 16.5,
+                  "marginLeft": "5%",
+                  "marginRight": "5%",
+                  "marginTop": 33,
+                  "opacity": 1,
+                  "width": "90%",
+                }
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#FFFFFF",
+                      "fontSize": 26.5,
+                      "fontWeight": "bold",
+                    },
+                  ]
+                }
+              >
+                Save
+              </Text>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <View>
+        <View
+          style={
+            Object {
+              "borderColor": "#DEDEDF",
+              "borderTopWidth": 1,
+              "marginTop": 65.5,
+            }
+          }
+        />
+        <View
+          style={
+            Object {
+              "backgroundColor": "#FFFFFF",
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "marginBottom": 41,
+                "marginTop": 41,
+                "paddingLeft": "4%",
+                "paddingRight": "4%",
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#56565A",
+                  "fontSize": 29.5,
+                  "fontWeight": "bold",
+                }
+              }
+            >
+              Investing involves risk including loss of principal.
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#56565A",
+                  "fontSize": 26.5,
+                  "lineHeight": 33,
+                  "marginTop": 24.5,
+                }
+              }
+            >
+              Victory Mutual Funds and USAA Mutual Funds are distributed by Victory Capital Advisers, Inc. (VCA). VictoryShares ETFs and VictoryShares USAA ETFs are distributed by Foreside Fund Services, LLC (Foreside). VCA and Foreside are members of FINRA and SIPC. Victory Capital Management Inc. (VCM) is the investment adviser to the Victory Mutual Funds, USAA Mutual Funds, VictoryShares ETFs and VictoryShares USAA ETFs. VCA and VCM are not affiliated with Foreside. USAA is not affiliated with Foreside, VCM, or VCA. USAA and the USAA logos are registered trademarks and the USAA Mutual Funds and USAA Investments logos are trademarks of United Services Automobile Association and are being used by Victory Capital and its affiliates under license. Victory Capital means Victory Capital Management Inc., the investment manager of the USAA 529 College Savings Plan (Plan). The Plan is distributed by Victory Capital Advisers, Inc., a broker dealer registered with FINRA and an affiliate of Victory Capital. Victory Capital and its affiliates are not affiliated with United Services Automobile Association or its affiliates. USAA and the USAA logo are registered trademarks and the USAA 529 College Savings Plan logo is a trademark of United Services Automobile Association and are being used by Victory Capital and its affiliates under license.
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "marginBottom": 41,
+                "marginTop": 33,
+                "paddingLeft": "4%",
+                "paddingRight": "4%",
+              }
+            }
+          >
+            <Image
+              resizeMode="contain"
+              source={
+                Object {
+                  "testUri": "../../../App/Images/logo.png",
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              Object {
+                "marginLeft": "4%",
+                "marginTop": 33,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#56565A",
+                  "fontSize": 26.5,
+                  "lineHeight": 33,
+                  "marginTop": 24.5,
+                }
+              }
+            >
+              Connect with Us
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "flexDirection": "row",
+                "marginBottom": 33,
+                "marginLeft": "2%",
+                "marginTop": 16.5,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "height": 35,
+                  "width": 50,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#56565A",
+                      "fontSize": 35,
+                    },
+                    Object {
+                      "backgroundColor": "transparent",
+                      "marginHorizontal": 5,
+                    },
+                    Object {
+                      "fontFamily": "anticon",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+                testID="iconIcon"
+              >
+                
+              </Text>
+            </View>
+            <View
+              style={
+                Object {
+                  "height": 35,
+                  "width": 50,
+                }
+              }
+            >
+              <Text
+                allowFontScaling={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#56565A",
+                      "fontSize": 35,
+                    },
+                    Object {
+                      "backgroundColor": "transparent",
+                      "marginHorizontal": 5,
+                    },
+                    Object {
+                      "fontFamily": "anticon",
+                      "fontStyle": "normal",
+                      "fontWeight": "normal",
+                    },
+                    Object {},
+                  ]
+                }
+                testID="iconIcon"
+              >
+                
+              </Text>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "flexDirection": "row",
+                "height": 65.5,
+                "justifyContent": "center",
+                "marginLeft": "2%",
+                "marginTop": 24.5,
+                "width": "100%",
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#5D83AE",
+                  "fontSize": 26.5,
+                  "fontWeight": "bold",
+                  "paddingLeft": "2%",
+                  "width": "50%",
+                }
+              }
+            >
+              Privacy Policy
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#5D83AE",
+                  "fontSize": 26.5,
+                  "fontWeight": "bold",
+                  "paddingLeft": "2%",
+                  "width": "50%",
+                }
+              }
+            >
+              Fund Documents
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "flexDirection": "row",
+                "height": 65.5,
+                "justifyContent": "center",
+                "marginLeft": "2%",
+                "marginTop": 24.5,
+                "width": "100%",
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#5D83AE",
+                  "fontSize": 26.5,
+                  "fontWeight": "bold",
+                  "paddingLeft": "2%",
+                  "width": "50%",
+                }
+              }
+            >
+              User Agreements
+            </Text>
+            <Text
+              style={
+                Object {
+                  "color": "#5D83AE",
+                  "fontSize": 26.5,
+                  "fontWeight": "bold",
+                  "paddingLeft": "2%",
+                  "width": "50%",
+                }
+              }
+            >
+              Support
+            </Text>
+          </View>
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#56565A",
+                "height": 98.5,
+                "justifyContent": "center",
+                "marginTop": 33,
+              }
+            }
+          >
+            <Text
+              style={
+                Object {
+                  "color": "#FFFFFF",
+                }
+              }
+            >
+              Copyright Victory Capital Management Inc. ©2020
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;
