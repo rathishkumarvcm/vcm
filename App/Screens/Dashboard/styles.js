@@ -198,10 +198,14 @@ const styles = StyleSheet.create({
     scrollView: {
         flex: .85
     },
+    tokenText: {
+        marginBottom:scaledHeight(50),
+    },   
     welcomeText:{        
         alignItems:'center',
         marginVertical: scaledHeight(15),
-    },   
+    }
+
 });
 
 

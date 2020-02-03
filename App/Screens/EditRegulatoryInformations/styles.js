@@ -3,7 +3,7 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 const { width } = Dimensions.get('window');
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     addEditTextLabel: {
         color: '#5D83AE',
         fontSize: scaledHeight(18),
@@ -239,6 +239,9 @@ export const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: scaledHeight(16)
     },
+    scrollViewContainer: {
+        flex: 0.85,
+    },
     settingsAddress: {
         backgroundColor: '#FFFFFF',
         borderColor: '#D4D4D4',
@@ -334,7 +337,8 @@ export const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: scaledHeight(16),
         fontWeight: 'bold'
-    }, signInView: {
+    }, 
+    signInView: {
         marginTop: scaledHeight(2),
         paddingLeft: '4%',
         paddingRight: '4%',
@@ -395,3 +399,5 @@ export const styles = StyleSheet.create({
         marginRight: '4%'
     }
 });
+
+export default styles;

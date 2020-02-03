@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
+import { Text, View, Image, ScrollView } from 'react-native';
+import PropTypes from 'prop-types';
+import styles from './styles';
+import { GButtonComponent, GHeaderComponent, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 
 class editEmailAddNewComponent extends Component {
@@ -10,25 +10,28 @@ class editEmailAddNewComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
-            enableBiometric: false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false
         };
     }
 
     componentDidMount() { }
 
-    editEmailOnCancel = () => this.props.navigation.navigate('editEmailInformation');
+    editEmailOnCancel = () => {
+        const {navigation} = this.props;
+        navigation.navigate('editEmailInformation');
+    }
 
     render() {
+
+        const {navigation} = this.props;
+
+
         return (
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation}
+                    navigation={navigation}
                 />
 
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.scrollViewContainer}>
 
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsInfo}>
@@ -55,7 +58,7 @@ class editEmailAddNewComponent extends Component {
 
                     <View style={styles.editEamilMargin}>
                         <GInputComponent
-                            placeholder={""}
+                            placeholder=""
                             editable={false}
                         />
                     </View>
@@ -77,7 +80,7 @@ class editEmailAddNewComponent extends Component {
 
                     <View style={styles.editEamilMargin}>
                         <GInputComponent
-                            placeholder={""}
+                            placeholder=""
                             editable={false}
                         />
                     </View>
@@ -116,7 +119,8 @@ class editEmailAddNewComponent extends Component {
                         <GButtonComponent
                             buttonStyle={styles.saveButtonStyle}
                             buttonText={globalString.common.save}
-                            textStyle={styles.saveButtonText} />
+                            textStyle={styles.saveButtonText}
+                        />
                     </View>
 
                     <View style={styles.newVictorySection}>
@@ -130,7 +134,7 @@ class editEmailAddNewComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")}
+                            source="../../Images/logo.png"
                         />
                     </View>
 
@@ -142,10 +146,10 @@ class editEmailAddNewComponent extends Component {
 
                     <View style={styles.whiteBackground}>
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/twitterlogo.png")}
+                            source="../../Images/twitterlogo.png"
                         />
                         <Image style={styles.imageWidthHeight}
-                            source={require("../../Images/linkedinlogo.png")}
+                            source="../../Images/linkedinlogo.png"
                         />
                     </View>
 
@@ -181,5 +185,14 @@ class editEmailAddNewComponent extends Component {
         );
     }
 }
+
+editEmailAddNewComponent.propTypes = {
+    navigation: PropTypes.instanceOf(Object),
+};
+
+editEmailAddNewComponent.defaultProps = {
+    navigation: {},
+};
+
 
 export default editEmailAddNewComponent;

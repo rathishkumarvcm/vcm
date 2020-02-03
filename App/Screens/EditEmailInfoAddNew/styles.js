@@ -3,7 +3,7 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 const { width } = Dimensions.get('window');
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     cancelButtonStyle: {
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
@@ -258,6 +258,9 @@ export const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: scaledHeight(16)
     },
+    scrollViewContainer: {
+        flex: 0.85,
+    },
     settingsAddress: {
         backgroundColor: '#FFFFFF',
         borderColor: '#D4D4D4',
@@ -420,3 +423,5 @@ export const styles = StyleSheet.create({
         paddingRight: '5%'
     }
 });
+
+export default styles;

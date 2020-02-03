@@ -6,7 +6,6 @@ import styles from './styles';
 import { GButtonComponent, GHeaderComponent, GModalComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import AppUtils from '../../Utils/AppUtils';
-import { scaledHeight } from '../../Utils/Resolution';
 
 class DashboardComponent extends Component {
     constructor(props) {
@@ -41,7 +40,7 @@ class DashboardComponent extends Component {
                 this.setState({
                     idToken: value
                 });
-            }).catch((error) => {
+            }).catch(() => {
                 this.setState({
                     idToken: ""
                 });
@@ -53,7 +52,7 @@ class DashboardComponent extends Component {
                 this.setState({
                     accessToken: value
                 });
-            }).catch((error) => {
+            }).catch(() => {
                 this.setState({
                     accessToken: ""
                 });
@@ -65,7 +64,7 @@ class DashboardComponent extends Component {
                 this.setState({
                     refreshToken: value
                 });
-            }).catch((error) => {
+            }).catch(() => {
                 this.setState({
                     refreshToken: ""
                 });
@@ -83,14 +82,17 @@ class DashboardComponent extends Component {
     }
 
     tokenDetails = () => {
-        if(this.state.mockApi){
-            this.props.setEnvironment("MOCK");
+        const {mockApi} = this.state;
+        const {setEnvironment} = this.props;
+
+        if(mockApi){
+            setEnvironment("MOCK");
         }
         else{
-            this.props.setEnvironment("LIVE");
+            setEnvironment("LIVE");
         }
         this.setState({
-            mockApi : !this.state.mockApi
+            mockApi : !mockApi
         });
 
     }
@@ -99,6 +101,12 @@ class DashboardComponent extends Component {
         const { navigation} = this.props;
         const { navigate } = navigation;  
         navigate({ routeName: 'termsAndConditions', key: 'termsAndConditions' });
+    }
+
+    onClickAccountSummary = () => {
+        const { navigation} = this.props;
+        const { navigate } = navigation;  
+        navigate({ routeName: 'accountSummary', key: 'accountSummary' });
     }
 
     closeModal = () => {
@@ -129,7 +137,7 @@ class DashboardComponent extends Component {
     render() {
         const { navigation} = this.props;
         const {getParam} = navigation;  
-        const {memberId,modalVisible} = this.state;
+        const {memberId,modalVisible, idToken, accessToken, refreshToken, mockApi} = this.state;
 
         const specialMFAUserType = `${ this.props && getParam('SpecialMFA','')}`; 
         return (
@@ -151,7 +159,7 @@ class DashboardComponent extends Component {
                         </View>
                     <View style={styles.dashboardItemContainer}>
                         <Text style={styles.dashboardTileText} onPress={this.selectTheState}>
-                            Account Summary
+                            {gblStrings.dashBoard.accountSummary}
                         </Text>                       
                     </View>
                 </View>
@@ -191,14 +199,15 @@ class DashboardComponent extends Component {
 
                         <GButtonComponent
                             buttonStyle={styles.openAccBtn}
-                            buttonText={this.state.mockApi ? "CONFIGURE MOCK API" : "CONFIGURE LIVE API"}
+                            buttonText={mockApi ? "CONFIGURE MOCK API" : "CONFIGURE LIVE API"}
                             textStyle={styles.openAccBtnTxt}
                             onPress={this.tokenDetails}
                         />
 
-    <Text style={{marginBottom:scaledHeight(50)}}>ID Token: {this.state.idToken}</Text>
-    <Text style={{marginBottom:scaledHeight(50)}}>ACCESS Token: {this.state.accessToken}</Text>
-    <Text style={{marginBottom:scaledHeight(50)}}>REFRESH Token: {this.state.refreshToken}</Text>
+
+    <Text style={styles.tokenText}>ID Token: {idToken}</Text>
+    <Text style={styles.tokenText}>ACCESS Token: {accessToken}</Text>
+    <Text style={styles.tokenText}>REFRESH Token: {refreshToken}</Text>
                     </View>                  
 
                     {(specialMFAUserType !== "" && (specialMFAUserType === "UserForm" || specialMFAUserType === "NewUser"))? (
@@ -231,5 +240,11 @@ class DashboardComponent extends Component {
 
 DashboardComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
+    setEnvironment: PropTypes.func    
 };
+
+DashboardComponent.defaultProps = {
+    setEnvironment: () => { }    
+};
+
 export default DashboardComponent;
