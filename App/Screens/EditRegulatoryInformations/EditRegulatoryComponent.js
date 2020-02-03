@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { styles } from './styles';
-import { GButtonComponent, GHeaderComponent, GIcon, GInputComponent, GRadioButtonComponent } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
+import { Text, View, Image, ScrollView } from 'react-native';
+import PropTypes from 'prop-types';
+import styles from './styles';
+import { GButtonComponent, GHeaderComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 
 class editRegulatoryComponent extends Component {
@@ -10,32 +10,34 @@ class editRegulatoryComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
-            enableBiometric: false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false
         };
     }
 
     componentDidMount() { }
 
-    editRegulatoryOnCancel = () => this.props.navigation.navigate('profileSettings');
+    editRegulatoryOnCancel = () => {
+        const {navigation} = this.props;
+        navigation.navigate('profileSettings');
+    }
 
     render() {
+
+        const {navigation} = this.props;
+
         return (
 
             <View style={styles.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation}
+                    navigation={navigation}
                 />
 
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.scrollViewContainer}>
 
                     {/* Header Section - Tree Structure */}
 
                     <View style={styles.settingsView}>
                         <Text style={styles.editRegulatoryOne}>
-                            {"Pro.."}
+                            Pro..
                         </Text>
 
                         <Text style={styles.editRegulatoryTwo}>
@@ -43,7 +45,7 @@ class editRegulatoryComponent extends Component {
                         </Text>
 
                         <Text style={styles.editRegulatoryOne}>
-                            {"Bas.."}
+                            Bas..
                         </Text>
 
                         <Text style={styles.editRegulatoryTwo}>
@@ -108,7 +110,7 @@ class editRegulatoryComponent extends Component {
 
                     <View style={styles.connectWithUs}>
                         <Image
-                            source={require("../../Images/logo.png")}
+                            source="../../Images/logo.png"
                         />
                     </View>
 
@@ -143,5 +145,14 @@ class editRegulatoryComponent extends Component {
         );
     }
 }
+
+editRegulatoryComponent.propTypes = {
+    navigation: PropTypes.instanceOf(Object),
+};
+
+editRegulatoryComponent.defaultProps = {
+    navigation: {},
+};
+
 
 export default editRegulatoryComponent;

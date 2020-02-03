@@ -1,7 +1,6 @@
 import { connect } from "react-redux";
 import editAddressAddNewComponent from './EditAddressAddNewComponent';
-import { profileSettingsAction } from "../../Shared/Actions";
-import { addressFormatActions } from "../../Shared/Actions";
+import { profileSettingsAction, addressFormatActions } from "../../Shared/Actions";
 
 const mapStateToProps = (state /* , props */) => (
   {

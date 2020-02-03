@@ -106,27 +106,32 @@ class editManageIntrestedPartiesComponent extends Component {
         const mainObj = navigation.getParam('mainObj');
         const pKey = navigation.getParam('pKey');
         accountArray = mainObj.interestedParties;
-        accountArray && accountArray.map((item) => {
-            let accountItem = {
-                accountType: item.account_Type,
-                accountName: item.account_Name,
-                accountNumber: item.account_Number,
-                startDate: item.startDate,
-                endDate: item.endDate,
-                accountTypeValidation: "",
-                accountTypeValidationMsg: "",
-                accountNameValidation: "",
-                accountNameValidationMsg: "",
-                accountNumberValidation: "",
-                accountNumberValidationMsg: "",
-                startDateValidation: true,
-                startDateValidationMsg: "",
-                endDateValidation: true,
-                endDateValidationMsg: ""
-            };
-            tagAccounts.push(accountItem);
-            this.setState({ taggedAccData: tagAccounts });
-        });
+
+        if(accountArray) {
+            accountArray.map((item) => {
+                const accountItem = {
+                    accountType: item.account_Type,
+                    accountName: item.account_Name,
+                    accountNumber: item.account_Number,
+                    startDate: item.startDate,
+                    endDate: item.endDate,
+                    accountTypeValidation: "",
+                    accountTypeValidationMsg: "",
+                    accountNameValidation: "",
+                    accountNameValidationMsg: "",
+                    accountNumberValidation: "",
+                    accountNumberValidationMsg: "",
+                    startDateValidation: true,
+                    startDateValidationMsg: "",
+                    endDateValidation: true,
+                    endDateValidationMsg: ""
+                };
+                tagAccounts.push(accountItem);
+                this.setState({ taggedAccData: tagAccounts });
+            });    
+        }
+
+
         this.setState(prevState => ({
             interestedPartyData: mainObj,
             parentKey: pKey,
@@ -220,7 +225,7 @@ class editManageIntrestedPartiesComponent extends Component {
         }));
     }
 
-    selectedDropDownValue = (value) => {
+    selectedDropDownValue = () => {
         // this.onUpdateField("personal", "relation", value);
     }
 
@@ -333,7 +338,7 @@ class editManageIntrestedPartiesComponent extends Component {
     }
 
     getPayloadData = () => {
-        const { reducerData, interestedPartyData, personal, interestedPartyObj } = this.state;
+        const { reducerData, interestedPartyData, personal } = this.state;
         const personalData = personal;
         const updatedObj = interestedPartyData;
         updatedObj.email = personalData.email;
@@ -354,8 +359,8 @@ class editManageIntrestedPartiesComponent extends Component {
     }
 
     onClickSave = () => {
-        const { editInterestedParties, navigation } = this.props;
-        const { personal, isAddressApiCalling, interestedPartyObj, interestedPartyData } = this.state;
+        const { navigation } = this.props;
+        const { personal, interestedPartyData } = this.state;
         // const payloadData = this.getPayloadData();
         // editInterestedParties(payloadData);
         // const notificationMsg = `${interestedPartyObj.fname} ${interestedPartyObj.lname} 's data has been Updated Successfully`;
@@ -540,7 +545,7 @@ class editManageIntrestedPartiesComponent extends Component {
                                                 inputref={this.setInputRef("accountNumber")}
                                                 propInputStyle={styles.customTxtBox}
                                                 value={item.account_Number}
-                                            //maxLength={gblStrings.maxLength.company}
+                                            // maxLength={gblStrings.maxLength.company}
                                             // onChangeText={this.onChangeText("personal", "company")}
                                             />
                                             <View style={styles.blockMarginTop}>
@@ -605,26 +610,19 @@ class editManageIntrestedPartiesComponent extends Component {
 
 editManageIntrestedPartiesComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    masterLookupStateData: PropTypes.instanceOf(Object),
     stateCityData: PropTypes.instanceOf(Object),
     getStateCity: PropTypes.func,
     getAddressFormat: PropTypes.func,
-    getCompositeLookUpData: PropTypes.func,
-    editInterestedParties: PropTypes.func,
     manageInterestedPartiesData: PropTypes.instanceOf(Object)
 
 };
 
 editManageIntrestedPartiesComponent.defaultProps = {
     navigation: {},
-    masterLookupStateData: {},
     stateCityData: {},
     getStateCity: () => { },
     getAddressFormat: () => { },
-    getCompositeLookUpData: () => { },
-    editInterestedParties: () => { },
     manageInterestedPartiesData: {}
-
 };
 
 export default editManageIntrestedPartiesComponent;
