@@ -34,6 +34,7 @@ export default class PdfComponent extends Component {
             pdfCreated: false
         };
     }
+
   async createPDF(){
     let options = {
       html: '<h1>PDF TEST</h1>',

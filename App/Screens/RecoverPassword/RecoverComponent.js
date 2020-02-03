@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text } from 'react-native';
+import PropTypes from 'prop-types';
 import { styles } from './styles';
 import {
   GHeaderComponent,
@@ -7,7 +8,6 @@ import {
   GButtonComponent,
   GInputComponent,
 } from '../../CommonComponents';
-import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
 
 import * as regEx from '../../Constants/RegexConstants';

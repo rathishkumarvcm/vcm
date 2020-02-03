@@ -7,7 +7,7 @@ This file is to maintain following, which to be used accross app.
 */
 import { scaledHeight } from "../Utils/Resolution";
 
-export const AppConstant = {
+ const AppConstant = {
   colors: {
     transparent:'transparent',
     primaryColor: "#33383F",
@@ -58,3 +58,5 @@ export const AppConstant = {
     spaceSixty: scaledHeight(60)
   }
 };
+
+export default AppConstant;

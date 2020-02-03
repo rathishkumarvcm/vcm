@@ -165,8 +165,6 @@ import automaticInvestmentVerify from './Screens/AutomaticInvestmentPlanVerify';
 import automaticInvestmentEsign from './Screens/AutomaticInvestmentPlanEsign';
 import automaticInvestmentAccount from './Screens/AutomaticInvestmentPlanAccount';
 
-import ImageUpload from './Screens/First';
-
 //  Special MFA Requirements
 import VerifySSNComponent from './Screens/VerifySSN/VerifySSNComponent';
 import VerifyMobileComponent from './Screens/VerifyMobile/VerifyMobileComponent';
@@ -922,12 +920,6 @@ const AppNavigator = createStackNavigator({
     },
     addBankAccount: {
         screen: AddBankAccountComponent,
-        navigationOptions: {
-            header: null,
-        }
-    },
-    imageUpload: {
-        screen: ImageUpload,
         navigationOptions: {
             header: null,
         }

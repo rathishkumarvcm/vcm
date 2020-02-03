@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View , Text, Dimensions} from 'react-native';
-import { GPagination,GButtonComponent } from '../../CommonComponents';
-import { StyleSheet } from "react-native";
-import { scaledHeight } from '../../Utils/Resolution';
+import { View , Text, Dimensions, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types';
+import { GPagination,GButtonComponent } from '../../CommonComponents';
+import { scaledHeight } from '../../Utils/Resolution';
 
 
 const {width} = Dimensions.get('window');
@@ -27,29 +26,29 @@ const data = [
     }
   ];
 const styles = StyleSheet.create({
-    pageScroll:{
-        width: width,
-        height:400,
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor:'#6B8E23'
-    },
     buttonStyle:{
-      height:scaledHeight(40),
-      width:'90%',
-      justifyContent: "center",
       alignItems:'center',
-      borderRadius:scaledHeight(5),
       backgroundColor:"#06748C",
+      borderRadius:scaledHeight(5),
+      height:scaledHeight(40),
+      justifyContent: "center",
+      marginLeft:scaledHeight(10),
       marginTop:scaledHeight(30),
-      marginLeft:scaledHeight(10)
+      width:'90%'
       
   },
-  buttonTextStyle:{
+    buttonTextStyle:{
       fontSize: scaledHeight(14),
       fontWeight: "bold",
       lineHeight:scaledHeight(20),
-  }
+  },
+  pageScroll:{
+        alignItems:'center',
+        backgroundColor:'#6B8E23',
+        height:400,
+        justifyContent:'center',
+        width
+    }
 });
 
 
@@ -62,20 +61,21 @@ class PaginationComponent extends Component {
     }
 
     updateFlatList = ({ item}) => {
-        return(<View key={item.id} 
+        return(
+<View key={item.id} 
             style={styles.pageScroll}
-               >
+>
             <Text>{item.text}</Text>
-               </View>
+</View>
         );
     }
 
     onScrollEnd(e) {
-        let contentOffset = e.nativeEvent.contentOffset;
-        let viewSize = e.nativeEvent.layoutMeasurement;
+        const {contentOffset} = e.nativeEvent;
+        const viewSize = e.nativeEvent.layoutMeasurement;
     
         //  Divide the horizontal offset by the width of the view to see which page is visible
-        let pageNum = Math.floor(contentOffset.x / viewSize.width);
+        const pageNum = Math.floor(contentOffset.x / viewSize.width);
         this.setState({
           pageNumber : pageNum
         });
@@ -89,7 +89,7 @@ class PaginationComponent extends Component {
           <GButtonComponent 
           buttonStyle={styles.buttonStyle} 
           textStyle={styles.buttonTextStyle}
-          buttonText= {"Back"}
+          buttonText= "Back"
           onPress={this.goBack}
           />
             <GPagination 

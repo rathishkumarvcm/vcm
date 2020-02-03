@@ -6,8 +6,7 @@ import { GLoadingSpinner,GErrorBoundaries } from '../CommonComponents';
 const GLoadingSpinnerHOC = Comp =>({isLoading,children,...props})=>{
     if(isLoading){
         return (<GLoadingSpinner />);
-    } else
-    return (
+    } return (
         <GErrorBoundaries>
             <Comp {...props}>
                 {children}

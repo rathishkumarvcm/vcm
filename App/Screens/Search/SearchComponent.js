@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { TextInput, View , Text, StyleSheet} from 'react-native';
+import PropTypes from 'prop-types';
 import { GSearchComponent,GButtonComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
-import PropTypes from 'prop-types';
 
-var promiseCall = new Promise(function(resolve) {
+const promiseCall = new Promise(function(resolve) {
     setTimeout(function() {
-     let nData = [
+     const nData = [
         {id: 1,text: 'One'},{id: 2,text: 'Two'},
         {id: 3,text: 'Three'},{id : 4,text : "Four"},
         {id : 5,text : "Five"},{id : 6,text : "Six"},
@@ -17,42 +17,42 @@ var promiseCall = new Promise(function(resolve) {
     }, 5000);
   });
 
-let data = [{id: 1,text: 'One'},{id: 2,text: 'Two'},{id: 3,text: 'Three'},{id : 4,text : "Four"}];
-let newData = [{id: 1,text: 'One'},{id: 2,text: 'Two'},{id: 3,text: 'Three'},{id : 4,text : "Four"},{id : 5,text : "Five"},{id : 6,text : "Six"},{id : 7,text : "Seven"},{id : 8,text : "Eight"},{id : 9,text : "Nine"},{id : 10,text : "Ten"}];
+const data = [{id: 1,text: 'One'},{id: 2,text: 'Two'},{id: 3,text: 'Three'},{id : 4,text : "Four"}];
+const newData = [{id: 1,text: 'One'},{id: 2,text: 'Two'},{id: 3,text: 'Three'},{id : 4,text : "Four"},{id : 5,text : "Five"},{id : 6,text : "Six"},{id : 7,text : "Seven"},{id : 8,text : "Eight"},{id : 9,text : "Nine"},{id : 10,text : "Ten"}];
 
 const styles = StyleSheet.create({
+  buttonStyle:{
+    alignItems:'center',
+    backgroundColor:"#06748C",
+    borderRadius:scaledHeight(5),
+    height:scaledHeight(40),
+    justifyContent: "center",
+    marginLeft:scaledHeight(10),
+    marginTop:scaledHeight(20),
+    width:'90%'
+    
+},
+  buttonTextStyle:{
+    fontSize: scaledHeight(14),
+    fontWeight: "bold",
+    lineHeight:scaledHeight(20),
+},
   container : {
     height:scaledHeight(50),
     width:'100%'
   },
   listArea :{
-    width: '100%',
+    alignItems:'center',
+    backgroundColor:'#6B8E23',
     height:scaledHeight(30),
     justifyContent:'center',
-    alignItems:'center',
-    backgroundColor:'#6B8E23'
+    width: '100%'
   },
-  textArea:{
-    marginTop:'10%',
+textArea:{
     borderBottomWidth :1,
+    marginTop:'10%',
     width:'90%'
   },
-  buttonStyle:{
-    height:scaledHeight(40),
-    width:'90%',
-    justifyContent: "center",
-    alignItems:'center',
-    borderRadius:scaledHeight(5),
-    backgroundColor:"#06748C",
-    marginTop:scaledHeight(20),
-    marginLeft:scaledHeight(10)
-    
-},
-buttonTextStyle:{
-    fontSize: scaledHeight(14),
-    fontWeight: "bold",
-    lineHeight:scaledHeight(20),
-},
 });
 
  
@@ -69,7 +69,7 @@ class SearchComponent extends Component {
     }
       
     promiseCalled = () => {
-      let appendArray=[];
+      const appendArray=[];
         this.state.flatListData.map((item) => {
             if(item.text.search(this.state.promiseVal) != -1){
                 appendArray.push(item);
@@ -99,10 +99,8 @@ class SearchComponent extends Component {
            });
        });
       }
-      else{
-        return;
-      }
     }
+
     onChangeMethod = (text) =>{
       if(text == ''){
         this.setState({
@@ -135,7 +133,7 @@ class SearchComponent extends Component {
                 // disabled
                 buttonStyle={styles.buttonStyle} 
                 textStyle={styles.buttonTextStyle}
-                buttonText= {"Back"}
+                buttonText= "Back"
                 onPress={this.goback}
             />
           <Text style={{fontSize:20,marginTop:'2%',
@@ -143,7 +141,7 @@ class SearchComponent extends Component {
         height:30,
         color:'green'}}
           >
-                        {"Search Component:"}
+                        Search Component:
           </Text>
           <TextInput style={styles.textArea}
           onChangeText={(text) => this.onChangeMethod(text)}

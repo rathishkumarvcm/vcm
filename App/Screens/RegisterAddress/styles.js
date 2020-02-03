@@ -5,6 +5,11 @@ const {width} = Dimensions.get('window');
 
 
 const styles = StyleSheet.create({
+    addressDropDown:{
+        position:'absolute',
+        right:0,
+        top:scaledHeight(700)
+    },
     container:{
         backgroundColor:'#F7FAFF',
         flex:1,
@@ -27,6 +32,9 @@ const styles = StyleSheet.create({
     faceIDtextStyle:{
         alignItems:'center',
         height:scaledHeight(20)
+    },
+    flexCont:{
+        flex:0.85
     },
     forgotLineText:{
         flexDirection:'row',

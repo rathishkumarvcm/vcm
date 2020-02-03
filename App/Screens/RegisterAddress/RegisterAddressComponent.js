@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Text,View,ScrollView,TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 import styles from './styles';
 import {GButtonComponent,GInputComponent,GIcon,GHeaderComponent,GFooterComponent,GDropDownComponent} from '../../CommonComponents';
-import PropTypes from 'prop-types';
-import { scaledHeight } from '../../Utils/Resolution';
 
 
   const newData = [
@@ -26,10 +25,6 @@ class registerAddressComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
-            isLoading:false,
-            enableBiometric:false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false,
             stateDropDown : false,
             valueDropDown : ''
         };
@@ -40,12 +35,14 @@ class registerAddressComponent extends Component {
     }
 
     goBack = () =>{
-        this.props.navigation.goBack();
+        const {navigation} = this.props;
+        navigation.goBack();
     }
 
     selectTheState = () => {
+        const {newState} = this.state;
         this.setState({
-            stateDropDown : !this.state.stateDropDown
+            stateDropDown : !newState.stateDropDown
         });
     }
 
@@ -56,81 +53,83 @@ class registerAddressComponent extends Component {
         });
     }
 
-    navigateEmail = ()=>this.props.navigation.navigate('registerEmail');
+    navigateEmail = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('registerEmail');
+    }
  
-    navigateDashboard = ()=>this.props.navigation.navigate('dashboard');
+    navigateDashboard = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('dashboard');
+    }
 
     render(){
-        
+        const {navigation} = this.props;
         return (
            
            
             <View style={styles.container}>
             <GHeaderComponent 
-            navigation={this.props.navigation}
+            navigation={navigation}
             register onPress={this.navigateEmail}
             />
 
-            <ScrollView style={{flex:0.85}}>
-
-            {/*<View style={styles.stepsOuter}>
-                <View style={styles.stepsInner} />
-        </View>*/}
+            <ScrollView style={styles.flexCont}>
 
             <View style={styles.signInView}>
                 <Text style={styles.signIntext}>
-                    {"You are almost done! Let us know your contact information."}
+                    You are almost done! Let us know your contact information.
                 </Text>
             </View>
 
             <View style={styles.newVictorySection1}>
                 <Text style={styles.openInvestment}>
-                        {"For USAA Members USAA Investments has been backed by the investment expertise of Victory Capital Management since July 2019."}
+                        For USAA Members USAA Investments has been backed by the investment expertise of Victory Capital Management since July 2019.
                 </Text>  
             </View>
 
 
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"Address 1"}       
+                    Address 1       
                 </Text>
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                placeholder={""}
+                placeholder=""
                 secureTextEntry
             />
 
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"Address 2(Optional)"}       
+                    Address 2(Optional)       
                 </Text>
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                placeholder={""}
+                placeholder=""
                 
             />
 
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"Zip"}       
+                    Zip       
                 </Text>
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                placeholder={""}
+                placeholder=""
                 
             />
 
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"City"}       
+                    City       
                 </Text>
             </View>
             <GInputComponent 
                 propInputStyle={styles.userIDTextBox} 
-                placeholder={""}
+                placeholder=""
                 
             />
 
@@ -141,11 +140,11 @@ class registerAddressComponent extends Component {
     showDropDown={this.state.stateDropDown}
     dropDownValue={this.state.valueDropDown}
     selectedDropDownValue={this.selectedDropDownValue}
-    itemToDisplay={"title"}
-    dropDownPostition={{position:'absolute',right:0,top:scaledHeight(700)}}
+    itemToDisplay="title"
+    dropDownPostition={styles.addressDropown}
 />
 
-           {/*} <View style={styles.signInView}>
+           {/* } <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
                     {"State"}       
                 </Text>
@@ -167,11 +166,11 @@ class registerAddressComponent extends Component {
                         color="black"
                     />
                 </TouchableOpacity>
-    </TouchableOpacity>*/}
+    </TouchableOpacity> */}
 
             
 
-        {/*this.state.stateDropDown && 
+        {/* this.state.stateDropDown && 
         <View style={{height:100,position:'absolute',right:0,top:scaledHeight(700),zIndex:1,
         borderWidth:1,marginLeft:'4%',marginRight:'4%',width:'92%',borderColor : "#DEDEDF",backgroundColor:'white'}}
         >
@@ -187,7 +186,7 @@ class registerAddressComponent extends Component {
             </View> */}
 
             
-            {/*<Dropdown
+            {/* <Dropdown
             dropdownOffset={{top:106}}
             containerStyle={{borderWidth:1,
             backgroundColor:'white',
@@ -206,7 +205,7 @@ class registerAddressComponent extends Component {
            // dropdownPosition={20}
            
                             data={data}
-        />*/}
+        /> */}
 
             <GButtonComponent 
                     buttonStyle={styles.signInButton}
@@ -223,7 +222,7 @@ class registerAddressComponent extends Component {
                         color="black"
             />
                 <Text style={styles.forgotLineTextColor}>
-                    {"Back"}
+                    Back
                 </Text>
             </TouchableOpacity>
 
@@ -232,7 +231,7 @@ class registerAddressComponent extends Component {
                     {"Need Assistance?  "}
                    
                 <Text style={styles.forgotLineTextColor}>
-                {"Get Help"}
+                Get Help
                 </Text>
                 </Text>
             </View>
@@ -244,10 +243,10 @@ class registerAddressComponent extends Component {
 
             <View style={styles.newVictorySection}>
                 <Text style={styles.termsofuseText}>
-                    {"Investments for USAA Members"}
+                    Investments for USAA Members
                 </Text>
                 <Text style={styles.openInvestment}>
-                        {"For USAA Members USAA Investments has been backed by the investment expertise of Victory Capital Management since July 2019. Your USAA online login credentials have not changed. They are the same details you used to you create your USAA online account.Your USAA online login credentials have not changed. They are the same details you used to you create your USAA online account."}
+                        For USAA Members USAA Investments has been backed by the investment expertise of Victory Capital Management since July 2019. Your USAA online login credentials have not changed. They are the same details you used to you create your USAA online account.Your USAA online login credentials have not changed. They are the same details you used to you create your USAA online account.
                 </Text> 
             </View>
 

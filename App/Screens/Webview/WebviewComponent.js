@@ -64,8 +64,6 @@ class WebviewComponent extends Component {
                 injectedJavaScript={runFirst}
                 // onMessage={this.onMessage}
             /> 
-
-            
             </>
 
             

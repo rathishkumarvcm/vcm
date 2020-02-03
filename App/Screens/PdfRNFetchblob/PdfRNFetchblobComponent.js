@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
 import { View,Text,StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import { scaledHeight } from '../../Utils/Resolution';
 import {GButtonComponent} from '../../CommonComponents';
-import PropTypes from 'prop-types';
 
 // const url = 'http:// www.africau.edu/Images/default/sample.pdf';
 
 const styles = StyleSheet.create({
+    buttonStyle:{
+        alignItems:'center',
+        backgroundColor:"#06748C",
+        borderRadius:scaledHeight(5),
+        height:scaledHeight(40),
+        justifyContent: "center",
+        marginTop:scaledHeight(10),
+        width:'90%' 
+        
+    },
+    buttonTextStyle:{
+        fontSize: scaledHeight(14),
+        fontWeight: "bold",
+        lineHeight:scaledHeight(20),
+    },
     containerStyle:{
         flex:1,
         flexDirection: 'column',
@@ -16,28 +31,10 @@ const styles = StyleSheet.create({
         // alignItems:'center'
     },
     labeltext:{
+        color:'green',
         fontSize:20,
-        marginBottom:'2%',
         height:30,
-        color:'green'
-    },
-    button:{
-        fontSize:scaledHeight(5)
-    },
-    buttonStyle:{
-        height:scaledHeight(40),
-        width:'90%',
-        justifyContent: "center",
-        alignItems:'center',
-        borderRadius:scaledHeight(5),
-        backgroundColor:"#06748C",
-        marginTop:scaledHeight(10) 
-        
-    },
-    buttonTextStyle:{
-        fontSize: scaledHeight(14),
-        fontWeight: "bold",
-        lineHeight:scaledHeight(20),
+        marginBottom:'2%'
     },
 });
 
@@ -45,7 +42,6 @@ class PdfRNFetchblob extends Component {
     constructor(props){
         super(props);
         this.state = {
-            isModalVisible:false
         };
     }
 
@@ -65,26 +61,26 @@ class PdfRNFetchblob extends Component {
     render(){
         return (
             <View style={styles.containerStyle}>
-                <Text style={styles.labeltext}>{"RN FETCH BLOB Features:"}</Text>
+                <Text style={styles.labeltext}>RN FETCH BLOB Features:</Text>
 
                 <GButtonComponent 
                     buttonStyle={styles.buttonStyle} 
                     textStyle={styles.buttonTextStyle}
-                    buttonText= {"Download PDF with Cache"}
+                    buttonText= "Download PDF with Cache"
                     onPress={this.pdfCache}
                 />
 
                 <GButtonComponent 
                     buttonStyle={styles.buttonStyle} 
                     textStyle={styles.buttonTextStyle}
-                    buttonText= {"Download PDF without Cache"}
+                    buttonText= "Download PDF without Cache"
                     onPress={this.pdfWithoutCache}
                 />
 
                  <GButtonComponent 
                     buttonStyle={styles.buttonStyle} 
                     textStyle={styles.buttonTextStyle}
-                    buttonText= {"Back"}
+                    buttonText= "Back"
                     onPress={this.goBack}
                  />
 
