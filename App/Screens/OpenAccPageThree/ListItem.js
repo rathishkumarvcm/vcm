@@ -115,14 +115,14 @@ const ListItem = (props) => {
     const {
         isActive,
         fundName,
-        minimum,
-        autoInvesting,
+       // minimum,
+       // autoInvesting,
         minMaxInvestMonthly,
         nav,
         lastNav,
         minMax52week,
-        risk,
-        item,
+      //  risk,
+       // item,
         riskImg,
         onClickCheckbox,
         onClickItem
@@ -172,7 +172,7 @@ const ListItem = (props) => {
                         <Image style={styles.riskLevelImg}
                         resizeMode="cover"
                         source={riskImg}
-                       />
+                        />
                         
                     </View>
                 </View>
@@ -182,23 +182,39 @@ const ListItem = (props) => {
     );
 };
 ListItem.propTypes = {
-    isActive: PropTypes.bool,
-    // onClickItem: PropTypes.func,
-    onClickCheckbox: PropTypes.func,
-    fundName: PropTypes.string,
-    minimum: PropTypes.string,
-    // autoInvesting: PropTypes.string,
-    // risk: PropTypes.string
+
+        isActive:PropTypes.bool,
+        fundName:PropTypes.string,
+        minimum:PropTypes.string,
+        autoInvesting:PropTypes.string,
+        minMaxInvestMonthly:PropTypes.string,
+        nav:PropTypes.string,
+        lastNav:PropTypes.string,
+        minMax52week:PropTypes.string,
+        risk:PropTypes.string,
+        item:PropTypes.instanceOf(Object),
+        riskImg:PropTypes.instanceOf(Object),
+        onClickCheckbox:PropTypes.func,
+        onClickItem:PropTypes.func,
 
 };
 ListItem.defaultProps = {
-    isActive: false,
-    // onClickItem: null,
-    onClickCheckbox: null,
-    fundName: "",
-    minimum: "",
-    // autoInvesting: "",
-    // risk: ""
+
+
+
+    isActive:false,
+    fundName:"",
+    minimum:"",
+    autoInvesting:"",
+    minMaxInvestMonthly:"",
+    nav:"",
+    lastNav:"",
+    minMax52week:"",
+    risk:"",
+    item:{},
+    riskImg:{},
+    onClickCheckbox:null,
+    onClickItem:null,
 };
 
 export default ListItem;

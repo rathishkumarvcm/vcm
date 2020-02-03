@@ -359,6 +359,7 @@ export default {
         fundType: "Fund Type",
         clearFilter: "Clear Filters",
         applyFilter: "Apply Filter",
+        sortBy:"Sort By",
         contactMSR: "Contact MSR",
         callTollFee: "Call toll-free",
         callTollFeeNo: "(855) 756-7520",

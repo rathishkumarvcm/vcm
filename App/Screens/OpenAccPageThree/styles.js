@@ -201,6 +201,10 @@ const styles = StyleSheet.create({
         width: '100%'
 
     },
+    dropDownViewSortBy: {
+        flexGrow: 1,
+        width: "50%"
+    },
 
     editFlexDirectionColumn: {
         flexDirection: 'column',
@@ -243,10 +247,10 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     fundItemContntView: {
-        margin: "4%"
+        margin: scaledHeight(15)
     },
     fundItemHeaderTxt: {
-        color: "#54565B",
+        color: "#0D7CB5",
         fontSize: scaledHeight(18),
         fontWeight: "bold"
     },
@@ -260,7 +264,6 @@ const styles = StyleSheet.create({
     fundItemSwitch: {
         alignItems: 'flex-end',
         flex: 0.3,
-        marginRight: '4%'
     },
     fundItemTitle:
     {
@@ -285,11 +288,13 @@ const styles = StyleSheet.create({
         color: "#56565A",
         fontSize: scaledHeight(14),
         fontWeight: "400",
-        lineHeight: scaledHeight(17)
+        lineHeight: scaledHeight(17),
+        marginTop: scaledHeight(8)
+
     },
     fundListGrp: {
         flexGrow: 1,
-        marginTop: scaledHeight(27)
+        marginTop: scaledHeight(15)
     },
     fundListHeader:
     {
@@ -482,7 +487,7 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(25)
     },
     marginBottomStyle: {
-        marginBottom: "4%"
+        marginBottom: scaledHeight(26)
       },
     mininitialInvestment: {
         color: '#56565A',
