@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import ModifySecQuesComponent from './ModifySecurityQuesComponent';
-import {loginActions} from "../../Shared/Actions";
-import {accOpeningActions,ModifySecurityQuestionsActions} from '../../Shared/Actions';
+import {loginActions,accOpeningActions,ModifySecurityQuestionsActions} from "../../Shared/Actions";
+
 
 
 

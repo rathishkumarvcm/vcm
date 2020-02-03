@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
-import { GButtonComponent, GHeaderComponent, GFooterComponent, GInputComponent, GRadioButtonComponent, GIcon, GDropDownComponent } from '../../CommonComponents';
+import { GButtonComponent, GHeaderComponent, GFooterComponent, GInputComponent, GRadioButtonComponent, GDropDownComponent } from '../../CommonComponents';
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import {emailRegex} from '../../Constants/RegexConstants';
@@ -96,8 +96,8 @@ class ModifySecQuesComponent extends Component {
         const { getPersonalCompositeData, masterLookupStateData } = this.props;
 
         for (let i = 0; i < compositePayloadData.length; i += 1) {
-            const tempkey = compositePayloadData[i];
-            if (this.props && masterLookupStateData && !masterLookupStateData[tempkey]) {
+            const tempkey = compositePayloadData[parseInt(i,0)];
+            if (this.props && masterLookupStateData && !masterLookupStateData[parseInt(tempkey,0)]) {
                 payload.push(tempkey);
             }
         }
@@ -172,7 +172,7 @@ class ModifySecQuesComponent extends Component {
 
         addedQuestionsPayload = {
             list_security_questions: questionsList,
-            primaryEmail: primaryEmail,
+            primaryEmail,
             additonalEmail: additionalEmail,
             documentDeliveryPreference: documentPreference
         };
@@ -219,7 +219,7 @@ class ModifySecQuesComponent extends Component {
     }
 
     onPressDropDown = (stateKey, keyName) => () => this.setState(prevState => ({
-        ...prevState[stateKey],
+        ...prevState[stateKey.toString()],
         [keyName]: !prevState.keyName
 
     }));
