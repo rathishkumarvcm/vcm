@@ -9,6 +9,7 @@ import AccountMessagingInvestmentAccountComponent from './AccountMessagingInvest
 
 const mapStateToProps = (state /* , props */) => ({
   // dashboardData: getLogin(state),
+  accountPreferenceinitialState: state.accountPreferenceData,   
 });
 
 const mapDispatchToProps = {

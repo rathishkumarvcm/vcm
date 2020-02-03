@@ -1,0 +1,3 @@
+import AddAccToInterestedPartyComponent from './AddAccToInterestedPartyContainer';
+
+export default AddAccToInterestedPartyComponent;

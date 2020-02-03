@@ -15,61 +15,6 @@ const month = new Date().getMonth() + 1; //  Current Month
 const year = new Date().getFullYear(); //  Current Year
 const currentdate = `${month}-${date}-${year}`;
 
-const accountsPreference = 
-    {       
-        "accountType": "Traditional IRA",               
-        "accName":"Lorem Ipsum",
-        "accNumber":"7667-3345-1111",                  
-        "receiveInvestmentAcc":"How would you like to receive documents for your Investment account?",
-        "preferences":[
-            {
-                "preferenceType": "Investment Statements and Inserts",     
-                "investmentStatements":[
-                    { "key": "online", "name": "Online", "selected":true },
-                    { "key": "paper", "name": "Paper", "selected":false }
-                ]
-            },
-            {
-                "preferenceType": "Investment Confirmations and Associated Prospectuses",     
-                "investmentStatements":[
-                    { "key": "online", "name": "Online", "selected":false },
-                    { "key": "paper", "name": "Paper", "selected":true }
-                ]
-            },
-            {
-                "preferenceType": "Investment Shareholder Reports (includes prospectus other documents)",     
-                "investmentStatements":[
-                    { "key": "online", "name": "Online", "selected":true },
-                    { "key": "paper", "name": "Paper", "selected":false }
-                ]
-            },
-            {
-                "preferenceType": "Investment Eligible Correspondence",     
-                "investmentStatements":[
-                    { "key": "online", "name": "Online", "selected":false },
-                    { "key": "paper", "name": "Paper", "selected":true }
-                ]
-            }                   
-        ],
-        "receiveTaxDocuments":"How would you like to receive tax documents?",
-        "taxDocuments":[
-            {
-                "documentType": "Documents for Tax Accounts?",     
-                "documentStatements":[
-                    { "key": "online", "name": "Online", "selected":true },
-                    { "key": "paper", "name": "Paper", "selected":false }
-                ]
-            },
-            {
-                "documentType": "Would you like all of your other documents from VCM Delivered the same way?",     
-                "documentStatements":[
-                    { "key": "yes", "name": "Yes", "selected":false },
-                    { "key": "no", "name": "No", "selected":true }
-                ]
-            }
-        ]
-};
-
 class AccountMessagingGeneralDocumentsComponent extends Component {
     constructor(props) {
         super(props);
@@ -84,7 +29,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
             selectedGeneralDocumentsAnnualItemID: '1',          
             selectedGeneralDocumentsPrivacyItemID: '1',
             saveSuccess:false,
-            accountPreferenceData: accountsPreference,          
+            accountPreferenceData: {},          
             switchValue:false,
             errMsg: "",
             personal: {
@@ -118,9 +63,27 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
         };
     }        
 
-    componentDidMount() {              
-     
+    componentDidMount() {                         
+        
     }
+
+    static getDerivedStateFromProps(props, prevState){
+        // initialize state variable and return. If no changes required for state
+        // variable then return empty object. return {}
+
+        const {accMessageDocumentinitialState} = props;     
+        const {accountPreferenceData} = prevState;     
+  
+         if (accMessageDocumentinitialState && Object.entries(accountPreferenceData).length === 0){
+            // AppUtils.debugLog(`Preference=====> ${JSON.stringify(Object.entries(accMessageDocumentinitialState).length)}`);
+            return {
+                accountPreferenceData: accMessageDocumentinitialState
+            };            
+        }
+        return{                           
+            accountPreferenceData: prevState.accountPreferenceData
+        };                    
+    }        
 
     componentDidUpdate(prevProps, prevState) {
 
@@ -574,84 +537,146 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                         </View>
                      )     
                      : null
-                     }                   
-        
-                    <View style={styles.taxDocumentcontainer}>
-                        <View style={styles.taxDocumentHeaderview}>                           
-                            <Text style={styles.taxDocumentHeaderViewTitle}>
-                                Traditional IRA
-                            </Text>
-                        </View>
-                        <View style={styles.lineBorder} />
-                    </View>   
-
-                    <View style={styles.accountInfoContainer}>
-
-                        <View style={styles.accountNameContainer}>  
-                            <Text style={styles.accountNameText}>
-                                Account Name
-                            </Text>
-                            <Text style={styles.accountNameValueText}>
-                                {accountsPreference.accName}
-                            </Text>
-                        </View>
-
-                        <View style={styles.accountNameContainer}>  
-                            <Text style={styles.accountNumberText}>
-                                Account Number
-                            </Text>
-                            <Text style={styles.accountNumberValueText}>
-                                {accountsPreference.accNumber}
-                            </Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.taxDocumentcontainer}>
-                        <View style={styles.taxDocumentHeaderview}>    
-                            <GIcon
-                                name="minus"
-                                type="antdesign"
-                                size={15}
-                                color="#56565A"
-                            />                       
-                            <Text style={styles.taxDocumentHeaderViewTitle}>
-                                Edit Delivery Preferences
-                            </Text>
-                        </View>
-                        <View style={styles.lineBorder} />
-                    </View>                    
-                 
-                    <View style={styles.taxDocumentcontainerBottom}> 
-                        <Text style={styles.taxDocumentAlertsContent}>
-                            {accountPreferenceData.receiveInvestmentAcc}
-                        </Text> 
-
+                     }                  
+                     {
+                        (Object.entries(accountPreferenceData).length>0)?(                                     
                         <View>
+
+                        <View style={styles.taxDocumentcontainer}>
+                            <View style={styles.taxDocumentHeaderview}>                           
+                                <Text style={styles.taxDocumentHeaderViewTitle}>
+                                    Traditional IRA
+                                </Text>
+                            </View>
+                            <View style={styles.lineBorder} />
+                        </View>   
+
+                        <View style={styles.accountInfoContainer}>
+
+                            <View style={styles.accountNameContainer}>  
+                                <Text style={styles.accountNameText}>
+                                    Account Name
+                                </Text>
+                                <Text style={styles.accountNameValueText}>
+                                    {accountPreferenceData.accName}
+                                </Text>
+                            </View>
+
+                            <View style={styles.accountNameContainer}>  
+                                <Text style={styles.accountNumberText}>
+                                    Account Number
+                                </Text>
+                                <Text style={styles.accountNumberValueText}>
+                                    {accountPreferenceData.accNumber}
+                                </Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.taxDocumentcontainer}>
+                            <View style={styles.taxDocumentHeaderview}>    
+                                <GIcon
+                                    name="minus"
+                                    type="antdesign"
+                                    size={15}
+                                    color="#56565A"
+                                />                       
+                                <Text style={styles.taxDocumentHeaderViewTitle}>
+                                    Edit Delivery Preferences
+                                </Text>
+                            </View>
+                            <View style={styles.lineBorder} />
+                        </View>                    
+                    
+                        <View style={styles.taxDocumentcontainerBottom}> 
+                            <Text style={styles.taxDocumentAlertsContent}>
+                                {accountPreferenceData.receiveInvestmentAcc}
+                            </Text> 
+
+                            <View>
+                                {
+                                    accountPreferenceData.preferences.map((accounts) => {
+                                        return (
+                                            <View style={styles.deliveryPreferenceOptions} key={accounts.preferenceType}>
+                                                <Text style={styles.investmentTypeText}>
+                                                    {accounts.preferenceType}
+                                                </Text>          
+                                                <View style={styles.radioBtnGrpConfirm}>                        
+                                                {    
+                                                    accounts.investmentStatements.map((preference) =>{                                       
+                                                        return(                    
+                                                            <View key={preference.key}>                                                   
+                                                                <CustomRadio
+                                                                    key={preference.key}
+                                                                    size={30}
+                                                                    itemBottom={10}
+                                                                    itemTop={10}
+                                                                    outerCicleColor="#DEDEDF"
+                                                                    innerCicleColor="#61285F"
+                                                                    labelStyle={styles.lblRadioBtnTxt}
+                                                                    label={preference.name}     
+                                                                    descLabelStyle={styles.lblRadioDescTxt}
+                                                                    descLabel=""                                                             
+                                                                    selected={preference.selected}
+                                                                    onPress={this.onPrefernceSelected(accounts.preferenceType,preference.key,preference.selected)}
+                                                                />          
+                                                            </View>                                                                                
+                                                        );                                                        
+                                                    })
+                                                }
+                                                </View>
+                                            </View>        
+                                        );                                
+                                    })
+                                }                      
+                            </View>                                                 
+                        </View>
+
+                        <View style={styles.taxDocumentcontainer}>
+                            <View style={styles.taxDocumentHeaderview}>
+                                <GIcon
+                                    name="minus"
+                                    type="antdesign"
+                                    size={15}
+                                    color="#56565A"
+                                />
+                                <Text style={styles.taxDocumentHeaderViewTitle}>
+                                    {gblStrings.settingAccountMessaging.accountMessagingGeneralTaxDocuments}
+                                </Text>
+                            </View>
+                            <View style={styles.lineBorder} />
+                        </View>   
+
+                        <View style={styles.taxDocumentcontainerBottom}> 
+                            <Text style={styles.taxDocumentAlertsContent}>
+                                {accountPreferenceData.receiveTaxDocuments}
+                            </Text> 
+
+                            <View>
                             {
-                                accountPreferenceData.preferences.map((accounts) => {
+                                accountPreferenceData.taxDocuments.map((taxDocument) => {
                                     return (
-                                        <View style={styles.deliveryPreferenceOptions} key={accounts.preferenceType}>
+                                        <View style={styles.deliveryPreferenceOptions} key={taxDocument.documentType}>
                                             <Text style={styles.investmentTypeText}>
-                                                {accounts.preferenceType}
+                                                {taxDocument.documentType}
                                             </Text>          
                                             <View style={styles.radioBtnGrpConfirm}>                        
                                             {    
-                                                accounts.investmentStatements.map((preference) =>{                                       
+                                                taxDocument.documentStatements.map((statements) =>{                                       
                                                     return(                    
-                                                        <View key={preference.key}>                                                   
+                                                        <View key={statements.key}>                                                   
                                                             <CustomRadio
-                                                                key={preference.key}
+                                                                key={statements.key}
                                                                 size={30}
                                                                 itemBottom={10}
                                                                 itemTop={10}
                                                                 outerCicleColor="#DEDEDF"
                                                                 innerCicleColor="#61285F"
                                                                 labelStyle={styles.lblRadioBtnTxt}
-                                                                label={preference.name}     
+                                                                label={statements.name}     
                                                                 descLabelStyle={styles.lblRadioDescTxt}
                                                                 descLabel=""                                                             
-                                                                selected={preference.selected}
-                                                                onPress={this.onPrefernceSelected(accounts.preferenceType,preference.key,preference.selected)}
+                                                                selected={statements.selected}
+                                                                onPress={this.onDocumentsSelected(taxDocument.documentType,statements.key,statements.selected)}
                                                             />          
                                                         </View>                                                                                
                                                     );                                                        
@@ -660,246 +685,187 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                             </View>
                                         </View>        
                                     );                                
-                                })
-                            }                      
-                        </View>                                                 
-                    </View>
-
-                    <View style={styles.taxDocumentcontainer}>
-                        <View style={styles.taxDocumentHeaderview}>
-                            <GIcon
-                                name="minus"
-                                type="antdesign"
-                                size={15}
-                                color="#56565A"
-                            />
-                            <Text style={styles.taxDocumentHeaderViewTitle}>
-                                {gblStrings.settingAccountMessaging.accountMessagingGeneralTaxDocuments}
+                                    })
+                                }          
+                            </View>                    
+                        </View>               
+                        <View style={styles.generalDocumentDisclaimerView}>                                                           
+                            <Text style={styles.generalDocumentDisclaimerViewTitle}>
+                                    {gblStrings.settingAccountMessaging.accountMessagingGeneralSomeDoc}  
+                                <Text style={styles.generalDocumentDisclaimerViewFaq} onPress={this.navigateFAQPage}>
+                                    {gblStrings.settingAccountMessaging.accountMessagingGeneralFaqPage}  
+                                </Text> 
+                                {gblStrings.settingAccountMessaging.accountMessagingGeneralAdditionalAssist}  
                             </Text>
                         </View>
-                        <View style={styles.lineBorder} />
-                    </View>   
 
-                    <View style={styles.taxDocumentcontainerBottom}> 
-                        <Text style={styles.taxDocumentAlertsContent}>
-                            {accountPreferenceData.receiveTaxDocuments}
-                        </Text> 
-
-                        <View>
-                        {
-                            accountPreferenceData.taxDocuments.map((taxDocument) => {
-                                return (
-                                    <View style={styles.deliveryPreferenceOptions} key={taxDocument.documentType}>
-                                        <Text style={styles.investmentTypeText}>
-                                            {taxDocument.documentType}
-                                        </Text>          
-                                        <View style={styles.radioBtnGrpConfirm}>                        
-                                        {    
-                                            taxDocument.documentStatements.map((statements) =>{                                       
-                                                return(                    
-                                                    <View key={statements.key}>                                                   
-                                                        <CustomRadio
-                                                            key={statements.key}
-                                                            size={30}
-                                                            itemBottom={10}
-                                                            itemTop={10}
-                                                            outerCicleColor="#DEDEDF"
-                                                            innerCicleColor="#61285F"
-                                                            labelStyle={styles.lblRadioBtnTxt}
-                                                            label={statements.name}     
-                                                            descLabelStyle={styles.lblRadioDescTxt}
-                                                            descLabel=""                                                             
-                                                            selected={statements.selected}
-                                                            onPress={this.onDocumentsSelected(taxDocument.documentType,statements.key,statements.selected)}
-                                                        />          
-                                                    </View>                                                                                
-                                                );                                                        
-                                            })
-                                        }
-                                        </View>
-                                    </View>        
-                                );                                
-                                })
-                            }          
-                        </View>                    
-                    </View>               
-                    <View style={styles.generalDocumentDisclaimerView}>                                                           
-                        <Text style={styles.generalDocumentDisclaimerViewTitle}>
-                                {gblStrings.settingAccountMessaging.accountMessagingGeneralSomeDoc}  
-                            <Text style={styles.generalDocumentDisclaimerViewFaq} onPress={this.navigateFAQPage}>
-                                {gblStrings.settingAccountMessaging.accountMessagingGeneralFaqPage}  
-                            </Text> 
-                            {gblStrings.settingAccountMessaging.accountMessagingGeneralAdditionalAssist}  
-                        </Text>
-                    </View>
-
-                    <View style={styles.taxDocumentcontainer}>
-                        <View style={styles.taxDocumentHeaderview}>    
-                            <GIcon
-                                name="minus"
-                                type="antdesign"
-                                size={15}
-                                color="#56565A"
-                            />                       
-                            <Text style={styles.taxDocumentHeaderViewTitle}>
-                                Add/Maintain Seasonal Address (Optional)
-                            </Text>
-                        </View>
-                        <View style={styles.lineBorder} />
-                    </View>      
-                    <View style={styles.toggleOptionscontainer}>
-                        <Text style={styles.toggleText}>
-                            Would you like to Set Seasonal Address?
-                        </Text>
-                        <View>                        
-                            <Switch trackColor={swithcStyle}
-                                onValueChange={this.toggleSwitch}
-                                value = {switchValue}
-                            />        
-                        </View>
-                    </View>              
-
-                    {
-                        (switchValue)? (
-                        <View style={styles.seasonalAddressContainer}>                            
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.addAddressInfo.addressLineOne}
-                            </Text>
-                            <GInputComponent         
-                                inputref={this.setInputRef("addrLine1")}                     
-                                propInputStyle={personal.addrLine1Validation ? styles.customTxtBox : styles.customTxtBoxError}
-                                maxLength={gblStrings.maxLength.emplAddress1}
-                                value={personal.addrLine1}
-                                onChangeText={this.onChangeText("personal", "addrLine1")}                               
-                                onSubmitEditing={this.onSubmitZipEditing("personal", "zipcode", this.addrLine2)}
-                                
-                                errorFlag={!personal.addrLine1Validation}
-                                errorText={errMsg}
-                            />
-
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.addAddressInfo.addressLineTwo}
-                            </Text>
-                            <GInputComponent          
-                                inputref={this.setInputRef("addrLine2")}                      
-                                propInputStyle={personal.addrLine2Validation ? styles.customTxtBox : styles.customTxtBoxError}                                
-                                maxLength={gblStrings.maxLength.addressLine2}
-                                value={personal.addrLine2}
-                                onChangeText={this.onChangeText("personal", "addrLine2")}                              
-                                onSubmitEditing={this.onSubmitZipEditing("personal", "zipcode", this.zipcode)}
-                                errorFlag={!personal.addrLine2Validation}
-                                errorText={errMsg}
-                            />
-
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.addAddressInfo.zipCode}
-                            </Text>
-                            <GInputComponent          
-                                inputref={this.setInputRef("zipcode")}                      
-                                propInputStyle={personal.zipcodeValidation ? styles.customTxtBox : styles.customTxtBoxError}                           
-                                value={personal.zipcode}
-                                maxLength={gblStrings.maxLength.zipCode}
-                                returnKeyType="done"
-                                onChangeText={this.onChangeText("personal", "zipcode")}
-                                keyboardType="number-pad"
-                                placeholder={gblStrings.accManagement.enterZip}
-                                onSubmitEditing={this.onSubmitZipEditing("personal", "zipcode", this.city)}
-                                errorFlag={!personal.zipcodeValidation}
-                                errorText={errMsg}
-                            />
-
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.addAddressInfo.cityLabel}
-                            </Text>
-                            <GInputComponent
-                                inputref={this.setInputRef("city")}
-                                propInputStyle={personal.cityValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}                               
-                                maxLength={gblStrings.maxLength.city}
-                                value={personal.city}
-                                onChangeText={this.onChangeText("personal", "city")}
-                                onSubmitEditing={this.onSubmitEditing(this.stateCity)}
-                                errorFlag={!personal.cityValidation}
-                                errorText={errMsg}                               
-                                editable={false}
-                            />
-
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.addAddressInfo.stateLabel}
-                            </Text>      
-                            <GInputComponent          
-                                inputref={this.setInputRef("stateCity")}                      
-                                propInputStyle={personal.stateCityValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}                             
-                                returnKeyType="done"
-                                maxLength={gblStrings.maxLength.state}
-                                value={personal.stateCity}
-                                onChangeText={this.onChangeText("personal", "stateCity")}
-                                onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
-                                errorFlag={!personal.stateCityValidation}
-                                errorText={errMsg}                               
-                                editable={false}
-                            />
-
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.marketingPrivacyLabel.marketingProductEmail}
-                            </Text>
-                            <GInputComponent                           
-                                propInputStyle={personal.emailAddressValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                placeholder= {gblStrings.marketingPrivacyLabel.marketingProductEmail}
-                                keyboardType="email-address"
-                                maxLength={gblStrings.maxLength.emailID}
-                                onChangeText={this.onChangeText("personal", "emailAddress")}
-                                onSubmitEditing={this.onSubmitEditing(this.socialSecurityNo)}
-                                errorFlag={!personal.emailAddressValidation}
-                                errorText={errMsg}
-                                value={personal.emailAddress}
-                            />                 
-
-                            <View style={styles.dateContainer}>
-                                                                                    
+                        <View style={styles.taxDocumentcontainer}>
+                            <View style={styles.taxDocumentHeaderview}>    
+                                <GIcon
+                                    name="minus"
+                                    type="antdesign"
+                                    size={15}
+                                    color="#56565A"
+                                />                       
                                 <Text style={styles.taxDocumentHeaderViewTitle}>
-                                    Effective Start & End Dates
-                                </Text>       
-                            
+                                    Add/Maintain Seasonal Address (Optional)
+                                </Text>
+                            </View>
+                            <View style={styles.lineBorder} />
+                        </View>      
+                        <View style={styles.toggleOptionscontainer}>
+                            <Text style={styles.toggleText}>
+                                Would you like to Set Seasonal Address?
+                            </Text>
+                            <View>                        
+                                <Switch trackColor={swithcStyle}
+                                    onValueChange={this.toggleSwitch}
+                                    value = {switchValue}
+                                />        
+                            </View>
+                        </View>              
+
+                        {
+                            (switchValue)? (
+                            <View style={styles.seasonalAddressContainer}>                            
                                 <Text style={styles.lblTxt}>
-                                    {gblStrings.accManagement.from}
+                                    {gblStrings.addAddressInfo.addressLineOne}
                                 </Text>
-                                <GDateComponent                                    
-                                    inputref={this.setInputRef("startDate")}
-                                    date={personal.startDate}
-                                    placeholder="MM-DD-YYYY"
-                                    dateTextLayout={styles.dateTextLayout}
-                                    componentStyle={styles.dateStyle}
-                                    minDate={currentdate}                                   
-                                    errorFlag={!personal.startDateValidation}
-                                    errorMsg={errMsg}
-                                    onDateChange={this.onChangeText("personal", "startDate")}
+                                <GInputComponent         
+                                    inputref={this.setInputRef("addrLine1")}                     
+                                    propInputStyle={personal.addrLine1Validation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    maxLength={gblStrings.maxLength.emplAddress1}
+                                    value={personal.addrLine1}
+                                    onChangeText={this.onChangeText("personal", "addrLine1")}                               
+                                    onSubmitEditing={this.onSubmitZipEditing("personal", "zipcode", this.addrLine2)}
+                                    
+                                    errorFlag={!personal.addrLine1Validation}
+                                    errorText={errMsg}
                                 />
-                                <Text style={styles.lblTxtCalender}>
-                                    {gblStrings.common.calender}
-                                </Text>
 
                                 <Text style={styles.lblTxt}>
-                                    {gblStrings.accManagement.to}
+                                    {gblStrings.addAddressInfo.addressLineTwo}
                                 </Text>
-                                <GDateComponent
-                                    inputref={this.setInputRef("endDate")}
-                                    date={personal.endDate}
-                                    placeholder="MM-DD-YYYY"
-                                    dateTextLayout={styles.dateTextLayout}
-                                    componentStyle={styles.dateStyle}
-                                    minDate={personal.startDate ? personal.startDate : currentdate}
-                                    errorFlag={!personal.endDateValidation}
-                                    errorMsg={errMsg}
-                                    onDateChange={this.onChangeText("personal", "endDate")}
+                                <GInputComponent          
+                                    inputref={this.setInputRef("addrLine2")}                      
+                                    propInputStyle={personal.addrLine2Validation ? styles.customTxtBox : styles.customTxtBoxError}                                
+                                    maxLength={gblStrings.maxLength.addressLine2}
+                                    value={personal.addrLine2}
+                                    onChangeText={this.onChangeText("personal", "addrLine2")}                              
+                                    onSubmitEditing={this.onSubmitZipEditing("personal", "zipcode", this.zipcode)}
+                                    errorFlag={!personal.addrLine2Validation}
+                                    errorText={errMsg}
                                 />
-                                <Text style={styles.lblTxtCalender}>
-                                    {gblStrings.common.calender}
-                                </Text>                      
-                            </View>  
-                        </View>
-                      )                                                   
-                       :null
-                   }
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.addAddressInfo.zipCode}
+                                </Text>
+                                <GInputComponent          
+                                    inputref={this.setInputRef("zipcode")}                      
+                                    propInputStyle={personal.zipcodeValidation ? styles.customTxtBox : styles.customTxtBoxError}                           
+                                    value={personal.zipcode}
+                                    maxLength={gblStrings.maxLength.zipCode}
+                                    returnKeyType="done"
+                                    onChangeText={this.onChangeText("personal", "zipcode")}
+                                    keyboardType="number-pad"
+                                    placeholder={gblStrings.accManagement.enterZip}
+                                    onSubmitEditing={this.onSubmitZipEditing("personal", "zipcode", this.city)}
+                                    errorFlag={!personal.zipcodeValidation}
+                                    errorText={errMsg}
+                                />
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.addAddressInfo.cityLabel}
+                                </Text>
+                                <GInputComponent
+                                    inputref={this.setInputRef("city")}
+                                    propInputStyle={personal.cityValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}                               
+                                    maxLength={gblStrings.maxLength.city}
+                                    value={personal.city}
+                                    onChangeText={this.onChangeText("personal", "city")}
+                                    onSubmitEditing={this.onSubmitEditing(this.stateCity)}
+                                    errorFlag={!personal.cityValidation}
+                                    errorText={errMsg}                               
+                                    editable={false}
+                                />
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.addAddressInfo.stateLabel}
+                                </Text>      
+                                <GInputComponent          
+                                    inputref={this.setInputRef("stateCity")}                      
+                                    propInputStyle={personal.stateCityValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}                             
+                                    returnKeyType="done"
+                                    maxLength={gblStrings.maxLength.state}
+                                    value={personal.stateCity}
+                                    onChangeText={this.onChangeText("personal", "stateCity")}
+                                    onSubmitEditing={this.onSubmitEditing(this.mobileNo)}
+                                    errorFlag={!personal.stateCityValidation}
+                                    errorText={errMsg}                               
+                                    editable={false}
+                                />
+
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.marketingPrivacyLabel.marketingProductEmail}
+                                </Text>
+                                <GInputComponent                           
+                                    propInputStyle={personal.emailAddressValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                    placeholder= {gblStrings.marketingPrivacyLabel.marketingProductEmail}
+                                    keyboardType="email-address"
+                                    maxLength={gblStrings.maxLength.emailID}
+                                    onChangeText={this.onChangeText("personal", "emailAddress")}
+                                    onSubmitEditing={this.onSubmitEditing(this.socialSecurityNo)}
+                                    errorFlag={!personal.emailAddressValidation}
+                                    errorText={errMsg}
+                                    value={personal.emailAddress}
+                                />                 
+
+                                <View style={styles.dateContainer}>
+                                                                                        
+                                    <Text style={styles.taxDocumentHeaderViewTitle}>
+                                        Effective Start & End Dates
+                                    </Text>       
+                                
+                                    <Text style={styles.lblTxt}>
+                                        {gblStrings.accManagement.from}
+                                    </Text>
+                                    <GDateComponent                                    
+                                        inputref={this.setInputRef("startDate")}
+                                        date={personal.startDate}
+                                        placeholder="MM-DD-YYYY"
+                                        dateTextLayout={styles.dateTextLayout}
+                                        componentStyle={styles.dateStyle}
+                                        minDate={currentdate}                                   
+                                        errorFlag={!personal.startDateValidation}
+                                        errorMsg={errMsg}
+                                        onDateChange={this.onChangeText("personal", "startDate")}
+                                    />
+                                    <Text style={styles.lblTxtCalender}>
+                                        {gblStrings.common.calender}
+                                    </Text>
+
+                                    <Text style={styles.lblTxt}>
+                                        {gblStrings.accManagement.to}
+                                    </Text>
+                                    <GDateComponent
+                                        inputref={this.setInputRef("endDate")}
+                                        date={personal.endDate}
+                                        placeholder="MM-DD-YYYY"
+                                        dateTextLayout={styles.dateTextLayout}
+                                        componentStyle={styles.dateStyle}
+                                        minDate={personal.startDate ? personal.startDate : currentdate}
+                                        errorFlag={!personal.endDateValidation}
+                                        errorMsg={errMsg}
+                                        onDateChange={this.onChangeText("personal", "endDate")}
+                                    />
+                                    <Text style={styles.lblTxtCalender}>
+                                        {gblStrings.common.calender}
+                                    </Text>                      
+                                </View>  
+                            </View>
+                            )                                                   
+                            :null
+                        }
 
                         <GButtonComponent
                             buttonStyle={styles.cancelButton}
@@ -943,6 +909,12 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                                 onPress={this.submitButtonAction}
                             />
                         </View>         
+                    
+                        </View>
+
+                    ):null
+                    }       
+                    
                     <GFooterSettingsComponent />
                 </ScrollView>
             </View>
@@ -952,7 +924,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
 
 AccountMessagingGeneralDocumentsComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),    
-   // accMessageDocumentinitialState: PropTypes.instanceOf(Object),
+    accMessageDocumentinitialState: PropTypes.instanceOf(Object),
     getAddressFormat: PropTypes.func,
     saveData:PropTypes.func,
     initialState: PropTypes.instanceOf(Object),
@@ -962,7 +934,7 @@ AccountMessagingGeneralDocumentsComponent.propTypes = {
 
 AccountMessagingGeneralDocumentsComponent.defaultProps = {
     navigation : {},
-  //  accMessageDocumentinitialState : {},
+    accMessageDocumentinitialState : {},
     getAddressFormat: null,
     getStateCity: null,
     initialState: {},

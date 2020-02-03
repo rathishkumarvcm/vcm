@@ -62,6 +62,10 @@ const newData = [
     title: 'Manage Interested Parties',
   },
   {
+    naviagteTo: 'rmdCalculator',
+    title: 'RMD Calculator',
+  },
+  {
     //  navigateTo:'Logout'
     title: 'Sign Out',
   }

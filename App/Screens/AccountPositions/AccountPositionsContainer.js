@@ -7,7 +7,7 @@ import AccountPositionsComponent from './AccountPositionsComponent';
 
 const mapStateToProps = (state /* , props */) => (
   {
-   
+    accountPositionsinitialState: state.accountPositionsData,   
   }
 );
 

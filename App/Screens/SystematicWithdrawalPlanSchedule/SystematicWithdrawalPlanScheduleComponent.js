@@ -222,14 +222,17 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
         /* Calculate Next Month */
         const nextMonth = new Date();
         let nextMonthDate;
-        if(date>=valueDateBeginDropDown)
+        if(date>=Number(valueDateBeginDropDown))
         {
             if(valueDateDropDown!=='null')
             {
-                if(date>=valueDateDropDown)
+                if(date>=Number(valueDateDropDown))
                 {
                     switch(valueTypeDropDown)
                     {
+                        case 'Twice a Month':
+                            nextMonth.setMonth(nextMonth.getMonth() + 1);
+                            break;
                         case 'Monthly':
                             nextMonth.setMonth(nextMonth.getMonth() + 1);
                             break;
@@ -243,7 +246,7 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
                             nextMonth.setMonth(nextMonth.getMonth() + 12);
                             break;
                     }
-                    nextMonthDate = `${nextMonth.getMonth()+1 }/${ valueDateDropDown }/${ nextMonth.getFullYear()}`;
+                    nextMonthDate = `${nextMonth.getMonth()+1 }/${ valueDateBeginDropDown }/${ nextMonth.getFullYear()}`;
                 }
                 else
                 {
@@ -253,6 +256,9 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
             else{
                     switch(valueTypeDropDown)
                     {
+                        case 'Twice a Month':
+                            nextMonth.setMonth(nextMonth.getMonth() + 1);
+                            break;
                         case 'Monthly':
                             nextMonth.setMonth(nextMonth.getMonth() + 1);
                             break;
@@ -275,10 +281,10 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
             nextMonthDate = `${nextMonth.getMonth()+1 }/${ valueDateBeginDropDown }/${ nextMonth.getFullYear()}`;
         }
         // const nextMonthDate = `${nextMonth.getMonth()+1 }/${ nextMonth.getDate() }/${ nextMonth.getFullYear()}`;
-        
         const savedAutoData = myInstance.getSavedSystematicData();
         const payload = {
             ...savedAutoData,
+            dateAdded: currentdate,
             typeDropDown,
             valueTypeDropDown,
             dateDropDown,

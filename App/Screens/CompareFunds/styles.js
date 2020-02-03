@@ -319,11 +319,11 @@ const styles = StyleSheet.create({
         height:scaledHeight(50),
         marginTop:scaledHeight(10),           
     },
-    scrollviewcontainer:{
-         flex: .85 
-    },
     scrollViewFlex:{
         flexDirection: 'row',flexGrow: 1
+    },
+    scrollviewcontainer:{
+         flex: .85 
     },
     sectionGrp: {
         flexGrow: 1,

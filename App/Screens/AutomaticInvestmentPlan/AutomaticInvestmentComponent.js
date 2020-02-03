@@ -65,8 +65,11 @@ class AutomaticInvestmentComponent extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { refresh } = this.state;
+        const { refresh } = this.state;//,accountType,generalAutoInvestment,iraAutoInvestment,utmaAutoInvest
         const { automaticInvestmentState } = this.props;
+        // this.showDeletePopup = false;
+        // const indexDelete = this.selectedIndex;
+        // this.selectedIndex = -1;
         if (this.props !== prevProps) {
             if (automaticInvestmentState) {
                 if (automaticInvestmentState.savedAccData) {
@@ -88,6 +91,52 @@ class AutomaticInvestmentComponent extends Component {
             }
         }
 
+        // if(automaticInvestmentState.isSuccess)
+        // {
+        //     //navigation.goBack();
+        //     let array;
+        //     switch (accountType.toLowerCase()) {
+        //         case 'general':
+        //             array = [...generalAutoInvestment];
+        //             if (indexDelete !== -1) {
+        //                 array.splice(indexDelete, 1);
+        //                 this.setState({ generalAutoInvestment: array });
+        //             }
+        //             break;
+        //         case 'ira':
+        //             array = [...iraAutoInvestment];
+        //             if (indexDelete !== -1) {
+        //                 array.splice(indexDelete, 1);
+        //                 this.setState({ iraAutoInvestment: array });
+        //             }
+        //             break;
+        //         case 'utma':
+        //             array = [...utmaAutoInvest];
+        //             if (indexDelete !== -1) {
+        //                 array.splice(indexDelete, 1);
+        //                 this.setState({ utmaAutoInvest: array });
+        //             }
+        //             break;
+        //         default:
+        //             break;
+
+        //     }
+        // }
+        // else if(automaticInvestmentState.isError)
+        // {
+        //     console.log(automaticInvestmentState[skipRespKey])
+        // }
+    }
+
+    getNumberWithOrdinal(n) {
+        var s=["th","st","nd","rd"],
+        v=n%100;
+        return n+(s[(v-20)%10]||s[v]||s[0]);
+    }
+
+    getAmountWithSymbol(n){
+        var s=["$"];
+        return s+n;
     }
 
     setCollapsableUpdates = index => () => {
@@ -105,11 +154,11 @@ class AutomaticInvestmentComponent extends Component {
     generateSelectedFunds = item => item.id;
 
     renderSelectedFunds = () => ({ item }) =>
-        (
-            <View style={styles.editDropdown}>
-                <Text style={styles.editDropdownText}> {item.name} </Text>
-                <Text style={styles.editDropdownText}> {item.amount} </Text>
-            </View>
+        ( 
+                <View style={styles.investDropdown}>
+                    <Text style={styles.investDropdownText}> {item.fundName} </Text>
+                    <Text style={styles.investDropdownText1}> {this.getAmountWithSymbol(item.fundAmount)} </Text>
+                </View>
         )
 
     generateEditDelete = item => item.id;
@@ -157,17 +206,21 @@ class AutomaticInvestmentComponent extends Component {
                 <View style={styles.flatBody}>
 
                     <View style={styles.flatBodyTitle}>
-                        <Text style={styles.flatBodyTitleValue}>{item.investedIn[0].name}</Text>
+                        <Text style={styles.flatBodyTitleValue}>{item.investedIn[0].fundName}</Text>
                         <Text style={styles.flatBodyTitleLink} onPress={this.popupInvestedIn(index)}>{item.investedIn.length}</Text>
                     </View>
 
                     {
                         index === popupIndex ? (
-                            <FlatList style={styles.editFlatList}
+                        <View style={styles.selectFunds}>
+                            <Text style={styles.investTitle}>Invested In</Text>
+                            <View style={styles.seperator_line} />
+                            <FlatList
                                 data={item.investedIn}
                                 renderItem={this.renderSelectedFunds()}
                                 keyExtractor={this.generateSelectedFunds}
                             />
+                        </View>
                         ) : null}
 
                     <Text style={styles.flatBodyDate}>{`Date added ${item.dateAdded}`}</Text>
@@ -183,11 +236,11 @@ class AutomaticInvestmentComponent extends Component {
                         </View>
                         <View style={styles.verifyContentMain}>
                             <Text style={styles.verifyConent1}>On the date</Text>
-                            <Text style={styles.verifyConent2}>{item.dateToInvest}</Text>
+                            <Text style={styles.verifyConent2}>{this.getNumberWithOrdinal(item.dateToInvest)}</Text>
                         </View>
                         <View style={styles.verifyContentMain}>
                             <Text style={styles.verifyConent1}>Amount</Text>
-                            <Text style={styles.verifyConent2}>{item.totalAmount}</Text>
+                            <Text style={styles.verifyConent2}>{this.getAmountWithSymbol(item.totalAmount)}</Text>
                         </View>
                         <View style={styles.flatBodyNextDate}>
                             <View style={styles.flatBodySkip}>
@@ -254,15 +307,31 @@ class AutomaticInvestmentComponent extends Component {
     }
 
     deleteAccount = (option) => () => {
-        const { refresh } = this.state;
-        const { accountType } = this.state;
-        const { generalAutoInvestment } = this.state;
-        const { iraAutoInvestment } = this.state;
-        const { utmaAutoInvest } = this.state;
+        // const { refresh } = this.state;
+        const { refresh,accountType,generalAutoInvestment,iraAutoInvestment,utmaAutoInvest } = this.state;
+        // const { automaticInvestmentState } = this.props;
         this.showDeletePopup = false;
         const indexDelete = this.selectedIndex;
         this.selectedIndex = -1;
         if (option) {
+            // const{deleteAutoInvestPlan}=this.props;
+            // const payload={
+            //     "customerId":"123",
+            //     "PADId":"001",
+            //     "investTo":{
+            //         "fundNumber": "30"
+            //     },
+            //     "accountSelection":{
+            //         "companyNumber": "591",
+            //         "accountNumber":"430"
+            //         },
+            //     "delete":{
+            //         "terminatePAD":"09/15/2020"
+            //     }
+                
+            //     }
+            // deleteAutoInvestPlan(payload);
+
             let array;
             switch (accountType.toLowerCase()) {
                 case 'general':
@@ -287,11 +356,6 @@ class AutomaticInvestmentComponent extends Component {
                     }
                     break;
                 default:
-                    array = [...generalAutoInvestment];
-                    if (indexDelete !== -1) {
-                        array.splice(indexDelete, 1);
-                        this.setState({ generalAutoInvestment: array });
-                    }
                     break;
 
             }
@@ -318,6 +382,23 @@ class AutomaticInvestmentComponent extends Component {
     }
 
     navigationInvestmentVerify = (index, type) => () => {
+        // const { skipAutoInvestPlan } = this.props;
+        // const payload={
+        //     "customerId":"123",
+        //      "PADId":"001",
+        //      "investTo":{
+        //         "fundNumber": "30"
+        //        },
+        //      "accountSelection":{
+        //         "companyNumber": "591",
+        //         "accountNumber":"430"
+        //         },
+        //      "skip":{
+        //     "dateSuspendedFrom":"05/02/2020",
+        //         "dateSuspendedTo":"07/15/2020"
+        //       }
+        //     }
+        // skipAutoInvestPlan(payload);
         const { navigation } = this.props;
         navigation.navigate({ routeName: 'automaticInvestmentVerify', key: 'automaticInvestmentVerify', params: { skip: true, indexSelected: index, accountType: type } });
     }
@@ -542,11 +623,13 @@ AutomaticInvestmentComponent.propTypes = {
 
     navigation: PropTypes.instanceOf(Object),
     automaticInvestmentState: PropTypes.instanceOf(Object),
+    // deleteAutoInvestPlan:PropTypes.func,
 };
 
 AutomaticInvestmentComponent.defaultProps = {
     navigation: {},
-    automaticInvestmentState: {}
+    automaticInvestmentState: {},
+    // deleteAutoInvestPlan:null,
 };
 
 export default AutomaticInvestmentComponent;

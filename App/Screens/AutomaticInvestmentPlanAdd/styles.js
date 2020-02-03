@@ -241,6 +241,98 @@ const styles = StyleSheet.create({
         borderTopWidth:1,
        
     },
+    childSectionGrp: {
+        flexGrow: 1,
+        marginHorizontal: '4%'
+    },
+    lblTxt: {
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginTop: scaledHeight(25)
+    },
+    radioBtnGrp: {
+        flexGrow: 1,
+        marginTop: scaledHeight(19),
+    },
+    lblRadioBtnTxt: {
+        color: '#333333DE',
+        fontSize: scaledHeight(16),
+        lineHeight: 28,
+        flexWrap: 'wrap'
+    },
+    lblRadioDescTxt: {
+        marginTop: scaledHeight(14),
+        color: '#333333DE',
+        fontSize: scaledHeight(14),
+        lineHeight: 22,
+        flexWrap: 'wrap',
+        opacity: .75
+    },
+    customTxtBoxError: {
+        marginTop: scaledHeight(9),
+        width: '100%',
+        borderColor: 'red'
+    },
+    customTxtBox: {
+        marginTop: scaledHeight(9),
+        width: '100%'
+    },
+    errMsg: {
+        color: 'red',
+        fontSize: scaledHeight(12),
+        marginVertical: scaledHeight(12),
+
+    },
+    lblSpecimen: {
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginTop: scaledHeight(58),
+        textDecorationStyle: 'solid',
+        textDecorationLine: 'underline'
+
+    },
+    lblSpecimenDesc: {
+        color: '#333333DE',
+        fontSize: scaledHeight(11),
+        textAlign: 'left',
+        marginTop: scaledHeight(58)
+
+    },
+    specimenImg: {
+        height: scaledHeight(176)
+    },
+    savingtxt:
+    { width: "50%", marginBottom: scaledHeight(15) },
+    checkingtxt:
+    { width: "50%", marginBottom: scaledHeight(0) },
+    addressStyle:
+    { flexDirection: 'column', marginLeft: scaledWidth(15), marginTop: scaledHeight(15), width: '100%' },
+    addressInput:
+    { marginTop: scaledHeight(9),width:'100%' },
+    addressPopulatedTxtBox: {
+        backgroundColor: "#F0F1F2",
+        marginTop: scaledHeight(9),
+        width: '100%'
+    },
+    addressInputError: {
+        borderColor: 'red',
+        marginTop: scaledHeight(9),
+        width: '100%'
+    },
+    financialTextLabel: {
+        color: '#333333DE', fontSize: scaledHeight(18), fontWeight: 'bold', marginBottom: '4%'
+    },
+    cityStateBlock:
+    { flexDirection: 'row', flex: 1, marginBottom: scaledHeight(20) },
+    cityStateStyle:
+    { flex: 0.5, marginRight: scaledWidth(30) },
+    cityStateError:{
+        borderColor: 'red',
+        flex: 0.5, marginRight: scaledWidth(30)
+    }
     
 });
 

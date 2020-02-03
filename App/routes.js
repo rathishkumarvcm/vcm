@@ -103,6 +103,8 @@ import ManageIntrestedPartiesComponent from './Screens/ManageIntrestedParties';
 import AddNewIntrestedPartiesComponent from './Screens/AddNewIntrestedParties';
 import VerifyIntrestedPartiesComponent from './Screens/VerifyIntrestedParties';
 import EditManageIntrestedPartiesComponent from './Screens/EditManageIntrestedParties';
+import AddAccToInterestedPartyComponent from './Screens/AddAccToInterestedParty';
+
 import ManageBeneficiariesComponent from './Screens/ManageBeneficiaries';
 import AddNewBeneficiaryComponent from './Screens/AddNewBeneficiary';
 import EditManageBeneficiariesComponent from './Screens/EditManageBeneficiaries';
@@ -135,9 +137,6 @@ import PasswordSuccess from "./Screens/RecoverPasswordSuccess";
 
 // Transactions  
 import TAmmendComponent from "./Screens/TAmmend";
-import FundSelectionComponent from './Screens/TAmmendFundSelection';
-import FundWithdrawlComponent from './Screens/TAmmendFundWithdrawl';
-import ReviewConfirmComponent from './Screens/TAmmendReviewAndConfirm';
 
 
 // Account Services
@@ -179,7 +178,13 @@ import Screen2Component from './Screens/NotificationTab/Screen2';
 import LineChartComponent from './Screens/Charts/LineChartComponent';
 import ChartComponent from './Screens/Charts';
 import TabBar from './Screens/Menu/TabBar';
+import FloatingButtonComponent from './Screens/ServiceRequest/FloatingButtonScreen';
 
+// Dashboard
+import AccountPositions from './Screens/AccountPositions';
+
+//RMD Calculator
+import RMDCalculatorComponent from './Screens/RMDCalculator';
 
 // Notification Tabs
 const NotificationTabNavigator = createMaterialTopTabNavigator(
@@ -209,84 +214,18 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
         },
     }
 );
-// //  Bottom Tabs
-// const BottomTabNavigator = createBottomTabNavigator({
-//     myVCM: {
-//         screen: AccountServicesComponent,
-//         navigationOptions: {
-//             tabBarLabel: 'MyVCM',
-//         },
-//     },
-//     portfolio: {
-//         screen: TermsAndConditions,
-//         navigationOptions: {
-//             tabBarLabel: 'Portfolio',
-//         },
-//     },
-//     invest: {
-//         screen: AccountServicesComponent,
-//         navigationOptions: {
-//             tabBarLabel: 'Invest',
-//         },
-//     },
-//     learn: {
-//         screen: LineChartComponent,
-//         navigationOptions: {
-//             tabBarLabel: 'Learn',
-//         },
-//     },
-//     // more: {
-//     //     screen: TabMoreComponent,
-//     //     navigationOptions: ({ navigation }) => ({
-//     //         tabBarOnPress: ({ defaultHandler }) => {
-//     //             defaultHandler();
-//     //             store.dispatch(tabMoreActions.setModalVisible(true));
-//     //            // navigation.goBack();
-//     //            // navigation.toggleRightDrawer();
-//     //         },
-//     //         tabBarLabel: 'More',
-//     //     }),
-//     // },
-// },
-//     {
-//         defaultNavigationOptions: ({ navigation }) => ({
-//             tabBarIcon: ({ focused, horizontal, tintColor }) => {
-//                 const { routeName } = navigation.state;
-//                 let iconName;
-//                 if (routeName === 'myVCM') {
-//                     iconName = 'home';
-//                 } else if (routeName === 'portfolio') {
-//                     iconName = 'note';
-//                 } else if (routeName === 'invest') {
-//                     iconName = 'insert-chart';
-//                 }
-//                 else if (routeName === 'learn') {
-//                     iconName = 'library-books';
-//                 } else {
-//                     iconName = 'more';
-//                 }
-//                 return (
-//                     <GIcon
-//                         name={iconName}
-//                         type="material"
-//                         size={20}
-//                         color={tintColor}
-//                     />
-//                 );
-//             },
-//         }),
 
-//     }
-// );
 //  Bottom Tabs
 const BottomTabNavigator = createBottomTabNavigator({
     myVCM: {
         screen: Screen1Component, // AccountStack,
         navigationOptions: {
-            tabBarIcon: ({ tintColor }) => <GIcon name={'home'}
-                type="material"
-                size={20}
-                color={tintColor} />,
+            tabBarIcon: ({ tintColor }) => (
+                <GIcon name="home"
+                    type="material"
+                    size={20}
+                    color={tintColor}
+                />),
             tabBarLabel: 'MyVCM',
         }
 
@@ -295,19 +234,20 @@ const BottomTabNavigator = createBottomTabNavigator({
         screen: LineChartComponent,
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => <GIcon name={'note'}
-            type="material"
-            size={20}
-            color={tintColor} />,
+                type="material"
+                size={20}
+                color={tintColor}
+            />,
             tabBarLabel: 'Portfolio',
         },
     },
     invest: {
-        screen: AccountServicesComponent,
+        screen: FloatingButtonComponent,
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => <GIcon name={'insert-chart'}
-            type="material"
-            size={20}
-            color={tintColor} />,
+                type="material"
+                size={20}
+                color={tintColor} />,
             tabBarLabel: 'Invest',
         },
     },
@@ -315,30 +255,19 @@ const BottomTabNavigator = createBottomTabNavigator({
         screen: ChartComponent,
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => <GIcon name={'library-books'}
-            type="material"
-            size={20}
-            color={tintColor} />,
+                type="material"
+                size={20}
+                color={tintColor} />,
             tabBarLabel: 'Learn',
         },
     },
-    // more: {
-    //     screen: MoreModalComponent,
-    //     navigationOptions: ({ navigation }) => ({
-    //         tabBarOnPress: ({ defaultHandler }) => {
-    //             defaultHandler();
-    //             // navigation.navigate('more')
-    //             store.dispatch(tabMoreActions.setModalVisible(true));
-    //         },
-    //         tabBarLabel: 'More',
-    //     }),
-    // },
 },
     {
         tabBarComponent: TabBar,
         tabBarOptions: {
             activeTintColor: "skyblue",
             inactiveTintColor: "#4F4F4F"
-          }
+        }
     }
 );
 
@@ -1040,12 +969,6 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
-    FundSelectionComponent: {
-        screen: FundSelectionComponent,
-        navigationOptions: {
-            header: null,
-        }
-    },
     compareFunds: {
         screen: CompareFunds,
         navigationOptions: {
@@ -1090,18 +1013,6 @@ const AppNavigator = createStackNavigator({
     },
     verifyMobileNumber: {
         screen: VerifyMobileComponent,
-        navigationOptions: {
-            header: null,
-        }
-    },
-    FundWithdrawlComponent: {
-        screen: FundWithdrawlComponent,
-        navigationOptions: {
-            header: null,
-        }
-    },
-    ReviewConfirmComponent: {
-        screen: ReviewConfirmComponent,
         navigationOptions: {
             header: null,
         }
@@ -1206,6 +1117,24 @@ const AppNavigator = createStackNavigator({
         screen: PhysicalWayManageBeneficiaryComponent,
         navigationOptions: {
             header: null,
+        }
+    },
+    accountPositions: {
+        screen: AccountPositions,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    rmdCalculator: {
+        screen: RMDCalculatorComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    addAccToInterestedParty: {
+        screen: AddAccToInterestedPartyComponent,
+        navigationOptions: {
+            header: null
         }
     }
 },

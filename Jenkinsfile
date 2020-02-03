@@ -49,17 +49,33 @@ pipeline {
                 sh 'echo Testing'
             }
         }
+        // stage('Deploy') { 
+        //     steps {
+        //         sh 'echo Deploying'
+        //         sh 'npm install'
+        //         dir('android')
+        //         {
+        //             sh 'echo AndroidBuild'
+        //             sh 'bundle install'
+        //             sh 'bundle update fastlane'
+        //             sh 'bundle exec fastlane beta'
+        //         }
+        //         dir('ios')
+        //         {
+        //             sh 'echo iOSBuild'
+        //             sh 'pod install'
+        //             sh 'bundle install'
+        //             sh 'bundle update fastlane'
+        //             // sh 'gem install json -v "2.3.0"'
+        //             sh 'bundle exec fastlane beta'
+        //         }
+        //     }
+        // }
+
         stage('Deploy') { 
             steps {
                 sh 'echo Deploying'
                 sh 'npm install'
-                dir('android')
-                {
-                    sh 'echo AndroidBuild'
-                    sh '/usr/local/opt/ruby/bin/bundle install'
-                    sh '/usr/local/opt/ruby/bin/bundle update fastlane'
-                    sh '/usr/local/opt/ruby/bin/bundle exec /usr/local/bin/fastlane beta'
-                }
                 dir('ios')
                 {
                     sh 'echo iOSBuild'
@@ -67,6 +83,13 @@ pipeline {
                     sh '/usr/local/opt/ruby/bin/bundle install'
                     sh '/usr/local/opt/ruby/bin/bundle update fastlane'
                     // sh 'gem install json -v "2.3.0"'
+                    sh '/usr/local/opt/ruby/bin/bundle exec /usr/local/bin/fastlane beta'
+                }
+                dir('android')
+                {
+                    sh 'echo AndroidBuild'
+                    sh '/usr/local/opt/ruby/bin/bundle install'
+                    sh '/usr/local/opt/ruby/bin/bundle update fastlane'
                     sh '/usr/local/opt/ruby/bin/bundle exec /usr/local/bin/fastlane beta'
                 }
             }

@@ -1,3 +1,4 @@
+/*
 import React from 'react';
 import { Text, View, TouchableOpacity} from 'react-native';
 import PropTypes from "prop-types";
@@ -94,3 +95,111 @@ ListItem.defaultProps = {
 };
 
 export default ListItem;
+
+*/
+
+
+
+import React from 'react';
+import { View, Text, Switch, TouchableOpacity ,Image} from 'react-native';
+import PropTypes from 'prop-types';
+import styles from './styles';
+// import { CustomCheckBox } from '../../AppComponents';
+import gblStrings from '../../Constants/GlobalStrings';
+import AppUtils from '../../Utils/AppUtils';
+
+const switchStyle = { flase: '#DBDBDB', true: '#444444' };
+const ListItem = (props) => {
+    AppUtils.debugLog(`ListItem:: ${props}`);
+
+    const {
+        isActive,
+        fundName,
+        minimum,
+        autoInvesting,
+        minMaxInvestMonthly,
+        nav,
+        lastNav,
+        minMax52week,
+        risk,
+        item,
+        riskImg,
+        onClickCheckbox,
+        onClickItem
+
+    } = props;
+
+
+
+    return (
+        <TouchableOpacity
+            onPress={onClickItem}
+            activeOpacity={0.8}
+            accessibilityRole="button"
+            style={styles.colItem}
+        >
+            <View style={styles.fundItemStyle}>
+                <View style={styles.fundItemTopView}>
+                    <View style={styles.fundItemTitle}>
+                        <Text style={styles.fundItemHeaderTxt}>{fundName}</Text>
+                    </View>
+                    <View style={styles.fundItemSwitch}>
+                        <Switch trackColor={switchStyle}
+                            onValueChange={onClickCheckbox}
+                            value={isActive}
+                        />
+                    </View>
+                </View>
+                <View style={styles.lineStyle} />
+                <View style={styles.fundItemContntView}>
+                    <View style={styles.marginBottomStyle}>
+                        <Text style={styles.fundItemValueHeading}>{gblStrings.accManagement.minMaxAmtAutoInvesting}</Text>
+                        <Text style={styles.fundItemValueTxt}>{minMaxInvestMonthly}</Text>
+                    </View>
+                    <View style={styles.marginBottomStyle}>
+                        <Text style={styles.fundItemValueHeading}>{gblStrings.accManagement.navInPercentage}</Text>
+                        <Text style={styles.fundItemValueTxt}>{nav}</Text>
+                    </View>
+                    <View style={styles.marginBottomStyle}>
+                        <Text style={styles.fundItemValueHeading}>{gblStrings.accManagement.lastNav}</Text>
+                        <Text style={styles.fundItemValueTxt}>{lastNav}</Text>
+                    </View>
+                    <View style={styles.marginBottomStyle}>
+                        <Text style={styles.fundItemValueHeading}>{gblStrings.accManagement.minMax52Week}</Text>
+                        <Text style={styles.fundItemValueTxt}>{minMax52week}</Text>
+                    </View>
+                    <View style={styles.marginBottomStyle}>
+                        <Image style={styles.riskLevelImg}
+                        resizeMode="cover"
+                        source={riskImg}
+                       />
+                        
+                    </View>
+                </View>
+            </View>
+        </TouchableOpacity>
+
+    );
+};
+ListItem.propTypes = {
+    isActive: PropTypes.bool,
+    // onClickItem: PropTypes.func,
+    onClickCheckbox: PropTypes.func,
+    fundName: PropTypes.string,
+    minimum: PropTypes.string,
+    // autoInvesting: PropTypes.string,
+    // risk: PropTypes.string
+
+};
+ListItem.defaultProps = {
+    isActive: false,
+    // onClickItem: null,
+    onClickCheckbox: null,
+    fundName: "",
+    minimum: "",
+    // autoInvesting: "",
+    // risk: ""
+};
+
+export default ListItem;
+

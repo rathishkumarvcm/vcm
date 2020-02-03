@@ -65,7 +65,7 @@ class SystematicWithdrawalPlanEsignComponent extends Component {
                             invest:item.valueTypeDropDown,
                             dateFromInvest:item.valueDateBeginDropDown,
                             dateToInvest:item.valueDateDropDown!=='null'?item.valueDateDropDown:'null',
-                            // dateAdded:item.dateAdded,
+                             dateAdded:item.dateAdded,
                             // endDate:item.endDate,
                             nextWithdrawalDate:item.nextWithdrawalDate,// item.nextWithdrawalDate
                         };
@@ -158,8 +158,9 @@ navigationSubmit = () => {
         myInstance.setSystematicWithdrawalEditMode(false);
         
     }
-    else
+    else{
     this.setState({errorTextMsg:'Please select the above checkbox'});
+    }
 }
 
     navigationBack = () => {

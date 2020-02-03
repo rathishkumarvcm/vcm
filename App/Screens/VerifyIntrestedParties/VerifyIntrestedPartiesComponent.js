@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
 import {
@@ -9,14 +9,12 @@ import {
 } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
-
-
 class VerifyIntrestedPartiesComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
       accountData: {},
-      newAddedInterestedParty: {}
+      addedInterestedParty: {}
     };
   }
 
@@ -26,9 +24,8 @@ class VerifyIntrestedPartiesComponent extends Component {
 
   updateInitialData = () => {
     const { navigation } = this.props;
-    const accData = navigation.getParam('acc_Data');
-    const addedObj = navigation.getParam("added_obj");
-    this.setState({ accountData: accData, newAddedInterestedParty: addedObj });
+    const newObj = navigation.getParam("addedData");
+    this.setState({ addedInterestedParty: newObj });
   }
 
   onClickEdit = () => {
@@ -51,48 +48,67 @@ class VerifyIntrestedPartiesComponent extends Component {
 
   getData = () => {
     const { manageInterestedPartiesData } = this.props;
-    const {newAddedInterestedParty, accountData}=this.state;
+    const { addedInterestedParty } = this.state;
+
     let list = [];
-    const completeData = accountData;
-    completeData.interestedParty.push(newAddedInterestedParty);
-    if (this.props && manageInterestedPartiesData && manageInterestedPartiesData.list_manage_interested_parties) {
-      list = manageInterestedPartiesData.list_manage_interested_parties;
+    if (this.props && manageInterestedPartiesData && manageInterestedPartiesData.data) {
+      list = manageInterestedPartiesData.data;
     }
-    list.map((m, n) => {
-      if (m.key === completeData.key) {
-        list.splice(n, 1, completeData);
-      }
-      return 0;
-    });
+    // here write the logic...if add /Edit
+    list.push(addedInterestedParty);
     return list;
   }
 
   generateKeyExtractor = (item) => item.key;
 
+  renderAccounts = ({ item, index }) => {
+    return (
+      <View style={styles.blockMarginTop}>
+        <View style={styles.flexStyle}>
+          <Text style={styles.titleHeaderText}>{`Tagged Account #${index + 1}`}</Text>
+          <TouchableOpacity>
+            <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.line} />
+        <View style={styles.paddingHorizontalStyle}>
+          <View style={styles.contentViewBlock}>
+            <Text style={styles.shortContentText}>Account Type</Text>
+            <Text style={styles.shortContentValueText}>{item.account_Type}</Text>
+          </View>
+          <View style={styles.contentViewBlock}>
+            <Text style={styles.shortContentText}>Account Name</Text>
+            <Text style={styles.shortContentValueText}>{item.account_Name}</Text>
+          </View>
+          <View style={styles.contentViewBlock}>
+            <Text style={styles.shortContentText}>Account Number</Text>
+            <Text style={styles.shortContentValueText}>{item.account_Number}</Text>
+          </View>
+          <View style={styles.contentViewBlock}>
+            <Text style={styles.shortContentText}>Effective Start Date</Text>
+            <Text style={styles.shortContentValueText}>{item.startDate}</Text>
+          </View>
+          <View style={styles.contentViewBlock}>
+            <Text style={styles.shortContentText}>Effective End Date</Text>
+            <Text style={styles.shortContentValueText}>{item.endDate}</Text>
+          </View>
+        </View>
+      </View>
+    );
+  }
+
   render() {
-    const {navigation}=this.props;
-    const {accountData, newAddedInterestedParty}=this.state;
+    const { navigation } = this.props;
+    const { addedInterestedParty } = this.state;
     return (
       <View style={styles.container}>
         <GHeaderComponent navigation={navigation} />
         <ScrollView style={styles.flexMainView}>
           <View style={styles.mainHeadingView}>
-            <Text style={styles.manageHeadline}>
-              {gblStrings.accManagement.manageIntrestedParties}
-            </Text>
+            <Text style={styles.manageHeadline}>Verify Interested Parties</Text>
           </View>
 
           <View style={styles.blockMarginTop}>
-            <View style={styles.titleHeadingView}>
-              <Text style={styles.titleHeaderText}>{accountData.account_Type}</Text>
-            </View>
-            <View style={styles.line} />
-            <View style={styles.containerView}>
-              <Text style={styles.containerHeaderText}>
-                {` Acc Name - ${accountData.account_Name} | Acc Number - ${accountData.account_Number}`}
-              </Text>
-            </View>
-            <View style={styles.blockMarginTop} />
             <View style={styles.flexStyle}>
               <Text style={styles.titleHeaderText}>{gblStrings.accManagement.verifyIntrestedPartyInfo}</Text>
               <TouchableOpacity onPress={this.onClickEdit}>
@@ -103,35 +119,31 @@ class VerifyIntrestedPartiesComponent extends Component {
             <View style={styles.paddingHorizontalStyle}>
               <View style={styles.contentViewBlock}>
                 <Text style={styles.shortContentText}>{gblStrings.accManagement.name}</Text>
-                <Text style={styles.shortContentValueText}>{`${newAddedInterestedParty.fname} ${newAddedInterestedParty.mname} ${newAddedInterestedParty.lname}`}</Text>
-              </View>
-              <View style={styles.contentViewBlock}>
-                <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToAccountHolder}</Text>
-                <Text style={styles.shortContentValueText}>{newAddedInterestedParty.relationship_To_Account_holder}</Text>
+                <Text style={styles.shortContentValueText}>{`${addedInterestedParty.fname} ${addedInterestedParty.mname} ${addedInterestedParty.lname}`}</Text>
               </View>
               <View style={styles.contentViewBlock}>
                 <Text style={styles.shortContentText}>{gblStrings.accManagement.emailAddress}</Text>
-                <Text style={styles.shortContentValueText}>{newAddedInterestedParty.email}</Text>
+                <Text style={styles.shortContentValueText}>{addedInterestedParty.email}</Text>
               </View>
               <View style={styles.contentViewBlock}>
                 <Text style={styles.shortContentText}>{gblStrings.accManagement.company}</Text>
-                <Text style={styles.shortContentValueText}>{newAddedInterestedParty.company}</Text>
+                <Text style={styles.shortContentValueText}>{addedInterestedParty.company}</Text>
               </View>
               <View style={styles.contentViewBlock}>
                 <Text style={styles.shortContentText}>{gblStrings.accManagement.mailingAdd}</Text>
-                <Text style={styles.shortContentValueText}>{`${newAddedInterestedParty.addressLine1} , ${newAddedInterestedParty.addressLine2} , ${newAddedInterestedParty.state} , ${newAddedInterestedParty.city} - ${newAddedInterestedParty.zipCode}`}</Text>
-              </View>
-              <View style={styles.contentViewBlock}>
-                <Text style={styles.shortContentText}>{gblStrings.accManagement.effStartDate}</Text>
-                <Text style={styles.shortContentValueText}>{newAddedInterestedParty.startDate}</Text>
-              </View>
-              <View style={styles.contentViewBlock}>
-                <Text style={styles.shortContentText}>{gblStrings.accManagement.effEndDate}</Text>
-                <Text style={styles.shortContentValueText}>{newAddedInterestedParty.endDate}</Text>
+                <Text style={styles.shortContentValueText}>{`${addedInterestedParty.addressLine1}, ${addedInterestedParty.addressLine2}, ${addedInterestedParty.state}, ${addedInterestedParty.city} - ${addedInterestedParty.zipCode}`}</Text>
               </View>
             </View>
           </View>
 
+          {/* --------------------------- Tagged Accounts View -------------------------------- */}
+
+          <FlatList
+            data={addedInterestedParty.interestedParties}
+            renderItem={this.renderAccounts}
+            keyExtractor={this.generateKeyExtractor}
+            extraData={this.state}
+          />
 
           {/* --------------------------- Button View -------------------------------- */}
 

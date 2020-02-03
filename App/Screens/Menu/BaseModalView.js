@@ -26,7 +26,6 @@ class BaseViewComponent extends React.Component {
       <SafeAreaView style={{flex:1}}>
         {this.props.children}
         <Modal
-          // transparent
           style={styles.rightModalStyle}
           ref={this.modal}
           hardwareAccelerated={true}

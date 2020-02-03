@@ -2,128 +2,28 @@ import { StyleSheet } from "react-native";
 import { scaledHeight } from "../../Utils/Resolution";
 
 const styles = StyleSheet.create({
-  contactUsLink: {
-    color: "#0000FF",
-    fontSize: scaledHeight(15),
-    textDecorationLine: "underline"
-  },
-  container: {
-    flex: 1,
-    backgroundColor: "#F9FBFC",
-    width: "100%"
-  },
-  mainHeadingView: {
-    width: "100%",
-    marginTop: scaledHeight(20),
-    paddingLeft: "4%",
-    paddingRight: "4%"
-  },
-  mainHeadlineText: {
-    color: "#54565B",
-    fontWeight: "bold",
-    fontSize: scaledHeight(22),
-    lineHeight: 27
-  },
-  subHeadlineText: {
-    color: "#54565B",
-    fontWeight: "bold",
-    fontSize: scaledHeight(22),
-    marginTop: scaledHeight(15),
-    lineHeight: 29
-  },
-  addBtn: {
-    alignSelf: "flex-start",
-    marginTop: scaledHeight(5)
-  },
   addAccountView: {
     alignSelf: "flex-start",
     marginBottom: scaledHeight(20),
     marginTop: scaledHeight(10),
     paddingLeft: '4%'
   },
-  contentText: {
-    color: "#56565A",
-    fontSize: scaledHeight(15)
-  },
-  editBtn: {
-    alignSelf: "flex-end",
-    paddingRight: '4%'
+  addBtn: {
+    alignSelf: "flex-start",
+    marginTop: scaledHeight(5)
   },
   blockMarginTop: {
     marginTop: scaledHeight(25)
   },
-  infoShortText: {
-    color: "#A7A7A7",
-    fontSize: scaledHeight(14)
+  contactUsLink: {
+    color: "#0000FF",
+    fontSize: scaledHeight(15),
+    textDecorationLine: "underline"
   },
-  disclaimerTextHeading: {
-    fontSize: scaledHeight(16),
-    marginBottom: scaledHeight(10),
-    fontWeight: "800",
-    color: "#56565A",
-    lineHeight: scaledHeight(23)
-  },
-  disclaimerTxt: {
-    fontSize: scaledHeight(16),
-    lineHeight: scaledHeight(23),
-    color: "#56565A"
-  },
-  contentContainerStyle: {
-    alignSelf: 'flex-start',
-    paddingLeft: "4%",
-    width:'60%',
-    marginBottom: scaledHeight(20)
-  },
-  flexMainView: {
-    flex: 0.85
-  },
-  footerView: {
-    marginTop: scaledHeight(15),
-    marginBottom: scaledHeight(15)
-  },
-  titleHeadingView: {
-    flexDirection: "row",
-    justifyContent: 'space-between'
-  },
-  titleHeaderText: {
-    color: "#56565A",
-    fontSize: scaledHeight(18),
-    fontWeight: "bold"
-  },
-  titleView: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
-  },
-  titleIconView: {
-    color: "#56565A",
-    fontSize: scaledHeight(18),
-    fontWeight: "bold",
-    paddingLeft: '4%',
-    paddingRight: '4%'
-  },
-  line: {
-    alignSelf: "center",
-    backgroundColor: "#707070",
-    height: scaledHeight(1),
-    marginBottom: scaledHeight(10),
-    marginTop: scaledHeight(10),
-    opacity: 0.5,
-    width: "92%",
-  },
-  containerView: {
-    alignSelf: "center",
-    borderColor: "#5D83AE99",
-    borderWidth: scaledHeight(1),
-    marginBottom: scaledHeight(15),
-    width: "92%",
-  },
-  containerHeaderView: {
-    backgroundColor: "#F1F1F1",
-    borderBottomColor: "#5D83AE99",
-    borderBottomWidth: scaledHeight(1),
-    height: scaledHeight(100),
-    justifyContent: 'center',
-    paddingLeft: "4%"
+  container: {
+    backgroundColor: "#F9FBFC",
+    flex: 1,
+    width: "100%"
   },
   containerHeaderText: {
     color: "#56565A",
@@ -135,11 +35,62 @@ const styles = StyleSheet.create({
     fontSize: scaledHeight(27),
     fontWeight: "bold"
   },
+  containerHeaderView: {
+    backgroundColor: "#F1F1F1",
+    borderBottomColor: "#5D83AE99",
+    borderBottomWidth: scaledHeight(1),
+    height: scaledHeight(100),
+    justifyContent: 'center',
+    paddingLeft: "4%"
+  },
+  containerView: {
+    alignSelf: "center",
+    borderColor: "#5D83AE99",
+    borderWidth: scaledHeight(1),
+    marginBottom: scaledHeight(15),
+    width: "92%",
+  },
+  contentContainerStyle: {
+    alignSelf: 'flex-start',
+    marginBottom: scaledHeight(20),
+    paddingLeft: "4%",
+    width: '70%',
+  },
+  contentText: {
+    color: "#56565A",
+    fontSize: scaledHeight(15)
+  },
+  dateTextLayout: {
+    marginTop: 0
+  },
+  editBtn: {
+    alignSelf: "flex-end",
+    paddingRight: '4%'
+  },
   editBtnText: {
     color: "#5D83AE",
     fontSize: scaledHeight(16),
     fontWeight: "600",
     lineHeight: scaledHeight(22)
+  },
+  flexDirectionStyle: {
+    flexDirection: "row"
+  },
+  flexMainView: {
+    flex: 0.85
+  },
+  flexSmall: {
+    flex: 0.12
+  },
+  iconSideViewStyle: {
+    alignItems: 'flex-end',
+    marginTop: '4%',
+    paddingRight: '4%',
+    width: '30%'
+  },
+  infoShortText: {
+    color: "#A7A7A7",
+    fontSize: scaledHeight(14)
   },
   innerContainerView: {
     alignSelf: "center",
@@ -149,76 +100,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: scaledHeight(10),
     marginTop: scaledHeight(10),
-    width: "90%"
+    width: "95%"
   },
   innerHeaderView: {
-    paddingVertical: "4%",
+    borderBottomColor: "#5D83AE99",
+    borderBottomWidth: scaledHeight(1),
+    flexDirection: "row",
+    justifyContent: "space-between",
     paddingLeft: "4%",
     paddingRight: "4%",
-    flexDirection: "row",
-    borderBottomWidth: scaledHeight(1),
-    borderBottomColor: "#5D83AE99",
-    justifyContent: "space-between"
-  },
-  shortContentText: {
-    color: "#56565A",
-    fontSize: scaledHeight(16),
-    fontWeight: "bold",
-    marginTop: scaledHeight(3)
-  },
-  shortContentValueText: {
-    color: "#54565B",
-    fontWeight: "400",
-    fontSize: scaledHeight(16),
-    lineHeight: 24
-  },
-  marginTopStyle: {
-    marginTop: scaledHeight(15)
-  },
-  flexDirectionStyle: {
-    flexDirection: "row"
-  },
-  notificationView: {
-    width: "100%",
-    //  height: scaledHeight(60),
-    flexDirection: "row",
-    marginTop: scaledHeight(10),
-    marginBottom: scaledHeight(20),
-    borderRadius: scaledHeight(15),
-    backgroundColor: "#E9E9E9",
-    padding: "4%",
-    justifyContent: "space-between"
-  },
-  notificationTxt: {
-    fontSize: scaledHeight(16),
-    color: "#56565A"
-  },
-  flexSmall: {
-    flex: 0.12
-  },
-  saveSuccessMsgTxt: {
-    flex: 0.7,
-    //  height: scaledHeight(50)
-  },
-  sideBtn: {
-    width: scaledHeight(20)
-  },
-  iconSideViewStyle: {
-    marginTop: '4%',
-    paddingRight:'4%',
-    alignItems:'flex-end',
-    width:'40%'
-  },
-  borderInternal: {
-    marginTop: scaledHeight(10),
-    marginBottom: scaledHeight(10),
-    borderBottomWidth: 1,
-    borderColor: "#E2E4E5"
+    paddingVertical: "4%",
   },
   lblLine: {
+    backgroundColor: "#707070",
     flexGrow: 1,
     height: scaledHeight(1),
-    backgroundColor: "#707070",
     opacity: 0.25
   },
   lblTxt: {
@@ -232,20 +128,100 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     margin: scaledHeight(10)
   },
+  line: {
+    alignSelf: "center",
+    backgroundColor: "#707070",
+    height: scaledHeight(1),
+    marginBottom: scaledHeight(10),
+    marginTop: scaledHeight(10),
+    opacity: 0.5,
+    width: "92%",
+  },
+  mainHeadingView: {
+    marginTop: scaledHeight(20),
+    paddingLeft: "4%",
+    paddingRight: "4%",
+    width: "100%",
+  },
+  mainHeadlineText: {
+    color: "#54565B",
+    fontSize: scaledHeight(22),
+    fontWeight: "bold",
+    lineHeight: 27
+  },
+  marginTopStyle: {
+    marginTop: scaledHeight(15)
+  },
+  notificationView: {
+    backgroundColor: "#E9E9E9",
+    borderRadius: scaledHeight(15),
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: scaledHeight(20),
+    marginTop: scaledHeight(10),
+    padding: "4%",
+    width: "100%",
+  },
+  notificationTxt: {
+    color: "#56565A",
+    fontSize: scaledHeight(16)
+  },
+  saveSuccessMsgTxt: {
+    flex: 0.7
+  },
+  sideBtn: {
+    width: scaledHeight(20)
+  },
   shadowView: {
-    flexDirection:'row',
     backgroundColor: "white",
+    elevation: 5,
+    flexDirection: 'row',
     shadowColor: "#000",
     shadowOffset: {
+      height: 1,
       width: 0,
-      height: 1
     },
     shadowOpacity: 0.4,
-    shadowRadius: 1.41,
-    elevation: 5
+    shadowRadius: 1.41
   },
-  dateTextLayout: {
-    marginTop: 0
+  shortContentText: {
+    color: "#56565A",
+    fontSize: scaledHeight(16),
+    fontWeight: "bold",
+    marginTop: scaledHeight(3)
+  },
+  shortContentValueText: {
+    color: "#54565B",
+    fontSize: scaledHeight(16),
+    fontWeight: "400",
+    lineHeight: 24
+  },
+  subHeadlineText: {
+    color: "#54565B",
+    fontSize: scaledHeight(22),
+    fontWeight: "bold",
+    lineHeight: 29,
+    marginTop: scaledHeight(15)
+  },
+  titleHeaderText: {
+    color: "#56565A",
+    fontSize: scaledHeight(18),
+    fontWeight: "bold"
+  },
+  titleHeadingView: {
+    flexDirection: "row",
+    justifyContent: 'space-between'
+  },
+  titleIconView: {
+    color: "#56565A",
+    fontSize: scaledHeight(18),
+    fontWeight: "bold",
+    paddingLeft: '4%',
+    paddingRight: '4%'
+  },
+  titleView: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start'
   }
 });
 

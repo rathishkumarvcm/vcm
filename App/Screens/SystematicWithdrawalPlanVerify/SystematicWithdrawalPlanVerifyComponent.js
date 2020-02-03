@@ -135,6 +135,10 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
             v=n%100;
             return n+(s[(v-20)%10]||s[v]||s[0]);
      }
+     getAmountWithSymbol(n){
+        var s=["$"];
+        return s+n;
+    }
 
     render() {
         const{systematicWithdrawalJson,skip,dateFromValue,dateToValue}=this.state;
@@ -176,7 +180,7 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
         if(item.account || item.accName)// if(autoInvestmentJson.account)
         {
             item.investedIn.forEach(fund=>{
-                fundlist=`${fund.name}\n${fundlist}`;
+                fundlist=`${fund.fundName}\n${fundlist}`;
             });
         }
         const{navigation}=this.props;
@@ -244,7 +248,7 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
                         </View>
                         <View style={styles.verifyContentView}>
                             <Text style={styles.verifyConent1}>Total Amount</Text>
-                            <Text style={styles.verifyConent2}>{item.totalFund?item.totalFund:item.totalAmount}</Text>
+                            <Text style={styles.verifyConent2}>{item.totalFund?this.getAmountWithSymbol(item.totalFund):this.getAmountWithSymbol(item.totalAmount)}</Text>
                         </View>
                         <View style={styles.verifyContentView}>
                             <Text style={styles.verifyConent1}>Fund To</Text>

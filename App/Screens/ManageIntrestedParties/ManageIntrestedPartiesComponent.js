@@ -6,8 +6,6 @@ import { GIcon, GHeaderComponent, GFooterSettingsComponent } from '../../CommonC
 import gblStrings from '../../Constants/GlobalStrings';
 import CardHeader from './CardHeader';
 
-let newInterestedParties = [];
-
 class manageIntrestedPartiesComponent extends Component {
     constructor(props) {
         super(props);
@@ -20,25 +18,20 @@ class manageIntrestedPartiesComponent extends Component {
     }
 
     componentDidMount() {
-        this.updateNavigationProps();
         this.getInterestedParties();
     }
 
     componentDidUpdate(prevProps) {
         if (this.props !== prevProps) {
-            this.updateNavigationProps();
+            this.getInterestedParties();
         }
     }
 
     getInterestedParties = () => {
-        const { manageInterestedPartiesData } = this.props;
+        const { manageInterestedPartiesData, navigation } = this.props;
         if (this.props && manageInterestedPartiesData && manageInterestedPartiesData.data) {
             this.setState({ interestedPartyData: manageInterestedPartiesData.data });
         }
-    }
-
-    updateNavigationProps = () => {
-        const { navigation } = this.props;
         this.setState({ isSavedSuccess: navigation.getParam("showMsg"), successMsg: navigation.getParam("successMsg") });
     }
 
@@ -47,40 +40,36 @@ class manageIntrestedPartiesComponent extends Component {
         navigation.navigate("addIntrestedParties");
     }
 
-    onClickEdit = (pObj, pKey, data) => () => {
-        // const { navigation } = this.props;
-        // navigation.navigate("editIntrestedParty", { acc_Data: data, parent_Obj: pObj, parent_Key: pKey });
+    onClickEdit = (data, index) => () => {
+        const { navigation } = this.props;
+        navigation.navigate("editIntrestedParty", { mainObj: data, pKey: index });
     }
 
-    getDeleteData = (item, obj) => {
-        const modObj = item;
-        const pIndex = newInterestedParties.findIndex((data) => data.key === item.key);
-        const cIndex = newInterestedParties[pIndex].interestedParty.findIndex((data) => data.key === obj.key);
+    getDeleteData = (item, key, index) => {
+        const { interestedPartyData } = this.state;
+        const delObj = item;
+        const mainObj = interestedPartyData[index];
+        const pIndex = index;
+        const cIndex = key;
 
-        const arr = [...newInterestedParties[pIndex].interestedParty];
+        const arr = [...mainObj.interestedParties];
         arr.splice(cIndex, 1);
 
-        modObj.interestedParty = arr;
+        mainObj.interestedParties = arr;
 
-        const newArr = [...newInterestedParties];
-        newArr.splice(pIndex, 1, modObj);
+        const newArr = [...interestedPartyData];
+        newArr.splice(pIndex, 1, delObj);
 
         return newArr;
     }
 
-    onDeleteFunc = (item) => () => {
-        // const { deleteInterestedParties } = this.props;
-        // const payloadData = this.getDeleteData(item, data);
-        // deleteInterestedParties(payloadData);
+    onDeleteFunc = (item, key, index) => () => {
+        const { deleteInterestedParties } = this.props;
+        const payloadData = this.getDeleteData(item, key, index);
+        deleteInterestedParties(payloadData);
     }
 
-    renderAccountData = ({ item }) => {
-        return (
-            <CardHeader item={item} onDelete={this.onDeleteFunc(item)} />
-        );
-    }
-
-    renderData = ({ item }) => {
+    renderData = ({ item, index }) => {
         const { collapseIcon } = this.state;
         return (
             <View style={styles.blockMarginTop}>
@@ -90,7 +79,7 @@ class manageIntrestedPartiesComponent extends Component {
                         <Text style={styles.titleHeaderText}>{`${item.fname} ${item.lname}`}</Text>
                     </View>
                     <View style={styles.editBtn}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={this.onClickEdit(item, index)}>
                             <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
                         </TouchableOpacity>
                     </View>
@@ -100,11 +89,12 @@ class manageIntrestedPartiesComponent extends Component {
                     <View style={styles.containerHeaderView}>
                         <Text style={styles.containerHeaderText}>{gblStrings.accManagement.noOfAccTagged} <Text style={styles.containerHeaderTextValue}>{item.accounts_Tagged}</Text></Text>
                     </View>
-                    <FlatList
-                        data={item.interestedParties}
-                        keyExtractor={this.generateKeyExtractor}
-                        renderItem={this.renderAccountData}
-                    />
+                    {item.interestedParties && item.interestedParties.map((subItem, key) => {
+                        return (
+                            <CardHeader item={subItem} onDelete={this.onDeleteFunc(subItem, key, index)} />
+                        );
+                    })}
+
                     <View style={styles.addAccountView}>
                         <TouchableOpacity>
                             <Text style={styles.editBtnText}>+ Add Account</Text>
@@ -118,11 +108,8 @@ class manageIntrestedPartiesComponent extends Component {
     generateKeyExtractor = (item) => item.key;
 
     render() {
-        const { navigation, manageInterestedPartiesData } = this.props;
+        const { navigation } = this.props;
         const { successMsg, isSavedSuccess, interestedPartyData } = this.state;
-        if (this.props && manageInterestedPartiesData && manageInterestedPartiesData.list_manage_interested_parties) {
-            newInterestedParties = manageInterestedPartiesData.list_manage_interested_parties;
-        }
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
@@ -183,6 +170,7 @@ manageIntrestedPartiesComponent.propTypes = {
     manageInterestedPartiesData: PropTypes.instanceOf(Object),
     deleteInterestedParties: PropTypes.func
 };
+
 manageIntrestedPartiesComponent.defaultProps = {
     navigation: {},
     manageInterestedPartiesData: {},

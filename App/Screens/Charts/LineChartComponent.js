@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
-// import { LineChart, } from "react-native-chart-kit";
 import { LineChart, Grid, YAxis, XAxis } from 'react-native-svg-charts';
-import { Circle, G, Line } from 'react-native-svg'
+import { Circle, G, Line } from 'react-native-svg';
 import { scaledHeight } from '../../Utils/Resolution';
 
 const screenWidth = Dimensions.get("window").width;
 const contentInset = { top: 20, bottom: 20 };
-const dataExample = {
-    labels: ["January", "February", "March", "April", "May", "June"],
-    datasets: [
-        {
-            data: [20, 45, 28, 80, 99, 43],
-            strokeWidth: 2 // optional
-        }
-    ],
-    legend: ["Rainy Days", "Sunny Days", "Snowy Days"] // optional
-};
 
 const axesSvg = { fontSize: 10, fill: 'grey' };
 const verticalContentInset = { top: 10, bottom: 10 };
@@ -76,26 +65,7 @@ class LineChartComponent extends React.PureComponent {
                     />
                 </View>
             </View>
-        )
+        );
     }
 }
 export default LineChartComponent;
-
-const styles = StyleSheet.create({
-    buttonStyle: {
-        height: '15%',
-        width: '50%',
-        justifyContent: "center",
-        alignItems: 'center',
-        borderRadius: 1,
-        backgroundColor: "#06748C",
-        marginTop: '2%',
-        alignSelf: 'center',
-        marginBottom: '5%'
-    },
-    buttonTextStyle: {
-        fontSize: scaledHeight(14),
-        fontWeight: "bold",
-        lineHeight: scaledHeight(20),
-    },
-});

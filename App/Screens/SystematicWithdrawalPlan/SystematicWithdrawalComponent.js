@@ -96,6 +96,11 @@ class SystematicWithdrawalComponent extends Component {
         v=n%100;
         return n+(s[(v-20)%10]||s[v]||s[0]);
      }
+
+     getAmountWithSymbol(n){
+        var s=["$"];
+        return s+n;
+    }
     
     setCollapsableUpdates = index => () => {
         const { arrExpand, expandIndex } = this.state;
@@ -113,8 +118,8 @@ class SystematicWithdrawalComponent extends Component {
     renderSelectedFunds = () => ({ item }) =>
         (
             <View style={styles.editDropdown}>
-                <Text style={styles.editDropdownText}> {item.name} </Text>
-                <Text style={styles.editDropdownText}> {item.amount} </Text>
+                <Text style={styles.editDropdownText}> {item.fundName} </Text>
+                <Text style={styles.editDropdownText}> {this.getAmountWithSymbol(item.fundAmount)} </Text>
             </View>
         )
 
@@ -161,7 +166,7 @@ class SystematicWithdrawalComponent extends Component {
                 <View style={styles.flatBody}>
 
                     <View style={styles.flatBodyTitle}>
-                        <Text style={styles.flatBodyTitleValue}>{item.investedIn[0].name}</Text>
+                        <Text style={styles.flatBodyTitleValue}>{item.investedIn[0].fundName}</Text>
                         <Text style={styles.flatBodyTitleLink} onPress={this.popupInvestedIn(index)}>{item.investedIn.length}</Text>
                     </View>
 
@@ -188,7 +193,7 @@ class SystematicWithdrawalComponent extends Component {
                         </View>
                         <View style={styles.verifyContentMain}>
                             <Text style={styles.verifyConent1}>Amount</Text>
-                            <Text style={styles.verifyConent2}>{item.totalAmount}</Text>
+                            <Text style={styles.verifyConent2}>{this.getAmountWithSymbol(item.totalAmount)}</Text>
                         </View>
                         <View style={styles.verifyContentMain}>
                             <Text style={styles.verifyConent1}>Fund To</Text>
