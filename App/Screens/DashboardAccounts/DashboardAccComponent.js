@@ -7,35 +7,6 @@ import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import AppUtils from '../../Utils/AppUtils';
 
-/*
-const accList = [
-
-    {
-        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcitt et faucibus lectus ut gdsgg massa convallis.',
-        name: 'General Investment Account(Non IRA)',
-        id: 0
-    },
-    {
-        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcitt et faucibus lectus ut gdsgg massa convallis.',
-        name: 'IRA (Retirement Account)',
-        id: 1
-    },
-    {
-        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcitt et faucibus lectus ut gdsgg massa convallis.',
-        name: 'Investing for Children',
-        id: 2
-    },
-    {
-        desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcitt et faucibus lectus ut gdsgg massa convallis.',
-        name: 'Speciality Accounts',
-        id: 3
-    }
-
-
-
-];
-*/
-
 class DashboardAccComponent extends Component {
     constructor(props) {
         super(props);
@@ -62,78 +33,90 @@ class DashboardAccComponent extends Component {
         retriveSavedData(pendingAppPayload);
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        AppUtils.debugLog(`getDerivedStateFromProps::::> ${ prevState}`);
+        return prevState;
+
+ 
+    }
+
     componentDidUpdate(prevProps, prevState) {
        AppUtils.debugLog(`componentDidUpdate::::> ${ prevState}`);
-       const { navigation , accOpeningData } = this.props;
-       const { navigate } = navigation;  
+       const {accOpeningData } = this.props;
 
        const { retrivePendingAppData } = this.state;
+       if (this.props !== prevProps) {
+        /*
+        const responseKey = ActionTypes.RETRIVE_OPENING_ACCT;
+        if (accOpeningData[`${responseKey}`]) {
+            if (accOpeningData[`${responseKey}`] !== prevProps.accOpeningData[`${responseKey}`]) {
+                const tempResponse = accOpeningData[`${responseKey}`];
+                if (tempResponse.savedPages) {
+                   
+                    this.setState({
+                        retrivePendingAppData: tempResponse
+                    });
 
-        if (this.props !== prevProps) {
-            const responseKey = ActionTypes.RETRIVE_OPENING_ACCT;
-            if (accOpeningData[responseKey]) {
-                if (accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
-                    const tempResponse = accOpeningData[responseKey];
-                    if (tempResponse.savedPages) {
-                       
-                        this.setState({
-                            retrivePendingAppData: tempResponse
-                        });
-
-                    } else {
-                        const msg = tempResponse.message;
-                        AppUtils.debugLog(`Account  Saved ::: :: ${ msg}`);
-                    }
+                } else {
+                    const msg = tempResponse.message;
+                    AppUtils.debugLog(`Account  Saved ::: :: ${ msg}`);
                 }
             }
+        }
+        */
 
-            const populateAppKey = "isPendingApplication";
-            if (accOpeningData[populateAppKey]) {
-                if (accOpeningData[populateAppKey] !== prevProps.accOpeningData[populateAppKey]) {
-                    const isPendingApplication = accOpeningData[populateAppKey];
-                    if (isPendingApplication) {
+        const populateAppKey = "isPendingApplication";
+        if (accOpeningData[`${populateAppKey}`]) {
+            if (accOpeningData[`${populateAppKey}`] !== prevProps.accOpeningData[`${populateAppKey}`]) {
+                const isPendingApplication = accOpeningData[`${populateAppKey}`];
+                if (isPendingApplication) {
 
-                        const selectedAccount = {
-                            "key": retrivePendingAppData.accountType || "",
-                            "value": retrivePendingAppData.accountMainCategory || ""
+                    const selectedAccount = {
+                        "key": retrivePendingAppData.accountType || "",
+                        "value": retrivePendingAppData.accountMainCategory || ""
 
-                        };
-                        const pageNo = `${ retrivePendingAppData.savedPages}`;
-                        let screenName = 'openAccPageOne';
+                    };
+                    const pageNo = `${ retrivePendingAppData.savedPages}`;
+                    let screenName = 'openAccPageOne';
 
 
-                        switch (pageNo) {
-                            case "1":
-                                screenName = 'openAccPageOne';
+                    switch (pageNo) {
+                        case "1":
+                            screenName = 'openAccPageOne';
+                            break;
+                        case "2":
+                            screenName = 'openAccPageTwo';
+                            break;
+                        case "3":
+                            screenName = 'openAccPageThree';
+                            break;
+                        case "4":
+                            screenName = 'openAccPageFour';
+                            break;
+                        case "5":
+                            screenName = 'openAccPageFive';
+                            break;
+                        case "6":
+                            screenName = 'openAccPageSix';
+                            break;
+                            default:
                                 break;
-                            case "2":
-                                screenName = 'openAccPageTwo';
-                                break;
-                            case "3":
-                                screenName = 'openAccPageThree';
-                                break;
-                            case "4":
-                                screenName = 'openAccPageFour';
-                                break;
-                            case "5":
-                                screenName = 'openAccPageFive';
-                                break;
-                            case "6":
-                                screenName = 'openAccPageSix';
-                                break;
-                                default:
-                                    break;
-                        }
+                    }
 
-                        if (screenName !== "") {
-                            navigate({ routeName: screenName, key: screenName, params: { selectedAccount, accType: "" } });
-                        }
+                    if (screenName !== "") {
+                        AppUtils.debugLog(`selectedAccount::::> ${ selectedAccount}`);
+                       // const { navigate } = navigation;  
+                       // navigate({ routeName: screenName, key: screenName, params: { selectedAccount, accType: "" } });
                     }
                 }
             }
         }
+    }
+       
 
     }
+
+
 
     /*----------------------
                                  Button Events 
@@ -195,20 +178,26 @@ class DashboardAccComponent extends Component {
        const { accOpeningData } = this.props;
        const { navigation} = this.props;
 
-       const { retrivePendingAppData } = this.state;
+       
 
 
         let accList = [];
         const tempkey = ActionTypes.GET_ACCOUNT_TYPES;
-        if (this.props && accOpeningData && accOpeningData[tempkey]) {
-            const tempResponse = accOpeningData[tempkey];
-            /*
-            if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
-                accList = tempResponse.result;
-                accList = accList.value;
-            }
-            */
+        if (this.props && accOpeningData && accOpeningData[`${tempkey}`]) {
+            const tempResponse = accOpeningData[`${tempkey}`];
            accList = tempResponse.value;
+        }
+
+        let retrivePendingAppData = {};
+        const responseKey = ActionTypes.RETRIVE_OPENING_ACCT;
+        if (this.props && accOpeningData && accOpeningData[`${responseKey}`]) {
+            const tempResponse = accOpeningData[`${responseKey}`];
+            if (tempResponse.savedPages) {
+                retrivePendingAppData = tempResponse;
+            } else {
+                const msg = tempResponse.message;
+                AppUtils.debugLog(`Account retrived ::: :: ${ msg}`);
+            }
         }
 
         //  let tempPendingAppData = this.state.retrivePendingAppData;
