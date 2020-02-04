@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
         alignItems:'center',
         height:scaledHeight(20)
     },
+    flexCont:{
+    flex:0.85
+    },
     forgotLineText:{
         flexDirection:'row',
         fontSize:scaledHeight(18),
@@ -75,6 +78,10 @@ const styles = StyleSheet.create({
         paddingRight:'4%',
         justifyContent:'center',
         alignItems:'center'
+    },
+    marginPadd:{
+        marginLeft:'4%',
+        marginRight:'4%'
     },
     newVictory:{
         color:'#486D89',

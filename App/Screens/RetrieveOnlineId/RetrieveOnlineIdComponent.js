@@ -39,6 +39,11 @@ class RetrieveOnlineIdComponent extends Component {
         const {navigation} = this.props;
         navigation.navigate('onlineIDVerification');
     }
+
+    goBack = () => {
+        const {navigation} = this.props;
+        navigation.goBack();
+    }
     
  
     render(){
@@ -89,7 +94,7 @@ class RetrieveOnlineIdComponent extends Component {
                     buttonStyle={styles.cancelButton}
                     buttonText="Cancel"
                     textStyle={styles.cancelButtonText}
-                    onPress={this.navigatePassword}
+                    onPress={this.goBack}
                    //  disabled={this.state.email === '' || !this.state.validationEmail}
             />
 

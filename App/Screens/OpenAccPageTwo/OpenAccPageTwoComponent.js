@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity, Image, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, Image, KeyboardAvoidingView, Platform, Switch } from 'react-native';
 import PropTypes from "prop-types";
 import ImagePicker from 'react-native-image-picker';
 import styles from './styles';
@@ -27,7 +27,7 @@ const date = new Date().getDate(); //  Current Date
 const month = new Date().getMonth() + 1; //  Current Month
 const year = new Date().getFullYear(); //  Current Year
 const currentdate = `${month}-${date}-${year}`;
-
+const switchStyle = { flase: '#DBDBDB', true: '#444444' };
 const tempDate = new Date();
 tempDate.setDate(tempDate.getDate() - 1);
 const prevDate = `${tempDate.getMonth() + 1}-${tempDate.getDate()}-${tempDate.getFullYear()}`;
@@ -223,7 +223,7 @@ class OpenAccPageTwoComponent extends Component {
                 isContactInfoExpanded: false,
                 isPhoneInfoExpanded: false,
                 isEmailInfoExpanded: false
-               
+
 
 
             },
@@ -619,7 +619,7 @@ class OpenAccPageTwoComponent extends Component {
             },
 
             retirement: {
-                
+
 
                 isPersonalInfoExpanded: false,
                 isEmploymentInfoExpanded: false,
@@ -696,7 +696,7 @@ class OpenAccPageTwoComponent extends Component {
     componentDidMount() {
 
         AppUtils.debugLog(`componentDidMount::::> ${this.props}`);
-        const { masterLookupStateData, getPersonalCompositeData,getCompositeLookUpData } = this.props;
+        const { masterLookupStateData, getPersonalCompositeData, getCompositeLookUpData } = this.props;
         const payload = [];
         const compositePayloadData = [
             "prefix",
@@ -1514,16 +1514,16 @@ class OpenAccPageTwoComponent extends Component {
         };
 
         const investChildPayload = {
-                "childBeneficiary": {
-                    "beneficiaryDetails": {
-                        "firstName": childBeneficiary.firstName || "",
-                        "middleInitial": childBeneficiary.middleInitial || "",
-                        "lastName": childBeneficiary.lastName || "",
-                        "ssnTin": childBeneficiary.socialSecurityNo || "",
-                        "dateOfBirth": childBeneficiary.dob || "",
-                        "relation": childBeneficiary.relationshipToAcc || "",
-                    }
+            "childBeneficiary": {
+                "beneficiaryDetails": {
+                    "firstName": childBeneficiary.firstName || "",
+                    "middleInitial": childBeneficiary.middleInitial || "",
+                    "lastName": childBeneficiary.lastName || "",
+                    "ssnTin": childBeneficiary.socialSecurityNo || "",
+                    "dateOfBirth": childBeneficiary.dob || "",
+                    "relation": childBeneficiary.relationshipToAcc || "",
                 }
+            }
         };
 
         /* const retirementAccPayload = {
@@ -2481,7 +2481,7 @@ class OpenAccPageTwoComponent extends Component {
                     isContactInfoExpanded: true,
                     isPhoneInfoExpanded: true,
                     isEmailInfoExpanded: true
-                   
+
                 },
                 isValidationSuccess,
                 errMsg: isValidationSuccess === false ? errMsg : ""
@@ -2779,9 +2779,9 @@ class OpenAccPageTwoComponent extends Component {
                         beneficiaryTotal += parseFloat(tempObj.beneficiaryDistPercent);
                     }
                 */
-        
-        
-                
+
+
+
 
 
                 let tempValidation = false;
@@ -3863,23 +3863,23 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
-    onBlurDistPercentageForIRABeneficiary = (keyName, index ,input) => text => {
+    onBlurDistPercentageForIRABeneficiary = (keyName, index, input) => text => {
         AppUtils.debugLog("onBlurDistPercentageForIRABeneficiary:::>");
         const { retirementBeneficiaryData } = this.state;
         const newItems = [...retirementBeneficiaryData];
-       // newItems[index].beneficiaryDistPercent = text;
-       
+        // newItems[index].beneficiaryDistPercent = text;
 
-        
-          newItems[index].firstNameValidation = true;
-          newItems[index].lastNameValidation = true;
-          newItems[index].dobValidation = true;
-          newItems[index].emailAddressValidation = true;
-          newItems[index].socialSecurityNoValidation = true;
-          newItems[index].beneficiaryTypeValidation = true;
-          newItems[index].relationshipToAccValidation = true;
-         // newItems[index].beneficiaryDistPercentValidation = true;
-  
+
+
+        newItems[index].firstNameValidation = true;
+        newItems[index].lastNameValidation = true;
+        newItems[index].dobValidation = true;
+        newItems[index].emailAddressValidation = true;
+        newItems[index].socialSecurityNoValidation = true;
+        newItems[index].beneficiaryTypeValidation = true;
+        newItems[index].relationshipToAccValidation = true;
+        // newItems[index].beneficiaryDistPercentValidation = true;
+
 
         let total = 0;
         let errMsg = "";
@@ -3891,10 +3891,10 @@ class OpenAccPageTwoComponent extends Component {
 
         AppUtils.debugLog(`beneficiaryDistPercent total:::>${total}`);
 
-        if (total > 100 || total < 100 ) {
+        if (total > 100 || total < 100) {
             errMsg = gblStrings.accManagement.beneficiariesCond;
             newItems[index].beneficiaryDistPercentValidation = false;
-        }else{
+        } else {
             newItems[index].beneficiaryDistPercentValidation = true;
 
         }
@@ -3989,6 +3989,10 @@ class OpenAccPageTwoComponent extends Component {
                 retirementBeneficiaryData: newItems
             });
         }
+    }
+
+    onPressAddPhoneNumber = () => {
+        AppUtils.debugLog("onPressAddPhoneNumber::: ");
     }
 
     onSelectedEstateTrustDropDownValue = (dropDownName, objIndex) => (value, index, data) => {
@@ -4237,7 +4241,7 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                   
+
                     <TouchableOpacity
                         activeOpacity={0.8}
                         accessibilityRole="button"
@@ -4278,8 +4282,8 @@ class OpenAccPageTwoComponent extends Component {
                             <Text style={styles.lblValueTxt}>
                                 {personal.firstName}
                             </Text>
-                           
-                           
+
+
                             {/* <GInputComponent
                                 inputref={this.setInputRef("firstName")}
                                 value={personal.firstName}
@@ -4293,7 +4297,7 @@ class OpenAccPageTwoComponent extends Component {
                                 errorText={errMsg}
                             /> */}
 
-                            
+
 
                             <Text style={styles.lblTxt}>
                                 <Text style={styles.lblTxt}>
@@ -4607,7 +4611,7 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                   
+
                     <TouchableOpacity
                         activeOpacity={0.8}
                         accessibilityRole="button"
@@ -4629,7 +4633,7 @@ class OpenAccPageTwoComponent extends Component {
                 {
                     personal.isContactInfoExpanded && (
                         <View style={styles.childSectionGrp}>
-                
+
                             <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.addressType}
                             </Text>
@@ -4705,8 +4709,8 @@ class OpenAccPageTwoComponent extends Component {
                                 onSubmitEditing={this.onSubmitEditing(this.stateCity)}
                                 errorFlag={!personal.cityValidation}
                                 errorText={errMsg}
-                               //  editable={personal.citizenship !== "U.S"}
-                               editable={false}
+                                //  editable={personal.citizenship !== "U.S"}
+                                editable={false}
 
                             />
                             <Text style={styles.lblTxt}>
@@ -4715,7 +4719,7 @@ class OpenAccPageTwoComponent extends Component {
                             <GInputComponent
                                 inputref={this.setInputRef("stateCity")}
                                 propInputStyle={personal.stateCityValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
-                               // placeholder={gblStrings.accManagement.enterState}
+                                // placeholder={gblStrings.accManagement.enterState}
                                 returnKeyType="done"
                                 maxLength={gblStrings.maxLength.state}
                                 value={personal.stateCity}
@@ -4823,7 +4827,7 @@ class OpenAccPageTwoComponent extends Component {
                                         <GInputComponent
                                             inputref={this.setInputRef("city_Phy")}
                                             propInputStyle={personal.city_PhyValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
-                                          //  placeholder={gblStrings.accManagement.enterCity}
+                                            //  placeholder={gblStrings.accManagement.enterCity}
                                             maxLength={gblStrings.maxLength.city}
                                             value={personal.city_Phy}
                                             onChangeText={this.onChangeText("personal", "city_Phy")}
@@ -4840,7 +4844,7 @@ class OpenAccPageTwoComponent extends Component {
                                         <GInputComponent
                                             inputref={this.setInputRef("stateCity_Phy")}
                                             propInputStyle={personal.stateCity_PhyValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
-                                           // placeholder={gblStrings.accManagement.enterState}
+                                            // placeholder={gblStrings.accManagement.enterState}
                                             returnKeyType="done"
                                             maxLength={gblStrings.maxLength.state}
                                             value={personal.stateCity_Phy}
@@ -4853,7 +4857,7 @@ class OpenAccPageTwoComponent extends Component {
                                         />
 
                                     </View>
-                                )} 
+                                )}
                         </View>
                     )}
             </View>
@@ -4869,7 +4873,7 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                   
+
                     <TouchableOpacity
                         activeOpacity={0.8}
                         accessibilityRole="button"
@@ -4892,152 +4896,210 @@ class OpenAccPageTwoComponent extends Component {
                     personal.isPhoneInfoExpanded && (
                         <View style={styles.childSectionGrp}>
 
-                            <View style={styles.lblHeader}>
-                                <Text style={styles.lblHeaderTxt}>
-                                    {gblStrings.accManagement.mobile}
-                                </Text>
+                            <View style={styles.phoneInfoView}>
+                                <View style={styles.lblHeader}>
+                                    <Text style={styles.lblHeaderTxt}>
+                                        <Text style={styles.lblHeaderTxt}>
+                                            {gblStrings.accManagement.mobile}
+                                        </Text>
+
+                                    </Text>
+                                </View>
+                                <View style={styles.phoneCardView}>
+                                    <View style={styles.dropDownViewPrefix}>
+                                        {this.renderCustomDropDown({
+                                            section: "personal",
+                                            stateKey: "phoneType",
+                                            dropDownName: "phoneTypeDropDown",
+                                            lblDropdownName: gblStrings.accManagement.mobile,
+                                            isOptional: false
+                                        })
+                                        }
+                                    </View>
+                                    <GInputComponent
+                                        inputref={this.setInputRef("mobileNo")}
+                                        propInputStyle={personal.mobileNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                        placeholder={gblStrings.accManagement.phoneNoFormat}
+                                        maxLength={gblStrings.maxLength.mobileNo}
+                                        keyboardType="phone-pad"
+                                        //  value={personal.mobileNo.replace(/\d(?=\d{4})/g, "*")}
+                                        value={personal.mobileNo}
+                                        onChangeText={this.onChangeText("personal", "mobileNo")}
+                                        onSubmitEditing={this.onSubmitEditing(this.contactDuringMobNo)}
+                                        errorFlag={!personal.mobileNoValidation}
+                                        errorText={errMsg}
+                                    />
+                                    {this.renderCustomDropDown({
+                                        section: "personal",
+                                        stateKey: "contactDuringMobNo",
+                                        dropDownName: "contactDuringMobNoDropDown",
+                                        lblDropdownName: gblStrings.accManagement.contactMeDuring,
+                                        isOptional: false
+                                    })
+                                    }
+                                    <View style={styles.setPrimaryView}>
+                                        <View style={styles.setPrimaryViewHeader}>
+                                            <Text style={styles.setPrimarylbl}>{gblStrings.accManagement.setAsPrimary}</Text>
+                                        </View>
+                                        <View style={styles.phoneInfoSwitch}>
+                                            <Switch trackColor={switchStyle}
+                                                // onValueChange={onClickCheckbox}
+                                                value
+                                            />
+                                        </View>
+                                    </View>
+
+                                </View>
+                                <GButtonComponent
+                                    onPress={this.onPressAddPhoneNumber}
+                                    buttonStyle={styles.addPhoneEmailBtn}
+                                    buttonText={gblStrings.accManagement.addAnotherNumber}
+                                    textStyle={styles.addPhoneEmailBtnTxt}
+                                />
+
                             </View>
-                            <View style={styles.dropDownViewPrefix}>
-                                {this.renderCustomDropDown({
-                                    section: "personal",
-                                    stateKey: "phoneType",
-                                    dropDownName: "phoneTypeDropDown",
-                                    lblDropdownName: gblStrings.accManagement.mobile,
-                                    isOptional: false
-                                })
-                                }
+
+                            <View style={styles.phoneInfoView}>
+                                <View style={styles.lblHeader}>
+                                    <Text style={styles.lblHeaderTxt}>
+                                        <Text style={styles.lblHeaderTxt}>
+                                            {gblStrings.accManagement.home}
+                                        </Text>
+                                        <Text style={styles.optionalTxt}>
+                                            {` ${gblStrings.accManagement.optional}`}
+                                        </Text>
+                                    </Text>
+                                </View>
+                                <View style={styles.phoneCardView}>
+                                    <View style={styles.dropDownViewPrefix}>
+                                        {this.renderCustomDropDown({
+                                            section: "personal",
+                                            stateKey: "phoneType2",
+                                            dropDownName: "phoneType2DropDown",
+                                            lblDropdownName: gblStrings.accManagement.home,
+                                            isOptional: true
+                                        })
+                                        }
+                                    </View>
+                                    <GInputComponent
+                                        inputref={this.setInputRef("telePhoneNo2")}
+                                        propInputStyle={styles.customTxtBox}
+                                        placeholder={gblStrings.accManagement.phoneNoFormat}
+                                        value={personal.telePhoneNo2}
+                                        maxLength={gblStrings.maxLength.phoneNo}
+                                        keyboardType="phone-pad"
+                                        onChangeText={this.onChangeText("personal", "telePhoneNo2")}
+                                        onSubmitEditing={this.onSubmitEditing(this.contactDuringTelePhone2)}
+
+                                    />
+                                    {this.renderCustomDropDown({
+                                        section: "personal",
+                                        stateKey: "contactDuringTelePhone2",
+                                        dropDownName: "contactDuringTelePhone2DropDown",
+                                        lblDropdownName: gblStrings.accManagement.contactMeDuring,
+                                        isOptional: false
+                                    })
+                                    }
+                                </View>
+
                             </View>
-                            <GInputComponent
-                                inputref={this.setInputRef("mobileNo")}
-                                propInputStyle={personal.mobileNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                placeholder={gblStrings.accManagement.phoneNoFormat}
-                                maxLength={gblStrings.maxLength.mobileNo}
-                                keyboardType="phone-pad"
-                                //  value={personal.mobileNo.replace(/\d(?=\d{4})/g, "*")}
-                                value={personal.mobileNo}
-                                onChangeText={this.onChangeText("personal", "mobileNo")}
-                                onSubmitEditing={this.onSubmitEditing(this.contactDuringMobNo)}
-                                errorFlag={!personal.mobileNoValidation}
-                                errorText={errMsg}
-                            />
-                            {this.renderCustomDropDown({
-                                section: "personal",
-                                stateKey: "contactDuringMobNo",
-                                dropDownName: "contactDuringMobNoDropDown",
-                                lblDropdownName: gblStrings.accManagement.contactMeDuring,
-                                isOptional: false
-                            })
-                            }
 
 
-                            <View style={styles.lblHeader}>
-                                <Text style={styles.lblHeaderTxt}>
-                                    {gblStrings.accManagement.home}
-                                </Text>
+                            <View style={styles.phoneInfoView}>
+                                <View style={styles.lblHeader}>
+                                    <Text style={styles.lblHeaderTxt}>
+                                        <Text style={styles.lblHeaderTxt}>
+                                            {gblStrings.accManagement.work}
+                                        </Text>
+                                        <Text style={styles.optionalTxt}>
+                                            {` ${gblStrings.accManagement.optional}`}
+                                        </Text>
+                                    </Text>
+                                </View>
+                                <View style={styles.phoneCardView}>
+                                    <View style={styles.dropDownViewPrefix}>
+                                        {this.renderCustomDropDown({
+                                            section: "personal",
+                                            stateKey: "phoneType3",
+                                            dropDownName: "phoneType3DropDown",
+                                            lblDropdownName: gblStrings.accManagement.home,
+                                            isOptional: true
+                                        })
+                                        }
+                                    </View>
+                                    <GInputComponent
+                                        inputref={this.setInputRef("telePhoneNo3")}
+                                        propInputStyle={styles.customTxtBox}
+                                        placeholder={gblStrings.accManagement.phoneNoFormat}
+                                        value={personal.telePhoneNo2}
+                                        maxLength={gblStrings.maxLength.phoneNo}
+                                        keyboardType="phone-pad"
+                                        onChangeText={this.onChangeText("personal", "telePhoneNo3")}
+                                        onSubmitEditing={this.onSubmitEditing(this.contactDuringTelePhone2)}
+
+                                    />
+                                    {this.renderCustomDropDown({
+                                        section: "personal",
+                                        stateKey: "contactDuringTelePhone3",
+                                        dropDownName: "contactDuringTelePhone3DropDown",
+                                        lblDropdownName: gblStrings.accManagement.contactMeDuring,
+                                        isOptional: false
+                                    })
+                                    }
+                                </View>
+
                             </View>
-                            <View style={styles.dropDownViewPrefix}>
-                                {this.renderCustomDropDown({
-                                    section: "personal",
-                                    stateKey: "phoneType2",
-                                    dropDownName: "phoneType2DropDown",
-                                    lblDropdownName: gblStrings.accManagement.home,
-                                    isOptional: true
-                                })
-                                }
+
+
+                            <View style={styles.phoneInfoView}>
+                                <View style={styles.lblHeader}>
+                                    <Text style={styles.lblHeaderTxt}>
+                                        <Text style={styles.lblHeaderTxt}>
+                                            {gblStrings.accManagement.fax}
+                                        </Text>
+                                        <Text style={styles.optionalTxt}>
+                                            {` ${gblStrings.accManagement.optional}`}
+                                        </Text>
+                                    </Text>
+                                </View>
+                                <View style={styles.phoneCardView}>
+                                    <View style={styles.dropDownViewPrefix}>
+                                        {this.renderCustomDropDown({
+                                            section: "personal",
+                                            stateKey: "phoneType4",
+                                            dropDownName: "phoneType4DropDown",
+                                            lblDropdownName: gblStrings.accManagement.home,
+                                            isOptional: true
+                                        })
+                                        }
+                                    </View>
+                                    <GInputComponent
+                                        inputref={this.setInputRef("telePhoneNo4")}
+                                        propInputStyle={styles.customTxtBox}
+                                        placeholder={gblStrings.accManagement.phoneNoFormat}
+                                        value={personal.telePhoneNo2}
+                                        maxLength={gblStrings.maxLength.phoneNo}
+                                        keyboardType="phone-pad"
+                                        onChangeText={this.onChangeText("personal", "telePhoneNo4")}
+                                        onSubmitEditing={this.onSubmitEditing(this.contactDuringTelePhone2)}
+
+                                    />
+                                    {this.renderCustomDropDown({
+                                        section: "personal",
+                                        stateKey: "contactDuringTelePhone4",
+                                        dropDownName: "contactDuringTelePhone4DropDown",
+                                        lblDropdownName: gblStrings.accManagement.contactMeDuring,
+                                        isOptional: false
+                                    })
+                                    }
+                                </View>
+
                             </View>
-                            <GInputComponent
-                                inputref={this.setInputRef("telePhoneNo2")}
-                                propInputStyle={styles.customTxtBox}
-                                placeholder={gblStrings.accManagement.phoneNoFormat}
-                                value={personal.telePhoneNo2}
-                                maxLength={gblStrings.maxLength.phoneNo}
-                                keyboardType="phone-pad"
-                                onChangeText={this.onChangeText("personal", "telePhoneNo2")}
-                                onSubmitEditing={this.onSubmitEditing(this.contactDuringTelePhone2)}
-
-                            />
-                            {this.renderCustomDropDown({
-                                section: "personal",
-                                stateKey: "contactDuringTelePhone2",
-                                dropDownName: "contactDuringTelePhone2DropDown",
-                                lblDropdownName: gblStrings.accManagement.contactMeDuring,
-                                isOptional: false
-                            })
-                            }
-
-                            <View style={styles.lblHeader}>
-                                <Text style={styles.lblHeaderTxt}>
-                                    {gblStrings.accManagement.work}
-                                </Text>
-                            </View>
-                            <View style={styles.dropDownViewPrefix}>
-                                {this.renderCustomDropDown({
-                                    section: "personal",
-                                    stateKey: "phoneType3",
-                                    dropDownName: "phoneType3DropDown",
-                                    lblDropdownName: gblStrings.accManagement.phoneType,
-                                    isOptional: true
-                                })
-                                }
-                            </View>
-                            <GInputComponent
-                                inputref={this.setInputRef("telePhoneNo3")}
-                                propInputStyle={styles.customTxtBox}
-                                placeholder=""
-                                value={personal.telePhoneNo3}
-                                maxLength={gblStrings.maxLength.phoneNo}
-                                keyboardType="phone-pad"
-                                onChangeText={this.onChangeText("personal", "telePhoneNo3")}
-                                onSubmitEditing={this.onSubmitEditing(this.contactDuringTelePhone3)}
-
-                            />
-                            {this.renderCustomDropDown({
-                                section: "personal",
-                                stateKey: "contactDuringTelePhone3",
-                                dropDownName: "contactDuringTelePhone3DropDown",
-                                lblDropdownName: gblStrings.accManagement.contactMeDuring,
-                                isOptional: false
-                            })
-                            }
 
 
-                            <View style={styles.lblHeader}>
-                                <Text style={styles.lblHeaderTxt}>
-                                    {gblStrings.accManagement.fax}
-                                </Text>
-                            </View>
-                            <View style={styles.dropDownViewPrefix}>
-                                {this.renderCustomDropDown({
-                                    section: "personal",
-                                    stateKey: "phoneType4",
-                                    dropDownName: "phoneType4DropDown",
-                                    lblDropdownName: gblStrings.accManagement.phoneType,
-                                    isOptional: true
-                                })
-                                }
-                            </View>
-                            <GInputComponent
-                                inputref={this.setInputRef("telePhoneNo4")}
-                                propInputStyle={styles.customTxtBox}
-                                placeholder=""
-                                value={personal.telePhoneNo3}
-                                maxLength={gblStrings.maxLength.phoneNo}
-                                keyboardType="phone-pad"
-                                onChangeText={this.onChangeText("personal", "telePhoneNo4")}
-                                onSubmitEditing={this.onSubmitEditing(this.contactDuringTelePhone3)}
 
-                            />
-                            {this.renderCustomDropDown({
-                                section: "personal",
-                                stateKey: "contactDuringTelePhone4",
-                                dropDownName: "contactDuringTelePhone4DropDown",
-                                lblDropdownName: gblStrings.accManagement.contactMeDuring,
-                                isOptional: false
-                            })
-                            }
-
-                           
                         </View>
+
                     )}
             </View>
 
@@ -5050,7 +5112,7 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                   
+
                     <TouchableOpacity
                         activeOpacity={0.8}
                         accessibilityRole="button"
@@ -5072,23 +5134,57 @@ class OpenAccPageTwoComponent extends Component {
                 {
                     personal.isEmailInfoExpanded && (
                         <View style={styles.childSectionGrp}>
-              
-                            <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.emailAddress}
-                            </Text>
-                            <GInputComponent
-                                inputref={this.setInputRef("emailAddress")}
-                                propInputStyle={personal.emailAddressValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                                placeholder={gblStrings.accManagement.emailformat}
-                                keyboardType="email-address"
-                                maxLength={gblStrings.maxLength.emailID}
-                                onChangeText={this.onChangeText("personal", "emailAddress")}
-                                onSubmitEditing={this.onSubmitEditing(this.socialSecurityNo)}
-                                errorFlag={!personal.emailAddressValidation}
-                                errorText={errMsg}
-                                value={personal.emailAddress}
 
-                            />
+                            <View style={styles.phoneInfoView}>
+                                <View style={styles.lblHeader}>
+                                    <Text style={styles.lblHeaderTxt}>
+                                        <Text style={styles.lblHeaderTxt}>
+                                            {gblStrings.accManagement.emailAddress}
+                                        </Text>
+
+                                    </Text>
+                                </View>
+                                <View style={styles.phoneCardView}>
+
+                                    <Text style={styles.lblTxt}>
+                                        {gblStrings.accManagement.emailAddress}
+                                    </Text>
+                                    <GInputComponent
+                                        inputref={this.setInputRef("emailAddress")}
+                                        propInputStyle={personal.emailAddressValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                        placeholder={gblStrings.accManagement.emailformat}
+                                        keyboardType="email-address"
+                                        maxLength={gblStrings.maxLength.emailID}
+                                        onChangeText={this.onChangeText("personal", "emailAddress")}
+                                        onSubmitEditing={this.onSubmitEditing(this.socialSecurityNo)}
+                                        errorFlag={!personal.emailAddressValidation}
+                                        errorText={errMsg}
+                                        value={personal.emailAddress}
+
+                                    />
+                                    <View style={styles.setPrimaryView}>
+                                        <View style={styles.setPrimaryViewHeader}>
+                                            <Text style={styles.setPrimarylbl}>{gblStrings.accManagement.setAsPrimary}</Text>
+                                        </View>
+                                        <View style={styles.phoneInfoSwitch}>
+                                            <Switch trackColor={switchStyle}
+                                                // onValueChange={onClickCheckbox}
+                                                value
+                                            />
+                                        </View>
+                                    </View>
+
+                                </View>
+                                <GButtonComponent
+                                    onPress={this.onPressAddPhoneNumber}
+                                    buttonStyle={styles.addPhoneEmailBtn}
+                                    buttonText={gblStrings.accManagement.addAnotherEmail}
+                                    textStyle={styles.addPhoneEmailBtnTxt}
+                                />
+
+                            </View>
+
+
                         </View>
                     )}
             </View>
@@ -5103,13 +5199,13 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                 
+
                     <TouchableOpacity
                         onPress={this.onClickExpandCollpaseEvent("personal", "isEmploymentInfoExpanded")}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-                    
+
                         <Text>
                             <Text style={styles.headings}>
                                 {personal.isEmploymentInfoExpanded ? "- " : "+ "}
@@ -5676,7 +5772,7 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
-    
+
     renderPersonalInfoJointOwner = () => {
         const { jointOwner, errMsg } = this.state;
 
@@ -5688,7 +5784,7 @@ class OpenAccPageTwoComponent extends Component {
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-                      
+
                         <Text>
                             <Text style={styles.headings}>
                                 {jointOwner.isPersonalInfoExpanded ? "- " : "+ "}
@@ -5697,7 +5793,7 @@ class OpenAccPageTwoComponent extends Component {
                                 {gblStrings.accManagement.personalInformationJoint}
                             </Text>
                         </Text>
-                        
+
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.lblLine} />
@@ -5826,7 +5922,7 @@ class OpenAccPageTwoComponent extends Component {
                             </Text>
                             {this.renderRadio("jointOwner", "citizenship", 28, { width: "30%", marginBottom: scaledHeight(0) }, styles.radioBtnGrp)}
                             {
-                                
+
                                 jointOwner.citizenship !== "U.S" &&
                                 (
                                     <View style={styles.nonUSView}>
@@ -5865,7 +5961,7 @@ class OpenAccPageTwoComponent extends Component {
                                                 {gblStrings.common.victoryCapitalAddress}
                                             </Text>
                                         </View>
-                                    {
+                                        {
                                     /* 
                                         <View>
                                             <Text style={styles.lblTxt}>
@@ -5996,15 +6092,15 @@ class OpenAccPageTwoComponent extends Component {
                                 secureTextEntry
 
                             />
-                           
+
                         </View>
                     )}
             </View>
 
         );
     }
-    
-    
+
+
 
     renderContactInfoJointOwner = () => {
         const { jointOwner, errMsg } = this.state;
@@ -6016,7 +6112,7 @@ class OpenAccPageTwoComponent extends Component {
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-                      
+
                         <Text>
                             <Text style={styles.headings}>
                                 {jointOwner.isContactInfoExpanded ? "- " : "+ "}
@@ -6025,7 +6121,7 @@ class OpenAccPageTwoComponent extends Component {
                                 {gblStrings.accManagement.contactInfoJoint}
                             </Text>
                         </Text>
-                        
+
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.lblLine} />
@@ -6094,7 +6190,7 @@ class OpenAccPageTwoComponent extends Component {
                             <GInputComponent
                                 inputref={this.setInputRef("city_joint")}
                                 propInputStyle={jointOwner.cityValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
-                               // placeholder={gblStrings.accManagement.enterCity}
+                                // placeholder={gblStrings.accManagement.enterCity}
                                 returnKeyType="done"
                                 maxLength={gblStrings.maxLength.city}
                                 value={jointOwner.city}
@@ -6107,13 +6203,13 @@ class OpenAccPageTwoComponent extends Component {
 
 
                             />
-                             <Text style={styles.lblTxt}>
+                            <Text style={styles.lblTxt}>
                                 {gblStrings.accManagement.stateTerritory}
-                             </Text>
+                            </Text>
                             <GInputComponent
                                 inputref={this.setInputRef("stateCity")}
                                 propInputStyle={jointOwner.stateCityValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
-                               // placeholder={gblStrings.accManagement.enterState}
+                                // placeholder={gblStrings.accManagement.enterState}
                                 returnKeyType="done"
                                 maxLength={gblStrings.maxLength.state}
                                 value={jointOwner.stateCity}
@@ -6217,7 +6313,7 @@ class OpenAccPageTwoComponent extends Component {
                                         <GInputComponent
                                             inputref={this.setInputRef("city_Phy_joint")}
                                             propInputStyle={jointOwner.city_PhyValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
-                                           // placeholder={gblStrings.accManagement.enterCity}
+                                            // placeholder={gblStrings.accManagement.enterCity}
                                             maxLength={gblStrings.maxLength.city}
                                             value={jointOwner.city_Phy}
                                             onChangeText={this.onChangeText("jointOwner", "city_Phy")}
@@ -6234,7 +6330,7 @@ class OpenAccPageTwoComponent extends Component {
                                         <GInputComponent
                                             inputref={this.setInputRef("stateCity_Phy_joint")}
                                             propInputStyle={jointOwner.stateCity_PhyValidation ? styles.customPopulatedTxtBox : styles.customTxtBoxError}
-                                          //  placeholder={gblStrings.accManagement.enterState}
+                                            //  placeholder={gblStrings.accManagement.enterState}
                                             returnKeyType="done"
                                             maxLength={gblStrings.maxLength.state}
                                             value={jointOwner.stateCity_Phy}
@@ -6271,7 +6367,7 @@ class OpenAccPageTwoComponent extends Component {
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-                      
+
                         <Text>
                             <Text style={styles.headings}>
                                 {jointOwner.isPhoneInfoExpanded ? "- " : "+ "}
@@ -6280,7 +6376,7 @@ class OpenAccPageTwoComponent extends Component {
                                 {gblStrings.accManagement.phoneInfoJoint}
                             </Text>
                         </Text>
-                        
+
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.lblLine} />
@@ -6374,7 +6470,7 @@ class OpenAccPageTwoComponent extends Component {
                                 isOptional: false
                             })
                             }
-                           
+
                             <GInputComponent
                                 inputref={this.setInputRef("telePhoneNo3")}
                                 propInputStyle={styles.customTxtBox}
@@ -6409,7 +6505,7 @@ class OpenAccPageTwoComponent extends Component {
                                 isOptional: false
                             })
                             }
-                           
+
                             <GInputComponent
                                 inputref={this.setInputRef("telePhoneNo4")}
                                 propInputStyle={styles.customTxtBox}
@@ -6429,8 +6525,8 @@ class OpenAccPageTwoComponent extends Component {
                                 isOptional: false
                             })
                             }
-                            
-                            
+
+
                         </View>
                     )}
             </View>
@@ -6448,7 +6544,7 @@ class OpenAccPageTwoComponent extends Component {
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-                      
+
                         <Text>
                             <Text style={styles.headings}>
                                 {jointOwner.isEmailInfoExpanded ? "- " : "+ "}
@@ -6457,7 +6553,7 @@ class OpenAccPageTwoComponent extends Component {
                                 {gblStrings.accManagement.emailInfoJoint}
                             </Text>
                         </Text>
-                        
+
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.lblLine} />
@@ -6873,13 +6969,13 @@ class OpenAccPageTwoComponent extends Component {
 
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                   
+
                     <TouchableOpacity
                         onPress={this.onClickExpandCollpaseEvent("jointOwner", "isFinancialInfoExpanded")}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-            
+
                         <Text>
                             <Text style={styles.headings}>
                                 {jointOwner.isFinancialInfoExpanded ? "- " : "+ "}
@@ -7064,7 +7160,7 @@ class OpenAccPageTwoComponent extends Component {
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                  
+
                     <TouchableOpacity
                         onPress={this.onClickExpandCollpaseEvent("childBeneficiary", "isPersonalInfoExpanded")}
                         activeOpacity={0.8}
@@ -7088,109 +7184,109 @@ class OpenAccPageTwoComponent extends Component {
                     childBeneficiary.isPersonalInfoExpanded && (
                         <View style={styles.childSectionGrp}>
 
-                        <Text style={styles.regulatoryQuestTxt}>
-                            {gblStrings.accManagement.childBeneficiaryNote}
-                        </Text>
-    
-    
-                        <Text style={styles.lblTxt}>
-                            {gblStrings.accManagement.firstName}
-                        </Text>
-                        <GInputComponent
-                            inputref={this.setInputRef("firstName_childben")}
-                            propInputStyle={childBeneficiary.firstNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                            placeholder=""
-                            maxLength={gblStrings.maxLength.firstName}
-                            value={childBeneficiary.firstName}
-                            onChangeText={this.onChangeText("childBeneficiary", "firstName")}
-                            onSubmitEditing={this.onSubmitEditing(this.middleInitial_childben)}
-                            errorFlag={!childBeneficiary.firstNameValidation}
-                            errorText={errMsg}
-                        />
-    
-                        <Text style={styles.lblTxt}>
+                            <Text style={styles.regulatoryQuestTxt}>
+                                {gblStrings.accManagement.childBeneficiaryNote}
+                            </Text>
+
+
                             <Text style={styles.lblTxt}>
-                                {gblStrings.accManagement.middleInitial}
+                                {gblStrings.accManagement.firstName}
                             </Text>
-                            <Text style={styles.optionalTxt}>
-                                {` ${gblStrings.accManagement.optional}`}
+                            <GInputComponent
+                                inputref={this.setInputRef("firstName_childben")}
+                                propInputStyle={childBeneficiary.firstNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                placeholder=""
+                                maxLength={gblStrings.maxLength.firstName}
+                                value={childBeneficiary.firstName}
+                                onChangeText={this.onChangeText("childBeneficiary", "firstName")}
+                                onSubmitEditing={this.onSubmitEditing(this.middleInitial_childben)}
+                                errorFlag={!childBeneficiary.firstNameValidation}
+                                errorText={errMsg}
+                            />
+
+                            <Text style={styles.lblTxt}>
+                                <Text style={styles.lblTxt}>
+                                    {gblStrings.accManagement.middleInitial}
+                                </Text>
+                                <Text style={styles.optionalTxt}>
+                                    {` ${gblStrings.accManagement.optional}`}
+                                </Text>
                             </Text>
-                        </Text>
-                        <GInputComponent
-                            inputref={this.setInputRef("middleInitial_childben")}
-                            propInputStyle={styles.customTxtBox}
-                            value={childBeneficiary.middleInitial}
-                            placeholder=""
-                            maxLength={gblStrings.maxLength.middleInitial}
-                            onChangeText={this.onChangeText("childBeneficiary", "middleInitial")}
-    
-                            onSubmitEditing={this.onSubmitEditing(this.lastName_childben)}
-    
-                        />
-    
-                        <Text style={styles.lblTxt}>
-                            {gblStrings.accManagement.lastName}
-                        </Text>
-                        <GInputComponent
-                            inputref={this.setInputRef("lastName_childben")}
-                            propInputStyle={childBeneficiary.lastNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                            placeholder=""
-                            value={childBeneficiary.lastName}
-                            maxLength={gblStrings.maxLength.lastName}
-                            returnKeyType="done"
-                            onChangeText={this.onChangeText("childBeneficiary", "lastName")}
-                            onSubmitEditing={this.onSubmitEditing(this.socialSecurityNo_childben)}
-                            errorFlag={!childBeneficiary.lastNameValidation}
-                            errorText={errMsg}
-                        />
-    
-    
-    
-                        <Text style={styles.lblTxt}>
-                            {gblStrings.accManagement.socialSecurityNo}
-                        </Text>
-                        <GInputComponent
-                            inputref={this.setInputRef("socialSecurityNo_childben")}
-                            propInputStyle={childBeneficiary.socialSecurityNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
-                            placeholder={gblStrings.accManagement.ssnNoFormat}
-                            value={childBeneficiary.socialSecurityNo}
-                            keyboardType="number-pad"
-                            returnKeyType="done"
-                            maxLength={gblStrings.maxLength.ssnNo}
-                            onChangeText={this.onChangeText("childBeneficiary", "socialSecurityNo")}
-                            onSubmitEditing={this.onSubmitEditing(this.dob_childben)}
-                            errorFlag={!childBeneficiary.socialSecurityNoValidation}
-                            errorText={errMsg}
-    
-                        />
-    
-                        <Text style={styles.lblTxt}>
-                            {gblStrings.accManagement.dob}
-                        </Text>
-                        <GDateComponent
-                            inputref={this.setInputRef("dob_childben")}
-                            date={childBeneficiary.dob}
-                            placeholder="Select Date"
-                            errorFlag={!childBeneficiary.dobValidation}
-                            errorMsg={errMsg}
-                            maxDate={prevDate}
-                            onDateChange={this.onChangeDate("childBeneficiary", "dob")}
-    
-                        />
-    
-                        {this.renderCustomDropDown({
-                            section: "childBeneficiary",
-                            stateKey: "relationshipToAcc",
-                            dropDownName: "relationshipToAccDropDown",
-                            lblDropdownName: gblStrings.accManagement.relationshipCustodian,
-                            isOptional: false
-                        })
-                        }
-    
+                            <GInputComponent
+                                inputref={this.setInputRef("middleInitial_childben")}
+                                propInputStyle={styles.customTxtBox}
+                                value={childBeneficiary.middleInitial}
+                                placeholder=""
+                                maxLength={gblStrings.maxLength.middleInitial}
+                                onChangeText={this.onChangeText("childBeneficiary", "middleInitial")}
+
+                                onSubmitEditing={this.onSubmitEditing(this.lastName_childben)}
+
+                            />
+
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.accManagement.lastName}
+                            </Text>
+                            <GInputComponent
+                                inputref={this.setInputRef("lastName_childben")}
+                                propInputStyle={childBeneficiary.lastNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                placeholder=""
+                                value={childBeneficiary.lastName}
+                                maxLength={gblStrings.maxLength.lastName}
+                                returnKeyType="done"
+                                onChangeText={this.onChangeText("childBeneficiary", "lastName")}
+                                onSubmitEditing={this.onSubmitEditing(this.socialSecurityNo_childben)}
+                                errorFlag={!childBeneficiary.lastNameValidation}
+                                errorText={errMsg}
+                            />
+
+
+
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.accManagement.socialSecurityNo}
+                            </Text>
+                            <GInputComponent
+                                inputref={this.setInputRef("socialSecurityNo_childben")}
+                                propInputStyle={childBeneficiary.socialSecurityNoValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                                placeholder={gblStrings.accManagement.ssnNoFormat}
+                                value={childBeneficiary.socialSecurityNo}
+                                keyboardType="number-pad"
+                                returnKeyType="done"
+                                maxLength={gblStrings.maxLength.ssnNo}
+                                onChangeText={this.onChangeText("childBeneficiary", "socialSecurityNo")}
+                                onSubmitEditing={this.onSubmitEditing(this.dob_childben)}
+                                errorFlag={!childBeneficiary.socialSecurityNoValidation}
+                                errorText={errMsg}
+
+                            />
+
+                            <Text style={styles.lblTxt}>
+                                {gblStrings.accManagement.dob}
+                            </Text>
+                            <GDateComponent
+                                inputref={this.setInputRef("dob_childben")}
+                                date={childBeneficiary.dob}
+                                placeholder="Select Date"
+                                errorFlag={!childBeneficiary.dobValidation}
+                                errorMsg={errMsg}
+                                maxDate={prevDate}
+                                onDateChange={this.onChangeDate("childBeneficiary", "dob")}
+
+                            />
+
+                            {this.renderCustomDropDown({
+                                section: "childBeneficiary",
+                                stateKey: "relationshipToAcc",
+                                dropDownName: "relationshipToAccDropDown",
+                                lblDropdownName: gblStrings.accManagement.relationshipCustodian,
+                                isOptional: false
+                            })
+                            }
+
                         </View>
-                
+
                     )}
-              
+
             </View>
         );
 
@@ -7303,7 +7399,7 @@ class OpenAccPageTwoComponent extends Component {
 
     renderBeneficiaryRetirement = () => {
         const { masterLookupStateData } = this.props;
-        const { retirementBeneficiaryData, errMsg ,retirement} = this.state;
+        const { retirementBeneficiaryData, errMsg, retirement } = this.state;
         let tempBeneficiaryData = dummyData;
         let tempRelationShipData = dummyData;
 
@@ -7324,13 +7420,13 @@ class OpenAccPageTwoComponent extends Component {
 
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
-                
+
                     <TouchableOpacity
                         onPress={this.onClickExpandCollpaseEvent("retirement", "isPersonalInfoExpanded")}
                         activeOpacity={0.8}
                         accessibilityRole="button"
                     >
-                      
+
 
                         <Text>
                             <Text style={styles.headings}>
@@ -7348,226 +7444,226 @@ class OpenAccPageTwoComponent extends Component {
 
                 {
                     retirement.isPersonalInfoExpanded && (
-                <View style={styles.childSectionGrp}>
-                    <Text style={styles.regulatoryNoteTxt}>
-                        {gblStrings.accManagement.beneficiariesNote}
-                    </Text>
+                        <View style={styles.childSectionGrp}>
+                            <Text style={styles.regulatoryNoteTxt}>
+                                {gblStrings.accManagement.beneficiariesNote}
+                            </Text>
 
-                    <Text style={styles.regulatoryQuestTxt}>
-                        {gblStrings.accManagement.beneficiariesCond}
-                    </Text>
-                    {retirementBeneficiaryData.map((item, index) => {
-                        const key = `benificairy${index}`;
-                        return (
-                            <View
-                                key={key}
-                            >
-                                {index !== 0 && <Text style={styles.lblLine} />}
-
-
-                                <GDropDownComponent
-                                    inputref={this.setInputRef(`beneficiaryType${index}`)}
-                                    dropDownLayout={styles.dropDownLayout}
-                                    dropDownTextName={styles.dropDownTextName}
-                                    textInputStyle={styles.textInputStyle}
-                                    dropDownName={gblStrings.accManagement.beneficiary}
-                                    data={tempBeneficiaryData}
-                                    //  changeState={this.onPressDropDownForIRABeneficiary("beneficiaryTypeDropDown", index)}
-                                    showDropDown={retirementBeneficiaryData[index].beneficiaryTypeDropDown}
-                                    dropDownValue={retirementBeneficiaryData[index].beneficiaryType}
-                                    selectedDropDownValue={this.onSelectedIRABeneficiaryDropDownValue("beneficiaryTypeDropDown", index)}
-                                    itemToDisplay="value"
-                                    dropDownPostition={styles.dropDownPostition}
-                                    errorFlag={!retirementBeneficiaryData[index].beneficiaryTypeValidation}
-                                    errorText={gblStrings.accManagement.emptyBeneficiaryType}
-                                />
+                            <Text style={styles.regulatoryQuestTxt}>
+                                {gblStrings.accManagement.beneficiariesCond}
+                            </Text>
+                            {retirementBeneficiaryData.map((item, index) => {
+                                const key = `benificairy${index}`;
+                                return (
+                                    <View
+                                        key={key}
+                                    >
+                                        {index !== 0 && <Text style={styles.lblLine} />}
 
 
-
-
-                                <GDropDownComponent
-                                    inputref={this.setInputRef(`relationshipToAcc${index}`)}
-                                    dropDownLayout={styles.dropDownLayout}
-                                    dropDownTextName={styles.dropDownTextName}
-                                    textInputStyle={styles.textInputStyle}
-                                    dropDownName={gblStrings.accManagement.relationshipToAccHolder}
-                                    data={tempRelationShipData}
-                                    //  changeState={this.onPressDropDownForIRABeneficiary("relationshipToAccDropDown", index)}
-                                    showDropDown={retirementBeneficiaryData[index].relationshipToAccDropDown}
-                                    dropDownValue={retirementBeneficiaryData[index].relationshipToAcc}
-                                    selectedDropDownValue={this.onSelectedIRABeneficiaryDropDownValue("relationshipToAccDropDown", index)}
-                                    itemToDisplay="value"
-                                    dropDownPostition={styles.dropDownPostition}
-                                    errorFlag={!retirementBeneficiaryData[index].relationshipToAccValidation}
-                                    errorText={gblStrings.accManagement.emptyRelationTypeMsg}
-                                />
+                                        <GDropDownComponent
+                                            inputref={this.setInputRef(`beneficiaryType${index}`)}
+                                            dropDownLayout={styles.dropDownLayout}
+                                            dropDownTextName={styles.dropDownTextName}
+                                            textInputStyle={styles.textInputStyle}
+                                            dropDownName={gblStrings.accManagement.beneficiary}
+                                            data={tempBeneficiaryData}
+                                            //  changeState={this.onPressDropDownForIRABeneficiary("beneficiaryTypeDropDown", index)}
+                                            showDropDown={retirementBeneficiaryData[index].beneficiaryTypeDropDown}
+                                            dropDownValue={retirementBeneficiaryData[index].beneficiaryType}
+                                            selectedDropDownValue={this.onSelectedIRABeneficiaryDropDownValue("beneficiaryTypeDropDown", index)}
+                                            itemToDisplay="value"
+                                            dropDownPostition={styles.dropDownPostition}
+                                            errorFlag={!retirementBeneficiaryData[index].beneficiaryTypeValidation}
+                                            errorText={gblStrings.accManagement.emptyBeneficiaryType}
+                                        />
 
 
 
-                                <View style={styles.distributionView}>
-                                    <View style={styles.distributionCol1}>
-                                        <Text style={styles.lblRowTxt}>
-                                            {gblStrings.accManagement.distributionPercentage}
+
+                                        <GDropDownComponent
+                                            inputref={this.setInputRef(`relationshipToAcc${index}`)}
+                                            dropDownLayout={styles.dropDownLayout}
+                                            dropDownTextName={styles.dropDownTextName}
+                                            textInputStyle={styles.textInputStyle}
+                                            dropDownName={gblStrings.accManagement.relationshipToAccHolder}
+                                            data={tempRelationShipData}
+                                            //  changeState={this.onPressDropDownForIRABeneficiary("relationshipToAccDropDown", index)}
+                                            showDropDown={retirementBeneficiaryData[index].relationshipToAccDropDown}
+                                            dropDownValue={retirementBeneficiaryData[index].relationshipToAcc}
+                                            selectedDropDownValue={this.onSelectedIRABeneficiaryDropDownValue("relationshipToAccDropDown", index)}
+                                            itemToDisplay="value"
+                                            dropDownPostition={styles.dropDownPostition}
+                                            errorFlag={!retirementBeneficiaryData[index].relationshipToAccValidation}
+                                            errorText={gblStrings.accManagement.emptyRelationTypeMsg}
+                                        />
+
+
+
+                                        <View style={styles.distributionView}>
+                                            <View style={styles.distributionCol1}>
+                                                <Text style={styles.lblRowTxt}>
+                                                    {gblStrings.accManagement.distributionPercentage}
+                                                </Text>
+                                            </View>
+                                            <View style={styles.distributionCol2}>
+
+                                                <GInputComponent
+                                                    inputref={this.setInputRef(`beneficiaryDistPercent${index}`)}
+                                                    propInputStyle={styles.customTxtBox}
+                                                    placeholder=""
+                                                    value={retirementBeneficiaryData[index].beneficiaryDistPercent}
+                                                    maxLength={gblStrings.maxLength.distributionPercentage}
+                                                    keyboardType="decimal-pad"
+                                                    onChangeText={this.onChangeTextForIRABeneficiary("beneficiaryDistPercent", index)}
+                                                    onSubmitEditing={this.onBlurDistPercentageForIRABeneficiary("beneficiaryDistPercent", index, this[`beneficiaryDistPercent${index}`])}
+                                                    errorFlag={!retirementBeneficiaryData[index].beneficiaryDistPercentValidation}
+                                                    errorText={errMsg}
+
+                                                />
+                                            </View>
+                                            <View style={styles.distributionCol3}>
+
+                                                <Text style={styles.lblRowTxt}>
+                                                    %
                                         </Text>
-                                    </View>
-                                    <View style={styles.distributionCol2}>
+                                            </View>
+
+                                        </View>
+
+                                        <Text style={styles.lblTxt}>
+                                            {gblStrings.accManagement.socialSecurityNo}
+                                        </Text>
 
                                         <GInputComponent
-                                            inputref={this.setInputRef(`beneficiaryDistPercent${index}`)}
+                                            inputref={this.setInputRef(`socialSecurityNo${index}`)}
                                             propInputStyle={styles.customTxtBox}
+                                            placeholder={gblStrings.accManagement.ssnNoFormat}
+                                            value={retirementBeneficiaryData[index].socialSecurityNo}
+                                            keyboardType="number-pad"
+                                            maxLength={gblStrings.maxLength.ssnNo}
+                                            onChangeText={this.onChangeTextForIRABeneficiary("socialSecurityNo", index)}
+                                            onSubmitEditing={this.onSubmitEditing(this[`firstName${index}`])}
+                                            errorFlag={!retirementBeneficiaryData[index].socialSecurityNoValidation}
+                                            errorText={errMsg}
+                                            secureTextEntry
+                                        />
+
+                                        <Text style={styles.lblTxt}>
+                                            {gblStrings.accManagement.firstName}
+                                        </Text>
+
+                                        <GInputComponent
+                                            inputref={this.setInputRef(`firstName${index}`)}
+                                            propInputStyle={styles.customTxtBox}
+                                            value={retirementBeneficiaryData[index].firstName}
                                             placeholder=""
-                                            value={retirementBeneficiaryData[index].beneficiaryDistPercent}
-                                            maxLength={gblStrings.maxLength.distributionPercentage}
-                                            keyboardType="decimal-pad"
-                                            onChangeText={this.onChangeTextForIRABeneficiary("beneficiaryDistPercent", index)}
-                                            onSubmitEditing={this.onBlurDistPercentageForIRABeneficiary("beneficiaryDistPercent", index,this[`beneficiaryDistPercent${index}`])}
-                                            errorFlag={!retirementBeneficiaryData[index].beneficiaryDistPercentValidation}
+                                            maxLength={gblStrings.maxLength.firstName}
+                                            onChangeText={this.onChangeTextForIRABeneficiary("firstName", index)}
+                                            onSubmitEditing={this.onSubmitEditing(this[`middleInitial${index}`])}
+                                            errorFlag={!retirementBeneficiaryData[index].firstNameValidation}
                                             errorText={errMsg}
 
                                         />
-                                    </View>
-                                    <View style={styles.distributionCol3}>
 
-                                        <Text style={styles.lblRowTxt}>
-                                            %
+                                        <Text style={styles.lblTxt}>
+                                            <Text style={styles.lblTxt}>
+                                                {gblStrings.accManagement.middleInitial}
+                                            </Text>
+                                            <Text style={styles.optionalTxt}>
+                                                {` ${gblStrings.accManagement.optional}`}
+                                            </Text>
                                         </Text>
+
+                                        <GInputComponent
+                                            inputref={this.setInputRef(`middleInitial${index}`)}
+                                            propInputStyle={styles.customTxtBox}
+                                            value={retirementBeneficiaryData[index].middleInitial}
+                                            placeholder=""
+                                            maxLength={gblStrings.maxLength.middleInitial}
+                                            onChangeText={this.onChangeTextForIRABeneficiary("middleInitial", index)}
+                                            onSubmitEditing={this.onSubmitEditing(this[`lastName${index}`])}
+
+
+                                        />
+
+                                        <Text style={styles.lblTxt}>
+                                            {gblStrings.accManagement.lastName}
+                                        </Text>
+
+
+                                        <GInputComponent
+                                            inputref={this.setInputRef(`lastName${index}`)}
+                                            propInputStyle={styles.customTxtBox}
+                                            value={retirementBeneficiaryData[index].lastName}
+                                            placeholder=""
+                                            maxLength={gblStrings.maxLength.lastName}
+                                            onChangeText={this.onChangeTextForIRABeneficiary("lastName", index)}
+                                            onSubmitEditing={this.onSubmitEditing(this[`dob${index}`])}
+                                            errorFlag={!retirementBeneficiaryData[index].lastNameValidation}
+                                            errorText={errMsg}
+
+                                        />
+
+
+
+                                        <Text style={styles.lblTxt}>
+                                            {gblStrings.accManagement.dob}
+                                        </Text>
+                                        <GDateComponent
+                                            inputref={this.setInputRef(`dob${index}`)}
+                                            date={retirementBeneficiaryData[index].dob}
+                                            value={retirementBeneficiaryData[index].dob}
+                                            placeholder="Select Date"
+                                            errorFlag={!retirementBeneficiaryData[index].dobValidation}
+                                            errorMsg={errMsg}
+                                            maxDate={prevDate}
+                                            onDateChange={this.onChangeDateForIRABeneficiary("dob", index)}
+
+                                        />
+
+
+                                        <Text style={styles.lblTxt}>
+                                            {gblStrings.accManagement.emailAddress}
+                                        </Text>
+
+
+                                        <GInputComponent
+                                            inputref={this.setInputRef(`emailAddress${index}`)}
+                                            propInputStyle={styles.customTxtBox}
+                                            value={retirementBeneficiaryData[index].emailAddress}
+                                            placeholder=""
+                                            maxLength={gblStrings.maxLength.emailID}
+                                            onChangeText={this.onChangeTextForIRABeneficiary("emailAddress", index)}
+                                            errorFlag={!retirementBeneficiaryData[index].emailAddressValidation}
+                                            errorText={errMsg}
+
+                                        />
+
+
+                                        <GButtonComponent
+                                            onPress={this.onPressRemoveIRABeneficiary(index)}
+                                            buttonStyle={styles.removeWhiteBtn}
+                                            buttonText={gblStrings.common.remove}
+                                            textStyle={styles.removeWhiteBtnTxt}
+                                        />
+
                                     </View>
+                                );
+                            }
+                            )}
+                            <View>
 
-                                </View>
-
-                                <Text style={styles.lblTxt}>
-                                    {gblStrings.accManagement.socialSecurityNo}
-                                </Text>
-
-                                <GInputComponent
-                                    inputref={this.setInputRef(`socialSecurityNo${index}`)}
-                                    propInputStyle={styles.customTxtBox}
-                                    placeholder={gblStrings.accManagement.ssnNoFormat}
-                                    value={retirementBeneficiaryData[index].socialSecurityNo}
-                                    keyboardType="number-pad"
-                                    maxLength={gblStrings.maxLength.ssnNo}
-                                    onChangeText={this.onChangeTextForIRABeneficiary("socialSecurityNo", index)}
-                                    onSubmitEditing={this.onSubmitEditing(this[`firstName${index}`])}
-                                    errorFlag={!retirementBeneficiaryData[index].socialSecurityNoValidation}
-                                    errorText={errMsg}
-                                    secureTextEntry
-                                />
-
-                                <Text style={styles.lblTxt}>
-                                    {gblStrings.accManagement.firstName}
-                                </Text>
-
-                                <GInputComponent
-                                    inputref={this.setInputRef(`firstName${index}`)}
-                                    propInputStyle={styles.customTxtBox}
-                                    value={retirementBeneficiaryData[index].firstName}
-                                    placeholder=""
-                                    maxLength={gblStrings.maxLength.firstName}
-                                    onChangeText={this.onChangeTextForIRABeneficiary("firstName", index)}
-                                    onSubmitEditing={this.onSubmitEditing(this[`middleInitial${index}`])}
-                                    errorFlag={!retirementBeneficiaryData[index].firstNameValidation}
-                                    errorText={errMsg}
-
-                                />
-
-                                <Text style={styles.lblTxt}>
-                                    <Text style={styles.lblTxt}>
-                                        {gblStrings.accManagement.middleInitial}
-                                    </Text>
-                                    <Text style={styles.optionalTxt}>
-                                        {` ${gblStrings.accManagement.optional}`}
-                                    </Text>
-                                </Text>
-
-                                <GInputComponent
-                                    inputref={this.setInputRef(`middleInitial${index}`)}
-                                    propInputStyle={styles.customTxtBox}
-                                    value={retirementBeneficiaryData[index].middleInitial}
-                                    placeholder=""
-                                    maxLength={gblStrings.maxLength.middleInitial}
-                                    onChangeText={this.onChangeTextForIRABeneficiary("middleInitial", index)}
-                                    onSubmitEditing={this.onSubmitEditing(this[`lastName${index}`])}
-
-
-                                />
-
-                                <Text style={styles.lblTxt}>
-                                    {gblStrings.accManagement.lastName}
-                                </Text>
-
-
-                                <GInputComponent
-                                    inputref={this.setInputRef(`lastName${index}`)}
-                                    propInputStyle={styles.customTxtBox}
-                                    value={retirementBeneficiaryData[index].lastName}
-                                    placeholder=""
-                                    maxLength={gblStrings.maxLength.lastName}
-                                    onChangeText={this.onChangeTextForIRABeneficiary("lastName", index)}
-                                    onSubmitEditing={this.onSubmitEditing(this[`dob${index}`])}
-                                    errorFlag={!retirementBeneficiaryData[index].lastNameValidation}
-                                    errorText={errMsg}
-
-                                />
-
-
-
-                                <Text style={styles.lblTxt}>
-                                    {gblStrings.accManagement.dob}
-                                </Text>
-                                <GDateComponent
-                                    inputref={this.setInputRef(`dob${index}`)}
-                                    date={retirementBeneficiaryData[index].dob}
-                                    value={retirementBeneficiaryData[index].dob}
-                                    placeholder="Select Date"
-                                    errorFlag={!retirementBeneficiaryData[index].dobValidation}
-                                    errorMsg={errMsg}
-                                    maxDate={prevDate}
-                                    onDateChange={this.onChangeDateForIRABeneficiary("dob", index)}
-
-                                />
-
-
-                                <Text style={styles.lblTxt}>
-                                    {gblStrings.accManagement.emailAddress}
-                                </Text>
-
-
-                                <GInputComponent
-                                    inputref={this.setInputRef(`emailAddress${index}`)}
-                                    propInputStyle={styles.customTxtBox}
-                                    value={retirementBeneficiaryData[index].emailAddress}
-                                    placeholder=""
-                                    maxLength={gblStrings.maxLength.emailID}
-                                    onChangeText={this.onChangeTextForIRABeneficiary("emailAddress", index)}
-                                    errorFlag={!retirementBeneficiaryData[index].emailAddressValidation}
-                                    errorText={errMsg}
-
-                                />
-
-
-                                <GButtonComponent
-                                    onPress={this.onPressRemoveIRABeneficiary(index)}
-                                    buttonStyle={styles.removeWhiteBtn}
-                                    buttonText={gblStrings.common.remove}
-                                    textStyle={styles.removeWhiteBtnTxt}
-                                />
-
+                                {retirementBeneficiaryData.length < 3 && (
+                                    <GButtonComponent
+                                        onPress={this.onPressAddIRABeneficiary}
+                                        buttonStyle={styles.addBeneficiaryBtn}
+                                        buttonText={gblStrings.accManagement.addAnotherBeneficiary}
+                                        textStyle={styles.addBeneficiaryBtnTxt}
+                                    />
+                                )}
                             </View>
-                        );
-                    }
-                    )}
-                    <View>
-
-                    {retirementBeneficiaryData.length < 3 && (
-                    <GButtonComponent
-                        onPress={this.onPressAddIRABeneficiary}
-                        buttonStyle={styles.addBeneficiaryBtn}
-                        buttonText={gblStrings.accManagement.addAnotherBeneficiary}
-                        textStyle={styles.addBeneficiaryBtnTxt}
-                    />
-                )}
-                    </View>
-                </View>
+                        </View>
 
                     )}
 
@@ -8622,13 +8718,13 @@ class OpenAccPageTwoComponent extends Component {
 
                     <CustomPageWizard currentPage={currentPage} pageName={`${currentPage} Personal Info`} />
 
-                
+
                     <View style={styles.allFieldsMandatoryView}>
                         <Text style={styles.allFieldsMandatoryTxt}>
                             {gblStrings.accManagement.allFieldsMandatory}
                         </Text>
                     </View>
-                  
+
 
 
                     { /* -----------Personalize -------------------*/}
@@ -8663,19 +8759,19 @@ class OpenAccPageTwoComponent extends Component {
                                 <Text style={styles.optionalTxt}>
                                     {gblStrings.accManagement.optional}
                                 </Text>
-                              
-                                
+
+
                             </View>
                             <GButtonComponent
-                                    buttonStyle={styles.browseBtn}
-                                    buttonText={gblStrings.common.browse}
-                                    textStyle={styles.normalBlackBtnTxt}
-                                    onPress={this.uploadImage}
+                                buttonStyle={styles.browseBtn}
+                                buttonText={gblStrings.common.browse}
+                                textStyle={styles.normalBlackBtnTxt}
+                                onPress={this.uploadImage}
                             />
-                          
+
                         </View>
                         {
-                                userAvatar !== "" && <Image source={userAvatar} style={styles.userAvatar} />
+                            userAvatar !== "" && <Image source={userAvatar} style={styles.userAvatar} />
                         }
                     </View>
 
@@ -8790,7 +8886,7 @@ OpenAccPageTwoComponent.defaultProps = {
     saveAccountOpening: null,
     getRankData: null,
     getAddressFormat: null,
-    getPersonalCompositeData:null,
+    getPersonalCompositeData: null,
     getCompositeLookUpData: null,
 
 
