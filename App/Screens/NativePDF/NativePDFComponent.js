@@ -1,15 +1,46 @@
 import React from 'react';
 import { StyleSheet, Dimensions, View } from 'react-native';
-import { scaledHeight } from '../../Utils/Resolution';
-import {GButtonComponent} from '../../CommonComponents';
 import PropTypes from 'prop-types';
 import Pdf from 'react-native-pdf';
+import { scaledHeight } from '../../Utils/Resolution';
+import {GButtonComponent} from '../../CommonComponents';
 
+
+const styles = StyleSheet.create({
+    buttonStyle:{
+        alignItems:'center',
+        backgroundColor:"#06748C",
+        borderRadius:scaledHeight(5),
+        height:scaledHeight(40),
+        justifyContent: "center",
+        marginTop:scaledHeight(10),
+        width:'40%' 
+        
+    },
+    buttonTextStyle:{
+        fontSize: scaledHeight(14),
+        fontWeight: "bold",
+        lineHeight:scaledHeight(20),
+    },
+    container: {
+        alignItems: 'center',
+        flex: 1,
+        justifyContent: 'flex-start',
+        marginTop: 25,
+    },
+    pdf: {
+        flex:0.9,
+        width:Dimensions.get('window').width,
+    }
+});
 
  
 export default class PDFExample extends React.Component {
 
-    goBack = ()=>this.props.navigation.goBack();
+    goBack = ()=>{
+        const {navigation} = this.props;
+        navigation.goBack();
+    }
 
     render() {
         const source = {uri:'http:// samples.leanpub.com/thereactnativebook-sample.pdf',cache:true};
@@ -24,7 +55,7 @@ export default class PDFExample extends React.Component {
                  <GButtonComponent 
                 buttonStyle={styles.buttonStyle} 
                 textStyle={styles.buttonTextStyle}
-                buttonText= {"Back"}
+                buttonText= "Back"
                 onPress={this.goBack}
                  />
                 <Pdf
@@ -52,43 +83,8 @@ PDFExample.propTypes = {
   };
   
   PDFExample.defaultProps = {
+    navigation : {}
  
   };
 
  
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        marginTop: 25,
-    },
-    pdf: {
-        flex:0.9,
-        width:Dimensions.get('window').width,
-    },
-    labeltext:{
-        fontSize:20,
-        marginBottom:'2%',
-        height:30,
-        color:'green'
-    },
-    button:{
-        fontSize:scaledHeight(5)
-    },
-    buttonStyle:{
-        height:scaledHeight(40),
-        width:'40%',
-        justifyContent: "center",
-        alignItems:'center',
-        borderRadius:scaledHeight(5),
-        backgroundColor:"#06748C",
-        marginTop:scaledHeight(10) 
-        
-    },
-    buttonTextStyle:{
-        fontSize: scaledHeight(14),
-        fontWeight: "bold",
-        lineHeight:scaledHeight(20),
-    }
-});

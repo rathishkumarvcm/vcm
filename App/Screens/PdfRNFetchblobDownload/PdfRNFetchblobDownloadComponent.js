@@ -39,10 +39,10 @@ const styles = StyleSheet.create({
         // alignItems:'center'
     },
     labeltext:{
+        color:'green',
         fontSize:20,
-        marginBottom:'2%',
         height:30,
-        color:'green'
+        marginBottom:'2%'
     },
 });
 
@@ -50,7 +50,6 @@ class PdfRNFetchblobDownload extends Component {
     constructor(props){
         super(props);
         this.state = {
-            isModalVisible:false
         };
     }
 
@@ -78,8 +77,16 @@ class PdfRNFetchblobDownload extends Component {
 
 
 
+    
+    goback = ()=>{
+        const {navigation} = this.props;
+        navigation.goBack();
+    }
+
+
     async downloadPDFIOS () {
-      const setCache = this.props.navigation.getParam('cache');
+      const {navigation} = this.props;
+      const setCache = navigation.getParam('cache');
       RNFetchBlob.config({
         fileCache: setCache,
         appendExt : 'pdf'
@@ -123,10 +130,6 @@ class PdfRNFetchblobDownload extends Component {
           }
     }
     
-    goback = ()=>{
-        const {navigation} = this.props;
-        navigation.goBack();
-    }
 
     render(){
         return (

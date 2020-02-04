@@ -11,9 +11,7 @@ class OtpSeucrityQuestionsComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
-            isLoading:false,
-            email:'',
-            validationEmail: true
+            valueDropDown : false
         };
     }
 
@@ -21,20 +19,24 @@ class OtpSeucrityQuestionsComponent extends Component {
        
     }
 
-    navigatePassword = ()=>this.props.navigation.navigate('registerPassword')
+    navigatePassword = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('registerPassword');
+    }
  
     render(){
-        
+        const {navigation} = this.props;
+        const {valueDropDown} = this.state;
         return (
            
            
             <View style={styles.container}>
              <GHeaderComponent 
-             navigation={this.props.navigation}
+             navigation={navigation}
              register
              />
         
-            <ScrollView style={{flex:0.85}}>
+            <ScrollView style={styles.flexContainer}>
                 <TouchableOpacity onPress={this.goBack} style={styles.goBack}>
                         <GIcon 
                             name="left"
@@ -67,15 +69,17 @@ class OtpSeucrityQuestionsComponent extends Component {
                 </Text>
              </View>
 
-            <TouchableOpacity style={{flexDirection:'row'}} onPress={this.selectTheState}>
+            <TouchableOpacity style={styles.flexRow} onPress={this.selectTheState}>
                 <GInputComponent 
                     propInputStyle={styles.userIDTextBox} 
                     placeholder=""
                     editable={false}
-                    value={this.state.valueDropDown}
+                    value={valueDropDown}
                 />
 
-                <TouchableOpacity style={{position:'absolute',right:20,top:14}} onPress={this.selectTheState}>
+
+
+                <TouchableOpacity style={styles.questionDropDown} onPress={this.selectTheState}>
                     <GIcon 
                         name="md-arrow-dropdown"
                         type="ionicon"
@@ -89,7 +93,7 @@ class OtpSeucrityQuestionsComponent extends Component {
                     propInputStyle={styles.userIDTextBox} 
                     placeholder=""
                     editable={false}
-                    value={this.state.valueDropDown}
+                    value={valueDropDown}
             />
 
 
@@ -99,15 +103,15 @@ class OtpSeucrityQuestionsComponent extends Component {
                 </Text>
             </View>
 
-            <TouchableOpacity style={{flexDirection:'row'}} onPress={this.selectTheState}>
+            <TouchableOpacity style={styles.flexRow} onPress={this.selectTheState}>
                 <GInputComponent 
                     propInputStyle={styles.userIDTextBox} 
                     placeholder=""
                     editable={false}
-                    value={this.state.valueDropDown}
+                    value={valueDropDown}
                 />
 
-                <TouchableOpacity style={{position:'absolute',right:20,top:14}} onPress={this.selectTheState}>
+                <TouchableOpacity style={styles.questionDropDown} onPress={this.selectTheState}>
                     <GIcon 
                         name="md-arrow-dropdown"
                         type="ionicon"
@@ -121,7 +125,7 @@ class OtpSeucrityQuestionsComponent extends Component {
                     propInputStyle={styles.userIDTextBox} 
                     placeholder=""
                     editable={false}
-                    value={this.state.valueDropDown}
+                    value={valueDropDown}
             />
 
             <View style={styles.signInView}>
@@ -130,15 +134,15 @@ class OtpSeucrityQuestionsComponent extends Component {
                 </Text>
             </View>
 
-            <TouchableOpacity style={{flexDirection:'row'}} onPress={this.selectTheState}>
+            <TouchableOpacity style={styles.flexRow} onPress={this.selectTheState}>
                 <GInputComponent 
                     propInputStyle={styles.userIDTextBox} 
                     placeholder=""
                     editable={false}
-                    value={this.state.valueDropDown}
+                    value={valueDropDown}
                 />
 
-                <TouchableOpacity style={{position:'absolute',right:20,top:14}} onPress={this.selectTheState}>
+                <TouchableOpacity style={styles.questionDropDown} onPress={this.selectTheState}>
                     <GIcon 
                         name="md-arrow-dropdown"
                         type="ionicon"
@@ -152,7 +156,7 @@ class OtpSeucrityQuestionsComponent extends Component {
                     propInputStyle={styles.userIDTextBox} 
                     placeholder=""
                     editable={false}
-                    value={this.state.valueDropDown}
+                    value={valueDropDown}
             />
 
             <View style={styles.signInView}>
@@ -165,14 +169,14 @@ class OtpSeucrityQuestionsComponent extends Component {
                     propInputStyle={styles.userIDTextBox} 
                     placeholder=""
                     editable={false}
-                    value={this.state.valueDropDown}
+                    value={valueDropDown}
                 />
 
             
 
 
 
-                <View style={{marginLeft:'4%',marginRight:'4%'}}>
+                <View style={styles.deliverView}>
                         <GRadioButtonComponent selected // questionsStyle={{width:'40%',flexWrap:'wrap'}} 
                         questions="Deliver all my documents at vcm.com"
                         />
@@ -203,8 +207,8 @@ class OtpSeucrityQuestionsComponent extends Component {
                     onPress={this.navigatePassword}
             />
 
-            <View style={{marginTop:20}}>
-                 <View style={{borderBottomWidth:1,borderBottomColor:'#535353'}} />  
+            <View style={styles.marginTwenty}>
+                 <View style={styles.usaaInvestment} />  
             </View>
             
             

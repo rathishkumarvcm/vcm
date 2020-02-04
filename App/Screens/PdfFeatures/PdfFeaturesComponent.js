@@ -1,12 +1,27 @@
 import React, { Component } from 'react';
 import { View,Text,StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 import { scaledHeight } from '../../Utils/Resolution';
 import {GButtonComponent} from '../../CommonComponents';
-import PropTypes from 'prop-types';
 
 // const url = 'http:// www.africau.edu/Images/default/sample.pdf';
 
 const styles = StyleSheet.create({
+    buttonStyle:{
+        alignItems:'center',
+        backgroundColor:"#06748C",
+        borderRadius:scaledHeight(5),
+        height:scaledHeight(40),
+        justifyContent: "center",
+        marginTop:scaledHeight(10),
+        width:'90%' 
+        
+    },
+    buttonTextStyle:{
+        fontSize: scaledHeight(14),
+        fontWeight: "bold",
+        lineHeight:scaledHeight(20),
+    },
     containerStyle:{
         flex:1,
         flexDirection: 'column',
@@ -16,28 +31,10 @@ const styles = StyleSheet.create({
         // alignItems:'center'
     },
     labeltext:{
+        color:'green',
         fontSize:20,
-        marginBottom:'2%',
         height:30,
-        color:'green'
-    },
-    button:{
-        fontSize:scaledHeight(5)
-    },
-    buttonStyle:{
-        height:scaledHeight(40),
-        width:'90%',
-        justifyContent: "center",
-        alignItems:'center',
-        borderRadius:scaledHeight(5),
-        backgroundColor:"#06748C",
-        marginTop:scaledHeight(10) 
-        
-    },
-    buttonTextStyle:{
-        fontSize: scaledHeight(14),
-        fontWeight: "bold",
-        lineHeight:scaledHeight(20),
+        marginBottom:'2%'
     },
 });
 
@@ -45,7 +42,6 @@ class PdfFeaturesComponent extends Component {
     constructor(props){
         super(props);
         this.state = {
-            isModalVisible:false
         };
     }
 
@@ -56,51 +52,68 @@ class PdfFeaturesComponent extends Component {
         // Linking.openURL(url);
     }
 
-    goBack = ()=>this.props.navigation.goBack();
+    goBack = ()=>{
+    const {navigation} = this.props;
+    navigation.goBack();
+    }
 
-    webView = ()=>this.props.navigation.navigate('webView');
+    webView = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('webView');
+    }
 
-    pdfLinking = ()=>this.props.navigation.navigate('pdfLinking');
+    pdfLinking = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('pdfLinking');
+    }
+    
+    
 
-    nativePdf = ()=>this.props.navigation.navigate('nativePdf');
+    nativePdf = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('nativePdf');
+    }    
 
-    pdfFetchBob = ()=>this.props.navigation.navigate('PdfRNFetchblob');
+    pdfFetchBob = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('PdfRNFetchblob');
+    }
     
     render(){
         return (
             <View style={styles.containerStyle}>
-                <Text style={styles.labeltext}>{"PDF Features:"}</Text>
+                <Text style={styles.labeltext}>PDF Features:</Text>
                 <GButtonComponent 
                 // disabled
                 buttonStyle={styles.buttonStyle} 
                 textStyle={styles.buttonTextStyle}
-                buttonText= {"Web View"}
+                buttonText= "Web View"
                 onPress={this.webView}
                 />
                 <GButtonComponent 
                 buttonStyle={styles.buttonStyle} 
                 textStyle={styles.buttonTextStyle}
-                buttonText= {"Linking"}
+                buttonText= "Linking"
                 onPress={this.pdfLinking}
                 />
                 <GButtonComponent 
                 buttonStyle={styles.buttonStyle} 
                 textStyle={styles.buttonTextStyle}
-                buttonText= {"React-Native-PDF"}
+                buttonText= "React-Native-PDF"
                 onPress={this.nativePdf}
                 />
 
                 <GButtonComponent 
                     buttonStyle={styles.buttonStyle} 
                     textStyle={styles.buttonTextStyle}
-                    buttonText= {"RN-Fetch-Blob"}
+                    buttonText= "RN-Fetch-Blob"
                     onPress={this.pdfFetchBob}
                 />
 
                  <GButtonComponent 
                     buttonStyle={styles.buttonStyle} 
                     textStyle={styles.buttonTextStyle}
-                    buttonText= {"Back"}
+                    buttonText= "Back"
                     onPress={this.goBack}
                  />
 
@@ -115,6 +128,7 @@ PdfFeaturesComponent.propTypes = {
   };
   
   PdfFeaturesComponent.defaultProps = {
+    navigation : {}
  
   };
 

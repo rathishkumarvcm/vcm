@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
         alignItems:'center',
         height:scaledHeight(20)
     },
+    flexCont:{
+        flex:0.85
+    },
     forgotLineText:{
         flexDirection:'row',
         fontSize:scaledHeight(18),
@@ -143,6 +146,10 @@ const styles = StyleSheet.create({
         color:'#2C8DBF',
         fontSize:scaledHeight(14),
         fontWeight:'bold'
+    },
+    optContainer:{
+        marginLeft:'4%',
+        marginRight:'4%'
     },
     passwordView:{
         paddingLeft:'4%',

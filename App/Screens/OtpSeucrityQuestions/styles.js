@@ -36,6 +36,10 @@ const styles = StyleSheet.create({
     copyRightText:{
         color:'#FFFFFF'
     },
+    deliverView:{
+        marginLeft:'4%',
+        marginRight:'4%'
+    },
     faceIDlogo:{
         alignSelf:'center',
         marginBottom:'5%',
@@ -44,6 +48,12 @@ const styles = StyleSheet.create({
     faceIDtextStyle:{
         alignItems:'center',
         height:scaledHeight(20)
+    },
+    flexContainer:{
+        flex:0.85
+    },
+    flexRow:{
+        flexDirection:'row'
     },
     forgotLineText:{
         flexDirection:'row',
@@ -74,6 +84,9 @@ const styles = StyleSheet.create({
         paddingRight:'4%',
         justifyContent:'center',
         alignItems:'center'
+    },
+    marginTwenty:{
+        marginTop:20
     },
     newVictory:{
         color:'#486D89',
@@ -119,7 +132,7 @@ const styles = StyleSheet.create({
         paddingRight:'4%',
         width:'100%'
     },
-    passwordView:{
+     passwordView:{
         paddingLeft:'4%',
         paddingRight:'4%'
     },
@@ -132,13 +145,14 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(15),
         width:'100%'
     },
-     privacyText:{
+    privacyText:{
         color:'#61285F',
         fontSize:scaledHeight(16),
         fontWeight:'bold',
         paddingLeft:'4%',
         width:'50%'
     },
+    questionDropDown:{position:'absolute',right:20,top:14},
     registernowButton:{
        alignItems:'center',
        backgroundColor:'#FFFFFF',
@@ -207,6 +221,10 @@ const styles = StyleSheet.create({
         fontSize : scaledHeight(18),
         marginBottom:scaledHeight(5)
     },
+    usaaInvestment:{
+        borderBottomColor:'#535353',
+        borderBottomWidth:1
+},
     usaaMemberSection:{
         flexDirection:'row',
         marginTop:scaledHeight(15)
@@ -233,7 +251,7 @@ const styles = StyleSheet.create({
         marginBottom:scaledHeight(18),
         marginLeft:'4%',
         marginRight:'4%'
-    },
+    }
 });
 
 export default styles;

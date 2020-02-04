@@ -25,6 +25,10 @@ const styles=StyleSheet.create({
       fontSize: scaledHeight(14),
       fontWeight: "bold",
       lineHeight:scaledHeight(20)
+    },
+    pdfLayout:{
+      alignItems:'center',
+      flex:1
     }
 });
 export default class PdfComponent extends Component {
@@ -34,6 +38,8 @@ export default class PdfComponent extends Component {
             pdfCreated: false
         };
     }
+ 
+  pdfCall = () =>this.createPDF();
 
   async createPDF(){
     const options = {
@@ -48,15 +54,14 @@ export default class PdfComponent extends Component {
         pdfCreated : true
     });
     console.log(JSON.stringify(file));
-    alert("file created successful");
   }
- 
-  pdfCall = () =>this.createPDF();
   
   render() {
+    
+    const {pdfCreated} = this.state;
     return(
-        !this.state.pdfCreated ? (
-      <View style={{flex:1,alignItems:'center'}}>
+        !pdfCreated ? (
+      <View style={styles.pdfLayout}>
             <GButtonComponent 
             buttonText="Create PDF" 
             onPress={this.pdfCall} 

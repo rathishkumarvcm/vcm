@@ -18,15 +18,16 @@ class OtpAuthenticationComponent extends Component {
     
        
     componentDidMount(){ 
-        if(this.props && this.props.initialState && this.props.initialState.phone){
+        const {initialState} = this.props;
+        if(initialState && initialState.phone){
           this.setState({
-            phoneNo : this.protectPhone(this.props.initialState.phone)
+            phoneNo : this.protectPhone(initialState.phone)
           });
         }
         
-        if(this.props && this.props.initialState && this.props.initialState.email){
+        if(initialState && initialState.email){
             this.setState({
-              email : this.props.initialState.email
+              email : initialState.email
             });
           }
     }
@@ -168,12 +169,13 @@ class OtpAuthenticationComponent extends Component {
 }
 
 OtpAuthenticationComponent.propTypes = {
-    navigation : PropTypes.instanceOf(Object)
+    navigation : PropTypes.instanceOf(Object),
+    initialState : PropTypes.instanceOf(Object)
   };
   
   OtpAuthenticationComponent.defaultProps = {
-    navigation : {}
- 
+    navigation : {},
+    initialState : {}
   };
 
 export default OtpAuthenticationComponent;

@@ -1,4 +1,3 @@
-/* global require */
 import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, Linking, TouchableOpacity } from 'react-native';
 import TouchID from 'react-native-touch-id';
@@ -37,20 +36,15 @@ class LoginComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
             enableBiometric: false,
             registeredBioMetric: false,
             faceIdEnrolled: false,
-            touchIdEnrolled: false,
             validationEmail: true,
             validationPassword: true,
             //  password: '',
             email: '',
-            registeredOnlineID: '',
             registeredSuccess: false,
-            name: '',
             password: '',
-            phone: '',
             inActivityAccount: false
         };
     }
@@ -60,6 +54,8 @@ class LoginComponent extends Component {
 
 
     componentDidMount() {
+
+        const {initialState} = this.props;
 
         RNSecureKeyStore.get("enableBioMetric")
             .then((value) => {
@@ -106,7 +102,7 @@ class LoginComponent extends Component {
             .then(biometryType => {
                 if (biometryType === 'TouchID') {
                     this.setState({
-                        touchIdEnrolled: true,
+                      
                         faceIdEnrolled: false
                     });
                     //  Touch ID is supported on iOS
@@ -114,46 +110,45 @@ class LoginComponent extends Component {
                 else if (biometryType === 'FaceID') {
                     this.setState({
                         faceIdEnrolled: true,
-                        touchIdEnrolled: false
+                    
                     });
                     //  Face ID is supported on iOS
                 }
                 else if (biometryType === true) {
                     this.setState({
-                        touchIdEnrolled: true,
+                     
                         faceIdEnrolled: false
                     });
                     //  Touch ID is supported on Android
                 }
             }).catch(error => {
                 this.setState({
-                    touchIdEnrolled: false,
+                    
                     faceIdEnrolled: false
                 });
                 console.log("Touch ID error occured !! ==>", error);
             });
 
-        if (this.props && this.props.initialState && this.props.initialState.verifiedEmail) {
+        if (initialState && initialState.verifiedEmail) {
             this.setState({
-                email: this.props.initialState.verifiedEmail
+                email: initialState.verifiedEmail
             });
         }
     }
 
     componentDidUpdate() {
 
-
-        const emailVerify = this.props.navigation.getParam('emailVerified');
-        const onlineID = this.props.navigation.getParam('emailVerifiedData');
-        if (emailVerify !== undefined && !this.state.registeredSuccess) {
+        const {navigation,loginState} = this.props;
+        const {registeredSuccess,email,password} = this.state;
+        const emailVerify = navigation.getParam('emailVerified');
+        if (emailVerify !== undefined && !registeredSuccess) {
             this.setState({
-                registeredSuccess: true,
-                registeredOnlineID: onlineID.emailID
+                registeredSuccess: true
             });
         }
 
         //  Special MFA Requirements
-        const onlineIdVerify = this.props.navigation.getParam('onlineIdCreated');
+        const onlineIdVerify = navigation.getParam('onlineIdCreated');
         if (onlineIdVerify !== undefined) {
             this.setState({
                 registeredSuccess: true
@@ -164,8 +159,8 @@ class LoginComponent extends Component {
 
         const validEmail = 'vcm.com';
         const validPassword = 'Vcm123';
-        const test = validEmail.localeCompare(this.state.email);
-        const test1 = validPassword.localeCompare(this.state.password);
+        const test = validEmail.localeCompare(email);
+        const test1 = validPassword.localeCompare(password);
 
         if (!test && !test1) {
             RNSecureKeyStore.set("EmailAddress", validEmail, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
@@ -175,7 +170,7 @@ class LoginComponent extends Component {
                     console.log(err);
                 });
 
-            if (this.props && this.props.loginState && this.props.loginState.emailCheck && this.props.loginState.data && this.props.loginState.data.response && this.props.loginState.data.response.status === 200) {
+            if (loginState && loginState.emailCheck && loginState.data && loginState.data.response && loginState.data.response.status === 200) {
                 this.navigateDashboard();
             }
         }
@@ -192,19 +187,21 @@ class LoginComponent extends Component {
     }
 
     onAuthenticate = result => {
+        const {navigation} = this.props;
+        const {registeredBioMetricUsername,registeredBioMeticPassword} = this.state;
 
         if (result) {
             alert("Authentication Successfull");
 
-            const username = this.state.registeredBioMetricUsername;
-            const password = this.state.registeredBioMeticPassword;
-            const email = this.state.registeredBioMetricUsername;
-            const phone_number = "+918754499334";
+            const username = registeredBioMetricUsername;
+            const password = registeredBioMeticPassword;
+            const email = registeredBioMetricUsername;
+            const phoneNumber = "+918754499334";
             Auth.signIn({
                 username,
                 password,
                 email,
-                phone_number
+                phoneNumber
             }).then(data => {
                 
                 console.log("Data", JSON.stringify(data.signInUserSession.idToken.jwtToken));
@@ -232,7 +229,7 @@ class LoginComponent extends Component {
                     }, (err) => {
                         console.log(err);
                     });
-                this.props.navigation.navigate('dashboard');
+                navigation.navigate('dashboard');
             });
 
             this.setState({
@@ -249,7 +246,8 @@ class LoginComponent extends Component {
     }
 
     validateEmail = () => {
-        const validate = reGex.emailRegex.test(this.state.email);
+        const {email} = this.state;
+        const validate = reGex.emailRegex.test(email);
         this.setState({
             validationEmail: validate
         });
@@ -262,7 +260,8 @@ class LoginComponent extends Component {
     }
 
     validatePassword = () => {
-        const validate = reGex.passwordRegex.test(this.state.password);
+        const {password} = this.state;
+        const validate = reGex.passwordRegex.test(password);
         this.setState({
             validationPassword: validate
         });
@@ -299,6 +298,7 @@ class LoginComponent extends Component {
     }
 
     signIn = () => {
+        const {setJWTToken,setEnvironment,navigation,updateEmail} = this.props;
         const {email} = this.state;
         const username = email;
         const {password} = this.state;;
@@ -312,26 +312,25 @@ class LoginComponent extends Component {
             console.log("ACCESS Token-----", JSON.stringify(data.signInUserSession.accessToken.jwtToken));
             console.log("ID Token-----", JSON.stringify(data.signInUserSession.idToken.jwtToken));
 
-            this.props.setJWTToken(data.signInUserSession.idToken.jwtToken);
-
-            this.props.setEnvironment("LIVE");
+            setJWTToken(data.signInUserSession.idToken.jwtToken);
+            setEnvironment("LIVE");
 
             RNSecureKeyStore.set("jwtToken", data.signInUserSession.idToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
                 console.log("token saved suuccessfully", res);
             }, (err) => {
-                // console.log("Error", err);
+                 console.log("Error", err);
             });
 
             RNSecureKeyStore.set("accessToken", data.signInUserSession.accessToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
                 console.log("token saved suuccessfully", res);
             }, (err) => {
-               // console.log("Error", err);
+                console.log("Error", err);
             });
 
             RNSecureKeyStore.set("refreshToken", data.signInUserSession.refreshToken.token, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
                 console.log("token saved suuccessfully", res);
             }, (err) => {
-                // console.log("Error", err);
+                console.log("Error", err);
             });
 
             const currentSessionTime = new Date();
@@ -363,16 +362,16 @@ class LoginComponent extends Component {
                 }, (err) => {
                     console.log(err);
                 });
-            this.props.updateEmail(username);
+                updateEmail(username);
 
             /* If it is a first time user use OTP auth */
             RNSecureKeyStore.get("authProcessCompleted")
                 .then((value) => {
                     console.log("authProcessCompleted------->", value);
-                    this.props.navigation.navigate('dashboard');
+                    navigation.navigate('dashboard');
                 }).catch((error) => {
-                    // console.log("Error", error)
-                    this.props.navigation.navigate('otpAuth');
+                     console.log("Error", error);
+                    navigation.navigate('otpAuth');
                 });
 
 
@@ -448,7 +447,7 @@ class LoginComponent extends Component {
 
 
     render() {
-        const {inActivityAccount,enableBiometric,loginState,registeredSuccess,email,validationEmail,validationPassword,validatePassword,password,registeredBioMetric} = this.state;
+        const {inActivityAccount,enableBiometric,loginState,registeredSuccess,email,validationEmail,validationPassword,validatePassword,password,registeredBioMetric,faceIdEnrolled} = this.state;
 
 
         return (
@@ -566,9 +565,9 @@ class LoginComponent extends Component {
                         />
                         <View>
                             {
-                                !registeredBioMetric ? null :
-
-                                    this.state.faceIdEnrolled ? (
+                                !registeredBioMetric ? null 
+                                :
+                                  faceIdEnrolled ? (
                                         <TouchableOpacity onPress={this.enableBiometricMethod}>
                                             <Image
                                                 resizeMode="contain"
@@ -671,14 +670,20 @@ LoginComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     loginState: PropTypes.instanceOf(Object),
     initialState: PropTypes.instanceOf(Object),
-    signInAction: PropTypes.func
+    signInAction: PropTypes.func,
+    setEnvironment : PropTypes.func,
+    updateEmail : PropTypes.func,
+    setJWTToken : PropTypes.func
 };
 
 LoginComponent.defaultProps = {
     navigation : {},
     loginState : {},
     initialState : {},
-    signInAction : () => {}
+    signInAction : () => {},
+    setEnvironment : () => {},
+    updateEmail : () => {},
+    setJWTToken : () => {}
 };
 
 export default LoginComponent;

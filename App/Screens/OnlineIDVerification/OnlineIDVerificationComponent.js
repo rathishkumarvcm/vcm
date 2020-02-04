@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Text,View,ScrollView,TouchableOpacity} from 'react-native';
+import { Text,View,ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
-import { Auth } from "aws-amplify";
 import styles from './styles';
 import {GButtonComponent,GHeaderComponent,GInputComponent,GFooterSettingsComponent} from '../../CommonComponents';
 
@@ -10,11 +9,7 @@ class OnlineIDVerificationComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
-            isLoading:false,
-            code:'',
-            validationEmail: true,
-            name : '',
-            confirmCode : false
+            code:''
         };
     }
 
@@ -31,30 +26,32 @@ class OnlineIDVerificationComponent extends Component {
 
 
 
-    navigatePassword = ()=>this.props.navigation.navigate('login');
-    
-    goBack = () =>{this.props.navigation.goBack();}
-
-    validCode = () => {
-        if(this.state.code.length === 6){
-            this.setState({
-                confirmCode : true
-            });
-        }
+    navigatePassword = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('login');
     }
+
+    goBack = () =>{
+        const {navigation} = this.props;
+        navigation.goBack();
+    }
+
+
  
     render(){
+        const {navigation} = this.props;
+        const {code} = this.state;
         
         return (
            
            
             <View style={styles.container}>
              <GHeaderComponent 
-             navigation={this.props.navigation}
+             navigation={navigation}
              register
              />
         
-            <ScrollView style={{flex:0.85}}>
+            <ScrollView style={styles.flexCont}>
 
            
 
@@ -93,11 +90,11 @@ class OnlineIDVerificationComponent extends Component {
                 </Text>
             </View>
 
+            
             <GInputComponent 
-            propInputStyle={{marginLeft:'4%',marginRight:'4%'}}
+            propInputStyle={styles.optContainer}
             onChangeText={this.setCode}
-            onBlur={this.validCode}
-            value={this.state.code}
+            value={code}
             keyboardType="number-pad"
             maxLength={6}
             />
