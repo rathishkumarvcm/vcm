@@ -94,7 +94,7 @@ class EditPhoneInfoComponent extends Component {
                 profileState.profileRelationShipDetails) {
                 relationshipContacts = [...profileState.profileRelationShipDetails];
                 this.setState({
-                    userMobileNumber: relationshipContacts[contactPosition].relationPhoneNumber,
+                    userMobileNumber: relationshipContacts[`${contactPosition}`].relationPhoneNumber,
                     isMobileRefreshed: !isMobileRefreshed
                 });
             }
@@ -539,10 +539,10 @@ class EditPhoneInfoComponent extends Component {
                 if (index !== -1) {
                     for (let input = 0; input < array.length; input += 1) {
                         if (input === index) {
-                            const switchVal = array[input].isPrimaryMobile;
-                            array[input].isPrimaryMobile = !switchVal;
+                            const switchVal = array[parseInt(input, 10)].isPrimaryMobile;
+                            array[parseInt(input, 10)].isPrimaryMobile = !switchVal;
                         } else {
-                            array[input].isPrimaryMobile = false;
+                            array[parseInt(input, 10)].isPrimaryMobile = false;
                         }
                     }
                     this.setState({
@@ -556,8 +556,8 @@ class EditPhoneInfoComponent extends Component {
             case 'home':
                 array = [...userHomeNumber];
                 if (index !== -1) {
-                    const switchVal = array[index].isPrimaryMobile;
-                    array[index].isPrimaryMobile = !switchVal;
+                    const switchVal = array[parseInt(index, 10)].isPrimaryMobile;
+                    array[parseInt(index, 10)].isPrimaryMobile = !switchVal;
                     this.setState({
                         userHomeNumber: array,
                         isHomeRefreshed: !isHomeRefreshed
@@ -568,8 +568,8 @@ class EditPhoneInfoComponent extends Component {
             case 'work':
                 array = [...userWorkNumber];
                 if (index !== -1) {
-                    const switchVal = array[index].isPrimaryMobile;
-                    array[index].isPrimaryMobile = !switchVal;
+                    const switchVal = array[parseInt(index, 10)].isPrimaryMobile;
+                    array[parseInt(index, 10)].isPrimaryMobile = !switchVal;
                     this.setState({
                         userWorkNumber: array,
                         isWorkRefreshed: !isWorkRefreshed

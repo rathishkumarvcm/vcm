@@ -414,6 +414,11 @@ class LoginComponent extends Component {
         navigation.navigate('dashboardScreen');
     }
 
+    navigateToGuestUserDashBoard = () => {
+        const {navigation} = this.props;
+        navigation.navigate('guestUserDashboard');
+    }
+
     navigateCommonUI = () => {
 
         RNSecureKeyStore.remove("enableBioMetric")
@@ -654,6 +659,14 @@ class LoginComponent extends Component {
                                 textStyle={styles.newVictoryButtonText}
                                 // Menu
                                 onPress={this.navigateToDashBoard}
+                            />
+
+                            <GButtonComponent
+                                buttonStyle={styles.newVictoryButton}
+                                buttonText="GuestUser DashBoard"
+                                textStyle={styles.newVictoryButtonText}
+                                // Menu
+                                onPress={this.navigateToGuestUserDashBoard}
                             />
                         </View>
 

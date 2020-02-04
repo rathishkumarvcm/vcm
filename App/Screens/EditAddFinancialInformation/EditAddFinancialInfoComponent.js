@@ -78,6 +78,10 @@ class EditAddFinancialInfoComponent extends Component {
         };
     }
 
+    componentDidMount() {
+        this.financialDidMount();
+    }
+
     dropDownFinancialClick = () => {
         const { dropDownFinancialState } = this.state;
         this.setState({
@@ -86,7 +90,7 @@ class EditAddFinancialInfoComponent extends Component {
     }
 
     dropDownFinancialSelect = (value, index, data) => {
-        const item = data[index];
+        const item = data[parseInt(index, 10)];
         this.setState({
             dropDownFinancialValue: item.key,
             dropDownFinancialState: false,
@@ -104,7 +108,7 @@ class EditAddFinancialInfoComponent extends Component {
 
     dropDownNetSelect = (value, index, data) => {
         this.setState({
-            dropDownNetValue: data[index].value,
+            dropDownNetValue: data[parseInt(index, 10)].value,
             dropDownNetState: false,
             dropDownNetFlag: false
         });
@@ -119,15 +123,12 @@ class EditAddFinancialInfoComponent extends Component {
 
     dropDownTaxFillSelect = (value, index, data) => {
         this.setState({
-            dropDownTaxFillValue: data[index].value,
+            dropDownTaxFillValue: data[parseInt(index, 10)].value,
             dropDownTaxFillState: false,
             dropDownTaxFillFlag: false
         });
     }
 
-    componentDidMount() {
-        this.financialDidMount();
-    }
 
     financialDidMount = () => {
         const { getProfileCompositeData, profileSettingsLookup, profileState } = this.props;
@@ -167,8 +168,8 @@ class EditAddFinancialInfoComponent extends Component {
         ];
 
         for (let i = 0; i < compositePayloadData.length; i += 1) {
-            const tempkey = compositePayloadData[i];
-            if (this.props && profileSettingsLookup && !profileSettingsLookup[tempkey]) {
+            const tempkey = compositePayloadData[parseInt(i, 10)];
+            if (this.props && profileSettingsLookup && !profileSettingsLookup[`${tempkey}`]) {
                 payload.push(tempkey);
             }
         }
@@ -249,21 +250,21 @@ class EditAddFinancialInfoComponent extends Component {
         const { profileSettingsLookup } = this.props;
 
         if (this.props && profileSettingsLookup &&
-            profileSettingsLookup[tempAnnualIncome] &&
-            profileSettingsLookup[tempAnnualIncome].value) {
-            userAnnualIncome = profileSettingsLookup[tempAnnualIncome].value;
+            profileSettingsLookup[`${tempAnnualIncome}`] &&
+            profileSettingsLookup[`${tempAnnualIncome}`].value) {
+            userAnnualIncome = profileSettingsLookup[`${tempAnnualIncome}`].value;
         }
 
         if (this.props && profileSettingsLookup &&
-            profileSettingsLookup[tempNetWorth] &&
-            profileSettingsLookup[tempNetWorth].value) {
-            userNetWorth = profileSettingsLookup[tempNetWorth].value;
+            profileSettingsLookup[`${tempNetWorth}`] &&
+            profileSettingsLookup[`${tempNetWorth}`].value) {
+            userNetWorth = profileSettingsLookup[`${tempNetWorth}`].value;
         }
 
         if (this.props && profileSettingsLookup &&
-            profileSettingsLookup[tempTaxFilling] &&
-            profileSettingsLookup[tempTaxFilling].value) {
-            userTaxFilling = profileSettingsLookup[tempTaxFilling].value;
+            profileSettingsLookup[`${tempTaxFilling}`] &&
+            profileSettingsLookup[`${tempTaxFilling}`].value) {
+            userTaxFilling = profileSettingsLookup[`${tempTaxFilling}`].value;
         }
 
         const { navigation } = this.props;

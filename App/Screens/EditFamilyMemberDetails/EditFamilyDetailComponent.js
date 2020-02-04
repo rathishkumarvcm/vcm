@@ -122,8 +122,8 @@ class EditFamilyDetailComponent extends Component {
         ];
 
         for (let i = 0; i < compositePayloadData.length; i += 1) {
-            const tempkey = compositePayloadData[i];
-            if (this.props && profileSettingsLookup && !profileSettingsLookup[tempkey]) {
+            const tempkey = compositePayloadData[parseInt(i, 10)];
+            if (this.props && profileSettingsLookup && !profileSettingsLookup[`${tempkey}`]) {
                 payload.push(tempkey);
             }
         }
@@ -146,7 +146,7 @@ class EditFamilyDetailComponent extends Component {
         this.setState({
             familyDetailData: {
                 ...familyDetailData,
-                dropDownValue: data[index].value,
+                dropDownValue: data[parseInt(index, 10)].value,
                 dropDownState: false
             }
         });
@@ -167,7 +167,7 @@ class EditFamilyDetailComponent extends Component {
         this.setState({
             familyDetailData: {
                 ...familyDetailData,
-                dropDownPrefixValue: data[index].value,
+                dropDownPrefixValue: data[parseInt(index, 10)].value,
                 dropDownPrefixState: false
             }
         });
@@ -188,7 +188,7 @@ class EditFamilyDetailComponent extends Component {
         this.setState({
             familyDetailData: {
                 ...familyDetailData,
-                dropDownSuffixValue: data[index].value,
+                dropDownSuffixValue: data[parseInt(index, 10)].value,
                 dropDownSuffixState: false
             }
         });
@@ -209,7 +209,7 @@ class EditFamilyDetailComponent extends Component {
         this.setState({
             familyDetailData: {
                 ...familyDetailData,
-                dropDownStatusValue: data[index].value,
+                dropDownStatusValue: data[parseInt(index, 10)].value,
                 dropDownStatusState: false
             }
         });
@@ -230,7 +230,7 @@ class EditFamilyDetailComponent extends Component {
         this.setState({
             familyDetailData: {
                 ...familyDetailData,
-                dropDownProofValue: data[index].value,
+                dropDownProofValue: data[parseInt(index, 10)].value,
                 dropDownProofState: false
             }
         });
@@ -299,23 +299,23 @@ class EditFamilyDetailComponent extends Component {
 
         if (this.props &&
             profileSettingsLookup &&
-            profileSettingsLookup[tempPrefixData] &&
-            profileSettingsLookup[tempPrefixData].value) {
-            profilePrefixData = profileSettingsLookup[tempPrefixData].value;
+            profileSettingsLookup[`${tempPrefixData}`] &&
+            profileSettingsLookup[`${tempPrefixData}`].value) {
+            profilePrefixData = profileSettingsLookup[`${tempPrefixData}`].value;
         }
 
         if (this.props &&
             profileSettingsLookup &&
-            profileSettingsLookup[tempSuffixData] &&
-            profileSettingsLookup[tempSuffixData].value) {
-            profileSuffixData = profileSettingsLookup[tempSuffixData].value;
+            profileSettingsLookup[`${tempSuffixData}`] &&
+            profileSettingsLookup[`${tempSuffixData}`].value) {
+            profileSuffixData = profileSettingsLookup[`${tempSuffixData}`].value;
         }
 
         if (this.props &&
             profileSettingsLookup &&
-            profileSettingsLookup[tempStatusData] &&
-            profileSettingsLookup[tempStatusData].value) {
-            profileStatusData = profileSettingsLookup[tempStatusData].value;
+            profileSettingsLookup[`${tempStatusData}`] &&
+            profileSettingsLookup[`${tempStatusData}`].value) {
+            profileStatusData = profileSettingsLookup[`${tempStatusData}`].value;
         }
 
         return (

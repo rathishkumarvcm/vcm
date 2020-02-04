@@ -101,8 +101,8 @@ class EditManageBenificiariesComponent extends Component {
     ];
 
     for (let i = 0; i < compositePayloadData.length; i += 1) {
-      const tempKey = compositePayloadData[i];
-      if (this.props && masterLookupStateData && !masterLookupStateData[tempKey]) {
+      const tempKey = compositePayloadData[parseInt(i, 10)];
+      if (this.props && masterLookupStateData && !masterLookupStateData[`${tempKey}`]) {
         payload.push(tempKey);
       }
     }
@@ -139,7 +139,7 @@ class EditManageBenificiariesComponent extends Component {
         const tempArr = [];
         const len = beneData.primary_Bene.length;
         for (let i = 0; i < len; i += 1) {
-          const data = beneData.primary_Bene[i];
+          const data = beneData.primary_Bene[parseInt(i, 10)];
           const tempData = {};
 
           tempData.key = data.key;
@@ -176,7 +176,7 @@ class EditManageBenificiariesComponent extends Component {
         const tempArr = [];
         const len = beneData.contingent_Bene.length;
         for (let i = 0; i < len; i += 1) {
-          const data = beneData.contingent_Bene[i];
+          const data = beneData.contingent_Bene[parseInt(i, 10)];
           const tempData = {};
 
           tempData.key = data.key;
@@ -213,7 +213,7 @@ class EditManageBenificiariesComponent extends Component {
         const tempArr = [];
         const len = beneData.transfer_on_Death_Bene.length;
         for (let i = 0; i < len; i += 1) {
-          const data = beneData.transfer_on_Death_Bene[i];
+          const data = beneData.transfer_on_Death_Bene[parseInt(i, 10)];
           const tempData = {};
 
           tempData.key = data.key;
@@ -250,7 +250,7 @@ class EditManageBenificiariesComponent extends Component {
         const tempArr = [];
         const len = beneData.new_Primary_Bene.length;
         for (let i = 0; i < len; i += 1) {
-          const data = beneData.new_Primary_Bene[i];
+          const data = beneData.new_Primary_Bene[parseInt(i, 10)];
           const tempData = {};
 
           tempData.key = data.key;
@@ -287,7 +287,7 @@ class EditManageBenificiariesComponent extends Component {
         const tempArr = [];
         const len = beneData.new_Contingent_Bene.length;
         for (let i = 0; i < len; i += 1) {
-          const data = beneData.new_Contingent_Bene[i];
+          const data = beneData.new_Contingent_Bene[parseInt(i, 10)];
           const tempData = {};
 
           tempData.key = data.key;
@@ -384,7 +384,7 @@ class EditManageBenificiariesComponent extends Component {
       const tempArr = [];
       const len = primaryBeneficiaryData.length;
       for (let i = 0; i < len; i += 1) {
-        const data = primaryBeneficiaryData[i];
+        const data = primaryBeneficiaryData[parseInt(i, 10)];
         const tempData = {};
 
         tempData.key = data.key;
@@ -410,7 +410,7 @@ class EditManageBenificiariesComponent extends Component {
       const tempArr = [];
       const len = contingentBeneficiaryData.length;
       for (let i = 0; i < len; i += 1) {
-        const data = contingentBeneficiaryData[i];
+        const data = contingentBeneficiaryData[parseInt(i, 10)];
         const tempData = {};
 
         tempData.key = data.key;
@@ -436,7 +436,7 @@ class EditManageBenificiariesComponent extends Component {
       const tempArr = [];
       const len = todBeneficiaryData.length;
       for (let i = 0; i < len; i += 1) {
-        const data = todBeneficiaryData[i];
+        const data = todBeneficiaryData[parseInt(i, 10)];
         const tempData = {};
 
         tempData.key = data.key;
@@ -462,7 +462,7 @@ class EditManageBenificiariesComponent extends Component {
       const tempArr = [];
       const len = newContingentBene.length;
       for (let i = 0; i < len; i += 1) {
-        const data = newContingentBene[i];
+        const data = newContingentBene[parseInt(i, 10)];
         const tempData = {};
 
         tempData.key = data.key;
@@ -488,7 +488,7 @@ class EditManageBenificiariesComponent extends Component {
       const tempArr = [];
       const len = newPrimaryBene.length;
       for (let i = 0; i < len; i += 1) {
-        const data = newPrimaryBene[i];
+        const data = newPrimaryBene[parseInt(i, 10)];
         const tempData = {};
 
         tempData.key = data.key;
@@ -563,7 +563,7 @@ class EditManageBenificiariesComponent extends Component {
   generateNewTodBeneficiaryKeyExtractor = (item) => item.key;
 
   setInputRef = (inputComp) => (ref) => {
-    this[inputComp] = ref;
+    this[`${inputComp}`] = ref;
   }
 
   selectedDropDown = (index, keyName, type) => text => {
@@ -571,7 +571,7 @@ class EditManageBenificiariesComponent extends Component {
     switch (type) {
       case "Primary": {
         const newItems = [...primaryBeneficiaryData];
-        newItems[index][keyName] = text;
+        newItems[parseInt(index, 10)][`${keyName}`] = text;
         this.setState({
           primaryBeneficiaryData: newItems
         });
@@ -589,7 +589,7 @@ class EditManageBenificiariesComponent extends Component {
       }
       case "Contingent": {
         const newItems = [...contingentBeneficiaryData];
-        newItems[index][keyName] = text;
+        newItems[parseInt(index, 10)][`${keyName}`] = text;
         this.setState({
           contingentBeneficiaryData: newItems
         });
@@ -607,7 +607,7 @@ class EditManageBenificiariesComponent extends Component {
       }
       case "Tod": {
         const newItems = [...todBeneficiaryData];
-        newItems[index][keyName] = text;
+        newItems[parseInt(index, 10)][`${keyName}`] = text;
         this.setState({
           todBeneficiaryData: newItems
         });
@@ -637,19 +637,19 @@ class EditManageBenificiariesComponent extends Component {
     switch (type) {
       case "Primary": {
         const newItems = [...primaryBeneficiaryData];
-        newItems[index][keyName] = value;
+        newItems[parseInt(index, 10)][`${keyName}`] = value;
         this.setState({ primaryBeneficiaryData: newItems });
         break;
       }
       case "Contingent": {
         const newItems = [...contingentBeneficiaryData];
-        newItems[index][keyName] = value;
+        newItems[parseInt(index, 10)][`${keyName}`] = value;
         this.setState({ contingentBeneficiaryData: newItems });
         break;
       }
       case "Tod": {
         const newItems = [...todBeneficiaryData];
-        newItems[index][keyName] = value;
+        newItems[parseInt(index, 10)][`${keyName}`] = value;
         this.setState({ todBeneficiaryData: newItems });
         break;
       }
@@ -664,19 +664,19 @@ class EditManageBenificiariesComponent extends Component {
     switch (type) {
       case "Primary": {
         const newItems = [...primaryBeneficiaryData];
-        newItems[index][keyName] = value;
+        newItems[parseInt(index, 10)][`${keyName}`] = value;
         this.setState({ primaryBeneficiaryData: newItems });
         break;
       }
       case "Contingent": {
         const newItems = [...contingentBeneficiaryData];
-        newItems[index][keyName] = value;
+        newItems[parseInt(index, 10)][`${keyName}`] = value;
         this.setState({ contingentBeneficiaryData: newItems });
         break;
       }
       case "Tod": {
         const newItems = [...todBeneficiaryData];
-        newItems[index][keyName] = value;
+        newItems[parseInt(index, 10)][`${keyName}`] = value;
         this.setState({ todBeneficiaryData: newItems });
         break;
       }
@@ -775,7 +775,7 @@ class EditManageBenificiariesComponent extends Component {
   selectedNewConDropDownValue = (index, keyName) => text => {
     const { newContingentBene } = this.state;
     const newItems = [...newContingentBene];
-    newItems[index][keyName] = text;
+    newItems[parseInt(index, 10)][`${keyName}`] = text;
     this.setState({
       newContingentBene: newItems
     });
@@ -797,7 +797,7 @@ class EditManageBenificiariesComponent extends Component {
   selectedNewPriDropDownValue = (index, keyName) => text => {
     const { newPrimaryBene } = this.state;
     const newItems = [...newPrimaryBene];
-    newItems[index][keyName] = text;
+    newItems[parseInt(index, 10)][`${keyName}`] = text;
     this.setState({
       newPrimaryBene: newItems
     });
@@ -823,7 +823,7 @@ class EditManageBenificiariesComponent extends Component {
       value = (text * 100).toFixed(2).toString();
     }
     const newItems = [...newContingentBene];
-    newItems[index][keyName] = value;
+    newItems[parseInt(index, 10)][`${keyName}`] = value;
     this.setState({ newContingentBene: newItems });
   }
 
@@ -834,7 +834,7 @@ class EditManageBenificiariesComponent extends Component {
       value = (text * 100).toFixed(2).toString();
     }
     const newItems = [...newPrimaryBene];
-    newItems[index][keyName] = value;
+    newItems[parseInt(index, 10)][`${keyName}`] = value;
     this.setState({ newPrimaryBene: newItems });
   }
 
@@ -842,7 +842,7 @@ class EditManageBenificiariesComponent extends Component {
     const { newContingentBene } = this.state;
     const newItems = [...newContingentBene];
     const val = value;
-    newItems[index][keyName] = val;
+    newItems[parseInt(index, 10)][`${keyName}`] = val;
     this.setState({ newContingentBene: newItems });
   }
 
@@ -850,7 +850,7 @@ class EditManageBenificiariesComponent extends Component {
     const { newPrimaryBene } = this.state;
     const newItems = [...newPrimaryBene];
     const val = value;
-    newItems[index][keyName] = val;
+    newItems[parseInt(index, 10)][`${keyName}`] = val;
     this.setState({ newPrimaryBene: newItems });
   }
 
@@ -922,7 +922,7 @@ class EditManageBenificiariesComponent extends Component {
     let isValidationSuccess = false;
     const { primaryBeneficiaryData } = this.state;
     for (let i = 0; i < primaryBeneficiaryData.length; i += 1) {
-      const obj = primaryBeneficiaryData[i];
+      const obj = primaryBeneficiaryData[parseInt(i, 10)];
       if (!this.isEmpty(obj.social_security_number)) {
         const validate = ssnRegex.test(obj.social_security_number);
         this.onChangeValidationText(i, "ssnValidation", validate, "Primary");
@@ -969,7 +969,7 @@ class EditManageBenificiariesComponent extends Component {
     let isValidationSuccess = false;
     const { todBeneficiaryData } = this.state;
     for (let i = 0; i < todBeneficiaryData.length; i += 1) {
-      const obj = todBeneficiaryData[i];
+      const obj = todBeneficiaryData[parseInt(i, 10)];
       if (!this.isEmpty(obj.social_security_number)) {
         const validate = ssnRegex.test(obj.social_security_number);
         this.onChangeValidationText(i, "ssnValidation", validate, "Tod");
@@ -1017,7 +1017,7 @@ class EditManageBenificiariesComponent extends Component {
     const { contingentBeneficiaryData } = this.state;
     const len = contingentBeneficiaryData.length;
     for (let i = 0; i < len; i += 1) {
-      const obj = contingentBeneficiaryData[i];
+      const obj = contingentBeneficiaryData[parseInt(i, 10)];
       if (!this.isEmpty(obj.social_security_number)) {
         const validate = ssnRegex.test(obj.social_security_number);
         this.onChangeValidationText(i, "ssnValidation", validate, "Contingent");
@@ -1064,7 +1064,7 @@ class EditManageBenificiariesComponent extends Component {
     let isValidationSuccess = false;
     const { newContingentBene } = this.state;
     for (let i = 0; i < newContingentBene.length; i += 1) {
-      const obj = newContingentBene[i];
+      const obj = newContingentBene[parseInt(i, 10)];
       if (this.isEmpty(obj.fname)) {
         this.onAddedBeneValidationText(i, "fnameValidation", false);
         this.onAddedBeneValidationText(i, "fnameValidationMsg", gblStrings.accManagement.emptyFirstNameMsg);
@@ -1133,7 +1133,7 @@ class EditManageBenificiariesComponent extends Component {
     let isValidationSuccess = false;
     const { newPrimaryBene } = this.state;
     for (let i = 0; i < newPrimaryBene.length; i += 1) {
-      const obj = newPrimaryBene[i];
+      const obj = newPrimaryBene[parseInt(i, 10)];
       if (this.isEmpty(obj.fname)) {
         this.onAddedPriBeneValidationText(i, "fnameValidation", false);
         this.onAddedPriBeneValidationText(i, "fnameValidationMsg", gblStrings.accManagement.emptyFirstNameMsg);

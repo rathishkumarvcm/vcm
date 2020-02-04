@@ -120,8 +120,8 @@ class EditOccupationInfoComponent extends Component {
         ];
 
         for (let i = 0; i < compositePayloadData.length; i += 1) {
-            const tempkey = compositePayloadData[i];
-            if (this.props && profileSettingsLookup && !profileSettingsLookup[tempkey]) {
+            const tempkey = compositePayloadData[parseInt(i, 10)];
+            if (this.props && profileSettingsLookup && !profileSettingsLookup[`${tempkey}`]) {
                 payload.push(tempkey);
             }
         }
@@ -214,8 +214,8 @@ class EditOccupationInfoComponent extends Component {
 
         if (isZipApiCalling) {
             if (this.props !== prevProps) {
-                if (this.props && stateCityData[stateCityResponseData]) {
-                    const tempResponse = stateCityData[stateCityResponseData];
+                if (this.props && stateCityData[`${stateCityResponseData}`]) {
+                    const tempResponse = stateCityData[`${stateCityResponseData}`];
                     if (tempResponse && tempResponse.City) {
                         this.setState({
                             occupationData: {
@@ -241,8 +241,8 @@ class EditOccupationInfoComponent extends Component {
 
         if (isAddressApiCalling) {
             if (this.props !== prevProps) {
-                if (this.props && stateCityData[addressResponseData]) {
-                    const tempAddressResponse = stateCityData[addressResponseData];
+                if (this.props && stateCityData[`${addressResponseData}`]) {
+                    const tempAddressResponse = stateCityData[`${addressResponseData}`];
                     if (tempAddressResponse && tempAddressResponse.Address2) {
                         this.setState({
                             occupationData: {
@@ -283,10 +283,10 @@ class EditOccupationInfoComponent extends Component {
     }
 
     dropDownOccupationSelect = (value, index, data) => {
-        if (data[index].value === 'Retired' ||
-            data[index].value === 'Not employed' ||
-            data[index].value === 'Homemaker' ||
-            data[index].value === 'Student') {
+        if (data[parseInt(index, 10)].value === 'Retired' ||
+            data[parseInt(index, 10)].value === 'Not employed' ||
+            data[parseInt(index, 10)].value === 'Homemaker' ||
+            data[parseInt(index, 10)].value === 'Student') {
             this.setState({
                 isOccupationRetired: true
             });
@@ -300,7 +300,7 @@ class EditOccupationInfoComponent extends Component {
         this.setState({
             occupationData: {
                 ...occupationData,
-                dropDownEmployeeValue: data[index].value,
+                dropDownEmployeeValue: data[parseInt(index, 10)].value,
                 dropDownEmployeeState: false,
                 dropDownEmployeeFlag: false
             }
@@ -322,7 +322,7 @@ class EditOccupationInfoComponent extends Component {
         this.setState({
             occupationData: {
                 ...occupationData,
-                dropDownPrimarySourceValue: data[index].value,
+                dropDownPrimarySourceValue: data[parseInt(index, 10)].value,
                 dropDownPrimarySourceState: false,
                 dropDownPrimarySourceFlag: false
             }
@@ -344,7 +344,7 @@ class EditOccupationInfoComponent extends Component {
         this.setState({
             occupationData: {
                 ...occupationData,
-                dropDownIndustryValue: data[index].value,
+                dropDownIndustryValue: data[parseInt(index, 10)].value,
                 dropDownIndustryState: false,
             }
         });
@@ -637,21 +637,21 @@ class EditOccupationInfoComponent extends Component {
         const tempSrcIncome = 'prim_src_income';
 
         if (this.props && profileSettingsLookup &&
-            profileSettingsLookup[tempEmpStatus] &&
-            profileSettingsLookup[tempEmpStatus].value) {
-            tempEmploymentClass = profileSettingsLookup[tempEmpStatus].value;
+            profileSettingsLookup[`${tempEmpStatus}`] &&
+            profileSettingsLookup[`${tempEmpStatus}`].value) {
+            tempEmploymentClass = profileSettingsLookup[`${tempEmpStatus}`].value;
         }
 
         if (this.props && profileSettingsLookup &&
-            profileSettingsLookup[tempIndustry] &&
-            profileSettingsLookup[tempIndustry].value) {
-            tempDataDropDown = profileSettingsLookup[tempIndustry].value;
+            profileSettingsLookup[`${tempIndustry}`] &&
+            profileSettingsLookup[`${tempIndustry}`].value) {
+            tempDataDropDown = profileSettingsLookup[`${tempIndustry}`].value;
         }
 
         if (this.props && profileSettingsLookup &&
-            profileSettingsLookup[tempSrcIncome] &&
-            profileSettingsLookup[tempSrcIncome].value) {
-            primarySourceOfIncome = profileSettingsLookup[tempSrcIncome].value;
+            profileSettingsLookup[`${tempSrcIncome}`] &&
+            profileSettingsLookup[`${tempSrcIncome}`].value) {
+            primarySourceOfIncome = profileSettingsLookup[`${tempSrcIncome}`].value;
         }
 
         return (

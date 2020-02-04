@@ -66,8 +66,8 @@ class editManageIntrestedPartiesComponent extends Component {
         const { stateCityData } = this.props;
         if (isZipApiCalling) {
             if (this.props !== prevProps) {
-                if (this.props && stateCityData[stateCityResponseData]) {
-                    const tempResponse = stateCityData[stateCityResponseData];
+                if (this.props && stateCityData[`${stateCityResponseData}`]) {
+                    const tempResponse = stateCityData[`${stateCityResponseData}`];
                     if (tempResponse && tempResponse.City) {
                         this.onUpdateField("personal", "city", tempResponse.City);
                         this.onUpdateField("personal", "stateValue", tempResponse.State);
@@ -84,8 +84,8 @@ class editManageIntrestedPartiesComponent extends Component {
 
         if (isAddressApiCalling) {
             if (this.props !== prevProps) {
-                if (this.props && stateCityData[addressResponseData]) {
-                    const tempAddressResponse = stateCityData[addressResponseData];
+                if (this.props && stateCityData[`${addressResponseData}`]) {
+                    const tempAddressResponse = stateCityData[`${addressResponseData}`];
                     if (tempAddressResponse && tempAddressResponse.Address2) {
                         this.onUpdateField("personal", "addressLine1", tempAddressResponse.Address1 || "");
                         this.onUpdateField("personal", "addressLine2", tempAddressResponse.Address2 || "");
@@ -102,7 +102,7 @@ class editManageIntrestedPartiesComponent extends Component {
     updateState = () => {
         const { navigation, manageInterestedPartiesData } = this.props;
         let accountArray = [];
-        let tagAccounts = [];
+        const tagAccounts = [];
         const mainObj = navigation.getParam('mainObj');
         const pKey = navigation.getParam('pKey');
         accountArray = mainObj.interestedParties;
@@ -130,7 +130,6 @@ class editManageIntrestedPartiesComponent extends Component {
                 this.setState({ taggedAccData: tagAccounts });
             });    
         }
-
 
         this.setState(prevState => ({
             interestedPartyData: mainObj,
@@ -197,7 +196,7 @@ class editManageIntrestedPartiesComponent extends Component {
     };
 
     setInputRef = (inputComp) => (ref) => {
-        this[inputComp] = ref;
+        this[`${inputComp}`] = ref;
     }
 
     isEmpty = (str) => {
@@ -210,7 +209,7 @@ class editManageIntrestedPartiesComponent extends Component {
     onChangeText = (stateKey, keyName) => text => {
         this.setState(prevState => ({
             [stateKey]: {
-                ...prevState[stateKey],
+                ...prevState[`${stateKey}`],
                 [keyName]: text
             }
         }));
@@ -219,7 +218,7 @@ class editManageIntrestedPartiesComponent extends Component {
     onUpdateField = (stateKey, keyName, val) => {
         this.setState(prevState => ({
             [stateKey]: {
-                ...prevState[stateKey],
+                ...prevState[`${stateKey}`],
                 [keyName]: val
             }
         }));
