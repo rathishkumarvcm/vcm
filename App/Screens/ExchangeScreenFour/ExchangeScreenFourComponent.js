@@ -117,13 +117,14 @@ class ExchangeScreenFourComponent extends Component {
                     "selectedAccountData": savedData.selectedAccountData,
                     "selectedFundData": savedData.selectedFundData,
                     "contribution": savedData.contribution,
-                    
+
                 }
             };
             menuList.splice(pIndex, 1, ammendPayloadData);
             ammendActions(menuList);
             // navigation.navigate('tAmmendComponent');
             navigation.navigate('tAmmendComponent',{ orderId : amndObj.title,transactionType:"Exchange",amend:true});
+
         }
         else {
             const orderId = `Order ID - EXC${year}${month}${date}${finalKey}`;
@@ -139,15 +140,45 @@ class ExchangeScreenFourComponent extends Component {
                     "worth": "",
                     "selectedAccountData": savedData.selectedAccountData,
                     "selectedFundData": savedData.selectedFundData,
-                      "contribution": savedData.contribution,
-                    
+                    "contribution": savedData.contribution,
                 }
             };
             menuList.push(payloadData);
+            // this.submitMethod();
             ammendActions(menuList);
             navigation.navigate('exchangeScreenFinish', { orderId: orderId });
         }
     }
+
+    submitMethod = () => {
+        // console.log("in exchange component submitMethod");
+        const { submitExchangeData } = this.props;
+        const payload = {
+            "customerId": "123",
+            "companyNumber": "591",
+            "fundNumberFrom": "30",
+            "accountNumberFrom": "30900011688",
+            "fundNumberTo": "33",
+            "accountNumberTo": "30900011688",
+            "newAccountFlag": "Y",
+            "typeValueReq": "D",
+            "exchangeAmount": "1000",
+            "effectiveDate": "12/20/2019",
+            "priceIndicator": "1",
+            "feeWaiveFlag": "N",
+            "telephoneExchange": "Y",
+            "percentage": "100",
+            "entryOperator": "JSMITH",
+            "longTermCapGainInstrCode": "",
+            "cdShortTermCapGainsDist": "",
+            "overLoadRate": "",
+            "feeReceivedAmount": ""
+        };
+        // console.log("payload---> " + JSON.stringify(payload));
+        submitExchangeData(payload);
+        return 0;
+    }
+
 
     formatAmount = (amount) => {
         const amt = parseInt(amount,0).toLocaleString();
@@ -209,7 +240,7 @@ class ExchangeScreenFourComponent extends Component {
                                 <Text style={styles.greyText16px}>{`$ ${this.formatAmount(savedData.selectedFundData.funds[0].sellingAmount)}`}</Text>
                             </View>
                         </View>
-                        
+
                         <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>{gblStrings.accManagement.selectedMutualFunds}</Text>
                             <Text style={styles.edit} onPress={this.onClickEditFundingSource}>{gblStrings.common.edit}</Text>
@@ -232,7 +263,7 @@ class ExchangeScreenFourComponent extends Component {
                             </View>
                         </View>
 
-                     
+
                         {/* <View style={styles.govtSecuritiesFund}>
 
                             <View style={styles.section}>
@@ -253,12 +284,12 @@ class ExchangeScreenFourComponent extends Component {
                             <Text style={styles.subHeading}>Dividents and Capital Gains Preferences </Text>
                             <Text style={styles.edit} onPress={this.onClickEditFundingSource}>{gblStrings.common.edit}</Text>
                         </View>
-                        <View style={styles.line} /> 
-                         <View style={styles.section}>
+                        <View style={styles.line} />
+                        <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>Reinvest Earning,Income and capital Gains</Text>
                             {/* <Text style={styles.greyText16px}>{savedData.currentSecurities.reinvest ? "I want to Re-Invest" : "No I dont want to Re-Invest"}</Text> */}
                             <Text style={styles.greyText16px}>I want to Re-Invest</Text>
-                         </View> 
+                        </View>
 
 
 
@@ -296,14 +327,16 @@ ExchangeScreenFourComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     exchangeData: PropTypes.instanceOf(Object),
     amendReducerData: PropTypes.instanceOf(Object),
-    ammendActions: PropTypes.func
+    ammendActions: PropTypes.func,
+    submitExchangeData: PropTypes.func,
 };
 
 ExchangeScreenFourComponent.defaultProps = {
     navigation: {},
     exchangeData: {},
     amendReducerData: {},
-    ammendActions: () => { }
+    ammendActions: () => { },
+    submitExchangeData: {},
 };
 
 export default ExchangeScreenFourComponent;
