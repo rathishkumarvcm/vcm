@@ -183,6 +183,9 @@ import AccountPositions from './Screens/AccountPositions';
 //RMD Calculator
 import RMDCalculatorComponent from './Screens/RMDCalculator';
 
+// RMD
+import RMDDashboardComponent from './Screens/RMDDashboard';
+
 // Notification Tabs
 const NotificationTabNavigator = createMaterialTopTabNavigator(
     {
@@ -1121,10 +1124,16 @@ const AppNavigator = createStackNavigator({
         navigationOptions: {
             header: null
         }
+    },
+    rmdDashboard:{
+        screen: RMDDashboardComponent,
+        navigationOptions: {
+            header: null,
+        }
     }
 },
     {
-        initialRouteName: "login"
+        initialRouteName: "rmdDashboard"
     });
 
 export default createAppContainer(AppNavigator);
