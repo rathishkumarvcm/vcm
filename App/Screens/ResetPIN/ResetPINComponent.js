@@ -78,7 +78,7 @@ class ResetPINComponent extends Component {
     }
     
     render() {
-        console.log("render--->this.props",JSON.stringify(this.props));
+        // console.log("render--->this.props",JSON.stringify(this.props));
         const { confirmNewPIN,newPIN,pinlength,comparePINS } = this.state;
         const { navigation } = this.props; 
         return (

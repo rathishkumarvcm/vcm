@@ -71,7 +71,7 @@ class ResetPasswordComponent extends Component {
 
 
     render() { 
-        console.log("render--->this.props",JSON.stringify(this.props));
+        // console.log("render--->this.props",JSON.stringify(this.props));
         const { navigation } = this.props;
         const { passwordStrengthStrong,newPassword,comparePasswords,confirmNewPassword } = this.state;
         return (

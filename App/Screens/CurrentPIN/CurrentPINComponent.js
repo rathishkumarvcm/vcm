@@ -17,8 +17,12 @@ class CurrentPINComponent extends Component {
     }
 
     componentDidMount() {
+        this.setCurrentPIN();
+    }
+
+    setCurrentPIN = () =>{
         const { initialState } = this.props;
-        console.log("initialState--->",JSON.stringify(initialState.currentPIN));
+        // console.log("initialState--->",JSON.stringify(initialState.currentPIN));
          if (this.props && initialState && initialState.currentPIN) {
             this.setState({
                 currentPIN:initialState.currentPIN

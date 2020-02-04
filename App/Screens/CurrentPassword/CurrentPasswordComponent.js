@@ -16,8 +16,12 @@ class CurrentPasswordComponent extends Component {
     }
 
     componentDidMount() {
+        this.setCurrentPassword();
+    }
+
+    setCurrentPassword = () =>{
         const { initialState } = this.props;
-        console.log("initialState--->",JSON.stringify(initialState.currentPassword));
+        // console.log("initialState--->",JSON.stringify(initialState.currentPassword));
          if (this.props && initialState && initialState.currentPassword) {
             this.setState({
                 currentPassword:initialState.currentPassword

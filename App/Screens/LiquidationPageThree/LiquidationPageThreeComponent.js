@@ -357,7 +357,7 @@ class LiquidationPageThreeComponent extends Component {
                     federalTaxInDollars: federalTaxToDollars,
                     totalTaxToBeWithhold: totalTaxToBWithhold,
                     totalYouWillReceive: amount,
-                    totalWithdrawal: parseInt(amount) + parseInt(totalTaxToBWithhold)
+                    totalWithdrawal: parseInt(amount,0) + parseInt(totalTaxToBWithhold,0)
                 }
             }));
         }

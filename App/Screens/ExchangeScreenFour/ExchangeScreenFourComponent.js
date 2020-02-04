@@ -150,7 +150,7 @@ class ExchangeScreenFourComponent extends Component {
     }
 
     formatAmount = (amount) => {
-        const amt = parseInt(amount).toLocaleString();
+        const amt = parseInt(amount,0).toLocaleString();
         return amt;
     }
 
