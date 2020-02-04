@@ -125,8 +125,8 @@ class EditEmailInfoComponent extends Component {
         const { profileEmailData, isEmailRefreshed } = this.state;
         const array = [...profileEmailData];
         if (index !== -1) {
-            const switchVal = array[index].isPrimaryEmail;
-            array[index].isPrimaryEmail = !switchVal;
+            const switchVal = array[parseInt(index, 10)].isPrimaryEmail;
+            array[parseInt(index, 10)].isPrimaryEmail = !switchVal;
             this.setState({
                 profileEmailData: array,
                 isEmailRefreshed: !isEmailRefreshed

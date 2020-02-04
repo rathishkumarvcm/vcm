@@ -101,8 +101,8 @@ class EditAddressAddNewComponent extends Component {
 
         if (isZipApiCalling) {
             if (this.props !== prevProps) {
-                if (this.props && stateCityData[stateCityResponseData]) {
-                    const tempResponse = stateCityData[stateCityResponseData];
+                if (this.props && stateCityData[`${stateCityResponseData}`]) {
+                    const tempResponse = stateCityData[`${stateCityResponseData}`];
                     if (tempResponse && tempResponse.City) {
                         this.setState({
                             userCity: tempResponse.City,
@@ -122,8 +122,8 @@ class EditAddressAddNewComponent extends Component {
 
         if (isAddressApiCalling) {
             if (this.props !== prevProps) {
-                if (this.props && stateCityData[addressResponseData]) {
-                    const tempAddressResponse = stateCityData[addressResponseData];
+                if (this.props && stateCityData[`${addressResponseData}`]) {
+                    const tempAddressResponse = stateCityData[`${addressResponseData}`];
                     if (tempAddressResponse && tempAddressResponse.Address2) {
                         this.setState({
                             addressOne: tempAddressResponse.Address1 || "",
@@ -361,9 +361,9 @@ class EditAddressAddNewComponent extends Component {
                 "isPhysicalAddress": false
             };
 
-            relationAddressPayload = profileState.profileRelationShipDetails[relationShipPosition].relationAddress;
+            relationAddressPayload = profileState.profileRelationShipDetails[`${relationShipPosition}`].relationAddress;
             relationAddressPayload.push(addContactInformation);
-            const relationAddressUpdated = [profileState.profileRelationShipDetails[relationShipPosition]];
+            const relationAddressUpdated = [profileState.profileRelationShipDetails[`${relationShipPosition}`]];
             relationContactPayload = {
                 ...profileState,
                 profileRelationShipDetails: relationAddressUpdated

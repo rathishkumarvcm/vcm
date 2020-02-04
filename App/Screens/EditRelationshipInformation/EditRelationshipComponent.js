@@ -87,7 +87,7 @@ class EditRelationshipComponent extends Component {
 
         for (let i = 0; i < compositePayloadData.length; i += 1) {
             const tempkey = compositePayloadData[Number(i)];
-            if (this.props && profileSettingsLookup && !profileSettingsLookup[tempkey]) {
+            if (this.props && profileSettingsLookup && !profileSettingsLookup[`${tempkey}`]) {
                 payload.push(tempkey);
             }
         }
@@ -110,7 +110,7 @@ class EditRelationshipComponent extends Component {
         this.setState({
             relationShipInfoData: {
                 ...relationShipInfoData,
-                dropDownRelationValue: data[index].value,
+                dropDownRelationValue: data[parseInt(index, 10)].value,
                 dropDownRelationState: false,
                 dropDownRelationFlag: false
             }
@@ -132,7 +132,7 @@ class EditRelationshipComponent extends Component {
         this.setState({
             relationShipInfoData: {
                 ...relationShipInfoData,
-                dropDownValue: data[index].value,
+                dropDownValue: data[parseInt(index, 10)].value,
                 dropDownState: false,
                 dropDownFlag: false
             }
@@ -154,7 +154,7 @@ class EditRelationshipComponent extends Component {
         this.setState({
             relationShipInfoData: {
                 ...relationShipInfoData,
-                dropDownSuffixValue: data[index].value,
+                dropDownSuffixValue: data[parseInt(index, 10)].value,
                 dropDownSuffixState: false,
                 dropDownSuffixFlag: false
             }
@@ -176,7 +176,7 @@ class EditRelationshipComponent extends Component {
         this.setState({
             relationShipInfoData: {
                 ...relationShipInfoData,
-                dropDownGenderValue: data[index].value,
+                dropDownGenderValue: data[parseInt(index, 10)].value,
                 dropDownGenderState: false,
                 dropDownGenderFlag: false
             }
@@ -198,7 +198,7 @@ class EditRelationshipComponent extends Component {
         this.setState({
             relationShipInfoData: {
                 ...relationShipInfoData,
-                dropDownStatusValue: data[index].value,
+                dropDownStatusValue: data[parseInt(index, 10)].value,
                 dropDownStatusState: false,
                 dropDownStatusFlag: false
             }
@@ -400,27 +400,27 @@ class EditRelationshipComponent extends Component {
         const tempStatusData = 'marital_status';
 
         if (this.props && profileSettingsLookup &&
-            profileSettingsLookup[tempPrefixData] &&
-            profileSettingsLookup[tempPrefixData].value) {
-            profilePrefixData = profileSettingsLookup[tempPrefixData].value;
+            profileSettingsLookup[`${tempPrefixData}`] &&
+            profileSettingsLookup[`${tempPrefixData}`].value) {
+            profilePrefixData = profileSettingsLookup[`${tempPrefixData}`].value;
         }
 
         if (this.props && profileSettingsLookup &&
-            profileSettingsLookup[tempSuffixData] &&
-            profileSettingsLookup[tempSuffixData].value) {
-            profileSuffixData = profileSettingsLookup[tempSuffixData].value;
+            profileSettingsLookup[`${tempSuffixData}`] &&
+            profileSettingsLookup[`${tempSuffixData}`].value) {
+            profileSuffixData = profileSettingsLookup[`${tempSuffixData}`].value;
         }
 
         if (this.props && profileSettingsLookup &&
-            profileSettingsLookup[tempGenderData] &&
-            profileSettingsLookup[tempGenderData].value) {
-            profileGenderData = profileSettingsLookup[tempGenderData].value;
+            profileSettingsLookup[`${tempGenderData}`] &&
+            profileSettingsLookup[`${tempGenderData}`].value) {
+            profileGenderData = profileSettingsLookup[`${tempGenderData}`].value;
         }
 
         if (this.props && profileSettingsLookup &&
-            profileSettingsLookup[tempStatusData] &&
-            profileSettingsLookup[tempStatusData].value) {
-            profileStatusData = profileSettingsLookup[tempStatusData].value;
+            profileSettingsLookup[`${tempStatusData}`] &&
+            profileSettingsLookup[`${tempStatusData}`].value) {
+            profileStatusData = profileSettingsLookup[`${tempStatusData}`].value;
         }
 
         return (

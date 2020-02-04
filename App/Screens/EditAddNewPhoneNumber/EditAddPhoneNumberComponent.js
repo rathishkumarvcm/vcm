@@ -71,7 +71,7 @@ class EditAddPhoneNumberComponent extends Component {
 
     dropDownPhoneSelect = (value, index, data) => {
         this.setState({
-            dropDownPhoneValue: data[index].value,
+            dropDownPhoneValue: data[parseInt(index, 10)].value,
             dropDownPhoneState: false,
             dropDownPhoneFlag: false
         });
@@ -86,7 +86,7 @@ class EditAddPhoneNumberComponent extends Component {
 
     dropDownCodeSelect = (value, index, data) => {
         this.setState({
-            dropDownCodeValue: data[index].value,
+            dropDownCodeValue: data[parseInt(index, 10)].value,
             dropDownCodeState: false,
             dropDownCodeFlag: false
         });
@@ -101,7 +101,7 @@ class EditAddPhoneNumberComponent extends Component {
 
     dropDownContactSelect = (value, index, data) => {
         this.setState({
-            dropDownContactValue: data[index].value,
+            dropDownContactValue: data[parseInt(index, 10)].value,
             dropDownContactState: false,
             dropDownContactFlag: false
         });

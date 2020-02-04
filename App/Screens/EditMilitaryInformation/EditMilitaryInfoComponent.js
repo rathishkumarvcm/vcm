@@ -97,7 +97,7 @@ class EditMilitaryInfoComponent extends Component {
 
         for (let i = 0; i < compositePayloadData.length; i +=1) {
             const tempkey = compositePayloadData[Number(i)];
-            if (this.props && profileSettingsLookup && !profileSettingsLookup[tempkey]) {
+            if (this.props && profileSettingsLookup && !profileSettingsLookup[`${tempkey}`]) {
                 payload.push(tempkey);
             }
         }
@@ -174,7 +174,7 @@ class EditMilitaryInfoComponent extends Component {
         this.setState({
             militaryInfoData: {
                 ...militaryInfoData,
-                dropDownMilitaryValue: data[index].value,
+                dropDownMilitaryValue: data[parseInt(index, 10)].value,
                 dropDownMilitaryState: false,
                 dropDownMilitaryMsg: ''
             }
@@ -197,7 +197,7 @@ class EditMilitaryInfoComponent extends Component {
         this.setState({
             militaryInfoData: {
                 ...militaryInfoData,
-                dropDownBranchValue: data[index].value,
+                dropDownBranchValue: data[parseInt(index, 10)].value,
                 dropDownBranchState: false,
                 dropDownBranchMsg: '',
                 dummyMilitaryStatusData: [],
@@ -206,9 +206,9 @@ class EditMilitaryInfoComponent extends Component {
             }
         });
 
-        payloadMilitaryRank = `mil_rank_${data[index].key}`;
+        payloadMilitaryRank = `mil_rank_${data[parseInt(index, 10)].key}`;
 
-        if (this.props && profileSettingsLookup && !profileSettingsLookup[payloadMilitaryRank]) {
+        if (this.props && profileSettingsLookup && !profileSettingsLookup[`${payloadMilitaryRank}`]) {
             getRankData(payloadMilitaryRank);
         }
     }
@@ -228,7 +228,7 @@ class EditMilitaryInfoComponent extends Component {
         this.setState({
             militaryInfoData: {
                 ...militaryInfoData,
-                dropDownMarineValue: data[index].value,
+                dropDownMarineValue: data[parseInt(index, 10)].value,
                 dropDownMarineState: false,
                 dropDownMarineMsg: ''
             }
@@ -337,9 +337,9 @@ class EditMilitaryInfoComponent extends Component {
         const { militaryInfoData } = this.state;
 
         if (this.props && profileSettingsLookup &&
-            profileSettingsLookup[payloadMilitaryRank] &&
-            profileSettingsLookup[payloadMilitaryRank].value) {
-            militaryInfoData.dummyMilitaryStatusData = profileSettingsLookup[payloadMilitaryRank].value;
+            profileSettingsLookup[`${payloadMilitaryRank}`] &&
+            profileSettingsLookup[`${payloadMilitaryRank}`].value) {
+            militaryInfoData.dummyMilitaryStatusData = profileSettingsLookup[`${payloadMilitaryRank}`].value;
         }
 
         return (
@@ -396,15 +396,15 @@ class EditMilitaryInfoComponent extends Component {
         const tempMilitaryService = 'mil_serv_branch';
 
         if (this.props && profileSettingsLookup &&
-            profileSettingsLookup[tempMilitaryStatus] &&
-            profileSettingsLookup[tempMilitaryStatus].value) {
-            userMilitaryStatus = profileSettingsLookup[tempMilitaryStatus].value;
+            profileSettingsLookup[`${tempMilitaryStatus}`] &&
+            profileSettingsLookup[`${tempMilitaryStatus}`].value) {
+            userMilitaryStatus = profileSettingsLookup[`${tempMilitaryStatus}`].value;
         }
 
         if (this.props && profileSettingsLookup &&
-            profileSettingsLookup[tempMilitaryService] &&
-            profileSettingsLookup[tempMilitaryService].value) {
-            userBranchOfService = profileSettingsLookup[tempMilitaryService].value;
+            profileSettingsLookup[`${tempMilitaryService}`] &&
+            profileSettingsLookup[`${tempMilitaryService}`].value) {
+            userBranchOfService = profileSettingsLookup[`${tempMilitaryService}`].value;
         }
 
         return (

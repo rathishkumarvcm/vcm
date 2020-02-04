@@ -67,7 +67,7 @@ class EditAddressInfoComponent extends Component {
                 profileState.profileRelationShipDetails) {
                 relationshipContacts = [...profileState.profileRelationShipDetails];
                 this.setState({
-                    profileUserAddressValue: relationshipContacts[contactPosition].relationAddress,
+                    profileUserAddressValue: relationshipContacts[`${contactPosition}`].relationAddress,
                     refreshAddressData: !refreshAddressData
                 });
             }
@@ -95,7 +95,7 @@ class EditAddressInfoComponent extends Component {
                 profileState.profileRelationShipDetails) {
                 relationshipContacts = [...profileState.profileRelationShipDetails];
                 this.setState({
-                    profileUserAddressValue: relationshipContacts[contactPosition].relationAddress,
+                    profileUserAddressValue: relationshipContacts[`${contactPosition}`].relationAddress,
                     refreshAddressData: !refreshAddressData
                 });
             }
@@ -251,8 +251,8 @@ class EditAddressInfoComponent extends Component {
         const { profileUserAddressValue, refreshAddressData } = this.state;
         const array = [...profileUserAddressValue];
         if (index !== -1) {
-            const switchVal = array[index].isMailingAddress;
-            array[index].isMailingAddress = !switchVal;
+            const switchVal = array[parseInt(index, 10)].isMailingAddress;
+            array[parseInt(index, 10)].isMailingAddress = !switchVal;
             this.setState({
                 profileUserAddressValue: array,
                 refreshAddressData: !refreshAddressData
@@ -264,8 +264,8 @@ class EditAddressInfoComponent extends Component {
         const { profileUserAddressValue, refreshAddressData } = this.state;
         const array = [...profileUserAddressValue];
         if (index !== -1) {
-            const switchVal = array[index].isPhysicalAddress;
-            array[index].isPhysicalAddress = !switchVal;
+            const switchVal = array[parseInt(index, 10)].isPhysicalAddress;
+            array[parseInt(index, 10)].isPhysicalAddress = !switchVal;
             this.setState({
                 profileUserAddressValue: array,
                 refreshAddressData: !refreshAddressData
