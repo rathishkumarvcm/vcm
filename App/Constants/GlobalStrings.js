@@ -137,6 +137,20 @@ export default {
         accountSummary: "Account Summary",
 
     },
+    guestDashBoard: {
+        guestUserOpenAccount: "An account will allow you to invest in Victory funds , monitor their performances and associate them with life goals . Most popular account Types are",
+        account: 'Accounts',
+        savedItems: "My Saved Items",
+        news: "News & Commentary",
+        communication: "Communication Center",
+        financial: "Financial Resources",
+        financialResources: {
+            portfolio: "Portfolio Planner",
+            retirement: "Retirement Planner",
+            product: "Product Information",
+            learning: "Learning Center",
+        },
+    },
     accManagement: {
         //  labels 
         accType: "Account Type",

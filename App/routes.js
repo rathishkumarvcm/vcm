@@ -56,6 +56,7 @@ import OnlineIDVerification from './Screens/OnlineIDVerification/OnlineIDVerific
 
 //  Acc Management
 import Dashboard from './Screens/Dashboard/DashboardComponent';
+import GuestUserDashboard from './Screens/GuestUserDashboard';
 import TermsAndConditions from './Screens/TermsAndConditions/TermsAndConditionsComponent';
 import DashboardAccounts from './Screens/DashboardAccounts';
 import OpenAccPageOne from './Screens/OpenAccPageOne';
@@ -291,6 +292,14 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
+
+    guestUserDashboard: {
+        screen: GuestUserDashboard,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    
     // drawerMore: {
     //     screen: MoreDrawerNavigator,
     //     navigationOptions: {

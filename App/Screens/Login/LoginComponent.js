@@ -407,7 +407,7 @@ class LoginComponent extends Component {
 
     navigateDashboard = () => {
         const {navigation} = this.props;
-        navigation.navigate('dashboard');
+        navigation.navigate('guestUserDashboard');
     }
 
     navigateToDashBoard = () => {
