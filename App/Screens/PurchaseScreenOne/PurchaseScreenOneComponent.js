@@ -63,13 +63,12 @@ class PurchaseScreenOneComponent extends Component {
         const accDetails = ActionTypes.GET_ACCOUNT_DETAILS;
         if (purchaseData[`${accDetails}`] !== undefined && purchaseData[`${accDetails}`] !== null) {
             tempAccountList = purchaseData[`${accDetails}`];
-            // console.log(tempAccountList);
             return {
                 accountList: [...tempAccountList],
                 isLoading: false
             };
         }
-        // AppUtils.debugLog(accountList);
+        AppUtils.debugLog(accountList);
         return prevState;
     }
 
@@ -336,11 +335,7 @@ class PurchaseScreenOneComponent extends Component {
 
     render() {
         const { disableNextButton, generalAccountIcon, collapseGeneralAccount, UTMAAccountIcon, collapseUTMAAccount, IRAAccountIcon, collapseIRAAccount } = this.state;
-        const { navigation, purchaseData } = this.props;
-        if (this.props && purchaseData && purchaseData.accSelectionData) {
-            accSelectionData = purchaseData.accSelectionData;
-            savedData = purchaseData.savePurchaseSelectedData;
-        }
+        const { navigation } = this.props;
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
@@ -367,15 +362,19 @@ class PurchaseScreenOneComponent extends Component {
                             </View>
                             <View style={styles.line} />
                         </View>
-                        {accSelectionData && accSelectionData.General_Account && <Collapsible collapsed={collapseGeneralAccount} align="center">
-                            <FlatList
-                                data={accSelectionData.General_Account}
-                                renderItem={this.renderGeneralAccount}
-                                keyExtractor={this.generateKeyGeneral}
-                                extraData={this.state}
-                                ListEmptyComponent={this.noItemDisplay}
-                            />
-                        </Collapsible>}
+                        {accSelectionData && accSelectionData.General_Account &&
+                            (
+                                <Collapsible collapsed={collapseGeneralAccount} align="center">
+                                    <FlatList
+                                        data={accSelectionData.General_Account}
+                                        renderItem={this.renderGeneralAccount}
+                                        keyExtractor={this.generateKeyGeneral}
+                                        extraData={this.state}
+                                        ListEmptyComponent={this.noItemDisplay}
+                                    />
+                                </Collapsible>
+                            )
+                        }
 
                         {/* ---------------------------- IRA Account  --------------------------------- */}
                         <View style={styles.accountTypeFlex}>
@@ -385,15 +384,19 @@ class PurchaseScreenOneComponent extends Component {
                             </View>
                             <View style={styles.line} />
                         </View>
-                        {accSelectionData && accSelectionData.IRA_Account && <Collapsible collapsed={collapseIRAAccount} align="center">
-                            <FlatList
-                                data={accSelectionData.IRA_Account}
-                                renderItem={this.renderIraAccount}
-                                keyExtractor={this.generateKeyIRA}
-                                extraData={this.state}
-                                ListEmptyComponent={this.noItemDisplay}
-                            />
-                        </Collapsible>}
+                        {accSelectionData && accSelectionData.IRA_Account &&
+                            (
+                                <Collapsible collapsed={collapseIRAAccount} align="center">
+                                    <FlatList
+                                        data={accSelectionData.IRA_Account}
+                                        renderItem={this.renderIraAccount}
+                                        keyExtractor={this.generateKeyIRA}
+                                        extraData={this.state}
+                                        ListEmptyComponent={this.noItemDisplay}
+                                    />
+                                </Collapsible>
+                            )
+                        }
 
                         {/* ---------------------------- UTMA Account  --------------------------------- */}
                         <View style={styles.accountTypeFlex}>
@@ -403,15 +406,19 @@ class PurchaseScreenOneComponent extends Component {
                             </View>
                             <View style={styles.line} />
                         </View>
-                        {accSelectionData && accSelectionData.UTMA_Account && <Collapsible collapsed={collapseUTMAAccount} align="center">
-                            <FlatList
-                                data={accSelectionData.UTMA_Account}
-                                renderItem={this.renderUtmaAccount}
-                                keyExtractor={this.generateKeyUTMA}
-                                extraData={this.state}
-                                ListEmptyComponent={this.noItemDisplay}
-                            />
-                        </Collapsible>}
+                        {accSelectionData && accSelectionData.UTMA_Account &&
+                            (
+                                <Collapsible collapsed={collapseUTMAAccount} align="center">
+                                    <FlatList
+                                        data={accSelectionData.UTMA_Account}
+                                        renderItem={this.renderUtmaAccount}
+                                        keyExtractor={this.generateKeyUTMA}
+                                        extraData={this.state}
+                                        ListEmptyComponent={this.noItemDisplay}
+                                    />
+                                </Collapsible>
+                            )
+                        }
 
                     </View>
 

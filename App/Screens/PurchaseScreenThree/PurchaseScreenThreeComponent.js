@@ -15,6 +15,10 @@ let savedData = {};
 let ammendData = {};
 let ammendIndex = null;
 
+let currentPage = 3;
+let totalCount = 4;
+let pageName = `${currentPage} - ${gblStrings.purchase.fundSource}`;
+
 const bankAccounts = [
     { key: "1", bankAccName: "Bank Account 1", bankAccountNo: "XXX-XXX-3838", verified: "true" },
     { key: "2", bankAccName: "Bank Account 2", bankAccountNo: "XXX-XXX-5163", verified: "true" }
@@ -37,6 +41,7 @@ let isIRA = false;
 class PurchaseScreenThreeComponent extends Component {
     constructor(props) {
         super(props);
+        const { navigation, purchaseData } = this.props;
         this.state = {
             selectedBankAccountIndex: null,
             showCheckMsg: false,
@@ -56,23 +61,17 @@ class PurchaseScreenThreeComponent extends Component {
             ammend: false
 
         };
+        ammendData = `${navigation.getParam('data')}`;
+        ammendIndex = `${navigation.getParam('index')}`;
+        ammend = `${navigation.getParam('ammend')}`;
+        savedData = purchaseData.savePurchaseSelectedData;
     }
 
     componentDidMount() {
-        const { navigation } = this.props;
-        ammendData = navigation.getParam('data');
-        ammendIndex = navigation.getParam('index');
         this.updateState();
     }
 
     updateState = () => {
-        const { navigation } = this.props;
-        if (navigation.getParam('ammend')) {
-            this.setState({ ammend: true });
-        }
-        else {
-            this.setState({ ammend: false });
-        }
         if (savedData) {
             if (savedData.selectedFundSourceData) {
                 this.setState({
@@ -301,11 +300,10 @@ class PurchaseScreenThreeComponent extends Component {
     generateBankKey = (a) => a.bankAccountNo;
 
     render() {
-        let currentPage = 3;
-        let totalCount = 4;
+
         const { disableNextButton, ammend, fundingSourceName, showCheckMsg, showWireTransferMsg, switchOff, switchOn, selectedContributionData, contributionFlag, contributionErrMsg } = this.state;
         const { purchaseData, navigation } = this.props;
-        let pageName = `${currentPage} - ${gblStrings.purchase.fundSource}`;
+
         if (ammend) {
             currentPage = 2;
             pageName = `${currentPage} - ${gblStrings.purchase.fundSource}`;
