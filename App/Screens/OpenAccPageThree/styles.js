@@ -392,10 +392,11 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(9.5),
         opacity: 0.5
     },
-    lblLine1: {
+    lblHzLine: {
 
-        backgroundColor: '#696069',
-        height: scaledHeight(1)
+        backgroundColor: '#D7D8D9',
+        flexGrow: 1,
+
     },
     lblMSRDescTxt: {
         color: '#333333DE',
@@ -403,6 +404,26 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(14),
         lineHeight: 25,
         marginBottom: scaledHeight(25)
+    },
+    lblPersonalCheckTxt: {
+        color: '#333333DE',
+        fontWeight: 'bold',
+        fontSize: scaledHeight(22),
+        lineHeight: 35
+    },
+    lblPersonalCheckNoteTxt: {
+        marginTop: scaledHeight(15),
+        fontWeight: 'bold',
+        color: '#333333DE',
+        fontSize: scaledHeight(16),
+        lineHeight: 22
+    },
+    offLineNoteHeader: {
+        flexDirection:'row',
+        alignContent: 'center',
+        alignItems: 'flex-start',
+        flexGrow: 1,
+        justifyContent: 'center',
     },
 
     lblMSRTxt: {
@@ -797,6 +818,26 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         backgroundColor: '#FFFFFF',
         borderColor: "#CFCFCF",
+        borderWidth: 1,
+        flexGrow: 1,
+        justifyContent: 'center',
+        padding: scaledHeight(23),
+    },
+    personalCheckContainer: {
+        alignContent: 'center',
+        alignItems: 'flex-start',
+        backgroundColor: '#F8F6DE',
+        borderColor: "#61285F45",
+        borderWidth: 1,
+        flexGrow: 1,
+        justifyContent: 'center',
+        padding: scaledHeight(23),
+    },
+    wireTransferContainer: {
+        alignContent: 'center',
+        alignItems: 'flex-start',
+        backgroundColor: '#F8F6DE',
+        borderColor: "#61285F45",
         borderWidth: 1,
         flexGrow: 1,
         justifyContent: 'center',

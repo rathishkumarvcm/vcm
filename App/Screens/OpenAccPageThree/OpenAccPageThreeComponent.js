@@ -105,6 +105,7 @@ class OpenAccPageThreeComponent extends Component {
             offLineMethods: [],
             onLineMethods: [],
             selectedCount: 0,
+            selectedFundsName:"",
             fundingSourceName: "",
             fundName: "",
             fundingOptions: "",
@@ -802,7 +803,9 @@ class OpenAccPageThreeComponent extends Component {
             fundList: newItems,
             selectedFundInvestmentsData: newSelectedData,
             selectedCount: this.getSelectedItems().length,
-            selectedCountValidation: true
+            selectedCountValidation: true,
+            selectedFundsName:this.getSelectedFundsName()
+
 
         });
 
@@ -865,7 +868,8 @@ class OpenAccPageThreeComponent extends Component {
             offLineMethods: method === "offline" ? toBeChangedData : notToBeChangedData,
             onLineMethods: method === "online" ? toBeChangedData : notToBeChangedData,
             fundingSourceName: item,
-            fundingSourceNameValidation: true
+            fundingSourceNameValidation: true,
+            selectedFundsName:this.getSelectedFundsName()
 
         });
 
@@ -1116,6 +1120,20 @@ class OpenAccPageThreeComponent extends Component {
 
     }
 
+    getSelectedFundsName = () => {
+        const { selectedFundInvestmentsData } = this.state;
+        const fundNameArray = [];
+        if (selectedFundInvestmentsData.length > 0) {
+            selectedFundInvestmentsData.map((item) => {
+                fundNameArray.push(item.fundName);
+            });
+        }
+
+        return fundNameArray.join(',');
+
+
+    }
+
 
 
     // Modal - Filter Funds
@@ -1317,7 +1335,9 @@ class OpenAccPageThreeComponent extends Component {
             minCount,
             selectedCount,
             selectedCountValidation,
+            selectedFundsName,
             selectedFundInvestmentsData,
+            fundingSourceName,
             fundingSourceNameValidation,
             offLineMethods,
             method,
@@ -1499,32 +1519,100 @@ class OpenAccPageThreeComponent extends Component {
                             </View>
 
                             {method === "offline" && (
-                                <View style={styles.tollFreeContainer}>
-                                    <Text style={styles.lblMSRDescTxt}>
-                                        {gblStrings.accManagement.contactMSRDesc}
-                                    </Text>
-                                    <View style={styles.contactMSR}>
-                                        <GIcon
-                                            name="phone"
-                                            type="font-awesome"
-                                            size={35}
-                                            color="#000000"
-                                        />
-                                        <Text style={styles.lblMSRTxt}>
-                                            {gblStrings.accManagement.contactMSR}
-                                        </Text>
-                                    </View>
+                                /* 
+                                 <View style={styles.tollFreeContainer}>
+                                       <Text style={styles.lblMSRDescTxt}>
+                                           {gblStrings.accManagement.contactMSRDesc}
+                                       </Text>
+                                       <View style={styles.contactMSR}>
+                                           <GIcon
+                                               name="phone"
+                                               type="font-awesome"
+                                               size={35}
+                                               color="#000000"
+                                           />
+                                           <Text style={styles.lblMSRTxt}>
+                                               {gblStrings.accManagement.contactMSR}
+                                           </Text>
+                                       </View>
+   
+                                       <TouchableOpacity
+                                           style={styles.callMSR}
+                                           onPress={null}
+                                       >
+                                           <Text>
+                                               <Text style={styles.callTollFee}>{gblStrings.accManagement.callTollFee} </Text>
+                                               <Text style={styles.callTollFeeNo}>{gblStrings.accManagement.callTollFeeNo} </Text>
+                                           </Text>
+                                       </TouchableOpacity>
+                                   </View>
+   
+                                   
+                               
+                               */
 
-                                    <TouchableOpacity
-                                        style={styles.callMSR}
-                                        onPress={null}
-                                    >
-                                        <Text>
-                                            <Text style={styles.callTollFee}>{gblStrings.accManagement.callTollFee} </Text>
-                                            <Text style={styles.callTollFeeNo}>{gblStrings.accManagement.callTollFeeNo} </Text>
-                                        </Text>
-                                    </TouchableOpacity>
+                                <View>
+                                    {fundingSourceName === "Personal Check" && (
+                                        <View style={styles.personalCheckContainer}>
+
+                                            <View style={styles.offLineNoteHeader}>
+                                                <Text style={styles.lblPersonalCheckTxt}>
+                                                    {gblStrings.accManagement.check}
+                                                </Text>
+
+                                            </View>
+                                            <Text style={styles.lblHzLine} />
+
+                                            <Text style={styles.lblPersonalCheckNoteTxt}>
+                                                {gblStrings.accManagement.checkNote}
+                                            </Text>
+
+                                        </View>
+                                    )}
+
+                                    {fundingSourceName === "Wire Transfer" && (
+                                        <View style={styles.wireTransferContainer}>
+
+                                            <View style={styles.offLineNoteHeader}>
+                                                <Text style={styles.lblPersonalCheckTxt}>
+                                                    {gblStrings.accManagement.wireTransfer}
+                                                </Text>
+
+                                            </View>
+                                            <Text style={styles.lblHzLine} />
+                                            <View style={styles.marginBottomStyle}>
+                                                <Text style={styles.fundItemValueHeading}>{gblStrings.accManagement.USAAFundName}</Text>
+                                    <Text style={styles.fundItemValueTxt}>{selectedFundsName}</Text>
+                                            </View>
+                                            <View style={styles.marginBottomStyle}>
+                                                <Text style={styles.fundItemValueHeading}>{gblStrings.accManagement.USAAAccNumber}</Text>
+                                                <Text style={styles.fundItemValueTxt}>{gblStrings.accManagement.USAAAccountNumber}</Text>
+                                            </View>
+                                            <View style={styles.marginBottomStyle}>
+                                                <Text style={styles.fundItemValueHeading}>{gblStrings.accManagement.Name}</Text>
+                                                <Text style={styles.fundItemValueTxt}>William</Text>
+                                            </View>
+                                            <View style={styles.marginBottomStyle}>
+                                                <Text style={styles.fundItemValueHeading}>{gblStrings.accManagement.USAAFundAccNumber}</Text>
+                                                <Text style={styles.fundItemValueTxt}>{gblStrings.accManagement.USAAAccountNumber}</Text>
+                                            </View>
+                                            <View style={styles.marginBottomStyle}>
+                                                <Text style={styles.fundItemValueHeading}>{gblStrings.accManagement.MailingToThisAddress}</Text>
+                                                <Text style={styles.fundItemValueTxt}>{gblStrings.accManagement.VCMMailingAdress}</Text>
+                                            </View>
+                                        
+                                            <Text style={styles.lblPersonalCheckNoteTxt}>
+                                                {gblStrings.accManagement.wireTransferNote}
+                                            </Text>
+
+                                        </View>
+                                    )}
+
                                 </View>
+
+
+
+
                             )}
 
 
@@ -1803,7 +1891,7 @@ class OpenAccPageThreeComponent extends Component {
                                                             <View style={styles.monthInvestmentContainer}>
                                                                 <Text style={styles.dollarTxt}>
                                                                     $
-                                                            </Text>
+                                                                </Text>
                                                                 <GInputComponent
                                                                     inputref={this.setInputRef(`monthlyInvestment${index}`)}
                                                                     propInputStyle={styles.initInvestTxtBox}
