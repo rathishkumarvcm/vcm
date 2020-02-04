@@ -1,10 +1,53 @@
 import { StyleSheet } from "react-native";
-import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
+import { scaledHeight } from '../../Utils/Resolution';
 
 const styles = StyleSheet.create({
+    alignSelf:{ alignSelf: 'center' },
     blackText: {
         fontWeight: '200',
         textAlignVertical: 'center',
+    },
+    columnContainer: { flexDirection: 'column', padding: scaledHeight(12), },
+    container: { flex: 1, justifyContent: 'center', },
+    customTxtBox: {
+        marginTop: scaledHeight(9),
+        width: "100%"
+    },
+    dividerLine: {
+        backgroundColor: 'lightgray', height: 1,
+        marginHorizontal: scaledHeight(10), marginVertical: scaledHeight(10)
+    },
+    dropdownLayout: {
+        marginBottom: 0,
+        marginLeft: 0,
+        marginRight: 0,
+        marginTop: scaledHeight(7),
+        paddingLeft: 0,
+    },
+    dropdownTextInput: {
+        marginLeft: 0,
+        width: '100%',
+    },
+    grayBoldText: {
+        color: 'gray',
+        fontWeight: '500',
+        marginHorizontal: scaledHeight(10),
+
+    },
+    grayBorderContainer: {
+        alignItems:'center',
+        borderColor: "#DEDEDF",
+        borderRadius: scaledHeight(4),
+        borderWidth: 1,
+        marginHorizontal: 0,
+        marginVertical: scaledHeight(10),
+        paddingVertical: scaledHeight(10),
+      //  height:"20%",
+        width:"100%"
+    },
+    grayText: {
+        color: "gray",
+        textAlignVertical: 'center'
     },
     labelText: {
         color: "#333333DE",
@@ -12,9 +55,55 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         // marginBottom:scaledHeight(8)
     },
+    lblTxt: {
+        color: "#333333DE",
+        fontSize: scaledHeight(16),
+        fontWeight: "600",
+        marginTop: scaledHeight(25)
+    },
+    linkText: {
+        color: 'blue',
+        fontSize: scaledHeight(10),
+        textDecorationLine: 'underline',
+        textDecorationStyle: 'solid'
+    },
+    modalSecureMessage: {
+        backgroundColor: 'transparent', flex: 1,
+        margin: 0
+    },
+    modalStyle: {
+        backgroundColor: 'transparent', flex: 1,
+        margin: 0
+    },
+    modalViewSecureMessage: {
+        alignSelf: 'center', backgroundColor: 'white',
+        elevation: 7,
+        padding: scaledHeight(7),
+        width: '90%'
+    },
+    modalViewStyle: {
+        alignSelf: 'center', backgroundColor: 'white',
+        borderRadius: scaledHeight(10),
+        elevation: 7,
+        // height: '70%',
+        padding: scaledHeight(7),
+        width: '80%',
+    },
+    multilineTextBox: {
+        backgroundColor: "#FFFFFF",
+        borderColor: "#DEDEDF",
+        borderRadius: scaledHeight(4),
+        borderWidth: 1,
+        justifyContent: "center",
+        marginTop: scaledHeight(9),
+        margin: 0,
+        minHeight: "20%",
+        padding: scaledHeight(3),
+        width: '100%',
+    },
     normalBlackBtn: {
-        alignSelf: 'center',
         alignItems: 'center',
+        alignSelf: 'center',
         backgroundColor: '#544A54',
         borderColor: "#61285F45",
         borderWidth: 1,
@@ -30,8 +119,8 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     normalWhiteBtn: {
-        alignSelf: 'center',
         alignItems: 'center',
+        alignSelf: 'center',
         backgroundColor: '#fff',
         borderColor: "#61285F45",
         borderWidth: 1,
@@ -47,66 +136,38 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         width: '100%'
     },
-    container: { flex: 1, justifyContent: 'center', },
-    columnContainer: { flexDirection: 'column', padding: scaledHeight(12), },
-    dropdownTextInput: {
-        width: '100%',
-        marginLeft: 0,
+    rowContainer: {
+        alignItems: 'center', flexDirection: 'row',
+        padding: scaledHeight(3), width: "100%"
     },
-    dropDownLayout: {
-        marginTop: scaledHeight(7),
-        paddingLeft: 0,
-        marginBottom: 0,
-        marginLeft: 0,
-        marginRight: 0,
+    scrollViewStyle: { flex: 1, width: "100%" },
+    smallGrayText: {
+        fontSize: scaledHeight(9)
     },
-    dividerLine: {
-        backgroundColor: 'lightgray', height: 1,
-        marginHorizontal: scaledHeight(10), marginVertical: scaledHeight(10)
+    transparentGrayContainer: {
+        backgroundColor: "rgba(0,0,0,0.1)",
+        marginHorizontal: scaledHeight(7),
+        marginVertical: scaledHeight(5),
+        paddingVertical: scaledHeight(10)
     },
-    modalStyle: {
-        backgroundColor: 'transparent', flex: 1,
-        margin: 0
+    uploadFileContainer: {
+        flexDirection: 'row',
+        marginTop: scaledHeight(10),
     },
-    modalViewStyle: {
-        alignSelf: 'center', backgroundColor: 'white',
-        borderRadius: scaledHeight(10),
-        elevation: 7,
-        // height: '70%',
-        padding: scaledHeight(7),
-        width: '80%',
+    uploadFileDesc: {
+        color: '#707070',
+        flex: 0.8,
+        fontSize: scaledHeight(12),
     },
-    modalSecureMessage: {
-        backgroundColor: 'transparent', flex: 1,
-        margin: 0
+    uploadFileDivider: {
+        color: '#707070',
+        flex: 0.1,
+        fontSize: scaledHeight(12),
     },
-    modalViewSecureMessage: {
-        alignSelf: 'center', backgroundColor: 'white',
-        elevation: 7,
-        padding: scaledHeight(7),
-        width: '90%'
-    },
-    lblTxt: {
-        color: "#333333DE",
-        fontSize: scaledHeight(16),
-        fontWeight: "600",
-        marginTop: scaledHeight(25)
-    },
-    customTxtBox: {
-        marginTop: scaledHeight(9),
-        width: "100%"
-    },
-    multilineTextBox: {
-        backgroundColor: "#FFFFFF",
-        width: '100%',
-        borderRadius: scaledHeight(4),
-        justifyContent: "center",
-        borderWidth: 1,
-        borderColor: "#DEDEDF",
-        marginTop: scaledHeight(9),
-        margin: 0,
-        padding: scaledHeight(3),
-        minHeight: "20%",
+    uploadFileTitle: {
+        color: '#707070',
+        flex: 0.5,
+        fontSize: scaledHeight(12),
     },
     viewStyle: {
         flexDirection: 'column', flex: 1,
@@ -114,36 +175,6 @@ const styles = StyleSheet.create({
         padding: scaledHeight(5),
         // marginHorizontal: 20, marginVertical: 50,
         backgroundColor: "pink"
-    },
-    grayText: {
-        color: "gray",
-        textAlignVertical: 'center'
-    },
-    grayBoldText: {
-        color: 'gray',
-        fontWeight: '500',
-        marginHorizontal: scaledHeight(10),
-
-    },
-    smallGrayText: {
-        fontSize: scaledHeight(9)
-    },
-    linkText: {
-        color: 'blue',
-        fontSize: scaledHeight(10),
-        textDecorationLine: 'underline',
-        textDecorationStyle: 'solid'
-    },
-    rowContainer: {
-        alignItems: 'center', flexDirection: 'row',
-        padding: scaledHeight(3), width: "100%"
-    },
-    scrollViewStyle: { flex: 1, width: "100%" },
-    transparentGrayContainer: {
-        backgroundColor: "rgba(0,0,0,0.1)",
-        marginHorizontal: scaledHeight(7),
-        marginVertical: scaledHeight(5),
-        paddingVertical: scaledHeight(10)
     },
 
 });

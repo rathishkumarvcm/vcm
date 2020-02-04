@@ -38,6 +38,22 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
 
     },
+    addPhoneEmailBtn: {
+        alignItems: 'center',
+        backgroundColor: '#F7FAFF',
+        flexWrap: 'wrap',
+        height: scaledHeight(50),
+        justifyContent: 'flex-start',
+        marginVertical: scaledHeight(25),
+        width: '90%',
+
+    },
+    addPhoneEmailBtnTxt: {
+        color: '#5D83AE',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+
+    },
     addTrustee:{
         color: '#0D7CB5',
         fontSize: scaledHeight(16),
@@ -187,7 +203,32 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         width: "40%"
     },
+    phoneInfoSwitch: {
+        alignItems: 'flex-end',
+        flex: 0.3,
+    },
+    setPrimaryView:
+    {
+        flexDirection: 'row',
+        flex: 1, justifyContent: "center",
+        alignItems: 'center',
+        borderTopColor: '#61285F45',
+        borderTopWidth: 1,
+        paddingTop:scaledHeight(25),
+        marginTop:scaledHeight(25),
+        marginBottom:scaledHeight(12),
+    },
+    setPrimarylbl: {
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginTop: scaledHeight(0)
 
+    },
+    setPrimaryViewHeader:
+    {
+        flex: 0.7
+    },
     errMsg: {
         color: 'red',
         fontSize: scaledHeight(12),
@@ -262,7 +303,19 @@ const styles = StyleSheet.create({
         backgroundColor: "#F2F2F2",
         marginBottom: scaledHeight(10),
         marginTop: scaledHeight(9),
-        padding:scaledHeight(10)
+        padding:scaledHeight(10),
+        borderWidth:1,
+        borderColor:"#70707080",
+        flexGrow:1
+    },
+    phoneInfoView:{
+      flexGrow:1
+    },
+    phoneCardView:{
+        marginTop: scaledHeight(9),
+        borderWidth:1,
+        borderColor:"#DCDCDC",
+        padding:scaledHeight(10),
     },
     lblHeaderTxt: {
         color: '#56565A',

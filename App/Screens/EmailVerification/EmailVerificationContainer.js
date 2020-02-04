@@ -3,7 +3,7 @@ import EmailVerificationComponent from './EmailVerificationComponent';
 import { loginActions } from "../../Shared/Actions";
 
 
-const mapStateToProps = (state /* , props */) => (
+const mapStateToProps = ( /* , props */) => (
     {
       // loginData: getLogin(state)
     }

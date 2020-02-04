@@ -59,6 +59,60 @@ class FloatingButtonComponent extends React.Component {
         });
     }
 
+    renderAttachmentLimit = () => {
+        return (
+            <View style={styles.columnContainer}>
+                <View style={styles.uploadFileContainer}>
+                    <Text style={styles.uploadFileTitle}>
+                        {gblStrings.accManagement.attachLimit}
+                    </Text>
+                    <Text style={styles.uploadFileDivider}>
+                        {gblStrings.accManagement.attachdivider}
+                    </Text>
+                    <Text style={styles.uploadFileDesc}>
+                        {gblStrings.accManagement.noOfFiles}
+                    </Text>
+                </View>
+
+                <View style={styles.uploadFileContainer}>
+                    <Text style={styles.uploadFileTitle}>
+                        {gblStrings.accManagement.sizeLimitPerFile}
+                    </Text>
+                    <Text style={styles.uploadFileDivider}>
+                        {gblStrings.accManagement.attachdivider}
+                    </Text>
+                    <Text style={styles.uploadFileDesc}>
+                        {gblStrings.accManagement.megaBytes}
+                    </Text>
+                </View>
+
+                <View style={styles.uploadFileContainer}>
+                    <Text style={styles.uploadFileTitle}>
+                        {gblStrings.accManagement.totalSizeLimit}
+                    </Text>
+                    <Text style={styles.uploadFileDivider}>
+                        {gblStrings.accManagement.attachdivider}
+                    </Text>
+                    <Text style={styles.uploadFileDesc}>
+                        {gblStrings.accManagement.megaBytes}
+                    </Text>
+                </View>
+
+                <View style={styles.uploadFileContainer}>
+                    <Text style={styles.uploadFileTitle}>
+                        {gblStrings.accManagement.fileTypesAllow}
+                    </Text>
+                    <Text style={styles.uploadFileDivider}>
+                        {gblStrings.accManagement.attachdivider}
+                    </Text>
+                    <Text style={styles.uploadFileDesc}>
+                        {gblStrings.accManagement.fileFormat}
+                    </Text>
+                </View>
+            </View>
+        );
+    }
+
     onChangeText = (index, keyName, value) => {
         const { newContingentBene } = this.state;
         const newItems = [...newContingentBene];
@@ -79,10 +133,8 @@ class FloatingButtonComponent extends React.Component {
         return (
             <SafeAreaView style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
-                <View style={{ flex: 1 }}>
-                    <ActionButton buttonColor="skyblue"
-                        onPress={this.toggleModal}
-                    >
+                <View style={styles.container}>
+                    <ActionButton buttonColor="skyblue" onPress={this.toggleModal}>
                         <GIcon
                             name="plus"
                             type="material"
@@ -102,56 +154,54 @@ class FloatingButtonComponent extends React.Component {
                     >
                         <SafeAreaView style={styles.modalViewStyle}>
                             <View style={styles.columnContainer}>
-                                <Text style={styles.grayBoldText}>NEED ASSISTENT?</Text>
+                                <Text style={styles.grayBoldText}>{gblStrings.msrServiceRequest.needAssistent}</Text>
                                 <View style={styles.dividerLine} />
                                 <View style={styles.rowContainer}>
                                     <GIcon name="phone" type="material" size={25} color="black" />
-                                    <Text style={styles.blackText}>(888) 456-9200</Text>
+                                    <Text style={styles.blackText}>{gblStrings.msrServiceRequest.vcmCustomerCareNumber}</Text>
                                 </View>
                                 <View style={styles.transparentGrayContainer}>
-                                    <Text style={styles.grayBoldText}>VCM'S MEMBER SERVICES</Text>
+                                    <Text style={styles.grayBoldText}>{gblStrings.msrServiceRequest.vcmMemberServices}</Text>
                                     <View style={styles.rowContainer}>
                                         <GIcon name="alarm" type="material" size={20} color="gray" />
                                         <View style={styles.columnContainer}>
-                                            <Text style={styles.blackText}>Monday - Friday</Text>
-                                            <Text style={styles.grayText}>7.00am - 8.00pm CT</Text>
+                                            <Text style={styles.blackText}>{gblStrings.msrServiceRequest.mondayToFriday}</Text>
+                                            <Text style={styles.grayText}>{gblStrings.msrServiceRequest.mondayToFridayTime}</Text>
                                         </View>
                                     </View>
                                     <View style={styles.rowContainer}>
                                         <GIcon name="alarm" type="material" size={20} color="gray" />
                                         <View style={styles.columnContainer}>
-                                            <Text style={styles.blackText}>Saturdays</Text>
-                                            <Text style={styles.grayText}>8.00am - 5.00pm CT</Text>
+                                            <Text style={styles.blackText}>{gblStrings.msrServiceRequest.saturdays}</Text>
+                                            <Text style={styles.grayText}>{gblStrings.msrServiceRequest.saturdayTime}</Text>
                                         </View>
                                     </View>
                                 </View>
                                 <View style={styles.transparentGrayContainer}>
-                                    <Text style={styles.grayBoldText}>403B SUPPORT SERVICES</Text>
+                                    <Text style={styles.grayBoldText}>{gblStrings.msrServiceRequest.t_403BServices}</Text>
                                     <View style={styles.rowContainer}>
                                         <GIcon name="alarm" type="material" size={20} color="gray" />
                                         <View style={styles.columnContainer}>
-                                            <Text style={styles.blackText}>Weekdays</Text>
-                                            <Text style={styles.grayText}>8.00am - 6.00pm CT</Text>
+                                            <Text style={styles.blackText}>{gblStrings.msrServiceRequest.weekdays}</Text>
+                                            <Text style={styles.grayText}>{gblStrings.msrServiceRequest.weekdayTime}</Text>
                                         </View>
                                     </View>
                                 </View>
-                                <Text style={{ alignSelf: 'center' }}>
-                                    <Text style={styles.smallGrayText}>For details refer to </Text>
-                                    <Text style={styles.linkText}>Victory Business Calendar</Text>
+                                <Text style={styles.alignSelf}>
+                                    <Text style={styles.smallGrayText}>{gblStrings.msrServiceRequest.forReferTo}</Text>
+                                    <Text style={styles.linkText}>{gblStrings.msrServiceRequest.victoryBusinessCalendar}</Text>
                                 </Text>
                                 <View style={styles.dividerLine} />
-                                <TouchableWithoutFeedback
-                                    onPress={this.toggleSecureMsgModal}
-                                >
+                                <TouchableWithoutFeedback onPress={this.toggleSecureMsgModal}>
                                     <View style={styles.rowContainer}>
                                         <GIcon name="mail" type="material" size={25} color="black" />
-                                        <Text style={styles.blackText}>Send us secure message</Text>
+                                        <Text style={styles.blackText}>{gblStrings.msrServiceRequest.sendSecureMsg}</Text>
                                     </View>
                                 </TouchableWithoutFeedback>
                                 <View style={styles.dividerLine} />
                                 <View style={styles.rowContainer}>
                                     <GIcon name="chat" type="material" size={25} color="black" />
-                                    <Text style={styles.blackText}>Live chat Agent</Text>
+                                    <Text style={styles.blackText}>{gblStrings.msrServiceRequest.liveChatAgent}</Text>
                                 </View>
                             </View>
                             {/* Secure Message Modal */}
@@ -177,10 +227,10 @@ class FloatingButtonComponent extends React.Component {
                                                 </View>
                                                 <View style={styles.dividerLine} />
                                                 <GDropDownComponent
-                                                    dropDownName={"Topic"}
+                                                    dropDownName={gblStrings.msrServiceRequest.topic}
                                                     dropDownTextName={styles.lblTxt}
                                                     textInputStyle={styles.dropdownTextInput}
-                                                    dropDownLayout={styles.dropDownLayout}
+                                                    dropDownLayout={styles.dropdownLayout}
                                                     data={topicData}
                                                     changeState={this.dropDownCodeClick}
                                                     showDropDown={dropDownTopicState}
@@ -191,10 +241,10 @@ class FloatingButtonComponent extends React.Component {
                                                     errorText={dropDownTopicMsg}
                                                 />
                                                 <GDropDownComponent
-                                                    dropDownName={"Account"}
+                                                    dropDownName={gblStrings.msrServiceRequest.account}
                                                     dropDownTextName={styles.lblTxt}
                                                     textInputStyle={styles.dropdownTextInput}
-                                                    dropDownLayout={styles.dropDownLayout}
+                                                    dropDownLayout={styles.dropdownLayout}
                                                     data={topicData}
                                                     changeState={this.dropDownCodeClick}
                                                     showDropDown={dropDownTopicState}
@@ -204,18 +254,17 @@ class FloatingButtonComponent extends React.Component {
                                                     errorFlag={dropDownTopicFlag}
                                                     errorText={dropDownTopicMsg}
                                                 />
-                                                <Text style={styles.labelText}>Subject</Text>
+                                                <Text style={styles.labelText}>{gblStrings.msrServiceRequest.subject}</Text>
                                                 <GInputComponent
                                                     propInputStyle={styles.customTxtBox}
-                                                    placeholder="abc@gmail.com"
-                                                    keyboardType="email-address"
+                                                    placeholder={gblStrings.msrServiceRequest.subject}
                                                     onChangeText={this.setSubjectText}
                                                     // onBlur={this.validCode}
                                                     value={inputSubject}
                                                     // errorFlag={true}
                                                     errorText={"error"}
                                                 />
-                                                <Text style={styles.labelText}>Message Body</Text>
+                                                <Text style={styles.labelText}>{gblStrings.msrServiceRequest.messageBody}</Text>
                                                 <TextInput
                                                     style={styles.multilineTextBox}
                                                     onChangeText={this.setMessageBodyText}
@@ -228,6 +277,26 @@ class FloatingButtonComponent extends React.Component {
                                                     errorText={"error"}
                                                 />
 
+                                                <View style={styles.grayBorderContainer}>
+                                                    <GButtonComponent
+                                                        buttonStyle={styles.selectFilesBtn}
+                                                        buttonText={gblStrings.accManagement.selectFiles}
+                                                        textStyle={styles.selectFilesBtnTxt}
+                                                        onPress={this.uploadImage}
+                                                    />
+                                                    <GIcon
+                                                        name="file-upload"
+                                                        type="material"
+                                                        size={30}
+                                                        color="#E9E4E4"
+                                                    />
+                                                    <TouchableOpacity onPress={this.uploadSelectedFiles}>
+                                                        <Text style={styles.uploadText}>
+                                                            {gblStrings.common.upload}
+                                                        </Text>
+                                                    </TouchableOpacity>
+                                                </View>
+                                                {this.renderAttachmentLimit}
                                                 <View style={styles.columnContainer}>
                                                     <GButtonComponent
                                                         buttonStyle={styles.normalWhiteBtn}

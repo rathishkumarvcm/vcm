@@ -10,10 +10,7 @@ class EmailVerificationComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
-            isLoading:false,
             code:'',
-            validationEmail: true,
-            name : '',
             confirmCode : false
         };
     }
@@ -29,27 +26,24 @@ class EmailVerificationComponent extends Component {
     }
 
     verifyOTP = () => {
-        const username = this.state.name;
-        const {code} = this.state; 
-        const registerSelfData = this.props.navigation.getParam('passwordData');
-        console.log("-----username-----",registerSelfData,code);
+        const {navigation} = this.props;
+        const {code} = this.state;
+        const registerSelfData = navigation.getParam('passwordData');
 
 
         Auth.confirmSignUp(registerSelfData.emailID, code, {
             //  Optional. Force user confirmation irrespective of existing alias. By default set to True.
             forceAliasCreation: true    
         }).then(data => { alert("verified OTP");
-        
-        
                           console.log(data);
-                          this.props.navigation.navigate('login',{emailVerified : true,emailVerifiedData:registerSelfData});
+                          navigation.navigate('login',{emailVerified : true,emailVerifiedData:registerSelfData});
         })
           .catch(err => console.log(err));
     }
 
     resendOTP = () => {
-        const username = this.state.name;
-        const registerSelfData = this.props.navigation.getParam('passwordData');
+        const {navigation} = this.props;
+        const registerSelfData = navigation.getParam('passwordData');
         
         Auth.resendSignUp(registerSelfData.emailID).then(() => {
             console.log('code resent successfully');
@@ -59,12 +53,19 @@ class EmailVerificationComponent extends Component {
     }
 
 
-    navigatePassword = ()=>this.props.navigation.navigate('login');
+    navigatePassword = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('login');
+    }
     
-    goBack = () =>{this.props.navigation.goBack();}
+    goBack = () =>{
+        const {navigation} = this.props;
+        navigation.goBack();
+    }
 
     validCode = () => {
-        if(this.state.code.length === 6){
+        const {code} = this.state;
+        if(code.length === 6){
             this.setState({
                 confirmCode : true
             });
@@ -72,17 +73,18 @@ class EmailVerificationComponent extends Component {
     }
  
     render(){
-        
+        const {navigation} = this.props;
+        const {code,confirmCode} = this.state;
         return (
            
            
             <View style={styles.container}>
              <GHeaderComponent 
-             navigation={this.props.navigation}
+             navigation={navigation}
              register
              />
         
-            <ScrollView style={{flex:0.85}}>
+            <ScrollView style={styles.flexCont}>
 
            
 
@@ -135,17 +137,17 @@ class EmailVerificationComponent extends Component {
             </View>
 
             <GInputComponent 
-            propInputStyle={{marginLeft:'4%',marginRight:'4%'}}
+            propInputStyle={styles.marginPadd}
             onChangeText={this.setCode}
             onBlur={this.validCode}
-            value={this.state.code}
+            value={code}
             keyboardType="number-pad"
             maxLength={6}
             />
 
              
            
-           {!this.state.confirmCode ? (
+           {!confirmCode ? (
            <GButtonComponent 
            buttonStyle={styles.backButton}
            buttonText="Resend"
@@ -156,7 +158,7 @@ class EmailVerificationComponent extends Component {
 :
 null} 
 
-           {this.state.confirmCode ? (
+           {confirmCode ? (
            <GButtonComponent 
            buttonStyle={styles.signInButton}
            buttonText="Confirm"
