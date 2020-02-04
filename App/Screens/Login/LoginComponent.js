@@ -407,12 +407,17 @@ class LoginComponent extends Component {
 
     navigateDashboard = () => {
         const {navigation} = this.props;
-        navigation.navigate('guestUserDashboard');
+        navigation.navigate('dashboard');
     }
 
     navigateToDashBoard = () => {
         const {navigation} = this.props;
         navigation.navigate('dashboardScreen');
+    }
+
+    navigateToGuestUserDashBoard = () => {
+        const {navigation} = this.props;
+        navigation.navigate('guestUserDashboard');
     }
 
     navigateCommonUI = () => {
@@ -655,6 +660,14 @@ class LoginComponent extends Component {
                                 textStyle={styles.newVictoryButtonText}
                                 // Menu
                                 onPress={this.navigateToDashBoard}
+                            />
+
+                            <GButtonComponent
+                                buttonStyle={styles.newVictoryButton}
+                                buttonText="GuestUser DashBoard"
+                                textStyle={styles.newVictoryButtonText}
+                                // Menu
+                                onPress={this.navigateToGuestUserDashBoard}
                             />
                         </View>
 
