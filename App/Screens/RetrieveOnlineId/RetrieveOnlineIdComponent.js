@@ -42,37 +42,36 @@ class RetrieveOnlineIdComponent extends Component {
     
  
     render(){
-        
+        const {navigation} = this.props;
+        const {email,validationEmail} = this.state;
         return (
            
            
             <View style={styles.container}>
              <GHeaderComponent 
-             navigation={this.props.navigation}
+             navigation={navigation}
              register
              />
         
-            <ScrollView style={{flex:0.85}}>
+            <ScrollView style={styles.flexContainer}>
 
-            {/*<View style={styles.stepsOuter}>
-                <View style={styles.stepsInner} />
-        </View> */}
+      
 
             <View style={styles.signInView}>
                 <Text style={styles.signIntext}>
-                    {"Retrieve your Online ID"}
+                    Retrieve your Online ID
                 </Text>
             </View>
 
             <View style={styles.retrieveSection}>
                 <Text style={styles.retrieveText}>
-                    {"Enter your registered Email ID to continue"}
+                    Enter your registered Email ID to continue
                 </Text>
             </View>
              
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"Registered E-mail"}       
+                    Registered E-mail       
                 </Text>
             </View>
             <GInputComponent 
@@ -80,9 +79,9 @@ class RetrieveOnlineIdComponent extends Component {
                 // placeholder={"Email"}
                 onChangeText={this.setEmail}
                 onBlur={this.validateEmail}
-                value={this.state.email}
-                errorFlag={!this.state.validationEmail}
-                errorText={"Enter a valid email."}
+                value={email}
+                errorFlag={!validationEmail}
+                errorText="Enter a valid email."
             />
 
 
@@ -99,7 +98,7 @@ class RetrieveOnlineIdComponent extends Component {
                     buttonText="Next"
                     textStyle={styles.signInButtonText}
                     onPress={this.navigatePassword}
-                    disabled={this.state.email === '' || !this.state.validationEmail}
+                    disabled={email === '' || !validationEmail}
             />
 
             
@@ -119,6 +118,7 @@ RetrieveOnlineIdComponent.propTypes = {
   };
   
   RetrieveOnlineIdComponent.defaultProps = {
+    navigation : {}
  
   };
 export default RetrieveOnlineIdComponent;

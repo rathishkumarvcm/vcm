@@ -44,6 +44,9 @@ const styles = StyleSheet.create({
         alignItems:'center',
         height:scaledHeight(20)
     },
+    flexContainer:{
+        flex:0.85
+    },
     forgotLineText:{
         flexDirection:'row',
         fontSize:scaledHeight(18),
@@ -73,6 +76,9 @@ const styles = StyleSheet.create({
         paddingRight:'4%',
         justifyContent:'center',
         alignItems:'center'
+    },
+    marginTwenty:{
+        marginTop:20
     },
     newVictory:{
         color:'#486D89',
@@ -106,6 +112,12 @@ const styles = StyleSheet.create({
         padding:scaledHeight(15),
         width:'92%'
     },
+    optContainer: {
+        height:scaledHeight(30),
+        marginBottom:'2%',
+        marginLeft:'4%',
+        marginRight:'4%'
+    },
     otpAuthHeader:{
         color:'#56565A',
         fontSize:scaledHeight(32),
@@ -118,7 +130,12 @@ const styles = StyleSheet.create({
         paddingRight:'4%',
         width:'100%'
     },
-    passwordView:{
+    otpOutLine:{
+        color:'#333333DE',
+        fontSize:scaledHeight(16),
+        opacity:100
+    },
+     passwordView:{
         paddingLeft:'4%',
         paddingRight:'4%'
     },
@@ -131,7 +148,7 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(15),
         width:'100%'
     },
-     privacyText:{
+    privacyText:{
         color:'#61285F',
         fontSize:scaledHeight(16),
         fontWeight:'bold',
@@ -162,7 +179,16 @@ const styles = StyleSheet.create({
         color:'#56565A',
         fontSize:scaledHeight(10)
     },
-    sendOTPButton:{
+    resendOtp:{
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    resendOtpNewLine:{
+        color:'#2C8DBF',
+        fontSize:scaledHeight(16),
+        textDecorationLine:'underline'
+    },
+sendOTPButton:{
         alignItems:'center',
         backgroundColor:'#56565A',
         borderColor:'#56565A',
@@ -204,6 +230,10 @@ const styles = StyleSheet.create({
         color:'#486D89',
         fontSize : scaledHeight(18),
         marginBottom:scaledHeight(5)
+    },
+    usaaBorderLine:{
+        borderBottomColor:'#535353',
+        borderBottomWidth:1
     },
     usaaMemberSection:{
         flexDirection:'row',

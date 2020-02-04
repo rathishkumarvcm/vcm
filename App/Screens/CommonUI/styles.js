@@ -35,12 +35,9 @@ const styles = StyleSheet.create({
         marginLeft : '5%',
         marginRight : '5%',
         marginTop:'10%'
-        // alignItems:'center'
     },
     floatInput: {
       width: "90%",
-      //  marginTop : "5%"
-      // marginBottom : "5%"
     },
     floatStyle: {           
             alignItems:'center',

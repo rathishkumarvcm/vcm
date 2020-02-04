@@ -3,7 +3,7 @@ import RegisterSelfComponent from './RegisterSelfComponent';
 import { loginActions } from "../../Shared/Actions";
 
 
-const mapStateToProps = (state /* , props */) => (
+const mapStateToProps = ( /* , props */) => (
     {
       // console.log("test",state)
     }

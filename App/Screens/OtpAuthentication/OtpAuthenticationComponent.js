@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Text,View,ScrollView,TouchableOpacity } from 'react-native';
+import { Text,View,ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import { Auth } from "aws-amplify";
 import styles from './styles';
-import {GButtonComponent,GHeaderComponent,GIcon,GRadioButtonComponent} from '../../CommonComponents';
+import {GButtonComponent,GHeaderComponent,GRadioButtonComponent} from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 
 class OtpAuthenticationComponent extends Component {
@@ -11,9 +11,7 @@ class OtpAuthenticationComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
-            isLoading:false,
-            email:'',
-            validationEmail: true
+            email:''
         };
     }
 
@@ -33,10 +31,15 @@ class OtpAuthenticationComponent extends Component {
           }
     }
 
-    navigateLogin = ()=>this.props.navigation.navigate('login');
+    navigateLogin = ()=> { 
+        const {navigation} = this.props;
+        navigation.navigate('login');
+    }
 
     navigatePassword = ()=>{
-        console.log("this.state.email",this.state.email);
+        const {navigation} = this.props;
+        const {email} = this.state;
+        console.log("this.state.email",email);
 
         Auth.verifyCurrentUserAttribute('email')
         .then(() => {
@@ -46,7 +49,7 @@ class OtpAuthenticationComponent extends Component {
         });
         
         
-        this.props.navigation.navigate('otpConfirm');
+        navigation.navigate('otpConfirm');
 
     }
 
@@ -59,30 +62,31 @@ class OtpAuthenticationComponent extends Component {
         if (index === 'email') {
             this.setState({
                 radioEnabled: true,
-                selectedOption : 'email'
             });
         }
         else {
             this.setState({
                 radioEnabled:false,
-                selectedOption : 'phone_number'
             });
         }
     }
     
  
     render(){
+
+        const {navigation} = this.props;
+        const {radioEnabled,email,phoneNo} = this.state;
         
         return (
            
            
             <View style={styles.container}>
              <GHeaderComponent 
-             navigation={this.props.navigation}
+             navigation={navigation}
              register
              />
         
-            <ScrollView style={{flex:0.85}}>
+            <ScrollView style={styles.flexContainer}>
 
                 <CustomPageWizard 
                     currentPage={1}
@@ -102,12 +106,12 @@ class OtpAuthenticationComponent extends Component {
             </View>
 
 
-                <View style={{marginLeft:'4%',marginRight:'4%'}}>
-                        <GRadioButtonComponent selected={this.state.radioEnabled} onPress={this.radioButtonClicked('email')}// questionsStyle={{width:'40%',flexWrap:'wrap'}} 
-                        questions={`${"Send OTP to email "} ${this.state.email}`}
+                <View style={styles.defaultPadding}>
+                        <GRadioButtonComponent selected={radioEnabled} onPress={this.radioButtonClicked('email')}// questionsStyle={{width:'40%',flexWrap:'wrap'}} 
+                        questions={`${"Send OTP to email "} ${email}`}
                         />
 
-                        <GRadioButtonComponent selected={!this.state.radioEnabled} onPress={this.radioButtonClicked('mobile')} questions={`${"Send OTP to mobile "} ${this.state.phoneNo}`} />
+                        <GRadioButtonComponent selected={!radioEnabled} onPress={this.radioButtonClicked('mobile')} questions={`${"Send OTP to mobile "} ${phoneNo}`} />
                 </View>
              
 
@@ -125,8 +129,8 @@ class OtpAuthenticationComponent extends Component {
                     onPress={this.navigatePassword}
             />
 
-            <View style={{marginTop:20}}>
-                 <View style={{borderBottomWidth:1,borderBottomColor:'#535353'}} />  
+            <View style={styles.marginTewnty}>
+                 <View style={styles.usaabottomBorder} />  
             </View>
             
             
@@ -168,6 +172,7 @@ OtpAuthenticationComponent.propTypes = {
   };
   
   OtpAuthenticationComponent.defaultProps = {
+    navigation : {}
  
   };
 

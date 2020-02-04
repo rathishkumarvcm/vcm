@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Text,View,ScrollView,TouchableOpacity } from 'react-native';
+import { Text,View,ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 import styles from './styles';
-import {GButtonComponent,GHeaderComponent,GIcon, GFooterComponent} from '../../CommonComponents';
+import {GButtonComponent,GHeaderComponent, GFooterComponent} from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
 
 class OtpSeucrityConfirmComponent extends Component {
@@ -11,9 +11,7 @@ class OtpSeucrityConfirmComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
-            isLoading:false,
-            email:'',
-            validationEmail: true
+            
         };
     }
 
@@ -21,10 +19,13 @@ class OtpSeucrityConfirmComponent extends Component {
        
     }
 
-    navigateLogin = ()=>this.props.navigation.navigate('login');
+    navigateLogin = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('login');
+    }
 
     navigatePassword = ()=>{
-
+        const {navigation} = this.props;
         RNSecureKeyStore.set("authProcessCompleted","true", {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
       .then((res) => {
           console.log("stored",res);
@@ -33,23 +34,26 @@ class OtpSeucrityConfirmComponent extends Component {
       });
 
         
-        this.props.navigation.navigate('dashboard');
+        navigation.navigate('dashboard');
     }
 
-    goBack = ()=>this.props.navigation.goBack();
+    goBack = ()=>{
+        const {navigation} = this.props;
+        navigation.goBack();
+    }
  
     render(){
-        console.log("security",this.props.saveQuestionsData);
+        const {navigation,saveQuestionsData} = this.props;
         return (
            
            
             <View style={styles.container}>
              <GHeaderComponent 
-             navigation={this.props.navigation}
+             navigation={navigation}
              register
              />
         
-            <ScrollView style={{flex:0.85}}>
+            <ScrollView style={styles.flexContainer}>
 
                 <CustomPageWizard 
                     currentPage={4}
@@ -73,10 +77,10 @@ class OtpSeucrityConfirmComponent extends Component {
                     Security Question1
                     </Text>
                     <Text style={styles.securityListQuestion}>
-                    {this.props.saveQuestionsData.list_security_questions[0].question1}   
+                    {saveQuestionsData.list_security_questions[0].question1}   
                     </Text>
                     <Text style={styles.securityListAnswer}>
-                    {this.props.saveQuestionsData.list_security_questions[0].answer1}
+                    {saveQuestionsData.list_security_questions[0].answer1}
                     </Text>
                 </View>
 
@@ -85,10 +89,10 @@ class OtpSeucrityConfirmComponent extends Component {
                         Security Question2
                     </Text>
                     <Text style={styles.securityListQuestion}>
-                    {this.props.saveQuestionsData.list_security_questions[1].question2}  
+                    {saveQuestionsData.list_security_questions[1].question2}  
                     </Text>
                     <Text style={styles.securityListAnswer}>
-                    {this.props.saveQuestionsData.list_security_questions[1].answer2}
+                    {saveQuestionsData.list_security_questions[1].answer2}
                     </Text>
                 </View>
 
@@ -98,10 +102,10 @@ class OtpSeucrityConfirmComponent extends Component {
                         Security Question3
                     </Text>
                     <Text style={styles.securityListQuestion}>
-                    {this.props.saveQuestionsData.list_security_questions[2].question3}
+                    {saveQuestionsData.list_security_questions[2].question3}
                     </Text>
                     <Text style={styles.securityListAnswer}>
-                    {this.props.saveQuestionsData.list_security_questions[2].answer3}
+                    {saveQuestionsData.list_security_questions[2].answer3}
                     </Text>
                 </View>
 
@@ -110,7 +114,7 @@ class OtpSeucrityConfirmComponent extends Component {
                         Primary Email
                     </Text>
                     <Text style={styles.securityListAnswer}>
-                        {this.props.saveQuestionsData.primaryEmail}
+                        {saveQuestionsData.primaryEmail}
                     </Text>
                 </View>
 
@@ -129,7 +133,7 @@ class OtpSeucrityConfirmComponent extends Component {
                         Document Delivery preferences
                     </Text>
                     <Text style={styles.securityListAnswer}>
-                        {this.props.saveQuestionsData.documentDeliveryPreference}
+                        {saveQuestionsData.documentDeliveryPreference}
                     </Text>
                 </View>
 
@@ -170,11 +174,15 @@ class OtpSeucrityConfirmComponent extends Component {
 }
 
 OtpSeucrityConfirmComponent.propTypes = {
-    navigation : PropTypes.instanceOf(Object)
+    navigation : PropTypes.instanceOf(Object),
+    saveQuestionsData : PropTypes.instanceOf(Object),
+    list_security_questions : PropTypes.arrayOf(Array)
   };
   
   OtpSeucrityConfirmComponent.defaultProps = {
-    navigation:{}
+    navigation:{},
+    saveQuestionsData : {},
+    list_security_questions : []
   };
 
 export default OtpSeucrityConfirmComponent;

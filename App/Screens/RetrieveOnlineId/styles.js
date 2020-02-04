@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
         alignItems:'center',
         height:scaledHeight(20)
     },
+    flexContainer:{
+        flex:0.85
+    },
     forgotLineText:{
         flexDirection:'row',
         fontSize:scaledHeight(18),

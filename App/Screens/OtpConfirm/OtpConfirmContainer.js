@@ -1,11 +1,9 @@
 import { connect } from "react-redux";
 import OtpConfirmComponent from './OtpConfirmComponent';
-import { getLogin } from "../../Shared/Reducers";
 
 
-const mapStateToProps = (state /* , props */) => (
+const mapStateToProps = ( /* , props */) => (
     {
-      loginData: getLogin(state)
     }
   );
 

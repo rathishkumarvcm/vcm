@@ -448,18 +448,19 @@ class LoginComponent extends Component {
 
 
     render() {
+        const {inActivityAccount,enableBiometric,loginState,registeredSuccess,email,validationEmail,validationPassword,validatePassword,password,registeredBioMetric} = this.state;
 
 
         return (
 
             <>
-                {this.state.enableBiometric &&
-                    <GBiometricAuthentication onAuthenticate={this.onAuthenticate} enableBiometric={this.state.enableBiometric} />
+                {enableBiometric &&
+                    <GBiometricAuthentication onAuthenticate={this.onAuthenticate} enableBiometric={enableBiometric} />
                 }
                 <View style={styles.container}>
 
                     {
-                        this.props.loginState && this.props.loginState.isloading && <GLoadingSpinner />
+                        loginState && loginState.isloading && <GLoadingSpinner />
                     }
 
                     <GHeaderComponent registerShow
@@ -468,8 +469,8 @@ class LoginComponent extends Component {
                     />
 
 
-                    <ScrollView style={{ flex: 0.85 }}>
-                        {this.state.registeredSuccess ? (
+                    <ScrollView style={styles.flexContainer}>
+                        {registeredSuccess ? (
                             <View style={styles.onlineIDSuccess}>
                                 <Text> Your Online ID successfully created.</Text>
                             </View>
@@ -484,7 +485,7 @@ class LoginComponent extends Component {
                             </Text>
                         </View>
 
-                        {this.state.inActivityAccount ? (
+                        {inActivityAccount ? (
 <View style={styles.inActivityView}>
                             <Text style={styles.inActivitytext}>
                                 Your online account has been locked for 90 days of inactivity. Please contact Victory Capital Management service Rep at +1 (000) 000-0000
@@ -505,9 +506,9 @@ class LoginComponent extends Component {
                             // placeholder={"E-mail"}
                             onChangeText={this.setEmail}
                             // onBlur={this.validateEmail}
-                            value={this.state.email}
+                            value={email}
                             // validateError={this.state.validateEmail}
-                            errorFlag={!this.state.validationEmail}
+                            errorFlag={!validationEmail}
                             errorText="Enter a valid email."
                             maxLength={30}
                         />
@@ -519,14 +520,14 @@ class LoginComponent extends Component {
                         </View>
 
                         <GInputComponent
-                            propInputStyle={!this.state.validationPassword ? styles.userIDTextBoxError : styles.userIDTextBox}
+                            propInputStyle={!validationPassword ? styles.userIDTextBoxError : styles.userIDTextBox}
                             // placeholder={"Password"}
                             onChangeText={this.setPassword}
                             // onBlur={this.validatePassword}
-                            validateError={this.state.validatePassword}
-                            value={this.state.password}
+                            validateError={validatePassword}
+                            value={password}
                             secureTextEntry
-                            errorFlag={!this.state.validationPassword}
+                            errorFlag={!validationPassword}
                             errorText="Enter a valid password."
                             maxLength={30}
                         />
@@ -565,7 +566,7 @@ class LoginComponent extends Component {
                         />
                         <View>
                             {
-                                !this.state.registeredBioMetric ? null :
+                                !registeredBioMetric ? null :
 
                                     this.state.faceIdEnrolled ? (
                                         <TouchableOpacity onPress={this.enableBiometricMethod}>
@@ -641,7 +642,7 @@ class LoginComponent extends Component {
 
                         </View>
 
-                        <View style={{ marginLeft: '4%', marginRight: '4%', width: '92%' }}>
+                        <View style={styles.marginForOther}>
                             <GButtonComponent
                                 buttonStyle={styles.newVictoryButton}
                                 buttonText="Other Settings"

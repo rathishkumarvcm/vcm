@@ -36,6 +36,10 @@ const styles = StyleSheet.create({
     copyRightText:{
         color:'#FFFFFF'
     },
+    defaultPadding:{
+        marginLeft:'4%',
+        marginRight:'4%'
+    },
     faceIDlogo:{
         alignSelf:'center',
         marginBottom:'5%',
@@ -44,6 +48,9 @@ const styles = StyleSheet.create({
     faceIDtextStyle:{
         alignItems:'center',
         height:scaledHeight(20)
+    },
+    flexContainer:{
+        flex:0.85
     },
     forgotLineText:{
         flexDirection:'row',
@@ -74,6 +81,9 @@ const styles = StyleSheet.create({
         paddingRight:'4%',
         justifyContent:'center',
         alignItems:'center'
+    },
+    marginTewnty:{
+        marginTop:20
     },
     newVictory:{
         color:'#486D89',
@@ -216,6 +226,10 @@ const styles = StyleSheet.create({
         fontSize:scaledHeight(16),
         height:scaledHeight(50),
         lineHeight:scaledHeight(50)
+    },
+    usaabottomBorder:{
+        borderBottomColor:'#535353',
+        borderBottomWidth:1
     },
     userIDText:{
         color:'#000000',

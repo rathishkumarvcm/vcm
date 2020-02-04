@@ -3,18 +3,15 @@ import { Text,View,ScrollView,TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import { Auth } from "aws-amplify";
 import styles from './styles';
-import {GButtonComponent,GInputComponent,GHeaderComponent,GIcon} from '../../CommonComponents';
+import {GButtonComponent,GInputComponent,GHeaderComponent} from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
-import { scaledHeight} from '../../Utils/Resolution';
 
 class OtpConfirmComponent extends Component {
     constructor(props){
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state={
-            isLoading:false,
-            code:'',
-            validationEmail: true
+            code:''
         };
     }
 
@@ -23,10 +20,12 @@ class OtpConfirmComponent extends Component {
     }
 
     verifyOTP = () => {
-        Auth.verifyCurrentUserAttributeSubmit('email', this.state.code)
+        const {navigation} = this.props;
+        const {code} = this.state;
+        Auth.verifyCurrentUserAttributeSubmit('email',code)
         .then(() => {
             console.log("email verified");
-            this.props.navigation.navigate('modifySecurityQues');
+            navigation.navigate('modifySecurityQues');
         }).catch(e => {
             console.log('failed with error', e);
         });
@@ -40,24 +39,35 @@ class OtpConfirmComponent extends Component {
 
     
 
-    navigateLogin = ()=> this.props.navigation.navigate('login');
+    navigateLogin = ()=> {
+        const {navigation} = this.props;
+        navigation.navigate('login');
+    }
 
-    goBack = ()=>this.props.navigation.goBack();
+    goBack = ()=>{
+        const {navigation} = this.props;
+        navigation.goBack();
+    }
 
-    navigatePassword = ()=> this.props.navigation.navigate('modifySecurityQues');
+    navigatePassword = ()=> {
+        const {navigation} = this.props;
+        navigation.navigate('modifySecurityQues');
+    }
  
     render(){
-        
+        const {navigation} = this.props;
+        const {code} = this.state;
+      
         return (
            
            
             <View style={styles.container}>
              <GHeaderComponent 
-             navigation={this.props.navigation}
+             navigation={navigation}
              register
              />
         
-            <ScrollView style={{flex:0.85}}>
+            <ScrollView style={styles.flexContainer}>
             
 
                 <CustomPageWizard 
@@ -77,8 +87,8 @@ class OtpConfirmComponent extends Component {
                 </Text> 
             </View>
 
-            <View style={{marginLeft:'4%',marginRight:'4%',marginBottom:'2%',height:scaledHeight(30)}}>
-                <Text style={{color:'#333333DE',fontSize:scaledHeight(16),opacity:100}}>
+            <View style={styles.optContainer}>
+                <Text style={styles.otpOutLine}>
                     Enter OTP
                 </Text>
             </View>
@@ -87,11 +97,11 @@ class OtpConfirmComponent extends Component {
                     placeholder=""
                     onChangeText={this.setEmail}
                     // onBlur={this.validateEmail}
-                    value={this.state.code}
+                    value={code}
                 />
 
-                <TouchableOpacity style={{alignItems:'center',justifyContent:'center'}}>
-                    <Text style={{color:'#2C8DBF',textDecorationLine:'underline',fontSize:scaledHeight(16)}}>
+                <TouchableOpacity style={styles.resendOtp}>
+                    <Text style={styles.resendOtpNewLine}>
                         Resend OTP
                     </Text>
                 </TouchableOpacity>
@@ -118,8 +128,8 @@ class OtpConfirmComponent extends Component {
                     onPress={this.verifyOTP}
             />
 
-            <View style={{marginTop:20}}>
-                 <View style={{borderBottomWidth:1,borderBottomColor:'#535353'}} />  
+            <View style={styles.marginTwenty}>
+                 <View style={styles.usaaBorderLine} />  
             </View>
             
             
@@ -161,6 +171,7 @@ OtpConfirmComponent.propTypes = {
   };
   
   OtpConfirmComponent.defaultProps = {
+    navigation : {}
  
   };
 
