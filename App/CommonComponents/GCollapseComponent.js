@@ -8,19 +8,20 @@ export default class GCollapseComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isCollapsed: false,
+           // isCollapsed: false,
         };
     }
 
     render() {
+        const {onPressAction,headerView,collapsedState,collapseView} = this.props;
         return (
             <>
-                <TouchableOpacity onPress={this.props.onPressAction}>
-                    <View>{this.props.headerView}</View>
+                <TouchableOpacity onPress={onPressAction}>
+                    <View>{headerView}</View>
                 </TouchableOpacity>
 
-                <Collapsible collapsed={this.props.collapsedState}>
-                    <View>{this.props.collapseView}</View>
+                <Collapsible collapsed={collapsedState}>
+                    <View>{collapseView}</View>
                 </Collapsible>
             </>
         );
@@ -34,8 +35,7 @@ GCollapseComponent.propTypes = {
     onPressAction: PropTypes.func.isRequired,
 };
 
-GCollapseComponent.defaultProps = {
-    collapsedState: false,
+GCollapseComponent.defaultProps = {        
 };
 
 

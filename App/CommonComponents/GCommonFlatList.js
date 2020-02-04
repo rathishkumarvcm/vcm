@@ -4,18 +4,18 @@ import PropTypes from "prop-types";
 import { scaledHeight } from '../Utils/Resolution';
 
 const styles = StyleSheet.create({
-    flatListView : {
-        borderWidth:1, 
-        width : '48%',
-        justifyContent:'center',
-        alignItems:'center',
-        height:scaledHeight(30)
-    },
     container:{
         flex:1,
         marginLeft:'2%',
         marginTop :'10%'
     },
+    // flatListView : {
+    //     alignItems:'center', 
+    //     borderWidth:1,
+    //     height:scaledHeight(30),
+    //     justifyContent:'center',
+    //     width : '48%'
+    // },
     headertext:{
         fontSize:20,
         marginBottom:'2%'
@@ -24,35 +24,38 @@ const styles = StyleSheet.create({
 
 const newLocal = (item) => item.type;
 
-export const GCommonFlatListView = (props) => (
+export const GCommonFlatListView = (props) =>{
+    const {data,updateFlatList,horizontal,numColumns,initialNumToRender,onEndReached,onEndReachedThreshold,initialScrollIndex,ListFooterComponent,ListHeaderComponent} = props;
+return (
     <View style={styles.container}>
         <Text style={styles.headertext}>
-            {"Flat List View with Two Column Section"}
+            Flat List View with Two Column Section
         </Text>
         <FlatList 
-            data={props.data}
-            renderItem={props.updateFlatList}
+            data={data}
+            renderItem={updateFlatList}
             keyExtractor={newLocal}
-            horizontal={props.horizontal}
-            numColumns={props.numColumns}
-            initialNumToRender={props.initialNumToRender}
-            onEndReached={props.onEndReached}
-            onEndReachedThreshold={props.onEndReachedThreshold}
+            horizontal={horizontal}
+            numColumns={numColumns}
+            initialNumToRender={initialNumToRender}
+            onEndReached={onEndReached}
+            onEndReachedThreshold={onEndReachedThreshold}
             // inverted={props.inverted}
-            initialScrollIndex={props.initialScrollIndex}
-            ListFooterComponent={props.ListFooterComponent}
-            ListHeaderComponent={props.ListHeaderComponent}
+            initialScrollIndex={initialScrollIndex}
+            ListFooterComponent={ListFooterComponent}
+            ListHeaderComponent={ListHeaderComponent}
             //  key={data.names}
         />
-    </View>
+    </View>    
 );
+};
 
 GCommonFlatListView.propTypes = {
-    displayData : PropTypes.string,
+    // displayData : PropTypes.string,
     renderItem : PropTypes.func,
     onEndReached : PropTypes.func,
     initialScrollIndex : PropTypes.number,
-    inverted : PropTypes.number,
+   // inverted : PropTypes.number,
     onEndReachedThreshold : PropTypes.number,
     initialNumToRender : PropTypes.number,
     numColumns : PropTypes.number,
@@ -69,7 +72,7 @@ GCommonFlatListView.defaultProps = {
     ListHeaderComponent : null,
     ListFooterComponent : null,
     initialScrollIndex : 0,
-    inverted : 0,
+    // inverted : 0,
     onEndReachedThreshold : 0.5,
     initialNumToRender : 10,
     numColumns : 1,

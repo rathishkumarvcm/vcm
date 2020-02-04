@@ -13,13 +13,13 @@ import { scaledHeight } from '../Utils/Resolution';
 \************************** */
 const styles = StyleSheet.create({
 buttonStyle:{
-  height:scaledHeight(40),
-  width:'90%',
-  justifyContent: "center",
   alignItems:'center',
-  borderRadius:1,
   backgroundColor:"#56565A",
-  marginTop:'2%' 
+  borderRadius:1,
+  height:scaledHeight(40),
+  justifyContent: "center",
+  marginTop:'2%',
+  width:'90%' 
   
 },
 buttonTextStyle:{
@@ -29,21 +29,23 @@ buttonTextStyle:{
 }
 });
 
-
-export const GButtonComponent = props => (
+export const GButtonComponent = props => {
+  const {onPress,disabled,buttonStyle,textStyle,buttonText}=props;
+  return(
   <TouchableOpacity 
-    onPress={props.onPress}
-    disabled={props.disabled}
-    style={[styles.buttonStyle,props.buttonStyle]}
+    onPress={onPress}
+    disabled={disabled}
+    style={[styles.buttonStyle,buttonStyle]}
     activeOpacity={0.8}
   >
-   {props.textStyle ? <Text style={[props.textStyle]}>{props.buttonText}</Text> :
-   <Text style={[styles.buttonTextStyle,props.textStyle]}>{props.buttonText}</Text>
+   {textStyle ? <Text style={textStyle}>{buttonText}</Text> :
+   <Text style={[styles.buttonTextStyle,textStyle]}>{buttonText}</Text>
 
    } 
   </TouchableOpacity>
 
 );
+};
 
 GButtonComponent.propTypes = {
   disabled : PropTypes.bool,
