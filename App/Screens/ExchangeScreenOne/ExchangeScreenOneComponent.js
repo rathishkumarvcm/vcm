@@ -6,6 +6,8 @@ import { GIcon, GHeaderComponent, GFooterSettingsComponent } from '../../CommonC
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+
 
 let accSelectionData = {};
 let savedData = {};
@@ -34,11 +36,35 @@ class ExchangeScreenOneComponent extends Component {
                 AutoInvPlan: "",
                 accType: "",
             },
+            accountList: []
         };
     }
 
     componentDidMount() {
+        const { getAccountList } = this.props;
+        const accountListPayload = {
+            "companyNumber": "591",
+            "memberId": "V122221212",
+            "customerId": "V1234567"
+        };
+        getAccountList(accountListPayload);
     }
+
+    componentDidUpdate(prevProps) {
+        const { exchangeData } = this.props;
+        if (prevProps !== this.props) {
+            let tempAccountList = []
+            if (exchangeData[ActionTypes.GET_ACCOUNT_DETAILS] !== undefined && exchangeData[ActionTypes.GET_ACCOUNT_DETAILS] !== null) {
+                tempAccountList = exchangeData[ActionTypes.GET_ACCOUNT_DETAILS];
+                console.log("Account List in:::::::::", tempAccountList);
+                this.setState({
+                    accountList: [...tempAccountList],
+                    isLoading: false
+                });
+            }
+        }
+    }
+
 
     onClickExpand = (type) => () => {
         const { collapseGeneralAccount, collapseIRAAccount, collapseUTMAAccount } = this.state;
@@ -401,13 +427,15 @@ class ExchangeScreenOneComponent extends Component {
 ExchangeScreenOneComponent.propTypes = {
     exchangeData: PropTypes.instanceOf(Object),
     navigation: PropTypes.instanceOf(Object),
-    saveData: PropTypes.func
+    saveData: PropTypes.func,
+    getAccountList: PropTypes.func
 };
 
 
 ExchangeScreenOneComponent.defaultProps = {
     exchangeData: {},
     navigation: {},
-    saveData: () => { }
+    saveData: () => { },
+    getAccountList: () => { }
 };
 export default ExchangeScreenOneComponent;
