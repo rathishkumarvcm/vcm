@@ -6,6 +6,47 @@ const styles = StyleSheet.create({
         fontWeight: '200',
         textAlignVertical: 'center',
     },
+    labelText: {
+        color: "#333333DE",
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        // marginBottom:scaledHeight(8)
+    },
+    normalBlackBtn: {
+        alignSelf: 'center',
+        alignItems: 'center',
+        backgroundColor: '#544A54',
+        borderColor: "#61285F45",
+        borderWidth: 1,
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginHorizontal: scaledHeight(37),
+        marginVertical: scaledHeight(7.5)
+    },
+    normalBlackBtnTxt: {
+        color: '#fff',
+        fontSize: scaledHeight(16),
+        textAlign: 'center',
+        width: '100%'
+    },
+    normalWhiteBtn: {
+        alignSelf: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderColor: "#61285F45",
+        borderWidth: 1,
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginHorizontal: scaledHeight(37),
+        marginVertical: scaledHeight(7.5)
+    },
+    normalWhiteBtnTxt: {
+        color: '#544A54',
+        fontSize: scaledHeight(16),
+        lineHeight: 22,
+        textAlign: 'center',
+        width: '100%'
+    },
     container: { flex: 1, justifyContent: 'center', },
     columnContainer: { flexDirection: 'column', padding: scaledHeight(12), },
     dropdownTextInput: {
@@ -13,10 +54,11 @@ const styles = StyleSheet.create({
         marginLeft: 0,
     },
     dropDownLayout: {
-        marginTop: scaledHeight(18),
+        marginTop: scaledHeight(7),
         paddingLeft: 0,
+        marginBottom: 0,
         marginLeft: 0,
-        marginRight: 0
+        marginRight: 0,
     },
     dividerLine: {
         backgroundColor: 'lightgray', height: 1,
@@ -54,6 +96,18 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(9),
         width: "100%"
     },
+    multilineTextBox: {
+        backgroundColor: "#FFFFFF",
+        width: '100%',
+        borderRadius: scaledHeight(4),
+        justifyContent: "center",
+        borderWidth: 1,
+        borderColor: "#DEDEDF",
+        marginTop: scaledHeight(9),
+        margin: 0,
+        padding: scaledHeight(3),
+        minHeight: "20%",
+    },
     viewStyle: {
         flexDirection: 'column', flex: 1,
         marginLeft: '30%',
@@ -80,7 +134,10 @@ const styles = StyleSheet.create({
         textDecorationLine: 'underline',
         textDecorationStyle: 'solid'
     },
-    rowContainer: { alignItems: 'center', flexDirection: 'row', padding: scaledHeight(3), },
+    rowContainer: {
+        alignItems: 'center', flexDirection: 'row',
+        padding: scaledHeight(3), width: "100%"
+    },
     scrollViewStyle: { flex: 1, width: "100%" },
     transparentGrayContainer: {
         backgroundColor: "rgba(0,0,0,0.1)",

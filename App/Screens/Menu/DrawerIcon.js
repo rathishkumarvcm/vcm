@@ -1,6 +1,6 @@
 import React from 'react';
 import { Platform, StyleSheet } from 'react-native';
-import PropTypes, { func } from "prop-types";
+import PropTypes from "prop-types";
 import { withNavigation } from 'react-navigation';
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { GIcon } from '../../CommonComponents/GIcon';

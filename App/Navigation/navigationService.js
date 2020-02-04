@@ -32,6 +32,4 @@ export const navigateBack = () => {
   navigator.dispatch(NavigationActions.back());
 };
 
-export const getNavigator = () => {
-  navigator;
-};
+export const getNavigator = () => navigator;

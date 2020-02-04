@@ -1,10 +1,6 @@
 import { createStackNavigator } from 'react-navigation-stack';
-import { createBottomTabNavigator, createMaterialTopTabNavigator, BottomTabBar } from 'react-navigation-tabs';
+import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createDrawerNavigator } from 'react-navigation-drawer';
-import { Modal } from 'react-native-modal';
-import React from 'react';
-import { Text, View } from 'react-native';
-import { GIcon } from '../CommonComponents/GIcon';
 import ListView from '../Screens/ListView';
 
 // Drawer
@@ -54,6 +50,7 @@ import Screen2Component from '../Screens/NotificationTab/Screen2';
 import TabBar from '../Screens/Menu/TabBar';
 import LineChartComponent from '../Screens/Charts/LineChartComponent';
 import ChartComponent from '../Screens/Charts';
+import Tab from '../Screens/Menu/Tab';
 
 
 // Notification Tabs
@@ -188,16 +185,17 @@ const AccountStack = createStackNavigator({
         }
     },
 });
-    
+
+function customTab(props) {
+    return <Tab tabObj={props.object} routeName={props.route} />;
+}
+
 //  Bottom Tabs
 const BottomTabNavigator = createBottomTabNavigator({
     myVCM: {
         screen: Screen1Component, // AccountStack,
         navigationOptions: {
-            tabBarIcon: ({ tintColor }) => <GIcon name={'home'}
-                type="material"
-                size={20}
-                color={tintColor} />,
+            tabBarIcon: (obj) => customTab({ object: obj, route: "myVCM" }),
             tabBarLabel: 'MyVCM',
         }
 
@@ -205,77 +203,27 @@ const BottomTabNavigator = createBottomTabNavigator({
     portfolio: {
         screen: LineChartComponent,
         navigationOptions: {
-            tabBarIcon: ({ tintColor }) => <GIcon name={'note'}
-            type="material"
-            size={20}
-            color={tintColor} />,
+            tabBarIcon: (obj) => customTab({ object: obj, route: "portfolio" }),
             tabBarLabel: 'Portfolio',
         },
     },
     invest: {
         screen: AccountServicesComponent,
         navigationOptions: {
-            tabBarIcon: ({ tintColor }) => <GIcon name={'insert-chart'}
-            type="material"
-            size={20}
-            color={tintColor} />,
+            tabBarIcon: (obj) => customTab({ object: obj, route: "invest" }),
             tabBarLabel: 'Invest',
         },
     },
     learn: {
         screen: ChartComponent,
         navigationOptions: {
-            tabBarIcon: ({ tintColor }) => <GIcon name={'library-books'}
-            type="material"
-            size={20}
-            color={tintColor} />,
+            tabBarIcon: (obj) => customTab({ object: obj, route: "learn" }),
             tabBarLabel: 'Learn',
         },
     },
-    // more: {
-    //     screen: MoreModalComponent,
-    //     navigationOptions: ({ navigation }) => ({
-    //         tabBarOnPress: ({ defaultHandler }) => {
-    //             defaultHandler();
-    //             // navigation.navigate('more')
-    //             store.dispatch(tabMoreActions.setModalVisible(true));
-    //         },
-    //         tabBarLabel: 'More',
-    //     }),
-    // },
 },
     {
         tabBarComponent: TabBar,
-        tabBarOptions: {
-            activeTintColor: "#4F4F4F",
-            inactiveTintColor: "#ddd"
-          }
-        // defaultNavigationOptions: ({ navigation }) => ({
-        //     tabBarIcon: ({ focused, horizontal, tintColor }) => {
-        //         const { routeName } = navigation.state;
-        //         let iconName;
-        //         if (routeName === 'myVCM') {
-        //             iconName = 'home';
-        //         } else if (routeName === 'portfolio') {
-        //             iconName = 'note';
-        //         } else if (routeName === 'invest') {
-        //             iconName = 'insert-chart';
-        //         }
-        //         else if (routeName === 'learn') {
-        //             iconName = 'library-books';
-        //         } else {
-        //             iconName = 'more';
-        //         }
-        //         return (
-        //             <GIcon
-        //                 name={iconName}
-        //                 type="material"
-        //                 size={20}
-        //                 color={tintColor}
-        //             />
-        //         );
-        //     }
-        // }),
     }
 );
 const DrawerNavigator = createDrawerNavigator({

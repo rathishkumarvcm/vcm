@@ -1,52 +1,40 @@
 import * as React from "react";
-import { Animated, TouchableOpacity } from "react-native";
+import PropTypes from "prop-types";
 import { GIcon } from '../../CommonComponents/GIcon';
 
-const Tab = ({ focusAnim, title, onPress }) => {
+const Tab = ({ tabObj, routeName }) => {
+    const { tintColor } = tabObj;
     let iconName;
-    if (title === 'myVCM') {
+    if (routeName === 'myVCM') {
         iconName = 'home';
-    } else if (title === 'portfolio') {
+    } else if (routeName === 'portfolio') {
         iconName = 'note';
-    } else if (title === 'invest') {
+    } else if (routeName === 'invest') {
         iconName = 'insert-chart';
     }
-    else if (title === 'learn') {
+    else if (routeName === 'learn') {
         iconName = 'library-books';
     } else {
         iconName = 'more';
     }
-
     return (
-        <TouchableOpacity onPress={onPress}>
-            <Animated.View
-                style={{
-                    padding: 10,
-                    flexDirection: 'column',
-                    borderRadius: 10,
-                    // backgroundColor: focusAnim.interpolate({
-                    //     inputRange: [0, 1],
-                    //     outputRange: ["transparent", "tomato"]
-                    // })
-                }}
-            >
-                <GIcon
-                    name={iconName}
-                    type="material"
-                    size={20}
-                    color={"black"}
-                />
-                <Animated.Text
-                    style={{
-                        // color: focusAnim.interpolate({
-                        //     inputRange: [0, 1],
-                        //     outputRange: ["#444", "#fff"]
-                        // })
-                    }}
-                >{title}</Animated.Text>
-            </Animated.View>
-        </TouchableOpacity>
+        <GIcon
+            name={iconName}
+            type="material"
+            size={20}
+            color={tintColor}
+        />
     );
+
+};
+Tab.propTypes = {
+    tabObj: PropTypes.instanceOf(Object),
+    routeName: PropTypes.string,
+};
+
+Tab.defaultProps = {
+    tabObj: {},
+    routeName: "",
 };
 
 export default Tab;

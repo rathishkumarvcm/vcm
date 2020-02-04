@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { View, Text, SafeAreaView, TouchableWithoutFeedback, Image } from 'react-native';
+import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import Modal from 'react-native-modal';
@@ -12,23 +13,24 @@ import { navigate } from '../../Navigation/navigationService';
 
 class BaseViewComponent extends React.Component {
   closeModal = () => {
-    this.props.dispatch(tabMoreActions.setModalVisible(false));
+    const { dispatch } = this.props;
+    dispatch(tabMoreActions.setModalVisible(false));
   };
 
   navigateToLogout = () => {
-    this.props.dispatch(tabMoreActions.setModalVisible(false));
+    const { dispatch } = this.props;
+    dispatch(tabMoreActions.setModalVisible(false));
     navigate('draweriOS');
   }
 
   render() {
-    let { isMoreModalVisible } = this.props;
+    const { isMoreModalVisible, children } = this.props;
     return (
-      <SafeAreaView style={{flex:1}}>
-        {this.props.children}
+      <SafeAreaView style={styles.scrollViewStyle}>
+        {children}
         <Modal
           style={styles.rightModalStyle}
           ref={this.modal}
-          hardwareAccelerated={true}
           hideModalContentWhileAnimating={false}
           animationIn={'slideInRight'}
           animationOut={'slideInLeft'}
@@ -43,7 +45,7 @@ class BaseViewComponent extends React.Component {
             <TouchableWithoutFeedback
               onPress={this.closeModal}
             >
-              <Text style={{ fontSize: 18, marginVertical: 20, marginHorizontal: 10 }}>Close</Text>
+              <Text style={styles.menuName}>Close</Text>
             </TouchableWithoutFeedback>
             <TouchableWithoutFeedback onPress={this.navigateToLogout}>
               <View style={styles.menuContainer}>
@@ -55,7 +57,7 @@ class BaseViewComponent extends React.Component {
             <TouchableWithoutFeedback
               onPress={this.navigateToLogout}
             >
-              <Text style={{ fontSize: 18, marginHorizontal: 10 }}>Drawer</Text>
+              <Text style={styles.menuName}>Drawer</Text>
             </TouchableWithoutFeedback>
           </SafeAreaView>
         </Modal>
@@ -63,6 +65,17 @@ class BaseViewComponent extends React.Component {
     );
   }
 }
+
+BaseViewComponent.propTypes = {
+  children: PropTypes.node,
+  isMoreModalVisible: PropTypes.bool,
+};
+
+BaseViewComponent.defaultProps = {
+  children: {},
+  isMoreModalVisible: false,
+};
+
 const mapStateToProps = state => {
   return state.tabMoreModalData;
 };

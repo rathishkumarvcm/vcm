@@ -3,7 +3,6 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { createDrawerNavigator, DrawerActions } from 'react-navigation-drawer';
 import React from 'react';
-import { GIcon } from './CommonComponents/GIcon';
 
 import LoginComponent from "./Screens/Login";
 import RegisterEmail from './Screens/RegisterEmail/RegisterEmailComponent';
@@ -172,10 +171,9 @@ import VerifyMobileComponent from './Screens/VerifyMobile/VerifyMobileComponent'
 import DrawerComponent from './Screens/Menu/DrawerComponent';
 import Screen1Component from './Screens/NotificationTab/Screen1';
 import Screen2Component from './Screens/NotificationTab/Screen2';
-import LineChartComponent from './Screens/Charts/LineChartComponent';
-import ChartComponent from './Screens/Charts';
 import TabBar from './Screens/Menu/TabBar';
-import FloatingButtonComponent from './Screens/ServiceRequest/FloatingButtonScreen';
+import Tab from './Screens/Menu/Tab';
+
 
 // Dashboard
 import AccountPositions from './Screens/AccountPositions';
@@ -185,6 +183,11 @@ import RMDCalculatorComponent from './Screens/RMDCalculator';
 
 // RMD
 import RMDDashboardComponent from './Screens/RMDDashboard';
+
+// MSR
+import AccessFormList from './Screens/MSRAccessForms/AccessFormsList';
+import FloatingButtonComponent from './Screens/MSRServiceRequest/FloatingButtonScreen';
+
 
 // Notification Tabs
 const NotificationTabNavigator = createMaterialTopTabNavigator(
@@ -215,61 +218,47 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
     }
 );
 
+function customTab(props) {
+    return <Tab tabObj={props.object} routeName={props.route} />;
+}
+
 //  Bottom Tabs
 const BottomTabNavigator = createBottomTabNavigator({
     myVCM: {
         screen: Screen1Component, // AccountStack,
         navigationOptions: {
-            tabBarIcon: ({ tintColor }) => (
-                <GIcon name="home"
-                    type="material"
-                    size={20}
-                    color={tintColor}
-                />),
+            tabBarIcon: (obj) => customTab({ object: obj, route: "myVCM" }),
             tabBarLabel: 'MyVCM',
         }
 
     },
     portfolio: {
-        screen: LineChartComponent,
+        screen: Dashboard,
         navigationOptions: {
-            tabBarIcon: ({ tintColor }) => <GIcon name={'note'}
-                type="material"
-                size={20}
-                color={tintColor}
-            />,
+            tabBarIcon: (obj) => customTab({ object: obj, route: "portfolio" }),
             tabBarLabel: 'Portfolio',
         },
     },
     invest: {
         screen: FloatingButtonComponent,
         navigationOptions: {
-            tabBarIcon: ({ tintColor }) => <GIcon name={'insert-chart'}
-                type="material"
-                size={20}
-                color={tintColor} />,
+            tabBarIcon: (obj) => customTab({ object: obj, route: "invest" }),
             tabBarLabel: 'Invest',
         },
     },
     learn: {
-        screen: ChartComponent,
+        screen: AccessFormList,
         navigationOptions: {
-            tabBarIcon: ({ tintColor }) => <GIcon name={'library-books'}
-                type="material"
-                size={20}
-                color={tintColor} />,
+            tabBarIcon: (obj) => customTab({ object: obj, route: "learn" }),
             tabBarLabel: 'Learn',
         },
     },
 },
     {
         tabBarComponent: TabBar,
-        tabBarOptions: {
-            activeTintColor: "skyblue",
-            inactiveTintColor: "#4F4F4F"
-        }
     }
 );
+
 
 const DrawerNavigator = createDrawerNavigator({
     Home: BottomTabNavigator,
@@ -1125,7 +1114,7 @@ const AppNavigator = createStackNavigator({
             header: null
         }
     },
-    rmdDashboard:{
+    rmdDashboard: {
         screen: RMDDashboardComponent,
         navigationOptions: {
             header: null,
