@@ -1500,6 +1500,35 @@ export default {
     rmdCalculator: {
         rmdCalculator_header: "RMD Calculator",
         rmdCalculator_info: "Use this calculator to determine your Required Minimum Distribution."
+    },
+    msrServiceRequest: {
+        needAssistent: "NEED ASSISTENT?",
+        vcmCustomerCareNumber: "(888) 456-9200",
+        mondayToFriday: "Monday - Friday",
+        mondayToFridayTime: "7.00am - 8.00pm CT",
+        saturdays: "Saturdays",
+        saturdayTime: "8.00am - 5.00pm CT",
+        weekdays: "Weekdays",
+        weekdayTime: "8.00am - 6.00pm CT",
+        t_403BServices: "403B SUPPORT SERVICES",
+        vcmMemberServices: "VCM'S MEMBER SERVICES",
+        forReferTo: "For details refer to ",
+        victoryBusinessCalendar: "Victory Business Calendar",
+        sendSecureMsg: "Send us secure message",
+        liveChatAgent: "Live chat Agent",
+
+        topic: "Topic",
+        account: "Account",
+        subject: "Subject",
+        messageBody: "Message Body"
+
+    },
+    msrAccessForms: {
+        forms: "Forms",
+        sortBy: "Sory By",
+        all: "All",
+        popular: "Popular"
     }
+
 
 };
