@@ -3,20 +3,19 @@ import { scaledHeight} from '../../Utils/Resolution';
 
 const {width} = Dimensions.get('window');
 
-
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     cancelButton:{
+        alignItems:'center',
+        backgroundColor:'#FFFFFF',
         borderColor:'#61285F45',
         borderWidth:1,
-        width:'80%',
+        height:scaledHeight(50),
+        justifyContent:'center',
+     
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(12),
-        // borderRadius:scaledHeight(25),
-        height:scaledHeight(50),
-        backgroundColor:'#FFFFFF',
-        alignItems:'center',
-        justifyContent:'center'
+        width:'80%'
      },
     cancelButtonText:{
         color:'#544A54',
@@ -165,17 +164,17 @@ export const styles = StyleSheet.create({
         fontSize:scaledHeight(10)
     },
     sendOTPButton:{
+        alignItems:'center',
+        backgroundColor:'#56565A',
         borderColor:'#56565A',
         borderWidth:1,
-        width:'80%',
+        height:scaledHeight(50),
+        justifyContent:'center',
+       
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(12),
-        // borderRadius:scaledHeight(25),
-        height:scaledHeight(50),
-        backgroundColor:'#56565A',
-        alignItems:'center',
-        justifyContent:'center'
+        width:'80%'
      },
     signInButtonText:{
         color:'#FFFFFF',
@@ -236,3 +235,5 @@ export const styles = StyleSheet.create({
         marginRight:'4%'
     },
 });
+
+export default styles;

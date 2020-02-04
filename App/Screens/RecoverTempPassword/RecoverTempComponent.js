@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text } from 'react-native';
-import { styles } from './styles';
+import PropTypes from 'prop-types';
+import styles from './styles';
 import {
   GHeaderComponent,
   GFooterSettingsComponent,
   GButtonComponent,
   GInputComponent,
 } from '../../CommonComponents';
-import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
 
 
@@ -30,14 +30,15 @@ class RecoverTempComponent extends Component {
       str_temp: text
     });
   }
+
 protect_email(user_email) {
-    var splitted, part1, part2;
+    let splitted; let part1; let part2;
     splitted = user_email.split("@");
     part1 = splitted[0];
     // avg = part1.length / 2;
     // part1 = part1.substring(0, (part1.length - avg));
     part2 = splitted[1];
-    return part1.substring(0, 3) + "*****"+part1.substring(part1.length-2,part1.length )+"@" + part2;
+    return `${part1.substring(0, 3) }*****${part1.substring(part1.length-2,part1.length )}@${ part2}`;
 }
   
   componentDidMount()
@@ -56,7 +57,7 @@ protect_email(user_email) {
   
   navigationPasswordTemp = () => 
   {
-      let valid_temp=this.state.str_temp === ""?true:false;
+      const valid_temp=this.state.str_temp === "";
      this.setState({
        boo_temp: valid_temp,
        err_temp: valid_temp ? globalString.recoverPassword.validPassword : '',
@@ -66,7 +67,9 @@ protect_email(user_email) {
       if(this.state.str_temp !== "")        
          this.props.navigation.navigate('passwordReset');
   }
+
   navigationPasswordOtp = () => this.props.navigation.goBack();
+
   render() {
     return (
       <View style={styles.container}>
@@ -79,7 +82,7 @@ protect_email(user_email) {
   <Text style={styles.notifInnerText}>{globalString.recoverPassword.guestTempPasswordNotify}{this.state.email}</Text>
             </View>
             <View style={styles.notifClose}>
-            <Text>{'X'}</Text>
+            <Text>X</Text>
             </View>
           </View>
           <View style={styles.signInView}>
@@ -130,7 +133,7 @@ RecoverTempComponent.propTypes = {
 };
 
 RecoverTempComponent.defaultProps = {
-
+  navigation:{},
 };
 
 export default RecoverTempComponent;

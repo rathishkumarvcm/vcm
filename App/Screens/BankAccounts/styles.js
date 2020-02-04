@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     accountNameHeaderText: {
         alignSelf: 'flex-start',
         color: '#56565A',
@@ -242,3 +242,5 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 });
+
+export default styles;

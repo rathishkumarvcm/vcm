@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     alertBox: {
         alignItems: 'center',
         backgroundColor: '#F2F2F2',
@@ -77,11 +77,7 @@ export const styles = StyleSheet.create({
         position: 'absolute',
         right: 6,
         top: 4
-    },
-    optionSubHeaderText: {
-        color: '#B2B2B2',
-        fontSize: scaledHeight(12),
-    },
+    },   
     optionSubHeaderText: {
         color: '#B2B2B2',
         fontSize: scaledHeight(16),
@@ -123,3 +119,5 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(14)
     },
 });
+
+export default styles;

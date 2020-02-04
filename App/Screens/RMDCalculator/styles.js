@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     accountIconStyle: {
         flex: 0.1,
     },
@@ -45,3 +45,5 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(25)
     },
 });
+
+export default styles;

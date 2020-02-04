@@ -3,8 +3,7 @@ import { scaledHeight} from '../../Utils/Resolution';
 
 const {width} = Dimensions.get('window');
 
-
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     container:{
         backgroundColor:'#F7FAFF',
         flex:1,
@@ -264,3 +263,5 @@ export const styles = StyleSheet.create({
         marginRight:'4%'
     }    
 });
+
+export default styles;

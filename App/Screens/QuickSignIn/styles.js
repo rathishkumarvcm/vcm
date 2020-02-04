@@ -29,17 +29,16 @@ const styles = StyleSheet.create({
     paddingLeft:"10%"
 },
     cancelButton:{
+    alignItems:'center',
+    backgroundColor:'#FFFFFF',
     borderColor:'#61285F45',
     borderWidth:1,
-    width:'80%',
+    height:scaledHeight(50),
+    justifyContent:'center',   
     marginLeft:'10%',
     marginRight:'10%',
     marginTop:scaledHeight(30),
-    // borderRadius:scaledHeight(25),
-    height:scaledHeight(50),
-    backgroundColor:'#FFFFFF',
-    alignItems:'center',
-    justifyContent:'center'
+    width:'80%'
  },
     cancelButtonText:{
     color:'#544A54',
@@ -51,12 +50,11 @@ container: {
         flex: 1,
         width: '100%'
     },
-lblLine: {
-        //  width:"100%",
-        flexGrow: 1,
-        marginTop: scaledHeight(9.5),
-        height: scaledHeight(1),
+lblLine: {       
         backgroundColor: '#707070',
+        flexGrow: 1,
+        height: scaledHeight(1),
+        marginTop: scaledHeight(9.5),
         opacity: .25
     },
 lblTxt:{

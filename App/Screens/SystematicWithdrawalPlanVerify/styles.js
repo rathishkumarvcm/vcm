@@ -120,17 +120,16 @@ const styles = StyleSheet.create({
         width:'100%'
     },
     continueButton:{
+        alignItems:'center',
+        backgroundColor:"rgba(84,74,84,0.5)",
         borderColor:'#61285F45',
         borderWidth:1,
-        width:'80%',
+        height:scaledHeight(50),
+        justifyContent:'center',     
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       // borderRadius:scaledHeight(25),
-        height:scaledHeight(50),
-        backgroundColor:"rgba(84,74,84,0.5)",
-        alignItems:'center',
-        justifyContent:'center',
+        width:'80%',
      },
      continueButtonSelected:{
         alignItems:'center',

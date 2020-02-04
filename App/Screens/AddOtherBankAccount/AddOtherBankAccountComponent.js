@@ -6,7 +6,7 @@ import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import { CustomRadio } from '../../AppComponents';
 import { scaledHeight } from '../../Utils/Resolution';
-import { styles } from './styles';
+import styles from './styles';
 
 class AddOtherBankAccountComponent extends Component {
     constructor(props) {
@@ -45,7 +45,7 @@ class AddOtherBankAccountComponent extends Component {
         navigation.goBack();
     }
 
-    navigateBankAccount = (isSuccess) => this.props.navigation.navigate('bankAccount', { isSuccess: isSuccess,
+    navigateBankAccount = (isSuccess) => this.props.navigation.navigate('bankAccount', { isSuccess,
         accountType : this.state.accountType || "-",
         financialInstitutionName: this.state.financialInstitutionName || "-",
         accountOwnerNames: this.state.accountOwner || "-",
@@ -65,9 +65,9 @@ class AddOtherBankAccountComponent extends Component {
     isEmpty = (str) => {
         if (str === "" || str === undefined || str === "null" || str === "undefined") {
             return true;
-        } else {
+        } 
             return false;
-        }
+        
     }
     
     setInputRef = (inputComp) => (ref) => {
@@ -116,7 +116,7 @@ class AddOtherBankAccountComponent extends Component {
 
         if (!isValidationSuccess) {
             this.setState({
-                [input + "Validation"]: false,
+                [`${input }Validation`]: false,
             });
 
             if (input !== "" && input !== null && input !== undefined) {
@@ -133,6 +133,7 @@ class AddOtherBankAccountComponent extends Component {
         }
 
     }
+
     callValidateBankAccount = () => {
         const validateBankAccountPayload = {
             "accountType": this.state.accountType || "-",
@@ -174,7 +175,7 @@ class AddOtherBankAccountComponent extends Component {
                                 label="Savings"
                                 descLabelStyle={styles.lblRadioDescTxt}
                                 descLabel=""
-                                selected={(this.state.accountType !== null && this.state.accountType === "Savings") ? true : false}
+                                selected={!!((this.state.accountType !== null && this.state.accountType === "Savings"))}
                                 onPress={this.onPressRadio("accountType", "Savings")}
                             />
                             <CustomRadio
@@ -186,16 +187,16 @@ class AddOtherBankAccountComponent extends Component {
                                 label="Checking"
                                 descLabelStyle={styles.lblRadioDescTxt}
                                 descLabel=""
-                                selected={(this.state.accountType !== null && this.state.accountType === "Checking") ? true : false}
+                                selected={!!((this.state.accountType !== null && this.state.accountType === "Checking"))}
                                 onPress={this.onPressRadio("accountType", "Checking")}
                             />
 
                         </View>
-                        {!this.state.accountTypeValidation &&
+                        {!this.state.accountTypeValidation && (
                             <Text style={styles.errMsg}>
                                 {gblStrings.accManagement.emptyTypeOfAccount}
                             </Text>
-                        }
+                          )}
 
                         <Text style={styles.lblTxt}>
                             {gblStrings.accManagement.financialInstitution}
@@ -274,11 +275,11 @@ class AddOtherBankAccountComponent extends Component {
                             source={require("../../Images/specimen.png")}
                         />
 
-                        {!this.state.isValidBankAccount &&
+                        {!this.state.isValidBankAccount && (
                             <Text style={styles.errMsg}>
                                 {this.state.validBankAccountMsg}
                             </Text>
-                        }
+                          )}
 
                         <GButtonComponent
                             buttonStyle={styles.backBtn}
@@ -322,6 +323,9 @@ class AddOtherBankAccountComponent extends Component {
 
 AddOtherBankAccountComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object)
+};
+AddOtherBankAccountComponent.defaultProps = {
+    navigation: {}
 };
 
 export default AddOtherBankAccountComponent;

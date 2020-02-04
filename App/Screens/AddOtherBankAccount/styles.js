@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     backBtn: {
         alignItems: 'center',
         backgroundColor: '#FFFFFF',
@@ -149,3 +149,5 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 });
+
+export default styles;

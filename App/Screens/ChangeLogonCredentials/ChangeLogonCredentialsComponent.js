@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-import { styles } from './styles';
-import PropTypes from 'prop-types';
+import styles from './styles';
 
 class ChangeLogonCredentialsComponent extends Component {
     constructor(props) {
@@ -12,8 +12,9 @@ class ChangeLogonCredentialsComponent extends Component {
             show: true,
         };
     }
+
     renderMessage = () => {
-        let message = this.props.navigation.getParam('message');
+        const message = this.props.navigation.getParam('message');
         if (message) {
             setTimeout(() => {
                 this.setState({
@@ -24,19 +25,22 @@ class ChangeLogonCredentialsComponent extends Component {
                 return (
                 <View style={styles.messageFlex}>
                     <Text style={styles.messageText}>{message}</Text>
-                </View>);
+                </View>
+);
            //  }
         }
         return null;
     }
 
     navigateCurrentPassword = () => this.props.navigation.navigate('currentPassword');
+
     navigateCurrentPIN = () => this.props.navigation.navigate('currentPIN');
+
     navigateToSecurityPref = () => this.props.navigation.navigate('securityPreference');
 
     render() {
         return (
-            <View style={styles.container} >
+            <View style={styles.container}>
                 <GHeaderComponent navigation={this.props.navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <TouchableOpacity>
@@ -114,6 +118,6 @@ ChangeLogonCredentialsComponent.propTypes = {
 };
 
 ChangeLogonCredentialsComponent.defaultProps = {
-
+    navigation :{}
 };
 export default ChangeLogonCredentialsComponent;

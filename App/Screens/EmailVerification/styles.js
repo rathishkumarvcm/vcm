@@ -4,19 +4,18 @@ import { scaledHeight} from '../../Utils/Resolution';
 const {width} = Dimensions.get('window');
 
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     backButton:{
+        alignItems:'center',
+        backgroundColor:'#FFFFFF',
         borderColor:'#61285F45',
         borderWidth:1,
-        width:'84%',
+        height:scaledHeight(50),
+        justifyContent:'center',        
         marginLeft:'8%',
         marginRight:'8%',
         marginTop:scaledHeight(12),
-        // borderRadius:scaledHeight(25),
-        height:scaledHeight(50),
-        backgroundColor:'#FFFFFF',
-        alignItems:'center',
-        justifyContent:'center'
+        width:'84%'
      },
     cancelButtonText:{
         color:'#56565A',
@@ -110,20 +109,18 @@ export const styles = StyleSheet.create({
         width:'92%'
     },
     newVictorySection1:{
+        flexDirection:'row',
+        flexWrap:'wrap',
+        marginTop:scaledHeight(20),     
         paddingLeft:'4%',
         paddingRight:'4%',
-        width:'100%',
-        // height:scaledHeight(40),
-        marginTop:scaledHeight(20),
-        flexDirection:'row',
-        flexWrap:'wrap'
+        width:'100%'
     },
     newVictorySection2:{
-        paddingLeft:'4%',
-        paddingRight:'4%',
-        width:'100%',
-       //  height:scaledHeight(70),
         marginTop:scaledHeight(4),
+        paddingLeft:'4%',
+        paddingRight:'4%',     
+        width:'100%',
 
     },
      openInvestment:{
@@ -190,17 +187,16 @@ export const styles = StyleSheet.create({
         fontSize:scaledHeight(10)
     },
     signInButton:{
+        alignItems:'center',
+        backgroundColor:'#56565A',
         borderColor:'#56565A',
         borderWidth:1,
-        width:'84%',
+        height:scaledHeight(50),
+        justifyContent:'center',      
         marginLeft:'8%',
         marginRight:'8%',
         marginTop:scaledHeight(12),
-        // borderRadius:scaledHeight(25),
-        height:scaledHeight(50),
-        backgroundColor:'#56565A',
-        alignItems:'center',
-        justifyContent:'center'
+        width:'84%'
      },
     signInButtonText:{
         color:'#FFFFFF',
@@ -211,12 +207,7 @@ export const styles = StyleSheet.create({
         marginTop:scaledHeight(18),
         paddingLeft:'4%',
         paddingRight:'4%',
-    },
-    signInView:{
-        marginTop:scaledHeight(18),
-        paddingLeft:'4%',
-        paddingRight:'4%',
-    },
+    },    
     signIntext:{
         color:'#56565A',
         fontSize:scaledHeight(36),
@@ -279,3 +270,5 @@ export const styles = StyleSheet.create({
         marginRight:'4%'
     },
 });
+
+export default styles;

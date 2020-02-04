@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
-import { styles } from './styles';
-import { GHeaderComponent, GIcon, GFooterSettingsComponent } from '../../CommonComponents';
 import PropTypes from "prop-types";
+import styles from './styles';
+import { GHeaderComponent, GIcon, GFooterSettingsComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class GeneralSettingsComponent extends Component {
@@ -17,9 +17,13 @@ class GeneralSettingsComponent extends Component {
     componentDidMount() { }
 
     navigateprofileSettings = () => this.props.navigation.navigate('profileSettings');
+
     navigateDeliverySettings = () => this.props.navigation.navigate('deliverySettings');
+
     navigateaccountMessagingSettings = () => this.props.navigation.navigate('accountMessagingSettings');
-    navigateSecurityPreference = () => this.props.navigation.navigate('securityPreference');   
+
+    navigateSecurityPreference = () => this.props.navigation.navigate('securityPreference');
+   
     navigateMarketingPrivacySettings = () => this.props.navigation.navigate('marketingandPrivacySettings');
 
     render() {
@@ -38,13 +42,14 @@ class GeneralSettingsComponent extends Component {
 
                     <View style={styles.signInView}>
                     {
-                        (this.props && this.props.initialState && this.props.initialState.email && this.props.initialState.firstName && this.props.initialState.lastName)?
+                        (this.props && this.props.initialState && this.props.initialState.email && this.props.initialState.firstName && this.props.initialState.lastName)? (
                         <Text style={styles.signInUserNametext}>
                             {this.props.initialState.firstName} {this.props.initialState.lastName}{", "}  
                             <Text style={styles.signInUserEmailtext}>
                                 {this.props.initialState.email}
                             </Text>
                         </Text>
+                      )
                         :null
                     }                        
                     </View>

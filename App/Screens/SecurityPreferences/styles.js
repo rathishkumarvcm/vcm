@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     backButtonFlex: {
         alignItems: 'center',
         borderColor: '#61285F45',
@@ -73,11 +73,6 @@ export const styles = StyleSheet.create({
         color: '#B2B2B2',
         fontSize: scaledHeight(12),
     },
-    optionSubHeaderText: {
-        color: '#B2B2B2',
-        fontSize: scaledHeight(16),
-        marginTop: scaledHeight(60)
-    },
     optionSubHeaderView: {
         paddingLeft: '4%',
         paddingRight: '4%',
@@ -105,3 +100,5 @@ export const styles = StyleSheet.create({
         marginTop: scaledHeight(14)
     }
 });
+
+export default styles;

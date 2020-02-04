@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Text,View,ScrollView,TouchableOpacity} from 'react-native';
-import {styles} from './styles';
-import {GButtonComponent,GHeaderComponent,GInputComponent,GFooterSettingsComponent} from '../../CommonComponents';
 import PropTypes from 'prop-types';
 import { Auth } from "aws-amplify";
+import styles from './styles';
+import {GButtonComponent,GHeaderComponent,GInputComponent,GFooterSettingsComponent} from '../../CommonComponents';
 
 class OnlineIDVerificationComponent extends Component {
     constructor(props){
@@ -61,13 +61,13 @@ class OnlineIDVerificationComponent extends Component {
            
             <View style={styles.signInView}>
                 <Text style={styles.signIntext}>
-                    {"Check your Inbox"}
+                    Check your Inbox
                 </Text>
             </View>
 
             <View style={styles.newVictorySection2}>
                 <Text style={styles.openInvestment1}>
-                        {"You can now access your Online ID sent to your email id"}
+                        You can now access your Online ID sent to your email id
                 </Text>
 
             </View>
@@ -76,7 +76,7 @@ class OnlineIDVerificationComponent extends Component {
                 <Text style={styles.openInvestment}>
                         {"If you do not see the validation email in your inbox, Click "}
                 <Text style={styles.openInvestmentlink}>
-                    {"Resend"}
+                    Resend
                 </Text>
                 <Text style={styles.openInvestment}>
                     {" Verification."}
@@ -89,7 +89,7 @@ class OnlineIDVerificationComponent extends Component {
 
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"Enter the OTP"}       
+                    Enter the OTP       
                 </Text>
             </View>
 
@@ -115,7 +115,7 @@ class OnlineIDVerificationComponent extends Component {
 
             <GFooterSettingsComponent />
 
-            {/*<View style={styles.termsofuse}>
+            {/* <View style={styles.termsofuse}>
                 <Text style={styles.termsofuseText}>
                     {"Need Assistance?  "}
                    
@@ -169,6 +169,6 @@ OnlineIDVerificationComponent.propTypes = {
   };
   
   OnlineIDVerificationComponent.defaultProps = {
- 
+    navigation : {}
   };
 export default OnlineIDVerificationComponent;

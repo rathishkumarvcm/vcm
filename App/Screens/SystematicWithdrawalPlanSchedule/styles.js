@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import { scaledHeight,scaledWidth} from '../../Utils/Resolution';
 
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     account_txt:
     { color: '#544A54', fontSize: scaledHeight(18), fontWeight: 'bold' },
     account_view:
@@ -46,17 +46,16 @@ export const styles = StyleSheet.create({
         marginRight:'4%'
     },
     cancelButton:{
+        alignItems:'center',
+        backgroundColor:'#FFFFFF',
         borderColor:'#61285F45',
         borderWidth:1,
-        width:'80%',
+        height:scaledHeight(50),
+        justifyContent:'center',   
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       // borderRadius:scaledHeight(25),
-        height:scaledHeight(50),
-        backgroundColor:'#FFFFFF',
-        alignItems:'center',
-        justifyContent:'center'
+        width:'80%'
      },
     cancelButtonText:{
         color:'#544A54',
@@ -112,17 +111,16 @@ export const styles = StyleSheet.create({
         width:'100%'
     },
     continueButton:{
+        alignItems:'center',
+        backgroundColor:"rgba(84,74,84,0.5)",
         borderColor:'#61285F45',
         borderWidth:1,
-        width:'80%',
+        height:scaledHeight(50),
+        justifyContent:'center',  
         marginLeft:'10%',
         marginRight:'10%',
         marginTop:scaledHeight(15),
-       // borderRadius:scaledHeight(25),
-        height:scaledHeight(50),
-        backgroundColor:"rgba(84,74,84,0.5)",
-        alignItems:'center',
-        justifyContent:'center',
+        width:'80%',
      },
     continueButtonSelected:{
         alignItems:'center',
@@ -208,3 +206,5 @@ export const styles = StyleSheet.create({
     },
     
 });
+
+export default styles;

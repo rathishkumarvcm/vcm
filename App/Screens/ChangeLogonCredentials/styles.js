@@ -1,8 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
-
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     backButtonFlex: {
         alignItems: 'center',
         borderColor: '#61285F45',
@@ -68,17 +67,16 @@ export const styles = StyleSheet.create({
         padding: "3%",
         textAlignVertical: "center"
     },
-    resetPasswordFlex: {
-        // backgroundColor: '#EEEEEE',
+    resetPasswordFlex: {       
         borderColor: '#A4A4A4DD',
         borderWidth: scaledHeight(1),
+        flexDirection: 'row',
         height: scaledHeight(120),
-        width: "92%",
+        justifyContent: 'space-around',
         marginLeft: "4%",
         marginRight: "4%",
         marginTop: scaledHeight(30),
-        flexDirection: 'row',
-        justifyContent: 'space-around'
+        width: "92%"
     },
     resetPasswordFlex1: {
         justifyContent: 'space-around',
@@ -123,3 +121,5 @@ export const styles = StyleSheet.create({
 
 
 });
+
+export default styles;

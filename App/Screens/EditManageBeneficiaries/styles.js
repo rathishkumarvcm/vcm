@@ -96,14 +96,13 @@ const styles = StyleSheet.create({
     width: "80%"
   },
   distributionValueTxt: {
-    color: '#B5B5B5',
-   //  width: scaledHeight(60),
-    height: scaledHeight(40),
-    fontSize: scaledHeight(10),
-    borderColor: '#B5B5B5',
-    textAlign: 'center',
+    borderColor: '#B5B5B5',   
     borderWidth: scaledHeight(1),
-    paddingTop:'4%'
+    color: '#B5B5B5',
+    fontSize: scaledHeight(10),
+    height: scaledHeight(40),
+    paddingTop:'4%',
+    textAlign: 'center'
   },
   distributionView: {
     flexDirection: 'row',

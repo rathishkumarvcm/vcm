@@ -1,9 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
-
-
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     addView : {
         alignItems:'center',
         backgroundColor:'#06748C',
@@ -44,14 +42,13 @@ export const styles = StyleSheet.create({
       //  marginTop : "5%"
       // marginBottom : "5%"
     },
-    floatStyle: {
-            // height:scaledHeight(20),
-            width:'90%',
-            justifyContent: "center",
+    floatStyle: {           
             alignItems:'center',
-            borderRadius:scaledHeight(5),
             backgroundColor:"gray",
-            marginTop:scaledHeight(100)    
+            borderRadius:scaledHeight(5),
+            justifyContent: "center",
+            marginTop:scaledHeight(100),
+            width:'90%'    
     },
     homeText:{
         fontSize:scaledHeight(10)
@@ -78,3 +75,5 @@ export const styles = StyleSheet.create({
         width:40
     },
 });
+
+export default styles;

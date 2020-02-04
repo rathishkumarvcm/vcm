@@ -1,8 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
-
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     accRecPrefText: {
         color: '#535353',
         fontSize: scaledHeight(20),
@@ -145,3 +144,5 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
 });
+
+export default styles;

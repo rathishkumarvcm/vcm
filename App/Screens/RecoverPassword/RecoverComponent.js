@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text } from 'react-native';
 import PropTypes from 'prop-types';
-import { styles } from './styles';
+import styles from './styles';
 import {
   GHeaderComponent,
   GFooterSettingsComponent,
@@ -51,15 +51,16 @@ class RecoveryComponent extends Component {
       str_security: text
     });
   }
+
   navigationResetOpt = () => {
 
-    let validSSn=regEx.allowNineNumeric.test(this.state.ssn);
+    const validSSn=regEx.allowNineNumeric.test(this.state.ssn);
     this.setState({
-      boo_OnlineId: this.state.onlineId == "" ? true : false,
+      boo_OnlineId: this.state.onlineId == "",
       err_onlineId: this.state.onlineId == "" ? globalString.recoverPassword.err_onlineId: '',
       boo_ssn: !validSSn,
       err_ssn: !validSSn ? globalString.recoverPassword.err_ssn : '',
-      boo_security:this.state.str_security==''?true:false,
+      boo_security:this.state.str_security=='',
       err_security:this.state.str_security==''? globalString.recoverPassword.err_security:''
     });
 
@@ -67,7 +68,7 @@ class RecoveryComponent extends Component {
     {
       if (!this.state.onlineId == "" && validSSn && !this.state.str_security=='')
       {
-        let recoveryJson={
+        const recoveryJson={
           onlineId:this.state.onlineId,
           ssn:this.state.ssn,
           security:this.state.str_security
@@ -77,20 +78,20 @@ class RecoveryComponent extends Component {
       }
     }
     else
-    {
-        if (!this.state.onlineId == "")
+    if (!this.state.onlineId == "")
         {
-          let recoveryJson={
+          const recoveryJson={
             onlineId:this.state.onlineId,
           };
           console.log(recoveryJson);
           this.props.navigation.navigate('passwordRecoverTemp');
         }
-    }
 
     
   }
+
   navigationLogin = () => this.props.navigation.goBack();
+
   render() {
     return (
       <View style={styles.container}>
@@ -104,7 +105,7 @@ class RecoveryComponent extends Component {
               <Text style={styles.notifInnerText}>{globalString.recoverPassword.retrive_password}</Text>
             </View>
             <View style={styles.notifClose}>
-            <Text>{'X'}</Text>
+            <Text>X</Text>
             </View>
         </View>
           
@@ -124,7 +125,7 @@ class RecoveryComponent extends Component {
 
           />
           <Text style={styles.errorMessage}>{this.state.err_onlineId}</Text>
-          {this.state.isCustomer ?
+          {this.state.isCustomer ? (
             <View>
               <View style={styles.passwordView}>
                 <Text style={styles.userIDText}>{globalString.recoverPassword.lable_ssn}</Text>
@@ -157,6 +158,7 @@ class RecoveryComponent extends Component {
               />
               <Text style={styles.errorMessage}>{this.state.err_security}</Text>
             </View>
+          )
             : <></>}
           <GButtonComponent
             buttonStyle={styles.cancelButton}
@@ -182,6 +184,7 @@ RecoveryComponent.propTypes = {
 };
 
 RecoveryComponent.defaultProps = {
+  navigation:{}
 
 };
 

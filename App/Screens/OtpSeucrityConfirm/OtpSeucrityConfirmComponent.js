@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Text,View,ScrollView,TouchableOpacity } from 'react-native';
-import {styles} from './styles';
-import {GButtonComponent,GHeaderComponent,GIcon, GFooterComponent} from '../../CommonComponents';
-import { CustomPageWizard } from '../../AppComponents';
 import PropTypes from 'prop-types';
 import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
+import styles from './styles';
+import {GButtonComponent,GHeaderComponent,GIcon, GFooterComponent} from '../../CommonComponents';
+import { CustomPageWizard } from '../../AppComponents';
 
 class OtpSeucrityConfirmComponent extends Component {
     constructor(props){
@@ -57,20 +57,20 @@ class OtpSeucrityConfirmComponent extends Component {
                 />
             <View style={styles.signInView}>
                 <Text style={styles.signIntext}>
-                    {"3 Setup Security Questions"}
+                    3 Setup Security Questions
                 </Text>
             </View>
 
             <View style={styles.otpHeaderSection}>
                 <Text style={styles.otpAuthHeader}>
-                        {'Confirm Security Answers'}
+                        Confirm Security Answers
                 </Text> 
             </View>
 
             <View style={styles.securityList}>
                 <View style={styles.securityListItem}>
                     <Text style={styles.securityListTitle}>
-                    {"Security Question1"}
+                    Security Question1
                     </Text>
                     <Text style={styles.securityListQuestion}>
                     {this.props.saveQuestionsData.list_security_questions[0].question1}   
@@ -82,7 +82,7 @@ class OtpSeucrityConfirmComponent extends Component {
 
                 <View style={styles.securityListItem}>
                     <Text style={styles.securityListTitle}>
-                        {"Security Question2"}
+                        Security Question2
                     </Text>
                     <Text style={styles.securityListQuestion}>
                     {this.props.saveQuestionsData.list_security_questions[1].question2}  
@@ -95,7 +95,7 @@ class OtpSeucrityConfirmComponent extends Component {
 
                 <View style={styles.securityListItem}>
                     <Text style={styles.securityListTitle}>
-                        {"Security Question3"}
+                        Security Question3
                     </Text>
                     <Text style={styles.securityListQuestion}>
                     {this.props.saveQuestionsData.list_security_questions[2].question3}
@@ -107,7 +107,7 @@ class OtpSeucrityConfirmComponent extends Component {
 
                 <View style={styles.securityListItem2}>
                     <Text style={styles.securityListQuestion}>
-                        {"Primary Email"}
+                        Primary Email
                     </Text>
                     <Text style={styles.securityListAnswer}>
                         {this.props.saveQuestionsData.primaryEmail}
@@ -121,12 +121,12 @@ class OtpSeucrityConfirmComponent extends Component {
                     <Text style={styles.securityListAnswer}>
                         {this.props.saveQuestionsData.additionalEmail}
                     </Text>
-                </View>*/}
+                </View> */}
 
 
                 <View style={styles.securityListItem1}>
                     <Text style={styles.securityListQuestion}>
-                        {"Document Delivery preferences"}
+                        Document Delivery preferences
                     </Text>
                     <Text style={styles.securityListAnswer}>
                         {this.props.saveQuestionsData.documentDeliveryPreference}
@@ -161,7 +161,7 @@ class OtpSeucrityConfirmComponent extends Component {
 
            
             
-            <GFooterComponent/>
+            <GFooterComponent />
             </ScrollView>
             </View>
     
@@ -174,7 +174,7 @@ OtpSeucrityConfirmComponent.propTypes = {
   };
   
   OtpSeucrityConfirmComponent.defaultProps = {
- 
+    navigation:{}
   };
 
 export default OtpSeucrityConfirmComponent;

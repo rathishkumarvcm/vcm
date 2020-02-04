@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Text,View,ScrollView,TouchableOpacity} from 'react-native';
-import {styles} from './styles';
-import {GButtonComponent,GHeaderComponent,GInputComponent,GFooterSettingsComponent} from '../../CommonComponents';
+import { Text,View,ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
 import { Auth } from "aws-amplify";
+import styles from './styles';
+import {GButtonComponent,GHeaderComponent,GInputComponent,GFooterSettingsComponent} from '../../CommonComponents';
 
 class EmailVerificationComponent extends Component {
     constructor(props){
@@ -29,9 +29,9 @@ class EmailVerificationComponent extends Component {
     }
 
     verifyOTP = () => {
-        let username = this.state.name;
-        let code = this.state.code; 
-        let registerSelfData = this.props.navigation.getParam('passwordData');
+        const username = this.state.name;
+        const {code} = this.state; 
+        const registerSelfData = this.props.navigation.getParam('passwordData');
         console.log("-----username-----",registerSelfData,code);
 
 
@@ -48,8 +48,8 @@ class EmailVerificationComponent extends Component {
     }
 
     resendOTP = () => {
-        let username = this.state.name;
-        let registerSelfData = this.props.navigation.getParam('passwordData');
+        const username = this.state.name;
+        const registerSelfData = this.props.navigation.getParam('passwordData');
         
         Auth.resendSignUp(registerSelfData.emailID).then(() => {
             console.log('code resent successfully');
@@ -89,18 +89,18 @@ class EmailVerificationComponent extends Component {
            
             <View style={styles.signInView}>
                 <Text style={styles.signIntext}>
-                    {"Check your Inbox - Email Verification required"}
+                    Check your Inbox - Email Verification required
                 </Text>
             </View>
 
             <View style={styles.newVictorySection1}>
                 <Text style={styles.openInvestment}>
-                        {"You entered"}
+                        You entered
                 <Text style={styles.openInvestmentBold}>
                     {" John.murphy@gmail.com "}
                 </Text>
                 <Text style={styles.openInvestment}>
-                    {"as the email address that you will use to sign in to your account."}
+                    as the email address that you will use to sign in to your account.
                 </Text>
                 </Text> 
 
@@ -108,7 +108,7 @@ class EmailVerificationComponent extends Component {
 
             <View style={styles.newVictorySection2}>
                 <Text style={styles.openInvestment1}>
-                        {"To complete your registration, we need to verify that this email address belongs to you."}
+                        To complete your registration, we need to verify that this email address belongs to you.
                 </Text>
 
             </View>
@@ -117,7 +117,7 @@ class EmailVerificationComponent extends Component {
                 <Text style={styles.openInvestment}>
                         {"If you do not see the validation email in your inbox, Click "}
                 <Text style={styles.openInvestmentlink}>
-                    {"Resend"}
+                    Resend
                 </Text>
                 <Text style={styles.openInvestment}>
                     {" Verification."}
@@ -130,7 +130,7 @@ class EmailVerificationComponent extends Component {
 
             <View style={styles.signInView}>
                 <Text style={styles.userIDText}>
-                    {"Enter the OTP"}       
+                    Enter the OTP       
                 </Text>
             </View>
 
@@ -145,29 +145,31 @@ class EmailVerificationComponent extends Component {
 
              
            
-           {!this.state.confirmCode ? 
+           {!this.state.confirmCode ? (
            <GButtonComponent 
            buttonStyle={styles.backButton}
            buttonText="Resend"
            textStyle={styles.cancelButtonText}
            onPress={this.resendOTP}
            />
+         )
 :
 null} 
 
-           {this.state.confirmCode ? 
+           {this.state.confirmCode ? (
            <GButtonComponent 
            buttonStyle={styles.signInButton}
            buttonText="Confirm"
            textStyle={styles.signInButtonText}
            onPress={this.verifyOTP}
            />
+         )
  : 
  null} 
 
             <GFooterSettingsComponent />
 
-            {/*<View style={styles.termsofuse}>
+            {/* <View style={styles.termsofuse}>
                 <Text style={styles.termsofuseText}>
                     {"Need Assistance?  "}
                    
@@ -221,6 +223,6 @@ EmailVerificationComponent.propTypes = {
   };
   
   EmailVerificationComponent.defaultProps = {
- 
+    navigation:{}
   };
 export default EmailVerificationComponent;

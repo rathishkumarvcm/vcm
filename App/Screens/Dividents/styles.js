@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     TextOffStyle: {
         color: '#544A54',
         fontSize: scaledHeight(18),
@@ -421,3 +421,5 @@ export const styles = StyleSheet.create({
         marginVertical: scaledHeight(15),
     }
 });
+
+export default styles;

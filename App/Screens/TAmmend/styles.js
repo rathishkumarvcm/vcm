@@ -18,17 +18,16 @@ const styles = StyleSheet.create({
         marginTop: "5%"
     },
     cancelButton: {
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
         borderColor: '#61285F45',
         borderWidth: 1,
-        width: '35%',
+      
+        height: scaledHeight(50),       
+        justifyContent: 'center',
         marginLeft: scaledHeight(15),
-        //  marginRight:'10%',
         marginTop: scaledHeight(10),
-        //  borderRadius:scaledHeight(25),
-        height: scaledHeight(50),
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'center'
+        width: '35%'
     },
     cancelButtonText: {
         color: '#544A54',
@@ -70,9 +69,9 @@ const styles = StyleSheet.create({
         //  fontWeight:'bold'
     },
     flexAccDetails1: {
-        //  height:scaledHeight(73),
-        marginTop: "4%",
+      
         flexDirection: 'row',
+        marginTop: "4%",
     }, lblCountText: {
         color: "#0000FF",
         fontSize: scaledHeight(18),
@@ -82,11 +81,11 @@ const styles = StyleSheet.create({
 
     },
     lblLine: {
-        //  width:"100%",
-        flexGrow: 1,
-        marginTop: scaledHeight(9.5),
-        height: scaledHeight(1),
+       
         backgroundColor: '#707070',
+        flexGrow: 1,
+        height: scaledHeight(1),
+        marginTop: scaledHeight(9.5),
         opacity: .25
     },
     lblTxt: {
@@ -101,13 +100,13 @@ const styles = StyleSheet.create({
         marginLeft: "2%",
         marginRight: "2%",
         marginTop: scaledHeight(25),
-        //  marginTop:"4%"     
+       
     },
     lblTxtInnerAmmend: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(14),
         fontWeight: 'bold',
-        //  marginTop: scaledHeight(25),
+      
         marginLeft: "2%",
         marginRight: "2%",
         marginTop: "4%",
@@ -138,12 +137,11 @@ const styles = StyleSheet.create({
         marginTop: "0%"
     },
     modalInsideView: {
-        //  justifyContent: 'center',
-        //  alignItems: 'center',
+      
         backgroundColor: '#ffffff',
         height: "20%",
-        width: "100%",
-        marginTop: scaledHeight(52)
+        marginTop: scaledHeight(52),
+        width: "100%"
     },
     modalText: {
         color: '#535353',
@@ -154,8 +152,7 @@ const styles = StyleSheet.create({
         textAlign: 'left'
     },
     modalView: {
-        //  justifyContent: 'center',
-        //  alignItems: 'center',
+     
         backgroundColor: 'rgba(0,0,0,0.1)',
         height: "100%",
         marginTop: scaledHeight(10)
@@ -173,17 +170,17 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(20),
     },
     saveButton: {
+        alignItems: 'center',
+        backgroundColor: '#56565A',
         borderColor: '#56565A',
         borderWidth: 1,
-        width: '35%',
-        marginLeft: '5%',
-        //  marginRight:'10%',
-        marginTop: scaledHeight(10),
-        //  borderRadius:scaledHeight(25),
+       
         height: scaledHeight(50),
-        backgroundColor: '#56565A',
-        alignItems: 'center',
-        justifyContent: 'center'
+       
+        justifyContent: 'center',
+        marginLeft: '5%',
+        marginTop: scaledHeight(10),
+        width: '35%'
     },
     saveButtonText: {
         color: '#FFFFFF',
@@ -218,13 +215,13 @@ const styles = StyleSheet.create({
         textAlign: 'left',
     },
     sorttext: {
-        textAlign: 'right',
-        //  color:'rgba(51, 51, 51, 0.87)',
-        fontSize: scaledHeight(14),
         color: '#535353',
+       
         flexWrap: 'wrap',
+        fontSize: scaledHeight(14),
+        marginLeft: scaledHeight(70),
         marginTop: scaledHeight(6),
-        marginLeft: scaledHeight(70)
+        textAlign: 'right'
     },
     transactionStatusFlex: {
         backgroundColor: '#F2F2F2',
@@ -233,8 +230,7 @@ const styles = StyleSheet.create({
         borderWidth: scaledHeight(1),
         
         height: scaledHeight(92),
-        // marginLeft: "4%",
-        // marginRight: "4%",
+      
         marginTop: scaledHeight(5)
     },
     transactionStatusMessageFlex: {

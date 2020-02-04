@@ -25,11 +25,10 @@ const styles = StyleSheet.create({
         color: '#FFFFFF'
     },
     editDropdown: {
-        height: scaledHeight(60),
         backgroundColor: '#FFFFFF',
-        // backgroundColor:'red',
+        borderBottomWidth: 1,       
         borderColor: '#00000029',
-        borderBottomWidth: 1,
+        height: scaledHeight(60),
         justifyContent: 'center',
     },
     editDropdownText: {

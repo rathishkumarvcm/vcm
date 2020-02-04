@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView , TouchableOpacity} from 'react-native';
-import { styles } from './styles';
+import DatePicker from 'react-native-datepicker';
+import PropTypes from "prop-types";
+import styles from './styles';
 import { GButtonComponent , GInputComponent , 
          GRadioButtonComponent, 
          GCheckBoxComponent, GCardTileComponent, GCounterComponent, GIconButton,
          GIcon
 } from '../../CommonComponents';
-import DatePicker from 'react-native-datepicker';
-import PropTypes from "prop-types";
 
 
 const securityQuestions = [
@@ -65,9 +65,9 @@ class CommonUIComponent extends Component {
     
 
     checkBoxClicked = (indexPre,previousValue) => {
-       var tempArray = [];
+       const tempArray = [];
         this.state.usersChoice.map((item,index)=>{
-            var temp = Object.assign({}, item);
+            const temp = { ...item};
             if(index === indexPre){
                 temp.checked = !previousValue;
             }
@@ -79,63 +79,69 @@ class CommonUIComponent extends Component {
     }
 
     chartNavigate = ()=>this.props.navigation.navigate('charts');
+
     goBack = ()=>this.props.navigation.goBack();
+
     pdfFeatures = ()=>this.props.navigation.navigate('pdfFeatures');
+
     listView = ()=>this.props.navigation.navigate('listView');
+
     pagination = ()=>this.props.navigation.navigate('pagination');
+
     navigatePdf = ()=>this.props.navigation.navigate('pdf');
+
     navigateSearch = ()=>this.props.navigation.navigate('search');
     
     render(){
         return (
             <ScrollView style={{flex:1,flexDirection:'column'}}>
                 <View style={styles.containerStyle}>
-                <Text style={styles.labeltext}>{"Button Component:"}</Text>
+                <Text style={styles.labeltext}>Button Component:</Text>
                 <GButtonComponent 
                 // disabled
                 buttonStyle={styles.buttonStyle} 
                 textStyle={styles.buttonTextStyle}
-                buttonText= {"Charts"}
+                buttonText= "Charts"
                 onPress={this.chartNavigate}
                 />
                 <GButtonComponent 
                 buttonStyle={styles.buttonStyle} 
                 textStyle={styles.buttonTextStyle}
-                buttonText= {"Back"}
+                buttonText= "Back"
                 onPress={this.goBack}
                 />
                 <GButtonComponent 
                 buttonStyle={styles.buttonStyle} 
                 textStyle={styles.buttonTextStyle}
-                buttonText= {"PDF POC"}
+                buttonText= "PDF POC"
                 onPress={this.pdfFeatures}
                 />
 
                 <GButtonComponent 
                     buttonStyle={styles.buttonStyle} 
                     textStyle={styles.buttonTextStyle}
-                    buttonText= {"Flat List"}
+                    buttonText= "Flat List"
                     onPress={this.listView}
                 />
 
                  <GButtonComponent 
                     buttonStyle={styles.buttonStyle} 
                     textStyle={styles.buttonTextStyle}
-                    buttonText= {"Pagination"}
+                    buttonText= "Pagination"
                     onPress={this.pagination}
                  />
 
                 <GButtonComponent 
                     buttonStyle={styles.buttonStyle} 
                     textStyle={styles.buttonTextStyle}
-                    buttonText= {"Maps"}
+                    buttonText= "Maps"
                     onPress={this.navigatePdf}
                 /> 
 
                 <GButtonComponent 
                     buttonStyle={styles.buttonStyle} 
                     textStyle={styles.buttonTextStyle}
-                    buttonText= {"Search"}
+                    buttonText= "Search"
                     onPress={this.navigateSearch}
                 /> 
 
@@ -144,14 +150,14 @@ class CommonUIComponent extends Component {
                 
                 <View style={{marginTop:'5%'}}>
                     <Text style={styles.labeltext}>
-                        {"Text Input Component:"}
+                        Text Input Component:
                     </Text>
                     <GInputComponent
                     // textInputStyle={}
                     secureTextEntry={false}
-                    inputText={""}
-                    placeholder={"Username"}
-                    placehlderTextColor={"gray"}
+                    inputText=""
+                    placeholder="Username"
+                    placehlderTextColor="gray"
                     autoFocus
                     editable
                     maxLength={100}
@@ -162,9 +168,9 @@ class CommonUIComponent extends Component {
             <View style={{marginTop:'5%',marginBottom:'5%'}}>
                 <GInputComponent
                     secureTextEntry
-                    inputText={""}
-                    placeholder={"Password"}
-                    placehlderTextColor={"gray"}
+                    inputText=""
+                    placeholder="Password"
+                    placehlderTextColor="gray"
                     autoFocus
                     editable
                     maxLength={10}
@@ -186,38 +192,40 @@ class CommonUIComponent extends Component {
 
             <View style={{marginTop:'5%',marginBottom:'5%'}}>
             <Text style={styles.labeltext}>
-                        {"Numeric Input Field:"}
+                        Numeric Input Field:
             </Text>
                 <GInputComponent
                     secureTextEntry={false}
-                    inputText={""}
-                    placeholder={"Numeric Field"}
-                    placehlderTextColor={"gray"}
+                    inputText=""
+                    placeholder="Numeric Field"
+                    placehlderTextColor="gray"
                     autoFocus
                     editable
                     maxLength={10}
-                    keyboardType={"numeric"}
+                    keyboardType="numeric"
                     contextMenuHidden
                 />
             </View>
 
 
             <Text style={styles.labeltext}>
-                        {"Radio Button Component:"}
+                        Radio Button Component:
             </Text>
                 {securityQuestions.map((item,index) => 
-                    index == this.state.radioButtonIndex ? 
+                    index == this.state.radioButtonIndex ? (
                     <GRadioButtonComponent 
                     onPress={()=>this.radioButtonClicked(index)}
                     selected
                     questions = {item.question}
                     />
-                    :
+                  )
+                    : (
                     <GRadioButtonComponent 
                     onPress={()=>this.radioButtonClicked(index)}
                     selected = {false}
                     questions = {item.question}
                     />
+                  )
                 )}
 
                 <Text style={{fontSize:20,
@@ -225,35 +233,37 @@ class CommonUIComponent extends Component {
         height:30,
         color:'green'}}
                 >
-                        {"Card Tile Component:"}
+                        Card Tile Component:
                 </Text>
                 <GCardTileComponent 
-                title={"Account Number"} 
-                details={"0000001004067032"} 
+                title="Account Number" 
+                details="0000001004067032" 
                 tileStyles={{color:"black"}
             }
                 />
-                <GCardTileComponent title={"Branch"} details={"Beasant Nagar"} />
-                <GCardTileComponent title={"Name"} details={"VCM.com"} tileStyles={{color:"black"}} />
-                <GCardTileComponent title={"Available Balance"} details={"246.31"} />
+                <GCardTileComponent title="Branch" details="Beasant Nagar" />
+                <GCardTileComponent title="Name" details="VCM.com" tileStyles={{color:"black"}} />
+                <GCardTileComponent title="Available Balance" details="246.31" />
 
                 <Text style={styles.labeltext}>
-                        {"Check Box Component:"}
+                        Check Box Component:
                 </Text>
                 {this.state.usersChoice.map((item,index) =>
-                    (<GCheckBoxComponent 
+                    (
+<GCheckBoxComponent 
                     onPress={()=>this.checkBoxClicked(index, item.checked)}
                     selected = {item.checked}
                     options = {item.options}
                     key = {item.options}
-                    />)
+/>
+)
                 )} 
                 {/* <Button title={strings("common.back")} onPress={()=>Actions.pop()} />  */}
                 
                 <View style={{height:10}} />
 
                 <Text style={styles.labeltext}>
-                        {"Date Picker Component:"}
+                        Date Picker Component:
                 </Text>
 
                 <DatePicker
@@ -277,13 +287,13 @@ class CommonUIComponent extends Component {
                         marginLeft: 36
                     }
                     }}
-                    onDateChange={(date) => {this.setState({date: date});}}
+                    onDateChange={(date) => {this.setState({date});}}
                 />
 
 
 <View style={{marginTop:'5%',marginBottom:'5%'}}>
                     <Text style={styles.labeltext}>
-                            {"Icon Button Component:"}
+                            Icon Button Component:
                     </Text>
                     <GIconButton 
                         title="Icon Button"
@@ -297,7 +307,7 @@ class CommonUIComponent extends Component {
                 
                 <View style={{marginTop:'5%',marginBottom:'5%'}}>
                     <Text style={styles.labeltext}>
-                            {"Icon Button Component 2"}
+                            Icon Button Component 2
                     </Text>
                     <GIconButton 
                         title="Icon Button 2"
@@ -310,7 +320,7 @@ class CommonUIComponent extends Component {
 
                 <View style={{marginTop:'5%',marginBottom:'5%'}}>
                     <Text style={styles.labeltext}>
-                            {"Icon Button Component 3"}
+                            Icon Button Component 3
                     </Text>
                     <GIconButton 
                         title="Icon Button 3"
@@ -327,7 +337,7 @@ class CommonUIComponent extends Component {
 
                 <View style={{marginTop:'5%',marginBottom:'5%'}}>
                     <Text style={styles.labeltext}>
-                            {"Icon Button Component 4"}
+                            Icon Button Component 4
                     </Text>
                     <GIconButton 
                         title="Icon Button 4"
@@ -341,7 +351,7 @@ class CommonUIComponent extends Component {
 
                 <View style={{marginTop:'5%',marginBottom:'5%'}}>
                     <Text style={styles.labeltext}>
-                            {"Icons in a column"}
+                            Icons in a column
                     </Text>
                     <GIcon 
                         name="home"
@@ -358,7 +368,7 @@ class CommonUIComponent extends Component {
 
                 <View style={{marginTop:'5%',marginBottom:'5%'}}>
                     <Text style={styles.labeltext}>
-                            {"Icons in a row"}
+                            Icons in a row
                     </Text>
                     <View style={{flexDirection: 'row', flex: 1}}>
                         <View>    
@@ -393,23 +403,23 @@ class CommonUIComponent extends Component {
                             />
                         </View>
                         <View>
-                            {/*<GIcon 
+                            {/* <GIcon 
                                 name="account-plus"
                                 type="material-community"
                                 size={40}
                                 color="black"
-                            />*/}
+                            /> */}
                         </View>
                     </View>
                 </View>
 
                 <View style={{marginTop:'5%',marginBottom:'5%'}}>
                     <Text style={styles.labeltext}>
-                            {"Icon Buttons No Text"}
+                            Icon Buttons No Text
                     </Text>
                     <View style={{flexDirection: 'row', flex: 1}}>
                         <View> 
-                            <TouchableOpacity >   
+                            <TouchableOpacity>   
                                 <GIcon 
                                     name="home"
                                     size={30}
@@ -418,7 +428,7 @@ class CommonUIComponent extends Component {
                             </TouchableOpacity>
                         </View>
                         <View>
-                            <TouchableOpacity >   
+                            <TouchableOpacity>   
                                 <GIcon 
                                     name="address-card"
                                     type="font-awesome"
@@ -428,7 +438,7 @@ class CommonUIComponent extends Component {
                             </TouchableOpacity>
                         </View>
                         <View>
-                            <TouchableOpacity >   
+                            <TouchableOpacity>   
                                 <GIcon 
                                     name="social-facebook"
                                     type="foundation"
@@ -444,7 +454,7 @@ class CommonUIComponent extends Component {
                 <View style={{height:10}} />
 
                 <Text style={styles.labeltext}>
-                        {"Counter Component:"}
+                        Counter Component:
                 </Text>
 
                  <View style={{flex:1,flexDirection:'row',height:200}}>

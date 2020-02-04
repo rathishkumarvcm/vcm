@@ -253,13 +253,7 @@ const styles = StyleSheet.create({
         flexWrap:'wrap',
         fontSize:scaledHeight(16),
         lineHeight:28
-    },
-    lblRadioBtnTxt: {
-        color: '#333333DE',
-        flexWrap: 'wrap',
-        fontSize: scaledHeight(16),
-        lineHeight: 28
-    },
+    },  
     lblRadioDescTxt:{
         color:'#333333DE',
         flexWrap:'wrap',
@@ -267,15 +261,7 @@ const styles = StyleSheet.create({
         lineHeight:22,
         marginTop:scaledHeight(14),
         opacity:.75
-    },
-    lblRadioDescTxt: {
-        color: '#333333DE',
-        flexWrap: 'wrap',
-        fontSize: scaledHeight(14),
-        lineHeight: 22,
-        marginTop: scaledHeight(14),
-        opacity: .75
-    },
+    },  
     lblSpecimen: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
@@ -315,11 +301,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         flexGrow:1,
         marginTop:scaledHeight(0)
-    },
-    radioBtnGrp: {
-        flexGrow: 1,
-        marginTop: scaledHeight(19),
-    },
+    },    
     radioStyle:{ marginBottom: scaledHeight(0), marginTop: scaledHeight(24), width: "30%" },
     savingtxt:
     { marginBottom: scaledHeight(15), width: "50%" },

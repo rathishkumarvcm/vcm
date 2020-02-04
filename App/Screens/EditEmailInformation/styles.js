@@ -47,11 +47,10 @@ const styles = StyleSheet.create({
         alignItems: "center", flexDirection: 'row', justifyContent: 'center', marginBottom: '2%', marginLeft: '3%', marginTop: '2%', width: '100%'
     },
     editDropdown: {
-        height: scaledHeight(60),
         backgroundColor: '#FFFFFF',
-        // backgroundColor:'red',
+        borderBottomWidth: 1,   
         borderColor: '#00000029',
-        borderBottomWidth: 1,
+        height: scaledHeight(60),
         justifyContent: 'center',
     },
     editDropdownText: {

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import {styles} from './styles';
 import {View, ScrollView, Text, TouchableOpacity} from 'react-native';
-import { GHeaderComponent, GIcon, GFooterComponent } from '../../CommonComponents';
 import PropTypes from "prop-types";
+import styles from './styles';
+import { GHeaderComponent, GIcon, GFooterComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 
 class ProfilesAndPreferences extends Component {
@@ -31,11 +31,16 @@ class ProfilesAndPreferences extends Component {
         }
     }
 
-    navigateBack = () => this.props.navigation.goBack();   
+    navigateBack = () => this.props.navigation.goBack();
+   
     navigateProfile = () => this.props.navigation.navigate('profileSettings');
+
     navigateDeliverySettings = () => this.props.navigation.navigate('deliverySettings');
+
     navigateAccountMessaging = () => this.props.navigation.navigate('accountMessagingSettings');
-    navigateSecurityPreference = () => this.props.navigation.navigate('securityPreference');    
+
+    navigateSecurityPreference = () => this.props.navigation.navigate('securityPreference');
+    
     navigateMarketingPrivacySettings = () => this.props.navigation.navigate('marketingandPrivacySettings');
     
     removeWelcomeText = () => {
@@ -219,5 +224,8 @@ ProfilesAndPreferences.propTypes = {
     navigation : PropTypes.instanceOf(Object),
     initialState : PropTypes.instanceOf(Object)
 };
-
+ProfilesAndPreferences.defaultProps = {
+    navigation:{},
+    initialState:{}
+};
 export default ProfilesAndPreferences;

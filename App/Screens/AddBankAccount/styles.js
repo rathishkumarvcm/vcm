@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     accountText: {
         color: '#5D83AEDE',
         flex: 0.9,
@@ -121,3 +121,5 @@ export const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
 });
+
+export default styles;

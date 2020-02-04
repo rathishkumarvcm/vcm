@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     accountNameHeaderText: {
         alignSelf: 'flex-start',
         color: '#56565A',
@@ -33,11 +33,7 @@ export const styles = StyleSheet.create({
         marginRight: '10.7%',
         marginTop: scaledHeight(40),
         width: '78.6%'
-    },
-    backButtonText: {
-        color: '#544A54',
-        fontSize: scaledHeight(16)
-    },
+    },    
     backButtonText: {
         color: '#56565A',
         fontSize: scaledHeight(16)
@@ -139,3 +135,5 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 });
+
+export default styles;

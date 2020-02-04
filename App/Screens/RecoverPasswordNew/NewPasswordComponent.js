@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text } from 'react-native';
-import { styles } from './styles';
+import PropTypes from 'prop-types';
+import styles from './styles';
 import {
   GHeaderComponent,
   GFooterSettingsComponent,
   GButtonComponent,
   GInputComponent,
 } from '../../CommonComponents';
-import PropTypes from 'prop-types';
 import globalString from '../../Constants/GlobalStrings';
 import * as regexConst from '../../Constants/RegexConstants';
 // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
@@ -60,12 +60,14 @@ class NewPasswordComponent extends Component {
     const validate = (ValidatePassword(this.state.str_new)===globalString.userManagement.strong);
     this.setState({ validationPassword: validate });
 }
+
   navigationLogin = () => this.props.navigation.navigate('login');
+
   navigationSuccess = () => 
   {
     
-    let validate_new=regexConst.passwordRegex.test(this.state.str_new);
-    let validate_cfm=regexConst.passwordRegex.test(this.state.str_cfm);
+    const validate_new=regexConst.passwordRegex.test(this.state.str_new);
+    const validate_cfm=regexConst.passwordRegex.test(this.state.str_cfm);
     
     // const validPass=regexConst.passwordRegex.test(this.state.str_new);
     this.setState({
@@ -79,7 +81,7 @@ class NewPasswordComponent extends Component {
      if(validate_new && validate_cfm)
         if(this.state.str_new == this.state.str_cfm)
         {
-          let recoveryJson={
+          const recoveryJson={
             newPassword:this.state.str_new,
           };
           console.log(recoveryJson);
@@ -92,6 +94,7 @@ class NewPasswordComponent extends Component {
           });
         }
 }
+
   navigationBack = () => this.props.navigation.goBack();
 
   render() {
@@ -202,6 +205,8 @@ NewPasswordComponent.propTypes = {
   navigation: PropTypes.instanceOf(Object),
 };
 
-NewPasswordComponent.defaultProps = {};
+NewPasswordComponent.defaultProps = {
+  navigation:{}
+};
 
 export default NewPasswordComponent;
