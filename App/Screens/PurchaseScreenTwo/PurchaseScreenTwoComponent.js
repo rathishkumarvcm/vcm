@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity, FlatList, Modal } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, Image, FlatList, Modal } from 'react-native';
 import PropTypes from "prop-types";
 import { GIcon, GInputComponent, GHeaderComponent, GDateComponent, GDropDownComponent, GButtonComponent, GFooterSettingsComponent, GLoadingSpinner } from '../../CommonComponents';
 import styles from './styles';
@@ -8,7 +8,6 @@ import { CustomCheckBox, PageNumber } from '../../AppComponents';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import AppUtils from '../../Utils/AppUtils';
 
-const specimen = require("../../Images/specimen.png");
 const lowRisk = require("../../Images/riskLow.png");
 const mediumRisk = require("../../Images/riskMedium.png");
 const highRisk = require("../../Images/riskHigh.png");
@@ -17,7 +16,6 @@ const images = {
     Low: lowRisk,
     Medium: mediumRisk,
     High: highRisk
-
 };
 
 const fundingOptionsData = [
@@ -74,7 +72,6 @@ class PurchaseScreenTwoComponent extends Component {
             applyFilterState: false,
             fundList: [],
             totalInitialInvestment: "",
-            // isFilterApplied: false,
             ammend: false
         };
     }
@@ -585,6 +582,13 @@ class PurchaseScreenTwoComponent extends Component {
                     <View style={styles.marginBottomStyle}>
                         <Text style={styles.fundItemValueHeading}>Risk</Text>
                         <Text style={styles.fundItemValueTxt}>{item.risk}</Text>
+                    </View>
+                    <View style={styles.marginBottomStyle}>
+                        <Image style={styles.riskLevelImg}
+                            resizeMode="cover"
+                            source={images[item.risk]}
+                        />
+
                     </View>
                 </View>
             </View>

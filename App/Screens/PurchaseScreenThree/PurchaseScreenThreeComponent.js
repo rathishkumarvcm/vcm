@@ -41,7 +41,7 @@ let isIRA = false;
 class PurchaseScreenThreeComponent extends Component {
     constructor(props) {
         super(props);
-        const { navigation, purchaseData } = this.props;
+        const { purchaseData } = this.props;
         this.state = {
             selectedBankAccountIndex: null,
             showCheckMsg: false,
@@ -61,9 +61,6 @@ class PurchaseScreenThreeComponent extends Component {
             ammend: false
 
         };
-        ammendData = `${navigation.getParam('data')}`;
-        ammendIndex = `${navigation.getParam('index')}`;
-        ammend = `${navigation.getParam('ammend')}`;
         savedData = purchaseData.savePurchaseSelectedData;
     }
 
@@ -72,6 +69,11 @@ class PurchaseScreenThreeComponent extends Component {
     }
 
     updateState = () => {
+        if (`${navigation.getParam('ammend')}`) {
+            ammendData = `${navigation.getParam('data')}`;
+            ammendIndex = `${navigation.getParam('index')}`;
+            ammend = `${navigation.getParam('ammend')}`;
+        }
         if (savedData) {
             if (savedData.selectedFundSourceData) {
                 this.setState({

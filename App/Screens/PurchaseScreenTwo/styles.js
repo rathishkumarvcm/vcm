@@ -397,6 +397,10 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     width: '100%'
   },
+  riskLevelImg: {
+    height: scaledHeight(54),
+    width: scaledHeight(110)
+  },
   stmtTxtStyle: {
     color: "#333333DE",
     fontSize: scaledHeight(18),
