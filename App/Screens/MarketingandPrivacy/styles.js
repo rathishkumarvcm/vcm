@@ -3,8 +3,7 @@ import { scaledHeight} from '../../Utils/Resolution';
 
 const {width} = Dimensions.get('window');
 
-
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     completeBorder:{
         backgroundColor:'#FFFFFF',
         borderBottomWidth:1,
@@ -428,7 +427,7 @@ export const styles = StyleSheet.create({
         marginRight:'4%',
         marginTop:scaledHeight(30),
         width: '92%'
-    },
+    },   
     termsofuse:{
         flexDirection:'row',
         flexWrap:'wrap',
@@ -473,3 +472,5 @@ export const styles = StyleSheet.create({
         paddingRight: '5%'
     },
 });
+
+export default styles;

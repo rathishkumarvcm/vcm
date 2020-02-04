@@ -1,164 +1,24 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, Switch, FlatList, Image } from 'react-native';
-import { styles } from './styles';
-import { GHeaderComponent, GIcon, GRadioButtonComponent } from '../../CommonComponents';
-import { scaledHeight } from '../../Utils/Resolution';
 import PropTypes from "prop-types";
+import styles from './styles';
+import { GHeaderComponent} from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
+import UserPhoneInformation from './UserPhoneInformation';
+import UserEmailInformation from './UserEmailInformation';
+import UserAddressInformation from './UserAddressInformation';
 
-const UserPhoneInformation = (props) => {
-    return (
-        <View style={styles.editEmailHolder}>
-            <View style={[styles.profileDivideIcon]}>
-                <View style={styles.profileDivideIconOne}>
-                    <Text style={styles.editEmailType}>
-                        {props.mobileNumberType}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {props.mobileNumber}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {props.mobilePreferredTime}
-                    </Text>
-                </View>
-                {/* <View style={styles.profileDivideIconTwo}>
-                    <Image style={styles.imageWidthHeight}
-                        source={require("../../Images/menu_icon.png")} />
-                </View> */}
-            </View>
-
-            <View style={styles.editEmailBorder} />
-
-            <View style={styles.editAddressView}>
-                <Text style={styles.editAddressLabel}>
-                    {globalString.marketingPrivacyLabel.marketingContactLabel}
-                </Text>
-                <View style={styles.editSwitchButton}>
-                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={props.onMobileToggle}
-                        value={props.isPrimaryMobile} />
-                </View>
-            </View>
-        </View>
-    );
-};
-
-UserPhoneInformation.propTypes = {
-    mobileNumberType: PropTypes.string,
-    mobileNumber: PropTypes.string,
-    mobilePreferredTime: PropTypes.string,
-    isPrimaryMobile: PropTypes.bool,
-    onMobileToggle: PropTypes.func
-};
-
-//  Email Information's Data
-
-const UserEmailInformation = (props) => {
-    return (
-        <View style={styles.editEmailHolder}>
-            <View style={[styles.profileDivideIcon]}>
-                <View style={styles.profileDivideIconOne}>
-                    <Text style={styles.editEmailType}>
-                        {props.emailType}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {props.emailId}
-                    </Text>
-                </View>
-
-                {/* <View style={styles.profileDivideIconTwo}>
-                    <Image style={styles.imageWidthHeight}
-                        source={require("../../Images/menu_icon.png")} />
-                </View> */}
-            </View>
-
-            <View style={styles.editEmailBorder} />
-
-            <View style={styles.editAddressView}>
-                <Text style={styles.editAddressLabel}>
-                    {globalString.marketingPrivacyLabel.marketingContactLabel}
-                </Text>
-
-                <View style={styles.editSwitchButton}>
-                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={props.onEmailToggle}
-                        value={props.isPrimaryEmail} />
-                </View>
-            </View>
-        </View>
-    );
-};
-
-UserEmailInformation.propTypes = {
-    emailType: PropTypes.string,
-    emailId: PropTypes.string,
-    isPrimaryEmail: PropTypes.bool,
-    onEmailToggle: PropTypes.func
-};
-
-//  Address Informations Data
-
-const UserAddressInformation = (props) => {
-    return (
-        <View style={styles.editEmailHolder}>
-            <View style={[styles.profileDivideIcon]}>
-                <View style={styles.profileDivideIconOne}>
-                    <Text style={styles.editEmailType}>
-                        {props.addressType}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {props.addressLineOne}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {props.addressCity}
-                    </Text>
-                    <Text style={styles.editEmailId}>
-                        {props.addressState}
-                    </Text>
-                </View>
-
-                {/* <View style={styles.profileDivideIconTwo}>
-                    <Image style={styles.imageWidthHeight}
-                        source={require("../../Images/menu_icon.png")} />
-                </View> */}
-            </View>
-
-            <View style={styles.editEmailBorder} />
-
-            <View style={styles.editAddressView}>
-                <Text style={styles.editAddressLabel}>
-                    {globalString.marketingPrivacyLabel.marketingContactLabel}
-                </Text>
-
-                <View style={styles.editSwitchButton}>
-                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
-                        onValueChange={this.toggleSwitchMailing}
-                        value={props.isMailingAddress} />
-                </View>
-            </View>
-        </View>
-    );
-};
-
-UserAddressInformation.propTypes = {
-    addressType: PropTypes.string,
-    addressLineOne: PropTypes.string,
-    addressCity: PropTypes.string,
-    addressState: PropTypes.string,
-    addressZipcode: PropTypes.string,
-    isMailingAddress: PropTypes.bool,
-    isPhysicalAddress: PropTypes.bool
-};
+const switchTrackColor = { flase: '#DBDBDB', true: '#444444' };
 
 class MarketingandPrivacyComponent extends Component {
     constructor(props) {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
-            enableBiometric: false,
-            faceIdEnrolled: false,
-            touchIdEnrolled: false,
+            // isLoading: false,
+            // enableBiometric: false,
+            // faceIdEnrolled: false,
+            // touchIdEnrolled: false,
 
             isMobileRefreshed: false,
             isEmailRefreshed: false,
@@ -175,60 +35,55 @@ class MarketingandPrivacyComponent extends Component {
     }
 
     componentDidMount() {
-        if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileUserMobileNumber) {
+        const {profileState } = this.props;
+        const {isMobileRefreshed,isEmailRefreshed,isAddressRefreshed} = this.state;
+
+        if (profileState && profileState.profileUserMobileNumber) {
             this.setState({
-                mobileNumberData: this.props.profileState.profileUserMobileNumber,
-                isMobileRefreshed: !this.state.isMobileRefreshed
+                mobileNumberData: profileState.profileUserMobileNumber,
+                isMobileRefreshed: !isMobileRefreshed
             });
         }
 
-        if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileUserMailInformation) {
+        if (profileState && profileState.profileUserMailInformation) {
             this.setState({
-                emailData: this.props.profileState.profileUserMailInformation,
-                isEmailRefreshed: !this.state.isEmailRefreshed
+                emailData: profileState.profileUserMailInformation,
+                isEmailRefreshed: !isEmailRefreshed
             });
         }
 
-        if (this.props &&
-            this.props.profileState &&
-            this.props.profileState.profileUserAddressInformation) {
+        if (profileState && profileState.profileUserAddressInformation) {
             this.setState({
-                addressData: this.props.profileState.profileUserAddressInformation,
-                isAddressRefreshed: !this.state.isAddressRefreshed
+                addressData: profileState.profileUserAddressInformation,
+                isAddressRefreshed: !isAddressRefreshed
             });
         }
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (this.props != prevProps) {
-            if (this.props &&
-                this.props.profileState &&
-                this.props.profileState.profileUserMobileNumber) {
+
+        const {profileState } = this.props;
+        const {isMobileRefreshed,isEmailRefreshed,isAddressRefreshed} = this.state;
+
+        if (this.props !== prevProps) {
+            if (profileState && profileState.profileUserMobileNumber) {
                 this.setState({
-                    mobileNumberData: this.props.profileState.profileUserMobileNumber,
-                    isMobileRefreshed: !this.state.isMobileRefreshed
+                    mobileNumberData: profileState.profileUserMobileNumber,
+                    isMobileRefreshed: !isMobileRefreshed
                 });
             }
 
-            if (this.props &&
-                this.props.profileState &&
-                this.props.profileState.profileUserMailInformation) {
+            if (profileState && profileState.profileUserMailInformation) {
                 this.setState({
-                    emailData: this.props.profileState.profileUserMailInformation,
-                    isEmailRefreshed: !this.state.isEmailRefreshed
+                    emailData: profileState.profileUserMailInformation,
+                    isEmailRefreshed: !isEmailRefreshed
                 });
             }
 
-            if (this.props &&
-                this.props.profileState &&
-                this.props.profileState.profileUserAddressInformation) {
+            if (profileState && profileState.profileUserAddressInformation) {
                 this.setState({
-                    addressData: this.props.profileState.profileUserAddressInformation,
-                    isAddressRefreshed: !this.state.isAddressRefreshed
+                    addressData: profileState.profileUserAddressInformation,
+                    isAddressRefreshed: !isAddressRefreshed
                 });
             }
         }
@@ -237,94 +92,113 @@ class MarketingandPrivacyComponent extends Component {
     //  Mobile Toggle and Information 
 
     onMobileToggle = (item, index) => () => {
-        var array = [...this.state.mobileNumberData];
+        const {mobileNumberData,isMobileRefreshed} = this.state;
+        const array = [...mobileNumberData];
         if (index !== -1) {
-            let switchVal = array[index].isPrimaryMobile;
-            array[index].isPrimaryMobile = !switchVal;
+            const switchVal = array[parseInt(index,10)].isPrimaryMobile;
+            array[parseInt(index,10)].isPrimaryMobile = !switchVal;
             this.setState({
                 mobileNumberData: array,
-                isMobileRefreshed: !this.state.isMobileRefreshed
+                isMobileRefreshed: !isMobileRefreshed
             });
         }
     }
 
     renderPhoneInformation = () => ({ item, index }) => {
-        return (<UserPhoneInformation
+        return (
+<UserPhoneInformation
             mobileNumberType={item.mobileNumberType}
             mobileNumber={item.mobileNumber}
             mobilePreferredTime={item.mobilePreferredTime}
             isPrimaryMobile={item.isPrimaryMobile}
-            onMobileToggle={this.onMobileToggle(item, index)} />)
+            onMobileToggle={this.onMobileToggle(item, index)}
+/>
+);
     };
 
     //  Email Toggle and Information
 
     onEmailToggle = (item, index) => () => {
-        var array = [...this.state.emailData];
+        const {emailData,isEmailRefreshed} = this.state;
+        const array = [...emailData];
         if (index !== -1) {
-            let switchVal = array[index].isPrimaryEmail;
-            array[index].isPrimaryEmail = !switchVal;
+            const switchVal = array[parseInt(index,10)].isPrimaryEmail;
+            array[parseInt(index,10)].isPrimaryEmail = !switchVal;
             this.setState({
                 emailData: array,
-                isEmailRefreshed: !this.state.isEmailRefreshed
+                isEmailRefreshed: !isEmailRefreshed
             });
         }
     }
 
     renderEmailInformation = () => ({ item, index }) => {
-        return (<UserEmailInformation
+        return (
+<UserEmailInformation
             emailType={item.emailType}
             emailId={item.emailId}
             isPrimaryEmail={item.isPrimaryEmail}
-            onEmailToggle={this.onEmailToggle(item, index)} />)
+            onEmailToggle={this.onEmailToggle(item, index)}
+/>
+);
     };
 
     //  Address Toggle and Information
 
     onAddressToggle = (item, index) => () => {
-        var array = [...this.state.addressData];
+        const {addressData,isAddressRefreshed} = this.state;
+        const array = [...addressData];
         if (index !== -1) {
-            let switchVal = array[index].isMailingAddress;
-            array[index].isMailingAddress = !switchVal;
+            const switchVal = array[parseInt(index,10)].isMailingAddress;
+            array[parseInt(index,10)].isMailingAddress = !switchVal;
             this.setState({
                 addressData: array,
-                isAddressRefreshed: !this.state.isAddressRefreshed
+                isAddressRefreshed: !isAddressRefreshed
             });
         }
     }
 
     renderAddressInformation = () => ({ item, index }) => {
-        return (<UserAddressInformation
+        return (
+<UserAddressInformation
             addressType={item.addressType}
             addressLineOne={item.addressLineOne}
             addressCity={item.addressCity}
-            addressState={item.addressState + ' ' + item.addressZipcode}
+            addressState={`${item.addressState } ${ item.addressZipcode}`}
             isMailingAddress={item.isMailingAddress}
-            onAddressToggle={this.onAddressToggle(item, index)} />)
+            onAddressToggle={this.onAddressToggle(item, index)}
+/>
+);
     };
 
     onProductMobileToggle = () => {
+        const {productMobileToggle} = this.state;
         this.setState({
-            productMobileToggle: !this.state.productMobileToggle
+            productMobileToggle: !productMobileToggle
         });
     }
 
     onProductHomeToggle = () => {
+        const {productHomeToggle} = this.state;
         this.setState({
-            productHomeToggle: !this.state.productHomeToggle
+            productHomeToggle: !productHomeToggle
         });
     }
 
     onProductMailingToggle = () => {
+        const {productMailingToggle} = this.state;
         this.setState({
-            productMailingToggle: !this.state.productMailingToggle
-        })
+            productMailingToggle: !productMailingToggle
+        });
     }
 
     render() {
+        const {navigation} = this.props;
+        const {mobileNumberData,isMobileRefreshed,emailData,isEmailRefreshed,
+            addressData,isAddressRefreshed,productMobileToggle,productHomeToggle,
+            productMailingToggle} = this.state;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
 
                 <ScrollView style={{ flex: 0.85 }}>
 
@@ -364,10 +238,11 @@ class MarketingandPrivacyComponent extends Component {
                         </View>
 
                         <FlatList
-                            data={this.state.mobileNumberData}
+                            data={mobileNumberData}
                             keyExtractor={this.generateKeyExtractor}
-                            extraData={this.state.isMobileRefreshed}
-                            renderItem={this.renderPhoneInformation()} />
+                            extraData={isMobileRefreshed}
+                            renderItem={this.renderPhoneInformation()}
+                        />
                     </View>
 
                     {/* Home Data */}
@@ -399,10 +274,11 @@ class MarketingandPrivacyComponent extends Component {
                         </View>
 
                         <FlatList
-                            data={this.state.emailData}
+                            data={emailData}
                             keyExtractor={this.generateKeyExtractor}
-                            extraData={this.state.isEmailRefreshed}
-                            renderItem={this.renderEmailInformation()} />
+                            extraData={isEmailRefreshed}
+                            renderItem={this.renderEmailInformation()}
+                        />
                     </View>
 
                     {/* Address Data */}
@@ -415,10 +291,11 @@ class MarketingandPrivacyComponent extends Component {
                         </View>
 
                         <FlatList
-                            data={this.state.addressData}
+                            data={addressData}
                             keyExtractor={this.generateKeyExtractor}
-                            extraData={this.state.isAddressRefreshed}
-                            renderItem={this.renderAddressInformation()} />
+                            extraData={isAddressRefreshed}
+                            renderItem={this.renderAddressInformation()}
+                        />
                     </View>
 
                     {/* Marketing Note Section */}
@@ -475,9 +352,10 @@ class MarketingandPrivacyComponent extends Component {
                                     {globalString.marketingPrivacyLabel.marketingMobilePhoneLabel}
                                 </Text>
                                 <View style={styles.editSwitchButton}>
-                                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                                    <Switch trackColor={switchTrackColor}
                                         onValueChange={this.onProductMobileToggle}
-                                        value={this.state.productMobileToggle} />
+                                        value={productMobileToggle}
+                                    />
                                 </View>
                             </View>
 
@@ -486,9 +364,10 @@ class MarketingandPrivacyComponent extends Component {
                                     {globalString.marketingPrivacyLabel.marketingHomePhoneLabel}
                                 </Text>
                                 <View style={styles.editSwitchButton}>
-                                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                                    <Switch trackColor={switchTrackColor}
                                         onValueChange={this.onProductHomeToggle} 
-                                        value={this.state.productHomeToggle}/>
+                                        value={productHomeToggle}
+                                    />
                                 </View>
                             </View>
 
@@ -498,7 +377,7 @@ class MarketingandPrivacyComponent extends Component {
                                 </Text>
                                 <View style={styles.editSwitchButton}>
                                     <Text style={styles.editAddressLabel}>
-                                        {"N/A"}
+                                        N/A
                                     </Text>
                                 </View>
                             </View>
@@ -508,9 +387,10 @@ class MarketingandPrivacyComponent extends Component {
                                     {globalString.marketingPrivacyLabel.marketingMailingLabel}
                                 </Text>
                                 <View style={styles.editSwitchButton}>
-                                    <Switch trackColor={{ flase: '#DBDBDB', true: '#444444' }}
+                                    <Switch trackColor={switchTrackColor}
                                         onValueChange={this.onProductMailingToggle}
-                                        value={this.state.productMailingToggle} />
+                                        value={productMailingToggle}
+                                    />
                                 </View>
                             </View>
                         </View>
@@ -530,7 +410,8 @@ class MarketingandPrivacyComponent extends Component {
                             </Text>
 
                             <Image style={styles.profileSettingSocialIcon}
-                                source={require("../../Images/logo.png")} />
+                                source="../../Images/logo.png"
+                            />
 
                             <Text style={styles.profileSettingConnectLabel}>
                                 {globalString.common.connectWithUs}
@@ -538,9 +419,11 @@ class MarketingandPrivacyComponent extends Component {
 
                             <View style={styles.whiteBackground}>
                                 <Image style={styles.imageWidthHeight}
-                                    source={require("../../Images/twitterlogo.png")} />
+                                    source="../../Images/twitterlogo.png"
+                                />
                                 <Image style={styles.imageWidthHeight}
-                                    source={require("../../Images/linkedinlogo.png")} />
+                                    source="../../Images/linkedinlogo.png"
+                                />
                             </View>
 
                             <View style={styles.privacyAgreement}>
@@ -577,9 +460,13 @@ class MarketingandPrivacyComponent extends Component {
 }
 
 MarketingandPrivacyComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    profileState :  PropTypes.instanceOf(Object)
 };
 
-MarketingandPrivacyComponent.defaultProps = {};
+MarketingandPrivacyComponent.defaultProps = {
+    navigation:{},
+    profileState : {}
+};
 
 export default MarketingandPrivacyComponent;
