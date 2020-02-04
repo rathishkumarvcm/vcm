@@ -261,7 +261,7 @@ export default {
         work:"Work",
         mobile:"Mobile",
         fax:"Fax",
-        addAnotherNumer:"+ Add Another Number",
+        addAnotherNumber:"+ Add Another Number",
         addAnotherEmail:"+ Add Another Email Address",
         stateTerritory:"State/Territory",
 
@@ -348,6 +348,7 @@ export default {
         ssnTINno: "Social Security Number/ TIN",
         explainTin: "Expalin TIN",
         addAnotherBeneficiary: "+ Add another Primary Beneficiary (Up to 3)",
+        setAsPrimary:"Set as Primary",
 
         investmentSelection: "Investment Selection",
         selectYourMutualFunds: "Select your VCM Mutual Funds",
