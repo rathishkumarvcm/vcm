@@ -6,6 +6,7 @@ import { GIcon, GHeaderComponent, GFooterComponent } from '../../CommonComponent
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 let savedData = {};
 
@@ -31,12 +32,35 @@ class LiquidationPageOneComponent extends Component {
                 currentValue: '',
                 holdingValue: '',
                 AutomaticInvestmentPlan: '',
-            }
+            },
+            accountList: []
         };
     }
 
     componentDidMount() {
         // console.log(" Screen 1 componentdidmount " + JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
+        const { getAccountList } = this.props;
+        const accountListPayload = {
+            "companyNumber": "591",
+            "memberId": "V122221212",
+            "customerId": "V1234567"
+        };
+        getAccountList(accountListPayload);
+    }
+
+    componentDidUpdate(prevProps) {
+        const { liquidationInitialState } = this.props;
+        if (prevProps !== this.props) {
+            let tempAccountList = []
+            if (liquidationInitialState[ActionTypes.GET_ACCOUNT_DETAILS] !== undefined && liquidationInitialState[ActionTypes.GET_ACCOUNT_DETAILS] !== null) {
+                tempAccountList = liquidationInitialState[ActionTypes.GET_ACCOUNT_DETAILS];
+                console.log("Account List in:::::::::", tempAccountList);
+                this.setState({
+                    accountList: [...tempAccountList],
+                    isLoading: false
+                });
+            }
+        }
     }
 
     /* -----------------FlatList Events --------------------- */
@@ -409,11 +433,13 @@ LiquidationPageOneComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     liquidationInitialState: PropTypes.instanceOf(Object),
     saveData: PropTypes.func,
+    getAccountList: PropTypes.func
 };
 
 LiquidationPageOneComponent.defaultProps = {
     navigation: {},
     liquidationInitialState: {},
-    saveData: () => { }
+    saveData: () => { },
+    getAccountList: () => { }
 };
 export default LiquidationPageOneComponent;
