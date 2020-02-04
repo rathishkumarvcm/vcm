@@ -1,8 +1,8 @@
 import React from "react";
 import { View, StyleSheet, } from 'react-native';
+import PropTypes from "prop-types";
 import { scaledHeight } from '../Utils/Resolution';
 import { GButtonComponent } from './GButtonComponent';
-import PropTypes from "prop-types";
 
 /* **************************\
   Function: GSwitchComponent
@@ -11,60 +11,12 @@ import PropTypes from "prop-types";
   Buttons this can be resued by giving  props value
 \************************** */
 const styles = StyleSheet.create({
-    switchContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        marginLeft: '4%',
-        marginBottom: scaledHeight(10)
-    },
-    offButtonStyle: {
-        borderColor: '#56565A',
-        borderRadius: 30,
-        height: scaledHeight(35),
-        borderWidth: 1,
-        marginTop: scaledHeight(12),
-        width: '22%',
-        backgroundColor: '#B7B7B7',
-        alignItems: 'flex-start',
-        justifyContent: 'center'
-    },
-    offButtonStyleDisable: {
-        borderColor: '#56565A',
-        borderRadius: 30,
-        height: scaledHeight(35),
-        borderWidth: 1,
-        marginTop: scaledHeight(12),
-        width: '22%',
-        backgroundColor: '#FFFFFF',
-        alignItems: 'flex-start',
-        justifyContent: 'center'
-    },
-    onButtonStyle: {
-        borderColor: '#56565A',
-        position: 'absolute',
-        left: '16%',
-        borderRadius: 30,
-        height: scaledHeight(35),
-        borderWidth: 1,
-        marginTop: scaledHeight(12),
-        width: '18%',
-        backgroundColor: '#B7B7B7',
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    onButtonStyleDisable: {
-        borderColor: '#56565A',
-        borderRadius: 30,
-        height: scaledHeight(35),
-        position: 'absolute',
-        zIndex: -1,
-        left: '16%',
-        borderWidth: 1,
-        marginTop: scaledHeight(12),
-        width: '18%',
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'center'
+    TextOffStyle: {
+        color: '#A2A2A2',
+        fontSize: scaledHeight(12),
+        fontWeight: 'bold',
+        marginLeft: '30%',
+        marginRight: '10%'
     },
     TextOnStyle: {
         color: '#56565A',
@@ -73,33 +25,85 @@ const styles = StyleSheet.create({
         marginLeft: '30%',
         marginRight: '10%'
     },
-    TextOffStyle: {
-        color: '#A2A2A2',
-        fontSize: scaledHeight(12),
-        fontWeight: 'bold',
-        marginLeft: '30%',
-        marginRight: '10%'
+    offButtonStyle: {
+        alignItems: 'flex-start',
+        backgroundColor: '#B7B7B7',
+        borderColor: '#56565A',
+        borderRadius: 30,
+        borderWidth: 1,
+        height: scaledHeight(35),
+        justifyContent: 'center',
+        marginTop: scaledHeight(12),
+        width: '22%'
+    },
+    offButtonStyleDisable: {
+        alignItems: 'flex-start',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#56565A',
+        borderRadius: 30,
+        borderWidth: 1,
+        height: scaledHeight(35),
+        justifyContent: 'center',
+        marginTop: scaledHeight(12),
+        width: '22%'
+    },
+    onButtonStyle: {
+        alignItems: 'center',
+        backgroundColor: '#B7B7B7',
+        borderColor: '#56565A',
+        borderRadius: 30,
+        borderWidth: 1,
+        height: scaledHeight(35),
+        justifyContent: 'center',
+        left: '16%',
+        marginTop: scaledHeight(12),
+        position: 'absolute',
+        width: '18%'
+    },
+    onButtonStyleDisable: {
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#56565A',
+        borderRadius: 30,
+        borderWidth: 1,
+        height: scaledHeight(35),
+        justifyContent: 'center',
+        left: '16%',
+        marginTop: scaledHeight(12),
+        position: 'absolute',
+        width: '18%',
+        zIndex: -1
+    },
+    switchContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        marginLeft: '4%',
+        marginBottom: scaledHeight(10)
     }
 });
 
-const GSwitchComponent = props => (
+const GSwitchComponent = props => {
+    const {switchOn,offStyle,offStyleDisabled,switchOffText,textOnStyle,textOffStyle,switchOnMethod,switchOff,
+        onStyle,onStyleDisabled,switchOnText,switchOffMethod}=props;
+return(
     <View style={styles.switchContainer}>
         <GButtonComponent
-            disabled={props.switchOn}
-            buttonStyle={props.switchOn ? [styles.offButtonStyle, props.offStyle] : [styles.offButtonStyleDisable, props.offStyleDisabled]}
-            buttonText={props.switchOffText}
-            textStyle={props.switchOn ? [styles.TextOnStyle, props.textOnStyle] : [styles.TextOffStyle, props.textOffStyle]}
-            onPress={props.switchOnMethod}
+            disabled={switchOn}
+            buttonStyle={switchOn ? [styles.offButtonStyle,offStyle] : [styles.offButtonStyleDisable,offStyleDisabled]}
+            buttonText={switchOffText}
+            textStyle={switchOn ? [styles.TextOnStyle,textOnStyle] : [styles.TextOffStyle,textOffStyle]}
+            onPress={switchOnMethod}
         />
         <GButtonComponent
-            disabled={props.switchOff}
-            buttonStyle={props.switchOff ? [styles.onButtonStyle, props.onStyle] : [styles.onButtonStyleDisable, props.onStyleDisabled]}
-            buttonText={props.switchOnText}
-            textStyle={props.switchOff ? [styles.TextOnStyle, props.textOnStyle] : [styles.TextOffStyle, props.textOffStyle]}
-            onPress={props.switchOffMethod}
+            disabled={switchOff}
+            buttonStyle={switchOff ? [styles.onButtonStyle, onStyle] : [styles.onButtonStyleDisable, onStyleDisabled]}
+            buttonText={switchOnText}
+            textStyle={switchOff ? [styles.TextOnStyle, textOnStyle] : [styles.TextOffStyle, textOffStyle]}
+            onPress={switchOffMethod}
         />
     </View>
 );
+};
 
 GSwitchComponent.propTypes = {
     switchOnMethod: PropTypes.func.isRequired,
@@ -129,6 +133,9 @@ GSwitchComponent.defaultProps = {
     onStyleDisabled: {},
     textOnStyle: {},
     textOffStyle: {},
+    buttonStyle:{},
+    textStyle:{}
+
 };
 
 export default GSwitchComponent;

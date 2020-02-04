@@ -10,31 +10,32 @@ class GBiometricAuthentication extends React.PureComponent {
         };
     }
 
-    static getDerivedStateFromProps(props, state){
+    static getDerivedStateFromProps(/* props, state */){
         // initialize state variable and return. If no changes required for state
         // variable then return empty object. return {}
-        console.log('error',props,state);
+        // console.log('error',props,state);
         return {}; // should return empty object by default
 
     }
 
 componentDidMount(){
 
-   
+   const {enableBiometric,onAuthenticate} = this.props;
+   const { biometryAuth } = this.state;
     // console.log("TouchID.isSupported()",TouchID.isSupported(),this.props.enableBiometric)
-    if(this.props.enableBiometric)
+    if(enableBiometric)
     TouchID.isSupported()
     .then(biometryType => {
         if (biometryType === 'TouchID') {
             TouchID.authenticate('Authenticate with fingerprint')
             .then(success => {
                 this.setState({biometryAuth:success},()=>{
-                    this.props.onAuthenticate(this.state.biometryAuth);
+                   onAuthenticate(biometryAuth);
                 });
             })
             .catch(error => {
                 this.setState({biometryAuth:false},()=>{
-                    this.props.onAuthenticate(this.state.biometryAuth);
+                    onAuthenticate(biometryAuth);
                 });
                 console.log('error',error);
             });
@@ -44,13 +45,13 @@ componentDidMount(){
             TouchID.authenticate('Authenticate with faceprint')
             .then(success => {
                 this.setState({biometryAuth:success},()=>{
-                    this.props.onAuthenticate(this.state.biometryAuth);
+                    onAuthenticate(biometryAuth);
                 });
             })
             .catch(error => {
                 // alert(JSON.stringify(error))
                 this.setState({biometryAuth:false},()=>{
-                    this.props.onAuthenticate(this.state.biometryAuth);
+                    onAuthenticate(biometryAuth);
                 });
                 console.log('error',error);
             });
@@ -60,12 +61,12 @@ componentDidMount(){
             TouchID.authenticate('Authenticate with biometric')
             .then(success => {
                 this.setState({biometryAuth:success},()=>{
-                    this.props.onAuthenticate(this.state.biometryAuth);
+                    onAuthenticate(biometryAuth);
                 });
             })
             .catch(error => {
                 this.setState({biometryAuth:false},()=>{
-                    this.props.onAuthenticate(this.state.biometryAuth);
+                    onAuthenticate(biometryAuth);
                 });
                 console.log('error',error);
             });
@@ -76,11 +77,12 @@ componentDidMount(){
     });
     
 }
+
     render(){
-            if(this.props.children!=null)
-                return this.props.children; 
-            else
-                return null;       
+        const {children} = this.props;
+            if(children!=null)
+                return children; 
+            return null;       
         }
 }
 
@@ -90,6 +92,7 @@ GBiometricAuthentication.propTypes ={
     children : PropTypes.instanceOf(Object)
 };
 GBiometricAuthentication.defaultProps={
-    enableBiometric:true
+    enableBiometric:true,
+    children : {}
 };
 export default GBiometricAuthentication;

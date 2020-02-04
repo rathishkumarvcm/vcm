@@ -18,12 +18,19 @@ describe('Account Messaging General Documents',()=>{
     });
 
     //  Function testing 
-    test('function testing',()=>{
-      const component = shallow(<AccountMessagingGeneralDocuments />);
-      const wrapper = new AccountMessagingGeneralDocuments;
-      component.render();
-      wrapper.onSelected('item','type');
-      wrapper.onSelectedConfirm('item');
-   });
+  //   test('function testing',()=>{
+  //     const component = shallow(<AccountMessagingGeneralDocuments />);
+  //     const wrapper = new AccountMessagingGeneralDocuments;
+  //     component.render();
+  //     wrapper.onPrefernceSelected('type','item','selected');
+  //     wrapper.onDocumentsSelected('type','item','selected');     
+  //     wrapper.onSelectedConfirm('item');
+  //     wrapper.toggleSwitch('value');
+  //     wrapper.setInputRef('input');
+  //     wrapper.setApplyState();
+  //     wrapper.onChangeText('state','keyname');
+  //     wrapper.onSubmitEditing('input');
+  //     wrapper.onSubmitZipEditing('state','keyname','focus');      
+  //  });
 
 });

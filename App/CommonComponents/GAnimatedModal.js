@@ -29,41 +29,47 @@ export default class GAnimatedModal extends React.Component {
       this.translateStyle = { transform: [{ translateY: this.modalMoveY }] }; 
     }
 
-    static getDerivedStateFromProps(props, state){
+    static getDerivedStateFromProps(/* props, state */){
       // initialize state variable and return. If no changes required for state
       // variable then return empty object. return {}
-      console.log("props",props,state);
+      // console.log("props",props,state);
       return {}; // should return empty object by default
     }
-    componentDidUpdate(prevProps, prevState) {
-      console.log("prevProps",prevProps,prevState);
-        if (this.props.visible) {
-          //  animate to show the modal
-          this.yTranslate.setValue(0); //  reset the animated value
-          Animated.spring(this.yTranslate, {
-            toValue: 1,
-            duration: 400,
-            overshootClamping:true 
-          }).start();
-        } else {
-          //  animate to hide the modal
-          Animated.timing(this.yTranslate, {
-            toValue: 0,
-            duration: 400,
-            easing: Easing.linear
-          }).start();
-        }
-      }
+
       shouldComponentUpdate(nextProps){
-        if(this.props.visible==nextProps.visible){
+        const {visible}=this.props;
+        if(visible===nextProps.visible){
             return false;
         }
         return true;
       }
+
+      componentDidUpdate(/* prevProps, prevState */) {
+       // console.log("prevProps",prevProps,prevState);
+        const {visible}=this.props;
+          if (visible) {
+            //  animate to show the modal
+            this.yTranslate.setValue(0); //  reset the animated value
+            Animated.spring(this.yTranslate, {
+              toValue: 1,
+              duration: 400,
+              overshootClamping:true 
+            }).start();
+          } else {
+            //  animate to hide the modal
+            Animated.timing(this.yTranslate, {
+              toValue: 0,
+              duration: 400,
+              easing: Easing.linear
+            }).start();
+          }
+        }
+
     render(){
+      const {children}=this.props;
         return (
             <Animated.View style={[styles.container, this.translateStyle,this.props.containerStyle]}>
-              {this.props.children}
+              {children}
             </Animated.View>
           );
     }
@@ -75,5 +81,8 @@ GAnimatedModal.propTypes = {
 };
 
 GAnimatedModal.defaultProps = {
+  visible : false,
+  children :{}
+
  
 };

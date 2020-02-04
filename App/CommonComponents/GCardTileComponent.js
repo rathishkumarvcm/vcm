@@ -5,6 +5,18 @@ import PropTypes from 'prop-types';
 import { scaledHeight } from '../Utils/Resolution';
 
 export const styles = StyleSheet.create({
+    addMore:{
+            color:'blue',           
+            height:scaledHeight(15)
+        },
+    // addView : {
+    //     alignItems:'center',
+    //     backgroundColor:'#06748C',
+    //     borderRadius:5,
+    //     height:scaledHeight(20),
+    //     justifyContent:'center',
+    //     width:scaledHeight(20)
+    // },
     container:{
         flex:1, 
         flexDirection : 'column',
@@ -13,70 +25,49 @@ export const styles = StyleSheet.create({
         marginBottom: '5%',
         alignItems:'center'
     },
-    wrapper:{
-        // flex:0.1,
-        marginTop:'1%',
-        textAlign:'center',
-        alignItems:'center',
-        justifyContent:'center',
-        marginBottom:scaledHeight(20)
+    detailStyle:{
+        fontWeight:'bold',
+        height:scaledHeight(20)       
     },
     tileContainer:{
         flex:1,
         flexDirection:'row',
-        height:scaledHeight(50),
-        // width:'90%',
-        // borderRightWidth:1,
-        // borderLeftWidth:1,
-        // justifyContent:'center',
-        // alignItems:'center'
+        height:scaledHeight(50),        
     },
     titileConatainerB:{
         flex: 1,
         flexDirection:'row',
-        height:scaledHeight(50),
-        // borderLeftWidth:1,
-        // borderRightWidth:1,
-        // justifyContent:'center',
-        // alignItems:'center'
+        height:scaledHeight(50),      
     },
-    detailStyle:{
-        height:scaledHeight(20),
-        fontWeight:'bold'
-       //  textAlign:'center'
-    },
-    addMore:{
-            height:scaledHeight(15),
-           //  textAlign:'center',
-            color:'blue'
-        },
-    addView : {
-        height:scaledHeight(20),
-        width:scaledHeight(20),
-        backgroundColor:'#06748C',
-        justifyContent:'center',
+    wrapper:{       
         alignItems:'center',
-        borderRadius:5
+        justifyContent:'center',
+        marginBottom:scaledHeight(20),
+        marginTop:'1%',
+        textAlign:'center'
     }
 });
 
 
-export const GCardTileComponent = props => (
+export const GCardTileComponent = props => {
+
+    const {tileStyles,details,title} = props;
+    return(
     <View style={styles.container}>
         <View style={styles.wrapper}>
             <Image style={styles.stretch}
-             source={require('../Images/FaceID.png')}
-             resizeMode={"contain"}
+             source="../Images/FaceID.png"
+             resizeMode="contain"
             />
         </View>
         <View style={styles.tileContainer}>
-        <Text style={[styles.detailStyle,props.tileStyles]}>
-        {props.title}
+        <Text style={[styles.detailStyle,tileStyles]}>
+        {title}
         </Text>
         </View>
         <View style={styles.titileConatainerB}>
-        <Text style={[styles.detailStyle,props.tileStyles]}>
-        {props.details}
+        <Text style={[styles.detailStyle,tileStyles]}>
+        {details}
         </Text>
         </View>
         <Text style={styles.addMore}>
@@ -84,6 +75,7 @@ export const GCardTileComponent = props => (
         </Text>
     </View>
 );
+};
 
 GCardTileComponent.propTypes = {
     tileStyles : PropTypes.instanceOf(Object),
@@ -92,6 +84,9 @@ GCardTileComponent.propTypes = {
 };
 
 GCardTileComponent.defaultProps = {
+    tileStyles:{},
+    title:'',
+    details:''
 
 };
 
