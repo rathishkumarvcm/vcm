@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, ScrollView , TouchableOpacity} from 'react-native';
 import { styles } from './styles';
 import { GButtonComponent , GInputComponent , 
-         GFloatingInputComponent, GRadioButtonComponent, 
+         GRadioButtonComponent, 
          GCheckBoxComponent, GCardTileComponent, GCounterComponent, GIconButton,
          GIcon
 } from '../../CommonComponents';
@@ -171,7 +171,7 @@ class CommonUIComponent extends Component {
                 />
             </View>
 
-            <View>
+           {/* <View>
             <Text style={styles.labeltext}>
                         {"Floating Label Component:"}
             </Text>
@@ -182,7 +182,7 @@ class CommonUIComponent extends Component {
                 value={"FloatLabel"}
                 inputStyle={styles.floatInput}
                 />
-            </View>
+           </View> */}
 
             <View style={{marginTop:'5%',marginBottom:'5%'}}>
             <Text style={styles.labeltext}>
