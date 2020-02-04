@@ -1133,7 +1133,7 @@ const AppNavigator = createStackNavigator({
     }
 },
     {
-        initialRouteName: "rmdDashboard"
+        initialRouteName: "login"
     });
 
 export default createAppContainer(AppNavigator);
