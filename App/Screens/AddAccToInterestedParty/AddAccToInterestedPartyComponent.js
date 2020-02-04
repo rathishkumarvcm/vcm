@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import PropTypes from "prop-types";
 import styles from './styles';
-import { GHeaderComponent, GLoadingSpinner, GFooterSettingsComponent, GInputComponent, GDateComponent, GDropDownComponent, GButtonComponent } from '../../CommonComponents';
+import { GHeaderComponent, GFooterSettingsComponent, GInputComponent, GDateComponent, GDropDownComponent, GButtonComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-
-import { nameRegex, emailRegex, zipCodeRegex } from '../../Constants/RegexConstants';
-import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 const accountTypeData = [
     { "key": "1", "value": "Traditional" },
@@ -33,17 +30,20 @@ class AddAccToInterestedPartyComponent extends Component {
         };
     }
 
-    componentDidMount() {
-        this.updateValue();
-    }
-
-    componentDidUpdate(prevProps) {
-
-    }
-
-    updateValue = () => {
-        const { navigation } = this.state;
-        this.setState({ initialData: navigation.getParam('initialData'), parentKey: navigation.getParam('index') });
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const { manageInterestedPartiesData } = nextProps;
+        const { initialData, accountList } = prevState;
+        if (manageInterestedPartiesData && manageInterestedPartiesData.savedInterestedPartyData) {
+            if (manageInterestedPartiesData.savedInterestedPartyData && manageInterestedPartiesData.savedInterestedPartyData.data)
+                return {
+                    initialData: manageInterestedPartiesData.savedInterestedPartyData.data
+                }
+            if (manageInterestedPartiesData.savedInterestedPartyData && manageInterestedPartiesData.savedInterestedPartyData.key)
+                return {
+                    parentKey: manageInterestedPartiesData.savedInterestedPartyData.parentKey
+                }
+        }
+        return prevState;
     }
 
     addTaggedAccount = () => {
@@ -57,7 +57,7 @@ class AddAccToInterestedPartyComponent extends Component {
             accountNameFlag: false,
             accountNameMsg: "",
             accountNumber: "",
-            accountNumberFlag: true,
+            accountNumberFlag: false,
             accountNumberMsg: "",
             startDate: "",
             startDateFlag: true,
@@ -67,7 +67,11 @@ class AddAccToInterestedPartyComponent extends Component {
             endDateMsg: ""
         };
         accList.push(accountDetails);
-        this.setState(prevState => ({ accountList: accList, tagAccountTextCount: prevState.tagAccountTextCount, taggedAccountText: "Tag Another Account" }));
+        this.setState(prevState => ({
+            accountList: accList,
+            tagAccountTextCount: prevState.tagAccountTextCount,
+            taggedAccountText: "Tag Another Account"
+        }));
     }
 
     /* -------------------------- Validation Events--------------------------------- */
@@ -82,21 +86,6 @@ class AddAccToInterestedPartyComponent extends Component {
     validateFields = () => {
         try {
             let isValidationSuccess = false;
-            this.setState(prevState => ({
-                personal: {
-                    ...prevState.personal,
-                    fnameValidation: true,
-                    lnameValidation: true,
-                    emailValidation: true,
-                    addressLine1Validation: true,
-                    addressLine2Validation: true,
-                    zipCodeValidation: true,
-                    relationValidation: false,
-                    startDateValidation: true,
-                    endDateValidation: true,
-                    addValidation: true
-                }
-            }));
             if (!this.validateEachFields()) {
                 isValidationSuccess = false;
             } else {
@@ -113,78 +102,31 @@ class AddAccToInterestedPartyComponent extends Component {
     validateEachFields = () => {
         let isErrMsg = false;
         let isValidationSuccess = false;
-        const { personal } = this.state;
-        if (this.isEmpty(personal.firstName)) {
-            this.onUpdateField("personal", "fnameValidation", false);
-            this.onUpdateField("personal", "fnameValiMsg", gblStrings.accManagement.emptyFirstNameMsg);
-            isErrMsg = true;
-        } else {
-            const validate = nameRegex.test(personal.firstName);
-            this.onUpdateField("personal", "fnameValidation", validate);
-            this.onUpdateField("personal", "fnameValiMsg", gblStrings.accManagement.firstNameFormat);
-            isErrMsg = !validate;
-        }
+        const { accountList } = this.state;
 
-        if (this.isEmpty(personal.lastName)) {
-            this.onUpdateField("personal", "lnameValidation", false);
-            this.onUpdateField("personal", "lnameValiMsg", gblStrings.accManagement.emptyLastNameMsg);
-            isErrMsg = true;
-        } else {
-            const validate = nameRegex.test(personal.lastName);
-            this.onUpdateField("personal", "lnameValidation", validate);
-            this.onUpdateField("personal", "lnameValiMsg", gblStrings.accManagement.lastNameFormat);
-            isErrMsg = !validate;
-        }
+        for (let i = 0; i < accountList.length; i += 1) {
+            const obj = accountList[i];
 
-        if (!this.isEmpty(personal.email)) {
-            const validate = emailRegex.test(personal.email);
-            this.onUpdateField("personal", "emailValidation", validate);
-            isErrMsg = !validate;
-        } else {
-            this.onUpdateField("personal", "emailValidation", true);
-        }
-
-        if (this.isEmpty(personal.addressLine1)) {
-            this.onUpdateField("personal", "addressLine1Validation", false);
-            isErrMsg = true;
-        } else {
-            this.onUpdateField("personal", "addressLine1Validation", true);
-        }
-
-        if (this.isEmpty(personal.addressLine2)) {
-            this.onUpdateField("personal", "addressLine2Validation", false);
-            isErrMsg = true;
-        } else {
-            this.onUpdateField("personal", "addressLine2Validation", true);
-        }
-
-        if (!this.isEmpty(personal.addressLine1) && !this.isEmpty(personal.addressLine2)) {
-            this.getAddressValid();
-        }
-
-        if (this.isEmpty(personal.zipCode)) {
-            this.onUpdateField("personal", "zipCodeValidation", false);
-            this.onUpdateField("personal", "zipCodeValiMsg", gblStrings.accManagement.emptyZipCodeMsg);
-            isErrMsg = true;
-        } else {
-            const validate = zipCodeRegex.test(personal.zipCode);
-            this.onUpdateField("personal", "zipCodeValidation", validate);
-            this.onUpdateField("personal", "zipCodeValiMsg", "Please enter valid ZipCode");
-            this.getZipCodeValue();
-            isErrMsg = !validate;
-        }
-
-        if (!this.isEmpty(personal.startDate) && !this.isEmpty(personal.endDate)) {
-            if (new Date(personal.startDate) > new Date(personal.endDate)) {
-                this.onUpdateField("personal", "startDateValidation", false);
-                this.onUpdateField("personal", "endDateValidation", false);
+            if (obj.accountType === '') {
+                this.onChangeValidationText(i, "accountTypeFlag", true);
+                this.onChangeValidationText(i, "accountTypeMsg", "Please select valid value");
+            }
+            if (obj.accountName === '') {
+                this.onChangeValidationText(i, "accountNameFlag", true);
+                this.onChangeValidationText(i, "accountNameMsg", "Please select valid value");
+            }
+            if (this.isEmpty(obj.accountNumber)) {
+                this.onChangeValidationText(i, "accountNumberFlag", false);
+                this.onChangeValidationText(i, "accountNumberMsg", "Please Enter Value");
                 isErrMsg = true;
             }
-        }
-
-        if (personal.relation === '') {
-            this.onUpdateField("personal", "relationValidation", true);
-            this.onUpdateField("personal", "relationValiMsg", gblStrings.accManagement.emptyRelationShipMsg);
+            if (!this.isEmpty(obj.startDate) && !this.isEmpty(obj.endDate)) {
+                if (new Date(obj.startDate) > new Date(obj.endDate)) {
+                    this.onChangeValidationText(i, "startDateFlag", false);
+                    this.onChangeValidationText(i, "endDateFlag", false);
+                    isErrMsg = true;
+                }
+            }
         }
 
         if (!isErrMsg) {
@@ -201,79 +143,78 @@ class AddAccToInterestedPartyComponent extends Component {
     };
 
     setInputRef = (inputComp) => (ref) => {
-        this[inputComp] = ref;
+        this[parseInt(inputComp, 0)] = ref;
     }
 
-    onChangeText = (stateKey, keyName) => text => {
-        this.setState(prevState => ({
-            [stateKey]: {
-                ...prevState[stateKey],
-                [keyName]: text
-            }
-        }));
+    onChangeText = (index, keyName) => text => {
+        const { accountList } = this.state;
+        let value = text;
+        const newItems = [...accountList];
+        newItems[index][keyName] = value;
+        this.setState({ accountList: newItems });
     }
 
-    onUpdateField = (stateKey, keyName, val) => {
-        this.setState(prevState => ({
-            [stateKey]: {
-                ...prevState[stateKey],
-                [keyName]: val
-            }
-        }));
+    selectedDropDownValue = (index, keyName) => text => {
+        const { accountList } = this.state;
+        const newItems = [...accountList];
+        newItems[index][keyName] = text;
+        this.setState({ accountList: newItems });
+        this.onChangeValidationText(index, keyName, false);
     }
 
-    selectedDropDownValue = (value) => {
-        this.onUpdateField("personal", "relation", value);
+    onChangeValidationText = (index, keyName, val) => {
+        const { accountList } = this.state;
+        const value = val;
+        const newItems = [...accountList];
+        newItems[index][keyName] = value;
+        this.setState({ accountList: newItems });
+
     }
 
     /* -------------------------- Button Events --------------------------------- */
+
     onCancelClick = () => {
-        const { navigation } = this.props;
-        this.setState({
-            personal: {
-                firstName: "",
-                middleName: "",
-                lastName: "",
-                email: "",
-                company: "",
-                addressLine1: "",
-                addressLine2: "",
-                zipCode: "",
-                city: "",
-                stateValue: ""
-            },
-            accountList: []
-        });
+        const { navigation, saveInterestedParties } = this.props;
+        const payload = {
+            savedInterestedPartyData: {}
+        }
+        saveInterestedParties(payload);
         navigation.goBack();
     }
 
     onClickSave = () => {
-        const { personal, accountList } = this.state;
-        const { navigation } = this.props;
-        const obj = {
-            "fname": personal.firstName,
-            "mname": personal.middleName,
-            "lname": personal.lastName,
-            "email": personal.email,
-            "addressLine1": personal.addressLine1,
-            "addressLine2": personal.addressLine2,
-            "company": personal.company,
-            "zipCode": personal.zipCode,
-            "city": personal.city,
-            "state": personal.stateValue,
-            "accountTagged": accountList
-        };
-        if (personal.addValidation && personal.addressLine1 && personal.addressLine2) {
-            navigation.navigate("verifyIntrestedParties", { addedData: obj, add: true });
+        const { accountList, initialData, parentKey } = this.state;
+        const { navigation, saveInterestedParties } = this.props;
+        // let arr = initialData.interestedParties;
+        // const len = initialData.interestedParties.length;
+        // for (let i = 0; i < accountList.length; i += 1) {
+        //     const data = accountList[i];
+        //     let obj = {
+        //         "key": len,
+        //         "account_Type": data.accountType,
+        //         "account_Name": data.accountName,
+        //         "account_Number": data.accountNumber,
+        //         "startDate": data.startDate,
+        //         "endDate": data.endDate
+        //     };
+        //     len += 1;
+        //     arr.push(obj);
+        // };
+        // let updatedObj = initialData;
+        // updatedObj.interestedParties = arr;
+        const payload = {
+            data: initialData,
+            parentKey
         }
+        saveInterestedParties(payload);
+        navigation.navigate("verifyIntrestedParties", { addedData: initialData, data: initialData, key: parentKey });
     }
 
     generateKeyExtractor = (item) => item.key;
 
     render() {
-        console.log("navigationData:::::",this.state.initialData)
         const { navigation } = this.props;
-        const {accountList, taggedAccountText } = this.state;
+        const { accountList, taggedAccountText, initialData } = this.state;
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
@@ -281,30 +222,38 @@ class AddAccToInterestedPartyComponent extends Component {
                     <View style={styles.mainHeadingView}>
                         <Text style={styles.mainHeadlineText}>Add Account</Text>
                     </View>
+                    <View style={styles.line} />
                     <View style={styles.blockMarginTop}>
 
                         {/* -------------------------- Interested Parties Details --------------------------------- */}
 
-                        <View style={styles.paddingHorizontalStyle}>
-
+                        <View style={styles.commonContentView}>
+                            <View style={styles.contentViewBlock}>
+                                <Text style={styles.shortContentText}>Account Holder</Text>
+                                <Text style={styles.shortContentValueText}>{`${initialData.fname} ${initialData.lname}`}</Text>
+                            </View>
+                            <View style={styles.contentViewBlock}>
+                                <Text style={styles.shortContentText}>Registration Owner</Text>
+                                <Text style={styles.shortContentValueText}>Lorem Ispum</Text>
+                            </View>
+                            <View style={styles.contentViewBlock}>
+                                <Text style={styles.shortContentText}>Account Number</Text>
+                                <Text style={styles.shortContentValueText}>Traditional,Roth,IRA</Text>
+                            </View>
                         </View>
                     </View>
 
                     {/* -------------------------- Add Tagged Accounts --------------------------------- */}
 
-                    <View style={styles.blockMarginTop}>
+                    <View style={styles.marginBottomStyle}>
                         {accountList && accountList.map((item, index) => {
                             return (
-                                <View style={styles.paddingHorizontalStyle}>
+                                <View style={styles.blockMarginTop}>
                                     <View style={styles.tagAccHeadingView}>
-                                        <Text style={styles.titleHeaderText}>{`Tagged Account # ${index + 1} `}</Text>
-                                        <View style={styles.addBtn}>
-                                            <TouchableOpacity>
-                                                <Text style={styles.editBtnText}>{gblStrings.common.delete}</Text>
-                                            </TouchableOpacity>
-                                        </View>
+                                        <Text style={styles.titleHeaderText}>{`Add New Account # ${index + 1} `}</Text>
                                     </View>
-                                    <View style={styles.marginTopStyle}>
+                                    <View style={styles.line} />
+                                    <View style={styles.paddingHorizontalStyle}>
                                         <GDropDownComponent
                                             dropDownName="Account Type"
                                             dropDownTextName={styles.lblTxt}
@@ -312,7 +261,7 @@ class AddAccToInterestedPartyComponent extends Component {
                                             textInputStyle={styles.dropdownTextInput}
                                             dropDownLayout={styles.dropDownLayout}
                                             dropDownValue={item.account_Type}
-                                            selectedDropDownValue={this.selectedDropDownValue(index, "account_Type")}
+                                            selectedDropDownValue={this.selectedDropDownValue(index, "accountType")}
                                             errorFlag={item.accountTypeFlag}
                                             errorText={item.accountTypeMsg}
                                         />
@@ -323,7 +272,7 @@ class AddAccToInterestedPartyComponent extends Component {
                                             textInputStyle={styles.dropdownTextInput}
                                             dropDownLayout={styles.dropDownLayout}
                                             dropDownValue={item.account_Name}
-                                            selectedDropDownValue={this.selectedDropDownValue(index, "account_Name")}
+                                            selectedDropDownValue={this.selectedDropDownValue(index, "accountName")}
                                             errorFlag={item.accountNameFlag}
                                             errorText={item.accountNameMsg}
                                         />
@@ -332,13 +281,12 @@ class AddAccToInterestedPartyComponent extends Component {
                                             inputref={this.setInputRef("accountNumber")}
                                             propInputStyle={styles.customTxtBox}
                                             value={item.account_Number}
-                                            maxLength={gblStrings.maxLength.company}
-                                            onChangeText={this.onChangeText("personal", "company")}
+                                            onChangeText={this.onChangeText(index, "accountNumber")}
                                             errorFlag={item.accountNumberFlag}
                                             errorText={item.accountNumberMsg}
                                         />
                                         <View style={styles.blockMarginTop}>
-                                            <Text style={styles.preferdTimeTxt}>Effective Start & End Date</Text>
+                                            <Text style={styles.effectiveDateText}>Effective Start & End Date</Text>
                                             <Text style={styles.lblTxt}>{gblStrings.accManagement.from}</Text>
                                             <GDateComponent
                                                 inputref={this.setInputRef("startDate")}
@@ -348,7 +296,7 @@ class AddAccToInterestedPartyComponent extends Component {
                                                 componentStyle={styles.dateStyle}
                                                 maxDate={item.endDate ? item.endDate : ""}
                                                 errorFlag={!item.startDateFlag}
-                                                onDateChange={this.onChangeText("personal", "startDate")}
+                                                onDateChange={this.onChangeText(index, "startDate")}
                                             />
                                             <Text style={styles.lblTxt}>{gblStrings.accManagement.to}</Text>
                                             <GDateComponent
@@ -359,7 +307,7 @@ class AddAccToInterestedPartyComponent extends Component {
                                                 componentStyle={styles.dateStyle}
                                                 minDate={item.startDate ? item.startDate : ""}
                                                 errorFlag={!item.endDateFlag}
-                                                onDateChange={this.onChangeText("personal", "endDate")}
+                                                onDateChange={this.onChangeText(index, "endDate")}
                                             />
                                             {!item.startDateFlag && <Text style={styles.errMsg}>{gblStrings.accManagement.validDateSelect}</Text>}
                                         </View>
@@ -414,15 +362,13 @@ class AddAccToInterestedPartyComponent extends Component {
 
 AddAccToInterestedPartyComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    stateCityData: PropTypes.instanceOf(Object),
-    getAddressFormat: PropTypes.func,
-    getStateCity: PropTypes.func
+    manageInterestedPartiesData: PropTypes.instanceOf(Object),
+    saveInterestedParties: PropTypes.func
 };
 
 AddAccToInterestedPartyComponent.defaultProps = {
     navigation: {},
-    stateCityData: {},
-    getAddressFormat: () => { },
-    getStateCity: () => { }
+    manageInterestedPartiesData: {},
+    saveInterestedParties: () => { }
 };
 export default AddAccToInterestedPartyComponent;

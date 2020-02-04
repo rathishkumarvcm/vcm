@@ -330,10 +330,10 @@ class PurchaseScreenThreeComponent extends Component {
                     </View>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.topContainer}>
-                        <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountName} {savedData.selectedAccountData.accountName}</Text>
+                        <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountName} {savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountName ? savedData.selectedAccountData.accountName : ""}</Text>
                         <View style={styles.flexDirectionStyle}>
                             <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountNumber}</Text>
-                            <Text style={styles.topContainerTxtBold}>{savedData.selectedAccountData.accountNumber}</Text>
+                            <Text style={styles.topContainerTxtBold}>{savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountNumber ? savedData.selectedAccountData.accountNumber : ""}</Text>
                         </View>
                     </View>
 

@@ -8,6 +8,18 @@ import { CustomCheckBox, PageNumber } from '../../AppComponents';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import AppUtils from '../../Utils/AppUtils';
 
+const specimen = require("../../Images/specimen.png");
+const lowRisk = require("../../Images/riskLow.png");
+const mediumRisk = require("../../Images/riskMedium.png");
+const highRisk = require("../../Images/riskHigh.png");
+
+const images = {
+    Low: lowRisk,
+    Medium: mediumRisk,
+    High: highRisk
+
+};
+
 const fundingOptionsData = [
     { "key": "init", "value": "Initial Investment" },
     { "key": "init_mon", "value": "Initial and Monthly Investment" }
@@ -80,7 +92,6 @@ class PurchaseScreenTwoComponent extends Component {
     getLookUpData = () => {
         const { navigation, getFunds, masterLookupStateData, getCompositeLookUpData } = this.props;
         const { fundList } = this.state;
-
         if (navigation.getParam('ammend')) {
             ammendData = navigation.getParam('data');
             ammendIndex = navigation.getParam('index');
@@ -613,10 +624,10 @@ class PurchaseScreenTwoComponent extends Component {
                     </View>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.topContainer}>
-                        <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountName} {ammend ? ammendData.selectedAccountData.accountName : savedData.selectedAccountData.accountName}</Text>
+                        <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountName} {ammend && ammendData.selectedAccountData && ammendData.selectedAccountData.accountName ? ammendData.selectedAccountData.accountName : savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountName ? savedData.selectedAccountData.accountName : ""}</Text>
                         <View style={styles.flexDirectionStyle}>
                             <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountNumber}</Text>
-                            <Text style={styles.topContainerTxtBold}>{ammend ? ammendData.selectedAccountData.accountNumber : savedData.selectedAccountData.accountNumber}</Text>
+                            <Text style={styles.topContainerTxtBold}>{ammend && ammendData.selectedAccountData && ammendData.selectedAccountData.accountNumber ? ammendData.selectedAccountData.accountNumber : savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountNumber ? savedData.selectedAccountData.accountNumber : ""}</Text>
                         </View>
                     </View>
 

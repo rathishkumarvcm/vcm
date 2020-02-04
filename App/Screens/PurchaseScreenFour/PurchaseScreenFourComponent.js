@@ -18,7 +18,7 @@ class PurchaseFourComponent extends Component {
             ammendData: {},
             ammendIndex: null
         };
-    }
+    };
 
     componentDidMount() {
         this.getData();
@@ -34,7 +34,7 @@ class PurchaseFourComponent extends Component {
         if (this.props && amendReducerData && amendReducerData.menu) {
             menuList = amendReducerData.menu;
         }
-    }
+    };
 
     navigatePurchasePageOne = () => {
         const { navigation } = this.props;
@@ -152,7 +152,7 @@ class PurchaseFourComponent extends Component {
 
         if (ammend) {
             const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
-            const amendObj = menuList[pIndex];
+            const amendObj = menuList[parseInt(pIndex, 0)];
             const transType = `Purchase Amended`;
             const ammendPayloadData = {
                 "key": amendObj.key,

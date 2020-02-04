@@ -28,6 +28,15 @@ const styles = StyleSheet.create({
     marginHorizontal: scaledHeight(12),
     marginVertical: scaledHeight(50),
   },
+  commonContentView: {
+    borderColor: '#E2E4E5',
+    borderWidth: scaledHeight(1),
+    marginBottom: '4%',
+    marginLeft: '4%',
+    marginRight: '4%',
+    paddingBottom: '8%',
+    paddingHorizontal: '4%',
+  },
   contactUsLink: {
     color: "#0000FF",
     fontSize: scaledHeight(15),
@@ -65,6 +74,11 @@ const styles = StyleSheet.create({
   contentText: {
     color: "#56565A",
     fontSize: scaledHeight(15)
+  },
+  contentViewBlock: {
+    marginTop: scaledHeight(20),
+    paddingLeft: "4%",
+    paddingRight: "4%",
   },
   customTxtBox: {
     marginTop: scaledHeight(9),
@@ -105,6 +119,12 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     lineHeight: scaledHeight(22)
   },
+  effectiveDateText: {
+    color: '#333333DE',
+    fontSize: scaledHeight(16),
+    fontWeight: 'bold',
+    marginBottom: '4%'
+  },
   errMsg: {
     color: 'red',
     fontSize: scaledHeight(12),
@@ -140,6 +160,11 @@ const styles = StyleSheet.create({
     paddingRight: "2%",
     paddingVertical: "4%"
   },
+  lblTxt: {
+    color: "rgba(51, 51, 51, 0.87)",
+    fontSize: scaledHeight(16),
+    fontWeight: "bold"
+  },
   line: {
     alignSelf: "center",
     backgroundColor: "#535353",
@@ -159,13 +184,11 @@ const styles = StyleSheet.create({
     color: '#54565B',
     fontSize: scaledHeight(22),
     fontWeight: 'bold',
-    lineHeight: 27
+    lineHeight: 27,
+    paddingLeft: '2%'
   },
   marginBottomStyle: {
     marginBottom: scaledHeight(20)
-  },
-  marginTopStyle: {
-    marginTop: scaledHeight(15)
   },
   normalBlackBtn: {
     alignContent: 'center',
@@ -261,8 +284,6 @@ const styles = StyleSheet.create({
     marginTop: scaledHeight(15)
   },
   tagAccHeadingView: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     paddingLeft: '4%',
     paddingRight: '4%',
   },

@@ -75,8 +75,8 @@ class addNewIntrestedPartiesComponent extends Component {
         const { stateCityData } = this.props;
         if (isZipApiCalling) {
             if (this.props !== prevProps) {
-                if (this.props && stateCityData[stateCityResponseData]) {
-                    const tempResponse = stateCityData[stateCityResponseData];
+                if (this.props && stateCityData[stateCityResponseData.toString()]) {
+                    const tempResponse = stateCityData[stateCityResponseData.toString()];
                     if (tempResponse && tempResponse.City) {
                         this.onUpdateField("personal", "city", tempResponse.City);
                         this.onUpdateField("personal", "stateValue", tempResponse.State);
@@ -93,8 +93,8 @@ class addNewIntrestedPartiesComponent extends Component {
 
         if (isAddressApiCalling) {
             if (this.props !== prevProps) {
-                if (this.props && stateCityData[addressResponseData]) {
-                    const tempAddressResponse = stateCityData[addressResponseData];
+                if (this.props && stateCityData[addressResponseData.toString()]) {
+                    const tempAddressResponse = stateCityData[addressResponseData.toString()];
                     if (tempAddressResponse && tempAddressResponse.Address2) {
                         this.onUpdateField("personal", "addressLine1", tempAddressResponse.Address1 || "");
                         this.onUpdateField("personal", "addressLine2", tempAddressResponse.Address2 || "");
@@ -332,13 +332,13 @@ class addNewIntrestedPartiesComponent extends Component {
     };
 
     setInputRef = (inputComp) => (ref) => {
-        this[inputComp] = ref;
+        this[parseInt(inputComp, 0)] = ref;
     }
 
     onChangeText = (stateKey, keyName) => text => {
         this.setState(prevState => ({
             [stateKey]: {
-                ...prevState[stateKey],
+                ...prevState[stateKey.toSting()],
                 [keyName]: text
             }
         }));
@@ -347,7 +347,7 @@ class addNewIntrestedPartiesComponent extends Component {
     onUpdateField = (stateKey, keyName, val) => {
         this.setState(prevState => ({
             [stateKey]: {
-                ...prevState[stateKey],
+                ...prevState[stateKey.toString()],
                 [keyName]: val
             }
         }));

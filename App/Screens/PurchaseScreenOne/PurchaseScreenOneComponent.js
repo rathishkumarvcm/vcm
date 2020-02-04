@@ -7,14 +7,19 @@ import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+import AppUtils from '../../Utils/AppUtils';
 
 let accSelectionData = {};
 let savedData = {};
+const currentPage = 1;
+const totalCount = 4;
+const pageName = `${currentPage} - ${gblStrings.purchase.accountSelection}`;
 
 class PurchaseScreenOneComponent extends Component {
 
     constructor(props) {
         super(props);
+        const { purchaseData } = this.props;
         this.state = {
             generalAccountIcon: '+',
             IRAAccountIcon: '+',
@@ -37,6 +42,8 @@ class PurchaseScreenOneComponent extends Component {
             },
             accountList: []
         };
+        accSelectionData = purchaseData.accSelectionData;
+        savedData = purchaseData.savePurchaseSelectedData;
     }
 
     componentDidMount() {
@@ -49,20 +56,23 @@ class PurchaseScreenOneComponent extends Component {
         getAccountList(accountListPayload);
     }
 
-    componentDidUpdate(prevProps) {
-        const { purchaseData } = this.props;
-        if (prevProps !== this.props) {
-            let tempAccountList = []
-            if (purchaseData[ActionTypes.GET_ACCOUNT_DETAILS] !== undefined && purchaseData[ActionTypes.GET_ACCOUNT_DETAILS] !== null) {
-                tempAccountList = purchaseData[ActionTypes.GET_ACCOUNT_DETAILS];
-                console.log("Account List in:::::::::", tempAccountList);
-                this.setState({
-                    accountList: [...tempAccountList],
-                    isLoading: false
-                });
-            }
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const { purchaseData } = nextProps;
+        const { accountList } = prevState;
+        let tempAccountList = [];
+        const accDetails = ActionTypes.GET_ACCOUNT_DETAILS;
+        if (purchaseData[`${accDetails}`] !== undefined && purchaseData[`${accDetails}`] !== null) {
+            tempAccountList = purchaseData[`${accDetails}`];
+            // console.log(tempAccountList);
+            return {
+                accountList: [...tempAccountList],
+                isLoading: false
+            };
         }
+        // AppUtils.debugLog(accountList);
+        return prevState;
     }
+
     /* -----------------Button Events --------------------- */
 
     onClickExpand = (type) => () => {
@@ -318,7 +328,6 @@ class PurchaseScreenOneComponent extends Component {
         );
     }
 
-
     generateKeyGeneral = (x) => x.accNumber;
 
     generateKeyIRA = (x) => x.accNumber;
@@ -326,16 +335,12 @@ class PurchaseScreenOneComponent extends Component {
     generateKeyUTMA = (x) => x.accNumber;
 
     render() {
-        const currentPage = 1;
-        const totalCount = 4;
-        const pageName = `${currentPage} - ${gblStrings.purchase.accountSelection}`;
         const { disableNextButton, generalAccountIcon, collapseGeneralAccount, UTMAAccountIcon, collapseUTMAAccount, IRAAccountIcon, collapseIRAAccount } = this.state;
-        const { purchaseData, navigation } = this.props;
+        const { navigation, purchaseData } = this.props;
         if (this.props && purchaseData && purchaseData.accSelectionData) {
             accSelectionData = purchaseData.accSelectionData;
             savedData = purchaseData.savePurchaseSelectedData;
         }
-
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
@@ -362,7 +367,7 @@ class PurchaseScreenOneComponent extends Component {
                             </View>
                             <View style={styles.line} />
                         </View>
-                        <Collapsible collapsed={collapseGeneralAccount} align="center">
+                        {accSelectionData && accSelectionData.General_Account && <Collapsible collapsed={collapseGeneralAccount} align="center">
                             <FlatList
                                 data={accSelectionData.General_Account}
                                 renderItem={this.renderGeneralAccount}
@@ -370,7 +375,7 @@ class PurchaseScreenOneComponent extends Component {
                                 extraData={this.state}
                                 ListEmptyComponent={this.noItemDisplay}
                             />
-                        </Collapsible>
+                        </Collapsible>}
 
                         {/* ---------------------------- IRA Account  --------------------------------- */}
                         <View style={styles.accountTypeFlex}>
@@ -380,7 +385,7 @@ class PurchaseScreenOneComponent extends Component {
                             </View>
                             <View style={styles.line} />
                         </View>
-                        <Collapsible collapsed={collapseIRAAccount} align="center">
+                        {accSelectionData && accSelectionData.IRA_Account && <Collapsible collapsed={collapseIRAAccount} align="center">
                             <FlatList
                                 data={accSelectionData.IRA_Account}
                                 renderItem={this.renderIraAccount}
@@ -388,7 +393,7 @@ class PurchaseScreenOneComponent extends Component {
                                 extraData={this.state}
                                 ListEmptyComponent={this.noItemDisplay}
                             />
-                        </Collapsible>
+                        </Collapsible>}
 
                         {/* ---------------------------- UTMA Account  --------------------------------- */}
                         <View style={styles.accountTypeFlex}>
@@ -398,7 +403,7 @@ class PurchaseScreenOneComponent extends Component {
                             </View>
                             <View style={styles.line} />
                         </View>
-                        <Collapsible collapsed={collapseUTMAAccount} align="center">
+                        {accSelectionData && accSelectionData.UTMA_Account && <Collapsible collapsed={collapseUTMAAccount} align="center">
                             <FlatList
                                 data={accSelectionData.UTMA_Account}
                                 renderItem={this.renderUtmaAccount}
@@ -406,7 +411,7 @@ class PurchaseScreenOneComponent extends Component {
                                 extraData={this.state}
                                 ListEmptyComponent={this.noItemDisplay}
                             />
-                        </Collapsible>
+                        </Collapsible>}
 
                     </View>
 

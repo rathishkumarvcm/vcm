@@ -17,22 +17,24 @@ class manageIntrestedPartiesComponent extends Component {
         };
     }
 
-    componentDidMount() {
-        this.getInterestedParties();
-    }
-
-    componentDidUpdate(prevProps) {
-        if (this.props !== prevProps) {
-            this.getInterestedParties();
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const { manageInterestedPartiesData, navigation } = nextProps;
+        if (manageInterestedPartiesData && manageInterestedPartiesData.data) {
+            return {
+                interestedPartyData: manageInterestedPartiesData.data
+            };
         }
-    }
-
-    getInterestedParties = () => {
-        const { manageInterestedPartiesData, navigation } = this.props;
-        if (this.props && manageInterestedPartiesData && manageInterestedPartiesData.data) {
-            this.setState({ interestedPartyData: manageInterestedPartiesData.data });
+        if (navigation.getParam("showMsg")) {
+            return {
+                isSavedSuccess: navigation.getParam("showMsg")
+            };
         }
-        this.setState({ isSavedSuccess: navigation.getParam("showMsg"), successMsg: navigation.getParam("successMsg") });
+        if (navigation.getParam("successMsg")) {
+            return {
+                successMsg: navigation.getParam("successMsg")
+            };
+        }
+        return prevState;
     }
 
     addInterestedParty = () => {
@@ -40,15 +42,34 @@ class manageIntrestedPartiesComponent extends Component {
         navigation.navigate("addIntrestedParties");
     }
 
+    onAddAccount = (data, key) => () => {
+        const { navigation, saveInterestedParties } = this.props;
+        const payload = {
+            savedInterestedPartyData: {
+                data,
+                key
+            }
+        };
+        saveInterestedParties(payload);
+        navigation.navigate("addAccToInterestedParty", { initialData: data, index: key });
+    }
+
     onClickEdit = (data, index) => () => {
-        const { navigation } = this.props;
+        const { navigation, saveInterestedParties } = this.props;
+        const payload = {
+            savedInterestedPartyData: {
+                data,
+                index
+            }
+        };
+        saveInterestedParties(payload);
         navigation.navigate("editIntrestedParty", { mainObj: data, pKey: index });
     }
 
     getDeleteData = (item, key, index) => {
         const { interestedPartyData } = this.state;
         const delObj = item;
-        const mainObj = interestedPartyData[index];
+        const mainObj = interestedPartyData[parseInt(index, 0)];
         const pIndex = index;
         const cIndex = key;
 
@@ -72,7 +93,7 @@ class manageIntrestedPartiesComponent extends Component {
     renderData = ({ item, index }) => {
         const { collapseIcon } = this.state;
         return (
-            <View style={styles.blockMarginTop}>
+            <View style={styles.blockMarginTop} key={index}>
                 <View style={styles.titleHeadingView}>
                     <View style={styles.titleView}>
                         <Text style={styles.titleIconView}>{collapseIcon}</Text>
@@ -96,7 +117,7 @@ class manageIntrestedPartiesComponent extends Component {
                     })}
 
                     <View style={styles.addAccountView}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={this.onAddAccount(item, index)}>
                             <Text style={styles.editBtnText}>+ Add Account</Text>
                         </TouchableOpacity>
                     </View>
@@ -115,6 +136,8 @@ class manageIntrestedPartiesComponent extends Component {
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.flexMainView} keyboardShouldPersistTaps="always" ref={this.setScrollViewRef}>
                     <View style={styles.mainHeadingView}>
+                        {/* ---------------------- Notification View -------------------- */}
+
                         {isSavedSuccess &&
                             (
                                 <View style={styles.notificationView}>
@@ -156,8 +179,10 @@ class manageIntrestedPartiesComponent extends Component {
                         keyExtractor={this.generateKeyExtractor}
                         renderItem={this.renderData}
                     />
+
                     {/* ---------------------- Footer View -------------------- */}
                     <GFooterSettingsComponent />
+
                 </ScrollView>
             </View>
 
@@ -168,13 +193,15 @@ class manageIntrestedPartiesComponent extends Component {
 manageIntrestedPartiesComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     manageInterestedPartiesData: PropTypes.instanceOf(Object),
-    deleteInterestedParties: PropTypes.func
+    deleteInterestedParties: PropTypes.func,
+    saveInterestedParties: PropTypes.func
 };
 
 manageIntrestedPartiesComponent.defaultProps = {
     navigation: {},
     manageInterestedPartiesData: {},
-    deleteInterestedParties: () => { }
+    deleteInterestedParties: () => { },
+    saveInterestedParties: () => { }
 };
 
 export default manageIntrestedPartiesComponent;
