@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import PropTypes from 'prop-types';
-import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
+import { GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
@@ -25,20 +25,8 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     componentDidMount() {
-        const { navigation, liquidationInitialState } = this.props;
-        const { getParam } = navigation;
-        console.log(" Screen 2 componentdidmount ", JSON.stringify(liquidationInitialState.saveLiquidationSelectedData));
-        if (getParam('ammend')) {
-            ammendData = getParam('data');
-            ammendIndex = getParam('index');
-            this.setState({ ammend: true });
-        }
-        else {
-            this.setState({ ammend: false });
-        }
-        if (liquidationInitialState && liquidationInitialState.saveLiquidationSelectedData) {
-            savedData = liquidationInitialState.saveLiquidationSelectedData;
-        }
+       
+        // console.log(" Screen 2 componentdidmount ", JSON.stringify(liquidationInitialState.saveLiquidationSelectedData));
         this.getFundList();
     }
 
@@ -66,16 +54,16 @@ class LiquidationPageTwoComponent extends Component {
         const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
             if (i !== index) {
-                funds[i].allSharesSelected = false;
-                funds[i].percentageSelected = false;
-                funds[i].percentageValue = '';
-                funds[i].dollarSelected = false;
-                funds[i].dollarValue = '';
-                funds[i].sellingAmount = "";
-                funds[i].isSelected = false;
+                funds[parseInt(i,0)].allSharesSelected = false;
+                funds[parseInt(i,0)].percentageSelected = false;
+                funds[parseInt(i,0)].percentageValue = '';
+                funds[parseInt(i,0)].dollarSelected = false;
+                funds[parseInt(i,0)].dollarValue = '';
+                funds[parseInt(i,0)].sellingAmount = "";
+                funds[parseInt(i,0)].isSelected = false;
             } else {
-                funds[i].sellingAmount = "";
-                funds[i].isSelected = true;
+                funds[parseInt(i,0)].sellingAmount = "";
+                funds[parseInt(i,0)].isSelected = true;
             }
         }
         this.setState({
@@ -89,18 +77,18 @@ class LiquidationPageTwoComponent extends Component {
         const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
             if (i === index) {
-                funds[i].allSharesSelected = !funds[i].allSharesSelected;
+                funds[parseInt(i,0)].allSharesSelected = !funds[parseInt(i,0)].allSharesSelected;
             } else {
-                funds[i].allSharesSelected = false;
+                funds[parseInt(i,0)].allSharesSelected = false;
             }
-            funds[i].percentageSelected = false;
-            funds[i].percentageValue = '';
-            funds[i].dollarSelected = false;
-            funds[i].dollarValue = '';
+            funds[parseInt(i,0)].percentageSelected = false;
+            funds[parseInt(i,0)].percentageValue = '';
+            funds[parseInt(i,0)].dollarSelected = false;
+            funds[parseInt(i,0)].dollarValue = '';
         }
         this.setState({
             fundListData: funds,
-            disableNextButton: !funds[index].allSharesSelected,
+            disableNextButton: !funds[parseInt(index,0)].allSharesSelected,
         });
     }
 
@@ -109,14 +97,14 @@ class LiquidationPageTwoComponent extends Component {
         const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
             if (i === index) {
-                funds[i].dollarSelected = !funds[i].dollarSelected;
+                funds[parseInt(i,0)].dollarSelected = !funds[parseInt(i,0)].dollarSelected;
             } else {
-                funds[i].dollarSelected = false;
+                funds[parseInt(i,0)].dollarSelected = false;
             }
-            funds[i].allSharesSelected = false;
-            funds[i].percentageSelected = false;
-            funds[i].percentageValue = '';
-            funds[i].dollarValue = '';
+            funds[parseInt(i,0)].allSharesSelected = false;
+            funds[parseInt(i,0)].percentageSelected = false;
+            funds[parseInt(i,0)].percentageValue = '';
+            funds[parseInt(i,0)].dollarValue = '';
 
         }
         this.setState({
@@ -130,14 +118,14 @@ class LiquidationPageTwoComponent extends Component {
         const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
             if (i === index) {
-                funds[i].percentageSelected = !funds[i].percentageSelected;
+                funds[parseInt(i,0)].percentageSelected = !funds[parseInt(i,0)].percentageSelected;
             } else {
-                funds[i].percentageSelected = false;
+                funds[parseInt(i,0)].percentageSelected = false;
             }
-            funds[i].allSharesSelected = false;
-            funds[i].dollarSelected = false;
-            funds[i].percentageValue = '';
-            funds[i].dollarValue = '';
+            funds[parseInt(i,0)].allSharesSelected = false;
+            funds[parseInt(i,0)].dollarSelected = false;
+            funds[parseInt(i,0)].percentageValue = '';
+            funds[parseInt(i,0)].dollarValue = '';
         }
         this.setState({
             fundListData: funds,
@@ -149,16 +137,16 @@ class LiquidationPageTwoComponent extends Component {
         const { fundListData } = this.state;
         const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
-            if (funds[i].isSelected) {
-                funds[i].dollarValue = text;
-                funds[i].dollarSelected = true;
+            if (funds[parseInt(i,0)].isSelected) {
+                funds[parseInt(i,0)].dollarValue = text;
+                funds[parseInt(i,0)].dollarSelected = true;
             } else {
-                funds[i].dollarValue = '';
-                funds[i].dollarSelected = false;
+                funds[parseInt(i,0)].dollarValue = '';
+                funds[parseInt(i,0)].dollarSelected = false;
             }
-            funds[i].percentageSelected = false;
-            funds[i].allSharesSelected = false;
-            funds[i].percentageValue = '';
+            funds[parseInt(i,0)].percentageSelected = false;
+            funds[parseInt(i,0)].allSharesSelected = false;
+            funds[parseInt(i,0)].percentageValue = '';
         }
         this.setState({
             fundListData: funds,
@@ -171,16 +159,16 @@ class LiquidationPageTwoComponent extends Component {
         const { fundListData } = this.state;
         const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
-            if (funds[i].isSelected) {
-                funds[i].percentageValue = text;
-                funds[i].percentageSelected = true;
+            if (funds[parseInt(i,0)].isSelected) {
+                funds[parseInt(i,0)].percentageValue = text;
+                funds[parseInt(i,0)].percentageSelected = true;
             } else {
-                funds[i].percentageValue = '';
-                funds[i].percentageSelected = false;
+                funds[parseInt(i,0)].percentageValue = '';
+                funds[parseInt(i,0)].percentageSelected = false;
             }
-            funds[i].dollarSelected = false;
-            funds[i].allSharesSelected = false;
-            funds[i].dollarValue = '';
+            funds[parseInt(i,0)].dollarSelected = false;
+            funds[parseInt(i,0)].allSharesSelected = false;
+            funds[parseInt(i,0)].dollarValue = '';
         }
         this.setState({
             fundListData: funds,
@@ -206,19 +194,19 @@ class LiquidationPageTwoComponent extends Component {
         const { navigate } = navigation;
         const funds = fundListData;
         for (let i = 0; i < funds.length; i += 1) {
-            if (funds[i].isSelected) {
-                if (funds[i].allSharesSelected) {
-                    funds[i].sellingAmount = funds[i].worthAmount;
-                    funds[i].TypeValueReq = 'A';
-                } else if (this.isEmpty(funds[i].percentageValue)) {
-                    funds[i].sellingAmount = funds[i].dollarValue;
-                    funds[i].TypeValueReq = 'D';
+            if (funds[parseInt(i,0)].isSelected) {
+                if (funds[parseInt(i,0)].allSharesSelected) {
+                    funds[parseInt(i,0)].sellingAmount = funds[parseInt(i,0)].worthAmount;
+                    funds[parseInt(i,0)].TypeValueReq = 'A';
+                } else if (this.isEmpty(funds[parseInt(i,0)].percentageValue)) {
+                    funds[parseInt(i,0)].sellingAmount = funds[parseInt(i,0)].dollarValue;
+                    funds[parseInt(i,0)].TypeValueReq = 'D';
                 } else {
-                    funds[i].sellingAmount = (funds[i].percentageValue / 100) * funds[i].worthAmount;
-                    funds[i].TypeValueReq = 'P';
+                    funds[parseInt(i,0)].sellingAmount = (funds[parseInt(i,0)].percentageValue / 100) * funds[parseInt(i,0)].worthAmount+"";
+                    funds[parseInt(i,0)].TypeValueReq = 'P';
                 }
             }else{
-                funds[i].TypeValueReq = '';
+                funds[parseInt(i,0)].TypeValueReq = '';
             }
         }
         this.setState({
@@ -253,7 +241,7 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     formatAmount = (amount) => {
-        const amt = parseInt(amount).toLocaleString();
+        const amt = parseInt(amount,0).toLocaleString();
         return amt;
     }
 
@@ -263,13 +251,25 @@ class LiquidationPageTwoComponent extends Component {
     }
 
     getFundList = () => {
+        
         const { navigation, liquidationInitialState } = this.props;
         const { getParam } = navigation;
+        if (getParam('ammend')) {
+            ammendData = getParam('data');
+            ammendIndex = getParam('index');
+            this.setState({ ammend: true });
+        }
+        else {
+            this.setState({ ammend: false });
+        }
+        if (liquidationInitialState && liquidationInitialState.saveLiquidationSelectedData) {
+            savedData = liquidationInitialState.saveLiquidationSelectedData;
+        }
         const savedFundData = liquidationInitialState.saveLiquidationSelectedData.selectedFundData.funds;
         let disable = false;
         for(let i=0;i<savedFundData.length;i+=1){
-            if(savedFundData[i].isSelected){
-                disable = !(savedFundData[i].allSharesSelected || savedFundData[i].percentageSelected || savedFundData[i].dollarSelected);
+            if(savedFundData[parseInt(i,0)].isSelected){
+                disable = !(savedFundData[parseInt(i,0)].allSharesSelected || savedFundData[parseInt(i,0)].percentageSelected || savedFundData[parseInt(i,0)].dollarSelected);
             }
         }
         if (getParam('ammend')) {

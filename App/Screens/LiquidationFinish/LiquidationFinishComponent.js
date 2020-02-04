@@ -15,11 +15,6 @@ class LiquidationFinishComponent extends Component {
         };
     }
 
-    componentDidMount() {
-        const { liquidationInitialState } = this.props;
-        console.log(" Screen 5 componentdidmount ", JSON.stringify(liquidationInitialState.saveLiquidationSelectedData));
-    }
-
     render() {
         const { navigation } = this.props;
         const { getParam } = navigation; 
@@ -55,11 +50,9 @@ class LiquidationFinishComponent extends Component {
 
 LiquidationFinishComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    liquidationInitialState: PropTypes.instanceOf(Object),
 };
 
 LiquidationFinishComponent.defaultProps = {
     navigation: {},
-    liquidationInitialState: {},
 };
 export default LiquidationFinishComponent;

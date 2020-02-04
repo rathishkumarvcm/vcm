@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Image, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-native-collapsible';
-import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent, GDropDownComponent, GSwitchComponent } from '../../CommonComponents';
+import { GInputComponent, GHeaderComponent, GFooterComponent, GDropDownComponent, GSwitchComponent } from '../../CommonComponents';
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
@@ -73,8 +73,8 @@ class LiquidationPageThreeComponent extends Component {
     }
 
     componentDidMount() {
-        const { liquidationInitialState } = this.props;
-        console.log(" Screen 3 componentdidmount ", JSON.stringify(liquidationInitialState.saveLiquidationSelectedData));
+        // const { liquidationInitialState } = this.props;
+        // console.log(" Screen 3 componentdidmount ", JSON.stringify(liquidationInitialState.saveLiquidationSelectedData));
         this.updateState();
     }
 
@@ -85,15 +85,6 @@ class LiquidationPageThreeComponent extends Component {
         if (getParam('ammend')) {
             ammendData = getParam('data');
             ammendIndex = getParam('index');
-            let selectedBankAccount = null;
-            if (!ammendData.selectedFundWithdrawalData.checkSelectedOrder) {
-                for (let i = 0; i < bankAccounts.length; i += 1) {
-                    if (ammendData.selectedFundWithdrawalData.bankAccountNo === bankAccounts[i].bankAccountNo) {
-                        selectedBankAccount = i;
-                    }
-                }
-
-            }
             this.setState({
                 ammend: true,
                 taxAccountingMethodData: {
@@ -137,7 +128,7 @@ class LiquidationPageThreeComponent extends Component {
         if (this.isEmpty(amount)) {
             return "";
         }
-        const amt = parseInt(amount).toLocaleString();
+        const amt = parseInt(amount,0).toLocaleString();
         return amt;
     }
 
@@ -203,7 +194,6 @@ class LiquidationPageThreeComponent extends Component {
 
     addaccount = (props) => {
         return (
-
             <View style={[styles.selectedBankAccountFlex, props.flexStyle]} onTouchStart={props.onClickCheck}>
                 <View style={styles.bankAccountFlex}>
                     <View style={styles.bankIconFlex}>
@@ -234,7 +224,7 @@ class LiquidationPageThreeComponent extends Component {
         }));
     }
 
-    onSelectBankAccount = (item, index) => {
+    onSelectBankAccount = (item) => {
         this.setState({
             fundingSource: {
                 selectedBankAccountNo: item.bankAccountNo,
