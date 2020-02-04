@@ -391,7 +391,10 @@ export default {
         USAAFundAccNumber:'USAA Mutual Fund Account Number',
         MailingToThisAddress:'Mailing to This Address',
         VCMMailgAdress:'Mellon Trust of New England \n 1 Boston Place Boston, \n Massachusetts 02108 ABA \n # 011001234',
-
+        USAAAccountNumber:'xxxx-xxxx-xxxx',
+        VCMMailingAdress:'Mellon Trust of New England \n 1 Boston Place Boston, \n Massachusetts 02108 ABA \n # 011001234',
+        wireTransferNote:"The transaction will be processed on confirmation of wire transfer details. Please wait for 3-5 business days for completion of your transaction.",
+       
         contactMSRDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcittet",
         offlineMethod: "Offline Method",
         offlineMethodDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcittet",
