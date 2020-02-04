@@ -17,13 +17,13 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
         super(props);
         this.state = {
             disableNextButton: false,
-            isLoading: false,
+            // isLoading: false,
             multipleFile: [],
             fileSelected: false,
             errorMessage: "",
-            selectedItemID: "",
-            selectedItemName: "",
-            itemID: "",
+            // selectedItemID: "",
+            // selectedItemName: "",
+            // itemID: "",
         };
     }
 
@@ -42,7 +42,6 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
 
     onClickCancel = () => {
         // const {navigation} = this.props;
-        // navigation.goBack('termsAndConditions');
     }
 
     onClickSave = () => {
@@ -53,14 +52,9 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
         // this.validateFields();
     }
 
-    onPressCheck = (keyName) => () => this.setState(prevState => ({ [keyName]: !prevState[keyName] }));
-
-    onSelected = (item) => {
-        AppUtils.debugLog(`item: ${item.id}`);
-        this.setState({ selectedItemID: item.id });
-        this.setState({ selectedItemName: item.name });
-        //  alert("You selected :: " + item.name)
-    }
+    // onSelected = (item) => {
+    //     this.setState({ selectedItemID: item.id, selectedItemName: item.name });
+    // }
 
     /* ---------------------- Document Picker Events -------------------------- */
 
@@ -69,14 +63,21 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
         if (multipleFile.length > 0) {
             let size = 0;
 
-            multipleFile.map((item) => (
-                size += item.size
-            ));
+            // multipleFile.map((item) => (
+            //     size += item.size
+            // ));
+
+            // for (let i = 0; i < programmerOutput.length; i++) {
+            //     totalOutput += programmerOutput[i].linesOfCode;
+            //   }
+
+             size = multipleFile.reduce((value, output) => value + output.size, 0);
 
             if ((size / 1024 ** 2) > maxFileSize) {
                 this.setState({ fileSelected: true, errorMessage: 'Total Size limit should be less than 30 MB' });
             } else {
-                alert(`File uploaded successfully`);
+                // console.log("File Uploaded SuccessFully");
+                // alert(`File uploaded successfully`);
             }
         } else {
             this.setState({ fileSelected: true, errorMessage: 'Please select a file before uploading' });
@@ -117,14 +118,14 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
                 });
             }
 
-            // for (const res of results) {
-            //   // Printing the log realted to the file
-            //   console.log(`res : ${ JSON.stringify(res)}`);
-            //   console.log(`URI : ${ res.uri}`);
-            //   console.log(`Type : ${ res.type}`);
-            //   console.log(`File Name : ${ res.name}`);
-            //   console.log(`File Size : ${ res.size}`);
-            // }
+            for (const res of results) {
+              // Printing the log realted to the file
+              console.log(`res : ${ JSON.stringify(res)}`);
+              console.log(`URI : ${ res.uri}`);
+              console.log(`Type : ${ res.type}`);
+              console.log(`File Name : ${ res.name}`);
+              console.log(`File Size : ${ res.size}`);
+            }
 
             // Setting the state to show multiple file attributes
 
@@ -179,7 +180,7 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
                                 buttonStyle={styles.selectBtnStyle}
                                 buttonText={gblStrings.accManagement.selectFiles}
                                 textStyle={styles.selectFileText}
-                                onPress={this.uploadImage.bind(this)}
+                                onPress={this.uploadImage}
                             />
                             <TouchableOpacity style={styles.uploadIconBtn} onPress={this.uploadSelectedFiles}>
                                 <GIcon name="file-upload" type="material" size={30} color="#E9E4E4" />
@@ -204,20 +205,10 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
                             <View style={styles.selectedFileDescContainer} key={item.name}>
                                 <Text style={styles.fileDescTextStyle}>
                                     {item.name ? item.name : ''}
-
-                                    {/* {'\n'}
-                                    Type: {item.type ? item.type : ''}
-                                    {'\n'}
-                                    File Size: {item.size ? item.size : ''}
-                                    {'\n'}
-                                    URI: {item.uri ? item.uri : ''}
-                                    {'\n'}                            */}
                                 </Text>
-                                {
-                                    <Text style={styles.fileDescTextStyleError}>
-                                        {(item.size / 1024 ** 2) < maxFileSize ? '' : 'Size limit of file should be less than 30 MB'}
-                                    </Text>
-                                }
+                                <Text style={styles.fileDescTextStyleError}>
+                                    {(item.size / 1024 ** 2) < maxFileSize ? '' : 'Size limit of file should be less than 30 MB'}
+                                </Text>
                             </View>
                         ))}
 
