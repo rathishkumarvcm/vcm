@@ -6,6 +6,17 @@ import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { CustomCheckBox, PageNumber } from '../../AppComponents';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+import AppUtils from '../../Utils/AppUtils';
+
+const specimen = require("../../Images/specimen.png");
+const lowRisk = require("../../Images/riskLow.png");
+const mediumRisk = require("../../Images/riskMedium.png");
+const highRisk = require("../../Images/riskHigh.png");
+const images = {
+    Low: lowRisk,
+    Medium: mediumRisk,
+    High: highRisk
+};
 
 const fundingOptionsData = [
     { "key": "init", "value": "Initial Investment" },
@@ -18,7 +29,6 @@ const filterMinData = [
     { key: '500', value: '500' },
     { key: '50', value: '50 initial and 50 monthly' },
 ];
-
 const filterRiskData = [
     { key: 'pre_cap', value: 'Preservation of Capital' },
     { key: 'con', value: 'Conservative' },
@@ -28,7 +38,6 @@ const filterRiskData = [
     { key: 'agg', value: 'Aggressive' },
     { key: 'very_agg', value: 'Very Aggressive' },
 ];
-
 const filterFundData = [
     { key: 'sta_fund', value: 'Starters Funds' },
     { key: 'tar_risk', value: 'Target Risk Funds' },
@@ -40,6 +49,7 @@ const filterFundData = [
     { key: 'alt_sec', value: 'Alternative/Sector Funds' },
     { key: 'mon_fun', value: 'Money Market Funds' },
 ];
+
 
 let savedData = {};
 let ammendData = {};
@@ -73,18 +83,55 @@ class ExchangeScreenThreeComponent extends Component {
         this.updateAmendData();
     }
 
+    // componentDidUpdate(prevProps) {
+    //     if (this.props !== prevProps) {
+    //         const { accOpeningData } = this.props;
+    //         let tempFundListData = [];
+    //         this.updateAmendData();
+    //         if (accOpeningData[ActionTypes.GET_FUNDLIST] !== undefined && accOpeningData[ActionTypes.GET_FUNDLIST].Items !== null) {
+    //             tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST].Items;
+    //             this.setState({
+    //                 fundList: [...tempFundListData],
+    //                 isFilterApplied: false,
+    //                 isLoading: false
+    //             });
+    //         }
+    //     }
+    // }
+
     componentDidUpdate(prevProps) {
         if (this.props !== prevProps) {
-            const { accOpeningData } = this.props;
-            let tempFundListData = [];
-            this.updateAmendData();
-            if (accOpeningData[ActionTypes.GET_FUNDLIST] !== undefined && accOpeningData[ActionTypes.GET_FUNDLIST].Items !== null) {
-                tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST].Items;
-                this.setState({
-                    fundList: [...tempFundListData],
-                    isFilterApplied: false,
-                    isLoading: false
+            this.updatePropsChange();
+        }
+    }
+
+    updatePropsChange = () => {
+        const { purchaseData, navigation } = this.props;
+        const { ammend } = this.state;
+        let tempFundListData = [];
+        if (navigation.getParam('ammend')) {
+            this.setState({ ammend: true });
+            ammendData = navigation.getParam('data');
+            ammendIndex = navigation.getParam('index');
+        }
+        else {
+            this.setState({ ammend: false });
+        }
+        if (purchaseData[ActionTypes.GET_FUNDLIST] !== undefined && purchaseData[ActionTypes.GET_FUNDLIST] !== null) {
+            tempFundListData = purchaseData[ActionTypes.GET_FUNDLIST];
+            this.setState({
+                fundList: [...tempFundListData],
+                // isFilterApplied: false,
+                isLoading: false
+            });
+            if (ammend) {
+                tempFundListData.map((item, k) => {
+                    if (item.fundName === ammendData.selectedFundData.fundName) {
+                        this.setState({ selectedFundIndex: k });
+                    }
+                    return 0;
                 });
+                // this.onAmendFund();
             }
         }
     }
@@ -111,14 +158,17 @@ class ExchangeScreenThreeComponent extends Component {
     }
 
     getLookUpData = () => {
-        const { getFundListData, masterLookupStateData, getCompositeLookUpData } = this.props;
+        const { getFunds, masterLookupStateData, getCompositeLookUpData } = this.props;
         const { fundList } = this.state;
 
         this.setState({ isLoading: true });
         if (this.state && fundList && !fundList.length > 0) {
-            const fundListPayload = {};
-            getFundListData(fundListPayload);
+            const fundListPayload = {
+                companyId: "591"
+            };
+            getFunds(fundListPayload);
         }
+
 
         const payload = [];
         const compositePayloadData = [
@@ -235,7 +285,7 @@ class ExchangeScreenThreeComponent extends Component {
 
     applyFilterAction = (visible) => () => {
         const { filterMinData, filterRiskData, filterFundData } = this.state;
-        const { getFundListData } = this.props;
+        const { getFunds } = this.props;
         this.setState({
             modalVisible: visible,
             applyFilterState: true,
@@ -280,7 +330,7 @@ class ExchangeScreenThreeComponent extends Component {
         });
 
         const fundListPayload = { 'minInvestment': minInvestKey };
-        getFundListData(fundListPayload);
+        getFunds(fundListPayload);
     }
 
     navigateCompareFunds = () => {
@@ -333,7 +383,7 @@ class ExchangeScreenThreeComponent extends Component {
                 this.onClickSave();
             }
         } catch (err) {
-            // console.log(`Error::: ${err}`);
+            AppUtils.debugLog(err);
         }
     }
 
@@ -518,10 +568,10 @@ class ExchangeScreenThreeComponent extends Component {
         newData.startDateValidation = true;
 
         if (!isNaN(newData.initialInvestment) && newData.initialInvestment !== "") {
-            total = total + parseFloat(newData.initialInvestment);
+            total += parseFloat(newData.initialInvestment);
         }
         if (!isNaN(newData.monthlyInvestment) && newData.monthlyInvestment !== "") {
-            total = total + parseFloat(newData.monthlyInvestment);
+            total += parseFloat(newData.monthlyInvestment);
         }
         this.setState({
             totalInitialInvestment: `$ ${total}`,
@@ -542,20 +592,24 @@ class ExchangeScreenThreeComponent extends Component {
                 <View style={styles.lineStyle} />
                 <View style={styles.fundItemContntView}>
                     <View style={styles.marginBottomStyle}>
-                        <Text style={styles.fundItemValueHeading}>Last NAV (Previous day close</Text>
-                        <Text style={styles.fundItemValueTxt}>$ 143</Text>
+                        <Text style={styles.fundItemValueHeading}>Min. / Max. Amount w/ Auto Investing</Text>
+                        <Text style={styles.fundItemValueTxt}>{`$ ${item.initialInvestment} / $ ${item.maxInvestment} w/ $ ${item.monthlyInvestment} monthly`}</Text>
                     </View>
                     <View style={styles.marginBottomStyle}>
-                        <Text style={styles.fundItemValueHeading}>NAV in %</Text>
-                        <Text style={styles.fundItemValueTxt}>14.3</Text>
+                        <Text style={styles.fundItemValueHeading}>NAV<Text style={styles.noteTextStyle}> (Change in Percentage)</Text></Text>
+                        <Text style={styles.fundItemValueTxt}>{item.changeInNav}</Text>
                     </View>
                     <View style={styles.marginBottomStyle}>
-                        <Text style={styles.fundItemValueHeading}>Min. / Max. Amount</Text>
-                        <Text style={styles.fundItemValueTxt}>$ 300/ $ 5000</Text>
+                        <Text style={styles.fundItemValueHeading}>Last Nav<Text style={styles.noteTextStyle}> (Previous day close)</Text></Text>
+                        <Text style={styles.fundItemValueTxt}>{`$ ${item.lastNav}`}</Text>
                     </View>
                     <View style={styles.marginBottomStyle}>
                         <Text style={styles.fundItemValueHeading}>52 week Min. / Max. Values</Text>
-                        <Text style={styles.fundItemValueTxt}>$ 3000 / $ 5000</Text>
+                        <Text style={styles.fundItemValueTxt}>{`$ ${item.min52W} / $ ${item.max52W}`}</Text>
+                    </View>
+                    <View style={styles.marginBottomStyle}>
+                        <Text style={styles.fundItemValueHeading}>Risk</Text>
+                        <Text style={styles.fundItemValueTxt}>{item.risk}</Text>
                     </View>
                 </View>
             </View>
@@ -953,21 +1007,23 @@ class ExchangeScreenThreeComponent extends Component {
 ExchangeScreenThreeComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     accOpeningData: PropTypes.instanceOf(Object),
-    getFundListData: PropTypes.func,
+    getFunds: PropTypes.func,
     masterLookupStateData: PropTypes.instanceOf(Object),
     getCompositeLookUpData: PropTypes.func,
     saveData: PropTypes.func,
-    exchangeData: PropTypes.instanceOf(Object)
+    exchangeData: PropTypes.instanceOf(Object),
+    purchaseData: PropTypes.instanceOf(Object)
 };
 
 ExchangeScreenThreeComponent.defaultProps = {
     saveData: () => { },
     getCompositeLookUpData: () => { },
     masterLookupStateData: {},
-    getFundListData: () => { },
+    getFunds: () => { },
     accOpeningData: {},
     navigation: {},
-    exchangeData: {}
+    exchangeData: {},
+    purchaseData: {}
 };
 
 export default ExchangeScreenThreeComponent;

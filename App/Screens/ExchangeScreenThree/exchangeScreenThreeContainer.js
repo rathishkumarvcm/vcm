@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import ExchangeScreenThreeComponent from './exchangeScreenThreeComponent';
-import { accOpeningActions, exchangeActions } from "../../Shared/Actions";
+import { accOpeningActions, exchangeActions, purchaseActions } from "../../Shared/Actions";
 /* ----------------------
                                   Redux Methods
                                                              -------------------------- */
@@ -10,11 +10,13 @@ const mapStateToProps = (state /* , props */) => ({
   initialState: state.initialAppData,
   masterLookupStateData: state.masterLookUpData,
   exchangeData: state.exchangeData,
+  purchaseData: state.purchaseData
 });
 
 const mapDispatchToProps = {
   ...accOpeningActions,
-  ...exchangeActions
+  ...exchangeActions,
+  ...purchaseActions
 };
 
 export default connect(
