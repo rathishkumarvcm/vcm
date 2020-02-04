@@ -51,10 +51,10 @@ class LiquidationPageOneComponent extends Component {
     componentDidUpdate(prevProps) {
         const { liquidationInitialState } = this.props;
         if (prevProps !== this.props) {
-            let tempAccountList = []
+            let tempAccountList = [];
             if (liquidationInitialState[ActionTypes.GET_ACCOUNT_DETAILS] !== undefined && liquidationInitialState[ActionTypes.GET_ACCOUNT_DETAILS] !== null) {
                 tempAccountList = liquidationInitialState[ActionTypes.GET_ACCOUNT_DETAILS];
-                console.log("Account List in:::::::::", tempAccountList);
+                // console.log("Account List in:::::::::", tempAccountList);
                 this.setState({
                     accountList: [...tempAccountList],
                     isLoading: false

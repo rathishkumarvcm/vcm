@@ -53,10 +53,10 @@ class ExchangeScreenOneComponent extends Component {
     componentDidUpdate(prevProps) {
         const { exchangeData } = this.props;
         if (prevProps !== this.props) {
-            let tempAccountList = []
+            let tempAccountList = [];
             if (exchangeData[ActionTypes.GET_ACCOUNT_DETAILS] !== undefined && exchangeData[ActionTypes.GET_ACCOUNT_DETAILS] !== null) {
                 tempAccountList = exchangeData[ActionTypes.GET_ACCOUNT_DETAILS];
-                console.log("Account List in:::::::::", tempAccountList);
+                // console.log("Account List in:::::::::", tempAccountList);
                 this.setState({
                     accountList: [...tempAccountList],
                     isLoading: false
