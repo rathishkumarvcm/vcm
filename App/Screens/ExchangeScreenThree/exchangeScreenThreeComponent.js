@@ -116,6 +116,7 @@ class ExchangeScreenThreeComponent extends Component {
         else {
             this.setState({ ammend: false });
         }
+        this.updateAmendData();
         if (purchaseData[ActionTypes.GET_FUNDLIST] !== undefined && purchaseData[ActionTypes.GET_FUNDLIST] !== null) {
             tempFundListData = purchaseData[ActionTypes.GET_FUNDLIST];
             this.setState({
@@ -130,7 +131,6 @@ class ExchangeScreenThreeComponent extends Component {
                     }
                     return 0;
                 });
-                // this.onAmendFund();
             }
         }
     }
@@ -211,23 +211,24 @@ class ExchangeScreenThreeComponent extends Component {
         switch (type) {
             case 'minInvest':
                 newItm = [...filterMinData];
-                newItm[index].isActive = !newItm[index].isActive;
+                newItm[parseInt(index, 0)].isActive = !newItm[parseInt(index, 0)].isActive;
                 this.setState({ filterMinData: newItm });
                 break;
             case 'risk':
                 newItm = [...filterRiskData];
-                newItm[index].isActive = !newItm[index].isActive;
+                newItm[parseInt(index, 0)].isActive = !newItm[parseInt(index, 0)].isActive;
                 this.setState({ filterRiskData: newItm });
                 break;
             case 'fundType':
                 newItm = [...filterFundData];
-                newItm[index].isActive = !newItm[index].isActive;
+                newItm[parseInt(index, 0)].isActive = !newItm[parseInt(index, 0)].isActive;
                 this.setState({ filterFundData: newItm });
                 break;
             default:
                 break;
         }
     }
+
 
     setModalVisible = (visible) => () => {
         const { applyFilterState } = this.state;
@@ -485,7 +486,7 @@ class ExchangeScreenThreeComponent extends Component {
     }
 
     setInputRef = (inputComp) => (ref) => {
-        this[inputComp] = ref;
+        this[parseInt(inputComp, 0)] = ref;
     }
 
     onChangeIndex = (item, index) => () => {

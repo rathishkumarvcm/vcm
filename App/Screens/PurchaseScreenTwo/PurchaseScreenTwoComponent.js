@@ -116,8 +116,8 @@ class PurchaseScreenTwoComponent extends Component {
         ];
 
         for (let i = 0; i < compositePayloadData.length; i += 1) {
-            const tempkey = compositePayloadData[i];
-            if (this.props && masterLookupStateData && !masterLookupStateData[tempkey]) {
+            const tempkey = compositePayloadData[parseInt(i, 0)];
+            if (this.props && masterLookupStateData && !masterLookupStateData[tempkey.toString()]) {
                 payload.push(tempkey);
             }
         }
@@ -182,17 +182,17 @@ class PurchaseScreenTwoComponent extends Component {
         switch (type) {
             case 'minInvest':
                 newItm = [...filterMinData];
-                newItm[index].isActive = !newItm[index].isActive;
+                newItm[parseInt(index, 0)].isActive = !newItm[parseInt(index, 0)].isActive;
                 this.setState({ filterMinData: newItm });
                 break;
             case 'risk':
                 newItm = [...filterRiskData];
-                newItm[index].isActive = !newItm[index].isActive;
+                newItm[parseInt(index, 0)].isActive = !newItm[parseInt(index, 0)].isActive;
                 this.setState({ filterRiskData: newItm });
                 break;
             case 'fundType':
                 newItm = [...filterFundData];
-                newItm[index].isActive = !newItm[index].isActive;
+                newItm[parseInt(index, 0)].isActive = !newItm[parseInt(index, 0)].isActive;
                 this.setState({ filterFundData: newItm });
                 break;
             default:
@@ -234,16 +234,16 @@ class PurchaseScreenTwoComponent extends Component {
         let tempRiskData = [];
         let tempFundTypeData = [];
 
-        if (tempKeyMinInv !== "" && this.props && masterLookupStateData && masterLookupStateData[tempKeyMinInv] && masterLookupStateData[tempKeyMinInv].value) {
-            tempMinInvData = masterLookupStateData[tempKeyMinInv].value;
+        if (tempKeyMinInv !== "" && this.props && masterLookupStateData && masterLookupStateData[tempKeyMinInv.toString()] && masterLookupStateData[tempKeyMinInv.toString()].value) {
+            tempMinInvData = masterLookupStateData[tempKeyMinInv.toString()].value;
         }
 
-        if (tempKeyRisk !== "" && this.props && masterLookupStateData && masterLookupStateData[tempKeyRisk] && masterLookupStateData[tempKeyRisk].value) {
-            tempRiskData = masterLookupStateData[tempKeyRisk].value;
+        if (tempKeyRisk !== "" && this.props && masterLookupStateData && masterLookupStateData[tempKeyRisk.toString()] && masterLookupStateData[tempKeyRisk.toString()].value) {
+            tempRiskData = masterLookupStateData[tempKeyRisk.toString()].value;
         }
 
-        if (tempKeyFundType !== "" && this.props && masterLookupStateData && masterLookupStateData[tempKeyFundType] && masterLookupStateData[tempKeyFundType].value) {
-            tempFundTypeData = masterLookupStateData[tempKeyFundType].value;
+        if (tempKeyFundType !== "" && this.props && masterLookupStateData && masterLookupStateData[tempKeyFundType.toString()] && masterLookupStateData[tempKeyFundType.toString()].value) {
+            tempFundTypeData = masterLookupStateData[tempKeyFundType.toString()].value;
         }
 
         this.setState({
@@ -260,7 +260,7 @@ class PurchaseScreenTwoComponent extends Component {
             modalVisible: visible,
             applyFilterState: true,
             fundList: [],
-            isFilterApplied: true
+            // isFilterApplied: true
         });
 
         let minInvestKey = "";
@@ -443,7 +443,7 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     setInputRef = (inputComp) => (ref) => {
-        this[inputComp] = ref;
+        this[parseInt(inputComp, 0)] = ref;
     }
 
     onChangeIndex = (item, index) => () => {
@@ -521,7 +521,7 @@ class PurchaseScreenTwoComponent extends Component {
     onChangeDateForInvestment = (keyName) => date => {
         const { selectedFundInvestmentData } = this.state;
         const newData = selectedFundInvestmentData;
-        newData[keyName] = date;
+        newData[keyName.toString()] = date;
         newData.fundingOptionValidation = true;
         newData.initialInvestmentValidation = true;
         newData.monthlyInvestmentValidation = true;
@@ -533,17 +533,17 @@ class PurchaseScreenTwoComponent extends Component {
         const { selectedFundInvestmentData } = this.state;
         const newData = selectedFundInvestmentData;
         let total = 0;
-        newData[keyName] = text;
+        newData[keyName.toString()] = text;
         newData.fundingOptionValidation = true;
         newData.initialInvestmentValidation = true;
         newData.monthlyInvestmentValidation = true;
         newData.startDateValidation = true;
 
-        if (!isNaN(newData.initialInvestment) && newData.initialInvestment !== "") {
-            total += parseFloat(newData.initialInvestment);
+        if (newData.initialInvestment && newData.initialInvestment !== "") {
+            total += parseFloat(newData.initialInvestment.toString());
         }
-        if (!isNaN(newData.monthlyInvestment) && newData.monthlyInvestment !== "") {
-            total += parseFloat(newData.monthlyInvestment);
+        if (newData.monthlyInvestment && newData.monthlyInvestment !== "") {
+            total += parseFloat(newData.monthlyInvestment.toString());
         }
         this.setState({
             totalInitialInvestment: `$ ${total}`,
@@ -628,7 +628,9 @@ class PurchaseScreenTwoComponent extends Component {
                     </View>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.topContainer}>
-                        <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountName} {ammend && ammendData.selectedAccountData && ammendData.selectedAccountData.accountName ? ammendData.selectedAccountData.accountName : savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountName ? savedData.selectedAccountData.accountName : ""}</Text>
+                        <Text style={styles.topContainerTxtBold}>
+                        {gblStrings.purchase.accountName} 
+                        {ammend && ammendData.selectedAccountData && ammendData.selectedAccountData.accountName ? ammendData.selectedAccountData.accountName : savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountName ? savedData.selectedAccountData.accountName : ""}</Text>
                         <View style={styles.flexDirectionStyle}>
                             <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountNumber}</Text>
                             <Text style={styles.topContainerTxtBold}>{ammend && ammendData.selectedAccountData && ammendData.selectedAccountData.accountNumber ? ammendData.selectedAccountData.accountNumber : savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountNumber ? savedData.selectedAccountData.accountNumber : ""}</Text>
