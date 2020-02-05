@@ -298,7 +298,7 @@ class CompareFundsComponent extends Component {
                         </View>
                       )}
 
-                    {fundDetailsData[ActionTypes.GET_FUNDDETAILS].result && compareFundsData.length === 0 && (
+                    { fundDetailsData && fundDetailsData[ActionTypes.GET_FUNDDETAILS] && fundDetailsData[ActionTypes.GET_FUNDDETAILS].result && compareFundsData.length === 0 && (
                         <View style={styles.fundCompareTextContainer}>
                             <Text style={styles.fundCompareText}>
                                 {fundDetailsData[ActionTypes.GET_FUNDDETAILS].result}
