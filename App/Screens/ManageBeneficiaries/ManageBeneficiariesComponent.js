@@ -2,24 +2,24 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
-import { GHeaderComponent, GIcon, GFooterSettingsComponent } from '../../CommonComponents';
+import { GHeaderComponent, GIcon, GButtonComponent, GFooterSettingsComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import CardHeader from './CardHeader';
 
 let beneficiaryData = [];
 
 class ManageBenificiariesComponent extends Component {
+  
   constructor(props) {
     super(props);
     this.state = {
       collapseIcon: "-",
       notificationMsg: "",
       isSuccessNotification: false,
+      totalContingent: 0,
+      totalPrimary: 0,
+      totalTransferDeath: 0
     };
-  }
-
-  componentDidMount() {
-
   }
 
   handleEdit = (data) => () => {
@@ -43,25 +43,25 @@ class ManageBenificiariesComponent extends Component {
     const cKey = keyArr[2];
 
     const pIndex = beneficiaryData.findIndex((data) => data.key === pKey);
-    const modObj = beneficiaryData[pIndex];
+    const modObj = beneficiaryData[parseInt(pIndex, 0)];
     let cIndex;
     let arr;
     switch (pName) {
       case "pri":
-        cIndex = beneficiaryData[pIndex].primary_Bene.findIndex((data) => data.key === cKey);
-        arr = [...beneficiaryData[pIndex].primary_Bene];
+        cIndex = beneficiaryData[parseInt(pIndex, 0)].primary_Bene.findIndex((data) => data.key === cKey);
+        arr = [...beneficiaryData[parseInt(pIndex, 0)].primary_Bene];
         arr.splice(cIndex, 1);
         modObj.primary_Bene = arr;
         break;
       case "con":
-        cIndex = beneficiaryData[pIndex].contingent_Bene.findIndex((data) => data.key === cKey);
-        arr = [...beneficiaryData[pIndex].contingent_Bene];
+        cIndex = beneficiaryData[parseInt(pIndex, 0)].contingent_Bene.findIndex((data) => data.key === cKey);
+        arr = [...beneficiaryData[parseInt(pIndex, 0)].contingent_Bene];
         arr.splice(cIndex, 1);
         modObj.contingent_Bene = arr;
         break;
       case "tod":
-        cIndex = beneficiaryData[pIndex].transfer_on_Death_Bene.findIndex((data) => data.key === cKey);
-        arr = [...beneficiaryData[pIndex].transfer_on_Death_Bene];
+        cIndex = beneficiaryData[parseInt(pIndex, 0)].transfer_on_Death_Bene.findIndex((data) => data.key === cKey);
+        arr = [...beneficiaryData[parseInt(pIndex, 0)].transfer_on_Death_Bene];
         arr.splice(cIndex, 1);
         modObj.transfer_on_Death_Bene = arr;
         break;
@@ -81,93 +81,36 @@ class ManageBenificiariesComponent extends Component {
     deleteBeneficiaryData(payloadData);
   }
 
+  /* ---------------------- Flat List Events -------------------- */
+
   generateKeyExtractor = (item) => item.key;
 
-  renderContingentBeneficiary = ({ item }) => {
-    return (
-      <View style={styles.innerContainerView}>
-        <CardHeader item={item} onPressDelete={this.deleteBene(item)} />
-        <View style={styles.marginPaddingStyle}>
-          <View style={styles.marginTopStyle}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.contingentBeneficiary}</Text>
-            <Text style={styles.beneNameStyle}>{`${item.fname} ${item.mname} ${item.lname}`}</Text>
-          </View>
-          <View style={styles.marginTopStyle}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToInsured}</Text>
-            <Text style={styles.shortContentValueText}>{item.relationship_To_Insured}</Text>
-          </View>
-          <View style={styles.marginTopStyle}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.accumulatedValue}</Text>
-            <Text style={styles.shortContentValueText}>{`$ ${item.accumulated_Value}`}</Text>
-          </View>
-          <View style={styles.marginTopStyle}>
-            <Text style={styles.shortContentText}>{gblStrings.accManagement.distribution}</Text>
-            <Text style={styles.shortContentValueText}>{`${item.distribution_Per} %`}</Text>
-          </View>
-          <View style={styles.marginTopStyle}>
-            <Text style={styles.infoShortText}>{`Last Updated on ${item.last_modified}`}</Text>
-          </View>
-        </View>
-      </View>
-    );
-  }
+  renderEmptyComponent = () => (
+    <View style={styles.emptyComponentContainer}>
+      <Text style={styles.containerDataText}>No Contingent Beneficiary available</Text>
+    </View>
+  );
+
+  renderContingentBeneficiary = ({ item }) => (
+    <View style={styles.innerContainerView}>
+      <CardHeader item={item} onPressDelete={this.deleteBene(item)} />
+    </View>
+  );
 
   renderTransferOnDeathBeneficiary = ({ item }) => (
     <View style={styles.innerContainerView}>
       <CardHeader item={item} onPressDelete={this.deleteBene(item)} />
-      <View style={styles.marginPaddingStyle}>
-        <View style={styles.marginTopStyle}>
-          <Text style={styles.shortContentText}>{gblStrings.accManagement.primaryBeneficiary}</Text>
-          <Text style={styles.beneNameStyle}>{`${item.fname} ${item.mname} ${item.lname}`}</Text>
-        </View>
-        <View style={styles.marginTopStyle}>
-          <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToInsured}</Text>
-          <Text style={styles.shortContentValueText}>{item.relationship_To_Insured}</Text>
-        </View>
-        <View style={styles.marginTopStyle}>
-          <Text style={styles.shortContentText}>{gblStrings.accManagement.accumulatedValue}</Text>
-          <Text style={styles.shortContentValueText}>{`$ ${item.accumulated_Value}`}</Text>
-        </View>
-        <View style={styles.marginTopStyle}>
-          <Text style={styles.shortContentText}>{gblStrings.accManagement.distribution}</Text>
-          <Text style={styles.shortContentValueText}>{`${item.distribution_Per} %`}</Text>
-        </View>
-        <View style={styles.marginTopStyle}>
-          <Text style={styles.infoShortText}>{`Last Updated on ${item.last_modified}`}</Text>
-        </View>
-      </View>
     </View>
   );
 
   renderPrimaryBeneficiary = ({ item }) => (
     <View style={styles.innerContainerView}>
       <CardHeader item={item} onPressDelete={this.deleteBene(item)} />
-      <View style={styles.marginPaddingStyle}>
-        <View style={styles.marginTopStyle}>
-          <Text style={styles.shortContentText}>{gblStrings.accManagement.primaryBeneficiary}</Text>
-          <Text style={styles.beneNameStyle}>{`${item.fname} ${item.mname} ${item.lname}`}</Text>
-        </View>
-        <View style={styles.marginTopStyle}>
-          <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToInsured}</Text>
-          <Text style={styles.shortContentValueText}>{item.relationship_To_Insured}</Text>
-        </View>
-        <View style={styles.marginTopStyle}>
-          <Text style={styles.shortContentText}>{gblStrings.accManagement.accumulatedValue}</Text>
-          <Text style={styles.shortContentValueText}>{`$ ${item.accumulated_Value}`}</Text>
-        </View>
-        <View style={styles.marginTopStyle}>
-          <Text style={styles.shortContentText}>{gblStrings.accManagement.distribution}</Text>
-          <Text style={styles.shortContentValueText}>{`${item.distribution_Per} %`}</Text>
-        </View>
-        <View style={styles.marginTopStyle}>
-          <Text style={styles.infoShortText}>{`Last Updated on ${item.last_modified}`}</Text>
-        </View>
-      </View>
     </View>
   );
 
   renderBeneficiaryData = ({ item }) => {
-    const { collapseIcon } = this.state;
+    const { collapseIcon, totalPrimary, totalContingent, totalTransferDeath } = this.state;
     return (
       <View style={styles.blockMarginTop}>
         <View style={styles.titleHeadingView}>
@@ -176,43 +119,179 @@ class ManageBenificiariesComponent extends Component {
         </View>
         <View style={styles.line} />
         <View style={styles.containerView}>
+
           <View style={styles.containerHeaderView}>
-            <Text style={styles.containerHeaderText}>{` - Acc Name - ${item.account_Name} | Acc Number - ${item.account_Number}`}</Text>
-            <View style={styles.flexDirectionStyle}>
-              <Text style={styles.containerHeaderText}>{` Value - $ ${item.accumulated_Value} | ${gblStrings.accManagement.distributionPercentage} - ${item.distribution_Per} %`}</Text>
-              <TouchableOpacity onPress={this.handleEdit(item)}>
-                <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
-              </TouchableOpacity>
+            <View style={styles.beneHeaderView}>
+              <View style={styles.innerHeaderTitleView}>
+                <Text style={styles.containerHeaderText}>Account Name</Text>
+                <Text style={styles.containerDataText}>{item.account_Name}</Text>
+              </View>
+              <View style={styles.verticalLine} />
+              <View style={styles.innerHeaderTitleView}>
+                <Text style={styles.containerHeaderText}>Account Number</Text>
+                <Text style={styles.containerDataText}>{item.account_Number}</Text>
+              </View>
+            </View>
+            <View style={styles.beneHeaderView}>
+              <View style={styles.innerHeaderTitleView}>
+                <Text style={styles.containerHeaderText}>Accured Value</Text>
+                <Text style={styles.containerDataText}>{item.accumulated_Value}</Text>
+              </View>
+              <View style={styles.verticalLine} />
+              <View style={styles.innerHeaderTitleView}>
+                <Text style={styles.containerHeaderText}>Primary Beneficiaries</Text>
+                {item.primary_Bene &&
+                  (
+                    <Text style={styles.containerDataText}>{item.primary_Bene.length ? item.primary_Bene.length : '0'}</Text>
+                  )
+                }
+                {item.transfer_on_Death_Bene &&
+                  (
+                    <Text style={styles.containerDataText}>{item.transfer_on_Death_Bene && item.transfer_on_Death_Bene ? item.transfer_on_Death_Bene.length : "0"}</Text>
+                  )
+                }
+              </View>
+            </View>
+            <View style={styles.beneHeaderView}>
+              <View style={styles.innerHeaderTitleView}>
+                <Text style={styles.containerHeaderText}>Contingent Beneficiaries</Text>
+                <Text style={styles.containerDataText}>{item.contingent_Bene && item.contingent_Bene.length ? item.contingent_Bene.length : '0'}</Text>
+              </View>
             </View>
           </View>
+
           {item.primary_Bene &&
             (
-              <FlatList
-                data={item.primary_Bene}
-                extraData={this.props}
-                keyExtractor={this.generateKeyExtractor}
-                renderItem={this.renderPrimaryBeneficiary}
-              />
+              <View>
+                <View style={styles.flexDirectionStyle}>
+                  <View>
+                    <Text style={styles.titleHeaderText}>Primary Beneficiary</Text>
+                    {item.primary_Bene && item.primary_Bene.length > 0 &&
+                      (
+                        <View>
+                          <Text style={styles.infoShortText}>{`(Last Updated on ${item.last_modified})`}</Text>
+                        </View>
+                      )
+                    }
+                  </View>
+                  {item.primary_Bene && item.primary_Bene.length > 0 &&
+                    (
+                      <TouchableOpacity onPress={this.handleEdit(item)}>
+                        <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
+                      </TouchableOpacity>
+                    )
+                  }
+                </View>
+                <FlatList
+                  data={item.primary_Bene}
+                  extraData={this.props}
+                  keyExtractor={this.generateKeyExtractor}
+                  renderItem={this.renderPrimaryBeneficiary}
+                />
+                {item.primary_Bene && item.primary_Bene.length > 0 &&
+                  (
+                    <View style={styles.totalDisView}>
+                      <Text style={styles.disTxtStr}>{`Total Distribution Percentage of Primary Beneficiary= ${totalPrimary} %`}</Text>
+                    </View>
+                  )
+                }
+                <TouchableOpacity style={styles.paddingStyleLeft}>
+                  <Text style={styles.addPrimaryLink}>
+                    + Add Primary Beneficiary
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
             )
           }
+
           {item.contingent_Bene &&
             (
-              <FlatList
-                data={item.contingent_Bene}
-                extraData={this.props}
-                keyExtractor={this.generateKeyExtractor}
-                renderItem={this.renderContingentBeneficiary}
-              />
+              <View>
+                <View style={styles.flexDirectionStyle}>
+                  <View>
+                    <Text style={styles.titleHeaderText}>Contingent Beneficiary</Text>
+                    {item.contingent_Bene && item.contingent_Bene.length > 0 &&
+                      (
+                        <View>
+                          <Text style={styles.infoShortText}>{`(Last Updated on ${item.last_modified})`}</Text>
+                        </View>
+                      )
+                    }
+                  </View>
+                  {item.contingent_Bene && item.contingent_Bene.length > 0 &&
+                    (
+                      <TouchableOpacity onPress={this.handleEdit(item)}>
+                        <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
+                      </TouchableOpacity>
+                    )
+                  }
+                </View>
+                <FlatList
+                  data={item.contingent_Bene}
+                  extraData={this.props}
+                  keyExtractor={this.generateKeyExtractor}
+                  renderItem={this.renderContingentBeneficiary}
+                  ListEmptyComponent={this.renderEmptyComponent}
+                />
+                {item.contingent_Bene && item.contingent_Bene.length > 0 &&
+                  (
+                    <View style={styles.totalDisView}>
+                      <Text style={styles.disTxtStr}>{`Total Distribution Percentage of Contingent Beneficiary= ${totalContingent} %`}</Text>
+                    </View>
+                  )
+                }
+                <TouchableOpacity style={styles.paddingStyleLeft}>
+                  <Text style={styles.addPrimaryLink}>
+                    + Add Contingent Beneficiary
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
             )
           }
+
           {item.transfer_on_Death_Bene &&
             (
-              <FlatList
-                data={item.transfer_on_Death_Bene}
-                extraData={this.props}
-                keyExtractor={this.generateKeyExtractor}
-                renderItem={this.renderTransferOnDeathBeneficiary}
-              />
+              <View>
+                <View style={styles.flexDirectionStyle}>
+                  <View>
+                    <Text style={styles.titleHeaderText}>Primary Beneficiary</Text>
+                    {item.transfer_on_Death_Bene && item.transfer_on_Death_Bene.length > 0 &&
+                      (
+                        <View>
+                          <Text style={styles.infoShortText}>{`(Last Updated on ${item.last_modified})`}</Text>
+                        </View>
+                      )
+                    }
+                  </View>
+                  {item.transfer_on_Death_Bene && item.transfer_on_Death_Bene.length > 0 &&
+                    (
+                      <TouchableOpacity onPress={this.handleEdit(item)}>
+                        <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
+                      </TouchableOpacity>
+                    )
+                  }
+                </View>
+                <FlatList
+                  data={item.transfer_on_Death_Bene}
+                  extraData={this.props}
+                  keyExtractor={this.generateKeyExtractor}
+                  renderItem={this.renderTransferOnDeathBeneficiary}
+                />
+                {item.transfer_on_Death_Bene && item.transfer_on_Death_Bene.length > 0 &&
+                  (
+                    <View style={styles.totalDisView}>
+                      <Text style={styles.disTxtStr}>{`Total Distribution Percentage of Primary Beneficiary= ${totalTransferDeath} %`}</Text>
+                    </View>
+                  )
+                }
+                <TouchableOpacity style={styles.paddingStyleLeft}>
+                  <Text style={styles.addPrimaryLink}>
+                    + Add Primary Beneficiary
+                  </Text>
+                </TouchableOpacity>
+              </View>
             )
           }
         </View>
@@ -244,6 +323,9 @@ class ManageBenificiariesComponent extends Component {
             </View>
           </View>
           <View style={styles.line} />
+
+          {/* ---------------------- Notification View -------------------- */}
+
           {isSuccessNotification ?
             (
               <View style={styles.notificationView}>
@@ -259,6 +341,8 @@ class ManageBenificiariesComponent extends Component {
               </View>
             ) : null
           }
+          {/* ---------------------- List of Beneficiaries -------------------- */}
+
           <View style={styles.mainHeadingView}>
             <Text style={styles.contentText}>
               {gblStrings.accManagement.beneficiariesAccount}
@@ -273,6 +357,31 @@ class ManageBenificiariesComponent extends Component {
             keyExtractor={this.generateKeyExtractor}
             renderItem={this.renderBeneficiaryData}
           />
+
+          {/* ---------------------- Upload View -------------------- */}
+
+
+          <View style={styles.mainHeadingView}>
+            <View style={styles.downloadContainer}>
+              <Text style={styles.downloadHeadingTxt}>Download the Form</Text>
+              <Text style={styles.downloadDescTxt}>“Mutual Fund Designation of Beneficiary -Traditional, Roth ,SEP and Simple IRAs” form</Text>
+              <GButtonComponent
+                buttonStyle={styles.downloadPdfBtn}
+                buttonText="Download PDFs"
+                textStyle={styles.downloadPdfBtnTxt}
+              />
+            </View>
+            <View style={styles.downloadContainer}>
+              <Text style={styles.downloadHeadingTxt}>To Upload Forms</Text>
+              <Text style={styles.downloadDescTxt}>Lorem Ipsum dolor dit amet sun nam caprioce delice Ipsum dolor dit amet sun nam caprioce delice</Text>
+              <GButtonComponent
+                buttonStyle={styles.downloadPdfBtn}
+                buttonText="Click Here"
+                textStyle={styles.downloadPdfBtnTxt}
+              />
+            </View>
+          </View>
+
 
           {/* ---------------------- Footer View -------------------- */}
           <GFooterSettingsComponent />

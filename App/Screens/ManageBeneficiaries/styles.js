@@ -5,8 +5,8 @@ const styles = StyleSheet.create({
   addNewBeneText: {
     color: "#5D83AE",
     fontSize: scaledHeight(13),
-    fontWeight: "400",
-    marginTop: scaledHeight(30),
+    fontWeight: "700",
+    marginTop: scaledHeight(10),
     paddingLeft: "4%"
   },
   addNewBeneView: {
@@ -14,9 +14,19 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%"
   },
-  beneNameStyle: {
-    color: "#56565A",
-    fontSize: scaledHeight(36)
+  addPrimaryLink: {
+    alignSelf: "flex-start",
+    color: "#5D83AE",
+    fontSize: scaledHeight(16),
+    fontWeight: "600",
+    lineHeight: scaledHeight(22),
+    marginBottom: scaledHeight(30),
+    marginTop: scaledHeight(30)
+  },
+  beneHeaderView: {
+    flexDirection: 'row',
+    paddingLeft: '4%',
+    paddingRight: '4%'
   },
   blockMarginTop: {
     marginTop: scaledHeight(25)
@@ -31,13 +41,20 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%"
   },
+  containerDataText: {
+    color: "#56565A",
+    fontSize: scaledHeight(14),
+    fontWeight: "400",
+    lineHeight: scaledHeight(17)
+  },
   containerHeaderText: {
-    color: "#54565B",
-    fontSize: scaledHeight(12),
-    fontWeight: "400"
+    color: "#56565A",
+    fontSize: scaledHeight(14),
+    fontWeight: "bold",
+    lineHeight: scaledHeight(19)
   },
   containerHeaderView: {
-    backgroundColor: "#ECECEC",
+    backgroundColor: "#F1F1F1",
     borderBottomColor: "#5D83AE99",
     borderBottomWidth: scaledHeight(1),
     marginBottom: scaledHeight(5),
@@ -61,6 +78,13 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     paddingLeft: '4%'
   },
+  disTxtStr: {
+    color: "#56565A",
+    fontSize: scaledHeight(17),
+    fontWeight: "600",
+    lineHeight: 20,
+    margin: scaledHeight(15)
+  },
   disclaimerTextHeading: {
     color: "#56565A",
     fontSize: scaledHeight(16),
@@ -73,14 +97,76 @@ const styles = StyleSheet.create({
     fontSize: scaledHeight(16),
     lineHeight: scaledHeight(23)
   },
+  downloadContainer: {
+    borderColor: '#D8D8D8',
+    borderWidth: scaledHeight(1),
+    marginTop: '6%',
+    shadowColor: "#0000000F",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.2,
+  },
+  downloadDescTxt: {
+    color: '#56565A',
+    fontSize: scaledHeight(16),
+    fontWeight: '400',
+    lineHeight: 22,
+    marginLeft: '4%',
+    marginRight: '4%',
+    marginTop: scaledHeight(17),
+    textAlign: 'left',
+  },
+  downloadHeadingTxt: {
+    color: '#56565A',
+    fontSize: scaledHeight(25),
+    fontWeight: "200",
+    lineHeight: scaledHeight(35),
+    marginHorizontal: scaledHeight(15),
+    marginTop: scaledHeight(25)
+  },
+  downloadPdfBtn: {
+    alignContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderColor: "#5D83AE",
+    borderWidth: 1,
+    height: scaledHeight(50),
+    justifyContent: 'center',
+    marginHorizontal: scaledHeight(15),
+    marginVertical: scaledHeight(25),
+    width: '50%'
+  },
+  downloadPdfBtnTxt: {
+    color: '#5D83AE',
+    fontSize: scaledHeight(16),
+    fontWeight: 'bold',
+    lineHeight: 20,
+    textAlign: 'center'
+  },
   editBtnText: {
     color: "#5D83AE",
-    fontSize: scaledHeight(15),
-    fontWeight: "400",
-    paddingLeft: "4%"
+    fontSize: scaledHeight(16),
+    fontWeight: "600",
+    marginTop: scaledHeight(15)
+  },
+  emptyComponentContainer: {
+    alignItems: 'center',
+    alignSelf: "center",
+    borderColor: "#5D83AE99",
+    borderWidth: scaledHeight(1),
+    height: scaledHeight(120),
+    justifyContent: 'center',
+    marginTop: scaledHeight(10),
+    width: "95%"
   },
   flexDirectionStyle: {
-    flexDirection: "row"
+    flexDirection: "row",
+    justifyContent: 'space-between',
+    marginTop: scaledHeight(15),
+    paddingLeft: '4%',
+    paddingRight: '4%',
   },
   flexMainView: {
     flex: 0.85
@@ -94,7 +180,8 @@ const styles = StyleSheet.create({
   },
   infoShortText: {
     color: "#A7A7A7",
-    fontSize: scaledHeight(14)
+    fontSize: scaledHeight(14),
+    marginTop: scaledHeight(5)
   },
   innerContainerView: {
     alignSelf: "center",
@@ -104,9 +191,11 @@ const styles = StyleSheet.create({
     marginTop: scaledHeight(10),
     width: "95%"
   },
+  innerHeaderTitleView: {
+    marginBottom: scaledHeight(10),
+    marginTop: scaledHeight(10)
+  },
   innerHeaderView: {
-    borderBottomColor: "#5D83AE99",
-    borderBottomWidth: scaledHeight(1),
     flexDirection: "row",
     justifyContent: "space-between",
     paddingLeft: "4%",
@@ -149,14 +238,12 @@ const styles = StyleSheet.create({
     color: "#54565B",
     fontSize: scaledHeight(22),
     fontWeight: "bold",
-    lineHeight: scaledHeight(29),
-    marginTop: scaledHeight(20)
+    lineHeight: scaledHeight(29)
   },
   marginBottomStyle: {
     marginBottom: scaledHeight(20)
   },
   marginPaddingStyle: {
-    marginBottom: scaledHeight(20),
     paddingLeft: '4%'
   },
   marginTopStyle: {
@@ -176,10 +263,6 @@ const styles = StyleSheet.create({
     marginTop: scaledHeight(10),
     padding: "4%",
     width: "100%"
-  },
-  paddingHorizontalStyle: {
-    paddingLeft: "4%",
-    paddingRight: "4%"
   },
   paddingStyleLeft: {
     paddingLeft: "4%"
@@ -233,6 +316,23 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     paddingLeft: '4%',
     paddingRight: '4%'
+  },
+  totalDisView: {
+    alignSelf: 'center',
+    backgroundColor: '#EEEEEE',
+    borderColor: '#EEEEEE',
+    borderWidth: scaledHeight(1),
+    marginTop: scaledHeight(10),
+    width: '90%'
+  },
+  verticalLine: {
+    alignSelf: "center",
+    backgroundColor: "#C4C3C3",
+    height: '70%',
+    marginLeft: '6%',
+    marginRight: '6%',
+    opacity: 1,
+    padding: scaledHeight(0.5)
   }
 });
 
