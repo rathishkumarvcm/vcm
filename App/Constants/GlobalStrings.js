@@ -114,7 +114,7 @@ export default {
         vcmNo: 11,
         relationship: 30,
         name: 80,
-        distributionPercentage: 3,
+        distributionPercentage: 4,
 
         initInvestment: 10,
         monthlyInvestment: 10,

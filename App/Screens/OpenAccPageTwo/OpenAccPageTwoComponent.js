@@ -9,7 +9,10 @@ import { scaledHeight } from '../../Utils/Resolution';
 import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import AppUtils from '../../Utils/AppUtils';
+import { emailRegex} from '../../Constants/RegexConstants';
 
+const isEmpty = value => typeof value === 'undefined' || value === null || value === false;
+const isNumeric = value => !isEmpty(value) && !Number.isNaN(Number(value));
 const imagePickerOptions = {
     title: 'Select Image',
     customButtons: [
@@ -22,7 +25,6 @@ const imagePickerOptions = {
     },
 };
 
-const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
 const date = new Date().getDate(); //  Current Date
 const month = new Date().getMonth() + 1; //  Current Month
 const year = new Date().getFullYear(); //  Current Year
@@ -90,7 +92,7 @@ class OpenAccPageTwoComponent extends Component {
                 city_Phy: "",
                 stateCity_Phy: "",
                 stateCity_PhyDropDown: false,
-                isYourPhysicalAddresSame: false,
+                isYourPhysicalAddresSame: "",
                 mobileNo: "",
                 contactDuringMobNo: "",
                 contactDuringMobNoDropDown: false,
@@ -267,7 +269,7 @@ class OpenAccPageTwoComponent extends Component {
                 city_Phy: "",
                 stateCity_Phy: "",
                 stateCity_PhyDropDown: false,
-                isYourPhysicalAddresSame: false,
+                isYourPhysicalAddresSame: "",
                 mobileNo: "",
                 contactDuringMobNo: "",
                 contactDuringMobNoDropDown: false,
@@ -473,7 +475,7 @@ class OpenAccPageTwoComponent extends Component {
                 city_Phy: "",
                 stateCity_Phy: "",
                 stateCity_PhyDropDown: false,
-                isYourPhysicalAddresSame: false,
+                isYourPhysicalAddresSame: "",
                 orgCountry: "",
                 mobileNo: "",
                 emailAddress: "",
@@ -575,7 +577,7 @@ class OpenAccPageTwoComponent extends Component {
                         city_Phy: "",
                         stateCity_Phy: "",
                         stateCity_PhyDropDown: false,
-                        isYourPhysicalAddresSame: false,
+                        isYourPhysicalAddresSame: "",
                         mobileNo: "",
                         memberPhoneNo: "",
                         busniessPhoneNo: "",
@@ -696,7 +698,7 @@ class OpenAccPageTwoComponent extends Component {
     componentDidMount() {
 
         AppUtils.debugLog(`componentDidMount::::> ${this.props}`);
-        const { masterLookupStateData, getPersonalCompositeData, getCompositeLookUpData } = this.props;
+        const { masterLookupStateData, getCompositeLookUpData } = this.props;
         const payload = [];
         const compositePayloadData = [
             "prefix",
@@ -721,13 +723,13 @@ class OpenAccPageTwoComponent extends Component {
         ];
 
         for (let i = 0; i < compositePayloadData.length; i += 1) {
-            const tempkey = compositePayloadData[i];
-            if (this.props && masterLookupStateData && !masterLookupStateData[tempkey]) {
+            const tempkey = compositePayloadData[+i];
+            if (this.props && masterLookupStateData && !masterLookupStateData[`${tempkey}`]) {
                 payload.push(tempkey);
             }
         }
 
-        getPersonalCompositeData(payload);
+        getCompositeLookUpData(payload);
 
 
     }
@@ -745,10 +747,10 @@ class OpenAccPageTwoComponent extends Component {
 
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.PERSONAL_INFO_SAVE_OPENING_ACCT;
-            if (accOpeningData[responseKey]) {
-                if (accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
-                    const tempResponse = accOpeningData[responseKey];
-                    if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
+            if (accOpeningData[`${responseKey}`]) {
+                if (accOpeningData[`${responseKey}`] !== prevProps.accOpeningData[`${responseKey}`]) {
+                    const tempResponse = accOpeningData[`${responseKey}`];
+                    if (tempResponse.status === 200 || tempResponse.statusCode === '200') {
                         const msg = tempResponse.message;
                         AppUtils.debugLog(`Account Type Saved ::: :: ${msg}`);
                         showAlert(gblStrings.common.appName, tempResponse.result, gblStrings.common.ok);
@@ -762,9 +764,9 @@ class OpenAccPageTwoComponent extends Component {
 
 
             const stateCityKey = ActionTypes.GET_STATECITY;
-            if (addressFormatData[stateCityKey]) {
-                if (addressFormatData[stateCityKey] !== prevProps.addressFormatData[stateCityKey]) {
-                    const tempResponse = addressFormatData[stateCityKey];
+            if (addressFormatData[`${stateCityKey}`]) {
+                if (addressFormatData[`${stateCityKey}`] !== prevProps.addressFormatData[`${stateCityKey}`]) {
+                    const tempResponse = addressFormatData[`${stateCityKey}`];
 
 
                     if (tempResponse && tempResponse.City) {
@@ -827,10 +829,9 @@ class OpenAccPageTwoComponent extends Component {
             }
 
             const addressKey = ActionTypes.GET_ADDRESSFORMAT;
-            if (addressFormatData[addressKey]) {
-                if (addressFormatData[addressKey] !== prevProps.addressFormatData[addressKey]) {
-                    const tempResponse = addressFormatData[addressKey];
-
+            if (addressFormatData[`${addressKey}`]) {
+                if (addressFormatData[`${addressKey}`] !== prevProps.addressFormatData[`${addressKey}`]) {
+                    const tempResponse = addressFormatData[`${addressKey}`];
                     if (tempResponse && tempResponse.City) {
                         if (keyName === "empZipcode") {
                             this.setState(() => ({
@@ -846,12 +847,12 @@ class OpenAccPageTwoComponent extends Component {
                             }));
                         } else if (keyName === "zipcode_Phy" && objIndex !== -1) {
                             const newItems = [...estate.trusteeData];
-                            newItems[objIndex].city_Phy = tempResponse.City;
-                            newItems[objIndex].stateCity_Phy = tempResponse.State;
-                            newItems[objIndex].addrLine1_Phy = tempResponse.Address1 || "";
-                            newItems[objIndex].addrLine2_Phy = tempResponse.Address2 || "";
-                            newItems[objIndex].addrLine1_PhyValidation = true;
-                            newItems[objIndex].addrLine2_PhyValidation = true;
+                            newItems[+objIndex].city_Phy = tempResponse.City;
+                            newItems[+objIndex].stateCity_Phy = tempResponse.State;
+                            newItems[+objIndex].addrLine1_Phy = tempResponse.Address1 || "";
+                            newItems[+objIndex].addrLine2_Phy = tempResponse.Address2 || "";
+                            newItems[+objIndex].addrLine1_PhyValidation = true;
+                            newItems[+objIndex].addrLine2_PhyValidation = true;
 
                             this.setState(() => (() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
@@ -862,12 +863,12 @@ class OpenAccPageTwoComponent extends Component {
                             })));
                         } else if (keyName === "zipcode" && objIndex !== -1) {
                             const newItems = [...estate.trusteeData];
-                            newItems[objIndex].city = tempResponse.City;
-                            newItems[objIndex].stateCity = tempResponse.State;
-                            newItems[objIndex].addrLine1 = tempResponse.Address1 || "";
-                            newItems[objIndex].addrLine2 = tempResponse.Address2 || "";
-                            newItems[objIndex].addrLine1Validation = true;
-                            newItems[objIndex].addrLine2Validation = true;
+                            newItems[+objIndex].city = tempResponse.City;
+                            newItems[+objIndex].stateCity = tempResponse.State;
+                            newItems[+objIndex].addrLine1 = tempResponse.Address1 || "";
+                            newItems[+objIndex].addrLine2 = tempResponse.Address2 || "";
+                            newItems[+objIndex].addrLine1Validation = true;
+                            newItems[+objIndex].addrLine2Validation = true;
 
                             this.setState(() => (() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
@@ -917,10 +918,10 @@ class OpenAccPageTwoComponent extends Component {
                             }));
                         } else if (currentZipCodeRef.keyName === "zipcode_Phy" && objIndex !== -1) {
                             const newItems = [...estate.trusteeData];
-                            newItems[objIndex].addrLine1_Phy = "";
-                            newItems[objIndex].addrLine2_Phy = "";
-                            newItems[objIndex].addrLine1_PhyValidation = false;
-                            newItems[objIndex].addrLine2_PhyValidation = false;
+                            newItems[+objIndex].addrLine1_Phy = "";
+                            newItems[+objIndex].addrLine2_Phy = "";
+                            newItems[+objIndex].addrLine1_PhyValidation = false;
+                            newItems[+objIndex].addrLine2_PhyValidation = false;
 
                             this.setState(() => (() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
@@ -933,10 +934,10 @@ class OpenAccPageTwoComponent extends Component {
                             })));
                         } else if (currentZipCodeRef.keyName === "zipcode" && objIndex !== -1) {
                             const newItems = [...estate.trusteeData];
-                            newItems[objIndex].addrLine1 = "";
-                            newItems[objIndex].addrLine2 = "";
-                            newItems[objIndex].addrLine1Validation = false;
-                            newItems[objIndex].addrLine2Validation = false;
+                            newItems[+objIndex].addrLine1 = "";
+                            newItems[+objIndex].addrLine2 = "";
+                            newItems[+objIndex].addrLine1Validation = false;
+                            newItems[+objIndex].addrLine2Validation = false;
 
                             this.setState(() => (() => ({
                                 [prevState.currentZipCodeRef.stateKey]: {
@@ -979,10 +980,9 @@ class OpenAccPageTwoComponent extends Component {
 
 
             const uploadImgKey = ActionTypes.UPLOAD_AVATAR;
-            if (accOpeningData[uploadImgKey]) {
-                if (accOpeningData[uploadImgKey] !== prevProps.accOpeningData[uploadImgKey]) {
-                    const tempResponse = accOpeningData[uploadImgKey];
-                    //  alert ("Image stautus \n::"+JSON.stringify(tempResponse));
+            if (accOpeningData[`${uploadImgKey}`]) {
+                if (accOpeningData[`${uploadImgKey}`]!== prevProps.accOpeningData[`${uploadImgKey}`]) {
+                    const tempResponse = accOpeningData[`${uploadImgKey}`];
                     if (tempResponse && tempResponse.b) {
                         if (tempResponse.b.Location) {
                             AppUtils.debugLog(`Image Uploaded Successfully \n::${tempResponse.b.Location}`);
@@ -1565,15 +1565,15 @@ class OpenAccPageTwoComponent extends Component {
         const tempBeneficiaryDetails = [];
         for (let i = 0; i < retirementBeneficiaryData.length; i += 1) {
             const tempObj = {
-                "type": retirementBeneficiaryData[i].beneficiaryType || "",
-                "relation": retirementBeneficiaryData[i].relationshipToAcc || "",
-                "distributionPercentage": retirementBeneficiaryData[i].beneficiaryDistPercent || "",
-                "firstName": retirementBeneficiaryData[i].firstName || "",
-                "middleInitial": retirementBeneficiaryData[i].middleInitial || "",
-                "lastName": retirementBeneficiaryData[i].lastName || "",
-                "ssnTin": retirementBeneficiaryData[i].socialSecurityNo || "",
-                "dateOfBirth": retirementBeneficiaryData[i].dob || "",
-                "emailAddress": retirementBeneficiaryData[i].emailAddress || "",
+                "type": retirementBeneficiaryData[+i].beneficiaryType || "",
+                "relation": retirementBeneficiaryData[+i].relationshipToAcc || "",
+                "distributionPercentage": retirementBeneficiaryData[+i].beneficiaryDistPercent || "",
+                "firstName": retirementBeneficiaryData[+i].firstName || "",
+                "middleInitial": retirementBeneficiaryData[+i].middleInitial || "",
+                "lastName": retirementBeneficiaryData[+i].lastName || "",
+                "ssnTin": retirementBeneficiaryData[+i].socialSecurityNo || "",
+                "dateOfBirth": retirementBeneficiaryData[+i].dob || "",
+                "emailAddress": retirementBeneficiaryData[+i].emailAddress || "",
                 "isPrimaryBeneficiary": "true"
             };
             tempBeneficiaryDetails.push(tempObj);
@@ -1864,19 +1864,15 @@ class OpenAccPageTwoComponent extends Component {
     onSubmitZipEditing = (stateKey, keyName, nextInputFocus) => text => {
         AppUtils.debugLog(`onSubmitZipEditing:::>${nextInputFocus} ${text}`);
 
+        const { [stateKey]:stateKeyName } = this.state;
         const { getStateCity, getAddressFormat } = this.props;
         const { currentZipCodeRef } = this.state;
-
-
         const newItems = { ...currentZipCodeRef };
-        //   const newItems = { ...this.state.currentZipCodeRef };
 
         newItems.keyName = keyName;
         newItems.stateKey = stateKey;
         newItems.objIndex = -1;
         newItems.apiName = ActionTypes.GET_STATECITY;
-
-
 
         this.setState({
             currentZipCodeRef: newItems,
@@ -1889,33 +1885,30 @@ class OpenAccPageTwoComponent extends Component {
         let addressPayload = {};
         // if (this.state[stateKey].citizenship === "U.S" || this.state[stateKey].citizenship === undefined ) {    
         if (keyName === "zipcode_Phy") {
-
             payload = {
-                "Zip": this.state[stateKey][keyName]
+                "Zip": stateKeyName[`${keyName}`]
             };
-
             addressPayload = {
                 ...payload,
-                "Address1": this.state[stateKey].addrLine1_Phy,
-                "Address2": this.state[stateKey].addrLine2_Phy,
-                "City": this.state[stateKey].city_Phy,
-                "State": this.state[stateKey].stateCity_Phy,
-                "Zip": this.state[stateKey][keyName]
+                "Address1": stateKeyName.addrLine1_Phy,
+                "Address2": stateKeyName.addrLine2_Phy,
+                "City": stateKeyName.city_Phy,
+                "State": stateKeyName.stateCity_Phy,
+                "Zip": stateKeyName[`${keyName}`]
 
             };
         } else {
 
             payload = {
-                "Zip": this.state[stateKey][keyName]
+                "Zip": stateKeyName[`${keyName}`]
             };
-
             addressPayload = {
                 ...payload,
-                "Address1": this.state[stateKey].addrLine1,
-                "Address2": this.state[stateKey].addrLine2,
-                "City": this.state[stateKey].city,
-                "State": this.state[stateKey].stateCity,
-                "Zip": this.state[stateKey][keyName]
+                "Address1": stateKeyName.addrLine1,
+                "Address2": stateKeyName.addrLine2,
+                "City": stateKeyName.city,
+                "State": stateKeyName.stateCity,
+                "Zip": stateKeyName[`${keyName}`]
 
             };
         }
@@ -1923,12 +1916,9 @@ class OpenAccPageTwoComponent extends Component {
 
         getStateCity(payload);
         getAddressFormat(addressPayload);
-
-
-
-        //  nextInputFocus.focus();
     }
 
+    /*
     onSubmitZipEditing1 = (stateKey, keyName, nextInputFocus) => text => {
         AppUtils.debugLog(`onSubmitZipEditing:::>${nextInputFocus} ${text}`);
 
@@ -2006,7 +1996,7 @@ class OpenAccPageTwoComponent extends Component {
 
 
 
-        /*
+        
         if (keyName === "zipcode_Phy") {
             
             payload = {
@@ -2043,17 +2033,19 @@ class OpenAccPageTwoComponent extends Component {
         // getStateCity(payload);
         getAddressFormat(addressPayload);
 
-        */
+        
 
 
 
 
     }
 
+    */
+
     onSubmitEmpZipEditing = (stateKey, keyName, nextInputFocus) => text => {
         AppUtils.debugLog(`onSubmitEmpZipEditing:::>${nextInputFocus} ${text}`);
         const { getStateCity, getAddressFormat } = this.props;
-
+        const { [stateKey]:stateKeyName } = this.state;
         const { currentZipCodeRef } = this.state;
         const newItems = { ...currentZipCodeRef };
         newItems.keyName = keyName;
@@ -2068,15 +2060,15 @@ class OpenAccPageTwoComponent extends Component {
 
 
         payload = {
-            "Zip": this.state[stateKey][keyName]
+            "Zip": stateKeyName[`${keyName}`]
         };
         addressPayload = {
             ...payload,
-            "Address1": this.state[stateKey].empAddrLine1,
-            "Address2": this.state[stateKey].empAddrLine2,
-            "City": this.state[stateKey].empCity,
-            "State": this.state[stateKey].empStateCity,
-            "Zip": this.state[stateKey][keyName]
+            "Address1": stateKeyName.empAddrLine1,
+            "Address2": stateKeyName.empAddrLine2,
+            "City": stateKeyName.empCity,
+            "State": stateKeyName.empStateCity,
+            "Zip": stateKeyName[`${keyName}`]
 
         };
 
@@ -2087,6 +2079,7 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
+    /*
     onSubmitEmpAddressEditing = (stateKey, keyName, nextInputFocus) => text => {
         AppUtils.debugLog(`onSubmitEmpAddressEditing:::>${nextInputFocus} ${text}`);
         const { getStateCity, getAddressFormat } = this.props;
@@ -2143,6 +2136,7 @@ class OpenAccPageTwoComponent extends Component {
         // getStateCity(payload);
         getAddressFormat(addressPayload);
     }
+    */
 
     onSubmitZipTrusteeEditing = (stateKey, keyName, nextInputFocus, objIndex) => text => {
         AppUtils.debugLog(`onSubmitZipTrusteeEditing:::>${nextInputFocus} ${text}`);
@@ -2162,7 +2156,7 @@ class OpenAccPageTwoComponent extends Component {
         this.setState({ currentZipCodeRef: newItems });
 
         const newTrusteeItmes = [...estate.trusteeData];
-        const tempObj = newTrusteeItmes[objIndex];
+        const tempObj = newTrusteeItmes[+objIndex];
 
         let payload = {};
         let addressPayload = {};
@@ -2170,7 +2164,7 @@ class OpenAccPageTwoComponent extends Component {
 
             if (keyName === "zipcode_Phy") {
                 payload = {
-                    "Zip": tempObj[keyName]
+                    "Zip": tempObj[`${keyName}`]
                 };
                 addressPayload = {
                     ...payload,
@@ -2181,7 +2175,7 @@ class OpenAccPageTwoComponent extends Component {
                 };
             } else {
                 payload = {
-                    "Zip": tempObj[keyName]
+                    "Zip": tempObj[`${keyName}`]
                 };
                 addressPayload = {
                     ...payload,
@@ -2216,7 +2210,7 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.debugLog("onChangeDate:::>");
         this.setState(prevState => ({
             [stateKey]: {
-                ...prevState[stateKey],
+                ...prevState[`${stateKey}`],
                 [keyName]: dateStr,
                 [`${keyName}Validation`]: true,
 
@@ -2224,6 +2218,7 @@ class OpenAccPageTwoComponent extends Component {
         }));
     }
 
+    /*
     onChangeSpiltDate = (stateKey, keyName, index) => dateStr => {
         AppUtils.debugLog(`onChangeSpiltDate:::>${index} ${dateStr}`);
         const tempCurrentDate = `${this.state[stateKey][keyName]}`;
@@ -2277,11 +2272,13 @@ class OpenAccPageTwoComponent extends Component {
         }));
     }
 
+    */
+
     onChangeText = (stateKey, keyName) => text => {
         AppUtils.debugLog("onChangeText:::>");
         this.setState(prevState => ({
             [stateKey]: {
-                ...prevState[stateKey],
+                ...prevState[`${stateKey}`],
                 [keyName]: text,
                 [`${keyName}Validation`]: true,
             }
@@ -2293,7 +2290,7 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.debugLog("onBlurText:::>");
         this.setState(prevState => ({
             [stateKey]: {
-                ...prevState[stateKey],
+                ...prevState[`${stateKey}`],
                 [keyName]: text,
                 [`${keyName}Validation`]: true,
             }
@@ -2310,7 +2307,7 @@ class OpenAccPageTwoComponent extends Component {
     onPressRadio = (stateKey, keyName, text) => () => {
         this.setState(prevState => ({
             [stateKey]: {
-                ...prevState[stateKey],
+                ...prevState[`${stateKey}`],
                 [keyName]: text,
                 [`${keyName}Validation`]: true,
             }
@@ -2318,7 +2315,7 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     setInputRef = (inputComp) => (ref) => {
-        this[inputComp] = ref;
+        this[`${inputComp}`] = ref;
     }
 
 
@@ -2351,8 +2348,9 @@ class OpenAccPageTwoComponent extends Component {
         } else if (this.isEmpty(personal.citizenship)) {
             errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
             input = 'citizenship';
-
-        } else if (personal.citizenship !== "U.S" && this.isEmpty(personal.residenceStatus)) {
+        } 
+        /*
+        else if (personal.citizenship !== "U.S" && this.isEmpty(personal.residenceStatus)) {
             errMsg = gblStrings.accManagement.emptyResidenceStatusMsg;
             input = 'residenceStatus';
         } else if (personal.citizenship !== "U.S" && this.isEmpty(personal.countryOfCitizenship)) {
@@ -2370,7 +2368,10 @@ class OpenAccPageTwoComponent extends Component {
         } else if (personal.citizenship !== "U.S" && this.isEmpty(personal.passportNoExpiryDate)) {
             errMsg = gblStrings.accManagement.emptyPassportNoExpiryDateMsg;
             input = 'passportNoExpiryDate';
-        } else if (this.isEmpty(personal.mailingAddressType)) {
+          
+        }   
+        */
+        else if (this.isEmpty(personal.mailingAddressType)) {
             errMsg = gblStrings.accManagement.emptyAddressTypeMsg;
             input = 'mailingAddressType';
         } else if (this.isEmpty(personal.addrLine1)) {
@@ -2489,9 +2490,9 @@ class OpenAccPageTwoComponent extends Component {
 
 
             if (input !== "" && input !== null && input !== undefined) {
-                if (this[input] !== null && this[input] !== undefined) {
-                    if (typeof this[input].focus === 'function') {
-                        this[input].focus();
+                if (this[`${input}`] !== null && this[`${input}`] !== undefined) {
+                    if (typeof this[`${input}`].focus === 'function') {
+                        this[`${input}`].focus();
                     }
                 }
             }
@@ -2528,7 +2529,9 @@ class OpenAccPageTwoComponent extends Component {
             input = 'maritalStatus';
         } else if (this.isEmpty(jointOwner.citizenship)) {
             errMsg = gblStrings.accManagement.emptyCitizenshipMsg;
-        } else if (jointOwner.citizenship !== "U.S" && this.isEmpty(jointOwner.residenceStatus)) {
+        } 
+        /*
+        else if (jointOwner.citizenship !== "U.S" && this.isEmpty(jointOwner.residenceStatus)) {
             errMsg = gblStrings.accManagement.emptyResidenceStatusMsg;
             input = 'residenceStatus';
         } else if (jointOwner.citizenship !== "U.S" && this.isEmpty(jointOwner.countryOfCitizenship)) {
@@ -2546,7 +2549,8 @@ class OpenAccPageTwoComponent extends Component {
         } else if (jointOwner.citizenship !== "U.S" && this.isEmpty(jointOwner.passportNoExpiryDate)) {
             errMsg = gblStrings.accManagement.emptyPassportNoExpiryDateMsg;
             input = 'passportNoExpiryDate';
-        } else if (this.isEmpty(jointOwner.mailingAddressType)) {
+        }
+        */ else if (this.isEmpty(jointOwner.mailingAddressType)) {
             errMsg = gblStrings.accManagement.emptyAddressTypeMsg;
             input = 'mailingAddressType';
         } else if (this.isEmpty(jointOwner.addrLine1)) {
@@ -2662,9 +2666,9 @@ class OpenAccPageTwoComponent extends Component {
             }));
 
             if (input !== "" && input !== null && input !== undefined) {
-                if (this[input] !== null && this[input] !== undefined) {
-                    if (typeof this[input].focus === 'function') {
-                        this[input].focus();
+                if (this[`${input}`] !== null && this[`${input}`] !== undefined) {
+                    if (typeof this[`${input}`].focus === 'function') {
+                        this[`${input}`].focus();
                     }
                 }
             }
@@ -2745,9 +2749,9 @@ class OpenAccPageTwoComponent extends Component {
             }));
 
             if (input !== "" && input !== null && input !== undefined) {
-                if (this[input] !== null && this[input] !== undefined) {
-                    if (typeof this[input].focus === 'function') {
-                        this[input].focus();
+                if (this[`${input}`] !== null && this[`${input}`] !== undefined) {
+                    if (typeof this[`${input}`].focus === 'function') {
+                        this[`${input}`].focus();
                     }
                 }
             }
@@ -2770,7 +2774,7 @@ class OpenAccPageTwoComponent extends Component {
 
             for (let i = 0; i < retirementBeneficiaryData.length; i += 1) {
                 let tempErrMsg = "";
-                const tempObj = retirementBeneficiaryData[i];
+                const tempObj = retirementBeneficiaryData[+i];
                 AppUtils.debugLog(`tempObj::${JSON.stringify(tempObj)}`);
 
                 /*
@@ -2831,7 +2835,7 @@ class OpenAccPageTwoComponent extends Component {
                     errMsg = tempErrMsg;
                     errMsgCount += 1;
                     const newItems = [...retirementBeneficiaryData];
-                    newItems[i][`${inputField}Validation`] = false;
+                    newItems[+i][`${inputField}Validation`] = false;
                     this.setState({
                         retirementBeneficiaryData: newItems,
                         isValidationSuccess,
@@ -3059,7 +3063,7 @@ class OpenAccPageTwoComponent extends Component {
 
             for (let i = 0; i < estate.trusteeData.length; i += 1) {
                 let tempErrMsg = "";
-                const tempObj = estate.trusteeData[i];
+                const tempObj = estate.trusteeData[+i];
                 AppUtils.debugLog(`tempObj::${JSON.stringify(tempObj)}`);
 
 
@@ -3151,8 +3155,10 @@ class OpenAccPageTwoComponent extends Component {
                     errMsg = tempErrMsg;
                     errMsgCount += 1;
                     const newItems = [...estate.trusteeData];
-                    newItems[i][`${inputField}Validation`] = false;
+                    newItems[+i][`${inputField}Validation`] = false;
 
+                    /* 
+                     #TODO
                     this.setState(prevState => ({
                         estate: {
                             ...prevState.estate,
@@ -3161,6 +3167,8 @@ class OpenAccPageTwoComponent extends Component {
                         isValidationSuccess,
                         errMsg: isValidationSuccess === false ? errMsg : ""
                     }));
+                    
+                    */
 
                     if (inputField !== "" && inputField !== null && inputField !== undefined) {
                         if (this[inputField + i] !== null && this[inputField + i] !== undefined) {
@@ -3201,13 +3209,13 @@ class OpenAccPageTwoComponent extends Component {
 
 
             if (input !== "" && input !== null && input !== undefined) {
-                if (this[input] !== null && this[input] !== undefined) {
-                    if (typeof this[input].focus === 'function') {
-                        this[input].focus();
+                if (this[`${input}`] !== null && this[`${input}`] !== undefined) {
+                    if (typeof this[`${input}`].focus === 'function') {
+                        this[`${input}`].focus();
                     }
                 }
             }
-            alert(errMsg);
+            showAlert(errMsg);
         }
 
 
@@ -3369,8 +3377,10 @@ class OpenAccPageTwoComponent extends Component {
     generateKeyExtractor = (item) => item.key;
 
 
-    renderRadio = (sectionName, radioName, radioSize, componentStyle, layoutStyle) => {
+    renderRadio = (sectionKey, radioName, radioSize, componentStyle, layoutStyle) => {
         AppUtils.debugLog(`renderRadio::: ${radioName}`);
+        const { [sectionKey]:sectionName } = this.state;
+
         let tempkey = "";//  "title";
         let radioData = dummyData;
         const { masterLookupStateData } = this.props;
@@ -3391,10 +3401,11 @@ class OpenAccPageTwoComponent extends Component {
         }
 
         AppUtils.debugLog(`tempkey::${tempkey}`);
+        
 
-        if (this.props && masterLookupStateData && masterLookupStateData[tempkey] && masterLookupStateData[tempkey].value) {
+        if (this.props && masterLookupStateData && masterLookupStateData[`${tempkey}`] && masterLookupStateData[`${tempkey}`].value) {
             AppUtils.debugLog(`tempkey inside::${tempkey}`);
-            radioData = masterLookupStateData[tempkey].value;
+            radioData = masterLookupStateData[`${tempkey}`].value;
         } else {
             AppUtils.debugLog(`tempkey not there::${tempkey}`);
 
@@ -3406,17 +3417,17 @@ class OpenAccPageTwoComponent extends Component {
         for (let i = 0; i < radioData.length; i += 1) {
             radioCoponents.push(
                 <CustomRadio
-                    key={radioData[i].key}
+                    key={radioData[+i].key}
                     componentStyle={componentStyle}
                     size={radioSize}
                     outerCicleColor="#DEDEDF"
                     innerCicleColor="#61285F"
                     labelStyle={styles.lblRadioBtnTxt}
-                    label={radioData[i].value}
+                    label={radioData[+i].value}
                     descLabelStyle={styles.lblRadioDescTxt}
                     descLabel=""
-                    selected={!!((this.state[sectionName][radioName] !== null && this.state[sectionName][radioName] === radioData[i].value))}
-                    onPress={this.onPressRadio(sectionName, radioName, radioData[i].value)}
+                    selected={!!((sectionName[`${radioName}`] !== null && sectionName[`${radioName}`] === radioData[+i].value))}
+                    onPress={this.onPressRadio(sectionKey, radioName, radioData[+i].value)}
 
                 />
             );
@@ -3432,8 +3443,10 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
-    renderYesNoRadio = (sectionName, radioName) => {
+    renderYesNoRadio = (sectionKey, radioName) => {
         AppUtils.debugLog(`renderYesNoRadio::: ${radioName}`);
+        const { [sectionKey]:sectionName } = this.state;
+
         const { errMsg } = this.state;
         return (
             <>
@@ -3447,8 +3460,8 @@ class OpenAccPageTwoComponent extends Component {
                         label="Yes"
                         descLabelStyle={styles.lblRadioDescTxt}
                         descLabel=""
-                        selected={!!((this.state[sectionName][radioName] !== null && this.state[sectionName][radioName] === "Yes"))}
-                        onPress={this.onPressRadio(sectionName, radioName, "Yes")}
+                        selected={!!((sectionName[`${radioName}`] !== null && sectionName[`${radioName}`] === "Yes"))}
+                        onPress={this.onPressRadio(sectionKey, radioName, "Yes")}
                     />
                     <CustomRadio
                         componentStyle={styles.radioCol2}
@@ -3459,12 +3472,12 @@ class OpenAccPageTwoComponent extends Component {
                         label="No"
                         descLabelStyle={styles.lblRadioDescTxt}
                         descLabel=""
-                        selected={!!((this.state[sectionName][radioName] !== null && this.state[sectionName][radioName] === "No"))}
-                        onPress={this.onPressRadio(sectionName, radioName, "No")}
+                        selected={!!((sectionName[`${radioName}`] !== null && sectionName[`${radioName}`] === "No"))}
+                        onPress={this.onPressRadio(sectionKey, radioName, "No")}
 
                     />
                 </View>
-                {!this.state[sectionName][`${radioName}Validation`] && (
+                {!sectionName[`${radioName}Validation`] && (
                     <Text style={styles.errMsg}>
                         {errMsg}
                     </Text>
@@ -3495,9 +3508,9 @@ class OpenAccPageTwoComponent extends Component {
 
         AppUtils.debugLog(`tempkey::${tempkey}`);
 
-        if (this.props && masterLookupStateData && masterLookupStateData[tempkey] && masterLookupStateData[tempkey].value) {
+        if (this.props && masterLookupStateData && masterLookupStateData[`${tempkey}`] && masterLookupStateData[`${tempkey}`].value) {
             AppUtils.debugLog(`tempkey inside::${tempkey}`);
-            radioData = masterLookupStateData[tempkey].value;
+            radioData = masterLookupStateData[`${tempkey}`].value;
         } else {
             AppUtils.debugLog(`tempkey not there::${tempkey}`);
 
@@ -3509,17 +3522,17 @@ class OpenAccPageTwoComponent extends Component {
         for (let i = 0; i < radioData.length; i += 1) {
             radioCoponents.push(
                 <CustomRadio
-                    key={radioData[i].key}
+                    key={radioData[+i].key}
                     componentStyle={componentStyle}
                     size={radioSize}
                     outerCicleColor="#DEDEDF"
                     innerCicleColor="#61285F"
                     labelStyle={styles.lblRadioBtnTxt}
-                    label={radioData[i].value}
+                    label={radioData[+i].value}
                     descLabelStyle={styles.lblRadioDescTxt}
                     descLabel=""
-                    selected={!!((newItems[objIndex][radioName] !== null && newItems[objIndex][radioName] === radioData[i].value))}
-                    onPress={this.onPressRadioForEstateTrust(radioName, objIndex, radioData[i].value)}
+                    selected={!!((newItems[+objIndex][`${radioName}`] !== null && newItems[+objIndex][`${radioName}`] === radioData[+i].value))}
+                    onPress={this.onPressRadioForEstateTrust(radioName, objIndex, radioData[+i].value)}
 
                 />
             );
@@ -3535,15 +3548,17 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
-    renderCalender = (sectionName, calendarName) => {
+    renderCalender = (sectionKey, calendarName) => {
         AppUtils.debugLog(`renderCalender::: ${calendarName}`);
+        const { [sectionKey]:sectionName } = this.state;
+
         return (
             <GDateComponent
-                date={this.state[sectionName][calendarName]}
+                date={sectionName[`${calendarName}`]}
                 placeholder="Select Date"
-                errorFlag={this.state[sectionName][`${calendarName}Validation`] !== undefined ? !this.state[sectionName][`${calendarName}Validation`] : false}
+                errorFlag={sectionName[`${calendarName}Validation`] !== undefined ? !sectionName[`${calendarName}Validation`] : false}
                 errMsg="Please selectDate"
-                onDateChange={this.onChangeDate(sectionName, calendarName)}
+                onDateChange={this.onChangeDate(sectionKey, calendarName)}
 
             />
         );
@@ -3614,8 +3629,9 @@ class OpenAccPageTwoComponent extends Component {
         const validationKey = `${stateKey}Validation`;
         const { masterLookupStateData } = this.props;
         const { errMsg } = this.state;
+        const { [section]:sectionName } = this.state;
 
-        const validationKeyValue = this.state[section][validationKey] !== undefined ? !this.state[section][validationKey] : false;
+        const validationKeyValue = sectionName[`${validationKey}`] !== undefined ? !sectionName[`${validationKey}`] : false;
 
         let dropDownData = dummyData;
         let tempkey = "";
@@ -3693,7 +3709,7 @@ class OpenAccPageTwoComponent extends Component {
                 tempkey = "mil_serv_branch";
                 break;
             case "rankDropDown":
-                tempkey = this.state[section].rankKey;
+                tempkey = sectionName.rankKey;
                 break;
 
             case "rankDropDown_IRA":
@@ -3720,8 +3736,8 @@ class OpenAccPageTwoComponent extends Component {
 
         }
 
-        if (tempkey !== "" && this.props && masterLookupStateData && masterLookupStateData[tempkey] && masterLookupStateData[tempkey].value) {
-            dropDownData = masterLookupStateData[tempkey].value;
+        if (tempkey !== "" && this.props && masterLookupStateData && masterLookupStateData[`${tempkey}`] && masterLookupStateData[`${tempkey}`].value) {
+            dropDownData = masterLookupStateData[`${tempkey}`].value;
         }
         let inputRefKey = "";
         if (section === "jointOwner") {
@@ -3737,14 +3753,10 @@ class OpenAccPageTwoComponent extends Component {
                 inputref={this.setInputRef(`${stateKey}${inputRefKey}`)}
                 dropDownLayout={styles.dropDownLayout}
                 dropDownTextName={styles.dropDownTextName}
-                //  pickerStyle={styles.textInputStyle}
                 dropDownName={lblDropdownName}
                 data={dropDownData}
-                dropDownValue={this.state[section][stateKey]}
-                //  showDropDown={this.state[section][dropDownName]}
-                //  changeState={(stateKey !== "taxBracket") ? this.onPressDropDown(section, dropDownName) : null}
+                dropDownValue={sectionName[`${stateKey}`]}
                 selectedDropDownValue={this.onSelectedDropDownValue(section, stateKey, dropDownName)}
-                //  itemToDisplay="value"
                 dropDownPostition={styles.dropDownPostition}
                 errorFlag={isOptional ? false : validationKeyValue}
                 errorText={errMsg}
@@ -3758,14 +3770,14 @@ class OpenAccPageTwoComponent extends Component {
     onSelectedDropDownValue = (section, stateKey, dropDownName) => (value, index, data) => {
         AppUtils.debugLog("onSelectedDropDownValue:");
         const { masterLookupStateData, getRankData } = this.props;
-        const item = data[index];
+        const item = data[+index];
         const tempRankKey = `mil_rank_${item.key}`;
         let payload = "";
 
         if (dropDownName === "branchOfServiceDropDown") {
             this.setState(prevState => ({
                 [section]: {
-                    ...prevState[section],
+                    ...prevState[`${section}`],
                     [stateKey]: item.value,
                     [dropDownName]: false,
                     rankKey: tempRankKey,
@@ -3774,7 +3786,7 @@ class OpenAccPageTwoComponent extends Component {
                 }
             }));
 
-            if (this.props && masterLookupStateData && !masterLookupStateData[tempRankKey]) {
+            if (this.props && masterLookupStateData && !masterLookupStateData[`${tempRankKey}`]) {
                 payload = tempRankKey;
                 getRankData(payload);
             }
@@ -3782,7 +3794,7 @@ class OpenAccPageTwoComponent extends Component {
         } else if (dropDownName === "annualIncomeDropDown") {
             this.setState(prevState => ({
                 [section]: {
-                    ...prevState[section],
+                    ...prevState[`${section}`],
                     [stateKey]: item.value,
                     [dropDownName]: false,
                     taxBracket: item.taxbracket,
@@ -3794,7 +3806,7 @@ class OpenAccPageTwoComponent extends Component {
         } else {
             this.setState(prevState => ({
                 [section]: {
-                    ...prevState[section],
+                    ...prevState[`${section}`],
                     [stateKey]: item.value,
                     [dropDownName]: false,
                     [`${stateKey}Validation`]: true,
@@ -3809,19 +3821,19 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.debugLog(`onSelectedIRABeneficiaryDropDownValue:: ${dropDownName}`);
         const { retirementBeneficiaryData } = this.state;
         const newItems = [...retirementBeneficiaryData];
-        const item = data[index];
+        const item = data[+index];
 
         switch (dropDownName) {
 
             case "beneficiaryTypeDropDown":
-                newItems[objIndex].beneficiaryTypeDropDown = false;
-                newItems[objIndex].beneficiaryType = item.value;
-                newItems[objIndex][`${dropDownName}Validation`] = true;
+                newItems[+objIndex].beneficiaryTypeDropDown = false;
+                newItems[+objIndex].beneficiaryType = item.value;
+                newItems[+objIndex].beneficiaryTypeValidation = true;
                 break;
             case "relationshipToAccDropDown":
-                newItems[objIndex].relationshipToAccDropDown = false;
-                newItems[objIndex].relationshipToAcc = item.value;
-                newItems[objIndex][`${dropDownName}Validation`] = true;
+                newItems[+objIndex].relationshipToAccDropDown = false;
+                newItems[+objIndex].relationshipToAcc = item.value;
+                newItems[+objIndex].relationshipToAccValidation = true;
                 break;
 
             default:
@@ -3842,8 +3854,8 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.debugLog("onChangeTextForIRABeneficiary:::>");
         const { retirementBeneficiaryData } = this.state;
         const newItems = [...retirementBeneficiaryData];
-        newItems[index][keyName] = text;
-        newItems[index][`${keyName}Validation`] = true;
+        newItems[+index][`${keyName}`] = text;
+        newItems[+index][`${keyName}Validation`] = true;
 
         /*
           newItems[index].firstNameValidation = true;
@@ -3864,28 +3876,28 @@ class OpenAccPageTwoComponent extends Component {
     }
 
     onBlurDistPercentageForIRABeneficiary = (keyName, index, input) => text => {
-        AppUtils.debugLog("onBlurDistPercentageForIRABeneficiary:::>");
+        AppUtils.debugLog(`onBlurDistPercentageForIRABeneficiary:::>${text}`);
         const { retirementBeneficiaryData } = this.state;
         const newItems = [...retirementBeneficiaryData];
         // newItems[index].beneficiaryDistPercent = text;
 
 
 
-        newItems[index].firstNameValidation = true;
-        newItems[index].lastNameValidation = true;
-        newItems[index].dobValidation = true;
-        newItems[index].emailAddressValidation = true;
-        newItems[index].socialSecurityNoValidation = true;
-        newItems[index].beneficiaryTypeValidation = true;
-        newItems[index].relationshipToAccValidation = true;
+        newItems[+index].firstNameValidation = true;
+        newItems[+index].lastNameValidation = true;
+        newItems[+index].dobValidation = true;
+        newItems[+index].emailAddressValidation = true;
+        newItems[+index].socialSecurityNoValidation = true;
+        newItems[+index].beneficiaryTypeValidation = true;
+        newItems[+index].relationshipToAccValidation = true;
         // newItems[index].beneficiaryDistPercentValidation = true;
 
 
         let total = 0;
         let errMsg = "";
         for (let i = 0; i < newItems.length; i += 1) {
-            if (!isNaN(newItems[i].beneficiaryDistPercent) && newItems[i].beneficiaryDistPercent !== "") {
-                total += parseFloat(newItems[i].beneficiaryDistPercent);
+            if (!isNumeric(newItems[+i].beneficiaryDistPercent) && newItems[+i].beneficiaryDistPercent !== "") {
+                total += parseFloat(newItems[+i].beneficiaryDistPercent);
             }
         }
 
@@ -3893,9 +3905,9 @@ class OpenAccPageTwoComponent extends Component {
 
         if (total > 100 || total < 100) {
             errMsg = gblStrings.accManagement.beneficiariesCond;
-            newItems[index].beneficiaryDistPercentValidation = false;
+            newItems[+index].beneficiaryDistPercentValidation = false;
         } else {
-            newItems[index].beneficiaryDistPercentValidation = true;
+            newItems[+index].beneficiaryDistPercentValidation = true;
 
         }
 
@@ -3914,8 +3926,8 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.debugLog("onChangeDateForIRABeneficiary:::>");
         const { retirementBeneficiaryData } = this.state;
         const newItems = [...retirementBeneficiaryData];
-        newItems[index][keyName] = dateStr;
-        newItems[index][`${keyName}Validation`] = true;
+        newItems[+index][`${keyName}`] = dateStr;
+        newItems[+index][`${keyName}Validation`] = true;
 
 
         /*   newItems[index].firstNameValidation = true;
@@ -3999,7 +4011,7 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.debugLog(`onSelectedEstateTrustDropDownValue:: ${dropDownName}`);
         const { estate } = this.state;
         const newItems = [...estate.trusteeData];
-        newItems[objIndex][`${dropDownName}Validation`] = true;
+        newItems[+objIndex][`${dropDownName}Validation`] = true;
 
         /* newItems[objIndex].firstNameValidation = true;
          newItems[objIndex].lastNameValidation = true;
@@ -4011,11 +4023,11 @@ class OpenAccPageTwoComponent extends Component {
 
 
 
-        const item = data[index];
+        const item = data[+index];
         switch (dropDownName) {
             case "suffixDropDown":
-                newItems[objIndex].suffixDropDown = false;
-                newItems[objIndex].suffix = item.value;
+                newItems[+objIndex].suffixDropDown = false;
+                newItems[+objIndex].suffix = item.value;
                 break;
             default:
                 break;
@@ -4037,8 +4049,8 @@ class OpenAccPageTwoComponent extends Component {
 
         const { estate } = this.state;
         const newItems = [...estate.trusteeData];
-        newItems[index][keyName] = text;
-        newItems[index][`${keyName}Validation`] = true;
+        newItems[+index][`${keyName}`] = text;
+        newItems[+index][`${keyName}Validation`] = true;
 
         /*
                 newItems[index].firstNameValidation = true;
@@ -4065,8 +4077,8 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.debugLog("onChangeDateForEstateTrust:::>");
         const { estate } = this.state;
         const newItems = [...estate.trusteeData];
-        newItems[index][keyName] = dateStr;
-        newItems[index][`${keyName}Validation`] = true;
+        newItems[+index][`${keyName}`] = dateStr;
+        newItems[+index][`${keyName}Validation`] = true;
 
         /*
         newItems[index].firstNameValidation = true;
@@ -4090,8 +4102,8 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.debugLog(`onPressRadioForEstateTrust:: ${keyName}`);
         const { estate } = this.state;
         const newItems = [...estate.trusteeData];
-        newItems[index][keyName] = text;
-        newItems[index][`${keyName}Validation`] = true;
+        newItems[+index][`${keyName}`] = text;
+        newItems[+index][`${keyName}Validation`] = true;
 
 
         this.setState(() => (prevState => ({
@@ -4207,8 +4219,8 @@ class OpenAccPageTwoComponent extends Component {
         AppUtils.debugLog("onClickExpandCollpaseEvent:::>");
         this.setState(prevState => ({
             [stateKey]: {
-                ...prevState[stateKey],
-                [keyName]: !prevState[stateKey][keyName]
+                ...prevState[`${stateKey}`],
+                [keyName]: !prevState[`${stateKey}`][`${keyName}`]
             }
         }));
     }
@@ -4236,8 +4248,6 @@ class OpenAccPageTwoComponent extends Component {
 
     renderPersonalInfo = () => {
         const { personal, errMsg } = this.state;
-        const { initialState } = this.props;
-
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
@@ -4606,7 +4616,6 @@ class OpenAccPageTwoComponent extends Component {
 
     renderContactInfo = () => {
         const { personal, errMsg } = this.state;
-        const { initialState } = this.props;
 
         return (
             <View style={styles.sectionGrp}>
@@ -4868,7 +4877,6 @@ class OpenAccPageTwoComponent extends Component {
 
     renderPhoneInfo = () => {
         const { personal, errMsg } = this.state;
-        const { initialState } = this.props;
 
         return (
             <View style={styles.sectionGrp}>
@@ -5022,7 +5030,7 @@ class OpenAccPageTwoComponent extends Component {
                                             section: "personal",
                                             stateKey: "phoneType3",
                                             dropDownName: "phoneType3DropDown",
-                                            lblDropdownName: gblStrings.accManagement.home,
+                                            lblDropdownName: gblStrings.accManagement.work,
                                             isOptional: true
                                         })
                                         }
@@ -5031,7 +5039,7 @@ class OpenAccPageTwoComponent extends Component {
                                         inputref={this.setInputRef("telePhoneNo3")}
                                         propInputStyle={styles.customTxtBox}
                                         placeholder={gblStrings.accManagement.phoneNoFormat}
-                                        value={personal.telePhoneNo2}
+                                        value={personal.telePhoneNo3}
                                         maxLength={gblStrings.maxLength.phoneNo}
                                         keyboardType="phone-pad"
                                         onChangeText={this.onChangeText("personal", "telePhoneNo3")}
@@ -5068,7 +5076,7 @@ class OpenAccPageTwoComponent extends Component {
                                             section: "personal",
                                             stateKey: "phoneType4",
                                             dropDownName: "phoneType4DropDown",
-                                            lblDropdownName: gblStrings.accManagement.home,
+                                            lblDropdownName: gblStrings.accManagement.fax,
                                             isOptional: true
                                         })
                                         }
@@ -5077,7 +5085,7 @@ class OpenAccPageTwoComponent extends Component {
                                         inputref={this.setInputRef("telePhoneNo4")}
                                         propInputStyle={styles.customTxtBox}
                                         placeholder={gblStrings.accManagement.phoneNoFormat}
-                                        value={personal.telePhoneNo2}
+                                        value={personal.telePhoneNo4}
                                         maxLength={gblStrings.maxLength.phoneNo}
                                         keyboardType="phone-pad"
                                         onChangeText={this.onChangeText("personal", "telePhoneNo4")}
@@ -5108,7 +5116,6 @@ class OpenAccPageTwoComponent extends Component {
 
     renderEmailInfo = () => {
         const { personal, errMsg } = this.state;
-        const { initialState } = this.props;
         return (
             <View style={styles.sectionGrp}>
                 <View style={styles.accTypeSelectSection}>
@@ -6510,7 +6517,7 @@ class OpenAccPageTwoComponent extends Component {
                                 inputref={this.setInputRef("telePhoneNo4")}
                                 propInputStyle={styles.customTxtBox}
                                 placeholder=""
-                                value={jointOwner.telePhoneNo3}
+                                value={jointOwner.telePhoneNo4}
                                 maxLength={gblStrings.maxLength.phoneNo}
                                 keyboardType="phone-pad"
                                 onChangeText={this.onChangeText("jointOwner", "telePhoneNo4")}
@@ -7405,15 +7412,13 @@ class OpenAccPageTwoComponent extends Component {
 
 
         let tempkey = "relationship";
-
-
-        if (tempkey !== "" && this.props && masterLookupStateData && masterLookupStateData[tempkey] && masterLookupStateData[tempkey].value) {
-            tempRelationShipData = masterLookupStateData[tempkey].value;
+        if (tempkey !== "" && this.props && masterLookupStateData && masterLookupStateData[`${tempkey}`] && masterLookupStateData[`${tempkey}`].value) {
+            tempRelationShipData = masterLookupStateData[`${tempkey}`].value;
         }
 
         tempkey = "ben_type";
-        if (tempkey !== "" && this.props && masterLookupStateData && masterLookupStateData[tempkey] && masterLookupStateData[tempkey].value) {
-            tempBeneficiaryData = masterLookupStateData[tempkey].value;
+        if (tempkey !== "" && this.props && masterLookupStateData && masterLookupStateData[`${tempkey}`] && masterLookupStateData[`${tempkey}`].value) {
+            tempBeneficiaryData = masterLookupStateData[`${tempkey}`].value;
         }
 
         return (
@@ -7468,13 +7473,12 @@ class OpenAccPageTwoComponent extends Component {
                                             textInputStyle={styles.textInputStyle}
                                             dropDownName={gblStrings.accManagement.beneficiary}
                                             data={tempBeneficiaryData}
-                                            //  changeState={this.onPressDropDownForIRABeneficiary("beneficiaryTypeDropDown", index)}
-                                            showDropDown={retirementBeneficiaryData[index].beneficiaryTypeDropDown}
-                                            dropDownValue={retirementBeneficiaryData[index].beneficiaryType}
+                                            showDropDown={item.beneficiaryTypeDropDown}
+                                            dropDownValue={item.beneficiaryType}
                                             selectedDropDownValue={this.onSelectedIRABeneficiaryDropDownValue("beneficiaryTypeDropDown", index)}
                                             itemToDisplay="value"
                                             dropDownPostition={styles.dropDownPostition}
-                                            errorFlag={!retirementBeneficiaryData[index].beneficiaryTypeValidation}
+                                            errorFlag={!item.beneficiaryTypeValidation}
                                             errorText={gblStrings.accManagement.emptyBeneficiaryType}
                                         />
 
@@ -7488,13 +7492,12 @@ class OpenAccPageTwoComponent extends Component {
                                             textInputStyle={styles.textInputStyle}
                                             dropDownName={gblStrings.accManagement.relationshipToAccHolder}
                                             data={tempRelationShipData}
-                                            //  changeState={this.onPressDropDownForIRABeneficiary("relationshipToAccDropDown", index)}
-                                            showDropDown={retirementBeneficiaryData[index].relationshipToAccDropDown}
-                                            dropDownValue={retirementBeneficiaryData[index].relationshipToAcc}
+                                            showDropDown={item.relationshipToAccDropDown}
+                                            dropDownValue={item.relationshipToAcc}
                                             selectedDropDownValue={this.onSelectedIRABeneficiaryDropDownValue("relationshipToAccDropDown", index)}
                                             itemToDisplay="value"
                                             dropDownPostition={styles.dropDownPostition}
-                                            errorFlag={!retirementBeneficiaryData[index].relationshipToAccValidation}
+                                            errorFlag={!item.relationshipToAccValidation}
                                             errorText={gblStrings.accManagement.emptyRelationTypeMsg}
                                         />
 
@@ -7512,12 +7515,13 @@ class OpenAccPageTwoComponent extends Component {
                                                     inputref={this.setInputRef(`beneficiaryDistPercent${index}`)}
                                                     propInputStyle={styles.customTxtBox}
                                                     placeholder=""
-                                                    value={retirementBeneficiaryData[index].beneficiaryDistPercent}
+                                                    returnKeyType="done"
+                                                    value={item.beneficiaryDistPercent}
                                                     maxLength={gblStrings.maxLength.distributionPercentage}
                                                     keyboardType="decimal-pad"
                                                     onChangeText={this.onChangeTextForIRABeneficiary("beneficiaryDistPercent", index)}
                                                     onSubmitEditing={this.onBlurDistPercentageForIRABeneficiary("beneficiaryDistPercent", index, this[`beneficiaryDistPercent${index}`])}
-                                                    errorFlag={!retirementBeneficiaryData[index].beneficiaryDistPercentValidation}
+                                                    errorFlag={!item.beneficiaryDistPercentValidation}
                                                     errorText={errMsg}
 
                                                 />
@@ -7526,7 +7530,7 @@ class OpenAccPageTwoComponent extends Component {
 
                                                 <Text style={styles.lblRowTxt}>
                                                     %
-                                        </Text>
+                                                </Text>
                                             </View>
 
                                         </View>
@@ -7539,12 +7543,13 @@ class OpenAccPageTwoComponent extends Component {
                                             inputref={this.setInputRef(`socialSecurityNo${index}`)}
                                             propInputStyle={styles.customTxtBox}
                                             placeholder={gblStrings.accManagement.ssnNoFormat}
-                                            value={retirementBeneficiaryData[index].socialSecurityNo}
+                                            value={item.socialSecurityNo}
                                             keyboardType="number-pad"
+                                            returnKeyType="done"
                                             maxLength={gblStrings.maxLength.ssnNo}
                                             onChangeText={this.onChangeTextForIRABeneficiary("socialSecurityNo", index)}
                                             onSubmitEditing={this.onSubmitEditing(this[`firstName${index}`])}
-                                            errorFlag={!retirementBeneficiaryData[index].socialSecurityNoValidation}
+                                            errorFlag={!item.socialSecurityNoValidation}
                                             errorText={errMsg}
                                             secureTextEntry
                                         />
@@ -7556,12 +7561,12 @@ class OpenAccPageTwoComponent extends Component {
                                         <GInputComponent
                                             inputref={this.setInputRef(`firstName${index}`)}
                                             propInputStyle={styles.customTxtBox}
-                                            value={retirementBeneficiaryData[index].firstName}
+                                            value={item.firstName}
                                             placeholder=""
                                             maxLength={gblStrings.maxLength.firstName}
                                             onChangeText={this.onChangeTextForIRABeneficiary("firstName", index)}
                                             onSubmitEditing={this.onSubmitEditing(this[`middleInitial${index}`])}
-                                            errorFlag={!retirementBeneficiaryData[index].firstNameValidation}
+                                            errorFlag={!item.firstNameValidation}
                                             errorText={errMsg}
 
                                         />
@@ -7578,7 +7583,7 @@ class OpenAccPageTwoComponent extends Component {
                                         <GInputComponent
                                             inputref={this.setInputRef(`middleInitial${index}`)}
                                             propInputStyle={styles.customTxtBox}
-                                            value={retirementBeneficiaryData[index].middleInitial}
+                                            value={item.middleInitial}
                                             placeholder=""
                                             maxLength={gblStrings.maxLength.middleInitial}
                                             onChangeText={this.onChangeTextForIRABeneficiary("middleInitial", index)}
@@ -7595,12 +7600,12 @@ class OpenAccPageTwoComponent extends Component {
                                         <GInputComponent
                                             inputref={this.setInputRef(`lastName${index}`)}
                                             propInputStyle={styles.customTxtBox}
-                                            value={retirementBeneficiaryData[index].lastName}
+                                            value={item.lastName}
                                             placeholder=""
                                             maxLength={gblStrings.maxLength.lastName}
                                             onChangeText={this.onChangeTextForIRABeneficiary("lastName", index)}
                                             onSubmitEditing={this.onSubmitEditing(this[`dob${index}`])}
-                                            errorFlag={!retirementBeneficiaryData[index].lastNameValidation}
+                                            errorFlag={!item.lastNameValidation}
                                             errorText={errMsg}
 
                                         />
@@ -7612,10 +7617,10 @@ class OpenAccPageTwoComponent extends Component {
                                         </Text>
                                         <GDateComponent
                                             inputref={this.setInputRef(`dob${index}`)}
-                                            date={retirementBeneficiaryData[index].dob}
-                                            value={retirementBeneficiaryData[index].dob}
+                                            date={item.dob}
+                                            value={item.dob}
                                             placeholder="Select Date"
-                                            errorFlag={!retirementBeneficiaryData[index].dobValidation}
+                                            errorFlag={!item.dobValidation}
                                             errorMsg={errMsg}
                                             maxDate={prevDate}
                                             onDateChange={this.onChangeDateForIRABeneficiary("dob", index)}
@@ -7631,11 +7636,11 @@ class OpenAccPageTwoComponent extends Component {
                                         <GInputComponent
                                             inputref={this.setInputRef(`emailAddress${index}`)}
                                             propInputStyle={styles.customTxtBox}
-                                            value={retirementBeneficiaryData[index].emailAddress}
+                                            value={item.emailAddress}
                                             placeholder=""
                                             maxLength={gblStrings.maxLength.emailID}
                                             onChangeText={this.onChangeTextForIRABeneficiary("emailAddress", index)}
-                                            errorFlag={!retirementBeneficiaryData[index].emailAddressValidation}
+                                            errorFlag={!item.emailAddressValidation}
                                             errorText={errMsg}
 
                                         />
@@ -8169,8 +8174,8 @@ class OpenAccPageTwoComponent extends Component {
 
         let dropDownData = [];
         const tempkey = "suffix";
-        if (tempkey !== "" && this.props && masterLookupStateData && masterLookupStateData[tempkey] && masterLookupStateData[tempkey].value) {
-            dropDownData = masterLookupStateData[tempkey].value;
+        if (tempkey !== "" && this.props && masterLookupStateData && masterLookupStateData[`${tempkey}`] && masterLookupStateData[`${tempkey}`].value) {
+            dropDownData = masterLookupStateData[`${tempkey}`].value;
         }
         const tempSuffixData = dropDownData;
         AppUtils.debugLog(`estate.trusteeData.length::: ${estate.trusteeData.length}`);
@@ -8871,7 +8876,6 @@ OpenAccPageTwoComponent.propTypes = {
     getRankData: PropTypes.func,
     getAddressFormat: PropTypes.func,
     getCompositeLookUpData: PropTypes.func,
-    getPersonalCompositeData: PropTypes.func,
 
 
 };
@@ -8886,7 +8890,6 @@ OpenAccPageTwoComponent.defaultProps = {
     saveAccountOpening: null,
     getRankData: null,
     getAddressFormat: null,
-    getPersonalCompositeData: null,
     getCompositeLookUpData: null,
 
 

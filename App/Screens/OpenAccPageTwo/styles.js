@@ -203,32 +203,6 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         width: "40%"
     },
-    phoneInfoSwitch: {
-        alignItems: 'flex-end',
-        flex: 0.3,
-    },
-    setPrimaryView:
-    {
-        flexDirection: 'row',
-        flex: 1, justifyContent: "center",
-        alignItems: 'center',
-        borderTopColor: '#61285F45',
-        borderTopWidth: 1,
-        paddingTop:scaledHeight(25),
-        marginTop:scaledHeight(25),
-        marginBottom:scaledHeight(12),
-    },
-    setPrimarylbl: {
-        color: 'rgba(51, 51, 51, 0.87)',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold',
-        marginTop: scaledHeight(0)
-
-    },
-    setPrimaryViewHeader:
-    {
-        flex: 0.7
-    },
     errMsg: {
         color: 'red',
         fontSize: scaledHeight(12),
@@ -301,21 +275,12 @@ const styles = StyleSheet.create({
     },
     lblHeader: {
         backgroundColor: "#F2F2F2",
+        borderColor:"#70707080",
+        borderWidth:1,
+        flexGrow:1,
         marginBottom: scaledHeight(10),
         marginTop: scaledHeight(9),
-        padding:scaledHeight(10),
-        borderWidth:1,
-        borderColor:"#70707080",
-        flexGrow:1
-    },
-    phoneInfoView:{
-      flexGrow:1
-    },
-    phoneCardView:{
-        marginTop: scaledHeight(9),
-        borderWidth:1,
-        borderColor:"#DCDCDC",
-        padding:scaledHeight(10),
+        padding:scaledHeight(10)
     },
     lblHeaderTxt: {
         color: '#56565A',
@@ -324,7 +289,6 @@ const styles = StyleSheet.create({
         lineHeight: 35
        
     },
-
     lblLine: {
         backgroundColor: '#707070',
         flexGrow: 1,
@@ -355,7 +319,6 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
     },
-
     lblTxt: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
@@ -363,6 +326,7 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(25)
 
     },
+
     lblValueTxt: {
         color: '#56565A',
         fontSize: scaledHeight(16),
@@ -372,15 +336,12 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         marginTop: scaledHeight(19)
     },
-
     militaryLblDate1: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
         fontWeight: 'normal',
         width: '20%'
     },
-
-
     militaryLblDate2: {
         marginLeft: '0%',
         width: '80%'
@@ -404,12 +365,11 @@ const styles = StyleSheet.create({
 
 
     },
-
-
     nonUSView: {
         flexGrow: 1,
         marginTop: scaledHeight(25)
     },
+
     normalBlackBtn: {
         alignContent: 'center',
         alignItems: 'center',
@@ -423,6 +383,7 @@ const styles = StyleSheet.create({
 
 
     },
+
 
     normalBlackBtnDisabledTxt: {
         color: '#fff',
@@ -463,6 +424,8 @@ const styles = StyleSheet.create({
         marginVertical: scaledHeight(7.5)
 
     },
+
+
     normalWhiteBtnTxt: {
         color: '#544A54',
         fontSize: scaledHeight(16),
@@ -475,6 +438,21 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         fontWeight: 'normal',
     },
+
+    phoneCardView:{
+        borderColor:"#DCDCDC",
+        borderWidth:1,
+        marginTop: scaledHeight(9),
+        padding:scaledHeight(10),
+    },
+    phoneInfoSwitch: {
+        alignItems: 'flex-end',
+        flex: 0.3,
+    },
+
+    phoneInfoView:{
+      flexGrow:1
+    },
     poBoxTxt: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(12),
@@ -482,7 +460,6 @@ const styles = StyleSheet.create({
         lineHeight: 32,
 
     },
-   
     privacyNoticeTitleTxt: {
         color: '#486D89',
         fontSize: scaledHeight(26),
@@ -507,6 +484,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.3
     },
+   
     radioBtnColGrp: {
         flexGrow: 1,
         marginTop: scaledHeight(19)
@@ -572,6 +550,28 @@ const styles = StyleSheet.create({
         marginHorizontal: scaledHeight(12),
         marginTop: scaledHeight(31),
         overflow: 'hidden'
+    },
+    setPrimaryView:
+    {
+        flexDirection: 'row',
+        flex: 1, justifyContent: "center",
+        alignItems: 'center',
+        borderTopColor: '#61285F45',
+        borderTopWidth: 1,
+        paddingTop:scaledHeight(25),
+        marginTop:scaledHeight(25),
+        marginBottom:scaledHeight(12),
+    },
+    setPrimaryViewHeader:
+    {
+        flex: 0.7
+    },
+    setPrimarylbl: {
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginTop: scaledHeight(0)
+
     },
     splitDateGrp: {
         alignItems: "flex-start",
