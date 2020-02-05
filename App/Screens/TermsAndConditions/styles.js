@@ -190,6 +190,9 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 
     },
+    scrollView: {
+        flex: .85
+    },
     sectionDescTxt: {
         color: '#56565A',
         fontSize: scaledHeight(16),
@@ -197,16 +200,16 @@ import { scaledHeight } from '../../Utils/Resolution';
         marginTop: scaledHeight(8)
 
     },
+
     sectionGrp: {
         flexGrow: 1,
         marginHorizontal: scaledHeight(12),
         marginTop: scaledHeight(31),
         overflow: 'hidden'
     },
-
     touchItem: {
         marginTop: scaledHeight(16),
-    }
+    },
 
 
 });

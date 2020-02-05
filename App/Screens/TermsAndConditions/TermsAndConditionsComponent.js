@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, FlatList } from 'react-native';
+import { Text, View, ScrollView, FlatList, showAlert } from 'react-native';
 import PropTypes from "prop-types";
-
+import AppUtils from '../../Utils/AppUtils';
 import { GButtonComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import { CustomCheckBox } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
@@ -48,9 +48,7 @@ class TermsAndConditionsComponent extends Component {
     /*----------------------
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
-    componentDidMount() {
 
-    }
     /*----------------------
    
     /*----------------------
@@ -58,38 +56,51 @@ class TermsAndConditionsComponent extends Component {
                                                                  -------------------------- */
 
     onClickHeader = () => {
-        console.log("#TODO : onClickHeader");
+        AppUtils.debugLog("#TODO : onClickHeader");
     }
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const { navigation } = this.props;
+        const { goBack } = navigation;
+        goBack();
     }
 
     onClickCancel = () => {
-        this.props.navigation.goBack('termsAndConditions');
+        const { navigation } = this.props;
+        const { goBack } = navigation;
+        goBack('termsAndConditions');
     }
-    
+
+
     onClickNext = () => {
         this.validateFields();
     }
 
-    onPressCheck = (keyName) => () => this.setState({
-        [keyName]: !this.state[keyName]
-    });
+    // onPressCheck = (keyName) => () => this.setState({
+    //     [keyName]: !this.state[keyName]
+    // });
+
+    onPressCheck = (keyName) => () => {
+        this.setState(prevState => ({
+            [keyName]: !prevState[`${keyName}`]
+        }));
+    }
 
     isEmpty = (str) => {
         if (str === "" || str === undefined || str === "null" || str === "undefined") {
             return true;
-        } 
-        else {
-            return false;
         }
+        return false;
+
     }
 
     validateFields = () => {
+        const { agreeConditions } = this.state;
+        const { navigation } = this.props;
+        const { navigate } = navigation;
         let errMsg = "";
         let isValidationSuccess = false;
-        if (this.state.agreeConditions === false) {
+        if (agreeConditions === false) {
             errMsg = gblStrings.accManagement.confirmAgreeCondMsg;
 
         } else {
@@ -97,37 +108,42 @@ class TermsAndConditionsComponent extends Component {
         }
 
         if (isValidationSuccess) {
-            this.props.navigation.navigate({ routeName: 'dashboardAccounts', key: 'dashboardAccounts' });
+            navigate({ routeName: 'dashboardAccounts', key: 'dashboardAccounts' });
         } else {
-            alert(errMsg);
+            AppUtils.debugLog(errMsg);
+            showAlert(gblStrings.common.appName, errMsg, gblStrings.common.ok);
+
         }
     }
-    
-    generateKeyExtractor = (item) => item.id ;
+
+    generateKeyExtractor = (item) => item.id;
 
     renderBasicTerms = ({ item }) =>
-        (<View style={StyleSheet.column}>
-            <View style={StyleSheet.row}>
-                <Text style={StyleSheet.bullet}>{"" + '\u2022' + ""}</Text>
-                <Text style={StyleSheet.bulletText}>{item.title}</Text>
+        (
+            <View style={StyleSheet.column}>
+                <View style={StyleSheet.row}>
+                    <Text style={StyleSheet.bullet}>{`${'\u2022'}`}</Text>
+                    <Text style={StyleSheet.bulletText}>{item.title}</Text>
+                </View>
             </View>
-         </View>
         );
 
-    
+
     /*----------------------
                                  Render Methods
                                                                  -------------------------- */
     render() {
-        const nextBtnstyle = this.state.agreeConditions ? StyleSheet.normalBlackBtn : [StyleSheet.normalBlackBtn, { opacity: .45 }];
+        const { agreeConditions } = this.state;
+        const { navigation } = this.props;
+        const nextBtnstyle = agreeConditions ? StyleSheet.normalBlackBtn : [StyleSheet.normalBlackBtn, { opacity: .45 }];
 
         return (
             <View style={StyleSheet.container}>
                 <GHeaderComponent
-                    navigation={this.props.navigation}
+                    navigation={navigation}
                     onPress={this.onClickHeader}
                 />
-                <ScrollView style={{ flex: .85 }}>
+                <ScrollView style={StyleSheet.scrollView}>
 
                     { /* -----------Terms and Conditions -------------------*/}
                     <View style={StyleSheet.sectionGrp}>
@@ -148,28 +164,14 @@ class TermsAndConditionsComponent extends Component {
 
                     { /* -----------Basic Terms -------------------*/}
 
-                    <View style={[StyleSheet.sectionGrp]}>
-                        <View style={StyleSheet.accTypeSelectSection} >
+                    <View style={StyleSheet.sectionGrp}>
+                        <View style={StyleSheet.accTypeSelectSection}>
                             <Text style={StyleSheet.headings}>
                                 {gblStrings.dashBoard.basicTerms}
                             </Text>
                         </View>
 
-                        <View style={{ flexGrow: 1 }}>
-                            { /* <FlatList
-                                data={basicTermsData}
-                                renderItem={({ item }) =>
-                                    (<View style={StyleSheet.column}>
-                                        <View style={StyleSheet.row}>
-                                            <Text style={StyleSheet.bullet}>{"" + '\u2022' + ""}</Text>
-                                            <Text style={StyleSheet.bulletText}>{item.title}</Text>
-                                        </View>
-                                    </View>
-                                    )
-                                }
-                                keyExtractor={item => item.id}
-                            />
-                            */}
+                        <View>
                             <FlatList
                                 data={basicTermsData}
                                 renderItem={this.renderBasicTerms}
@@ -177,16 +179,16 @@ class TermsAndConditionsComponent extends Component {
                             />
                         </View>
 
-                        <View style={StyleSheet.agreeSectionGrp} >
+                        <View style={StyleSheet.agreeSectionGrp}>
                             <CustomCheckBox
                                 size={20}
                                 itemBottom={0}
                                 itemTop={0}
-                                outerCicleColor={"#707070"}
-                                innerCicleColor={"#61285F"}
+                                outerCicleColor="#707070"
+                                innerCicleColor="#61285F"
                                 labelStyle={StyleSheet.agreeTermsTxt}
                                 label={gblStrings.dashBoard.agreeMsgContent}
-                                selected={this.state.agreeConditions}
+                                selected={agreeConditions}
                                 onPress={this.onPressCheck("agreeConditions")}
 
                             />
@@ -215,7 +217,7 @@ class TermsAndConditionsComponent extends Component {
                             buttonText={gblStrings.common.next}
                             textStyle={StyleSheet.normalBlackBtnTxt}
                             onPress={this.onClickNext}
-                            disabled={!this.state.agreeConditions}
+                            disabled={!agreeConditions}
 
                         />
                     </View>
