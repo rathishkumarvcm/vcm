@@ -6,29 +6,31 @@ import { scaledHeight } from '../Utils/Resolution';
 
 const styles = StyleSheet.create({
 flatListView : {
-    borderWidth:1, 
-    width : '48%',
+    alignItems:'center', 
+    borderWidth:1,
+    height:scaledHeight(30),
     justifyContent:'center',
-    alignItems:'center',
-    height:scaledHeight(30)
+    width : '48%'
 }
 });
 
-
-export const GFlatListView = (props) => (
+export const GFlatListView = (props) => {
+    const {displayData} = props;
+return(
     <View style={styles.flatListView}>
         <Text>
-            {props.displayData}
+            {displayData}
         </Text>
     </View>
 );
+};
 
 GFlatListView.propTypes = {
     displayData : PropTypes.string
 };
 
 GFlatListView.defaultProps = {
-
+    displayData:""
 };
 
 export default GFlatListView;

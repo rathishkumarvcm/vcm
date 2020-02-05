@@ -11,6 +11,7 @@ import DrawerIcon from '../Screens/Menu/DrawerIcon';
 
 const { width } = Dimensions.get('window');
 
+const logo = require("../Images/logo.png");
 
 const newData = [
   {
@@ -72,6 +73,13 @@ const newData = [
 ];
 
 const styles = StyleSheet.create({
+  headerClickStyle: {
+    width: scaledWidth(100)
+  },
+  headerClickTouch: {
+    height: scaledWidth(50),
+    width: '25%'
+  },
   loginHeader: {
     flex: .12,
     flexDirection: 'row',
@@ -80,8 +88,21 @@ const styles = StyleSheet.create({
     paddingRight: '4%',
     width: '100%'
   },
-  modalGreenColorText: {
-    marginTop: 10
+  logoStyle: {
+    alignItems: 'flex-start',
+    height: scaledHeight(100),
+    width: '100%'
+  },
+  logoStyleHead: {
+    alignItems: 'flex-start', justifyContent: 'flex-start', width: '100%'
+  },
+  logoTouch: {
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    marginTop: scaledHeight(25)
+  },
+  menuStyle: {
+    alignItems: 'center', justifyContent: 'center', marginTop: scaledHeight(15)
   },
   modalImage: {
     height: 30, marginTop: 20, width: 30
@@ -92,10 +113,6 @@ const styles = StyleSheet.create({
     height: "100%",
     justifyContent: 'center',
     width: "100%",
-
-  },
-  modalRedColorText: {
-    marginTop: 10
   },
   modalView: {
     alignItems: 'center',
@@ -103,29 +120,47 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  registernowButton: {
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    borderColor: '#61285F',
-    borderRadius: scaledHeight(14),
+  navigateProfile: {
+    backgroundColor: 'white',
+    borderColor: "#DEDEDF",
     borderWidth: 1,
-    height: scaledHeight(28),
-    justifyContent: 'center',
-    width: width / 3.3
+    height: scaledHeight(250),
+    marginTop: scaledHeight(85),
+    position: 'absolute',
+    width: '100%',
+    zIndex: 2
   },
-  registernowText: {
-    color: '#56565A',
-    fontSize: scaledHeight(10)
+  navigationTouch: {
+    alignItems: 'flex-end',
+    justifyContent: 'center'
+  },
+  searchTouch: {
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   signIntext: {
     color: '#535353',
     flexWrap: 'wrap',
     fontSize: scaledHeight(25),
     textAlign: 'left',
-  }
+  },
+  touchableStyle:
+  {
+    borderBottomWidth: 1,
+    borderColor: "#DEDEDF",
+    height: scaledHeight(50),
+    justifyContent: 'center'
+  },
+  viewContainer: {
+    width: '60%'
+  },
+  viewContainerOne: {
+    width: '12%'
+  }               
 });
 
 class GHeaderComponent extends Component {
+
   constructor(props) {
     super(props);
     // set true to isLoading if data for this screen yet to be received and wanted to show loader.
@@ -147,7 +182,8 @@ class GHeaderComponent extends Component {
         SignOut: false
       });
     }, 1000);
-    this.props.navigation.navigate('login');
+    const {navigation} = this.props;
+    navigation.navigate('login');
   }
 
   signOut = () => {
@@ -174,27 +210,40 @@ class GHeaderComponent extends Component {
   }
 
 
-  headerClicked = () => this.props.navigation.navigate('login');
+  headerClicked = () =>{
+    const {navigation} = this.props;
+    navigation.navigate('login');
+  }
 
-  setMenu = () => { this.setState({ menuList: !this.state.menuList }); }
+  setMenu = () => { 
+    const {menuList} = this.state;
+    this.setState({ menuList: !menuList });
+   }
 
-  navigateProfile = () => this.props.navigation.navigate('profileSettings')
+  navigateProfile = () =>{
+    const {navigation} = this.props;
+    navigation.navigate('profileSettings');
+  }
 
-  moveToNotifications = () => this.props.navigation.navigate('notificationTabs')
-  openLeftDrawer = () => this.props.navigation.navigate('DrawerOpen')
+  moveToNotifications = () =>{
+    const {navigation} = this.props;
+    navigation.navigate('notificationTabs');
+  } 
+  
+  openLeftDrawer = () =>{
+    const {navigation} = this.props;
+    navigation.navigate('DrawerOpen');
+  } 
 
   updateDataList = ({ item }) => {
-    return (<TouchableOpacity
-      style={{
-        height: scaledHeight(50),
-        borderBottomWidth: 1,
-        borderColor: "#DEDEDF",
-        justifyContent: 'center'
-      }
-      }
-      onPress={this.newMethod(item)}>
+    return (
+<TouchableOpacity
+      style={styles.touchableStyle}
+      onPress={this.newMethod(item)}
+>
       <Text> {item.title} </Text>
-    </TouchableOpacity>);
+</TouchableOpacity>
+);
   }
 
   newMethod(item) {
@@ -207,29 +256,33 @@ class GHeaderComponent extends Component {
 
       }
       else {
-        this.props.navigation.navigate(item.naviagteTo);
+        const {navigation} = this.props;
+        navigation.navigate(item.naviagteTo);
       }
     };
   }
 
   render() {
+    const {register,registerShow,navigation} = this.props;
+    const {menuList,SignOut,ModalVisibleStatus} = this.state;
+    
     return (
       <>
-        {this.props.register ? (
+        {register ? (
           <TouchableOpacity style={styles.loginHeader}>
             <TouchableOpacity
-              style={{ width: scaledWidth(100) }}
+              style={styles.headerClickStyle}
               onPress={this.headerClicked}
             >
-              <Image style={{ width: '100%', height: scaledHeight(100), alignItems: 'flex-start' }}
+              <Image style={styles.logoStyle}
                 resizeMode="contain"
-                source={require("../Images/logo.png")}
+                source={logo}
               />
             </TouchableOpacity>
 
-            <View style={{ width: '60%' }} />
+            <View style={styles.viewContainer} />
 
-            <TouchableOpacity style={{ alignItems: 'flex-end', marginTop: scaledHeight(25), justifyContent: 'center' }}>
+            <TouchableOpacity style={styles.logoTouch}>
               <GIcon
                 name="typing"
                 type="entypo"
@@ -242,19 +295,19 @@ class GHeaderComponent extends Component {
           : (
             <>
               <TouchableOpacity style={styles.loginHeader}>
-                <TouchableOpacity style={{ width: '25%', height: scaledWidth(50) }}
+                <TouchableOpacity style={styles.headerClickTouch}
                   onPress={this.headerClicked}
                 >
-                  <Image style={{ width: '100%', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                  <Image style={styles.logoStyleHead}
                     resizeMode="contain"
-                    source={require("../Images/logo.png")}
+                    source={logo}
                   />
                 </TouchableOpacity>
 
-                <View style={{ width: '12%' }} />
+                <View style={styles.viewContainerOne} />
 
-                {!this.props.registerShow ? (
-                  <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', marginTop: scaledHeight(15) }}
+                {!registerShow ? (
+                  <TouchableOpacity style={styles.menuStyle}
                     onPress={this.setMenu}
                   >
                     <GIcon
@@ -267,9 +320,9 @@ class GHeaderComponent extends Component {
                 ) : null}
                 {/* <Text style={{ alignItems: 'center', justifyContent: 'center', marginTop: scaledHeight(15) }}>{this.props.headerText}</Text> */}
 
-                <View style={{ width: '10%' }} />
+                <View style={styles.viewContainerOne} />
 
-                <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }}>
+                <TouchableOpacity style={styles.searchTouch}>
                   <GIcon
                     name="ios-search"
                     type="ionicon"
@@ -277,8 +330,9 @@ class GHeaderComponent extends Component {
                     color="black"
                   />
                 </TouchableOpacity>
-                <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center' }}
-                  onPress={this.moveToNotifications} >
+                <TouchableOpacity style={styles.searchTouch}
+                  onPress={this.moveToNotifications}
+                >
                   <GIcon
                     name="md-notifications-outline"
                     type="ionicon"
@@ -286,30 +340,30 @@ class GHeaderComponent extends Component {
                     color="black"
                   />
                 </TouchableOpacity>
-                <TouchableOpacity style={{ alignItems: 'flex-end', justifyContent: 'center' }}>
-                  <DrawerIcon navigation={this.props.navigation} />
+                <TouchableOpacity style={styles.navigationTouch}>
+                  <DrawerIcon navigation={navigation} />
                 </TouchableOpacity>
               </TouchableOpacity>
-              {this.state.menuList && (
+              {menuList && (
                 <TouchableOpacity
                   onPress={this.navigateProfile}
-                  style={{ height: scaledHeight(250), marginTop: scaledHeight(85), zIndex: 2, position: 'absolute', borderWidth: 1, width: '100%', borderColor: "#DEDEDF", backgroundColor: 'white' }}
+                  style={styles.navigateProfile}
                 >
                   <FlatList
                     data={newData}
                     renderItem={this.updateDataList}
                     keyExtractor={item => item.title}
                   />
-                  {this.state.SignOut ?
+                  {SignOut ?
                     (
                       <Modal
                         transparent
-                        visible={this.state.ModalVisibleStatus}
+                        visible={ModalVisibleStatus}
                       >
                         <View style={styles.modalView}>
                           <View style={styles.modalInsideView}>
                             <Text style={styles.signIntext}>Signing Out </Text>
-                            <Image source={require('../Images/logo.png')} style={styles.modalImage} />
+                            <Image source={logo} style={styles.modalImage} />
                           </View>
                         </View>
                       </Modal>
@@ -327,10 +381,14 @@ class GHeaderComponent extends Component {
 }
 GHeaderComponent.propTypes = {
   register: PropTypes.bool,
+  registerShow: PropTypes.bool,
   navigation: PropTypes.instanceOf(Object)
 };
 
 GHeaderComponent.defaultProps = {
+  register:false,
+  registerShow: false,
+  navigation:{}
 
 };
 

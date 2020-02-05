@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, View , FlatList} from "react-native";
 import PropTypes from "prop-types";
-import { scaledHeight } from '../Utils/Resolution';
 
 const styles = StyleSheet.create({
     container:{
@@ -52,7 +51,7 @@ return (
 
 GCommonFlatListView.propTypes = {
     // displayData : PropTypes.string,
-    renderItem : PropTypes.func,
+    // renderItem : PropTypes.func,
     onEndReached : PropTypes.func,
     initialScrollIndex : PropTypes.number,
    // inverted : PropTypes.number,
@@ -67,11 +66,13 @@ GCommonFlatListView.propTypes = {
 };
 
 GCommonFlatListView.defaultProps = {
-    renderItem: null,
+    // renderItem: null,
     onEndReached : null,
     ListHeaderComponent : null,
     ListFooterComponent : null,
+    updateFlatList : null,
     initialScrollIndex : 0,
+    data:[],
     // inverted : 0,
     onEndReachedThreshold : 0.5,
     initialNumToRender : 10,

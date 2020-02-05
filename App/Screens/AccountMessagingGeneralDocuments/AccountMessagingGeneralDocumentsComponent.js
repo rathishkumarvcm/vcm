@@ -80,6 +80,100 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
                 accountPreferenceData: accMessageDocumentinitialState
             };            
         }
+
+        const { addressFormatData } = props;
+        const { currentZipCodeRef } = prevState;
+        const {          
+            keyName = "",
+            objIndex = -1
+        } = currentZipCodeRef;
+        
+        const addressKey = ActionTypes.GET_ADDRESSFORMAT;
+            if (addressFormatData[`${addressKey}`]) {
+                const tempResponse = addressFormatData[`${addressKey}`];
+
+                if (tempResponse && tempResponse.City) {
+                    if (keyName === "zipcode" && objIndex !== -1) {
+                        const newItems = [];
+                        newItems[parseInt(objIndex,10)].city = tempResponse.City;
+                        newItems[parseInt(objIndex,10)].stateCity = tempResponse.State;
+                        newItems[parseInt(objIndex,10)].addrLine1 = tempResponse.Address1 || "";
+                        newItems[parseInt(objIndex,10)].addrLine2 = tempResponse.Address2 || "";
+                        newItems[parseInt(objIndex,10)].addrLine1Validation = true;
+                        newItems[parseInt(objIndex,10)].addrLine2Validation = true;
+
+                        return {
+                            [currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey]                                    
+                            }
+                        };                            
+                    } 
+                    return {                           
+                        [currentZipCodeRef.stateKey]: {
+                            ...prevState[prevState.currentZipCodeRef.stateKey],
+                            city: tempResponse.City,
+                            stateCity: tempResponse.State,
+                            addrLine1: tempResponse.Address1 || "",
+                            addrLine2: tempResponse.Address2 || "",
+                            addrLine1Validation: true,
+                            addrLine2Validation: true
+                        }        
+                    };                   
+                } 
+                    
+                if (tempResponse && tempResponse.ErrorNumber) {
+                    if (currentZipCodeRef.keyName === "zipcode" && objIndex !== -1) {
+                        const newItems = [];
+                        newItems[parseInt(objIndex,10)].addrLine1 = "";
+                        newItems[parseInt(objIndex,10)].addrLine2 = "";
+                        newItems[parseInt(objIndex,10)].addrLine1Validation = false;
+                        newItems[parseInt(objIndex,10)].addrLine2Validation = false;
+
+                        return {
+                            [currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey]                                   
+                            },
+                            errMsg: "Invalid address"
+                        };                           
+                    } 
+                    return {
+                        [currentZipCodeRef.stateKey]: {
+                            ...prevState[prevState.currentZipCodeRef.stateKey],
+                            addrLine1Validation: false,
+                            addrLine2Validation: false
+                        },
+                        errMsg: "Invalid address"
+                    };                        
+                }           
+            }
+
+        const stateCityKey = ActionTypes.GET_STATECITY;
+        if (addressFormatData[`${stateCityKey}`]) {                                         
+                const tempResponse = addressFormatData[`${stateCityKey}`];
+                if (tempResponse && tempResponse.City) {
+                    // AppUtils.debugLog(`Address Format=====>1 ${JSON.stringify(tempResponse.City)}`);
+                    if (keyName === "zipcode" && objIndex !== -1) {
+                        // AppUtils.debugLog(`Address Format=====>2 ${JSON.stringify(tempResponse.City)}`);
+                        const newItems = [];
+                        newItems[parseInt(objIndex,10)].city = tempResponse.City;
+                        newItems[parseInt(objIndex,10)].stateCity = tempResponse.State;
+
+                        return{
+                            [currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey]                                   
+
+                            }
+                        };                        
+                    }                        
+                    return{                        
+                        [currentZipCodeRef.stateKey]: {
+                            ...prevState[prevState.currentZipCodeRef.stateKey],
+                            city: tempResponse.City,
+                            stateCity: tempResponse.State
+                        }
+                    };
+                }           
+        }
         return{                           
             accountPreferenceData: prevState.accountPreferenceData
         };                    
@@ -88,113 +182,113 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
     componentDidUpdate(prevProps, prevState) {
 
         AppUtils.debugLog(`componentDidUpdate::::> ${prevState}`);
-        const { addressFormatData } = this.props;
+        // const { addressFormatData } = this.props;
 
-        const { currentZipCodeRef } = this.state;
-        const {
-            //  stateKey = "",
-            keyName = "",
-            objIndex = -1
-        } = currentZipCodeRef;
+        // const { currentZipCodeRef } = this.state;
+        // const {
+        //     //  stateKey = "",
+        //     keyName = "",
+        //     objIndex = -1
+        // } = currentZipCodeRef;
 
-        if (this.props !== prevProps) {           
+        // if (this.props !== prevProps) {           
 
-            const stateCityKey = ActionTypes.GET_STATECITY;
-            if (addressFormatData[`${stateCityKey}`]) {
-                if (addressFormatData[`${stateCityKey}`] !== prevProps.addressFormatData[`${stateCityKey}`]) {
-                    const tempResponse = addressFormatData[`${stateCityKey}`];
+        //     const stateCityKey = ActionTypes.GET_STATECITY;
+        //     if (addressFormatData[`${stateCityKey}`]) {
+        //         if (addressFormatData[`${stateCityKey}`] !== prevProps.addressFormatData[`${stateCityKey}`]) {
+        //             const tempResponse = addressFormatData[`${stateCityKey}`];
 
-                    if (tempResponse && tempResponse.City) {
-                        if (keyName === "zipcode" && objIndex !== -1) {
-                            const newItems = [];
-                            newItems[parseInt(objIndex,10)].city = tempResponse.City;
-                            newItems[parseInt(objIndex,10)].stateCity = tempResponse.State;
+        //             if (tempResponse && tempResponse.City) {
+        //                 if (keyName === "zipcode" && objIndex !== -1) {
+        //                     const newItems = [];
+        //                     newItems[parseInt(objIndex,10)].city = tempResponse.City;
+        //                     newItems[parseInt(objIndex,10)].stateCity = tempResponse.State;
 
-                            this.setState(() => (() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey]                                   
+        //                     this.setState(() => (() => ({
+        //                         [prevState.currentZipCodeRef.stateKey]: {
+        //                             ...prevState[prevState.currentZipCodeRef.stateKey]                                   
 
-                                }
-                            })));
-                        }else {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    city: tempResponse.City,
-                                    stateCity: tempResponse.State
+        //                         }
+        //                     })));
+        //                 }else {
+        //                     this.setState(() => ({
+        //                         [prevState.currentZipCodeRef.stateKey]: {
+        //                             ...prevState[prevState.currentZipCodeRef.stateKey],
+        //                             city: tempResponse.City,
+        //                             stateCity: tempResponse.State
 
-                                }
-                            }));
-                        }
-                    }
-                }
-            }
+        //                         }
+        //                     }));
+        //                 }
+        //             }
+        //         }
+        //     }
 
-            const addressKey = ActionTypes.GET_ADDRESSFORMAT;
-            if (addressFormatData[`${addressKey}`]) {
-                if (addressFormatData[`${addressKey}`] !== prevProps.addressFormatData[`${addressKey}`]) {
-                    const tempResponse = addressFormatData[`${addressKey}`];
+        //     const addressKey = ActionTypes.GET_ADDRESSFORMAT;
+        //     if (addressFormatData[`${addressKey}`]) {
+        //         if (addressFormatData[`${addressKey}`] !== prevProps.addressFormatData[`${addressKey}`]) {
+        //             const tempResponse = addressFormatData[`${addressKey}`];
 
-                    if (tempResponse && tempResponse.City) {
-                        if (keyName === "zipcode" && objIndex !== -1) {
-                            const newItems = [];
-                            newItems[parseInt(objIndex,10)].city = tempResponse.City;
-                            newItems[parseInt(objIndex,10)].stateCity = tempResponse.State;
-                            newItems[parseInt(objIndex,10)].addrLine1 = tempResponse.Address1 || "";
-                            newItems[parseInt(objIndex,10)].addrLine2 = tempResponse.Address2 || "";
-                            newItems[parseInt(objIndex,10)].addrLine1Validation = true;
-                            newItems[parseInt(objIndex,10)].addrLine2Validation = true;
+        //             if (tempResponse && tempResponse.City) {
+        //                 if (keyName === "zipcode" && objIndex !== -1) {
+        //                     const newItems = [];
+        //                     newItems[parseInt(objIndex,10)].city = tempResponse.City;
+        //                     newItems[parseInt(objIndex,10)].stateCity = tempResponse.State;
+        //                     newItems[parseInt(objIndex,10)].addrLine1 = tempResponse.Address1 || "";
+        //                     newItems[parseInt(objIndex,10)].addrLine2 = tempResponse.Address2 || "";
+        //                     newItems[parseInt(objIndex,10)].addrLine1Validation = true;
+        //                     newItems[parseInt(objIndex,10)].addrLine2Validation = true;
 
-                            this.setState(() => (() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey]                                    
-                                }
-                            })));
-                        } 
-                        else {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    city: tempResponse.City,
-                                    stateCity: tempResponse.State,
-                                    addrLine1: tempResponse.Address1 || "",
-                                    addrLine2: tempResponse.Address2 || "",
-                                    addrLine1Validation: true,
-                                    addrLine2Validation: true
-                                }
-                            }));
-                        }
-                    } else if (tempResponse && tempResponse.ErrorNumber) {
-                        if (currentZipCodeRef.keyName === "zipcode" && objIndex !== -1) {
-                            const newItems = [];
-                            newItems[parseInt(objIndex,10)].addrLine1 = "";
-                            newItems[parseInt(objIndex,10)].addrLine2 = "";
-                            newItems[parseInt(objIndex,10)].addrLine1Validation = false;
-                            newItems[parseInt(objIndex,10)].addrLine2Validation = false;
+        //                     this.setState(() => (() => ({
+        //                         [prevState.currentZipCodeRef.stateKey]: {
+        //                             ...prevState[prevState.currentZipCodeRef.stateKey]                                    
+        //                         }
+        //                     })));
+        //                 } 
+        //                 else {
+        //                     this.setState(() => ({
+        //                         [prevState.currentZipCodeRef.stateKey]: {
+        //                             ...prevState[prevState.currentZipCodeRef.stateKey],
+        //                             city: tempResponse.City,
+        //                             stateCity: tempResponse.State,
+        //                             addrLine1: tempResponse.Address1 || "",
+        //                             addrLine2: tempResponse.Address2 || "",
+        //                             addrLine1Validation: true,
+        //                             addrLine2Validation: true
+        //                         }
+        //                     }));
+        //                 }
+        //             } else if (tempResponse && tempResponse.ErrorNumber) {
+        //                 if (currentZipCodeRef.keyName === "zipcode" && objIndex !== -1) {
+        //                     const newItems = [];
+        //                     newItems[parseInt(objIndex,10)].addrLine1 = "";
+        //                     newItems[parseInt(objIndex,10)].addrLine2 = "";
+        //                     newItems[parseInt(objIndex,10)].addrLine1Validation = false;
+        //                     newItems[parseInt(objIndex,10)].addrLine2Validation = false;
 
-                            this.setState(() => (() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey]                                   
-                                },
-                                errMsg: "Invalid address"
+        //                     this.setState(() => (() => ({
+        //                         [prevState.currentZipCodeRef.stateKey]: {
+        //                             ...prevState[prevState.currentZipCodeRef.stateKey]                                   
+        //                         },
+        //                         errMsg: "Invalid address"
 
-                            })));
-                        } else {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    // addrLine1: "",
-                                    // addrLine2: "",
-                                    addrLine1Validation: false,
-                                    addrLine2Validation: false
-                                },
-                                errMsg: "Invalid address"
-                            }));
-                        }
-                    }
-                }
-            }
-        }
+        //                     })));
+        //                 } else {
+        //                     this.setState(() => ({
+        //                         [prevState.currentZipCodeRef.stateKey]: {
+        //                             ...prevState[prevState.currentZipCodeRef.stateKey],
+        //                             // addrLine1: "",
+        //                             // addrLine2: "",
+        //                             addrLine1Validation: false,
+        //                             addrLine2Validation: false
+        //                         },
+        //                         errMsg: "Invalid address"
+        //                     }));
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
     }    
 
     isEmpty = (str) => {

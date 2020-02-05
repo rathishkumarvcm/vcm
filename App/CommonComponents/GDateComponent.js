@@ -1,11 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
+import DatePicker from 'react-native-datepicker';
 import { GIcon } from './GIcon';
 import { scaledHeight } from '../Utils/Resolution';
-import DatePicker from 'react-native-datepicker';
-
-
 
 const styles = StyleSheet.create({
     componentStyle: {
@@ -50,9 +48,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: scaledHeight(8)
     },
-    dateTouchBodyStyle: {
-
-    },
+    dateTouchBodyStyle: {},
     errorSection: {
         marginLeft: '4%',
         marginRight: '4%'
@@ -67,58 +63,66 @@ const styles = StyleSheet.create({
 });
 
 
-export const GDateComponent = props => (
+export const GDateComponent = props => {
+const {dateTextName,dateTextLayout,dateTitleName,inputref,errorFlag,componentStyle,
+    date,mode,placeholder,format,minDate,maxDate,iconComponent,confirmBtnText,cancelBtnText,
+    dateIconStyle,dateInputStyle,dateTextStyle,dateTouchBodyStyle,onDateChange,errorMsg} = props;
+return(
     <View>
        {
-           (props.dateTextName && props.dateTextName!="") &&
-           <View style={[styles.dateTextLayout, props.dateTextLayout]}>
-           <Text style={[styles.dateTitleName, props.dateTitleName]}>
-               {props.dateTextName}
+           (dateTextName && dateTextName!=="") && (
+           <View style={[styles.dateTextLayout, dateTextLayout]}>
+           <Text style={[styles.dateTitleName, dateTitleName]}>
+               {dateTextName}
            </Text>
-       </View>
-       }
+           </View>
+         )}
        
         <DatePicker
-            ref={props.inputref}
-            style={props.errorFlag ? [styles.componentStyle, props.componentStyle, styles.errorView] : [styles.componentStyle, props.componentStyle]}
-            date={props.date}
-            mode={props.mode}
-            placeholder={props.placeholder}
-            format={props.format}
-            minDate={props.minDate}
-            maxDate={props.maxDate}
-            iconComponent={props.iconComponent}
-            confirmBtnText={props.confirmBtnText}
-            cancelBtnText={props.cancelBtnText}
+            ref={inputref}
+            style={errorFlag ? [styles.componentStyle, componentStyle, styles.errorView] : [styles.componentStyle, componentStyle]}
+            date={date}
+            mode={mode}
+            placeholder={placeholder}
+            format={format}
+            minDate={minDate}
+            maxDate={maxDate}
+            iconComponent={iconComponent}
+            confirmBtnText={confirmBtnText}
+            cancelBtnText={cancelBtnText}
             customStyles={{
-                dateIcon: props.dateIconStyle,
-                dateInput: props.dateInputStyle,
-                dateText: props.dateTextStyle,
-                dateTouchBody: props.dateTouchBodyStyle,
-                placeholderText: props.dateTextStyle
+                dateIcon: dateIconStyle,
+                dateInput: dateInputStyle,
+                dateText: dateTextStyle,
+                dateTouchBody: dateTouchBodyStyle,
+                placeholderText: dateTextStyle
             }}
-            onDateChange={props.onDateChange}
+            onDateChange={onDateChange}
         />
-        {props.errorFlag ? <View style={styles.errorSection}>
+        {errorFlag ? (
+<View style={styles.errorSection}>
             <Text style={styles.errorSectionText}>
-                {props.errorMsg}
+                {errorMsg}
             </Text>
-                           </View> : null}
+</View>
+) : null}
     </View>
 
 );
+};
 
 GDateComponent.propTypes = {
     componentStyle: PropTypes.instanceOf(Object),
     dateIconStyle: PropTypes.instanceOf(Object),
     dateInputStyle: PropTypes.instanceOf(Object),
-    dateTextStyle: PropTypes.instanceOf(Object),
-    dateTouchBody: PropTypes.instanceOf(Object),
+    dateTextStyle: PropTypes.instanceOf(Object),   
     iconComponent: PropTypes.instanceOf(Object),
     dateTextLayout: PropTypes.instanceOf(Object),
     dateTitleName: PropTypes.instanceOf(Object),
+    dateTouchBodyStyle: PropTypes.instanceOf(Object),
 
     date: PropTypes.string,
+    dateTextName : PropTypes.string,
     format: PropTypes.string,
     mode: PropTypes.string,
     placeholder: PropTypes.string,
@@ -126,13 +130,14 @@ GDateComponent.propTypes = {
     cancelBtnText: PropTypes.string,
     errorFlag: PropTypes.bool,
     errorMsg: PropTypes.string,
-
+    minDate:PropTypes.string,
+    maxDate:PropTypes.string,
 
     onDateChange: PropTypes.func,
-    onOpenModal: PropTypes.func,
-    onCloseModal: PropTypes.func,
-    onPressMask: PropTypes.func,
-    getDateStr: PropTypes.func,
+    // onOpenModal: PropTypes.func,
+    // onCloseModal: PropTypes.func,
+    // onPressMask: PropTypes.func,
+    // getDateStr: PropTypes.func,
 
     inputref: PropTypes.oneOfType([
         PropTypes.func,
@@ -146,8 +151,10 @@ GDateComponent.defaultProps = {
     dateIconStyle: styles.dateIconStyle,
     dateInputStyle: styles.dateInputStyle,
     dateTextStyle: styles.dateTextStyle,
-    dateTouchBody: styles.dateTouchBodyStyle,
-
+    // dateTouchBody: styles.dateTouchBodyStyle,
+    dateTextLayout: styles.dateTextStyle,
+    dateTitleName:styles.dateTitleName,
+    dateTouchBodyStyle:{},
 
     date: "",
     format: "MM-DD-YYYY",
@@ -158,17 +165,20 @@ GDateComponent.defaultProps = {
         type="font-awesome"
         size={20}
         color="#B5B5B5"
-                   />,
+    />,
     confirmBtnText: "Confirm",
     cancelBtnText: "Cancel",
     errorFlag: false,
     errorMsg: "",
+    minDate:"",
+    maxDate:"",
 
     onDateChange: null,
-    onOpenModal: null,
-    onCloseModal: null,
-    onPressMask: null,
-    getDateStr: null,
+    // onOpenModal: null,
+    // onCloseModal: null,
+    // onPressMask: null,
+    // getDateStr: null,
+    dateTextName:null
 };
 
 export default GDateComponent;

@@ -1,9 +1,10 @@
 import React from "react";
 import { View, StyleSheet, Text, Image } from 'react-native';
-import PropTypes from "prop-types";
 import { scaledHeight } from '../Utils/Resolution';
 import gblStrings from '../Constants/GlobalStrings';
 import { GIcon } from "./GIcon";
+
+const logo = require('../Images/logo.png');
 
 export const styles = StyleSheet.create({
     backgroundColor:{
@@ -76,7 +77,7 @@ export const styles = StyleSheet.create({
     },
 });
 
-export const GFooterSettingsComponent = props => (
+export const GFooterSettingsComponent = () => (
 
     <View>
         <View style={styles.lineBorder} />
@@ -94,7 +95,7 @@ export const GFooterSettingsComponent = props => (
             <View style={styles.logoImageView}>
                 <Image
                     resizeMode="contain"
-                    source={require("../Images/logo.png")}
+                    source={logo}
                 />
             </View>
 
@@ -147,7 +148,7 @@ export const GFooterSettingsComponent = props => (
 );
 
 GFooterSettingsComponent.propTypes = {
-    onPress: PropTypes.func
+    // onPress: PropTypes.func
 };
 
 GFooterSettingsComponent.defaultProps = {
