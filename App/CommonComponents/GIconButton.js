@@ -5,7 +5,6 @@ import {
 import PropTypes from 'prop-types';
 import GIcon from './GIcon';
 
-
 const styles = StyleSheet.create({
   buttonStyle: {
     backgroundColor: '#06748C',
@@ -42,53 +41,59 @@ const styles = StyleSheet.create({
 
 
 export const GIconButton = (props) => {
-    const { id } = props;
+    const { id,iconRight,iconSize,iconColor,textStyle,title,icon,iconType,onPress } = props;
   return (
 <View>
     <TouchableOpacity
       style={[styles.buttonStyle, id.buttonStyle]}
       activeOpacity={0.8}
-      onPress={props.onPress}
+      onPress={onPress}
     >
       <View style={styles.wrapper}>
-        {!props.iconRight && (
+        {!iconRight && (
         <View style={styles.leftIconView}>
-          <GIcon name={id.icon} type={id.iconType} size={props.iconSize} color={props.iconColor} />
+          <GIcon name={id.icon} type={id.iconType} size={iconSize} color={iconColor} />
         </View>
         )}
         <View style={styles.buttonTextView}>
-          <Text style={[styles.buttonTextStyle, props.textStyle]}>{props.title}</Text>
+          <Text style={[styles.buttonTextStyle, textStyle]}>{title}</Text>
         </View>
-        {props.iconRight && (
+        {iconRight && (
         <View style={styles.rightIconView}>
-          <GIcon name={props.icon} type={props.iconType} size={props.iconSize} color={props.iconColor} />
+          <GIcon name={icon} type={iconType} size={iconSize} color={iconColor} />
         </View>
         )}
       </View>
     </TouchableOpacity>
-  </View>
+</View>
 );
 };
 
 GIconButton.propTypes = {
   title: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
-  iconType: PropTypes.string,
+   iconType: PropTypes.string,
   iconSize: PropTypes.number,
   iconColor: PropTypes.string,
   iconRight: PropTypes.bool,
-  disabled: PropTypes.bool,
+ // disabled: PropTypes.bool,
   buttonStyle: PropTypes.instanceOf(Object),
   textStyle: PropTypes.instanceOf(Object),
+  id:PropTypes.instanceOf(Object),
   onPress: PropTypes.func,
 };
 
 GIconButton.defaultProps = {
   iconSize: 30,
   iconRight: false,
-  disabled: false,
+  // disabled: false,
   buttonStyle: {},
   textStyle: {},
+  id:{},
+  onPress:() => { },
+  iconColor:'',
+  iconType:''
+
 };
 
 export default GIconButton;

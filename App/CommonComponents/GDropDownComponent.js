@@ -158,7 +158,7 @@ GDropDownComponent.defaultProps = {
   dropDownTextName:{},
   // textInputStyle:{},
   // dropDownPostition:{},
-  selectedDropDownValue:null,
+  selectedDropDownValue:() => { },
   // changeState:null,
   errorText:"",
 

@@ -18,13 +18,17 @@ export default class CommonDataManager {
   isLaunched = false;
 
   accOpeningEditModeEnabled = false;
+
   savedAccData = {};
+
   screenStateData = {};
 
   automaticInvestmentEnabled = false;
+
   savedAutomaticData = {};
 
   systematicWithdrawalEnabled = false;
+
   savedSystematicData = {};
   
   /* **************************\
@@ -93,7 +97,7 @@ export default class CommonDataManager {
   setFailedCount(value) {
     
     if (value === 1) {
-      this.failedFingerCount = this.failedFingerCount + value;
+      this.failedFingerCount += value;
     } else {
       this.failedFingerCount = value;
     }
@@ -119,32 +123,40 @@ export default class CommonDataManager {
   getAccOpeningEditMode(){
     return this.accOpeningEditModeEnabled;
   }
+
   setAccOpeningEditMode(value){
     this.accOpeningEditModeEnabled = value;
   }
+
   getSavedAccData(){
     return this.savedAccData;
   }
+
   setSavedAccData(value){
     this.savedAccData = value;
   }
+
   getScreenStateData(){
     return this.screenStateData;
   }
+
   setScreenStateData(value){
     this.screenStateData = value;
-    console.log("this.screenStateData"+JSON.stringify(this.screenStateData));
+    console.log(`this.screenStateData${JSON.stringify(this.screenStateData)}`);
   }
 
   getAutomaticInvestmentEditMode(){
     return this.automaticInvestmentEnabled;
   }
+
   setAutomaticInvestmentEditMode(value){
     this.automaticInvestmentEnabled = value;
   }
+
   getSavedAutomaticData(){
     return this.savedAutomaticData;
   }
+
   setSavedAutomaticData(value){
     this.savedAutomaticData = value;
   }
@@ -152,12 +164,15 @@ export default class CommonDataManager {
   getSystematicWithdrawalEditMode(){
     return this.systematicWithdrawalEnabled;
   }
+
   setSystematicWithdrawalEditMode(value){
     this.systematicWithdrawalEnabled = value;
   }
+
   getSavedSystematicData(){
     return this.savedSystematicData;
   }
+
   setSavedSystematicData(value){
     this.savedSystematicData = value;
   }

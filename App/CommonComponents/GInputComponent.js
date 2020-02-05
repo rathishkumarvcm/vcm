@@ -12,21 +12,10 @@ import { GIcon } from './GIcon';
 
 export const styles = StyleSheet.create({
 
-  textInputStyle: {
-    fontSize: scaledHeight(16),
-    marginLeft: scaledHeight(14),
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: '#B5B5B5'
-  },
-  inputBoxStyle: {
-    height: scaledHeight(48),
-    backgroundColor: "#FFFFFF",
-    width: '92%',
-    borderRadius: scaledHeight(4),
-    justifyContent: "center",
-    borderWidth: 1,
-    borderColor: "#DEDEDF"
+  arrowIconStyle: {
+    position: 'absolute',
+    right: 15,
+    top: 15
   },
   errorSection: {
     marginLeft: '4%',
@@ -41,47 +30,64 @@ export const styles = StyleSheet.create({
     // marginRight:'4%',
     borderColor: 'red'
   },
-  arrowIconStyle: {
-    position: 'absolute',
-    right: 15,
-    top: 15
+  inputBoxStyle: {
+    backgroundColor: "#FFFFFF",
+    borderColor: "#DEDEDF",
+    borderRadius: scaledHeight(4),
+    borderWidth: 1,
+    height: scaledHeight(48),
+    justifyContent: "center",
+    width: '92%'
+  },
+  textInputStyle: {
+    alignItems: 'center',
+    color: '#B5B5B5',
+    fontSize: scaledHeight(16),
+    justifyContent: 'center',
+    marginLeft: scaledHeight(14)
   }
 });
 
-export const GInputComponent = (props) => (
+export const GInputComponent = (props) => {
+
+  const {errorFlag,propInputStyle,inputStyle,value,secureTextEntry,autoFocus,editable,onBlur,onChange,onChangeText,
+    onSubmitEditing,onFocus,onKeyPress,keyboardType,returnKeyType,maxLength,multiline,numberOfLines,placeholder,
+    placeholderTextColor,selectionColor,autoCapitalize,inputref,inputText,dropDownBox,arrowIconStyle,dropDownClick,
+    errorText} = props;
+return(
   <>
-    <View style={props.errorFlag ? [styles.inputBoxStyle, props.propInputStyle, styles.errorView] : [styles.inputBoxStyle, props.propInputStyle]}>
+    <View style={errorFlag ? [styles.inputBoxStyle, propInputStyle, styles.errorView] : [styles.inputBoxStyle, propInputStyle]}>
       <TextInput
         {...props}
-        style={[styles.textInputStyle, props.inputStyle]}
-        value={props.value}
-        secureTextEntry={props.secureTextEntry}
+        style={[styles.textInputStyle, inputStyle]}
+        value={value}
+        secureTextEntry={secureTextEntry}
         autoCorrect={false}
-        autoFocus={props.autoFocus}
-        editable={props.editable}
-        onBlur={props.onBlur}
-        onChange={props.onChange}
-        onChangeText={props.onChangeText}
-        onSubmitEditing={props.onSubmitEditing}
-        onFocus={props.onFocus}
-        onKeyPress={props.onKeyPress}
-        keyboardType={props.keyboardType}
-        returnKeyType={props.returnKeyType}
-        maxLength={props.maxLength}
-        multiline={props.multiline}
-        numberOfLines={props.numberOfLines}
-        placeholder={props.placeholder}
-        placeholderTextColor={props.placeholderTextColor}
-        selectionColor={props.selectionColor}
+        autoFocus={autoFocus}
+        editable={editable}
+        onBlur={onBlur}
+        onChange={onChange}
+        onChangeText={onChangeText}
+        onSubmitEditing={onSubmitEditing}
+        onFocus={onFocus}
+        onKeyPress={onKeyPress}
+        keyboardType={keyboardType}
+        returnKeyType={returnKeyType}
+        maxLength={maxLength}
+        multiline={multiline}
+        numberOfLines={numberOfLines}
+        placeholder={placeholder}
+        placeholderTextColor={placeholderTextColor}
+        selectionColor={selectionColor}
         // underlineColorAndroid={props.underlineColorAndroid}
-        autoCapitalize={props.autoCapitalize}
-        ref={props.inputref}
+        autoCapitalize={autoCapitalize}
+        ref={inputref}
         underlineColorAndroid="transparent"
       >
-        {props.inputText}
+        {inputText}
       </TextInput>
-      {props.dropDownBox ?
-        <TouchableOpacity style={[styles.arrowIconStyle, props.arrowIconStyle]} onPress={props.dropDownClick}>
+      {dropDownBox ? (
+        <TouchableOpacity style={[styles.arrowIconStyle, arrowIconStyle]} onPress={dropDownClick}>
           <GIcon
             name="md-arrow-dropdown"
             type="ionicon"
@@ -89,28 +95,29 @@ export const GInputComponent = (props) => (
             color="black"
           />
         </TouchableOpacity>
+      )
         :
         null}
-
-
-
     </View>
-    {props.errorFlag ? <View style={styles.errorSection}>
+    {errorFlag ? (
+<View style={styles.errorSection}>
       <Text style={styles.errorSectionText}>
-        {props.errorText}
+        {errorText}
       </Text>
-                       </View> : null}
-
+</View>
+) : null}
   </>
 );
+};
 
 GInputComponent.propTypes = {
   inputStyle: PropTypes.instanceOf(Object),
-  value: PropTypes.string,
+  arrowIconStyle: PropTypes.instanceOf(Object),
+  // value: PropTypes.string,
   secureTextEntry: PropTypes.bool,
   autoFocus: PropTypes.bool,
   editable: PropTypes.bool,
-  inputText: PropTypes.string,
+ // inputText: PropTypes.string,
   keyboardType: PropTypes.string,
   returnKeyType: PropTypes.string,
   onBlur: PropTypes.func,
@@ -126,25 +133,30 @@ GInputComponent.propTypes = {
   underlineColorAndroid: PropTypes.string,
   autoCapitalize: PropTypes.string,
   onFocus: PropTypes.func,
+  dropDownClick:PropTypes.func,
   onKeyPress: PropTypes.func,
   inputref: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.shape({ current: PropTypes.object })
   ]),
-  propInputStyle: PropTypes.instanceOf(Object)
+  propInputStyle: PropTypes.instanceOf(Object),
+  dropDownBox:PropTypes.bool,
+  errorFlag:PropTypes.bool,
+  errorText:PropTypes.string
 };
 
 GInputComponent.defaultProps = {
   inputStyle: {},
-  //  value: '',
+  arrowIconStyle:{},
+  // value: '',
   autoFocus: false,
   editable: true,
   keyboardType: "default",
   returnKeyType: "next",
-  onBlur: null,
-  onChange: null,
-  onChangeText: null,
-  onSubmitEditing: null,
+  onBlur: () => { },
+  onChange: () => { },
+  onChangeText: () => { },
+  onSubmitEditing: () => { },
   maxLength: 100,
   multiline: false,
   numberOfLines: 1,
@@ -152,7 +164,16 @@ GInputComponent.defaultProps = {
   placeholderTextColor: null,
   selectionColor: null,
   underlineColorAndroid: null,
-  autoCapitalize: "none"
+  autoCapitalize: "none",
+  secureTextEntry:false,
+  // inputText:'',
+  onFocus:() => { },
+  dropDownClick:() => { },
+  onKeyPress:() => { },
+  propInputStyle:{},
+  dropDownBox:false,
+  errorFlag:false,
+  errorText:''  
 };
 
 export default GInputComponent;
