@@ -67,7 +67,7 @@ class BaseViewComponent extends React.Component {
 }
 
 BaseViewComponent.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.node, // children: PropTypes.element.isRequired
   isMoreModalVisible: PropTypes.bool,
 };
 

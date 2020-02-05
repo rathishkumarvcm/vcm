@@ -5,6 +5,7 @@ import Modal from 'react-native-modal';
 import styles from './style';
 import gblStrings from '../../Constants/GlobalStrings';
 import { GIcon, GHeaderComponent, GDropDownComponent, GInputComponent, GButtonComponent } from '../../CommonComponents';
+import AttachmentData from './AttachmentData';
 
 const topicData = [
     { "key": "1", "value": "Investment Advice" },
@@ -14,6 +15,7 @@ const topicData = [
     { "key": "5", "value": "Account Service" },
     { "key": "6", "value": "Others" },
 ];
+
 
 class FloatingButtonComponent extends React.Component {
     constructor(props) {
@@ -268,8 +270,9 @@ class FloatingButtonComponent extends React.Component {
                                                 <TextInput
                                                     style={styles.multilineTextBox}
                                                     onChangeText={this.setMessageBodyText}
+                                                    placeholder={gblStrings.msrServiceRequest.messageBody}
                                                     value={inputMessageBody}
-                                                    multiline={true}
+                                                    multiline
                                                     numberOfLines={10}
                                                     clearButtonMode="while-editing"
                                                     maxLength={1000}
@@ -296,7 +299,7 @@ class FloatingButtonComponent extends React.Component {
                                                         </Text>
                                                     </TouchableOpacity>
                                                 </View>
-                                                {this.renderAttachmentLimit}
+                                                <AttachmentData limit="10" />
                                                 <View style={styles.columnContainer}>
                                                     <GButtonComponent
                                                         buttonStyle={styles.normalWhiteBtn}

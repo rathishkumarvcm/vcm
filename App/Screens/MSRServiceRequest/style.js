@@ -2,12 +2,15 @@ import { StyleSheet } from "react-native";
 import { scaledHeight } from '../../Utils/Resolution';
 
 const styles = StyleSheet.create({
-    alignSelf:{ alignSelf: 'center' },
+    alignSelf: { alignSelf: 'center' },
     blackText: {
         fontWeight: '200',
         textAlignVertical: 'center',
     },
-    columnContainer: { flexDirection: 'column', padding: scaledHeight(12), },
+    columnContainer: {
+        flexDirection: 'column', flexGrow: 1,
+        padding: scaledHeight(12),
+    },
     container: { flex: 1, justifyContent: 'center', },
     customTxtBox: {
         marginTop: scaledHeight(9),
@@ -35,15 +38,15 @@ const styles = StyleSheet.create({
 
     },
     grayBorderContainer: {
-        alignItems:'center',
+        alignItems: 'center',
         borderColor: "#DEDEDF",
         borderRadius: scaledHeight(4),
         borderWidth: 1,
         marginHorizontal: 0,
         marginVertical: scaledHeight(10),
         paddingVertical: scaledHeight(10),
-      //  height:"20%",
-        width:"100%"
+        //  height:"20%",
+        width: "100%"
     },
     grayText: {
         color: "gray",
@@ -94,11 +97,10 @@ const styles = StyleSheet.create({
         borderColor: "#DEDEDF",
         borderRadius: scaledHeight(4),
         borderWidth: 1,
-        justifyContent: "center",
-        marginTop: scaledHeight(9),
         margin: 0,
-        minHeight: "20%",
-        padding: scaledHeight(3),
+        marginTop: scaledHeight(9),
+        padding: scaledHeight(5),
+        textAlignVertical: "top",
         width: '100%',
     },
     normalBlackBtn: {
