@@ -99,9 +99,9 @@ class OpenAccPageOneComponent extends Component {
 
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.ACCT_TYPE_SAVE_OPENING_ACCT;
-            if (accOpeningData[responseKey]) {
-                if (accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
-                    const tempResponse = accOpeningData[responseKey];
+            if (accOpeningData[`${responseKey}`]) {
+                if (accOpeningData[`${responseKey}`] !== prevProps.accOpeningData[`${responseKey}`]) {
+                    const tempResponse = accOpeningData[`${responseKey}`];
                     if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
                         const msg = tempResponse.message;
                         AppUtils.debugLog(`Account Type Saved ::: :: ${msg}`);
@@ -406,7 +406,7 @@ class OpenAccPageOneComponent extends Component {
                     <View style={styles.sectionGrp}>
                         <View style={styles.accTypeSelectSection}>
                             <Text style={styles.headings}>
-                                {pageOne[type].pageSec1Text}
+                                {pageOne[`${type}`].pageSec1Text}
                             </Text>
                         </View>
 
