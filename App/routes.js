@@ -234,7 +234,7 @@ const BottomTabNavigator = createBottomTabNavigator({
 
     },
     portfolio: {
-        screen: Dashboard,
+        screen: SpecialtyAccSubmit,
         navigationOptions: {
             tabBarIcon: (obj) => customTab({ object: obj, route: "portfolio" }),
             tabBarLabel: 'Portfolio',

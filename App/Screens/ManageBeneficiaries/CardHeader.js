@@ -30,9 +30,23 @@ class CardHeader extends Component {
         return (
             <View>
                 <View style={styles.innerHeaderView}>
-                    <View style={styles.flexDirectionStyle}>
-                        <Text style={styles.shortContentText}>{gblStrings.accManagement.contractNumber}</Text>
-                        <Text style={styles.contractText}>{item.contract_Number}</Text>
+                    <View style={styles.marginPaddingStyle}>
+                        <View style={styles.marginBottomStyle}>
+                            <Text style={styles.shortContentText}>Beneficiary Name</Text>
+                            <Text style={styles.shortContentValueText}>{`${item.fname} ${item.mname} ${item.lname}`}</Text>
+                        </View>
+                        <View style={styles.marginBottomStyle}>
+                            <Text style={styles.shortContentText}>{gblStrings.accManagement.relationToInsured}</Text>
+                            <Text style={styles.shortContentValueText}>{item.relationship_To_Insured}</Text>
+                        </View>
+                        <View style={styles.marginBottomStyle}>
+                            <Text style={styles.shortContentText}>{gblStrings.accManagement.accumulatedValue}</Text>
+                            <Text style={styles.shortContentValueText}>{`$ ${item.accumulated_Value}`}</Text>
+                        </View>
+                        <View style={styles.marginBottomStyle}>
+                            <Text style={styles.shortContentText}>{gblStrings.accManagement.distribution}</Text>
+                            <Text style={styles.shortContentValueText}>{`${item.distribution_Per} %`}</Text>
+                        </View>
                     </View>
                     <TouchableOpacity style={styles.sideBtn} onPress={this.updateState}>
                         <GIcon name="dots-three-vertical" type="entypo" size={30} color="black" />
@@ -49,6 +63,7 @@ class CardHeader extends Component {
                         )
                         : null
                 }
+
             </View>
         );
     }

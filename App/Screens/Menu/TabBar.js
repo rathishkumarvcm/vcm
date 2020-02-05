@@ -33,7 +33,7 @@ const TabBar = props => {
       {routes.map((route, routeIndex) => {
         const isRouteActive = routeIndex === activeRouteIndex;
         const tintColor = isRouteActive ? "skyblue" : "#4F4F4F";
-        console.log(JSON.stringify(route));
+       // console.log(JSON.stringify(route));
         return (
           <TouchableOpacity
             key={routeIndex}
