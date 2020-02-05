@@ -652,6 +652,7 @@ class LiquidationPageThreeComponent extends Component {
                                                                         dropDownLayout={styles.dropDownLayout}
                                                                         dropDownTextName={styles.blackTextBold16px}
                                                                         textInputStyle={styles.dropDownText}
+                                                                        errorFlag={false}
                                                                         dropDownName={gblStrings.liquidation.isTheReqAmount}
                                                                         data={reqAmountTypeJson}
                                                                         dropDownValue={taxAccountingMethodData.requestedAmountType}

@@ -147,7 +147,7 @@ class LiquidationPageFourComponent extends Component {
             }
         if (ammend) {
             const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
-            const amndObj = menuList[pIndex];
+            const amndObj = menuList[parseInt(pIndex, 0)];
             const transType = `Liquidation Amended`;
             const ammendPayloadData = {
                 "key": amndObj.key,
@@ -180,10 +180,10 @@ class LiquidationPageFourComponent extends Component {
             navigation.navigate('tAmmendComponent',{ orderId : amndObj.title,transactionType:"Liquidation",amend:true});
         }
         else {
-            const orderId = `Order ID - LIQ0${year}${month}${date}`;
+            const orderID = `Order ID - LIQ0${year}${month}${date}`;
             const payloadData = {
                 "key": finalKey,
-                "title": orderId,
+                "title": orderID,
                 "data": {
                     "count": 5,
                     "Dateadded": updatedDate,
@@ -228,44 +228,64 @@ class LiquidationPageFourComponent extends Component {
             };
             saveData(liquidationData);
 
-            navigate('LiquidationFinish', { orderId: orderId });
+            navigate('LiquidationFinish', { orderId: orderID });
         }
 
     }
 
     submitMethod = () => {
-         // console.log("in component submitMethod");
-        const { submitLiquidationData } = this.props;
-        let amountBeforeTaxes = '0';
-        let amountAfterTaxes = '0';
-        if(savedData.selectedFundWithdrawalData.amountBeforeTaxes===''){
+       const { submitLiquidationData } = this.props;
+       let amountBeforeTaxes = '0';
+       let amountAfterTaxes = '0';
+       if(savedData.selectedFundWithdrawalData.amountBeforeTaxes===''){
+           amountBeforeTaxes = '0';
+           amountAfterTaxes = savedData.selectedFundWithdrawalData.amountAfterTaxes;
+       }else{
+           amountBeforeTaxes = savedData.selectedFundWithdrawalData.amountBeforeTaxes;
+           amountAfterTaxes = '0';
+       }
+       const { ammend,ammendData } = this.state;
+       let accType = "";
+       if(ammend) {
+           accType = ammendData.selectedAccountData.accountType;
+       } else {
+           accType = savedData.selectedAccountData.accountType;
+       }
+       if(accType!=="IRA"){
             amountBeforeTaxes = '0';
-            amountAfterTaxes = savedData.selectedFundWithdrawalData.amountAfterTaxes;
-        }else{
-            amountBeforeTaxes = savedData.selectedFundWithdrawalData.amountBeforeTaxes;
             amountAfterTaxes = '0';
-        }
-        const payload = {
-            "customerId": "45435",
-            "CompanyNumber": "591",
-            "FundNumber": "30",
-            "AccountNumber": "30900035576",
-            "TypeValueReq": selectedFundData.TypeValueReq,
-            "liquidateAmount": selectedFundData.sellingAmount,
-            "PaymentMethod": savedData.selectedFundWithdrawalData.PaymentMethod,
-             "TaxWithholdingCode": "P",
-            "AmountBeforeTaxes": amountBeforeTaxes,
-            "AmountAfterTaxes": amountAfterTaxes,
-            "FederalTax": savedData.selectedFundWithdrawalData.federalTaxInPerc,
-            "StateTax": savedData.selectedFundWithdrawalData.stateTaxInPerc,
-            "TotalTaxestobewithhold": savedData.selectedFundWithdrawalData.totalTaxToBeWithHold,
-            "Totalyouwillreceive": savedData.selectedFundWithdrawalData.totalYouWillReceive,
-            "TotalWithdrawal": savedData.selectedFundWithdrawalData.totalWithdrawal
-          };
-          // console.log("payload---> ",JSON.stringify(payload));
-        submitLiquidationData(payload);
-        return 0;
-    }
+            federalTax="0";
+            stateTax="0";
+            totalTaxestobewithhold="0";
+            totalyouwillreceive="0";
+            totalWithdrawal="0";
+       }else{
+            federalTax=savedData.selectedFundWithdrawalData.federalTaxInPerc,
+            stateTax=savedData.selectedFundWithdrawalData.stateTaxInPerc,
+            totalTaxestobewithhold=savedData.selectedFundWithdrawalData.totalTaxToBeWithHold,
+            totalyouwillreceive=savedData.selectedFundWithdrawalData.totalYouWillReceive,
+            totalWithdrawal=savedData.selectedFundWithdrawalData.totalWithdrawal;
+       }
+       const payload = {
+           "customerId": "45435",
+           "CompanyNumber": "591",
+           "FundNumber": "30",
+           "AccountNumber": "30900035576",
+           "TypeValueReq": selectedFundData.TypeValueReq,
+           "liquidateAmount": selectedFundData.sellingAmount,
+           "PaymentMethod": savedData.selectedFundWithdrawalData.PaymentMethod,
+            "TaxWithholdingCode": "P",
+           "AmountBeforeTaxes": amountBeforeTaxes,
+           "AmountAfterTaxes": amountAfterTaxes,
+           "FederalTax": federalTax,
+           "StateTax": stateTax,
+           "TotalTaxestobewithhold": totalTaxestobewithhold,
+           "Totalyouwillreceive": totalyouwillreceive,
+           "TotalWithdrawal": totalWithdrawal
+         };
+       submitLiquidationData(payload);
+       return 0;
+   }
 
 
     render() {
