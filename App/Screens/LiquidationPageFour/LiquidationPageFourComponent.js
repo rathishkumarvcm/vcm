@@ -246,6 +246,11 @@ class LiquidationPageFourComponent extends Component {
        }
        const { ammend,ammendData } = this.state;
        let accType = "";
+       let federalTax="0";
+       let stateTax="0";
+       let totalTaxestobewithhold="0";
+       let totalyouwillreceive="0";
+       let totalWithdrawal="0";
        if(ammend) {
            accType = ammendData.selectedAccountData.accountType;
        } else {
@@ -260,10 +265,10 @@ class LiquidationPageFourComponent extends Component {
             totalyouwillreceive="0";
             totalWithdrawal="0";
        }else{
-            federalTax=savedData.selectedFundWithdrawalData.federalTaxInPerc,
-            stateTax=savedData.selectedFundWithdrawalData.stateTaxInPerc,
-            totalTaxestobewithhold=savedData.selectedFundWithdrawalData.totalTaxToBeWithHold,
-            totalyouwillreceive=savedData.selectedFundWithdrawalData.totalYouWillReceive,
+            federalTax=savedData.selectedFundWithdrawalData.federalTaxInPerc;
+            stateTax=savedData.selectedFundWithdrawalData.stateTaxInPerc;
+            totalTaxestobewithhold=savedData.selectedFundWithdrawalData.totalTaxToBeWithHold;
+            totalyouwillreceive=savedData.selectedFundWithdrawalData.totalYouWillReceive;
             totalWithdrawal=savedData.selectedFundWithdrawalData.totalWithdrawal;
        }
        const payload = {

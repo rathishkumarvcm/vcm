@@ -7,6 +7,7 @@ import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+import AppUtils from '../../Utils/AppUtils';
 
 let savedData = {};
 
@@ -38,7 +39,6 @@ class LiquidationPageOneComponent extends Component {
     }
 
     componentDidMount() {
-        // console.log(" Screen 1 componentdidmount " + JSON.stringify(this.props.liquidationInitialState.saveLiquidationSelectedData));
         const { getAccountList } = this.props;
         const accountListPayload = {
             "companyNumber": "591",
@@ -48,19 +48,20 @@ class LiquidationPageOneComponent extends Component {
         getAccountList(accountListPayload);
     }
 
-    componentDidUpdate(prevProps) {
-        const { liquidationInitialState } = this.props;
-        if (prevProps !== this.props) {
-            let tempAccountList = [];
-            if (liquidationInitialState[ActionTypes.GET_ACCOUNT_DETAILS] !== undefined && liquidationInitialState[ActionTypes.GET_ACCOUNT_DETAILS] !== null) {
-                tempAccountList = liquidationInitialState[ActionTypes.GET_ACCOUNT_DETAILS];
-                // console.log("Account List in:::::::::", tempAccountList);
-                this.setState({
-                    accountList: [...tempAccountList],
-                    isLoading: false
-                });
-            }
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const { liquidationInitialState } = nextProps;
+        const { accountList } = prevState;
+        let tempAccountList = [];
+        const accDetails = ActionTypes.GET_ACCOUNT_DETAILS;
+        if (liquidationInitialState[`${accDetails}`] !== undefined && liquidationInitialState[`${accDetails}`] !== null) {
+            tempAccountList = liquidationInitialState[`${accDetails}`];
+            return {
+                accountList: [...tempAccountList],
+                isLoading: false
+            };
         }
+        AppUtils.debugLog(accountList);
+        return prevState;
     }
 
     /* -----------------FlatList Events --------------------- */

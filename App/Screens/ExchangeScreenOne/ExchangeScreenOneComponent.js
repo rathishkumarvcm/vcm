@@ -7,7 +7,7 @@ import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
-
+import AppUtils from '../../Utils/AppUtils';
 
 let accSelectionData = {};
 let savedData = {};
@@ -50,19 +50,20 @@ class ExchangeScreenOneComponent extends Component {
         getAccountList(accountListPayload);
     }
 
-    componentDidUpdate(prevProps) {
-        const { exchangeData } = this.props;
-        if (prevProps !== this.props) {
-            let tempAccountList = [];
-            if (exchangeData[ActionTypes.GET_ACCOUNT_DETAILS] !== undefined && exchangeData[ActionTypes.GET_ACCOUNT_DETAILS] !== null) {
-                tempAccountList = exchangeData[ActionTypes.GET_ACCOUNT_DETAILS];
-                // console.log("Account List in:::::::::", tempAccountList);
-                this.setState({
-                    accountList: [...tempAccountList],
-                    isLoading: false
-                });
-            }
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const { exchangeData } = nextProps;
+        const { accountList } = prevState;
+        let tempAccountList = [];
+        const accDetails = ActionTypes.GET_ACCOUNT_DETAILS;
+        if (exchangeData[`${accDetails}`] !== undefined && exchangeData[`${accDetails}`] !== null) {
+            tempAccountList = exchangeData[`${accDetails}`];
+            return {
+                accountList: [...tempAccountList],
+                isLoading: false
+            };
         }
+        AppUtils.debugLog(accountList);
+        return prevState;
     }
 
 
