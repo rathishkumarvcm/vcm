@@ -781,8 +781,8 @@ class OpenAccPageTwoComponent extends Component {
                             }));
                         } else if (keyName === "zipcode_Phy" && objIndex !== -1) {
                             const newItems = [...estate.trusteeData];
-                            newItems[objIndex].city_Phy = tempResponse.City;
-                            newItems[objIndex].stateCity_Phy = tempResponse.State;
+                            newItems[+objIndex].city_Phy = tempResponse.City;
+                            newItems[+objIndex].stateCity_Phy = tempResponse.State;
 
 
                             this.setState(() => (() => ({
@@ -794,8 +794,8 @@ class OpenAccPageTwoComponent extends Component {
                             })));
                         } else if (keyName === "zipcode" && objIndex !== -1) {
                             const newItems = [...estate.trusteeData];
-                            newItems[objIndex].city = tempResponse.City;
-                            newItems[objIndex].stateCity = tempResponse.State;
+                            newItems[+objIndex].city = tempResponse.City;
+                            newItems[+objIndex].stateCity = tempResponse.State;
 
 
                             this.setState(() => (() => ({
