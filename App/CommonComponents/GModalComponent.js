@@ -51,45 +51,51 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(10)        
     },   
 });
-const GModalComponent = props => (      
+const GModalComponent = props => {
+    const {modalVisible,modalContainerStyle,titleContent,descContent1,descContent2,
+        buttonGoActionStyle,buttonGoTextStyle,buttonGoText,buttonGoOnPress,buttonCancelActionStyle,
+        buttonCancelText,buttonCancelTextStyle,buttonGoCancelPress} = props;
+return(      
     <Modal
         transparent
-        visible={props.modalVisible}
-        onRequestClose={!props.modalVisible}
+        visible={modalVisible}
+        onRequestClose={!modalVisible}
     >
         <View style={styles.modalBackgroundView}>                           
-            <View style={[styles.modalContainer, props.modalContainerStyle]}>
+            <View style={[styles.modalContainer, modalContainerStyle]}>
                 <Text style={styles.titleText}>
-                    {props.titleContent}
+                    {titleContent}
                 </Text>
                 <Text style={styles.modalContentText}>
-                    {props.descContent1}
+                    {descContent1}
                 </Text>
                 {
-                    (props.descContent2!=="")?
+                    (descContent2!=="")? (
                     <Text style={styles.modalContentText}>
-                        {props.descContent2}
+                        {descContent2}
                     </Text>
+                  )
                     :null
                 }            
                 <View style={styles.modalActionContainer}>
                     <GButtonComponent
-                        buttonStyle={[styles.buttonGoActionStyle, props.buttonGoActionStyle]}
-                        buttonText={props.buttonGoText}
-                        textStyle={[styles.buttonGoTextStyle, props.buttonGoTextStyle]}      
-                        onPress={props.buttonGoOnPress}                        
+                        buttonStyle={[styles.buttonGoActionStyle, buttonGoActionStyle]}
+                        buttonText={buttonGoText}
+                        textStyle={[styles.buttonGoTextStyle, buttonGoTextStyle]}      
+                        onPress={buttonGoOnPress}                        
                     />
                     <GButtonComponent
-                        buttonStyle={[styles.buttonGoActionStyle, props.buttonCancelActionStyle]}
-                        buttonText={props.buttonCancelText}
-                        textStyle={[styles.buttonGoTextStyle, props.buttonCancelTextStyle]}    
-                        onPress={props.buttonGoCancelPress}                  
+                        buttonStyle={[styles.buttonGoActionStyle, buttonCancelActionStyle]}
+                        buttonText={buttonCancelText}
+                        textStyle={[styles.buttonGoTextStyle, buttonCancelTextStyle]}    
+                        onPress={buttonGoCancelPress}                  
                     />
                 </View>
             </View>
         </View>
     </Modal>
 );
+};
 
 GModalComponent.propTypes = {
     modalVisible : PropTypes.bool.isRequired,   

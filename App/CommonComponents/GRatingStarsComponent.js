@@ -1,13 +1,21 @@
 import React from "react";
-import { View } from 'react-native';
+import { View,StyleSheet } from 'react-native';
 import PropTypes from "prop-types";
 import GIcon from './GIcon';
 
 
-const GRatingStarsComponent = (props) => {
-    var stars = [];
+const styles = StyleSheet.create({
+    viewContainer:{
+        alignItems: 'center', 
+        flexDirection: 'row', 
+        justifyContent: 'flex-start'
+     }
+});
 
-    for (let i = 1; i <= 5; i++) {
+const GRatingStarsComponent = (props) => {
+    const stars = [];
+
+    for (let i = 1; i <= 5; i+=1) {
        let tempcolor = props.unRatedStarColor;
         if (i <= props.rating) {
             tempcolor = props.ratedStarColor;
@@ -26,7 +34,7 @@ const GRatingStarsComponent = (props) => {
 
     }
     return (
-        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+        <View style={styles.viewContainer}>
             {stars}
         </View>
     );

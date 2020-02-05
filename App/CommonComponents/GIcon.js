@@ -1,15 +1,37 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Platform,
-  TouchableHighlight,
   View,
   StyleSheet,
-  Text,
-  ViewPropTypes
+  Text 
 } from 'react-native';
 
 import getIconType from '../Utils/GetIconType';
+
+const styles = StyleSheet.create({
+  // button: {
+  //   margin: 7,
+  // },
+  // disabled: {
+  //   backgroundColor: '#D1D5D8',
+  // },
+  iconContainerStyle:{
+    height:40,
+  },
+  // raised: {
+  //   ...Platform.select({
+  //     android: {
+  //       elevation: 2,
+  //     },
+  //     default: {
+  //       shadowColor: 'rgba(0,0,0, .4)',
+  //       shadowOffset: { height: 1, width: 1 },
+  //       shadowOpacity: 1,
+  //       shadowRadius: 1,
+  //     },
+  //   }),
+  // },
+});
 
 const GIcon = props => {
   const {
@@ -18,26 +40,27 @@ const GIcon = props => {
     size,
     color,
     iconStyle,
-    underlayColor,
+  //  underlayColor,
     reverse,
-    raised,
-    containerStyle,
+   // raised,
+  //  containerStyle,
     reverseColor,
-    disabled,
-    disabledStyle,
-    onPress,
-    Component = onPress ? TouchableHighlight : View,
-    ...attributes
+   // disabled,
+  //  disabledStyle,
+   // onPress,
+    // Component = onPress ? TouchableHighlight : View,
+    // ...attributes
   } = props;
 
   const IconComponent = getIconType(type);
-  const getBackgroundColor = () => {
-    if (reverse) {
-      return color;
-    }
+  
+  // const getBackgroundColor = () => {
+  //   if (reverse) {
+  //     return color;
+  //   }
 
-    return raised ? 'white' : 'transparent';
-  };
+  //   return raised ? 'white' : 'transparent';
+  // };
 
   return (
     <View style={StyleSheet.flatten([styles.iconContainerStyle,     
@@ -66,53 +89,33 @@ GIcon.propTypes = {
   name: PropTypes.string,
   size: PropTypes.number,
   color: PropTypes.string,
-  Component: PropTypes.func,
-  underlayColor: PropTypes.string,
+ // Component: PropTypes.func,
+ // underlayColor: PropTypes.string,
   reverse: PropTypes.bool,
-  raised: PropTypes.bool,
-  containerStyle: ViewPropTypes.style,
+  // raised: PropTypes.bool,
+  // containerStyle: ViewPropTypes.style,
   iconStyle: Text.propTypes.style,
-  onPress: PropTypes.func,
+  // onPress: PropTypes.func,
   reverseColor: PropTypes.string,
-  disabled: PropTypes.bool,
-  disabledStyle: ViewPropTypes.style,
+ // disabled: PropTypes.bool,
+ // disabledStyle: ViewPropTypes.style,
 };
 
 GIcon.defaultProps = {
-  underlayColor: 'white',
+ // underlayColor: 'white',
   reverse: false,
-  raised: false,
+ // raised: false,
   size: 24,
   color: 'black',
   reverseColor: 'white',
-  disabled: false,
+  // disabled: false,
   type: 'material',
+  name:'',
+  iconStyle:{},
+ // onPress:null
 };
 
-const styles = StyleSheet.create({
-  button: {
-    margin: 7,
-  },
-  raised: {
-    ...Platform.select({
-      android: {
-        elevation: 2,
-      },
-      default: {
-        shadowColor: 'rgba(0,0,0, .4)',
-        shadowOffset: { height: 1, width: 1 },
-        shadowOpacity: 1,
-        shadowRadius: 1,
-      },
-    }),
-  },
-  disabled: {
-    backgroundColor: '#D1D5D8',
-  },
-  iconContainerStyle:{
-    height:40,
-  },
-});
+
 
 export { GIcon };
 export default GIcon;
