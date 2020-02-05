@@ -52,9 +52,9 @@ import { scaledHeight } from '../../Utils/Resolution';
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
     },
-    blackTextBold13px:{
+    blueTextBold13px:{
         alignSelf:'center',
-        color:'#544A54',
+        color:'#0D7CB5',
         fontSize:scaledHeight(13),
         fontWeight:'bold',
         marginLeft:"4%",
@@ -82,7 +82,10 @@ import { scaledHeight } from '../../Utils/Resolution';
         backgroundColor:'#EFECEC',
         flexDirection:'row',
         height:scaledHeight(82),
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        marginTop:"3%",
+        borderTopColor:'#5D83AE99',
+        borderTopWidth:scaledHeight(1)
     },
     flex3:{
         flexDirection:'column',
@@ -104,6 +107,9 @@ import { scaledHeight } from '../../Utils/Resolution';
         height: scaledHeight(1),
         marginTop: scaledHeight(40),
         opacity: 0.4,
+    },
+    fundInfoFlex:{
+        flexDirection:'column'
     },
     fundSourceContent:{
         color:'#56565A',
@@ -127,6 +133,10 @@ import { scaledHeight } from '../../Utils/Resolution';
         marginRight:"4%",
         marginTop:"5%",
     },
+    greyTextRegular13px:{
+        fontSize:scaledHeight(13),
+        color:'#56565A'
+    },
     headerFlex:{
         flexDirection:'row',
         height:scaledHeight(29),
@@ -135,6 +145,9 @@ import { scaledHeight } from '../../Utils/Resolution';
         color:'#56565A',
         fontSize:scaledHeight(22),
         fontWeight:'bold',
+    },
+    horizontalFlex:{
+        flexDirection:'row'
     },
     inputStyle:{
         color:'#56565A',
@@ -148,6 +161,11 @@ import { scaledHeight } from '../../Utils/Resolution';
     },
     mainFlex:{
         flex: 0.85
+    },
+    minAmountFlex:{
+        marginLeft: '4%',
+        marginRight: '4%',
+        marginTop: '3%',
     },
     radioButtonFlexOff:{
         alignItems: 'center',
@@ -172,7 +190,6 @@ import { scaledHeight } from '../../Utils/Resolution';
         borderColor:'#5D83AE99',
         borderWidth:scaledHeight(1),
         flexDirection:'column',
-        height:scaledHeight(347)
     },
     submitFlex: {
         alignItems: 'center',
@@ -227,6 +244,7 @@ import { scaledHeight } from '../../Utils/Resolution';
     totalSharesValue:{
         color:'#56565A',
         fontSize:scaledHeight(14),
+        paddingVertical:scaledHeight(5)
     },
 
 });

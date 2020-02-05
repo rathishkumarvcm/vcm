@@ -293,7 +293,33 @@ class LiquidationPageTwoComponent extends Component {
                 <View style={styles.sharesFlex}>
 
                     <View style={styles.flex1}>
-                        <Text style={styles.blackTextBold13px}>{item.fundName}</Text>
+                        <Text style={styles.blueTextBold13px}>{item.fundName}</Text>
+                    </View>
+
+                    <View style={styles.fundInfoFlex}>
+                        <View style={styles.minAmountFlex}>
+                            <Text style={styles.totalSharesText}>Min. / Max. Amount</Text>
+                            <Text style={styles.totalSharesValue}>$ 300 / $ 5,000</Text>
+                        </View>
+                        <View style={styles.minAmountFlex}>
+                            <View style={styles.horizontalFlex}>
+                                <Text style={styles.totalSharesText}>NAV </Text>
+                                <Text style={styles.greyTextRegular13px}>(Change in Percentage)</Text>
+                            </View>
+
+                            <Text style={styles.totalSharesValue}>↑ 14.3</Text>
+                        </View>
+                        <View style={styles.minAmountFlex}>
+                            <View style={styles.horizontalFlex}>
+                                <Text style={styles.totalSharesText}>Last NAV </Text>
+                                <Text style={styles.greyTextRegular13px}>(Previous day close)</Text>
+                            </View>
+                            <Text style={styles.totalSharesValue}>$ 143</Text>
+                        </View>
+                        <View style={styles.minAmountFlex}>
+                            <Text style={styles.totalSharesText}>52 week Min. / Max. Values</Text>
+                            <Text style={styles.totalSharesValue}>$ 3,000 / $ 5,000</Text>
+                        </View>
                     </View>
 
                     <View style={styles.flex2}>
