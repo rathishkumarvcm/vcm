@@ -117,7 +117,6 @@ class AddNewBeneficiaryComponent extends Component {
         payload.push(obj);
       }
     }
-
     getPersonalCompositeData(payload);
   }
 
@@ -1031,14 +1030,14 @@ class AddNewBeneficiaryComponent extends Component {
 AddNewBeneficiaryComponent.propTypes = {
   navigation: PropTypes.instanceOf(Object),
   masterLookupStateData: PropTypes.instanceOf(Object),
-  getPersonalCompositeData: PropTypes.instanceOf(Object),
+  getPersonalCompositeData: PropTypes.func,
   saveBeneficiaryData: PropTypes.func
 };
 
 AddNewBeneficiaryComponent.defaultProps = {
   navigation: {},
   masterLookupStateData: {},
-  getPersonalCompositeData: {},
+  getPersonalCompositeData: () => { },
   saveBeneficiaryData: () => { }
 };
 

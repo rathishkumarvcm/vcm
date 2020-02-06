@@ -338,7 +338,7 @@ class EditManageBenificiariesComponent extends Component {
     if (todBeneficiaryData) {
       const data = [...todBeneficiaryData, ...newPrimaryBene];
       totTod = data.reduce((prev, cur) => {
-        let dist = parseInt(cur.distribution_Per,10);
+        let dist = parseInt(cur.distribution_Per, 10);
         if (this.isEmpty(cur.distribution_Per)) {
           dist = 0;
         }
@@ -347,13 +347,13 @@ class EditManageBenificiariesComponent extends Component {
     }
     if (primaryBeneficiaryData) {
       totalPri = primaryBeneficiaryData.reduce((prev, cur) => {
-        return prev + parseInt(cur.distribution_Per,10);
+        return prev + parseInt(cur.distribution_Per, 10);
       }, 0);
     }
     if (contingentBeneficiaryData) {
       const data = contingentBeneficiaryData.concat(newContingentBene);
       totalCon = data.reduce((prev, cur) => {
-        let dist = parseInt(cur.distribution_Per,10);
+        let dist = parseInt(cur.distribution_Per, 10);
         if (this.isEmpty(cur.distribution_Per)) {
           dist = 0;
         }
@@ -1237,7 +1237,7 @@ class EditManageBenificiariesComponent extends Component {
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0;
             } else {
-              distributionValue = parseInt(item.distribution_Per,10);
+              distributionValue = parseInt(item.distribution_Per, 10);
             }
             return (
               <View key={this.generateEditPrimaryBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
@@ -1327,7 +1327,7 @@ class EditManageBenificiariesComponent extends Component {
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0;
             } else {
-              distributionValue = parseInt(item.distribution_Per,10);
+              distributionValue = parseInt(item.distribution_Per, 10);
             }
             return (
               <View key={this.generateContingentBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
@@ -1416,7 +1416,7 @@ class EditManageBenificiariesComponent extends Component {
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0;
             } else {
-              distributionValue = parseInt(item.distribution_Per,10);
+              distributionValue = parseInt(item.distribution_Per, 10);
             }
             return (
               <View key={this.generateNewContingentBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
@@ -1558,7 +1558,7 @@ class EditManageBenificiariesComponent extends Component {
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0;
             } else {
-              distributionValue = parseInt(item.distribution_Per,10);
+              distributionValue = parseInt(item.distribution_Per, 10);
             }
             return (
               <View key={this.generateTodBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
@@ -1648,7 +1648,7 @@ class EditManageBenificiariesComponent extends Component {
             if (this.isEmpty(item.distribution_Per)) {
               distributionValue = 0;
             } else {
-              distributionValue = parseInt(item.distribution_Per,10);
+              distributionValue = parseInt(item.distribution_Per, 10);
             }
             return (
               <View key={this.generateNewTodBeneficiaryKeyExtractor} style={styles.blockMarginTop}>
@@ -1882,7 +1882,7 @@ class EditManageBenificiariesComponent extends Component {
 EditManageBenificiariesComponent.propTypes = {
   navigation: PropTypes.instanceOf(Object),
   masterLookupStateData: PropTypes.instanceOf(Object),
-  getPersonalCompositeData: PropTypes.instanceOf(Object),
+  getPersonalCompositeData: PropTypes.func,
   manageBeneficiaryData: PropTypes.instanceOf(Object),
   savedBeneficiaryData: PropTypes.func
 };
@@ -1890,7 +1890,7 @@ EditManageBenificiariesComponent.propTypes = {
 EditManageBenificiariesComponent.defaultProps = {
   navigation: {},
   masterLookupStateData: {},
-  getPersonalCompositeData: {},
+  getPersonalCompositeData: () => { },
   manageBeneficiaryData: {},
   savedBeneficiaryData: () => { }
 };
