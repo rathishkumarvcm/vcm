@@ -1,17 +1,22 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity,StyleSheet } from 'react-native';
 import PropTypes from "prop-types";
 import { scaledHeight } from '../Utils/Resolution';
 import { GInputComponent, GIcon} from '../CommonComponents';
 
-
+const styles = StyleSheet.create({
+    touchStyle:{
+        alignItems: 'center', flexDirection: 'row', justifyContent: 'flex-end', marginTop: scaledHeight(9), zIndex: 35,
+    },
+    touchStylePosition:{
+        alignItems: 'center', position: 'absolute'
+    }
+});
 
 
 const CustomDropDown = React.forwardRef ((props) => (
     <TouchableOpacity 
-    style={{
-        zindex: 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', marginTop: scaledHeight(9),
-    }} 
+    style={styles.touchStyle} 
     onPress={props.onPress}
     ref={props.inputref}
 
@@ -24,7 +29,7 @@ const CustomDropDown = React.forwardRef ((props) => (
             value={props.value}
         />
 
-        <TouchableOpacity style={{ alignItems: 'center', position: 'absolute' }} onPress={props.onPress}>
+        <TouchableOpacity style={styles.touchStylePosition} onPress={props.onPress}>
             <GIcon
                 name="md-arrow-dropdown"
                 type="ionicon"

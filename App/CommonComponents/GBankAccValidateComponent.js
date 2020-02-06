@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 import { scaledHeight } from '../Utils/Resolution';
 import gblStrings from '../Constants/GlobalStrings';
 import CustomRadio from '../AppComponents/CustomRadio';
-import GInputComponent from "./GInputComponent";
-import GButtonComponent from "./GButtonComponent";
+import {GInputComponent} from "./GInputComponent";
+import {GButtonComponent} from "./GButtonComponent";
 import ImagesLoad from '../Images/ImageIndex';
 
 export const styles = StyleSheet.create({
@@ -123,7 +123,12 @@ export const styles = StyleSheet.create({
     }
 });
 
-export const GBankAccValidateComponent = (props) => (
+export const GBankAccValidateComponent = (props) => {
+    const {accountType,onSavingsPressed,onCheckingPressed,accountTypeValidation,financialInstitutionNameValidation,
+        financialInstitutionName,onFinanceTextChange,accountOwnerValidation,accountOwner,onAccountOwnerTextChange,
+        transitRoutingNumberValidation,transitRoutingNumber,onTransitRoutingTextChange,accountNumberValidation,accountNumber,
+        onAccountNumberTextChange,isValidBankAccount,validBankAccountMsg,validateBankAccount} = props;
+return(
  
     <View style={styles.sectionGrp}>
         <View style={styles.accTypeSelectSection}>
@@ -149,8 +154,8 @@ export const GBankAccValidateComponent = (props) => (
                     label="Savings"
                     descLabelStyle={styles.lblRadioDescTxt}
                     descLabel=""
-                    selected={!!((props.accountType !== null && props.accountType === "Savings"))}
-                    onPress={props.onSavingsPressed}
+                    selected={!!((accountType !== null && accountType === "Savings"))}
+                    onPress={onSavingsPressed}
                 />
 
                 <CustomRadio
@@ -162,12 +167,12 @@ export const GBankAccValidateComponent = (props) => (
                     label="Checking"
                     descLabelStyle={styles.lblRadioDescTxt}
                     descLabel=""
-                    selected={!!((props.accountType !== null && props.accountType === "Checking"))}
-                    onPress={props.onCheckingPressed}
+                    selected={!!((accountType !== null && accountType === "Checking"))}
+                    onPress={onCheckingPressed}
                 />
             </View>
 
-            {!props.accountTypeValidation && (
+            {!accountTypeValidation && (
                 <Text style={styles.errMsg}>
                     {gblStrings.accManagement.emptyTypeOfAccount}
                 </Text>
@@ -178,13 +183,13 @@ export const GBankAccValidateComponent = (props) => (
             </Text>
 
             <GInputComponent
-                propInputStyle={props.financialInstitutionNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                propInputStyle={financialInstitutionNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
                 placeholder=""
                 maxLength={gblStrings.maxLength.common}
-                value={props.financialInstitutionName}
-                errorFlag={!props.financialInstitutionNameValidation}
+                value={financialInstitutionName}
+                errorFlag={!financialInstitutionNameValidation}
                 errorText={gblStrings.accManagement.emptyFinancialInstitution}
-                onChangeText={props.onFinanceTextChange}
+                onChangeText={onFinanceTextChange}
             />
 
             <Text style={styles.lblTxt}>
@@ -192,13 +197,13 @@ export const GBankAccValidateComponent = (props) => (
             </Text>
 
             <GInputComponent
-                propInputStyle={props.accountOwnerValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                propInputStyle={accountOwnerValidation ? styles.customTxtBox : styles.customTxtBoxError}
                 placeholder=""
                 maxLength={gblStrings.maxLength.common}
-                value={props.accountOwner}
-                errorFlag={!props.accountOwnerValidation}
+                value={accountOwner}
+                errorFlag={!accountOwnerValidation}
                 errorText={gblStrings.accManagement.emptyAccountOwnerName}
-                onChangeText={props.onAccountOwnerTextChange}
+                onChangeText={onAccountOwnerTextChange}
             />
 
             <Text style={styles.lblTxt}>
@@ -206,13 +211,13 @@ export const GBankAccValidateComponent = (props) => (
             </Text>
 
             <GInputComponent
-                propInputStyle={props.transitRoutingNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                propInputStyle={transitRoutingNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
                 placeholder=""
                 maxLength={gblStrings.maxLength.transitRoutingNumber}
-                value={props.transitRoutingNumber}
-                errorFlag={!props.transitRoutingNumberValidation}
+                value={transitRoutingNumber}
+                errorFlag={!transitRoutingNumberValidation}
                 errorText={gblStrings.accManagement.emptyTransitRoutingNo}
-                onChangeText={props.onTransitRoutingTextChange}
+                onChangeText={onTransitRoutingTextChange}
             />
 
             <Text style={styles.lblTxt}>
@@ -220,13 +225,13 @@ export const GBankAccValidateComponent = (props) => (
             </Text>
 
             <GInputComponent
-                propInputStyle={props.accountNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                propInputStyle={accountNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
                 placeholder=""
                 maxLength={gblStrings.maxLength.accountNumber}
-                value={props.accountNumber}
-                errorFlag={!props.accountNumberValidation}
+                value={accountNumber}
+                errorFlag={!accountNumberValidation}
                 errorText={gblStrings.accManagement.emptyAccountNumber}
-                onChangeText={props.onAccountNumberTextChange}
+                onChangeText={onAccountNumberTextChange}
                 keyboardType="number-pad"
                 returnKeyType="done"
             />
@@ -244,9 +249,9 @@ export const GBankAccValidateComponent = (props) => (
                 source={ImagesLoad.specimen}
             />
 
-            {!props.isValidBankAccount && (
+            {!isValidBankAccount && (
                 <Text style={styles.errMsg}>
-                    {props.validBankAccountMsg}
+                    {validBankAccountMsg}
                 </Text>
             )}
 
@@ -254,13 +259,14 @@ export const GBankAccValidateComponent = (props) => (
                 buttonStyle={styles.saveButtonStyle}
                 buttonText={gblStrings.common.validate}
                 textStyle={styles.saveButtonText}
-                onPress={props.validateBankAccount}
+                onPress={validateBankAccount}
             />
         </View>
     </View>
 );
+};
 
-GBankAccValidateComponent.propType = {
+GBankAccValidateComponent.propTypes = {
     accountType: PropTypes.string,
     financialInstitutionName: PropTypes.string,
     accountOwner: PropTypes.string,

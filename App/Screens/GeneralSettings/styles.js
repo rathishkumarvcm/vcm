@@ -157,6 +157,9 @@ const styles = StyleSheet.create({
         color:'#56565A',
         fontSize:scaledHeight(10)
     },
+    scrollViewFlex:{
+         flex: 0.85 
+    },
     settingsHeadline:{
         color:'#000000',
         fontSize:scaledHeight(24)
@@ -225,14 +228,14 @@ const styles = StyleSheet.create({
         marginRight:'4%',
         marginTop:scaledHeight(30),
         width: '92%'
-    },
-    termsofuse:{
+    }, termsofuse:{
         flexDirection:'row',
         flexWrap:'wrap',
         marginTop:scaledHeight(10),
         paddingLeft:'4%',
         paddingRight:'4%'
-    }, termsofuseText:{
+    },
+    termsofuseText:{
         color:'#56565A',
         fontSize : scaledHeight(18)
     },

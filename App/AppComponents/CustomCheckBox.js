@@ -1,50 +1,58 @@
 import React from 'react';
-import { Text, View, TouchableOpacity } from 'react-native';
-import { scaledHeight } from '../Utils/Resolution';
+import { Text, View, TouchableOpacity,StyleSheet } from 'react-native';
 import PropTypes from "prop-types";
+import { scaledHeight } from '../Utils/Resolution';
 
+const styles = StyleSheet.create({
+    textStyle: {
+        marginLeft: scaledHeight(12), width: '80%'
+    }
+}
+);
 
-
-const CustomCheckBox = props => (
+const CustomCheckBox = props => {
+    const {width,itemTop,itemBottom,onPress,size,outerCicleColor,selected,innerCicleColor,label} = props;
+return(
 
     <TouchableOpacity style={{
-        width: props.width,
+        width,
         flexDirection: "row",
         flexGrow: 1,
         alignItems: 'flex-start',
         justifyContent: 'flex-start',
-        marginTop: scaledHeight(props.itemTop),
-        marginBottom: scaledHeight(props.itemBottom)
-    }} onPress={props.onPress}
+        marginTop: scaledHeight(itemTop),
+        marginBottom: scaledHeight(itemBottom)
+    }} onPress={onPress}
     >
         <View style={{
-            height: props.size,
-            width: props.size,
+            height: size,
+            width: size,
             marginTop:scaledHeight(2),
             borderWidth: 2,
-            borderColor: props.outerCicleColor,
+            borderColor: outerCicleColor,
             alignItems: 'center',
             justifyContent: 'center'
 
         }}
         >
             {
-                props.selected ?
+                selected ? (
                     <View style={{
-                        height: props.size / 2,
-                        width: props.size / 2,
-                        backgroundColor: props.innerCicleColor
+                        height: size / 2,
+                        width: size / 2,
+                        backgroundColor: innerCicleColor
                     }}
                     />
+                  )
                     : null
             }
         </View>
-
-        <Text style={[{ width: '80%', marginLeft: scaledHeight(12) }, props.labelStyle]}>
-            {props.label}
+        <Text style={[styles.textStyle, props.labelStyle]}>
+            {label}
         </Text>
     </TouchableOpacity>
 );
+};
 
 CustomCheckBox.propTypes = {
     width: PropTypes.string,
