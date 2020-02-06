@@ -1,7 +1,7 @@
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 // User Management
-import LoginComponent from '../Screens/Login/';
+import LoginComponent from '../Screens/Login';
 import RegisterEmail from '../Screens/RegisterEmail/RegisterEmailComponent';
 import RegisterPassword from '../Screens/RegisterPassword/RegisterPasswordComponent';
 import RegisterSelf from '../Screens/RegisterSelf/RegisterSelfComponent';
@@ -25,17 +25,17 @@ import CSMSoftTokenComponent from '../Screens/CSMSoftToken';
 import CSMPushNotificationComponent from '../Screens/CSMPushNotification';
 import CSMOtp from '../Screens/CSMOtp';
 import QuickSigninComponent from '../Screens/QuickSignIn';
-import PasswordRecovery from '../Screens/RecoverPassword/';
-import PasswordRecoveryOtp from '../Screens/RecoverPasswordOtp/';
-import PasswordRecoverTemp from '../Screens/RecoverTempPassword/';
-import PasswordReset from '../Screens/RecoverPasswordNew/';
-import PasswordSuccess from '../Screens/RecoverPasswordSuccess/';
+import PasswordRecovery from '../Screens/RecoverPassword';
+import PasswordRecoveryOtp from '../Screens/RecoverPasswordOtp';
+import PasswordRecoverTemp from '../Screens/RecoverTempPassword';
+import PasswordReset from '../Screens/RecoverPasswordNew';
+import PasswordSuccess from '../Screens/RecoverPasswordSuccess';
 
 import VerifySSNComponent from '../Screens/VerifySSN/VerifySSNComponent';
 import VerifyMobileComponent from '../Screens/VerifyMobile/VerifyMobileComponent';
 
 
-import DashboardStack from '../Navigation/stacks';
+import DashboardStack from './stacks';
 
 const AuthenticationStack = createStackNavigator({
     login: {
@@ -50,18 +50,11 @@ const AuthenticationStack = createStackNavigator({
             header: null
         }
     },
-    passwordRecovery: {
-        screen: PasswordRecovery,
-        navigationOptions: {
-            header: null
-        }
-    },
     retrieveOnlineId: {
         screen: RetrieveOnlineId,
-        navigationOptions: ({ navigation }) => ({
-            // header: props => <GHeaderComponent navigation={navigation} {...props} register={false} headerText="My VCM" isBackAvailable={false} />,
+        navigationOptions:{
             header: null
-        })
+        }
     },
     registerSelf: {
         screen: RegisterSelf,
