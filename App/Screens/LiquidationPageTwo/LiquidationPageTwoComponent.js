@@ -202,7 +202,7 @@ class LiquidationPageTwoComponent extends Component {
                     funds[parseInt(i,0)].sellingAmount = funds[parseInt(i,0)].dollarValue;
                     funds[parseInt(i,0)].TypeValueReq = 'D';
                 } else {
-                    funds[parseInt(i,0)].sellingAmount = (funds[parseInt(i,0)].percentageValue / 100) * funds[parseInt(i,0)].worthAmount+"";
+                    funds[parseInt(i,0)].sellingAmount = ((funds[parseInt(i,0)].percentageValue / 100) * funds[parseInt(i,0)].worthAmount).toString();
                     funds[parseInt(i,0)].TypeValueReq = 'P';
                 }
             }else{

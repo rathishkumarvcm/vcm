@@ -15,26 +15,32 @@ class AccountRecoveryPrefComponent extends Component {
             emailId: '',
             mobileNo: '',
         };
-        this.selectedOption='email';
+        this.selectedOption = 'email';
     }
 
     componentDidMount() {
-        if (this.props && this.props.initialState && this.props.initialState.email) {
+        this.setEmailIDNMobileNo();
+    }
+
+    setEmailIDNMobileNo = () => {
+        const { initialState } = this.props;
+        if (initialState && initialState.email) {
             this.setState({
-                emailId: this.props.initialState.email,
-                mobileNo: this.props.initialState.phone
+                emailId: initialState.email,
+                mobileNo: initialState.phone
             });
         }
     }
 
     maskMobNo = (mobile) => {
         let maskNo = '';
-        if (mobile.substring(0, 3) == "+91") {
-            mobile = mobile.substring(4, mobile.length);
+        let mobileNo = mobile;
+        if (mobile.substring(0, 3) === "+91") {
+            mobileNo = mobile.substring(4, mobile.length);
         }
-        for (let i = 0; i < mobile.length; i++) {
-            if (i < 2 || i == mobile.length - 1 || i == mobile.length - 2) {
-                maskNo += mobile[i].toString();
+        for (let i = 0; i < mobileNo.length; i += 1) {
+            if (i < 2 || i === mobileNo.length - 1 || i === mobileNo.length - 2) {
+                maskNo += mobileNo[parseInt(i,0)].toString();
             } else {
                 maskNo += "*";
             }
@@ -46,9 +52,9 @@ class AccountRecoveryPrefComponent extends Component {
         const prefix = myEmail.substring(0, myEmail.lastIndexOf("@"));
         const postfix = myEmail.substring(myEmail.lastIndexOf("@"));
         let maskid = '';
-        for (let i = 0; i < prefix.length; i++) {
-            if (i < 3 || i == prefix.length - 1 || i == prefix.length - 2) {
-                maskid += prefix[i].toString();
+        for (let i = 0; i < prefix.length; i += 1) {
+            if (i < 3 || i === prefix.length - 1 || i === prefix.length - 2) {
+                maskid += prefix[parseInt(i,0)].toString();
             }
             else {
                 maskid += "*";
@@ -59,35 +65,45 @@ class AccountRecoveryPrefComponent extends Component {
     }
 
     onCheckEmail = () => {
-        this.setState({ emailChecked: !this.state.emailChecked });
+        this.setState(prevState => ({
+            emailChecked: !prevState.emailChecked,
+        }));
     }
 
     onCheckMobile = () => {
-        this.setState({ mobileNoChecked: !this.state.mobileNoChecked });
+        this.setState(prevState => ({
+            mobileNoChecked: !prevState.mobileNoChecked,
+        }));
     }
 
     onClickSave = () => {
-        console.log("------- onClick save account recovery preferences -------");
-        if ((this.state.emailChecked) && (this.state.mobileNoChecked)) {
+        // console.log("------- onClick save account recovery preferences -------");
+        const { emailChecked, mobileNoChecked } = this.state;
+        if ((emailChecked) && (mobileNoChecked)) {
             this.setState({ message: gblStrings.userManagement.accRecPrefEmailText });
             this.selectedOption = 'EmailNText';
-        } else if (this.state.mobileNoChecked) {
+        } else if (mobileNoChecked) {
             this.setState({ message: gblStrings.userManagement.accRecPrefText });
             this.selectedOption = 'Text';
         } else {
             this.setState({ message: gblStrings.userManagement.accRecPrefEmail, emailChecked: true });
             this.selectedOption = 'Email';
         }
-        console.log(`Selected Recovery Option----> ${this.selectedOption}`);
+        // console.log(`Selected Recovery Option----> ${this.selectedOption}`);
     }
 
-    
-    navigateToSecurityPref = () => this.props.navigation.navigate('securityPreference');
+
+    navigateToSecurityPref = () => {
+        const { navigation } = this.props;
+        navigation.navigate('securityPreference');
+    }
 
     render() {
+        const { navigation } = this.props;
+        const { emailChecked, emailId, mobileNoChecked, mobileNo,message } = this.state;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <TouchableOpacity>
                         <GIcon
@@ -98,11 +114,11 @@ class AccountRecoveryPrefComponent extends Component {
                         />
 
                     </TouchableOpacity>
-                    {this.state.message !== '' ? (
+                    {message !== '' ? (
                         <View style={styles.messageFlex}>
-                            <Text style={styles.messageText}>{this.state.message}</Text>
+                            <Text style={styles.messageText}>{message}</Text>
                         </View>
-                      )
+                    )
                         : null}
 
                     <Text style={styles.accRecPrefText}>{gblStrings.userManagement.accountRecPrefHeading}</Text>
@@ -115,27 +131,27 @@ class AccountRecoveryPrefComponent extends Component {
                         <View style={styles.checkBoxFlex}>
                             <TouchableOpacity onPress={this.onCheckEmail}>
                                 {
-                                    (this.state.emailChecked) ? (
+                                    (emailChecked) ? (
                                         <GIcon
                                             name="checksquareo"
                                             type="antdesign"
                                             size={35}
                                             color="#707070"
                                         />
-                                      ) : (
-                                        <GIcon
-                                            name="square"
-                                            type="feather"
-                                            size={35}
-                                            color="#707070"
-                                        />
-                                      )}
+                                    ) : (
+                                            <GIcon
+                                                name="square"
+                                                type="feather"
+                                                size={35}
+                                                color="#707070"
+                                            />
+                                        )}
 
                             </TouchableOpacity>
 
                         </View>
                         <View style={styles.emailIdOption}>
-                            <Text style={styles.emailIdText}>{gblStrings.userManagement.emailId}{this.maskEmail(this.state.emailId)}</Text>
+                            <Text style={styles.emailIdText}>{gblStrings.userManagement.emailId}{this.maskEmail(emailId)}</Text>
                             <Text style={styles.greyText}>{gblStrings.userManagement.emailIdSelection}</Text>
                         </View>
                     </View>
@@ -144,26 +160,26 @@ class AccountRecoveryPrefComponent extends Component {
                         <View style={styles.checkBoxFlex}>
                             <TouchableOpacity onPress={this.onCheckMobile}>
                                 {
-                                    (this.state.mobileNoChecked) ? (
+                                    (mobileNoChecked) ? (
                                         <GIcon
                                             name="checksquareo"
                                             type="antdesign"
                                             size={35}
                                             color="#707070"
                                         />
-                                      ) : (
-                                        <GIcon
-                                            name="square"
-                                            type="feather"
-                                            size={35}
-                                            color="#707070"
-                                        />
-                                      )}
+                                    ) : (
+                                            <GIcon
+                                                name="square"
+                                                type="feather"
+                                                size={35}
+                                                color="#707070"
+                                            />
+                                        )}
 
                             </TouchableOpacity>
                         </View>
                         <View style={styles.emailIdOption}>
-                            <Text style={styles.emailIdText}>{gblStrings.userManagement.textMessageTo}{this.maskMobNo(this.state.mobileNo)}</Text>
+                            <Text style={styles.emailIdText}>{gblStrings.userManagement.textMessageTo}{this.maskMobNo(mobileNo)}</Text>
                             <Text style={styles.greyText}>{gblStrings.userManagement.mobileNoSelection}</Text>
                         </View>
                     </View>
@@ -201,13 +217,13 @@ class AccountRecoveryPrefComponent extends Component {
 }
 
 AccountRecoveryPrefComponent.propTypes = {
-    navigation : PropTypes.instanceOf(Object),
-    initialState : PropTypes.instanceOf(Object),
+    navigation: PropTypes.instanceOf(Object),
+    initialState: PropTypes.instanceOf(Object),
 };
 
 AccountRecoveryPrefComponent.defaultProps = {
-    navigation : {},
-    initialState:{}
+    navigation: {},
+    initialState: {}
 
 };
 export default AccountRecoveryPrefComponent;

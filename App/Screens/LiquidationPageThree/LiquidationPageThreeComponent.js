@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Image, FlatList } from 'react-native';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-native-collapsible';
-import { GInputComponent, GHeaderComponent, GFooterComponent, GDropDownComponent, GSwitchComponent } from '../../CommonComponents';
+import { GInputComponent, GHeaderComponent, GFooterComponent, GDropDownComponent } from '../../CommonComponents';
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
@@ -44,7 +44,7 @@ class LiquidationPageThreeComponent extends Component {
             collapseDeliveryAddress: false,
             collapseTaxAccounting: false,
             collapseTaxWithHoldingOption: false,
-           // selectedBankAccountIndex: null,
+            // selectedBankAccountIndex: null,
             fundingSource: {
                 selectedBankAccountNo: '',
                 selectedBankAccountName: '',
@@ -104,22 +104,22 @@ class LiquidationPageThreeComponent extends Component {
                     selectedBankAccountName: ammendData.selectedFundWithdrawalData.bankAccountName,
                     checkOrderSelected: ammendData.selectedFundWithdrawalData.checkSelectedOrder
                 },
-               // selectedBankAccountIndex: selectedBankAccount,
+                // selectedBankAccountIndex: selectedBankAccount,
                 showMessageFlex: false,
                 disableNextButton: false
 
             });
         }
         else {
-            this.setState({ 
+            this.setState({
                 ammend: false,
                 fundingSource: {
                     selectedBankAccountNo: savedFundWithdrawalData.bankAccountNo,
                     selectedBankAccountName: savedFundWithdrawalData.bankAccountName,
                     checkOrderSelected: savedFundWithdrawalData.checkSelectedOrder
                 },
-                disableNextButton:!(savedFundWithdrawalData.checkSelectedOrder || (savedFundWithdrawalData.bankAccountNo !== ""))
-             });
+                disableNextButton: !(savedFundWithdrawalData.checkSelectedOrder || (savedFundWithdrawalData.bankAccountNo !== ""))
+            });
         }
     }
 
@@ -127,7 +127,7 @@ class LiquidationPageThreeComponent extends Component {
         if (this.isEmpty(amount)) {
             return "";
         }
-        const amt = parseInt(amount,0).toLocaleString();
+        const amt = parseInt(amount, 0).toLocaleString();
         return amt;
     }
 
@@ -193,7 +193,7 @@ class LiquidationPageThreeComponent extends Component {
 
     addaccount = (props) => {
         return (
-            <View style={[styles.selectedBankAccountFlex, props.flexStyle]} onTouchStart={props.onClickCheck}>
+            <View style={props.flexStyle} onTouchStart={props.onClickCheck}>
                 <View style={styles.bankAccountFlex}>
                     <View style={styles.bankIconFlex}>
                         <Image style={styles.bankIconStyle}
@@ -230,7 +230,7 @@ class LiquidationPageThreeComponent extends Component {
                 selectedBankAccountName: item.bankAccName,
                 checkOrderSelected: false
             },
-           // selectedBankAccountIndex: index,
+            // selectedBankAccountIndex: index,
             showMessageFlex: item.status,
             disableNextButton: false
         });
@@ -356,7 +356,7 @@ class LiquidationPageThreeComponent extends Component {
                     federalTaxInDollars: federalTaxToDollars,
                     totalTaxToBeWithhold: totalTaxToBWithhold,
                     totalYouWillReceive: amount,
-                    totalWithdrawal: parseInt(amount,0) + parseInt(totalTaxToBWithhold,0)
+                    totalWithdrawal: parseInt(amount, 0) + parseInt(totalTaxToBWithhold, 0)
                 }
             }));
         }
@@ -427,9 +427,9 @@ class LiquidationPageThreeComponent extends Component {
         const { saveData, navigation } = this.props;
         const { navigate } = navigation;
         let paymentMethod = "";
-        if(fundingSource.checkOrderSelected){
+        if (fundingSource.checkOrderSelected) {
             paymentMethod = "01";
-        }else{
+        } else {
             paymentMethod = "05";
         }
         const payloadData = {
@@ -627,7 +627,26 @@ class LiquidationPageThreeComponent extends Component {
                                                         { /* -----------------------------Tax Withholding Options ends here ------------------------*/}
 
                                                         <View style={styles.switchFlex}>
-                                                            <GSwitchComponent
+
+                                                            <View style={styles.doNotWitholdTaxFlex}>
+                                                                <TouchableOpacity onPress={this.switchOnMethod}>
+                                                                    <View style={styles.radioButtonFlexOff}>
+                                                                        {(switchOn) ? <View style={styles.radioButtonFlexOn} /> : null}
+                                                                    </View>
+                                                                </TouchableOpacity>
+                                                                <Text style={styles.blackTextRegular16px}>{gblStrings.liquidation.doNotWithholdTaxes}</Text>
+                                                            </View>
+                                                            <View style={styles.doNotWitholdTaxFlex}>
+                                                                <TouchableOpacity onPress={this.switchOnMethod}>
+                                                                    <View style={styles.radioButtonFlexOff}>
+                                                                        {(switchOff) ? <View style={styles.radioButtonFlexOn} /> : null}
+                                                                    </View>
+                                                                </TouchableOpacity>
+                                                                <Text style={styles.blackTextRegular16px}>{gblStrings.liquidation.withholdTaxes}</Text>
+                                                            </View>
+
+
+                                                            { /* <GSwitchComponent
                                                                 switchOffText={gblStrings.liquidation.doNotWithholdTaxes}
                                                                 switchOnText={gblStrings.liquidation.withholdTaxes}
                                                                 switchOff={switchOff}
@@ -640,7 +659,7 @@ class LiquidationPageThreeComponent extends Component {
                                                                 offStyleDisabled={styles.offButtonStyleDisable}
                                                                 textOnStyle={styles.TextOnStyle}
                                                                 textOffStyle={switchOff ? styles.TextOffStyle : styles.TextOffStyleWithholdtax}
-                                                            />
+                                                           /> */ }
                                                         </View>
 
                                                         {/* switch on view starts here */}

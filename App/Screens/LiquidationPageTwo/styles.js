@@ -81,12 +81,12 @@ import { scaledHeight } from '../../Utils/Resolution';
     },
     flex2:{
         backgroundColor:'#EFECEC',
+        borderTopColor:'#5D83AE99',
+        borderTopWidth:scaledHeight(1),
         flexDirection:'row',
         height:scaledHeight(82),
         justifyContent:'space-between',
         marginTop:"3%",
-        borderTopColor:'#5D83AE99',
-        borderTopWidth:scaledHeight(1)
     },
     flex3:{
         flexDirection:'column',
@@ -135,8 +135,8 @@ import { scaledHeight } from '../../Utils/Resolution';
         marginTop:"5%",
     },
     greyTextRegular13px:{
+        color:'#56565A',
         fontSize:scaledHeight(13),
-        color:'#56565A'
     },
     headerFlex:{
         flexDirection:'row',

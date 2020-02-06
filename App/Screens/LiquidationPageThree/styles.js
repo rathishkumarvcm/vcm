@@ -149,7 +149,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         height: scaledHeight(19),
     },
-
+    blackTextRegular16px:{
+        color:'#54565B',
+        fontSize: scaledHeight(16),
+        marginLeft:"5%",
+        paddingTop:scaledHeight(11)
+    },
     city: {
         backgroundColor: '#F1F1F1',
         borderColor: '#DEDEDF',
@@ -172,6 +177,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#F7FAFF',
         flex: 1,
         width: '100%'
+    },
+    doNotWitholdTaxFlex:{
+        flexDirection:'row',
+        marginLeft:"4%",
+        marginRight:"4%",
+        marginTop:scaledHeight(12),
+        width:"92%",
     },
     dollarSkin: {
         color: '#333333DE',
@@ -379,6 +391,25 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(34),
         textAlign: 'center'
     },
+    radioButtonFlexOff:{
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#DEDEDF',
+        borderRadius: scaledHeight(16),
+        borderWidth: 1,
+        height: scaledHeight(32),
+        justifyContent: 'center',
+        marginTop:scaledHeight(4),
+        width: scaledHeight(32),
+    },
+    radioButtonFlexOn:{
+        alignItems: 'center',
+        backgroundColor: '#56565A',
+        borderRadius: scaledHeight(8),
+        height: scaledHeight(16),
+        justifyContent: 'center',
+        width: scaledHeight(16),
+    },
     reqAmountTypeStyle: {
         color: '#56565A',
         fontSize: scaledHeight(16),
@@ -479,7 +510,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     switchFlex: {
-        height: scaledHeight(60),
+        // height: scaledHeight(60),
     },
     tNCFlex: {
         marginLeft: "4%",
@@ -524,5 +555,6 @@ const styles = StyleSheet.create({
         height: scaledHeight(89),
         marginTop: scaledHeight(24)
     },
+   
 });
 export default styles;
