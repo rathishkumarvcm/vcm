@@ -1,14 +1,17 @@
+/* eslint-disable react-native/no-raw-text */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
-import { Text, View, ScrollView, Image,FlatList, TouchableOpacity} from 'react-native';
+import { Text, View, ScrollView,FlatList, TouchableOpacity, Platform, Linking} from 'react-native';
 // import RNSecureKeyStore from 'react-native-secure-key-store';
 import PropTypes from "prop-types";
+import TextTicker from 'react-native-text-ticker';
 import styles from './styles';
 import { GHeaderComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import GuestUserAccounts from './GuestUesrAccounts';
 import GuestUserFinancial from './GuestUserFinancial';
+import GuestUserCommunicationCenter from './GuestUserCommunicationCenter';
 // import AppUtils from '../../Utils/AppUtils';
 // import GuestUserNewsAndCommentary from './GuestUserNewsAndCommentary';
 
@@ -59,6 +62,21 @@ class GuestUserDashboardComponent extends Component {
         // alert("4111");
     }
 
+    onPressCall = () => {
+        let phoneNumber = '+ 1 466 210 0255';
+ 
+        if (Platform.OS === 'android') {
+        // eslint-disable-next-line no-template-curly-in-string
+        phoneNumber = 'tel:${+ 1 466 210 0255}';
+        }
+        else {
+        // eslint-disable-next-line no-template-curly-in-string
+        phoneNumber = "telprompt:${+ 1 466 210 0255}";
+        }
+    
+        Linking.openURL(phoneNumber);
+    }
+
     closeModal = () => {
         this.setState(prevState => ({
             modalVisible : !prevState.modalVisible
@@ -100,8 +118,16 @@ class GuestUserDashboardComponent extends Component {
 
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
-                <ScrollView style={styles.scrollView}>          
-                
+                <ScrollView style={styles.scrollView}>  
+                        <TextTicker
+                            style={styles.bannerText}
+                            duration={10000}
+                            loop
+                            bounce
+                            repeatSpacer={0}
+                            marqueeDelay={0}
+                        >Lorem Ipsum has been the industrys standard dummy text ever since the 1500s
+                        </TextTicker>
                     <View style={styles.tileView}>
                         <View style={styles.profileHeader}>
                             <Text style={styles.profileHeadline}>
@@ -145,14 +171,12 @@ class GuestUserDashboardComponent extends Component {
                                 {gblStrings.guestDashBoard.communication}
                             </Text>
                         </View>
-                        <View style={styles.communicationView}>
-                            <Image style={styles.phoneImage}
-                                // eslint-disable-next-line global-require
-                                source={require('../../Images/phone.png')}
-                                resizeMode="contain"
+                        <View>
+                            <GuestUserCommunicationCenter 
+                             onPressCall={this.onPressCall} 
                             />
-                            <Text style={styles.phoneNumText}>+ 1 466 210 0255</Text>
                         </View>
+                        
                     </View>
                     
                 </ScrollView>

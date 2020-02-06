@@ -1,7 +1,7 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet,Dimensions } from "react-native";
 import {scaledHeight } from '../../Utils/Resolution';
 
-
+const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     
@@ -19,18 +19,41 @@ const styles = StyleSheet.create({
     accountTypesView:{
         marginVertical:'3%',
     },
+    bannerText: {
+        backgroundColor:'#ffff',
+        color: '#56565A',
+        fontSize: scaledHeight(22),
+        fontWeight:'bold',
+        padding:'0.5%'
+        // marginTop:'2%'
+    },
+    callButton:{
+        borderColor:'#486d90',
+        borderWidth:1,
+        width:'60%',
+        // eslint-disable-next-line react-native/sort-styles
+        marginLeft:'14%',
+        marginRight:'14%',
+        marginTop:scaledHeight(12),
+        marginBottom:scaledHeight(12),
+       //  borderRadius:scaledHeight(25),
+        height:scaledHeight(40),
+        backgroundColor:'#486d90',
+        alignItems:'center',
+        justifyContent:'center'
+     },
     communicationView: {
         alignItems:'center',
-        flexDirection:'row',
-        justifyContent:'flex-end',
+        // flexDirection:'row',
+        justifyContent:'center',
         marginBottom: '10%',
-        marginRight: '10%'
     },
     container: {
         backgroundColor: '#F7FAFF',
         flex: 1,
         width: '100%'
     },
+
     dashboardSection: {
         backgroundColor:'#fff',
         borderColor: '#61285F45',
@@ -40,6 +63,7 @@ const styles = StyleSheet.create({
         padding: '3%',
         width: '92%',
     },
+
     dashboardText: {
         color: '#5D83AE',
         fontSize: scaledHeight(44),
@@ -92,11 +116,9 @@ const styles = StyleSheet.create({
         color:'#2C8DBF',
         fontSize : scaledHeight(14),
     },
-
     newsListView:{
         marginVertical: scaledHeight(8),
     },
-
     openAccountText: {
         color: '#56565A',
         fontSize: scaledHeight(16),
@@ -105,14 +127,34 @@ const styles = StyleSheet.create({
         width: '100%',
 
     },
-    phoneImage: {
-        // width: '100%',
-        height: '50%'
+    phoneContentText: {
+        color: '#56565A',
+        fontSize: scaledHeight(15),
+        marginVertical: '8%',
+        textAlign:'center',
     },
-     phoneNumText: {
-        fontSize:scaledHeight(14),
-        // color:'#FFFFFF',
+    phoneImage: {
+        // height: '20%',
+        // width: '100%'
+    },
+    phoneImageView: {
+        backgroundColor:'#ffff',
+        borderRadius:width/2,
+        marginVertical: '3%',
+        padding:'10%', 
+        shadowColor:'#e4e6e8', 
+        shadowOffset: { width: 0, height: 4, },
+        shadowOpacity:80, 
+        shadowRadius: 3
+    },
+    phoneNumText: {
+        color:'#194c7d',
+        fontSize:scaledHeight(15),
         fontWeight:'bold'
+    },
+    phoneTextView: {
+        alignItems:'center',
+        width:'60%'
     },
     profileHeader: {
         alignItems: 'flex-start',
