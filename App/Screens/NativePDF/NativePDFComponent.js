@@ -60,15 +60,6 @@ export default class PDFExample extends React.Component {
                  />
                 <Pdf
                     source={source}
-                    onLoadComplete={(numberOfPages)=>{
-                        console.log(`number of pages: ${numberOfPages}`);
-                    }}
-                    onPageChanged={(page)=>{
-                        console.log(`current page: ${page}`);
-                    }}
-                    onError={(error)=>{
-                        console.log(error);
-                    }}
                     style={styles.pdf}
                 />
             </View>

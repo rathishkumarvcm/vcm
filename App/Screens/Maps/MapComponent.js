@@ -37,7 +37,6 @@ class MapComponent extends Component {
     });
 
         this.state={
-            isFromLocationScreen : false
         };
 
       }
@@ -73,7 +72,7 @@ class MapComponent extends Component {
           latitudeDelta : 0.0922,
           longitudeDelta : 0.0421
         }}
-        />*/
+        /> */
         <>
         </>
       );
