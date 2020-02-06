@@ -41,10 +41,10 @@ const images = {
 };
 
 
-const fundingOptionsData = [
+const fundingOptions = [
     {
         "key": "init",
-        "value": "Initial Investment"
+        "value": "Initialtt Investment"
     },
     {
         "key": "init_mon",
@@ -107,7 +107,7 @@ class OpenAccPageThreeComponent extends Component {
             offLineMethods: [],
             onLineMethods: [],
             selectedCount: 0,
-            selectedFundsName:"",
+            selectedFundsName: "",
             fundingSourceName: "",
             fundName: "",
             fundingOptions: "",
@@ -195,71 +195,9 @@ class OpenAccPageThreeComponent extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         AppUtils.debugLog(`componentDidUpdate::::> ${prevState}`);
-        const { accOpeningData, masterLookupStateData, /* clearReduxKeyData, */ isSuccess, isError } = this.props;
-        const { fundingSourceList, offLineMethods, onLineMethods } = this.state;
+        const { accOpeningData, masterLookupStateData, clearReduxKeyData } = this.props;
 
         if (this.props !== prevProps) {
-            let tempFundListData = [];
-            if (accOpeningData[ActionTypes.GET_FUNDLIST]) {
-                tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST];
-                this.setState({
-                    fundList: [...tempFundListData.map(v => ({ ...v, isActive: false }))],
-                    isFilterApplied: false
-                });
-            }
-
-
-            let tempFundingSourceList = [];
-            if (fundingSourceList.length === 0) {
-                if (this.props && masterLookupStateData && masterLookupStateData.fund_source && masterLookupStateData.fund_source.value) {
-                    tempFundingSourceList = masterLookupStateData.fund_source.value;
-                    AppUtils.debugLog(`tempFundingSourceList:: ${JSON.stringify(tempFundingSourceList)}`);
-                    if (tempFundingSourceList.length > 0) {
-                        const tempOffLineSubtypes = tempFundingSourceList[0].subtypes;
-                        const tempOnLineSubtypes = tempFundingSourceList[1].subtypes;
-                        this.setState({
-                            offLineMethods: [...tempOffLineSubtypes.map(v => ({ ...v, isActive: false }))],
-                            onLineMethods: [...tempOnLineSubtypes.map(v => ({ ...v, isActive: false }))],
-                            fundingSourceList: [...offLineMethods.map(v => ({ ...v, isActive: false })), ...onLineMethods.map(v => ({ ...v, isActive: false }))]
-                        });
-                    }
-                }
-            }
-
-
-            const validateBankAccKey = ActionTypes.VALIDATE_BANK_ACCOUNT;
-            if (accOpeningData[`${validateBankAccKey}`]) {
-                if (accOpeningData[`${validateBankAccKey}`] !== prevProps.accOpeningData[`${validateBankAccKey}`]) {
-                    const tempResponse = accOpeningData[`${validateBankAccKey}`];
-                    if (tempResponse.accountVerified) {
-                        if (tempResponse.accountVerified === "true") {
-                            this.setState({
-                                isValidBankAccount: true,
-                                validBankAccountMsg: "AccountVerification Successfully"
-                            });
-                            showAlert(gblStrings.common.appName, tempResponse.bankName, gblStrings.common.ok);
-                        } else {
-                            this.setState({
-                                isValidBankAccount: false,
-                                validBankAccountMsg: "AccountVerification failure"
-                            });
-                        }
-                        AppUtils.debugLog(`Valid bank account::${tempResponse.accountVerified}`);
-
-                    } else {
-                        AppUtils.debugLog(`Not Valid bank account::${tempResponse.message}`);
-
-                        this.setState({
-                            isValidBankAccount: false,
-                            validBankAccountMsg: `AccountVerification failure :${tempResponse.message}`
-
-                        });
-                    }
-                }
-            }
-
-
-
 
             const responseKey = ActionTypes.INVEST_SELECT_SAVE_OPENING_ACCT;
             if (accOpeningData[`${responseKey}`]) {
@@ -278,97 +216,80 @@ class OpenAccPageThreeComponent extends Component {
             }
 
 
-        }
+            const validateBankAccKey = ActionTypes.VALIDATE_BANK_ACCOUNT;
+            if (accOpeningData[`${validateBankAccKey}`]) {
+                if (accOpeningData[`${validateBankAccKey}`] !== prevProps.accOpeningData[`${validateBankAccKey}`]) {
+                    const tempResponse = accOpeningData[`${validateBankAccKey}`];
+                    if (tempResponse.accountVerified) {
+                        if (tempResponse.accountVerified === "true") {
+                            showAlert(gblStrings.common.appName, tempResponse.bankName, gblStrings.common.ok);
+                        }
+                        AppUtils.debugLog(`Valid bank account::${tempResponse.accountVerified}`);
+                    } else {
+                        AppUtils.debugLog(`Not Valid bank account::${tempResponse.message}`);
 
-
-
-        if (isSuccess || isError) {
-            //  clearReduxKeyData(ActionTypes.GET_FUNDLIST);
-        }
-
-
-
-    }
-
-    /*
-
-    static getDerivedStateFromProps(nextProps, prevState) {
-
-        AppUtils.debugLog("getDerivedStateFromProps::"+nextProps);
-        AppUtils.debugLog("getDerivedStateFromProps::"+prevState);
-
-
-        const { accOpeningData, masterLookupStateData ,isSuccess,isError} = nextProps;
-        const { fundList,fundingSourceList, offLineMethods, onLineMethods,isFilterApplied } = prevState;
-
-
-       
-        let tempFundListData = [];
-        if (fundList.length === 0) {
-            if (accOpeningData[ActionTypes.GET_FUNDLIST]) {
-                tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST];
-                return {
-                    fundList: [...tempFundListData.map(v => ({ ...v, isActive: false }))],
-                    isFilterApplied: false
-                };
+                    }
+                }
             }
-        }
-            
-        
 
-       
+        }
 
 
         let tempFundingSourceList = [];
-        if (fundingSourceList.length === 0) {
-            if (masterLookupStateData && masterLookupStateData.fund_source && masterLookupStateData.fund_source.value) {
-                tempFundingSourceList = masterLookupStateData.fund_source.value;
-                AppUtils.debugLog(`tempFundingSourceList:: ${JSON.stringify(tempFundingSourceList)}`);
-                if (tempFundingSourceList.length > 0) {
-                    const tempOffLineSubtypes = tempFundingSourceList[0].subtypes;
-                    const tempOnLineSubtypes = tempFundingSourceList[1].subtypes;
-                    return {
-                        offLineMethods: [...tempOffLineSubtypes.map(v => ({ ...v, isActive: false }))],
-                        onLineMethods: [...tempOnLineSubtypes.map(v => ({ ...v, isActive: false }))],
-                        fundingSourceList: [...offLineMethods.map(v => ({ ...v, isActive: false })), ...onLineMethods.map(v => ({ ...v, isActive: false }))]
-                    };
-                }
+        if (masterLookupStateData.fund_source) {
+            tempFundingSourceList = masterLookupStateData.fund_source.value;
+            if (tempFundingSourceList.length > 0) {
+                clearReduxKeyData("fund_source", "");
             }
         }
 
-        const validateBankAccKey = ActionTypes.VALIDATE_BANK_ACCOUNT;
-        if (accOpeningData[validateBankAccKey]) {
-            const tempResponse = accOpeningData[validateBankAccKey];
-            if (tempResponse.accountVerified) {
-                if (tempResponse.accountVerified === "true") {
-                    showAlert(gblStrings.common.appName, tempResponse.bankName, gblStrings.common.ok);
-                    return {
-                        isValidBankAccount: true,
-                        validBankAccountMsg: "AccountVerification Successfully"
-                    };
-                }
-                AppUtils.debugLog(`Valid bank account::${tempResponse.accountVerified}`);
-
-            } else {
-                AppUtils.debugLog(`Not Valid bank account::${tempResponse.message}`);
-
-                return {
-                    isValidBankAccount: false,
-                    validBankAccountMsg: `AccountVerification failure :${tempResponse.message}`
-
-                };
+        let tempFundListData = [];
+        if (accOpeningData[ActionTypes.GET_FUNDLIST]) {
+            tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST];
+            if (tempFundListData.length > 0) {
+                clearReduxKeyData(ActionTypes.GET_FUNDLIST, "");
             }
-
-            return {
-                isValidBankAccount: false,
-                validBankAccountMsg: "AccountVerification failure"
-            };
         }
+
+    }
+
+
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+
+        const { accOpeningData, masterLookupStateData } = nextProps;
+        const { offLineMethods, onLineMethods } = prevState;
+
+        let tempFundListData = [];
+        if (accOpeningData[ActionTypes.GET_FUNDLIST]) {
+            tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST];
+            return ({
+                fundList: tempFundListData,
+                isFilterApplied: false
+            });
+        }
+
+        let tempFundingSourceList = [];
+        if (masterLookupStateData.fund_source) {
+            tempFundingSourceList = masterLookupStateData.fund_source.value;
+            AppUtils.debugLog(`tempFundingSourceList:: ${JSON.stringify(tempFundingSourceList)}`);
+            if (tempFundingSourceList.length > 0) {
+                const tempOffLineSubtypes = tempFundingSourceList[0].subtypes;
+                const tempOnLineSubtypes = tempFundingSourceList[1].subtypes;
+                return ({
+                    offLineMethods: [...tempOffLineSubtypes.map(v => ({ ...v, isActive: false }))],
+                    onLineMethods: [...tempOnLineSubtypes.map(v => ({ ...v, isActive: false }))],
+                    fundingSourceList: [...offLineMethods.map(v => ({ ...v, isActive: false })), ...onLineMethods.map(v => ({ ...v, isActive: false }))]
+                });
+            }
+        }
+
+
 
         return prevState;
     }
 
-    */
+
 
 
 
@@ -484,7 +405,7 @@ class OpenAccPageThreeComponent extends Component {
             accountOwner,
             transitRoutingNumber,
             accountNumber } = this.state;
-        const {validateBankAccInfo } = this.props;
+        const { validateBankAccInfo } = this.props;
 
         /*
 
@@ -737,7 +658,11 @@ class OpenAccPageThreeComponent extends Component {
     onSelectFundList = (item, index) => () => {
         AppUtils.debugLog(`onSelectFundList:: ${index}`);
         const { selectedFundInvestmentsData, fundList } = this.state;
-        const newItems = [...fundList];
+
+        // const {accOpeningData} = this.props;
+        // const {[ActionTypes.GET_FUNDLIST]:fundListData =[]} = accOpeningData;
+        const tempFundListData = fundList.length > 0 ? fundList : [];
+        const newItems = [...tempFundListData];
         newItems[+index].isActive = !newItems[+index].isActive;
         const tempData = new InvestmentDetails();
         tempData.fundName = item.fundName;
@@ -776,7 +701,7 @@ class OpenAccPageThreeComponent extends Component {
             selectedFundInvestmentsData: newSelectedData,
             selectedCount: this.getSelectedItems().length,
             selectedCountValidation: true,
-            selectedFundsName:this.getSelectedFundsName()
+            selectedFundsName: this.getSelectedFundsName()
 
 
         });
@@ -810,15 +735,23 @@ class OpenAccPageThreeComponent extends Component {
         let notToBeChangedData = [];
         const { offLineMethods, onLineMethods } = this.state;
 
+        const { masterLookupStateData } = this.props;
+
+        const { offLineMethodData, onLineMethodData } = masterLookupStateData;
+        const tempOffLineMethodData = offLineMethods.length > 0 ? offLineMethods : offLineMethodData;
+        const tempOnLineMethodData = onLineMethods.length > 0 ? onLineMethods : onLineMethodData;
+
+
+
         switch (method) {
             case "offline":
-                toBeChangedData = [...offLineMethods];
-                notToBeChangedData = [...onLineMethods];
+                toBeChangedData = [...tempOffLineMethodData];
+                notToBeChangedData = [...tempOnLineMethodData];
 
                 break;
             case "online":
-                toBeChangedData = [...onLineMethods];
-                notToBeChangedData = [...offLineMethods];
+                toBeChangedData = [...tempOnLineMethodData];
+                notToBeChangedData = [...tempOffLineMethodData];
                 break;
             default:
                 break;
@@ -841,7 +774,7 @@ class OpenAccPageThreeComponent extends Component {
             onLineMethods: method === "online" ? toBeChangedData : notToBeChangedData,
             fundingSourceName: item,
             fundingSourceNameValidation: true,
-            selectedFundsName:this.getSelectedFundsName()
+            selectedFundsName: this.getSelectedFundsName()
 
         });
 
@@ -1312,7 +1245,6 @@ class OpenAccPageThreeComponent extends Component {
     render() {
         AppUtils.debugLog(`RENDER::: OpenAccPageThree ::>>>  ::::${JSON.stringify(this.props)}`);
 
-        const tempFundOptionsData = fundingOptionsData;
         const {
             fundList,
             minCount,
@@ -1335,8 +1267,8 @@ class OpenAccPageThreeComponent extends Component {
             transitRoutingNumberValidation,
             accountNumber,
             accountNumberValidation,
-            isValidBankAccount,
-            validBankAccountMsg,
+            // isValidBankAccount,
+            // validBankAccountMsg,
             totalInitialInvestment,
             modalVisible,
             filtermindata,
@@ -1350,7 +1282,36 @@ class OpenAccPageThreeComponent extends Component {
         const month = new Date().getMonth() + 1; // Current Month
         const year = new Date().getFullYear(); // Current Year
         const currentdate = `${month}-${date}-${year}`;
-        const tempFundListData = fundList.length > minCount ? fundList.slice(0, minCount) : fundList;
+        // const tempFundListData = fundList.length > minCount ? fundList.slice(0, minCount) : fundList;
+        const tempFundList = fundList.length > 0 ? fundList : [];
+        const tempFundListData = tempFundList.length > minCount ? tempFundList.slice(0, minCount) : tempFundList;
+
+
+        const tempOffLineMethodData = offLineMethods.length > 0 ? offLineMethods : [];
+        const tempOnLineMethodData = onLineMethods.length > 0 ? onLineMethods : [];
+        AppUtils.debugLog(`masterLookupStateData::${JSON.stringify(masterLookupStateData)}`);
+       
+        const {fund_options:fundingOptionsData = {}} = masterLookupStateData;
+        const tempFundOptionsData = fundingOptionsData.value ? fundingOptionsData.value:fundingOptions;
+
+
+        const validateBankAccKey = ActionTypes.VALIDATE_BANK_ACCOUNT;
+        let isValidBankAccount = true;
+        let validBankAccountMsg = "Bank Details Verification Failure";
+        if (accOpeningData[`${validateBankAccKey}`]) {
+            const tempResponse = accOpeningData[`${validateBankAccKey}`];
+            if (tempResponse.accountVerified) {
+                if (tempResponse.accountVerified === "true") {
+                    isValidBankAccount = true;
+                    validBankAccountMsg = "Bank Details Verification Success";
+                }else{
+                    isValidBankAccount = false;
+
+                }
+            }
+        }
+
+
 
         return (
             <View style={styles.container}>
@@ -1495,13 +1456,26 @@ class OpenAccPageThreeComponent extends Component {
                             <Text style={styles.lblOfflineDescTxt}>
                                 {gblStrings.accManagement.offlineMethodDesc}
                             </Text>
-                            <View style={styles.commonColView}>
-                                <FlatList
-                                    data={offLineMethods}
-                                    keyExtractor={this.generateFundSourceKeyExtractor}
-                                    renderItem={this.renderFundSourceListItem('offline')}
-                                />
-                            </View>
+                            {
+                                tempOffLineMethodData && tempOffLineMethodData.length > 0 && (
+                                    <View style={styles.commonColView}>
+                                        <FlatList
+                                            data={tempOffLineMethodData}
+                                            keyExtractor={this.generateFundSourceKeyExtractor}
+                                            renderItem={this.renderFundSourceListItem('offline')}
+                                        />
+                                    </View>
+                                )
+                            }
+
+
+
+
+
+
+
+
+
 
                             {method === "offline" && (
                                 /* 
@@ -1567,7 +1541,7 @@ class OpenAccPageThreeComponent extends Component {
                                             <Text style={styles.lblHzLine} />
                                             <View style={styles.marginBottomStyle}>
                                                 <Text style={styles.fundItemValueHeading}>{gblStrings.accManagement.USAAFundName}</Text>
-                                    <Text style={styles.fundItemValueTxt}>{selectedFundsName}</Text>
+                                                <Text style={styles.fundItemValueTxt}>{selectedFundsName}</Text>
                                             </View>
                                             <View style={styles.marginBottomStyle}>
                                                 <Text style={styles.fundItemValueHeading}>{gblStrings.accManagement.USAAAccNumber}</Text>
@@ -1585,7 +1559,7 @@ class OpenAccPageThreeComponent extends Component {
                                                 <Text style={styles.fundItemValueHeading}>{gblStrings.accManagement.MailingToThisAddress}</Text>
                                                 <Text style={styles.fundItemValueTxt}>{gblStrings.accManagement.VCMMailingAdress}</Text>
                                             </View>
-                                        
+
                                             <Text style={styles.lblPersonalCheckNoteTxt}>
                                                 {gblStrings.accManagement.wireTransferNote}
                                             </Text>
@@ -1611,13 +1585,19 @@ class OpenAccPageThreeComponent extends Component {
                             <Text style={styles.sectionDescTxt}>
                                 {gblStrings.accManagement.onlineMethodDesc}
                             </Text>
-                            <View style={styles.commonColView}>
-                                <FlatList
-                                    data={onLineMethods}
-                                    keyExtractor={this.generateFundSourceKeyExtractor}
-                                    renderItem={this.renderFundSourceListItem('online')}
-                                />
-                            </View>
+
+                            {
+                                tempOnLineMethodData && tempOnLineMethodData.length > 0 && (
+                                    <View style={styles.commonColView}>
+                                        <FlatList
+                                            data={tempOnLineMethodData}
+                                            keyExtractor={this.generateFundSourceKeyExtractor}
+                                            renderItem={this.renderFundSourceListItem('online')}
+                                        />
+
+                                    </View>
+                                )
+                            }
 
 
                         </View>
@@ -2126,8 +2106,7 @@ OpenAccPageThreeComponent.propTypes = {
     accOpeningData: PropTypes.instanceOf(Object),
     masterLookupStateData: PropTypes.instanceOf(Object),
     addBankAccount: PropTypes.instanceOf(Object),
-    isSuccess: PropTypes.string,
-    isError : PropTypes.string,
+    clearReduxKeyData: PropTypes.func,
     saveAccountOpening: PropTypes.func,
     getFundListData: PropTypes.func,
     getCompositeLookUpData: PropTypes.func,
@@ -2139,8 +2118,7 @@ OpenAccPageThreeComponent.defaultProps = {
     accOpeningData: {},
     addBankAccount: {},
     masterLookupStateData: {},
-    isSuccess: "",
-    isError : "",
+    clearReduxKeyData: null,
     getFundListData: null,
     saveAccountOpening: null,
     getCompositeLookUpData: null,

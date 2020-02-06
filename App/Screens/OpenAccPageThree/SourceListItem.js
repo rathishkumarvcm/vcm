@@ -7,7 +7,7 @@ import AppUtils from '../../Utils/AppUtils';
 
 
 const SourceListItem = (props) => {
-    AppUtils.debugLog("SourceListItem:: ");
+    AppUtils.debugLog(`SourceListItem:: ${JSON.stringify(props)}`);
     const { 
         onPress,
         style,

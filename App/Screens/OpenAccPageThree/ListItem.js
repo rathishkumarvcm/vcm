@@ -110,7 +110,7 @@ import AppUtils from '../../Utils/AppUtils';
 
 const switchStyle = { flase: '#DBDBDB', true: '#444444' };
 const ListItem = (props) => {
-    AppUtils.debugLog(`ListItem:: ${props}`);
+    AppUtils.debugLog(`ListItem:: ${JSON.stringify(props)}`);
 
     const {
         isActive,
