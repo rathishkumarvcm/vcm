@@ -60,15 +60,7 @@ class PaginationComponent extends Component {
         };
     }
 
-    updateFlatList = ({ item}) => {
-        return(
-<View key={item.id} 
-            style={styles.pageScroll}
->
-            <Text>{item.text}</Text>
-</View>
-        );
-    }
+
 
     onScrollEnd(e) {
         const {contentOffset} = e.nativeEvent;
@@ -80,6 +72,16 @@ class PaginationComponent extends Component {
           pageNumber : pageNum
         });
       }
+
+      updateFlatList = ({ item}) => {
+        return(
+<View key={item.id} 
+            style={styles.pageScroll}
+>
+            <Text>{item.text}</Text>
+</View>
+        );
+    }
     
     goBack = ()=>{
       const {navigation} = this.props;
@@ -100,7 +102,6 @@ class PaginationComponent extends Component {
             updateFlatList={this.updateFlatList} 
             horizontal 
             data={data} 
-            onScroll={(e) => this.onScrollEnd(e)}  
             pageNumber={pageNumber} 
             />
         </>

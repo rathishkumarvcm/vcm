@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Dimensions } from 'react-native';
-import { LineChart, Grid, YAxis, XAxis } from 'react-native-svg-charts';
+// import { View } from 'react-native';
+// import { LineChart, Grid, YAxis, XAxis } from 'react-native-svg-charts';
 
 
 
@@ -8,10 +8,10 @@ class LineChartComponent extends React.PureComponent {
 
     render() {
 
-        const data1 = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ];
-        const data2 = [ -87, 66, -69, 92, -40, -61, 16, 62, 20, -93, -54, 47, -89, -44, 18 ];
+       // const data1 = [ 50, 10, 40, 95, -4, -24, 85, 91, 35, 53, -53, 24, 50, -20, -80 ];
+       // const data2 = [ -87, 66, -69, 92, -40, -61, 16, 62, 20, -93, -54, 47, -89, -44, 18 ];
 
-        const data = [
+       /* const data = [
             {
                 data: data1,
                 svg: { stroke: '#8800cc' },
@@ -24,7 +24,7 @@ class LineChartComponent extends React.PureComponent {
 
         const axesSvg = { fontSize: 10, fill: 'grey' };
         const verticalContentInset = { top: 10, bottom: 10 };
-        const xAxisHeight = 30;
+        const xAxisHeight = 30; */
 
         // Layout of an x-axis together with a y-axis is a problem that stems from flexbox.
         // All react-native-svg-charts components support full flexbox and therefore all
@@ -33,7 +33,7 @@ class LineChartComponent extends React.PureComponent {
         // and then displace the other axis with just as many pixels. Simple but manual.
 
         return (
-            <View style={{ height: 200, padding: 20, flexDirection: 'row' }}>
+           {/* <View style={{ height: 200, padding: 20, flexDirection: 'row' }}>
                 <YAxis
                     data={data}
                     style={{ marginBottom: xAxisHeight }}
@@ -57,7 +57,7 @@ class LineChartComponent extends React.PureComponent {
                         svg={axesSvg}
                     />
                 </View>
-            </View>
+        </View> */}
         );
     }
 }

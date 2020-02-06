@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 });
 
 const Labels = ({ slices }) => {
-    return slices.map((slice, index) => {
+    return slices.map((slice) => {
         const { pieCentroid, data } = slice;
         return (
             <Text
@@ -80,7 +80,7 @@ export default class ChartComponent extends Component {
         const amounts = [35, 40, 8, 17];
    
 
-        const randomColor = () => (`#${ (Math.random() * 0xFFFFFF << 0).toString(16) }000000`).slice(0, 7);
+        const randomColor = () => (`#${ (Math.random() * 0xFFFFFF < 0).toString(16) }000000`).slice(0, 7);
 
         const pieData = amounts
             .filter(value => value > 0)
@@ -107,7 +107,6 @@ export default class ChartComponent extends Component {
                     <GButtonComponent buttonText="View in Bar Chart" onPress={() => this.setState({ barChart: !this.state.barChart })} buttonStyle={styles.buttonStyle} />
 
                     <PieChart
-                        style={{ height: 200 }}
                         valueAccessor={({ item }) => item.amount}
                         data={pieData}
                         spacing={0}
@@ -134,7 +133,6 @@ export default class ChartComponent extends Component {
                         buttonStyle={styles.buttonStyle}
                     />
                     <BarChart
-                        style={{ height: 200 }}
                         data={barData}
                         yAccessor={({ item }) => item.value}
                         svg={{
