@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView , TouchableOpacity} from 'react-native';
-import DatePicker from 'react-native-datepicker';
 import PropTypes from "prop-types";
 import styles from './styles';
 import { GButtonComponent , GInputComponent , 
          GRadioButtonComponent, 
-         GCheckBoxComponent, GCardTileComponent, GCounterComponent, GIconButton,
+         GCheckBoxComponent, GCardTileComponent, GIconButton,
          GIcon
 } from '../../CommonComponents';
 
@@ -27,14 +26,11 @@ class CommonUIComponent extends Component {
                 {options : "Credit card payment",checked: true},
                 {options : "Online Services",checked : false},
                 {options : "Mobile banking",checked : true}
-            ],
-            diffCounter : 0,
-            date:"2019-09-03"
+            ]
         };
     }
 
     throwException = ()=>{
-        console.log('Exception from Home Component');
         // console.log('baseUrl:-',Config);
         throw new Error('Custom Exception throw from home component');
     }
@@ -44,15 +40,10 @@ class CommonUIComponent extends Component {
     
 
     radioButtonClicked = (index)=>{
-        if(index!==this.state.radioButtonIndex){
+        const {radioButtonIndex} = this.state;
+        if(index!==radioButtonIndex){
             this.setState({ 
                 radioButtonIndex : index,
-                radioButton : false
-            });
-        }
-        else{
-            this.setState({ 
-                radioButton : false
             });
         }
     }
@@ -60,8 +51,9 @@ class CommonUIComponent extends Component {
     
 
     checkBoxClicked = (indexPre,previousValue) => {
+        const {usersChoice} = this.state;
        const tempArray = [];
-        this.state.usersChoice.map((item,index)=>{
+        usersChoice.map((item,index) => {
             const temp = { ...item};
             if(index === indexPre){
                 temp.checked = !previousValue;
@@ -109,8 +101,9 @@ class CommonUIComponent extends Component {
     }
     
     render(){
+        const {radioButtonIndex,usersChoice} = this.state;
         return (
-            <ScrollView style={{flex:1,flexDirection:'column'}}>
+            <ScrollView style={styles.flexCont}>
                 <View style={styles.containerStyle}>
                 <Text style={styles.labeltext}>Button Component:</Text>
                 <GButtonComponent 
@@ -164,7 +157,7 @@ class CommonUIComponent extends Component {
            
 
                 
-                <View style={{marginTop:'5%'}}>
+                <View>
                     <Text style={styles.labeltext}>
                         Text Input Component:
                     </Text>
@@ -228,7 +221,7 @@ class CommonUIComponent extends Component {
                         Radio Button Component:
             </Text>
                 {securityQuestions.map((item,index) => 
-                    index == this.state.radioButtonIndex ? (
+                    index === radioButtonIndex ? (
                     <GRadioButtonComponent 
                     onPress={()=>this.radioButtonClicked(index)}
                     selected
@@ -244,18 +237,12 @@ class CommonUIComponent extends Component {
                   )
                 )}
 
-                <Text style={{fontSize:20,
-        marginBottom:'2%',
-        height:30,
-        color:'green'}}
-                >
+                <Text style={styles.cardTile}>
                         Card Tile Component:
                 </Text>
                 <GCardTileComponent 
                 title="Account Number" 
                 details="0000001004067032" 
-                tileStyles={{color:"black"}
-            }
                 />
                 <GCardTileComponent title="Branch" details="Beasant Nagar" />
                 <GCardTileComponent title="Name" details="VCM.com" tileStyles={{color:"black"}} />
@@ -264,7 +251,7 @@ class CommonUIComponent extends Component {
                 <Text style={styles.labeltext}>
                         Check Box Component:
                 </Text>
-                {this.state.usersChoice.map((item,index) =>
+                {usersChoice.map((item,index) =>
                     (
 <GCheckBoxComponent 
                     onPress={()=>this.checkBoxClicked(index, item.checked)}
@@ -276,35 +263,13 @@ class CommonUIComponent extends Component {
                 )} 
                 {/* <Button title={strings("common.back")} onPress={()=>Actions.pop()} />  */}
                 
-                <View style={{height:10}} />
+                <View/>
 
                 <Text style={styles.labeltext}>
                         Date Picker Component:
                 </Text>
 
-                <DatePicker
-                    style={{width: 200}}
-                    date={this.state.date}
-                    mode="date"
-                    placeholder="select date"
-                    format="YYYY-MM-DD"
-                    minDate="2019-09-03"
-                    maxDate="2020-06-01"
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                    dateIcon: {
-                        position: 'absolute',
-                        left: 0,
-                        top: 4,
-                        marginLeft: 0
-                    },
-                    dateInput: {
-                        marginLeft: 36
-                    }
-                    }}
-                    onDateChange={(date) => {this.setState({date});}}
-                />
+                
 
 
 <View style={styles.defaultMargin}>
@@ -345,8 +310,8 @@ class CommonUIComponent extends Component {
                         iconSize={30}
                         iconColor="blue"
                         iconRight
-                        buttonStyle={{backgroundColor: "grey"}}
-                        textStyle={{color:"white"}}
+                        buttonStyle={styles.iconButton}
+                        textStyle={styles.iconWhite}
                        //  onPress={() => this.iconButtonPressed('facebook')}
                     />
                 </View>
@@ -386,7 +351,7 @@ class CommonUIComponent extends Component {
                     <Text style={styles.labeltext}>
                             Icons in a row
                     </Text>
-                    <View style={{flexDirection: 'row', flex: 1}}>
+                    <View style={styles.flexCont}>
                         <View>    
                             <GIcon 
                                 name="home"
@@ -429,11 +394,11 @@ class CommonUIComponent extends Component {
                     </View>
                 </View>
 
-                <View style={{marginTop:'5%',marginBottom:'5%'}}>
+                <View style={styles.defaultMargin}>
                     <Text style={styles.labeltext}>
                             Icon Buttons No Text
                     </Text>
-                    <View style={{flexDirection: 'row', flex: 1}}>
+                    <View style={styles.flexCont}>
                         <View> 
                             <TouchableOpacity>   
                                 <GIcon 
@@ -467,35 +432,7 @@ class CommonUIComponent extends Component {
                 </View>
 
                 
-                <View style={{height:10}} />
-
-                <Text style={styles.labeltext}>
-                        Counter Component:
-                </Text>
-
-                 <View style={{flex:1,flexDirection:'row',height:200}}>
-                    <View style={{flex:0.2}}>
-                        <GCounterComponent 
-                        counterValue={this.state.diffCounter} 
-                        onAddPress={()=> {
-                            if(this.state.diffCounter >= 0){
-                                this.setState({diffCounter:this.state.diffCounter+1});
-                            }
-                        }}
-                            
-                        onMinusPress={()=>{
-                            if(this.state.diffCounter > 0){
-                                this.setState({diffCounter:this.state.diffCounter-1});
-                            }}}
-                        />
-                    </View> 
-                    <View style={{flex:0.5,alignItems:'center',justifyContent:'center',height:100}}>
-                    <Text>
-                         {this.state.diffCounter}
-                    </Text>
-                    </View>
-                 </View>
-                
+     
                 </View>
             </ScrollView>
         );
@@ -503,11 +440,11 @@ class CommonUIComponent extends Component {
 }
 
 CommonUIComponent.propTypes = {
-    register: PropTypes.bool,
     navigation : PropTypes.instanceOf(Object)
   };
   
   CommonUIComponent.defaultProps = {
+    navigation : {},
  
   };
 

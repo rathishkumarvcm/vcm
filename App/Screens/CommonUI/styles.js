@@ -29,6 +29,10 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         lineHeight:scaledHeight(20),
     },
+    cardTile:{color:'green',
+        fontSize:20,
+        height:30,
+        marginBottom:'2%'},
     containerStyle:{
         flex:1,
         flexDirection: 'column',
@@ -36,7 +40,8 @@ const styles = StyleSheet.create({
         marginRight : '5%',
         marginTop:'10%'
     },
-    defaultMargin:{marginBottom:'5%',marginTop:'5%'},
+        defaultMargin:{marginBottom:'5%',marginTop:'5%'},
+        flexCont:{flex:1,flexDirection:'column'},
     floatInput: {
       width: "90%",
     },
@@ -51,6 +56,8 @@ const styles = StyleSheet.create({
     homeText:{
         fontSize:scaledHeight(10)
     },
+    iconButton:{backgroundColor: "grey"},
+    iconWhite:{color:"white"},
     initialfloatingBorder: {
         borderBottomColor: "gray",
         borderBottomWidth: scaledHeight(1),
