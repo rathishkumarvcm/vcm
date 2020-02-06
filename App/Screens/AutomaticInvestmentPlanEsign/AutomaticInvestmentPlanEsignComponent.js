@@ -37,7 +37,7 @@ class AutomaticInvestmentPlanEsignComponent extends Component {
             //     NavigationActions.navigate({ routeName: 'accountService' }),
             //     NavigationActions.navigate({ routeName: 'automaticInvestment' })
             //   ],2);
-            if(itemToEdit == -1)
+            if(itemToEdit < 0)
                 navigation.goBack('automaticInvestmentAccount');
             else
                 navigation.goBack('automaticInvestmentAdd');

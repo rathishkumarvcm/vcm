@@ -18,6 +18,8 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(15),
         width: '80%'
     },
+    scrollStyles:
+    { flex: 0.85 },
     cancelButtonText: {
         color: '#544A54',
         fontSize: scaledHeight(16),

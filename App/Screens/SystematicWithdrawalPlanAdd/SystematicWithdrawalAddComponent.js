@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, FlatList, Switch, TouchableOpacity, Modal } from 'react-native';
+import { View, ScrollView, Text, FlatList, Switch, TouchableOpacity, Modal, showAlert } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
 import {
@@ -157,8 +157,8 @@ class SystematicWithdrawalComponent extends Component {
         ];
 
         for (let i = 0; i < compositePayloadData.length; i+=1) {
-            const tempkey = compositePayloadData[i];
-            if (this.props && masterLookupStateData && !masterLookupStateData[tempkey]) {
+            const tempkey = compositePayloadData[+i];
+            if (this.props && masterLookupStateData && !masterLookupStateData[`${tempkey}`]) {
                 payload.push(tempkey);
             }
         }
@@ -181,7 +181,7 @@ class SystematicWithdrawalComponent extends Component {
                 }
                 if(valueToEdit!=null)
                 {
-                    //const strTotal = valueToEdit.totalAmount.replace('$', '').trim();
+                    // const strTotal = valueToEdit.totalAmount.replace('$', '').trim();
                     let bankIndex = 0;
                     bankAccountInfo.forEach((bank, index) => {
 
@@ -190,7 +190,7 @@ class SystematicWithdrawalComponent extends Component {
                             
                         }
                     });
-                    let invest=[...valueToEdit.investedIn.map(v => ({...v,isActive:true,IsNotValidAmount:false,errorMsg:'Please enter amount greater than or equal to 50'}))];
+                    const invest=[...valueToEdit.investedIn.map(v => ({...v,isActive:true,IsNotValidAmount:false,errorMsg:'Please enter amount greater than or equal to 50'}))];
                     this.setState({
                         sysWithdrawalAmountJson: valueToEdit,
                         accName: valueToEdit.account.split('|')[0],
@@ -212,7 +212,7 @@ class SystematicWithdrawalComponent extends Component {
         if (this.props !== prevProps) {
             let tempFundListData = [];
             // const tempFundAmount = [];
-            if(ItemToEdit==-1)
+            if(ItemToEdit===-1)
             {
                 if (fundListState[ActionTypes.GET_FUNDLIST] !== undefined && fundListState[ActionTypes.GET_FUNDLIST].Items !== null) {
                     tempFundListData = fundListState[ActionTypes.GET_FUNDLIST];
@@ -228,8 +228,7 @@ class SystematicWithdrawalComponent extends Component {
                 }
             }
             else
-            {
-                if (fundListState[ActionTypes.GET_FUNDLIST] !== undefined && fundListState[ActionTypes.GET_FUNDLIST].Items !== null) {
+            if (fundListState[ActionTypes.GET_FUNDLIST] !== undefined && fundListState[ActionTypes.GET_FUNDLIST].Items !== null) {
                     tempFundListData = fundListState[ActionTypes.GET_FUNDLIST];
 
                         if (this.props && bankAccountInfo && bankAccountInfo !== bankAccountDetails) {
@@ -240,7 +239,6 @@ class SystematicWithdrawalComponent extends Component {
                         });
                     }
                 }
-            }
         }
 
         const stateCityResponseData = ActionTypes.GET_STATECITY;
@@ -248,8 +246,8 @@ class SystematicWithdrawalComponent extends Component {
 
         if (isZipApiCalling) {
             if (this.props !== prevProps) {
-                if (this.props && stateCityData[stateCityResponseData]) {
-                    const tempResponse = stateCityData[stateCityResponseData];
+                if (this.props && stateCityData[`${stateCityResponseData}`]) {
+                    const tempResponse = stateCityData[`${stateCityResponseData}`];
                     if (tempResponse && tempResponse.City) {
                         this.setState({
                             userCity: tempResponse.City,
@@ -269,8 +267,8 @@ class SystematicWithdrawalComponent extends Component {
 
         if (isAddressApiCalling) {
             if (this.props !== prevProps) {
-                if (this.props && stateCityData[addressResponseData]) {
-                    const tempAddressResponse = stateCityData[addressResponseData];
+                if (this.props && stateCityData[`${addressResponseData}`]) {
+                    const tempAddressResponse = stateCityData[`${addressResponseData}`];
                     if (tempAddressResponse && tempAddressResponse.Address2) {
                         this.setState({
                             addressOne: tempAddressResponse.Address1 || "",
@@ -599,7 +597,7 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
                         else{
                             this.addAddressOnValidate('validateAddressValueOne').then(()=>{
                                 this.moveToNext();
-                            })
+                            });
                             // if(validationAddressOne)
                             
                         }
@@ -714,13 +712,13 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
                 
                 let remining=fundRemaining;
                 let consumed=fundConsumed;
-                if (array[Number(index)].isActive && array[Number(index)].errorMsg=='') {
+                if (array[Number(index)].isActive && array[Number(index)].errorMsg==='') {
                     remining=Number(fundRemaining)+Number(array[Number(index)].fundAmount);
                     consumed=Number(fundConsumed)-Number(array[Number(index)].fundAmount);
                     array[Number(index)].fundAmount = 0;
                     
                 }
-                else if (array[Number(index)].isActive && array[Number(index)].errorMsg!='') {
+                else if (array[Number(index)].isActive && array[Number(index)].errorMsg!=='') {
                     array[Number(index)].fundAmount=0;
                     array[Number(index)].IsNotValidAmount=false;
                     array[Number(index)].errorMsg='';
@@ -731,7 +729,7 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
                 }
                 const switchVal = array[Number(index)].isActive;
                 array[Number(index)].isActive = !switchVal;
-                this.setState({ fundList: array,fundRemaining:remining,fundConsumed:consumed,IsNotValidAmount:false});//investedIn:[] 
+                this.setState({ fundList: array,fundRemaining:remining,fundConsumed:consumed,IsNotValidAmount:false});
             }
         }
         else{
@@ -739,36 +737,21 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
         }
     }
 
-    getFundAmount = (value, index) => {
-        const{fundList} =this.state;//,ItemToEdit,investedIn
+    getFundAmount = (index) => (value) => {
+        const{fundList} =this.state;
         const array = [...fundList];
-        // const indexChange = selectedIndex;
-        // if (index !== -1) {
-        //     array[Number(index)].fundAmount = value;
-        //     this.setState({ fundList: array });
-        // }
-
-        // if(ItemToEdit>-1 && index !== -1)
-        // {
-        //     const arrayInvest=[...investedIn];
-        //     arrayInvest[Number(index)].amount = value;
-        //     array[Number(index)].fundAmount = value;
-        //     this.setState({ investedIn: arrayInvest,fundList: array });
-        // }
-        // else if (index !== -1) {
-            array[Number(index)].fundAmount = value;
-            this.setState({ fundList: array });
-        // }
+        array[Number(index)].fundAmount = value;
+        this.setState({ fundList: array });
     }
 
     changeRemaining = () => {
-        const{totalFund,fundList,refresh}=this.state;//,ItemToEdit,investedIn
+        const{totalFund,fundList,refresh}=this.state;
         let remaining = totalFund;
        
         fundList.forEach((item,index) => {
             let msg="Please enter amount greater than or equal to 50";
             
-            const array = [...fundList];//ItemToEdit>-1?[...investedIn]:
+            const array = [...fundList];
             array[Number(index)].IsNotValidAmount = false;
             array[Number(index)].errorMsg='';
             if(Number(item.fundAmount)>=50)
@@ -866,24 +849,14 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
         else
             navigation.goBack('systematicWithdrawalAccount');
     }
-    // emptyInvestedIn = () =>
-    // {
-    //     this.setState({investedIn:[]})
-    // }
+
+    
     generateAmountKeyExtractor = (item) => item.fundNumber.toString()
 
     renderAmount = () => ({ item, index }) =>{
-        const{errorMsg,ItemToEdit} =this.state;//investedIn,
+        const{errorMsg,ItemToEdit} =this.state;
         return(
             <View style={styles.fundListView}>
-                {/* {investedIn.forEach((fund) => {
-
-                    if (fund.name === item.fundName) {
-                        item.isActive = true;
-                        item.fundAmount = fund.amount.replace('$', '');
-                        
-                    }
-                })} */}
                 <View style={styles.fundListHeader}>
                     <View style={styles.fundListHeaderView}>
                         <Text style={styles.fundNameText}>{item.fundName}</Text>
@@ -892,8 +865,8 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
                     <Switch trackColor={switchStyle}
                             onValueChange={this.toggleSwitch(index)}
                             value={item.isActive}
-                            disabled={ItemToEdit>-1?true:false}
-                        />
+                            disabled={ItemToEdit>-1}
+                    />
                     </View>
                 </View>
 
@@ -904,7 +877,7 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
                         <View style={styles.inputError}>
                             <GInputComponent style={styles.fundRemainStyle} 
                                 // onFocus={this.emptyInvestedIn}
-                                onChangeText={(value) => this.getFundAmount(value, index)}
+                                onChangeText={this.getFundAmount(index)}
                                 onEndEditing={this.changeRemaining}
                                 value={item.fundAmount.toString()}
                                 errorFlag={item.IsNotValidAmount}
@@ -986,7 +959,7 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
 
     getIndex = (value, arr, prop) => {
         for (let i = 0; i < arr.length; i+=1) {
-            if (arr[i][prop] === value) {
+            if (arr[+i][`${prop}`] === value) {
                 return i;
             }
         }
@@ -1064,7 +1037,7 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
 
         if (isObjExistIndex !== -1) {
 
-            newItems[isObjExistIndex].isActive = false;
+            newItems[+isObjExistIndex].isActive = false;
             newSelectedData[Number(index)].isActive = false;
             newSelectedData.splice(index, 1);
 
@@ -1078,14 +1051,14 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
     }
 
     setInputRef = (inputComp) => (ref) => {
-        this[inputComp] = ref;
+        this[`${inputComp}`] = ref;
     }
 
     onChangeTextForInvestment = (keyName, index) => text => {
         // AppUtils.Dlog("onChangeTextForInvestment:::>");
         const{selectedFundInvestmentsData}=this.state;
         const newItems = [...selectedFundInvestmentsData];
-        newItems[Number(index)][keyName] = text;
+        newItems[Number(index)][`${keyName}`] = text;
         // newItems[Number(index)][keyName+"Validation"] = false;
         newItems[Number(index)].fundingOptionValidation = true;
         newItems[Number(index)].initialInvestmentValidation = true;
@@ -1094,8 +1067,8 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
 
         let total = 0;
         for (let i = 0; i < newItems.length; i+=1) {
-            if (!isNaN(newItems[i].initialInvestment) && newItems[i].initialInvestment !== "") {
-                total += parseFloat(newItems[i].initialInvestment);
+            if (!Number.isNaN(newItems[+i].initialInvestment) && newItems[+i].initialInvestment !== "") {
+                total += parseFloat(newItems[+i].initialInvestment);
 
             }
         }
@@ -1259,7 +1232,7 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
 
     checkFundAmount=()=>{
         const{totalFund}=this.state;
-        this.setState({IsNotValidAmount:!(totalFund>=50) });
+        this.setState({IsNotValidAmount:(totalFund<50) });
     }
 
     // Construct Filter values from Master Data on Clicking Filter Funds
@@ -1275,16 +1248,16 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
 
 
         // AppUtils.Dlog('Filter Clicked...');
-        if (tempKeyMinInv !== "" && this.props && masterLookupStateData && masterLookupStateData[tempKeyMinInv] && masterLookupStateData[tempKeyMinInv].value) {
-            tempMinInvData = masterLookupStateData[tempKeyMinInv].value;
+        if (tempKeyMinInv !== "" && this.props && masterLookupStateData && masterLookupStateData[`${tempKeyMinInv}`] && masterLookupStateData[`${tempKeyMinInv}`].value) {
+            tempMinInvData = masterLookupStateData[`${tempKeyMinInv}`].value;
         }
 
-        if (tempKeyRisk !== "" && this.props && masterLookupStateData && masterLookupStateData[tempKeyRisk] && masterLookupStateData[tempKeyRisk].value) {
-            tempRiskData = masterLookupStateData[tempKeyRisk].value;
+        if (tempKeyRisk !== "" && this.props && masterLookupStateData && masterLookupStateData[`${tempKeyRisk}`] && masterLookupStateData[`${tempKeyRisk}`].value) {
+            tempRiskData = masterLookupStateData[`${tempKeyRisk}`].value;
         }
 
-        if (tempKeyFundType !== "" && this.props && masterLookupStateData && masterLookupStateData[tempKeyFundType] && masterLookupStateData[tempKeyFundType].value) {
-            tempFundTypeData = masterLookupStateData[tempKeyFundType].value;
+        if (tempKeyFundType !== "" && this.props && masterLookupStateData && masterLookupStateData[`${tempKeyFundType}`] && masterLookupStateData[`${tempKeyFundType}`].value) {
+            tempFundTypeData = masterLookupStateData[`${tempKeyFundType}`].value;
         }
 
         this.setState({
@@ -1324,7 +1297,7 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
         if(selectedFundInvestmentsData.length > 1){
             if(selectedFundInvestmentsData.length < 5){
                 const fundSelectedCompare = {};
-                selectedFundInvestmentsData.map((item,index)=>{                   
+                selectedFundInvestmentsData.forEach((item,index)=>{                   
                     // fundSelectedCompare = `${fundSelectedCompare.concat(`fundNumber${index+1}=${item.fundNumber}`)}&`;
                     fundSelectedCompare[`fundNumber${index+1}`] = item.fundNumber;
                 });                                               
@@ -1333,12 +1306,12 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
                    push('compareFunds', { fundDetails: fundSelectedCompare });
                }
             }else{
-                showAlert(gblStrings.common.appName ,gblStrings.accManagement.validateCompareFundsMsg,gblStrings.common.ok);
-                AppUtils.debugLog(gblStrings.accManagement.validateCompareFundsMsg);
+                showAlert(globalString.common.appName ,globalString.accManagement.validateCompareFundsMsg,globalString.common.ok);
+                // AppUtils.debugLog(globalString.accManagement.validateCompareFundsMsg);
             }
         }else{
-            showAlert(gblStrings.common.appName ,gblStrings.accManagement.validateCompareFundsMsg,gblStrings.common.ok);
-            AppUtils.debugLog(gblStrings.accManagement.validateCompareFundsMsg);
+            showAlert(globalString.common.appName ,globalString.accManagement.validateCompareFundsMsg,globalString.common.ok);
+            // AppUtils.debugLog(globalString.accManagement.validateCompareFundsMsg);
         }      
     }
 
@@ -1364,39 +1337,38 @@ payeeName,validationPayeeName,taxAccountingMethodData,selectedFundInvestmentsDat
                         });
     }
 
-    addAddressOnValidate(validationType){
+    addAddressOnValidate(validationType)
+    {
         const{payeeName,addressOne,zipCodeValue} = this.state;
-                switch (validationType) {
-        
-                    case 'validateAddressValueOne':
-                        if (payeeName === "") {
-                            this.setState({
-                                validationPayeeName: false
-                            });
-                        }
-                        if (addressOne === "") {
-                            this.setState({
-                                validationAddressOne: false
-                            });
-                        }
-        
-                        if (zipCodeValue === "") {
-                            const validate = reGex.zipCodeRegex.test(zipCodeValue);
-                            this.setState({
-                                isZipCodeValid: validate
-                            });
-                        }
-        
-                        if (addressOne !== '' &&
-                            zipCodeValue !=='') {
-        
-                            this.addNewAddress();
-                        }
-                        break;
-                    default:
-                        break;
-                }
+        if(validationType==='validateAddressValueOne')
+        {
+                
+            if (payeeName === "") {
+                this.setState({
+                    validationPayeeName: false
+                });
             }
+            if (addressOne === "") {
+                this.setState({
+                    validationAddressOne: false
+                });
+            }
+
+            if (zipCodeValue === "") {
+                const validate = reGex.zipCodeRegex.test(zipCodeValue);
+                this.setState({
+                    isZipCodeValid: validate
+                });
+            }
+
+            if (addressOne !== '' &&
+                zipCodeValue !=='') {
+
+                this.addNewAddress();
+            }
+        }
+                
+    }
 
 
     render() {

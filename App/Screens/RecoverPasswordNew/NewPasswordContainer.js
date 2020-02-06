@@ -3,7 +3,7 @@ import NewPasswordComponent from './NewPasswordComponent';
 
 
 
-const mapStateToProps = (state /* , props */) => (
+const mapStateToProps = ( /* state , props */) => (
     {
       
     }

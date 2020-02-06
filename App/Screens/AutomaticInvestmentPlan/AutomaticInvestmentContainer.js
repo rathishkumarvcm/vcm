@@ -4,7 +4,7 @@ import {addAutomaticInvestmentActions } from "../../Shared/Actions";
 
 
 const mapStateToProps = (state) => ({
-      automaticInvestmentState:state.automaticInvestmentData,
+      automaticInvestmentProps:state.automaticInvestmentData,
   });
 
 const mapDispatchToProps = {

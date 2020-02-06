@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text,Linking } from 'react-native';
 import PropTypes from 'prop-types';
+import { NavigationActions } from 'react-navigation';
 import styles from './styles';
 import {
     GHeaderComponent,
@@ -10,7 +11,6 @@ import {
 } from '../../CommonComponents';
 import { CustomCheckBox } from '../../AppComponents';
 import globalString from '../../Constants/GlobalStrings';
-import { NavigationActions } from 'react-navigation';
 
 const myInstance = GSingletonClass.getInstance();
 const url = 'https://content.usaa.com/mcontent/static_assets/Mstar/Morningstar_FundProfiles_USSPX.pdf';
@@ -28,13 +28,7 @@ class SystematicWithdrawalPlanEsignComponent extends Component {
 
     componentDidUpdate(){
         const{navigation,systematicWithdrawalState}=this.props;
-        const{itemToEdit}=this.state;
         if(systematicWithdrawalState.savedAccData){
-            // navigation.navigate({routeName:'systematicWithdrawal',key:'systematicWithdrawal'});
-            // if(itemToEdit==-1)
-            //     navigation.goBack('systematicWithdrawalAccount');
-            // else
-            //     navigation.goBack('systematicWithdrawalAdd');
             navigation.reset([
                 NavigationActions.navigate({ routeName: 'dashboard' }),
                 NavigationActions.navigate({ routeName: 'accountService' }),

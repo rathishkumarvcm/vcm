@@ -17,69 +17,80 @@ class RecoverTempComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {  
-      boo_temp: false,
-      str_temp: '',
-      err_temp: '',
+      booTemp: false,
+      strTemp: '',
+      errTemp: '',
       email:''
     };
     // set true to isLoading if data for this screen yet to be received and wanted to show loader.
   }
 
-  setTemp = (text) => {
-    this.setState({
-      str_temp: text
-    });
-  }
-
-protect_email(user_email) {
-    let splitted; let part1; let part2;
-    splitted = user_email.split("@");
-    part1 = splitted[0];
-    // avg = part1.length / 2;
-    // part1 = part1.substring(0, (part1.length - avg));
-    part2 = splitted[1];
-    return `${part1.substring(0, 3) }*****${part1.substring(part1.length-2,part1.length )}@${ part2}`;
-}
-  
   componentDidMount()
   {
-    
-    if(this.props && this.props.initialState && this.props.initialState.email){
+    const{initialState}=this.props;
+    if(initialState && initialState.email){
       
       this.setState({
-          email : this.protect_email(this.props.initialState.email)
-        // email:reGex.protect_email(this.props.initialState.verifiedEmail)
+          email : this.protectEmail(initialState.email)
+        // email:reGex.protectEmail(this.props.initialState.verifiedEmail)
       });
     }
   }
 
-  navigationLogin = () => this.props.navigation.navigate('login');
+  setTemp = (text) => {
+    this.setState({
+      strTemp: text
+    });
+  }
+
+protectEmail = (userEmail) =>()=> {
+    // let part1; let part2;
+    const splitted = userEmail.split("@");
+    const[part1,part2]=splitted;
+    // part1 = splitted[0];
+    // part2 = splitted[1];
+    return `${part1.substring(0, 3) }*****${part1.substring(part1.length-2,part1.length )}@${ part2}`;
+}
+  
+  
+
+  navigationLogin = () => {
+    const{navigation} =this.props;
+    navigation.navigate('login');
+  }
   
   navigationPasswordTemp = () => 
   {
-      const valid_temp=this.state.str_temp === "";
+    const{strTemp}=this.state;
+    const{navigation} =this.props;
+      const validTemp=strTemp === "";
      this.setState({
-       boo_temp: valid_temp,
-       err_temp: valid_temp ? globalString.recoverPassword.validPassword : '',
+       booTemp: validTemp,
+       errTemp: validTemp ? globalString.recoverPassword.validPassword : '',
       
    });
       
-      if(this.state.str_temp !== "")        
-         this.props.navigation.navigate('passwordReset');
+      if(strTemp !== "")        
+         navigation.navigate('passwordReset');
   }
 
-  navigationPasswordOtp = () => this.props.navigation.goBack();
+  navigationPasswordOtp = () => {
+    const{navigation} =this.props;
+    navigation.goBack();
+  }
 
   render() {
+    const{navigation} =this.props;
+    const{email,errTemp,strOtp,booTemp}=this.state;
     return (
       <View style={styles.container}>
         <GHeaderComponent register
-          navigation={this.props.navigation}
+          navigation={navigation}
         />
-        <ScrollView style={{ flex: 0.85 }}>
+        <ScrollView style={styles.scrollStyles}>
           <View style={styles.notifOuter}>
             <View style={styles.notifInner}>
-  <Text style={styles.notifInnerText}>{globalString.recoverPassword.guestTempPasswordNotify}{this.state.email}</Text>
+  <Text style={styles.notifInnerText}>{globalString.recoverPassword.guestTempPasswordNotify}{email}</Text>
             </View>
             <View style={styles.notifClose}>
             <Text>X</Text>
@@ -97,11 +108,11 @@ protect_email(user_email) {
             
           </View>
 
-          <GInputComponent propInputStyle={this.state.boo_temp ? styles.userIDTextBoxError : styles.userIDTextBox}
+          <GInputComponent propInputStyle={booTemp ? styles.userIDTextBoxError : styles.userIDTextBox}
             placeholder={globalString.recoverPassword.passwordPlaceHolder} onChangeText={this.setTemp}
-            value={this.state.str_otp} secureTextEntry
+            value={strOtp} secureTextEntry
           />
-          <Text style={styles.errorMessage}>{this.state.err_temp}</Text>
+          <Text style={styles.errorMessage}>{errTemp}</Text>
           
           <GButtonComponent
             buttonStyle={styles.cancelButton}
