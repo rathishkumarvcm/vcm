@@ -4,23 +4,23 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import AddNewBeneficiaryComponent from '../App/Screens/AddNewBeneficiary/AddNewBeneficiaryComponent';
+import ManageIntrestedPartiesComponent from '../App/Screens/ManageIntrestedParties/ManageIntrestedPartiesComponent';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 const navigation = { navigate: jest.fn() };
 
-describe('Add new Beneficiaries', () => {
+describe('List of Interested Parties', () => {
 
   // Snap shot 
   it('snap shot', () => {
-    const tree = renderer.create(<AddNewBeneficiaryComponent navigation={navigation} />).toJSON();
+    const tree = renderer.create(<ManageIntrestedPartiesComponent navigation={navigation} />).toJSON();
     expect(tree).toMatchSnapshot();
   });
 
   // Application Render
   test('render', () => {
-    const component = shallow(<AddNewBeneficiaryComponent navigation={navigation} />);
+    const component = shallow(<ManageIntrestedPartiesComponent navigation={navigation} />);
     component.render();
   });
 

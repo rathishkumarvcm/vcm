@@ -10,7 +10,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 const navigation = { navigate: jest.fn() };
 
-describe('List of Beneficiaries', () => {
+describe('Verify Beneficiaries', () => {
 
   // Snap shot 
   it('snap shot', () => {
