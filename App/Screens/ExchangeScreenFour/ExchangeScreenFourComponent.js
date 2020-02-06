@@ -102,7 +102,7 @@ class ExchangeScreenFourComponent extends Component {
 
         if (ammend) {
             const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
-            const amndObj = menuList[pIndex];
+            const amndObj = menuList[parseInt(pIndex, 10)];
             const transType = `Exchange Amended`;
             const ammendPayloadData = {
                 "key": amndObj.key,
@@ -123,7 +123,7 @@ class ExchangeScreenFourComponent extends Component {
             menuList.splice(pIndex, 1, ammendPayloadData);
             ammendActions(menuList);
             // navigation.navigate('tAmmendComponent');
-            navigation.navigate('tAmmendComponent',{ orderId : amndObj.title,transactionType:"Exchange",amend:true});
+            navigation.navigate('tAmmendComponent', { orderId: amndObj.title, transactionType: "Exchange", amend: true });
 
         }
         else {
@@ -146,7 +146,7 @@ class ExchangeScreenFourComponent extends Component {
             menuList.push(payloadData);
             // this.submitMethod();
             ammendActions(menuList);
-            navigation.navigate('exchangeScreenFinish', { orderId: orderId });
+            navigation.navigate('exchangeScreenFinish', { orderId });
         }
     }
 
@@ -181,7 +181,7 @@ class ExchangeScreenFourComponent extends Component {
 
 
     formatAmount = (amount) => {
-        const amt = parseInt(amount,0).toLocaleString();
+        const amt = parseInt(amount, 0).toLocaleString();
         return amt;
     }
 
