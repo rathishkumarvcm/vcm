@@ -6,10 +6,10 @@ import { GHeaderComponent, GFooterSettingsComponent, GIcon, GButtonComponent, sh
 import { CustomRadio, CustomCheckBox } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import AppUtils from '../../Utils/AppUtils';
+import * as regex from '../../Constants/RegexConstants';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 const swithcStyle = { flase: '#DBDBDB', true: '#444444' };
-const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
 const date = new Date().getDate(); //  Current Date
 const month = new Date().getMonth() + 1; //  Current Month
 const year = new Date().getFullYear(); //  Current Year
@@ -493,7 +493,7 @@ class AccountMessagingGeneralDocumentsComponent extends Component {
         } else if (this.isEmpty(personal.stateCity)) {
             errMsg = gblStrings.accManagement.emptyStateMsg;
             input = 'stateCity';
-        } else if (!emailRegex.test(personal.emailAddress)) {
+        } else if (!regex.emailRegex.test(personal.emailAddress)) {
             errMsg = gblStrings.accManagement.invalidEmailMasg;
             input = 'emailAddress';
         }else if (this.isEmpty(personal.startDate)) {

@@ -83,7 +83,7 @@ class AccountMessagingSettingsComponent extends Component {
                         </Text>
                     </View>
 
-                    <View style={styles.listContainer}>
+                    {/* <View style={styles.listContainer}>
                         <TouchableOpacity
                             style={styles.touchOpacityPosition}
                             onPress={this.navigateaccountMessagingGoals}
@@ -105,9 +105,9 @@ class AccountMessagingSettingsComponent extends Component {
                                 </Text>
                             </View>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
 
-                    <View style={styles.listContainer}>
+                    {/* <View style={styles.listContainer}>
                         <TouchableOpacity
                             style={styles.touchOpacityPosition}
                             onPress={this.navigateaccountMessagingAdvice}
@@ -129,7 +129,7 @@ class AccountMessagingSettingsComponent extends Component {
                                 </Text>
                             </View>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
 
                     {/* <View style={styles.listContainer}>
                         <TouchableOpacity
@@ -179,7 +179,7 @@ class AccountMessagingSettingsComponent extends Component {
                         </TouchableOpacity>
                     </View>
 
-                    <View style={styles.listContainer}>
+                    {/* <View style={styles.listContainer}>
                         <TouchableOpacity
                             style={styles.touchOpacityPosition}
                             onPress={this.navigateAccountMessagingSecurityAndFraud}
@@ -207,7 +207,7 @@ class AccountMessagingSettingsComponent extends Component {
                                 </Text>
                             </View>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
 
                     <View style={styles.listContainer}>
                         <TouchableOpacity
