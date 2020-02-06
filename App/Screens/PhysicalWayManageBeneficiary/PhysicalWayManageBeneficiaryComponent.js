@@ -71,7 +71,7 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
             //     totalOutput += programmerOutput[i].linesOfCode;
             //   }
 
-             size = multipleFile.reduce((value, output) => value + output.size, 0);
+            size = multipleFile.reduce((value, output) => value + output.size, 0);
 
             if ((size / 1024 ** 2) > maxFileSize) {
                 this.setState({ fileSelected: true, errorMessage: 'Total Size limit should be less than 30 MB' });
@@ -118,14 +118,14 @@ class PhysicalWayManageBeneficiaryComponent extends Component {
                 });
             }
 
-            for (const res of results) {
-              // Printing the log realted to the file
-              console.log(`res : ${ JSON.stringify(res)}`);
-              console.log(`URI : ${ res.uri}`);
-              console.log(`Type : ${ res.type}`);
-              console.log(`File Name : ${ res.name}`);
-              console.log(`File Size : ${ res.size}`);
-            }
+            // for (const res of results) {
+            //     // Printing the log realted to the file
+            //     //   console.log(`res : ${ JSON.stringify(res)}`);
+            //     //   console.log(`URI : ${ res.uri}`);
+            //     //   console.log(`Type : ${ res.type}`);
+            //     //   console.log(`File Name : ${ res.name}`);
+            //     //   console.log(`File Size : ${ res.size}`);
+            // }
 
             // Setting the state to show multiple file attributes
 
