@@ -102,15 +102,14 @@ class OpenAccPageOneComponent extends Component {
             if (accOpeningData[`${responseKey}`]) {
                 if (accOpeningData[`${responseKey}`] !== prevProps.accOpeningData[`${responseKey}`]) {
                     const tempResponse = accOpeningData[`${responseKey}`];
-                    if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
-                        const msg = tempResponse.message;
+                    if (tempResponse.status) {
+                        const msg = tempResponse.status;
                         AppUtils.debugLog(`Account Type Saved ::: :: ${msg}`);
-                        showAlert(gblStrings.common.appName ,tempResponse.result,gblStrings.common.ok);
-
+                        showAlert(gblStrings.common.appName, tempResponse.status, gblStrings.common.ok);
+                        AppUtils.debugLog(tempResponse.status);
                     } else {
+                        showAlert(gblStrings.common.appName, tempResponse.message, gblStrings.common.ok);
                         AppUtils.debugLog(tempResponse.message);
-                        showAlert(gblStrings.common.appName ,tempResponse.message,gblStrings.common.ok);
-
                     }
                 }
             }

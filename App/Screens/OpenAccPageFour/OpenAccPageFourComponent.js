@@ -44,15 +44,15 @@ class OpenAccPageFourComponent extends Component {
             "stmt_pros_rep"
         ];
 
-        const { masterLookupStateData,getCompositeLookUpData,getPersonalCompositeData } = this.props;
+        const { masterLookupStateData,getCompositeLookUpData } = this.props;
 
         for (let i = 0; i < compositePayloadData.length; i+=1) {
-            const tempkey = compositePayloadData[i];
-            if (this.props && masterLookupStateData && !masterLookupStateData[tempkey]) {
+            const tempkey = compositePayloadData[+i];
+            if (this.props && masterLookupStateData && !masterLookupStateData[`${tempkey}`]) {
                 payload.push(tempkey);
             }
         }
-        getPersonalCompositeData(payload);
+        getCompositeLookUpData(payload);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -61,16 +61,16 @@ class OpenAccPageFourComponent extends Component {
 
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.PREFERENCE_SAVE_OPENING_ACCT;
-            if (accOpeningData[responseKey]) {
-                if (accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
-                    const tempResponse = accOpeningData[responseKey];
-                    if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
-                        const msg = tempResponse.message;
-                        AppUtils.debugLog(`Account Type Saved ::: :: ${ msg}`);
-                        showAlert(gblStrings.common.appName ,tempResponse.result,"OK");
-                        AppUtils.debugLog(tempResponse.result);
+            if (accOpeningData[`${responseKey}`]) {
+                if (accOpeningData[`${responseKey}`] !== prevProps.accOpeningData[`${responseKey}`]) {
+                    const tempResponse = accOpeningData[`${responseKey}`];
+                    if (tempResponse.status) {
+                        const msg = tempResponse.status;
+                        AppUtils.debugLog(`Account Type Saved ::: :: ${msg}`);
+                        showAlert(gblStrings.common.appName, tempResponse.status, gblStrings.common.ok);
+                        AppUtils.debugLog(tempResponse.status);
                     } else {
-                        showAlert(gblStrings.common.appName ,tempResponse.message,"OK");
+                        showAlert(gblStrings.common.appName, tempResponse.message, gblStrings.common.ok);
                         AppUtils.debugLog(tempResponse.message);
                     }
                 }
@@ -203,7 +203,7 @@ class OpenAccPageFourComponent extends Component {
 
     renderRadio = (radioName, radioSize, componentStyle, layoutStyle) => {
        
-     
+     const {[radioName]:radio} = this.state;
         AppUtils.debugLog(`renderRadio::: ${ radioName}`);
         const { masterLookupStateData} = this.props;
 
@@ -223,25 +223,25 @@ class OpenAccPageFourComponent extends Component {
 
         AppUtils.debugLog(`tempkey::${ tempkey}`);
 
-        if (this.props && masterLookupStateData && masterLookupStateData[tempkey] && masterLookupStateData[tempkey].value) {
-            radioData = masterLookupStateData[tempkey].value;
+        if (this.props && masterLookupStateData && masterLookupStateData[`${tempkey}`] && masterLookupStateData[`${tempkey}`].value) {
+            radioData = masterLookupStateData[`${tempkey}`].value;
         }
 
         const radioCoponents = [];
         for (let i = 0; i < radioData.length; i +=1) {
             radioCoponents.push(
                 <CustomRadio
-                    key={radioData[i].key}
+                    key={radioData[+i].key}
                     componentStyle={componentStyle}
                     size={radioSize}
                     outerCicleColor="#DEDEDF"
                     innerCicleColor="#61285F"
                     labelStyle={styles.lblRadioBtnTxt}
-                    label={radioData[i].value}
+                    label={radioData[+i].value}
                     descLabelStyle={styles.lblRadioDescTxt}
-                    descLabel={radioData[i].value}
-                    selected={!!((this.state[radioName] !== null && this.state[radioName] === radioData[i].key))}
-                    onPress={this.onPressRadio(radioName, radioData[i].key)}
+                    descLabel={radioData[+i].value}
+                    selected={!!((radio !== null && radio === radioData[+i].key))}
+                    onPress={this.onPressRadio(radioName, radioData[+i].key)}
                 />
             );
         }
@@ -407,7 +407,6 @@ OpenAccPageFourComponent.propTypes = {
    
     saveAccountOpening:PropTypes.func,
     getCompositeLookUpData:PropTypes.func,
-    getPersonalCompositeData:PropTypes.func
 
 };
 OpenAccPageFourComponent.defaultProps = {
@@ -416,7 +415,6 @@ OpenAccPageFourComponent.defaultProps = {
     masterLookupStateData: {},
     getCompositeLookUpData: null,
     saveAccountOpening: null,
-    getPersonalCompositeData:null
     
 
 };

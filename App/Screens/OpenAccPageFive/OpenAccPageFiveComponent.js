@@ -32,16 +32,16 @@ class OpenAccPageFiveComponent extends Component {
 
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.PREFERENCE_SAVE_OPENING_ACCT;
-            if (accOpeningData[responseKey]) {
-                if (accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
-                    const tempResponse = accOpeningData[responseKey];
-                    if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
-                        const msg = tempResponse.message;
-                        AppUtils.debugLog(`Account Type Saved ::: :: ${ msg}`);
-                        showAlert(gblStrings.common.appName ,tempResponse.result,"OK");
-                        AppUtils.debugLog(tempResponse.result);
+            if (accOpeningData[`${responseKey}`]) {
+                if (accOpeningData[`${responseKey}`] !== prevProps.accOpeningData[`${responseKey}`]) {
+                    const tempResponse = accOpeningData[`${responseKey}`];
+                    if (tempResponse.status) {
+                        const msg = tempResponse.status;
+                        AppUtils.debugLog(`Account Type Saved ::: :: ${msg}`);
+                        showAlert(gblStrings.common.appName, tempResponse.status, gblStrings.common.ok);
+                        AppUtils.debugLog(tempResponse.status);
                     } else {
-                        showAlert(gblStrings.common.appName ,tempResponse.message,"OK");
+                        showAlert(gblStrings.common.appName, tempResponse.message, gblStrings.common.ok);
                         AppUtils.debugLog(tempResponse.message);
                     }
                 }
@@ -1234,12 +1234,14 @@ class OpenAccPageFiveComponent extends Component {
     renderMutualFundList = (data) => {
 
         const { investmentInfo = {} } = data || {};
+        /*
         const {
-            //  fundingSource = {},
-            //  totalFunds = '',
-            fundListData = []
+              fundingSource = {},
+              totalFunds = '',
         } = (investmentInfo && investmentInfo.fundListData) ? investmentInfo : {};
+        */
 
+        const fundListData = investmentInfo.fundListData ? investmentInfo.fundListData:[];
         /*
          const {
              method = '',
