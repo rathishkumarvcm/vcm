@@ -10,7 +10,7 @@ import {
     GSingletonClass
 } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
-import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+// import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 const myInstance = GSingletonClass.getInstance();
 class AutomaticInvestmentPlanVerifyComponent extends Component {
@@ -69,7 +69,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
     componentDidUpdate(){
         const{navigation,automaticInvestmentState} = this.props;
         // const{dateFromValue,dateToValue} =this.state;
-        const skipRespKey = ActionTypes.SKIP_INVEST_WITHDRAW_PLAN;
+        // const skipRespKey = ActionTypes.SKIP_INVEST_WITHDRAW_PLAN;
 
         if(automaticInvestmentState.isSuccess)
         {
@@ -78,7 +78,7 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
         }
         else if(automaticInvestmentState.isError)
         {
-            console.log(automaticInvestmentState[skipRespKey]);
+            // console.log(automaticInvestmentState[`${skipRespKey}`]);
         }
 
             // if (automaticInvestmentState[skipRespKey]) {

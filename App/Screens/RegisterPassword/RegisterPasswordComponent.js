@@ -6,7 +6,7 @@ import { NavigationActions } from 'react-navigation';
 import styles from './styles';
 import { GButtonComponent, GInputComponent, GFooterSettingsComponent, GHeaderComponent, showAlert } from '../../CommonComponents';
 import globalStrings from '../../Constants/GlobalStrings';
-import { ValidatePassword } from '../../Utils/ValidatePassword';
+import ValidatePassword from '../../Utils/ValidatePassword';
 import AppUtils from '../../Utils/AppUtils';
 
 //  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
