@@ -22,12 +22,7 @@ class CommonUIComponent extends Component {
     constructor(props){
         super(props);
         this.state = {
-            radioButton : false,
             radioButtonIndex : null,
-            checkBox : false,
-            checkBoxIndex : null,
-            currentCheckBox : false,
-            radioButtonSelected : false,
             usersChoice : [
                 {options : "Credit card payment",checked: true},
                 {options : "Online Services",checked : false},
@@ -78,19 +73,40 @@ class CommonUIComponent extends Component {
         });
     }
 
-    chartNavigate = ()=>this.props.navigation.navigate('charts');
+    chartNavigate = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('charts');
+    }
 
-    goBack = ()=>this.props.navigation.goBack();
+    goBack = ()=>{
+        const {navigation} = this.props;
+        navigation.goBack();
+    }
 
-    pdfFeatures = ()=>this.props.navigation.navigate('pdfFeatures');
+    pdfFeatures = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('pdfFeatures');
+    }
 
-    listView = ()=>this.props.navigation.navigate('listView');
+    listView = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('listView');
+    }
 
-    pagination = ()=>this.props.navigation.navigate('pagination');
+    pagination = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('pagination');
+    }
+    
+    navigatePdf = ()=>{
+        const {navigation} = this.props;
+        navigation.navigate('pdf');
+    }
 
-    navigatePdf = ()=>this.props.navigation.navigate('pdf');
-
-    navigateSearch = ()=>this.props.navigation.navigate('search');
+    navigateSearch = ()=>{
+    const {navigation} = this.props;
+    navigation.navigate('search');
+    }
     
     render(){
         return (
@@ -165,7 +181,7 @@ class CommonUIComponent extends Component {
                     />
                 </View>
 
-            <View style={{marginTop:'5%',marginBottom:'5%'}}>
+            <View sstyle={styles.defaultMargin}>
                 <GInputComponent
                     secureTextEntry
                     inputText=""
@@ -190,7 +206,7 @@ class CommonUIComponent extends Component {
                 />
            </View> */}
 
-            <View style={{marginTop:'5%',marginBottom:'5%'}}>
+            <View style={styles.defaultMargin}>
             <Text style={styles.labeltext}>
                         Numeric Input Field:
             </Text>
@@ -291,7 +307,7 @@ class CommonUIComponent extends Component {
                 />
 
 
-<View style={{marginTop:'5%',marginBottom:'5%'}}>
+<View style={styles.defaultMargin}>
                     <Text style={styles.labeltext}>
                             Icon Button Component:
                     </Text>
@@ -305,7 +321,7 @@ class CommonUIComponent extends Component {
                     />
 </View>
                 
-                <View style={{marginTop:'5%',marginBottom:'5%'}}>
+                <View style={styles.defaultMargin}>
                     <Text style={styles.labeltext}>
                             Icon Button Component 2
                     </Text>
@@ -318,7 +334,7 @@ class CommonUIComponent extends Component {
                     />
                 </View>
 
-                <View style={{marginTop:'5%',marginBottom:'5%'}}>
+                <View style={styles.defaultMargin}>
                     <Text style={styles.labeltext}>
                             Icon Button Component 3
                     </Text>
@@ -335,7 +351,7 @@ class CommonUIComponent extends Component {
                     />
                 </View>
 
-                <View style={{marginTop:'5%',marginBottom:'5%'}}>
+                <View style={styles.defaultMargin}>
                     <Text style={styles.labeltext}>
                             Icon Button Component 4
                     </Text>
@@ -349,7 +365,7 @@ class CommonUIComponent extends Component {
                     />
                 </View>
 
-                <View style={{marginTop:'5%',marginBottom:'5%'}}>
+                <View style={styles.defaultMargin}>
                     <Text style={styles.labeltext}>
                             Icons in a column
                     </Text>
@@ -366,7 +382,7 @@ class CommonUIComponent extends Component {
                     />
                 </View>
 
-                <View style={{marginTop:'5%',marginBottom:'5%'}}>
+                <View style={styles.defaultMargin}>
                     <Text style={styles.labeltext}>
                             Icons in a row
                     </Text>

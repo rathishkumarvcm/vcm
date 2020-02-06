@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
 import Amplify, { Auth } from 'aws-amplify';
 import styles from './styles';
-import { GButtonComponent, GInputComponent, GBiometricAuthentication, GHeaderComponent, GFooterSettingsComponent, GLoadingSpinner, showAlertWithCancelButton } from '../../CommonComponents';
+import { GButtonComponent, GInputComponent, GBiometricAuthentication, GHeaderComponent, GFooterSettingsComponent, GLoadingSpinner, showAlert, showAlertWithCancelButton } from '../../CommonComponents';
 import * as reGex from '../../Constants/RegexConstants';
 
 // const awsmobile = {
@@ -58,13 +58,11 @@ class LoginComponent extends Component {
         const {initialState} = this.props;
 
         RNSecureKeyStore.get("enableBioMetric")
-            .then((value) => {
-                console.log("value------->", value);
+            .then(() => {
                 this.setState({
                     registeredBioMetric: true
                 });
-            }).catch((error) => {
-                console.log("Error", error);
+            }).catch(() => {
                 this.setState({
                     registeredBioMetric: false
                 });
@@ -72,12 +70,10 @@ class LoginComponent extends Component {
 
         RNSecureKeyStore.get("bioMetricUserName")
             .then((value) => {
-                console.log("username------->", value);
                 this.setState({
                     registeredBioMetricUsername: value
                 });
-            }).catch((error) => {
-                console.log("Error", error);
+            }).catch(() => {
                 this.setState({
                     registeredBioMetricUsername: ''
                 });
@@ -86,18 +82,16 @@ class LoginComponent extends Component {
 
         RNSecureKeyStore.get("bioMetricPassword")
             .then((value) => {
-                console.log("password------->", value);
                 this.setState({
                     registeredBioMeticPassword: value
                 });
-            }).catch((error) => {
-                console.log("Error", error);
+            }).catch(() => {
                 this.setState({
                     registeredBioMeticPassword: false
                 });
             });
 
-        console.log("componentDidMount");
+       
         TouchID.isSupported()
             .then(biometryType => {
                 if (biometryType === 'TouchID') {
@@ -121,12 +115,11 @@ class LoginComponent extends Component {
                     });
                     //  Touch ID is supported on Android
                 }
-            }).catch(error => {
+            }).catch(() => {
                 this.setState({
                     
                     faceIdEnrolled: false
                 });
-                console.log("Touch ID error occured !! ==>", error);
             });
 
         if (initialState && initialState.verifiedEmail) {
@@ -155,8 +148,6 @@ class LoginComponent extends Component {
             });
         }
 
-        console.log('componentDidUpdate', emailVerify);
-
         const validEmail = 'vcm.com';
         const validPassword = 'Vcm123';
         const test = validEmail.localeCompare(email);
@@ -164,10 +155,8 @@ class LoginComponent extends Component {
 
         if (!test && !test1) {
             RNSecureKeyStore.set("EmailAddress", validEmail, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
-                .then((res) => {
-                    console.log("stored", res);
-                }, (err) => {
-                    console.log(err);
+                .then(() => {
+                }, () => {
                 });
 
             if (loginState && loginState.emailCheck && loginState.data && loginState.data.response && loginState.data.response.status === 200) {
@@ -191,7 +180,7 @@ class LoginComponent extends Component {
         const {registeredBioMetricUsername,registeredBioMeticPassword} = this.state;
 
         if (result) {
-            alert("Authentication Successfull");
+            showAlert("Authentication Successfull");
 
             const username = registeredBioMetricUsername;
             const password = registeredBioMeticPassword;
@@ -204,10 +193,10 @@ class LoginComponent extends Component {
                 phoneNumber
             }).then(data => {
                 
-                console.log("Data", JSON.stringify(data.signInUserSession.idToken.jwtToken));
+                // console.log("Data", JSON.stringify(data.signInUserSession.idToken.jwtToken));
 
                 RNSecureKeyStore.set("jwtToken", data.signInUserSession.idToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
-                    console.log("token saved suuccessfully", res);
+                    // console.log("token saved suuccessfully", res);
                 }, (err) => {
                     console.log("Error", err);
                 });
@@ -215,19 +204,15 @@ class LoginComponent extends Component {
                 const currentSessionTime = new Date();
 
                 RNSecureKeyStore.set("currentSession", currentSessionTime.getTime().toString(), { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
-                    .then((res) => {
-                        console.log("*****currentSession******", res);
-                    }, (err) => {
-                        console.log(err);
+                    .then(() => {
+                    }, () => {
                     });
 
 
-                alert("Signed In Successfully.");
+                    showAlert("Signed In Successfully.");
                 RNSecureKeyStore.set("EmailAddress", username, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
-                    .then((res) => {
-                        console.log("stored", res);
-                    }, (err) => {
-                        console.log(err);
+                    .then(() => {
+                    }, () => {
                     });
                 navigation.navigate('dashboard');
             });
@@ -236,8 +221,8 @@ class LoginComponent extends Component {
                 enableBiometric: false
             });
         }
-        else {
-            alert("Aunthentication Failed");
+        else {     
+            showAlert("Aunthentication Failed");
             this.setState({
                 enableBiometric: false
             });
@@ -276,24 +261,19 @@ class LoginComponent extends Component {
     enableBioMetric = () => {
         RNSecureKeyStore.set("enableBioMetric", "true", { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
             .then((res) => {
-                alert("Registered Bio Metric Successfully.");
-            }, (err) => {
-                console.log(err);
+                showAlert("Registered Bio Metric Successfully.");
+            }, () => {
             });
 
 
         RNSecureKeyStore.set("bioMetricUserName", this.state.email, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
-            .then((res) => {
-                console.log("Bio Metric username saved.");
-            }, (err) => {
-                console.log(err);
+            .then(() => {
+            }, () => {
             });
 
         RNSecureKeyStore.set("bioMetricPassword", this.state.password, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
-            .then((res) => {
-                console.log("Bio Metric password saved.");
-            }, (err) => {
-                console.log(err);
+            .then(() => {
+            }, () => {
             });
     }
 
@@ -316,31 +296,23 @@ class LoginComponent extends Component {
             setEnvironment("LIVE");
 
             RNSecureKeyStore.set("jwtToken", data.signInUserSession.idToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
-                console.log("token saved suuccessfully", res);
-            }, (err) => {
-                 console.log("Error", err);
+            }, () => {
             });
 
             RNSecureKeyStore.set("accessToken", data.signInUserSession.accessToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
-                console.log("token saved suuccessfully", res);
-            }, (err) => {
-                console.log("Error", err);
+            }, () => {
             });
 
             RNSecureKeyStore.set("refreshToken", data.signInUserSession.refreshToken.token, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
-                console.log("token saved suuccessfully", res);
-            }, (err) => {
-                console.log("Error", err);
+            }, () => {
             });
 
             const currentSessionTime = new Date();
             
 
             RNSecureKeyStore.set("currentSession", currentSessionTime.getTime().toString(), { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
-                .then((res) => {
-                    console.log("*****currentSession******", res);
-                }, (err) => {
-                    console.log(err);
+                .then(() => {
+                }, () => {
                 });
 
             if (!this.state.registeredBioMetric) {
@@ -355,22 +327,18 @@ class LoginComponent extends Component {
             }
 
 
-            alert("Signed In Successfully.");
+            showAlert("Signed In Successfully.");
             RNSecureKeyStore.set("EmailAddress", username, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
-                .then((res) => {
-                    console.log("stored", res);
-                }, (err) => {
-                    console.log(err);
+                .then(() => {
+                }, () => {
                 });
                 updateEmail(username);
 
             /* If it is a first time user use OTP auth */
             RNSecureKeyStore.get("authProcessCompleted")
-                .then((value) => {
-                    console.log("authProcessCompleted------->", value);
+                .then(() => {
                     navigation.navigate('dashboard');
-                }).catch((error) => {
-                     console.log("Error", error);
+                }).catch(() => {
                     navigation.navigate('otpAuth');
                 });
 
@@ -379,8 +347,7 @@ class LoginComponent extends Component {
             // this.props.navigation.navigate('otpAuth');
             // this.props.navigation.navigate('dashboard');
         }).catch(error => {
-            alert("Username and Password Incorrect.");
-             console.log(error);
+            showAlert("Username and Password Incorrect.");
         });
     }
 
@@ -422,17 +389,13 @@ class LoginComponent extends Component {
     navigateCommonUI = () => {
 
         RNSecureKeyStore.remove("enableBioMetric")
-            .then((res) => {
-                console.log(res);
-            }, (err) => {
-                console.log(err);
+            .then(() => {
+            }, () => {
             });
 
         RNSecureKeyStore.remove("authProcessCompleted")
-            .then((res) => {
-                console.log(res);
-            }, (err) => {
-                console.log(err);
+            .then(() => {
+            }, () => {
             });
         // this.props.navigation.navigate('Common');
 

@@ -71,36 +71,16 @@ export default class ChartComponent extends Component {
     }
 
     goBack = () => {
-        this.props.navigation.goBack();
+        const {navigation} = this.props;
+        navigation.goBack();
     }
 
     render() {
 
         const amounts = [35, 40, 8, 17];
-        const pData = [
-            {
-                key: 1,
-                amount: 35,
-                svg: { fill: '#600080' },
-            },
-            {
-                key: 2,
-                amount: 40,
-                svg: { fill: '#9900cc' }
-            },
-            {
-                key: 3,
-                amount: 8,
-                svg: { fill: '#c61aff' }
-            },
-            {
-                key: 4,
-                amount: 17,
-                svg: { fill: '#d966ff' }
-            }
-        ];
+   
 
-        const randomColor = () => ('#' + (Math.random() * 0xFFFFFF << 0).toString(16) + '000000').slice(0, 7);
+        const randomColor = () => (`#${ (Math.random() * 0xFFFFFF << 0).toString(16) }000000`).slice(0, 7);
 
         const pieData = amounts
             .filter(value => value > 0)
@@ -116,14 +96,15 @@ export default class ChartComponent extends Component {
 
         return (
             !this.state.barChart ?
-                <View>
+                (
+<View>
                     <GButtonComponent
                         buttonStyle={styles.buttonStyle}
                         textStyle={styles.buttonTextStyle}
-                        buttonText={"Back"}
+                        buttonText="Back"
                         onPress={this.goBack}
                     />
-                    <GButtonComponent buttonText={"View in Bar Chart"} onPress={() => this.setState({ barChart: !this.state.barChart })} buttonStyle={styles.buttonStyle} />
+                    <GButtonComponent buttonText="View in Bar Chart" onPress={() => this.setState({ barChart: !this.state.barChart })} buttonStyle={styles.buttonStyle} />
 
                     <PieChart
                         style={{ height: 200 }}
@@ -136,17 +117,19 @@ export default class ChartComponent extends Component {
                     >
                         <Labels />
                     </PieChart>
-                </View>
+</View>
+)
                 :
-                <View>
+                (
+<View>
                     <GButtonComponent
                         buttonStyle={styles.buttonStyle}
                         textStyle={styles.buttonTextStyle}
-                        buttonText={"Back"}
+                        buttonText="Back"
                         onPress={this.goBack}
                     />
 
-                    <GButtonComponent buttonText={"View in Pie Chart"}
+                    <GButtonComponent buttonText="View in Pie Chart"
                         onPress={() => this.setState({ barChart: !this.state.barChart })}
                         buttonStyle={styles.buttonStyle}
                     />
@@ -162,7 +145,8 @@ export default class ChartComponent extends Component {
                     >
                         <Grid />
                     </BarChart>
-                </View>
+</View>
+)
         );
     }
 
@@ -175,5 +159,6 @@ ChartComponent.propTypes = {
 };
 
 ChartComponent.defaultProps = {
+    navigation : {}
 
 };

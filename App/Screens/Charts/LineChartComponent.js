@@ -1,15 +1,8 @@
-import React, { Component } from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import React from 'react';
+import { View, Dimensions } from 'react-native';
 import { LineChart, Grid, YAxis, XAxis } from 'react-native-svg-charts';
-import { Circle, G, Line } from 'react-native-svg';
-import { scaledHeight } from '../../Utils/Resolution';
 
-const screenWidth = Dimensions.get("window").width;
-const contentInset = { top: 20, bottom: 20 };
 
-const axesSvg = { fontSize: 10, fill: 'grey' };
-const verticalContentInset = { top: 10, bottom: 10 };
-const xAxisHeight = 30;
 
 class LineChartComponent extends React.PureComponent {
 
