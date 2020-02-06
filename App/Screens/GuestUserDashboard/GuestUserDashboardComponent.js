@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { Text, View, ScrollView, Image,FlatList, TouchableOpacity} from 'react-native';
 // import RNSecureKeyStore from 'react-native-secure-key-store';
@@ -7,6 +9,7 @@ import { GHeaderComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import GuestUserAccounts from './GuestUesrAccounts';
 import GuestUserFinancial from './GuestUserFinancial';
+// import AppUtils from '../../Utils/AppUtils';
 // import GuestUserNewsAndCommentary from './GuestUserNewsAndCommentary';
 
 class GuestUserDashboardComponent extends Component {
@@ -31,10 +34,10 @@ class GuestUserDashboardComponent extends Component {
 
     }
 
-    static getDerivedStateFromProps(props) {
+    static getDerivedStateFromProps(nextProps) {  
         return {
-            newsData: props.newsData.newsAndCommentary
-        }
+            newsData: nextProps.newsData.newsAndCommentary
+        };
     }
 
     /*----------------------
