@@ -10,7 +10,7 @@ import {
 } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import * as regexConst from '../../Constants/RegexConstants';
-import {ValidatePassword} from '../../Utils/ValidatePassword';
+import ValidatePassword from '../../Utils/ValidatePassword';
 
 class NewPasswordComponent extends Component {
   constructor(props) {
@@ -22,7 +22,7 @@ class NewPasswordComponent extends Component {
       booCfm: false,
       strCfm: '',
       errCfm: '',
-      validationPassword:false,
+      // validationPassword:false,
     };
     // set true to isLoading if data for this screen yet to be received and wanted to show loader.
   }
@@ -51,12 +51,12 @@ class NewPasswordComponent extends Component {
   //      password: text
   //    });
   //  }
-  validateNewPassword = () => {
-    const{strNew} =this.state;
+//   validateNewPassword = () => {
+//     const{strNew} =this.state;
    
-    const validate = (ValidatePassword(strNew)===globalString.userManagement.strong);
-    this.setState({ validationPassword: validate });
-}
+//     const validate = (ValidatePassword(strNew)===globalString.userManagement.strong);
+//     this.setState({ validationPassword: validate });
+// }
 
   navigationLogin = () => {
     const{navigation}=this.props;
@@ -153,8 +153,8 @@ class NewPasswordComponent extends Component {
            placeholder={globalString.recoverPassword.passwordPlaceHolder} 
            onChangeText={this.setNew}
            value={strNew}
-           onBlur={this.validateNewPassword}
-          onSubmitEditing={this.validateNewPassword}
+          //  onBlur={this.validateNewPassword}
+          // onSubmitEditing={this.validateNewPassword}
            secureTextEntry
           />
           <Text style={styles.errorMessage}>{errNew}</Text>

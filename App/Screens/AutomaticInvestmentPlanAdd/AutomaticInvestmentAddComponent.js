@@ -674,9 +674,9 @@ class AutomaticInvestmentAddComponent extends Component {
                 }));
 
                 if (input !== "" && input !== null && input !== undefined) {
-                    if (this[input] !== null && this[input] !== undefined) {
-                        if (typeof this[input].focus === 'function') {
-                            this[input].focus();
+                    if (this[`${input}`] !== null && this[`${input}`] !== undefined) {
+                        if (typeof this[`${input}`].focus === 'function') {
+                            this[`${input}`].focus();
                         }
                     }
                 }
@@ -689,7 +689,7 @@ class AutomaticInvestmentAddComponent extends Component {
     render() {
         const { navigation } = this.props;
         const { accName, accNumber, bankAccountDetails, totalFund, errorMsg,
-            selectedItemID, fundConsumed, fundRemaining, fundList, refresh, selectedBank, addBankAccount, errMsg } = this.state;//,investedIn,ItemToEdit
+            selectedItemID, fundConsumed, fundRemaining, fundList, refresh, selectedBank, addBankAccount, errMsg } = this.state;
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
@@ -774,7 +774,7 @@ class AutomaticInvestmentAddComponent extends Component {
                                             label="Savings"
                                             descLabelStyle={styles.lblRadioDescTxt}
                                             descLabel=""
-                                            selected={(addBankAccount.accountType !== null && addBankAccount.accountType === "Savings") ? true : false}
+                                            selected={!!((addBankAccount.accountType !== null && addBankAccount.accountType === "Savings"))}
                                             onPress={this.onPressRadio("accountType", "Savings")}
                                         />
                                         <CustomRadio
@@ -787,7 +787,7 @@ class AutomaticInvestmentAddComponent extends Component {
                                             label="Checking"
                                             descLabelStyle={styles.lblRadioDescTxt}
                                             descLabel=""
-                                            selected={(addBankAccount.accountType !== null && addBankAccount.accountType === "Checking") ? true : false}
+                                            selected={!!((addBankAccount.accountType !== null && addBankAccount.accountType === "Checking"))}
                                             onPress={this.onPressRadio("accountType", "Checking")}
                                         />
 

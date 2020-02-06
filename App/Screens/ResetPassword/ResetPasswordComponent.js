@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { GIcon, GInputComponent, GHeaderComponent, GFooterComponent } from '../../CommonComponents';
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
-import {ValidatePassword} from '../../Utils/ValidatePassword';
+import ValidatePassword from '../../Utils/ValidatePassword';
 
 
 class ResetPasswordComponent extends Component {

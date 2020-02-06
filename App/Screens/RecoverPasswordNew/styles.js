@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: scaledHeight(8),
   },
-  passNewStyle:{ flex: 2, color: '#333333DE',
+  passNewStyle:{ color: '#333333DE', flex: 2,
   fontSize: scaledHeight(16),
   fontWeight: 'bold',
   marginBottom: scaledHeight(8),},
@@ -244,7 +244,6 @@ const styles = StyleSheet.create({
   },
   refreshOtp: {
     color: '#0000FF',
-    // textDecorationLine:"underline",
     fontSize: scaledHeight(16),
     fontWeight: '500',
   },
@@ -345,7 +344,6 @@ userIDText: {
 userIDTextBox: {
     marginLeft: '4%',
     marginRight: '4%',
-    //  marginBottom:scaledHeight(18)
   },
 userIDTextBoxError: {
     borderColor: 'red',

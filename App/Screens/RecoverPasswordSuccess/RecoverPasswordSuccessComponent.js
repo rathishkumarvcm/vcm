@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text } from 'react-native';
+import PropTypes from 'prop-types';
 import styles from './styles';
 import {
   GHeaderComponent,
   GFooterComponent
 } from '../../CommonComponents';
-import PropTypes from 'prop-types';
-import { scaledHeight } from '../../Utils/Resolution';
 import globalStrings from '../../Constants/GlobalStrings';
 
 class RecoveryPasswordSuccessComponent extends Component {
