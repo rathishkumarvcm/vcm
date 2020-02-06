@@ -48,13 +48,10 @@ class OpenAccPageSixComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            itemID: "",
             confirmTINType: "",
             confirmTINTypeValidation: true,
             agreeConditionsValidation: true,
             agreeConditions: false,
-            isValidationSuccess: true,
-            errMsg: ""
 
         };
     }
@@ -64,7 +61,7 @@ class OpenAccPageSixComponent extends Component {
                                                                  -------------------------- */
     componentDidMount() {
         AppUtils.debugLog("componentDidMount::::> ");
-        const { masterLookupStateData, getCompositeLookUpData,getPersonalCompositeData } = this.props;
+        const { masterLookupStateData, getCompositeLookUpData } = this.props;
         const payload = [];
         const compositePayloadData = [
             "backup_withholding",
@@ -73,12 +70,12 @@ class OpenAccPageSixComponent extends Component {
         ];
 
         for (let i = 0; i < compositePayloadData.length; i += 1) {
-            const tempkey = compositePayloadData[i];
-            if (this.props && masterLookupStateData && !masterLookupStateData[tempkey]) {
+            const tempkey = compositePayloadData[+i];
+            if (this.props && masterLookupStateData && !masterLookupStateData[`${tempkey}`]) {
                 payload.push(tempkey);
             }
         }
-        getPersonalCompositeData(payload);
+        getCompositeLookUpData(payload);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -88,24 +85,25 @@ class OpenAccPageSixComponent extends Component {
 
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.ESIGN_SAVE_OPENING_ACCT;
-            if (accOpeningData[responseKey]) {
-                if (accOpeningData[responseKey] !== prevProps.accOpeningData[responseKey]) {
-                    const tempResponse = accOpeningData[responseKey];
-                    if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
-                        AppUtils.debugLog(`Account  Saved ::: :: ${tempResponse.message}`);
-                        showAlert(gblStrings.common.appName, tempResponse.message, gblStrings.common.ok);
+            if (accOpeningData[`${responseKey}`]) {
+                if (accOpeningData[`${responseKey}`] !== prevProps.accOpeningData[`${responseKey}`]) {
+                    const tempResponse = accOpeningData[`${responseKey}`];
+                    if (tempResponse.status) {
+                        const msg = tempResponse.status;
+                        AppUtils.debugLog(`Account Type Saved ::: :: ${msg}`);
+                        showAlert(gblStrings.common.appName, tempResponse.status, gblStrings.common.ok);
+                        AppUtils.debugLog(tempResponse.status);
                     } else {
-                        AppUtils.debugLog(`Account  Saved  falied::: :: ${tempResponse.message}`);
                         showAlert(gblStrings.common.appName, tempResponse.message, gblStrings.common.ok);
-
+                        AppUtils.debugLog(tempResponse.message);
                     }
                 }
             }
 
             const submitResKey = ActionTypes.SUBMIT_OPENING_ACCT;
-            if (accOpeningData[submitResKey]) {
-                if (accOpeningData[submitResKey] !== prevProps.accOpeningData[submitResKey]) {
-                    const tempResponse = accOpeningData[submitResKey];
+            if (accOpeningData[`${submitResKey}`]) {
+                if (accOpeningData[`${submitResKey}`] !== prevProps.accOpeningData[`${submitResKey}`]) {
+                    const tempResponse = accOpeningData[`${submitResKey}`];
                    /* if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
                         const msg = `${tempResponse.message}  :${tempResponse.accountId}`;
                         AppUtils.debugLog(`Account Created ::: :: ${msg}`);
@@ -242,17 +240,14 @@ class OpenAccPageSixComponent extends Component {
     }
 
     validateFields = () => {
-        let errMsg = "";
         let input = "";
         const { confirmTINType, agreeConditions } = this.state;
 
 
         let isValidationSuccess = false;
         if (this.isEmpty(confirmTINType)) {
-            errMsg = gblStrings.accManagement.confirmTINBackupWithholdingMsg;
             input = "confirmTINTypeValidation";
         } else if (agreeConditions === false) {
-            errMsg = gblStrings.accManagement.confirmAgreeCondMsg;
             input = "agreeConditionsValidation";
 
         } else {
@@ -264,8 +259,6 @@ class OpenAccPageSixComponent extends Component {
 
         }
         this.setState({
-            isValidationSuccess,
-            errMsg: isValidationSuccess === false ? errMsg : "",
             [input]: false
         });
         return isValidationSuccess;
@@ -295,6 +288,7 @@ class OpenAccPageSixComponent extends Component {
     renderRadio = (radioName, radioSize, componentStyle, layoutStyle) => {
         AppUtils.debugLog(`renderRadio::: ${radioName}`);
         const { masterLookupStateData } = this.props;
+        const {[radioName]:radio} = this.state;
 
         let radioData = dummyData;
         let tempkey = "";
@@ -308,25 +302,25 @@ class OpenAccPageSixComponent extends Component {
 
         AppUtils.debugLog(`tempkey::${tempkey}`);
 
-        if (this.props && masterLookupStateData && masterLookupStateData[tempkey] && masterLookupStateData[tempkey].value) {
-            radioData = masterLookupStateData[tempkey].value;
+        if (this.props && masterLookupStateData && masterLookupStateData[`${tempkey}`] && masterLookupStateData[`${tempkey}`].value) {
+            radioData = masterLookupStateData[`${tempkey}`].value;
         }
 
         const radioCoponents = [];
         for (let i = 0; i < radioData.length; i += 1) {
             radioCoponents.push(
                 <CustomRadio
-                    key={radioData[i].key}
+                    key={radioData[+i].key}
                     componentStyle={componentStyle}
                     size={radioSize}
                     outerCicleColor="#DEDEDF"
                     innerCicleColor="#61285F"
                     labelStyle={styles.lblRadioBtnTxt}
-                    label={radioData[i].value}
+                    label={radioData[+i].value}
                     descLabelStyle={styles.lblRadioDescTxt}
                     descLabel=""
-                    selected={!!((this.state[radioName] !== null && this.state[radioName] === radioData[i].key))}
-                    onPress={this.onPressRadio(radioName, radioData[i].key)}
+                    selected={!!((radio !== null && radio === radioData[+i].key))}
+                    onPress={this.onPressRadio(radioName, radioData[+i].key)}
                 />
             );
         }
@@ -535,7 +529,6 @@ OpenAccPageSixComponent.propTypes = {
     submitAccountOpening: PropTypes.func,
     saveAccountOpening: PropTypes.func,
     getCompositeLookUpData: PropTypes.func,
-    getPersonalCompositeData: PropTypes.func
 
 };
 OpenAccPageSixComponent.defaultProps = {
@@ -545,7 +538,6 @@ OpenAccPageSixComponent.defaultProps = {
     getCompositeLookUpData: null,
     saveAccountOpening: null,
     submitAccountOpening: null,
-    getPersonalCompositeData: null
 
 
 
