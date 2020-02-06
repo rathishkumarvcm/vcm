@@ -47,7 +47,7 @@ export default class TAmmendComponent extends Component {
     }
 
     getPendingTransactions = () => {
-         console.log("in component");
+        // console.log("in component");
         const { getTransactionData } = this.props;
         const payload = {
                 "customerId":"123",
@@ -93,26 +93,26 @@ export default class TAmmendComponent extends Component {
         const { navigation } = this.props;
         if (data.TransactionType === "Liquidation" || data.TransactionType === "Liquidation Amended") {
             navigation.navigate('LiquidationPageTwo',
-                { index: selectedIndex, data: data, ammend: true });
+                { index: selectedIndex, data, ammend: true });
         }
         if (data.TransactionType === "Purchase" || data.TransactionType === "Purchase Amended") {
 
             navigation.navigate('purchaseScreenTwo',
-                { index: selectedIndex, data: data, ammend: true });
+                { index: selectedIndex,data, ammend: true });
         }
         if (data.TransactionType === "Exchange" || data.TransactionType === "Exchange Amended") {
             navigation.navigate('exchangeScreenTwo',
-                { index: selectedIndex, data: data, ammend: true });
+                { index: selectedIndex, data, ammend: true });
         }
     }
 
     renderAccordians = () => {
         const items = [];
-
-        for (item of this.state.pendingItems) {
+const {pendingItems} = this.state;
+        for (item of pendingItems) {
             items.push(
                 <Accordian
-                    title={item.title}
+                    title={item && item.title}
                     index={item.key}
                     data={item.data}
                     selectDataIndex={this.selectIndex}

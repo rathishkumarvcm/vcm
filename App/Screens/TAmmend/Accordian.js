@@ -44,29 +44,34 @@ export default class Accordian extends Component {
 
     moveToFundSelection = () => {
 
+        const{navigate}=this.props;
         this.setState({
             modalVisible: false,
         });
         this.setState({
             ammend: false,
         });
-        this.props.navigate();
+        navigate();
 
     }
 
     toggleExpand = () => {
-        this.setState({ expanded: !this.state.expanded });
-        this.props.selectDataIndex(this.props.data, this.props.title, this.props.index);
+        const{expanded}=this.state;
+        const{selectDataIndex,data,title}=this.props;
+        this.setState({ expanded: !expanded });
+        selectDataIndex(data, title, title);
     }
 
     render() {
+        const{expanded,ammend,modalVisible}=this.state;
+        const{title,data,selectedTitle,selectedValue}=this.props;
         return (
 
             <View>
 
-                <TouchableOpacity style={styles.row} onPress={() => this.toggleExpand(item)}>
-                    <Text style={styles.expandImage}>{this.state.expanded ? "-" : "+"}</Text>
-                    <Text style={styles.lblTxt}>{this.props.title}</Text>
+                <TouchableOpacity style={styles.row} onPress={this.toggleExpand}>
+                    <Text style={styles.expandImage}>{expanded ? "-" : "+"}</Text>
+                    <Text style={styles.lblTxt}>{title}</Text>
                     <TouchableOpacity style={styles.ellipseImage} onPress={this.showAmmend}>
 
                         <GIcon
@@ -80,10 +85,10 @@ export default class Accordian extends Component {
 
                 <View />
                 {
-                    this.state.expanded &&
+                    expanded &&
                     (
                         <View style={styles.accordianView}>
-                            {this.state.ammend ?
+                            {ammend ?
                                 (
                                     <View style={styles.shadowView}>
                                         <TouchableOpacity onPress={this.showModal}>
@@ -105,56 +110,60 @@ export default class Accordian extends Component {
                                     color="#BBB3B3"
                                 />
                                 <View style={styles.marginTopView}>
-                                    <Text style={styles.lblTxt}>{gblStrings.liquidation.accountName} {this.props.data.selectedAccountData.accountName}</Text>
+                                    <Text style={styles.lblTxt}>{gblStrings.liquidation.accountName} {data.selectedAccountData.accountName}</Text>
                                     <Text style={styles.lblTxt}>{gblStrings.liquidation.accountNumber}</Text>
-                                    <Text style={styles.lblTxt}>{this.props.data.selectedAccountData.accountNumber}</Text>
+                                    <Text style={styles.lblTxt}>{data.selectedAccountData.accountNumber}</Text>
                                 </View>
                             </View>
                             <View style={styles.viewRow}>
-                                <Text style={styles.lblTxtInner}>{this.props.data.selectedFundData.fundName}</Text>
-                                <Text style={styles.lblCountText}>{this.props.data.count}</Text>
+                                <Text style={styles.lblTxtInner}>{data.selectedFundData.fundName}</Text>
+                                <Text style={styles.lblCountText}>{data.count}</Text>
                             </View>
 
                             <View style={styles.viewRow}>
                                 <Text style={styles.lblTxtSmall}>Date added:</Text>
-                                <Text style={styles.lblTxtSmall}>{this.props.data.Dateadded}</Text>
+                                <Text style={styles.lblTxtSmall}>{data.Dateadded}</Text>
                             </View>
                             <Text style={styles.lblLine} />
                             <View style={styles.viewColum}>
                                 <Text style={styles.lblTxtInner}>CurrentValue</Text>
-                                <Text style={styles.lblTxtMedium}>{this.props.data.selectedAccountData.currentValue}</Text>
+                                <Text style={styles.lblTxtMedium}>{data.selectedAccountData.currentValue}</Text>
                             </View>
                             <View style={styles.viewColum}>
                                 <Text style={styles.lblTxtInner}>TransactionType</Text>
-                                <Text style={styles.lblTxtMedium}>{this.props.data.TransactionType}</Text>
+                                <Text style={styles.lblTxtMedium}>{data.TransactionType}</Text>
                             </View>
-                            {(this.props.data.TransactionType === "Exchange"||this.props.data.TransactionType === "Exchange Amended")?
+                            {(data.TransactionType === "Exchange"||data.TransactionType === "Exchange Amended")?
+                            (
                             <View style={styles.viewColum}>
                                 <Text style={styles.lblTxtInner}>FundName</Text>
-                                <Text style={styles.lblTxtMedium}>{this.props.data.selectedFundData.fundName}}</Text>
-                            </View>:
+                                <Text style={styles.lblTxtMedium}>{data.selectedFundData.fundName}</Text>
+                            </View>
+                            ):
+                            (
                             <View style={styles.viewColum}>
                                 <Text style={styles.lblTxtInner}>PaymentMode</Text>
-                                <Text style={styles.lblTxtMedium}>{this.props.data.selectedFundSourceData.paymentMode}</Text>
+                                <Text style={styles.lblTxtMedium}>{data.selectedFundSourceData.paymentMode}</Text>
                             </View>
+                            )
                             }
                             <View style={styles.viewColum}>
                                 <Text style={styles.lblTxtInner}>OrderStatus</Text>
-                                <Text style={styles.lblTxtMedium}>{this.props.data.OrderStatus}</Text>
+                                <Text style={styles.lblTxtMedium}>{data.OrderStatus}</Text>
                             </View>
                         </View>
                     )
                 }
-                {this.state.modalVisible ?
+                {modalVisible ?
                     (
                         <Modal
                             transparent
-                            visible={this.state.modalVisible}
+                            visible={modalVisible}
                         >
                             <View style={styles.modalView}>
                                 <View style={styles.modalInsideView}>
-                                    <Text style={styles.modalText}>Are you Sure you want to Amend {this.props.selectedTitle}
-                                        (Purchase of {this.props.selectedValue} of UAUX fund)
+                                    <Text style={styles.modalText}>Are you Sure you want to Amend {selectedTitle}
+                                        (Purchase of {selectedValue} of UAUX fund)
                                     </Text>
                                     <View style={styles.buttonView}>
                                         <GButtonComponent
@@ -195,7 +204,7 @@ Accordian.propTypes = {
     navigate: PropTypes.func,
     data: PropTypes.instanceOf(Object),
     title: PropTypes.instanceOf(Object),
-    index: PropTypes.instanceOf(Object),
+     // index: PropTypes.instanceOf(Object),
     selectedTitle: PropTypes.instanceOf(Object),
     selectedValue: PropTypes.instanceOf(Object)
 };
@@ -204,7 +213,7 @@ Accordian.defaultProps = {
     selectDataIndex: () => { },
     data: {},
     title: {},
-    index: {},
+     // index: {},
     selectedTitle: {},
     selectedValue: {}
 };
