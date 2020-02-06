@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         marginRight : '5%',
         marginTop:'10%'
     },
-    defaultMargin:{marginTop:'5%',marginBottom:'5%'};
+    defaultMargin:{marginBottom:'5%',marginTop:'5%'},
     floatInput: {
       width: "90%",
     },
