@@ -3896,7 +3896,7 @@ class OpenAccPageTwoComponent extends Component {
         let total = 0;
         let errMsg = "";
         for (let i = 0; i < newItems.length; i += 1) {
-            if (!isNumeric(newItems[+i].beneficiaryDistPercent) && newItems[+i].beneficiaryDistPercent !== "") {
+            if (isNumeric(newItems[+i].beneficiaryDistPercent) && newItems[+i].beneficiaryDistPercent !== "") {
                 total += parseFloat(newItems[+i].beneficiaryDistPercent);
             }
         }
