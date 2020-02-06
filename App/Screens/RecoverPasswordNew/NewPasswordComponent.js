@@ -10,37 +10,32 @@ import {
 } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import * as regexConst from '../../Constants/RegexConstants';
-// const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/;
 import {ValidatePassword} from '../../Utils/ValidatePassword';
 
 class NewPasswordComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isReset: true,
-      //  validationPassword: false,
-      password: '',
-      boo_new: false,
-      str_new: '',     
-      err_new: '',
-      boo_cfm: false,
-      str_cfm: '',
-      style_cfm: styles.userIDTextBox,
-      err_cfm: '',
-      validationPassword: true,
+      booNew: false,
+      strNew: '',     
+      errNew: '',
+      booCfm: false,
+      strCfm: '',
+      errCfm: '',
+      validationPassword:false,
     };
     // set true to isLoading if data for this screen yet to be received and wanted to show loader.
   }
 
   setNew = (text) => {
     this.setState({
-      str_new: text
+      strNew: text
     });
   }
 
   setConfirm = (text) => {
     this.setState({
-      str_cfm: text
+      strCfm: text
     });
   }
 
@@ -57,53 +52,65 @@ class NewPasswordComponent extends Component {
   //    });
   //  }
   validateNewPassword = () => {
-    const validate = (ValidatePassword(this.state.str_new)===globalString.userManagement.strong);
+    const{strNew} =this.state;
+   
+    const validate = (ValidatePassword(strNew)===globalString.userManagement.strong);
     this.setState({ validationPassword: validate });
 }
 
-  navigationLogin = () => this.props.navigation.navigate('login');
+  navigationLogin = () => {
+    const{navigation}=this.props;
+    navigation.navigate('login');
+  }
 
   navigationSuccess = () => 
   {
+    const{strNew,strCfm} =this.state;
+    const{navigation}=this.props;
+    const validateNew=regexConst.passwordRegex.test(strNew);
+    const validateCfm=regexConst.passwordRegex.test(strCfm);
     
-    const validate_new=regexConst.passwordRegex.test(this.state.str_new);
-    const validate_cfm=regexConst.passwordRegex.test(this.state.str_cfm);
-    
-    // const validPass=regexConst.passwordRegex.test(this.state.str_new);
+    // const validPass=regexConst.passwordRegex.test(this.state.strNew);
     this.setState({
-      boo_new: !validate_new,// == "" ? true : false,
-      err_new: !validate_new ? globalString.recoverPassword.validPassword : '',
-      boo_cfm: !validate_cfm,
-      err_cfm: !validate_cfm ? globalString.recoverPassword.validPassword : '',
+      booNew: !validateNew,
+      errNew: !validateNew ? globalString.recoverPassword.validPassword : '',
+      booCfm: !validateCfm,
+      errCfm: !validateCfm ? globalString.recoverPassword.validPassword : '',
       
   });
      
-     if(validate_new && validate_cfm)
-        if(this.state.str_new == this.state.str_cfm)
+     if(validateNew && validateCfm)
+        if(strNew === strCfm)
         {
           const recoveryJson={
-            newPassword:this.state.str_new,
+            newPassword:strNew,
           };
-          console.log(recoveryJson);
-          this.props.navigation.navigate('passwordSuccess');
+         
+          navigation.navigate('passwordSuccess',{key:recoveryJson});
         }
         else
         {
           this.setState({
-              err_cfm:globalString.recoverPassword.password_mismatch
+              errCfm:globalString.recoverPassword.password_mismatch
           });
         }
 }
 
-  navigationBack = () => this.props.navigation.goBack();
+  navigationBack = () => 
+  {
+    const{navigation}=this.props;
+    navigation.goBack();
+  }
 
   render() {
+    const{navigation}=this.props;
+    const{strNew,strCfm,booCfm,booNew,errCfm,errNew} =this.state;
     return (
       <View style={styles.container}>
         <GHeaderComponent register
-          navigation={this.props.navigation}
+          navigation={navigation}
         />
-        <ScrollView style={{ flex: 0.85 }}>
+        <ScrollView style={styles.scrollStyle}>
           <View style={styles.signInView}>
             <Text style={styles.retrievePasswordText}>
               {globalString.recoverPassword.password_new_title}
@@ -133,7 +140,7 @@ class NewPasswordComponent extends Component {
           } */}
 
           <View style={styles.hintView}>
-            <Text style={[{ flex: 2 }, styles.enterOpt]}>
+            <Text style={styles.passNewStyle}>
               {globalString.recoverPassword.password_new}
             </Text>
             <View style={styles.hintText}>
@@ -142,27 +149,27 @@ class NewPasswordComponent extends Component {
           </View>
 
           <GInputComponent
-           propInputStyle={this.state.boo_new ? styles.userIDTextBoxError : styles.userIDTextBox}
+           propInputStyle={booNew ? styles.userIDTextBoxError : styles.userIDTextBox}
            placeholder={globalString.recoverPassword.passwordPlaceHolder} 
            onChangeText={this.setNew}
-           value={this.state.str_new}
+           value={strNew}
            onBlur={this.validateNewPassword}
-            onSubmitEditing={this.validateNewPassword}
+          onSubmitEditing={this.validateNewPassword}
            secureTextEntry
           />
-          <Text style={styles.errorMessage}>{this.state.err_new}</Text>
+          <Text style={styles.errorMessage}>{errNew}</Text>
 
           <View style={styles.passwordStrengthFlex}>
                         <View style={styles.passwordStrongFlex}>
-                            <View style={(ValidatePassword(this.state.str_new)==globalString.userManagement.strong)?styles.strong:styles.default} />
+                            <View style={(ValidatePassword(strNew)===globalString.userManagement.strong)?styles.strong:styles.default} />
                             <Text style={styles.strongText}>{globalString.userManagement.strong}</Text>
                         </View>
                         <View style={styles.passwordStrongFlex}>
-                            <View style={(ValidatePassword(this.state.str_new)==globalString.userManagement.good)?styles.good:styles.default} />
+                            <View style={(ValidatePassword(strNew)===globalString.userManagement.good)?styles.good:styles.default} />
                             <Text style={styles.strongText}>{globalString.userManagement.good}</Text>
                         </View>
                         <View style={styles.passwordStrongFlex}>
-                            <View style={(this.state.str_new.length>0)&&(ValidatePassword(this.state.str_new)==globalString.userManagement.weak)?styles.weak:styles.default} />
+                            <View style={(strNew.length>0)&&(ValidatePassword(strNew)===globalString.userManagement.weak)?styles.weak:styles.default} />
                             <Text style={styles.strongText}>{globalString.userManagement.weak}</Text>
                         </View>
           </View>
@@ -171,11 +178,11 @@ class NewPasswordComponent extends Component {
           </View>
 
           <GInputComponent
-            propInputStyle={this.state.boo_cfm ? styles.userIDTextBoxError : styles.userIDTextBox}
+            propInputStyle={booCfm ? styles.userIDTextBoxError : styles.userIDTextBox}
             placeholder={globalString.recoverPassword.passwordPlaceHolder} onChangeText={this.setConfirm}
-            value={this.state.str_cfm} secureTextEntry
+            value={strCfm} secureTextEntry
           />
-          <Text style={styles.errorMessage}>{this.state.err_cfm}</Text>
+          <Text style={styles.errorMessage}>{errCfm}</Text>
 
           <GButtonComponent
             buttonStyle={styles.cancelButton}

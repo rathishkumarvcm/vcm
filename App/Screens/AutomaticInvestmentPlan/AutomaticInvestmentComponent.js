@@ -43,21 +43,21 @@ class AutomaticInvestmentComponent extends Component {
 
     componentDidMount() {
         const { refresh } = this.state;
-        const { automaticInvestmentState } = this.props;
-        if (automaticInvestmentState) {
-            if (automaticInvestmentState.savedAccData) {
+        const { automaticInvestmentProps } = this.props;
+        if (automaticInvestmentProps) {
+            if (automaticInvestmentProps.savedAccData) {
                 this.setState({
-                    generalAutoInvestment: automaticInvestmentState.savedAccData.general,
-                    iraAutoInvestment: automaticInvestmentState.savedAccData.ira,
-                    utmaAutoInvest: automaticInvestmentState.savedAccData.utma,
+                    generalAutoInvestment: automaticInvestmentProps.savedAccData.general,
+                    iraAutoInvestment: automaticInvestmentProps.savedAccData.ira,
+                    utmaAutoInvest: automaticInvestmentProps.savedAccData.utma,
                     refresh: !refresh
                 });
             }
             else {
                 this.setState({
-                    generalAutoInvestment: automaticInvestmentState.general,
-                    iraAutoInvestment: automaticInvestmentState.ira,
-                    utmaAutoInvest: automaticInvestmentState.utma,
+                    generalAutoInvestment: automaticInvestmentProps.general,
+                    iraAutoInvestment: automaticInvestmentProps.ira,
+                    utmaAutoInvest: automaticInvestmentProps.utma,
                     refresh: !refresh
                 });
             }
@@ -65,77 +65,38 @@ class AutomaticInvestmentComponent extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { refresh } = this.state;//,accountType,generalAutoInvestment,iraAutoInvestment,utmaAutoInvest
-        const { automaticInvestmentState } = this.props;
-        // this.showDeletePopup = false;
-        // const indexDelete = this.selectedIndex;
-        // this.selectedIndex = -1;
+        const { refresh } = this.state;
+        const { automaticInvestmentProps } = this.props;
         if (this.props !== prevProps) {
-            if (automaticInvestmentState) {
-                if (automaticInvestmentState.savedAccData) {
+            if (automaticInvestmentProps) {
+                if (automaticInvestmentProps.savedAccData) {
                     this.setState({
-                        generalAutoInvestment: automaticInvestmentState.savedAccData.general,
-                        iraAutoInvestment: automaticInvestmentState.savedAccData.ira,
-                        utmaAutoInvest: automaticInvestmentState.savedAccData.utma,
+                        generalAutoInvestment: automaticInvestmentProps.savedAccData.general,
+                        iraAutoInvestment: automaticInvestmentProps.savedAccData.ira,
+                        utmaAutoInvest: automaticInvestmentProps.savedAccData.utma,
                         refresh: !refresh
                     });
                 }
                 else {
                     this.setState({
-                        generalAutoInvestment: automaticInvestmentState.general,
-                        iraAutoInvestment: automaticInvestmentState.ira,
-                        utmaAutoInvest: automaticInvestmentState.utma,
+                        generalAutoInvestment: automaticInvestmentProps.general,
+                        iraAutoInvestment: automaticInvestmentProps.ira,
+                        utmaAutoInvest: automaticInvestmentProps.utma,
                         refresh: !refresh
                     });
                 }
             }
         }
-
-        // if(automaticInvestmentState.isSuccess)
-        // {
-        //     //navigation.goBack();
-        //     let array;
-        //     switch (accountType.toLowerCase()) {
-        //         case 'general':
-        //             array = [...generalAutoInvestment];
-        //             if (indexDelete !== -1) {
-        //                 array.splice(indexDelete, 1);
-        //                 this.setState({ generalAutoInvestment: array });
-        //             }
-        //             break;
-        //         case 'ira':
-        //             array = [...iraAutoInvestment];
-        //             if (indexDelete !== -1) {
-        //                 array.splice(indexDelete, 1);
-        //                 this.setState({ iraAutoInvestment: array });
-        //             }
-        //             break;
-        //         case 'utma':
-        //             array = [...utmaAutoInvest];
-        //             if (indexDelete !== -1) {
-        //                 array.splice(indexDelete, 1);
-        //                 this.setState({ utmaAutoInvest: array });
-        //             }
-        //             break;
-        //         default:
-        //             break;
-
-        //     }
-        // }
-        // else if(automaticInvestmentState.isError)
-        // {
-        //     console.log(automaticInvestmentState[skipRespKey])
-        // }
     }
 
-    getNumberWithOrdinal(n) {
-        var s=["th","st","nd","rd"],
-        v=n%100;
-        return n+(s[(v-20)%10]||s[v]||s[0]);
+    getNumberWithOrdinal = (n) => {
+        const s=["th","st","nd","rd"];
+        const v=n%100;
+        return n+(s[(v-20)%10]||s[+v]||s[0]);
     }
 
-    getAmountWithSymbol(n){
-        var s=["$"];
+    getAmountWithSymbol = (n) => {
+        const s=["$"];
         return s+n;
     }
 
@@ -309,7 +270,7 @@ class AutomaticInvestmentComponent extends Component {
     deleteAccount = (option) => () => {
         // const { refresh } = this.state;
         const { refresh,accountType,generalAutoInvestment,iraAutoInvestment,utmaAutoInvest } = this.state;
-        // const { automaticInvestmentState } = this.props;
+        // const { automaticInvestmentProps } = this.props;
         this.showDeletePopup = false;
         const indexDelete = this.selectedIndex;
         this.selectedIndex = -1;
@@ -426,7 +387,7 @@ class AutomaticInvestmentComponent extends Component {
         // const{iraAutoInvestment}=this.state;
         // const{utmaAutoInvest}=this.state;
         // const{refresh}=this.state;
-        const { navigation, automaticInvestmentState } = this.props;
+        const { navigation, automaticInvestmentProps } = this.props;
         return (
 
             <View style={styles.container}>
@@ -531,7 +492,7 @@ class AutomaticInvestmentComponent extends Component {
                                     />
                                 ) : null}
 
-                                {automaticInvestmentState.utma ? (
+                                {automaticInvestmentProps.utma ? (
                                     <View>
                                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(2)}>
                                             <View style={styles.expandView}>
@@ -622,13 +583,13 @@ class AutomaticInvestmentComponent extends Component {
 AutomaticInvestmentComponent.propTypes = {
 
     navigation: PropTypes.instanceOf(Object),
-    automaticInvestmentState: PropTypes.instanceOf(Object),
+    automaticInvestmentProps: PropTypes.instanceOf(Object),
     // deleteAutoInvestPlan:PropTypes.func,
 };
 
 AutomaticInvestmentComponent.defaultProps = {
     navigation: {},
-    automaticInvestmentState: {},
+    automaticInvestmentProps: {},
     // deleteAutoInvestPlan:null,
 };
 

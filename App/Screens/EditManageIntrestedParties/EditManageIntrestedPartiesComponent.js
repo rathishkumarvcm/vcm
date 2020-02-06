@@ -107,7 +107,7 @@ class editManageIntrestedPartiesComponent extends Component {
         const pKey = navigation.getParam('pKey');
         accountArray = mainObj.interestedParties;
 
-        if(accountArray) {
+        if (accountArray) {
             accountArray.map((item) => {
                 const accountItem = {
                     accountType: item.account_Type,
@@ -128,7 +128,8 @@ class editManageIntrestedPartiesComponent extends Component {
                 };
                 tagAccounts.push(accountItem);
                 this.setState({ taggedAccData: tagAccounts });
-            });    
+                return 0;
+            });
         }
 
         this.setState(prevState => ({
@@ -363,7 +364,7 @@ class editManageIntrestedPartiesComponent extends Component {
         // const payloadData = this.getPayloadData();
         // editInterestedParties(payloadData);
         // const notificationMsg = `${interestedPartyObj.fname} ${interestedPartyObj.lname} 's data has been Updated Successfully`;
-        if (personal.addressLine1 && personal.addressLine2 ) {
+        if (personal.addressLine1 && personal.addressLine2) {
             //    navigation.navigate("manageIntrestedParties", { showMsg: true, successMsg: notificationMsg });
             navigation.navigate("verifyIntrestedParties", { addedData: interestedPartyData, edit: true });
         }

@@ -130,13 +130,14 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
         navigation.goBack('systematicWithdrawalAdd');
     }
 
-    getNumberWithOrdinal(n) {
-            var s=["th","st","nd","rd"],
-            v=n%100;
-            return n+(s[(v-20)%10]||s[v]||s[0]);
+    getNumberWithOrdinal = (n) => {
+            const s=["th","st","nd","rd"];
+            const v=n%100;
+            return n+(s[(v-20)%10]||s[+v]||s[0]);
      }
-     getAmountWithSymbol(n){
-        var s=["$"];
+
+     getAmountWithSymbol= (n) =>{
+        const s=["$"];
         return s+n;
     }
 
@@ -165,16 +166,16 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
             ordinalDate=this.getNumberWithOrdinal(item.valueDateBeginDropDown);
             if(twiceMonth !== 'null')
             {
-                ordinalDate=ordinalDate+this.getNumberWithOrdinal(twiceMonth);
+                ordinalDate+=this.getNumberWithOrdinal(twiceMonth);
             }
         }
         else
         {
             ordinalDate=this.getNumberWithOrdinal(item.dateFromInvest);
             if(twiceMonth !== 'null')
-                ordinalDate=ordinalDate+this.getNumberWithOrdinal(twiceMonth);
+                ordinalDate+=this.getNumberWithOrdinal(twiceMonth);
         }
-        //item.valueDateBeginDropDown?(this.getNumberWithOrdinal(item.valueDateBeginDropDown)+this.getNumberWithOrdinal(twiceMonth)):this.getNumberWithOrdinal(item.dateFromInvest)+this.getNumberWithOrdinal(twiceMonth)
+        // item.valueDateBeginDropDown?(this.getNumberWithOrdinal(item.valueDateBeginDropDown)+this.getNumberWithOrdinal(twiceMonth)):this.getNumberWithOrdinal(item.dateFromInvest)+this.getNumberWithOrdinal(twiceMonth)
 
         
         if(item.account || item.accName)// if(autoInvestmentJson.account)
@@ -328,7 +329,7 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
                         buttonText={globalString.common.submit}
                         textStyle={styles.continueButtonText}
                         onPress={dateFromValue!=='' && dateToValue!==''?this.navigationSubmit:null}
-/>
+                    />
 )}
                         <GFooterComponent />
                     </View>

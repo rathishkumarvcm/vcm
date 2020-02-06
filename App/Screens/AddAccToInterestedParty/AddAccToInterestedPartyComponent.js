@@ -32,16 +32,15 @@ class AddAccToInterestedPartyComponent extends Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         const { manageInterestedPartiesData } = nextProps;
-        const { initialData, accountList } = prevState;
         if (manageInterestedPartiesData && manageInterestedPartiesData.savedInterestedPartyData) {
             if (manageInterestedPartiesData.savedInterestedPartyData && manageInterestedPartiesData.savedInterestedPartyData.data)
                 return {
                     initialData: manageInterestedPartiesData.savedInterestedPartyData.data
-                }
+                };
             if (manageInterestedPartiesData.savedInterestedPartyData && manageInterestedPartiesData.savedInterestedPartyData.key)
                 return {
                     parentKey: manageInterestedPartiesData.savedInterestedPartyData.parentKey
-                }
+                };
         }
         return prevState;
     }
@@ -105,7 +104,7 @@ class AddAccToInterestedPartyComponent extends Component {
         const { accountList } = this.state;
 
         for (let i = 0; i < accountList.length; i += 1) {
-            const obj = accountList[i];
+            const obj = accountList[parseInt(i, 10)];
 
             if (obj.accountType === '') {
                 this.onChangeValidationText(i, "accountTypeFlag", true);
@@ -143,21 +142,21 @@ class AddAccToInterestedPartyComponent extends Component {
     };
 
     setInputRef = (inputComp) => (ref) => {
-        this[parseInt(inputComp, 0)] = ref;
+        this[parseInt(inputComp, 10)] = ref;
     }
 
     onChangeText = (index, keyName) => text => {
         const { accountList } = this.state;
-        let value = text;
+        const value = text;
         const newItems = [...accountList];
-        newItems[index][keyName] = value;
+        newItems[parseInt(index, 10)][keyName.toString()] = value;
         this.setState({ accountList: newItems });
     }
 
     selectedDropDownValue = (index, keyName) => text => {
         const { accountList } = this.state;
         const newItems = [...accountList];
-        newItems[index][keyName] = text;
+        newItems[parseInt(index, 10)][keyName.toString()] = text;
         this.setState({ accountList: newItems });
         this.onChangeValidationText(index, keyName, false);
     }
@@ -166,9 +165,8 @@ class AddAccToInterestedPartyComponent extends Component {
         const { accountList } = this.state;
         const value = val;
         const newItems = [...accountList];
-        newItems[index][keyName] = value;
+        newItems[parseInt(index, 10)][keyName.toString()] = value;
         this.setState({ accountList: newItems });
-
     }
 
     /* -------------------------- Button Events --------------------------------- */
@@ -177,13 +175,13 @@ class AddAccToInterestedPartyComponent extends Component {
         const { navigation, saveInterestedParties } = this.props;
         const payload = {
             savedInterestedPartyData: {}
-        }
+        };
         saveInterestedParties(payload);
         navigation.goBack();
     }
 
     onClickSave = () => {
-        const { accountList, initialData, parentKey } = this.state;
+        const { initialData, parentKey } = this.state;
         const { navigation, saveInterestedParties } = this.props;
         // let arr = initialData.interestedParties;
         // const len = initialData.interestedParties.length;
@@ -205,7 +203,7 @@ class AddAccToInterestedPartyComponent extends Component {
         const payload = {
             data: initialData,
             parentKey
-        }
+        };
         saveInterestedParties(payload);
         navigation.navigate("verifyIntrestedParties", { addedData: initialData, data: initialData, key: parentKey });
     }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text } from 'react-native';
-import { styles } from './styles';
+import styles from './styles';
 import {
   GHeaderComponent,
   GFooterComponent
@@ -19,16 +19,18 @@ class RecoveryPasswordSuccessComponent extends Component {
   }
 
   componentDidMount() {
+    const{navigation}=this.props;
     setTimeout(() => {
-      this.props.navigation.navigate('login');
+      navigation.navigate('login');
       }, 5000);
   }
 
   render() {
+    const{navigation}=this.props;
     return (
       <View style={styles.container}>
-        <GHeaderComponent register navigation={this.props.navigation} />
-        <ScrollView style={{ flex: 0.85 }}>
+        <GHeaderComponent register navigation={navigation} />
+        <ScrollView style={styles.scrollStyle}>
           <View style={styles.signInView}>
             <Text style={styles.retrievePasswordText}>
               {globalStrings.recoverPassword.password_suceess_head}
@@ -46,7 +48,7 @@ class RecoveryPasswordSuccessComponent extends Component {
             <View style={styles.lineBorder} />
             <Text style={styles.passwordSuccessMessage}>{globalStrings.recoverPassword.password_success_footer1}</Text>
 
-            <Text style={{ fontSize: scaledHeight(14) }}>
+            <Text style={styles.footerStyle}>
               {
                 globalStrings.recoverPassword.password_success_footer2
               }
@@ -60,10 +62,13 @@ class RecoveryPasswordSuccessComponent extends Component {
     );
   }
 }
+
 RecoveryPasswordSuccessComponent.propTypes = {
   navigation: PropTypes.instanceOf(Object),
 };
 
-RecoveryPasswordSuccessComponent.defaultProps = {};
+RecoveryPasswordSuccessComponent.defaultProps = {
+  navigation:{}
+};
 
 export default RecoveryPasswordSuccessComponent;

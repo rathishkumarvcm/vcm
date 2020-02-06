@@ -3,7 +3,7 @@ import OnlineIDVerificationComponent from './OnlineIDVerificationComponent';
 import { loginActions } from "../../Shared/Actions";
 
 
-const mapStateToProps = (state /* , props */) => (
+const mapStateToProps = ( /* , props */) => (
     {
       // loginData: getLogin(state)
     }

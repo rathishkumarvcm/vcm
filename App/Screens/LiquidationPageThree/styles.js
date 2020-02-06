@@ -188,6 +188,17 @@ const styles = StyleSheet.create({
         paddingLeft: '0%',
         width: "100%",
     },
+    dropDownStyle:{
+        backgroundColor: 'white',
+        borderColor: "#DEDEDF",
+        borderWidth: scaledHeight(1), 
+        marginLeft: "0%", 
+        paddingLeft: "4%", 
+        position: 'absolute', 
+        top: scaledHeight(80), 
+        width: "98%", 
+        zIndex: 3, 
+    },
     dropDownText: {
         marginLeft: "0%",
         paddingLeft: "2%",

@@ -18,6 +18,7 @@ import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants
 
 const switchStyle = { flase: '#DBDBDB', true: '#444444' };
 const myInstance = GSingletonClass.getInstance();
+const specimen = require("../../Images/specimen.png");
 
 class AutomaticInvestmentAddComponent extends Component {
     constructor(props) {
@@ -126,7 +127,7 @@ class AutomaticInvestmentAddComponent extends Component {
                         }
                     });
 
-                    let invest = [...valueToEdit.investedIn.map(v => ({ ...v, isActive: true, IsNotValidAmount: false, errorMsg: 'Please enter amount greater than or equal to 50' }))];
+                    const invest = [...valueToEdit.investedIn.map(v => ({ ...v, isActive: true, IsNotValidAmount: false, errorMsg: 'Please enter amount greater than or equal to 50' }))];
                     this.setState({
                         accName: valueToEdit.account.split('|')[0],
                         accNumber: valueToEdit.account.split('|')[1],
@@ -147,7 +148,7 @@ class AutomaticInvestmentAddComponent extends Component {
         const { bankAccountDetails, ItemToEdit, currentZipCodeRef, estate } = this.state;
         if (this.props !== prevProps) {
             let tempFundListData = [];
-            if (ItemToEdit == -1) {
+            if (ItemToEdit < 0) {
                 if (fundListState[ActionTypes.GET_FUNDLIST] !== undefined && fundListState[ActionTypes.GET_FUNDLIST].Items !== null) {
                     tempFundListData = fundListState[ActionTypes.GET_FUNDLIST];
                     if (bankAccountInfo && bankAccountInfo !== bankAccountDetails) {
@@ -158,13 +159,11 @@ class AutomaticInvestmentAddComponent extends Component {
                     }
                 }
             }
-            else {
-                if (bankAccountInfo && bankAccountInfo !== bankAccountDetails) {
+            else if (bankAccountInfo && bankAccountInfo !== bankAccountDetails) {
                     this.setState({
                         bankAccountDetails: bankAccountInfo
                     });
                 }
-            }
             const {
                 keyName = "",
                 objIndex = -1
@@ -173,15 +172,15 @@ class AutomaticInvestmentAddComponent extends Component {
             if (this.props !== prevProps) {
 
                 const stateCityKey = ActionTypes.GET_STATECITY;
-                if (addressFormatData[stateCityKey]) {
-                    if (addressFormatData[stateCityKey] !== prevProps.addressFormatData[stateCityKey]) {
-                        const tempResponse = addressFormatData[stateCityKey];
+                if (addressFormatData[`${stateCityKey}`]) {
+                    if (addressFormatData[`${stateCityKey}`] !== prevProps.addressFormatData[`${stateCityKey}`]) {
+                        const tempResponse = addressFormatData[`${stateCityKey}`];
 
                         if (tempResponse && tempResponse.City) {
                             if (keyName === "zipcode" && objIndex !== -1) {
                                 const newItems = [...estate.trusteeData];
-                                newItems[objIndex].city = tempResponse.City;
-                                newItems[objIndex].stateCity = tempResponse.State;
+                                newItems[+objIndex].city = tempResponse.City;
+                                newItems[+objIndex].stateCity = tempResponse.State;
 
                                 this.setState(() => (() => ({
                                     [prevState.currentZipCodeRef.stateKey]: {
@@ -205,19 +204,19 @@ class AutomaticInvestmentAddComponent extends Component {
                 }
 
                 const addressKey = ActionTypes.GET_ADDRESSFORMAT;
-                if (addressFormatData[addressKey]) {
-                    if (addressFormatData[addressKey] !== prevProps.addressFormatData[addressKey]) {
-                        const tempResponse = addressFormatData[addressKey];
+                if (addressFormatData[`${addressKey}`]) {
+                    if (addressFormatData[`${addressKey}`] !== prevProps.addressFormatData[`${addressKey}`]) {
+                        const tempResponse = addressFormatData[`${addressKey}`];
 
                         if (tempResponse && tempResponse.City) {
                             if (keyName === "zipcode" && objIndex !== -1) {
                                 const newItems = [...estate.trusteeData];
-                                newItems[objIndex].city = tempResponse.City;
-                                newItems[objIndex].stateCity = tempResponse.State;
-                                newItems[objIndex].addrLine1 = tempResponse.Address1 || "";
-                                newItems[objIndex].addrLine2 = tempResponse.Address2 || "";
-                                newItems[objIndex].addrLine1Validation = true;
-                                newItems[objIndex].addrLine2Validation = true;
+                                newItems[+objIndex].city = tempResponse.City;
+                                newItems[+objIndex].stateCity = tempResponse.State;
+                                newItems[+objIndex].addrLine1 = tempResponse.Address1 || "";
+                                newItems[+objIndex].addrLine2 = tempResponse.Address2 || "";
+                                newItems[+objIndex].addrLine1Validation = true;
+                                newItems[+objIndex].addrLine2Validation = true;
 
                                 this.setState(() => (() => ({
                                     [prevState.currentZipCodeRef.stateKey]: {
@@ -242,10 +241,10 @@ class AutomaticInvestmentAddComponent extends Component {
                         } else if (tempResponse && tempResponse.ErrorNumber) {
                             if (currentZipCodeRef.keyName === "zipcode" && objIndex !== -1) {
                                 const newItems = [...estate.trusteeData];
-                                newItems[objIndex].addrLine1 = "";
-                                newItems[objIndex].addrLine2 = "";
-                                newItems[objIndex].addrLine1Validation = false;
-                                newItems[objIndex].addrLine2Validation = false;
+                                newItems[+objIndex].addrLine1 = "";
+                                newItems[+objIndex].addrLine2 = "";
+                                newItems[+objIndex].addrLine1Validation = false;
+                                newItems[+objIndex].addrLine2Validation = false;
 
                                 this.setState(() => (() => ({
                                     [prevState.currentZipCodeRef.stateKey]: {
@@ -304,7 +303,7 @@ class AutomaticInvestmentAddComponent extends Component {
             selectedBank,
             fundRemaining,
             totalFund: `${totalFund}`,
-            fundFrom: selectedBank!=-1?bankAccountDetails[Number(selectedBank)].bankName:addBankAccount.financialInstitutionName,
+            fundFrom: selectedBank!==-1?bankAccountDetails[Number(selectedBank)].bankName:addBankAccount.financialInstitutionName,
             investedIn: selected,
             fundConsumed,
             refresh,
@@ -386,13 +385,13 @@ class AutomaticInvestmentAddComponent extends Component {
 
                 let remining = fundRemaining;
                 let consumed = fundConsumed;
-                if (array[Number(index)].isActive && array[Number(index)].errorMsg == '') {
+                if (array[Number(index)].isActive && array[Number(index)].errorMsg === '') {
                     remining = Number(fundRemaining) + Number(array[Number(index)].fundAmount);
                     consumed = Number(fundConsumed) - Number(array[Number(index)].fundAmount);
                     array[Number(index)].fundAmount = 0;
 
                 }
-                else if (array[Number(index)].isActive && array[Number(index)].errorMsg != '') {
+                else if (array[Number(index)].isActive && array[Number(index)].errorMsg !== '') {
                     array[Number(index)].fundAmount = 0;
                     array[Number(index)].IsNotValidAmount = false;
                     array[Number(index)].errorMsg = '';
@@ -404,7 +403,7 @@ class AutomaticInvestmentAddComponent extends Component {
                 const switchVal = array[Number(index)].isActive;
                 array[Number(index)].isActive = !switchVal;
                 this.IsNotValidAmount = false;
-                this.setState({ fundList: array, fundRemaining: remining, fundConsumed: consumed });//investedIn:[] 
+                this.setState({ fundList: array, fundRemaining: remining, fundConsumed: consumed });
             }
         }
         else {
@@ -419,14 +418,15 @@ class AutomaticInvestmentAddComponent extends Component {
         this.setState({ selectedBank: index, refresh: !refresh });
     }
 
-    getFundAmount = (value, index) => {
-        const { fundList } = this.state;//,ItemToEdit,investedIn
+    getFundAmount = (index) =>(value) => {
+        const { fundList } = this.state;
         const array = [...fundList];
         array[Number(index)].fundAmount = value;
         this.setState({ fundList: array });
     }
+    
     changeRemaining = () => {
-        const { totalFund, fundList, refresh } = this.state;//,ItemToEdit,investedIn
+        const { totalFund, fundList, refresh } = this.state;
         let remaining = totalFund;
 
         fundList.forEach((item, index) => {
@@ -490,7 +490,7 @@ class AutomaticInvestmentAddComponent extends Component {
                         <Switch trackColor={switchStyle}
                             onValueChange={this.toggleSwitch(index)}
                             value={item.isActive}
-                            disabled={ItemToEdit > -1 ? true : false}
+                            disabled={ItemToEdit > -1}
                         />
 
                     </View>
@@ -501,7 +501,7 @@ class AutomaticInvestmentAddComponent extends Component {
                         <Text style={styles.auto_invest_to_top}>$</Text>
                         <View style={styles.inputError}>
                             <GInputComponent style={styles.leftSpace}
-                                onChangeText={(value) => this.getFundAmount(value, index)}
+                                onChangeText={this.getFundAmount(index)}
                                 onEndEditing={this.changeRemaining}
                                 value={item.fundAmount.toString()}
                                 errorFlag={item.IsNotValidAmount}
@@ -526,10 +526,10 @@ class AutomaticInvestmentAddComponent extends Component {
     }
 
     bankInfoKey = (item) => this.popularAccount.indexOf(item);
-    renderBankInfo = () => ({ item }) =>
+
+    renderBankInfo = () => ({ item }) => 
         (
-            <TouchableOpacity style={styles.accountView} >
-                {/* onPress={this.openAddBankOption(item)} */}
+            <TouchableOpacity style={styles.accountView}>
                 <GIcon
                     name="closesquareo"
                     type="antdesign"
@@ -560,10 +560,10 @@ class AutomaticInvestmentAddComponent extends Component {
     }
 
     setInputRef = (inputComp) => (ref) => {
-        this[inputComp] = ref;
+        this[`${inputComp}`] = ref;
     }
 
-    onSubmitEditing = (input) => text => {
+    onSubmitEditing = (input) => () => {
         input.focus();
     }
 
@@ -571,7 +571,7 @@ class AutomaticInvestmentAddComponent extends Component {
         AppUtils.debugLog("onChangeText:::>");
         this.setState(prevState => ({
             [stateKey]: {
-                ...prevState[stateKey],
+                ...prevState[`${stateKey}`],
                 [keyName]: text,
                 [`${keyName}Validation`]: true,
             }
@@ -582,7 +582,7 @@ class AutomaticInvestmentAddComponent extends Component {
         AppUtils.debugLog(`onSubmitZipEditing:::>${nextInputFocus} ${text}`);
 
         const { getStateCity, getAddressFormat } = this.props;
-        const { currentZipCodeRef } = this.state;
+        const { currentZipCodeRef,[stateKey]:stateKeyName } = this.state;
 
         const newItems = { ...currentZipCodeRef };
         newItems.keyName = keyName;
@@ -600,16 +600,16 @@ class AutomaticInvestmentAddComponent extends Component {
         let addressPayload = {};
 
         payload = {
-            "Zip": this.state[stateKey][keyName]
+            "Zip": stateKeyName[`${keyName}`]
         };
 
         addressPayload = {
             ...payload,
-            "Address1": this.state[stateKey].addrLine1,
-            "Address2": this.state[stateKey].addrLine2,
-            "City": this.state[stateKey].city,
-            "State": this.state[stateKey].stateCity,
-            "Zip": this.state[stateKey][keyName]
+            "Address1": stateKeyName.addrLine1,
+            "Address2": stateKeyName.addrLine2,
+            "City": stateKeyName.city,
+            "State": stateKeyName.stateCity,
+            "Zip": stateKeyName[`${keyName}`]
         };
 
         getStateCity(payload);
@@ -683,9 +683,7 @@ class AutomaticInvestmentAddComponent extends Component {
             }
             return isValidationSuccess;
         }
-        else
-            return true;
-        
+        return true;
     }
 
     render() {
@@ -760,7 +758,7 @@ class AutomaticInvestmentAddComponent extends Component {
                                     renderItem={this.renderBankInfo()}
                                     keyExtractor={this.bankInfoKey}
                                 />:null} */}
-                            {this.otherBank ?
+                            {this.otherBank ? (
                                 <View style={styles.childSectionGrp}>
                                     <Text style={styles.lblTxt}>
                                         {globalString.accManagement.typeOfAccount}
@@ -794,11 +792,11 @@ class AutomaticInvestmentAddComponent extends Component {
                                         />
 
                                     </View>
-                                    {!addBankAccount.accountTypeValidation &&
+                                    {!addBankAccount.accountTypeValidation && (
                                         <Text style={styles.errMsg}>
                                             {globalString.accManagement.emptyTypeOfAccount}
                                         </Text>
-                                    }
+                                      )}
 
                                     <Text style={styles.lblTxt}>
                                         {globalString.accManagement.financialInstitution}
@@ -874,7 +872,7 @@ class AutomaticInvestmentAddComponent extends Component {
                                     </Text>
                                     <Image style={styles.specimenImg}
                                         resizeMode="contain"
-                                        source={require("../../Images/specimen.png")}
+                                        source={specimen}
                                     />
 
                                     <View style={styles.addressStyle}>
@@ -952,6 +950,7 @@ class AutomaticInvestmentAddComponent extends Component {
 
                                     </View>
                                 </View>
+                              )
                                 : null}
                             <Text style={styles.autoInvest_sub_title_text}>- Invest To</Text>
                             <View style={styles.seperator_line} />
@@ -1012,7 +1011,8 @@ class AutomaticInvestmentAddComponent extends Component {
                                 <View style={styles.auto_invest_to_top_view}>
                                     <Text style={styles.auto_invest_to_top}>$</Text>
                                     <GInputComponent style={styles.fundRemainStyle}
-                                        value={fundConsumed.toString()} />
+                                        value={fundConsumed.toString()}
+                                    />
                                 </View>
                             </View>
 

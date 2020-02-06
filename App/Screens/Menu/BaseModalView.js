@@ -32,8 +32,8 @@ class BaseViewComponent extends React.Component {
           style={styles.rightModalStyle}
           ref={this.modal}
           hideModalContentWhileAnimating={false}
-          animationIn={'slideInRight'}
-          animationOut={'slideInLeft'}
+          animationIn="slideInRight"
+          animationOut="slideInLeft"
           animationOutTiming={20}
           onRequestClose={this.closeModal}
           onBackdropPress={this.closeModal}

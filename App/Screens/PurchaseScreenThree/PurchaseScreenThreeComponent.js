@@ -70,10 +70,11 @@ class PurchaseScreenThreeComponent extends Component {
 
     updateState = () => {
         const { navigation } = this.props;
-        if (`${navigation.getParam('ammend')}`) {
+        const flag = `${navigation.getParam('ammend')}`;
+        if (flag) {
             ammendData = `${navigation.getParam('data')}`;
             ammendIndex = `${navigation.getParam('index')}`;
-            ammend = `${navigation.getParam('ammend')}`;
+            this.setState({ ammend: flag });
         }
         if (savedData) {
             if (savedData.selectedFundSourceData) {

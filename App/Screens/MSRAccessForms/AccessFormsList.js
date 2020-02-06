@@ -77,6 +77,7 @@ class AccessFormList extends React.Component {
                     <GLoadingSpinner />} */}
                 <View style={styles.container}>
                     <Text style={styles.boldText}>{gblStrings.msrAccessForms.forms}</Text>
+                    <Text style={styles.regularText}>You will need free Adobe reader to view the documents</Text>
                     <View style={styles.rowContainer}>
                         <Text style={styles.blackText}>{gblStrings.msrAccessForms.sortBy}</Text>
                         <GSwitchComponent
@@ -94,6 +95,7 @@ class AccessFormList extends React.Component {
                             textOffStyle={styles.smallText}
                         />
                     </View>
+                    <View style={styles.dividerLine} />
                     <FlatList
                         style={{ height: "80%" }}
                         data={forms}

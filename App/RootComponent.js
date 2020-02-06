@@ -1,53 +1,38 @@
 import React, { Component } from 'react';
 import { Provider } from "react-redux";
-import { Text, AppState } from 'react-native';
-import RNSecureKeyStore, { ACCESSIBLE } from 'react-native-secure-key-store';
+import { AppState } from 'react-native';
+import RNSecureKeyStore  from 'react-native-secure-key-store';
 import { Auth } from "aws-amplify";
 // import { NavigationActions } from 'react-navigation';
  import AppNavigator from './routes';
-import AppStackNavigator from './Navigation/index';
 import store from './Shared/Store/index';
 import { setTopLevelNavigator, setPreviousScreen } from './Navigation/navigationService';
-import { scaledHeight } from './Utils/Resolution';
 import { showAlertWithCancelButton, GErrorBoundaries } from './CommonComponents';
 
 /*
 Create application store and its inital value when app launch
 */
-const initialState = {
-  appVersion: "1.0.0",
-  env: "PROD",
-  wsVersion: "",
-  NotifitcationWsVersion: "",
-  appBuildKey: "",
-  appID: "",
-  language: "en"
-};
+
 // const store = configureStore({ initialState });
 
-var sessionId;
+let sessionId;
 
 class RootComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      timeOut: false,
       appState: AppState.currentState,
     };
   }
 
-  signOut = () => {
-    this.navigator &&
-      this.navigator.dispatch(
-        NavigationActions.navigate({ routeName: 'login' }));
-  }
+ 
 
   componentDidMount() {
     // AppState.addEventListener('change', this._handleAppStateChange);
 
     setInterval(() => {
       RNSecureKeyStore.get("jwtToken")
-        .then((setValue) => {
+        .then(() => {
           RNSecureKeyStore.get("currentSession")
             .then((res) => {
               if (sessionId === undefined) {
@@ -62,52 +47,32 @@ class RootComponent extends Component {
                   () => this.signOut()
                 );
                 // alert("TIME OUT IS CALLING");
-                this.setState({
-                  timeOut: true
-                });
+              
 
                 Auth.signOut({ global: true })
-                  .then(data => console.log("SigoutSucces", data))
-                  .catch(err => console.log(err));
+                  .then(() => {})
+                  .catch(() => {});
 
                 RNSecureKeyStore.remove("currentSession")
-                  .then((res) => {
-                    console.log(res);
-                  }, (err) => {
-                    console.log(err);
+                  .then(() => {
+                  }, () => {
                   });
 
                 RNSecureKeyStore.remove("jwtToken")
-                  .then((res) => {
-                    console.log(res);
-                  }, (err) => {
-                    console.log(err);
+                  .then(() => {
+                  }, () => {
                   });
               }
-            }, (err) => {
-              console.log("err--->", err);
+            }, () => {
             });
         },
-          (err) => {
-            console.log("err", err);
+          () => {
           });
     }, 300000);
   }
 
-  /*componentWillMount() {
-    AppState.removeEventListener('change', this._handleAppStateChange);
-  }*/
 
-  _handleAppStateChange = (nextAppState) => {
-    if (
-      this.state.appState.match(/inactive|background/) &&
-      nextAppState === 'active'
-    ) {
-      console.log('App has come to the foreground!');
-      this.signOut();
-    }
-    this.setState({ appState: nextAppState });
-  };
+
 
   getActiveRouteName(navigationState) {
     if (!navigationState) {
@@ -121,7 +86,24 @@ class RootComponent extends Component {
     return route.routeName;
   }
 
-  navigationStateChange = (prevState, currentState, action) => {
+  _handleAppStateChange = (nextAppState) => {
+    const {appState} = this.state;
+    if (
+      appState.match(/inactive|background/) &&
+      nextAppState === 'active'
+    ) {
+      this.signOut();
+    }
+    this.setState({ appState: nextAppState });
+  };
+
+  signOut = () => {
+    this.navigator &&
+      this.navigator.dispatch(
+        NavigationActions.navigate({ routeName: 'login' }));
+  }
+
+  navigationStateChange = (prevState, currentState) => {
     const currentScreen = this.getActiveRouteName(currentState);
     const prevScreen = this.getActiveRouteName(prevState);
 

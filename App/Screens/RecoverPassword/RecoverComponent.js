@@ -18,16 +18,16 @@ class RecoveryComponent extends Component {
     super(props);
     this.state = {
       isCustomer: true,
-      boo_OnlineId: false,
+      booOnlineId: false,
       onlineId: '',
-      err_onlineId: '',
-      boo_ssn: false,
+      errOnlineId: '',
+      booSsn: false,
       ssn: '',
-      style_ssn: styles.userIDTextBox,
-      err_ssn: '',
-      str_security:'',
-      err_security:'',
-      boo_security:false
+      // style_ssn: styles.userIDTextBox,
+      errSsn: '',
+      strSecurity:'',
+      errSecurity:'',
+      booSecurity:false
     };
     // set true to isLoading if data for this screen yet to be received and wanted to show loader.
   }
@@ -48,57 +48,66 @@ class RecoveryComponent extends Component {
 
   setSecurity = (text) => {
     this.setState({
-      str_security: text
+      strSecurity: text
     });
   }
 
   navigationResetOpt = () => {
-
-    const validSSn=regEx.allowNineNumeric.test(this.state.ssn);
+    const{ssn,onlineId,strSecurity,isCustomer}=this.state;
+    const{navigation}=this.props;
+    const validSSn=regEx.allowNineNumeric.test(ssn);
     this.setState({
-      boo_OnlineId: this.state.onlineId == "",
-      err_onlineId: this.state.onlineId == "" ? globalString.recoverPassword.err_onlineId: '',
-      boo_ssn: !validSSn,
-      err_ssn: !validSSn ? globalString.recoverPassword.err_ssn : '',
-      boo_security:this.state.str_security=='',
-      err_security:this.state.str_security==''? globalString.recoverPassword.err_security:''
+      booOnlineId: onlineId === "",
+      errOnlineId: onlineId === "" ? globalString.recoverPassword.errOnlineId: '',
+      booSsn: !validSSn,
+      errSsn: !validSSn ? globalString.recoverPassword.errSsn : '',
+      booSecurity:strSecurity==='',
+      errSecurity:strSecurity===''? globalString.recoverPassword.errSecurity:''
     });
-
-    if (this.state.isCustomer)
+    let recoveryJson;
+    if (isCustomer)
     {
-      if (!this.state.onlineId == "" && validSSn && !this.state.str_security=='')
+      
+      if (onlineId !== "" && validSSn && strSecurity!=='')
       {
-        const recoveryJson={
-          onlineId:this.state.onlineId,
-          ssn:this.state.ssn,
-          security:this.state.str_security
+        recoveryJson={
+          onlineId,
+          ssn,
+          security:strSecurity
         };
-        console.log(recoveryJson);
-        this.props.navigation.navigate('passwordRecoveryOtp');
+        
+        navigation.navigate('passwordRecoveryOtp',{key:recoveryJson});
       }
     }
     else
-    if (!this.state.onlineId == "")
+    if (onlineId !== "")
         {
-          const recoveryJson={
-            onlineId:this.state.onlineId,
+          recoveryJson={
+            onlineId,
           };
-          console.log(recoveryJson);
-          this.props.navigation.navigate('passwordRecoverTemp');
+          
+          navigation.navigate('passwordRecoverTemp',{key:recoveryJson});
         }
 
     
   }
 
-  navigationLogin = () => this.props.navigation.goBack();
+  navigationLogin = () => 
+  {
+    const{navigation}=this.props;
+    navigation.goBack();
+  }
 
   render() {
+    const{navigation}=this.props;
+    const{booOnlineId,onlineId,errOnlineId,isCustomer,ssn,errSsn,booSecurity,errSecurity
+      ,strSecurity,booSsn}=this.state;
     return (
       <View style={styles.container}>
         <GHeaderComponent register
-          navigation={this.props.navigation}
+          navigation={navigation}
         />
-        <ScrollView style={{ flex: 0.85 }}>
+        <ScrollView style={styles.scrollStyle}>
 
         <View style={styles.notifOuter}>
             <View style={styles.notifInner}>
@@ -118,26 +127,26 @@ class RecoveryComponent extends Component {
           {/* <GInputComponent placeholder={'Online ID'} /> */}
 
           <GInputComponent
-            propInputStyle={this.state.boo_OnlineId ? styles.userIDTextBoxError : styles.userIDTextBox}
+            propInputStyle={booOnlineId ? styles.userIDTextBoxError : styles.userIDTextBox}
             placeholder={globalString.recoverPassword.lable_onlineId}
             onChangeText={this.setOnlineId}
-            value={this.state.onlineId}
+            value={onlineId}
 
           />
-          <Text style={styles.errorMessage}>{this.state.err_onlineId}</Text>
-          {this.state.isCustomer ? (
+          <Text style={styles.errorMessage}>{errOnlineId}</Text>
+          {isCustomer ? (
             <View>
               <View style={styles.passwordView}>
                 <Text style={styles.userIDText}>{globalString.recoverPassword.lable_ssn}</Text>
               </View>
 
-              <GInputComponent propInputStyle={this.state.boo_ssn ? styles.userIDTextBoxError : styles.userIDTextBox}
+              <GInputComponent propInputStyle={booSsn ? styles.userIDTextBoxError : styles.userIDTextBox}
                 placeholder={globalString.recoverPassword.placeholder_ssn}
                 onChangeText={this.setSNN}
-                value={this.state.ssn}
+                value={ssn}
 
               />
-              <Text style={styles.errorMessage}>{this.state.err_ssn}</Text>
+              <Text style={styles.errorMessage}>{errSsn}</Text>
               <View style={styles.passwordView}>
                 <Text style={styles.userIDText}>{globalString.recoverPassword.lable_security}</Text>
               </View>
@@ -151,12 +160,12 @@ class RecoveryComponent extends Component {
                 <Text style={styles.userIDText}>{globalString.recoverPassword.enter_security}</Text>
               </View>
 
-              <GInputComponent propInputStyle={this.state.boo_security ? styles.userIDTextBoxError : styles.userIDTextBox}
+              <GInputComponent propInputStyle={booSecurity ? styles.userIDTextBoxError : styles.userIDTextBox}
               placeholder={globalString.recoverPassword.lable_security} 
               onChangeText={this.setSecurity} 
-              value={this.state.str_security} 
+              value={strSecurity} 
               />
-              <Text style={styles.errorMessage}>{this.state.err_security}</Text>
+              <Text style={styles.errorMessage}>{errSecurity}</Text>
             </View>
           )
             : <></>}

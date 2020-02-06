@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
     fontSize: scaledHeight(16),
     fontWeight: 'bold',
   },
-
   copyRightSection: {
     alignItems: 'center',
     backgroundColor: '#56565A',
@@ -61,19 +60,20 @@ const styles = StyleSheet.create({
     backgroundColor:'#544A54',
     height: scaledHeight(3),
 },
-
   enterOpt: {
     color: '#333333DE',
     fontSize: scaledHeight(16),
     fontWeight: 'bold',
     marginBottom: scaledHeight(8),
   },
+
   errorMessage: {
     color:"red",
     fontSize: scaledHeight(14),
     paddingLeft:'4%',
     paddingRight:'4%',
   },
+
   faceIDlogo: {
     alignSelf: 'center',
     marginBottom: '5%',
@@ -95,7 +95,6 @@ const styles = StyleSheet.create({
     fontSize: scaledHeight(18),
     fontWeight: 'bold',
   },
-
   good: {
     backgroundColor: 'orange',
     height: scaledHeight(3),
@@ -106,6 +105,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
    
   },
+
   hintView: {
     flex: 1,
     flexDirection: 'row',
@@ -195,12 +195,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: scaledHeight(8),
   },
-
+  passNewStyle:{ flex: 2, color: '#333333DE',
+  fontSize: scaledHeight(16),
+  fontWeight: 'bold',
+  marginBottom: scaledHeight(8),},
   passwordStrengthFlex: {
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center'
 },
+
   passwordStrongFlex: {
     flexDirection: 'column',
     flex: 0.3,
@@ -283,6 +287,7 @@ const styles = StyleSheet.create({
     color: '#56565A',
     fontSize: scaledHeight(30),
   },
+  scrollStyle:{ flex: 0.85 },
   securityCheck: {
     backgroundColor: '#878280',
     height: scaledHeight(70),

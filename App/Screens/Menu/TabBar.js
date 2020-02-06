@@ -7,9 +7,9 @@ import { tabMoreActions } from '../../Shared/Actions';
 import { GIcon } from '../../CommonComponents/GIcon';
 
 const S = StyleSheet.create({
-  container: { flexDirection: 'row', height: 52, elevation: 2 },
-  tabButton: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  tabLabelText: { color:"#4F4F4F",fontSize: 10, }
+  container: { elevation: 2, flexDirection: 'row', height: 52, },
+  tabButton: { alignItems: 'center', flex: 1, justifyContent: 'center', },
+  tabLabelText: { color: "#4F4F4F", fontSize: 10, }
 });
 
 const TabBar = props => {
@@ -33,7 +33,7 @@ const TabBar = props => {
       {routes.map((route, routeIndex) => {
         const isRouteActive = routeIndex === activeRouteIndex;
         const tintColor = isRouteActive ? "skyblue" : "#4F4F4F";
-       // console.log(JSON.stringify(route));
+        // console.log(JSON.stringify(route));
         return (
           <TouchableOpacity
             key={routeIndex}

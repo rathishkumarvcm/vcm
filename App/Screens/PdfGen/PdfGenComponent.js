@@ -53,7 +53,6 @@ export default class PdfComponent extends Component {
         filePath: file.filePath,
         pdfCreated : true
     });
-    console.log(JSON.stringify(file));
   }
   
   render() {

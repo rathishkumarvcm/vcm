@@ -11,7 +11,6 @@ import {
 } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
-//import AppUtils from '../../Utils/AppUtils';
 
 const myInstance = GSingletonClass.getInstance();
 class AutomaticInvestmentPlanVerifyComponent extends Component {
@@ -67,19 +66,19 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
 
     }
 
-    componentDidUpdate(preProps,nextProps){
+    componentDidUpdate(){
         const{navigation,automaticInvestmentState} = this.props;
-        const{dateFromValue,dateToValue} =this.state;
+        // const{dateFromValue,dateToValue} =this.state;
         const skipRespKey = ActionTypes.SKIP_INVEST_WITHDRAW_PLAN;
 
         if(automaticInvestmentState.isSuccess)
         {
             navigation.goBack();
-            //navigation.goBack('automaticInvestmentPlan',{'dateFromValue':dateFromValue,'dateToValue':dateToValue});
+            // navigation.goBack('automaticInvestmentPlan',{'dateFromValue':dateFromValue,'dateToValue':dateToValue});
         }
         else if(automaticInvestmentState.isError)
         {
-            console.log(automaticInvestmentState[skipRespKey])
+            console.log(automaticInvestmentState[skipRespKey]);
         }
 
             // if (automaticInvestmentState[skipRespKey]) {
@@ -140,14 +139,14 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
         });
     }
 
-    getNumberWithOrdinal(n) {
-        var s=["th","st","nd","rd"],
-        v=n%100;
-        return n+(s[(v-20)%10]||s[v]||s[0]);
+    getNumberWithOrdinal = (n) => {
+        const s=["th","st","nd","rd"];
+        const v=n%100;
+        return n+(s[(v-20)%10]||s[+v]||s[0]);
  }
 
-  getAmountWithSymbol(n){
-        var s=["$"];
+  getAmountWithSymbol= (n) =>{
+        const s=["$"];
         return s+n;
     }
 
@@ -175,16 +174,15 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
                 "dateSuspendedFrom":dateFromValue,
                 "dateSuspendedTo":dateToValue
               }
-            }
+            };
         skipAutoInvestPlan(payload);
         
     }
 
-    // navigation.navigate({routeName:'automaticInvestment',key:'automaticInvestment'});
     navigationBack = () => {
         const{navigation}=this.props;
         navigation.goBack();
-        //'automaticInvestment',{skipFrom:dateFromValue,skipTo:dateToValue,index:}
+        // 'automaticInvestment',{skipFrom:dateFromValue,skipTo:dateToValue,index:}
     }
 
     navigationCancel = () => {
@@ -195,12 +193,8 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
     editAddedAccount=()=>
     {
         const{navigation}=this.props;
-        // const{indexSelected}=this.state;
         myInstance.setAutomaticInvestmentEditMode(true);
-        // if(indexSelected>-1)
-            navigation.goBack('automaticInvestmentSchedule');
-        // else
-            // navigation.goBack('automaticInvestmentAdd')
+        navigation.goBack('automaticInvestmentSchedule');
     }
 
     render() {

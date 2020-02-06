@@ -622,7 +622,7 @@ class OpenAccPageThreeComponent extends Component {
 
         let total = 0;
         for (let i = 0; i < newItems.length; i += 1) {
-            if (!isNaN(newItems[+i].initialInvestment) && newItems[+i].initialInvestment !== "") {
+            if (isNumeric(newItems[+i].initialInvestment) && newItems[+i].initialInvestment !== "") {
                 total += parseFloat(newItems[+i].initialInvestment);
 
             }
@@ -857,7 +857,9 @@ class OpenAccPageThreeComponent extends Component {
             if (item.isActive === true) {
                 selecteditems.push(item);
             }
+            return selecteditems;
         });
+
         AppUtils.debugLog(`selecteditems:: ${selecteditems.length}`);
 
         return selecteditems;
@@ -1097,8 +1099,9 @@ class OpenAccPageThreeComponent extends Component {
         const fundNameArray = [];
         if (selectedFundInvestmentsData.length > 0) {
             selectedFundInvestmentsData.map((item) => {
-                fundNameArray.push(item.fundName);
+                return fundNameArray.push(item.fundName);
             });
+
         }
 
         return fundNameArray.join(',');
@@ -1146,6 +1149,8 @@ class OpenAccPageThreeComponent extends Component {
                     mininvestkey = item.value;
                 }
             }
+            return mininvestkey;
+
         });
 
         let riskkey = "";
@@ -1157,6 +1162,8 @@ class OpenAccPageThreeComponent extends Component {
                     riskkey = item.key;
                 }
             }
+            return riskkey;
+
         });
 
         let funddatakey = "";
@@ -1168,6 +1175,8 @@ class OpenAccPageThreeComponent extends Component {
                     funddatakey = item.key;
                 }
             }
+            return funddatakey;
+
         });
         AppUtils.debugLog("minInvest=", mininvestkey);
         AppUtils.debugLog("risk=", riskkey);
@@ -1279,6 +1288,8 @@ class OpenAccPageThreeComponent extends Component {
                 selectedFundInvestmentsData.map((item, index) => {
                     // fundSelectedCompare = `${fundSelectedCompare.concat(`fundNumber${index+1}=${item.fundNumber}`)}&`;
                     fundSelectedCompare[`fundNumber${index + 1}`] = item.fundNumber;
+                    return fundSelectedCompare;
+
                 });
                 // AppUtils.debugLog("Selected Funds:"+fundSelectedCompare);
                 if (fundSelectedCompare !== null && fundSelectedCompare !== "") {
@@ -2115,10 +2126,12 @@ OpenAccPageThreeComponent.propTypes = {
     accOpeningData: PropTypes.instanceOf(Object),
     masterLookupStateData: PropTypes.instanceOf(Object),
     addBankAccount: PropTypes.instanceOf(Object),
+    isSuccess: PropTypes.string,
+    isError : PropTypes.string,
     saveAccountOpening: PropTypes.func,
     getFundListData: PropTypes.func,
     getCompositeLookUpData: PropTypes.func,
-   // clearReduxKeyData: PropTypes.func
+    validateBankAccInfo: PropTypes.func
 
 };
 OpenAccPageThreeComponent.defaultProps = {
@@ -2126,10 +2139,12 @@ OpenAccPageThreeComponent.defaultProps = {
     accOpeningData: {},
     addBankAccount: {},
     masterLookupStateData: {},
+    isSuccess: "",
+    isError : "",
     getFundListData: null,
     saveAccountOpening: null,
     getCompositeLookUpData: null,
-  //  clearReduxKeyData: PropTypes.null
+    validateBankAccInfo: null
 
 
 };

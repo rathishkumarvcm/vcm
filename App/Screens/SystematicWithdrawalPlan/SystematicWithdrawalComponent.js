@@ -91,14 +91,14 @@ class SystematicWithdrawalComponent extends Component {
     //     }
 
     // }
-    getNumberWithOrdinal(n) {
-        var s=["th","st","nd","rd"],
-        v=n%100;
-        return n+(s[(v-20)%10]||s[v]||s[0]);
+    getNumberWithOrdinal = (n) => {
+        const s=["th","st","nd","rd"];
+        const v=n%100;
+        return n+(s[(v-20)%10]||s[+v]||s[0]);
      }
 
-     getAmountWithSymbol(n){
-        var s=["$"];
+     getAmountWithSymbol = (n) => {
+        const s=["$"];
         return s+n;
     }
     
@@ -189,7 +189,7 @@ class SystematicWithdrawalComponent extends Component {
                         </View>
                         <View style={styles.verifyContentMain}>
                             <Text style={styles.verifyConent1}>On the date</Text>
-                            <Text style={styles.verifyConent2}>{item.dateToInvest == 'null'? this.getNumberWithOrdinal(item.dateFromInvest) : (`${this.getNumberWithOrdinal(item.dateFromInvest)} & ${this.getNumberWithOrdinal(item.dateToInvest)}`)}</Text>
+                            <Text style={styles.verifyConent2}>{item.dateToInvest === 'null'? this.getNumberWithOrdinal(item.dateFromInvest) : (`${this.getNumberWithOrdinal(item.dateFromInvest)} & ${this.getNumberWithOrdinal(item.dateToInvest)}`)}</Text>
                         </View>
                         <View style={styles.verifyContentMain}>
                             <Text style={styles.verifyConent1}>Amount</Text>

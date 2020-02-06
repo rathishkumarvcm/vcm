@@ -1,8 +1,7 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet,Dimensions } from 'react-native';
 import { scaledHeight } from '../../Utils/Resolution';
-// import { Colors } from 'react-native/Libraries/NewAppScreen';
 
-const { width } = Dimensions.get('window');
+const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   cancelButton: {
@@ -46,7 +45,6 @@ const styles = StyleSheet.create({
     fontSize: scaledHeight(16),
     fontWeight: 'bold',
   },
-
   copyRightSection: {
     alignItems: 'center',
     backgroundColor: '#56565A',
@@ -63,16 +61,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: scaledHeight(8),
   },
-
   faceIDlogo: {
     alignSelf: 'center',
     marginBottom: '5%',
     marginTop: '5%',
   },
+
   faceIDtextStyle: {
     alignItems: 'center',
     height: scaledHeight(20),
   },
+
+  footerStyle:{ fontSize: scaledHeight(14) },
   forgotLineText: {
     flexDirection: 'row',
     fontSize: scaledHeight(18),
@@ -99,12 +99,12 @@ const styles = StyleSheet.create({
     paddingRight: '4%',
     marginTop: scaledHeight(28),
   },
-
   lineBorder: {
     borderColor: '#DEDEDF',
     borderTopWidth: 1,
     marginTop: scaledHeight(25),
   },
+
   loginHeader: {
     flex: 0.15,
     flexDirection: 'row',
@@ -187,13 +187,13 @@ const styles = StyleSheet.create({
   { fontSize: scaledHeight(16), fontWeight: '500', marginBottom: '4%', marginTop: '4%' },
   passwordSuccessTitle:
   { fontSize: scaledHeight(16), marginBottom: '4%', marginTop: '6%' },
-
- 
   passwordTextBox: {
     marginLeft: '4%',
     marginRight: '4%',
-    //  marginBottom:scaledHeight(18)
+    
   },
+
+ 
   passwordTextBoxError: {
     borderColor: 'red',
     marginLeft: '4%',
@@ -268,6 +268,7 @@ const styles = StyleSheet.create({
     color: '#56565A',
     fontSize: scaledHeight(32),
   },
+  scrollStyle:{ flex: 0.85 },
   securityCheck: {
     backgroundColor: '#878280',
     height: scaledHeight(70),
@@ -317,7 +318,7 @@ const styles = StyleSheet.create({
   userIDTextBox: {
     marginLeft: '4%',
     marginRight: '4%',
-    //  marginBottom:scaledHeight(18)
+    
   },
   userIDTextBoxError: {
     borderColor: 'red',

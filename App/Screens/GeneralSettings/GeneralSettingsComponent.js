@@ -10,29 +10,44 @@ class GeneralSettingsComponent extends Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,           
+            // isLoading: false,           
         };
     }
 
     componentDidMount() { }
 
-    navigateprofileSettings = () => this.props.navigation.navigate('profileSettings');
+    navigateprofileSettings = () =>{
+        const {navigation} = this.props;
+        navigation.navigate('profileSettings');
+    }
 
-    navigateDeliverySettings = () => this.props.navigation.navigate('deliverySettings');
+    navigateDeliverySettings = () =>{
+        const {navigation} = this.props;
+        navigation.navigate('deliverySettings');
+    }
 
-    navigateaccountMessagingSettings = () => this.props.navigation.navigate('accountMessagingSettings');
+    navigateaccountMessagingSettings = () =>{
+        const {navigation} = this.props;
+        navigation.navigate('accountMessagingSettings');
+    }
 
-    navigateSecurityPreference = () => this.props.navigation.navigate('securityPreference');
+    navigateSecurityPreference = () => {
+        const {navigation} = this.props;
+        navigation.navigate('securityPreference');
+    }
    
-    navigateMarketingPrivacySettings = () => this.props.navigation.navigate('marketingandPrivacySettings');
+    navigateMarketingPrivacySettings = () =>{
+        const {navigation} = this.props;
+        navigation.navigate('marketingandPrivacySettings');
+    }
 
     render() {
-
+        const {navigation,initialState} = this.props;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
 
-                <ScrollView style={{ flex: 0.85 }}>
+                <ScrollView style={styles.scrollViewFlex}>
 
                     <View style={styles.settingsView}>
                         <Text style={styles.settingsHeadline}>
@@ -42,11 +57,11 @@ class GeneralSettingsComponent extends Component {
 
                     <View style={styles.signInView}>
                     {
-                        (this.props && this.props.initialState && this.props.initialState.email && this.props.initialState.firstName && this.props.initialState.lastName)? (
+                        (this.props && initialState && initialState.email && initialState.firstName &&initialState.lastName)? (
                         <Text style={styles.signInUserNametext}>
-                            {this.props.initialState.firstName} {this.props.initialState.lastName}{", "}  
+                            {initialState.firstName} {initialState.lastName}{", "}  
                             <Text style={styles.signInUserEmailtext}>
-                                {this.props.initialState.email}
+                                {initialState.email}
                             </Text>
                         </Text>
                       )
@@ -181,6 +196,8 @@ GeneralSettingsComponent.propTypes = {
 };
 
 GeneralSettingsComponent.defaultProps = {
+    navigation:{},
+    initialState:{}
 
 };
 

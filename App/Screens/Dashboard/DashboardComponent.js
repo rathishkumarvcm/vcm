@@ -131,6 +131,11 @@ class DashboardComponent extends Component {
         navigation.navigate('accountPositions'); 
     }
 
+    navigateMoneyAssest = () => {                     
+        const {navigation} = this.props;
+        navigation.navigate('moneyAndAssest'); 
+    }
+
     /*----------------------
                                  Render Methods
                                                                  -------------------------- */
@@ -165,7 +170,7 @@ class DashboardComponent extends Component {
                 </View>
                 <View style={styles.dashboardListContainer}>               
                     <View style={styles.dashboardItemContainer}>
-                        <Text style={styles.dashboardTileText} onPress={this.selectTheState}>
+                        <Text style={styles.dashboardTileText} onPress={this.navigateMoneyAssest}>
                             Money & Asset Movement
                         </Text>                       
                     </View>

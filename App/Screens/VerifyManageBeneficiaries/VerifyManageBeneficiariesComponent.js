@@ -10,6 +10,7 @@ let beneData = {};
 let newFlag = false;
 
 class VerifyManageBenificiariesComponent extends Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -31,25 +32,26 @@ class VerifyManageBenificiariesComponent extends Component {
   }
 
   setData = () => {
-    const { manageBeneficiaryData, navigation } = this.props;
-    if (this.props && navigation.getParam('newFlag')) {
+    const { manageBeneficiaryData } = this.props;
+    const flag = manageBeneficiaryData.newBeneficiaryFlag;
+    if (this.props && flag) {
       newFlag = true;
     }
     if (this.props && manageBeneficiaryData && manageBeneficiaryData.savedBeneficiaryData) {
       tempData = manageBeneficiaryData.savedBeneficiaryData;
 
-      if (this.props && navigation.getParam('newFlag')) {
+      if (this.props && flag) {
         let priArr = [];
         let conArr = [];
-        if (tempData.new_Primary_Bene && tempData.new_Primary_Bene.length) {
+        if (tempData.new_Primary_Bene && tempData.new_Primary_Bene.length)
           priArr = tempData.new_Primary_Bene;
-        }
-        if (tempData.new_Contingent_Bene && tempData.new_Contingent_Bene.length) {
+
+        if (tempData.new_Contingent_Bene && tempData.new_Contingent_Bene.length)
           conArr = tempData.new_Contingent_Bene;
-        }
+
         tempData.primary_Bene = priArr;
         tempData.contingent_Bene = conArr;
-      } else {
+      } else
         if (tempData.primary_Bene && tempData.primary_Bene.length > 0 && tempData.contingent_Bene && tempData.contingent_Bene.length > 0 && tempData.transfer_on_Death_Bene && tempData.transfer_on_Death_Bene.length < 0) {
           let priArr = [];
           let conArr = [];
@@ -73,7 +75,6 @@ class VerifyManageBenificiariesComponent extends Component {
           tempData.transfer_on_Death_Bene = todArr;
           tempData.contingent_Bene = conArr;
         }
-      }
       this.updateInitialData(tempData);
     }
 
@@ -82,7 +83,7 @@ class VerifyManageBenificiariesComponent extends Component {
   updateInitialData = (data) => {
     if (data) {
       beneData = data;
-      this.setInitialValue()
+      this.setInitialValue();
       // this.setState({ beneData: data }, () => this.setInitialValue());
     }
   }
@@ -95,7 +96,7 @@ class VerifyManageBenificiariesComponent extends Component {
     // const { beneData } = this.state;
     if (beneData.transfer_on_Death_Bene) {
       const tot = beneData.transfer_on_Death_Bene.reduce((prev, cur) => {
-        let dist = parseInt(cur.distribution_Per);
+        let dist = parseInt(cur.distribution_Per, 10);
         if (this.isEmpty(cur.distribution_Per)) {
           dist = 0;
         }
@@ -105,7 +106,7 @@ class VerifyManageBenificiariesComponent extends Component {
     }
     if (beneData.primary_Bene) {
       const tot = beneData.contingent_Bene.reduce((prev, cur) => {
-        let dist = parseInt(cur.distribution_Per);
+        let dist = parseInt(cur.distribution_Per, 10);
         if (this.isEmpty(cur.distribution_Per)) {
           dist = 0;
         }
@@ -115,7 +116,7 @@ class VerifyManageBenificiariesComponent extends Component {
     }
     if (beneData.contingent_Bene) {
       const tot = beneData.primary_Bene.reduce((prev, cur) => {
-        let dist = parseInt(cur.distribution_Per);
+        let dist = parseInt(cur.distribution_Per, 10);
         if (this.isEmpty(cur.distribution_Per)) {
           dist = 0;
         }

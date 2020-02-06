@@ -64,8 +64,7 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
             dateJson.push({"id":i.toString(),"value": i.toString()});
          }
          const{automaticInvestmentState}=this.props;
-         const{accountType}=this.state;
-        const {itemToEdit} = this.state;
+         const{accountType,itemToEdit}=this.state;
         if (itemToEdit > -1) {
             if (this.props && automaticInvestmentState) {
                 switch(accountType)

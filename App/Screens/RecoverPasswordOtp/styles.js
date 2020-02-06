@@ -1,6 +1,5 @@
 import { StyleSheet,Dimensions } from "react-native";
 import { scaledHeight} from '../../Utils/Resolution';
-// import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const {width} = Dimensions.get('window');
 

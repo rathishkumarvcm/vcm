@@ -750,11 +750,11 @@ class OpenAccPageTwoComponent extends Component {
             if (accOpeningData[`${responseKey}`]) {
                 if (accOpeningData[`${responseKey}`] !== prevProps.accOpeningData[`${responseKey}`]) {
                     const tempResponse = accOpeningData[`${responseKey}`];
-                    if (tempResponse.status === 200 || tempResponse.statusCode === '200') {
-                        const msg = tempResponse.message;
+                    if (tempResponse.status) {
+                        const msg = tempResponse.status;
                         AppUtils.debugLog(`Account Type Saved ::: :: ${msg}`);
-                        showAlert(gblStrings.common.appName, tempResponse.result, gblStrings.common.ok);
-                        AppUtils.debugLog(tempResponse.result);
+                        showAlert(gblStrings.common.appName, tempResponse.status, gblStrings.common.ok);
+                        AppUtils.debugLog(tempResponse.status);
                     } else {
                         showAlert(gblStrings.common.appName, tempResponse.message, gblStrings.common.ok);
                         AppUtils.debugLog(tempResponse.message);
@@ -3896,7 +3896,7 @@ class OpenAccPageTwoComponent extends Component {
         let total = 0;
         let errMsg = "";
         for (let i = 0; i < newItems.length; i += 1) {
-            if (!isNumeric(newItems[+i].beneficiaryDistPercent) && newItems[+i].beneficiaryDistPercent !== "") {
+            if (isNumeric(newItems[+i].beneficiaryDistPercent) && newItems[+i].beneficiaryDistPercent !== "") {
                 total += parseFloat(newItems[+i].beneficiaryDistPercent);
             }
         }

@@ -3,7 +3,7 @@ import { Text,View,ScrollView} from 'react-native';
 import PropTypes from 'prop-types';
 import { Auth } from "aws-amplify";
 import styles from './styles';
-import {GButtonComponent,GHeaderComponent,GInputComponent,GFooterSettingsComponent} from '../../CommonComponents';
+import {GButtonComponent,GHeaderComponent,GInputComponent,GFooterSettingsComponent,showAlert} from '../../CommonComponents';
 
 class EmailVerificationComponent extends Component {
     constructor(props){
@@ -34,11 +34,10 @@ class EmailVerificationComponent extends Component {
         Auth.confirmSignUp(registerSelfData.emailID, code, {
             //  Optional. Force user confirmation irrespective of existing alias. By default set to True.
             forceAliasCreation: true    
-        }).then(data => { alert("verified OTP");
-                          console.log(data);
+        }).then(() => { showAlert("verified OTP");
                           navigation.navigate('login',{emailVerified : true,emailVerifiedData:registerSelfData});
         })
-          .catch(err => console.log(err));
+          .catch(() => {});
     }
 
     resendOTP = () => {
@@ -46,9 +45,7 @@ class EmailVerificationComponent extends Component {
         const registerSelfData = navigation.getParam('passwordData');
         
         Auth.resendSignUp(registerSelfData.emailID).then(() => {
-            console.log('code resent successfully');
-        }).catch(e => {
-            console.log(e);
+        }).catch(() => {
         });
     }
 

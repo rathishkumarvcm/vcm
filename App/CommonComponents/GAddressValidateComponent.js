@@ -1,15 +1,30 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import globalString from '../Constants/GlobalStrings';
-import GInputComponent from './GInputComponent';
 import PropTypes from "prop-types";
+import globalString from '../Constants/GlobalStrings';
+import {GInputComponent} from './GInputComponent';
+import {GButtonComponent} from './GButtonComponent';
 import { scaledHeight } from '../Utils/Resolution';
 
 export const styles = StyleSheet.create({
-    settingsView1: {
-        marginTop: scaledHeight(18),
-        paddingLeft: '4%',
-        paddingRight: '4%',
+    editAddressCityLabel: {
+        color: '#333333DE',
+        fontSize: scaledHeight(18),
+        fontWeight: 'bold',
+        margin: '2%'
+    },
+    editAddressCityValue: {
+        color: '#56565A',
+        fontSize: scaledHeight(18),
+        margin: '2%'
+    },
+    editAddressInput: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        marginBottom: '2%',
+        paddingLeft: '2%',
+        paddingRight: '2%',
+        width: '100%'
     },
     editAddressTypeLabel: {
         color: '#333333DE',
@@ -17,31 +32,12 @@ export const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: '4%'
     },
-    editAddressInput: {
-        flexDirection: 'column',
-        width: '100%',
-        paddingLeft: '2%',
-        paddingRight: '2%',
-        marginBottom: '2%',
-        justifyContent: 'center'
-    },
     editFlexDirectionColumn: {
         flexDirection: 'column',
-        width: '100%',
         marginTop: scaledHeight(20),
         paddingLeft: '4%',
-        paddingRight: '4%'
-    },
-    editAddressCityLabel: {
-        color: '#333333DE',
-        fontWeight: 'bold',
-        margin: '2%',
-        fontSize: scaledHeight(18)
-    },
-    editAddressCityValue: {
-        color: '#56565A',
-        margin: '2%',
-        fontSize: scaledHeight(18)
+        paddingRight: '4%',
+        width: '100%'
     },
     saveButtonStyle: {
         alignItems: 'center',
@@ -59,9 +55,17 @@ export const styles = StyleSheet.create({
         color: '#FFFFFF',
         fontSize: scaledHeight(16)
     },
+    settingsView1: {
+        marginTop: scaledHeight(18),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+    },
 });
 
-export const GAddressValidateComponent = (props) => (
+export const GAddressValidateComponent = (props) => {
+    const {setAddressOne,addressOne,validationAddressOne,addressTwo,setAddressTwo,validationAddressTwo,
+        validateZipCodeValue,setZipcodeValue,zipCodeValue,isZipCodeValid,userCity,userState,isValidateAddress,validateAddressValue} = props;
+return(
     <View>
         <View style={styles.settingsView1}>
             <Text style={styles.editAddressTypeLabel}>
@@ -73,10 +77,10 @@ export const GAddressValidateComponent = (props) => (
             <GInputComponent
                 propInputStyle={styles.editAddressInput}
                 placeholder={globalString.addAddressInfo.addressLineOne}
-                onChangeText={props.setAddressOne}
-                value={props.addressOne}
+                onChangeText={setAddressOne}
+                value={addressOne}
                 maxLength={50}
-                errorFlag={!props.validationAddressOne}
+                errorFlag={!validationAddressOne}
                 errorText={globalString.profileValidationMessages.validateAddressLineOne}
             />
         </View>
@@ -91,10 +95,10 @@ export const GAddressValidateComponent = (props) => (
             <GInputComponent
                 propInputStyle={styles.editAddressInput}
                 placeholder={globalString.addAddressInfo.addressLineTwo}
-                value={props.addressTwo}
+                value={addressTwo}
                 maxLength={50}
-                onChangeText={props.setAddressTwo}
-                errorFlag={!props.validationAddressTwo}
+                onChangeText={setAddressTwo}
+                errorFlag={!validationAddressTwo}
                 errorText={globalString.profileValidationMessages.validateAddressLineTwo}
             />
         </View>
@@ -109,12 +113,12 @@ export const GAddressValidateComponent = (props) => (
             <GInputComponent
                 propInputStyle={styles.editAddressInput}
                 placeholder={globalString.addAddressInfo.zipCode}
-                onBlur={props.validateZipCodeValue}
-                onChangeText={props.setZipcodeValue}
-                value={props.zipCodeValue}
+                onBlur={validateZipCodeValue}
+                onChangeText={setZipcodeValue}
+                value={zipCodeValue}
                 keyboardType="number-pad"
                 maxLength={5}
-                errorFlag={!props.isZipCodeValid}
+                errorFlag={!isZipCodeValid}
                 errorText={globalString.profileValidationMessages.validateZipcode}
             />
         </View>
@@ -124,7 +128,7 @@ export const GAddressValidateComponent = (props) => (
                 {globalString.addAddressInfo.cityLabel}
             </Text>
             <Text style={styles.editAddressCityValue}>
-                {props.userCity}
+                {userCity}
             </Text>
         </View>
 
@@ -133,21 +137,23 @@ export const GAddressValidateComponent = (props) => (
                 {globalString.addAddressInfo.stateLabel}
             </Text>
             <Text style={styles.editAddressCityValue}>
-                {props.userState}
+                {userState}
             </Text>
         </View>
 
-        {!props.isValidateAddress && (
+        {!isValidateAddress && (
             <GButtonComponent
                 buttonStyle={styles.saveButtonStyle}
-                buttonText={gblStrings.common.validate}
+                buttonText={globalString.common.validate}
                 textStyle={styles.saveButtonText}
-                onPress={props.validateAddressValue} />
+                onPress={validateAddressValue}
+            />
         )}
     </View>
 );
+};
 
-GAddressValidateComponent.propType = {
+GAddressValidateComponent.propTypes = {
     addressOne: PropTypes.string,
     addressTwo: PropTypes.string,
     zipCodeValue: PropTypes.string,

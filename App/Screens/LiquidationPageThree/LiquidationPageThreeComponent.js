@@ -6,7 +6,6 @@ import { GInputComponent, GHeaderComponent, GFooterComponent, GDropDownComponent
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
-import { scaledHeight } from '../../Utils/Resolution';
 
 
 let savedData = {};
@@ -224,7 +223,7 @@ class LiquidationPageThreeComponent extends Component {
         }));
     }
 
-    onSelectBankAccount = (item) => {
+    onSelectBankAccount = (item) => () => {
         this.setState({
             fundingSource: {
                 selectedBankAccountNo: item.bankAccountNo,
@@ -365,10 +364,10 @@ class LiquidationPageThreeComponent extends Component {
 
     generatekeyBankAccNo = (a) => a.bankAccountNo;
 
-    renderBankAccounts = ({ item, index }) => {
+    renderBankAccounts = ({ item }) => {
         const { fundingSource } = this.state;
         return (
-            <View style={(item.bankAccountNo === fundingSource.selectedBankAccountNo) ? styles.selectedBankAccountFlex : styles.unSelectedBankAccountFlex} onTouchStart={() => this.onSelectBankAccount(item, index)}>
+            <View style={(item.bankAccountNo === fundingSource.selectedBankAccountNo) ? styles.selectedBankAccountFlex : styles.unSelectedBankAccountFlex} onTouchStart={this.onSelectBankAccount(item)}>
                 <View style={styles.bankAccountFlex}>
                     <View style={styles.bankIconFlex}>
                         <Image style={styles.bankIconStyle}
@@ -657,10 +656,7 @@ class LiquidationPageThreeComponent extends Component {
                                                                         data={reqAmountTypeJson}
                                                                         dropDownValue={taxAccountingMethodData.requestedAmountType}
                                                                         selectedDropDownValue={this.selectedDropDownValue}
-                                                                        dropDownPostition={{
-                                                                            position: 'absolute', top: scaledHeight(80), width: "98%", marginLeft: "0%", paddingLeft: "4%", borderColor: "#DEDEDF",
-                                                                            borderWidth: scaledHeight(1), zIndex: 3, backgroundColor: 'white'
-                                                                        }}
+                                                                        dropDownPostition={styles.dropDownStyle}
                                                                     />
 
                                                                     {

@@ -3,7 +3,7 @@ import RecoveryPasswordSuccessComponent from './RecoverPasswordSuccessComponent'
 
 
 
-const mapStateToProps = (state /* , props */) => (
+const mapStateToProps = ( /* state , props */) => (
     {
      
     }

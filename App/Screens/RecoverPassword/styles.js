@@ -1,9 +1,7 @@
 import { StyleSheet,Dimensions } from "react-native";
 import { scaledHeight} from '../../Utils/Resolution';
-// import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const {width} = Dimensions.get('window');
-
 
 const styles = StyleSheet.create({
     cancelButton:{
@@ -18,7 +16,7 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(42),
         width:'80%'
      },
-    cancelButtonText:{
+     cancelButtonText:{
         color:'#544A54',
         fontSize:scaledHeight(16),
         fontWeight:'bold'
@@ -45,23 +43,23 @@ const styles = StyleSheet.create({
         fontSize:scaledHeight(16),
         fontWeight:'bold'
     },
-    
     copyRightSection:{
         alignItems:'center',
         backgroundColor:'#56565A',
         height:scaledHeight(50),
         justifyContent:'center'
     },
+    
     copyRightText:{
         color:'#FFFFFF'
     },
-    
     errorMessage: {
         color:"red",
         fontSize: scaledHeight(14),
         paddingLeft:'4%',
         paddingRight:'4%',
       },
+    
     faceIDlogo:{
         alignSelf:'center',
         marginBottom:'5%',
@@ -97,7 +95,6 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center'
     },
-    
     newVictory:{
         color:'#56565A',
         fontSize:scaledHeight(30),
@@ -105,6 +102,7 @@ const styles = StyleSheet.create({
         lineHeight:scaledHeight(30),
         marginTop:scaledHeight(20)
     },
+    
     newVictoryButton:{
         alignItems:'center',
         backgroundColor:'#FFFFFF',
@@ -199,7 +197,6 @@ const styles = StyleSheet.create({
         marginRight:'4%',
         marginTop:scaledHeight(20),
       },
-  
     registernowButton:{
        alignItems:'center',
        backgroundColor:'#FFFFFF',
@@ -210,7 +207,8 @@ const styles = StyleSheet.create({
        justifyContent:'center',
        width:width/3.3
     },
-     registernowButton1:{
+  
+    registernowButton1:{
         alignSelf:'center',
        backgroundColor:'#FFFFFF',
        borderColor:'#56565A',
@@ -220,14 +218,15 @@ const styles = StyleSheet.create({
        justifyContent:'center',
        width:width/2
      },
-    registernowText:{
+     registernowText:{
         color:'#56565A',
         fontSize:scaledHeight(10)
     },
-     retrievePasswordText:{
+    retrievePasswordText:{
         color:'#56565A',
         fontSize:scaledHeight(30)
     },
+     scrollStyle:{ flex: 0.85 },
     securityCheck:
     {
         backgroundColor:'#878280',
@@ -278,7 +277,6 @@ const styles = StyleSheet.create({
     userIDTextBox:{
         marginLeft:'4%',
         marginRight:'4%',
-        // marginBottom:scaledHeight(18)
     },
     userIDTextBoxError:{
         borderColor : 'red',
