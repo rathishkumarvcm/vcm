@@ -1,102 +1,93 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet } from 'react-native';
-import { scaledHeight } from '../Utils/Resolution';
 import PropTypes from "prop-types";
+import { scaledHeight } from '../Utils/Resolution';
 
 
 export const styles = StyleSheet.create({
     
-    wizardSection: {
-        width: "100%",
-        flexGrow: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-
+    lblLine: {
+        backgroundColor: '#707070',       
+        height: scaledHeight(1),
+        position:"absolute",       
+        width:"90%",
     },
-    wizardPageSection: {
-        flexDirection: 'row',
-        width: '100%',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-       //  marginVertical: scaledHeight(25)
-       marginTop:scaledHeight(41),
-
+    otplblLine: {
+        backgroundColor: '#707070',    
+        height: scaledHeight(1),
+        position:"absolute",     
+        width:"80%",
     },
     wizardGrid: {
-        justifyContent: 'center',
         alignItems: 'center',
-        width: scaledHeight(24),
-        height: scaledHeight(24),
+        backgroundColor: '#FFFFFF',
         borderColor: 'rgba(112, 112, 112, 0.5)',
         borderWidth: 1,
-        backgroundColor: '#FFFFFF',
+        height: scaledHeight(24),
+        justifyContent: 'center',
+        width: scaledHeight(24),
 
     },
-    wizardPageTxt: {
-        fontSize: scaledHeight(15),
-        color: '#535353',
-        textAlign: 'center'
-    },
-    wizardGridVisited: {
-        justifyContent: 'center',
+    wizardGridCurrent: {
         alignItems: 'center',
-        width: scaledHeight(24),
-        height: scaledHeight(24),
+        backgroundColor: '#CDDBFC',
         borderColor: 'rgba(112, 112, 112, 0.5)',
         borderWidth: 1,
+        height: scaledHeight(32),
+        justifyContent: 'center',
+        width: scaledHeight(32),
+
+    },
+    wizardGridVisited: {
+        alignItems: 'center',
         backgroundColor: '#58D460',
+        borderColor: 'rgba(112, 112, 112, 0.5)',
+        borderWidth: 1,
+        height: scaledHeight(24),
+        justifyContent: 'center',
+        width: scaledHeight(24),
 
     },
     wizardGridVisitedTxt: {
-        fontSize: scaledHeight(15),
         color: '#535353',
+        fontSize: scaledHeight(15),
         textAlign: 'center'
     },
 
-    wizardGridCurrent: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: scaledHeight(32),
-        height: scaledHeight(32),
-        borderColor: 'rgba(112, 112, 112, 0.5)',
-        borderWidth: 1,
-        backgroundColor: '#CDDBFC',
-
-    },
     wizardPageCurrentTxt: {
+        color: '#535353',
         fontSize: scaledHeight(15),
         fontWeight: 'bold',
-        color: '#535353',
         textAlign: 'center'
     },
+    wizardPageSection: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop:scaledHeight(41),     
+       width: '100%',
 
-    wizardTitleTxt: {
-        fontSize: scaledHeight(20),
-      //   fontFamily:'Roboto',
-        marginHorizontal: scaledHeight(12),
-       //  marginVertical: scaledHeight(5),
-        marginTop: scaledHeight(34),
-        fontWeight: 'bold',
+    },
+
+    wizardPageTxt: {
         color: '#535353',
-        lineHeight: 22
+        fontSize: scaledHeight(15),
+        textAlign: 'center'
     },
-    lblLine: {
-        width:"90%",
-       //  flexGrow: 1,
-       //  marginTop: scaledHeight(9.5),
-        height: scaledHeight(1),
-        backgroundColor: '#707070',
-        // opacity: .25,
-        position:"absolute",
+    wizardSection: {
+        alignItems: 'flex-start',
+        flexGrow: 1,
+        justifyContent: 'flex-start',
+        width: "100%",
+
     },
-    otplblLine: {
-        width:"80%",
-       //  flexGrow: 1,
-       //  marginTop: scaledHeight(9.5),
-        height: scaledHeight(1),
-        backgroundColor: '#707070',
-        // opacity: .25,
-        position:"absolute",
+    wizardTitleTxt: {
+        color: '#535353',    
+        fontSize: scaledHeight(20),   
+        fontWeight: 'bold',
+        lineHeight: 22,
+        marginHorizontal: scaledHeight(12),
+        marginTop: scaledHeight(34)
     }
 
 });
@@ -106,21 +97,21 @@ export const styles = StyleSheet.create({
 
 const CustomPageWizard = props => 
 {
-     /*----------- Wizard grid rendering -------------------*/
-     var pages = [];
-     let currentPage = props.currentPage;
+     /* ----------- Wizard grid rendering -------------------*/
+     const pages = [];
+     const {currentPage,lastPage,pageName} = props;
      let totalCount;
-    if(props.lastPage){
+    if(lastPage){
          totalCount = 4;
     }
     else{
          totalCount = 6;
     }
-     var tempViewSkin = styles.wizardGrid;
-     var tempTxtSkin = styles.wizardPageTxt;
+     let tempViewSkin = styles.wizardGrid;
+     let tempTxtSkin = styles.wizardPageTxt;
 
-     for (let i = 1; i <= totalCount; i++) {
-         if (currentPage == i) {
+     for (let i = 1; i <= totalCount; i+=1) {
+         if (currentPage === i) {
              tempViewSkin = styles.wizardGridCurrent;
              tempTxtSkin = styles.wizardPageCurrentTxt;
          } else if (i < currentPage) {
@@ -135,11 +126,11 @@ const CustomPageWizard = props =>
 
              <TouchableOpacity
                  activeOpacity={0.8}
-                 accessibilityRole={'button'}
+                 accessibilityRole="button"
                  key={i}
 
              >
-                 <View style={tempViewSkin} >
+                 <View style={tempViewSkin}>
                      <Text style={tempTxtSkin}>
                          {i}
                      </Text>
@@ -149,13 +140,13 @@ const CustomPageWizard = props =>
      }
     return (
         <View style={styles.wizardSection}>
-            <View style={styles.wizardPageSection} >
-            <Text style={props.lastPage ? styles.otplblLine :styles.lblLine} />
+            <View style={styles.wizardPageSection}>
+            <Text style={lastPage ? styles.otplblLine :styles.lblLine} />
 
                           {pages}
             </View>
             <Text style={styles.wizardTitleTxt}>
-                {props.pageName}
+                {pageName}
             </Text>
         </View>
     );
