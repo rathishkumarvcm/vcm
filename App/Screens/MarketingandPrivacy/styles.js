@@ -4,6 +4,23 @@ import { scaledHeight} from '../../Utils/Resolution';
 const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+    cancelButton: {
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderColor: '#7B8288',
+        borderWidth: 1,
+        height: scaledHeight(55),
+        justifyContent: 'center',
+        marginLeft: '10%',
+        marginRight: '10%',
+        marginTop: scaledHeight(42),
+        width: '80%',
+    },
+    cancelButtonText: {
+        color: '#544A54',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold'
+    },
     completeBorder:{
         backgroundColor:'#FFFFFF',
         borderBottomWidth:1,
@@ -33,13 +50,13 @@ const styles = StyleSheet.create({
         color: '#FFFFFF'
     },
     editAddressLabel: {
-        color: '#707070', fontSize: scaledHeight(16), marginBottom: '2%', marginLeft: '3%', width: '70%'
+        color: '#707070', fontSize: scaledHeight(14), marginBottom: '2%', marginLeft: '3%', width: '70%'
     },
     editAddressView: {
-        alignItems: "center", flexDirection: 'row', justifyContent: 'center', marginBottom: '2%', marginLeft: '3%', marginTop: '2%', width: '100%'
+        alignItems: "center", flexDirection: 'row', justifyContent: 'center', marginBottom: '2%', marginTop: '2%', width: '100%'
     },
     editEmailBorder: { 
-        borderBottomWidth: 1, borderColor: '#B2B2B2', marginBottom: '4%', marginTop: '4%' 
+        borderBottomWidth: 1, borderColor: '#B2B2B2', marginBottom: '2%', marginTop: '2%' 
     },
     editEmailHolder: {
         backgroundColor: '#fff', borderColor: '#CCCCCC', borderWidth: 1, marginBottom: '2%', marginLeft: '2%', marginRight: '2%', marginTop: '2%', width: '96%'
@@ -51,7 +68,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row', marginBottom: '2%', marginTop: '2%' 
     },
     editEmailType: {
-        color: '#707070', fontSize: scaledHeight(16), fontWeight: 'bold', marginBottom: '2%', marginLeft: '3%', marginTop: '4%'
+        color: '#707070', fontSize: scaledHeight(16), fontWeight: 'bold', marginBottom: '4%', marginLeft: '3%', marginTop: '4%'
     },
     editFlexDirectionColumn: {
         flexDirection: 'column',
@@ -61,7 +78,10 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     editSwitchButton: {
-        marginBottom: '2%', marginTop: '2%', width: '30%'
+        marginBottom: '2%', marginTop: '2%', width: '20%'
+    },
+    editTextStyle: {
+        color: '#228AE5', fontSize: scaledHeight(14), marginBottom: '2%',marginLeft: '3%', marginTop:'2%'
     },
     faceIDlogo:{
         alignSelf:'center',
@@ -131,10 +151,7 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center'
     },
-    marketingContentHolder: {
-        backgroundColor:'#FFFFFF',
-        borderColor:'#D4D4D4',
-        borderWidth :1,
+    marketingContentHolder: {      
         marginLeft:'3%',
         marginRight:'3%',
         marginTop:scaledHeight(16),
@@ -167,10 +184,10 @@ const styles = StyleSheet.create({
     marketingNotes: {
         color: '#56565A', fontSize: scaledHeight(16), lineHeight: 30, marginBottom: '2%', marginTop: '4%', textAlign: 'justify', width: '100%'
     },
-    marketingNotesLink: {
+     marketingNotesLink: {
         color: '#0000FF', fontSize: scaledHeight(16), lineHeight: 30, width: '100%'
     },
-     marketingPadding: {
+    marketingPadding: {
         padding: '4%'
     },
     newVictory:{
@@ -244,8 +261,8 @@ const styles = StyleSheet.create({
         color: '#0000FF', fontSize: scaledHeight(14), width: '20%' 
     },
     profileSettingConnectLabel: { color: '#56565A', fontSize: scaledHeight(18), marginTop: '4%' },
-    profileSettingFooterView: { flexDirection: 'column', margin: '4%', width: '92%' },
-    profileSettingInvestLabel: { color: '#56565A', flexWrap: 'wrap', fontSize: scaledHeight(16), lineHeight: 24, marginBottom: '3%', textAlign: 'justify' }, profileSettingSecurityLabel: { color: '#56565A', fontSize: scaledHeight(16), lineHeight: 24, marginTop: '4%', textAlign: 'justify' },
+    profileSettingFooterView: { flexDirection: 'column', margin: '4%', width: '92%' }, profileSettingInvestLabel: { color: '#56565A', flexWrap: 'wrap', fontSize: scaledHeight(16), lineHeight: 24, marginBottom: '3%', textAlign: 'justify' },
+    profileSettingSecurityLabel: { color: '#56565A', fontSize: scaledHeight(16), lineHeight: 24, marginTop: '4%', textAlign: 'justify' },
     profileSettingShareLabel: { color: '#56565A', fontSize: scaledHeight(16), lineHeight: 24, textAlign: 'justify' },
     profileSettingSocialLabel: { color: '#0000FF', fontSize: scaledHeight(16), marginTop: scaledHeight(3) },
     profileSettingSocialView: { color: '#707070', fontSize: scaledHeight(18), fontWeight: 'bold', width: '70%' },
@@ -288,6 +305,26 @@ const styles = StyleSheet.create({
     registernowText:{
         color:'#56565A',
         fontSize:scaledHeight(10)
+    },
+    saveButton: {
+        alignItems: 'center',
+        backgroundColor: '#56565A',
+        borderColor: '#56565A',
+        borderWidth: 1,
+        height: scaledHeight(55),
+        justifyContent: 'center',
+        marginLeft: '10%',
+        marginRight: '10%',
+        marginTop: scaledHeight(30),
+        width: '80%',
+    },
+    saveButtonText: {
+        color: '#FFFFFF',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold'
+    },
+    scrollContainer:{
+        flex: 0.85 
     },
     settingsAddress:{
         backgroundColor:'#FFFFFF',
@@ -404,7 +441,7 @@ const styles = StyleSheet.create({
         color:'#FFFFFF',
         fontSize:scaledHeight(16),
         fontWeight:'bold'
-    },
+    },   
     signInView:{
         marginTop:scaledHeight(2),
         paddingLeft:'4%',
@@ -427,7 +464,7 @@ const styles = StyleSheet.create({
         marginRight:'4%',
         marginTop:scaledHeight(30),
         width: '92%'
-    },   
+    },
     termsofuse:{
         flexDirection:'row',
         flexWrap:'wrap',

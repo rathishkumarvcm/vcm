@@ -7,12 +7,15 @@ import globalString from '../../Constants/GlobalStrings';
 //  Address Informations Data
 const switchTrackColor = { flase: '#DBDBDB', true: '#444444' };
 const UserAddressInformation = (props) => {
-    const {addressType,addressLineOne,addressCity,addressState,isMailingAddress,onAddressToggle} = props;
+    const {addressType,addressLineOne,addressCity,addressState,isMarketingOffersEnabled,onAddressToggle,navigateEditSection} = props;
     return (
         <View style={styles.editEmailHolder}>
             <View style={styles.profileDivideIcon}>
                 <View style={styles.profileDivideIconOne}>
                     <Text style={styles.editEmailType}>
+                        {globalString.marketingPrivacyLabel.marketingMailingLabel}
+                    </Text>
+                    <Text style={styles.editEmailId}>
                         {addressType}
                     </Text>
                     <Text style={styles.editEmailId}>
@@ -24,25 +27,23 @@ const UserAddressInformation = (props) => {
                     <Text style={styles.editEmailId}>
                         {addressState}
                     </Text>
-                </View>
-
-                {/* <View style={styles.profileDivideIconTwo}>
-                    <Image style={styles.imageWidthHeight}
-                        source={require("../../Images/menu_icon.png")} />
-                </View> */}
+                    <Text style={styles.editTextStyle} onPress={navigateEditSection}>
+                        {globalString.common.edit}
+                    </Text>
+                </View>           
             </View>
 
             <View style={styles.editEmailBorder} />
 
             <View style={styles.editAddressView}>
                 <Text style={styles.editAddressLabel}>
-                    {globalString.marketingPrivacyLabel.marketingContactLabel}
+                    {isMarketingOffersEnabled ? globalString.marketingPrivacyLabel.marketingContactEnableLabel : globalString.marketingPrivacyLabel.marketingContactDisableLabel}                                       
                 </Text>
 
                 <View style={styles.editSwitchButton}>
                     <Switch trackColor={switchTrackColor}
                         onValueChange={onAddressToggle}
-                        value={isMailingAddress}
+                        value={isMarketingOffersEnabled}
                     />
                 </View>
             </View>
@@ -55,8 +56,9 @@ UserAddressInformation.propTypes = {
     addressLineOne: PropTypes.string,
     addressCity: PropTypes.string,
     addressState: PropTypes.string,  
-    isMailingAddress: PropTypes.bool,   
+    isMarketingOffersEnabled: PropTypes.bool,   
     onAddressToggle:PropTypes.func,
+    navigateEditSection:PropTypes.func
 };
 
 UserAddressInformation.defaultProps = {
@@ -64,8 +66,9 @@ UserAddressInformation.defaultProps = {
     addressLineOne: '',   
     addressCity:'',
     addressState:'',   
-    isMailingAddress: false,
-    onAddressToggle: null
+    isMarketingOffersEnabled: false,
+    onAddressToggle: () => { },
+    navigateEditSection: () => { }
 };
 
 export default UserAddressInformation;

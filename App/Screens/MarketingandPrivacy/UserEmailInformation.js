@@ -6,36 +6,34 @@ import globalString from '../../Constants/GlobalStrings';
 
 const switchTrackColor = { flase: '#DBDBDB', true: '#444444' };
 const UserEmailInformation = (props) => {
-    const {emailType,emailId,onEmailToggle,isPrimaryEmail} = props;
+    const {emailId,onEmailToggle,isMarketingOffersEnabled,navigateEditSection} = props;
     return (
         <View style={styles.editEmailHolder}>
             <View style={styles.profileDivideIcon}>
                 <View style={styles.profileDivideIconOne}>
                     <Text style={styles.editEmailType}>
-                        {emailType}
+                        {globalString.accManagement.emailAddress}
                     </Text>
                     <Text style={styles.editEmailId}>
                         {emailId}
                     </Text>
+                    <Text style={styles.editTextStyle} onPress={navigateEditSection}>
+                        {globalString.common.edit}
+                    </Text>
                 </View>
-
-                {/* <View style={styles.profileDivideIconTwo}>
-                    <Image style={styles.imageWidthHeight}
-                        source={require("../../Images/menu_icon.png")} />
-                </View> */}
             </View>
 
             <View style={styles.editEmailBorder} />
 
             <View style={styles.editAddressView}>
                 <Text style={styles.editAddressLabel}>
-                    {globalString.marketingPrivacyLabel.marketingContactLabel}
+                    {isMarketingOffersEnabled ? globalString.marketingPrivacyLabel.marketingContactEnableLabel : globalString.marketingPrivacyLabel.marketingContactDisableLabel}                                       
                 </Text>
 
                 <View style={styles.editSwitchButton}>
                     <Switch trackColor={switchTrackColor}
                         onValueChange={onEmailToggle}
-                        value={isPrimaryEmail}
+                        value={isMarketingOffersEnabled}
                     />
                 </View>
             </View>
@@ -44,17 +42,19 @@ const UserEmailInformation = (props) => {
 };
 
 UserEmailInformation.propTypes = {
-    emailType: PropTypes.string,
+    // emailType: PropTypes.string,
     emailId: PropTypes.string,
-    isPrimaryEmail: PropTypes.bool,
-    onEmailToggle: PropTypes.func
+    isMarketingOffersEnabled: PropTypes.bool,  
+    onEmailToggle: PropTypes.func,
+    navigateEditSection:PropTypes.func
 };
 
 UserEmailInformation.defaultProps = {
-    emailType: '',
+   // emailType: '',
     emailId: '',   
-    isPrimaryEmail: false,
-    onEmailToggle: null
+    isMarketingOffersEnabled: false,
+    onEmailToggle : () => { },
+    navigateEditSection: () => { }
 };
 
 export default UserEmailInformation;

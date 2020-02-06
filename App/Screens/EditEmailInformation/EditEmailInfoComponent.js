@@ -216,7 +216,7 @@ class EditEmailInfoComponent extends Component {
 
     emailAddNewOnCancel = () => {
         const { navigation } = this.props;
-        navigation.navigate('profileSettings');
+        navigation.goBack();
     }
 
     render() {

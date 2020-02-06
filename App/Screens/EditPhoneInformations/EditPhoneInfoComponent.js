@@ -609,7 +609,7 @@ class EditPhoneInfoComponent extends Component {
         const { isRelation } = this.state;
         const { navigation } = this.props;
         if (!isRelation) {
-            navigation.navigate('profileSettings');
+            navigation.goBack();
         } else {
             navigation.navigate('editFamilyMemberInfo');
         }
