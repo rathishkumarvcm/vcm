@@ -112,10 +112,9 @@ class AddNewBeneficiaryComponent extends Component {
     ];
 
     for (let i = 0; i < compositePayloadData.length; i += 1) {
-      const obj = compositePayloadData[i];
-      const tempKey = obj;
-      if (this.props && masterLookupStateData && !masterLookupStateData[tempKey]) {
-        payload.push(tempKey);
+      const obj = compositePayloadData[parseInt(i, 10)];
+      if (this.props && masterLookupStateData && !masterLookupStateData[obj.toString()]) {
+        payload.push(obj);
       }
     }
 
@@ -178,10 +177,9 @@ class AddNewBeneficiaryComponent extends Component {
       const tempArr = [];
       const len = newContingentBene.length;
       for (let i = 0; i < len; i += 1) {
-        const obj = newContingentBene[i];
+        const obj = newContingentBene[parseInt(i, 10)];
         const data = obj;
         const tempData = {};
-
         tempData.key = data.key;
         tempData.fname = data.fname;
         tempData.mname = data.mname;
@@ -205,7 +203,7 @@ class AddNewBeneficiaryComponent extends Component {
       const tempArr = [];
       const len = newPrimaryBene.length;
       for (let i = 0; i < len; i += 1) {
-        const obj = newPrimaryBene[i];
+        const obj = newPrimaryBene[parseInt(i, 10)];
         const data = obj;
         const tempData = {};
 
@@ -252,7 +250,7 @@ class AddNewBeneficiaryComponent extends Component {
     const payload = this.getPayloadData();
     // console.log("payload", payload);
     saveBeneficiaryData(payload);
-    navigation.navigate("verifyManageBeneficiaries",{newFlag:true});
+    navigation.navigate("verifyManageBeneficiaries", { newFlag: true });
   }
 
   goBack = () => {
@@ -275,12 +273,12 @@ class AddNewBeneficiaryComponent extends Component {
 
   setInputRef = (inputComp) => (ref) => {
     const value = ref;
-    this[inputComp] = value;
+    this[parseInt(inputComp, 10)] = value;
   }
 
   addNewPrimaryBene = () => {
     const { newPrimaryBene } = this.state;
-    const addText = 'Add Another Primary Beneficiary( Up To 3)';
+    const addText = 'Add Another Primary Beneficiary';
     primaryCount += 1;
     const array = newPrimaryBene;
     const tempData = {};
@@ -377,7 +375,7 @@ class AddNewBeneficiaryComponent extends Component {
   selectedNewConDropDownValue = (index, keyName) => text => {
     const { newContingentBene } = this.state;
     const newItems = [...newContingentBene];
-    newItems[index][keyName] = text;
+    newItems[parseInt(index, 10)][keyName.toString()] = text;
     this.setState({
       newContingentBene: newItems
     });
@@ -399,7 +397,7 @@ class AddNewBeneficiaryComponent extends Component {
   selectedNewPriDropDownValue = (index, keyName) => text => {
     const { newPrimaryBene } = this.state;
     const newItems = [...newPrimaryBene];
-    newItems[index][keyName] = text;
+    newItems[parseInt(index, 10)][keyName.toString()] = text;
     this.setState({
       newPrimaryBene: newItems
     });
@@ -425,7 +423,7 @@ class AddNewBeneficiaryComponent extends Component {
     if (keyName === "distribution_Per") {
       value = (value * 100).toFixed(2).toString();
     }
-    newItems[index][keyName] = value;
+    newItems[parseInt(index, 10)][keyName.toString()] = value;
     this.setState({ newContingentBene: newItems });
   }
 
@@ -436,14 +434,14 @@ class AddNewBeneficiaryComponent extends Component {
     if (keyName === "distribution_Per") {
       value = (value * 100).toFixed(2).toString();
     }
-    newItems[index][keyName] = value;
+    newItems[parseInt(index, 10)][keyName.toString()] = value;
     this.setState({ newPrimaryBene: newItems });
   }
 
   onAddedBeneValidationText = (index, keyName, value) => {
     const { newContingentBene } = this.state;
     const newItems = [...newContingentBene];
-    newItems[index][keyName] = value;
+    newItems[parseInt(index, 10)][keyName.toString()] = value;
     this.setState({
       newContingentBene: newItems
     });
@@ -452,7 +450,7 @@ class AddNewBeneficiaryComponent extends Component {
   onAddedPriBeneValidationText = (index, keyName, value) => {
     const { newPrimaryBene } = this.state;
     const newItems = [...newPrimaryBene];
-    newItems[index][keyName] = value;
+    newItems[parseInt(index, 10)][keyName.toString()] = value;
     this.setState({
       newPrimaryBene: newItems
     });
@@ -499,7 +497,7 @@ class AddNewBeneficiaryComponent extends Component {
     let isValidationSuccess = false;
     const len = newContingentBene.length;
     for (let i = 0; i < len; i += 1) {
-      const obj = newContingentBene[i];
+      const obj = newContingentBene[parseInt(i, 10)];
       if (this.isEmpty(obj.fname)) {
         this.onAddedBeneValidationText(i, "fnameValidation", false);
         this.onAddedBeneValidationText(i, "fnameValidationMsg", gblStrings.accManagement.emptyFirstNameMsg);
@@ -569,7 +567,7 @@ class AddNewBeneficiaryComponent extends Component {
     let isValidationSuccess = false;
     const len = newPrimaryBene.length;
     for (let i = 0; i < len; i += 1) {
-      const obj = newPrimaryBene[i];
+      const obj = newPrimaryBene[parseInt(i, 10)];
       if (this.isEmpty(obj.fname)) {
         this.onAddedPriBeneValidationText(i, "fnameValidation", false);
         this.onAddedPriBeneValidationText(i, "fnameValidationMsg", gblStrings.accManagement.emptyFirstNameMsg);
@@ -669,7 +667,7 @@ class AddNewBeneficiaryComponent extends Component {
                           <Text style={styles.smallTitleText}>Primary distributions must total 100 percent</Text>
                           <View>
                             <GDropDownComponent
-                              dropDownName="Supported Account"
+                              dropDownName="Accounts"
                               dropDownTextName={styles.lblTxt}
                               data={supportedAccountData}
                               textInputStyle={styles.dropdownTextInput}
