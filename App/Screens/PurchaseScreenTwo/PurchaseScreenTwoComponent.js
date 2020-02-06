@@ -514,7 +514,7 @@ class PurchaseScreenTwoComponent extends Component {
     onUpdateField = (keyName, data) => {
         const { selectedFundInvestmentData } = this.state;
         const newData = selectedFundInvestmentData;
-        newData[keyName] = data;
+        newData[`${keyName}`] = data;
         this.setState({ selectedFundInvestmentData: newData });
     }
 
@@ -629,11 +629,16 @@ class PurchaseScreenTwoComponent extends Component {
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.topContainer}>
                         <Text style={styles.topContainerTxtBold}>
-                        {gblStrings.purchase.accountName} 
-                        {ammend && ammendData.selectedAccountData && ammendData.selectedAccountData.accountName ? ammendData.selectedAccountData.accountName : savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountName ? savedData.selectedAccountData.accountName : ""}</Text>
+                            {gblStrings.purchase.accountName}
+                            {ammend && ammendData.selectedAccountData && ammendData.selectedAccountData.accountName ? ammendData.selectedAccountData.accountName : ""}
+                            {savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountName ? savedData.selectedAccountData.accountName : ""}
+                        </Text>
                         <View style={styles.flexDirectionStyle}>
                             <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountNumber}</Text>
-                            <Text style={styles.topContainerTxtBold}>{ammend && ammendData.selectedAccountData && ammendData.selectedAccountData.accountNumber ? ammendData.selectedAccountData.accountNumber : savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountNumber ? savedData.selectedAccountData.accountNumber : ""}</Text>
+                            <Text style={styles.topContainerTxtBold}>
+                                {ammend && ammendData.selectedAccountData && ammendData.selectedAccountData.accountNumber ? ammendData.selectedAccountData.accountNumber : ""}
+                                {savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountNumber ? savedData.selectedAccountData.accountNumber : ""}
+                            </Text>
                         </View>
                     </View>
 
