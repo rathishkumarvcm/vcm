@@ -239,7 +239,8 @@ class AddNewBeneficiaryComponent extends Component {
     completeData.new_Contingent_Bene = newConBeneData;
 
     const payload = {
-      savedBeneficiaryData: completeData
+      savedBeneficiaryData: completeData,
+      newBeneficiaryFlag: true
     };
 
     return payload;
@@ -248,9 +249,8 @@ class AddNewBeneficiaryComponent extends Component {
   onClickSave = () => {
     const { saveBeneficiaryData, navigation } = this.props;
     const payload = this.getPayloadData();
-    // console.log("payload", payload);
     saveBeneficiaryData(payload);
-    navigation.navigate("verifyManageBeneficiaries", { newFlag: true });
+    navigation.navigate("verifyManageBeneficiaries");
   }
 
   goBack = () => {

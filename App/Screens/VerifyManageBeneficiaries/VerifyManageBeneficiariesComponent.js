@@ -32,14 +32,15 @@ class VerifyManageBenificiariesComponent extends Component {
   }
 
   setData = () => {
-    const { manageBeneficiaryData, navigation } = this.props;
-    if (this.props && navigation.getParam('newFlag')) {
+    const { manageBeneficiaryData } = this.props;
+    const flag = manageBeneficiaryData.newBeneficiaryFlag;
+    if (this.props && flag) {
       newFlag = true;
     }
     if (this.props && manageBeneficiaryData && manageBeneficiaryData.savedBeneficiaryData) {
       tempData = manageBeneficiaryData.savedBeneficiaryData;
 
-      if (this.props && navigation.getParam('newFlag')) {
+      if (this.props && flag) {
         let priArr = [];
         let conArr = [];
         if (tempData.new_Primary_Bene && tempData.new_Primary_Bene.length)
