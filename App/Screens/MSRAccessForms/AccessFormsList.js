@@ -1,25 +1,21 @@
 import React from 'react';
-import { Text, View, FlatList, ActivityIndicator, SafeAreaView, TouchableOpacity, Image } from 'react-native';
+import { Text, View, FlatList, ActivityIndicator, SafeAreaView, TouchableOpacity, Image, Switch } from 'react-native';
 import PropTypes from "prop-types";
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import styles from './style';
 import gblStrings from '../../Constants/GlobalStrings';
-import { GHeaderComponent, GSwitchComponent, GLoadingSpinner } from '../../CommonComponents';
+import { GHeaderComponent, GSwitchComponent } from '../../CommonComponents';
 import { msrAccessFormActions } from '../../Shared/Actions';
 import logoImage from '../../Images/FaceID.png';
 
 class AccessFormList extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            isSorted: false
-        };
-    }
 
-    switchSort = () => this.setState(prevState => ({
-        isSorted: !prevState.isSorted
-    }));
+
+    switchSort = (value) => {
+        const { sortByPopular, dispatch } = this.props;
+        sortByPopular(value);
+    }
 
     emptyList = () => {
         return (
@@ -34,8 +30,20 @@ class AccessFormList extends React.Component {
         );
     }
 
+    footerComponent = () => {
+        const { isMoreDataAvailable } = this.props;
+        return (
+            <View style={styles.footerContainer}>
+                {isMoreDataAvailable ?
+                    <ActivityIndicator size="large" color="#00f" /> :
+                    <Text style={styles.boldText}>End of Forms</Text>
+                }
+            </View>
+        );
+    }
+
     handleLoadMore = () => {
-        const { isMoreDataAvailable, loadForms, pageNumber, incementPageNumber } = this.props;
+        const { isMoreDataAvailable, loadForms, incementPageNumber } = this.props;
         if (!isMoreDataAvailable)
             return;
         incementPageNumber();
@@ -65,10 +73,9 @@ class AccessFormList extends React.Component {
     }
 
     render() {
-        const { navigation, isMoreDataAvailable, isPageLoading, pageNumber, forms } = this.props;
-        //  const nextBtnstyle = this.state.agreeConditions ? StyleSheet.normalBlackBtn : [StyleSheet.normalBlackBtn, { opacity: .45 }];
-        const { isSorted
-        } = this.state;
+        const { navigation, forms, isSortByPopular,
+            // isPageLoading, pageNumber,
+        } = this.props;
 
         return (
             <SafeAreaView style={styles.container}>
@@ -76,40 +83,40 @@ class AccessFormList extends React.Component {
                 {/* {isMoreDataAvailable &&
                     <GLoadingSpinner />} */}
                 <View style={styles.container}>
-                    <Text style={styles.boldText}>{gblStrings.msrAccessForms.forms}</Text>
-                    <Text style={styles.regularText}>You will need free Adobe reader to view the documents</Text>
-                    <View style={styles.rowContainer}>
-                        <Text style={styles.blackText}>{gblStrings.msrAccessForms.sortBy}</Text>
-                        <GSwitchComponent
-                            switchOnMethod={this.switchSort}
-                            switchOffMethod={this.switchSort}
-                            switchOn={!isSorted}
-                            switchOff={isSorted}
-                            switchOnText={gblStrings.msrAccessForms.all}
-                            switchOffText={gblStrings.msrAccessForms.popular}
-                            // offStyle={styles.offButtonStyle}
-                            // offStyleDisabled={styles.offButtonStyleDisable}
-                            // onStyle={styles.onButtonStyle}
-                            // onStyleDisabled={styles.onButtonStyleDisable}
-                            textOnStyle={styles.smallText}
-                            textOffStyle={styles.smallText}
-                        />
+                    <View style={styles.columnContainer}>
+                        <Text style={styles.boldText}>{gblStrings.msrAccessForms.forms}</Text>
+                        <Text style={styles.regularText}>You will need free Adobe reader to view the documents</Text>
+                        <View style={styles.rowContainer}>
+                            <Text style={styles.blackText}>{gblStrings.msrAccessForms.sortBy}</Text>
+                            <Switch
+                                onValueChange={this.switchSort}
+                                value={isSortByPopular}
+                            />
+                            {/* <GSwitchComponent
+                                switchOnMethod={this.switchSort(false)}
+                                switchOffMethod={this.switchSort(true)}
+                                switchOn={isSortByPopular}
+                                switchOff={!isSortByPopular}
+                                switchOnText={gblStrings.msrAccessForms.all}
+                                switchOffText={gblStrings.msrAccessForms.popular}
+                                offStyle={styles.offButtonStyle}
+                                onStyle={styles.onButtonStyle}
+                                offStyleDisabled={styles.offButtonStyleDisable}
+                                onStyleDisabled={styles.onButtonStyleDisable}
+                                textOnStyle={styles.smallText}
+                                textOffStyle={styles.smallText}
+                            /> */}
+                        </View>
+                        <View style={styles.dividerLine} />
                     </View>
-                    <View style={styles.dividerLine} />
                     <FlatList
-                        style={{ height: "80%" }}
+                        style={styles.listStyle}
                         data={forms}
                         showsVerticalScrollIndicator={false}
                         keyExtractor={item => item.id}
                         onEndReached={this.handleLoadMore}
                         onEndReachedThreshold={0.5}
-                        ListFooterComponent={
-                            <View style={styles.footerContainer} >
-                                {isMoreDataAvailable &&
-                                    <ActivityIndicator size="large" color="#00f" />
-                                }
-                            </View>
-                        }
+                        ListFooterComponent={this.ListFooterComponent}
                         ListEmptyComponent={this.emptyList}
                         renderItem={this.renderItem}
                     />
@@ -122,22 +129,32 @@ class AccessFormList extends React.Component {
 AccessFormList.propTypes = {
     forms: PropTypes.arrayOf,
     isPageLoading: PropTypes.bool,
+    isSortByPopular: PropTypes.bool,
     isMoreDataAvailable: PropTypes.bool,
+    navigation: PropTypes.instanceOf(Object),
     loadForms: PropTypes.instanceOf(Object),
     incementPageNumber: PropTypes.instanceOf(Object),
+    sortByPopular: PropTypes.instanceOf(Object)
 };
 
 AccessFormList.defaultProps = {
     forms: [],
     isPageLoading: true,
     isMoreDataAvailable: true,
+    isSortByPopular: false,
+    navigation: {},
     loadForms: {},
-    incementPageNumber: {}
+    incementPageNumber: {},
+    sortByPopular: {}
 };
 
 const mapStateToProps = state => {
     return state.msrAccessFormsData;
 };
+
+// const mapDispatchToProps = {
+//     ...msrAccessFormActions
+// };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     dispatch,

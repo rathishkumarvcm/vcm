@@ -1,18 +1,21 @@
 import React from 'react';
-import { Text, SafeAreaView } from 'react-native';
+import { Text, SafeAreaView, StyleSheet } from 'react-native';
 import BaseModalView from '../Menu/BaseModalView';
 
+const styles = StyleSheet.create({
+  container: { alignItems: 'center', flex: 1, justifyContent: 'center', },
+});
 
-export default class Screen1Component extends React.Component {
+class Screen1Component extends React.PureComponent {
 
   render() {
-
     return (
       <BaseModalView>
-        <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <SafeAreaView style={styles.container}>
           <Text>Screen1...!</Text>
         </SafeAreaView>
       </BaseModalView>
     );
   }
 }
+export default Screen1Component;

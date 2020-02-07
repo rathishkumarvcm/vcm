@@ -24,20 +24,17 @@ const DrawerIcon = ({ navigation }) =>
     (
         <TouchableOpacity
             style={styles.iconContainer}
-            onPress={openSideDrawer}
+            onPress={() => {
+                if (Platform.OS === 'android')
+                    navigation.openDrawer();
+                else
+                    navigation.navigate("draweriOS");
+            }}
         >
             {(Platform.OS === 'android') ?
-                <GIcon
-                    name="menu"
-                    type="material"
-                    size={40}
-                    color="black"
-                /> : <GIcon
-                    name="account-circle"
-                    type="material"
-                    size={40}
-                    color="black"
-                />}
+                (<GIcon name="menu" type="material" size={40} color="black" />)
+                : <GIcon name="account-circle" type="material" size={40} color="black" />
+            }
         </TouchableOpacity>
     );
 DrawerIcon.propTypes = {
