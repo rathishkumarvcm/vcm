@@ -68,10 +68,22 @@ class SearchComponent extends Component {
         };
     }
       
+
+    onScrollEnd() {
+      const {loading} = this.state;
+      if(!loading){
+        promiseCall.then((value)=>{
+           this.setState({flatListData : value,loading:true},()=>{
+           });
+       });
+      }
+    } 
+    
     promiseCalled = () => {
+      const {flatListData,promiseVal} = this.state;
       const appendArray=[];
-        this.state.flatListData.map((item) => {
-            if(item.text.search(this.state.promiseVal) != -1){
+        flatListData.map((item) => {
+            if(item.text.search(promiseVal) !== -1){
                 appendArray.push(item);
             }
         });
@@ -90,19 +102,10 @@ class SearchComponent extends Component {
         }
     }
 
-    onScrollEnd() {
-      if(!this.state.loading){
-        promiseCall.then((value)=>{
-          alert("List is going to update with new data");
-           this.setState({flatListData : value,loading:true},()=>{
-             console.log(this.state.flatListData);
-           });
-       });
-      }
-    }
+
 
     onChangeMethod = (text) =>{
-      if(text == ''){
+      if(text === ''){
         this.setState({
           flatListData : newData,
           noData : false,
@@ -114,19 +117,24 @@ class SearchComponent extends Component {
 
     keyExtractor = item => item.id.toString();
 
-    updateFlatList({ item}) {
-        return (
-          <View key={item.id} 
-            style={styles.listArea}
-          >
-            <Text>{item.text}</Text>
-          </View>
-        );
-      }
+    goback = ()=>{
+      const {navigation} = this.props;
+      navigation.goBack();
+    }
 
-    goback = ()=>this.props.navigation.goBack();
+    updateFlatList({item}) {
+      return (
+        <View key={item.id} 
+          style={styles.listArea}
+        >
+          <Text>{item.text}</Text>
+        </View>
+      );
+    }
+
 
     render(){
+      const {flatListData,promiseVal,noData} = this.state;
         return(
           <View style={styles.container}>
             <GButtonComponent 
@@ -136,20 +144,16 @@ class SearchComponent extends Component {
                 buttonText= "Back"
                 onPress={this.goback}
             />
-          <Text style={{fontSize:20,marginTop:'2%',
-        marginBottom:'2%',
-        height:30,
-        color:'green'}}
-          >
+          <Text>
                         Search Component:
           </Text>
           <TextInput style={styles.textArea}
-          onChangeText={(text) => this.onChangeMethod(text)}
-          value={this.state.promiseVal}
+          // onChangeText={(text) => this.onChangeMethod(text)}
+          value={promiseVal}
           onBlur={this.promiseCalled}
           />
           <TextInput />
-            <GSearchComponent data={this.state.flatListData} onScroll={(e) => this.onScrollEnd(e)} updateFlatList={this.updateFlatList} noData={this.state.noData} />
+            <GSearchComponent data={flatListData} updateFlatList={this.updateFlatList} noData={noData} />
           </View>
         );
     }
@@ -160,6 +164,7 @@ SearchComponent.propTypes = {
   };
   
   SearchComponent.defaultProps = {
+    navigation : {}
  
   };
 

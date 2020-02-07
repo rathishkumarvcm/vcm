@@ -7,7 +7,8 @@ import Amplify, { Auth } from 'aws-amplify';
 import styles from './styles';
 import { GButtonComponent, GInputComponent, GBiometricAuthentication, GHeaderComponent, GFooterSettingsComponent, GLoadingSpinner, showAlert, showAlertWithCancelButton } from '../../CommonComponents';
 import * as reGex from '../../Constants/RegexConstants';
-
+import faceIdImg from '../../Images/FaceID.png';
+import touchImg from '../../Images/TouchID.png';
 // const awsmobile = {
 //     "aws_project_region": "us-east-2",
 //     "aws_cognito_identity_pool_id": "us-east-2:47948e7d-eb40-4622-918a-a5682bb6796f",
@@ -55,7 +56,7 @@ class LoginComponent extends Component {
 
     componentDidMount() {
 
-        const {initialState} = this.props;
+       // const {initialState} = this.props;
 
         RNSecureKeyStore.get("enableBioMetric")
             .then(() => {
@@ -122,20 +123,19 @@ class LoginComponent extends Component {
                 });
             });
 
-        if (initialState && initialState.verifiedEmail) {
+        /* if (initialState && initialState.verifiedEmail) {
             this.setState({
                 email: initialState.verifiedEmail
             });
-        }
+        } */
     }
 
-    componentDidUpdate() {
-
-        const {navigation,loginState} = this.props;
-        const {registeredSuccess,email,password} = this.state;
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const {navigation,loginState} = nextProps;
+        const {registeredSuccess,email,password} = prevState;
         const emailVerify = navigation.getParam('emailVerified');
         if (emailVerify !== undefined && !registeredSuccess) {
-            this.setState({
+            return({
                 registeredSuccess: true
             });
         }
@@ -143,7 +143,7 @@ class LoginComponent extends Component {
         //  Special MFA Requirements
         const onlineIdVerify = navigation.getParam('onlineIdCreated');
         if (onlineIdVerify !== undefined) {
-            this.setState({
+            return({
                 registeredSuccess: true
             });
         }
@@ -163,6 +163,7 @@ class LoginComponent extends Component {
                 this.navigateDashboard();
             }
         }
+        return null;
     }
 
     enableBiometricMethod = () => {
@@ -195,10 +196,9 @@ class LoginComponent extends Component {
                 
                 // console.log("Data", JSON.stringify(data.signInUserSession.idToken.jwtToken));
 
-                RNSecureKeyStore.set("jwtToken", data.signInUserSession.idToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
+                RNSecureKeyStore.set("jwtToken", data.signInUserSession.idToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then(() => {
                     // console.log("token saved suuccessfully", res);
-                }, (err) => {
-                    console.log("Error", err);
+                }, () => {
                 });
 
                 const currentSessionTime = new Date();
@@ -259,19 +259,20 @@ class LoginComponent extends Component {
     }
 
     enableBioMetric = () => {
+        const {email, password} = this.state;
         RNSecureKeyStore.set("enableBioMetric", "true", { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
-            .then((res) => {
+            .then(() => {
                 showAlert("Registered Bio Metric Successfully.");
             }, () => {
             });
 
 
-        RNSecureKeyStore.set("bioMetricUserName", this.state.email, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
+        RNSecureKeyStore.set("bioMetricUserName", email, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
             .then(() => {
             }, () => {
             });
 
-        RNSecureKeyStore.set("bioMetricPassword", this.state.password, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
+        RNSecureKeyStore.set("bioMetricPassword", password, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY })
             .then(() => {
             }, () => {
             });
@@ -279,7 +280,7 @@ class LoginComponent extends Component {
 
     signIn = () => {
         const {setJWTToken,setEnvironment,navigation,updateEmail} = this.props;
-        const {email} = this.state;
+        const {email, registeredBioMetric} = this.state;
         const username = email;
         const {password} = this.state;;
         const phoneNumber = "+918754499334";
@@ -289,21 +290,21 @@ class LoginComponent extends Component {
             email,
             phoneNumber
         }).then(data => {
-            console.log("ACCESS Token-----", JSON.stringify(data.signInUserSession.accessToken.jwtToken));
-            console.log("ID Token-----", JSON.stringify(data.signInUserSession.idToken.jwtToken));
+            // console.log("ACCESS Token-----", JSON.stringify(data.signInUserSession.accessToken.jwtToken));
+            // console.log("ID Token-----", JSON.stringify(data.signInUserSession.idToken.jwtToken));
 
             setJWTToken(data.signInUserSession.idToken.jwtToken);
             setEnvironment("LIVE");
 
-            RNSecureKeyStore.set("jwtToken", data.signInUserSession.idToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
+            RNSecureKeyStore.set("jwtToken", data.signInUserSession.idToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then(() => {
             }, () => {
             });
 
-            RNSecureKeyStore.set("accessToken", data.signInUserSession.accessToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
+            RNSecureKeyStore.set("accessToken", data.signInUserSession.accessToken.jwtToken, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then(() => {
             }, () => {
             });
 
-            RNSecureKeyStore.set("refreshToken", data.signInUserSession.refreshToken.token, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then((res) => {
+            RNSecureKeyStore.set("refreshToken", data.signInUserSession.refreshToken.token, { accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY }).then(() => {
             }, () => {
             });
 
@@ -315,7 +316,7 @@ class LoginComponent extends Component {
                 }, () => {
                 });
 
-            if (!this.state.registeredBioMetric) {
+            if (!registeredBioMetric) {
                 showAlertWithCancelButton(
                     "Enable Bio Metric",
                     "Do you want to enable Bio Metric authentication?.",
@@ -346,7 +347,7 @@ class LoginComponent extends Component {
 
             // this.props.navigation.navigate('otpAuth');
             // this.props.navigation.navigate('dashboard');
-        }).catch(error => {
+        }).catch(() => {
             showAlert("Username and Password Incorrect.");
         });
     }
@@ -415,7 +416,7 @@ class LoginComponent extends Component {
 
 
     render() {
-        const {inActivityAccount,enableBiometric,loginState,registeredSuccess,email,validationEmail,validationPassword,validatePassword,password,registeredBioMetric,faceIdEnrolled} = this.state;
+        const {inActivityAccount,enableBiometric,loginState,registeredSuccess,email,validationEmail,validationPassword,validatePassword,password,faceIdEnrolled} = this.state;
 
 
         return (
@@ -533,15 +534,13 @@ class LoginComponent extends Component {
                         />
                         <View>
                             {
-                                !registeredBioMetric ? null 
-                                :
                                   faceIdEnrolled ? (
-                                        <TouchableOpacity onPress={this.enableBiometricMethod}>
+                                        <TouchableOpacity>
                                             <Image
                                                 resizeMode="contain"
-                                                source={require("../../Images/FaceID.png")}
+                                                source={faceIdImg}
                                                 style={styles.faceIDlogo}
-                                                onPress={this.enableBiometricMethod}
+                                                // onPress={this.enableBiometricMethod}
                                             />
 
                                             <TouchableOpacity style={styles.faceIDtextStyle}>
@@ -552,12 +551,12 @@ class LoginComponent extends Component {
                                         </TouchableOpacity>
                                       )
                                         : (
-                                        <TouchableOpacity onPress={this.enableBiometricMethod}>
+                                        <TouchableOpacity>
                                             <Image
                                                 resizeMode="contain"
-                                                source={require("../../Images/TouchID.png")}
+                                                source={touchImg}
                                                 style={styles.faceIDlogo}
-                                                onPress={this.enableBiometricMethod}
+                                                // onPress={this.enableBiometricMethod}
                                             />
 
                                             <TouchableOpacity style={styles.faceIDtextStyle}>
@@ -645,7 +644,7 @@ class LoginComponent extends Component {
 LoginComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     loginState: PropTypes.instanceOf(Object),
-    initialState: PropTypes.instanceOf(Object),
+    // initialState: PropTypes.instanceOf(Object),
     signInAction: PropTypes.func,
     setEnvironment : PropTypes.func,
     updateEmail : PropTypes.func,
@@ -655,7 +654,7 @@ LoginComponent.propTypes = {
 LoginComponent.defaultProps = {
     navigation : {},
     loginState : {},
-    initialState : {},
+    // initialState : {},
     signInAction : () => {},
     setEnvironment : () => {},
     updateEmail : () => {},

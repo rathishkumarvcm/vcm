@@ -50,7 +50,7 @@ class CommonUIComponent extends Component {
 
     
 
-    checkBoxClicked = (indexPre,previousValue) => {
+    /* checkBoxClicked = (indexPre,previousValue) => {
         const {usersChoice} = this.state;
        const tempArray = [];
         usersChoice.map((item,index) => {
@@ -63,7 +63,7 @@ class CommonUIComponent extends Component {
         this.setState({ 
             usersChoice : tempArray
         });
-    }
+    } */
 
     chartNavigate = ()=>{
         const {navigation} = this.props;
@@ -223,14 +223,14 @@ class CommonUIComponent extends Component {
                 {securityQuestions.map((item,index) => 
                     index === radioButtonIndex ? (
                     <GRadioButtonComponent 
-                    onPress={()=>this.radioButtonClicked(index)}
+                    // onPress={()=>this.radioButtonClicked(index)}
                     selected
                     questions = {item.question}
                     />
                   )
                     : (
                     <GRadioButtonComponent 
-                    onPress={()=>this.radioButtonClicked(index)}
+                    // onPress={()=>this.radioButtonClicked(index)}
                     selected = {false}
                     questions = {item.question}
                     />
@@ -245,16 +245,16 @@ class CommonUIComponent extends Component {
                 details="0000001004067032" 
                 />
                 <GCardTileComponent title="Branch" details="Beasant Nagar" />
-                <GCardTileComponent title="Name" details="VCM.com" tileStyles={{color:"black"}} />
+                <GCardTileComponent title="Name" details="VCM.com" />
                 <GCardTileComponent title="Available Balance" details="246.31" />
 
                 <Text style={styles.labeltext}>
                         Check Box Component:
                 </Text>
-                {usersChoice.map((item,index) =>
+                {usersChoice.map((item) =>
                     (
 <GCheckBoxComponent 
-                    onPress={()=>this.checkBoxClicked(index, item.checked)}
+                    // onPress={()=>this.checkBoxClicked(index, item.checked)}
                     selected = {item.checked}
                     options = {item.options}
                     key = {item.options}
@@ -263,7 +263,7 @@ class CommonUIComponent extends Component {
                 )} 
                 {/* <Button title={strings("common.back")} onPress={()=>Actions.pop()} />  */}
                 
-                <View/>
+                <View />
 
                 <Text style={styles.labeltext}>
                         Date Picker Component:
@@ -282,7 +282,7 @@ class CommonUIComponent extends Component {
                         iconSize={20}
                         buttonStyle={styles.iconButtonStyle}
                         textStyle={styles.iconTextStyle}
-                        onPress={() => this.iconButtonPressed('delete')}
+                        // onPress={() => this.iconButtonPressed('delete')}
                     />
 </View>
                 

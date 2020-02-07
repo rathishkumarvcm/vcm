@@ -17,7 +17,7 @@ class OtpAuthenticationComponent extends Component {
 
     
        
-    componentDidMount(){ 
+   /* componentDidMount(){ 
         const {initialState} = this.props;
         if(initialState && initialState.phone){
           this.setState({
@@ -30,7 +30,7 @@ class OtpAuthenticationComponent extends Component {
               email : initialState.email
             });
           }
-    }
+    } */
 
     navigateLogin = ()=> { 
         const {navigation} = this.props;
@@ -39,14 +39,10 @@ class OtpAuthenticationComponent extends Component {
 
     navigatePassword = ()=>{
         const {navigation} = this.props;
-        const {email} = this.state;
-        console.log("this.state.email",email);
 
         Auth.verifyCurrentUserAttribute('email')
         .then(() => {
-             console.log('a verification code is sent');
-        }).catch((e) => {
-             console.log('failed with error', e);
+        }).catch(() => {
         });
         
         
@@ -170,12 +166,12 @@ class OtpAuthenticationComponent extends Component {
 
 OtpAuthenticationComponent.propTypes = {
     navigation : PropTypes.instanceOf(Object),
-    initialState : PropTypes.instanceOf(Object)
+   // initialState : PropTypes.instanceOf(Object)
   };
   
   OtpAuthenticationComponent.defaultProps = {
     navigation : {},
-    initialState : {}
+    // initialState : {}
   };
 
 export default OtpAuthenticationComponent;

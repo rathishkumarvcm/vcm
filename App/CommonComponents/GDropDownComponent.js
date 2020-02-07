@@ -69,10 +69,10 @@ optionalTxt: {
   fontWeight: 'normal',
 },
 pickerStyle : {
+    alignSelf: 'stretch',
     borderColor:"#DEDEDF",
     borderWidth:1,
-    marginLeft:'2%',
-    width:'92%'
+    marginLeft:'2%'
 },
 // showDropDownSectionStyle:{
 //     backgroundColor:'white',

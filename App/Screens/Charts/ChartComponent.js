@@ -75,7 +75,14 @@ export default class ChartComponent extends Component {
         navigation.goBack();
     }
 
+
+    changeChartView = () => {
+        const {barChart} = this.state;
+        this.setState({ barChart: !barChart });
+    }
+
     render() {
+        const {barChart} = this.state;
 
         const amounts = [35, 40, 8, 17];
    
@@ -88,14 +95,14 @@ export default class ChartComponent extends Component {
                 value,
                 svg: {
                     fill: randomColor(),
-                    onPress: () => console.log('press', index),
+                    onPress: () => {},
                 },
                 key: `pie-${index}`,
                 amount: value
             }));
 
         return (
-            !this.state.barChart ?
+            !barChart ?
                 (
 <View>
                     <GButtonComponent
@@ -104,7 +111,7 @@ export default class ChartComponent extends Component {
                         buttonText="Back"
                         onPress={this.goBack}
                     />
-                    <GButtonComponent buttonText="View in Bar Chart" onPress={() => this.setState({ barChart: !this.state.barChart })} buttonStyle={styles.buttonStyle} />
+                    <GButtonComponent buttonText="View in Bar Chart" onPress={this.changeChartView} buttonStyle={styles.buttonStyle} />
 
                     <PieChart
                         valueAccessor={({ item }) => item.amount}
@@ -129,15 +136,13 @@ export default class ChartComponent extends Component {
                     />
 
                     <GButtonComponent buttonText="View in Pie Chart"
-                        onPress={() => this.setState({ barChart: !this.state.barChart })}
+                        onPress={this.changeChartView}
                         buttonStyle={styles.buttonStyle}
                     />
                     <BarChart
                         data={barData}
                         yAccessor={({ item }) => item.value}
-                        svg={{
-                            fill: 'green',
-                        }}
+                        svg={{fill: 'green'}}
                         contentInset={{ top: 30, bottom: 30 }}
                         {...this.props}
                     >
