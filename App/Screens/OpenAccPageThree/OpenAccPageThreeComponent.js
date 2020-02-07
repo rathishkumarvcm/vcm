@@ -264,7 +264,7 @@ class OpenAccPageThreeComponent extends Component {
         if (accOpeningData[ActionTypes.GET_FUNDLIST]) {
             tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST];
             return ({
-                fundList: tempFundListData,
+                fundList: [...tempFundListData.map(v => ({ ...v, isActive: false }))],
                 isFilterApplied: false
             });
         }
