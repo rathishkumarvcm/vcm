@@ -736,14 +736,9 @@ class OpenAccPageTwoComponent extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         AppUtils.debugLog(`componentDidUpdate::::> ${prevState}`);
-        const { accOpeningData, addressFormatData } = this.props;
+        const { accOpeningData, addressFormatData,clearReduxKeyData } = this.props;
 
-        const { currentZipCodeRef, estate } = this.state;
-        const {
-            //  stateKey = "",
-            keyName = "",
-            objIndex = -1
-        } = currentZipCodeRef;
+
 
         if (this.props !== prevProps) {
             const responseKey = ActionTypes.PERSONAL_INFO_SAVE_OPENING_ACCT;
@@ -763,222 +758,6 @@ class OpenAccPageTwoComponent extends Component {
             }
 
 
-            const stateCityKey = ActionTypes.GET_STATECITY;
-            if (addressFormatData[`${stateCityKey}`]) {
-                if (addressFormatData[`${stateCityKey}`] !== prevProps.addressFormatData[`${stateCityKey}`]) {
-                    const tempResponse = addressFormatData[`${stateCityKey}`];
-
-
-                    if (tempResponse && tempResponse.City) {
-                        if (keyName === "empZipcode") {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    empCity: tempResponse.City,
-                                    empStateCity: tempResponse.State
-
-                                }
-                            }));
-                        } else if (keyName === "zipcode_Phy" && objIndex !== -1) {
-                            const newItems = [...estate.trusteeData];
-                            newItems[+objIndex].city_Phy = tempResponse.City;
-                            newItems[+objIndex].stateCity_Phy = tempResponse.State;
-
-
-                            this.setState(() => (() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    trusteeData: newItems
-
-                                }
-                            })));
-                        } else if (keyName === "zipcode" && objIndex !== -1) {
-                            const newItems = [...estate.trusteeData];
-                            newItems[+objIndex].city = tempResponse.City;
-                            newItems[+objIndex].stateCity = tempResponse.State;
-
-
-                            this.setState(() => (() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    trusteeData: newItems
-
-                                }
-                            })));
-                        } else if (keyName === "zipcode_Phy" && objIndex !== -1) {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    city_Phy: tempResponse.City,
-                                    stateCity_Phy: tempResponse.State
-
-                                }
-                            }));
-                        } else {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    city: tempResponse.City,
-                                    stateCity: tempResponse.State
-
-                                }
-                            }));
-                        }
-                    }
-                }
-            }
-
-            const addressKey = ActionTypes.GET_ADDRESSFORMAT;
-            if (addressFormatData[`${addressKey}`]) {
-                if (addressFormatData[`${addressKey}`] !== prevProps.addressFormatData[`${addressKey}`]) {
-                    const tempResponse = addressFormatData[`${addressKey}`];
-                    if (tempResponse && tempResponse.City) {
-                        if (keyName === "empZipcode") {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    empCity: tempResponse.City,
-                                    empStateCity: tempResponse.State,
-                                    empAddrLine1: tempResponse.Address1 || "",
-                                    empAddrLine2: tempResponse.Address2 || "",
-                                    empAddrLine1Validation: true,
-                                    empAddrLine2Validation: true
-                                }
-                            }));
-                        } else if (keyName === "zipcode_Phy" && objIndex !== -1) {
-                            const newItems = [...estate.trusteeData];
-                            newItems[+objIndex].city_Phy = tempResponse.City;
-                            newItems[+objIndex].stateCity_Phy = tempResponse.State;
-                            newItems[+objIndex].addrLine1_Phy = tempResponse.Address1 || "";
-                            newItems[+objIndex].addrLine2_Phy = tempResponse.Address2 || "";
-                            newItems[+objIndex].addrLine1_PhyValidation = true;
-                            newItems[+objIndex].addrLine2_PhyValidation = true;
-
-                            this.setState(() => (() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    trusteeData: newItems
-
-                                }
-                            })));
-                        } else if (keyName === "zipcode" && objIndex !== -1) {
-                            const newItems = [...estate.trusteeData];
-                            newItems[+objIndex].city = tempResponse.City;
-                            newItems[+objIndex].stateCity = tempResponse.State;
-                            newItems[+objIndex].addrLine1 = tempResponse.Address1 || "";
-                            newItems[+objIndex].addrLine2 = tempResponse.Address2 || "";
-                            newItems[+objIndex].addrLine1Validation = true;
-                            newItems[+objIndex].addrLine2Validation = true;
-
-                            this.setState(() => (() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    trusteeData: newItems
-
-                                }
-                            })));
-                        } else if (keyName === "zipcode_Phy") {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    city_Phy: tempResponse.City,
-                                    stateCity_Phy: tempResponse.State,
-                                    addrLine1_Phy: tempResponse.Address1 || "",
-                                    addrLine2_Phy: tempResponse.Address2 || "",
-                                    addrLine1_PhyValidation: true,
-                                    addrLine2_PhyValidation: true
-                                }
-                            }));
-                        } else {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    city: tempResponse.City,
-                                    stateCity: tempResponse.State,
-                                    addrLine1: tempResponse.Address1 || "",
-                                    addrLine2: tempResponse.Address2 || "",
-                                    addrLine1Validation: true,
-                                    addrLine2Validation: true
-                                }
-                            }));
-                        }
-
-                    } else if (tempResponse && tempResponse.ErrorNumber) {
-                        if (currentZipCodeRef.keyName === "empZipcode") {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    // empAddrLine1: "",
-                                    // empAddrLine2: ""
-                                    empAddrLine1Validation: false,
-                                    empAddrLine2Validation: false
-                                },
-                                errMsg: "Invalid address"
-
-                            }));
-                        } else if (currentZipCodeRef.keyName === "zipcode_Phy" && objIndex !== -1) {
-                            const newItems = [...estate.trusteeData];
-                            newItems[+objIndex].addrLine1_Phy = "";
-                            newItems[+objIndex].addrLine2_Phy = "";
-                            newItems[+objIndex].addrLine1_PhyValidation = false;
-                            newItems[+objIndex].addrLine2_PhyValidation = false;
-
-                            this.setState(() => (() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    trusteeData: newItems
-
-                                },
-                                errMsg: "Invalid address"
-
-                            })));
-                        } else if (currentZipCodeRef.keyName === "zipcode" && objIndex !== -1) {
-                            const newItems = [...estate.trusteeData];
-                            newItems[+objIndex].addrLine1 = "";
-                            newItems[+objIndex].addrLine2 = "";
-                            newItems[+objIndex].addrLine1Validation = false;
-                            newItems[+objIndex].addrLine2Validation = false;
-
-                            this.setState(() => (() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    trusteeData: newItems
-
-                                },
-                                errMsg: "Invalid address"
-
-                            })));
-                        } else if (currentZipCodeRef.keyName === "zipcode_Phy") {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    // addrLine1_Phy: "",
-                                    // addrLine2_Phy: "",
-                                    addrLine1_PhyValidation: false,
-                                    addrLine2_PhyValidation: false
-                                },
-                                errMsg: "Invalid address"
-                            }));
-                        } else {
-                            this.setState(() => ({
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-
-                                    // addrLine1: "",
-                                    // addrLine2: "",
-                                    addrLine1Validation: false,
-                                    addrLine2Validation: false
-                                },
-                                errMsg: "Invalid address"
-                            }));
-                        }
-                    }
-                }
-            }
-
-
-
-
             const uploadImgKey = ActionTypes.UPLOAD_AVATAR;
             if (accOpeningData[`${uploadImgKey}`]) {
                 if (accOpeningData[`${uploadImgKey}`]!== prevProps.accOpeningData[`${uploadImgKey}`]) {
@@ -995,165 +774,246 @@ class OpenAccPageTwoComponent extends Component {
 
         }
 
+        const stateCityKey = ActionTypes.GET_STATECITY;
+        if (addressFormatData[`${stateCityKey}`]) {
+            clearReduxKeyData(stateCityKey, "");
+
+        }
+
+        const addressKey = ActionTypes.GET_ADDRESSFORMAT;
+        if (addressFormatData[`${addressKey}`]) {
+            clearReduxKeyData(addressKey, "");
+
+        }
+
+
 
     }
 
     // #TODO
 
-    /*
+    
     static getDerivedStateFromProps(nextProps, prevState) {
 
 
         const { addressFormatData } = nextProps;
 
-        const { currentZipCodeRef,estate,isUSPSAddrFormatAPICalled,isUSPSStateAPICalled } = prevState;
+        const { currentZipCodeRef,estate } = prevState;
         const {
             //  stateKey = "",
             keyName = "",
             objIndex = -1,
-            apiName = ""
         } = currentZipCodeRef;
 
         AppUtils.debugLog(`getDerivedStateFromProps currentZipCodeRef ::::> ${JSON.stringify(currentZipCodeRef)}`);
 
 
-        if(isUSPSStateAPICalled){
-            const stateCityKey = ActionTypes.GET_STATECITY;
-            if (addressFormatData[stateCityKey] ) {
-                    const tempResponse = addressFormatData[stateCityKey];
-                   
-                    if (tempResponse && tempResponse.City) {
-                        if (keyName === "empZipcode") {
-                            return {
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    empCity: tempResponse.City,
-                                    empStateCity: tempResponse.State
-    
-                                },
-                                isUSPSStateAPICalled :false
-                            };
-                        }
-                     if (keyName === "zipcode_Phy" && objIndex !== -1) {
-                            const newItems = [...estate.trusteeData];
-                            newItems[objIndex].city_Phy = tempResponse.City;
-                            newItems[objIndex].stateCity_Phy = tempResponse.State;
-                          
-                          
-                           return {
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    trusteeData:newItems
-        
-                                },
-                                isUSPSStateAPICalled :false
-
-                            };
-                        } 
-                     if (keyName === "zipcode" && objIndex !== -1) {
-                            const newItems = [...estate.trusteeData];
-                            newItems[objIndex].city = tempResponse.City;
-                            newItems[objIndex].stateCity = tempResponse.State;
-                         
-                                              
-                          return {
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    trusteeData:newItems
-        
-                                },
-                                isUSPSStateAPICalled :false
-
-                            };
-                        } 
-                     if (keyName === "zipcode_Phy" && objIndex === -1) {
-                           return {
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    city_Phy: tempResponse.City,
-                                    stateCity_Phy: tempResponse.State
-    
-                                },
-                                isUSPSStateAPICalled :false
-
-                            };
-                        } 
-                     if (keyName === "zipcode" && objIndex === -1){
-                          return {
-                                [prevState.currentZipCodeRef.stateKey]: {
-                                    ...prevState[prevState.currentZipCodeRef.stateKey],
-                                    city: tempResponse.City,
-                                    stateCity: tempResponse.State
-    
-                                },
-                                isUSPSStateAPICalled :false
-
-                            };
-                        }
-                    }
-                
-            }
-            
-        }
-        if(isUSPSAddrFormatAPICalled){
-            const addressKey = ActionTypes.GET_ADDRESSFORMAT;
-            if (addressFormatData[addressKey]) {
-                const tempResponse = addressFormatData[addressKey];
+        const stateCityKey = ActionTypes.GET_STATECITY;
+        if (addressFormatData[`${stateCityKey}`]) {
+                const tempResponse = addressFormatData[`${stateCityKey}`];
                 if (tempResponse && tempResponse.City) {
                     if (keyName === "empZipcode") {
-                        return {
+                        return ({
+                            [prevState.currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey],
+                                empCity: tempResponse.City,
+                                empStateCity: tempResponse.State,
+                                empZipcodeValidation:true
+
+                            }
+                        });
+                    }
+                    
+                    if (keyName === "zipcode_Phy" && objIndex !== -1) {
+                        const newItems = [...estate.trusteeData];
+                        newItems[+objIndex].city_Phy = tempResponse.City;
+                        newItems[+objIndex].stateCity_Phy = tempResponse.State;
+                        newItems[+objIndex].zipcode_PhyValidation = true;
+                        return({
+                            [prevState.currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey],
+                                trusteeData: newItems
+
+                            }
+                        });
+                    } 
+                    
+                    if (keyName === "zipcode" && objIndex !== -1) {
+                        const newItems = [...estate.trusteeData];
+                        newItems[+objIndex].city = tempResponse.City;
+                        newItems[+objIndex].stateCity = tempResponse.State;
+                        newItems[+objIndex].zipcodeValidation = true;
+
+
+                       return({
+                            [prevState.currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey],
+                                trusteeData: newItems
+
+                            }
+                        });
+                    } 
+                    
+                    if (keyName === "zipcode_Phy" && objIndex === -1) {
+                       return({
+                            [prevState.currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey],
+                                city_Phy: tempResponse.City,
+                                stateCity_Phy: tempResponse.State,
+                                zipcode_PhyValidation:true
+
+                            }
+                        });
+                    } 
+
+                
+                    if (keyName === "zipcode" && objIndex === -1) {
+                        return({
+                             [prevState.currentZipCodeRef.stateKey]: {
+                                 ...prevState[prevState.currentZipCodeRef.stateKey],
+                                 city: tempResponse.City,
+                                 stateCity: tempResponse.State,
+                                 zipcodeValidation:true
+
+                             }
+                         });
+                    }  
+                }
+
+                if (tempResponse && tempResponse.ErrorNumber && tempResponse.Description) {
+                    if (keyName === "empZipcode") {
+                        return ({
+                            [prevState.currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey],
+                                empCity: tempResponse.City,
+                                empStateCity: tempResponse.State,
+                                empZipcodeValidation:false
+ 
+                            },
+                            errMsg: tempResponse.Description
+                        });
+                    }
+                    
+                    if (keyName === "zipcode_Phy" && objIndex !== -1) {
+                        const newItems = [...estate.trusteeData];
+                        newItems[+objIndex].city_Phy = tempResponse.City;
+                        newItems[+objIndex].stateCity_Phy = tempResponse.State;
+                        newItems[+objIndex].zipcode_PhyValidation = false;
+
+                        return({
+                            [prevState.currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey],
+                                trusteeData: newItems
+
+                            },
+                            errMsg: "Invalid address"
+
+                        });
+                    } 
+                    
+                    if (keyName === "zipcode" && objIndex !== -1) {
+                        const newItems = [...estate.trusteeData];
+                        newItems[+objIndex].city = tempResponse.City;
+                        newItems[+objIndex].stateCity = tempResponse.State;
+                        newItems[+objIndex].zipcodeValidation = false;
+
+
+                       return({
+                            [prevState.currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey],
+                                trusteeData: newItems
+
+                            },
+                            errMsg: tempResponse.Description
+
+                        });
+                    } 
+                    
+                    if (keyName === "zipcode_Phy" && objIndex === -1) {
+                       return({
+                            [prevState.currentZipCodeRef.stateKey]: {
+                                ...prevState[prevState.currentZipCodeRef.stateKey],
+                                city_Phy: tempResponse.City,
+                                stateCity_Phy: tempResponse.State,
+                                zipcode_PhyValidation:false
+ 
+                            },
+                            errMsg: tempResponse.Description
+                        });
+                    } 
+
+                
+                    if (keyName === "zipcode" && objIndex === -1) {
+                        return({
+                             [prevState.currentZipCodeRef.stateKey]: {
+                                 ...prevState[prevState.currentZipCodeRef.stateKey],
+                                 city: tempResponse.City,
+                                 stateCity: tempResponse.State,
+                                 zipcodeValidation:false
+ 
+                             },
+                             errMsg: tempResponse.Description
+                             
+                         });
+                    }  
+                }
+            
+        }
+
+        
+        const addressKey = ActionTypes.GET_ADDRESSFORMAT;
+        if (addressFormatData[`${addressKey}`]) {
+                const tempResponse = addressFormatData[`${addressKey}`];
+                if (tempResponse && tempResponse.City) {
+                    if (keyName === "empZipcode") {
+                        return({
                             [prevState.currentZipCodeRef.stateKey]: {
                                 ...prevState[prevState.currentZipCodeRef.stateKey],
                                 empCity: tempResponse.City,
                                 empStateCity: tempResponse.State,
                                 empAddrLine1: tempResponse.Address1 || "",
-                                empAddrLine2: tempResponse.Address2 || ""
-    
-                            },
-                            isUSPSAddrFormatAPICalled :false
-
-                        };
-                    }
+                                empAddrLine2: tempResponse.Address2 || "",
+                                empAddrLine1Validation: true,
+                                empAddrLine2Validation: true
+                            }
+                        });
+                    } 
                     if (keyName === "zipcode_Phy" && objIndex !== -1) {
                         const newItems = [...estate.trusteeData];
-                        newItems[objIndex].city_Phy = tempResponse.City;
-                        newItems[objIndex].stateCity_Phy = tempResponse.State;
-                        newItems[objIndex].addrLine1_Phy = tempResponse.Address1 || "";
-                        newItems[objIndex].addrLine2_Phy = tempResponse.Address2 || "";
-                        newItems[objIndex].addrLine1_PhyValidation = true;
-                        newItems[objIndex].addrLine2_PhyValidation = true;
-    
-                        return {
+                        newItems[+objIndex].city_Phy = tempResponse.City;
+                        newItems[+objIndex].stateCity_Phy = tempResponse.State;
+                        newItems[+objIndex].addrLine1_Phy = tempResponse.Address1 || "";
+                        newItems[+objIndex].addrLine2_Phy = tempResponse.Address2 || "";
+                        newItems[+objIndex].addrLine1_PhyValidation = true;
+                        newItems[+objIndex].addrLine2_PhyValidation = true;
+
+                         return({
                             [prevState.currentZipCodeRef.stateKey]: {
                                 ...prevState[prevState.currentZipCodeRef.stateKey],
                                 trusteeData: newItems
-    
-                            },
-                            isUSPSAddrFormatAPICalled :false
 
-                        };
-                    };
-                    if (keyName === "zipcode" && objIndex !== -1) {
+                            }
+                        });
+                    } 
+                     if (keyName === "zipcode" && objIndex !== -1) {
                         const newItems = [...estate.trusteeData];
-                        newItems[objIndex].city = tempResponse.City;
-                        newItems[objIndex].stateCity = tempResponse.State;
-                        newItems[objIndex].addrLine1 = tempResponse.Address1 || "";
-                        newItems[objIndex].addrLine2 = tempResponse.Address2 || "";
-                        newItems[objIndex].addrLine1Validation = true;
-                        newItems[objIndex].addrLine2Validation = true;
-    
-                        return {
+                        newItems[+objIndex].city = tempResponse.City;
+                        newItems[+objIndex].stateCity = tempResponse.State;
+                        newItems[+objIndex].addrLine1 = tempResponse.Address1 || "";
+                        newItems[+objIndex].addrLine2 = tempResponse.Address2 || "";
+                        newItems[+objIndex].addrLine1Validation = true;
+                        newItems[+objIndex].addrLine2Validation = true;
+
+                        return({
                             [prevState.currentZipCodeRef.stateKey]: {
                                 ...prevState[prevState.currentZipCodeRef.stateKey],
                                 trusteeData: newItems
-    
-                            },
-                            isUSPSAddrFormatAPICalled :false
 
-                        };
-                    }
+                            }
+                        });
+                    } 
                     if (keyName === "zipcode_Phy" && objIndex === -1) {
-                        return {
+                        return({
                             [prevState.currentZipCodeRef.stateKey]: {
                                 ...prevState[prevState.currentZipCodeRef.stateKey],
                                 city_Phy: tempResponse.City,
@@ -1162,13 +1022,11 @@ class OpenAccPageTwoComponent extends Component {
                                 addrLine2_Phy: tempResponse.Address2 || "",
                                 addrLine1_PhyValidation: true,
                                 addrLine2_PhyValidation: true
-                            },
-                            isUSPSAddrFormatAPICalled :false
-
-                        };
-                    }
+                            }
+                        });
+                    } 
                     if (keyName === "zipcode" && objIndex === -1) {
-                        return {
+                       return({
                             [prevState.currentZipCodeRef.stateKey]: {
                                 ...prevState[prevState.currentZipCodeRef.stateKey],
                                 city: tempResponse.City,
@@ -1177,67 +1035,64 @@ class OpenAccPageTwoComponent extends Component {
                                 addrLine2: tempResponse.Address2 || "",
                                 addrLine1Validation: true,
                                 addrLine2Validation: true
-                            },
-                            isUSPSAddrFormatAPICalled :false
-
-                        };
+                            }
+                        });
                     }
-    
-                }
-    
-                if (tempResponse && tempResponse.ErrorNumber) {
+
+                } 
+                
+                if (tempResponse && tempResponse.ErrorNumber && tempResponse.Description) {
                     if (currentZipCodeRef.keyName === "empZipcode") {
-                        return {
+                        return ({
                             [prevState.currentZipCodeRef.stateKey]: {
                                 ...prevState[prevState.currentZipCodeRef.stateKey],
-                                empAddrLine1: "",
-                                empAddrLine2: ""
-    
+                                // empAddrLine1: "",
+                                // empAddrLine2: ""
+                                empAddrLine1Validation: false,
+                                empAddrLine2Validation: false
                             },
-                            isUSPSAddrFormatAPICalled :false
+                            errMsg: tempResponse.Description
 
-                        };
-                    }
+                        });
+                    } 
+                    
                     if (currentZipCodeRef.keyName === "zipcode_Phy" && objIndex !== -1) {
                         const newItems = [...estate.trusteeData];
-                        // newItems[objIndex].addrLine1_Phy = "";
-                        // newItems[objIndex].addrLine2_Phy = "";
-                        newItems[objIndex].addrLine1_PhyValidation = false;
-                        newItems[objIndex].addrLine2_PhyValidation = false;
-    
-                        return {
+                        newItems[+objIndex].addrLine1_Phy = "";
+                        newItems[+objIndex].addrLine2_Phy = "";
+                        newItems[+objIndex].addrLine1_PhyValidation = false;
+                        newItems[+objIndex].addrLine2_PhyValidation = false;
+
+                        return ({
                             [prevState.currentZipCodeRef.stateKey]: {
                                 ...prevState[prevState.currentZipCodeRef.stateKey],
                                 trusteeData: newItems
-    
-                            },
-                            errMsg: "Invalid address",
-                            isUSPSAddrFormatAPICalled :false
 
-    
-                        };
-                    }
+                            },
+                            errMsg: tempResponse.Description
+
+                        });
+                    } 
+                    
                     if (currentZipCodeRef.keyName === "zipcode" && objIndex !== -1) {
                         const newItems = [...estate.trusteeData];
-                        // newItems[objIndex].addrLine1 = "";
-                        // newItems[objIndex].addrLine2 = "";
-                        newItems[objIndex].addrLine1Validation = false;
-                        newItems[objIndex].addrLine2Validation = false;
-    
-                        return {
+                        newItems[+objIndex].addrLine1 = "";
+                        newItems[+objIndex].addrLine2 = "";
+                        newItems[+objIndex].addrLine1Validation = false;
+                        newItems[+objIndex].addrLine2Validation = false;
+
+                       return ({
                             [prevState.currentZipCodeRef.stateKey]: {
                                 ...prevState[prevState.currentZipCodeRef.stateKey],
                                 trusteeData: newItems
-    
-                            },
-                            errMsg: "Invalid address",
-                            isUSPSAddrFormatAPICalled :false
 
-    
-                        };
-                    }
+                            },
+                            errMsg: tempResponse.Description
+
+                        });
+                    } 
                     if (currentZipCodeRef.keyName === "zipcode_Phy" && objIndex === -1) {
-                        return {
+                        return({
                             [prevState.currentZipCodeRef.stateKey]: {
                                 ...prevState[prevState.currentZipCodeRef.stateKey],
                                 // addrLine1_Phy: "",
@@ -1245,29 +1100,28 @@ class OpenAccPageTwoComponent extends Component {
                                 addrLine1_PhyValidation: false,
                                 addrLine2_PhyValidation: false
                             },
-                            errMsg: "Invalid address",
-                            isUSPSAddrFormatAPICalled :false
-
-                        };
-                    }
+                            errMsg: tempResponse.Description
+                        });
+                    } 
                     if (currentZipCodeRef.keyName === "zipcode" && objIndex === -1) {
-                        return {
+                         return({
                             [prevState.currentZipCodeRef.stateKey]: {
                                 ...prevState[prevState.currentZipCodeRef.stateKey],
-    
+
                                 // addrLine1: "",
                                 // addrLine2: "",
                                 addrLine1Validation: false,
                                 addrLine2Validation: false
                             },
-                            errMsg: "Invalid address",
-                            isUSPSAddrFormatAPICalled :false
-
-                        };
+                            errMsg: tempResponse.Description
+                        });
                     }
                 }
-            } 
+            
         }
+
+        
+
        
 
       
@@ -1276,7 +1130,7 @@ class OpenAccPageTwoComponent extends Component {
 
     }
 
-    */
+    
 
 
 
@@ -8876,7 +8730,7 @@ OpenAccPageTwoComponent.propTypes = {
     getRankData: PropTypes.func,
     getAddressFormat: PropTypes.func,
     getCompositeLookUpData: PropTypes.func,
-
+    clearReduxKeyData:PropTypes.func
 
 };
 OpenAccPageTwoComponent.defaultProps = {
@@ -8891,6 +8745,8 @@ OpenAccPageTwoComponent.defaultProps = {
     getRankData: null,
     getAddressFormat: null,
     getCompositeLookUpData: null,
+    clearReduxKeyData:null
+
 
 
 };
