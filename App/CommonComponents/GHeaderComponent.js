@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Dimensions, Image, FlatList, Modal } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Image, FlatList, Modal } from 'react-native';
 import PropTypes from "prop-types";
 import { Auth } from "aws-amplify";
 import RNSecureKeyStore from 'react-native-secure-key-store';
@@ -9,7 +9,6 @@ import { GIcon } from './GIcon';
 import { scaledHeight, scaledWidth } from '../Utils/Resolution';
 import DrawerIcon from '../Screens/Menu/DrawerIcon';
 
-const { width } = Dimensions.get('window');
 
 const logo = require("../Images/logo.png");
 
@@ -190,22 +189,18 @@ class GHeaderComponent extends Component {
 
     //  For removing key
     RNSecureKeyStore.remove("currentSession")
-      .then((res) => {
-        console.log(res);
-      }, (err) => {
-        console.log(err);
+      .then(() => {
+      }, () => {
       });
 
     RNSecureKeyStore.remove("jwtToken")
-      .then((res) => {
-        console.log(res);
-      }, (err) => {
-        console.log(err);
+      .then(() => {
+      }, () => {
       });
 
     Auth.signOut({ global: true })
-      .then(data => console.log("SigoutSucces", data))
-      .catch(err => console.log(err));
+      .then(() => {})
+      .catch(() => {});
 
   }
 

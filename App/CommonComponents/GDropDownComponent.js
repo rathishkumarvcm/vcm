@@ -74,6 +74,7 @@ pickerStyle : {
     borderWidth:1,
     marginLeft:'2%'
 },
+topSection :{ 'top': 5 }
 // showDropDownSectionStyle:{
 //     backgroundColor:'white',
 //     borderColor : "#DEDEDF",
@@ -107,7 +108,7 @@ export const GDropDownComponent = props => {
             
     <Dropdown
       data={data}
-      dropdownOffset={{ 'top': 5 }}
+      dropdownOffset={styles.topSection}
       baseColor="#DEDEDF"
       // dropdownPosition={-5.75}
       placeholder= "Select"
@@ -140,6 +141,8 @@ GDropDownComponent.propTypes = {
   selectedDropDownValue: PropTypes.func,
  // changeState : PropTypes.func,
   errorText:PropTypes.string,
+  dropDownValue : PropTypes.string,
+  itemCount : PropTypes.number,
 //   inputref : PropTypes.oneOfType([
 //     PropTypes.func, 
 //     PropTypes.shape({ current: PropTypes.object })
@@ -161,7 +164,8 @@ GDropDownComponent.defaultProps = {
   selectedDropDownValue:() => { },
   // changeState:null,
   errorText:"",
-
+  dropDownValue :"",
+  itemCount : 1
 };
 
 export default GDropDownComponent;
