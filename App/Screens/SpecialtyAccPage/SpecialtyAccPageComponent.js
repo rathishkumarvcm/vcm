@@ -177,25 +177,25 @@ class SpecialtyAccPageComponent extends Component {
                     <Text style={styles.accTypeTilte}>
                         {accType}
                     </Text>
-                    <CustomPageWizard currentPage={currentPage} pageName={pageName || `${currentPage } ${ specaltyAccPages[currentPage].pageName}`} />
+                    <CustomPageWizard currentPage={currentPage} pageName={pageName || `${currentPage } ${ specaltyAccPages[+currentPage].pageName}`} />
 
                     { /*    -----------Page Info -------------------    */}
                     <View style={styles.sectionGrp}>
                         <View style={styles.accTypeSelectSection}>
                             <Text style={styles.headings}>
-                                {(specaltyAccPages[currentPage].secTitle)}
+                                {(specaltyAccPages[+currentPage].secTitle)}
                             </Text>                          
 
                         </View>
 
                         <Text style={styles.lblLine} />
                         <Text style={styles.sectionDescTxt}>
-                            {(specaltyAccPages[currentPage].pageDesc)}
+                            {(specaltyAccPages[+currentPage].pageDesc)}
                         </Text>
 
                         <View style={styles.childSectionGrp}>
                             <FlatList
-                                data={specaltyAccPDFList[currentPage]}
+                                data={specaltyAccPDFList[+currentPage]}
                                 keyExtractor={this.generateKeyExtractor}
                                 renderItem={this.renderPDFListItem}
                             />

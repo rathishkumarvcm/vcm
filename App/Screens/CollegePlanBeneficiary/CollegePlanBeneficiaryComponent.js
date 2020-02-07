@@ -136,21 +136,23 @@ class CollegePlanBeneficiaryComponent extends Component {
 
     }
 
-    onPressDropDown = (keyName) => () => this.setState({
-        [keyName]: !this.state[keyName]
-    });
+    onPressDropDown = (keyName) => () =>{
+        this.setState(prevState => ({
+            [keyName]: prevState[`${keyName}`],
+                
+            
+        }));
+
+    } 
 
     onPressRadio = (keyName, text) => () => this.setState({
         [keyName]: text
     });
 
     setInputRef = (inputComp) => (ref) => {
-        this[inputComp] = ref;
+        this[`${inputComp}`] = ref;
     }
 
-    setInputRef = (inputComp) => (ref) => {
-        this[inputComp] = ref;
-    }
 
     generateKeyExtractor = (item) => item.key;
 
@@ -158,9 +160,10 @@ class CollegePlanBeneficiaryComponent extends Component {
 
     renderCustomDropDown = ({ stateKey = "", dropDownName = "", lblDropdownName = "", isOptional = false }) => {
         const validationKey = `${stateKey}Validation`;
-        const { errMsg } = this.state;
-        const validationKeyValue = this.state[validationKey] !== undefined ? !this.state[validationKey] : false;
+        const { [stateKey]:stateKeyName,[validationKey]:validationKeyName,errMsg } = this.state;
 
+        const validationKeyValue = validationKeyName !== undefined ? !validationKeyName : false;
+//
 
         const dropDownData = dummyData;
 
@@ -186,7 +189,7 @@ class CollegePlanBeneficiaryComponent extends Component {
                 dropDownTextName={styles.dropDownTextName}
                 dropDownName={lblDropdownName}
                 data={dropDownData}
-                dropDownValue={this.state[stateKey]}
+                dropDownValue={stateKeyName}
                 selectedDropDownValue={this.onSelectedDropDownValue(stateKey, dropDownName)}
                 dropDownPostition={styles.dropDownPostition}
                 errorFlag={isOptional ? false : validationKeyValue}
@@ -200,7 +203,7 @@ class CollegePlanBeneficiaryComponent extends Component {
 
     onSelectedDropDownValue = (stateKey, dropDownName) => (value, index, data) => {
         AppUtils.debugLog(`onSelectedDropDownValue:${dropDownName}`);
-        const item = data[index];
+        const item = data[+index];
 
         this.setState(({
             [stateKey]: item.value,

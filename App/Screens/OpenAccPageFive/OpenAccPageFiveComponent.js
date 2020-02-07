@@ -31,8 +31,10 @@ class OpenAccPageFiveComponent extends Component {
         const { accOpeningData} = this.props;
 
         if (this.props !== prevProps) {
-            const responseKey = ActionTypes.PREFERENCE_SAVE_OPENING_ACCT;
+            const responseKey = ActionTypes.VERIFY_SAVE_OPENING_ACCT;
             if (accOpeningData[`${responseKey}`]) {
+                AppUtils.debugLog(`VERIFY_SAVE_OPENING_ACCT::::> ${accOpeningData}`);
+
                 if (accOpeningData[`${responseKey}`] !== prevProps.accOpeningData[`${responseKey}`]) {
                     const tempResponse = accOpeningData[`${responseKey}`];
                     if (tempResponse.status) {
@@ -1826,7 +1828,7 @@ class OpenAccPageFiveComponent extends Component {
 
                     <View style={styles.btnGrp}>
                         {
-                            (specialMFAUserType !== "" && specialMFAUserType !== "GuestUser" && specialMFAUserType !== "NewUser" && specialMFAUserType !== "UserForm") ? (
+                           /* (specialMFAUserType !== "" && specialMFAUserType !== "GuestUser" && specialMFAUserType !== "NewUser" && specialMFAUserType !== "UserForm") ? (
                                 <GButtonComponent
                                     buttonStyle={styles.normalWhiteBtn}
                                     buttonText={gblStrings.common.save}
@@ -1834,7 +1836,14 @@ class OpenAccPageFiveComponent extends Component {
                                     onPress={this.onClickSave}
                                 />
                             )
-                                : null
+                                : null 
+                            */
+                                <GButtonComponent
+                                buttonStyle={styles.normalWhiteBtn}
+                                buttonText={gblStrings.common.save}
+                                textStyle={styles.normalWhiteBtnTxt}
+                                onPress={this.onClickSave}
+                                />  
                         }
                         {
                             (specialMFAUserType !== "" && specialMFAUserType !== "GuestUser" && specialMFAUserType !== "NewUser" && specialMFAUserType !== "UserForm") ? (
