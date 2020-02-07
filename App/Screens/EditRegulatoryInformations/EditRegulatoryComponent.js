@@ -60,7 +60,7 @@ class editRegulatoryComponent extends Component {
                     {/* Manage Regulagtory Section */}
 
                     <View>
-                        <View style={[styles.settingsView, styles.editRegulatoryView]}>
+                        <View style={styles.editRegulatoryView}>
                             <Text style={styles.editRegulatoryHeadOne}>
                                 {globalString.editProfilePageValue.editManageRegulatory}
                             </Text>

@@ -3,6 +3,17 @@ import { scaledHeight } from '../../Utils/Resolution';
 
 const { width } = Dimensions.get('window');
 
+
+const commonStyles = StyleSheet.create({
+    commonSettingsView: {
+        flexDirection: 'row',
+        marginTop: scaledHeight(18),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+        width: '100%',
+    },
+});
+
 const styles = StyleSheet.create({
     addEditTextLabel: {
         color: '#5D83AE',
@@ -28,7 +39,7 @@ const styles = StyleSheet.create({
     },
     connectWithUs: {
         backgroundColor: 'white',
-        flexDirection: 'column',
+        flexDirection: 'column',    
         height: scaledHeight(100),
         paddingBottom: '5%',
         paddingLeft: '5%'
@@ -82,7 +93,7 @@ const styles = StyleSheet.create({
     editRegulatoryOne: { color: '#0000FF', fontSize: scaledHeight(14) },
     editRegulatoryPolitical: { color: '#333333DE', fontSize: scaledHeight(16), fontWeight: 'bold', width: '100%' },
     editRegulatoryTwo: { color: '#56565A', fontSize: scaledHeight(14) },
-    editRegulatoryView: { alignItems: 'center', justifyContent: 'center' },
+    editRegulatoryView: { ...commonStyles.commonSettingsView, alignItems: 'center', justifyContent: 'center' },
     editTitleBold: {
         color: '#707070',
         fontSize: scaledHeight(18),
@@ -308,13 +319,7 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(20),
         width: '92%'
     },
-    settingsView: {
-        flexDirection: 'row',
-        marginTop: scaledHeight(18),
-        paddingLeft: '4%',
-        paddingRight: '4%',
-        width: '100%',
-    },
+    settingsView: commonStyles.commonSettingsView,
     settingsView1: {
         marginTop: scaledHeight(18),
         paddingLeft: '4%',
