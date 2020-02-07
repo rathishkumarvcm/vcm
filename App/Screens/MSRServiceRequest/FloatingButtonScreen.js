@@ -2,6 +2,10 @@ import React from 'react';
 import { Text, View, ScrollView, TextInput, TouchableWithoutFeedback, SafeAreaView, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Modal from 'react-native-modal';
+import PropTypes from "prop-types";
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+import { msrServiceRequestActions } from '../../Shared/Actions';
 import styles from './style';
 import gblStrings from '../../Constants/GlobalStrings';
 import { GIcon, GHeaderComponent, GDropDownComponent, GInputComponent, GButtonComponent } from '../../CommonComponents';
@@ -16,6 +20,15 @@ const topicData = [
     { "key": "6", "value": "Others" },
 ];
 
+const accountData = [
+    { "key": "1", "value": "34XXXXX XX25" },
+    { "key": "2", "value": "52XXXXX XX74" },
+    { "key": "3", "value": "85XXXXX XXX99" },
+    { "key": "4", "value": "10XXXXX XX07" },
+    { "key": "5", "value": "97XXXXX XX11" },
+    { "key": "6", "value": "11XXXXX XXX24" },
+    { "key": "7", "value": "71XXXXX XXX74" },
+];
 
 class FloatingButtonComponent extends React.Component {
     constructor(props) {
@@ -24,22 +37,87 @@ class FloatingButtonComponent extends React.Component {
             isShowModal: false,
             isShowSecureMessageModal: false,
             inputSubject: "",
+            erFlagSubject: false,
             inputMessageBody: "",
+            // erFlagMsgBody: false,
 
             dropDownTopicState: false,
             dropDownTopicValue: '',
             dropDownTopicFlag: false,
             dropDownTopicMsg: '',
+
+            dropDownAccountState: false,
+            dropDownAccountValue: '',
+            dropDownAccountFlag: false,
+            dropDownAccountMsg: '',
         };
     }
+
+    static getDerivedStateFromProps(props, state) {
+        // console.warn("*****", state);
+        return state;
+    }
+
 
     toggleModal = () => this.setState(prevState => ({
         isShowModal: !prevState.isShowModal,
         isShowSecureMessageModal: false
     }));
 
+    // toggleModal = () => {
+    //     const { setModalVisible, setSecureMsgModalVisible, isShowModal } = this.props;
+    //     setModalVisible(!isShowModal);
+    //     setSecureMsgModalVisible(false);
+    // }
+
     toggleSecureMsgModal = () => this.setState(prevState => ({ isShowSecureMessageModal: !prevState.isShowSecureMessageModal }));
 
+    // toggleSecureMsgModal = () => {
+    //     const { setSecureMsgModalVisible } = this.props;
+    //     setSecureMsgModalVisible(true);
+    // }
+
+    submitToCall = () => {
+        if (this.validate) {
+            console.warn("You can call API!");
+        }
+    }
+
+    isEmpty = (str) => {
+        if (str === null || str === undefined || str === "null" || str === "" || str === "undefined") {
+            return true;
+        }
+        return false;
+    }
+
+    validate = () => {
+        const { dropDownTopicValue, dropDownAccountValue, inputSubject, inputMessageBody } = this.state;
+        if (this.isEmpty(dropDownTopicValue)) {
+            this.setState({
+                dropDownTopicFlag: true,
+                dropDownTopicMsg: "Please select any Topic!"
+            });
+            return false;
+        }
+        if (this.isEmpty(dropDownAccountValue)) {
+            this.setState({
+                dropDownAccountFlag: true,
+                dropDownAccountMsg: "Please select any Account!"
+            });
+            return false;
+        }
+        if (this.isEmpty(inputSubject)) {
+            this.setState({
+                erFlagSubject: true,
+            });
+            return false;
+        }
+        if (this.isEmpty(inputMessageBody)) {
+            console.log("optional");
+        }
+        return true;
+
+    }
 
     setSubjectText = text => {
         this.setState({
@@ -58,6 +136,14 @@ class FloatingButtonComponent extends React.Component {
             dropDownTopicValue: data[index].value,
             dropDownTopicState: false,
             dropDownTopicFlag: false
+        });
+    }
+
+    dropDownAccountSelect = (value, index, data) => {
+        this.setState({
+            dropDownAccountValue: data[index].value,
+            dropDownAccountState: false,
+            dropDownAccountFlag: false
         });
     }
 
@@ -128,10 +214,10 @@ class FloatingButtonComponent extends React.Component {
 
         const { navigation } = this.props;
         //  const nextBtnstyle = this.state.agreeConditions ? StyleSheet.normalBlackBtn : [StyleSheet.normalBlackBtn, { opacity: .45 }];
-        const { isShowModal, isShowSecureMessageModal, inputSubject, inputMessageBody,
-            dropDownTopicValue, dropDownTopicState, dropDownTopicFlag, dropDownTopicMsg
-        } = this.state;
-
+        // const { isShowModal, isShowSecureMessageModal } = this.props;
+        const { inputSubject, inputMessageBody, erFlagSubject, isShowModal, isShowSecureMessageModal,
+            dropDownTopicValue, dropDownTopicState, dropDownTopicFlag, dropDownTopicMsg,
+            dropDownAccountValue, dropDownAccountState, dropDownAccountFlag, dropDownAccountMsg } = this.state;
         return (
             <SafeAreaView style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
@@ -234,7 +320,6 @@ class FloatingButtonComponent extends React.Component {
                                                     textInputStyle={styles.dropdownTextInput}
                                                     dropDownLayout={styles.dropdownLayout}
                                                     data={topicData}
-                                                    changeState={this.dropDownCodeClick}
                                                     showDropDown={dropDownTopicState}
                                                     dropDownValue={dropDownTopicValue}
                                                     selectedDropDownValue={this.dropDownTopicSelect}
@@ -247,14 +332,13 @@ class FloatingButtonComponent extends React.Component {
                                                     dropDownTextName={styles.lblTxt}
                                                     textInputStyle={styles.dropdownTextInput}
                                                     dropDownLayout={styles.dropdownLayout}
-                                                    data={topicData}
-                                                    changeState={this.dropDownCodeClick}
-                                                    showDropDown={dropDownTopicState}
-                                                    dropDownValue={dropDownTopicValue}
-                                                    selectedDropDownValue={this.dropDownTopicSelect}
+                                                    data={accountData}
+                                                    showDropDown={dropDownAccountState}
+                                                    dropDownValue={dropDownAccountValue}
+                                                    selectedDropDownValue={this.dropDownAccountSelect}
                                                     itemToDisplay="value"
-                                                    errorFlag={dropDownTopicFlag}
-                                                    errorText={dropDownTopicMsg}
+                                                    errorFlag={dropDownAccountFlag}
+                                                    errorText={dropDownAccountMsg}
                                                 />
                                                 <Text style={styles.labelText}>{gblStrings.msrServiceRequest.subject}</Text>
                                                 <GInputComponent
@@ -263,8 +347,8 @@ class FloatingButtonComponent extends React.Component {
                                                     onChangeText={this.setSubjectText}
                                                     // onBlur={this.validCode}
                                                     value={inputSubject}
-                                                    // errorFlag={true}
-                                                    errorText={"error"}
+                                                    errorFlag={erFlagSubject}
+                                                    errorText={gblStrings.msrServiceRequest.erMsgSubject}
                                                 />
                                                 <Text style={styles.labelText}>{gblStrings.msrServiceRequest.messageBody}</Text>
                                                 <TextInput
@@ -276,8 +360,6 @@ class FloatingButtonComponent extends React.Component {
                                                     numberOfLines={10}
                                                     clearButtonMode="while-editing"
                                                     maxLength={1000}
-                                                    // errorFlag={true}
-                                                    errorText={"error"}
                                                 />
 
                                                 <View style={styles.grayBorderContainer}>
@@ -305,13 +387,13 @@ class FloatingButtonComponent extends React.Component {
                                                         buttonStyle={styles.normalWhiteBtn}
                                                         buttonText={gblStrings.common.cancel}
                                                         textStyle={styles.normalWhiteBtnTxt}
-                                                        onPress={this.goBack}
+                                                        onPress={this.toggleSecureMsgModal}
                                                     />
                                                     <GButtonComponent
                                                         buttonStyle={styles.normalBlackBtn}
-                                                        buttonText={gblStrings.common.next}
+                                                        buttonText={gblStrings.common.submit}
                                                         textStyle={styles.normalBlackBtnTxt}
-                                                        onPress={this.onClickNext}
+                                                        onPress={this.submitToCall}
                                                     // disabled={!this.state.agreeConditions}
                                                     />
                                                 </View>
@@ -329,5 +411,31 @@ class FloatingButtonComponent extends React.Component {
     }
 }
 
-export default FloatingButtonComponent;
+FloatingButtonComponent.propTypes = {
+    // isPageLoading: PropTypes.bool,
+    // isShowModal: PropTypes.bool,
+    // isShowSecureMessageModal: PropTypes.bool,
+    navigation: PropTypes.instanceOf(Object),
+};
 
+FloatingButtonComponent.defaultProps = {
+    // isPageLoading: true,
+    // isShowModal: false,
+    // isShowSecureMessageModal: false,
+    navigation: {},
+};
+
+const mapStateToProps = state => {
+    return state.msrAccessFormsData;
+};
+
+// const mapDispatchToProps = {
+//     ...msrServiceRequestActions
+// };
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+    dispatch,
+    ...msrServiceRequestActions
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(FloatingButtonComponent);

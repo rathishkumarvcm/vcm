@@ -10,11 +10,11 @@ import { Platform } from 'react-native';
 export default {
     isIOSPlatform: Platform.OS === 'ios',
     common: {
-        appName : "VCM MemeberServices",
+        appName: "VCM MemeberServices",
         cancel: "Cancel",
         ok: "Ok",
         enable: "Enable",
-        disable:"Disable",
+        disable: "Disable",
         back: "Back",
         submit: "Submit",
         done: "Done",
@@ -62,7 +62,7 @@ export default {
         deleteAlertMsg: "Are you sure to delete?",
         vcmMemberService: "VCM Memeber Services",
         apply: "Apply",
-        calender:"MM/DD/YYYY"
+        calender: "MM/DD/YYYY"
     },
     login: {
         imageRequest: "imageRequest",
@@ -84,8 +84,8 @@ export default {
         ssnNo: 9,
         company: 30,
 
-        USResidentCardNo:13,
-        passportNumber:8,
+        USResidentCardNo: 13,
+        passportNumber: 8,
         address: 60,
         addressLine1: 50,
         addressLine2: 50,
@@ -244,18 +244,18 @@ export default {
         beneficiariesCond: "Primary distributions must total 100 percent",
 
 
-        contactInfo:"Contact Information",
-        phoneInfo:"Phone Information",
-        emailInfo:"Email Information",
+        contactInfo: "Contact Information",
+        phoneInfo: "Phone Information",
+        emailInfo: "Email Information",
         allFieldsMandatory: "All fields are required except mentioned optional",
         mailToCSR: "Mail To CSR @",
-        home:"Home",
-        work:"Work",
-        mobile:"Mobile",
-        fax:"Fax",
-        addAnotherNumber:"+ Add Another Number",
-        addAnotherEmail:"+ Add Another Email Address",
-        stateTerritory:"State/Territory",
+        home: "Home",
+        work: "Work",
+        mobile: "Mobile",
+        fax: "Fax",
+        addAnotherNumber: "+ Add Another Number",
+        addAnotherEmail: "+ Add Another Email Address",
+        stateTerritory: "State/Territory",
 
 
         suffix: "Suffix",
@@ -292,12 +292,12 @@ export default {
         socialSecurityNo: "Social Security Number",
         ssnNoFormat: "**********",
         citizenship: "Citizenship",
-        residenceStatus:"Residence Status",
-        countryOfCitizenship:"Country of citizenship",
-        USResidentCardNo:"U.S. Permanent Resident Card Number",
-        USResidentCardNoExpiryDate:"Expiration Date",
-        passportNumber:"Passport number",
-        passportNoExpiryDate:"Expiration Date",
+        residenceStatus: "Residence Status",
+        countryOfCitizenship: "Country of citizenship",
+        USResidentCardNo: "U.S. Permanent Resident Card Number",
+        USResidentCardNoExpiryDate: "Expiration Date",
+        passportNumber: "Passport number",
+        passportNoExpiryDate: "Expiration Date",
 
 
         empStatus: "Employment Status",
@@ -340,7 +340,7 @@ export default {
         ssnTINno: "Social Security Number/ TIN",
         explainTin: "Expalin TIN",
         addAnotherBeneficiary: "+ Add another Primary Beneficiary (Up to 3)",
-        setAsPrimary:"Set as Primary",
+        setAsPrimary: "Set as Primary",
 
         investmentSelection: "Investment Selection",
         selectYourMutualFunds: "Select your VCM Mutual Funds",
@@ -367,7 +367,7 @@ export default {
         fundType: "Fund Type",
         clearFilter: "Clear Filters",
         applyFilter: "Apply Filter",
-        sortBy:"Sort By",
+        sortBy: "Sort By",
         contactMSR: "Contact MSR",
         callTollFee: "Call toll-free",
         callTollFeeNo: "(855) 756-7520",
@@ -375,19 +375,19 @@ export default {
         navInPercentage: "NAV in %",
         lastNav: "Last NAV (Previous day close)",
         minMax52Week: "52 week Min. / Max. Values",
-        check:"- Check",
-        checkNote:"Please make the check payable to USAA Mutual Funds and include the account number of the mutual fund in the memo section. \n Note: We do not accept 3rd party checks, traveler’s checks and money orders..  \n\n The transaction will be processed only after receiving the check. Please wait for 3-5 business days for completion of your transaction.",
-        wireTransfer:'- Wire Transfer',
-        USAAFundName:'USAA Fund Name',
-        USAAAccNumber:'USAA Account Number',
-        Name:"Name",
-        USAAFundAccNumber:'USAA Mutual Fund Account Number',
-        MailingToThisAddress:'Mailing to This Address',
-        VCMMailgAdress:'Mellon Trust of New England \n 1 Boston Place Boston, \n Massachusetts 02108 ABA \n # 011001234',
-        USAAAccountNumber:'xxxx-xxxx-xxxx',
-        VCMMailingAdress:'Mellon Trust of New England \n 1 Boston Place Boston, \n Massachusetts 02108 ABA \n # 011001234',
-        wireTransferNote:"The transaction will be processed on confirmation of wire transfer details. Please wait for 3-5 business days for completion of your transaction.",
-       
+        check: "- Check",
+        checkNote: "Please make the check payable to USAA Mutual Funds and include the account number of the mutual fund in the memo section. \n Note: We do not accept 3rd party checks, traveler’s checks and money orders..  \n\n The transaction will be processed only after receiving the check. Please wait for 3-5 business days for completion of your transaction.",
+        wireTransfer: '- Wire Transfer',
+        USAAFundName: 'USAA Fund Name',
+        USAAAccNumber: 'USAA Account Number',
+        Name: "Name",
+        USAAFundAccNumber: 'USAA Mutual Fund Account Number',
+        MailingToThisAddress: 'Mailing to This Address',
+        VCMMailgAdress: 'Mellon Trust of New England \n 1 Boston Place Boston, \n Massachusetts 02108 ABA \n # 011001234',
+        USAAAccountNumber: 'xxxx-xxxx-xxxx',
+        VCMMailingAdress: 'Mellon Trust of New England \n 1 Boston Place Boston, \n Massachusetts 02108 ABA \n # 011001234',
+        wireTransferNote: "The transaction will be processed on confirmation of wire transfer details. Please wait for 3-5 business days for completion of your transaction.",
+
         contactMSRDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcittet",
         offlineMethod: "Offline Method",
         offlineMethodDesc: "Lorem ipsum dolor sit amet, consectetur adipiscing elitdh Nam imperdiet dictum orcittet",
@@ -699,11 +699,11 @@ export default {
         emptyPassportNumberMsg: "Please select Passport Number",
         emptyPassportNoExpiryDateMsg: "Please select expiration date of Passport Number",
         validateCompareFundsMsg: "Please select minimum 2 or maximum 4 funds to compare",
-        emptyCallTimePreference:"Please select Call Time Preference",
-        contactInfoJoint:"Contact Information - Joint Owner",
-        phoneInfoJoint:"Phone Information - Joint Owner",
-        emailInfoJoint:"Email Information - Joint Owner",
-        
+        emptyCallTimePreference: "Please select Call Time Preference",
+        contactInfoJoint: "Contact Information - Joint Owner",
+        phoneInfoJoint: "Phone Information - Joint Owner",
+        emailInfoJoint: "Email Information - Joint Owner",
+
 
 
     },
@@ -944,7 +944,7 @@ export default {
         deliveryPreferenceAvailabilityDescPref: "if a preferred time to call you is not selected, we will continue to call you during VCM business hours and as permitted by law.",
         deliveryPreferenceQuietTime: "Quiet Time",
         deliveryPreferenceQuietTimeDelay: "Quite Time tells us when not to disturb you - we will delay text/SMS messages during your selected timeframe. However, situations that require immediate attention will still trigger a text/SMS messages.",
-        deliveryPreferenceQuietTimeDelayDesc:"Central Time (America/Chicago) is set by default. Time Zone will update when you change the Start time or End Time.",
+        deliveryPreferenceQuietTimeDelayDesc: "Central Time (America/Chicago) is set by default. Time Zone will update when you change the Start time or End Time.",
         priorityTextContent: "During the plot phase, certain limited alerts and notification related to specific programs and products will take priority above the preferences set in inbox.",
         priorityTextContentMessage: "Message categorization is provided as a tool but should not be relied on to determine which message need to be reviewed. All messages provided in inbox should be reviewed.",
         priorityTextContentText: "Text message frequency depends on your service selections. To cancel text message services at any time text",
@@ -966,8 +966,8 @@ export default {
         modalEnterCorrectCode: "Enter the Correct Code",
         modalCodeSentSuccess: "Code has been sent successfully",
 
-        startTime:"Start Time",
-        endTime:"End Time",
+        startTime: "Start Time",
+        endTime: "End Time",
         emptyStartTime: "Please select a start time",
         emptyEndTime: "Please select an end time",
         validEndTime: "Please select a valid time",
@@ -1111,16 +1111,16 @@ export default {
         create_invest_plan: 'Create Automatic Investment Plan',
         acc_title: '1 - Account Selection',
         acc_content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text.',
-        currentValue:'Current Value',
-        holding:'Holding',
-        general:"general",
-        utma:"utma",
-        ira:"ira",
-        one:'1',
-        two:'2',
-        three:'3',
-        four:'4',
-        five:'5',
+        currentValue: 'Current Value',
+        holding: 'Holding',
+        general: "general",
+        utma: "utma",
+        ira: "ira",
+        one: '1',
+        two: '2',
+        three: '3',
+        four: '4',
+        five: '5',
     },
     // Systematic Investment Plan
     systematicWithdrawal: {
@@ -1232,7 +1232,7 @@ export default {
         validateEmpOccupation: "Enter Valid Occupation",
         validateEmpName: "Enter Valid Employee Name",
         validateEmpLineOne: "Enter Valid Employee Line One",
-        validatePayeeName:"Enter valid name"
+        validatePayeeName: "Enter valid name"
     },
     accountServices: {
         account_services: 'Account Services',
@@ -1330,8 +1330,8 @@ export default {
         totalWithdrawal: "Total Withdrawal",
         taxAccountingMethod: "Tax Accounting Method",
         taxAccountingMethodContext: "By default, the value is ‘Average Cost Basis’ when original account is created. User will have to call the MSR for any change to the method If the user has set up alternate method through MSR, display that method.",
-        averageCostBasis:"Average Cost Basis",
-        currentMethod:"Current method",
+        averageCostBasis: "Average Cost Basis",
+        currentMethod: "Current method",
         doNotWithholdTaxes: "Do not withhold Taxes",
         withholdTaxes: "Withhold Taxes",
         onlineMethod: "Online Method",
@@ -1349,7 +1349,7 @@ export default {
         accountName: "Account Name ",
         confirmationMsg1: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. .",
         confirmationMsg2: "Please wait for 3-5 business days for Settlement of your transaction.",
-        reviewAndConfirmMsg:"Online trading will cease 30 minutes prior to fund close <Display fund close time as lesser of Rule C01 and C02 in HH:MM format>. Trade submitted after online cutoff time will be priced as of next business day.",
+        reviewAndConfirmMsg: "Online trading will cease 30 minutes prior to fund close <Display fund close time as lesser of Rule C01 and C02 in HH:MM format>. Trade submitted after online cutoff time will be priced as of next business day.",
         targetPage: "TARGET PAGE",
         accountSelectionContent: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.",
         generalAccountHeading: "General Account",
@@ -1437,7 +1437,7 @@ export default {
         marketingPrivacyContent: "Investing involves risk including loss of principal. Victory Mutual Funds and USAA Mutual Funds are distributed by Victory Capital Advisers, Inc. (VCA). VictoryShares ETFs and VictoryShares USAA ETFs are distributed by Foreside Fund Services, LLC (Foreside). VCA and Foreside are members of FINRA and SIPC. Victory Capital Management Inc. (VCM) is the investment adviser to the Victory Mutual Funds, USAA Mutual Funds, VictoryShares ETFs and VictoryShares USAA ETFs. VCA and VCM are not affiliated with Foreside. USAA is not affiliated with Foreside, VCM, or VCA. USAA and the USAA logos are registered trademarks and the USAA Mutual Funds and USAA Investments logos are trademarks of United Services Automobile Association and are being used by Victory Capital and its affiliates under license. Victory Capital means Victory Capital Management Inc., the investment manager of the USAA 529 College Savings Plan (Plan). The Plan is distributed by Victory Capital Advisers, Inc., a broker dealer registered with FINRA and an affiliate of Victory Capital. Victory Capital and its affiliates are not affiliated with United Services Automobile Association or its affiliates. USAA and the USAA logo are registered trademarks and the USAA 529 College Savings Plan logo is a trademark of United Services Automobile Association and are being used by Victory Capital and its affiliates under license."
     },
     purchase: {
-        purchase:"Purchase",
+        purchase: "Purchase",
         accountSelection: "Account Selection",
         openAccount: "Open Account",
         accountName: "Account Name",
@@ -1497,7 +1497,7 @@ export default {
         currentValue: "Current Value",
         holding: "Holding",
         automaticInvPlan: "Automatic Investment Plan",
-        exchangeYourFund:"Exchange your Fund"
+        exchangeYourFund: "Exchange your Fund"
 
     },
     rmdCalculator: {
@@ -1523,7 +1523,10 @@ export default {
         topic: "Topic",
         account: "Account",
         subject: "Subject",
-        messageBody: "Message Body"
+        messageBody: "Message Body",
+
+        erMsgSubject: "Subject can't be empty!",
+        erMsgBody: "Message body can't be empty!"
 
     },
     msrAccessForms: {
