@@ -1,126 +1,41 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
-import { GHeaderComponent } from '../../CommonComponents';
-import {styles} from './styles';
+import { GHeaderComponent, GButtonComponent } from '../../CommonComponents';
+import { styles } from './styles';
 import AccountSummaryAccordion from './AccountSummaryAccordion';
 
 class AccountSummaryComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      accounts: [
-        {
-          "groupName": "Holding Group 1",
-          "groupID": 12345,
-          "accounts": [
-            {
-              "accountID": 6001,
-              "accountName": "MF GI Plan 1",
-              "balance": 8000,
-              "qtd": 2.15,
-              "ytd": 1.26
-            },
-            {
-              "accountID": 6002,
-              "accountName": "IRA Plan 1 IRA Plan 1 IRA Plan 1 IRA Plan 1 IRA Plan 1 IRA Plan 1 IRA Plan 1 IRA Plan 1 IRA Plan 1 IRA Plan 1 IRA Plan 1 ",
-              "balance": 3000,
-              "qtd": 2.15,
-              "ytd": 1.26
-            },
-            {
-              "accountID": 6003,
-              "accountName": "529 Plan 1",
-              "balance": 5000,
-              "qtd": 2.15,
-              "ytd": 1.26
-            },
-            {
-              "accountID": 6003,
-              "accountName": "ETF Plan 1",
-              "balance": 9000,
-              "qtd": 2.15,
-              "ytd": 1.26
-            }
-          ]
-        },
-        {
-          "groupName": "Holding Group 2",
-          "groupID": 12346,
-          "accounts": [
-            {
-              "accountID": 7001,
-              "accountName": "MF GI Plan 2",
-              "balance": 9000,
-              "qtd": 2.15,
-              "ytd": 1.26
-            },
-            {
-              "accountID": 7002,
-              "accountName": "IRA Plan 2",
-              "balance": 5000,
-              "qtd": 2.15,
-              "ytd": 1.26
-            },
-            {
-              "accountID": 7003,
-              "accountName": "529 Plan 2",
-              "balance": 4000,
-              "qtd": 2.15,
-              "ytd": 1.26
-            },
-            {
-              "accountID": 7003,
-              "accountName": "ETF Plan 2",
-              "balance": 3000,
-              "qtd": 2.15,
-              "ytd": 1.26
-            }
-          ]
-        },
-        {
-          "groupName": "Holding Group 3",
-          "groupID": 12347,
-          "accounts": [
-            {
-              "accountID": 8001,
-              "accountName": "MF GI Plan 3",
-              "balance": 8000,
-              "qtd": 2.15,
-              "ytd": 1.26
-            },
-            {
-              "accountID": 8002,
-              "accountName": "IRA Plan 3",
-              "balance": 5000,
-              "qtd": 2.15,
-              "ytd": 1.26
-            },
-            {
-              "accountID": 8003,
-              "accountName": "529 Plan 3",
-              "balance": 2000,
-              "qtd": 2.15,
-              "ytd": 1.26
-            },
-            {
-              "accountID": 8003,
-              "accountName": "ETF Plan 3",
-              "balance": 1000,
-              "qtd": 2.15,
-              "ytd": 1.26
-            }
-          ]
-        }
-      ]
+      groups: [],
+    };
+  }
+
+
+  static getDerivedStateFromProps(props, prevState) {
+
+    let { accountSummaryInitialState: { holdingGroups } } = props;
+    const { groups } = prevState;
+
+    if (groups.length === 0) {
+      holdingGroups = holdingGroups.map((item) => {
+        const accounts = item.accounts.map((account) => { return { ...account, checked: true }; });
+        return { ...item, accounts };
+      });
+      return { groups: holdingGroups };
+    }
+    return {
+      groups: prevState.holdingGroups
     };
   }
 
 
   renderAccordians = () => {
-    const {accounts} = this.state;
+    const { groups } = this.state;
     const items = [];
-    for (const item of accounts) {
+    for (const item of groups) {
       items.push(
         <AccountSummaryAccordion
           title={item.groupName}
@@ -131,16 +46,20 @@ class AccountSummaryComponent extends Component {
     return items;
   }
 
+  onClickAddGroup = () => {
+
+  }
+
   tableHeader = () => {
     return (
       <View style={styles.tableHeaderView}>
-        <View style = {styles.headerHoldingGroupView}>
+        <View style={styles.headerHoldingGroupView}>
           <Text style={styles.holdingGroupText}>Holding Group</Text>
         </View>
-        <View style = {styles.headerBalanceView}>
+        <View style={styles.headerBalanceView}>
           <Text style={styles.balanceText}>Balance (USD)</Text>
         </View>
-        <View style = {styles.headerReturnsView}>
+        <View style={styles.headerReturnsView}>
           <Text style={styles.returnText}>Returns</Text>
         </View>
       </View>
@@ -153,20 +72,30 @@ class AccountSummaryComponent extends Component {
       <View style={styles.container}>
         <GHeaderComponent navigation={navigation} />
         {this.tableHeader()}
-        <ScrollView style = {styles.scrollView}>
+        <ScrollView style={styles.scrollView}>
           {this.renderAccordians()}
         </ScrollView>
+        <View style = {styles.addGroupContainer}>
+          <GButtonComponent
+            buttonStyle={styles.addGroupButton}
+            buttonText="Add an New Account"
+            textStyle={styles.addGroupText}
+            onPress={this.onClickOpenAnAccount}
+          />
+        </View>
       </View>
     );
   }
 }
 
 AccountSummaryComponent.propTypes = {
-  navigation : PropTypes.instanceOf(Object),
+  navigation: PropTypes.instanceOf(Object),
+  accountSummaryInitialState: PropTypes.instanceOf(Object)
 };
 
 AccountSummaryComponent.defaultProps = {
-  navigation : {},
+  navigation: {},
+  accountSummaryInitialState: {}
 };
 
 

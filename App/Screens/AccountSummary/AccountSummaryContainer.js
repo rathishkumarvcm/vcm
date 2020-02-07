@@ -1,15 +1,22 @@
 import { connect } from 'react-redux';
 import AccountSummaryComponent from './AccountSummaryComponent';
 
-const mapStateToProps = () => {
-    return {
+// const mapStateToProps = () => {
+//     return {
 
-    };
+//     };
+// };
+// const mapDispatchToProps = () => {
+//     return {
+
+//     };
+// };
+
+const mapStateToProps = (state /* , props */) => ({
+        accountSummaryInitialState: state.accountSummaryData,
+});
+
+const mapDispatchToProps = {
 };
-const mapDispatchToProps = () => {
-    return {
 
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps) (AccountSummaryComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(AccountSummaryComponent);
