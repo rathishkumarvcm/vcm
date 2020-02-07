@@ -943,7 +943,8 @@ export default {
         deliveryPreferenceAvailabilityDesc: "optional This selection will apply to all of the phone numbers listed on your profile.",
         deliveryPreferenceAvailabilityDescPref: "if a preferred time to call you is not selected, we will continue to call you during VCM business hours and as permitted by law.",
         deliveryPreferenceQuietTime: "Quiet Time",
-        deliveryPreferenceQuietTimeDelay: "You can delay text messages when using Quiet Time. To enable this feature, navigate to \"Delivery Settings\" in your VCM Mobile App.",
+        deliveryPreferenceQuietTimeDelay: "Quite Time tells us when not to disturb you - we will delay text/SMS messages during your selected timeframe. However, situations that require immediate attention will still trigger a text/SMS messages.",
+        deliveryPreferenceQuietTimeDelayDesc:"Central Time (America/Chicago) is set by default. Time Zone will update when you change the Start time or End Time.",
         priorityTextContent: "During the plot phase, certain limited alerts and notification related to specific programs and products will take priority above the preferences set in inbox.",
         priorityTextContentMessage: "Message categorization is provided as a tool but should not be relied on to determine which message need to be reviewed. All messages provided in inbox should be reviewed.",
         priorityTextContentText: "Text message frequency depends on your service selections. To cancel text message services at any time text",
@@ -964,6 +965,12 @@ export default {
         modalResendCode: "Resend Code",
         modalEnterCorrectCode: "Enter the Correct Code",
         modalCodeSentSuccess: "Code has been sent successfully",
+
+        startTime:"Start Time",
+        endTime:"End Time",
+        emptyStartTime: "Please select a start time",
+        emptyEndTime: "Please select an end time",
+        validEndTime: "Please select a valid time",
     },
     addFinancialInformations: {
         addFinancialTitle: "Manage Financial Information",

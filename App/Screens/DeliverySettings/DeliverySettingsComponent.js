@@ -1,51 +1,77 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, TouchableOpacity, Modal } from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, Modal, Switch } from 'react-native';
 import PropTypes from "prop-types";
 import styles from './styles';
-import { GHeaderComponent, GIcon, GFooterSettingsComponent, GSwitchComponent, GButtonComponent, GInputComponent } from '../../CommonComponents';
+import { GHeaderComponent, GIcon, GFooterSettingsComponent, GSwitchComponent, GButtonComponent, GInputComponent, GDropDownComponent, GDateComponent } from '../../CommonComponents';
 import { CustomCheckBox } from '../../AppComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import AppUtils from '../../Utils/AppUtils';
+
+const swithcStyle = { flase: '#DBDBDB', true: '#444444' };
+const tempTimeZone = [
+    {
+        "key": "central",
+        "value": "Central"
+    },
+    {
+        "key": "eastern",
+        "value": "Eastern"
+    },
+    {
+        "key": "general",
+        "value": "General"
+    },
+    {
+        "key": "pacific",
+        "value": "Pacific"
+    }
+];
+
+const tempPreferenceData = [
+    { key: 'morning', value: 'Morning (8am - 10am)' },
+    { key: 'midday', value: 'Mid-Day (10am - 4pm)' },
+    { key: 'earlyevening', value: 'Early Evening (4am - 6pm)' },
+    { key: 'night', value: 'Night (6am - 9pm)' }
+];
 
 class DeliverySettingsComponent extends Component {
     constructor(props) {
         super(props);
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
 
-        const{ initialState,deliverySettingsinitialState }=props;
-
+        const { initialState, deliverySettingsinitialState } = props;
         this.state = {
             // isLoading: false,
 
             emailReadMoreUrgentMessages: false,
-            emailReadMoreNotification: false,          
+            emailReadMoreNotification: false,
             pushNotifyReadMoreUrgentMessages: false,
-            pushNotifyReadMoreNotification: false,         
+            pushNotifyReadMoreNotification: false,
             textReadMoreUrgentMessages: false,
-            textReadMoreNotification: false,           
+            textReadMoreNotification: false,
 
-            emailUrgentSwitchOn: deliverySettingsinitialState.emailUrgentSwitchOn, 
-            emailUrgentSwitchOff: deliverySettingsinitialState.emailUrgentSwitchOff, 
-        
-            emailNotificationSwitchOn: deliverySettingsinitialState.emailNotificationSwitchOn, 
-            emailNotificationSwitchOff: deliverySettingsinitialState.emailNotificationSwitchOff,           
-                            
-            notificationUrgentSwitchOn: deliverySettingsinitialState.notificationUrgentSwitchOn, 
+            emailUrgentSwitchOn: deliverySettingsinitialState.emailUrgentSwitchOn,
+            emailUrgentSwitchOff: deliverySettingsinitialState.emailUrgentSwitchOff,
+
+            emailNotificationSwitchOn: deliverySettingsinitialState.emailNotificationSwitchOn,
+            emailNotificationSwitchOff: deliverySettingsinitialState.emailNotificationSwitchOff,
+
+            notificationUrgentSwitchOn: deliverySettingsinitialState.notificationUrgentSwitchOn,
             notificationUrgentSwitchOff: deliverySettingsinitialState.notificationUrgentSwitchOff,
-        
-            notificationNotificationSwitchOn: deliverySettingsinitialState.notificationNotificationSwitchOn, 
+
+            notificationNotificationSwitchOn: deliverySettingsinitialState.notificationNotificationSwitchOn,
             notificationNotificationSwitchOff: deliverySettingsinitialState.notificationNotificationSwitchOff,
-                        
-            textUrgentSwitchOn: deliverySettingsinitialState.textUrgentSwitchOn, 
+
+            textUrgentSwitchOn: deliverySettingsinitialState.textUrgentSwitchOn,
             textUrgentSwitchOff: deliverySettingsinitialState.textUrgentSwitchOff,
-        
-            textNotificationSwitchOn: deliverySettingsinitialState.textNotificationSwitchOn, 
+
+            textNotificationSwitchOn: deliverySettingsinitialState.textNotificationSwitchOn,
             textNotificationSwitchOff: deliverySettingsinitialState.textNotificationSwitchOff,
-        
+
             preferenceMorning: deliverySettingsinitialState.preferenceMorning,
-            preferenceMidDay:deliverySettingsinitialState.preferenceMidDay, 
-            preferenceEarlyEvening: deliverySettingsinitialState.preferenceEarlyEvening, 
-            preferenceNight: deliverySettingsinitialState.preferenceNight,         
+            preferenceMidDay: deliverySettingsinitialState.preferenceMidDay,
+            preferenceEarlyEvening: deliverySettingsinitialState.preferenceEarlyEvening,
+            preferenceNight: deliverySettingsinitialState.preferenceNight,
 
             modalVisible: false,
             resendSuccessVisible: false,
@@ -55,77 +81,59 @@ class DeliverySettingsComponent extends Component {
 
             email: initialState.email,
             phoneno: initialState.phone,
+
+            dropDownPreferenceValue: 'Central',
+            dropDownQuietTimeValue: 'Central',
+            dropDownTimeFlag: false,
+            dropDownTimeMsg: '',
+
+            PreferenceData: [...tempPreferenceData.map(v => ({ ...v, isActive: false }))],
+            switchValue: false,
+            errMsg: "",
+            quietTime: {
+                startTime: "",
+                endTime: "",
+                startTimeValidation: true,
+                endTimeValidation: true,
+                startTimeValiMsg: "",
+                endTimeValiMsg: ""
+            },           
         };
     }
 
     componentDidMount() {
-    //     const{ initialState,deliverySettingsinitialState }=this.props;
-
-    //     if (initialState && initialState.email) {
-    //         this.setState({ email: initialState.email});
-    //     }
-    //     if (initialState && initialState.phone) {
-    //         this.setState({ phoneno: initialState.phone});
-    //     }
-
-    //     if (deliverySettingsinitialState){            
-    //             this.setState({ 
-    //                 emailUrgentSwitchOn: deliverySettingsinitialState.emailUrgentSwitchOn, 
-    //                 emailUrgentSwitchOff: deliverySettingsinitialState.emailUrgentSwitchOff, 
-               
-    //                 emailNotificationSwitchOn: deliverySettingsinitialState.emailNotificationSwitchOn, 
-    //                 emailNotificationSwitchOff: deliverySettingsinitialState.emailNotificationSwitchOff,           
-                                 
-    //                 notificationUrgentSwitchOn: deliverySettingsinitialState.notificationUrgentSwitchOn, 
-    //                 notificationUrgentSwitchOff: deliverySettingsinitialState.notificationUrgentSwitchOff,
-              
-    //                 notificationNotificationSwitchOn: deliverySettingsinitialState.notificationNotificationSwitchOn, 
-    //                 notificationNotificationSwitchOff: deliverySettingsinitialState.notificationNotificationSwitchOff,
-                             
-    //                 textUrgentSwitchOn: deliverySettingsinitialState.textUrgentSwitchOn, 
-    //                 textUrgentSwitchOff: deliverySettingsinitialState.textUrgentSwitchOff,
-               
-    //                 textNotificationSwitchOn: deliverySettingsinitialState.textNotificationSwitchOn, 
-    //                 textNotificationSwitchOff: deliverySettingsinitialState.textNotificationSwitchOff,
-               
-    //                 preferenceMorning: deliverySettingsinitialState.preferenceMorning,
-    //                 preferenceMidDay:deliverySettingsinitialState.preferenceMidDay, 
-    //                 preferenceEarlyEvening: deliverySettingsinitialState.preferenceEarlyEvening, 
-    //                 preferenceNight: deliverySettingsinitialState.preferenceNight,                  
-    //     });
-    // }
-}
+    }
 
     goBack = () => {
-        const{ navigation }=this.props;
+        const { navigation } = this.props;
         navigation.goBack();
     };
 
-    navigateEditEmail = () =>{
-        const{ navigation }=this.props;
+    navigateEditEmail = () => {
+        const { navigation } = this.props;
         navigation.navigate('editEmailInformation');
     };
 
-    navigateEditPhone = () =>{
-        const{ navigation }=this.props;
+    navigateEditPhone = () => {
+        const { navigation } = this.props;
         navigation.navigate('editPhoneInformation');
     };
 
-    navigateEditNotification = () =>{
-        const{ navigation }=this.props;
+    navigateEditNotification = () => {
+        const { navigation } = this.props;
         navigation.navigate('accountMessagingDeviceManagement');
     };
 
-    setModalVisible = (visible) =>()=> {
+    setModalVisible = (visible) => () => {
         this.setState({ modalVisible: visible, resendSuccessVisible: false, resendPinCode: '', enterCorrectCode: false });
     }
 
-    setResendSuccess = (visible) =>()=>{
+    setResendSuccess = (visible) => () => {
         this.setState({ resendSuccessVisible: visible, enterCorrectCode: false });
     }
 
     validateInputData = () => {
-        const{ resendPinCode }=this.state;
+        const { resendPinCode } = this.state;
         if (resendPinCode === '') {
             this.setState({ enterCorrectCode: true, resendSuccessVisible: false });
         } else {
@@ -133,11 +141,11 @@ class DeliverySettingsComponent extends Component {
         }
     }
 
-    setResendCode = text => {        
-        this.setState({ resendPinCode : text });
+    setResendCode = text => {
+        this.setState({ resendPinCode: text });
     }
 
-    switchOnOffStateUpdates = (fromView, flag) =>()=> {
+    switchOnOffStateUpdates = (fromView, flag) => () => {
         switch (fromView) {
             //  Email Section Switch
             case 'emailUrgentMessage':
@@ -147,7 +155,7 @@ class DeliverySettingsComponent extends Component {
             case 'emailNotification':
                 if (flag) this.setState({ emailNotificationSwitchOn: true, emailNotificationSwitchOff: false });
                 else this.setState({ emailNotificationSwitchOn: false, emailNotificationSwitchOff: true });
-                break;           
+                break;
             //  Notification Section Switch
             case 'pushNotifyUrgentMessage':
                 if (flag) this.setState({ notificationUrgentSwitchOn: true, notificationUrgentSwitchOff: false });
@@ -156,7 +164,7 @@ class DeliverySettingsComponent extends Component {
             case 'pushNotifyNotification':
                 if (flag) this.setState({ notificationNotificationSwitchOn: true, notificationNotificationSwitchOff: false });
                 else this.setState({ notificationNotificationSwitchOn: false, notificationNotificationSwitchOff: true });
-                break;            
+                break;
             //  Text Message Section Switch
             case 'textUrgentMessage':
                 if (flag) this.setState({ textUrgentSwitchOn: true, textUrgentSwitchOff: false });
@@ -165,151 +173,222 @@ class DeliverySettingsComponent extends Component {
             case 'textNotification':
                 if (flag) this.setState({ textNotificationSwitchOn: true, textNotificationSwitchOff: false });
                 else this.setState({ textNotificationSwitchOn: false, textNotificationSwitchOff: true });
-                break;            
+                break;
             default:
-                break;    
+                break;
         }
     }
 
-    setReadMoreStateUpdates = (fromview) => () =>{
+    setReadMoreStateUpdates = (fromview) => () => {
         switch (fromview) {
             case 'emailUrgentMessage':
                 this.setState({
                     emailReadMoreUrgentMessages: true,
-                    emailReadMoreNotification: false,                    
+                    emailReadMoreNotification: false,
                 });
                 break;
             case 'emailNotification':
                 this.setState({
                     emailReadMoreUrgentMessages: false,
-                    emailReadMoreNotification: true,                  
+                    emailReadMoreNotification: true,
                 });
-                break;           
+                break;
             case 'pushNotifyUrgentMessage':
                 this.setState({
                     pushNotifyReadMoreUrgentMessages: true,
-                    pushNotifyReadMoreNotification: false,                   
+                    pushNotifyReadMoreNotification: false,
                 });
                 break;
             case 'pushNotifyNotification':
                 this.setState({
                     pushNotifyReadMoreUrgentMessages: false,
-                    pushNotifyReadMoreNotification: true,                  
+                    pushNotifyReadMoreNotification: true,
                 });
-                break;           
+                break;
             case 'textUrgentMessage':
                 this.setState({
                     textReadMoreUrgentMessages: true,
-                    textReadMoreNotification: false,                    
+                    textReadMoreNotification: false,
                 });
                 break;
             case 'textNotification':
                 this.setState({
                     textReadMoreUrgentMessages: false,
-                    textReadMoreNotification: true,                    
+                    textReadMoreNotification: true,
                 });
-                break;           
+                break;
             default:
-                break;     
+                break;
         }
     }
 
-    setPreferenceUpdates = (fromview) => ()=>{
-        const {preferenceMorning,preferenceMidDay,preferenceEarlyEvening,preferenceNight} = this.state;
+    setInputRef = (inputComp) => (ref) => {
+        this[`${inputComp}`] = ref;
+    }
 
-        switch (fromview) {
-            case 'morning':
-                this.setState({
-                    preferenceMorning: !preferenceMorning,
-                    preferenceMidDay: false,
-                    preferenceEarlyEvening: false,
-                    preferenceNight: false,
-                });
-                break;
-            case 'midDay':
-                this.setState({
-                    preferenceMorning: false,
-                    preferenceMidDay: !preferenceMidDay,
-                    preferenceEarlyEvening: false,
-                    preferenceNight: false,
-                });
-                break;
-            case 'earlyEvening':
-                this.setState({
-                    preferenceMorning: false,
-                    preferenceMidDay: false,
-                    preferenceEarlyEvening: !preferenceEarlyEvening,
-                    preferenceNight: false,
-                });
-                break;
-            case 'night':
-                this.setState({
-                    preferenceMorning: false,
-                    preferenceMidDay: false,
-                    preferenceEarlyEvening: false,
-                    preferenceNight: !preferenceNight,
-                });
-                break;
-            default:
-                break; 
+    onChangeText = (stateKey, keyName) => text => {
+        AppUtils.debugLog(`onChangeText:::>${text}`);
+
+        this.setState(prevState => ({
+            [stateKey]: {
+                ...prevState[`${stateKey}`],
+                [keyName]: text,
+                [`${keyName}Validation`]: true,
+            }
+        }));
+    }   
+
+    isEmpty = (str) => {
+        if (str === "" || str === undefined || str === null || str === "null" || str === "undefined" || str.replace(/^\s+|\s+$/gm, '') === "") {
+            return true;
         }
+        return false;
+    }
+
+    validateInfoFields = () => {
+        const { quietTime } = this.state;
+
+        let errMsg = "";
+        let isValidationSuccess = false;
+        let input = "";
+
+        const currentDate = new Date();
+        const d1 = new Date(`${currentDate.toDateString()} ${quietTime.startTime}`);
+        const d2 = new Date(`${currentDate.toDateString()} ${quietTime.endTime}`);
+        const duration = d2.getTime() - d1.getTime();
+        let hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+        hours = (hours < 10) ? hours : hours;
+
+        AppUtils.debugLog(`Difference Time:::>${hours}`);
+
+        if (this.isEmpty(quietTime.startTime)) {
+            errMsg = gblStrings.settingsDeliveryPreference.emptyStartTime;
+            input = 'startTime';
+        } else if (this.isEmpty(quietTime.endTime)) {
+            errMsg = gblStrings.settingsDeliveryPreference.emptyEndTime;
+            input = 'endTime';
+        } else if (hours < 0) {
+            errMsg = gblStrings.settingsDeliveryPreference.validEndTime;
+            input = 'endTime';
+        } else {
+            isValidationSuccess = true;
+        }
+
+        if (!isValidationSuccess) {
+            AppUtils.debugLog(`quietTime Info errMsg:: ${errMsg}`);
+
+            this.setState(prevState => ({
+                quietTime: {
+                    ...prevState.quietTime,
+                    [`${input}Validation`]: false,
+                },
+                isValidationSuccess,
+                errMsg: isValidationSuccess === false ? errMsg : ""
+            }));
+
+            if (input !== "" && input !== null && input !== undefined) {
+                if (this[`${input}`] !== null && this[`${input}`] !== undefined) {
+                    if (typeof this[`${input}`].focus === 'function') {
+                        this[`${input}`].focus();
+                    }
+                }
+            }
+        }
+        return isValidationSuccess;
     }
 
     saveButtonAction = () => {
-        AppUtils.debugLog('Save Button Clicked...'); 
-
         const {
-            emailUrgentSwitchOn,emailUrgentSwitchOff,
-            emailNotificationSwitchOn,emailNotificationSwitchOff,
-            notificationUrgentSwitchOn,notificationUrgentSwitchOff,
-            notificationNotificationSwitchOn,notificationNotificationSwitchOff,
-            textUrgentSwitchOn,textUrgentSwitchOff,
-            textNotificationSwitchOn,textNotificationSwitchOff,
-            preferenceMorning,preferenceMidDay,preferenceEarlyEvening,preferenceNight
-
+            emailUrgentSwitchOn, emailUrgentSwitchOff,
+            emailNotificationSwitchOn, emailNotificationSwitchOff,
+            notificationUrgentSwitchOn, notificationUrgentSwitchOff,
+            notificationNotificationSwitchOn, notificationNotificationSwitchOff,
+            textUrgentSwitchOn, textUrgentSwitchOff,
+            textNotificationSwitchOn, textNotificationSwitchOff,
+            preferenceMorning, preferenceMidDay, preferenceEarlyEvening, preferenceNight, switchValue
         } = this.state;
 
-        const {saveData,navigation} = this.props;
+        const { saveData, navigation } = this.props;
 
-        const payloadData = {                              
-                            
-            emailUrgentSwitchOn,  
-            emailUrgentSwitchOff,   
+        const payloadData = {
 
-            emailNotificationSwitchOn,    
-            emailNotificationSwitchOff,              
-            
-            notificationUrgentSwitchOn,    
-            notificationUrgentSwitchOff, 
+            emailUrgentSwitchOn,
+            emailUrgentSwitchOff,
 
-            notificationNotificationSwitchOn,    
-            notificationNotificationSwitchOff,            
+            emailNotificationSwitchOn,
+            emailNotificationSwitchOff,
 
-            textUrgentSwitchOn,    
-            textUrgentSwitchOff,   
+            notificationUrgentSwitchOn,
+            notificationUrgentSwitchOff,
 
-            textNotificationSwitchOn,    
-            textNotificationSwitchOff,                         
+            notificationNotificationSwitchOn,
+            notificationNotificationSwitchOff,
+
+            textUrgentSwitchOn,
+            textUrgentSwitchOff,
+
+            textNotificationSwitchOn,
+            textNotificationSwitchOff,
 
             preferenceMorning,
             preferenceMidDay,
             preferenceEarlyEvening,
-            preferenceNight          
-        };        
-        saveData(payloadData);
-        navigation.goBack();    
+            preferenceNight
+        };
+
+        if (switchValue) {
+            if (this.validateInfoFields()) {
+                AppUtils.debugLog(`Quiet Time Off::: Saved Success>`);
+                saveData(payloadData);
+                navigation.goBack();
+            }
+        } else {
+            AppUtils.debugLog(`Quiet Time Off:::>`);
+            saveData(payloadData);
+            navigation.goBack();
+        }
+    }
+
+    // Checkbox selection on Clicking Filters 
+    onCheckboxSelect = (item, index) => () => {
+        AppUtils.debugLog(`Index :  ${index}`);
+        AppUtils.debugLog(`Checkbox Selected : ${item.key} ${item.value} ${item.isActive}`);
+        let newItm = [];
+        const {
+            PreferenceData,
+        } = this.state;
+        newItm = [...PreferenceData];
+        newItm[+index].isActive = !newItm[+index].isActive;
+        this.setState({ PreferenceData: newItm });
+
+        AppUtils.debugLog(`New Item:${JSON.stringify(newItm)}`);
+    }
+
+    toggleSwitch = (value) => {
+        this.setState({ switchValue: value });
+    }
+
+    dropDownPreferenceSelect = (value, index, data) => {
+        AppUtils.debugLog(`DropDown Preference Selected : Value : ${value} Index : ${index} Data : ${JSON.stringify(data)}`);
+    }
+
+    dropDownQuietTimeSelect = (value, index, data) => {
+        AppUtils.debugLog(`DropDown QuietTime Selected : Value : ${value} Index : ${index} Data : ${JSON.stringify(data)}`);
     }
 
     render() {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         const {
-            email,emailReadMoreUrgentMessages,emailUrgentSwitchOn,emailUrgentSwitchOff,emailReadMoreNotification,
-            emailNotificationSwitchOn,emailNotificationSwitchOff,
-            pushNotifyReadMoreUrgentMessages,notificationUrgentSwitchOn,notificationUrgentSwitchOff,pushNotifyReadMoreNotification,
-            notificationNotificationSwitchOn,notificationNotificationSwitchOff,
-            phoneno,textReadMoreUrgentMessages,textUrgentSwitchOn,textUrgentSwitchOff,textReadMoreNotification,
-            textNotificationSwitchOn,textNotificationSwitchOff,
-            preferenceMorning,preferenceMidDay,preferenceEarlyEvening,preferenceNight,modalVisible,resendPinCode,enterCorrectCode,resendSuccessVisible,
+            email, emailReadMoreUrgentMessages, emailUrgentSwitchOn, emailUrgentSwitchOff, emailReadMoreNotification,
+            emailNotificationSwitchOn, emailNotificationSwitchOff,
+            pushNotifyReadMoreUrgentMessages, notificationUrgentSwitchOn, notificationUrgentSwitchOff, pushNotifyReadMoreNotification,
+            notificationNotificationSwitchOn, notificationNotificationSwitchOff,
+            phoneno, textReadMoreUrgentMessages, textUrgentSwitchOn, textUrgentSwitchOff, textReadMoreNotification,
+            textNotificationSwitchOn, textNotificationSwitchOff,
+           /* preferenceMorning,preferenceMidDay,preferenceEarlyEvening,preferenceNight, */ modalVisible, resendPinCode, enterCorrectCode, resendSuccessVisible,
+            dropDownPreferenceValue, dropDownQuietTimeValue, dropDownTimeFlag, dropDownTimeMsg, PreferenceData, switchValue, quietTime, errMsg,
+
         } = this.state;
 
         return (
@@ -390,7 +469,7 @@ class DeliverySettingsComponent extends Component {
                             <Text style={styles.emailPreferenceDescTitle}>
                                 {gblStrings.settingsDeliveryPreference.deliveryPreferenceReadMoreUrgent}
                             </Text>
-                          )
+                        )
                             : null}
                         <View style={styles.switchContainer}>
                             <GSwitchComponent
@@ -423,7 +502,7 @@ class DeliverySettingsComponent extends Component {
                             <Text style={styles.emailPreferenceDescTitle}>
                                 {gblStrings.settingsDeliveryPreference.deliveryPreferenceReadMoreNotification}
                             </Text>
-                          )
+                        )
                             : null}
                         <View style={styles.switchContainer}>
                             <GSwitchComponent
@@ -435,7 +514,7 @@ class DeliverySettingsComponent extends Component {
                                 switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                             />
                         </View>
-                    </View>                   
+                    </View>
 
                     {/* Push Notification - Category */}
                     <View style={styles.pushNotificationContainer}>
@@ -479,7 +558,7 @@ class DeliverySettingsComponent extends Component {
                             <Text style={styles.emailPreferenceDescTitle}>
                                 {gblStrings.settingsDeliveryPreference.deliveryPreferenceReadMoreUrgent}
                             </Text>
-                          )
+                        )
                             : null}
                         <View style={styles.switchContainer}>
                             <GSwitchComponent
@@ -512,7 +591,7 @@ class DeliverySettingsComponent extends Component {
                             <Text style={styles.emailPreferenceDescTitle}>
                                 {gblStrings.settingsDeliveryPreference.deliveryPreferenceReadMoreNotification}
                             </Text>
-                          )
+                        )
                             : null}
                         <View style={styles.switchContainer}>
                             <GSwitchComponent
@@ -525,7 +604,7 @@ class DeliverySettingsComponent extends Component {
                             />
                         </View>
                     </View>
-                    
+
                     {/* Text Message - Category */}
                     <View style={styles.textMessageContainer}>
                         <TouchableOpacity style={styles.touchOpacity}>
@@ -545,15 +624,6 @@ class DeliverySettingsComponent extends Component {
                     </View>
                     <Text style={styles.explainTextMessage}>Explain Text Message</Text>
                     <Text style={styles.userRegisterNumberText}>{phoneno}</Text>
-                    {/* <View style={styles.registerNumberContainer}>
-                        <GIcon
-                            name="alert-circle"
-                            type="material-community"
-                            size={20}
-                            color="#56565A"
-                        />
-                        <Text style={styles.registerNumberText} onPress={this.setModalVisible(true)}>Register this number</Text>
-                    </View> */}
 
                     <View style={styles.emailPreferenceContainer}>
                         <View style={styles.emailPreferenceUrgentContainer}>
@@ -574,7 +644,7 @@ class DeliverySettingsComponent extends Component {
                             <Text style={styles.emailPreferenceDescTitle}>
                                 {gblStrings.settingsDeliveryPreference.deliveryPreferenceReadMoreUrgent}
                             </Text>
-                          )
+                        )
                             : null}
                         <View style={styles.switchContainer}>
                             <GSwitchComponent
@@ -607,7 +677,7 @@ class DeliverySettingsComponent extends Component {
                             <Text style={styles.emailPreferenceDescTitle}>
                                 {gblStrings.settingsDeliveryPreference.deliveryPreferenceReadMoreNotification}
                             </Text>
-                          )
+                        )
                             : null}
                         <View style={styles.switchContainer}>
                             <GSwitchComponent
@@ -619,7 +689,7 @@ class DeliverySettingsComponent extends Component {
                                 switchOffText={gblStrings.settingAccountMessaging.accountMessagingAdviceSwitchOff}
                             />
                         </View>
-                    </View>                    
+                    </View>
 
                     {/*  Call Preference Section */}
                     <View style={styles.callPreferenceContainer}>
@@ -637,58 +707,124 @@ class DeliverySettingsComponent extends Component {
                             {gblStrings.settingsDeliveryPreference.deliveryPreferenceAvailabilityDescPref}
                         </Text>
 
-                        <View style={styles.preferenceSectionGrp}>
-                            <CustomCheckBox
-                                size={20}
-                                itemBottom={0}
-                                itemTop={0}
-                                outerCicleColor="#4D4D4D"
-                                innerCicleColor="#61285F"
-                                labelStyle={styles.preferenceSectionTxt}
-                                label="Morning 8:00 AM - 10:00 AM"
-                                selected={preferenceMorning}
-                                onPress={this.setPreferenceUpdates('morning')}
-                            />
+                        <GDropDownComponent
+                            dropDownLayout={styles.dropDownLayoutStyle}
+                            dropDownTextName={styles.lblTxtDropDown}
+                            dropDownName="Time Zone"
+                            data={tempTimeZone}
+                            dropDownValue={dropDownPreferenceValue}
+                            selectedDropDownValue={this.dropDownPreferenceSelect}
+                            itemToDisplay="value"
+                            errorFlag={dropDownTimeFlag}
+                            errorText={dropDownTimeMsg}
+                        />
+
+                        {
+                            PreferenceData.map((item, index) => {
+                                return (
+                                    <View key={item.key} style={styles.preferenceSectionGrp}>
+                                        <CustomCheckBox
+                                            size={20}
+                                            itemBottom={0}
+                                            itemTop={0}
+                                            outerCicleColor="#DEDEDF"
+                                            innerCicleColor="#61285F"
+                                            labelStyle={styles.preferenceSectionTxt}
+                                            label={item.value}
+                                            selected={item.isActive}
+                                            onPress={this.onCheckboxSelect(item, index)}
+                                        />
+                                    </View>
+                                );
+                            })
+                        }
+
+                    </View>
+
+                    <View style={styles.quietTimeContainer}>
+
+                        <View style={styles.quietTimeflexContainer}>
+
+                            <View style={styles.quietTimeTitleFlex}>
+                                <GIcon
+                                    name="volume-off"
+                                    type="material-community"
+                                    size={30}
+                                    color="black"
+                                />
+                                <Text style={styles.quietTimeText}>
+                                    {gblStrings.settingsDeliveryPreference.deliveryPreferenceQuietTime}
+                                </Text>
+                            </View>
+
+                            <View style={styles.quietTimeflexDirection}>
+                                <Switch trackColor={swithcStyle}
+                                    onValueChange={this.toggleSwitch}
+                                    value={switchValue}
+                                />
+                            </View>
                         </View>
-                        <View style={styles.preferenceSectionGrp}>
-                            <CustomCheckBox
-                                size={20}
-                                itemBottom={0}
-                                itemTop={0}
-                                outerCicleColor="#4D4D4D"
-                                innerCicleColor="#61285F"
-                                labelStyle={styles.preferenceSectionTxt}
-                                label="Mid-Day 10:00 AM - 04:00 PM"
-                                selected={preferenceMidDay}
-                                onPress={this.setPreferenceUpdates('midDay')}
-                            />
-                        </View>
-                        <View style={styles.preferenceSectionGrp}>
-                            <CustomCheckBox
-                                size={20}
-                                itemBottom={0}
-                                itemTop={0}
-                                outerCicleColor="#4D4D4D"
-                                innerCicleColor="#61285F"
-                                labelStyle={styles.preferenceSectionTxt}
-                                label="Early Evening 04:00 PM - 06:00 PM"
-                                selected={preferenceEarlyEvening}
-                                onPress={this.setPreferenceUpdates('earlyEvening')}
-                            />
-                        </View>
-                        <View style={styles.preferenceSectionGrp}>
-                            <CustomCheckBox
-                                size={20}
-                                itemBottom={0}
-                                itemTop={0}
-                                outerCicleColor="#4D4D4D"
-                                innerCicleColor="#61285F"
-                                labelStyle={styles.preferenceSectionTxt}
-                                label="Night 06:00 PM - 09:00 PM"
-                                selected={preferenceNight}
-                                onPress={this.setPreferenceUpdates('night')}
-                            />
-                        </View>
+
+                        <Text style={styles.quietTimeTextDelay}>
+                            {gblStrings.settingsDeliveryPreference.deliveryPreferenceQuietTimeDelay}
+                        </Text>
+                        <Text style={styles.quietTimeTextDelay}>
+                            {gblStrings.settingsDeliveryPreference.deliveryPreferenceQuietTimeDelayDesc}
+                        </Text>
+
+                        {
+                            (switchValue) ? (
+                                <View>
+                                    <GDropDownComponent
+                                        dropDownLayout={styles.dropDownLayoutStyle}
+                                        dropDownTextName={styles.lblTxtDropDown}
+                                        dropDownName="Time Zone"
+                                        data={tempTimeZone}
+                                        dropDownValue={dropDownQuietTimeValue}
+                                        selectedDropDownValue={this.dropDownQuietTimeSelect}
+                                        itemToDisplay="value"
+                                        errorFlag={dropDownTimeFlag}
+                                        errorText={dropDownTimeMsg}
+                                    />
+
+                                    <View style={styles.dateContainer}>
+                                        <Text style={styles.lblTxt}>
+                                            {gblStrings.settingsDeliveryPreference.startTime}
+                                        </Text>
+                                        <GDateComponent
+                                            inputref={this.setInputRef("startTime")}
+                                            date={quietTime.startTime}
+                                            placeholder="HH:MM"
+                                            dateTextLayout={styles.dateTextLayout}
+                                            componentStyle={styles.dateStyle}
+                                            errorFlag={!quietTime.startTimeValidation}
+                                            errorMsg={errMsg}
+                                            format="HH:mm"
+                                            mode="time"
+                                            onDateChange={this.onChangeText("quietTime", "startTime")}
+                                        />
+
+                                        <Text style={styles.lblTxt}>
+                                            {gblStrings.settingsDeliveryPreference.endTime}
+                                        </Text>
+                                        <GDateComponent
+                                            inputref={this.setInputRef("endTime")}
+                                            date={quietTime.endTime}
+                                            placeholder="HH:MM"
+                                            dateTextLayout={styles.dateTextLayout}
+                                            componentStyle={styles.dateStyle}
+                                            errorFlag={!quietTime.endTimeValidation}
+                                            errorMsg={errMsg}
+                                            format="HH:mm"
+                                            mode="time"
+                                            onDateChange={this.onChangeText("quietTime", "endTime")}
+                                        />                                        
+                                    </View>
+                                </View>
+
+                            ) : null
+                        }
+
                     </View>
 
                     <GButtonComponent
@@ -703,23 +839,6 @@ class DeliverySettingsComponent extends Component {
                         textStyle={styles.saveButtonText}
                         onPress={this.saveButtonAction}
                     />
-
-                    <View style={styles.lineBorder} />
-                    <View style={styles.quietTimeContainer}>
-                        <GIcon
-                            name="volume-off"
-                            type="material-community"
-                            size={30}
-                            color="black"
-                        />
-                        <Text style={styles.quietTimeText}>
-                            {gblStrings.settingsDeliveryPreference.deliveryPreferenceQuietTime}
-                        </Text>
-                    </View>
-                    <Text style={styles.quietTimeTextDelay}>
-                        {gblStrings.settingsDeliveryPreference.deliveryPreferenceQuietTimeDelay}
-                    </Text>
-                    <View style={styles.lineBorder} />
 
                     <Text style={styles.priorityTextContent}>
                         {gblStrings.settingsDeliveryPreference.priorityTextContent}
@@ -808,7 +927,7 @@ class DeliverySettingsComponent extends Component {
                                     <Text style={styles.modalEnterCode}>
                                         {gblStrings.settingsDeliveryPreference.modalEnterCorrectCode}
                                     </Text>
-                                  )
+                                )
                                     : null
                                 }
                                 <View style={styles.modalDidntReceiveContainer}>
@@ -829,7 +948,7 @@ class DeliverySettingsComponent extends Component {
                                     <Text style={styles.modalCodeSentSuccess}>
                                         {gblStrings.settingsDeliveryPreference.modalCodeSentSuccess}
                                     </Text>
-                                  )
+                                )
                                     : null
                                 }
                                 <GButtonComponent
@@ -861,13 +980,13 @@ DeliverySettingsComponent.propTypes = {
     initialState: PropTypes.instanceOf(Object),
     deliverySettingsinitialState: PropTypes.instanceOf(Object),
 
-    saveData:PropTypes.func,
+    saveData: PropTypes.func,
 };
 
 DeliverySettingsComponent.defaultProps = {
-    navigation : {},
-    initialState : {},
-    deliverySettingsinitialState : {},
+    navigation: {},
+    initialState: {},
+    deliverySettingsinitialState: {},
     saveData: () => { }
 
 };
