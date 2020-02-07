@@ -2,25 +2,49 @@ import React, { Component } from 'react';
 import { Text, View, ScrollView, TouchableOpacity, Modal } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
-import { GHeaderComponent, GFooterComponent, GIcon, GButtonComponent, GDateComponent } from '../../CommonComponents';
+import { GHeaderComponent, GFooterComponent, GIcon, GButtonComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import { CustomCheckBox, CustomRadio } from '../../AppComponents';
+
+
+const filterOptions = [
+    {
+        key: '1',
+        value: 'Account',
+
+    },
+    {
+        key: '2',
+        value: 'Fund',
+
+    },
+    {
+        key: '3',
+        value: 'Amount',
+
+    },
+    {
+        key: '4',
+        value: 'Movement',
+
+    },
+];
 
 const accountData = [
     {
         key: '1',
         value: 'Individual',
-        isActive: false
+        
     },
     {
         key: '2',
         value: 'IRA',
-        isActive: false
+        
     },
     {
         key: '3',
         value: 'Joint',
-        isActive: false
+        
     },
 
 ];
@@ -29,17 +53,17 @@ const fundData = [
     {
         key: '1',
         value: 'USIFX',
-        isActive: false
+        
     },
     {
         key: '2',
         value: 'USSPX',
-        isActive: false
+        
     },
     {
         key: '3',
         value: 'USAGX',
-        isActive: false
+        
     },
 ];
 
@@ -47,23 +71,23 @@ const amountData = [
     {
         key: '1',
         value: 'Less than $1000',
-        min:0,
-        max:1000,
-        isActive: false
+        min: 0,
+        max: 1000,
+        
     },
     {
         key: '2',
         value: 'greater than $1000',
-        min:1000,
-        max:null,
-        isActive: false
+        min: 1000,
+        max: null,
+        
     },
     {
         key: '3',
         value: 'between $ 100- $1000',
-        min:100,
-        max:1000,
-        isActive: false
+        min: 100,
+        max: 1000,
+        
     },
 ];
 
@@ -71,22 +95,22 @@ const movementData = [
     {
         key: '1',
         value: 'Automatic Investment',
-        isActive: false
+        
     },
     {
         key: '2',
         value: 'Automatic Withdrawal',
-        isActive: false
+        
     },
     {
         key: '3',
         value: 'Automatic RMD withdrawal',
-        isActive: false
+        
     },
     {
         key: '4',
         value: 'Dividend Re-invest',
-        isActive: false
+        
     },
 ];
 
@@ -94,16 +118,18 @@ class MoneyAndAssestComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            applyFilterState: false,
             modalVisible: false,
-            fromDateValue: '',
-            toDateValue: '',
-            errorDate: false,
-            fliterByAccount: '',
-            fliterByFund: '',
-            fliterByAmount: '',
-            fliterByMovement: '',
-            data:[
+            // fromDateValue: '',
+            // toDateValue: '',
+            // errorDate: false,
+            optionArray: [],
+            option: '',
+            accountDataFilter:[],
+            amountDataFilter:[],
+            movementDataFilter:[],
+            fundDataFiler:[],
+            firstTime:true,
+            data: [
                 {
                     key: '1',
                     movementType: 'Automatic Withdrawal',
@@ -141,7 +167,7 @@ class MoneyAndAssestComponent extends Component {
                     nextActivity: '01/01/20'
                 }
             ],
-            filterData:[
+            filterData: [
                 {
                     key: '1',
                     movementType: 'Automatic Withdrawal',
@@ -182,17 +208,34 @@ class MoneyAndAssestComponent extends Component {
         };
     }
 
+    static getDerivedStateFromProps(nextProps,prevState){
+        const {firstTime} = prevState;
+        if(firstTime)
+        {
+            return({
+                accountDataFilter: [...accountData.map(v => ({ ...v, isActive: false }))],
+                amountDataFilter: [...amountData.map(v => ({ ...v, isActive: false }))],
+                fundDataFiler:[...fundData.map(v => ({ ...v, isActive: false }))],
+                movementDataFilter: [...movementData.map(v => ({ ...v, isActive: false }))],
+                optionArray: [...accountData.map(v => ({ ...v, isActive: false }))],
+                option: 'Account',
+                firstTime:false
+            });
+        }
+        return null;
+      }
+
     setModalVisible = (visible) => () => {
         this.setState({ modalVisible: visible });
     }
 
     buildFilter = (filter) => {
-        let query = {};
-        for (let keys in filter) {
-            if ( (filter[keys].constructor === Object) || (filter[keys].constructor === Array && filter[keys].length > 0)) {
-                query[keys] = filter[keys];
+        const query = {};
+        Object.keys(filter).forEach((key)=>{
+            if ((filter[key.toString()].constructor === Object) || (filter[key.toString()].constructor === Array && filter[key.toString()].length > 0)) {
+                query[key.toString()] = filter[key.toString()];
             }
-        }
+        });
         return query;
     }
 
@@ -200,20 +243,21 @@ class MoneyAndAssestComponent extends Component {
         const keysWithMinMax = [
             'amount',
         ];
-        const filteredData = data.filter( (item) => {
-            for (let key in query) {
-                if (item[key] === undefined) {
-                    return false;
-                }
-                else if (keysWithMinMax.includes(key)) {
-                    if (query[key]['min'] !== null && item[key] < query[key]['min']) {
+        const min='min';
+        const max='max';
+    
+        const filteredData = data.filter((item) => {
+        const keyArray = Object.keys(query);
+            for (let x=0;x<keyArray.length;x+=1) {
+                if (keysWithMinMax.includes(keyArray[+x])) {
+                    if (query[keyArray[+x]][min.toString()] !== null && item[keyArray[+x]] < query[keyArray[+x]][min.toString()]) {
                         return false;
                     }
-                    if (query[key]['max'] !== null && item[key] > query[key]['max']) {
+                    if (query[keyArray[+x]][max.toString()] !== null && item[keyArray[+x]] > query[keyArray[+x]][max.toString()]) {
                         return false;
                     }
                 }
-                else if (!query[key].includes(item[key])) {
+                else if (!query[keyArray[+x]].includes(item[keyArray[+x]])) {
                     return false;
                 }
             }
@@ -222,137 +266,167 @@ class MoneyAndAssestComponent extends Component {
         return filteredData;
     };
 
-    applyFilterAction = (visible,applyFilter) => () => {
-        const{fliterByAccount,fliterByFund,fliterByAmount,fliterByMovement,data}=this.state;
-    
+    applyFilterAction = (visible, applyFilter) => () => {
+        const { accountDataFilter, fundDataFiler, amountDataFilter, movementDataFilter, data } = this.state;
 
-        if(!applyFilter){
-            this.setState({
-                modalVisible: visible,
-                applyFilterState: applyFilter,
-                filterData:data,
-                fliterByAccount:'',
-
-                
-            });
-        }
-        let filter = {
+        const filter = {
             account: [],
-            fund:[],
-            amount:{},
-            movementType:[],
+            fund: [],
+            amount: {},
+            movementType: [],
         };
-        
-        if(fliterByAccount !='')
-        {
-            fliterByAccount.forEach(item => {
-                if (item.isActive) {
-                    filter.account.push(`${item.value}`); 
-                }
-            });
-        }
+        if (!applyFilter) {
 
-        if(fliterByFund !='')
-        {
-            fliterByFund.forEach(item => {
-                if (item.isActive) {
-                    filter.fund.push(`${item.value}`); 
-                }
-            });
-        }
-
-        if(fliterByAmount !='')
-        {
-            fliterByAmount.forEach(item => {
-                if (item.isActive) {
-                    filter.amount={min:item.min,max:item.max}
-                }
-            });
-        }
-
-        if(fliterByMovement!='')
-        {
-            fliterByMovement.forEach(item => {
-                if (item.isActive) {
-                    filter.movementType.push(`${item.value}`); 
-                }
-            });
-        }
-        
-        const query = this.buildFilter(filter);
-        const result = this.filterData(data, query);
-        if(applyFilter)
-        {
             this.setState({
-                modalVisible: visible,
-                applyFilterState: applyFilter,
-                filterData:result
+                accountDataFilter: [...accountData.map(v => ({ ...v, isActive: false }))],
+                amountDataFilter: [...amountData.map(v => ({ ...v, isActive: false }))],
+                fundDataFiler:[...fundData.map(v => ({ ...v, isActive: false }))],
+                movementDataFilter: [...movementData.map(v => ({ ...v, isActive: false }))],
+                optionArray: [...accountData.map(v => ({ ...v, isActive: false }))],
+                option: 'Account',
+                filterData:data
             });
-        } 
+        }
+        else{
+        
+
+            if (accountDataFilter !== '') {
+                accountDataFilter.forEach(item => {
+                    if (item.isActive) {
+                        filter.account.push(`${item.value}`);
+                    }
+                });
+            }
+
+            if (fundDataFiler !== '') {
+                fundDataFiler.forEach(item => {
+                    if (item.isActive) {
+                        filter.fund.push(`${item.value}`);
+                    }
+                });
+            }
+
+            if (amountDataFilter !== '') {
+                amountDataFilter.forEach(item => {
+                    if (item.isActive) {
+                        filter.amount = { min: item.min, max: item.max };
+                    }
+                });
+            }
+
+            if (movementDataFilter !== '') {
+                movementDataFilter.forEach(item => {
+                    if (item.isActive) {
+                        filter.movementType.push(`${item.value}`);
+                    }
+                });
+            }
+            const query = this.buildFilter(filter);
+        const result = this.filterData(data, query);
+        
+        this.setState({
+            modalVisible: visible,
+            filterData: result,
+
+        });
+        }
+        
+        
     }
 
     // Checkbox selection on Clicking Filters 
     onCheckboxSelect = (keyName, item, index) => () => {
+        const {accountDataFilter,fundDataFiler,movementDataFilter} =this.state;
         let newItm = [];
-        switch (keyName) {
+        switch (keyName.split(" ")[0]) {
+
             case 'Account':
-                newItm = [...accountData];
+                newItm = [...accountDataFilter];
+                newItm[Number(index)].isActive = !newItm[Number(index)].isActive;
+                this.setState({accountDataFilter: newItm,optionArray: newItm });
                 break;
             case 'Fund':
-                newItm = [...fundData];
-                break;
-            case 'Amount':
-                newItm = [...amountData];
+                newItm = [...fundDataFiler];
+                newItm[Number(index)].isActive = !newItm[Number(index)].isActive;
+                this.setState({fundDataFiler: newItm,optionArray: newItm });
                 break;
             case 'Movement':
-                newItm = [...movementData];
+                newItm = [...movementDataFilter];
+                newItm[Number(index)].isActive = !newItm[Number(index)].isActive;
+                this.setState({movementDataFilter: newItm,optionArray: newItm });
                 break;
             default:
                 break;
         }
-        newItm[Number(index)].isActive = !newItm[Number(index)].isActive;
-        this.setState({ [`fliterBy${keyName}`]: newItm });
+        
     }
 
     onRadioSelect = (keyName, item, index) => () => {
-        amountData.map((i)=>{
-            i.isActive=false;
-        });
-        amountData[Number(index)].isActive = !amountData[Number(index)].isActive;
-        this.setState({ [`fliterBy${keyName}`]: amountData });
+        const {amountDataFilter} =this.state;
+        for (let i = 0; i < amountDataFilter.length; i += 1) {
+            if (i === index)
+                amountDataFilter[Number(index)].isActive = !amountDataFilter[Number(index)].isActive;
+            else
+                amountDataFilter[Number(i)].isActive = false;
+        }
+
+        this.setState({optionArray: amountDataFilter });
     }
 
-    onChangeDateValue = (keyName, date) => {
-        this.setState({
-            [keyName]: date,
-            errorDate: false
-        });
+    // onChangeDateValue = (keyName) => (date) => {
+    //     this.setState({
+    //         [keyName]: date,
+    //         errorDate: false
+    //     });
+    // }
+
+    selectedOption = (value) => () => {
+        const {accountDataFilter,fundDataFiler,amountDataFilter,movementDataFilter} =this.state;
+        switch (value) {
+            case 'Amount':
+                this.setState({ optionArray: [...amountDataFilter], option: value });
+                break;
+            case 'Movement':
+                this.setState({ optionArray: [...movementDataFilter], option: value });
+                break;
+            case 'Account':
+                this.setState({ optionArray: [...accountDataFilter], option: value });
+                break;
+            case 'Fund':
+                this.setState({ optionArray: [...fundDataFiler], option: value });
+                break;
+            default:
+                break;
+        }
+
     }
 
     render() {
         const { navigation } = this.props;
-        const { modalVisible, fromDateValue, toDateValue, errorDate,filterData } = this.state;
-        const date = new Date().getDate(); // Current Date
-        const month = new Date().getMonth() + 1; // Current Month
-        const year = new Date().getFullYear(); // Current Year
-        const currentdate = `${month}/${date}/${year}`;
+        const { modalVisible ,filterData, optionArray, option } = this.state;// , fromDateValue, toDateValue, errorDate,
+        // const date = new Date().getDate(); // Current Date
+        // const month = new Date().getMonth() + 1; // Current Month
+        // const year = new Date().getFullYear(); // Current Year
+        // const currentdate = `${month}/${date}/${year}`;
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.scrollViewFlex}>
+
                     <View style={styles.moneyTitleView}>
                         <Text style={styles.moneyTitleText}>Money and Assest Movement</Text>
                         <TouchableOpacity onPress={this.setModalVisible(true)}>
                             <GIcon
                                 name="filter"
                                 type="material-community"
-                                size={30}
+                                size={25}
+                                color="#fff"
                             />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.headerView}>
                         {
-                            filterData.map((item, index) => {
+                            filterData.map((item) => {
                                 return (
                                     <View style={styles.fundItemStyle}>
 
@@ -407,111 +481,11 @@ class MoneyAndAssestComponent extends Component {
                     <Modal
                         transparent
                         visible={modalVisible}
-                        onRequestClose={this.setModalVisible(!modalVisible)}>
+                        onRequestClose={this.setModalVisible(!modalVisible)}
+                    >
                         <View style={styles.modalBackgroundView}>
                             <View style={styles.modalContainer}>
-                                <ScrollView>
-                                    <View style={styles.modalTitleView}>
-                                        <Text style={styles.modalTitleText}>
-                                            {globalString.accManagement.filterFunds}
-                                        </Text>
-                                        <TouchableOpacity onPress={this.setModalVisible(!modalVisible)}>
-                                            <GIcon
-                                                name="close"
-                                                type="antdesign"
-                                                size={30}
-                                                color="black"
-                                            />
-                                        </TouchableOpacity>
-                                    </View>
-
-                                    <View style={styles.modalMinCheckBoxContainer}>
-                                        <Text style={styles.modalMinInvestTitleText}>Account</Text>
-                                        {
-                                            accountData.map((item, index) => {
-                                                return (
-                                                    <CustomCheckBox
-                                                        key={item.key}
-                                                        size={20}
-                                                        itemBottom={0}
-                                                        itemTop={0}
-                                                        outerCicleColor="#DEDEDF"
-                                                        innerCicleColor="#61285F"
-                                                        labelStyle={styles.modalCheckBoxLabel}
-                                                        label={item.value}
-                                                        selected={item.isActive}
-                                                        onPress={this.onCheckboxSelect("Account", item, index)}
-                                                    />
-                                                );
-                                            })
-                                        }
-                                    </View>
-
-                                    <View style={styles.modalMinCheckBoxContainer}>
-                                        <Text style={styles.modalMinInvestTitleText}>Fund</Text>
-                                        {
-                                            fundData.map((item, index) => {
-                                                return (
-                                                    <CustomCheckBox
-                                                        key={item.key}
-                                                        size={20}
-                                                        itemBottom={0}
-                                                        itemTop={0}
-                                                        outerCicleColor="#DEDEDF"
-                                                        innerCicleColor="#61285F"
-                                                        labelStyle={styles.modalCheckBoxLabel}
-                                                        label={item.value}
-                                                        selected={item.isActive}
-                                                        onPress={this.onCheckboxSelect("Fund", item, index)}
-                                                    />
-                                                );
-                                            })
-                                        }
-                                    </View>
-
-                                    <View style={styles.modalMinCheckBoxContainer}>
-                                        <Text style={styles.modalMinInvestTitleText}>Amount</Text>
-                                        {
-                                            amountData.map((item, index) => {
-                                                return (
-                                                    <CustomRadio
-                                                        key={item.key}
-                                                        size={20}
-                                                        itemBottom={0}
-                                                        itemTop={0}
-                                                        outerCicleColor="#DEDEDF"
-                                                        innerCicleColor="#61285F"
-                                                        labelStyle={styles.modalCheckBoxLabel}
-                                                        label={item.value}
-                                                        selected={item.isActive}
-                                                        onPress={this.onRadioSelect("Amount", item, index)}
-                                                    />
-                                                );
-                                            })
-                                        }
-                                    </View>
-
-                                    <View style={styles.modalMinCheckBoxContainer}>
-                                        <Text style={styles.modalMinInvestTitleText}>Movement Type</Text>
-                                        {
-                                            movementData.map((item, index) => {
-                                                return (
-                                                    <CustomCheckBox
-                                                        key={item.key}
-                                                        size={20}
-                                                        itemBottom={0}
-                                                        itemTop={0}
-                                                        outerCicleColor="#DEDEDF"
-                                                        innerCicleColor="#61285F"
-                                                        labelStyle={styles.modalCheckBoxLabel}
-                                                        label={item.value}
-                                                        selected={item.isActive}
-                                                        onPress={this.onCheckboxSelect("Movement", item, index)}
-                                                    />
-                                                );
-                                            })
-                                        }
-                                    </View>
+                                {/* 
                                     <View style={styles.modalMinCheckBoxContainer}>
                                         <GDateComponent
                                             dateTitleName={styles.financialTextLabel}
@@ -519,7 +493,7 @@ class MoneyAndAssestComponent extends Component {
                                             minDate={currentdate}
                                             placeholder="MM/DD/YYYY"
                                             date={fromDateValue}
-                                            onDateChange={(date) => this.onChangeDateValue('fromDateValue', date)}
+                                            onDateChange={this.onChangeDateValue('fromDateValue',date)}
                                             errorFlag={errorDate}
                                             errorMsg="Please select a valid date"
                                         />
@@ -531,29 +505,92 @@ class MoneyAndAssestComponent extends Component {
                                             minDate={currentdate}
                                             placeholder="MM/DD/YYYY"
                                             date={toDateValue}
-                                            onDateChange={(date) => this.onChangeDateValue('toDateValue', date)}
+                                            onDateChange={this.onChangeDateValue('toDateValue',date)}
                                             errorFlag={errorDate}
                                             errorMsg="Please select a valid date"
                                         />
                                     </View>
-                                    <View style={styles.modalActionContainer}>
-                                        <GButtonComponent
-                                            buttonStyle={styles.modalClearFilterBtn}
-                                            buttonText={globalString.accManagement.clearFilter}
-                                            textStyle={styles.modalCancelBtnTxt}
-                                        // onPress={this.clearFilterAction}
+                                 */}
+                                <View style={styles.modalTitleView}>
+                                    <TouchableOpacity onPress={this.setModalVisible(!modalVisible)}>
+                                        <GIcon
+                                            name="close"
+                                            type="antdesign"
+                                            size={25}
+                                            color="#486d90"
                                         />
-                                        <GButtonComponent
-                                            buttonStyle={styles.modalApplyFilterBtn}
-                                            buttonText={globalString.accManagement.applyFilter}
-                                            textStyle={styles.modalApplyBtnTxt}
-                                            onPress={this.applyFilterAction(false,true)}
-                                        />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={styles.viewContainer}>
+                                    <View style={styles.leftContainer}>
+                                        {
+                                            filterOptions.map((item) => {
+                                                return (
+                                                    <Text style={item.value === option ? styles.modalMinInvestTitleSelected : styles.modalMinInvestTitleText} 
+                                                        onPress={this.selectedOption(item.value)}
+                                                    >{item.value}
+                                                    </Text>
+                                                );
+                                            })
+                                        }
                                     </View>
-                                </ScrollView>
+                                    <View style={styles.rightContainer}>
+                                        {
+                                            optionArray.map((item, index) => {
+                                                return (
+                                                    option === 'Amount' ? (
+                                                        <CustomRadio
+                                                            key={item.key}
+                                                            size={20}
+                                                            itemBottom={0}
+                                                            itemTop={0}
+                                                            outerCicleColor="#DEDEDF"
+                                                            innerCicleColor="#486d90"
+                                                            labelStyle={styles.modalCheckBoxLabel}
+                                                            label={item.value}
+                                                            selected={item.isActive}
+                                                            onPress={this.onRadioSelect(option, item, index)}
+                                                        />
+                                                    )
+                                                        : (
+                                                            <CustomCheckBox
+                                                                key={item.key}
+                                                                size={20}
+                                                                itemBottom={0}
+                                                                itemTop={0}
+                                                                outerCicleColor="#DEDEDF"
+                                                                innerCicleColor="#486d90"
+                                                                labelStyle={styles.modalCheckBoxLabel}
+                                                                label={item.value}
+                                                                selected={item.isActive}
+                                                                onPress={this.onCheckboxSelect(option, item, index)}
+                                                            />
+                                                        )
+
+                                                );
+                                            })
+                                        }
+                                    </View>
+                                </View>
+                                <View style={styles.modalActionContainer}>
+                                    <GButtonComponent
+                                        buttonStyle={styles.modalClearFilterBtn}
+                                        buttonText={globalString.accManagement.clearFilter}
+                                        textStyle={styles.modalCancelBtnTxt}
+                                        onPress={this.applyFilterAction(true, false)}
+                                    />
+                                    <GButtonComponent
+                                        buttonStyle={styles.modalApplyFilterBtn}
+                                        buttonText={globalString.accManagement.applyFilter}
+                                        textStyle={styles.modalApplyBtnTxt}
+                                        onPress={this.applyFilterAction(false, true)}
+                                    />
+                                </View>
                             </View>
                         </View>
                     </Modal>
+
+
                 </ScrollView>
             </View>
         );

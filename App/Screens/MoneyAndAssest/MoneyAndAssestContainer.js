@@ -5,7 +5,7 @@ import MoneyAndAssestComponent from './MoneyAndAssestComponent';
                                   Redux Methods
                                                              -------------------------- */
 
-const mapStateToProps = (state /* , props */) => (
+const mapStateToProps = ( /* state , props */) => (
   {
    
   }
