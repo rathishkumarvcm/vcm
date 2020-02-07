@@ -57,9 +57,9 @@ export default class Accordian extends Component {
 
     toggleExpand = () => {
         const{expanded}=this.state;
-        const{selectDataIndex,data,title}=this.props;
+        const{selectDataIndex,data,title,index}=this.props;
         this.setState({ expanded: !expanded });
-        selectDataIndex(data, title, title);
+        selectDataIndex(data, title, index);
     }
 
     render() {

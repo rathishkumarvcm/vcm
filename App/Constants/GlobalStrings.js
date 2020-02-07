@@ -168,21 +168,14 @@ export default {
         // manage beneficiearies
         manageBeneficiaries: "Manage Beneficiaries",
         contactUs: "Contact Us",
-        myAccountBeneficiariesInfo: "My Accounts / Beneficiary Information",
         beneficiariesAccount: "The following contracts / accounts are available for you to view and update your beneficiaries. If your contracts / beneficiaries are not shown here please ",
-        traditionalIra: "Traditional IRA",
-        contractNumber: "Contract Number",
-        primaryBeneficiary: "Primary Beneficiary",
-        rothIra: "Roth IRA",
         accumulatedValue: "Accumulated Value",
-        contingentBeneficiary: "Contingent Beneficiary",
         beneficiary_type: "Beneficiary Type",
         registrationOwner: "Registration Owner",
         relationToOwner: "Relationship to Account owner",
         relationToInsured: "Relationship to Insured",
         distribution: "Distribution",
         accBeneficiaryContent: "You may name one or more people or entities as beneficiaries. Learn more",
-        beneficiaryAdd: "Beneficiary Address",
         company: "Company",
         editPrimaryBene: "Edit Primary Beneficiary Information",
         editContingentBene: "Edit Contingent Beneficiary Information",
@@ -212,7 +205,6 @@ export default {
         // manageIntrestedParties
         manageIntrestedParties: "Manage Interested Parties",
         addInterestedParty: "Add Interested Party",
-        statements: "Statements",
         intrestedPartiesAddedSuccessMeg: "Interested Party Added Successfully",
         relationToAccountHolder: "Relationship To Account Holder",
         noOfAccTagged: "Number of Accounts Tagged",
@@ -1438,6 +1430,7 @@ export default {
         marketingPrivacyContent: "Investing involves risk including loss of principal. Victory Mutual Funds and USAA Mutual Funds are distributed by Victory Capital Advisers, Inc. (VCA). VictoryShares ETFs and VictoryShares USAA ETFs are distributed by Foreside Fund Services, LLC (Foreside). VCA and Foreside are members of FINRA and SIPC. Victory Capital Management Inc. (VCM) is the investment adviser to the Victory Mutual Funds, USAA Mutual Funds, VictoryShares ETFs and VictoryShares USAA ETFs. VCA and VCM are not affiliated with Foreside. USAA is not affiliated with Foreside, VCM, or VCA. USAA and the USAA logos are registered trademarks and the USAA Mutual Funds and USAA Investments logos are trademarks of United Services Automobile Association and are being used by Victory Capital and its affiliates under license. Victory Capital means Victory Capital Management Inc., the investment manager of the USAA 529 College Savings Plan (Plan). The Plan is distributed by Victory Capital Advisers, Inc., a broker dealer registered with FINRA and an affiliate of Victory Capital. Victory Capital and its affiliates are not affiliated with United Services Automobile Association or its affiliates. USAA and the USAA logo are registered trademarks and the USAA 529 College Savings Plan logo is a trademark of United Services Automobile Association and are being used by Victory Capital and its affiliates under license."
     },
     purchase: {
+        purchase:"Purchase",
         accountSelection: "Account Selection",
         openAccount: "Open Account",
         accountName: "Account Name",

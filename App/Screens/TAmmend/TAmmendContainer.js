@@ -1,22 +1,23 @@
 import { connect } from "react-redux";
 import TAmmendComponent from './TAmmendComponent';
-import {loginActions,ammendActions} from "../../Shared/Actions";
+import { loginActions, ammendActions, purchaseActions } from "../../Shared/Actions";
 
 
 const mapStateToProps = (state) => (
   {
     loginState: state.loginData,
-    initialState :state.initialAppData,
-    amendReducerData:state.amendReducerData
+    initialState: state.initialAppData,
+    amendReducerData: state.amendReducerData
   }
 );
 
 const mapDispatchToProps = {
   ...loginActions,
-  ...ammendActions
+  ...ammendActions,
+  ...purchaseActions
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(TAmmendComponent);
+  mapStateToProps,
+  mapDispatchToProps
+)(TAmmendComponent);

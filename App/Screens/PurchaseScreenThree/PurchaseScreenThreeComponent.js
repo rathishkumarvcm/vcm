@@ -5,7 +5,7 @@ import { GHeaderComponent, GFooterSettingsComponent, GButtonComponent, GDropDown
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 import { PageNumber } from '../../AppComponents';
-
+import AppUtils from '../../Utils/AppUtils';
 
 const checkOrder = require("../../Images/offlinemethod1.png");
 const wireTransfer = require("../../Images/offlinemethod2.png");
@@ -69,12 +69,17 @@ class PurchaseScreenThreeComponent extends Component {
     }
 
     updateState = () => {
-        const { navigation } = this.props;
-        const flag = `${navigation.getParam('ammend')}`;
-        if (flag) {
-            ammendData = `${navigation.getParam('data')}`;
-            ammendIndex = `${navigation.getParam('index')}`;
-            this.setState({ ammend: flag });
+        const { purchaseData } = this.props;
+        // const flag = `${navigation.getParam('ammend')}`;
+        // if (flag) {
+        //     ammendData = `${navigation.getParam('data')}`;
+        //     ammendIndex = `${navigation.getParam('index')}`;
+        //     this.setState({ ammend: flag });
+        // }
+        if (purchaseData.isAmend) {
+            this.setState({ ammend: true });
+            ammendData = purchaseData.amendObj;
+            ammendIndex = purchaseData.amendIndex;
         }
         if (savedData) {
             if (savedData.selectedFundSourceData) {
@@ -135,29 +140,55 @@ class PurchaseScreenThreeComponent extends Component {
     onClickSave = () => {
         const { navigation, saveData } = this.props;
         const { ammend, fundingSourceName, bankAccountName, fundingMethod, bankAccountNumber, switchOff, selectedContributionData } = this.state;
-        const payloadData = {
-            savePurchaseSelectedData: {
-                ...savedData,
-                "selectedFundSourceData": {
-                    "paymentMode": fundingSourceName,
-                    "bankAccountName": bankAccountName,
-                    "bankAccountNumber": bankAccountNumber,
-                    "fundSourceType": fundingMethod,
-                    "totalInvestment": savedData.selectedFundData.total
-                },
-                "currentSecurities": {
-                    "reinvest": switchOff
-                },
-                "contribution": {
-                    "contribution": selectedContributionData.contribution
-                }
-            }
-        };
-        saveData(payloadData);
+
         if (ammend) {
+            const payloadData = {
+                savePurchaseSelectedData: {
+                    ...savedData,
+                    "selectedFundSourceData": {
+                        "paymentMode": fundingSourceName,
+                        "bankAccountName": bankAccountName,
+                        "bankAccountNumber": bankAccountNumber,
+                        "fundSourceType": fundingMethod,
+                        "totalInvestment": savedData.selectedFundData.total
+                    },
+                    "currentSecurities": {
+                        "reinvest": switchOff
+                    },
+                    "contribution": {
+                        "contribution": selectedContributionData.contribution
+                    }
+                },
+                isAmend: true,
+                amendObj: ammendData,
+                amendIndex: ammendIndex
+            };
+            saveData(payloadData);
             navigation.navigate('purchaseScreenFour', { ammend: true, data: ammendData, index: ammendIndex });
         }
         else {
+            const payloadData = {
+                savePurchaseSelectedData: {
+                    ...savedData,
+                    "selectedFundSourceData": {
+                        "paymentMode": fundingSourceName,
+                        "bankAccountName": bankAccountName,
+                        "bankAccountNumber": bankAccountNumber,
+                        "fundSourceType": fundingMethod,
+                        "totalInvestment": savedData.selectedFundData.total
+                    },
+                    "currentSecurities": {
+                        "reinvest": switchOff
+                    },
+                    "contribution": {
+                        "contribution": selectedContributionData.contribution
+                    }
+                },
+                isAmend: false,
+                amendObj: {},
+                amendIndex: null
+            };
+            saveData(payloadData);
             navigation.navigate('purchaseScreenFour', { ammend: false });
         }
     }
@@ -180,7 +211,7 @@ class PurchaseScreenThreeComponent extends Component {
                 this.onClickSave();
             }
         } catch (err) {
-            // console.log(`Error::: ${err}`);
+            AppUtils.debugLog(err);
         }
 
 

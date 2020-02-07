@@ -19,7 +19,7 @@ export default class TAmmendComponent extends Component {
             selectedValue: '',
             pendingItems: [],
             data: {},
-            showMsg : false,
+            showMsg: false,
         };
     }
 
@@ -50,10 +50,10 @@ export default class TAmmendComponent extends Component {
         // console.log("in component");
         const { getTransactionData } = this.props;
         const payload = {
-                "customerId":"123",
-                "companyNumber": "591",
-                "fundNumber": "330",
-                "accountNumber": "3000000107"
+            "customerId": "123",
+            "companyNumber": "591",
+            "fundNumber": "330",
+            "accountNumber": "3000000107"
         };
         getTransactionData(payload);
         return 0;
@@ -90,17 +90,29 @@ export default class TAmmendComponent extends Component {
 
         const { data, selectedIndex } = this.state;
 
-        const { navigation } = this.props;
+        const { navigation, saveData } = this.props;
         if (data.TransactionType === "Liquidation" || data.TransactionType === "Liquidation Amended") {
             navigation.navigate('LiquidationPageTwo',
                 { index: selectedIndex, data, ammend: true });
         }
         if (data.TransactionType === "Purchase" || data.TransactionType === "Purchase Amended") {
-
+            console.log("amendindex",selectedIndex);
+            const payloadData = {
+                isAmend: true,
+                amendObj: data,
+                amendIndex: selectedIndex
+            };
+            saveData(payloadData);
             navigation.navigate('purchaseScreenTwo',
-                { index: selectedIndex,data, ammend: true });
+                { index: selectedIndex, data, ammend: true });
         }
         if (data.TransactionType === "Exchange" || data.TransactionType === "Exchange Amended") {
+            const payloadData = {
+                isAmend: true,
+                amendObj: data,
+                amendIndex: selectedIndex
+            };
+            saveData(payloadData);
             navigation.navigate('exchangeScreenTwo',
                 { index: selectedIndex, data, ammend: true });
         }
@@ -108,7 +120,7 @@ export default class TAmmendComponent extends Component {
 
     renderAccordians = () => {
         const items = [];
-const {pendingItems} = this.state;
+        const { pendingItems } = this.state;
         for (item of pendingItems) {
             items.push(
                 <Accordian
@@ -130,9 +142,9 @@ const {pendingItems} = this.state;
     notificationView = () => {
         const { navigation } = this.props;
         if (navigation.getParam('amend')) {
-            this.setState({showMsg : true});
+            this.setState({ showMsg: true });
             setTimeout(() => {
-                this.setState({showMsg : false});
+                this.setState({ showMsg: false });
 
             }, 5000);
         }
@@ -141,7 +153,7 @@ const {pendingItems} = this.state;
     render() {
 
         const { navigation } = this.props;
-        const {showMsg} = this.state;
+        const { showMsg } = this.state;
         // const amend = navigation.getParam('amend');
         // console.log("insideamend",navigation.getParam('amend'));
         const orderId = navigation.getParam('orderId');
@@ -196,11 +208,13 @@ const {pendingItems} = this.state;
 TAmmendComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     amendReducerData: PropTypes.instanceOf(Object),
-    getTransactionData: PropTypes.func
+    getTransactionData: PropTypes.func,
+    saveData: PropTypes.func
 };
 
 TAmmendComponent.defaultProps = {
     navigation: {},
     amendReducerData: {},
-    getTransactionData : () => {}
+    getTransactionData: () => { },
+    saveData: () => { }
 };
