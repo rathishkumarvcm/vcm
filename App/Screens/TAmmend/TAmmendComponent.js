@@ -96,7 +96,6 @@ export default class TAmmendComponent extends Component {
                 { index: selectedIndex, data, ammend: true });
         }
         if (data.TransactionType === "Purchase" || data.TransactionType === "Purchase Amended") {
-            console.log("amendindex",selectedIndex);
             const payloadData = {
                 isAmend: true,
                 amendObj: data,
@@ -120,21 +119,37 @@ export default class TAmmendComponent extends Component {
 
     renderAccordians = () => {
         const items = [];
-        const { pendingItems } = this.state;
-        for (item of pendingItems) {
+        const { pendingItems, selectedIndex, selectedTitle, selectedValue } = this.state;
+        const len = pendingItems.length;
+        for (let i = 0; i < len; i += 1) {
+            const item=pendingItems[parseInt(i,10)];
             items.push(
                 <Accordian
                     title={item && item.title}
                     index={item.key}
                     data={item.data}
                     selectDataIndex={this.selectIndex}
-                    selectedIndex={this.state.selectedIndex}
-                    selectedTitle={this.state.selectedTitle}
-                    selectedValue={this.state.selectedValue}
+                    selectedIndex={selectedIndex}
+                    selectedTitle={selectedTitle}
+                    selectedValue={selectedValue}
                     navigate={this.navigatetoFundSelection}
                 />
             );
         }
+        // for (item of pendingItems) {
+        //     items.push(
+        //         <Accordian
+        //             title={item && item.title}
+        //             index={item.key}
+        //             data={item.data}
+        //             selectDataIndex={this.selectIndex}
+        //             selectedIndex={selectedIndex}
+        //             selectedTitle={selectedTitle}
+        //             selectedValue={selectedValue}
+        //             navigate={this.navigatetoFundSelection}
+        //         />
+        //     );
+        // }
         return items;
 
     }

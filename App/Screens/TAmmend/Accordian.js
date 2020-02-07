@@ -204,7 +204,7 @@ Accordian.propTypes = {
     navigate: PropTypes.func,
     data: PropTypes.instanceOf(Object),
     title: PropTypes.instanceOf(Object),
-     // index: PropTypes.instanceOf(Object),
+    index: PropTypes.instanceOf(Object),
     selectedTitle: PropTypes.instanceOf(Object),
     selectedValue: PropTypes.instanceOf(Object)
 };
@@ -213,7 +213,7 @@ Accordian.defaultProps = {
     selectDataIndex: () => { },
     data: {},
     title: {},
-     // index: {},
+    index: {},
     selectedTitle: {},
     selectedValue: {}
 };
