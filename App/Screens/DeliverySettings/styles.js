@@ -404,6 +404,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     switchContainer: {
+        alignSelf:'center',
         marginLeft: '2%',
         marginTop: scaledHeight(6)
     },

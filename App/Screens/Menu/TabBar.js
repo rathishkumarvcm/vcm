@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity, Platform, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
@@ -7,8 +7,11 @@ import { tabMoreActions } from '../../Shared/Actions';
 import { GIcon } from '../../CommonComponents/GIcon';
 
 const S = StyleSheet.create({
-  container: { elevation: 2, flexDirection: 'row', height: 52, },
-  tabButton: { alignItems: 'center', flex: 1, justifyContent: 'center', },
+  container: { alignItems: "center", backgroundColor: 'white', elevation: 2, flexDirection: 'row', height: Platform.OS === "android" ? 52 : 65, },
+  tabButton: {
+    alignItems: 'center', flex: 1, height: "100%", justifyContent: 'center',
+    marginBottom: Platform.OS === "android" ? 0 : 5
+  },
   tabLabelText: { color: "#4F4F4F", fontSize: 10, }
 });
 
@@ -24,17 +27,18 @@ const TabBar = props => {
 
   const showRightModal = () => dispatch(tabMoreActions.setModalVisible(true));
 
-  const onCustomTabPress = (routeN) => onTabPress({ routeN });
+  // const onCustomTabPress = (routeN) => onTabPress({ routeN });
 
   const { routes, index: activeRouteIndex } = navigation.state;
 
   return (
-    <SafeAreaView style={S.container}>
+    <View style={S.container}>
       {routes.map((route, routeIndex) => {
         const isRouteActive = routeIndex === activeRouteIndex;
         const tintColor = isRouteActive ? "skyblue" : "#4F4F4F";
         // console.log(JSON.stringify(route));
         return (
+          // <View style={S.tabButton}>
           <TouchableOpacity
             key={routeIndex}
             style={S.tabButton}
@@ -45,6 +49,7 @@ const TabBar = props => {
 
             <Text style={[S.tabLabelText, { color: tintColor }]}>{getLabelText({ route })} </Text>
           </TouchableOpacity>
+          // </View>
         );
       })}
       <TouchableOpacity
@@ -59,7 +64,7 @@ const TabBar = props => {
         />
         <Text style={S.tabLabelText}>More</Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };
 TabBar.propTypes = {

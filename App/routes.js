@@ -1,7 +1,7 @@
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator, createMaterialTopTabNavigator } from 'react-navigation-tabs';
-import { createDrawerNavigator, DrawerActions } from 'react-navigation-drawer';
+import { createDrawerNavigator } from 'react-navigation-drawer';
 import React from 'react';
 
 import LoginComponent from "./Screens/Login";
@@ -221,8 +221,8 @@ const NotificationTabNavigator = createMaterialTopTabNavigator(
     }
 );
 
-function customTab(props) {
-    return <Tab tabObj={props.object} routeName={props.route} />;
+function customTab(obj) {
+    return <Tab tabObj={obj.object} routeName={obj.route} />;
 }
 
 //  Bottom Tabs
@@ -273,12 +273,6 @@ const DrawerNavigator = createDrawerNavigator({
     initialRouteName: 'Home',
     contentComponent: DrawerComponent,
     drawerWidth: 250,
-    getCustomActionCreators: (route, stateKey) => {
-        console.log('Left: ', stateKey);
-        return {
-            toggleLeftDrawer: () => DrawerActions.toggleDrawer({ key: stateKey })
-        };
-    },
 });
 
 const AppNavigator = createStackNavigator({
@@ -301,7 +295,7 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
-    
+
     // drawerMore: {
     //     screen: MoreDrawerNavigator,
     //     navigationOptions: {
@@ -1131,7 +1125,7 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
-    moneyAndAssest:{
+    moneyAndAssest: {
         screen: MoneyAndAssest,
         navigationOptions: {
             header: null,
