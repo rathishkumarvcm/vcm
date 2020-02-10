@@ -1,17 +1,14 @@
 import { connect } from "react-redux";
 import MoneyAndAssestComponent from './MoneyAndAssestComponent';
+import {moneyAssestActions} from "../../Shared/Actions";
 
-/*----------------------
-                                  Redux Methods
-                                                             -------------------------- */
-
-const mapStateToProps = ( /* state , props */) => (
-  {
-   
+const mapStateToProps = ( state /* , props */) => ({
+      moneyAndAssestProps:state.moneyAndAssestData,
   }
 );
 
 const mapDispatchToProps = {
+  ...moneyAssestActions
 };
 
 export default connect(

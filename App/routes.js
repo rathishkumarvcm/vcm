@@ -178,7 +178,7 @@ import Tab from './Screens/Menu/Tab';
 
 // Dashboard
 import AccountPositions from './Screens/AccountPositions';
-import MoneyAndAssest from './Screens/MoneyAndAssest/MoneyAndAssestComponent';
+import MoneyAndAssest from './Screens/MoneyAndAssest';
 import AccountSummary from './Screens/AccountSummary';
 
 // RMD Calculator

@@ -129,101 +129,40 @@ class MoneyAndAssestComponent extends Component {
             movementDataFilter:[],
             fundDataFiler:[],
             firstTime:true,
-            data: [
-                {
-                    key: '1',
-                    movementType: 'Automatic Withdrawal',
-                    account: 'Individual',
-                    fund: 'USIFX',
-                    fromTo: 'Bank1',
-                    amount: '100',
-                    frequency: 'Semi Annually',
-                    onTheDate: '21',
-                    lastActivity: '21/06/19',
-                    nextActivity: '21/01/20'
-                },
-                {
-                    key: '2',
-                    movementType: 'Automatic Investment',
-                    account: 'Joint',
-                    fund: 'USSPX',
-                    fromTo: 'Bank2',
-                    amount: '50',
-                    frequency: 'Monthly',
-                    onTheDate: '15',
-                    lastActivity: '15/11/19',
-                    nextActivity: '15/12/20'
-                },
-                {
-                    key: '3',
-                    movementType: 'Automatic RMD',
-                    account: 'IRA',
-                    fund: 'USAGX',
-                    fromTo: 'Bank1',
-                    amount: '2000',
-                    frequency: 'Quarterly',
-                    onTheDate: '1',
-                    lastActivity: '01/10/19',
-                    nextActivity: '01/01/20'
-                }
-            ],
-            filterData: [
-                {
-                    key: '1',
-                    movementType: 'Automatic Withdrawal',
-                    account: 'Individual',
-                    fund: 'USIFX',
-                    fromTo: 'Bank1',
-                    amount: '100',
-                    frequency: 'Semi Annually',
-                    onTheDate: '21',
-                    lastActivity: '21/06/19',
-                    nextActivity: '21/01/20'
-                },
-                {
-                    key: '2',
-                    movementType: 'Automatic Investment',
-                    account: 'Joint',
-                    fund: 'USSPX',
-                    fromTo: 'Bank2',
-                    amount: '50',
-                    frequency: 'Monthly',
-                    onTheDate: '15',
-                    lastActivity: '15/11/19',
-                    nextActivity: '15/12/20'
-                },
-                {
-                    key: '3',
-                    movementType: 'Automatic RMD',
-                    account: 'IRA',
-                    fund: 'USAGX',
-                    fromTo: 'Bank1',
-                    amount: '2000',
-                    frequency: 'Quarterly',
-                    onTheDate: '1',
-                    lastActivity: '01/10/19',
-                    nextActivity: '01/01/20'
-                }
-            ],
+            data: [],
+            filterData: [],
         };
     }
 
     static getDerivedStateFromProps(nextProps,prevState){
         const {firstTime} = prevState;
+        const {moneyAndAssestProps} = nextProps;
         if(firstTime)
         {
-            return({
-                accountDataFilter: [...accountData.map(v => ({ ...v, isActive: false }))],
-                amountDataFilter: [...amountData.map(v => ({ ...v, isActive: false }))],
-                fundDataFiler:[...fundData.map(v => ({ ...v, isActive: false }))],
-                movementDataFilter: [...movementData.map(v => ({ ...v, isActive: false }))],
-                optionArray: [...accountData.map(v => ({ ...v, isActive: false }))],
-                option: 'Account',
-                firstTime:false
-            });
+            if(moneyAndAssestProps){
+                return({
+                    data:moneyAndAssestProps.movementList.data,
+                    filterData:moneyAndAssestProps.movementList.data,
+                    accountDataFilter: [...accountData.map(v => ({ ...v, isActive: false }))],
+                    amountDataFilter: [...amountData.map(v => ({ ...v, isActive: false }))],
+                    fundDataFiler:[...fundData.map(v => ({ ...v, isActive: false }))],
+                    movementDataFilter: [...movementData.map(v => ({ ...v, isActive: false }))],
+                    optionArray: [...accountData.map(v => ({ ...v, isActive: false }))],
+                    option: 'Account',
+                    firstTime:false
+                });
+            }
+            
         }
         return null;
       }
+
+      componentDidMount(){
+        const { moneyAndAssestProps,clearMovementData } = this.props;
+        if(Object.keys(moneyAndAssestProps.movementList).length>0){
+            clearMovementData();
+        }
+    }
 
     setModalVisible = (visible) => () => {
         this.setState({ modalVisible: visible });
@@ -619,10 +558,14 @@ class MoneyAndAssestComponent extends Component {
 }
 MoneyAndAssestComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
+    moneyAndAssestProps:PropTypes.instanceOf(Object),
+    clearMovementData:PropTypes.func,
 };
 
 MoneyAndAssestComponent.defaultProps = {
     navigation: {},
+    moneyAndAssestProps:{},
+    clearMovementData:null,
 };
 
 
