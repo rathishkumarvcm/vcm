@@ -163,7 +163,7 @@ class DashboardComponent extends Component {
                             </Text>                       
                         </View>
                     <View style={styles.dashboardItemContainer}>
-                        <Text style={styles.dashboardTileText} onPress={this.onClickAccountSummary}>
+                        <Text style={styles.dashboardTileText} onPress={this.selectTheState}>
                             {gblStrings.dashBoard.accountSummary}
                         </Text>                       
                     </View>

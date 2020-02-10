@@ -96,6 +96,16 @@ const styles = StyleSheet.create({
     },
 });
 
+const modalStyles = StyleSheet.create({
+
+    modalContainerView: {
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        flex: 1,
+        // justifyContent: 'center',
+    }
+});
+
 /** AccountSummaryAccordion Styles */
 
 const accordianStyles = StyleSheet.create({
@@ -115,14 +125,14 @@ const accordianStyles = StyleSheet.create({
         marginRight: scaledWidth(20)
     },
     accordionSectionBalanceView: {
-        flex: 0.33, flexDirection: 'row', justifyContent: 'flex-end'
+        flex: 0.25, flexDirection: 'row', justifyContent: 'flex-end'
     },
     accordionSectionGroupNameText: {
         ...commonStyles.commonText,
         marginLeft: scaledWidth(8),
     },
     accordionSectionGroupNameView: {
-        flex: 0.33, flexDirection: 'row', justifyContent: 'flex-start'
+        flex: 0.45, flexDirection: 'row', justifyContent: 'flex-start'
     },
     accordionSectionHeader: {
         alignItems: 'center',
@@ -139,7 +149,7 @@ const accordianStyles = StyleSheet.create({
         marginRight: scaledWidth(10),
     },
     accordionSectionReturnsView: {
-        flex: 0.34, flexDirection: 'row', justifyContent: 'flex-start'
+        flex: 0.30, flexDirection: 'row', justifyContent: 'flex-start'
     },
     accordionSectionYtdText: {
         ...commonStyles.accordionSectionText,
@@ -218,4 +228,4 @@ const accordianStyles = StyleSheet.create({
 });
 
 
-export { styles, accordianStyles };
+export { styles, accordianStyles, modalStyles };

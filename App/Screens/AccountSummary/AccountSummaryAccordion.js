@@ -176,37 +176,49 @@ export default class AccountSummaryAccordion extends Component {
 
     keyExtractor = (item, index) => (`key ${index}`)
 
-    render() {
-        const { data, expanded } = this.state;
+    accordianSectionHeader = () => {
+
+        const { expanded } = this.state;
         const { title } = this.props;
+
         return (
-            <View>
-                <TouchableOpacity style={accordianStyles.accordionSectionHeader} onPress={this.toggleExpand}>
-                    {
-                        expanded ? (<GIcon name="remove" type="material" size={25} color="#707070" />)
-                            : (<GIcon name="add" type="material" size={25} color="#707070" />)
-                    }
+            <View style={accordianStyles.accordionSectionHeader}>
 
-                    <View style={accordianStyles.accordionSectionGroupNameView}>
+                <View style={accordianStyles.accordionSectionGroupNameView}>
+                    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', }} onPress={this.toggleExpand}>
+                        {
+                            expanded ? (<GIcon name="remove" type="material" size={25} color="#707070" />)
+                                : (<GIcon name="add" type="material" size={25} color="#707070" />)
+                        }
                         <Text style={accordianStyles.accordionSectionGroupNameText} numberOfLines={2}>{title}</Text>
-                    </View>
-                    <View style={accordianStyles.accordionSectionBalanceView}>
-                        <Text style={accordianStyles.accordionSectionBalanceText}>{this.calculateAccountBalance(keys.balance)}</Text>
-                    </View>
-                    <View style={accordianStyles.accordionSectionReturnsView}>
-                        <Text style={accordianStyles.accordionSectionQtdText}>{this.calculateAccountBalance(keys.qtd)}</Text>
-                        <Text style={accordianStyles.accordionSectionYtdText}>{this.calculateAccountBalance(keys.ytd)}</Text>
-                    </View>
-
-                    <GIcon
-                        name="more-vert"
-                        type="material"
-                        size={25}
-                        color="#707070"
-                    />
-
+                    </TouchableOpacity>
+                </View>
+                <View style={accordianStyles.accordionSectionBalanceView}>
+                    <Text style={accordianStyles.accordionSectionBalanceText}>{this.calculateAccountBalance(keys.balance)}</Text>
+                </View>
+                <View style={accordianStyles.accordionSectionReturnsView}>
+                    <Text style={accordianStyles.accordionSectionQtdText}>{this.calculateAccountBalance(keys.qtd)}</Text>
+                    <Text style={accordianStyles.accordionSectionYtdText}>{this.calculateAccountBalance(keys.ytd)}</Text>
+                </View>
+                
+                <TouchableOpacity onPress={this.onClickMenu}>
+                <GIcon
+                    name="more-vert"
+                    type="material"
+                    size={25}
+                    color="#707070"
+                />
                 </TouchableOpacity>
 
+            </View>
+        );
+    }
+
+    render() {
+        const { data, expanded } = this.state;
+        return (
+            <View>
+                {this.accordianSectionHeader()}
                 <View style={accordianStyles.parentHr} />
                 {
                     expanded && (
@@ -221,7 +233,7 @@ export default class AccountSummaryAccordion extends Component {
                             />
                         </View>
                     )
-                }   
+                }
 
                 {/* {
                     showMenu ? (
