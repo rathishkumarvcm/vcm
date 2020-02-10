@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
-import MoneyAndAssestComponent from './MoneyAndAssestComponent';
+import MoneyAndAssetComponent from './MoneyAndAssetComponent';
 import {moneyAssestActions} from "../../Shared/Actions";
 
 const mapStateToProps = ( state /* , props */) => ({
-      moneyAndAssestProps:state.moneyAndAssestData,
+      moneyAndAssetProps:state.moneyAndAssetData,
   }
 );
 
@@ -14,4 +14,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(MoneyAndAssestComponent);
+)(MoneyAndAssetComponent);

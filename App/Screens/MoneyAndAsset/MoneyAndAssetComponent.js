@@ -114,7 +114,7 @@ const movementData = [
     },
 ];
 
-class MoneyAndAssestComponent extends Component {
+class MoneyAndAssetComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -136,13 +136,13 @@ class MoneyAndAssestComponent extends Component {
 
     static getDerivedStateFromProps(nextProps,prevState){
         const {firstTime} = prevState;
-        const {moneyAndAssestProps} = nextProps;
+        const {moneyAndAssetProps} = nextProps;
         if(firstTime)
         {
-            if(moneyAndAssestProps){
+            if(moneyAndAssetProps){
                 return({
-                    data:moneyAndAssestProps.movementList.data,
-                    filterData:moneyAndAssestProps.movementList.data,
+                    data:moneyAndAssetProps.movementList.data,
+                    filterData:moneyAndAssetProps.movementList.data,
                     accountDataFilter: [...accountData.map(v => ({ ...v, isActive: false }))],
                     amountDataFilter: [...amountData.map(v => ({ ...v, isActive: false }))],
                     fundDataFiler:[...fundData.map(v => ({ ...v, isActive: false }))],
@@ -158,8 +158,8 @@ class MoneyAndAssestComponent extends Component {
       }
 
       componentDidMount(){
-        const { moneyAndAssestProps,clearMovementData } = this.props;
-        if(Object.keys(moneyAndAssestProps.movementList).length>0){
+        const { moneyAndAssetProps,clearMovementData } = this.props;
+        if(Object.keys(moneyAndAssetProps.movementList).length>0){
             clearMovementData();
         }
     }
@@ -556,17 +556,17 @@ class MoneyAndAssestComponent extends Component {
         );
     }
 }
-MoneyAndAssestComponent.propTypes = {
+MoneyAndAssetComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    moneyAndAssestProps:PropTypes.instanceOf(Object),
+    moneyAndAssetProps:PropTypes.instanceOf(Object),
     clearMovementData:PropTypes.func,
 };
 
-MoneyAndAssestComponent.defaultProps = {
+MoneyAndAssetComponent.defaultProps = {
     navigation: {},
-    moneyAndAssestProps:{},
+    moneyAndAssetProps:{},
     clearMovementData:null,
 };
 
 
-export default MoneyAndAssestComponent;
+export default MoneyAndAssetComponent;

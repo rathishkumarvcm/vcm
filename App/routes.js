@@ -178,7 +178,7 @@ import Tab from './Screens/Menu/Tab';
 
 // Dashboard
 import AccountPositions from './Screens/AccountPositions';
-import MoneyAndAssest from './Screens/MoneyAndAssest';
+import MoneyAndAsset from './Screens/MoneyAndAsset';
 import AccountSummary from './Screens/AccountSummary';
 
 // RMD Calculator
@@ -1125,8 +1125,8 @@ const AppNavigator = createStackNavigator({
             header: null,
         }
     },
-    moneyAndAssest: {
-        screen: MoneyAndAssest,
+    moneyAndAsset: {
+        screen: MoneyAndAsset,
         navigationOptions: {
             header: null,
         }

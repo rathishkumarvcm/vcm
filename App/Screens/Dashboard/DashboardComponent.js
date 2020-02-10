@@ -133,7 +133,7 @@ class DashboardComponent extends Component {
 
     navigateMoneyAssest = () => {                     
         const {navigation} = this.props;
-        navigation.navigate('moneyAndAssest'); 
+        navigation.navigate('moneyAndAsset'); 
     }
 
     /*----------------------
