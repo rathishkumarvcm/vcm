@@ -79,6 +79,7 @@ class FloatingButtonComponent extends React.Component {
 
     submitToCall = () => {
         if (this.validate) {
+            this.toggleModal();
             console.warn("You can call API!");
         }
     }
@@ -362,7 +363,7 @@ class FloatingButtonComponent extends React.Component {
                                                     maxLength={1000}
                                                 />
 
-                                                <View style={styles.grayBorderContainer}>
+                                                {/* <View style={styles.grayBorderContainer}>
                                                     <GButtonComponent
                                                         buttonStyle={styles.selectFilesBtn}
                                                         buttonText={gblStrings.accManagement.selectFiles}
@@ -380,7 +381,7 @@ class FloatingButtonComponent extends React.Component {
                                                             {gblStrings.common.upload}
                                                         </Text>
                                                     </TouchableOpacity>
-                                                </View>
+                                                </View> */}
                                                 <AttachmentData limit="10" />
                                                 <View style={styles.columnContainer}>
                                                     <GButtonComponent

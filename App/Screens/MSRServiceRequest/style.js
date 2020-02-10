@@ -81,8 +81,9 @@ const styles = StyleSheet.create({
     modalViewSecureMessage: {
         alignSelf: 'center', backgroundColor: 'white',
         elevation: 7,
+        marginVertical:'3%',
         padding: scaledHeight(7),
-        width: '90%'
+        width: '90%',
     },
     modalViewStyle: {
         alignSelf: 'center', backgroundColor: 'white',
@@ -137,6 +138,13 @@ const styles = StyleSheet.create({
         lineHeight: 22,
         textAlign: 'center',
         width: '100%'
+    },
+    previewImage: {
+        flex:0.3,    
+        height: scaledHeight(70),
+        marginHorizontal:scaledHeight(10),
+        marginTop: scaledHeight(20),
+        width: scaledHeight(70),   
     },
     rowContainer: {
         alignItems: 'center', flexDirection: 'row',

@@ -10,16 +10,17 @@ import onlineMethodImg from '../../Images/onlinemethod1.png';
 import styles from './styles';
 import { tabMoreActions } from '../../Shared/Actions';
 import { navigate } from '../../Navigation/navigationService';
+import { setModalVisible } from '../../Shared/Actions/TabMoreAction';
 
 class BaseViewComponent extends React.Component {
   closeModal = () => {
     const { dispatch } = this.props;
-    dispatch(tabMoreActions.setModalVisible(false));
+    dispatch(setModalVisible(false));
   };
 
   navigateToLogout = () => {
     const { dispatch } = this.props;
-    dispatch(tabMoreActions.setModalVisible(false));
+    dispatch(setModalVisible(false));
     navigate('draweriOS');
   }
 
@@ -69,11 +70,13 @@ class BaseViewComponent extends React.Component {
 BaseViewComponent.propTypes = {
   children: PropTypes.node, // children: PropTypes.element.isRequired
   isMoreModalVisible: PropTypes.bool,
+  dispatch: PropTypes.instanceOf(Object)
 };
 
 BaseViewComponent.defaultProps = {
   children: {},
   isMoreModalVisible: false,
+  dispatch: {}
 };
 
 const mapStateToProps = state => {

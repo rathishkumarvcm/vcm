@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import { tabMoreActions } from '../../Shared/Actions';
 import { GIcon } from '../../CommonComponents/GIcon';
+import { setModalVisible } from '../../Shared/Actions/TabMoreAction';
 
 const S = StyleSheet.create({
   container: { alignItems: "center", backgroundColor: 'white', elevation: 2, flexDirection: 'row', height: Platform.OS === "android" ? 52 : 65, },
@@ -25,9 +26,9 @@ const TabBar = props => {
     dispatch
   } = props;
 
-  const showRightModal = () => dispatch(tabMoreActions.setModalVisible(true));
+  const showRightModal = () => dispatch(setModalVisible(true));
 
-  // const onCustomTabPress = (routeN) => onTabPress({ routeN });
+  // const onCustomTabPress = (route) => { return () => (onTabPress({ route })); };
 
   const { routes, index: activeRouteIndex } = navigation.state;
 
@@ -38,18 +39,19 @@ const TabBar = props => {
         const tintColor = isRouteActive ? "skyblue" : "#4F4F4F";
         // console.log(JSON.stringify(route));
         return (
-          // <View style={S.tabButton}>
-          <TouchableOpacity
-            key={routeIndex}
-            style={S.tabButton}
-            onPress={() => onTabPress({ route })}
-            accessibilityLabel={getAccessibilityLabel({ route })}
-          >
-            {renderIcon({ route, focused: isRouteActive, tintColor })}
+          <View style={S.tabButton}>
+            <TouchableOpacity
+              // key={routeIndex}
+              style={S.tabButton}
+              onPress={() => onTabPress({ route })}
+              // onPress={onCustomTabPress}
+              accessibilityLabel={getAccessibilityLabel({ route })}
+            >
+              {renderIcon({ route, focused: isRouteActive, tintColor })}
 
-            <Text style={[S.tabLabelText, { color: tintColor }]}>{getLabelText({ route })} </Text>
-          </TouchableOpacity>
-          // </View>
+              <Text style={[S.tabLabelText, { color: tintColor }]}>{getLabelText({ route })} </Text>
+            </TouchableOpacity>
+          </View>
         );
       })}
       <TouchableOpacity
