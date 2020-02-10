@@ -222,6 +222,10 @@ const styles = StyleSheet.create({
         borderTopWidth:1,
        
     },
+    spaceTopBottom:{
+        marginBottom:scaledHeight(5),
+        marginTop:scaledHeight(5)
+    },
     textBorder:{
         borderBottomWidth:1,
         borderColor:'#C1C1C1',

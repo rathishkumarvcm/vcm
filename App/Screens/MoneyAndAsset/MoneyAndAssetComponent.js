@@ -499,21 +499,7 @@ class MoneyAndAssetComponent extends Component {
                                             optionArray.map((item, index) => {
                                                 return (
                                                     option === 'Amount' ? (
-                                                        <CustomRadio
-                                                            key={item.key}
-                                                            size={20}
-                                                            itemBottom={0}
-                                                            itemTop={0}
-                                                            outerCicleColor="#DEDEDF"
-                                                            innerCicleColor="#486d90"
-                                                            labelStyle={styles.modalCheckBoxLabel}
-                                                            label={item.value}
-                                                            selected={item.isActive}
-                                                            onPress={this.onRadioSelect(option, item, index)}
-                                                        />
-                                                    )
-                                                        : (
-                                                            <CustomCheckBox
+                                                            <CustomRadio
                                                                 key={item.key}
                                                                 size={20}
                                                                 itemBottom={0}
@@ -523,8 +509,24 @@ class MoneyAndAssetComponent extends Component {
                                                                 labelStyle={styles.modalCheckBoxLabel}
                                                                 label={item.value}
                                                                 selected={item.isActive}
-                                                                onPress={this.onCheckboxSelect(option, item, index)}
+                                                                onPress={this.onRadioSelect(option, item, index)}
                                                             />
+                                                    )
+                                                        : (
+                                                            <View style={styles.spaceTopBottom}>
+                                                                <CustomCheckBox
+                                                                    key={item.key}
+                                                                    size={20}
+                                                                    itemBottom={0}
+                                                                    itemTop={0}
+                                                                    outerCicleColor="#DEDEDF"
+                                                                    innerCicleColor="#486d90"
+                                                                    labelStyle={styles.modalCheckBoxLabel}
+                                                                    label={item.value}
+                                                                    selected={item.isActive}
+                                                                    onPress={this.onCheckboxSelect(option, item, index)}
+                                                                />
+                                                            </View>
                                                         )
 
                                                 );
