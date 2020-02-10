@@ -484,6 +484,9 @@ class MoneyAndAssestComponent extends Component {
                         onRequestClose={this.setModalVisible(!modalVisible)}
                     >
                         <View style={styles.modalBackgroundView}>
+                            <TouchableOpacity onPress={this.setModalVisible(!modalVisible)}>
+                                <View style={styles.emptyView} />
+                            </TouchableOpacity>
                             <View style={styles.modalContainer}>
                                 {/* 
                                     <View style={styles.modalMinCheckBoxContainer}>
@@ -512,7 +515,8 @@ class MoneyAndAssestComponent extends Component {
                                     </View>
                                  */}
                                 <View style={styles.modalTitleView}>
-                                    <TouchableOpacity onPress={this.setModalVisible(!modalVisible)}>
+                                    <Text style={styles.modalTitleText}>{globalString.automaticInvestment.filter}</Text>
+                                    <TouchableOpacity onPress={this.setModalVisible(!modalVisible)} style={styles.modalTitleImage}>
                                         <GIcon
                                             name="close"
                                             type="antdesign"
@@ -521,15 +525,18 @@ class MoneyAndAssestComponent extends Component {
                                         />
                                     </TouchableOpacity>
                                 </View>
+                                <View style={styles.seperator_line} />
                                 <View style={styles.viewContainer}>
                                     <View style={styles.leftContainer}>
                                         {
                                             filterOptions.map((item) => {
                                                 return (
+                                                    <View style={item.value === option ?styles.textBorderSelected:styles.textBorder}>
                                                     <Text style={item.value === option ? styles.modalMinInvestTitleSelected : styles.modalMinInvestTitleText} 
                                                         onPress={this.selectedOption(item.value)}
                                                     >{item.value}
                                                     </Text>
+                                                    </View>
                                                 );
                                             })
                                         }
@@ -575,13 +582,13 @@ class MoneyAndAssestComponent extends Component {
                                 <View style={styles.modalActionContainer}>
                                     <GButtonComponent
                                         buttonStyle={styles.modalClearFilterBtn}
-                                        buttonText={globalString.accManagement.clearFilter}
+                                        buttonText={globalString.automaticInvestment.reset}
                                         textStyle={styles.modalCancelBtnTxt}
                                         onPress={this.applyFilterAction(true, false)}
                                     />
                                     <GButtonComponent
                                         buttonStyle={styles.modalApplyFilterBtn}
-                                        buttonText={globalString.accManagement.applyFilter}
+                                        buttonText={globalString.automaticInvestment.apply}
                                         textStyle={styles.modalApplyBtnTxt}
                                         onPress={this.applyFilterAction(false, true)}
                                     />

@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         { marginLeft: scaledHeight(10), 
             marginRight: scaledHeight(10) },
     leftContainer:{
-        marginTop: scaledHeight(18),
+         marginRight: scaledWidth(18),
         width:'40%',
     },
     lineStyle: {
@@ -87,13 +87,16 @@ const styles = StyleSheet.create({
         marginBottom: "4%"
     },
     modalActionContainer: {
-        bottom:20,
+        borderBottomWidth:1,
+        borderColor:'#C1C1C1',
+        borderTopWidth:1,
+        bottom:5,
         flexDirection: 'row',
         position:'absolute',
         width:'100%'
     },
     modalApplyBtnTxt: {
-        color: '#FFFFFF',
+        color:'#486d90',
         fontSize: scaledHeight(18),
         fontWeight: 'bold',
         textAlign: 'center',
@@ -102,18 +105,18 @@ const styles = StyleSheet.create({
     modalApplyFilterBtn: {
         alignContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#486d90',
-        height: scaledHeight(50),
+        backgroundColor: '#fff',
+        // height: scaledHeight(50),
         justifyContent: 'center',
         width: '50%',
     },
     modalBackgroundView: {
         backgroundColor: 'rgba(0,0,0,0.5)',
         height: '100%',
-       
+       flexDirection:'column'
     },
     modalCancelBtnTxt: {
-        color: '#5D83AE',
+        color: '#56565A',
         fontSize: scaledHeight(18),
         fontWeight: 'bold',
         textAlign: 'center',
@@ -134,19 +137,21 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        borderColor:'#486d90',
-        borderWidth:1,
-        height: scaledHeight(50),
+        borderColor:'#C1C1C1',
+        borderRightWidth:1,
         justifyContent: 'center',
+        marginBottom:scaledHeight(12),
         width: '50%',
     },
-
+    emptyView:{
+        height:'50%',
+    },
     modalContainer: {
         backgroundColor: '#FFFFFF',
         bottom:0,
         height:'50%',
         paddingBottom: scaledHeight(15),
-        position:'absolute',
+        // position:'absolute',
         width:'100%',
         
     },
@@ -156,30 +161,38 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(10),
         
     },
-
     modalMinInvestTitleSelected: {
         color: '#486d90',
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
-        marginBottom: scaledHeight(16),
+        marginBottom: scaledHeight(12),
+        marginLeft:scaledWidth(10),
+        marginTop: scaledHeight(12),
     },
-
     modalMinInvestTitleText: {
         color: '#56565A',
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
-        marginBottom: scaledHeight(16),
+        marginBottom: scaledHeight(12),
+        marginLeft:scaledWidth(10),
+        marginTop: scaledHeight(12),
+    },
+
+    modalTitleImage: {
+        width: '20%'
     },
 
     modalTitleText: {
-        color: '#fff',
+        color: '#56565A',
         fontSize: scaledHeight(20),
         fontWeight: 'bold',
-        width: '85%'
+        width: '80%'
     },
     modalTitleView: {
-        alignItems:'flex-end',
-        marginTop:scaledHeight(10),
+        flexDirection:"row",
+        marginBottom:scaledHeight(12),
+        marginLeft:scaledWidth(10),
+        marginTop:scaledHeight(12),
         width:'100%'
     },
     moneyTitleText: {
@@ -204,10 +217,23 @@ const styles = StyleSheet.create({
     scrollViewFlex: {
         flex: 0.85
     },
+    seperator_line:{
+        borderTopColor:'#C1C1C1',
+        borderTopWidth:1,
+       
+    },
+    textBorder:{
+        borderBottomWidth:1,
+        borderColor:'#C1C1C1',
+        borderRightWidth:1,
+        
+    },
+    textBorderSelected:{
+        borderBottomWidth:1,
+        borderColor:'#C1C1C1',
+    },
     viewContainer:{
         flexDirection:'row',
-        paddingLeft: '4%',
-        paddingRight: '4%',
         width:'100%',
     },
 });

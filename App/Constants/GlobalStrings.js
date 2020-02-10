@@ -1122,6 +1122,9 @@ export default {
         three:'3',
         four:'4',
         five:'5',
+        filter:'Filters',
+        reset:'RESET',
+        apply:'APPLY'
     },
     // Systematic Investment Plan
     systematicWithdrawal: {
