@@ -380,6 +380,12 @@ class MoneyAndAssestComponent extends Component {
     //     });
     // }
 
+    setNewMovement =() =>() =>
+    {
+        const { navigation } = this.props;
+        navigation.navigate('accountService');
+    }
+
     selectedOption = (value) => () => {
         const {accountDataFilter,fundDataFiler,amountDataFilter,movementDataFilter} =this.state;
         switch (value) {
@@ -418,6 +424,14 @@ class MoneyAndAssestComponent extends Component {
                         <TouchableOpacity onPress={this.setModalVisible(true)}>
                             <GIcon
                                 name="filter"
+                                type="material-community"
+                                size={25}
+                                color="#fff"
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={this.setNewMovement()}>
+                            <GIcon
+                                name="plus"
                                 type="material-community"
                                 size={25}
                                 color="#fff"

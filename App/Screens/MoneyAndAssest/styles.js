@@ -197,10 +197,10 @@ const styles = StyleSheet.create({
     },
     moneyTitleText: {
         color: "#fff",
-        fontSize: scaledHeight(20),
+        fontSize: scaledHeight(19),
         fontWeight: "bold",
         paddingLeft:scaledWidth(10),
-        width:'85%'
+        width:'80%'
     },
     moneyTitleView: {
         backgroundColor: '#486d90', 
