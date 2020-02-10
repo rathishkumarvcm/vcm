@@ -165,6 +165,11 @@ const styles = StyleSheet.create({
         color: '#56565A',
         fontSize: scaledHeight(20)
     },
+    savedItemsText: {
+        color:'#2C8DBF',
+        fontSize : scaledHeight(14),
+        textDecorationLine:'underline'
+    },
     scrollContentStyle: {
         flexGrow: 1,
         paddingVertical: 0

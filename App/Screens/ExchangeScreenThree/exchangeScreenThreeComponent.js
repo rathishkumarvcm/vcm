@@ -50,7 +50,6 @@ const tempFilterFundData = [
     { key: 'mon_fun', value: 'Money Market Funds' },
 ];
 
-
 let savedData = {};
 let ammendData = {};
 let ammendIndex = 0;
@@ -73,7 +72,6 @@ class ExchangeScreenThreeComponent extends Component {
             applyFilterState: false,
             fundList: [],
             totalInitialInvestment: "",
-            // isFilterApplied: false,
             ammend: false
         };
     }
@@ -83,22 +81,6 @@ class ExchangeScreenThreeComponent extends Component {
         this.updateAmendData();
     }
 
-    // componentDidUpdate(prevProps) {
-    //     if (this.props !== prevProps) {
-    //         const { accOpeningData } = this.props;
-    //         let tempFundListData = [];
-    //         this.updateAmendData();
-    //         if (accOpeningData[ActionTypes.GET_FUNDLIST] !== undefined && accOpeningData[ActionTypes.GET_FUNDLIST].Items !== null) {
-    //             tempFundListData = accOpeningData[ActionTypes.GET_FUNDLIST].Items;
-    //             this.setState({
-    //                 fundList: [...tempFundListData],
-    //                 isFilterApplied: false,
-    //                 isLoading: false
-    //             });
-    //         }
-    //     }
-    // }
-
     componentDidUpdate(prevProps) {
         if (this.props !== prevProps) {
             this.updatePropsChange();
@@ -106,33 +88,16 @@ class ExchangeScreenThreeComponent extends Component {
     }
 
     updatePropsChange = () => {
-        const { purchaseData, navigation } = this.props;
-        const { ammend } = this.state;
+        const { purchaseData } = this.props;
         let tempFundListData = [];
-        if (navigation.getParam('ammend')) {
-            this.setState({ ammend: true });
-            ammendData = navigation.getParam('data');
-            ammendIndex = navigation.getParam('index');
-        }
-        else {
-            this.setState({ ammend: false });
-        }
+        const getFundList = ActionTypes.GET_FUNDLIST;
         this.updateAmendData();
-        if (purchaseData[ActionTypes.GET_FUNDLIST] !== undefined && purchaseData[ActionTypes.GET_FUNDLIST] !== null) {
-            tempFundListData = purchaseData[ActionTypes.GET_FUNDLIST];
+        if (purchaseData[`${getFundList}`] !== undefined && purchaseData[`${getFundList}`] !== null) {
+            tempFundListData = purchaseData[`${getFundList}`];
             this.setState({
                 fundList: [...tempFundListData],
-                // isFilterApplied: false,
                 isLoading: false
             });
-            if (ammend) {
-                tempFundListData.map((item, k) => {
-                    if (item.fundName === ammendData.selectedFundData.fundName) {
-                        this.setState({ selectedFundIndex: k });
-                    }
-                    return 0;
-                });
-            }
         }
     }
 
@@ -169,20 +134,17 @@ class ExchangeScreenThreeComponent extends Component {
             getFunds(fundListPayload);
         }
 
-
         const payload = [];
         const compositePayloadData = [
-            "fund_source",
-            "fund_options",
             "filter_min_inv",
             "filter_fund_type",
             "filter_risk"
         ];
 
         for (let i = 0; i < compositePayloadData.length; i += 1) {
-            const tempkey = compositePayloadData[parseInt(i, 10)];
-            if (this.props && masterLookupStateData && !masterLookupStateData[`${tempkey}`]) {
-                payload.push(tempkey);
+            const tempKey = compositePayloadData[parseInt(i, 10)];
+            if (this.props && masterLookupStateData && !masterLookupStateData[`${tempKey}`]) {
+                payload.push(tempKey);
             }
         }
         getCompositeLookUpData(payload);
@@ -206,28 +168,35 @@ class ExchangeScreenThreeComponent extends Component {
     }
 
     /* ----------------- Filter Events ------------------ */
-    onCheckboxSelect = (type, item, index) => () => {
-        const { filterMinData, filterRiskData, filterFundData } = this.state;
+
+    onCheckboxSelect = (fromtype, item, index) => () => {
+        AppUtils.debugLog('Index : ', index);
+        AppUtils.debugLog('Checkbox Selected : ', `${item.key} ${item.value} ${item.isActive}`);
         let newItm = [];
-        switch (type) {
+        const {
+            filterMinData, filterRiskData, filterFundData
+        } = this.state;
+
+        switch (fromtype) {
             case 'minInvest':
                 newItm = [...filterMinData];
-                newItm[parseInt(index, 0)].isActive = !newItm[parseInt(index, 0)].isActive;
+                newItm[+index].isActive = !newItm[+index].isActive;
                 this.setState({ filterMinData: newItm });
                 break;
             case 'risk':
                 newItm = [...filterRiskData];
-                newItm[parseInt(index, 0)].isActive = !newItm[parseInt(index, 0)].isActive;
+                newItm[+index].isActive = !newItm[+index].isActive;
                 this.setState({ filterRiskData: newItm });
                 break;
             case 'fundType':
                 newItm = [...filterFundData];
-                newItm[parseInt(index, 0)].isActive = !newItm[parseInt(index, 0)].isActive;
+                newItm[+index].isActive = !newItm[+index].isActive;
                 this.setState({ filterFundData: newItm });
                 break;
             default:
                 break;
         }
+        AppUtils.debugLog(`New Item:${JSON.stringify(newItm)}`);
     }
 
 
@@ -290,8 +259,7 @@ class ExchangeScreenThreeComponent extends Component {
         this.setState({
             modalVisible: visible,
             applyFilterState: true,
-            fundList: [],
-            // isFilterApplied: true
+            fundList: []
         });
 
         let minInvestKey = "";
@@ -330,28 +298,15 @@ class ExchangeScreenThreeComponent extends Component {
             return 0;
         });
 
-        const fundListPayload = { 'minInvestment': minInvestKey };
-        getFunds(fundListPayload);
+        const fundListPayload = {
+            'minInvestment': minInvestKey,
+            "companyId": "591",
+        };
+        getFunds(AppUtils.getCleanedPayload(fundListPayload));
     }
 
     navigateCompareFunds = () => {
-        //  AppUtils.debugLog(this.state.selectedFundInvestmentsData);
-        //  if (this.state.selectedFundInvestmentsData.length > 1) {
-        //      if (this.state.selectedFundInvestmentsData.length < 5) {
-        //          let fundSelectedCompare = "";
-        //          this.state.selectedFundInvestmentsData.map((item, index) => {
-        //              fundSelectedCompare = `${fundSelectedCompare.concat(`fundNumber${index + 1}=${item.fundNumber}`)}&`;
-        //          });
-        //          //  AppUtils.debugLog("Selected Funds:"+fundSelectedCompare);
-        //          if (fundSelectedCompare !== null && fundSelectedCompare !== "") {
-        //              this.props.navigation.push('compareFunds', { fundDetails: fundSelectedCompare });
-        //          }
-        //      } else {
-        //          alert('Please select minimum 2 or maximum 4 funds to compare');
-        //      }
-        //  } else {
-        //      alert('Please select minimum 2 or maximum 4 funds to compare');
-        //  }
+
     }
 
     /* -------------------Validation Events ----------------------- */
@@ -473,13 +428,10 @@ class ExchangeScreenThreeComponent extends Component {
     /* ----------------- Fund List Events -------------------------- */
 
     switchMethod = () => {
-        //     const { fundingMethod } = this.state;
-        //     if (fundingMethod === 'Online') {
         this.setState(prevState => ({
             switchOff: !prevState.switchOff,
             switchOn: !prevState.switchOn,
         }));
-        //  }
     }
 
     onPressRemoveInvestment = () => {
@@ -487,7 +439,7 @@ class ExchangeScreenThreeComponent extends Component {
     }
 
     setInputRef = (inputComp) => (ref) => {
-        this[parseInt(inputComp, 0)] = ref;
+        this[`${inputComp}`] = ref;
     }
 
     onChangeIndex = (item, index) => () => {
@@ -617,7 +569,6 @@ class ExchangeScreenThreeComponent extends Component {
                             resizeMode="cover"
                             source={images[item.risk]}
                         />
-
                     </View>
                 </View>
             </View>
@@ -660,15 +611,25 @@ class ExchangeScreenThreeComponent extends Component {
                 {(accOpeningData.isLoading || masterLookupStateData.isLoading || isLoading) && <GLoadingSpinner />}
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
+                    <View style={styles.headerTextView}>
+                        <Text style={styles.titleHeaderTextStyle}>Exchange</Text>
+                        <View style={styles.line} />
+                    </View>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
                     <View style={styles.topContainer}>
-                        <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountName} {ammend ? ammendData.selectedAccountData.accountName : savedData.selectedAccountData.accountName}</Text>
+                        <Text style={styles.topContainerTxtBold}>
+                            {gblStrings.purchase.accountName}
+                            {ammend && ammendData.selectedAccountData && ammendData.selectedAccountData.accountName ? ammendData.selectedAccountData.accountName : ""}
+                            {!ammend && savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountName ? savedData.selectedAccountData.accountName : ""}
+                        </Text>
                         <View style={styles.flexDirectionStyle}>
                             <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountNumber}</Text>
-                            <Text style={styles.topContainerTxtBold}>{ammend ? ammendData.selectedAccountData.accountNumber : savedData.selectedAccountData.accountNumber}</Text>
+                            <Text style={styles.topContainerTxtBold}>
+                                {ammend && ammendData.selectedAccountData && ammendData.selectedAccountData.accountNumber ? ammendData.selectedAccountData.accountNumber : ""}
+                                {!ammend && savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountNumber ? savedData.selectedAccountData.accountNumber : ""}
+                            </Text>
                         </View>
                     </View>
-
 
                     {/* -------------Select VCM Funds ----------------------- */}
 
@@ -856,7 +817,7 @@ class ExchangeScreenThreeComponent extends Component {
                         <View style={styles.line} />
                         <Text style={styles.stmtSmallTextStyle}>You will have to call the MSR for any change to the method, If the user has set up alternate method through MSR.</Text>
                         <Text style={styles.stmtBoldTxtStyle}>Current method</Text>
-                        {/* <Text style={styles.stmtSmallTextStyle}>Average Cost Basis</Text> */}
+                        <Text style={styles.stmtSmallTextStyle}>Average Cost Basis</Text>
                     </View>
 
                     {/* ----------------- Button Group -------------------- */}

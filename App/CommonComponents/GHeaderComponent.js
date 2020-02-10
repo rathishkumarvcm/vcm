@@ -1,15 +1,13 @@
 
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Dimensions, Image, FlatList, Modal } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Image, FlatList, Modal, Platform } from 'react-native';
 import PropTypes from "prop-types";
 import { Auth } from "aws-amplify";
 import RNSecureKeyStore from 'react-native-secure-key-store';
 // { ACCESSIBLE } from 'react-native-secure-key-store';
 import { GIcon } from './GIcon';
 import { scaledHeight, scaledWidth } from '../Utils/Resolution';
-import DrawerIcon from '../Screens/Menu/DrawerIcon';
 
-const { width } = Dimensions.get('window');
 
 const logo = require("../Images/logo.png");
 
@@ -156,7 +154,7 @@ const styles = StyleSheet.create({
   },
   viewContainerOne: {
     width: '12%'
-  }               
+  }
 });
 
 class GHeaderComponent extends Component {
@@ -182,7 +180,7 @@ class GHeaderComponent extends Component {
         SignOut: false
       });
     }, 1000);
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     navigation.navigate('login');
   }
 
@@ -190,60 +188,64 @@ class GHeaderComponent extends Component {
 
     //  For removing key
     RNSecureKeyStore.remove("currentSession")
-      .then((res) => {
-        console.log(res);
-      }, (err) => {
-        console.log(err);
+      .then(() => {
+      }, () => {
       });
 
     RNSecureKeyStore.remove("jwtToken")
-      .then((res) => {
-        console.log(res);
-      }, (err) => {
-        console.log(err);
+      .then(() => {
+      }, () => {
       });
 
     Auth.signOut({ global: true })
-      .then(data => console.log("SigoutSucces", data))
-      .catch(err => console.log(err));
+      .then(() => { })
+      .catch(() => { });
 
   }
 
 
-  headerClicked = () =>{
-    const {navigation} = this.props;
+  headerClicked = () => {
+    const { navigation } = this.props;
     navigation.navigate('login');
   }
 
-  setMenu = () => { 
-    const {menuList} = this.state;
+  setMenu = () => {
+    const { menuList } = this.state;
     this.setState({ menuList: !menuList });
-   }
+  }
 
-  navigateProfile = () =>{
-    const {navigation} = this.props;
+  navigateProfile = () => {
+    const { navigation } = this.props;
     navigation.navigate('profileSettings');
   }
 
-  moveToNotifications = () =>{
-    const {navigation} = this.props;
+  navigateToDrawer = () => {
+    const { navigation } = this.props;
+    if (Platform.OS === 'android')
+      navigation.openDrawer();
+    else
+      navigation.navigate("draweriOS");
+  }
+
+  moveToNotifications = () => {
+    const { navigation } = this.props;
     navigation.navigate('notificationTabs');
-  } 
-  
-  openLeftDrawer = () =>{
-    const {navigation} = this.props;
+  }
+
+  openLeftDrawer = () => {
+    const { navigation } = this.props;
     navigation.navigate('DrawerOpen');
-  } 
+  }
 
   updateDataList = ({ item }) => {
     return (
-<TouchableOpacity
-      style={styles.touchableStyle}
-      onPress={this.newMethod(item)}
->
-      <Text> {item.title} </Text>
-</TouchableOpacity>
-);
+      <TouchableOpacity
+        style={styles.touchableStyle}
+        onPress={this.newMethod(item)}
+      >
+        <Text> {item.title} </Text>
+      </TouchableOpacity>
+    );
   }
 
   newMethod(item) {
@@ -256,16 +258,16 @@ class GHeaderComponent extends Component {
 
       }
       else {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         navigation.navigate(item.naviagteTo);
       }
     };
   }
 
   render() {
-    const {register,registerShow,navigation} = this.props;
-    const {menuList,SignOut,ModalVisibleStatus} = this.state;
-    
+    const { register, registerShow,} = this.props;
+    const { menuList, SignOut, ModalVisibleStatus } = this.state;
+
     return (
       <>
         {register ? (
@@ -340,8 +342,13 @@ class GHeaderComponent extends Component {
                     color="black"
                   />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.navigationTouch}>
-                  <DrawerIcon navigation={navigation} />
+                <TouchableOpacity style={styles.navigationTouch}
+                  onPress={this.navigateToDrawer}
+                >
+                  {(Platform.OS === 'android') ?
+                    (<GIcon name="menu" type="material" size={40} color="black" />)
+                    : <GIcon name="account-circle" type="material" size={40} color="black" />
+                  }
                 </TouchableOpacity>
               </TouchableOpacity>
               {menuList && (
@@ -386,9 +393,9 @@ GHeaderComponent.propTypes = {
 };
 
 GHeaderComponent.defaultProps = {
-  register:false,
+  register: false,
   registerShow: false,
-  navigation:{}
+  navigation: {}
 
 };
 

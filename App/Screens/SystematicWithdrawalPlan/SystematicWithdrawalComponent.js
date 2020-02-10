@@ -41,50 +41,84 @@ class SystematicWithdrawalComponent extends Component {
         };
     }
 
-    componentDidMount() {
-        const { refresh } = this.state;
-        const { systematicWithdrawalState } = this.props;
-        if (systematicWithdrawalState) {
-            if (systematicWithdrawalState.savedAccData) {
-                this.setState({
-                    generalySystematicWithdrawal: systematicWithdrawalState.savedAccData.general,
-                    iraSystematicWithdrawal: systematicWithdrawalState.savedAccData.ira,
-                    utmaSystematicWithdrawal: systematicWithdrawalState.savedAccData.utma,
-                    refresh: !refresh
-                });
-            }
-            else {
-                this.setState({
-                    generalySystematicWithdrawal: systematicWithdrawalState.general,
-                    iraSystematicWithdrawal: systematicWithdrawalState.ira,
-                    utmaSystematicWithdrawal: systematicWithdrawalState.utma,
-                    refresh: !refresh
-                });
-            }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const { refresh } = prevState;
+        const { systematicWithdrawalProps } = nextProps;
+        if(Object.keys(systematicWithdrawalProps.existingPlanList).length>0)
+        {
+            return{
+                
+                generalySystematicWithdrawal: systematicWithdrawalProps.existingPlanList.general,
+                iraSystematicWithdrawal: systematicWithdrawalProps.existingPlanList.ira,
+                utmaSystematicWithdrawal: systematicWithdrawalProps.existingPlanList.utma,
+                refresh: !refresh
+            };
+        }
+        // if (systematicWithdrawalProps.savedAccData && automaticInvestmentState !== systematicWithdrawalProps.savedAccData) {
+        //     return{
+        //         automaticInvestmentState:systematicWithdrawalProps,
+        //          generalySystematicWithdrawal: systematicWithdrawalProps.savedAccData.general,
+        //          iraSystematicWithdrawal: systematicWithdrawalProps.savedAccData.ira,
+        //          utmaSystematicWithdrawal: systematicWithdrawalProps.savedAccData.utma,
+        //          refresh: !refresh
+        //      };
+        //  }
+        return prevState;
+
+    }
+
+    componentDidMount(){
+        const { systematicWithdrawalProps,clearReduxKeyData } = this.props;
+        if(Object.keys(systematicWithdrawalProps.existingPlanList).length>0){
+            clearReduxKeyData();
         }
     }
+
+    // componentDidMount() {
+    //     const { refresh } = this.state;
+    //     const { systematicWithdrawalProps } = this.props;
+    //     if (systematicWithdrawalProps) {
+    //         if (systematicWithdrawalProps.savedAccData) {
+    //             this.setState({
+    //                 generalySystematicWithdrawal: systematicWithdrawalProps.savedAccData.general,
+    //                 iraSystematicWithdrawal: systematicWithdrawalProps.savedAccData.ira,
+    //                 utmaSystematicWithdrawal: systematicWithdrawalProps.savedAccData.utma,
+    //                 refresh: !refresh
+    //             });
+    //         }
+    //         else {
+    //             this.setState({
+    //                 generalySystematicWithdrawal: systematicWithdrawalProps.general,
+    //                 iraSystematicWithdrawal: systematicWithdrawalProps.ira,
+    //                 utmaSystematicWithdrawal: systematicWithdrawalProps.utma,
+    //                 refresh: !refresh
+    //             });
+    //         }
+    //     }
+    // }
  
 
     // componentDidUpdate(prevProps, prevState) {
     //     const{refresh} = this.state;
-    //       const{systematicWithdrawalState}=this.props;
-    //     if (this.props && systematicWithdrawalState) {
-    //         if(systematicWithdrawalState.savedAccData)
+    //       const{systematicWithdrawalProps}=this.props;
+    //     if (this.props && systematicWithdrawalProps) {
+    //         if(systematicWithdrawalProps.savedAccData)
     //         {
-    //             console.log('componentDidMount#####################',systematicWithdrawalState.savedAccData)
+    //             console.log('componentDidMount#####################',systematicWithdrawalProps.savedAccData)
     //             this.setState({
-    //                 generalySystematicWithdrawal: systematicWithdrawalState.savedAccData.general,
-    //                 iraSystematicWithdrawal: systematicWithdrawalState.savedAccData.ira,
-    //                 utmaSystematicWithdrawal:systematicWithdrawalState.savedAccData.utma,
+    //                 generalySystematicWithdrawal: systematicWithdrawalProps.savedAccData.general,
+    //                 iraSystematicWithdrawal: systematicWithdrawalProps.savedAccData.ira,
+    //                 utmaSystematicWithdrawal:systematicWithdrawalProps.savedAccData.utma,
     //                 refresh: !refresh
     //             });
     //         }
     //         // else
     //         // {
     //         //     this.setState({
-    //         //         generalySystematicWithdrawal: systematicWithdrawalState.general,
-    //         //         iraSystematicWithdrawal: systematicWithdrawalState.ira,
-    //         //         utmaSystematicWithdrawal:systematicWithdrawalState.utma,
+    //         //         generalySystematicWithdrawal: systematicWithdrawalProps.general,
+    //         //         iraSystematicWithdrawal: systematicWithdrawalProps.ira,
+    //         //         utmaSystematicWithdrawal:systematicWithdrawalProps.utma,
     //         //         refresh: !refresh
     //         //     });
     //         // }
@@ -346,7 +380,7 @@ class SystematicWithdrawalComponent extends Component {
     }
 
     render() {
-        const { navigation, systematicWithdrawalState } = this.props;
+        const { navigation, systematicWithdrawalProps } = this.props;
         const { generalySystematicWithdrawal, iraSystematicWithdrawal, utmaSystematicWithdrawal, arrExpand, refresh, expand } = this.state;
         return (
             <View style={styles.container}>
@@ -454,7 +488,7 @@ class SystematicWithdrawalComponent extends Component {
                                     </View>
                                 ) : null}
 
-                                {systematicWithdrawalState.utma ? (
+                                {systematicWithdrawalProps.utma ? (
                                     <View>
                                         <TouchableOpacity style={styles.touchOpacityPosition} onPress={this.setCollapsableUpdates(2)}>
                                         <View style={styles.expandView}>
@@ -542,12 +576,14 @@ class SystematicWithdrawalComponent extends Component {
 SystematicWithdrawalComponent.propTypes = {
 
     navigation: PropTypes.instanceOf(Object),
-    systematicWithdrawalState: PropTypes.instanceOf(Object),
+    systematicWithdrawalProps: PropTypes.instanceOf(Object),
+    clearReduxKeyData: PropTypes.func,
 };
 
 SystematicWithdrawalComponent.defaultProps = {
     navigation: {},
-    systematicWithdrawalState: {}
+    systematicWithdrawalProps: {},
+    clearReduxKeyData: null,
 };
 
 export default SystematicWithdrawalComponent;

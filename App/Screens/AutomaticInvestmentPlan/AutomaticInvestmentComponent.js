@@ -28,7 +28,7 @@ class AutomaticInvestmentComponent extends Component {
         this.showDeletePopup = false;
         this.selectedIndex = -1;
         this.state = {
-
+            
             expand: false,
             generalAutoInvestment: {},
             iraAutoInvestment: {},
@@ -41,53 +41,94 @@ class AutomaticInvestmentComponent extends Component {
         };
     }
 
-    componentDidMount() {
-        const { refresh } = this.state;
-        const { automaticInvestmentProps } = this.props;
-        if (automaticInvestmentProps) {
-            if (automaticInvestmentProps.savedAccData) {
-                this.setState({
-                    generalAutoInvestment: automaticInvestmentProps.savedAccData.general,
-                    iraAutoInvestment: automaticInvestmentProps.savedAccData.ira,
-                    utmaAutoInvest: automaticInvestmentProps.savedAccData.utma,
-                    refresh: !refresh
-                });
-            }
-            else {
-                this.setState({
-                    generalAutoInvestment: automaticInvestmentProps.general,
-                    iraAutoInvestment: automaticInvestmentProps.ira,
-                    utmaAutoInvest: automaticInvestmentProps.utma,
-                    refresh: !refresh
-                });
-            }
+    // componentDidMount() {
+    //     const { refresh } = this.state;
+    //     const { automaticInvestmentProps } = this.props;
+    //     if (automaticInvestmentProps) {
+    //         if (automaticInvestmentProps.savedAccData) {
+    //             this.setState({
+    //                 generalAutoInvestment: automaticInvestmentProps.savedAccData.general,
+    //                 iraAutoInvestment: automaticInvestmentProps.savedAccData.ira,
+    //                 utmaAutoInvest: automaticInvestmentProps.savedAccData.utma,
+    //                 refresh: !refresh
+    //             });
+    //         }
+    //         else {
+    //             this.setState({
+    //                 generalAutoInvestment: automaticInvestmentProps.general,
+    //                 iraAutoInvestment: automaticInvestmentProps.ira,
+    //                 utmaAutoInvest: automaticInvestmentProps.utma,
+    //                 refresh: !refresh
+    //             });
+    //         }
+    //     }
+    // }
+
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const { refresh } = prevState;
+        const { automaticInvestmentProps } = nextProps;
+        if(Object.keys(automaticInvestmentProps.existingPlanList).length>0)
+        {
+            return{
+                
+                generalAutoInvestment: automaticInvestmentProps.existingPlanList.general,
+                iraAutoInvestment: automaticInvestmentProps.existingPlanList.ira,
+                utmaAutoInvest: automaticInvestmentProps.existingPlanList.utma,
+                refresh: !refresh
+            };
+        }
+        // if (automaticInvestmentProps.savedAccData && automaticInvestmentState !== automaticInvestmentProps.savedAccData) {
+        //     return{
+        //         automaticInvestmentState:automaticInvestmentProps,
+        //          generalAutoInvestment: automaticInvestmentProps.savedAccData.general,
+        //          iraAutoInvestment: automaticInvestmentProps.savedAccData.ira,
+        //          utmaAutoInvest: automaticInvestmentProps.savedAccData.utma,
+        //          refresh: !refresh
+        //      };
+        //  }
+        return prevState;
+
+    }
+
+    componentDidMount(){
+        const { automaticInvestmentProps,clearReduxKeyData } = this.props;
+        if(Object.keys(automaticInvestmentProps.existingPlanList).length>0){
+            clearReduxKeyData();
         }
     }
 
-    componentDidUpdate(prevProps) {
-        const { refresh } = this.state;
-        const { automaticInvestmentProps } = this.props;
-        if (this.props !== prevProps) {
-            if (automaticInvestmentProps) {
-                if (automaticInvestmentProps.savedAccData) {
-                    this.setState({
-                        generalAutoInvestment: automaticInvestmentProps.savedAccData.general,
-                        iraAutoInvestment: automaticInvestmentProps.savedAccData.ira,
-                        utmaAutoInvest: automaticInvestmentProps.savedAccData.utma,
-                        refresh: !refresh
-                    });
-                }
-                else {
-                    this.setState({
-                        generalAutoInvestment: automaticInvestmentProps.general,
-                        iraAutoInvestment: automaticInvestmentProps.ira,
-                        utmaAutoInvest: automaticInvestmentProps.utma,
-                        refresh: !refresh
-                    });
-                }
-            }
-        }
-    }
+    // componentDidUpdate(prevProps) {
+    //     const { automaticInvestmentProps,clearReduxKeyData } = this.props;
+    //     if(Object.keys(automaticInvestmentProps.existingPlanList).length>0){
+    //         clearReduxKeyData("existingPlanList",{});
+    //     }
+    // }
+
+
+    // componentDidUpdate(prevProps) {
+    //     const { refresh } = this.state;
+    //     const { automaticInvestmentProps } = this.props;
+    //     if (this.props !== prevProps) {
+    //         if (automaticInvestmentProps) {
+    //             if (automaticInvestmentProps.savedAccData) {
+    //                 this.setState({
+    //                     generalAutoInvestment: automaticInvestmentProps.savedAccData.general,
+    //                     iraAutoInvestment: automaticInvestmentProps.savedAccData.ira,
+    //                     utmaAutoInvest: automaticInvestmentProps.savedAccData.utma,
+    //                     refresh: !refresh
+    //                 });
+    //             }
+    //             else {
+    //                 this.setState({
+    //                     generalAutoInvestment: automaticInvestmentProps.general,
+    //                     iraAutoInvestment: automaticInvestmentProps.ira,
+    //                     utmaAutoInvest: automaticInvestmentProps.utma,
+    //                     refresh: !refresh
+    //                 });
+    //             }
+    //         }
+    //     }
+    // }
 
     getNumberWithOrdinal = (n) => {
         const s=["th","st","nd","rd"];
@@ -584,12 +625,14 @@ AutomaticInvestmentComponent.propTypes = {
 
     navigation: PropTypes.instanceOf(Object),
     automaticInvestmentProps: PropTypes.instanceOf(Object),
+    clearReduxKeyData: PropTypes.func,
     // deleteAutoInvestPlan:PropTypes.func,
 };
 
 AutomaticInvestmentComponent.defaultProps = {
     navigation: {},
     automaticInvestmentProps: {},
+    clearReduxKeyData: null,
     // deleteAutoInvestPlan:null,
 };
 

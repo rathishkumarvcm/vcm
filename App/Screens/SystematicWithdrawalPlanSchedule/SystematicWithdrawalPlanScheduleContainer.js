@@ -4,7 +4,7 @@ import SystematicWithdrawalPlanScheduleComponent from './SystematicWithdrawalPla
 
 
 const mapStateToProps = (state) => ({
-      systematicWithdrawalState:state.systematicWithdrawalData,
+      systematicWithdrawalProps:state.systematicWithdrawalData,
     }
   );
 

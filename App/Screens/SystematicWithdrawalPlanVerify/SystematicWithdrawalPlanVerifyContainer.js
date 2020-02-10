@@ -5,7 +5,7 @@ import SystematicWithdrawalPlanVerifyComponent from './SystematicWithdrawalPlanV
 
 const mapStateToProps = (state /* , props */) => (
     {
-      systematicWithdrawalState:state.systematicWithdrawalData,
+      systematicWithdrawalProps:state.systematicWithdrawalData,
     }
   );
 

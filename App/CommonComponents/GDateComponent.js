@@ -98,6 +98,7 @@ return(
                 placeholderText: dateTextStyle
             }}
             onDateChange={onDateChange}
+            is24Hour={false}
         />
         {errorFlag ? (
 <View style={styles.errorSection}>

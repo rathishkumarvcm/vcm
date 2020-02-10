@@ -341,7 +341,7 @@ class PurchaseScreenOneComponent extends Component {
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <View style={styles.headerTextView}>
-                        <Text style={styles.titleHeaderTextStyle}>Purchase</Text>
+                        <Text style={styles.titleHeaderTextStyle}>{gblStrings.purchase.purchase}</Text>
                         <View style={styles.line} />
                     </View>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />

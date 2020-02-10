@@ -30,14 +30,14 @@ const convertToDeviceResolution = function (dp) {
     //  let deviceResolution = PixelRatio.get();
 
     // Multiply the given value with current device resolution.
-    let currentValue = PixelRatio.getPixelSizeForLayoutSize(dp);//  * deviceResolution;
+    const currentValue = PixelRatio.getPixelSizeForLayoutSize(dp);//  * deviceResolution;
 
     return currentValue;
 };
 
 const scale = size => {
-    let mdpi = size / 3;
-    let cal = PixelRatio.get() * mdpi;
+    const mdpi = size / 3;
+    const cal = PixelRatio.get() * mdpi;
     return cal;
 };
 
@@ -48,8 +48,8 @@ const scaledHeight = size => {
 
 
     //  alert('Size '+ size+" baseSize "+baseSize+" calSizeRatio "+calSizeRatio+" calSize "+calSize)
-    let isString = "" + size;
-    let index = isString.indexOf("%");
+    const isString = `${ size}`;
+    const index = isString.indexOf("%");
     let heightRatio = 0;
     if (index === -1) {
         //  alert('not a string index '+index)
@@ -58,22 +58,22 @@ const scaledHeight = size => {
         //  alert('string index '+index)
         heightRatio = isString;
     }
-    let calHeight = heightPercentageToDP("" + heightRatio); // (height*heightRatio)/100
+    const calHeight = heightPercentageToDP(`${ heightRatio}`); // (height*heightRatio)/100
     //  console.log(calHeight)
     return calHeight;
 };
 
 const scaledWidth = size => {
     //  alert(PixelRatio.get())
-    let isString = "" + size;
-    let index = isString.indexOf("%");
+    const isString = `${ size}`;
+    const index = isString.indexOf("%");
     let widthRatio = 0;
     if (index === -1) {
         widthRatio = (size * 100) / 374;
     } else {
         widthRatio = size;
     }
-    let calWidth = widthPercentageToDP("" + widthRatio); // (width*widthRatio)/100
+    const calWidth = widthPercentageToDP(`${ widthRatio}`); // (width*widthRatio)/100
 
     return calWidth;
 };

@@ -71,7 +71,7 @@ GPagination.propTypes = {
     horizontal: PropTypes.bool,
     ListHeaderComponent: PropTypes.func,
     ListFooterComponent: PropTypes.func,
-    onScroll: PropTypes.onScroll,
+    onScroll: PropTypes.func,
     updateFlatList: PropTypes.func,
    // keyExtractor: PropTypes.func,
     data: PropTypes.instanceOf(Array),
@@ -91,7 +91,8 @@ GPagination.defaultProps = {
     horizontal: false,
     onScroll: null,
     updateFlatList:() => { },
-    pageNumber:0
+    pageNumber:0,
+    data : ""
 
 
 };

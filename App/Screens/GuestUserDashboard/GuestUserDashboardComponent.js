@@ -12,6 +12,7 @@ import gblStrings from '../../Constants/GlobalStrings';
 import GuestUserAccounts from './GuestUesrAccounts';
 import GuestUserFinancial from './GuestUserFinancial';
 import GuestUserCommunicationCenter from './GuestUserCommunicationCenter';
+// import GuestUserSavedItems from './GuestUserSavedItems';
 // import AppUtils from '../../Utils/AppUtils';
 // import GuestUserNewsAndCommentary from './GuestUserNewsAndCommentary';
 
@@ -21,6 +22,7 @@ class GuestUserDashboardComponent extends Component {
         //  set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
             newsData: [],
+            savedItemsData: [],
             // memberId: '',
             // modalVisible:true,
             // idToken:'',
@@ -34,12 +36,14 @@ class GuestUserDashboardComponent extends Component {
                                                                  -------------------------- */
     componentDidMount() {
         this.props.newsAndCommentaryActions();
+        this.props.savedItemsActions();
 
     }
 
     static getDerivedStateFromProps(nextProps) {  
         return {
-            newsData: nextProps.newsData.newsAndCommentary
+            newsData: nextProps.newsData.newsAndCommentary,
+            savedItemsData: nextProps.savedItemsData.savedItems,
         };
     }
 
@@ -67,11 +71,11 @@ class GuestUserDashboardComponent extends Component {
  
         if (Platform.OS === 'android') {
         // eslint-disable-next-line no-template-curly-in-string
-        phoneNumber = 'tel:${+ 1 466 210 0255}';
+        phoneNumber = 'tel:+ 1 466 210 0255';
         }
         else {
         // eslint-disable-next-line no-template-curly-in-string
-        phoneNumber = "telprompt:${+ 1 466 210 0255}";
+        phoneNumber = 'telprompt:${+ 1 466 210 0255}';
         }
     
         Linking.openURL(phoneNumber);
@@ -97,11 +101,19 @@ class GuestUserDashboardComponent extends Component {
     getKey = (item) => item.id
 
     renderNewsList = ({ item }) => (
-            <TouchableOpacity style={styles.newsListView}>
-                <Text style={styles.newsListText}>
-                    {item.id}) {item.title}
-                </Text>
-            </TouchableOpacity>
+        <TouchableOpacity style={styles.newsListView}>
+            <Text style={styles.newsListText}>
+                {item.id}) {item.title}
+            </Text>
+        </TouchableOpacity>
+    )
+
+    renderSavedItems = ({ item }) => (
+        <TouchableOpacity style={styles.newsListView}>
+            <Text style={styles.savedItemsText}>
+                {item.id}) {item.title}
+            </Text>
+        </TouchableOpacity>
     )
 
     /*----------------------
@@ -110,7 +122,7 @@ class GuestUserDashboardComponent extends Component {
     render() {
         const { navigation} = this.props;
         // const {getParam} = navigation;  
-        const {newsData} = this.state;
+        const {newsData,savedItemsData} = this.state;
         
         // const specialMFAUserType = `${ this.props && getParam('SpecialMFA','')}`; 
         return (
@@ -119,15 +131,29 @@ class GuestUserDashboardComponent extends Component {
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.scrollView}>  
-                        <TextTicker
-                            style={styles.bannerText}
-                            duration={10000}
-                            loop
-                            bounce
-                            repeatSpacer={0}
-                            marqueeDelay={0}
-                        >Lorem Ipsum has been the industrys standard dummy text ever since the 1500s
-                        </TextTicker>
+                    <TextTicker
+                        style={styles.bannerText}
+                        duration={10000}
+                        loop
+                        bounce
+                        repeatSpacer={0}
+                        marqueeDelay={0}
+                    >Lorem Ipsum has been the industrys standard dummy text ever since the 1500s
+                    </TextTicker>
+                    <View style={styles.tileView}>
+                        <View style={styles.profileHeader}>
+                            <Text style={styles.profileHeadline}>
+                                {gblStrings.guestDashBoard.savedItems}
+                            </Text>
+                        </View>
+                        <View style={styles.dashboardSection}>
+                            <FlatList
+                                data={savedItemsData}
+                                keyExtractor={this.getKey}
+                                renderItem={this.renderSavedItems}
+                            />
+                        </View>
+                    </View>
                     <View style={styles.tileView}>
                         <View style={styles.profileHeader}>
                             <Text style={styles.profileHeadline}>
@@ -176,7 +202,6 @@ class GuestUserDashboardComponent extends Component {
                              onPressCall={this.onPressCall} 
                             />
                         </View>
-                        
                     </View>
                     
                 </ScrollView>

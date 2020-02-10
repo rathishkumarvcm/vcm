@@ -66,10 +66,69 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
         };
     }
 
+    static getDerivedStateFromProps(nextProps,preState) {
+        const { systematicWithdrawalProps } = nextProps;
+        const{ itemToEdit, accountType }=preState;
+        // for (let i = 1; i <= 30; i+=1) {
+        //     dateJson.push({ "id": i.toString(), "value": i.toString() });
+        // }
+        // const date = new Date().getFullYear();
+        // for (let i = date; i <= (date + 30); i+=1) {
+        //     yearJson.push({ "id": i.toString(), "value": i.toString() });
+
+        // }
+        // for (let i = 1; i <= 12; i+=1) {
+        //     monthJson.push({ "id": i.toString(), "value": i.toString() });
+        // }
+
+        const itemEdit = itemToEdit;
+        if (itemEdit > -1) {
+            if (systematicWithdrawalProps) {
+                switch (accountType) {
+                    case 'General':
+                        return({
+                            systematicWithdrawalJson: systematicWithdrawalProps.general[Number(itemEdit)],
+                            valueTypeDropDown: systematicWithdrawalProps.general[Number(itemEdit)].invest,
+                            valueDateDropDown: systematicWithdrawalProps.general[Number(itemEdit)].dateToInvest,
+                            valueDateBeginDropDown: systematicWithdrawalProps.general[Number(itemEdit)].dateFromInvest,
+                            valueStartYearDropDown: systematicWithdrawalProps.general[Number(itemEdit)].startYear,
+                            valueStartMonthDropDown: systematicWithdrawalProps.general[Number(itemEdit)].startDate,
+                            selectedFrequency: typeJson.findIndex(obj => obj.value === systematicWithdrawalProps.general[Number(itemEdit)].invest)
+                        });
+                       
+                    case 'Ira':
+                        return({
+                            systematicWithdrawalJson: systematicWithdrawalProps.ira[Number(itemEdit)],
+                            valueTypeDropDown: systematicWithdrawalProps.ira[Number(itemEdit)].invest,
+                            valueDateDropDown: systematicWithdrawalProps.ira[Number(itemEdit)].dateToInvest,
+                            valueDateBeginDropDown: systematicWithdrawalProps.ira[Number(itemEdit)].dateFromInvest,
+                            valueStartYearDropDown: systematicWithdrawalProps.ira[Number(itemEdit)].startYear,
+                            valueStartMonthDropDown: systematicWithdrawalProps.ira[Number(itemEdit)].startDate,
+                            selectedFrequency: typeJson.findIndex(obj => obj.value === systematicWithdrawalProps.ira[Number(itemEdit)].invest)
+                        });
+                        
+                    case 'Utma':
+                       return({
+                            systematicWithdrawalJson: systematicWithdrawalProps.utma[Number(itemEdit)],
+                            valueTypeDropDown: systematicWithdrawalProps.utma[Number(itemEdit)].invest,
+                            valueDateDropDown: systematicWithdrawalProps.utma[Number(itemEdit)].dateToInvest,
+                            valueDateBeginDropDown: systematicWithdrawalProps.utma[Number(itemEdit)].dateFromInvest,
+                            valueStartYearDropDown: systematicWithdrawalProps.utma[Number(itemEdit)].startYear,
+                            valueStartMonthDropDown: systematicWithdrawalProps.utma[Number(itemEdit)].startDate,
+                            selectedFrequency: typeJson.findIndex(obj => obj.value === systematicWithdrawalProps.utma[Number(itemEdit)].invest)
+                        });
+                        
+                    default:
+                        break;
+                }
+            }
+        }
+        return null;
+    }
 
     componentDidMount() {
-        const { systematicWithdrawalState } = this.props;
-        const{ itemToEdit, accountType }=this.state;
+        // const { systematicWithdrawalProps } = this.props;
+        // const{ itemToEdit, accountType }=this.state;
         for (let i = 1; i <= 30; i+=1) {
             dateJson.push({ "id": i.toString(), "value": i.toString() });
         }
@@ -83,48 +142,48 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
         }
 
 
-        const itemEdit = itemToEdit;
-        if (itemEdit > -1) {
-            if (this.props && systematicWithdrawalState) {
-                switch (accountType) {
-                    case 'General':
-                        this.setState({
-                            systematicWithdrawalJson: systematicWithdrawalState.general[Number(itemEdit)],
-                            valueTypeDropDown: systematicWithdrawalState.general[Number(itemEdit)].invest,
-                            valueDateDropDown: systematicWithdrawalState.general[Number(itemEdit)].dateToInvest,
-                            valueDateBeginDropDown: systematicWithdrawalState.general[Number(itemEdit)].dateFromInvest,
-                            valueStartYearDropDown: systematicWithdrawalState.general[Number(itemEdit)].startYear,
-                            valueStartMonthDropDown: systematicWithdrawalState.general[Number(itemEdit)].startDate,
-                            selectedFrequency: typeJson.findIndex(obj => obj.value === systematicWithdrawalState.general[Number(itemEdit)].invest)
-                        });
-                        break;
-                    case 'Ira':
-                        this.setState({
-                            systematicWithdrawalJson: systematicWithdrawalState.ira[Number(itemEdit)],
-                            valueTypeDropDown: systematicWithdrawalState.ira[Number(itemEdit)].invest,
-                            valueDateDropDown: systematicWithdrawalState.ira[Number(itemEdit)].dateToInvest,
-                            valueDateBeginDropDown: systematicWithdrawalState.ira[Number(itemEdit)].dateFromInvest,
-                            valueStartYearDropDown: systematicWithdrawalState.ira[Number(itemEdit)].startYear,
-                            valueStartMonthDropDown: systematicWithdrawalState.ira[Number(itemEdit)].startDate,
-                            selectedFrequency: typeJson.findIndex(obj => obj.value === systematicWithdrawalState.ira[Number(itemEdit)].invest)
-                        });
-                        break;
-                    case 'Utma':
-                        this.setState({
-                            systematicWithdrawalJson: systematicWithdrawalState.utma[Number(itemEdit)],
-                            valueTypeDropDown: systematicWithdrawalState.utma[Number(itemEdit)].invest,
-                            valueDateDropDown: systematicWithdrawalState.utma[Number(itemEdit)].dateToInvest,
-                            valueDateBeginDropDown: systematicWithdrawalState.utma[Number(itemEdit)].dateFromInvest,
-                            valueStartYearDropDown: systematicWithdrawalState.utma[Number(itemEdit)].startYear,
-                            valueStartMonthDropDown: systematicWithdrawalState.utma[Number(itemEdit)].startDate,
-                            selectedFrequency: typeJson.findIndex(obj => obj.value === systematicWithdrawalState.utma[Number(itemEdit)].invest)
-                        });
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
+        // const itemEdit = itemToEdit;
+        // if (itemEdit > -1) {
+        //     if (this.props && systematicWithdrawalProps) {
+        //         switch (accountType) {
+        //             case 'General':
+        //                 this.setState({
+        //                     systematicWithdrawalJson: systematicWithdrawalProps.general[Number(itemEdit)],
+        //                     valueTypeDropDown: systematicWithdrawalProps.general[Number(itemEdit)].invest,
+        //                     valueDateDropDown: systematicWithdrawalProps.general[Number(itemEdit)].dateToInvest,
+        //                     valueDateBeginDropDown: systematicWithdrawalProps.general[Number(itemEdit)].dateFromInvest,
+        //                     valueStartYearDropDown: systematicWithdrawalProps.general[Number(itemEdit)].startYear,
+        //                     valueStartMonthDropDown: systematicWithdrawalProps.general[Number(itemEdit)].startDate,
+        //                     selectedFrequency: typeJson.findIndex(obj => obj.value === systematicWithdrawalProps.general[Number(itemEdit)].invest)
+        //                 });
+        //                 break;
+        //             case 'Ira':
+        //                 this.setState({
+        //                     systematicWithdrawalJson: systematicWithdrawalProps.ira[Number(itemEdit)],
+        //                     valueTypeDropDown: systematicWithdrawalProps.ira[Number(itemEdit)].invest,
+        //                     valueDateDropDown: systematicWithdrawalProps.ira[Number(itemEdit)].dateToInvest,
+        //                     valueDateBeginDropDown: systematicWithdrawalProps.ira[Number(itemEdit)].dateFromInvest,
+        //                     valueStartYearDropDown: systematicWithdrawalProps.ira[Number(itemEdit)].startYear,
+        //                     valueStartMonthDropDown: systematicWithdrawalProps.ira[Number(itemEdit)].startDate,
+        //                     selectedFrequency: typeJson.findIndex(obj => obj.value === systematicWithdrawalProps.ira[Number(itemEdit)].invest)
+        //                 });
+        //                 break;
+        //             case 'Utma':
+        //                 this.setState({
+        //                     systematicWithdrawalJson: systematicWithdrawalProps.utma[Number(itemEdit)],
+        //                     valueTypeDropDown: systematicWithdrawalProps.utma[Number(itemEdit)].invest,
+        //                     valueDateDropDown: systematicWithdrawalProps.utma[Number(itemEdit)].dateToInvest,
+        //                     valueDateBeginDropDown: systematicWithdrawalProps.utma[Number(itemEdit)].dateFromInvest,
+        //                     valueStartYearDropDown: systematicWithdrawalProps.utma[Number(itemEdit)].startYear,
+        //                     valueStartMonthDropDown: systematicWithdrawalProps.utma[Number(itemEdit)].startDate,
+        //                     selectedFrequency: typeJson.findIndex(obj => obj.value === systematicWithdrawalProps.utma[Number(itemEdit)].invest)
+        //                 });
+        //                 break;
+        //             default:
+        //                 break;
+        //         }
+        //     }
+        // }
     }
 
     selectTheType = () => {
@@ -501,12 +560,12 @@ class SystematicWithdrawalPlanScheduleComponent extends Component {
 SystematicWithdrawalPlanScheduleComponent.propTypes = {
 
     navigation: PropTypes.instanceOf(Object),
-    systematicWithdrawalState: PropTypes.instanceOf(Object),
+    systematicWithdrawalProps: PropTypes.instanceOf(Object),
 };
 
 SystematicWithdrawalPlanScheduleComponent.defaultProps = {
     navigation: {},
-    systematicWithdrawalState: {}
+    systematicWithdrawalProps: {}
 };
 
 export default SystematicWithdrawalPlanScheduleComponent;

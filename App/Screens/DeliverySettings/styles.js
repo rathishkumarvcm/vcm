@@ -3,6 +3,7 @@ import { scaledHeight} from '../../Utils/Resolution';
 
 const styles = StyleSheet.create({
     callPreferenceContainer: {
+        backgroundColor:'#FFFFFF',
         borderColor: '#B7B7B7',
         borderWidth: 0.8,
         marginLeft: '4%',
@@ -10,7 +11,7 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(30),
         paddingBottom: scaledHeight(25),
         paddingLeft: '4%',
-        paddingRight: '4%',
+        paddingRight: '4%'
     },
     callPreferenceTitle: {
         color: '#56565A',
@@ -53,6 +54,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#F7FAFF',
         flex: 1,
         width: '100%'
+    },
+    dateContainer:{
+        paddingHorizontal:'2%'
+    },
+    dropDownLayoutStyle:{
+        marginLeft:'2%',
+        marginRight:'2%',       
+        marginTop:scaledHeight(4)
     },
     emailEditText: {
         color: '#0000FF',
@@ -117,6 +126,19 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: scaledHeight(20),
         marginTop: scaledHeight(7)
+    },
+    lblTxt: {
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginTop: scaledHeight(10)
+    },
+    lblTxtDropDown: {
+        color: 'rgba(51, 51, 51, 0.87)',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginBottom:scaledHeight(10),
+        marginTop: scaledHeight(10)
     },
     lineBorder: {
         borderColor: '#DEDEDF',
@@ -251,7 +273,7 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(20),
     },
     preferenceSectionTxt: {
-        color: '#228AE5',
+        color: '#56565A',
         fontSize: scaledHeight(14),
         fontWeight: 'bold',
         marginLeft: '4%',
@@ -315,12 +337,16 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(3),
         width: '86%'
     },
-    quietTimeContainer: {
-        alignContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row',
+    quietTimeContainer: {      
+        backgroundColor:'#FFFFFF',
+        borderColor: '#B7B7B7',       
+        borderWidth: 0.8,
         marginLeft: '4%',
-        marginTop: scaledHeight(10)
+        marginRight: '4%',
+        marginTop: scaledHeight(10),
+        paddingBottom: scaledHeight(25),
+        paddingHorizontal: '4%',
+        paddingVertical: scaledHeight(20)
     },
     quietTimeText: {
         color: '#56565A',
@@ -330,9 +356,20 @@ const styles = StyleSheet.create({
     },
     quietTimeTextDelay: {
         color: '#707070',
-        fontSize: scaledHeight(16),
-        marginLeft: '16%',
-        marginRight: '10%',
+        fontSize: scaledHeight(16),   
+        paddingVertical: scaledHeight(10)    
+    },
+    quietTimeTitleFlex:
+    {
+        flexDirection:'row',
+        width:'80%'
+    },
+    quietTimeflexContainer:{
+        flexDirection:'row',
+        marginBottom:scaledHeight(10)
+    },
+    quietTimeflexDirection:{
+        flexDirection:'row'
     },
     readMoreText: {
         color: '#228AE5',
@@ -403,8 +440,7 @@ const styles = StyleSheet.create({
         paddingRight: '4%',
         width: '100%',
     },
-    switchContainer: {
-        alignSelf:'center',
+    switchContainer: {       
         marginLeft: '2%',
         marginTop: scaledHeight(6)
     },
@@ -412,6 +448,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginLeft: '2%',
         marginTop: scaledHeight(35),
+    },
+    timeZoneLabel: { 
+        color: '#333333DE',
+        fontSize: scaledHeight(14),
+        fontWeight: 'bold',
+        marginBottom:scaledHeight(8) 
     },
     touchOpacity: {
         width: '10%'

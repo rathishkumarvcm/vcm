@@ -28,62 +28,100 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
         };
     }
 
-    componentDidMount() {
-        const{automaticInvestmentState}=this.props;
-        const{skip,accountType,indexSelected}=this.state;
+    static getDerivedStateFromProps(nextProps,preState) {
+        const{automaticInvestmentProps}=nextProps;
+        const{skip,accountType,indexSelected}=preState;
         let payload = {};
         if (skip) {
-            if (this.props && automaticInvestmentState) {
+            if (automaticInvestmentProps) {
                 switch(accountType.toLowerCase())
                 {
                     case 'general':
                         payload = {
-                            ...automaticInvestmentState.general
+                            ...automaticInvestmentProps.general
                         };
                         break;
                     case 'ira':
                         payload = {
-                            ...automaticInvestmentState.ira
+                            ...automaticInvestmentProps.ira
                         };
                         break;
                     case 'utma':
                         payload = {
-                            ...automaticInvestmentState.utma
+                            ...automaticInvestmentProps.utma
                         };
                         break;
                         default:
                             break;
                 }
-                this.setState({
+                return({
                     autoInvestmentJson: payload[Number(indexSelected)],
                 });
             }
         }
         else {
-            this.setState({ autoInvestmentJson: myInstance.getSavedAutomaticData() });
+            return({ autoInvestmentJson: myInstance.getSavedAutomaticData() });
             
         }
-
+        return null;
     }
 
+    // componentDidMount() {
+    //     const{automaticInvestmentProps}=this.props;
+    //     const{skip,accountType,indexSelected}=this.state;
+    //     let payload = {};
+    //     if (skip) {
+    //         if (this.props && automaticInvestmentProps) {
+    //             switch(accountType.toLowerCase())
+    //             {
+    //                 case 'general':
+    //                     payload = {
+    //                         ...automaticInvestmentProps.general
+    //                     };
+    //                     break;
+    //                 case 'ira':
+    //                     payload = {
+    //                         ...automaticInvestmentProps.ira
+    //                     };
+    //                     break;
+    //                 case 'utma':
+    //                     payload = {
+    //                         ...automaticInvestmentProps.utma
+    //                     };
+    //                     break;
+    //                     default:
+    //                         break;
+    //             }
+    //             this.setState({
+    //                 autoInvestmentJson: payload[Number(indexSelected)],
+    //             });
+    //         }
+    //     }
+    //     else {
+    //         this.setState({ autoInvestmentJson: myInstance.getSavedAutomaticData() });
+            
+    //     }
+
+    // }
+
     componentDidUpdate(){
-        const{navigation,automaticInvestmentState} = this.props;
+        const{navigation,automaticInvestmentProps} = this.props;
         // const{dateFromValue,dateToValue} =this.state;
         // const skipRespKey = ActionTypes.SKIP_INVEST_WITHDRAW_PLAN;
 
-        if(automaticInvestmentState.isSuccess)
+        if(automaticInvestmentProps.isSuccess)
         {
             navigation.goBack();
             // navigation.goBack('automaticInvestmentPlan',{'dateFromValue':dateFromValue,'dateToValue':dateToValue});
         }
-        else if(automaticInvestmentState.isError)
+        else if(automaticInvestmentProps.isError)
         {
-            // console.log(automaticInvestmentState[`${skipRespKey}`]);
+            // console.log(automaticInvestmentProps[`${skipRespKey}`]);
         }
 
-            // if (automaticInvestmentState[skipRespKey]) {
-            //     //if (automaticInvestmentState[skipRespKey] !== prevProps.automaticInvestmentState[skipRespKey]) {
-            //         const tempResponse = automaticInvestmentState[skipRespKey];
+            // if (automaticInvestmentProps[skipRespKey]) {
+            //     //if (automaticInvestmentProps[skipRespKey] !== prevProps.automaticInvestmentProps[skipRespKey]) {
+            //         const tempResponse = automaticInvestmentProps[skipRespKey];
             //         if (tempResponse.statusCode === 200 || tempResponse.statusCode === '200') {
             //             const msg = `${tempResponse.message}`;
             //             AppUtils.debugLog(`Account Skipped ::: :: ${msg}`);
@@ -116,11 +154,11 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
 
     getPayload = () => {
 
-        const{automaticInvestmentState}=this.props;
+        const{automaticInvestmentProps}=this.props;
         let payload = {};
-        if (this.props && automaticInvestmentState && automaticInvestmentState.savedAccData) {
+        if (this.props && automaticInvestmentProps && automaticInvestmentProps.savedAccData) {
             payload = {
-                ...automaticInvestmentState.savedAccData
+                ...automaticInvestmentProps.savedAccData
             };
         }
         return payload;
@@ -377,13 +415,13 @@ class AutomaticInvestmentPlanVerifyComponent extends Component {
 AutomaticInvestmentPlanVerifyComponent.propTypes = {
 
     navigation: PropTypes.instanceOf(Object),
-    automaticInvestmentState: PropTypes.instanceOf(Object),
+    automaticInvestmentProps: PropTypes.instanceOf(Object),
     skipAutoInvestPlan:PropTypes.func,
 };
 
 AutomaticInvestmentPlanVerifyComponent.defaultProps = {
     navigation:{},
-    automaticInvestmentState:{},
+    automaticInvestmentProps:{},
     skipAutoInvestPlan:{},
 };
 

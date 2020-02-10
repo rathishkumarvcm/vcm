@@ -55,22 +55,74 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
             accName:`${navigation.getParam('accName')}`,
             accNumber:`${navigation.getParam('accNumber')}`,
             accountType:`${navigation.getParam('accountType')}`,
+            
             ...automaticSchedule
         };
     }
 
-    componentDidMount() {
-        for(let i=1; i<=30; i += 1) {
-            dateJson.push({"id":i.toString(),"value": i.toString()});
-         }
-         const{automaticInvestmentState}=this.props;
-         const{accountType,itemToEdit}=this.state;
+
+    // static getDerivedStateFromProps(nextProps, prevState) {
+    //     const{accountType,itemToEdit} = prevState;
+    //     const{automaticInvestmentState} = nextProps;
+        
+    //     if (itemToEdit > -1) {
+    //         if (automaticInvestmentState) {
+    //             switch(accountType)
+    //             {
+    //                 case 'General':
+    //                     return({
+    //                         autoInvestmentAddAmountJson: automaticInvestmentState.general[Number(itemToEdit)],
+    //                         valueTypeDropDown: automaticInvestmentState.general[Number(itemToEdit)].invest,
+    //                         valueDateDropDown: automaticInvestmentState.general[Number(itemToEdit)].dateToInvest.replace('th', '').trim(),
+    //                         valueEndDropDown: automaticInvestmentState.general[Number(itemToEdit)].ending,
+    //                         customDateValue:automaticInvestmentState.general[Number(itemToEdit)].ending==='Custom'?
+    //                                         automaticInvestmentState.general[Number(itemToEdit)].endDate:null
+    //                     });
+                        
+    //                 case 'Ira':
+    //                     return({
+    //                         autoInvestmentAddAmountJson: automaticInvestmentState.ira[Number(itemToEdit)],
+    //                         valueTypeDropDown: automaticInvestmentState.ira[Number(itemToEdit)].invest,
+    //                         valueDateDropDown: automaticInvestmentState.ira[Number(itemToEdit)].dateToInvest.replace('th', '').trim(),
+    //                         valueEndDropDown: automaticInvestmentState.ira[Number(itemToEdit)].ending,
+    //                         customDateValue:automaticInvestmentState.ira[Number(itemToEdit)].ending==='Custom'?
+    //                                         automaticInvestmentState.ira[Number(itemToEdit)].endDate:null
+    //                     });
+                        
+    //                 case 'Utma':
+    //                     return({
+    //                         autoInvestmentAddAmountJson: automaticInvestmentState.utma[Number(itemToEdit)],
+    //                         valueTypeDropDown: automaticInvestmentState.utma[Number(itemToEdit)].invest,
+    //                         valueDateDropDown: automaticInvestmentState.utma[Number(itemToEdit)].dateToInvest.replace('th', '').trim(),
+    //                         valueEndDropDown: automaticInvestmentState.utma[Number(itemToEdit)].ending,
+    //                         customDateValue:automaticInvestmentState.utma[Number(itemToEdit)].ending==='Custom'?
+    //                                         automaticInvestmentState.utma[Number(itemToEdit)].endDate:null
+    //                     });
+                       
+    //                 default:
+    //                     break;
+    //             }
+                
+    //         }
+    //     }
+    //     return prevState;
+
+    // }
+
+    // componentDidUpdate(preProps,preState){
+    //     const{automaticInvestmentState} = preProps;
+
+
+    // }
+    static getDerivedStateFromProps(nextProps,preState) {
+        const{automaticInvestmentState}=nextProps;
+         const{accountType,itemToEdit}=preState;
         if (itemToEdit > -1) {
-            if (this.props && automaticInvestmentState) {
+            if (automaticInvestmentState) {
                 switch(accountType)
                 {
                     case 'General':
-                        this.setState({
+                        return({
                             autoInvestmentAddAmountJson: automaticInvestmentState.general[Number(itemToEdit)],
                             valueTypeDropDown: automaticInvestmentState.general[Number(itemToEdit)].invest,
                             valueDateDropDown: automaticInvestmentState.general[Number(itemToEdit)].dateToInvest.replace('th', '').trim(),
@@ -78,9 +130,9 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                             customDateValue:automaticInvestmentState.general[Number(itemToEdit)].ending==='Custom'?
                                             automaticInvestmentState.general[Number(itemToEdit)].endDate:null
                         });
-                        break;
+                        
                     case 'Ira':
-                        this.setState({
+                        return({
                             autoInvestmentAddAmountJson: automaticInvestmentState.ira[Number(itemToEdit)],
                             valueTypeDropDown: automaticInvestmentState.ira[Number(itemToEdit)].invest,
                             valueDateDropDown: automaticInvestmentState.ira[Number(itemToEdit)].dateToInvest.replace('th', '').trim(),
@@ -88,9 +140,9 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                             customDateValue:automaticInvestmentState.ira[Number(itemToEdit)].ending==='Custom'?
                                             automaticInvestmentState.ira[Number(itemToEdit)].endDate:null
                         });
-                        break;
+                        
                     case 'Utma':
-                        this.setState({
+                        return({
                             autoInvestmentAddAmountJson: automaticInvestmentState.utma[Number(itemToEdit)],
                             valueTypeDropDown: automaticInvestmentState.utma[Number(itemToEdit)].invest,
                             valueDateDropDown: automaticInvestmentState.utma[Number(itemToEdit)].dateToInvest.replace('th', '').trim(),
@@ -98,13 +150,62 @@ class AutomaticInvestmentPlanScheduleComponent extends Component {
                             customDateValue:automaticInvestmentState.utma[Number(itemToEdit)].ending==='Custom'?
                                             automaticInvestmentState.utma[Number(itemToEdit)].endDate:null
                         });
-                        break;
+                        
                     default:
                         break;
                 }
                 
             }
         }
+        return null;
+    }
+
+    componentDidMount() {
+        for(let i=1; i<=30; i += 1) {
+            dateJson.push({"id":i.toString(),"value": i.toString()});
+         }
+        //  const{automaticInvestmentState}=this.props;
+        //  const{accountType,itemToEdit}=this.state;
+        // if (itemToEdit > -1) {
+        //     if (this.props && automaticInvestmentState) {
+        //         switch(accountType)
+        //         {
+        //             case 'General':
+        //                 this.setState({
+        //                     autoInvestmentAddAmountJson: automaticInvestmentState.general[Number(itemToEdit)],
+        //                     valueTypeDropDown: automaticInvestmentState.general[Number(itemToEdit)].invest,
+        //                     valueDateDropDown: automaticInvestmentState.general[Number(itemToEdit)].dateToInvest.replace('th', '').trim(),
+        //                     valueEndDropDown: automaticInvestmentState.general[Number(itemToEdit)].ending,
+        //                     customDateValue:automaticInvestmentState.general[Number(itemToEdit)].ending==='Custom'?
+        //                                     automaticInvestmentState.general[Number(itemToEdit)].endDate:null
+        //                 });
+        //                 break;
+        //             case 'Ira':
+        //                 this.setState({
+        //                     autoInvestmentAddAmountJson: automaticInvestmentState.ira[Number(itemToEdit)],
+        //                     valueTypeDropDown: automaticInvestmentState.ira[Number(itemToEdit)].invest,
+        //                     valueDateDropDown: automaticInvestmentState.ira[Number(itemToEdit)].dateToInvest.replace('th', '').trim(),
+        //                     valueEndDropDown: automaticInvestmentState.ira[Number(itemToEdit)].ending,
+        //                     customDateValue:automaticInvestmentState.ira[Number(itemToEdit)].ending==='Custom'?
+        //                                     automaticInvestmentState.ira[Number(itemToEdit)].endDate:null
+        //                 });
+        //                 break;
+        //             case 'Utma':
+        //                 this.setState({
+        //                     autoInvestmentAddAmountJson: automaticInvestmentState.utma[Number(itemToEdit)],
+        //                     valueTypeDropDown: automaticInvestmentState.utma[Number(itemToEdit)].invest,
+        //                     valueDateDropDown: automaticInvestmentState.utma[Number(itemToEdit)].dateToInvest.replace('th', '').trim(),
+        //                     valueEndDropDown: automaticInvestmentState.utma[Number(itemToEdit)].ending,
+        //                     customDateValue:automaticInvestmentState.utma[Number(itemToEdit)].ending==='Custom'?
+        //                                     automaticInvestmentState.utma[Number(itemToEdit)].endDate:null
+        //                 });
+        //                 break;
+        //             default:
+        //                 break;
+        //         }
+                
+        //     }
+        // }
     }
 
     getPayload = () => {

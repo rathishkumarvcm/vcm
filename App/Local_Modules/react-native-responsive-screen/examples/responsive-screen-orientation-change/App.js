@@ -20,18 +20,18 @@ export default class App extends React.Component {
   render() {
     const styles = StyleSheet.create({
       container: {
-        flex: 1,
-        backgroundColor: 'gray',
         alignItems: 'center',
+        backgroundColor: 'gray',
+        flex: 1,
         justifyContent: 'center',
       },
       responsiveBox: {
-        width: widthPercentageToDP('84.5%'),
-        height: heightPercentageToDP('17%'),
-        borderWidth: 2,
         borderColor: 'orange',
+        borderWidth: 2,
         flexDirection: 'column',
-        justifyContent: 'space-around' 
+        height: heightPercentageToDP('17%'),
+        justifyContent: 'space-around',
+        width: widthPercentageToDP('84.5%') 
       },
       text: {
         color: 'white'

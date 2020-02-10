@@ -87,15 +87,12 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     getLookUpData = () => {
-        const { navigation, getFunds, masterLookupStateData, getCompositeLookUpData } = this.props;
+        const { purchaseData, getFunds, masterLookupStateData, getCompositeLookUpData } = this.props;
         const { fundList } = this.state;
-        if (navigation.getParam('ammend')) {
-            ammendData = navigation.getParam('data');
-            ammendIndex = navigation.getParam('index');
+        if (purchaseData.isAmend) {
             this.setState({ ammend: true });
-        }
-        else {
-            this.setState({ ammend: false });
+            ammendData = purchaseData.amendObj;
+            ammendIndex = purchaseData.amendIndex;
         }
 
         this.setState({ isLoading: true });
@@ -108,42 +105,44 @@ class PurchaseScreenTwoComponent extends Component {
 
         const payload = [];
         const compositePayloadData = [
-            "fund_source",
-            "fund_options",
             "filter_min_inv",
             "filter_fund_type",
             "filter_risk"
         ];
 
         for (let i = 0; i < compositePayloadData.length; i += 1) {
-            const tempkey = compositePayloadData[parseInt(i, 0)];
-            if (this.props && masterLookupStateData && !masterLookupStateData[tempkey.toString()]) {
-                payload.push(tempkey);
+            const tempKey = compositePayloadData[parseInt(i, 0)];
+            if (this.props && masterLookupStateData && !masterLookupStateData[tempKey.toString()]) {
+                payload.push(tempKey);
             }
         }
         getCompositeLookUpData(payload);
     }
 
     updatePropsChange = () => {
-        const { purchaseData, navigation } = this.props;
+        const { purchaseData } = this.props;
 
         const { ammend } = this.state;
         let tempFundListData = [];
 
-        if (navigation.getParam('ammend')) {
+        if (purchaseData.isAmend) {
             this.setState({ ammend: true });
-            ammendData = navigation.getParam('data');
-            ammendIndex = navigation.getParam('index');
+            ammendData = purchaseData.amendObj;
+            ammendIndex = purchaseData.amendIndex;
         }
-        else {
-            this.setState({ ammend: false });
-        }
-
-        if (purchaseData[ActionTypes.GET_FUNDLIST] !== undefined && purchaseData[ActionTypes.GET_FUNDLIST] !== null) {
-            tempFundListData = purchaseData[ActionTypes.GET_FUNDLIST];
+        // if (navigation.getParam('ammend')) {
+        //     this.setState({ ammend: true });
+        //     ammendData = navigation.getParam('data');
+        //     ammendIndex = navigation.getParam('index');
+        // }
+        // else {
+        //     this.setState({ ammend: false });
+        // }
+        const getFundList = ActionTypes.GET_FUNDLIST;
+        if (purchaseData[`${getFundList}`] !== undefined && purchaseData[`${getFundList}`] !== null) {
+            tempFundListData = purchaseData[`${getFundList}`];
             this.setState({
                 fundList: [...tempFundListData],
-                // isFilterApplied: false,
                 isLoading: false
             });
             if (ammend) {
@@ -176,28 +175,34 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     /* ----------------- Filter Events ------------------ */
-    onCheckboxSelect = (type, item, index) => () => {
-        const { filterMinData, filterRiskData, filterFundData } = this.state;
+    onCheckboxSelect = (fromType, item, index) => () => {
+        AppUtils.debugLog('Index : ', index);
+        AppUtils.debugLog('Checkbox Selected : ', `${item.key} ${item.value} ${item.isActive}`);
         let newItm = [];
-        switch (type) {
+        const {
+            filterMinData, filterRiskData, filterFundData
+        } = this.state;
+
+        switch (fromType) {
             case 'minInvest':
                 newItm = [...filterMinData];
-                newItm[parseInt(index, 0)].isActive = !newItm[parseInt(index, 0)].isActive;
+                newItm[+index].isActive = !newItm[+index].isActive;
                 this.setState({ filterMinData: newItm });
                 break;
             case 'risk':
                 newItm = [...filterRiskData];
-                newItm[parseInt(index, 0)].isActive = !newItm[parseInt(index, 0)].isActive;
+                newItm[+index].isActive = !newItm[+index].isActive;
                 this.setState({ filterRiskData: newItm });
                 break;
             case 'fundType':
                 newItm = [...filterFundData];
-                newItm[parseInt(index, 0)].isActive = !newItm[parseInt(index, 0)].isActive;
+                newItm[+index].isActive = !newItm[+index].isActive;
                 this.setState({ filterFundData: newItm });
                 break;
             default:
                 break;
         }
+        AppUtils.debugLog(`New Item:${JSON.stringify(newItm)}`);
     }
 
     setModalVisible = (visible) => () => {
@@ -234,16 +239,16 @@ class PurchaseScreenTwoComponent extends Component {
         let tempRiskData = [];
         let tempFundTypeData = [];
 
-        if (tempKeyMinInv !== "" && this.props && masterLookupStateData && masterLookupStateData[tempKeyMinInv.toString()] && masterLookupStateData[tempKeyMinInv.toString()].value) {
-            tempMinInvData = masterLookupStateData[tempKeyMinInv.toString()].value;
+        if (tempKeyMinInv !== "" && this.props && masterLookupStateData && masterLookupStateData[`${tempKeyMinInv}`] && masterLookupStateData[`${tempKeyMinInv}`].value) {
+            tempMinInvData = masterLookupStateData[`${tempKeyMinInv}`].value;
         }
 
-        if (tempKeyRisk !== "" && this.props && masterLookupStateData && masterLookupStateData[tempKeyRisk.toString()] && masterLookupStateData[tempKeyRisk.toString()].value) {
-            tempRiskData = masterLookupStateData[tempKeyRisk.toString()].value;
+        if (tempKeyRisk !== "" && this.props && masterLookupStateData && masterLookupStateData[`${tempKeyRisk}`] && masterLookupStateData[`${tempKeyRisk}`].value) {
+            tempRiskData = masterLookupStateData[`${tempKeyRisk}`].value;
         }
 
-        if (tempKeyFundType !== "" && this.props && masterLookupStateData && masterLookupStateData[tempKeyFundType.toString()] && masterLookupStateData[tempKeyFundType.toString()].value) {
-            tempFundTypeData = masterLookupStateData[tempKeyFundType.toString()].value;
+        if (tempKeyFundType !== "" && this.props && masterLookupStateData && masterLookupStateData[`${tempKeyFundType}`] && masterLookupStateData[`${tempKeyFundType}`].value) {
+            tempFundTypeData = masterLookupStateData[`${tempKeyFundType}`].value;
         }
 
         this.setState({
@@ -259,8 +264,7 @@ class PurchaseScreenTwoComponent extends Component {
         this.setState({
             modalVisible: visible,
             applyFilterState: true,
-            fundList: [],
-            // isFilterApplied: true
+            fundList: []
         });
 
         let minInvestKey = "";
@@ -299,28 +303,14 @@ class PurchaseScreenTwoComponent extends Component {
             return 0;
         });
 
-        const fundListPayload = { 'minInvestment': minInvestKey };
-        getFunds(fundListPayload);
+        const fundListPayload = {
+            'minInvestment': minInvestKey,
+            "companyId": "591",
+        };
+        getFunds(AppUtils.getCleanedPayload(fundListPayload));
     }
 
     navigateCompareFunds = () => {
-        //  AppUtils.debugLog(this.state.selectedFundInvestmentsData);
-        //  if (this.state.selectedFundInvestmentsData.length > 1) {
-        //      if (this.state.selectedFundInvestmentsData.length < 5) {
-        //          let fundSelectedCompare = "";
-        //          this.state.selectedFundInvestmentsData.map((item, index) => {
-        //              fundSelectedCompare = `${fundSelectedCompare.concat(`fundNumber${index + 1}=${item.fundNumber}`)}&`;
-        //          });
-        //          //  AppUtils.debugLog("Selected Funds:"+fundSelectedCompare);
-        //          if (fundSelectedCompare !== null && fundSelectedCompare !== "") {
-        //              this.props.navigation.push('compareFunds', { fundDetails: fundSelectedCompare });
-        //          }
-        //      } else {
-        //          alert('Please select minimum 2 or maximum 4 funds to compare');
-        //      }
-        //  } else {
-        //      alert('Please select minimum 2 or maximum 4 funds to compare');
-        //  }
     }
 
     /* -------------------Validation Events ----------------------- */
@@ -410,7 +400,10 @@ class PurchaseScreenTwoComponent extends Component {
                     "currentSecurities": ammendData.currentSecurities,
                     "contribution": ammendData.contribution,
                     "estimated": ammendData.estimated
-                }
+                },
+                isAmend: true,
+                amendObj: ammendData,
+                amendIndex: ammendIndex
             };
             saveData(ammendPayloadData);
             navigation.navigate('purchaseScreenThree', { ammend: true, index: ammendIndex, data: ammendData });
@@ -429,7 +422,10 @@ class PurchaseScreenTwoComponent extends Component {
                         "count": '',
                         "total": totalInitialInvestment
                     },
-                }
+                },
+                isAmend: false,
+                amendObj: {},
+                amendIndex: null
             };
             saveData(payloadData);
             navigation.navigate('purchaseScreenThree', { ammend: false });
@@ -443,7 +439,7 @@ class PurchaseScreenTwoComponent extends Component {
     }
 
     setInputRef = (inputComp) => (ref) => {
-        this[parseInt(inputComp, 0)] = ref;
+        this[`${inputComp}`] = ref;
     }
 
     onChangeIndex = (item, index) => () => {
@@ -521,7 +517,7 @@ class PurchaseScreenTwoComponent extends Component {
     onChangeDateForInvestment = (keyName) => date => {
         const { selectedFundInvestmentData } = this.state;
         const newData = selectedFundInvestmentData;
-        newData[keyName.toString()] = date;
+        newData[`${keyName}`] = date;
         newData.fundingOptionValidation = true;
         newData.initialInvestmentValidation = true;
         newData.monthlyInvestmentValidation = true;
@@ -533,7 +529,7 @@ class PurchaseScreenTwoComponent extends Component {
         const { selectedFundInvestmentData } = this.state;
         const newData = selectedFundInvestmentData;
         let total = 0;
-        newData[keyName.toString()] = text;
+        newData[`${keyName}`] = text;
         newData.fundingOptionValidation = true;
         newData.initialInvestmentValidation = true;
         newData.monthlyInvestmentValidation = true;
@@ -623,7 +619,7 @@ class PurchaseScreenTwoComponent extends Component {
                 <GHeaderComponent navigation={navigation} />
                 <ScrollView style={styles.mainFlex}>
                     <View style={styles.headerTextView}>
-                        <Text style={styles.titleHeaderTextStyle}>Purchase</Text>
+                        <Text style={styles.titleHeaderTextStyle}>{gblStrings.purchase.purchase}</Text>
                         <View style={styles.line} />
                     </View>
                     <PageNumber currentPage={currentPage} pageName={pageName} totalCount={totalCount} />
@@ -631,13 +627,13 @@ class PurchaseScreenTwoComponent extends Component {
                         <Text style={styles.topContainerTxtBold}>
                             {gblStrings.purchase.accountName}
                             {ammend && ammendData.selectedAccountData && ammendData.selectedAccountData.accountName ? ammendData.selectedAccountData.accountName : ""}
-                            {savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountName ? savedData.selectedAccountData.accountName : ""}
+                            {!ammend && savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountName ? savedData.selectedAccountData.accountName : ""}
                         </Text>
                         <View style={styles.flexDirectionStyle}>
                             <Text style={styles.topContainerTxtBold}>{gblStrings.purchase.accountNumber}</Text>
                             <Text style={styles.topContainerTxtBold}>
                                 {ammend && ammendData.selectedAccountData && ammendData.selectedAccountData.accountNumber ? ammendData.selectedAccountData.accountNumber : ""}
-                                {savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountNumber ? savedData.selectedAccountData.accountNumber : ""}
+                                {!ammend && savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountNumber ? savedData.selectedAccountData.accountNumber : ""}
                             </Text>
                         </View>
                     </View>

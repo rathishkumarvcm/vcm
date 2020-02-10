@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import GuestUserDashboardComponent from './GuestUserDashboardComponent';
-import { newsAndCommentaryActions } from "../../Shared/Actions";
+import { newsAndCommentaryActions, savedItemsActions } from "../../Shared/Actions";
 
 /*----------------------
                                   Redux Methods
@@ -8,12 +8,14 @@ import { newsAndCommentaryActions } from "../../Shared/Actions";
 
 const mapStateToProps = (state /* , props */) => (
     {
-      newsData: state.newsAndCommentaryData
+      newsData: state.newsAndCommentaryData,
+      savedItemsData: state.savedItemsData,
     }
   );
 
 const mapDispatchToProps = {
-  ...newsAndCommentaryActions
+  ...newsAndCommentaryActions,
+  ...savedItemsActions
 };
 
 export default connect(

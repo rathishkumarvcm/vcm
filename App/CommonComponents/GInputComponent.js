@@ -157,6 +157,7 @@ GInputComponent.defaultProps = {
   onChange: () => { },
   onChangeText: () => { },
   onSubmitEditing: () => { },
+  inputref : () => { },
   maxLength: 100,
   multiline: false,
   numberOfLines: 1,

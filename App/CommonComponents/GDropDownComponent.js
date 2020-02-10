@@ -72,8 +72,11 @@ pickerStyle : {
     alignSelf: 'stretch',
     borderColor:"#DEDEDF",
     borderWidth:1,
-    marginLeft:'2%'
+    marginLeft:'2%',
+    marginRight:'15%',
+    marginTop:"15%"
 },
+topSection :{ left: 0 ,top: 5}
 // showDropDownSectionStyle:{
 //     backgroundColor:'white',
 //     borderColor : "#DEDEDF",
@@ -107,7 +110,7 @@ export const GDropDownComponent = props => {
             
     <Dropdown
       data={data}
-      dropdownOffset={{ 'top': 5 }}
+      dropdownOffset={styles.topSection}
       baseColor="#DEDEDF"
       // dropdownPosition={-5.75}
       placeholder= "Select"
@@ -131,7 +134,7 @@ GDropDownComponent.propTypes = {
   isOptional:PropTypes.bool,
   disabled:PropTypes.bool,
   data:PropTypes.instanceOf(Object),
-  errorFlag:PropTypes.instanceOf(Object),
+  errorFlag:PropTypes.bool,
   dropDownLayout: PropTypes.instanceOf(Object),
   // pickerStyle: PropTypes.instanceOf(Object),
   dropDownTextName: PropTypes.instanceOf(Object),
@@ -140,6 +143,8 @@ GDropDownComponent.propTypes = {
   selectedDropDownValue: PropTypes.func,
  // changeState : PropTypes.func,
   errorText:PropTypes.string,
+  dropDownValue : PropTypes.string,
+  itemCount : PropTypes.number,
 //   inputref : PropTypes.oneOfType([
 //     PropTypes.func, 
 //     PropTypes.shape({ current: PropTypes.object })
@@ -161,7 +166,8 @@ GDropDownComponent.defaultProps = {
   selectedDropDownValue:() => { },
   // changeState:null,
   errorText:"",
-
+  dropDownValue :"",
+  itemCount : 4
 };
 
 export default GDropDownComponent;

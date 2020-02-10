@@ -5,7 +5,7 @@ import {addSystematicWithdrawalActions } from "../../Shared/Actions";
 
 
 const mapStateToProps = (state) => ({
-  systematicWithdrawalState:state.systematicWithdrawalData,
+  systematicWithdrawalProps:state.systematicWithdrawalData,
     }
   );
 

@@ -5,12 +5,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import styles from './style';
 import gblStrings from '../../Constants/GlobalStrings';
-import { GHeaderComponent, GSwitchComponent } from '../../CommonComponents';
+import { GHeaderComponent } from '../../CommonComponents';
 import { msrAccessFormActions } from '../../Shared/Actions';
 import logoImage from '../../Images/FaceID.png';
 
 class AccessFormList extends React.Component {
-
 
     switchSort = (value) => {
         const { sortByPopular, dispatch } = this.props;
@@ -149,16 +148,16 @@ AccessFormList.defaultProps = {
 };
 
 const mapStateToProps = state => {
-    return state.msrAccessFormsData;
+    return state.msrAccessFormsData; 
 };
 
-// const mapDispatchToProps = {
-//     ...msrAccessFormActions
-// };
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-    dispatch,
+const mapDispatchToProps = {
     ...msrAccessFormActions
-}, dispatch);
+};
+
+// const mapDispatchToProps = (dispatch) => bindActionCreators({
+//     dispatch,
+//     ...msrAccessFormActions
+// }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccessFormList);

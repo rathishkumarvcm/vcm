@@ -95,6 +95,7 @@ class AutomaticInvestmentAddComponent extends Component {
     }
 
 
+
     componentDidMount() {
         const { getFundListData, getBankAccountInfo, automaticInvestmentState, bankAccountInfo } = this.props;
         const { fundList, ItemToEdit, accountType } = this.state;
@@ -149,6 +150,13 @@ class AutomaticInvestmentAddComponent extends Component {
         if (this.props !== prevProps) {
             let tempFundListData = [];
             if (ItemToEdit < 0) {
+
+                // if (fundListState[ActionTypes.GET_FUNDLIST]) {
+                //     tempFundListData = fundListState[ActionTypes.GET_FUNDLIST];
+                //     if (tempFundListData.length > 0) {
+                //         clearReduxKeyData(ActionTypes.GET_FUNDLIST, "");
+                //     }
+                // }
                 if (fundListState[ActionTypes.GET_FUNDLIST] !== undefined && fundListState[ActionTypes.GET_FUNDLIST].Items !== null) {
                     tempFundListData = fundListState[ActionTypes.GET_FUNDLIST];
                     if (bankAccountInfo && bankAccountInfo !== bankAccountDetails) {

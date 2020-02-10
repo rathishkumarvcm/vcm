@@ -28,46 +28,83 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
         };
     }
 
-    componentDidMount() {
-        const{systematicWithdrawalState}=this.props;
-        const{skip,accountType,indexSelected}=this.state;
+    static getDerivedStateFromProps(nextProps,preState) {
+        const{systematicWithdrawalProps}=nextProps;
+        const{skip,accountType,indexSelected}=preState;
         let payload = {};
         if (skip) {
-            if (this.props && systematicWithdrawalState) {
+            if (systematicWithdrawalProps) {
                 switch(accountType.toLowerCase())
                 {
                     case 'general':
                         payload = {
-                            ...systematicWithdrawalState.general
+                            ...systematicWithdrawalProps.general
                         };
                         break;
                     case 'ira':
                         payload = {
-                            ...systematicWithdrawalState.ira
+                            ...systematicWithdrawalProps.ira
                         };
                         break;
                     case 'utma':
                         payload = {
-                            ...systematicWithdrawalState.utma
+                            ...systematicWithdrawalProps.utma
                         };
                         break;
                     default:
                         break;
                 }
-                this.setState({
+                return({
                     systematicWithdrawalJson: payload[Number(indexSelected)],
                 });
-                // ,() => {
-                //     this.afterSetStateFinished();
-                // }
             }
         }
         else {
-             this.setState({ systematicWithdrawalJson: myInstance.getSavedSystematicData() });
-            
+             return({ systematicWithdrawalJson: myInstance.getSavedSystematicData() });
         }
-
+        return null;
     }
+
+    // componentDidMount() {
+    //     const{systematicWithdrawalProps}=this.props;
+    //     const{skip,accountType,indexSelected}=this.state;
+    //     let payload = {};
+    //     if (skip) {
+    //         if (this.props && systematicWithdrawalProps) {
+    //             switch(accountType.toLowerCase())
+    //             {
+    //                 case 'general':
+    //                     payload = {
+    //                         ...systematicWithdrawalProps.general
+    //                     };
+    //                     break;
+    //                 case 'ira':
+    //                     payload = {
+    //                         ...systematicWithdrawalProps.ira
+    //                     };
+    //                     break;
+    //                 case 'utma':
+    //                     payload = {
+    //                         ...systematicWithdrawalProps.utma
+    //                     };
+    //                     break;
+    //                 default:
+    //                     break;
+    //             }
+    //             this.setState({
+    //                 systematicWithdrawalJson: payload[Number(indexSelected)],
+    //             });
+    //             // ,() => {
+    //             //     this.afterSetStateFinished();
+    //             // }
+    //         }
+    //     }
+    //     else {
+    //          this.setState({ systematicWithdrawalJson: myInstance.getSavedSystematicData() });
+            
+    //     }
+
+    // }
 
     generateKeyExtractor = (item) => item.id;
 
@@ -341,12 +378,12 @@ class SystematicWithdrawalPlanVerifyComponent extends Component {
 SystematicWithdrawalPlanVerifyComponent.propTypes = {
 
     navigation: PropTypes.instanceOf(Object),
-    systematicWithdrawalState: PropTypes.instanceOf(Object),
+    systematicWithdrawalProps: PropTypes.instanceOf(Object),
 };
 
 SystematicWithdrawalPlanVerifyComponent.defaultProps = {
     navigation:{},
-    systematicWithdrawalState:{}
+    systematicWithdrawalProps:{}
 };
 
 export default SystematicWithdrawalPlanVerifyComponent;

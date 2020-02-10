@@ -22,6 +22,32 @@ const commonStyles = StyleSheet.create({
 /** AccountSummaryComponent Styles */
 
 const styles = StyleSheet.create({
+    addGroupButton: {
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#544A54',
+
+        borderColor: '#61285F',
+        borderWidth: 1,
+
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        // marginBottom:scaledHeight(15),
+        // marginTop:scaledHeight(26),
+        width: '80%'
+    },
+    addGroupContainer: { 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        marginBottom: 20, 
+        width: "100%" 
+    },
+    addGroupText: {
+        color: '#FFFFFF',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
     balanceText: {
         ...commonStyles.commonHeaderText,
         alignSelf: 'center',
@@ -34,18 +60,18 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     headerBalanceView: {
-        flex: 0.33, 
-        flexDirection: 'row', 
+        flex: 0.33,
+        flexDirection: 'row',
         justifyContent: 'center'
     },
     headerHoldingGroupView: {
-        flex: 0.33, 
-        flexDirection: 'row', 
+        flex: 0.33,
+        flexDirection: 'row',
         justifyContent: 'center'
     },
     headerReturnsView: {
-        flex: 0.34, 
-        flexDirection: 'row', 
+        flex: 0.34,
+        flexDirection: 'row',
         justifyContent: 'center'
     },
     holdingGroupText: {
@@ -53,6 +79,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         // marginLeft: scaledWidth(0),
     },
+
     returnText: {
         ...commonStyles.commonHeaderText,
         alignSelf: 'center',
@@ -66,7 +93,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         // justifyContent:'space-evenly',
         width: '100%',
-    }
+    },
 });
 
 /** AccountSummaryAccordion Styles */
@@ -159,11 +186,35 @@ const accordianStyles = StyleSheet.create({
         height: 1,
         width: '100%',
     },
+    editDropdown: {
+        backgroundColor: '#FFFFFF',
+        borderBottomWidth: 1,
+        borderColor: '#00000029',
+        height: scaledHeight(60),
+        justifyContent: 'center',
+    },
+    editDropdownText: {
+        color: '#56565A',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        marginLeft: scaledWidth(20)
+    },
+    editFlatList: {
+        elevation: 4,
+        position: 'absolute',
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 1, },
+        shadowOpacity: 0.23,
+        shadowRadius: 2.62,
+        top: 55,
+        width: '100%',
+        zIndex: 5,
+    },
     parentHr: {
         color: Colors.WHITE,
         height: 1,
         width: '100%'
-    }
+    },
 });
 
 

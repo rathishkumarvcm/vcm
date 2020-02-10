@@ -112,9 +112,6 @@ GSwitchComponent.propTypes = {
     switchOff: PropTypes.bool.isRequired,
     switchOnText: PropTypes.string,
     switchOffText: PropTypes.string,
-    disabled: PropTypes.bool,
-    buttonStyle: PropTypes.instanceOf(Object),
-    textStyle: PropTypes.instanceOf(Object),
     offStyle: PropTypes.instanceOf(Object),
     offStyleDisabled: PropTypes.instanceOf(Object),
     onStyle: PropTypes.instanceOf(Object),
@@ -124,7 +121,6 @@ GSwitchComponent.propTypes = {
 };
 
 GSwitchComponent.defaultProps = {
-    disabled: false,
     switchOnText: "",
     switchOffText: "",
     offStyle: {},
@@ -132,9 +128,7 @@ GSwitchComponent.defaultProps = {
     onStyle: {},
     onStyleDisabled: {},
     textOnStyle: {},
-    textOffStyle: {},
-    buttonStyle:{},
-    textStyle:{}
+    textOffStyle: {}
 
 };
 

@@ -34,18 +34,32 @@ class AutomaticInvestmentAccountComponent extends Component {
 
     }
 
-    componentDidMount() {
-        const{accountState}=this.props;
+    static getDerivedStateFromProps(nextProps) {
+        const{accountState}=nextProps;
         if (accountState) {
 
-            this.setState({
+            return({
                 generalAccountJson: accountState.general,
                 iraAccountJson: accountState.ira,
                 utmaAccountJson: accountState.utma,
 
             });
         }
+        return null;
     }
+
+    // componentDidMount() {
+    //     const{accountState}=this.props;
+    //     if (accountState) {
+
+    //         this.setState({
+    //             generalAccountJson: accountState.general,
+    //             iraAccountJson: accountState.ira,
+    //             utmaAccountJson: accountState.utma,
+
+    //         });
+    //     }
+    // }
 
     selectedAccount = (index,type) => () => {
         const{generalAccountJson,iraAccountJson,utmaAccountJson} =this.state;

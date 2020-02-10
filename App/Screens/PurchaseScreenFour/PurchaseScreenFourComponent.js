@@ -25,12 +25,19 @@ class PurchaseFourComponent extends Component {
     }
 
     getData = () => {
-        const { navigation, amendReducerData } = this.props;
-        this.setState({
-            ammend: navigation.getParam('ammend'),
-            ammendData: navigation.getParam('data'),
-            ammendIndex: navigation.getParam('index')
-        });
+        const { amendReducerData, purchaseData } = this.props;
+        if (purchaseData) {
+            this.setState({
+                ammend: purchaseData.isAmend,
+                ammendData: purchaseData.amendObj,
+                ammendIndex: purchaseData.amendIndex
+            });
+        }
+        // this.setState({
+        //     ammend: navigation.getParam('ammend'),
+        //     ammendData: navigation.getParam('data'),
+        //     ammendIndex: navigation.getParam('index')
+        // });
         if (this.props && amendReducerData && amendReducerData.menu) {
             menuList = amendReducerData.menu;
         }
@@ -136,7 +143,10 @@ class PurchaseFourComponent extends Component {
                     "estimatedNetTradeAmt": "",
                     "effectiveDate": ""
                 }
-            }
+            },
+            isAmend: false,
+            amendObj: {},
+            amendIndex: null
         };
         saveData(data);
     }
@@ -149,10 +159,9 @@ class PurchaseFourComponent extends Component {
         const year = new Date().getFullYear();
         const updatedDate = `${date} / ${month} / ${year}`;
         const finalKey = menuList[menuList.length - 1].key + 1;
-
         if (ammend) {
             const pIndex = menuList.findIndex((item) => item.key === ammendIndex);
-            const amendObj = menuList[parseInt(pIndex, 0)];
+            const amendObj = menuList[parseInt(pIndex, 10)];
             const transType = `Purchase Amended`;
             const ammendPayloadData = {
                 "key": amendObj.key,
@@ -247,7 +256,6 @@ class PurchaseFourComponent extends Component {
         if (this.props && purchaseData && purchaseData.savePurchaseSelectedData) {
             savedData = purchaseData.savePurchaseSelectedData;
         }
-
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
@@ -346,27 +354,6 @@ class PurchaseFourComponent extends Component {
                             <Text style={styles.greyTextBold16px}>Contribution for IRA account</Text>
                             <Text style={styles.greyText16px}>{savedData.contribution.contribution}</Text>
                         </View>
-                        {/* <View style={styles.horizontalFlex}>
-                            <Text style={styles.subHeading}>Estimated</Text>
-                            <Text style={styles.edit} onPress={this.onClickEditSelectedFund}>{gblStrings.common.edit}</Text>
-                        </View>
-                        <View style={styles.line} />
-
-                        <View style={styles.govtSecuritiesFund}>
-
-                            <View style={styles.section}>
-                                <Text style={styles.greyTextBold16px}>Estimated Fee</Text>
-                                <Text style={styles.greyText16px}>{}</Text>
-                            </View>
-                            <View style={styles.section}>
-                                <Text style={styles.greyTextBold16px}>Estimated Net Trade Amount</Text>
-                                <Text style={styles.greyText16px}>{}</Text>
-                            </View>
-                            <View style={styles.section}>
-                                <Text style={styles.greyTextBold16px}>Effective Date</Text>
-                                <Text style={styles.greyText16px}>{}</Text>
-                            </View>
-                    </View> */}
                     </View>
 
                     {/* ----------------------------------- Button Fields -------------------------------- */}
