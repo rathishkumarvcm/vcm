@@ -279,11 +279,11 @@ class PurchaseFourComponent extends Component {
                         <View style={styles.line} />
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountName}</Text>
-                            <Text style={styles.greyText16px}>{gblStrings.liquidation.accountName}{savedData.selectedAccountData.accountName}</Text>
+                            <Text style={styles.greyText16px}>{gblStrings.liquidation.accountName}{savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountName && savedData.selectedAccountData.accountName}</Text>
                         </View>
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountNumber}</Text>
-                            <Text style={styles.greyText16px}>{savedData.selectedAccountData.accountNumber}</Text>
+                            <Text style={styles.greyText16px}>{savedData && savedData.selectedAccountData && savedData.selectedAccountData.accountNumber && savedData.selectedAccountData.accountNumber}</Text>
                         </View>
                         <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>{gblStrings.accManagement.selectedMutualFunds}</Text>
@@ -292,21 +292,21 @@ class PurchaseFourComponent extends Component {
                         <View style={styles.line} />
 
                         <View style={styles.govtSecuritiesFund}>
-                            <Text style={styles.blackTextBold22px}>{savedData.selectedFundData.fundName}</Text>
+                            <Text style={styles.blackTextBold22px}>{savedData && savedData.selectedFundData && savedData.selectedFundData.fundName && savedData.selectedFundData.fundName}</Text>
                             <View style={styles.section}>
                                 <Text style={styles.greyTextBold16px}>Initial Investment</Text>
-                                <Text style={styles.greyText16px}>{`$ ${savedData.selectedFundData.initialInvestment}`}</Text>
+                                <Text style={styles.greyText16px}>{`$ ${savedData && savedData.selectedFundData && savedData.selectedFundData.initialInvestment && savedData.selectedFundData.initialInvestment}`}</Text>
                             </View>
-                            {!savedData.selectedFundData.fundingOption === "Initial Investment" ?
+                            {!savedData && savedData.selectedFundData && savedData.selectedFundData.fundingOption === "Initial Investment" ?
                                 (
                                     <View>
                                         <View style={styles.section}>
                                             <Text style={styles.greyTextBold16px}>Monthly Investment</Text>
-                                            <Text style={styles.greyText16px}>{`$ ${savedData.selectedFundData.monthlyInvestment}`}</Text>
+                                            <Text style={styles.greyText16px}>{`$ ${savedData && savedData.selectedFundData && savedData.selectedFundData.monthlyInvestment && savedData.selectedFundData.monthlyInvestment}`}</Text>
                                         </View>
                                         <View style={styles.section}>
                                             <Text style={styles.greyTextBold16px}>Start Date</Text>
-                                            <Text style={styles.greyText16px}>{savedData.selectedFundData.startDate}</Text>
+                                            <Text style={styles.greyText16px}>{savedData && savedData.selectedFundData && savedData.selectedFundData.startDate && savedData.selectedFundData.startDate}</Text>
                                         </View>
                                     </View>
                                 ) : null}
@@ -319,7 +319,7 @@ class PurchaseFourComponent extends Component {
                         <View style={styles.line} />
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>Reinvest Earning,Income and capital Gains</Text>
-                            <Text style={styles.greyText16px}>{savedData.currentSecurities.reinvest ? "I want to Re-Invest" : "No I dont want to Re-Invest"}</Text>
+                            <Text style={styles.greyText16px}>{savedData && savedData.currentSecurities && savedData.currentSecurities.reinvest && savedData.currentSecurities.reinvest ? "I want to Re-Invest" : "No I dont want to Re-Invest"}</Text>
                         </View>
                         <View style={styles.horizontalFlex}>
                             <Text style={styles.subHeading}>{gblStrings.accManagement.fundingSource}</Text>
@@ -328,20 +328,20 @@ class PurchaseFourComponent extends Component {
                         <View style={styles.line} />
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>{gblStrings.accManagement.fundingSource}</Text>
-                            <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.paymentMode}</Text>
+                            <Text style={styles.greyText16px}>{savedData && savedData.selectedFundSourceData && savedData.selectedFundSourceData.paymentMode && savedData.selectedFundSourceData.paymentMode}</Text>
                         </View>
 
-                        {(savedData.selectedFundSourceData.fundSourceType === "Offline") ?
+                        {(savedData && savedData.selectedFundSourceData && savedData.selectedFundSourceData.fundSourceType === "Offline") ?
                             (
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.totalInvestment}</Text>
-                                    <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.totalInvestment}</Text>
+                                    <Text style={styles.greyText16px}>{savedData && savedData.selectedFundSourceData && savedData.selectedFundSourceData.totalInvestment && savedData.selectedFundSourceData.totalInvestment}</Text>
                                 </View>
                             ) :
                             (
                                 <View style={styles.section}>
                                     <Text style={styles.greyTextBold16px}>{gblStrings.liquidation.accountNumber}</Text>
-                                    <Text style={styles.greyText16px}>{savedData.selectedFundSourceData.bankAccountNumber}</Text>
+                                    <Text style={styles.greyText16px}>{savedData && savedData.selectedFundSourceData && savedData.selectedFundSourceData.bankAccountNumber && savedData.selectedFundSourceData.bankAccountNumber}</Text>
                                 </View>
                             )
                         }
@@ -352,7 +352,7 @@ class PurchaseFourComponent extends Component {
                         <View style={styles.line} />
                         <View style={styles.section}>
                             <Text style={styles.greyTextBold16px}>Contribution for IRA account</Text>
-                            <Text style={styles.greyText16px}>{savedData.contribution.contribution}</Text>
+                            <Text style={styles.greyText16px}>{savedData && savedData.contribution && savedData.contribution.contribution && savedData.contribution.contribution}</Text>
                         </View>
                     </View>
 
