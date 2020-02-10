@@ -8,6 +8,7 @@ const linkedin = require("../Images/linkedin.png");
 const youtube = require("../Images/youtube.png");
 const facebook = require("../Images/facebook.png");
 const insta = require("../Images/insta.png");
+const logo = require("../Images/logo.png");
 
 export const styles = StyleSheet.create({
     connectWithUsText: {
@@ -65,7 +66,7 @@ export const GFooterComponent = () => (
     <View>
         <Image style={styles.logoSize}
             resizeMode="contain"
-            source="../Images/logo.png"
+            source={logo}
         />
         <Text style={styles.connectWithUsText}>Connect with Us</Text>
         <View style={styles.socialIcons}>

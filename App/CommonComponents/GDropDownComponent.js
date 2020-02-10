@@ -72,9 +72,11 @@ pickerStyle : {
     alignSelf: 'stretch',
     borderColor:"#DEDEDF",
     borderWidth:1,
-    marginLeft:'2%'
+    marginLeft:'2%',
+    marginRight:'15%',
+    marginTop:"15%"
 },
-topSection :{ 'top': 5 }
+topSection :{ left: 0 ,top: 5}
 // showDropDownSectionStyle:{
 //     backgroundColor:'white',
 //     borderColor : "#DEDEDF",
@@ -132,7 +134,7 @@ GDropDownComponent.propTypes = {
   isOptional:PropTypes.bool,
   disabled:PropTypes.bool,
   data:PropTypes.instanceOf(Object),
-  errorFlag:PropTypes.instanceOf(Object),
+  errorFlag:PropTypes.bool,
   dropDownLayout: PropTypes.instanceOf(Object),
   // pickerStyle: PropTypes.instanceOf(Object),
   dropDownTextName: PropTypes.instanceOf(Object),
@@ -165,7 +167,7 @@ GDropDownComponent.defaultProps = {
   // changeState:null,
   errorText:"",
   dropDownValue :"",
-  itemCount : 1
+  itemCount : 4
 };
 
 export default GDropDownComponent;
