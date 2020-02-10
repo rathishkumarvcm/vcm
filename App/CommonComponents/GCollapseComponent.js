@@ -29,13 +29,16 @@ export default class GCollapseComponent extends React.Component {
 }
 
 GCollapseComponent.propTypes = {
-    collapseView: PropTypes.View,
-    headerView: PropTypes.View,
+    collapseView: PropTypes.instanceOf(Object),
+    headerView: PropTypes.instanceOf(Object),
     collapsedState: PropTypes.bool.isRequired,
     onPressAction: PropTypes.func.isRequired,
 };
 
-GCollapseComponent.defaultProps = {        
+GCollapseComponent.defaultProps = { 
+    collapseView: {},
+    headerView: {}, 
+    collapsedState: false      
 };
 
 

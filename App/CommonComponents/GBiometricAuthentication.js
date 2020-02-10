@@ -33,11 +33,10 @@ componentDidMount(){
                    onAuthenticate(biometryAuth);
                 });
             })
-            .catch(error => {
+            .catch(() => {
                 this.setState({biometryAuth:false},()=>{
                     onAuthenticate(biometryAuth);
                 });
-                console.log('error',error);
             });
             //  Touch ID is supported on iOS
           } 
@@ -48,12 +47,10 @@ componentDidMount(){
                     onAuthenticate(biometryAuth);
                 });
             })
-            .catch(error => {
-                // alert(JSON.stringify(error))
+            .catch(() => {
                 this.setState({biometryAuth:false},()=>{
                     onAuthenticate(biometryAuth);
                 });
-                console.log('error',error);
             });
             //  Face ID is supported on iOS
           } 
@@ -64,17 +61,14 @@ componentDidMount(){
                     onAuthenticate(biometryAuth);
                 });
             })
-            .catch(error => {
+            .catch(() => {
                 this.setState({biometryAuth:false},()=>{
                     onAuthenticate(biometryAuth);
                 });
-                console.log('error',error);
             });
             //  Touch ID is supported on Android
           }
-    }).catch(error => {
-        console.log('error--',JSON.stringify(error));
-    });
+    }).catch(() => {});
     
 }
 

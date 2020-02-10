@@ -3,7 +3,7 @@ import {
   Text, View, StyleSheet, TouchableOpacity,
 } from 'react-native';
 import PropTypes from 'prop-types';
-import GIcon from './GIcon';
+import Gicon from './GIcon';
 
 const styles = StyleSheet.create({
   buttonStyle: {
@@ -52,7 +52,7 @@ export const GIconButton = (props) => {
       <View style={styles.wrapper}>
         {!iconRight && (
         <View style={styles.leftIconView}>
-          <GIcon name={id.icon} type={id.iconType} size={iconSize} color={iconColor} />
+          <Gicon name={id.icon} type={id.iconType} size={iconSize} color={iconColor} />
         </View>
         )}
         <View style={styles.buttonTextView}>
@@ -60,7 +60,7 @@ export const GIconButton = (props) => {
         </View>
         {iconRight && (
         <View style={styles.rightIconView}>
-          <GIcon name={icon} type={iconType} size={iconSize} color={iconColor} />
+          <Gicon name={icon} type={iconType} size={iconSize} color={iconColor} />
         </View>
         )}
       </View>

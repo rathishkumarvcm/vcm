@@ -36,8 +36,7 @@ export function SetKeyValueToStore(key, value, callBack) {
 export function GetKeyValueFromStore(key, callBack) {
   RNSecureKeyStore.get(key).then(
     res => callBack(res),
-    err => {
-      console.log(err);
+    () => {
       return callBack("Error");
     }
   );

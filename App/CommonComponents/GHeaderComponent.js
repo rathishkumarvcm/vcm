@@ -248,6 +248,10 @@ class GHeaderComponent extends Component {
     );
   }
 
+  keyExtractor = ({item}) => {
+    return item.title;
+  }
+
   newMethod(item) {
 
     return () => {
@@ -359,7 +363,7 @@ class GHeaderComponent extends Component {
                   <FlatList
                     data={newData}
                     renderItem={this.updateDataList}
-                    keyExtractor={item => item.title}
+                    keyExtractor={this.keyExtractor}
                   />
                   {SignOut ?
                     (

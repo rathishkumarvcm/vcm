@@ -6,7 +6,7 @@ import { GWebViewComponent, GHeaderComponent, GIcon } from '../../CommonComponen
 import styles from './styles';
 import gblStrings from '../../Constants/GlobalStrings';
 
-const url = 'https://www.dinkytown.net/java/required-minimum-distribution-rmd.html?KJEData=*ACCOUNT_BALANCE*:250000,*BENEFICIARY_AGE*:50,*BIRTHDAY_AFTER_JUNE30*:false,*IS_BENEFICIARY_YOUR_SPOUSE*:true,*RATE_OF_RETURN*:4.3,*YOUR_AGE*:72';
+const url = {uri : 'https://www.dinkytown.net/java/required-minimum-distribution-rmd.html?KJEData=*ACCOUNT_BALANCE*:250000,*BENEFICIARY_AGE*:50,*BIRTHDAY_AFTER_JUNE30*:false,*IS_BENEFICIARY_YOUR_SPOUSE*:true,*RATE_OF_RETURN*:4.3,*YOUR_AGE*:72'};
 
 class RMDCalculatorComponent extends Component {
 
@@ -46,9 +46,7 @@ class RMDCalculatorComponent extends Component {
 
                     <View style={styles.linkBreak1} />
 
-                    <GWebViewComponent
-                        source={{ uri: url }}
-                    />
+                    <GWebViewComponent link={url} />
                 </View>
             </View>
         );

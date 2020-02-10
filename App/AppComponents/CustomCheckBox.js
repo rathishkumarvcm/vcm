@@ -4,45 +4,45 @@ import PropTypes from "prop-types";
 import { scaledHeight } from '../Utils/Resolution';
 
 const styles = StyleSheet.create({
+    selectedview: {
+        backgroundColor: '#33A8FF',
+        height: 12,
+        width: 12,        
+    },
     textStyle: {
         marginLeft: scaledHeight(12), width: '80%'
-    }
+    },    
+    touchStyle: {
+        alignItems: 'flex-start',
+        flexDirection: "row",
+        flexGrow: 1, 
+        justifyContent: 'flex-start', 
+        marginBottom: scaledHeight(12),
+        marginTop: scaledHeight(0),        
+        width: '100%', 
+    },    
+    touchView: {
+        alignItems: 'center',
+        borderColor: '#33A8FF',
+        borderWidth: 2, 
+        height: 24,    
+        justifyContent: 'center',  
+        marginTop: scaledHeight(2),   
+        width: 24,         
+    },    
 }
 );
 
 const CustomCheckBox = props => {
-    const {width,itemTop,itemBottom,onPress,size,outerCicleColor,selected,innerCicleColor,label} = props;
+    const {itemTop,itemBottom,onPress,size,outerCicleColor,selected,innerCicleColor,label, width} = props;
 return(
 
-    <TouchableOpacity style={{
-        width,
-        flexDirection: "row",
-        flexGrow: 1,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
-        marginTop: scaledHeight(itemTop),
-        marginBottom: scaledHeight(itemBottom)
-    }} onPress={onPress}
-    >
-        <View style={{
-            height: size,
-            width: size,
-            marginTop:scaledHeight(2),
-            borderWidth: 2,
-            borderColor: outerCicleColor,
-            alignItems: 'center',
-            justifyContent: 'center'
-
-        }}
+    <TouchableOpacity style={[styles.touchStyle,{width: width, marginTop: scaledHeight(itemTop), marginBottom: scaledHeight(itemBottom)}]} onPress={onPress}>
+        <View style={[styles.touchView,{height: size, width: size,borderColor: outerCicleColor,}]}
         >
             {
                 selected ? (
-                    <View style={{
-                        height: size / 2,
-                        width: size / 2,
-                        backgroundColor: innerCicleColor
-                    }}
-                    />
+                    <View style={[styles.selectedview,{height:(size/2), width: (size/2), backgroundColor: innerCicleColor}]}/>
                   )
                     : null
             }

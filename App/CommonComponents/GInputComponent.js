@@ -53,12 +53,11 @@ export const GInputComponent = (props) => {
   const {errorFlag,propInputStyle,inputStyle,value,secureTextEntry,autoFocus,editable,onBlur,onChange,onChangeText,
     onSubmitEditing,onFocus,onKeyPress,keyboardType,returnKeyType,maxLength,multiline,numberOfLines,placeholder,
     placeholderTextColor,selectionColor,autoCapitalize,inputref,inputText,dropDownBox,arrowIconStyle,dropDownClick,
-    errorText} = props;
+    errorText, underlineColorAndroid} = props;
 return(
   <>
     <View style={errorFlag ? [styles.inputBoxStyle, propInputStyle, styles.errorView] : [styles.inputBoxStyle, propInputStyle]}>
       <TextInput
-        {...props}
         style={[styles.textInputStyle, inputStyle]}
         value={value}
         secureTextEntry={secureTextEntry}
@@ -79,10 +78,9 @@ return(
         placeholder={placeholder}
         placeholderTextColor={placeholderTextColor}
         selectionColor={selectionColor}
-        // underlineColorAndroid={props.underlineColorAndroid}
+        underlineColorAndroid={underlineColorAndroid}
         autoCapitalize={autoCapitalize}
         ref={inputref}
-        underlineColorAndroid="transparent"
       >
         {inputText}
       </TextInput>
@@ -113,11 +111,11 @@ return(
 GInputComponent.propTypes = {
   inputStyle: PropTypes.instanceOf(Object),
   arrowIconStyle: PropTypes.instanceOf(Object),
-  // value: PropTypes.string,
+  value: PropTypes.string,
   secureTextEntry: PropTypes.bool,
   autoFocus: PropTypes.bool,
   editable: PropTypes.bool,
- // inputText: PropTypes.string,
+  inputText: PropTypes.string,
   keyboardType: PropTypes.string,
   returnKeyType: PropTypes.string,
   onBlur: PropTypes.func,
@@ -148,7 +146,7 @@ GInputComponent.propTypes = {
 GInputComponent.defaultProps = {
   inputStyle: {},
   arrowIconStyle:{},
-  // value: '',
+  value: '',
   autoFocus: false,
   editable: true,
   keyboardType: "default",
@@ -164,10 +162,10 @@ GInputComponent.defaultProps = {
   placeholder: "",
   placeholderTextColor: null,
   selectionColor: null,
-  underlineColorAndroid: null,
+  underlineColorAndroid: "transparent",
   autoCapitalize: "none",
   secureTextEntry:false,
-  // inputText:'',
+  inputText:'',
   onFocus:() => { },
   dropDownClick:() => { },
   onKeyPress:() => { },

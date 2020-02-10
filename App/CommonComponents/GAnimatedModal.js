@@ -77,12 +77,14 @@ export default class GAnimatedModal extends React.Component {
 
 GAnimatedModal.propTypes = {
   visible : PropTypes.bool,
-  children: PropTypes.instanceOf(Object)
+  children: PropTypes.instanceOf(Object),
+  containerStyle: PropTypes.instanceOf(Object)
 };
 
 GAnimatedModal.defaultProps = {
   visible : false,
-  children :{}
+  children :{},
+  containerStyle :{}
 
  
 };

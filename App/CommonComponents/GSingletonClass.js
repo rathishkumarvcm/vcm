@@ -142,7 +142,7 @@ export default class CommonDataManager {
 
   setScreenStateData(value){
     this.screenStateData = value;
-    console.log(`this.screenStateData${JSON.stringify(this.screenStateData)}`);
+    // console.log(`this.screenStateData${JSON.stringify(this.screenStateData)}`);
   }
 
   getAutomaticInvestmentEditMode(){

@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
 
 
 export const GDateComponent = props => {
-const {dateTextName,dateTextLayout,dateTitleName,inputref,errorFlag,componentStyle,
+const {dateTextName,dateTextLayout,dateTitleName,errorFlag,componentStyle,
     date,mode,placeholder,format,minDate,maxDate,iconComponent,confirmBtnText,cancelBtnText,
     dateIconStyle,dateInputStyle,dateTextStyle,dateTouchBodyStyle,onDateChange,errorMsg} = props;
 return(
@@ -79,7 +79,6 @@ return(
          )}
        
         <DatePicker
-            ref={inputref}
             style={errorFlag ? [styles.componentStyle, componentStyle, styles.errorView] : [styles.componentStyle, componentStyle]}
             date={date}
             mode={mode}
@@ -140,10 +139,10 @@ GDateComponent.propTypes = {
     // onPressMask: PropTypes.func,
     // getDateStr: PropTypes.func,
 
-    inputref: PropTypes.oneOfType([
-        PropTypes.func,
-        PropTypes.shape({ current: PropTypes.object })
-    ])
+    // inputref: PropTypes.oneOfType([
+    //     PropTypes.func,
+    //     PropTypes.shape({ current: PropTypes.object })
+    // ])
 
 };
 
@@ -171,8 +170,8 @@ GDateComponent.defaultProps = {
     cancelBtnText: "Cancel",
     errorFlag: false,
     errorMsg: "",
-   // minDate:"",
-    // maxDate:"",
+    minDate:"",
+    maxDate:"",
 
     onDateChange: null,
     // onOpenModal: null,

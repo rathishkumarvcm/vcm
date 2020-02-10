@@ -1,7 +1,7 @@
 import React from "react";
 import { View,StyleSheet } from 'react-native';
 import PropTypes from "prop-types";
-import GIcon from './GIcon';
+import Gicon from './GIcon';
 
 
 const styles = StyleSheet.create({
@@ -22,7 +22,7 @@ const GRatingStarsComponent = (props) => {
         }
 
         stars.push(
-            <GIcon
+            <Gicon
                 name="star"
                 type="font-awesome"
                 size={props.size}

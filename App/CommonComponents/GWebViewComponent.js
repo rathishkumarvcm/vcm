@@ -4,22 +4,20 @@ import { WebView } from 'react-native-webview';
 
 
 export const GWebViewComponent = (props) => {
-    const {source} = props;
+    const {link} = props;
     return(
     <WebView
-            source={{ uri: source.uri }}
-            //  injectedJavaScript={props.injectedJavaScript}
+            source={link}
     /> 
 );
 };
 
 GWebViewComponent.propTypes = {
-    uri : PropTypes.string,
-    source : PropTypes.instanceOf(Object).isRequired
+    link : PropTypes.instanceOf(Object),
 };
 
 GWebViewComponent.defaultProps = {
-   uri : ''
+    link: {uri: ''}
 };
 
 export default GWebViewComponent;
