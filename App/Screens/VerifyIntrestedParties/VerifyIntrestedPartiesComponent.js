@@ -13,8 +13,9 @@ class VerifyIntrestedPartiesComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      accountData: {},
-      addedInterestedParty: {}
+      addedInterestedParty: {},
+      isEdit: false,
+      isNew: false
     };
   }
 
@@ -23,9 +24,14 @@ class VerifyIntrestedPartiesComponent extends Component {
   }
 
   updateInitialData = () => {
-    const { navigation } = this.props;
-    const newObj = navigation.getParam("addedData");
-    this.setState({ addedInterestedParty: newObj });
+    const { manageInterestedPartiesData } = this.props;
+    const data = manageInterestedPartiesData.savedInterestedPartyData;
+    if (manageInterestedPartiesData.isEdit) {
+      this.setState({ addedInterestedParty: data.getData, isEdit: true, isNew: false });
+    }
+    if (manageInterestedPartiesData.isNew) {
+      this.setState({ addedInterestedParty: data.data, isNew: true, isEdit: false });
+    }
   }
 
   onClickEdit = () => {
@@ -34,28 +40,57 @@ class VerifyIntrestedPartiesComponent extends Component {
   }
 
   onClickCancel = () => {
-    const { navigation } = this.props;
+    const { navigation, saveInterestedParties } = this.props;
+    const payload = {
+      savedInterestedPartyData: {}
+    };
+    saveInterestedParties(payload);
     navigation.navigate("manageIntrestedParties");
   }
 
   onClickSubmit = () => {
     const { navigation, saveInterestedParties } = this.props;
-    const { accountData } = this.state;
-    const payloadData = this.getData();
+    const { addedInterestedParty, isEdit, isNew } = this.state;
+    let payloadData = {};
+    const data = this.getData();
+    if (isEdit) {
+      payloadData = {
+        data,
+        isEdit,
+        isShowMsg: true,
+        notificationMsg: `${addedInterestedParty.fname} ${addedInterestedParty.lname}'s information has been Updated Successfully `
+      };
+    }
+    if (isNew) {
+      payloadData = {
+        data,
+        isNew,
+        isShowMsg: true,
+        notificationMsg: `${addedInterestedParty.fname} ${addedInterestedParty.lname}'s has been added Successfully `
+      };
+    }
+
     saveInterestedParties(payloadData);
-    navigation.navigate("manageIntrestedParties", { showMsg: true, successMsg: `New Interested Party has been added in " ${accountData.account_Type} " successfully` });
+    navigation.navigate("manageIntrestedParties");
   }
 
   getData = () => {
     const { manageInterestedPartiesData } = this.props;
-    const { addedInterestedParty } = this.state;
-
+    const { addedInterestedParty, isEdit, isNew } = this.state;
     let list = [];
     if (this.props && manageInterestedPartiesData && manageInterestedPartiesData.data) {
       list = manageInterestedPartiesData.data;
     }
-    // here write the logic...if add /Edit
-    list.push(addedInterestedParty);
+
+    if (isEdit) {
+      const index = list.filter((item) => item.key === addedInterestedParty.key);
+      list.slice(index, 1, addedInterestedParty);
+    }
+
+    if (isNew) {
+      list.push(addedInterestedParty);
+    }
+
     return list;
   }
 
@@ -66,7 +101,7 @@ class VerifyIntrestedPartiesComponent extends Component {
       <View style={styles.blockMarginTop}>
         <View style={styles.flexStyle}>
           <Text style={styles.titleHeaderText}>{`Tagged Account #${index + 1}`}</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.onClickEdit}>
             <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
           </TouchableOpacity>
         </View>
@@ -74,15 +109,15 @@ class VerifyIntrestedPartiesComponent extends Component {
         <View style={styles.paddingHorizontalStyle}>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortContentText}>Account Type</Text>
-            <Text style={styles.shortContentValueText}>{item.account_Type}</Text>
+            <Text style={styles.shortContentValueText}>{item.accountType}</Text>
           </View>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortContentText}>Account Name</Text>
-            <Text style={styles.shortContentValueText}>{item.account_Name}</Text>
+            <Text style={styles.shortContentValueText}>{item.accountName}</Text>
           </View>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortContentText}>Account Number</Text>
-            <Text style={styles.shortContentValueText}>{item.account_Number}</Text>
+            <Text style={styles.shortContentValueText}>{item.accountNumber}</Text>
           </View>
           <View style={styles.contentViewBlock}>
             <Text style={styles.shortContentText}>Effective Start Date</Text>
@@ -110,7 +145,7 @@ class VerifyIntrestedPartiesComponent extends Component {
 
           <View style={styles.blockMarginTop}>
             <View style={styles.flexStyle}>
-              <Text style={styles.titleHeaderText}>{gblStrings.accManagement.verifyIntrestedPartyInfo}</Text>
+              <Text style={styles.titleHeaderText}>{`Verify - ${addedInterestedParty.fname} ${addedInterestedParty.mname} ${addedInterestedParty.lname}'s Personal Information `}</Text>
               <TouchableOpacity onPress={this.onClickEdit}>
                 <Text style={styles.editBtnText}>{gblStrings.common.edit}</Text>
               </TouchableOpacity>

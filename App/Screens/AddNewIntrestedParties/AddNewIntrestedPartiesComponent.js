@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import styles from './styles';
 import { GHeaderComponent, GLoadingSpinner, GFooterSettingsComponent, GInputComponent, GDateComponent, GDropDownComponent, GButtonComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
-
+import AppUtils from '../../Utils/AppUtils';
 import { nameRegex, emailRegex, zipCodeRegex } from '../../Constants/RegexConstants';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
@@ -51,13 +51,6 @@ class addNewIntrestedPartiesComponent extends Component {
                 zipCodeValidation: true,
                 zipCodeValiMsg: "",
                 accounts: []
-            },
-            addedAccount: {
-                accountType: "",
-                accountName: "",
-                accountNumber: "",
-                startDate: "",
-                endDate: ""
             },
             tagAccountTextCount: 0,
             taggedAccountText: "Tag Account",
@@ -237,7 +230,7 @@ class addNewIntrestedPartiesComponent extends Component {
                 this.onClickSave();
             }
         } catch (err) {
-            // console.log(`Error::: ${err}`);
+            AppUtils.debugLog(`Error ::: :: ${err}`);
         }
     }
 
@@ -332,13 +325,13 @@ class addNewIntrestedPartiesComponent extends Component {
     };
 
     setInputRef = (inputComp) => (ref) => {
-        this[parseInt(inputComp, 0)] = ref;
+        this[`${inputComp}`] = ref;
     }
 
     onChangeText = (stateKey, keyName) => text => {
         this.setState(prevState => ({
             [stateKey]: {
-                ...prevState[stateKey.toSting()],
+                ...prevState[`${stateKey}`],
                 [keyName]: text
             }
         }));
@@ -347,14 +340,24 @@ class addNewIntrestedPartiesComponent extends Component {
     onUpdateField = (stateKey, keyName, val) => {
         this.setState(prevState => ({
             [stateKey]: {
-                ...prevState[stateKey.toString()],
+                ...prevState[`${stateKey}`],
                 [keyName]: val
             }
         }));
     }
 
-    selectedDropDownValue = (value) => {
-        this.onUpdateField("personal", "relation", value);
+    selectedDropDownValue = (index, keyName) => text => {
+        const { accountList } = this.state;
+        const newItems = [...accountList];
+        newItems[parseInt(index, 10)][`${keyName}`] = text;
+        this.setState({ accountList: newItems });
+    }
+
+    onChangeAccText = (keyName, index) => text => {
+        const { accountList } = this.state;
+        const newItems = [...accountList];
+        newItems[parseInt(index, 10)][`${keyName}`] = text;
+        this.setState({ accountList: newItems });
     }
 
     /* -------------------------- Button Events --------------------------------- */
@@ -380,8 +383,8 @@ class addNewIntrestedPartiesComponent extends Component {
 
     onClickSave = () => {
         const { personal, accountList } = this.state;
-        const { navigation } = this.props;
-        const obj = {
+        const { navigation, saveInterestedParties } = this.props;
+        const getData = {
             "fname": personal.firstName,
             "mname": personal.middleName,
             "lname": personal.lastName,
@@ -392,10 +395,19 @@ class addNewIntrestedPartiesComponent extends Component {
             "zipCode": personal.zipCode,
             "city": personal.city,
             "state": personal.stateValue,
-            "accountTagged": accountList
+            "accountTagged": accountList.length,
+            "interestedParties": accountList
         };
+        const payloadData = {
+            savedInterestedPartyData: {
+                data: getData
+            },
+            isEdit: false,
+            isNew: true
+        };
+        saveInterestedParties(payloadData);
         if (personal.addValidation && personal.addressLine1 && personal.addressLine2) {
-            navigation.navigate("verifyIntrestedParties", { addedData: obj, add: true });
+            navigation.navigate("verifyIntrestedParties");
         }
     }
 
@@ -591,8 +603,8 @@ class addNewIntrestedPartiesComponent extends Component {
                                             data={accountTypeData}
                                             textInputStyle={styles.dropdownTextInput}
                                             dropDownLayout={styles.dropDownLayout}
-                                            dropDownValue={item.account_Type}
-                                            selectedDropDownValue={this.selectedDropDownValue(index, "account_Type")}
+                                            dropDownValue={item.accountType}
+                                            selectedDropDownValue={this.selectedDropDownValue(index, "accountType")}
                                             errorFlag={item.accountTypeFlag}
                                             errorText={item.accountTypeMsg}
                                         />
@@ -602,8 +614,8 @@ class addNewIntrestedPartiesComponent extends Component {
                                             data={accountNameData}
                                             textInputStyle={styles.dropdownTextInput}
                                             dropDownLayout={styles.dropDownLayout}
-                                            dropDownValue={item.account_Name}
-                                            selectedDropDownValue={this.selectedDropDownValue(index, "account_Name")}
+                                            dropDownValue={item.accountName}
+                                            selectedDropDownValue={this.selectedDropDownValue(index, "accountName")}
                                             errorFlag={item.accountNameFlag}
                                             errorText={item.accountNameMsg}
                                         />
@@ -611,9 +623,9 @@ class addNewIntrestedPartiesComponent extends Component {
                                         <GInputComponent
                                             inputref={this.setInputRef("accountNumber")}
                                             propInputStyle={styles.customTxtBox}
-                                            value={item.account_Number}
+                                            value={item.accountNumber}
                                             maxLength={gblStrings.maxLength.company}
-                                            onChangeText={this.onChangeText("personal", "company")}
+                                            onChangeText={this.onChangeAccText("accountNumber", index)}
                                             errorFlag={item.accountNumberFlag}
                                             errorText={item.accountNumberMsg}
                                         />
@@ -628,7 +640,7 @@ class addNewIntrestedPartiesComponent extends Component {
                                                 componentStyle={styles.dateStyle}
                                                 maxDate={item.endDate ? item.endDate : ""}
                                                 errorFlag={!item.startDateFlag}
-                                                onDateChange={this.onChangeText("personal", "startDate")}
+                                                onDateChange={this.onChangeAccText("startDate", index)}
                                             />
                                             <Text style={styles.lblTxt}>{gblStrings.accManagement.to}</Text>
                                             <GDateComponent
@@ -639,7 +651,7 @@ class addNewIntrestedPartiesComponent extends Component {
                                                 componentStyle={styles.dateStyle}
                                                 minDate={item.startDate ? item.startDate : ""}
                                                 errorFlag={!item.endDateFlag}
-                                                onDateChange={this.onChangeText("personal", "endDate")}
+                                                onDateChange={this.onChangeAccText("endDate", index)}
                                             />
                                             {!item.startDateFlag && <Text style={styles.errMsg}>{gblStrings.accManagement.validDateSelect}</Text>}
                                         </View>
@@ -685,13 +697,15 @@ addNewIntrestedPartiesComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     stateCityData: PropTypes.instanceOf(Object),
     getAddressFormat: PropTypes.func,
-    getStateCity: PropTypes.func
+    getStateCity: PropTypes.func,
+    saveInterestedParties: PropTypes.func
 };
 
 addNewIntrestedPartiesComponent.defaultProps = {
     navigation: {},
     stateCityData: {},
     getAddressFormat: () => { },
-    getStateCity: () => { }
+    getStateCity: () => { },
+    saveInterestedParties: () => { }
 };
 export default addNewIntrestedPartiesComponent;

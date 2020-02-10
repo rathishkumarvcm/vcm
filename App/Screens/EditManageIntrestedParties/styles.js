@@ -2,6 +2,12 @@ import { StyleSheet } from "react-native";
 import { scaledHeight } from "../../Utils/Resolution";
 
 const styles = StyleSheet.create({
+  addAccountView: {
+    alignSelf: "flex-start",
+    marginBottom: scaledHeight(20),
+    marginTop: scaledHeight(10),
+    paddingLeft: '4%'
+  },
   addBtn: {
     marginBottom: scaledHeight(5),
     paddingRight: '4%'

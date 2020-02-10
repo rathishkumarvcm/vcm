@@ -31,15 +31,15 @@ class CardHeader extends Component {
                 <View style={styles.contentContainerStyle}>
                     <View style={styles.marginTopStyle}>
                         <Text style={styles.shortContentText}>Account Type</Text>
-                        <Text style={styles.shortContentValueText}>{item.account_Type}</Text>
+                        <Text style={styles.shortContentValueText}>{item.accountType}</Text>
                     </View>
                     <View style={styles.marginTopStyle}>
                         <Text style={styles.shortContentText}>Account Name</Text>
-                        <Text style={styles.shortContentValueText}>{item.account_Name}</Text>
+                        <Text style={styles.shortContentValueText}>{item.accountName}</Text>
                     </View>
                     <View style={styles.marginTopStyle}>
                         <Text style={styles.shortContentText}>Account Number</Text>
-                        <Text style={styles.shortContentValueText}>{item.account_Number}</Text>
+                        <Text style={styles.shortContentValueText}>{item.accountNumber}</Text>
                     </View>
                     <View style={styles.marginTopStyle}>
                         <Text style={styles.shortContentText}>Effective Start & End Date</Text>

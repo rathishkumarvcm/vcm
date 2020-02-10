@@ -63,13 +63,13 @@ class manageIntrestedPartiesComponent extends Component {
             }
         };
         saveInterestedParties(payload);
-        navigation.navigate("editIntrestedParty", { mainObj: data, pKey: index });
+        navigation.navigate("editIntrestedParty");
     }
 
     getDeleteData = (item, key, index) => {
         const { interestedPartyData } = this.state;
         const delObj = item;
-        const mainObj = interestedPartyData[parseInt(index, 0)];
+        const mainObj = interestedPartyData[parseInt(index, 10)];
         const pIndex = index;
         const cIndex = key;
 
@@ -90,6 +90,10 @@ class manageIntrestedPartiesComponent extends Component {
         deleteInterestedParties(payloadData);
     }
 
+    onClickCancelNotification = () => {
+        this.setState({ isSavedSuccess: false, successMsg: "" });
+    }
+
     renderData = ({ item, index }) => {
         const { collapseIcon } = this.state;
         return (
@@ -108,7 +112,7 @@ class manageIntrestedPartiesComponent extends Component {
                 <View style={styles.line} />
                 <View style={styles.containerView}>
                     <View style={styles.containerHeaderView}>
-                        <Text style={styles.containerHeaderText}>{gblStrings.accManagement.noOfAccTagged} <Text style={styles.containerHeaderTextValue}>{item.accounts_Tagged}</Text></Text>
+                        <Text style={styles.containerHeaderText}>{gblStrings.accManagement.noOfAccTagged} <Text style={styles.containerHeaderTextValue}>{item.interestedParties.length}</Text></Text>
                     </View>
                     {item.interestedParties && item.interestedParties.map((subItem, key) => {
                         return (
@@ -152,7 +156,7 @@ class manageIntrestedPartiesComponent extends Component {
                                     <View style={styles.saveSuccessMsgTxt}>
                                         <Text style={styles.notificationTxt}>{successMsg}</Text>
                                     </View>
-                                    <TouchableOpacity style={styles.flexSmall}>
+                                    <TouchableOpacity style={styles.flexSmall} onPress={this.onClickCancelNotification}>
                                         <GIcon
                                             name="close"
                                             type="EvilIcons"

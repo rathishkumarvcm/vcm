@@ -6,6 +6,7 @@ import { GButtonComponent, GDateComponent, GDropDownComponent, GInputComponent, 
 import gblStrings from '../../Constants/GlobalStrings';
 import { zipCodeRegex, emailRegex } from '../../Constants/RegexConstants';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
+import AppUtils from '../../Utils/AppUtils';
 
 const accountTypeData = [
     { "key": "1", "value": "Traditional" },
@@ -100,26 +101,30 @@ class editManageIntrestedPartiesComponent extends Component {
     }
 
     updateState = () => {
-        const { navigation, manageInterestedPartiesData } = this.props;
+        const { manageInterestedPartiesData } = this.props;
         let accountArray = [];
         const tagAccounts = [];
-        const mainObj = navigation.getParam('mainObj');
-        const pKey = navigation.getParam('pKey');
+        let mainObj = {};
+        let pKey = "";
+        if (manageInterestedPartiesData && manageInterestedPartiesData.savedInterestedPartyData) {
+            mainObj = manageInterestedPartiesData.savedInterestedPartyData.data;
+            pKey = manageInterestedPartiesData.savedInterestedPartyData.index;
+        }
         accountArray = mainObj.interestedParties;
-
         if (accountArray) {
             accountArray.map((item) => {
                 const accountItem = {
-                    accountType: item.account_Type,
-                    accountName: item.account_Name,
-                    accountNumber: item.account_Number,
+                    key: item.key,
+                    accountType: item.accountType,
+                    accountName: item.accountName,
+                    accountNumber: item.accountNumber,
                     startDate: item.startDate,
                     endDate: item.endDate,
-                    accountTypeValidation: "",
+                    accountTypeValidation: false,
                     accountTypeValidationMsg: "",
-                    accountNameValidation: "",
+                    accountNameValidation: false,
                     accountNameValidationMsg: "",
-                    accountNumberValidation: "",
+                    accountNumberValidation: true,
                     accountNumberValidationMsg: "",
                     startDateValidation: true,
                     startDateValidationMsg: "",
@@ -152,6 +157,32 @@ class editManageIntrestedPartiesComponent extends Component {
         if (manageInterestedPartiesData && manageInterestedPartiesData.list_manage_interested_parties) {
             this.setState({ reducerData: manageInterestedPartiesData.data });
         }
+    }
+
+    onAddAccount = () => {
+        const { taggedAccData } = this.state;
+        const prevArr = taggedAccData;
+        const key = taggedAccData.length + 1;
+        const newAccObj = {
+            key: key.toString(),
+            accountType: "",
+            accountName: "",
+            accountNumber: "",
+            startDate: "",
+            endDate: "",
+            accountTypeValidation: false,
+            accountTypeValidationMsg: "",
+            accountNameValidation: false,
+            accountNameValidationMsg: "",
+            accountNumberValidation: true,
+            accountNumberValidationMsg: "",
+            startDateValidation: true,
+            startDateValidationMsg: "",
+            endDateValidation: true,
+            endDateValidationMsg: ""
+        };
+        prevArr.push(newAccObj);
+        this.setState({ taggedAccData: prevArr });
     }
 
     getZipCodeValue = () => {
@@ -216,6 +247,13 @@ class editManageIntrestedPartiesComponent extends Component {
         }));
     }
 
+    onChangeAccText = (keyName, index) => text => {
+        const { taggedAccData } = this.state;
+        const newItems = [...taggedAccData];
+        newItems[parseInt(index, 10)][`${keyName}`] = text;
+        this.setState({ taggedAccData: newItems });
+    }
+
     onUpdateField = (stateKey, keyName, val) => {
         this.setState(prevState => ({
             [stateKey]: {
@@ -225,8 +263,18 @@ class editManageIntrestedPartiesComponent extends Component {
         }));
     }
 
-    selectedDropDownValue = () => {
-        // this.onUpdateField("personal", "relation", value);
+    onUpdateArrField = (index, keyName, val) => {
+        const { taggedAccData } = this.state;
+        const newItems = [...taggedAccData];
+        newItems[parseInt(index, 10)][`${keyName}`] = val;
+        this.setState({ taggedAccData: newItems });
+    }
+
+    selectedDropDownValue = (index, keyName) => text => {
+        const { taggedAccData } = this.state;
+        const newItems = [...taggedAccData];
+        newItems[parseInt(index, 10)][`${keyName}`] = text;
+        this.setState({ taggedAccData: newItems });
     }
 
     onCancelClick = () => {
@@ -263,8 +311,10 @@ class editManageIntrestedPartiesComponent extends Component {
     }
 
     validateFields = () => {
+        const { taggedAccData } = this.state;
         try {
             let isValidationSuccess = false;
+            let isTaggedAccountSuccess = false;
             this.setState(prevState => ({
                 personal: {
                     ...prevState.personal,
@@ -280,11 +330,20 @@ class editManageIntrestedPartiesComponent extends Component {
             } else {
                 isValidationSuccess = true;
             }
-            if (isValidationSuccess) {
+
+            if (taggedAccData) {
+                isTaggedAccountSuccess = false;
+                if (!this.validateTaggedAcc()) {
+                    isTaggedAccountSuccess = false;
+                } else {
+                    isTaggedAccountSuccess = true;
+                }
+            }
+            if (isValidationSuccess && isTaggedAccountSuccess) {
                 this.onClickSave();
             }
         } catch (err) {
-            // console.log(`Error::: ${err}`);
+            AppUtils.debugLog(`Error ::: :: ${err}`);
         }
     }
 
@@ -337,8 +396,38 @@ class editManageIntrestedPartiesComponent extends Component {
         return isValidationSuccess;
     }
 
+    validateTaggedAcc = () => {
+        let isErrMsg = false;
+        let isValidationSuccess = false;
+        const { taggedAccData } = this.state;
+        for (let i = 0; i < taggedAccData.length; i += 1) {
+            const obj = taggedAccData[parseInt(i, 10)];
+            if (this.isEmpty(obj.accountType)) {
+                this.onUpdateArrField(i, "accountTypeValidation", true);
+                this.onUpdateArrField(i, "accountTypeValidationMsg", "Please select a value");
+                isErrMsg = true;
+            }
+            if (this.isEmpty(obj.accountName)) {
+                this.onUpdateArrField(i, "accountNameValidation", true);
+                this.onUpdateArrField(i, "accountNameValidationMsg", "Please select a value");
+                isErrMsg = true;
+            }
+            if (this.isEmpty(obj.accountNumber)) {
+                this.onUpdateArrField(i, "accountNumberValidation", false);
+                this.onUpdateArrField(i, "accountNumberValidationMsg", "Please enter the Value");
+                isErrMsg = true;
+            }
+
+        }
+        if (!isErrMsg) {
+            isValidationSuccess = true;
+        }
+
+        return isValidationSuccess;
+    }
+
     getPayloadData = () => {
-        const { reducerData, interestedPartyData, personal } = this.state;
+        const { interestedPartyData, personal, taggedAccData } = this.state;
         const personalData = personal;
         const updatedObj = interestedPartyData;
         updatedObj.email = personalData.email;
@@ -348,26 +437,32 @@ class editManageIntrestedPartiesComponent extends Component {
         updatedObj.zipCode = personalData.zipCode;
         updatedObj.city = personalData.city;
         updatedObj.state = personalData.stateValue;
-        updatedObj.interestedParties = personalData.taggedAccounts;
-
-        const pIndex = reducerData.findIndex((item) => item.key === interestedPartyData.key);
-
-        const newArr = [...reducerData];
-        newArr.splice(pIndex, 1, updatedObj);
-
-        return newArr;
+        updatedObj.interestedParties = taggedAccData;
+        return updatedObj;
     }
 
     onClickSave = () => {
-        const { navigation } = this.props;
-        const { personal, interestedPartyData } = this.state;
-        // const payloadData = this.getPayloadData();
-        // editInterestedParties(payloadData);
-        // const notificationMsg = `${interestedPartyObj.fname} ${interestedPartyObj.lname} 's data has been Updated Successfully`;
+        const { navigation, saveInterestedParties } = this.props;
+        const { personal } = this.state;
+        const getData = this.getPayloadData();
+        const payloadData = {
+            savedInterestedPartyData: {
+                getData
+            },
+            isEdit: true,
+            isNew: false
+        };
+        saveInterestedParties(payloadData);
         if (personal.addressLine1 && personal.addressLine2) {
-            //    navigation.navigate("manageIntrestedParties", { showMsg: true, successMsg: notificationMsg });
-            navigation.navigate("verifyIntrestedParties", { addedData: interestedPartyData, edit: true });
+            navigation.navigate("verifyIntrestedParties");
         }
+    }
+
+    onDeleteFunc = (index) => () => {
+        const { taggedAccData } = this.state;
+        const arr = [...taggedAccData];
+        arr.splice(index, 1);
+        this.setState({ taggedAccData: arr });
     }
 
     generateKeyExtractor = (item) => item.key;
@@ -510,7 +605,7 @@ class editManageIntrestedPartiesComponent extends Component {
                                         <View style={styles.tagAccHeadingView}>
                                             <Text style={styles.titleHeaderText}>{`Tagged Account # ${index + 1} `}</Text>
                                             <View style={styles.addBtn}>
-                                                <TouchableOpacity>
+                                                <TouchableOpacity onPress={this.onDeleteFunc(index)}>
                                                     <Text style={styles.editBtnText}>{gblStrings.common.delete}</Text>
                                                 </TouchableOpacity>
                                             </View>
@@ -522,10 +617,10 @@ class editManageIntrestedPartiesComponent extends Component {
                                                 data={accountTypeData}
                                                 textInputStyle={styles.dropdownTextInput}
                                                 dropDownLayout={styles.dropDownLayout}
-                                                dropDownValue={item.account_Type}
-                                                selectedDropDownValue={this.selectedDropDownValue(index, "account_Type")}
-                                            // errorFlag={item.relationToAccOwnerFlag}
-                                            // errorText={item.relationToAccOwnerValidationMsg}
+                                                dropDownValue={item.accountType}
+                                                selectedDropDownValue={this.selectedDropDownValue(index, "accountType")}
+                                                errorFlag={item.accountTypeValidation}
+                                                errorText={item.accountTypeValidationMsg}
                                             />
                                             <GDropDownComponent
                                                 dropDownName="Account Name"
@@ -533,10 +628,10 @@ class editManageIntrestedPartiesComponent extends Component {
                                                 data={accountNameData}
                                                 textInputStyle={styles.dropdownTextInput}
                                                 dropDownLayout={styles.dropDownLayout}
-                                                dropDownValue={item.account_Name}
-                                                selectedDropDownValue={this.selectedDropDownValue(index, "account_Name")}
-                                            // errorFlag={item.relationToAccOwnerFlag}
-                                            // errorText={item.relationToAccOwnerValidationMsg}
+                                                dropDownValue={item.accountName}
+                                                selectedDropDownValue={this.selectedDropDownValue(index, "accountName")}
+                                                errorFlag={item.accountNameValidation}
+                                                errorText={item.accountNameValidationMsg}
                                             />
                                             <Text style={styles.lblTxt}>
                                                 Account Number
@@ -544,9 +639,10 @@ class editManageIntrestedPartiesComponent extends Component {
                                             <GInputComponent
                                                 inputref={this.setInputRef("accountNumber")}
                                                 propInputStyle={styles.customTxtBox}
-                                                value={item.account_Number}
-                                            // maxLength={gblStrings.maxLength.company}
-                                            // onChangeText={this.onChangeText("personal", "company")}
+                                                value={item.accountNumber}
+                                                onChangeText={this.onChangeAccText("accountNumber", index)}
+                                                errorFlag={!item.accountNumberValidation}
+                                                errorText={item.accountNumberValidationMsg}
                                             />
                                             <View style={styles.blockMarginTop}>
                                                 <Text style={styles.preferdTimeTxt}>Effective Start & End Date</Text>
@@ -558,8 +654,8 @@ class editManageIntrestedPartiesComponent extends Component {
                                                     dateTextLayout={styles.dateTextLayout}
                                                     componentStyle={styles.dateStyle}
                                                     maxDate={item.endDate ? item.endDate : ""}
-                                                // errorFlag={!item.startDateValidation}
-                                                // onDateChange={this.onChangeText("personal", "startDate")}
+                                                    errorFlag={!item.startDateValidation}
+                                                    onDateChange={this.onChangeAccText("startDate", index)}
                                                 />
                                                 <Text style={styles.lblTxt}>{gblStrings.accManagement.to}</Text>
                                                 <GDateComponent
@@ -569,15 +665,20 @@ class editManageIntrestedPartiesComponent extends Component {
                                                     dateTextLayout={styles.dateTextLayout}
                                                     componentStyle={styles.dateStyle}
                                                     minDate={item.startDate ? item.startDate : ""}
-                                                // errorFlag={!item.endDateValidation}
-                                                // onDateChange={this.onChangeText("personal", "endDate")}
+                                                    errorFlag={!item.endDateValidation}
+                                                    onDateChange={this.onChangeAccText("endDate", index)}
                                                 />
-                                                {/* {!personal.startDateValidation && <Text style={styles.errMsg}>{gblStrings.accManagement.validDateSelect}</Text>} */}
+                                                {!item.startDateValidation && <Text style={styles.errMsg}>{gblStrings.accManagement.validDateSelect}</Text>}
                                             </View>
                                         </View>
                                     </View>
                                 );
                             })}
+                        </View>
+                        <View style={styles.addAccountView}>
+                            <TouchableOpacity onPress={this.onAddAccount}>
+                                <Text style={styles.editBtnText}>+ Tag Another Account</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     {/* ----------------- Button Group -------------------- */}
@@ -613,7 +714,8 @@ editManageIntrestedPartiesComponent.propTypes = {
     stateCityData: PropTypes.instanceOf(Object),
     getStateCity: PropTypes.func,
     getAddressFormat: PropTypes.func,
-    manageInterestedPartiesData: PropTypes.instanceOf(Object)
+    manageInterestedPartiesData: PropTypes.instanceOf(Object),
+    saveInterestedParties: PropTypes.func
 
 };
 
@@ -622,7 +724,8 @@ editManageIntrestedPartiesComponent.defaultProps = {
     stateCityData: {},
     getStateCity: () => { },
     getAddressFormat: () => { },
-    manageInterestedPartiesData: {}
+    manageInterestedPartiesData: {},
+    saveInterestedParties: () => { }
 };
 
 export default editManageIntrestedPartiesComponent;

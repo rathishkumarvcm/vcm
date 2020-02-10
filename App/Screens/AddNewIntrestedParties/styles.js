@@ -143,7 +143,8 @@ const styles = StyleSheet.create({
   lblTxt: {
     color: "rgba(51, 51, 51, 0.87)",
     fontSize: scaledHeight(16),
-    fontWeight: "bold"
+    fontWeight: "bold",
+    marginTop: scaledHeight(15)
   },
   line: {
     alignSelf: "center",

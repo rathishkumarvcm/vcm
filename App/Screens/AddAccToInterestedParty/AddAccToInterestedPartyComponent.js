@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import styles from './styles';
 import { GHeaderComponent, GFooterSettingsComponent, GInputComponent, GDateComponent, GDropDownComponent, GButtonComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
+import AppUtils from '../../Utils/AppUtils';
 
 const accountTypeData = [
     { "key": "1", "value": "Traditional" },
@@ -30,25 +31,42 @@ class AddAccToInterestedPartyComponent extends Component {
         };
     }
 
-    static getDerivedStateFromProps(nextProps, prevState) {
-        const { manageInterestedPartiesData } = nextProps;
+    componentDidMount() {
+        this.setData();
+    }
+
+    // static getDerivedStateFromProps(nextProps, prevState) {
+    //     const { manageInterestedPartiesData } = nextProps;
+    //     if (manageInterestedPartiesData && manageInterestedPartiesData.savedInterestedPartyData) {
+    //         if (manageInterestedPartiesData.savedInterestedPartyData && manageInterestedPartiesData.savedInterestedPartyData.data)
+    //             return {
+    //                 initialData: manageInterestedPartiesData.savedInterestedPartyData.data
+    //             };
+    //         if (manageInterestedPartiesData.savedInterestedPartyData && manageInterestedPartiesData.savedInterestedPartyData.key)
+    //             return {
+    //                 parentKey: manageInterestedPartiesData.savedInterestedPartyData.parentKey
+    //             };
+    //     }
+    //     return prevState;
+    // }
+
+    setData = () => {
+        const { manageInterestedPartiesData } = this.props;
         if (manageInterestedPartiesData && manageInterestedPartiesData.savedInterestedPartyData) {
             if (manageInterestedPartiesData.savedInterestedPartyData && manageInterestedPartiesData.savedInterestedPartyData.data)
-                return {
-                    initialData: manageInterestedPartiesData.savedInterestedPartyData.data
-                };
+                this.setState({ initialData: manageInterestedPartiesData.savedInterestedPartyData.data });
+
             if (manageInterestedPartiesData.savedInterestedPartyData && manageInterestedPartiesData.savedInterestedPartyData.key)
-                return {
-                    parentKey: manageInterestedPartiesData.savedInterestedPartyData.parentKey
-                };
+                this.setState({ parentKey: manageInterestedPartiesData.savedInterestedPartyData.parentKey });
         }
-        return prevState;
     }
 
     addTaggedAccount = () => {
-        const { accountList } = this.state;
+        const { accountList, initialData } = this.state;
         const accList = accountList;
+        const key = initialData.interestedParties.length + 1;
         const accountDetails = {
+            key: key.toString(),
             accountType: "",
             accountTypeFlag: false,
             accountTypeMsg: "",
@@ -56,7 +74,7 @@ class AddAccToInterestedPartyComponent extends Component {
             accountNameFlag: false,
             accountNameMsg: "",
             accountNumber: "",
-            accountNumberFlag: false,
+            accountNumberFlag: true,
             accountNumberMsg: "",
             startDate: "",
             startDateFlag: true,
@@ -94,7 +112,7 @@ class AddAccToInterestedPartyComponent extends Component {
                 this.onClickSave();
             }
         } catch (err) {
-            // console.log(`Error::: ${err}`);
+            AppUtils.debugLog(`Error ::: :: ${err}`);
         }
     }
 
@@ -142,30 +160,29 @@ class AddAccToInterestedPartyComponent extends Component {
     };
 
     setInputRef = (inputComp) => (ref) => {
-        this[parseInt(inputComp, 10)] = ref;
+        this[`${inputComp}`] = ref;
     }
 
     onChangeText = (index, keyName) => text => {
         const { accountList } = this.state;
         const value = text;
         const newItems = [...accountList];
-        newItems[parseInt(index, 10)][keyName.toString()] = value;
+        newItems[parseInt(index, 10)][`${keyName}`] = value;
         this.setState({ accountList: newItems });
     }
 
     selectedDropDownValue = (index, keyName) => text => {
         const { accountList } = this.state;
         const newItems = [...accountList];
-        newItems[parseInt(index, 10)][keyName.toString()] = text;
+        newItems[parseInt(index, 10)][`${keyName}`] = text;
         this.setState({ accountList: newItems });
-        this.onChangeValidationText(index, keyName, false);
     }
 
     onChangeValidationText = (index, keyName, val) => {
         const { accountList } = this.state;
         const value = val;
         const newItems = [...accountList];
-        newItems[parseInt(index, 10)][keyName.toString()] = value;
+        newItems[parseInt(index, 10)][`${keyName}`] = value;
         this.setState({ accountList: newItems });
     }
 
@@ -180,32 +197,43 @@ class AddAccToInterestedPartyComponent extends Component {
         navigation.goBack();
     }
 
-    onClickSave = () => {
-        const { initialData, parentKey } = this.state;
-        const { navigation, saveInterestedParties } = this.props;
-        // let arr = initialData.interestedParties;
-        // const len = initialData.interestedParties.length;
-        // for (let i = 0; i < accountList.length; i += 1) {
-        //     const data = accountList[i];
-        //     let obj = {
-        //         "key": len,
-        //         "account_Type": data.accountType,
-        //         "account_Name": data.accountName,
-        //         "account_Number": data.accountNumber,
-        //         "startDate": data.startDate,
-        //         "endDate": data.endDate
-        //     };
-        //     len += 1;
-        //     arr.push(obj);
-        // };
-        // let updatedObj = initialData;
-        // updatedObj.interestedParties = arr;
-        const payload = {
-            data: initialData,
-            parentKey
+    getPayloadData = () => {
+        const { initialData, accountList } = this.state;
+        const arr = initialData.interestedParties;
+        let len = initialData.interestedParties.length + 1;
+        for (let i = 0; i < accountList.length; i += 1) {
+            const data = accountList[parseInt(i, 10)];
+            const obj = {
+                "key": len.toString(),
+                "accountType": data.accountType,
+                "accountName": data.accountName,
+                "accountNumber": data.accountNumber,
+                "startDate": data.startDate,
+                "endDate": data.endDate
+            };
+            len += 1;
+            arr.push(obj);
         };
-        saveInterestedParties(payload);
-        navigation.navigate("verifyIntrestedParties", { addedData: initialData, data: initialData, key: parentKey });
+        const updatedObj = initialData;
+        updatedObj.interestedParties.concat(arr);
+        return updatedObj;
+    }
+
+    onClickSave = () => {
+        const { navigation, saveInterestedParties } = this.props;
+        const { parentKey } = this.state;
+        const getData = this.getPayloadData();
+        const payloadData = {
+            savedInterestedPartyData: {
+                getData,
+                parentKey,
+            },
+            isEdit: true,
+            isNew: false
+        };
+        saveInterestedParties(payloadData);
+        navigation.navigate("verifyIntrestedParties");
+
     }
 
     generateKeyExtractor = (item) => item.key;
@@ -280,7 +308,7 @@ class AddAccToInterestedPartyComponent extends Component {
                                             propInputStyle={styles.customTxtBox}
                                             value={item.account_Number}
                                             onChangeText={this.onChangeText(index, "accountNumber")}
-                                            errorFlag={item.accountNumberFlag}
+                                            errorFlag={!item.accountNumberFlag}
                                             errorText={item.accountNumberMsg}
                                         />
                                         <View style={styles.blockMarginTop}>
