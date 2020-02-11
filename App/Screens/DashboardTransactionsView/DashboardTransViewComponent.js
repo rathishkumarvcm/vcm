@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
 import styles from './styles';
 import { GButtonComponent, GIcon } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
+
 
 const sortingOptions = [{ id: "1", option: "Transaction Description" }, { id: "2", option: "Trade Date" }, { id: "3", option: "Price" }, { id: "4", option: "Value" }, { id: "5", option: "Transaction Status" }];
 
@@ -45,7 +47,7 @@ class DashboardTransViewComponent extends Component {
             } if (x > y) {
                 return 1;
             }
-            return 0;``
+            return 0;
         });
     }
 
@@ -213,6 +215,7 @@ class DashboardTransViewComponent extends Component {
 
     render() {
         const { showSortOptions, transactions } = this.state;
+        const { dashboardTransViewData }= this.props;
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.mainFlex}>
@@ -256,10 +259,12 @@ class DashboardTransViewComponent extends Component {
 
 DashboardTransViewComponent.propTypes = {
     // navigation: PropTypes.instanceOf(Object),
+    dashboardTransViewData: PropTypes.instanceOf(Object),
 };
 
 DashboardTransViewComponent.defaultProps = {
     // navigation: {},
+    dashboardTransViewData: {},
 };
 
 export default DashboardTransViewComponent;

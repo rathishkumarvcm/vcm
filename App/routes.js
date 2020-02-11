@@ -191,6 +191,9 @@ import RMDDashboardComponent from './Screens/RMDDashboard';
 import AccessFormList from './Screens/MSRAccessForms';
 import FloatingButtonComponent from './Screens/MSRServiceRequest';
 
+import DashboardTransViewComponent from './Screens/DashboardTransactionsView';
+
+
 
 // Notification Tabs
 const NotificationTabNavigator = createMaterialTopTabNavigator(
@@ -1133,6 +1136,12 @@ const AppNavigator = createStackNavigator({
     },
     accountSummary: {
         screen: AccountSummary,
+        navigationOptions: {
+            header: null,
+        }
+    },
+    DashboardTransView:{
+        screen:DashboardTransViewComponent,
         navigationOptions: {
             header: null,
         }
