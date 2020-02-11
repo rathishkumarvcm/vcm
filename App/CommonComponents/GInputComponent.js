@@ -52,7 +52,7 @@ export const GInputComponent = (props) => {
 
   const {errorFlag,propInputStyle,inputStyle,value,secureTextEntry,autoFocus,editable,onBlur,onChange,onChangeText,
     onSubmitEditing,onFocus,onKeyPress,keyboardType,returnKeyType,maxLength,multiline,numberOfLines,placeholder,
-    placeholderTextColor,selectionColor,autoCapitalize,inputref,inputText,dropDownBox,arrowIconStyle,dropDownClick,
+    placeholderTextColor,selectionColor,autoCapitalize,dropDownBox,arrowIconStyle,dropDownClick,
     errorText, underlineColorAndroid} = props;
 return(
   <>
@@ -80,10 +80,8 @@ return(
         selectionColor={selectionColor}
         underlineColorAndroid={underlineColorAndroid}
         autoCapitalize={autoCapitalize}
-        ref={inputref}
-      >
-        {inputText}
-      </TextInput>
+      />
+      
       {dropDownBox ? (
         <TouchableOpacity style={[styles.arrowIconStyle, arrowIconStyle]} onPress={dropDownClick}>
           <GIcon
@@ -115,7 +113,6 @@ GInputComponent.propTypes = {
   secureTextEntry: PropTypes.bool,
   autoFocus: PropTypes.bool,
   editable: PropTypes.bool,
-  inputText: PropTypes.string,
   keyboardType: PropTypes.string,
   returnKeyType: PropTypes.string,
   onBlur: PropTypes.func,
@@ -133,10 +130,6 @@ GInputComponent.propTypes = {
   onFocus: PropTypes.func,
   dropDownClick:PropTypes.func,
   onKeyPress: PropTypes.func,
-  inputref: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.shape({ current: PropTypes.object })
-  ]),
   propInputStyle: PropTypes.instanceOf(Object),
   dropDownBox:PropTypes.bool,
   errorFlag:PropTypes.bool,
@@ -155,7 +148,6 @@ GInputComponent.defaultProps = {
   onChange: () => { },
   onChangeText: () => { },
   onSubmitEditing: () => { },
-  inputref : () => { },
   maxLength: 100,
   multiline: false,
   numberOfLines: 1,
@@ -165,7 +157,6 @@ GInputComponent.defaultProps = {
   underlineColorAndroid: "transparent",
   autoCapitalize: "none",
   secureTextEntry:false,
-  inputText:'',
   onFocus:() => { },
   dropDownClick:() => { },
   onKeyPress:() => { },

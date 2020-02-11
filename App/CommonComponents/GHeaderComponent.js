@@ -248,7 +248,7 @@ class GHeaderComponent extends Component {
     );
   }
 
-  keyExtractor = ({item}) => {
+  keyExtractor = (item) => {
     return item.title;
   }
 

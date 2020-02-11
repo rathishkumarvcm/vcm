@@ -170,8 +170,8 @@ GDateComponent.defaultProps = {
     cancelBtnText: "Cancel",
     errorFlag: false,
     errorMsg: "",
-    minDate:"",
-    maxDate:"",
+    minDate: undefined,
+    maxDate: undefined,
 
     onDateChange: null,
     // onOpenModal: null,
