@@ -103,7 +103,79 @@ const modalStyles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         flex: 1,
         // justifyContent: 'center',
-    }
+    },
+    modalView: { 
+        backgroundColor: '#fff', 
+        height: '65%', 
+        marginTop: "20%", 
+        width: '90%'
+    },
+    groupNameView: {
+        marginTop: scaledHeight(34),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+      },
+    groupNameText: {
+        color: '#333333DE',
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold',
+        marginBottom: scaledHeight(8)
+    },
+    groupNameInput: {
+        marginLeft: '4%',
+        marginRight: '4%',
+    },
+    selectAccountView: {
+        marginTop: scaledHeight(34),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+    },
+    selectAccountText:{
+        color: '#333333DE',
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold',
+        marginBottom: scaledHeight(8)
+    },
+    modalButtonText: {
+        color: '#FFFFFF',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalCancelButton: {
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#544A54',
+
+        borderColor: '#61285F',
+        borderWidth: 1,
+
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        width: '30%'
+      },
+      modalAddButton: {
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#544A54',
+
+        borderColor: '#61285F',
+        borderWidth: 1,
+
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        // marginBottom:scaledHeight(15),
+        // marginTop:scaledHeight(26),
+        width: '30%',
+        marginRight: 20
+      },
+      modalButtonView: {
+          flex: 1, 
+          flexDirection: 'row', 
+          justifyContent: 'center', 
+          marginTop: "10%"
+      }
+
 });
 
 /** AccountSummaryAccordion Styles */

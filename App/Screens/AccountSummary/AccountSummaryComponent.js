@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Modal, Button, Image } from 'react-native';
+import { View, Text, ScrollView, Modal, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import MultiSelect from 'react-native-multiple-select';
-import SelectMultiple from 'react-native-select-multiple';
-import { GHeaderComponent, GButtonComponent, GInputComponent } from '../../CommonComponents';
+import { GHeaderComponent, GButtonComponent, GInputComponent, showAlert } from '../../CommonComponents';
 import { styles, modalStyles } from './styles';
 import AccountSummaryAccordion from './AccountSummaryAccordion';
-import { scaledHeight, scaledWidth } from '../../Utils/Resolution';
-import globalString from '../../Constants/GlobalStrings';
+import { scaledHeight } from '../../Utils/Resolution';
+import globalStrings from '../../Constants/GlobalStrings';
 
-const fruits = ['Apples', 'Oranges', 'Pears', 'Apples', 'Oranges', 'Pears', 'Apples', 'Oranges', 'Pears', 'Apples', 'Oranges', 'Pears'];
 
 
 class AccountSummaryComponent extends Component {
@@ -20,7 +18,7 @@ class AccountSummaryComponent extends Component {
       showAddGroupModal: false,
       groupName: "",
       selectedItems: [],
-      selectedFruits: []
+      listOfAllAccounts:[],
     };
   }
 
@@ -30,41 +28,31 @@ class AccountSummaryComponent extends Component {
     let { accountSummaryInitialState: { holdingGroups } } = props;
     const { groups } = prevState;
 
-    if (groups.length === 0) {
+    if (groups !== holdingGroups) {
       holdingGroups = holdingGroups.map((item) => {
         const accounts = item.accounts.map((account) => { return { ...account, checked: true }; });
         return { ...item, accounts };
       });
       return { groups: holdingGroups };
     }
-    // return {
-    //   groups: prevState.holdingGroups
-    // };
-  }
-
-  onSelectionsChange = (selectedFruits) => {
-    // selectedFruits is array of { label, value }
-    this.setState({ selectedFruits });
+    return null;
   }
 
   onSelectedItemsChange = selectedItems => {
-    console.log("selectedItems =>>>><<<<===", selectedItems);
     this.setState({ selectedItems });
   };
 
   hide = () => {
-    this.setState({ showAddGroupModal: false, groupName: "" });
+    this.setState({ showAddGroupModal: false, groupName: "", selectedItems: [] });
   }
 
   show = () => {
-    this.setState({ showAddGroupModal: true, groupName: "" });
+    this.setState({ showAddGroupModal: true, groupName: "", selectedItems: [] });
   }
 
 
   renderAccordians = () => {
     const { groups } = this.state;
-
-    console.log("groups ===>>>>====>>>", groups);
 
     const items = [];
     for (const item of groups) {
@@ -78,17 +66,69 @@ class AccountSummaryComponent extends Component {
     return items;
   }
 
-
-  onClickShowModal = () => {
-    this.show();
+  getAllAccounts = () => {
+    const {groups} = this.state;
+    const accountList = [];
+      groups.forEach(element => {
+      accountList.push(...element.accounts);
+    });
+    this.setState({
+      listOfAllAccounts: this.uniqueArray(accountList, "accountID")
+    });
   }
 
-  onClickHideModal = () => {
+  uniqueArray = (array, objectKey) => {
+    const unique = array
+         .map(e => e[`${objectKey}`])
+         // store the keys of the unique objects
+         .map((e, i, final) => final.indexOf(e) === i && i)
+         // eliminate the dead keys & store unique objects
+        .filter(e => array[`${e}`]).map(e => array[`${e}`]);      
+     return unique;
+  }
+    
+  onClickShowModal = () => {
+    this.show();
+    this.getAllAccounts();
+  }
+
+  onClickAddAccount = () => {
+    this.onClickAddNewGroup();
+  }
+
+  onClickCancelAccount = () => {
     this.hide();
   }
 
-  onClickAddNewGroup = () => {
 
+  onClickAddNewGroup = () => {
+    const {addHoldingGroup} = this.props;
+    const {groupName, listOfAllAccounts} = this.state;
+    const selectedAccounts = [];
+
+    const {selectedItems} = this.state;
+
+    listOfAllAccounts.forEach(account => {
+      selectedItems.forEach(accountID => {
+        if (account.accountID === accountID) {
+          selectedAccounts.push(account);
+        }
+      });
+    });
+
+
+    if(groupName && selectedAccounts.length !== 0) {
+      const newHoldingGroup = {
+        "groupName": groupName,
+        "groupID": 85695,
+        "accounts": selectedAccounts,
+      };
+      addHoldingGroup(newHoldingGroup);
+      this.hide();
+    }
+    else {
+      showAlert(globalStrings.common.appName, `Please enter the group name and account`, globalStrings.common.ok);
+    }
   }
 
   setNewGroupName = (text) => {
@@ -97,21 +137,8 @@ class AccountSummaryComponent extends Component {
     });
   }
 
-  renderLabel = (label, style) => {
-    return (
-      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <Image style={{ width: 42, height: 42 }} source={{ uri: 'https://dummyimage.com/100x100/52c25a/fff&text=S' }} />
-        <View style={{ marginLeft: 10 }}>
-          <Text style={style}>{accountName}</Text>
-        </View>
-      </View>
-    );
-  }
-
-
   addNewGroupModal = () => {
-    const { showAddGroupModal, groupName, selectedItems, groups, selectedFruits } = this.state;
-    const { accounts } = groups[0];
+    const { showAddGroupModal, groupName, selectedItems, listOfAllAccounts } = this.state;
 
     return (
       <Modal
@@ -121,64 +148,27 @@ class AccountSummaryComponent extends Component {
         onRequestClose={() => this.setModalVisible(false)}
       >
         <View style={modalStyles.modalContainerView}>
-          <View style={{ backgroundColor: '#fff', height: '60%', width: '90%', marginTop: "20%"}}>
-
-
-            <View style={{
-              marginTop: scaledHeight(34),
-              paddingLeft: '4%',
-              paddingRight: '4%',
-            }}
-            >
-              <Text style={{
-                color: '#333333DE',
-                fontSize: scaledHeight(20),
-                fontWeight: 'bold',
-                marginBottom: scaledHeight(8)
-              }}
-              >Group Name
-              </Text>
+          <View style={modalStyles.modalView}>
+            <View style={modalStyles.groupNameView}>
+              <Text style={modalStyles.groupNameText}>Group Name </Text>
             </View>
             {/* <GInputComponent placeholder={'Online ID'} /> */}
 
             <GInputComponent
-              propInputStyle={{
-                marginLeft: '4%',
-                marginRight: '4%',
-              }}
+              propInputStyle={modalStyles.groupNameInput}
               placeholder="Group Name"
               onChangeText={this.setNewGroupName}
               value={groupName}
 
             />
 
-            <View style={{
-              marginTop: scaledHeight(34),
-              paddingLeft: '4%',
-              paddingRight: '4%',
-            }}
-            >
-              <Text style={{
-                color: '#333333DE',
-                fontSize: scaledHeight(20),
-                fontWeight: 'bold',
-                marginBottom: scaledHeight(8)
-              }}
-              > Select Account
-              </Text>
+            <View style={modalStyles.selectAccountView}>
+              <Text style={modalStyles.selectAccountText}> Select Account </Text>
             </View>
-
-
-            {/* <SelectMultiple
-          items={accounts}
-          selectedItems={selectedFruits}
-          renderLabel={this.renderLabel} 
-          onSelectionsChange={this.onSelectionsChange} 
-          /> */}
 
             <MultiSelect
               hideTags
-              items={accounts}
+              items={listOfAllAccounts}
               uniqueKey="accountID"
               ref={(component) => { this.multiSelect = component; }}
               onSelectedItemsChange={this.onSelectedItemsChange}
@@ -198,14 +188,14 @@ class AccountSummaryComponent extends Component {
               hideSubmitButton
               hideDropdown
               fixedHeight
-              searchInputStyle = {{backgroundColor: 'red',marginLeft: 0, marginRight: 0}}
-              styleInputGroup = {{backgroundColor: 'green', marginLeft: 30, marginRight: 30}}
+              searchInputStyle = {{marginLeft: 0, marginRight: 0}}
+              styleInputGroup = {{ marginLeft: 30, marginRight: 30}}
               // styleMainWrapper = {{backgroundColor: 'green'}}
-              styleTextDropdown = {{backgroundColor: 'blue', marginLeft: 0, marginLeft: 0}}
+              styleTextDropdown = {{ marginLeft: 0, marginLeft: 0}}
               // styleListContainer  = {{backgroundColor: 'yellow', marginTop: 60}}
-              styleDropdownMenuSubsection = {{backgroundColor: 'orange'}}
+              styleDropdownMenuSubsection = {{}}
               searchIcon={false}
-              styleDropdownMenu = {{backgroundColor: 'yellow', backgroundColor: "#FFFFFF",
+              styleDropdownMenu = {{backgroundColor: "#FFFFFF",
               borderColor: "#DEDEDF",
               borderRadius: scaledHeight(4),
               borderWidth: 1,
@@ -214,71 +204,29 @@ class AccountSummaryComponent extends Component {
               width: '92%',
               marginLeft: '4%',
               marginRight: '4%',
-
+              
           }}
-              // styleDropdownMenuSubsection = {{backgroundColor: 'pink'}}
             />
 
-{/* searchInputStyle?: StyleProp<TextStyle>;
-    styleDropdownMenu?: StyleProp<ViewStyle>;
-    styleDropdownMenuSubsection?: StyleProp<ViewStyle>;
-    styleInputGroup?: StyleProp<ViewStyle>;
-    styleItemsContainer?: StyleProp<ViewStyle>;
-    styleListContainer?: StyleProp<ViewStyle>;
-    styleMainWrapper?: StyleProp<ViewStyle>;
-    styleRowList?: StyleProp<ViewStyle>;
-    styleSelectorContainer?: StyleProp<ViewStyle>;
-    styleTextDropdown?: StyleProp<TextStyle>;
-    styleTextDropdownSelected?: StyleProp<TextStyle>; */}
 
 
 
 
-
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center', marginTop: "50%" }}>
+            <View style={modalStyles.modalButtonView}>
               <GButtonComponent
-                buttonStyle={{
-                  alignContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: '#544A54',
-
-                  borderColor: '#61285F',
-                  borderWidth: 1,
-
-                  height: scaledHeight(50),
-                  justifyContent: 'center',
-                  // marginBottom:scaledHeight(15),
-                  // marginTop:scaledHeight(26),
-                  width: '30%',
-                  marginRight: 20
-                }}
+                buttonStyle={modalStyles.modalAddButton}
 
                 buttonText="Add"
-                textStyle={styles.addGroupText}
-                onPress={this.onClickHideModal}
+                textStyle={modalStyles.modalButtonText}
+                onPress={this.onClickAddAccount}
               />
               <GButtonComponent
-                buttonStyle={{
-                  alignContent: 'center',
-                  alignItems: 'center',
-                  backgroundColor: '#544A54',
-
-                  borderColor: '#61285F',
-                  borderWidth: 1,
-
-                  height: scaledHeight(50),
-                  justifyContent: 'center',
-                  // marginBottom:scaledHeight(15),
-                  // marginTop:scaledHeight(26),
-                  width: '30%'
-                }}
+                buttonStyle={modalStyles.modalCancelButton}
                 buttonText="Cancel"
-                textStyle={styles.addGroupText}
-                onPress={this.onClickHideModal}
+                textStyle={modalStyles.modalButtonText}
+                onPress={this.onClickCancelAccount}
               />
             </View>
-
-
           </View>
         </View>
       </Modal>
@@ -326,12 +274,14 @@ class AccountSummaryComponent extends Component {
 
 AccountSummaryComponent.propTypes = {
   navigation: PropTypes.instanceOf(Object),
-  accountSummaryInitialState: PropTypes.instanceOf(Object)
+  accountSummaryInitialState: PropTypes.instanceOf(Object),
+  addHoldingGroup: PropTypes.func
 };
 
 AccountSummaryComponent.defaultProps = {
   navigation: {},
-  accountSummaryInitialState: {}
+  accountSummaryInitialState: {},
+  addHoldingGroup: () => {}
 };
 
 
