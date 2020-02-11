@@ -683,7 +683,7 @@ class PurchaseScreenTwoComponent extends Component {
                     {selectedFundIndex !== null ?
                         (
                             <View style={styles.innerContainerStyle}>
-                                <View onClick={this.onClickExpandFundInvestment}>
+                                <View>
                                     <Text style={styles.headerText}>{gblStrings.purchase.fundYourAcc}</Text>
                                     <View style={styles.line} />
                                 </View>

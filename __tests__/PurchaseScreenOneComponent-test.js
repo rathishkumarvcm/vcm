@@ -24,4 +24,16 @@ describe('Purchase Screen One - Account Selection', () => {
     component.render();
   });
 
+  // Function testing 
+  test('function testing', () => {
+    const component = shallow(<PurchaseScreenOneComponent />);
+    const wrapper = new PurchaseScreenOneComponent;
+    component.render();
+    wrapper.onClickSelectGeneralAccount();
+    wrapper.onClickSelectIRAAccount();
+    wrapper.onClickSelectUTMAAccount();
+    wrapper.onClickOpenAccount();
+    wrapper.onClickExpand();
+  });
+
 });

@@ -24,4 +24,14 @@ describe('Purchase Screen Three - Fund Source', () => {
     component.render();
   });
 
+  test('function testing', () => {
+    const component = shallow(<PurchaseScreenThreeComponent />);
+    const wrapper = new PurchaseScreenThreeComponent;
+    component.render();
+    wrapper.onSelectBankAccount();
+    wrapper.switchMethod();
+    wrapper.onClickCheckOrderSelected();
+    wrapper.onClickWireTransferSelected();
+  });
+
 });

@@ -24,4 +24,15 @@ describe('Purchase Screen Two - Investment Selection', () => {
     component.render();
   });
 
+  // Function testing 
+  test('function testing', () => {
+    const component = shallow(<PurchaseScreenTwoComponent />);
+    const wrapper = new PurchaseScreenTwoComponent;
+    component.render();
+    wrapper.setModalVisible(true);
+    wrapper.onPressRemoveInvestment();
+    wrapper.onChangeTextForInvestment("initialInvestment");
+    wrapper.onChangeIndex();
+  });
+
 });

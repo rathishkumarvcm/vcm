@@ -19,7 +19,6 @@ class PurchaseScreenOneComponent extends Component {
 
     constructor(props) {
         super(props);
-        const { purchaseData } = this.props;
         this.state = {
             generalAccountIcon: '+',
             IRAAccountIcon: '+',
@@ -42,12 +41,13 @@ class PurchaseScreenOneComponent extends Component {
             },
             accountList: []
         };
-        accSelectionData = purchaseData.accSelectionData;
-        savedData = purchaseData.savePurchaseSelectedData;
+
     }
 
     componentDidMount() {
-        const { getAccountList } = this.props;
+        const { getAccountList, purchaseData } = this.props;
+        accSelectionData = purchaseData.accSelectionData;
+        savedData = purchaseData.savePurchaseSelectedData;
         const accountListPayload = {
             "companyNumber": "591",
             "memberId": "V122221212",
