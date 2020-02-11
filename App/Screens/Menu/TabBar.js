@@ -2,12 +2,19 @@ import React from 'react';
 import { Text, StyleSheet, TouchableOpacity, Platform, View } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from "redux";
 import { tabMoreActions } from '../../Shared/Actions';
 import { GIcon } from '../../CommonComponents/GIcon';
-import { setModalVisible } from '../../Shared/Actions/TabMoreAction';
 
-const S = StyleSheet.create({
+export const createStyles = (tint) => {
+  return StyleSheet.create({
+    tabLabelText: {
+      color: "#4F4F4F", fontSize: 10,
+      ...tint
+    }
+  });
+};
+
+const styles = StyleSheet.create({
   container: { alignItems: "center", backgroundColor: 'white', elevation: 2, flexDirection: 'row', height: Platform.OS === "android" ? 52 : 65, },
   tabButton: {
     alignItems: 'center', flex: 1, height: "100%", justifyContent: 'center',
@@ -23,40 +30,37 @@ const TabBar = props => {
     onTabPress,
     getAccessibilityLabel,
     navigation,
-    dispatch
+    setMoreModalVisible
   } = props;
 
-  const showRightModal = () => dispatch(setModalVisible(true));
-
-  // const onCustomTabPress = (route) => { return () => (onTabPress({ route })); };
+  const onCustomTabPress = (route) => () => onTabPress({ route });
 
   const { routes, index: activeRouteIndex } = navigation.state;
 
   return (
-    <View style={S.container}>
+    <View style={styles.container}>
       {routes.map((route, routeIndex) => {
         const isRouteActive = routeIndex === activeRouteIndex;
         const tintColor = isRouteActive ? "skyblue" : "#4F4F4F";
-        // console.log(JSON.stringify(route));
         return (
-          <View style={S.tabButton}>
+          <View style={styles.tabButton}>
             <TouchableOpacity
               // key={routeIndex}
-              style={S.tabButton}
-              onPress={() => onTabPress({ route })}
-              // onPress={onCustomTabPress}
+              style={styles.tabButton}
+              // onPress={() => onTabPress({ route })}
+              onPress={onCustomTabPress(route)}
               accessibilityLabel={getAccessibilityLabel({ route })}
             >
               {renderIcon({ route, focused: isRouteActive, tintColor })}
 
-              <Text style={[S.tabLabelText, { color: tintColor }]}>{getLabelText({ route })} </Text>
+              <Text style={createStyles({ color: tintColor }).tabLabelText}>{getLabelText({ route })} </Text>
             </TouchableOpacity>
           </View>
         );
       })}
       <TouchableOpacity
-        style={S.tabButton}
-        onPress={showRightModal}
+        style={styles.tabButton}
+        onPress={setMoreModalVisible(true)}
       >
         <GIcon
           name="more"
@@ -64,14 +68,14 @@ const TabBar = props => {
           size={20}
           color="#4F4F4F"
         />
-        <Text style={S.tabLabelText}>More</Text>
+        <Text style={styles.tabLabelText}>More</Text>
       </TouchableOpacity>
     </View>
   );
 };
 TabBar.propTypes = {
   navigation: PropTypes.instanceOf(Object),
-  dispatch: PropTypes.instanceOf(Object),
+  setMoreModalVisible: PropTypes.instanceOf(Object),
   renderIcon: PropTypes.instanceOf(Object),
   onTabPress: PropTypes.instanceOf(Object),
   getAccessibilityLabel: PropTypes.instanceOf(Object),
@@ -80,7 +84,7 @@ TabBar.propTypes = {
 };
 TabBar.defaultProps = {
   navigation: {},
-  dispatch: {},
+  setMoreModalVisible: {},
   renderIcon: {},
   onTabPress: {},
   getAccessibilityLabel: {},
@@ -91,14 +95,19 @@ const mapStateToProps = state => {
   return state.tabMoreModalData;
 };
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      dispatch,
-      ...tabMoreActions
-    },
-    dispatch
-  );
+const mapDispatchToProps = {
+  ...tabMoreActions,
+};
+
+// const mapDispatchToProps = dispatch =>
+//   bindActionCreators(
+//     {
+//       dispatch,
+//       ...tabMoreActions
+//     },
+//     dispatch
+//   );
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

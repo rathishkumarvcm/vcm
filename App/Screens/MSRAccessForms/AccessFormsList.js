@@ -1,18 +1,15 @@
 import React from 'react';
 import { Text, View, FlatList, ActivityIndicator, SafeAreaView, TouchableOpacity, Image, Switch } from 'react-native';
 import PropTypes from "prop-types";
-import { connect } from 'react-redux';
-import { bindActionCreators } from "redux";
 import styles from './style';
 import gblStrings from '../../Constants/GlobalStrings';
 import { GHeaderComponent } from '../../CommonComponents';
-import { msrAccessFormActions } from '../../Shared/Actions';
 import logoImage from '../../Images/FaceID.png';
 
 class AccessFormList extends React.Component {
 
     switchSort = (value) => {
-        const { sortByPopular, dispatch } = this.props;
+        const { sortByPopular } = this.props;
         sortByPopular(value);
     }
 

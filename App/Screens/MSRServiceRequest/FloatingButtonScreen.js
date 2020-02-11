@@ -359,26 +359,6 @@ class FloatingButtonComponent extends React.Component {
                                                     clearButtonMode="while-editing"
                                                     maxLength={1000}
                                                 />
-
-                                                {/* <View style={styles.grayBorderContainer}>
-                                                    <GButtonComponent
-                                                        buttonStyle={styles.selectFilesBtn}
-                                                        buttonText={gblStrings.accManagement.selectFiles}
-                                                        textStyle={styles.selectFilesBtnTxt}
-                                                        onPress={this.uploadImage}
-                                                    />
-                                                    <GIcon
-                                                        name="file-upload"
-                                                        type="material"
-                                                        size={30}
-                                                        color="#E9E4E4"
-                                                    />
-                                                    <TouchableOpacity onPress={this.uploadSelectedFiles}>
-                                                        <Text style={styles.uploadText}>
-                                                            {gblStrings.common.upload}
-                                                        </Text>
-                                                    </TouchableOpacity>
-                                                </View> */}
                                                 <AttachmentData limit="10" />
                                                 <View style={styles.columnContainer}>
                                                     <GButtonComponent

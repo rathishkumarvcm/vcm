@@ -16,7 +16,6 @@ class AttachmentData extends React.Component {
         super(props);
         // set true to isLoading if data for this screen yet to be received and wanted to show loader.
         this.state = {
-            isLoading: false,
             multipleFiles: [],
             showFileError: false,
             erFileMessage: "Please attach any file!"
@@ -97,6 +96,8 @@ class AttachmentData extends React.Component {
         }
     }
 
+    // requireImageUri = () => { "uri": item.uri }
+
     render() {
         const { limit, size, formats } = this.props;
         const { multipleFiles, showFileError, erFileMessage } = this.state;
@@ -120,7 +121,7 @@ class AttachmentData extends React.Component {
                         <Text style={styles.uploadText}>
                             {gblStrings.common.upload}
                         </Text>
-                        <Text>Selected files count{multipleFiles.length}</Text>
+                        <Text style={styles.grayBoldText}>Selected files count {multipleFiles.length}</Text>
                     </TouchableOpacity>
 
                     {showFileError && (
@@ -135,12 +136,14 @@ class AttachmentData extends React.Component {
                 <ScrollView>
                     {/* Showing the data of selected Multiple files */}
                     {multipleFiles.map((item) => (
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} key={item.name}>
-                            <Text style={styles.textStyle}>
-                                {item.name ? item.name : ''} Size {item.size} MB
+                        <View style={styles.itemContainer} key={item.name}>
+                            <Text style={styles.smallGrayText}>
+                                {item.name ? item.name : ''}   Size {item.size} MB
                             </Text>
-                            <Image source={{ "uri": item.uri }} style={styles.previewImage} />
-
+                            <Image style={styles.previewImage}
+                                source={{ "uri": item.uri }}
+                            // source={this.requireImageUri}
+                            />
                         </View>
                     ))}
                 </ScrollView>
