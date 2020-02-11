@@ -8,7 +8,7 @@ const createStyles = (props) => {
           alignItems:'center',
           backgroundColor:"#56565A",
           borderRadius:1,
-          height:scaledHeight(props.height),
+          height:scaledHeight(40),
           justifyContent: "center",
           marginTop:'2%',
           width:'90%',
