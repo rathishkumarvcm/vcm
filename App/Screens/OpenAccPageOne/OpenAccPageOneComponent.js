@@ -390,7 +390,7 @@ class OpenAccPageOneComponent extends Component {
 
         const type = selectedAccount.key || "";
         const currentPage = 1;
-        const nextBtnstyle = !isNextBtnDisabled ? styles.normalBlackBtn : [styles.normalBlackBtn, { opacity: .45 }];
+        const nextBtnstyle = !isNextBtnDisabled ? styles.normalBlackBtn : styles.nextOpacityBtn;
         return (
             <View style={styles.container}>
                 {

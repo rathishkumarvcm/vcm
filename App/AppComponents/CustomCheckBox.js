@@ -1,57 +1,24 @@
 import React from 'react';
-import { Text, View, TouchableOpacity,StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import PropTypes from "prop-types";
 import { scaledHeight } from '../Utils/Resolution';
-
-const styles = StyleSheet.create({
-    selectedview: {
-        backgroundColor: '#33A8FF',
-        height: 12,
-        width: 12,        
-    },
-    textStyle: {
-        marginLeft: scaledHeight(12), width: '80%'
-    },    
-    touchStyle: {
-        alignItems: 'flex-start',
-        flexDirection: "row",
-        flexGrow: 1, 
-        justifyContent: 'flex-start', 
-        marginBottom: scaledHeight(12),
-        marginTop: scaledHeight(0),        
-        width: '100%', 
-    },    
-    touchView: {
-        alignItems: 'center',
-        borderColor: '#33A8FF',
-        borderWidth: 2, 
-        height: 24,    
-        justifyContent: 'center',  
-        marginTop: scaledHeight(2),   
-        width: 24,         
-    },    
-}
-);
+import CustomCheckBoxStyle from './CustomCheckBoxStyle';
 
 const CustomCheckBox = props => {
-    const {itemTop,itemBottom,onPress,size,outerCicleColor,selected,innerCicleColor,label, width} = props;
-return(
-
-    <TouchableOpacity style={[styles.touchStyle,{width: width, marginTop: scaledHeight(itemTop), marginBottom: scaledHeight(itemBottom)}]} onPress={onPress}>
-        <View style={[styles.touchView,{height: size, width: size,borderColor: outerCicleColor,}]}
-        >
-            {
-                selected ? (
-                    <View style={[styles.selectedview,{height:(size/2), width: (size/2), backgroundColor: innerCicleColor}]}/>
-                  )
-                    : null
-            }
-        </View>
-        <Text style={[styles.textStyle, props.labelStyle]}>
-            {label}
-        </Text>
-    </TouchableOpacity>
-);
+    const {itemTop,itemBottom,onPress,size,outerCicleColor,selected,innerCicleColor,label, width, labelStyle} = props;
+    const styles = CustomCheckBoxStyle(size, innerCicleColor, width, itemBottom, itemTop, outerCicleColor, labelStyle);
+    return(
+        <TouchableOpacity style={styles.checkboxtouchStyle} onPress={onPress}>
+            <View style={styles.checkboxtouchView}>
+                {
+                    selected ? ( <View style={styles.checkboxselectedView} /> ) : null
+                }
+            </View>
+            <Text style={styles.checkboxtextStyle}>
+                {label}
+            </Text>
+        </TouchableOpacity>
+    );
 };
 
 CustomCheckBox.propTypes = {

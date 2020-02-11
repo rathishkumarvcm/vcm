@@ -140,6 +140,18 @@ const styles = StyleSheet.create({
 
 
     },
+    nextOpacityBtn: {
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#544A54',
+        borderColor: "#61285F45",
+        borderWidth: 1,
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginHorizontal: scaledHeight(37),
+        marginVertical: scaledHeight(7.5),
+        opacity: .45
+    },
     normalBlackBtn: {
          alignContent: 'center',
          alignItems: 'center',
