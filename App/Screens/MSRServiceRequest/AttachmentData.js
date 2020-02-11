@@ -68,12 +68,12 @@ class AttachmentData extends React.Component {
                     ]
                 });
             }
-            results.map((item) => {
-                return (
-                    console.warn(`res : ${JSON.stringify(item)}`),
-                    console.warn(`File Size (MB): ${item.size / 1048576.0}`) // bytes to MB
-                );
-            });
+            // results.map((item) => {
+            //     return (
+            //         console.warn(`res : ${JSON.stringify(item)}`),
+            //         console.warn(`File Size (MB): ${item.size / 1048576.0}`) // bytes to MB
+            //     );
+            // });
             // Setting the state to show multiple file attributes
             if (results.length > maxFileLimit) {
                 this.setState({ showFileError: true, erFileMessage: `You can attach only ${maxFileLimit} file` });

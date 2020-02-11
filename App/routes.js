@@ -188,8 +188,8 @@ import RMDCalculatorComponent from './Screens/RMDCalculator';
 import RMDDashboardComponent from './Screens/RMDDashboard';
 
 // MSR
-import AccessFormList from './Screens/MSRAccessForms/AccessFormsList';
-import FloatingButtonComponent from './Screens/MSRServiceRequest/FloatingButtonScreen';
+import AccessFormList from './Screens/MSRAccessForms';
+import FloatingButtonComponent from './Screens/MSRServiceRequest';
 
 
 // Notification Tabs

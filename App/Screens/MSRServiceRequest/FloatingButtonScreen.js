@@ -3,9 +3,6 @@ import { Text, View, ScrollView, TextInput, TouchableWithoutFeedback, SafeAreaVi
 import ActionButton from 'react-native-action-button';
 import Modal from 'react-native-modal';
 import PropTypes from "prop-types";
-import { connect } from 'react-redux';
-import { bindActionCreators } from "redux";
-import { msrServiceRequestActions } from '../../Shared/Actions';
 import styles from './style';
 import gblStrings from '../../Constants/GlobalStrings';
 import { GIcon, GHeaderComponent, GDropDownComponent, GInputComponent, GButtonComponent } from '../../CommonComponents';
@@ -426,17 +423,4 @@ FloatingButtonComponent.defaultProps = {
     navigation: {},
 };
 
-const mapStateToProps = state => {
-    return state.msrAccessFormsData;
-};
-
-// const mapDispatchToProps = {
-//     ...msrServiceRequestActions
-// };
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-    dispatch,
-    ...msrServiceRequestActions
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(FloatingButtonComponent);
+export default FloatingButtonComponent;

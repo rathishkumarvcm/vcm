@@ -147,17 +147,4 @@ AccessFormList.defaultProps = {
     sortByPopular: {}
 };
 
-const mapStateToProps = state => {
-    return state.msrAccessFormsData; 
-};
-
-const mapDispatchToProps = {
-    ...msrAccessFormActions
-};
-
-// const mapDispatchToProps = (dispatch) => bindActionCreators({
-//     dispatch,
-//     ...msrAccessFormActions
-// }, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(AccessFormList);
+export default AccessFormList;
