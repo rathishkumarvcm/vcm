@@ -1,8 +1,7 @@
 import React from "react";
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
-
-import { scaledHeight } from '../Utils/Resolution';
+import createCommonStyles from './commonStyles';
 
 /* **************************\
   Function: GButtonComponent
@@ -12,24 +11,11 @@ import { scaledHeight } from '../Utils/Resolution';
 
   Developer : Rathish
 \************************** */
-const createStyles = (props) => { 
-return StyleSheet.create({
-    buttonStyle:{
-      alignItems:'center',
-      backgroundColor:"#56565A",
-      borderRadius:1,
-      height:scaledHeight(props.height),
-      justifyContent: "center",
-      marginTop:'2%',
-      width:'90%',
-      ...props.buttonStyle
-}
-});
-};
+
 
 export const GButtonComponent = props => {
   const {onPress,disabled,textStyle,buttonText}=props;
-  const styles = createStyles(props);
+  const styles = createCommonStyles(props);
   return(
   <TouchableOpacity 
     onPress={onPress}
@@ -48,7 +34,7 @@ export const GButtonComponent = props => {
 
 GButtonComponent.propTypes = {
   disabled : PropTypes.bool,
-  // buttonStyle: PropTypes.func,
+  buttonStyle: PropTypes.func,
   textStyle: PropTypes.instanceOf(Object),
   buttonText: PropTypes.string.isRequired,
   onPress: PropTypes.func
@@ -56,7 +42,7 @@ GButtonComponent.propTypes = {
 
 GButtonComponent.defaultProps = {
   disabled : false,
-  // buttonStyle: () => {},
+  buttonStyle: () => {},
   textStyle: {},
   onPress: PropTypes.func
 };
