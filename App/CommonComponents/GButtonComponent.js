@@ -34,7 +34,6 @@ export const GButtonComponent = props => {
 
 GButtonComponent.propTypes = {
   disabled : PropTypes.bool,
-  buttonStyle: PropTypes.func,
   textStyle: PropTypes.instanceOf(Object),
   buttonText: PropTypes.string.isRequired,
   onPress: PropTypes.func
@@ -42,7 +41,6 @@ GButtonComponent.propTypes = {
 
 GButtonComponent.defaultProps = {
   disabled : false,
-  buttonStyle: () => {},
   textStyle: {},
   onPress: PropTypes.func
 };
