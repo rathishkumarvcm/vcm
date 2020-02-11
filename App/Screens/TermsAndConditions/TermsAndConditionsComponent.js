@@ -135,7 +135,7 @@ class TermsAndConditionsComponent extends Component {
     render() {
         const { agreeConditions } = this.state;
         const { navigation } = this.props;
-        const nextBtnstyle = agreeConditions ? StyleSheet.normalBlackBtn : [StyleSheet.normalBlackBtn, { opacity: .45 }];
+        const nextBtnstyle = agreeConditions ? StyleSheet.normalBlackBtn : StyleSheet.nextOpacityBtn;
 
         return (
             <View style={StyleSheet.container}>
