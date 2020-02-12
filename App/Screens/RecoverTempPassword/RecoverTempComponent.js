@@ -20,22 +20,37 @@ class RecoverTempComponent extends Component {
       booTemp: false,
       strTemp: '',
       errTemp: '',
-      email:''
+      email:'',
+      isFirst:true,
     };
     // set true to isLoading if data for this screen yet to be received and wanted to show loader.
   }
 
-  componentDidMount()
-  {
-    const{initialState}=this.props;
-    if(initialState && initialState.email){
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const{initialState}=nextProps;
+    const{isFirst}=prevState;
+    if(isFirst){
       
-      this.setState({
-          email : this.protectEmail(initialState.email)
+      return({
+          email : this.protectEmail(initialState.email),
+          isFirst:false
         // email:reGex.protectEmail(this.props.initialState.verifiedEmail)
       });
     }
-  }
+    return null;
+}
+
+  // componentDidMount()
+  // {
+  //   const{initialState}=this.props;
+  //   if(initialState && initialState.email){
+      
+  //     this.setState({
+  //         email : this.protectEmail(initialState.email)
+  //       // email:reGex.protectEmail(this.props.initialState.verifiedEmail)
+  //     });
+  //   }
+  // }
 
   setTemp = (text) => {
     this.setState({

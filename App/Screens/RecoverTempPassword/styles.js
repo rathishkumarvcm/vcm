@@ -18,8 +18,6 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(15),
         width: '80%'
     },
-    scrollStyles:
-    { flex: 0.85 },
     cancelButtonText: {
         color: '#544A54',
         fontSize: scaledHeight(16),
@@ -47,17 +45,16 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         fontWeight: 'bold'
     },
-
     copyRightSection: {
         alignItems: 'center',
         backgroundColor: '#56565A',
         height: scaledHeight(50),
         justifyContent: 'center'
     },
+
     copyRightText: {
         color: '#FFFFFF'
     },
-
     enterOpt: {
         color: '#333333DE',
         fontSize: scaledHeight(16),
@@ -71,6 +68,7 @@ const styles = StyleSheet.create({
         paddingLeft: '4%',
         paddingRight: '4%',
     },
+
     faceIDlogo: {
         alignSelf: 'center',
         marginBottom: '5%',
@@ -97,7 +95,6 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         marginTop: scaledHeight(25)
     },
-
     loginHeader: {
         flex: .15,
         flexDirection: 'row',
@@ -107,6 +104,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+
     newVictory: {
         color: '#56565A',
         fontSize: scaledHeight(30),
@@ -201,14 +199,14 @@ const styles = StyleSheet.create({
         paddingLeft: '4%',
         width: '50%'
     },
-
- 
     refreshOtp:
     {
         color: '#0000FF',
         fontSize: scaledHeight(16),
         fontWeight: '500',
     },
+
+ 
     refreshOtpView: {
         alignSelf: 'center',
         borderBottomColor: '#0000FF',
@@ -251,6 +249,8 @@ const styles = StyleSheet.create({
         color: '#56565A',
         fontSize: scaledHeight(30)
     },
+    scrollStyles:
+    { flex: 0.85 },
     securityCheck:
     {
         backgroundColor: '#878280',

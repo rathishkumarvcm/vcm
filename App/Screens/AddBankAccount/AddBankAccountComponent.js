@@ -10,6 +10,7 @@ class AddBankAccountComponent extends Component {
         super(props);
         this.state = {
             expand: false,
+            isFirst:true,
             popularAccount: [
                 "Discover",
                 "Bank of America",
@@ -25,10 +26,11 @@ class AddBankAccountComponent extends Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         const { popularBankInfo } = nextProps;
-        const { popularAccount } = prevState;
-        if (popularAccount !== popularBankInfo) {
-            this.setState({ popularAccount: JSON.parse(popularBankInfo) });
+        const { isFirst } = prevState;
+        if (isFirst) {
+            return({ popularAccount: JSON.parse(popularBankInfo),isFirst:false });
         }
+        return null;
     }
 
     componentDidMount() {
