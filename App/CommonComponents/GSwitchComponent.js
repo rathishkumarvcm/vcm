@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, } from 'react-native';
 import PropTypes from "prop-types";
-import { scaledHeight } from '../Utils/Resolution';
+import { scaledHeight, getCustomStyle } from '../Utils/Resolution';
 import { GButtonComponent } from './GButtonComponent';
 
 /* **************************\
@@ -89,16 +89,16 @@ return(
     <View style={styles.switchContainer}>
         <GButtonComponent
             disabled={switchOn}
-            buttonStyle={switchOn ? [styles.offButtonStyle,offStyle] : [styles.offButtonStyleDisable,offStyleDisabled]}
+            buttonStyle={switchOn ? getCustomStyle(styles.offButtonStyle,offStyle) : getCustomStyle(styles.offButtonStyleDisable,offStyleDisabled)}
             buttonText={switchOffText}
-            textStyle={switchOn ? [styles.TextOnStyle,textOnStyle] : [styles.TextOffStyle,textOffStyle]}
+            textStyle={switchOn ? getCustomStyle(styles.TextOnStyle,textOnStyle) : getCustomStyle(styles.TextOffStyle,textOffStyle)}
             onPress={switchOnMethod}
         />
         <GButtonComponent
             disabled={switchOff}
-            buttonStyle={switchOff ? [styles.onButtonStyle, onStyle] : [styles.onButtonStyleDisable, onStyleDisabled]}
+            buttonStyle={switchOff ? getCustomStyle(styles.onButtonStyle, onStyle) : getCustomStyle(styles.onButtonStyleDisable, onStyleDisabled)}
             buttonText={switchOnText}
-            textStyle={switchOff ? [styles.TextOnStyle, textOnStyle] : [styles.TextOffStyle, textOffStyle]}
+            textStyle={switchOff ? getCustomStyle(styles.TextOnStyle, textOnStyle) : getCustomStyle(styles.TextOffStyle, textOffStyle)}
             onPress={switchOffMethod}
         />
     </View>
