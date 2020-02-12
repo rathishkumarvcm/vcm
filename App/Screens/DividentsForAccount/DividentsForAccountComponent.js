@@ -54,7 +54,7 @@ class DividentsForAccountComponent extends Component {
                 tmpCurrentSecurities = item.CurrentSecurities;
                 tmpCurrentSecurities.map((fund, i) => () => {
                     if (fund.FundId === fundId) {
-                        tmpCurrentSecurities[i].amountRemaining = text;
+                        tmpCurrentSecurities[`${i}`].amountRemaining = text;
                     }
                 });
             }
@@ -69,20 +69,20 @@ class DividentsForAccountComponent extends Component {
         switch (fromView) {
             case 'currentSecurities':
                 if (flag) {
-                    tmpData.map((item, i) => {
+                    tmpData.map((item, i) => () => {
                         if (item.Id === itemId) {
-                            tmpData[i].currentSecuritiesSwitchOn = true;
-                            tmpData[i].currentSecuritiesSwitchOff = false;
+                            tmpData[`${i}`].currentSecuritiesSwitchOn = true;
+                            tmpData[`${i}`].currentSecuritiesSwitchOff = false;
                             this.updateStateChanged();
                         }
                     });
                     this.setState({ accountInfo: tmpData });
                 }
                 else {
-                    tmpData.map((item, i) => {
+                    tmpData.map((item, i) => () =>{
                         if (item.Id === itemId) {
-                            tmpData[i].currentSecuritiesSwitchOn = false;
-                            tmpData[i].currentSecuritiesSwitchOff = true;
+                            tmpData[`${i}`].currentSecuritiesSwitchOn = false;
+                            tmpData[`${i}`].currentSecuritiesSwitchOff = true;
                             this.updateStateChanged();
                         }
                     });
@@ -91,20 +91,20 @@ class DividentsForAccountComponent extends Component {
                 break;
             case 'futureSecurities':
                 if (flag) {
-                    tmpData.map((item, i) => {
+                    tmpData.map((item, i) => () => {
                         if (item.Id === itemId) {
-                            tmpData[i].futureSecuritiesSwitchOn = true;
-                            tmpData[i].futureSecuritiesSwitchOff = false;
+                            tmpData[`${i}`].futureSecuritiesSwitchOn = true;
+                            tmpData[`${i}`].futureSecuritiesSwitchOff = false;
                             this.updateStateChanged();
                         }
                     });
                     this.setState({ accountInfo: tmpData });
                 }
                 else {
-                    tmpData.map((item, i) => {
+                    tmpData.map((item, i) => () => {
                         if (item.Id === itemId) {
-                            tmpData[i].futureSecuritiesSwitchOn = false;
-                            tmpData[i].futureSecuritiesSwitchOff = true;
+                            tmpData[`${i}`].futureSecuritiesSwitchOn = false;
+                            tmpData[`${i}`].futureSecuritiesSwitchOff = true;
                             this.updateStateChanged();
                         }
                     });
@@ -123,16 +123,16 @@ class DividentsForAccountComponent extends Component {
         tmpData = accountInfo;
         switch (fromView) {
             case 'currentSecurities':
-                tmpData.map((item) => {
+                tmpData.map((item) => () => {
                     if (item.Id === accountId) {
                         let tmpCurrentSecurities = [];
                         tmpCurrentSecurities = item.currentFundList;
-                        tmpCurrentSecurities.map((fund, i) => {
+                        tmpCurrentSecurities.map((fund, i) => () => {
                             if (fund.FundId === fundId) {
                                 if (flag) {
-                                    tmpCurrentSecurities[i].enableReinvest = true;
+                                    tmpCurrentSecurities[`${i}`].enableReinvest = true;
                                 } else {
-                                    tmpCurrentSecurities[i].enableReinvest = false;
+                                    tmpCurrentSecurities[`${i}`].enableReinvest = false;
                                 }
                                 this.updateStateChanged();
                             }
@@ -142,16 +142,16 @@ class DividentsForAccountComponent extends Component {
                 this.setState({ accountInfo: tmpData });
                 break;
             case 'futureSecurities':
-                tmpData.map((item) => {
+                tmpData.map((item) => () =>{
                     if (item.Id === accountId) {
                         let tmpFutureSecurities = [];
                         tmpFutureSecurities = item.futureFundList;
-                        tmpFutureSecurities.map((fund, i) => {
+                        tmpFutureSecurities.map((fund, i) => () =>{
                             if (fund.FundId === fundId) {
                                 if (flag) {
-                                    tmpFutureSecurities[i].enableReinvest = true;
+                                    tmpFutureSecurities[`${i}`].enableReinvest = true;
                                 } else {
-                                    tmpFutureSecurities[i].enableReinvest = false;
+                                    tmpFutureSecurities[`${i}`].enableReinvest = false;
                                 }
                                 this.updateStateChanged();
                             }
@@ -202,7 +202,7 @@ class DividentsForAccountComponent extends Component {
             this.setState({ dividentsData: dividentsInfo });
             const tmpData = dividentsInfo;
             const tmpAccountInfo = [];
-            tmpData.map((item) => {
+            tmpData.map((item) => () =>{
                 if (item.AccountNumber === accountNumber) {
                     tmpAccountInfo.push(item);
                 }

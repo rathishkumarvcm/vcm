@@ -28,6 +28,9 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%'
     },
+    contentcontainer: {
+        justifyContent: 'center'
+    },
     customTxtBox: {
         marginTop: scaledHeight(9),
         width: '100%'
@@ -36,6 +39,10 @@ const styles = StyleSheet.create({
         borderColor: 'red',
         marginTop: scaledHeight(9),
         width: '100%'
+    },
+    customcomponentstyle:{
+        marginBottom: scaledHeight(15),
+        width: "50%", 
     },
     errMsg: {
         color: 'red',

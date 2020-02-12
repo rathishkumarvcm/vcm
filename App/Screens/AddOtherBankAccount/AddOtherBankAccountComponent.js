@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import PropTypes from "prop-types";
+import PropTypes, { array } from "prop-types";
 import { View, ScrollView, Text, Image } from 'react-native';
-import { GHeaderComponent, GInputComponent, GFooterComponent, GButtonComponent } from '../../CommonComponents';
+import { GHeaderComponent, GInputComponent, GFooterComponent, GButtonComponent, showAlert } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
 import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 import { CustomRadio } from '../../AppComponents';
-import { scaledHeight } from '../../Utils/Resolution';
+// import { scaledHeight } from '../../Utils/Resolution';
 import styles from './styles';
+
+const specimen=require("../../Images/specimen.png");
 
 class AddOtherBankAccountComponent extends Component {
     constructor(props) {
@@ -17,8 +19,7 @@ class AddOtherBankAccountComponent extends Component {
             accountOwner: "",
             transitRoutingNumber: "",
             accountNumber: "",
-
-            accountTypeValidation: true,
+            // accountTypeValidation: true,
             financialInstitutionNameValidation: true,
             accountOwnerValidation: true,
             transitRoutingNumberValidation: true,
@@ -28,9 +29,10 @@ class AddOtherBankAccountComponent extends Component {
 
     componentDidUpdate(prevProps) {
         const addBankAccKey = ActionTypes.ADD_BANK_ACCOUNT;
-        if (this.props.addBankAccount[addBankAccKey]) {
-            if (this.props.addBankAccount[addBankAccKey] !== prevProps.addBankAccount[addBankAccKey]) {
-                const tempResponse = this.props.addBankAccount[addBankAccKey];
+        const { addBankAccount } = this.props;
+        if (addBankAccount[`${addBankAccKey}`]) {
+            if (addBankAccount[`${addBankAccKey}`] !== prevProps.addBankAccount[`${addBankAccKey}`]) {
+                const tempResponse = addBankAccount[`${addBankAccKey}`];
                 if (tempResponse.statusCode === 200 && tempResponse.statusType === "S") {
                     this.navigateBankAccount(true);
                 } else {
@@ -45,16 +47,20 @@ class AddOtherBankAccountComponent extends Component {
         navigation.goBack();
     }
 
-    navigateBankAccount = (isSuccess) => this.props.navigation.navigate('bankAccount', { isSuccess,
-        accountType : this.state.accountType || "-",
-        financialInstitutionName: this.state.financialInstitutionName || "-",
-        accountOwnerNames: this.state.accountOwner || "-",
-        transitRoutingNumber: this.state.transitRoutingNumber || "-",
-        accountNumber: this.state.accountNumber || "-"})
+    navigateBankAccount = (isSuccess) => {
+        const { navigation } = this.props;
+        const { accountType, financialInstitutionName, accountOwner, transitRoutingNumber, accountNumber } = this.state;
+        navigation.navigate('bankAccount', { isSuccess,
+        accountType : accountType || "-",
+        financialInstitutionName: financialInstitutionName || "-",
+        accountOwnerNames: accountOwner || "-",
+        transitRoutingNumber: transitRoutingNumber || "-",
+        accountNumber: accountNumber || "-"});
+    }
     
     onPressRadio = (keyName, text) => () => this.setState({
         [keyName]: text,
-        accountTypeValidation: true,
+        // accountTypeValidation: true,
         financialInstitutionNameValidation: true,
         accountOwnerValidation: true,
         transitRoutingNumberValidation: true,
@@ -71,17 +77,17 @@ class AddOtherBankAccountComponent extends Component {
     }
     
     setInputRef = (inputComp) => (ref) => {
-        this[inputComp] = ref;
+        this[`${inputComp}`] = ref;
     }
 
-    onSubmitEditing = (input) => text => {
+    onSubmitEditing = (input) => () => {
         input.focus();
     }
 
     onChangeText = (keyName) => text => {
         this.setState({
             [keyName]: text,
-            accountTypeValidation: true,
+            // accountTypeValidation: true,
             financialInstitutionNameValidation: true,
             accountOwnerValidation: true,
             transitRoutingNumberValidation: true,
@@ -90,24 +96,24 @@ class AddOtherBankAccountComponent extends Component {
     }    
 
     validateBankAccount = () => {
-
+        const { accountType, financialInstitutionName, accountOwner, transitRoutingNumber, accountNumber } = this.state;
         let errMsg = "";
         let isValidationSuccess = false;
         let input = "";
 
-        if (this.isEmpty(this.state.accountType)) {
+        if (this.isEmpty(accountType)) {
             errMsg = gblStrings.accManagement.emptyTypeOfAccount;
             input = "accountType";
-        } else if (this.isEmpty(this.state.financialInstitutionName)) {
+        } else if (this.isEmpty(financialInstitutionName)) {
             errMsg = gblStrings.accManagement.emptyFinancialInstitution;
             input = "financialInstitutionName";
-        } else if (this.isEmpty(this.state.accountOwner)) {
+        } else if (this.isEmpty(accountOwner)) {
             errMsg = gblStrings.accManagement.emptyAccountOwnerName;
             input = "accountOwner";
-        } else if (this.isEmpty(this.state.transitRoutingNumber)) {
+        } else if (this.isEmpty(transitRoutingNumber)) {
             errMsg = gblStrings.accManagement.emptyTransitRoutingNo;
             input = "transitRoutingNumber";
-        } else if (this.isEmpty(this.state.accountNumber)) {
+        } else if (this.isEmpty(accountNumber)) {
             errMsg = gblStrings.accManagement.emptyAccountNumber;
             input = "accountNumber";
         } else {
@@ -120,39 +126,44 @@ class AddOtherBankAccountComponent extends Component {
             });
 
             if (input !== "" && input !== null && input !== undefined) {
-                if (this[input] !== null && this[input] !== undefined) {
-                    if (typeof this[input].focus === 'function') {
-                        this[input].focus();
+                if (this[`${input}`] !== null && this[`${input}`] !== undefined) {
+                    if (typeof this[`${input}`].focus === 'function') {
+                        this[`${input}`].focus();
                     }
                 }
             }
-
-            alert(errMsg);
+            showAlert(gblStrings.common.appName, errMsg, gblStrings.common.ok);
+            // alert(errMsg);
         } else {
             return this.callValidateBankAccount();
         }
-
+        return false;
     }
 
     callValidateBankAccount = () => {
+        const { addBankAccountAction } =this.props;
+        const { accountType, financialInstitutionName, accountOwner, transitRoutingNumber, accountNumber } = this.state;
         const validateBankAccountPayload = {
-            "accountType": this.state.accountType || "-",
-            "financialInstitutionName": this.state.financialInstitutionName || "-",
-            "accountOwnerNames": this.state.accountOwner || "-",
-            "transitRoutingNumber": this.state.transitRoutingNumber || "-",
-            "accountNumber": this.state.accountNumber || "-"
+            "accountType": accountType || "-",
+            "financialInstitutionName": financialInstitutionName || "-",
+            "accountOwnerNames": accountOwner || "-",
+            "transitRoutingNumber": transitRoutingNumber || "-",
+            "accountNumber": accountNumber || "-"
 
         };
 
-        this.props.addBankAccountAction(validateBankAccountPayload);
+        addBankAccountAction(validateBankAccountPayload);
     }
 
     render() {
+        const { navigation } = this.props;
+        const { isValidBankAccount, validBankAccountMsg, accountNumberValidation, accountNumber, transitRoutingNumber, transitRoutingNumberValidation,
+            accountOwnerValidation, accountOwner, financialInstitutionNameValidation, financialInstitutionName, accountType } = this.state;
         return (
             <View style={styles.container}>
-                <GHeaderComponent navigation={this.props.navigation} />
+                <GHeaderComponent navigation={navigation} />
 
-                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={{ justifyContent: 'center' }}>
+                <ScrollView style={styles.scrollviewStyle} contentContainerStyle={styles.contentcontainer}>
                     <View style={styles.header}>
                         <Text style={styles.headerText}>
                             {gblStrings.addPopularBankAccount.add_bank_account}
@@ -167,7 +178,7 @@ class AddOtherBankAccountComponent extends Component {
                         </Text>
                         <View style={styles.radioBtnGrp}>
                             <CustomRadio
-                                componentStyle={{ width: "50%", marginBottom: scaledHeight(15) }}
+                                componentStyle={styles.customcomponentstyle}
                                 size={30}
                                 outerCicleColor="#DEDEDF"
                                 innerCicleColor="#61285F"
@@ -175,11 +186,11 @@ class AddOtherBankAccountComponent extends Component {
                                 label="Savings"
                                 descLabelStyle={styles.lblRadioDescTxt}
                                 descLabel=""
-                                selected={!!((this.state.accountType !== null && this.state.accountType === "Savings"))}
+                                selected={!!((accountType !== null && accountType === "Savings"))}
                                 onPress={this.onPressRadio("accountType", "Savings")}
                             />
                             <CustomRadio
-                                componentStyle={{ width: "50%", marginBottom: scaledHeight(0) }}
+                                componentStyle={styles.customcomponentstyle}
                                 size={30}
                                 outerCicleColor="#DEDEDF"
                                 innerCicleColor="#61285F"
@@ -187,12 +198,12 @@ class AddOtherBankAccountComponent extends Component {
                                 label="Checking"
                                 descLabelStyle={styles.lblRadioDescTxt}
                                 descLabel=""
-                                selected={!!((this.state.accountType !== null && this.state.accountType === "Checking"))}
+                                selected={!!((accountType !== null && accountType === "Checking"))}
                                 onPress={this.onPressRadio("accountType", "Checking")}
                             />
 
                         </View>
-                        {!this.state.accountTypeValidation && (
+                        {!isValidBankAccount && (
                             <Text style={styles.errMsg}>
                                 {gblStrings.accManagement.emptyTypeOfAccount}
                             </Text>
@@ -203,11 +214,11 @@ class AddOtherBankAccountComponent extends Component {
                         </Text>
                         <GInputComponent
                             inputref={this.setInputRef("financialInstitutionName")}
-                            propInputStyle={this.state.financialInstitutionNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            propInputStyle={financialInstitutionNameValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder=""
                             maxLength={gblStrings.maxLength.common}
-                            value={this.state.financialInstitutionName}
-                            errorFlag={!this.state.financialInstitutionNameValidation}
+                            value={financialInstitutionName}
+                            errorFlag={!financialInstitutionNameValidation}
                             errorText={gblStrings.accManagement.emptyFinancialInstitution}
                             onChangeText={this.onChangeText("financialInstitutionName")}
                             onSubmitEditing={this.onSubmitEditing(this.accountOwner)}
@@ -219,11 +230,11 @@ class AddOtherBankAccountComponent extends Component {
                         </Text>
                         <GInputComponent
                             inputref={this.setInputRef("accountOwner")}
-                            propInputStyle={this.state.accountOwnerValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            propInputStyle={accountOwnerValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder=""
                             maxLength={gblStrings.maxLength.common}
-                            value={this.state.accountOwner}
-                            errorFlag={!this.state.accountOwnerValidation}
+                            value={accountOwner}
+                            errorFlag={!accountOwnerValidation}
                             errorText={gblStrings.accManagement.emptyAccountOwnerName}
                             onChangeText={this.onChangeText("accountOwner")}
                             onSubmitEditing={this.onSubmitEditing(this.transitRoutingNumber)}
@@ -236,11 +247,11 @@ class AddOtherBankAccountComponent extends Component {
                         </Text>
                         <GInputComponent
                             inputref={this.setInputRef("transitRoutingNumber")}
-                            propInputStyle={this.state.transitRoutingNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            propInputStyle={transitRoutingNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder=""
                             maxLength={gblStrings.maxLength.transitRoutingNumber}
-                            value={this.state.transitRoutingNumber}
-                            errorFlag={!this.state.transitRoutingNumberValidation}
+                            value={transitRoutingNumber}
+                            errorFlag={!transitRoutingNumberValidation}
                             errorText={gblStrings.accManagement.emptyTransitRoutingNo}
                             onChangeText={this.onChangeText("transitRoutingNumber")}
                             onSubmitEditing={this.onSubmitEditing(this.accountNumber)}
@@ -252,11 +263,11 @@ class AddOtherBankAccountComponent extends Component {
                         </Text>
                         <GInputComponent
                             inputref={this.setInputRef("accountNumber")}
-                            propInputStyle={this.state.accountNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
+                            propInputStyle={accountNumberValidation ? styles.customTxtBox : styles.customTxtBoxError}
                             placeholder=""
                             maxLength={gblStrings.maxLength.accountNumber}
-                            value={this.state.accountNumber}
-                            errorFlag={!this.state.accountNumberValidation}
+                            value={accountNumber}
+                            errorFlag={!accountNumberValidation}
                             errorText={gblStrings.accManagement.emptyAccountNumber}
                             onChangeText={this.onChangeText("accountNumber")}
                             keyboardType="number-pad"
@@ -272,12 +283,12 @@ class AddOtherBankAccountComponent extends Component {
                         </Text>
                         <Image style={styles.specimenImg}
                             resizeMode="contain"
-                            source={require("../../Images/specimen.png")}
+                            source={specimen}
                         />
 
-                        {!this.state.isValidBankAccount && (
+                        {!isValidBankAccount && (
                             <Text style={styles.errMsg}>
-                                {this.state.validBankAccountMsg}
+                                {validBankAccountMsg}
                             </Text>
                           )}
 
@@ -285,7 +296,7 @@ class AddOtherBankAccountComponent extends Component {
                             buttonStyle={styles.backBtn}
                             buttonText={gblStrings.common.cancel}
                             textStyle={styles.backButtonText}
-                            onPress={() => this.navigateBankAccount(false)}
+                            onPress={this.navigateBankAccount(false)}
                         />
 
                         <GButtonComponent
@@ -322,10 +333,14 @@ class AddOtherBankAccountComponent extends Component {
 }
 
 AddOtherBankAccountComponent.propTypes = {
-    navigation: PropTypes.instanceOf(Object)
+    navigation: PropTypes.instanceOf(Object),
+    addBankAccount: PropTypes.instanceOf(array),
+    addBankAccountAction: PropTypes.func
 };
 AddOtherBankAccountComponent.defaultProps = {
-    navigation: {}
+    navigation: {},
+    addBankAccount: [],
+    addBankAccountAction: {}
 };
 
 export default AddOtherBankAccountComponent;

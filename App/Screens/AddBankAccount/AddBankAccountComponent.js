@@ -25,14 +25,16 @@ class AddBankAccountComponent extends Component {
 
     componentDidMount() {
         const payload = [];
-
-        payload.push(JSON.stringify(this.state.popularAccount));
-        this.props.getPopularBankNames(payload);
+        const { popularAccount } = this.state;
+        const { getPopularBankNames } = this.props;
+        payload.push(JSON.stringify(popularAccount));
+        getPopularBankNames(payload);
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props && this.props.popularBankInfo && this.props.popularBankInfo !== prevProps.popularBankInfo) {
-            this.setState({ popularAccount: JSON.parse(this.props.popularBankInfo) });
+        const { popularBankInfo } = this.props;
+        if (this.props && popularBankInfo && popularBankInfo !== prevProps.popularBankInfo) {
+            this.setState({ popularAccount: JSON.parse(popularBankInfo) });
         }
     }
 
@@ -71,7 +73,7 @@ class AddBankAccountComponent extends Component {
         </TouchableOpacity>
     );
 
-    bankInfoKey = (item) => this.state.popularAccount.indexOf(item);
+    bankInfoKey = (item) => {return item;};
 
     render() {
         const { navigation } = this.props;
