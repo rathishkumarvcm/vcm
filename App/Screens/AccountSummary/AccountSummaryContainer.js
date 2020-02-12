@@ -18,10 +18,8 @@ const mapStateToProps = (state /* , props */) => ({
         accountSummaryInitialState: state.accountSummaryData,
 });
 
-const mapDispatchToProps = (dispatch) => {
-        return {
-                addHoldingGroup: bindActionCreators(addHoldingGroup, dispatch)
-        };
-};
+const mapDispatchToProps = (dispatch) => ({
+        addHoldingGroup: bindActionCreators(addHoldingGroup, dispatch)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountSummaryComponent);

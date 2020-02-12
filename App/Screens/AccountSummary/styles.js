@@ -36,11 +36,11 @@ const styles = StyleSheet.create({
         // marginTop:scaledHeight(26),
         width: '80%'
     },
-    addGroupContainer: { 
-        alignItems: 'center', 
-        justifyContent: 'center', 
-        marginBottom: 20, 
-        width: "100%" 
+    addGroupContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20,
+        width: "100%"
     },
     addGroupText: {
         color: '#FFFFFF',
@@ -98,49 +98,48 @@ const styles = StyleSheet.create({
 
 const modalStyles = StyleSheet.create({
 
-    modalContainerView: {
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        flex: 1,
-        // justifyContent: 'center',
+    groupNameInput: {
+        marginLeft: '4%',
+        marginRight: '4%',
     },
-    modalView: { 
-        backgroundColor: '#fff', 
-        height: '65%', 
-        marginTop: "20%", 
-        width: '90%'
-    },
-    groupNameView: {
-        marginTop: scaledHeight(34),
-        paddingLeft: '4%',
-        paddingRight: '4%',
-      },
     groupNameText: {
         color: '#333333DE',
         fontSize: scaledHeight(20),
         fontWeight: 'bold',
         marginBottom: scaledHeight(8)
     },
-    groupNameInput: {
-        marginLeft: '4%',
-        marginRight: '4%',
-    },
-    selectAccountView: {
+    groupNameView: {
         marginTop: scaledHeight(34),
         paddingLeft: '4%',
         paddingRight: '4%',
     },
-    selectAccountText:{
-        color: '#333333DE',
-        fontSize: scaledHeight(20),
-        fontWeight: 'bold',
-        marginBottom: scaledHeight(8)
+    modalAddButton: {
+        alignContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#544A54',
+
+        borderColor: '#61285F',
+        borderWidth: 1,
+
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        marginRight: 20,
+        width: '30%',
+
+        // marginBottom:scaledHeight(15),
+        // marginTop:scaledHeight(26),
     },
     modalButtonText: {
         color: '#FFFFFF',
         fontSize: scaledHeight(16),
         fontWeight: 'bold',
         textAlign: 'center',
+    },
+    modalButtonView: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: "10%"
     },
     modalCancelButton: {
         alignContent: 'center',
@@ -153,29 +152,44 @@ const modalStyles = StyleSheet.create({
         height: scaledHeight(50),
         justifyContent: 'center',
         width: '30%'
-      },
-      modalAddButton: {
-        alignContent: 'center',
+    },
+    modalContainerView: {
         alignItems: 'center',
-        backgroundColor: '#544A54',
-
-        borderColor: '#61285F',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        flex: 1,
+        // justifyContent: 'center',
+    },
+    modalView: {
+        backgroundColor: '#fff',
+        height: '65%',
+        marginTop: "20%",
+        width: '90%'
+    },
+    multiSelectDropDownMenu: {
+        backgroundColor: "#FFFFFF",
+        borderColor: "#DEDEDF",
+        borderRadius: scaledHeight(4),
         borderWidth: 1,
-
-        height: scaledHeight(50),
-        justifyContent: 'center',
-        // marginBottom:scaledHeight(15),
-        // marginTop:scaledHeight(26),
-        width: '30%',
-        marginRight: 20
-      },
-      modalButtonView: {
-          flex: 1, 
-          flexDirection: 'row', 
-          justifyContent: 'center', 
-          marginTop: "10%"
-      }
-
+        height: scaledHeight(48),
+        justifyContent: "center",
+        marginLeft: '4%',
+        marginRight: '4%',
+        width: '92%',
+    },
+    multiSelectSearchInputStyle: {marginLeft: 0, marginRight: 0},
+    multiSelectStyleInputGroup: { marginLeft: 30, marginRight: 30},
+    multiSelectStyleTextDropdown: { marginLeft: 0, marginRight: 0},
+    selectAccountText: {
+        color: '#333333DE',
+        fontSize: scaledHeight(20),
+        fontWeight: 'bold',
+        marginBottom: scaledHeight(8)
+    },
+    selectAccountView: {
+        marginTop: scaledHeight(34),
+        paddingLeft: '4%',
+        paddingRight: '4%',
+    }
 });
 
 /** AccountSummaryAccordion Styles */

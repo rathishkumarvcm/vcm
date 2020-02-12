@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text, FlatList } from "react-native";
 import PropTypes from 'prop-types';
+import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 import { accordianStyles } from './styles';
 import { GIcon } from '../../CommonComponents';
 
@@ -18,85 +19,10 @@ export default class AccountSummaryAccordion extends Component {
             data: props.data,
             expanded: false,
         };
+
+        this.accountMenu = [];
+        this.groupMenu = null;
     }
-
-    // onClick = (index) => {
-    //     const { data } = this.state;
-    //     const temp = data.slice();
-    //     temp[Number(index)].value = !temp[Number(index)].value;
-    //     this.setState({ data: temp });
-    // }
-
-    toggleExpand = () => {
-        const { expanded } = this.state;
-        this.setState({ expanded: !expanded });
-    }
-
-    onClickMenu = () => {
-    }
-
-    renderMenuOptions = () => ({ item, index }) => (
-        <TouchableOpacity style={accordianStyles.editDropdown}>
-            <Text style={accordianStyles.editDropdownText}
-                onPress={this.onMenuItemClicked(index)}
-            >
-                {item.name}
-            </Text>
-        </TouchableOpacity>
-    );
-
-    onMenuItemClicked = () => () => {
-
-        // const { selectedIndex, refreshAddressData, profileUserAddressValue } = this.state;
-        // switch (index) {
-        //     case 0:
-        //         this.setState({
-        //             refreshAddressData: !refreshAddressData,
-        //             selectedIndex: -1
-        //         });
-        //         break;
-
-        //     case 1:
-        //         showAlertWithCancelButton(globalString.common.vcmMemberService,
-        //             globalString.common.deleteAlertMsg,
-        //             globalString.common.cancel,
-        //             globalString.common.delete,
-        //             () => {
-        //                 this.setState({
-        //                     refreshAddressData: !refreshAddressData,
-        //                     selectedIndex: -1
-        //                 });
-        //             },
-        //             () => {
-        //                 const array = [...profileUserAddressValue];
-        //                 const indexDelete = selectedIndex;
-        //                 if (indexDelete !== -1) {
-        //                     array.splice(indexDelete, 1);
-        //                     this.setState({
-        //                         profileUserAddressValue: array,
-        //                         refreshAddressData: !refreshAddressData,
-        //                         selectedIndex: -1
-        //                     });
-        //                 }
-        //             });
-        //         break;
-
-        //     default:
-        //         break;
-        // }
-    }
-
-
-
-    // dropDownTextName={styles.lblTxt}
-    // data={supportedAccountData}
-    // textInputStyle={styles.dropdownTextInput}
-    // dropDownLayout={styles.dropDownLayout}
-    // dropDownValue={beneData.account_Type}
-    // selectedDropDownValue={this.selectedSupportedAccountType()}
-    // errorFlag={supportedAccountFlag}
-    // errorText={supportedAccountMsg}
-
 
     onClick = (index) => {
         const { data } = this.state;
@@ -106,11 +32,37 @@ export default class AccountSummaryAccordion extends Component {
     }
 
     toggleExpand = () => {
-
         const { expanded } = this.state;
         this.setState({ expanded: !expanded });
     }
-    // onPress={() => this.onClick(index)}
+
+    setMenuRef = (ref, index) => {
+        this.accountMenu[Number(index)] = ref;
+    };
+
+    hideMenu = (index) => {
+        this.accountMenu[Number(index)].hide();
+    };
+
+    showMenu = (index) => {
+        this.accountMenu[Number(index)].show();
+    };
+
+    hideGroupMenu = () => {
+        this.groupMenu.hide();
+    };
+
+    showGroupMenu = () => {
+        this.groupMenu.show();
+    };
+
+    addAccountInGroup = () => {
+        this.hideGroupMenu();
+    }
+
+    removeGroup = () => {
+        this.hideGroupMenu();
+    }
 
 
     renderAccountList = ({ item, index }) => {
@@ -136,19 +88,35 @@ export default class AccountSummaryAccordion extends Component {
                         <Text style={accordianStyles.accountQtdText}>{item.qtd}</Text>
                         <Text style={accordianStyles.accountYtdText}>{item.ytd}</Text>
                     </View>
-                    <TouchableOpacity onPress={this.onClickMenu()}>
-                        <GIcon
-                            name="more-vert"
-                            type="material"
-                            size={20}
-                            color="#707070"
-                        />
-                    </TouchableOpacity>
 
-
-
+                    <Menu
+                        ref={(input) => { this.accountMenu[index] = input; }}
+                        button={(
+                            <TouchableOpacity onPress={() => this.showMenu(index)}>
+                                <GIcon
+                                    name="more-vert"
+                                    type="material"
+                                    size={20}
+                                    color="#707070"
+                                />
+                            </TouchableOpacity>
+                        )}
+                    >
+                        <MenuDivider />
+                        <MenuItem onPress={() => this.hideMenu(index)}>Place an Order</MenuItem>
+                        <MenuDivider />
+                        <MenuItem onPress={() => this.hideMenu(index)}>View Account Activity</MenuItem>
+                        <MenuDivider />
+                        <MenuItem onPress={() => this.hideMenu(index)}>View Statement</MenuItem>
+                        <MenuDivider />
+                        <MenuItem onPress={() => this.hideMenu(index)}>Manage Preferences</MenuItem>
+                        <MenuDivider />
+                        <MenuItem onPress={() => this.hideMenu(index)}>Manage Account Services</MenuItem>
+                        <MenuDivider />
+                        <MenuItem onPress={() => this.hideMenu(index)}>Remove Account</MenuItem>
+                        <MenuDivider />
+                    </Menu>
                 </View>
-
                 <View style={accordianStyles.childHr} />
             </View>
         );
@@ -185,7 +153,7 @@ export default class AccountSummaryAccordion extends Component {
             <View style={accordianStyles.accordionSectionHeader}>
 
                 <View style={accordianStyles.accordionSectionGroupNameView}>
-                    <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center', }} onPress={this.toggleExpand}>
+                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', }} onPress={this.toggleExpand}>
                         {
                             expanded ? (<GIcon name="remove" type="material" size={25} color="#707070" />)
                                 : (<GIcon name="add" type="material" size={25} color="#707070" />)
@@ -200,15 +168,26 @@ export default class AccountSummaryAccordion extends Component {
                     <Text style={accordianStyles.accordionSectionQtdText}>{this.calculateAccountBalance(keys.qtd)}</Text>
                     <Text style={accordianStyles.accordionSectionYtdText}>{this.calculateAccountBalance(keys.ytd)}</Text>
                 </View>
-                
-                <TouchableOpacity onPress={this.onClickMenu}>
-                <GIcon
-                    name="more-vert"
-                    type="material"
-                    size={25}
-                    color="#707070"
-                />
-                </TouchableOpacity>
+
+                <Menu
+                    ref={(input) => { this.groupMenu = input; }}
+                    button={(
+                        <TouchableOpacity onPress={() => this.showGroupMenu()}>
+                            <GIcon
+                                name="more-vert"
+                                type="material"
+                                size={25}
+                                color="#707070"
+                            />
+                        </TouchableOpacity>
+                    )}
+                >
+                    <MenuDivider />
+                    <MenuItem onPress={this.addAccountInGroup}>Add Account</MenuItem>
+                    <MenuDivider />
+                    <MenuItem onPress={this.removeGroup}>Remove Group</MenuItem>
+                    <MenuDivider />
+                </Menu>
 
             </View>
         );
@@ -234,21 +213,9 @@ export default class AccountSummaryAccordion extends Component {
                         </View>
                     )
                 }
-
-                {/* {
-                    showMenu ? (
-                        <FlatList style={accordianStyles.editFlatList}
-                            data={editDeleteMenuOption}
-                            renderItem={this.renderMenuOptions()}
-                        />
-                    ) : null
-                }
- */}
-
             </View>
         );
     }
-
 }
 
 AccountSummaryAccordion.propTypes = {
