@@ -2,7 +2,7 @@ import React from "react";
 import { Text, StyleSheet,View } from "react-native";
 import PropTypes from "prop-types";
 import { Dropdown } from 'react-native-material-dropdown';
-import { scaledHeight } from '../Utils/Resolution';
+import { scaledHeight,getCustomStyle } from '../Utils/Resolution';
 
 /* **************************\
   Function: GButtonComponent
@@ -93,13 +93,6 @@ topSection :{ left: 0 ,top: 5}
 //     width : '92%',
 // }
 });
-
-const getCustomStyle = (defaultStyle = {},propStyle={})=>{
-  return{
-    ...defaultStyle,
-    ...propStyle
-  };
-};
 
 
 export const GDropDownComponent = props => {

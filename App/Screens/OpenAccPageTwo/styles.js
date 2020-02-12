@@ -203,20 +203,6 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         width: "40%"
     },
-    removeTxtBtn: {
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        marginTop: scaledHeight(0)
-    },
-    removeTxt: {
-        color: '#5D83AE',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold',
-        lineHeight: 20,
-        textAlign: 'right',
-        width: '100%'
-    },
     errMsg: {
         color: 'red',
         fontSize: scaledHeight(12),
@@ -340,7 +326,6 @@ const styles = StyleSheet.create({
         marginTop: scaledHeight(25)
 
     },
-
     lblValueTxt: {
         color: '#56565A',
         fontSize: scaledHeight(16),
@@ -350,6 +335,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         marginTop: scaledHeight(19)
     },
+
     militaryLblDate1: {
         color: 'rgba(51, 51, 51, 0.87)',
         fontSize: scaledHeight(16),
@@ -365,7 +351,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start'
     },
-
     moreTxt: {
         color: '#61285F',
         fontSize: scaledHeight(16),
@@ -379,11 +364,11 @@ const styles = StyleSheet.create({
 
 
     },
+
     nonUSView: {
         flexGrow: 1,
         marginTop: scaledHeight(25)
     },
-
     normalBlackBtn: {
         alignContent: 'center',
         alignItems: 'center',
@@ -397,20 +382,20 @@ const styles = StyleSheet.create({
 
 
     },
-
-
     normalBlackBtnDisabledTxt: {
         color: '#fff',
         fontSize: scaledHeight(16),
         textAlign: 'center',
         width: '100%'
     },
+
     normalBlackBtnTxt: {
         color: '#fff',
         fontSize: scaledHeight(16),
         textAlign: 'center',
         width: '100%'
     },
+
 
     normalBlackDisabledBtn: {
         alignContent: 'center',
@@ -439,7 +424,6 @@ const styles = StyleSheet.create({
 
     },
 
-
     normalWhiteBtnTxt: {
         color: '#544A54',
         fontSize: scaledHeight(16),
@@ -452,6 +436,7 @@ const styles = StyleSheet.create({
         fontSize: scaledHeight(16),
         fontWeight: 'normal',
     },
+
 
     phoneCardView:{
         borderColor:"#DCDCDC",
@@ -474,6 +459,7 @@ const styles = StyleSheet.create({
         lineHeight: 32,
 
     },
+
     privacyNoticeTitleTxt: {
         color: '#486D89',
         fontSize: scaledHeight(26),
@@ -498,7 +484,6 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.3
     },
-   
     radioBtnColGrp: {
         flexGrow: 1,
         marginTop: scaledHeight(19)
@@ -508,6 +493,7 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         marginTop: scaledHeight(19)
     },
+   
     radioCol1: {
         marginBottom: scaledHeight(0),
         width: "30%"
@@ -528,6 +514,20 @@ const styles = StyleSheet.create({
         lineHeight: 28,
         marginTop: scaledHeight(23)
 
+    },
+    removeTxt: {
+        color: '#5D83AE',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        lineHeight: 20,
+        textAlign: 'right',
+        width: '100%'
+    },
+    removeTxtBtn: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginTop: scaledHeight(0)
     },
     removeWhiteBtn: {
         alignContent: 'center',

@@ -78,4 +78,12 @@ const scaledWidth = size => {
     return calWidth;
 };
 
-export { convertToDeviceResolution, scaledWidth, scaledHeight, scale };
+
+const getCustomStyle = (defaultStyle = {},propStyle={})=>{
+    return{
+      ...defaultStyle,
+      ...propStyle
+    };
+  };
+
+export { convertToDeviceResolution, scaledWidth, scaledHeight, scale ,getCustomStyle};
