@@ -203,6 +203,20 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         width: "40%"
     },
+    removeTxtBtn: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginTop: scaledHeight(0)
+    },
+    removeTxt: {
+        color: '#5D83AE',
+        fontSize: scaledHeight(16),
+        fontWeight: 'bold',
+        lineHeight: 20,
+        textAlign: 'right',
+        width: '100%'
+    },
     errMsg: {
         color: 'red',
         fontSize: scaledHeight(12),

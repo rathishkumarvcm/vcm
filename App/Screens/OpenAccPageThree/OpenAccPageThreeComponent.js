@@ -1806,7 +1806,7 @@ class OpenAccPageThreeComponent extends Component {
                                                     textInputStyle={styles.textInputStyle}
                                                     dropDownName={gblStrings.accManagement.fundingOptions}
                                                     data={tempFundOptionsData}
-                                                    changeState={this.onPressDropDownForInvestment("fundingOptionDropDown", index)}
+                                                   // changeState={this.onPressDropDownForInvestment("fundingOptionDropDown", index)}
                                                     // showDropDown={this.state.selectedFundInvestmentsData[index].fundingOptionDropDown}
                                                     dropDownValue={item.fundingOptionDropDown}
                                                     selectedDropDownValue={this.onSelectedDropDownValue("fundingOptionDropDown", index)}
