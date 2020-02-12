@@ -1,10 +1,10 @@
-import env from 'react-native-config';
+// import env from 'react-native-config';
 
 
 
 const config = {
     api:{
-        host:env.baseUrl,
+       // host:env.baseUrl,
         timeout:2000
     }
 };

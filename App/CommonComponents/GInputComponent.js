@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TextInput, StyleSheet, Text, TouchableOpacity } from "react-native";
 import PropTypes from "prop-types";
-import { scaledHeight } from '../Utils/Resolution';
+import { scaledHeight,getCustomStyle } from '../Utils/Resolution';
 import { GIcon } from './GIcon';
 /* **************************\
   Function: GInputComponent
@@ -30,6 +30,15 @@ export const styles = StyleSheet.create({
     // marginRight:'4%',
     borderColor: 'red'
   },
+  inputBoxErrViewStyle: {
+    backgroundColor: "#FFFFFF",
+    borderColor: "red",
+    borderRadius: scaledHeight(4),
+    borderWidth: 1,
+    height: scaledHeight(48),
+    justifyContent: "center",
+    width: '92%'
+},
   inputBoxStyle: {
     backgroundColor: "#FFFFFF",
     borderColor: "#DEDEDF",
@@ -46,6 +55,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     marginLeft: scaledHeight(14)
   }
+
 });
 
 export const GInputComponent = (props) => {
@@ -56,9 +66,9 @@ export const GInputComponent = (props) => {
     errorText, underlineColorAndroid} = props;
 return(
   <>
-    <View style={errorFlag ? [styles.inputBoxStyle, propInputStyle, styles.errorView] : [styles.inputBoxStyle, propInputStyle]}>
+    <View style={errorFlag ? getCustomStyle(styles.inputBoxErrViewStyle, propInputStyle) : getCustomStyle(styles.inputBoxStyle, propInputStyle)}>
       <TextInput
-        style={[styles.textInputStyle, inputStyle]}
+        style={getCustomStyle(styles.textInputStyle, inputStyle)}
         value={value}
         secureTextEntry={secureTextEntry}
         autoCorrect={false}
@@ -83,7 +93,7 @@ return(
       />
       
       {dropDownBox ? (
-        <TouchableOpacity style={[styles.arrowIconStyle, arrowIconStyle]} onPress={dropDownClick}>
+        <TouchableOpacity style={getCustomStyle(styles.arrowIconStyle, arrowIconStyle)} onPress={dropDownClick}>
           <GIcon
             name="md-arrow-dropdown"
             type="ionicon"

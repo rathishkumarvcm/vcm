@@ -3,12 +3,12 @@ import React from 'react';
 
 import { GLoadingSpinner,GErrorBoundaries } from '../CommonComponents';
 
-const GLoadingSpinnerHOC = Comp =>({isLoading,children,...props})=>{
+const GLoadingSpinnerHOC = Comp =>({isLoading,children/* ...props */})=>{
     if(isLoading){
         return (<GLoadingSpinner />);
     } return (
         <GErrorBoundaries>
-            <Comp {...props}>
+            <Comp>  
                 {children}
             </Comp>
         </GErrorBoundaries>

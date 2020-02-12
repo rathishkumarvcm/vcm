@@ -201,6 +201,10 @@ class InvestmentPlanInfoComponent extends Component {
         this.tabBar.scrollToEnd();
     }
 
+    setInputRef = (inputComp) => (ref) => {
+        this[`${inputComp}`] = ref;
+    }
+
 
 
     /*----------------------
@@ -294,7 +298,7 @@ class InvestmentPlanInfoComponent extends Component {
                     <View>
 
                         <ScrollView
-                            ref={input => this.tabBar = input}
+                            ref={this.setInputRef('tabBar') /* input => this.tabBar = input */}
 
                             style={styles.tabBar}
                             horizontal

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from "react-redux";
 import { AppState } from 'react-native';
-import RNSecureKeyStore  from 'react-native-secure-key-store';
+import RNSecureKeyStore from 'react-native-secure-key-store';
 import { Auth } from "aws-amplify";
 // import { NavigationActions } from 'react-navigation';
  import AppNavigator from './routes';
@@ -98,9 +98,11 @@ class RootComponent extends Component {
   };
 
   signOut = () => {
-    this.navigator &&
+    /* this.navigator &&
       this.navigator.dispatch(
         NavigationActions.navigate({ routeName: 'login' }));
+
+        */
   }
 
   navigationStateChange = (prevState, currentState) => {
@@ -112,15 +114,17 @@ class RootComponent extends Component {
     }
   }
 
+  setInputRef = (navigatorRef) => {
+    this.navigator = navigatorRef;
+    setTopLevelNavigator(navigatorRef);
+}
+
   render() {
     return (
       <GErrorBoundaries>
         <Provider store={store}>
           <AppNavigator
-            ref={navigatorRef => {
-              this.navigator = navigatorRef;
-              setTopLevelNavigator(navigatorRef);
-            }}
+            ref={this.setInputRef}
             onNavigationStateChange={this.navigationStateChange}
           />
         </Provider>
