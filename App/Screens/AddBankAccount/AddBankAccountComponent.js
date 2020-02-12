@@ -23,6 +23,14 @@ class AddBankAccountComponent extends Component {
         };
     }
 
+    static getDerivedStateFromProps(nextProps, prevState) {
+        const { popularBankInfo } = nextProps;
+        const { popularAccount } = prevState;
+        if (popularAccount !== popularBankInfo) {
+            this.setState({ popularAccount: JSON.parse(popularBankInfo) });
+        }
+    }
+
     componentDidMount() {
         const payload = [];
         const { popularAccount } = this.state;
@@ -31,12 +39,12 @@ class AddBankAccountComponent extends Component {
         getPopularBankNames(payload);
     }
 
-    componentDidUpdate(prevProps) {
-        const { popularBankInfo } = this.props;
-        if (this.props && popularBankInfo && popularBankInfo !== prevProps.popularBankInfo) {
-            this.setState({ popularAccount: JSON.parse(popularBankInfo) });
-        }
-    }
+    // componentDidUpdate(prevProps) {
+    //     const { popularBankInfo } = this.props;
+    //     if (this.props && popularBankInfo && popularBankInfo !== prevProps.popularBankInfo) {
+    //         this.setState({ popularAccount: JSON.parse(popularBankInfo) });
+    //     }
+    // }
 
     setExpandInstruction = () => {
         const { expand } = this.state;
