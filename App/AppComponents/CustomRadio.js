@@ -16,7 +16,7 @@ const CustomRadio = props => {
                 }
             </View>
 
-            <View style={styles.viewContainer}>
+            <View style={styles.radioviewContainer}>
                 <Text style={labelStyle}>
                     {label}
                 </Text>
