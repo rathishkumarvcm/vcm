@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
 
 export const GCardTileComponent = props => {
 
-    const {tileStyles,details,title} = props;
+    const {/* tileStyles, */ details,title} = props;
     return(
     <View style={styles.container}>
         <View style={styles.wrapper}>
@@ -61,12 +61,12 @@ export const GCardTileComponent = props => {
             />
         </View>
         <View style={styles.tileContainer}>
-        <Text style={[styles.detailStyle,tileStyles]}>
+        <Text style={styles.detailStyle}>  { /* [styles.detailStyle,tileStyles] */ }
         {title}
         </Text>
         </View>
         <View style={styles.titileConatainerB}>
-        <Text style={[styles.detailStyle,tileStyles]}>
+        <Text style={styles.detailStyle}>
         {details}
         </Text>
         </View>

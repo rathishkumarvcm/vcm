@@ -41,11 +41,11 @@ const styles = StyleSheet.create({
 
 
 export const GIconButton = (props) => {
-    const { id,iconRight,iconSize,iconColor,textStyle,title,icon,iconType,onPress } = props;
+    const { id,iconRight,iconSize,iconColor,/* textStyle, */ title,icon,iconType,onPress } = props;
   return (
 <View>
     <TouchableOpacity
-      style={[styles.buttonStyle, id.buttonStyle]}
+      style={styles.buttonStyle}
       activeOpacity={0.8}
       onPress={onPress}
     >
@@ -56,7 +56,7 @@ export const GIconButton = (props) => {
         </View>
         )}
         <View style={styles.buttonTextView}>
-          <Text style={[styles.buttonTextStyle, textStyle]}>{title}</Text>
+          <Text style={styles.buttonTextStyle}>{title}</Text>
         </View>
         {iconRight && (
         <View style={styles.rightIconView}>

@@ -37,8 +37,7 @@ GCollapseComponent.propTypes = {
 
 GCollapseComponent.defaultProps = { 
     collapseView: {},
-    headerView: {}, 
-    collapsedState: false      
+    headerView: {}
 };
 
 

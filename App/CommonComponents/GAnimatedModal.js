@@ -17,6 +17,7 @@ const styles = {
 export default class GAnimatedModal extends React.Component {
     constructor(props){
         super(props);
+       const {containerStyle} = this.props;
         this.state={
         };
 
@@ -27,6 +28,7 @@ export default class GAnimatedModal extends React.Component {
           outputRange: [0, this.negativeHeight]
       });
       this.translateStyle = { transform: [{ translateY: this.modalMoveY }] }; 
+      this.amimatedViewStyle = [styles.container, this.translateStyle,containerStyle]
     }
 
     static getDerivedStateFromProps(/* props, state */){
@@ -68,7 +70,7 @@ export default class GAnimatedModal extends React.Component {
     render(){
       const {children}=this.props;
         return (
-            <Animated.View style={[styles.container, this.translateStyle,this.props.containerStyle]}>
+            <Animated.View style={this.amimatedViewStyle}>
               {children}
             </Animated.View>
           );
