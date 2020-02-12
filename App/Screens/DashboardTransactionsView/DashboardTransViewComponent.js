@@ -14,14 +14,19 @@ class DashboardTransViewComponent extends Component {
         this.state = {
             showOperations: false,
             showSortOptions: false,
-            transactions: [
-                { symbol: "USAUX", fundName: "USAA Agressive Growth Fund", transactionDesc: "Purchase", tradeDate: "02/02/2020", quantity: "60.00", price: "$41.00", value: "$1,052.00", cumulativeShares: "2500.00", transactionStatus: "Pending" },
-                { symbol: "USAUX", fundName: "USAA Agressive Growth Fund", transactionDesc: "Liquidation", tradeDate: "02/02/2020", quantity: "60.00", price: "$98.00", value: "$3,458.00", cumulativeShares: "2500.00", transactionStatus: "Confirmed" },
-                { symbol: "USAUX", fundName: "USAA Agressive Growth Fund", transactionDesc: "Purchase", tradeDate: "02/02/2020", quantity: "60.00", price: "$40.00", value: "$6,897.00", cumulativeShares: "2500.00", transactionStatus: "Pending" },
-                { symbol: "USAUX", fundName: "USAA Agressive Growth Fund", transactionDesc: "Liquidation", tradeDate: "02/02/2020", quantity: "60.00", price: "$56.00", value: "$2,254.00", cumulativeShares: "2500.00", transactionStatus: "Pending" },
-                { symbol: "USAUX", fundName: "USAA Agressive Growth Fund", transactionDesc: "Exchange", tradeDate: "02/02/2020", quantity: "60.00", price: "$100.00", value: "$4,356.00", cumulativeShares: "2500.00", transactionStatus: "Confirmed" },
-            ],
+            transactions: [],
         };
+    }
+
+    componentDidMount(){
+        this.getTransactionsList();
+    }
+
+    getTransactionsList=()=>{
+        const { dashboardTransViewData }= this.props;
+        this.setState({
+            transactions:dashboardTransViewData.transactions
+        });
     }
 
     splitDate = (date) => {
@@ -215,7 +220,6 @@ class DashboardTransViewComponent extends Component {
 
     render() {
         const { showSortOptions, transactions } = this.state;
-        const { dashboardTransViewData }= this.props;
         return (
             <View style={styles.container}>
                 <ScrollView style={styles.mainFlex}>
