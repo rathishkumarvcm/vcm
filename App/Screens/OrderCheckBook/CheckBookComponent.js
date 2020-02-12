@@ -47,10 +47,10 @@ class CheckBookComponent extends Component {
         switch (fromView) {
             case 'General Account':          
                 tmpData = generalAccount;
-                tmpData.map((item, index) => {
+                tmpData.map((item, index) => () => {
                     if (item.Id === itemId) {
-                        const tmpVal = tmpData[index].showRequestOption;
-                        tmpData[index].showRequestOption = !tmpVal;
+                        const tmpVal = tmpData[`${index}`].showRequestOption;
+                        tmpData[`${index}`].showRequestOption = !tmpVal;
                     }
                 });
                 this.updateStateChanged();
@@ -58,10 +58,10 @@ class CheckBookComponent extends Component {
                 break;
             case 'IRA Account':
                 tmpData = iraAccount;
-                tmpData.map((item, index) => {
+                tmpData.map((item, index) => () => {
                     if (item.Id === itemId) {
-                        const tmpVal = tmpData[index].showRequestOption;
-                        tmpData[index].showRequestOption = !tmpVal;
+                        const tmpVal = tmpData[`${index}`].showRequestOption;
+                        tmpData[`${index}`].showRequestOption = !tmpVal;
                     }
                 });
                 this.updateStateChanged();
@@ -69,10 +69,10 @@ class CheckBookComponent extends Component {
                 break;
             case 'UTMA Account':
                 tmpData = utmaAccount;
-                tmpData.map((item, index) => {
+                tmpData.map((item, index) => () => {
                     if (item.Id === itemId) {
-                        const tmpVal = tmpData[index].showRequestOption;
-                        tmpData[index].showRequestOption = !tmpVal;
+                        const tmpVal = tmpData[`${index}`].showRequestOption;
+                        tmpData[`${index}`].showRequestOption = !tmpVal;
                     }
                 });
                 this.updateStateChanged();
@@ -118,7 +118,7 @@ class CheckBookComponent extends Component {
                     {`${item.AccountName}`}
                 </Text>
 
-                <TouchableOpacity style={styles.editInfo} key={item.Id} onPress={() => this.updateShowRequestOption(fromView, item.Id)}>
+                <TouchableOpacity style={styles.editInfo} key={item.Id} onPress={this.updateShowRequestOption(fromView, item.Id)}>
                     <GIcon
                         name="dots-vertical"
                         type="material-community"
@@ -173,7 +173,7 @@ class CheckBookComponent extends Component {
                     const tmpGeneralAccount = [];
                     const tmpIRAAccount = [];
                     const tmpUTMAAccount = [];
-                    checkBookInfo.map((item) => {
+                    checkBookInfo.map((item) => () => {
                         switch (item.AccountType) {
                             case 'General Account':
                                 tmpGeneralAccount.push(item);

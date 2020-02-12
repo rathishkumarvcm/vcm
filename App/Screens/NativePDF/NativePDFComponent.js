@@ -5,6 +5,7 @@ import Pdf from 'react-native-pdf';
 import { scaledHeight } from '../../Utils/Resolution';
 import {GButtonComponent} from '../../CommonComponents';
 
+const source = {uri:'http:// samples.leanpub.com/thereactnativebook-sample.pdf',cache:true};
 
 const styles = StyleSheet.create({
     buttonStyle:{
@@ -43,7 +44,7 @@ export default class PDFExample extends React.Component {
     }
 
     render() {
-        const source = {uri:'http:// samples.leanpub.com/thereactnativebook-sample.pdf',cache:true};
+        
         // const source = require('./test.pdf');  //  ios only
         // const source = {uri:'bundle-assets:// test.pdf'};
  
