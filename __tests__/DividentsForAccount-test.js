@@ -10,7 +10,7 @@ import DividentsForAccount from '../App/Screens/DividentsForAccount/DividentsFor
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const navigation = { navigate: jest.fn(), getParam: jest.fn() }
+const navigation = { navigate: jest.fn(), getParam: jest.fn() };
 
 const getDividentsInfo = jest.fn();
 
@@ -18,7 +18,7 @@ describe('Bank Accounts ', () => {
 
     // Snap shot 
     it('snap shot', () => {
-        const tree = renderer.create(<DividentsForAccount navigation={navigation} getDividentsInfo={getDividentsInfo}/>).toJSON();
+        const tree = renderer.create(<DividentsForAccount navigation={navigation} getDividentsInfo={getDividentsInfo} />).toJSON();
         expect(tree).toMatchSnapshot();
     });
 

@@ -14,7 +14,7 @@ import AntIcon from 'react-native-vector-icons/AntDesign';
 const customIcons = {};
 
 export const registerCustomIconType = (id, customIcon) => {
-  customIcons[id] = customIcon;
+  customIcons[`${id}`] = customIcon;
 };
 
 export default type => {

@@ -10,7 +10,7 @@ import CheckBookPlaceOrder from '../App/Screens/CheckBookPlaceOrder/CheckBookPla
 
 Enzyme.configure({ adapter: new Adapter() });
 
-const navigation = { navigate: jest.fn(), getParam: jest.fn() }
+const navigation = { navigate: jest.fn(), getParam: jest.fn() };
 
 describe('Bank Accounts ', () => {
 
@@ -23,7 +23,7 @@ describe('Bank Accounts ', () => {
     // Render using mount - mount includes child component also
     test('function testing', () => {
         const component = Enzyme.mount(
-            <CheckBookPlaceOrder navigation={navigation}  />
+            <CheckBookPlaceOrder navigation={navigation} />
         );
         component.render();
     });

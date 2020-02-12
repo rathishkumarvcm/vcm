@@ -11,9 +11,11 @@ describe('Compare Funds',()=>{
 
     //  Render using shallow - shallow not includes child component
     test('Match Snapshot',()=>{
-        const props = {};
+      //  const props = {};
         const getFundDetailsData = jest.fn();
-        const component = shallow(<CompareFunds {...props} getFundDetailsData={getFundDetailsData} navigation={navigation} />);  
+        const component = shallow(<CompareFunds getFundDetailsData={getFundDetailsData} navigation={navigation} />);  
+       // const component = shallow(<CompareFunds {...props} getFundDetailsData={getFundDetailsData} navigation={navigation} />);  
+
         component.render();
         expect(component).toMatchSnapshot();
     });

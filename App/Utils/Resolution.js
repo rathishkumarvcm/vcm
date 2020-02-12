@@ -23,7 +23,7 @@ Note: Resolution should be used only for fontSize. For padding size, height, wid
 be given in % value to support for orientation.
 */
 
-const convertToDeviceResolution = function (dp) {
+const convertToDeviceResolution = (dp) => {
 
     // Get current device resolution.
     // https:// facebook.github.io/react-native/docs/pixelratio#getpixelsizeforlayoutsize

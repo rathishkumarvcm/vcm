@@ -6,7 +6,7 @@ import 'react-native';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+// import Adapter from 'enzyme-adapter-react-16';
 import ResetPasswordComponent from '../App/Screens/ResetPassword/ResetPasswordComponent';
 
 describe('Current PIN',()=>{
