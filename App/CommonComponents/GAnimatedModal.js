@@ -28,7 +28,7 @@ export default class GAnimatedModal extends React.Component {
           outputRange: [0, this.negativeHeight]
       });
       this.translateStyle = { transform: [{ translateY: this.modalMoveY }] }; 
-      this.amimatedViewStyle = [styles.container, this.translateStyle,containerStyle]
+      this.amimatedViewStyle = [styles.container, this.translateStyle,containerStyle];
     }
 
     static getDerivedStateFromProps(/* props, state */){

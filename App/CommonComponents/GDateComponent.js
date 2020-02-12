@@ -1,85 +1,39 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
 import PropTypes from "prop-types";
 import DatePicker from 'react-native-datepicker';
 import { GIcon } from './GIcon';
-import { scaledHeight } from '../Utils/Resolution';
+import GDateComponentStyle from './GDateComponentStyle';
 
-const styles = StyleSheet.create({
-    componentStyle: {
-        backgroundColor: "#FFFFFF",
-        borderColor: "#DEDEDF",
-        borderRadius: scaledHeight(4),
-        borderWidth: 1,
-        height: scaledHeight(48),
-        justifyContent: "center",
-        marginTop:scaledHeight(9),
-        width: '100%'
-    },
-    dateIconStyle: {
-        left: 0,
-        marginLeft: 0,
-        position: 'absolute',
-        top: 4
-    },
-    dateInputStyle: {
-        alignItems: 'flex-start',
-        borderColor: "transparent",
-        borderWidth: 0,
-        justifyContent: 'center',
-        marginLeft: 0
-    },
-    dateTextLayout: {
-        marginTop: scaledHeight(18),
-        paddingLeft: '4%',
-        paddingRight: '4%',
-    },
-    dateTextStyle: {
-        alignItems: 'center',
-        color: '#B5B5B5',
-        fontSize: scaledHeight(16),
-        justifyContent: 'center',
-        marginLeft: scaledHeight(14),
-        textAlign: 'left'
-    },
-    dateTitleName: {
-        color: '#000000',
-        fontSize: scaledHeight(16),
-        fontWeight: 'bold',
-        marginBottom: scaledHeight(8)
-    },
-    dateTouchBodyStyle: {},
-    errorSection: {
-        marginLeft: '4%',
-        marginRight: '4%'
-    },
-    errorSectionText: {
-        color: 'red',
-        fontSize: scaledHeight(12)
-    },
-    errorView: {
-        borderColor: 'red'
-    },
-});
 
+const getCustomStyles = (styles,props) => {
+  return {
+        dateIcon: [styles.dateIconStyle,props.dateIconStyle],
+        dateInput: [styles.dateInputStyle,props.dateInputStyle],
+        dateText: [styles.dateTextStyle,props.dateTextStyle],
+        dateTouchBody: props.dateTouchBodyStyle,
+        placeholderText: [styles.dateTextStyle,props.dateTextStyle]
+      
+};
+};
 
 export const GDateComponent = props => {
-const {dateTextName,dateTextLayout,dateTitleName,errorFlag,componentStyle,
-    date,mode,placeholder,format,minDate,maxDate,iconComponent,confirmBtnText,cancelBtnText,
-    dateIconStyle,dateInputStyle,dateTextStyle,dateTouchBodyStyle,onDateChange,errorMsg} = props;
+const {dateTextName,errorFlag,date,mode,placeholder,format,minDate,maxDate,iconComponent,confirmBtnText,cancelBtnText,onDateChange,errorMsg} = props;
+    const styles = GDateComponentStyle(props);
+    const customStyles = getCustomStyles(styles,props);
 return(
     <View>
        {
            (dateTextName && dateTextName!=="") && (
-           <View style={[styles.dateTextLayout, dateTextLayout]}>
-           <Text style={[styles.dateTitleName, dateTitleName]}>
+           <View style={styles.dateTextLayout}>
+           <Text style={styles.dateTitleName}>
                {dateTextName}
            </Text>
            </View>
          )}
        
         <DatePicker
-            style={errorFlag ? [styles.componentStyle, componentStyle, styles.errorView] : [styles.componentStyle, componentStyle]}
+            style={errorFlag ? styles.componentErrViewStyle :styles.componentStyle}
             date={date}
             mode={mode}
             placeholder={placeholder}
@@ -89,13 +43,7 @@ return(
             iconComponent={iconComponent}
             confirmBtnText={confirmBtnText}
             cancelBtnText={cancelBtnText}
-            customStyles={{
-                dateIcon: dateIconStyle,
-                dateInput: dateInputStyle,
-                dateText: dateTextStyle,
-                dateTouchBody: dateTouchBodyStyle,
-                placeholderText: dateTextStyle
-            }}
+            customStyles={customStyles}
             onDateChange={onDateChange}
             is24Hour={false}
         />
@@ -112,15 +60,7 @@ return(
 };
 
 GDateComponent.propTypes = {
-    componentStyle: PropTypes.instanceOf(Object),
-    dateIconStyle: PropTypes.instanceOf(Object),
-    dateInputStyle: PropTypes.instanceOf(Object),
-    dateTextStyle: PropTypes.instanceOf(Object),   
-    iconComponent: PropTypes.instanceOf(Object),
-    dateTextLayout: PropTypes.instanceOf(Object),
-    dateTitleName: PropTypes.instanceOf(Object),
-    dateTouchBodyStyle: PropTypes.instanceOf(Object),
-
+   
     date: PropTypes.string,
     dateTextName : PropTypes.string,
     format: PropTypes.string,
@@ -132,7 +72,7 @@ GDateComponent.propTypes = {
     errorMsg: PropTypes.string,
     minDate:PropTypes.string,
     maxDate:PropTypes.string,
-
+    iconComponent:PropTypes.instanceOf(Object),
     onDateChange: PropTypes.func,
     // onOpenModal: PropTypes.func,
     // onCloseModal: PropTypes.func,
@@ -147,14 +87,6 @@ GDateComponent.propTypes = {
 };
 
 GDateComponent.defaultProps = {
-    componentStyle: styles.componentStyle,
-    dateIconStyle: styles.dateIconStyle,
-    dateInputStyle: styles.dateInputStyle,
-    dateTextStyle: styles.dateTextStyle,
-    // dateTouchBody: styles.dateTouchBodyStyle,
-    dateTextLayout: styles.dateTextStyle,
-    dateTitleName:styles.dateTitleName,
-    dateTouchBodyStyle:{},
 
     date: "",
     format: "MM-DD-YYYY",

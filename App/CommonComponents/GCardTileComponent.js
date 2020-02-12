@@ -78,13 +78,13 @@ export const GCardTileComponent = props => {
 };
 
 GCardTileComponent.propTypes = {
-    tileStyles : PropTypes.instanceOf(Object),
+   // tileStyles : PropTypes.instanceOf(Object),
     title : PropTypes.string,
     details : PropTypes.string
 };
 
 GCardTileComponent.defaultProps = {
-    tileStyles:{},
+   // tileStyles:{},
     title:'',
     details:''
 

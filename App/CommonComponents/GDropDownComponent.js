@@ -94,14 +94,21 @@ topSection :{ left: 0 ,top: 5}
 // }
 });
 
+const getCustomStyle = (defaultStyle = {},propStyle={})=>{
+  return{
+    ...defaultStyle,
+    ...propStyle
+  };
+};
+
 
 export const GDropDownComponent = props => {
   const {dropDownLayout,dropDownTextName,dropDownName,isOptional,data,errorFlag,
     dropDownValue,selectedDropDownValue,errorText,itemCount,disabled} = props;
   return(
 
-    <View style={[styles.dropDownLayout,dropDownLayout]}>
-    <Text style={[styles.dropDownTextName, dropDownTextName]}>
+    <View style={getCustomStyle(styles.dropDownLayout,dropDownLayout)}>
+    <Text style={getCustomStyle(styles.dropDownTextName, dropDownTextName)}>
       <Text>
         {dropDownName}
       </Text>
