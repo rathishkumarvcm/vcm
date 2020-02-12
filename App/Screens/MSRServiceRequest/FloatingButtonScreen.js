@@ -1,12 +1,13 @@
 import React from 'react';
-import { Text, View, ScrollView, TextInput, TouchableWithoutFeedback, SafeAreaView, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { Text, View, ScrollView, TextInput, TouchableWithoutFeedback, SafeAreaView, TouchableOpacity, KeyboardAvoidingView, Linking, Platform } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Modal from 'react-native-modal';
 import PropTypes from "prop-types";
 import styles from './style';
 import gblStrings from '../../Constants/GlobalStrings';
-import { GIcon, GHeaderComponent, GDropDownComponent, GInputComponent, GButtonComponent } from '../../CommonComponents';
+import { GIcon, GHeaderComponent, GDropDownComponent, GInputComponent, GButtonComponent, showAlertWithCancelButton } from '../../CommonComponents';
 import AttachmentData from './AttachmentData';
+import arrayStyles from './arrayStyles';
 
 const topicData = [
     { "key": "1", "value": "Investment Advice" },
@@ -145,59 +146,25 @@ class FloatingButtonComponent extends React.Component {
         });
     }
 
-    renderAttachmentLimit = () => {
-        return (
-            <View style={styles.columnContainer}>
-                <View style={styles.uploadFileContainer}>
-                    <Text style={styles.uploadFileTitle}>
-                        {gblStrings.accManagement.attachLimit}
-                    </Text>
-                    <Text style={styles.uploadFileDivider}>
-                        {gblStrings.accManagement.attachdivider}
-                    </Text>
-                    <Text style={styles.uploadFileDesc}>
-                        {gblStrings.accManagement.noOfFiles}
-                    </Text>
-                </View>
+    openDialPad = () => {
+        const phone = gblStrings.msrServiceRequest.vcmCustomerCareNumber;
+        let number;
+        if (Platform.OS === 'android') {
+            showAlertWithCancelButton(gblStrings.common.appName, 'Are you sure want to make a call ?',
+                gblStrings.common.ok, gblStrings.common.cancel,
+                () => {
+                    number = `tel:${phone}`;
+                    Linking.openURL(number);
+                },
+                () => { this.dismiss(); }
+            );
 
-                <View style={styles.uploadFileContainer}>
-                    <Text style={styles.uploadFileTitle}>
-                        {gblStrings.accManagement.sizeLimitPerFile}
-                    </Text>
-                    <Text style={styles.uploadFileDivider}>
-                        {gblStrings.accManagement.attachdivider}
-                    </Text>
-                    <Text style={styles.uploadFileDesc}>
-                        {gblStrings.accManagement.megaBytes}
-                    </Text>
-                </View>
-
-                <View style={styles.uploadFileContainer}>
-                    <Text style={styles.uploadFileTitle}>
-                        {gblStrings.accManagement.totalSizeLimit}
-                    </Text>
-                    <Text style={styles.uploadFileDivider}>
-                        {gblStrings.accManagement.attachdivider}
-                    </Text>
-                    <Text style={styles.uploadFileDesc}>
-                        {gblStrings.accManagement.megaBytes}
-                    </Text>
-                </View>
-
-                <View style={styles.uploadFileContainer}>
-                    <Text style={styles.uploadFileTitle}>
-                        {gblStrings.accManagement.fileTypesAllow}
-                    </Text>
-                    <Text style={styles.uploadFileDivider}>
-                        {gblStrings.accManagement.attachdivider}
-                    </Text>
-                    <Text style={styles.uploadFileDesc}>
-                        {gblStrings.accManagement.fileFormat}
-                    </Text>
-                </View>
-            </View>
-        );
-    }
+        }
+        else {
+            number = `telprompt:${phone} `;
+        }
+        Linking.openURL(number);
+    };
 
     onChangeText = (index, keyName, value) => {
         const { newContingentBene } = this.state;
@@ -242,10 +209,12 @@ class FloatingButtonComponent extends React.Component {
                             <View style={styles.columnContainer}>
                                 <Text style={styles.grayBoldText}>{gblStrings.msrServiceRequest.needAssistent}</Text>
                                 <View style={styles.dividerLine} />
-                                <View style={styles.rowContainer}>
-                                    <GIcon name="phone" type="material" size={25} color="black" />
-                                    <Text style={styles.blackText}>{gblStrings.msrServiceRequest.vcmCustomerCareNumber}</Text>
-                                </View>
+                                <TouchableOpacity onPress={this.openDialPad}>
+                                    <View style={styles.rowContainer}>
+                                        <GIcon name="phone" type="material" size={25} color="black" />
+                                        <Text style={styles.blackText}>{gblStrings.msrServiceRequest.vcmCustomerCareNumber}</Text>
+                                    </View>
+                                </TouchableOpacity>
                                 <View style={styles.transparentGrayContainer}>
                                     <Text style={styles.grayBoldText}>{gblStrings.msrServiceRequest.vcmMemberServices}</Text>
                                     <View style={styles.rowContainer}>
@@ -306,7 +275,7 @@ class FloatingButtonComponent extends React.Component {
                                         <KeyboardAvoidingView>
                                             <View style={styles.columnContainer}>
                                                 <View style={styles.rowContainer}>
-                                                    <Text style={[styles.labelText, { width: '90%' }]}>New Secure Message</Text>
+                                                    <Text style={arrayStyles({ width: '90%' }).labelText}>New Secure Message</Text>
                                                     <TouchableOpacity onPress={this.toggleSecureMsgModal}>
                                                         <GIcon name="close" type="material" size={25} color="black" />
                                                     </TouchableOpacity>

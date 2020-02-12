@@ -4,15 +4,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { tabMoreActions } from '../../Shared/Actions';
 import { GIcon } from '../../CommonComponents/GIcon';
+import arrayStyles from './arrayStyles';
 
-export const createStyles = (tint) => {
-  return StyleSheet.create({
-    tabLabelText: {
-      color: "#4F4F4F", fontSize: 10,
-      ...tint
-    }
-  });
-};
 
 const styles = StyleSheet.create({
   container: { alignItems: "center", backgroundColor: 'white', elevation: 2, flexDirection: 'row', height: Platform.OS === "android" ? 52 : 65, },
@@ -53,7 +46,7 @@ const TabBar = props => {
             >
               {renderIcon({ route, focused: isRouteActive, tintColor })}
 
-              <Text style={createStyles({ color: tintColor }).tabLabelText}>{getLabelText({ route })} </Text>
+              <Text style={arrayStyles({ color: tintColor }).tabLabelText}>{getLabelText({ route })} </Text>
             </TouchableOpacity>
           </View>
         );

@@ -63,7 +63,8 @@ class AttachmentData extends React.Component {
                         'org.openxmlformats.wordprocessingml.document',
                         'com.adobe.pdf',
                         'org.openxmlformats.spreadsheetml.sheet',
-                        // DocumentPicker.types.images,            
+                        DocumentPicker.types.images,
+                        DocumentPicker.types.pdf
                     ]
                 });
             }
@@ -135,17 +136,21 @@ class AttachmentData extends React.Component {
                 </View>
                 <ScrollView>
                     {/* Showing the data of selected Multiple files */}
-                    {multipleFiles.map((item) => (
-                        <View style={styles.itemContainer} key={item.name}>
-                            <Text style={styles.smallGrayText}>
-                                {item.name ? item.name : ''}   Size {item.size} MB
-                            </Text>
-                            <Image style={styles.previewImage}
-                                source={{ "uri": item.uri }}
-                            // source={this.requireImageUri}
-                            />
-                        </View>
-                    ))}
+                    {multipleFiles.map((item) => {
+                        // eslint-disable-next-line react-perf/jsx-no-new-object-as-prop
+                        const imageConfig = { "uri": item.uri };
+                        return (
+                            <View style={styles.itemContainer} key={item.name}>
+                                <Text style={styles.smallGrayText}>
+                                    {item.name ? item.name : ''}   Size {item.size} MB
+                                </Text>
+                                <Image style={styles.previewImage}
+                                    source={imageConfig}
+                                // source={this.requireImageUri}
+                                />
+                            </View>
+                        );
+                    })}
                 </ScrollView>
                 {/* Show File Size limit details */}
                 <View style={styles.uploadFileContainer}>
@@ -198,8 +203,8 @@ class AttachmentData extends React.Component {
                 </View>
             </View>
         );
-    }
-};
+    };
+}
 AttachmentData.propTypes = {
     limit: PropTypes.string,
     size: PropTypes.string,
