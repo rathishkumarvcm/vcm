@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import styles from './styles';
 import { GHeaderComponent, GSwitchComponent, GFooterComponent, GButtonComponent, GIcon, GCollapseComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
+import { getCustomStyle } from '../../Utils/Resolution';
 
 
 class DividentsForAccountComponent extends Component {
@@ -178,15 +179,185 @@ class DividentsForAccountComponent extends Component {
         this.setState({ collapsedState: flag });
     }
 
-    renderList = ({ item }) => (
-        <ViewAccountItem
-            item={item}
-            switchOnOffStateUpdates={this.switchOnOffStateUpdates}
-            updateStateChanged={this.updateStateChanged}
-            switchOnOffReinvest={this.switchOnOffReinvest}
-            setDividentAmount={this.setDividentAmount}
-        />
-    )
+    renderList = ({ item }) => {
+        return (
+            <>
+                <View style={styles.accountView}>
+                    <Text style={styles.accountText}>
+                        {`${item.accountName}`}
+                    </Text>
+                    <Text style={styles.accountText}>
+                        {`${gblStrings.dividents.account_number } ${item.AccountNumber}`}
+                    </Text>
+                </View>
+    
+                <View style={styles.optionHeaderView}>
+                    <Text style={styles.optionHeaderText}>
+                        {gblStrings.dividents.current_securities}
+                    </Text>
+    
+                    <View style={styles.linkBreak1} />
+    
+                    <Text style={styles.optionSubHeaderText}>
+                        {gblStrings.dividents.current_fund_header}
+                    </Text>
+    
+                    <View style={styles.switchContainer}>
+                        <GSwitchComponent
+                            switchOnMethod={this.switchOnOffStateUpdates('currentSecurities', false, item.Id)}
+                            switchOffMethod={this.switchOnOffStateUpdates('currentSecurities', true, item.Id)}
+                            switchOn={item.currentSecuritiesSwitchOff}
+                            switchOff={item.currentSecuritiesSwitchOn}
+                            switchOnText={gblStrings.common.yes}
+                            switchOffText={gblStrings.common.no}
+                            offStyle={styles.offButtonStyle}
+                            offStyleDisabled={styles.offButtonStyleDisable}
+                            onStyle={styles.onButtonStyle}
+                            onStyleDisabled={styles.onButtonStyleDisable}
+                            textOnStyle={styles.TextOnStyle}
+                            textOffStyle={styles.TextOffStyle}
+                        />
+                        <View style={styles.switchFlexView}>
+                            <Text style={styles.switchInlineTex}>
+                                {gblStrings.dividents.no_do_not_want_to_reinvest}
+                            </Text>
+                            <Text style={styles.switchInlineTex}>
+                                {gblStrings.dividents.yes_want_to_reinvest}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+    
+                {item.currentSecuritiesSwitchOn ? (
+                    <View style={styles.reinvestContainer}>
+                        {item.currentSecurities.map((fund) => (
+                            <>
+                                <View style={styles.fundContainer}>
+                                    <Text style={styles.fundText}>
+                                        {fund.FundName}
+                                    </Text>
+                                    <Switch style={styles.switchStyle}
+                                        onValueChange={this.switchOnOffReinvest('currentSecurities', !fund.enableReinvest, item.Id, fund.FundId)}
+                                        value={fund.enableReinvest}
+                                        trackColor={getCustomStyle({ true: '#000000', false: '#DBDBDB' },{})}
+                                    />
+                                </View>                            
+                            </>
+                          ))}
+                    </View>
+                  )
+                    : null
+                }
+    
+                <View style={styles.optionHeaderView}>
+    
+                    <Text style={styles.optionHeaderText}>
+                        {gblStrings.dividents.future_securites}
+                    </Text>
+    
+                    <View style={styles.linkBreak1} />
+    
+                    <Text style={styles.optionSubHeaderText}>
+                        {gblStrings.dividents.future_fund_header}
+                    </Text>
+    
+                    <View style={styles.switchContainer}>
+                        <GSwitchComponent
+                            switchOnMethod={this.switchOnOffStateUpdates('futureSecurities', false, item.Id)}
+                            switchOffMethod={this.switchOnOffStateUpdates('futureSecurities', true, item.Id)}
+                            switchOn={item.futureSecuritiesSwitchOff}
+                            switchOff={item.futureSecuritiesSwitchOn}
+                            switchOnText={gblStrings.common.yes}
+                            switchOffText={gblStrings.common.no}
+                            offStyle={styles.offButtonStyle}
+                            offStyleDisabled={styles.offButtonStyleDisable}
+                            onStyle={styles.onButtonStyle}
+                            onStyleDisabled={styles.onButtonStyleDisable}
+                            textOnStyle={styles.TextOnStyle}
+                            textOffStyle={styles.TextOffStyle}
+                        />
+                        <View style={styles.switchFlexView}>
+                            <Text style={styles.switchInlineTex}>
+                                {gblStrings.dividents.no_do_not_want_to_reinvest}
+                            </Text>
+                            <Text style={styles.switchInlineTex}>
+                                {gblStrings.dividents.yes_want_to_reinvest}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+    
+    
+                {item.futureSecuritiesSwitchOn ? (
+                    <View style={styles.reinvestContainer}>
+                        {item.futureSecurities.map((fund) => (
+                            <>
+                                <View style={styles.fundContainer}>
+                                    <Text style={styles.fundText}>
+                                        {fund.FundName}
+                                    </Text>
+                                    <Switch style={styles.switchStyle}
+                                        onValueChange={this.switchOnOffReinvest('futureSecurities', !fund.enableReinvest, item.Id, fund.FundId)}
+                                        value={fund.enableReinvest}
+                                        trackColor={getCustomStyle({ true: '#000000', false: '#DBDBDB' },{})}
+                                    />
+                                </View>
+                            </>
+                          ))}
+                    </View>
+                  )
+                    : null
+                }
+    
+                <View style={styles.optionHeaderView}>
+    
+                    <Text style={styles.optionHeaderText}>
+                        {gblStrings.dividents.directed_dividents}
+                    </Text>
+    
+                    <View style={styles.linkBreak1} />
+    
+                    <Text style={styles.optionSubHeaderText}>
+                        {gblStrings.dividents.directed_dividents_header}
+                    </Text>
+                    <Text style={styles.contactText}>
+                        {gblStrings.dividents.directed_dividents_header_contact}
+                    </Text>
+    
+                    <View style={styles.switchContainer}>
+                        <GSwitchComponent
+                            switchOnMethod={this.switchOnOffStateUpdates('futureSecurities', false)}
+                            switchOffMethod={this.switchOnOffStateUpdates('futureSecurities', true)}
+                            switchOn={item.futureSecuritiesSwitchOff}
+                            switchOff={item.futureSecuritiesSwitchOn}
+                            switchOnText={gblStrings.common.yes}
+                            switchOffText={gblStrings.common.no}
+                            offStyle={styles.offButtonStyle}
+                            offStyleDisabled={styles.offButtonStyleDisable}
+                            onStyle={styles.onButtonStyle}
+                            onStyleDisabled={styles.onButtonStyleDisable}
+                            textOnStyle={styles.TextOnStyle}
+                            textOffStyle={styles.TextOffStyle}
+                        />
+                        <View style={styles.switchFlexView}>
+                            <Text style={styles.switchInlineTex}>
+                                {gblStrings.dividents.no_do_not_want_to_reinvest}
+                            </Text>
+                            <Text style={styles.switchInlineTex}>
+                                {gblStrings.dividents.yes_want_to_reinvest}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+    
+    
+                {item.futureSecuritiesSwitchOn ?
+                    <View style={styles.reinvestContainer} />
+                    : null
+                }
+            </>
+        );
+    }
 
     render() {
 
@@ -303,208 +474,208 @@ class DividentsForAccountComponent extends Component {
     }
 }
 
-const ViewAccountItem = (props) => {
-    let item = [];
-    let currentSecurities = [];
-    let futureSecurities = [];
-    item = props.item;
-    currentSecurities = item.currentFundList;
-    futureSecurities = item.futureFundList;
-    props.updateStateChanged;
-    return (
-        <>
-            <View style={styles.accountView}>
-                <Text style={styles.accountText}>
-                    {`${item.accountName}`}
-                </Text>
-                <Text style={styles.accountText}>
-                    {`${gblStrings.dividents.account_number } ${item.AccountNumber}`}
-                </Text>
-            </View>
+// const ViewAccountItem = (props) => {
+//     let item = [];
+//     let currentSecurities = [];
+//     let futureSecurities = [];
+//     item = props.item;
+//     currentSecurities = item.currentFundList;
+//     futureSecurities = item.futureFundList;
+//     props.updateStateChanged;
+//     return (
+//         <>
+//             <View style={styles.accountView}>
+//                 <Text style={styles.accountText}>
+//                     {`${item.accountName}`}
+//                 </Text>
+//                 <Text style={styles.accountText}>
+//                     {`${gblStrings.dividents.account_number } ${item.AccountNumber}`}
+//                 </Text>
+//             </View>
 
-            <View style={styles.optionHeaderView}>
-                <Text style={styles.optionHeaderText}>
-                    {gblStrings.dividents.current_securities}
-                </Text>
+//             <View style={styles.optionHeaderView}>
+//                 <Text style={styles.optionHeaderText}>
+//                     {gblStrings.dividents.current_securities}
+//                 </Text>
 
-                <View style={styles.linkBreak1} />
+//                 <View style={styles.linkBreak1} />
 
-                <Text style={styles.optionSubHeaderText}>
-                    {gblStrings.dividents.current_fund_header}
-                </Text>
+//                 <Text style={styles.optionSubHeaderText}>
+//                     {gblStrings.dividents.current_fund_header}
+//                 </Text>
 
-                <View style={styles.switchContainer}>
-                    <GSwitchComponent
-                        switchOnMethod={props.switchOnOffStateUpdates('currentSecurities', false, item.Id)}
-                        switchOffMethod={props.switchOnOffStateUpdates('currentSecurities', true, item.Id)}
-                        switchOn={item.currentSecuritiesSwitchOff}
-                        switchOff={item.currentSecuritiesSwitchOn}
-                        switchOnText={gblStrings.common.yes}
-                        switchOffText={gblStrings.common.no}
-                        offStyle={styles.offButtonStyle}
-                        offStyleDisabled={styles.offButtonStyleDisable}
-                        onStyle={styles.onButtonStyle}
-                        onStyleDisabled={styles.onButtonStyleDisable}
-                        textOnStyle={styles.TextOnStyle}
-                        textOffStyle={styles.TextOffStyle}
-                    />
-                    <View style={styles.switchFlexView}>
-                        <Text style={styles.switchInlineTex}>
-                            {gblStrings.dividents.no_do_not_want_to_reinvest}
-                        </Text>
-                        <Text style={styles.switchInlineTex}>
-                            {gblStrings.dividents.yes_want_to_reinvest}
-                        </Text>
-                    </View>
-                </View>
-            </View>
+//                 <View style={styles.switchContainer}>
+//                     <GSwitchComponent
+//                         switchOnMethod={props.switchOnOffStateUpdates('currentSecurities', false, item.Id)}
+//                         switchOffMethod={props.switchOnOffStateUpdates('currentSecurities', true, item.Id)}
+//                         switchOn={item.currentSecuritiesSwitchOff}
+//                         switchOff={item.currentSecuritiesSwitchOn}
+//                         switchOnText={gblStrings.common.yes}
+//                         switchOffText={gblStrings.common.no}
+//                         offStyle={styles.offButtonStyle}
+//                         offStyleDisabled={styles.offButtonStyleDisable}
+//                         onStyle={styles.onButtonStyle}
+//                         onStyleDisabled={styles.onButtonStyleDisable}
+//                         textOnStyle={styles.TextOnStyle}
+//                         textOffStyle={styles.TextOffStyle}
+//                     />
+//                     <View style={styles.switchFlexView}>
+//                         <Text style={styles.switchInlineTex}>
+//                             {gblStrings.dividents.no_do_not_want_to_reinvest}
+//                         </Text>
+//                         <Text style={styles.switchInlineTex}>
+//                             {gblStrings.dividents.yes_want_to_reinvest}
+//                         </Text>
+//                     </View>
+//                 </View>
+//             </View>
 
-            {item.currentSecuritiesSwitchOn ? (
-                <View style={styles.reinvestContainer}>
-                    {currentSecurities.map((fund) => (
-                        <>
-                            <View style={styles.fundContainer}>
-                                <Text style={styles.fundText}>
-                                    {fund.FundName}
-                                </Text>
-                                <Switch style={styles.switchStyle}
-                                    onValueChange={props.switchOnOffReinvest('currentSecurities', !fund.enableReinvest, item.Id, fund.FundId)}
-                                    value={fund.enableReinvest}
-                                    trackColor={{ true: '#000000', false: '#DBDBDB' }}
-                                />
-                            </View>                            
-                        </>
-                      ))}
-                </View>
-              )
-                : null
-            }
+//             {item.currentSecuritiesSwitchOn ? (
+//                 <View style={styles.reinvestContainer}>
+//                     {currentSecurities.map((fund) => (
+//                         <>
+//                             <View style={styles.fundContainer}>
+//                                 <Text style={styles.fundText}>
+//                                     {fund.FundName}
+//                                 </Text>
+//                                 <Switch style={styles.switchStyle}
+//                                     onValueChange={props.switchOnOffReinvest('currentSecurities', !fund.enableReinvest, item.Id, fund.FundId)}
+//                                     value={fund.enableReinvest}
+//                                     trackColor={{ true: '#000000', false: '#DBDBDB' }}
+//                                 />
+//                             </View>                            
+//                         </>
+//                       ))}
+//                 </View>
+//               )
+//                 : null
+//             }
 
-            <View style={styles.optionHeaderView}>
+//             <View style={styles.optionHeaderView}>
 
-                <Text style={styles.optionHeaderText}>
-                    {gblStrings.dividents.future_securites}
-                </Text>
+//                 <Text style={styles.optionHeaderText}>
+//                     {gblStrings.dividents.future_securites}
+//                 </Text>
 
-                <View style={styles.linkBreak1} />
+//                 <View style={styles.linkBreak1} />
 
-                <Text style={styles.optionSubHeaderText}>
-                    {gblStrings.dividents.future_fund_header}
-                </Text>
+//                 <Text style={styles.optionSubHeaderText}>
+//                     {gblStrings.dividents.future_fund_header}
+//                 </Text>
 
-                <View style={styles.switchContainer}>
-                    <GSwitchComponent
-                        switchOnMethod={props.switchOnOffStateUpdates('futureSecurities', false, item.Id)}
-                        switchOffMethod={props.switchOnOffStateUpdates('futureSecurities', true, item.Id)}
-                        switchOn={item.futureSecuritiesSwitchOff}
-                        switchOff={item.futureSecuritiesSwitchOn}
-                        switchOnText={gblStrings.common.yes}
-                        switchOffText={gblStrings.common.no}
-                        offStyle={styles.offButtonStyle}
-                        offStyleDisabled={styles.offButtonStyleDisable}
-                        onStyle={styles.onButtonStyle}
-                        onStyleDisabled={styles.onButtonStyleDisable}
-                        textOnStyle={styles.TextOnStyle}
-                        textOffStyle={styles.TextOffStyle}
-                    />
-                    <View style={styles.switchFlexView}>
-                        <Text style={styles.switchInlineTex}>
-                            {gblStrings.dividents.no_do_not_want_to_reinvest}
-                        </Text>
-                        <Text style={styles.switchInlineTex}>
-                            {gblStrings.dividents.yes_want_to_reinvest}
-                        </Text>
-                    </View>
-                </View>
-            </View>
-
-
-            {item.futureSecuritiesSwitchOn ? (
-                <View style={styles.reinvestContainer}>
-                    {futureSecurities.map((fund) => (
-                        <>
-                            <View style={styles.fundContainer}>
-                                <Text style={styles.fundText}>
-                                    {fund.FundName}
-                                </Text>
-                                <Switch style={styles.switchStyle}
-                                    onValueChange={props.switchOnOffReinvest('futureSecurities', !fund.enableReinvest, item.Id, fund.FundId)}
-                                    value={fund.enableReinvest}
-                                    trackColor={{ true: '#000000', false: '#DBDBDB' }}
-                                />
-                            </View>
-                        </>
-                      ))}
-                </View>
-              )
-                : null
-            }
-
-            <View style={styles.optionHeaderView}>
-
-                <Text style={styles.optionHeaderText}>
-                    {gblStrings.dividents.directed_dividents}
-                </Text>
-
-                <View style={styles.linkBreak1} />
-
-                <Text style={styles.optionSubHeaderText}>
-                    {gblStrings.dividents.directed_dividents_header}
-                </Text>
-                <Text style={styles.contactText}>
-                    {gblStrings.dividents.directed_dividents_header_contact}
-                </Text>
-
-                <View style={styles.switchContainer}>
-                    <GSwitchComponent
-                        switchOnMethod={props.switchOnOffStateUpdates('futureSecurities', false)}
-                        switchOffMethod={props.switchOnOffStateUpdates('futureSecurities', true)}
-                        switchOn={item.futureSecuritiesSwitchOff}
-                        switchOff={item.futureSecuritiesSwitchOn}
-                        switchOnText={gblStrings.common.yes}
-                        switchOffText={gblStrings.common.no}
-                        offStyle={styles.offButtonStyle}
-                        offStyleDisabled={styles.offButtonStyleDisable}
-                        onStyle={styles.onButtonStyle}
-                        onStyleDisabled={styles.onButtonStyleDisable}
-                        textOnStyle={styles.TextOnStyle}
-                        textOffStyle={styles.TextOffStyle}
-                    />
-                    <View style={styles.switchFlexView}>
-                        <Text style={styles.switchInlineTex}>
-                            {gblStrings.dividents.no_do_not_want_to_reinvest}
-                        </Text>
-                        <Text style={styles.switchInlineTex}>
-                            {gblStrings.dividents.yes_want_to_reinvest}
-                        </Text>
-                    </View>
-                </View>
-            </View>
+//                 <View style={styles.switchContainer}>
+//                     <GSwitchComponent
+//                         switchOnMethod={props.switchOnOffStateUpdates('futureSecurities', false, item.Id)}
+//                         switchOffMethod={props.switchOnOffStateUpdates('futureSecurities', true, item.Id)}
+//                         switchOn={item.futureSecuritiesSwitchOff}
+//                         switchOff={item.futureSecuritiesSwitchOn}
+//                         switchOnText={gblStrings.common.yes}
+//                         switchOffText={gblStrings.common.no}
+//                         offStyle={styles.offButtonStyle}
+//                         offStyleDisabled={styles.offButtonStyleDisable}
+//                         onStyle={styles.onButtonStyle}
+//                         onStyleDisabled={styles.onButtonStyleDisable}
+//                         textOnStyle={styles.TextOnStyle}
+//                         textOffStyle={styles.TextOffStyle}
+//                     />
+//                     <View style={styles.switchFlexView}>
+//                         <Text style={styles.switchInlineTex}>
+//                             {gblStrings.dividents.no_do_not_want_to_reinvest}
+//                         </Text>
+//                         <Text style={styles.switchInlineTex}>
+//                             {gblStrings.dividents.yes_want_to_reinvest}
+//                         </Text>
+//                     </View>
+//                 </View>
+//             </View>
 
 
-            {item.futureSecuritiesSwitchOn ?
-                <View style={styles.reinvestContainer} />
-                : null
-            }
-        </>
-    );
-};
+//             {item.futureSecuritiesSwitchOn ? (
+//                 <View style={styles.reinvestContainer}>
+//                     {futureSecurities.map((fund) => (
+//                         <>
+//                             <View style={styles.fundContainer}>
+//                                 <Text style={styles.fundText}>
+//                                     {fund.FundName}
+//                                 </Text>
+//                                 <Switch style={styles.switchStyle}
+//                                     onValueChange={props.switchOnOffReinvest('futureSecurities', !fund.enableReinvest, item.Id, fund.FundId)}
+//                                     value={fund.enableReinvest}
+//                                     trackColor={{ true: '#000000', false: '#DBDBDB' }}
+//                                 />
+//                             </View>
+//                         </>
+//                       ))}
+//                 </View>
+//               )
+//                 : null
+//             }
 
-ViewAccountItem.propTypes = {
-    item: PropTypes.instanceOf(Object),
-    updateStateChanged: PropTypes.instanceOf(Function),
-    switchOnOffStateUpdates: PropTypes.instanceOf(Function),
-    switchOnOffReinvest: PropTypes.instanceOf(Function),
-    setDividentAmount: PropTypes.instanceOf(Function),
-};
+//             <View style={styles.optionHeaderView}>
 
-ViewAccountItem.defaultProps = {
-    item: {},
-    updateStateChanged: () => {},
-    switchOnOffStateUpdates: () => {},
-    switchOnOffReinvest: () => {},
-    setDividentAmount: () => {},
-};
+//                 <Text style={styles.optionHeaderText}>
+//                     {gblStrings.dividents.directed_dividents}
+//                 </Text>
+
+//                 <View style={styles.linkBreak1} />
+
+//                 <Text style={styles.optionSubHeaderText}>
+//                     {gblStrings.dividents.directed_dividents_header}
+//                 </Text>
+//                 <Text style={styles.contactText}>
+//                     {gblStrings.dividents.directed_dividents_header_contact}
+//                 </Text>
+
+//                 <View style={styles.switchContainer}>
+//                     <GSwitchComponent
+//                         switchOnMethod={props.switchOnOffStateUpdates('futureSecurities', false)}
+//                         switchOffMethod={props.switchOnOffStateUpdates('futureSecurities', true)}
+//                         switchOn={item.futureSecuritiesSwitchOff}
+//                         switchOff={item.futureSecuritiesSwitchOn}
+//                         switchOnText={gblStrings.common.yes}
+//                         switchOffText={gblStrings.common.no}
+//                         offStyle={styles.offButtonStyle}
+//                         offStyleDisabled={styles.offButtonStyleDisable}
+//                         onStyle={styles.onButtonStyle}
+//                         onStyleDisabled={styles.onButtonStyleDisable}
+//                         textOnStyle={styles.TextOnStyle}
+//                         textOffStyle={styles.TextOffStyle}
+//                     />
+//                     <View style={styles.switchFlexView}>
+//                         <Text style={styles.switchInlineTex}>
+//                             {gblStrings.dividents.no_do_not_want_to_reinvest}
+//                         </Text>
+//                         <Text style={styles.switchInlineTex}>
+//                             {gblStrings.dividents.yes_want_to_reinvest}
+//                         </Text>
+//                     </View>
+//                 </View>
+//             </View>
+
+
+//             {item.futureSecuritiesSwitchOn ?
+//                 <View style={styles.reinvestContainer} />
+//                 : null
+//             }
+//         </>
+//     );
+// };
+
+// ViewAccountItem.propTypes = {
+//     item: PropTypes.instanceOf(Object),
+//     updateStateChanged: PropTypes.instanceOf(Function),
+//     switchOnOffStateUpdates: PropTypes.instanceOf(Function),
+//     switchOnOffReinvest: PropTypes.instanceOf(Function),
+//     setDividentAmount: PropTypes.instanceOf(Function),
+// };
+
+// ViewAccountItem.defaultProps = {
+//     item: {},
+//     updateStateChanged: () => {},
+//     switchOnOffStateUpdates: () => {},
+//     switchOnOffReinvest: () => {},
+//     setDividentAmount: () => {},
+// };
 
 DividentsForAccountComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),

@@ -91,7 +91,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                 tmpCurrentSecurities = item.CurrentSecurities;
                 tmpCurrentSecurities.map((fund, index) => () => {
                     if (fund.FundId === fundId) {
-                        tmpCurrentSecurities[index].amountRemaining = text;
+                        tmpCurrentSecurities[`${index}`].amountRemaining = text;
                     }
                 });
             }
@@ -109,8 +109,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                 if (flag) {
                     tmpData.map((item, index) => () => {
                         if (item.Id === itemId) {
-                            tmpData[index].currentSecuritiesSwitchOn = true;
-                            tmpData[index].currentSecuritiesSwitchOff = false;
+                            tmpData[`${index}`].currentSecuritiesSwitchOn = true;
+                            tmpData[`${index}`].currentSecuritiesSwitchOff = false;
                             this.updateCurrentSecurityChanged();
 
                         }
@@ -120,8 +120,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                 else {
                     tmpData.map((item, index) => () => {
                         if (item.Id === itemId) {
-                            tmpData[index].currentSecuritiesSwitchOn = false;
-                            tmpData[index].currentSecuritiesSwitchOff = true;
+                            tmpData[`${index}`].currentSecuritiesSwitchOn = false;
+                            tmpData[`${index}`].currentSecuritiesSwitchOff = true;
                             this.updateCurrentSecurityChanged();
                         }
                     });
@@ -132,8 +132,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                 if (flag) {
                     tmpData.map((item, index) => () => {
                         if (item.Id === itemId) {
-                            tmpData[index].futureSecuritiesSwitchOn = true;
-                            tmpData[index].futureSecuritiesSwitchOff = false;
+                            tmpData[`${index}`].futureSecuritiesSwitchOn = true;
+                            tmpData[`${index}`].futureSecuritiesSwitchOff = false;
                             this.updateCurrentSecurityChanged();
                         }
                     });
@@ -142,8 +142,8 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                 else {
                     tmpData.map((item, index) => () => {
                         if (item.Id === itemId) {
-                            tmpData[index].futureSecuritiesSwitchOn = false;
-                            tmpData[index].futureSecuritiesSwitchOff = true;
+                            tmpData[`${index}`].futureSecuritiesSwitchOn = false;
+                            tmpData[`${index}`].futureSecuritiesSwitchOff = true;
                             this.updateCurrentSecurityChanged();
                         }
                     });
@@ -169,9 +169,9 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
                         tmpCurrentSecurities.map((fund, index) => () => {
                             if (fund.FundId === fundId) {
                                 if (flag) {
-                                    tmpCurrentSecurities[index].enableReinvest = true;
+                                    tmpCurrentSecurities[`${index}`].enableReinvest = true;
                                 } else {
-                                    tmpCurrentSecurities[index].enableReinvest = false;
+                                    tmpCurrentSecurities[`${index}`].enableReinvest = false;
                                 }
                                 this.updateCurrentSecurityChanged();
                             }
@@ -191,10 +191,10 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
             case 'General Account': {
                 const {generalAccount} = this.state;                
                 tmpData = generalAccount;
-                tmpData.map((item, i) => {
+                tmpData.map((item, i) => () => {
                     if (item.Id === itemId) {
-                        const tmpOption = !tmpData[i].showRequestOption;
-                        tmpData[i].showRequestOption = tmpOption;
+                        const tmpOption = !tmpData[`${i}`].showRequestOption;
+                        tmpData[`${i}`].showRequestOption = tmpOption;
                     }
                 });
                 this.setState({ generalAccount: tmpData });
@@ -204,10 +204,10 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
             case 'IRA Account': {
                 const { iraAccount } = this.state;                
                 tmpData = iraAccount;
-                tmpData.map((item, i) => {
+                tmpData.map((item, i) => () => {
                     if (item.Id === itemId) {
-                        const tmpOption = !tmpData[i].showRequestOption;
-                        tmpData[i].showRequestOption = tmpOption;
+                        const tmpOption = !tmpData[`${i}`].showRequestOption;
+                        tmpData[`${i}`].showRequestOption = tmpOption;
                     }
                 });
                 this.setState({ iraAccount: tmpData });
@@ -217,10 +217,10 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
             case 'UTMA Account': {
                 const { utmaAccount } = this.state;                
                 tmpData = utmaAccount;
-                tmpData.map((item, i) => {
+                tmpData.map((item, i) => () => {
                     if (item.Id === itemId) {
-                        const tmpOption = !tmpData[i].showRequestOption;
-                        tmpData[i].showRequestOption = tmpOption;
+                        const tmpOption = !tmpData[`${i}`].showRequestOption;
+                        tmpData[`${i}`].showRequestOption = tmpOption;
                     }
                 });
                 this.updateStateChanged();
@@ -250,13 +250,86 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
         this.setState({ requestSubmited: navigation.getParam('requestSubmited', false) });
     };
 
-    renderList = ({ item }) => (
-        <ViewAccountItem
-            item={item}
-            updateShowRequestOption={this.updateShowRequestOption}
-            navigateDividentsForAccount={this.navigateDividentsForAccount}
-        />
-)
+    renderList = ({ item }) => {
+        return (
+            <View style={styles.infoContainer}>
+                <View style={styles.accountName}>
+                    <Text style={styles.accountNameText}>
+                        {`${item.accountName}`}
+                    </Text>
+    
+                    <TouchableOpacity style={styles.editInfo} key={item.Id} onPress={this.updateShowRequestOption(item.accountType, item.Id)}>
+                        <GIcon
+                            name="dots-vertical"
+                            type="material-community"
+                            size={30}
+                        />
+                    </TouchableOpacity>
+                </View>
+    
+                <View style={styles.accountName}>
+                    <Text style={styles.accountNameText}>
+                        {gblStrings.dividents.account_number}
+                    </Text>
+                    <Text style={styles.accountNameText}>
+                        {`${item.AccountNumber}`}
+                    </Text>
+                </View>
+    
+                {item.showRequestOption && (
+                <GButtonComponent
+                    buttonStyle={styles.requestBtn}
+                    buttonText={gblStrings.common.edit}
+                    textStyle={styles.requestButtonText}
+                    onPress={this.navigateDividentsForAccount(item)}
+                />
+                )}
+    
+                <View style={styles.linkBreak2} />
+    
+                <Text style={styles.accountNameHeaderText}>
+                    {gblStrings.dividents.current_value}
+                </Text>
+    
+                <Text style={styles.accountNameSubHeaderText}>
+                    {`${item.currectValue}`}
+                </Text>
+    
+                <Text style={styles.accountNameHeaderText}>
+                    {gblStrings.dividents.holding}
+                </Text>
+    
+                <Text style={styles.accountNameSubHeaderText}>
+                    {`${item.holding}`}
+                </Text>
+    
+                <Text style={styles.accountNameHeaderText}>
+                    {gblStrings.dividents.current_funds}
+                </Text>
+    
+                <Text style={styles.accountNameSubHeaderText}>
+                    {item.currentFunds ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
+                </Text>
+    
+                <Text style={styles.accountNameHeaderText}>
+                    {gblStrings.dividents.future_funds}
+                </Text>
+    
+                <Text style={styles.accountNameSubHeaderText}>
+                    {item.futureFunds ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
+                </Text>
+    
+                <Text style={styles.accountNameHeaderText}>
+                    {gblStrings.dividents.directed_dividents}
+                </Text>
+    
+                <Text style={styles.accountNameSubHeaderText}>
+                    {item.directedDividentsAndCapitalGains ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
+                </Text>
+    
+            </View>
+        );
+    }
 
     render() {
         const { dividentsInfo,
@@ -281,7 +354,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
             const tmpGeneralAccount = [];
             const tmpIRAAccount = [];
             const tmpUTMAAccount = [];
-            tmpData.map((item) => {
+            tmpData.map((item) => () => {
                 switch (item.accountType) {
                     case 'General Account':
                         tmpGeneralAccount.push(item);
@@ -513,89 +586,89 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
 }
 
 
-const ViewAccountItem = (props) => {
-    let item = [];
-    item = props.item;    
-    return (
-        <View style={styles.infoContainer}>
-            <View style={styles.accountName}>
-                <Text style={styles.accountNameText}>
-                    {`${item.accountName}`}
-                </Text>
+// const ViewAccountItem = (props) => {
+//     let item = [];
+//     item = props.item;    
+//     return (
+//         <View style={styles.infoContainer}>
+//             <View style={styles.accountName}>
+//                 <Text style={styles.accountNameText}>
+//                     {`${item.accountName}`}
+//                 </Text>
 
-                <TouchableOpacity style={styles.editInfo} key={item.Id} onPress={() => props.updateShowRequestOption(item.accountType, item.Id)}>
-                    <GIcon
-                        name="dots-vertical"
-                        type="material-community"
-                        size={30}
-                    />
-                </TouchableOpacity>
-            </View>
+//                 <TouchableOpacity style={styles.editInfo} key={item.Id} onPress={() => props.updateShowRequestOption(item.accountType, item.Id)}>
+//                     <GIcon
+//                         name="dots-vertical"
+//                         type="material-community"
+//                         size={30}
+//                     />
+//                 </TouchableOpacity>
+//             </View>
 
-            <View style={styles.accountName}>
-                <Text style={styles.accountNameText}>
-                    {gblStrings.dividents.account_number}
-                </Text>
-                <Text style={styles.accountNameText}>
-                    {`${item.AccountNumber}`}
-                </Text>
-            </View>
+//             <View style={styles.accountName}>
+//                 <Text style={styles.accountNameText}>
+//                     {gblStrings.dividents.account_number}
+//                 </Text>
+//                 <Text style={styles.accountNameText}>
+//                     {`${item.AccountNumber}`}
+//                 </Text>
+//             </View>
 
-            {item.showRequestOption && (
-<GButtonComponent
-                buttonStyle={styles.requestBtn}
-                buttonText={gblStrings.common.edit}
-                textStyle={styles.requestButtonText}
-                onPress={() =>
-                    props.navigateDividentsForAccount(item)}
-/>
-)}
+//             {item.showRequestOption && (
+// <GButtonComponent
+//                 buttonStyle={styles.requestBtn}
+//                 buttonText={gblStrings.common.edit}
+//                 textStyle={styles.requestButtonText}
+//                 onPress={() =>
+//                     props.navigateDividentsForAccount(item)}
+// />
+// )}
 
-            <View style={styles.linkBreak2} />
+//             <View style={styles.linkBreak2} />
 
-            <Text style={styles.accountNameHeaderText}>
-                {gblStrings.dividents.current_value}
-            </Text>
+//             <Text style={styles.accountNameHeaderText}>
+//                 {gblStrings.dividents.current_value}
+//             </Text>
 
-            <Text style={styles.accountNameSubHeaderText}>
-                {`${item.currectValue}`}
-            </Text>
+//             <Text style={styles.accountNameSubHeaderText}>
+//                 {`${item.currectValue}`}
+//             </Text>
 
-            <Text style={styles.accountNameHeaderText}>
-                {gblStrings.dividents.holding}
-            </Text>
+//             <Text style={styles.accountNameHeaderText}>
+//                 {gblStrings.dividents.holding}
+//             </Text>
 
-            <Text style={styles.accountNameSubHeaderText}>
-                {`${item.holding}`}
-            </Text>
+//             <Text style={styles.accountNameSubHeaderText}>
+//                 {`${item.holding}`}
+//             </Text>
 
-            <Text style={styles.accountNameHeaderText}>
-                {gblStrings.dividents.current_funds}
-            </Text>
+//             <Text style={styles.accountNameHeaderText}>
+//                 {gblStrings.dividents.current_funds}
+//             </Text>
 
-            <Text style={styles.accountNameSubHeaderText}>
-                {item.currentFunds ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
-            </Text>
+//             <Text style={styles.accountNameSubHeaderText}>
+//                 {item.currentFunds ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
+//             </Text>
 
-            <Text style={styles.accountNameHeaderText}>
-                {gblStrings.dividents.future_funds}
-            </Text>
+//             <Text style={styles.accountNameHeaderText}>
+//                 {gblStrings.dividents.future_funds}
+//             </Text>
 
-            <Text style={styles.accountNameSubHeaderText}>
-                {item.futureFunds ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
-            </Text>
+//             <Text style={styles.accountNameSubHeaderText}>
+//                 {item.futureFunds ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
+//             </Text>
 
-            <Text style={styles.accountNameHeaderText}>
-                {gblStrings.dividents.directed_dividents}
-            </Text>
+//             <Text style={styles.accountNameHeaderText}>
+//                 {gblStrings.dividents.directed_dividents}
+//             </Text>
 
-            <Text style={styles.accountNameSubHeaderText}>
-                {item.directedDividentsAndCapitalGains ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
-            </Text>
+//             <Text style={styles.accountNameSubHeaderText}>
+//                 {item.directedDividentsAndCapitalGains ? `${gblStrings.dividents.yes_want_to_reinvest}` : `${gblStrings.dividents.do_not_reinvest}`}
+//             </Text>
 
-        </View>
-    );
-};
+//         </View>
+//     );
+// };
 
 DividentsAndCapitalGainsPrefComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),

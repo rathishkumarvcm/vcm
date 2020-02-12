@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, FlatList, TouchableOpacity } from 'react-native';
-import PropTypes from "prop-types";
+import PropTypes, { array } from "prop-types";
 import styles from './styles';
 import { GHeaderComponent, GFooterComponent, GIcon, GButtonComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
@@ -17,7 +17,7 @@ class BankAccountsComponent extends Component {
         this.bankName = "";
         this.state = {
             stateUpdated: false,
-            bankAccountInfo: []
+            bankAccountInfoState: []
         };
     }
 
@@ -42,25 +42,28 @@ class BankAccountsComponent extends Component {
         }
     }
 
-    updateView = () => this.setState({ stateUpdated: !this.state.stateUpdated });
+    updateView = () => {
+        const { stateUpdated } = this.state;
+        this.setState({ stateUpdated: !stateUpdated });
+    }
 
     updateShowDeleteOption = (fromView, showDeleteOption, itemId) => () => {
-        const { bankAccountInfo } = this.state;
+        const { bankAccountInfoState } = this.state;
         switch (fromView) {
             case 'showDelete':
                 if (showDeleteOption) {
                     let tmpData = [];
-                    tmpData = bankAccountInfo;
-                    tmpData.map((item, i) => {
+                    tmpData = bankAccountInfoState;
+                    tmpData.map((item, i) => () => {
                         if (item.Id === itemId) {
-                            bankAccountInfo[i].showDeleteOption = showDeleteOption;
+                            bankAccountInfoState[`${i}`].showDeleteOption = showDeleteOption;
                         } else {
-                            bankAccountInfo[i].showDeleteOption = !showDeleteOption;
+                            bankAccountInfoState[`${i}`].showDeleteOption = !showDeleteOption;
                         }
                     });
                     this.updateView();
 
-                    this.setState({ bankAccountInfo: tmpData });
+                    this.setState({ bankAccountInfoState: tmpData });
                 }
                 break;
 
@@ -71,29 +74,29 @@ class BankAccountsComponent extends Component {
 
     deleteBankAccount = (shouldDelete) => () => {
         this.confirmDelete = false;
-        const { bankAccountInfo } = this.state;
+        const { bankAccountInfoState } = this.state;
         if (shouldDelete) {
             const payload = [];            
-            payload.push(JSON.stringify(bankAccountInfo));
+            payload.push(JSON.stringify(bankAccountInfoState));
             const { deleteBankAccount } = this.props;
             deleteBankAccount(JSON.stringify(payload), this.accountNumber);
         } else {
             let tmpData = [];
-            tmpData = bankAccountInfo;
-            tmpData.map((item, i) => {
+            tmpData = bankAccountInfoState;
+            tmpData.map((item, i) => () => {
                 if (item.Id === this.deleteId) {
-                    bankAccountInfo[i].showDeleteOption = false;
+                    bankAccountInfoState[`${i}`].showDeleteOption = false;
                 }
             });
-            this.setState({ bankAccountInfo: tmpData });
+            this.setState({ bankAccountInfoState: tmpData });
         }
         this.updateView();
     }
 
     addBankAccount = (item) => {
         const payload = [];
-        const { bankAccountInfo } = this.state;
-        payload.push(JSON.stringify(bankAccountInfo));
+        const { bankAccountInfoState } = this.state;
+        payload.push(JSON.stringify(bankAccountInfoState));
         const { addBankAccount } = this.props;
         addBankAccount(item, JSON.stringify(payload));
 
@@ -182,8 +185,9 @@ class BankAccountsComponent extends Component {
 
     render() {
         const { bankAccountInfo } = this.props;
-        if (this.props && bankAccountInfo && bankAccountInfo !== this.state.bankAccountInfo) {
-            this.setState({ bankAccountInfo: bankAccountInfo });
+        const { bankAccountInfoState, stateUpdated } = this.state;
+        if (this.props && bankAccountInfo && bankAccountInfo !== bankAccountInfoState) {
+            this.setState({ bankAccountInfoState: bankAccountInfo });
         }
         const {navigation} = this.props;
         const isSuccess = navigation.getParam('isSuccess', false);
@@ -194,7 +198,7 @@ class BankAccountsComponent extends Component {
 
         const tmpData = {};
         if (isSuccess) {
-            tmpData.Id = (this.state.bankAccountInfo.length + 1).toString();
+            tmpData.Id = (bankAccountInfoState.length + 1).toString();
             tmpData.bankName = financialInstitutionName;
             tmpData.accountType = accountType;
             tmpData.accountNumber = accountNumber;
@@ -273,8 +277,8 @@ class BankAccountsComponent extends Component {
 
                     {this.props && bankAccountInfo && (
                         <FlatList
-                            data={this.state.bankAccountInfo}
-                            extraData={this.state.stateUpdated}
+                            data={bankAccountInfoState}
+                            extraData={stateUpdated}
                             keyExtractor={this.bankAccountKey}
                             renderItem={this.renderBankAccount()}
                         />
@@ -304,11 +308,19 @@ class BankAccountsComponent extends Component {
 
 BankAccountsComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
+    bankAccountInfo: PropTypes.instanceOf(array),
     getParam: PropTypes.func,
     getBankAccountInfo: PropTypes.func,
+    deleteBankAccount: PropTypes.func,
+    addBankAccount: PropTypes.func,
 };
 
 BankAccountsComponent.defaultProps = {
     navigation: {},
+    bankAccountInfo: [],
+    getParam: () => {},
+    getBankAccountInfo: () => {},
+    deleteBankAccount: () => {},
+    addBankAccount: () => {},
 };
 export default BankAccountsComponent;
