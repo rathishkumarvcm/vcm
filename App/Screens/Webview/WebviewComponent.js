@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { scaledHeight } from '../../Utils/Resolution';
 import {GWebViewComponent,GButtonComponent} from '../../CommonComponents';
 
-const url = 'http:// www.africau.edu/Images/default/sample.pdf';
+const url = {uri : 'http:// www.africau.edu/Images/default/sample.pdf'};
 
 
 
@@ -46,7 +46,7 @@ class WebviewComponent extends Component {
 
 
     render(){
-        const runFirst = ``;
+        // const runFirst = ``;
         return (
             
 
@@ -60,8 +60,8 @@ class WebviewComponent extends Component {
                 onPress={this.goBack}
 />
             <GWebViewComponent
-                source={{uri:url}}
-                injectedJavaScript={runFirst}
+                link={url}
+                // injectedJavaScript={runFirst}
                 // onMessage={this.onMessage}
             /> 
             </>
