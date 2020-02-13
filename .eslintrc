@@ -71,8 +71,8 @@
     "no-alert":2,
     "react-native/sort-styles":1,
     "react/sort-comp":1,
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]   //  1 = allowed, 0 = not allowed
-
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],   //  1 = allowed, 0 = not allowed
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
   },
   "globals": {
     "GLOBAL": false,
