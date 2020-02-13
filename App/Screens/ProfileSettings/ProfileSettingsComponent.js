@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { Text, View, Image, ScrollView, FlatList, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
-import { GHeaderComponent, showAlertWithCancelButton } from '../../CommonComponents';
+import { GHeaderComponent, showAlertWithCancelButton, GLoadingSpinner } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import ImagesLoad from '../../Images/ImageIndex';
+import * as ActionTypes from "../../Shared/ReduxConstants/ServiceActionConstants";
 
 const editDeleteMenuOption = [
     {
@@ -81,8 +82,10 @@ class ProfileSettingsComponent extends Component {
     }
 
     profileSettingsMount = () => {
-        const { initialState, profileState } = this.props;
+        const { initialState, profileState, getProfileBasicInformations } = this.props;
         const { personalInformations, contactInformations, financialInformationData, employmentInformationData } = this.state;
+        const payloadData = { "vcmId": "43534" };
+        getProfileBasicInformations(payloadData);
         if (this.props) {
             this.setState({
                 profileRelationShipData: profileState.profileRelationShipDetails,
@@ -148,6 +151,12 @@ class ProfileSettingsComponent extends Component {
         const { profileState } = this.props;
         if (this.props !== prevProps) {
             if (profileState) {
+                const responseKey = ActionTypes.GET_PROFILE_BASIC_INFORMATIONS;
+                if (profileState[`${responseKey}`]) {
+                    const getProfileInformationResponse = profileState[`${responseKey}`];
+                    console.log('@@@@@@@@@@@@@ Profile Data Loading 1234', getProfileInformationResponse);
+                    console.log('@@@@@@@@@@@@@ Profile Data Loading 1234', getProfileInformationResponse.vcmId);
+                }
                 this.setState({
                     profilePrimaryMobile: profileState.profilePrimaryMobile,
                     profilePrimayMail: profileState.profilePrimayMail,
@@ -421,12 +430,15 @@ class ProfileSettingsComponent extends Component {
     };
 
     render() {
-        const { navigation } = this.props;
+        const { navigation, profileState } = this.props;
         const { personalInformations, show, contactInformations, profilePrimaryMobile, profilePrimayMail,
             financialInformationData, isProfileRetired, employmentInformationData, isServingMilitary,
             profileRelationShipData, isRelationRefreshed, profileMilitaryBranch, profileMilitaryRank } = this.state;
         return (
             <View style={styles.container}>
+                {
+                    (profileState.isLoading) && <GLoadingSpinner />
+                }
                 <GHeaderComponent
                     navigation={navigation}
                 />
@@ -1076,13 +1088,15 @@ class ProfileSettingsComponent extends Component {
 ProfileSettingsComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
     profileState: PropTypes.instanceOf(Object),
-    initialState: PropTypes.instanceOf(Object)
+    initialState: PropTypes.instanceOf(Object),
+    getProfileBasicInformations: PropTypes.func
 };
 
 ProfileSettingsComponent.defaultProps = {
     navigation: {},
     profileState: {},
-    initialState: {}
+    initialState: {},
+    getProfileBasicInformations: null
 };
 
 export default ProfileSettingsComponent;
