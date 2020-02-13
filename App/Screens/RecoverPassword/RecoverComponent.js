@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, TouchableOpacity,StatusBar } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity,Image} from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
 import { GInputComponent,GTitleBarComponent } from '../../CommonComponents';
 import globalString from '../../Constants/GlobalStrings';
 import * as regEx from '../../Constants/RegexConstants';
+import audioSmall from '../../Images/audioSmall.png';
+import refreshSmall from '../../Images/refreshSmall.png';
 
 class RecoveryComponent extends Component {
   constructor(props) {
@@ -88,12 +90,10 @@ class RecoveryComponent extends Component {
     const { /* booOnlineId, onlineId, errOnlineId, */ isCustomer, ssn, errSsn, booSecurity, errSecurity
       , strSecurity, booSsn } = this.state;
     return (
-      <View style={styles.container}>
-
-          <StatusBar backgroundColor="#194C7D" barStyle="light-content" translucent />
+      <View style={styles.container}>         
 
             <GTitleBarComponent
-              toolbarTiltle="Retrieve Password"
+              toolbarTiltle={globalString.recoverPassword.retrievePassword}
               backPress={this.navigationLogin}
             />
             
@@ -119,7 +119,7 @@ class RecoveryComponent extends Component {
                 Enter Details
               </Text>
               <Text style={styles.mandatoryText}>
-                * All fields are mandatory except mentioned optional.
+               {globalString.recoverPassword.mandatory}
               </Text>
 
               <Text style={styles.userIDText}>
@@ -160,15 +160,18 @@ class RecoveryComponent extends Component {
                   <View style={styles.securityCheck} />
 
                   <View style={styles.refreshSecurityView}>
+                  <Image style={styles.arrowIconStyle} source={refreshSmall} />
                     <Text style={styles.refreshSecurity}>
                       {globalString.recoverPassword.refresh_security}
                     </Text>
                   </View>
 
                   <View style={styles.refreshSecurityView}>
+                    <Image style={styles.arrowIconStyle} source={audioSmall} />
                     <Text style={styles.refreshSecurity}>
-                      Play Audio
+                      {globalString.recoverPassword.playAudio}
                     </Text>
+
                   </View>
 
                   <View style={styles.passwordView}>

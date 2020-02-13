@@ -1101,7 +1101,10 @@ export default {
         password_success_msg2: 'Need assistance ?  GetHelp',
         retrive_password: 'Enter below details to retrieve your Password',
         password_success_footer1: 'Neque porro quisquam est qui dolorem',
-        password_success_footer2: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet dictum orci et faucibus. Suspendisse non malesuada enim. Aliquam fringilla lectus ut massa convallis gravida. Integer condimentum mollis velit, nec porta diam mattis sit amet. Quisque sodales, enim quis laoreet aliquet, mauris nisi condimentum libero, a viverra ligula libero sed sem. Pellentesque sed mollis tortor, vitae finibus metus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus blandit consequat arcu nec iaculis. Aenean at pharetra nisl. Sed eget turpis sit amet'
+        password_success_footer2: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam imperdiet dictum orci et faucibus. Suspendisse non malesuada enim. Aliquam fringilla lectus ut massa convallis gravida. Integer condimentum mollis velit, nec porta diam mattis sit amet. Quisque sodales, enim quis laoreet aliquet, mauris nisi condimentum libero, a viverra ligula libero sed sem. Pellentesque sed mollis tortor, vitae finibus metus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus blandit consequat arcu nec iaculis. Aenean at pharetra nisl. Sed eget turpis sit amet',
+        retrievePassword:"Retrieve Password",
+        mandatory:" * All fields are mandatory except mentioned optional.",
+        playAudio:" Play Audio"
     },
     automaticInvestment: {
         autoInves_Title: 'Automatic Investment Plan',
@@ -1558,5 +1561,11 @@ export default {
         signIn:"Sign In",
         byClicking:"By clicking “Sign In” I agree to the Victory Capital ",
         termsOfUse:"Terms of Use."
+    },
+    changePIN:{
+        title:"Change PIN",
+        enterCurrentPIN:"Enter Current Security PIN",
+        enterSecurityPin:"Enter Security PIN",
+
     }
 };

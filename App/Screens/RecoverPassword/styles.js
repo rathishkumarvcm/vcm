@@ -4,7 +4,12 @@ import { scaledHeight} from '../../Utils/Resolution';
 const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-    bottomView: {    
+    arrowIconStyle:{     
+        alignSelf:'center',
+         marginLeft: '2%',
+         marginRight: '2%' 
+   },
+      bottomView: {    
         alignItems: 'center',
         backgroundColor: '#194C7D',
         bottom: 0,
@@ -25,23 +30,22 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(42),
         width:'80%'
      },
-      cancelButtonText:{
+        cancelButtonText:{
         color:'#544A54',
         fontSize:scaledHeight(16),
         fontWeight:'bold'
     },
         container:{
+        alignItems:'center',
+        alignSelf:'stretch',     
         backgroundColor:'#F7F7F7',
-        flex:1,
-        // width:'100%',
-        alignSelf:'stretch',
-        alignItems:'center'
+        flex:1
     },
-        contentContainer:{
+     contentContainer:{
             alignSelf:'stretch',
             paddingHorizontal:'2%',
         },
-     continueButton:{
+    continueButton:{
         alignItems:'center',       
         height:scaledHeight(50),
         justifyContent:'center',    
@@ -62,6 +66,7 @@ const styles = StyleSheet.create({
     copyRightText:{
         color:'#FFFFFF'
     },
+    
     cornerTriangle:{
             backgroundColor: 'transparent',
             borderRightColor: 'transparent',
@@ -72,17 +77,16 @@ const styles = StyleSheet.create({
             height: 0,
             width: 0
         },
-    
     errorMessage: {
         color:"red",
         fontSize: scaledHeight(14),       
       },
+    
     faceIDlogo:{
         alignSelf:'center',
         marginBottom:'5%',
         marginTop:'5%'
     },
-    
     faceIDtextStyle:{
         alignItems:'center',
         height:scaledHeight(20)
@@ -130,12 +134,12 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center'
     },
+    
     mandatoryText:{
         color:'#56565A',
         fontSize:scaledHeight(12),
         marginTop:scaledHeight(20)
     },
-    
     newVictory:{
         color:'#56565A',
         fontSize:scaledHeight(30),
@@ -226,9 +230,10 @@ const styles = StyleSheet.create({
         color: '#56565A',       
         fontSize: scaledHeight(14),       
       },
-    refreshSecurityView: {
+      refreshSecurityView: {
         alignSelf: 'center',             
-        marginTop:scaledHeight(20),
+        flexDirection:'row',
+       marginTop:scaledHeight(20)
       },
   
     registernowButton:{

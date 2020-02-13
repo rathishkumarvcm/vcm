@@ -193,6 +193,8 @@ import FloatingButtonComponent from './Screens/MSRServiceRequest';
 
 import DashboardTransViewComponent from './Screens/DashboardTransactionsView';
 
+import ChangePINComponent from './Screens/ChangePIN';
+
 
 
 // Notification Tabs
@@ -278,7 +280,7 @@ const DrawerNavigator = createDrawerNavigator({
     drawerWidth: 250,
 });
 
-const AppNavigator = createStackNavigator({
+const AppNavigator = createStackNavigator({   
     login: {
         screen: LoginComponent,
         navigationOptions: {
@@ -1145,7 +1147,13 @@ const AppNavigator = createStackNavigator({
         navigationOptions: {
             header: null,
         }
-    }
+    },
+    changePIN: {
+        screen: ChangePINComponent,
+        navigationOptions: {
+            header: null,
+        }
+    },
 },
     {
         initialRouteName: "login"

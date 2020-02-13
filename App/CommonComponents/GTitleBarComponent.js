@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity, StatusBar } from 'react-native';
 import PropTypes from "prop-types";
 import { scaledHeight } from '../Utils/Resolution';
 import backArrow from '../Images/backArrow.png';
@@ -44,6 +44,7 @@ const GTitleBarComponent = props => {
     const { toolbarTiltle, backPress } = props;
     return (
         <View style={styles.toolBarContainer}>
+            <StatusBar backgroundColor="#194C7D" barStyle="light-content" translucent />
             <View style={styles.toolBarContent}>
 
                 <TouchableOpacity style={styles.touchableStyle} onPress={backPress}>
