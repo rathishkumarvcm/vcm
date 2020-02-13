@@ -185,7 +185,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
         }
     }
 
-    updateShowRequestOption = (fromView, itemId) => {
+    updateShowRequestOption = (fromView, itemId) => () => {
         let tmpData = {};
         switch (fromView) {            
             case 'General Account': {
@@ -249,6 +249,10 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
         const { navigation } = this.props;
         this.setState({ requestSubmited: navigation.getParam('requestSubmited', false) });
     };
+
+    updaterequestSubmit = () => () => {
+        this.setState({requestSubmited: false});
+    }
 
     renderList = ({ item }) => {
         return (
@@ -378,7 +382,7 @@ class DividentsAndCapitalGainsPrefComponent extends Component {
 
                 <ScrollView style={styles.scrollviewStyle} contentContainerStyle={styles.contentStyle}>
                     {requestSubmited && (
-                        <TouchableOpacity style={styles.confirmationView} onPress={this.setState({requestSubmited: false})}>
+                        <TouchableOpacity style={styles.confirmationView} onPress={this.updaterequestSubmit()}>
                             <Text style={styles.confirmationText}>
                                 {gblStrings.dividents.request_submit_dividents}
                             </Text>

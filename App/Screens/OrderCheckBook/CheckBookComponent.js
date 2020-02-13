@@ -38,7 +38,7 @@ class CheckBookComponent extends Component {
 
     getKey = (item) => item.Id
 
-    updateShowRequestOption = (fromView, itemId) => {
+    updateShowRequestOption = (fromView, itemId) => () => {
         let tmpData = [];
         const { generalAccount } = this.state;
         const { iraAccount } = this.state;
