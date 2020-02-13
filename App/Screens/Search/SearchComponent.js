@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { GSearchComponent,GButtonComponent } from '../../CommonComponents';
 import { scaledHeight } from '../../Utils/Resolution';
 
+
+
+/*
 const promiseCall = new Promise(function(resolve) {
     setTimeout(function() {
      const nData = [
@@ -16,8 +19,28 @@ const promiseCall = new Promise(function(resolve) {
       resolve(nData);
     }, 5000);
   });
+  */
 
-const data = [{id: 1,text: 'One'},{id: 2,text: 'Two'},{id: 3,text: 'Three'},{id : 4,text : "Four"}];
+const setTimeout = (resolve) => {
+  const nData = [
+    { id: 1, text: 'One' }, { id: 2, text: 'Two' },
+    { id: 3, text: 'Three' }, { id: 4, text: "Four" },
+    { id: 5, text: "Five" }, { id: 6, text: "Six" },
+    { id: 7, text: "Seven" }, { id: 8, text: "Eight" },
+    { id: 9, text: "Nine" }, { id: 10, text: "Ten" }
+  ];
+  resolve(nData);
+};
+const promisCallBack = (resolve) => {
+  setTimeout(resolve);
+};
+
+const promiseCall = new Promise(promisCallBack, 5000);
+
+
+
+
+const data = [{id: 1,text: 'One1'},{id: 2,text: 'Two'},{id: 3,text: 'Three'},{id : 4,text : "Four"}];
 const newData = [{id: 1,text: 'One'},{id: 2,text: 'Two'},{id: 3,text: 'Three'},{id : 4,text : "Four"},{id : 5,text : "Five"},{id : 6,text : "Six"},{id : 7,text : "Seven"},{id : 8,text : "Eight"},{id : 9,text : "Nine"},{id : 10,text : "Ten"}];
 
 const styles = StyleSheet.create({
@@ -86,6 +109,7 @@ class SearchComponent extends Component {
             if(item.text.search(promiseVal) !== -1){
                 appendArray.push(item);
             }
+            return appendArray;
         });
 
         if(appendArray.length > 0){
@@ -122,7 +146,7 @@ class SearchComponent extends Component {
       navigation.goBack();
     }
 
-    updateFlatList({item}) {
+    updatedFlatList = ({item}) =>{
       return (
         <View key={item.id} 
           style={styles.listArea}
@@ -153,7 +177,7 @@ class SearchComponent extends Component {
           onBlur={this.promiseCalled}
           />
           <TextInput />
-            <GSearchComponent data={flatListData} updateFlatList={this.updateFlatList} noData={noData} />
+            <GSearchComponent data={flatListData} updateFlatList={this.updatedFlatList} noData={noData} />
           </View>
         );
     }
