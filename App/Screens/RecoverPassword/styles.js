@@ -4,7 +4,16 @@ import { scaledHeight} from '../../Utils/Resolution';
 const {width} = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-    cancelButton:{
+    bottomView: {    
+        alignItems: 'center',
+        backgroundColor: '#194C7D',
+        bottom: 0,
+        height: scaledHeight(50),
+        justifyContent: 'center',
+        position: 'absolute', 
+        width: '100%', 
+      },
+      cancelButton:{
         alignItems:'center',
         backgroundColor:'#FFFFFF',
         borderColor:'#61285F45',
@@ -16,25 +25,26 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(42),
         width:'80%'
      },
-     cancelButtonText:{
+      cancelButtonText:{
         color:'#544A54',
         fontSize:scaledHeight(16),
         fontWeight:'bold'
     },
-    container:{
-        backgroundColor:'#F7FAFF',
+        container:{
+        backgroundColor:'#F7F7F7',
         flex:1,
-        width:'100%'
+        // width:'100%',
+        alignSelf:'stretch',
+        alignItems:'center'
     },
-    continueButton:{
-        alignItems:'center',
-        backgroundColor:'#56565A',
-        borderColor:'#56565A',
-        borderWidth:1,
+        contentContainer:{
+            alignSelf:'stretch',
+            paddingHorizontal:'2%',
+        },
+     continueButton:{
+        alignItems:'center',       
         height:scaledHeight(50),
-        justifyContent:'center',     
-        marginLeft:'10%',
-        marginRight:'10%',
+        justifyContent:'center',    
         marginTop:scaledHeight(15),
         width:'80%'
      },
@@ -49,22 +59,30 @@ const styles = StyleSheet.create({
         height:scaledHeight(50),
         justifyContent:'center'
     },
-    
     copyRightText:{
         color:'#FFFFFF'
     },
+    cornerTriangle:{
+            backgroundColor: 'transparent',
+            borderRightColor: 'transparent',
+            borderRightWidth: 20,
+            borderStyle: 'solid',
+            borderTopColor: '#8BC105',
+            borderTopWidth: 20,
+            height: 0,
+            width: 0
+        },
+    
     errorMessage: {
         color:"red",
-        fontSize: scaledHeight(14),
-        paddingLeft:'4%',
-        paddingRight:'4%',
+        fontSize: scaledHeight(14),       
       },
-    
     faceIDlogo:{
         alignSelf:'center',
         marginBottom:'5%',
         marginTop:'5%'
     },
+    
     faceIDtextStyle:{
         alignItems:'center',
         height:scaledHeight(20)
@@ -81,6 +99,23 @@ const styles = StyleSheet.create({
         fontSize : scaledHeight(18),
         fontWeight:'bold'
     },
+    layoutContainer:{
+        alignSelf:'stretch',
+        backgroundColor: '#FFFFFF',       
+        flex:1, 
+        height: '100%',
+        left: '4%',
+        position: 'absolute',
+        right: '4%',          
+        top: scaledHeight(120)       
+    },
+    layoutpositioncontainer: {
+        backgroundColor: '#194C7D',
+        height: scaledHeight(8),
+        position: 'absolute',
+        right: 0,
+        top: 0,
+    },
     lineBorder:{
         borderColor:'#DEDEDF',
         borderTopWidth:1,
@@ -95,6 +130,12 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center'
     },
+    mandatoryText:{
+        color:'#56565A',
+        fontSize:scaledHeight(12),
+        marginTop:scaledHeight(20)
+    },
+    
     newVictory:{
         color:'#56565A',
         fontSize:scaledHeight(30),
@@ -102,7 +143,6 @@ const styles = StyleSheet.create({
         lineHeight:scaledHeight(30),
         marginTop:scaledHeight(20)
     },
-    
     newVictoryButton:{
         alignItems:'center',
         backgroundColor:'#FFFFFF',
@@ -164,9 +204,7 @@ const styles = StyleSheet.create({
         marginTop:scaledHeight(10)
     },
     passwordView:{
-        marginTop:scaledHeight(28),
-        paddingLeft:'4%',
-        paddingRight:'4%'
+        marginTop:scaledHeight(20),      
     },
     privacyAgreement:{
         alignItems:'center',
@@ -185,18 +223,14 @@ const styles = StyleSheet.create({
         width:'50%'
     },
     refreshSecurity: {
-        color: '#0000FF',
-       
-        fontSize: scaledHeight(15),
-        fontWeight: '500',
+        color: '#56565A',       
+        fontSize: scaledHeight(14),       
       },
     refreshSecurityView: {
-        alignSelf: 'flex-end',
-        borderBottomColor: '#0000FF',
-        borderBottomWidth: 1,
-        marginRight:'4%',
+        alignSelf: 'center',             
         marginTop:scaledHeight(20),
       },
+  
     registernowButton:{
        alignItems:'center',
        backgroundColor:'#FFFFFF',
@@ -207,8 +241,7 @@ const styles = StyleSheet.create({
        justifyContent:'center',
        width:width/3.3
     },
-  
-    registernowButton1:{
+     registernowButton1:{
         alignSelf:'center',
        backgroundColor:'#FFFFFF',
        borderColor:'#56565A',
@@ -218,36 +251,41 @@ const styles = StyleSheet.create({
        justifyContent:'center',
        width:width/2
      },
-     registernowText:{
+    registernowText:{
         color:'#56565A',
         fontSize:scaledHeight(10)
-    },
+    },  
     retrievePasswordText:{
-        color:'#56565A',
-        fontSize:scaledHeight(30)
-    },
-     scrollStyle:{ flex: 0.85 },
+        color:'#194C7D',
+        fontSize:scaledHeight(18),       
+    }, 
+     scrollStyle:{ alignSelf:'stretch',flex:1 },    
     securityCheck:
     {
         backgroundColor:'#878280',
-        height:scaledHeight(70),
-        marginLeft:'4%',
-        marginRight:'4%',
-      
-        width:'92%'
+        height:scaledHeight(70), 
+        marginTop:scaledHeight(20),          
     },
     signInUser:{
-        marginTop:scaledHeight(34),
-        paddingLeft:'4%',
-        paddingRight:'4%',
+        marginTop:scaledHeight(20),       
     },
     
     signInView:{
-        marginTop:scaledHeight(50),
+        marginTop:scaledHeight(10),
         paddingLeft:'4%',
         paddingRight:'4%',
     },
-      termsofuse:{
+      ssnText:{
+        color:'#56565A',
+        fontSize:scaledHeight(13),    
+        marginBottom:scaledHeight(10),        
+    },
+    submitButtonStyle:{
+        color:'#FFFFFF',
+        fontSize:scaledHeight(16),
+        fontWeight:'bold'
+    },
+    termsofuse:{
         flexDirection:'row',
         flexWrap:'wrap',
         marginTop:scaledHeight(25),
@@ -258,6 +296,10 @@ const styles = StyleSheet.create({
         color:'#56565A',
         fontSize : scaledHeight(18)
     },
+    touchableStyle: {
+        alignItems: 'center',        
+        width: '100%', 
+      },
     usaaMemberSection:{
         flexDirection:'row',
         marginTop:scaledHeight(15)
@@ -269,21 +311,23 @@ const styles = StyleSheet.create({
         lineHeight:scaledHeight(50)
     },
     userIDText:{
-        color:'#333333DE',
-        fontSize:scaledHeight(20),
-        fontWeight:'bold',
-        marginBottom:scaledHeight(8)
+        color:'#56565A',
+        fontSize:scaledHeight(13),     
+        marginBottom:scaledHeight(10),
+        marginTop:scaledHeight(20),        
     },
     userIDTextBox:{
-        marginLeft:'4%',
-        marginRight:'4%',
+        width:'100%'     
     },
     userIDTextBoxError:{
-        borderColor : 'red',
-        marginLeft:'4%',
-     
-        marginRight:'4%'
+        borderColor : 'red',       
+    },
+    vcmIdText:{
+        color:'#56565A',
+        fontSize:scaledHeight(16),           
+        fontWeight:'bold'
     }
+
     
 });
 
