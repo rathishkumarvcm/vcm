@@ -8,17 +8,17 @@ import * as COLORS from "../../Constants/ColorConstants";
 const styles = StyleSheet.create({
   container: { backgroundColor: COLORS.BACKGROUND_GRAY, flex: 1, },
   contentContainer: {
-    alignItems:'center',
-    alignSelf:'center',
+    alignItems: 'center',
+    alignSelf: 'center',
     backgroundColor: COLORS.WHITE_COLOR,
     borderColor: "transparent",
     borderWidth: 0.5,
     bottom: 0,
     height: '100%',
     marginHorizontal: scaledHeight(35),
-    position:'absolute',
-    top:scaledHeight(90),
-    width:"85%"
+    position: 'absolute',
+    top: scaledHeight(90),
+    width: "85%"
   },
   triangleCorner: {
     alignSelf: 'flex-start',
@@ -42,9 +42,8 @@ class Screen1Component extends React.PureComponent {
         <SafeAreaView style={styles.container}>
           <GTitleBarComponent toolbarTiltle="My VCM" backPress={null} />
           <View style={styles.contentContainer}>
-            <View style={styles.triangleCorner}>
-              <Text>Screen1...!</Text>
-            </View>
+            <View style={styles.triangleCorner} />
+            <Text>Screen1...!</Text>
           </View>
         </SafeAreaView>
       </BaseModalView>
