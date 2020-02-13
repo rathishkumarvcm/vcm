@@ -133,7 +133,7 @@ class FloatingButtonComponent extends React.Component {
 
     dropDownTopicSelect = (value, index, data) => {
         this.setState({
-            dropDownTopicValue: data[index].value,
+            dropDownTopicValue: data[+index].value,
             dropDownTopicState: false,
             dropDownTopicFlag: false
         });
@@ -141,7 +141,7 @@ class FloatingButtonComponent extends React.Component {
 
     dropDownAccountSelect = (value, index, data) => {
         this.setState({
-            dropDownAccountValue: data[index].value,
+            dropDownAccountValue: data[+index].value,
             dropDownAccountState: false,
             dropDownAccountFlag: false
         });
@@ -170,7 +170,7 @@ class FloatingButtonComponent extends React.Component {
     onChangeText = (index, keyName, value) => {
         const { newContingentBene } = this.state;
         const newItems = [...newContingentBene];
-        newItems[index][keyName] = value;
+        newItems[+index][`${keyName}`] = value;
         this.setState({
             newContingentBene: newItems
         });
