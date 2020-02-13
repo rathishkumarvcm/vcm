@@ -58,8 +58,7 @@ class DashboardTransViewComponent extends Component {
 
     sortByPrice = (array, key) => {
         for (let i = 0; i < array.length; i += 1) {
-            const a = array[parseInt(i, 0)].price
-            a = Number(array[parseInt(i, 0)].price.replace(/(^\$|,)/g, ''));
+            array[parseInt(i, 0)].price = Number(array[parseInt(i, 0)].price.replace(/(^\$|,)/g, ''));
         }
         return array.sort((a, b) => {
             const x = a[`${key}`];
