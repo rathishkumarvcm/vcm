@@ -45,7 +45,7 @@ export default type => {
       return AntIcon;
     default:
       if (Object.prototype.hasOwnProperty.call(customIcons, type)) {
-        return customIcons[type];
+        return customIcons[`${type}`];
       }
       return MaterialIcon;
   }

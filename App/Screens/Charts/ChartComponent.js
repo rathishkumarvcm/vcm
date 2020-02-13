@@ -21,6 +21,8 @@ const barData = [
         data: data2,
     },
 ];
+const barSVG = { fill: 'green' };
+const contentInset = { top: 30, bottom: 30 };
 const styles = StyleSheet.create({
     buttonStyle: {
         alignItems: 'center',
@@ -71,23 +73,28 @@ export default class ChartComponent extends Component {
     }
 
     goBack = () => {
-        const {navigation} = this.props;
+        const { navigation } = this.props;
         navigation.goBack();
     }
 
 
     changeChartView = () => {
-        const {barChart} = this.state;
+        const { barChart } = this.state;
         this.setState({ barChart: !barChart });
     }
 
+    getPieChartValueAccessor = ({ item }) =>item.amount
+
+    getBarChartYAccessor = ({ item }) =>item.value
+
+
     render() {
-        const {barChart} = this.state;
+        const { barChart } = this.state;
 
         const amounts = [35, 40, 8, 17];
-   
 
-        const randomColor = () => (`#${ (Math.random() * 0xFFFFFF < 0).toString(16) }000000`).slice(0, 7);
+
+        const randomColor = () => (`#${(Math.random() * 0xFFFFFF < 0).toString(16)}000000`).slice(0, 7);
 
         const pieData = amounts
             .filter(value => value > 0)
@@ -95,61 +102,67 @@ export default class ChartComponent extends Component {
                 value,
                 svg: {
                     fill: randomColor(),
-                    onPress: () => {},
+                    onPress: () => { },
                 },
                 key: `pie-${index}`,
                 amount: value
             }));
+      
 
         return (
             !barChart ?
                 (
-<View>
-                    <GButtonComponent
-                        buttonStyle={styles.buttonStyle}
-                        textStyle={styles.buttonTextStyle}
-                        buttonText="Back"
-                        onPress={this.goBack}
-                    />
-                    <GButtonComponent buttonText="View in Bar Chart" onPress={this.changeChartView} buttonStyle={styles.buttonStyle} />
+                    <View>
+                        <GButtonComponent
+                            buttonStyle={styles.buttonStyle}
+                            textStyle={styles.buttonTextStyle}
+                            buttonText="Back"
+                            onPress={this.goBack}
+                        />
+                        <GButtonComponent buttonText="View in Bar Chart" onPress={this.changeChartView} buttonStyle={styles.buttonStyle} />
 
-                    <PieChart
-                        valueAccessor={({ item }) => item.amount}
-                        data={pieData}
-                        spacing={0}
-                        innerRadius={10}
-                        outerRadius={90}
-                        labelRadius={30}
-                    >
-                        <Labels />
-                    </PieChart>
-</View>
-)
+                        <PieChart
+                            // valueAccessor={({ item }) => item.amount}
+                            valueAccessor={this.getPieChartValueAccessor}
+                            data={pieData}
+                            spacing={0}
+                            innerRadius={10}
+                            outerRadius={90}
+                            labelRadius={30}
+                        >
+                            <Labels />
+                        </PieChart>
+                    </View>
+                )
                 :
                 (
-<View>
-                    <GButtonComponent
-                        buttonStyle={styles.buttonStyle}
-                        textStyle={styles.buttonTextStyle}
-                        buttonText="Back"
-                        onPress={this.goBack}
-                    />
+                    <View>
+                        <GButtonComponent
+                            buttonStyle={styles.buttonStyle}
+                            textStyle={styles.buttonTextStyle}
+                            buttonText="Back"
+                            onPress={this.goBack}
+                        />
 
-                    <GButtonComponent buttonText="View in Pie Chart"
-                        onPress={this.changeChartView}
-                        buttonStyle={styles.buttonStyle}
-                    />
-                    <BarChart
-                        data={barData}
-                        yAccessor={({ item }) => item.value}
-                        svg={{fill: 'green'}}
-                        contentInset={{ top: 30, bottom: 30 }}
-                        {...this.props}
-                    >
-                        <Grid />
-                    </BarChart>
-</View>
-)
+                        <GButtonComponent buttonText="View in Pie Chart"
+                            onPress={this.changeChartView}
+                            buttonStyle={styles.buttonStyle}
+                        />
+                        <BarChart
+                            data={barData}
+                           //  yAccessor={({ item }) => item.value}
+                           // svg={{ fill: 'green' }}
+                           // contentInset={{ top: 30, bottom: 30 }}
+                            // {...this.props}
+                             yAccessor={this.getBarChartYAccessor}
+                            svg={barSVG}
+                            contentInset={contentInset}
+                          
+                        >
+                            <Grid />
+                        </BarChart>
+                    </View>
+                )
         );
     }
 
@@ -162,6 +175,6 @@ ChartComponent.propTypes = {
 };
 
 ChartComponent.defaultProps = {
-    navigation : {}
+    navigation: {}
 
 };
