@@ -40,7 +40,7 @@ class AutomaticInvestmentAddComponent extends Component {
         ];
         this.IsNotValidAmount = false;
         this.state = {
-
+            isFirst:true,
             selectedItemID: "D",
             selectedItemName: "Doller",
             fundList: [],
@@ -69,21 +69,21 @@ class AutomaticInvestmentAddComponent extends Component {
                 accountOwnerValidation: true,
                 transitRoutingNumberValidation: true,
                 accountNumberValidation: true,
-                addrLine1: '',
-                addrLine2: '',
-                zipcode: '',
-                city: "",
-                stateCity: "",
-                zipcodeValidation: true,
-                cityValidation: true,
-                stateCityValidation: true,
-                stateValidation: true,
-                isZipApiCalling: false,
-                isAddressApiCalling: false,
-                addrLine1Validation: true,
-                addrLine2Validation: true,
-                userCity: '',
-                userState: '',
+                // addrLine1: '',
+                // addrLine2: '',
+                // zipcode: '',
+                // city: "",
+                // stateCity: "",
+                // zipcodeValidation: true,
+                // cityValidation: true,
+                // stateCityValidation: true,
+                // stateValidation: true,
+                // isZipApiCalling: false,
+                // isAddressApiCalling: false,
+                // addrLine1Validation: true,
+                // addrLine2Validation: true,
+                // userCity: '',
+                // userState: '',
             },
             currentZipCodeRef: {
                 stateKey: "",
@@ -127,27 +127,20 @@ class AutomaticInvestmentAddComponent extends Component {
                             bankIndex = index;
                         }
                     });
-
-                    const invest = [...valueToEdit.investedIn.map(v => ({ ...v, isActive: true, IsNotValidAmount: false, errorMsg: 'Please enter amount greater than or equal to 50' }))];
-                    this.setState({
-                        accName: valueToEdit.account.split('|')[0],
-                        accNumber: valueToEdit.account.split('|')[1],
-                        totalFund: Number(valueToEdit.totalAmount),
-                        fundList: invest,
-                        fundConsumed: Number(valueToEdit.totalAmount),
-                        fundRemaining: 0,
-                        selectedBank: bankIndex,
-                    });
+                    this.getDerivedStateFromProps1(valueToEdit,bankIndex);
+                    
                 }
             }
         }
 
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        const { fundListState, bankAccountInfo, addressFormatData } = this.props;
-        const { bankAccountDetails, ItemToEdit, currentZipCodeRef, estate } = this.state;
-        if (this.props !== prevProps) {
+    
+
+    static getDerivedStateFromProps(nextProps,prevState){
+        const { fundListState, bankAccountInfo } = nextProps; // , addressFormatData
+        const { bankAccountDetails, ItemToEdit,isFirst } = prevState; // , estate , currentZipCodeRef
+        if (isFirst) {
             let tempFundListData = [];
             if (ItemToEdit < 0) {
 
@@ -160,126 +153,175 @@ class AutomaticInvestmentAddComponent extends Component {
                 if (fundListState[ActionTypes.GET_FUNDLIST] !== undefined && fundListState[ActionTypes.GET_FUNDLIST].Items !== null) {
                     tempFundListData = fundListState[ActionTypes.GET_FUNDLIST];
                     if (bankAccountInfo && bankAccountInfo !== bankAccountDetails) {
-                        this.setState({
+                        return({
                             fundList: [...tempFundListData.map(v => ({ ...v, isActive: false, fundAmount: 0, IsNotValidAmount: false, errorMsg: 'Please enter amount greater than or equal to 50' }))],
-                            bankAccountDetails: bankAccountInfo
+                            bankAccountDetails: bankAccountInfo,
+                            isFirst:false
                         });
                     }
                 }
             }
             else if (bankAccountInfo && bankAccountInfo !== bankAccountDetails) {
-                    this.setState({
-                        bankAccountDetails: bankAccountInfo
+                return({
+                        bankAccountDetails: bankAccountInfo,
+                        isFirst:false
                     });
                 }
-            const {
-                keyName = "",
-                objIndex = -1
-            } = currentZipCodeRef;
-
-            if (this.props !== prevProps) {
-
-                const stateCityKey = ActionTypes.GET_STATECITY;
-                if (addressFormatData[`${stateCityKey}`]) {
-                    if (addressFormatData[`${stateCityKey}`] !== prevProps.addressFormatData[`${stateCityKey}`]) {
-                        const tempResponse = addressFormatData[`${stateCityKey}`];
-
-                        if (tempResponse && tempResponse.City) {
-                            if (keyName === "zipcode" && objIndex !== -1) {
-                                const newItems = [...estate.trusteeData];
-                                newItems[+objIndex].city = tempResponse.City;
-                                newItems[+objIndex].stateCity = tempResponse.State;
-
-                                this.setState(() => (() => ({
-                                    [prevState.currentZipCodeRef.stateKey]: {
-                                        ...prevState[prevState.currentZipCodeRef.stateKey],
-                                        trusteeData: newItems
-
-                                    }
-                                })));
-                            } else {
-                                this.setState(() => ({
-                                    [prevState.currentZipCodeRef.stateKey]: {
-                                        ...prevState[prevState.currentZipCodeRef.stateKey],
-                                        city: tempResponse.City,
-                                        stateCity: tempResponse.State
-
-                                    }
-                                }));
-                            }
-                        }
-                    }
-                }
-
-                const addressKey = ActionTypes.GET_ADDRESSFORMAT;
-                if (addressFormatData[`${addressKey}`]) {
-                    if (addressFormatData[`${addressKey}`] !== prevProps.addressFormatData[`${addressKey}`]) {
-                        const tempResponse = addressFormatData[`${addressKey}`];
-
-                        if (tempResponse && tempResponse.City) {
-                            if (keyName === "zipcode" && objIndex !== -1) {
-                                const newItems = [...estate.trusteeData];
-                                newItems[+objIndex].city = tempResponse.City;
-                                newItems[+objIndex].stateCity = tempResponse.State;
-                                newItems[+objIndex].addrLine1 = tempResponse.Address1 || "";
-                                newItems[+objIndex].addrLine2 = tempResponse.Address2 || "";
-                                newItems[+objIndex].addrLine1Validation = true;
-                                newItems[+objIndex].addrLine2Validation = true;
-
-                                this.setState(() => (() => ({
-                                    [prevState.currentZipCodeRef.stateKey]: {
-                                        ...prevState[prevState.currentZipCodeRef.stateKey],
-                                        trusteeData: newItems
-                                    }
-                                })));
-                            }
-                            else {
-                                this.setState(() => ({
-                                    [prevState.currentZipCodeRef.stateKey]: {
-                                        ...prevState[prevState.currentZipCodeRef.stateKey],
-                                        city: tempResponse.City,
-                                        stateCity: tempResponse.State,
-                                        addrLine1: tempResponse.Address1 || "",
-                                        addrLine2: tempResponse.Address2 || "",
-                                        addrLine1Validation: true,
-                                        addrLine2Validation: true
-                                    }
-                                }));
-                            }
-                        } else if (tempResponse && tempResponse.ErrorNumber) {
-                            if (currentZipCodeRef.keyName === "zipcode" && objIndex !== -1) {
-                                const newItems = [...estate.trusteeData];
-                                newItems[+objIndex].addrLine1 = "";
-                                newItems[+objIndex].addrLine2 = "";
-                                newItems[+objIndex].addrLine1Validation = false;
-                                newItems[+objIndex].addrLine2Validation = false;
-
-                                this.setState(() => (() => ({
-                                    [prevState.currentZipCodeRef.stateKey]: {
-                                        ...prevState[prevState.currentZipCodeRef.stateKey],
-                                        trusteeData: newItems
-                                    },
-                                    errMsg: "Invalid address"
-
-                                })));
-                            } else {
-                                this.setState(() => ({
-                                    [prevState.currentZipCodeRef.stateKey]: {
-                                        ...prevState[prevState.currentZipCodeRef.stateKey],
-                                        // addrLine1: "",
-                                        // addrLine2: "",
-                                        addrLine1Validation: false,
-                                        addrLine2Validation: false
-                                    },
-                                    errMsg: "Invalid address"
-                                }));
-                            }
-                        }
-                    }
-                }
+            
             }
-        }
+            return null;
     }
+
+    componentDidUpdate() {
+        // const { fundListState, bankAccountInfo } = this.props; // , addressFormatData
+        // const { bankAccountDetails, ItemToEdit } = this.state; // , estate , currentZipCodeRef
+        // if (this.props !== prevProps) {
+        //     let tempFundListData = [];
+        //     if (ItemToEdit < 0) {
+
+        //         // if (fundListState[ActionTypes.GET_FUNDLIST]) {
+        //         //     tempFundListData = fundListState[ActionTypes.GET_FUNDLIST];
+        //         //     if (tempFundListData.length > 0) {
+        //         //         clearReduxKeyData(ActionTypes.GET_FUNDLIST, "");
+        //         //     }
+        //         // }
+        //         if (fundListState[ActionTypes.GET_FUNDLIST] !== undefined && fundListState[ActionTypes.GET_FUNDLIST].Items !== null) {
+        //             tempFundListData = fundListState[ActionTypes.GET_FUNDLIST];
+        //             if (bankAccountInfo && bankAccountInfo !== bankAccountDetails) {
+        //                 this.setState({
+        //                     fundList: [...tempFundListData.map(v => ({ ...v, isActive: false, fundAmount: 0, IsNotValidAmount: false, errorMsg: 'Please enter amount greater than or equal to 50' }))],
+        //                     bankAccountDetails: bankAccountInfo
+        //                 });
+        //             }
+        //         }
+        //     }
+        //     else if (bankAccountInfo && bankAccountInfo !== bankAccountDetails) {
+        //             this.setState({
+        //                 bankAccountDetails: bankAccountInfo
+        //             });
+        //         }
+        //     }
+        }
+    
+            // const {
+            //     keyName = "",
+            //     objIndex = -1
+            // } = currentZipCodeRef;
+
+            // if (this.props !== prevProps) {
+
+            //     const stateCityKey = ActionTypes.GET_STATECITY;
+            //     if (addressFormatData[`${stateCityKey}`]) {
+            //         if (addressFormatData[`${stateCityKey}`] !== prevProps.addressFormatData[`${stateCityKey}`]) {
+            //             const tempResponse = addressFormatData[`${stateCityKey}`];
+
+            //             if (tempResponse && tempResponse.City) {
+            //                 if (keyName === "zipcode" && objIndex !== -1) {
+            //                     const newItems = [...estate.trusteeData];
+            //                     newItems[+objIndex].city = tempResponse.City;
+            //                     newItems[+objIndex].stateCity = tempResponse.State;
+
+            //                     this.setState(() => (() => ({
+            //                         [prevState.currentZipCodeRef.stateKey]: {
+            //                             ...prevState[prevState.currentZipCodeRef.stateKey],
+            //                             trusteeData: newItems
+
+            //                         }
+            //                     })));
+            //                 } else {
+            //                     this.setState(() => ({
+            //                         [prevState.currentZipCodeRef.stateKey]: {
+            //                             ...prevState[prevState.currentZipCodeRef.stateKey],
+            //                             city: tempResponse.City,
+            //                             stateCity: tempResponse.State
+
+            //                         }
+            //                     }));
+            //                 }
+            //             }
+            //         }
+            //     }
+
+            //     const addressKey = ActionTypes.GET_ADDRESSFORMAT;
+            //     if (addressFormatData[`${addressKey}`]) {
+            //         if (addressFormatData[`${addressKey}`] !== prevProps.addressFormatData[`${addressKey}`]) {
+            //             const tempResponse = addressFormatData[`${addressKey}`];
+
+            //             if (tempResponse && tempResponse.City) {
+            //                 if (keyName === "zipcode" && objIndex !== -1) {
+            //                     const newItems = [...estate.trusteeData];
+            //                     newItems[+objIndex].city = tempResponse.City;
+            //                     newItems[+objIndex].stateCity = tempResponse.State;
+            //                     newItems[+objIndex].addrLine1 = tempResponse.Address1 || "";
+            //                     newItems[+objIndex].addrLine2 = tempResponse.Address2 || "";
+            //                     newItems[+objIndex].addrLine1Validation = true;
+            //                     newItems[+objIndex].addrLine2Validation = true;
+
+            //                     this.setState(() => (() => ({
+            //                         [prevState.currentZipCodeRef.stateKey]: {
+            //                             ...prevState[prevState.currentZipCodeRef.stateKey],
+            //                             trusteeData: newItems
+            //                         }
+            //                     })));
+            //                 }
+            //                 else {
+            //                     this.setState(() => ({
+            //                         [prevState.currentZipCodeRef.stateKey]: {
+            //                             ...prevState[prevState.currentZipCodeRef.stateKey],
+            //                             city: tempResponse.City,
+            //                             stateCity: tempResponse.State,
+            //                             addrLine1: tempResponse.Address1 || "",
+            //                             addrLine2: tempResponse.Address2 || "",
+            //                             addrLine1Validation: true,
+            //                             addrLine2Validation: true
+            //                         }
+            //                     }));
+            //                 }
+            //             } else if (tempResponse && tempResponse.ErrorNumber) {
+            //                 if (currentZipCodeRef.keyName === "zipcode" && objIndex !== -1) {
+            //                     const newItems = [...estate.trusteeData];
+            //                     newItems[+objIndex].addrLine1 = "";
+            //                     newItems[+objIndex].addrLine2 = "";
+            //                     newItems[+objIndex].addrLine1Validation = false;
+            //                     newItems[+objIndex].addrLine2Validation = false;
+
+            //                     this.setState(() => (() => ({
+            //                         [prevState.currentZipCodeRef.stateKey]: {
+            //                             ...prevState[prevState.currentZipCodeRef.stateKey],
+            //                             trusteeData: newItems
+            //                         },
+            //                         errMsg: "Invalid address"
+
+            //                     })));
+            //                 } else {
+            //                     this.setState(() => ({
+            //                         [prevState.currentZipCodeRef.stateKey]: {
+            //                             ...prevState[prevState.currentZipCodeRef.stateKey],
+            //                             // addrLine1: "",
+            //                             // addrLine2: "",
+            //                             addrLine1Validation: false,
+            //                             addrLine2Validation: false
+            //                         },
+            //                         errMsg: "Invalid address"
+            //                     }));
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
+       
+            getDerivedStateFromProps1(valueToEdit,bankIndex){
+                const invest = [...valueToEdit.investedIn.map(v => ({ ...v, isActive: true, IsNotValidAmount: false, errorMsg: 'Please enter amount greater than or equal to 50' }))];
+                            this.setState({
+                                accName: valueToEdit.account.split('|')[0],
+                                accNumber: valueToEdit.account.split('|')[1],
+                                totalFund: Number(valueToEdit.totalAmount),
+                                fundList: invest,
+                                fundConsumed: Number(valueToEdit.totalAmount),
+                                fundRemaining: 0,
+                                selectedBank: bankIndex,
+                            });
+            }
 
     isEmpty = (str) => {
         if (str === "" || str === undefined || str === null || str === "null" || str === "undefined" || str.replace(/^\s+|\s+$/gm, '') === "") {
@@ -631,25 +673,26 @@ class AutomaticInvestmentAddComponent extends Component {
             let isValidationSuccess = false;
             let input = "";
 
-            if (this.isEmpty(addBankAccount.addrLine1)) {
-                errMsg = globalString.accManagement.emptyAddressLine1Msg;
-                input = 'addrLine1';
-            } else if (this.isEmpty(addBankAccount.addrLine2)) {
-                errMsg = globalString.accManagement.emptyAddressLine2Msg;
-                input = 'addrLine2';
-            } else if (this.isEmpty(addBankAccount.zipcode)) {
-                errMsg = globalString.accManagement.emptyZipCodeMsg;
-                input = 'zipcode';
-            } else if (addBankAccount.zipcode.length < globalString.maxLength.zipCode) {
-                errMsg = globalString.accManagement.invalidZipCodeMsg;
-                input = 'zipcode';
-            } else if (this.isEmpty(addBankAccount.city)) {
-                errMsg = globalString.accManagement.emptyCityMsg;
-                input = 'city';
-            } else if (this.isEmpty(addBankAccount.stateCity)) {
-                errMsg = globalString.accManagement.emptyStateMsg;
-                input = 'stateCity';
-            } else if (this.isEmpty(addBankAccount.accountType)) {
+            // if (this.isEmpty(addBankAccount.addrLine1)) {
+            //     errMsg = globalString.accManagement.emptyAddressLine1Msg;
+            //     input = 'addrLine1';
+            // } else if (this.isEmpty(addBankAccount.addrLine2)) {
+            //     errMsg = globalString.accManagement.emptyAddressLine2Msg;
+            //     input = 'addrLine2';
+            // } else if (this.isEmpty(addBankAccount.zipcode)) {
+            //     errMsg = globalString.accManagement.emptyZipCodeMsg;
+            //     input = 'zipcode';
+            // } else if (addBankAccount.zipcode.length < globalString.maxLength.zipCode) {
+            //     errMsg = globalString.accManagement.invalidZipCodeMsg;
+            //     input = 'zipcode';
+            // } else if (this.isEmpty(addBankAccount.city)) {
+            //     errMsg = globalString.accManagement.emptyCityMsg;
+            //     input = 'city';
+            // } else if (this.isEmpty(addBankAccount.stateCity)) {
+            //     errMsg = globalString.accManagement.emptyStateMsg;
+            //     input = 'stateCity';
+            // } else 
+            if (this.isEmpty(addBankAccount.accountType)) {
                 errMsg = globalString.accManagement.emptyTypeOfAccount;
                 input = "accountType";
             } else if (this.isEmpty(addBankAccount.financialInstitutionName)) {
@@ -883,7 +926,7 @@ class AutomaticInvestmentAddComponent extends Component {
                                         source={specimen}
                                     />
 
-                                    <View style={styles.addressStyle}>
+                                    {/* <View style={styles.addressStyle}>
                                         <Text style={styles.financialTextLabel}>Address</Text>
                                         <GInputComponent placeholder={globalString.addAddressInfo.addressLineOne}
                                             inputref={this.setInputRef("addrLine1")}
@@ -906,9 +949,9 @@ class AutomaticInvestmentAddComponent extends Component {
                                             errorFlag={!addBankAccount.addrLine2Validation}
                                             errorText={errMsg}
                                         />
-                                    </View>
+                                    </View> */}
 
-                                    <View style={styles.addressStyle}>
+                                    {/* <View style={styles.addressStyle}>
                                         <Text style={styles.financialTextLabel}>ZIP Code</Text>
 
                                         <GInputComponent
@@ -924,9 +967,9 @@ class AutomaticInvestmentAddComponent extends Component {
                                             errorFlag={!addBankAccount.zipcodeValidation}
                                             errorText={errMsg}
                                         />
-                                    </View>
+                                    </View> */}
 
-                                    <View style={styles.addressStyle}>
+                                    {/* <View style={styles.addressStyle}>
                                         <Text style={styles.financialTextLabel}>City & State</Text>
                                         <View style={styles.cityStateBlock}>
 
@@ -956,7 +999,7 @@ class AutomaticInvestmentAddComponent extends Component {
 
                                         </View>
 
-                                    </View>
+                                    </View> */}
                                 </View>
                               )
                                 : null}
