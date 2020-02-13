@@ -740,7 +740,7 @@ class AutomaticInvestmentAddComponent extends Component {
     render() {
         const { navigation } = this.props;
         const { accName, accNumber, bankAccountDetails, totalFund, errorMsg,
-            selectedItemID, fundConsumed, fundRemaining, fundList, refresh, selectedBank, addBankAccount, errMsg } = this.state;
+            selectedItemID, fundConsumed, fundRemaining, fundList, refresh, selectedBank, addBankAccount } = this.state;// , errMsg
         return (
             <View style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
@@ -1113,7 +1113,7 @@ AutomaticInvestmentAddComponent.propTypes = {
     fundListState: PropTypes.instanceOf(Object),
     automaticInvestmentState: PropTypes.instanceOf(Object),
     bankAccountInfo: PropTypes.instanceOf(Object),
-    addressFormatData: PropTypes.instanceOf(Object),
+    // addressFormatData: PropTypes.instanceOf(Object),
     getFundListData: PropTypes.func,
     getBankAccountInfo: PropTypes.func,
     getStateCity: PropTypes.func,
@@ -1125,7 +1125,7 @@ AutomaticInvestmentAddComponent.defaultProps = {
     fundListState: {},
     automaticInvestmentState: {},
     bankAccountInfo: {},
-    addressFormatData: {},
+    // addressFormatData: {},
     getFundListData: () => { },
     getBankAccountInfo: () => { },
     getStateCity: () => { },
