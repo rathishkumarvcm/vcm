@@ -35,7 +35,7 @@ const TabBar = props => {
     <View style={styles.container}>
       {routes.map((route, routeIndex) => {
         const isRouteActive = routeIndex === activeRouteIndex;
-        const tintColor = isRouteActive ? COLORS.PRIMARY_DARK_COLOR : COLORS.DARK_GRAY_COLOR;
+        const tintColor = isRouteActive ? COLORS.DARK_BLUE : COLORS.GRAY;
         return (
           <View style={styles.tabButton}>
             <TouchableOpacity

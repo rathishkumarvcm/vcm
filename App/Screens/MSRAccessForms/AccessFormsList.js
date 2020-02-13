@@ -87,9 +87,9 @@ class AccessFormList extends React.Component {
                         <View style={styles.rowContainer}>
                             <Text style={styles.blackText}>{gblStrings.msrAccessForms.sortBy}</Text>
                             <Switch
-                                // ios_backgroundColor={COLORS.PRIMARY_DARK_COLOR}
+                                ios_backgroundColor={COLORS.BLUE}
                                 thumbColor={COLORS.WHITE_COLOR}
-                                trackColor={COLORS.PRIMARY_DARK_COLOR}
+                                trackColor={COLORS.DARK_BLUE}
                                 onValueChange={this.switchSort}
                                 value={isSortByPopular}
                             />
