@@ -1076,8 +1076,8 @@ export default {
         err_ssn: 'Enter a valid SSN',
         title_onlineId: 'Retrieve your\nPassword',
         lable_onlineId: 'Online ID',
-        lable_ssn: 'Social Security Number(SSN)',
-        placeholder_ssn: "23456",
+        lable_ssn: 'Social Security Number',
+        placeholder_ssn: "****",
         security: 'Security Check',
         refresh_security: 'Refresh Security check',
         lable_security: 'Security Check',
@@ -1538,6 +1538,7 @@ export default {
         all: "All",
         popular: "Popular"
     },
+<<<<<<< Updated upstream
     accountSummary: {
         placeAnOrder: "Place an Order",
         viewAccountActivity: "View Account Activity",
@@ -1547,5 +1548,18 @@ export default {
         removeAccount: "Remove Account",
         addAccount: "Add Account",
         removeGroup: "Remove Group",
+=======
+
+    loginComponent:{
+        enterOnlineId:"Enter Online ID",
+        enterPassword:"Enter Password",
+        signUp:"Sign Up",
+        retrieveOnlineId:"Retrieve Online ID",
+        retrievePassword:"Retrieve Password",
+        validPassword:"Enter a valid password.",
+        signIn:"Sign In",
+        byClicking:"By clicking “Sign In” I agree to the Victory Capital ",
+        termsOfUse:"Terms of Use."
+>>>>>>> Stashed changes
     }
 };

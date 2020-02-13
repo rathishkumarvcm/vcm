@@ -1,8 +1,11 @@
 import React from "react";
-import { View, TextInput, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { View, TextInput, StyleSheet, Text, TouchableOpacity,Image } from "react-native";
 import PropTypes from "prop-types";
 import { scaledHeight,getCustomStyle } from '../Utils/Resolution';
 import { GIcon } from './GIcon';
+import onlineIdprofile from '../Images/onlineIdprofile.png';
+import onlineIdpassword from '../Images/onlineIdpassword.png';
+
 /* **************************\
   Function: GInputComponent
   Explanation:
@@ -13,6 +16,11 @@ import { GIcon } from './GIcon';
 export const styles = StyleSheet.create({
 
   arrowIconStyle: {
+    position: 'absolute',
+    right: 15,
+    top: 15
+  },
+  logoStyle:{
     position: 'absolute',
     right: 15,
     top: 15
@@ -63,7 +71,7 @@ export const GInputComponent = (props) => {
   const {errorFlag,propInputStyle,inputStyle,value,secureTextEntry,autoFocus,editable,onBlur,onChange,onChangeText,
     onSubmitEditing,onFocus,onKeyPress,keyboardType,returnKeyType,maxLength,multiline,numberOfLines,placeholder,
     placeholderTextColor,selectionColor,autoCapitalize,dropDownBox,arrowIconStyle,dropDownClick,
-    errorText, underlineColorAndroid} = props;
+    errorText, underlineColorAndroid,loginOnlineId,loginPassword} = props;
 return(
   <>
     <View style={errorFlag ? getCustomStyle(styles.inputBoxErrViewStyle, propInputStyle) : getCustomStyle(styles.inputBoxStyle, propInputStyle)}>
@@ -104,6 +112,12 @@ return(
       )
         :
         null}
+        {loginOnlineId ? (        
+          <Image style={styles.logoStyle} source={onlineIdprofile} />  
+        ):null}
+         {loginPassword ? (        
+          <Image style={styles.logoStyle} source={onlineIdpassword} />  
+        ):null}        
     </View>
     {errorFlag ? (
 <View style={styles.errorSection}>
@@ -143,7 +157,9 @@ GInputComponent.propTypes = {
   propInputStyle: PropTypes.instanceOf(Object),
   dropDownBox:PropTypes.bool,
   errorFlag:PropTypes.bool,
-  errorText:PropTypes.string
+  errorText:PropTypes.string,
+  loginOnlineId:PropTypes.bool,
+  loginPassword:PropTypes.bool
 };
 
 GInputComponent.defaultProps = {
@@ -173,7 +189,10 @@ GInputComponent.defaultProps = {
   propInputStyle:{},
   dropDownBox:false,
   errorFlag:false,
-  errorText:''  
+  errorText:'' ,
+  loginOnlineId:false,
+  loginPassword:false
+
 };
 
 export default GInputComponent;
