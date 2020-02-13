@@ -6,15 +6,19 @@ import { tabMoreActions } from '../../Shared/Actions';
 import { GIcon } from '../../CommonComponents/GIcon';
 import arrayStyles from './arrayStyles';
 import * as COLORS from "../../Constants/ColorConstants";
-
+import { scaledHeight } from '../../Utils/Resolution';
 
 const styles = StyleSheet.create({
-  container: { alignItems: "center", backgroundColor: 'white', elevation: 2, flexDirection: 'row', height: Platform.OS === "android" ? 52 : 65, },
+  container: {
+    alignItems: "center", backgroundColor: 'white', elevation: 2,
+    flexDirection: 'row', height: Platform.OS === "android" ? 52 : 65,
+    paddingHorizontal: scaledHeight(30)
+  },
   tabButton: {
     alignItems: 'center', flex: 1, height: "100%", justifyContent: 'center',
     marginBottom: Platform.OS === "android" ? 0 : 5
   },
-  tabLabelText: { color: COLORS.DARK_GRAY_COLOR, fontSize: 10, }
+  tabLabelText: { color: COLORS.GRAY, fontSize: 10, }
 });
 
 const TabBar = props => {
@@ -60,7 +64,7 @@ const TabBar = props => {
           name="more"
           type="material"
           size={20}
-          color={COLORS.DARK_GRAY_COLOR}
+          color={COLORS.GRAY}
         />
         <Text style={styles.tabLabelText}>More</Text>
       </TouchableOpacity>

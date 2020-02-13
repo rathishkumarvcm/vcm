@@ -1,7 +1,7 @@
 import React from "react";
-import { View, StyleSheet, Image, Text,TouchableOpacity} from 'react-native';
+import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
 import PropTypes from "prop-types";
-import { scaledHeight} from '../Utils/Resolution';
+import { scaledHeight } from '../Utils/Resolution';
 import backArrow from '../Images/backArrow.png';
 
 /* **************************\
@@ -10,39 +10,39 @@ import backArrow from '../Images/backArrow.png';
 \************************** */
 
 const styles = StyleSheet.create({
-   
-    arrowIconStyle:{     
-         alignSelf:'center',
-          marginLeft: '2%',
-          marginRight: '2%' 
+
+    arrowIconStyle: {
+        alignSelf: 'center',
+        marginLeft: '2%',
+        marginRight: '2%'
     },
-     toolBarContainer:{ 
-         alignSelf:'stretch',
-        backgroundColor: '#194C7D', 
+    toolBarContainer: {
+        alignSelf: 'stretch',
+        backgroundColor: '#194C7D',
         height: scaledHeight(156)
-     },
-    toolBarContent:{
+    },
+    toolBarContent: {
         flexDirection: 'row',
         marginLeft: '4%',
         marginRight: '4%',
-        marginTop: scaledHeight(50),      
+        marginTop: scaledHeight(50),
     },
-    toolbarTitleText:{
+    toolbarTitleText: {
         color: "#FFFFFF",
-         fontSize: scaledHeight(24), 
-         fontWeight: 'bold', 
-         marginLeft: '2%', 
-         marginRight: '2%',
-         textAlign: 'center' 
+        fontSize: scaledHeight(24),
+        fontWeight: 'bold',
+        marginLeft: '2%',
+        marginRight: '2%',
+        textAlign: 'center'
     },
-    touchableStyle:{
-        alignSelf:'center'
-    }       
+    touchableStyle: {
+        alignSelf: 'center'
+    }
 });
 
 const GTitleBarComponent = props => {
-    const {toolbarTiltle,backPress}=props;
-    return(
+    const { toolbarTiltle, backPress } = props;
+    return (
         <View style={styles.toolBarContainer}>
             <View style={styles.toolBarContent}>
 
@@ -58,14 +58,14 @@ const GTitleBarComponent = props => {
     );
 };
 
-GTitleBarComponent.propTypes = {  
+GTitleBarComponent.propTypes = {
     toolbarTiltle: PropTypes.string,
-    backPress: PropTypes.func   
+    backPress: PropTypes.func
 };
 
 GTitleBarComponent.defaultProps = {
-      toolbarTiltle: "",  
-    backPress : () => {}
+    toolbarTiltle: "",
+    backPress: () => { }
 };
 
 export default GTitleBarComponent;

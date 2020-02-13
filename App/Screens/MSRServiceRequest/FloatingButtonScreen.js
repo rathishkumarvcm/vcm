@@ -57,6 +57,16 @@ class FloatingButtonComponent extends React.Component {
         return state;
     }
 
+    componentDidMount() {
+        const { getAccountList } = this.props;
+        const accountListPayload = {
+            "companyNumber": "591",
+            "memberId": "V122221212",
+            "customerId": "V1234567"
+        };
+        getAccountList(accountListPayload);
+    }
+
 
     toggleModal = () => this.setState(prevState => ({
         isShowModal: !prevState.isShowModal,
@@ -178,7 +188,7 @@ class FloatingButtonComponent extends React.Component {
 
     render() {
 
-        const { navigation } = this.props;
+        const { navigation, accounts } = this.props;
         //  const nextBtnstyle = this.state.agreeConditions ? StyleSheet.normalBlackBtn : [StyleSheet.normalBlackBtn, { opacity: .45 }];
         // const { isShowModal, isShowSecureMessageModal } = this.props;
         const { inputSubject, inputMessageBody, erFlagSubject, isShowModal, isShowSecureMessageModal,
@@ -300,7 +310,7 @@ class FloatingButtonComponent extends React.Component {
                                                     dropDownTextName={styles.lblTxt}
                                                     textInputStyle={styles.dropdownTextInput}
                                                     dropDownLayout={styles.dropdownLayout}
-                                                    data={accountData}
+                                                    data={accounts}
                                                     showDropDown={dropDownAccountState}
                                                     dropDownValue={dropDownAccountValue}
                                                     selectedDropDownValue={this.dropDownAccountSelect}
@@ -364,6 +374,8 @@ FloatingButtonComponent.propTypes = {
     // isShowModal: PropTypes.bool,
     // isShowSecureMessageModal: PropTypes.bool,
     navigation: PropTypes.instanceOf(Object),
+    getAccountList: PropTypes.instanceOf(Object),
+    accounts: PropTypes.arrayOf
 };
 
 FloatingButtonComponent.defaultProps = {
@@ -371,6 +383,8 @@ FloatingButtonComponent.defaultProps = {
     // isShowModal: false,
     // isShowSecureMessageModal: false,
     navigation: {},
+    getAccountList: {},
+    accounts: []
 };
 
 export default FloatingButtonComponent;
