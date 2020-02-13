@@ -79,7 +79,7 @@ class FloatingButtonComponent extends React.Component {
     submitToCall = () => {
         if (this.validate) {
             this.toggleModal();
-            console.warn("You can call API!");
+           // console.warn("You can call API!");
         }
     }
 
@@ -113,7 +113,7 @@ class FloatingButtonComponent extends React.Component {
             return false;
         }
         if (this.isEmpty(inputMessageBody)) {
-            console.log("optional");
+           // console.log("optional");
         }
         return true;
 
@@ -188,7 +188,7 @@ class FloatingButtonComponent extends React.Component {
             <SafeAreaView style={styles.container}>
                 <GHeaderComponent navigation={navigation} />
                 <View style={styles.container}>
-                    <ActionButton buttonColor={COLORS.SECONDARY_DARK_COLOR} onPress={this.toggleModal}>
+                    <ActionButton buttonColor={COLORS.SECONDARY_COLOR} onPress={this.toggleModal}>
                         <GIcon
                             name="plus"
                             type="material"

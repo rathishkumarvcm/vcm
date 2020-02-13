@@ -5,6 +5,7 @@ import styles from './style';
 import gblStrings from '../../Constants/GlobalStrings';
 import { GHeaderComponent } from '../../CommonComponents';
 import logoImage from '../../Images/FaceID.png';
+import * as COLORS from "../../Constants/ColorConstants";
 
 class AccessFormList extends React.Component {
 
@@ -46,6 +47,7 @@ class AccessFormList extends React.Component {
         loadForms();
     }
 
+    keyExtractor = (item, index) => (`key ${index}`)
 
     renderItem = ({ item }) => {
         return (
@@ -85,6 +87,9 @@ class AccessFormList extends React.Component {
                         <View style={styles.rowContainer}>
                             <Text style={styles.blackText}>{gblStrings.msrAccessForms.sortBy}</Text>
                             <Switch
+                                // ios_backgroundColor={COLORS.PRIMARY_DARK_COLOR}
+                                thumbColor={COLORS.WHITE_COLOR}
+                                trackColor={COLORS.PRIMARY_DARK_COLOR}
                                 onValueChange={this.switchSort}
                                 value={isSortByPopular}
                             />
@@ -109,7 +114,7 @@ class AccessFormList extends React.Component {
                         style={styles.listStyle}
                         data={forms}
                         showsVerticalScrollIndicator={false}
-                        keyExtractor={item => item.id}
+                        keyExtractor={this.keyExtractor}
                         onEndReached={this.handleLoadMore}
                         onEndReachedThreshold={0.5}
                         ListFooterComponent={this.ListFooterComponent}
@@ -124,7 +129,6 @@ class AccessFormList extends React.Component {
 
 AccessFormList.propTypes = {
     forms: PropTypes.arrayOf,
-    isPageLoading: PropTypes.bool,
     isSortByPopular: PropTypes.bool,
     isMoreDataAvailable: PropTypes.bool,
     navigation: PropTypes.instanceOf(Object),
@@ -135,7 +139,6 @@ AccessFormList.propTypes = {
 
 AccessFormList.defaultProps = {
     forms: [],
-    isPageLoading: true,
     isMoreDataAvailable: true,
     isSortByPopular: false,
     navigation: {},

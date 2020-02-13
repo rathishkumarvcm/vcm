@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', flex: 1, height: "100%", justifyContent: 'center',
     marginBottom: Platform.OS === "android" ? 0 : 5
   },
-  tabLabelText: { color: "#4F4F4F", fontSize: 10, }
+  tabLabelText: { color: COLORS.DARK_GRAY_COLOR, fontSize: 10, }
 });
 
 const TabBar = props => {
@@ -35,7 +35,7 @@ const TabBar = props => {
     <View style={styles.container}>
       {routes.map((route, routeIndex) => {
         const isRouteActive = routeIndex === activeRouteIndex;
-        const tintColor = isRouteActive ? COLORS.PRIMARY_DARK_COLOR : "#4F4F4F";
+        const tintColor = isRouteActive ? COLORS.PRIMARY_DARK_COLOR : COLORS.DARK_GRAY_COLOR;
         return (
           <View style={styles.tabButton}>
             <TouchableOpacity
@@ -60,7 +60,7 @@ const TabBar = props => {
           name="more"
           type="material"
           size={20}
-          color="#4F4F4F"
+          color={COLORS.DARK_GRAY_COLOR}
         />
         <Text style={styles.tabLabelText}>More</Text>
       </TouchableOpacity>
