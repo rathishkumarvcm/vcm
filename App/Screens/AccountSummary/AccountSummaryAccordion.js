@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 import { accordianStyles } from './styles';
 import { GIcon } from '../../CommonComponents';
+import GlobalStrings from '../../Constants/GlobalStrings';
 
 const keys = {
     balance: "balance",
@@ -24,7 +25,19 @@ export default class AccountSummaryAccordion extends Component {
         this.groupMenu = null;
     }
 
-    onClick = (index) => {
+    setAccountMenuRef = index => input => {
+        this.accountMenu[Number(index)] = input;
+        // (input) => { this.accountMenu[index] = input; }
+    };
+
+    setGroupMenuRef = input => {
+        this.groupMenu = input;
+        // (input) => { this.groupMenu = input; }
+    };
+
+
+
+    onClick = (index) => () => {
         const { data } = this.state;
         const temp = data.slice();
         temp[Number(index)].checked = !temp[Number(index)].checked;
@@ -40,11 +53,11 @@ export default class AccountSummaryAccordion extends Component {
         this.accountMenu[Number(index)] = ref;
     };
 
-    hideMenu = (index) => {
+    hideMenu = (index) => () => {
         this.accountMenu[Number(index)].hide();
     };
 
-    showMenu = (index) => {
+    showMenu = (index) => () => {
         this.accountMenu[Number(index)].show();
     };
 
@@ -60,18 +73,20 @@ export default class AccountSummaryAccordion extends Component {
         this.hideGroupMenu();
     }
 
-    removeGroup = () => {
+    removeGroup = (groupId) => () => {
+        const { removeGroup } = this.props;
+        removeGroup(groupId);
         this.hideGroupMenu();
     }
 
-
     renderAccountList = ({ item, index }) => {
+
         return (
             <View>
 
                 <View style={accordianStyles.accordionRow}>
 
-                    <TouchableOpacity onPress={() => this.onClick(index)}>
+                    <TouchableOpacity onPress={this.onClick(index)}>
                         {
                             item.checked ? (<GIcon name="check-box" type="material" size={25} color="#707070" />)
                                 : (<GIcon name="check-box-outline-blank" type="material" size={25} color="#707070" />)
@@ -90,9 +105,9 @@ export default class AccountSummaryAccordion extends Component {
                     </View>
 
                     <Menu
-                        ref={(input) => { this.accountMenu[index] = input; }}
+                        ref={this.setAccountMenuRef(index)}
                         button={(
-                            <TouchableOpacity onPress={() => this.showMenu(index)}>
+                            <TouchableOpacity onPress={this.showMenu(index)}>
                                 <GIcon
                                     name="more-vert"
                                     type="material"
@@ -103,17 +118,17 @@ export default class AccountSummaryAccordion extends Component {
                         )}
                     >
                         <MenuDivider />
-                        <MenuItem onPress={() => this.hideMenu(index)}>Place an Order</MenuItem>
+                        <MenuItem onPress={this.hideMenu(index)}>{GlobalStrings.accountSummary.placeAnOrder}</MenuItem>
                         <MenuDivider />
-                        <MenuItem onPress={() => this.hideMenu(index)}>View Account Activity</MenuItem>
+                        <MenuItem onPress={this.hideMenu(index)}>{GlobalStrings.accountSummary.viewAccountActivity}</MenuItem>
                         <MenuDivider />
-                        <MenuItem onPress={() => this.hideMenu(index)}>View Statement</MenuItem>
+                        <MenuItem onPress={this.hideMenu(index)}>{GlobalStrings.accountSummary.viewStatement}</MenuItem>
                         <MenuDivider />
-                        <MenuItem onPress={() => this.hideMenu(index)}>Manage Preferences</MenuItem>
+                        <MenuItem onPress={this.hideMenu(index)}>{GlobalStrings.accountSummary.managePreferences}</MenuItem>
                         <MenuDivider />
-                        <MenuItem onPress={() => this.hideMenu(index)}>Manage Account Services</MenuItem>
+                        <MenuItem onPress={this.hideMenu(index)}>{GlobalStrings.accountSummary.manageAccountServices}</MenuItem>
                         <MenuDivider />
-                        <MenuItem onPress={() => this.hideMenu(index)}>Remove Account</MenuItem>
+                        <MenuItem onPress={this.hideMenu(index)}>{GlobalStrings.accountSummary.removeAccount}</MenuItem>
                         <MenuDivider />
                     </Menu>
                 </View>
@@ -147,18 +162,18 @@ export default class AccountSummaryAccordion extends Component {
     accordianSectionHeader = () => {
 
         const { expanded } = this.state;
-        const { title } = this.props;
+        const { group } = this.props;
 
         return (
             <View style={accordianStyles.accordionSectionHeader}>
 
                 <View style={accordianStyles.accordionSectionGroupNameView}>
-                    <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', }} onPress={this.toggleExpand}>
+                    <TouchableOpacity style={accordianStyles.plusMinusView} onPress={this.toggleExpand}>
                         {
                             expanded ? (<GIcon name="remove" type="material" size={25} color="#707070" />)
                                 : (<GIcon name="add" type="material" size={25} color="#707070" />)
                         }
-                        <Text style={accordianStyles.accordionSectionGroupNameText} numberOfLines={2}>{title}</Text>
+                        <Text style={accordianStyles.accordionSectionGroupNameText} numberOfLines={2}>{group.groupName}</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={accordianStyles.accordionSectionBalanceView}>
@@ -170,9 +185,9 @@ export default class AccountSummaryAccordion extends Component {
                 </View>
 
                 <Menu
-                    ref={(input) => { this.groupMenu = input; }}
+                    ref={this.setGroupMenuRef}
                     button={(
-                        <TouchableOpacity onPress={() => this.showGroupMenu()}>
+                        <TouchableOpacity onPress={this.showGroupMenu}>
                             <GIcon
                                 name="more-vert"
                                 type="material"
@@ -183,9 +198,9 @@ export default class AccountSummaryAccordion extends Component {
                     )}
                 >
                     <MenuDivider />
-                    <MenuItem onPress={this.addAccountInGroup}>Add Account</MenuItem>
+                    <MenuItem onPress={this.addAccountInGroup}>{GlobalStrings.accountSummary.addAccount}</MenuItem>
                     <MenuDivider />
-                    <MenuItem onPress={this.removeGroup}>Remove Group</MenuItem>
+                    <MenuItem onPress={this.removeGroup(group.groupID)}>{GlobalStrings.accountSummary.removeGroup}</MenuItem>
                     <MenuDivider />
                 </Menu>
 
@@ -219,11 +234,13 @@ export default class AccountSummaryAccordion extends Component {
 }
 
 AccountSummaryAccordion.propTypes = {
-    title: PropTypes.instanceOf(String),
-    data: PropTypes.instanceOf(Array)
+    data: PropTypes.instanceOf(Array),
+    group: PropTypes.instanceOf(Object),
+    removeGroup: PropTypes.func
 };
 
 AccountSummaryAccordion.defaultProps = {
-    title: '',
-    data: []
+    data: [],
+    group: {},
+    removeGroup: () => { },
 };

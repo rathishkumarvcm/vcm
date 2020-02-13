@@ -311,6 +311,10 @@ const accordianStyles = StyleSheet.create({
         height: 1,
         width: '100%'
     },
+    plusMinusView: {
+        alignItems: 'center', 
+        flexDirection: 'row'
+    }
 });
 
 

@@ -13,8 +13,10 @@ class AccountSummaryModal extends Component {
     this.state = {
       groupName: "",
       selectedItems: [],
-      listOfAllAccounts:[],
+      listOfAllAccounts: [],
     };
+
+    this.multiSelect = null;
   }
 
   componentDidMount() {
@@ -26,9 +28,9 @@ class AccountSummaryModal extends Component {
   };
 
   getAllAccounts = () => {
-    const {groups} = this.props;
+    const { groups } = this.props;
     const accountList = [];
-      groups.forEach(element => {
+    groups.forEach(element => {
       accountList.push(...element.accounts);
     });
     this.setState({
@@ -38,20 +40,20 @@ class AccountSummaryModal extends Component {
 
   uniqueArray = (array, objectKey) => {
     const unique = array
-         .map(e => e[`${objectKey}`])
-         // store the keys of the unique objects
-         .map((e, i, final) => final.indexOf(e) === i && i)
-         // eliminate the dead keys & store unique objects
-        .filter(e => array[`${e}`]).map(e => array[`${e}`]);      
-     return unique;
+      .map(e => e[`${objectKey}`])
+      // store the keys of the unique objects
+      .map((e, i, final) => final.indexOf(e) === i && i)
+      // eliminate the dead keys & store unique objects
+      .filter(e => array[`${e}`]).map(e => array[`${e}`]);
+    return unique;
   }
 
   onClickAddAccount = () => {
-    const {onClickAdd} = this.props;
-    const {groupName, listOfAllAccounts} = this.state;
+    const { onClickAdd } = this.props;
+    const { groupName, listOfAllAccounts } = this.state;
     const selectedAccounts = [];
 
-    const {selectedItems} = this.state;
+    const { selectedItems } = this.state;
 
     listOfAllAccounts.forEach(account => {
       selectedItems.forEach(accountID => {
@@ -61,12 +63,8 @@ class AccountSummaryModal extends Component {
       });
     });
 
-    if(groupName && selectedAccounts.length !== 0) {
-    const newHoldingGroup = {
-        "groupName": groupName,
-        "groupID": 85695,
-        "accounts": selectedAccounts,
-      };
+    if (groupName && selectedAccounts.length !== 0) {
+      const newHoldingGroup = { "groupName": groupName, "selectedAccounts": selectedAccounts };
       onClickAdd(newHoldingGroup);
 
       // Remove the modal data.
@@ -78,8 +76,11 @@ class AccountSummaryModal extends Component {
   }
 
   onClickCancelAccount = () => {
-    const {onClickCancel} = this.props;
+    const { onClickCancel } = this.props;
     onClickCancel();
+
+    // Remove the modal data.
+    this.setState({ groupName: "", selectedItems: [] });
   }
 
   setNewGroupName = (text) => {
@@ -87,6 +88,11 @@ class AccountSummaryModal extends Component {
       groupName: text
     });
   }
+
+  setGroupMenuRef = component => {
+    this.multiSelect = component;
+};
+
 
   addNewGroupModal = () => {
     const { groupName, selectedItems, listOfAllAccounts } = this.state;
@@ -118,7 +124,7 @@ class AccountSummaryModal extends Component {
               hideTags
               items={listOfAllAccounts}
               uniqueKey="accountID"
-              ref={(component) => { this.multiSelect = component; }}
+              ref={this.setGroupMenuRef}
               onSelectedItemsChange={this.onSelectedItemsChange}
               selectedItems={selectedItems}
               selectText="Accounts"
@@ -135,11 +141,11 @@ class AccountSummaryModal extends Component {
               hideSubmitButton
               hideDropdown
               fixedHeight
-              searchInputStyle = {modalStyles.multiSelectSearchInputStyle}
-              styleInputGroup = {modalStyles.multiSelectStyleInputGroup}
-              styleTextDropdown = {modalStyles.multiSelectStyleTextDropdown}
+              searchInputStyle={modalStyles.multiSelectSearchInputStyle}
+              styleInputGroup={modalStyles.multiSelectStyleInputGroup}
+              styleTextDropdown={modalStyles.multiSelectStyleTextDropdown}
               searchIcon={false}
-              styleDropdownMenu = {modalStyles.multiSelectDropDownMenu}
+              styleDropdownMenu={modalStyles.multiSelectDropDownMenu}
             />
 
             <View style={modalStyles.modalButtonView}>
@@ -176,16 +182,16 @@ class AccountSummaryModal extends Component {
 AccountSummaryModal.propTypes = {
   showAddGroupModal: PropTypes.instanceOf(Boolean),
   groups: PropTypes.instanceOf(Array),
-  onClickAdd:PropTypes.func,
-  onClickCancel:PropTypes.func
+  onClickAdd: PropTypes.func,
+  onClickCancel: PropTypes.func
 
 };
 
 AccountSummaryModal.defaultProps = {
   showAddGroupModal: false,
   groups: [],
-  onClickAdd: () => {},
-  onClickCancel: () => {}
+  onClickAdd: () => { },
+  onClickCancel: () => { }
 };
 
 

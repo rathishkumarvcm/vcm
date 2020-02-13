@@ -1537,7 +1537,15 @@ export default {
         sortBy: "Sory By",
         all: "All",
         popular: "Popular"
+    },
+    accountSummary: {
+        placeAnOrder: "Place an Order",
+        viewAccountActivity: "View Account Activity",
+        viewStatement: "View Statement",
+        managePreferences: "Manage Preferences",
+        manageAccountServices: "Manage Account Services",
+        removeAccount: "Remove Account",
+        addAccount: "Add Account",
+        removeGroup: "Remove Group",
     }
-
-
 };

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
-import { GHeaderComponent, GButtonComponent } from '../../CommonComponents';
+import { GHeaderComponent, GButtonComponent, showAlert } from '../../CommonComponents';
 import { styles } from './styles';
 import AccountSummaryAccordion from './AccountSummaryAccordion';
 import AccountSummaryModal from './AccountSummaryModal';
+import GlobalStrings from '../../Constants/GlobalStrings';
 
 class AccountSummaryComponent extends Component {
   constructor(props) {
@@ -14,7 +15,6 @@ class AccountSummaryComponent extends Component {
       showAddGroupModal: false,
     };
   }
-
 
   static getDerivedStateFromProps(props, prevState) {
 
@@ -33,16 +33,17 @@ class AccountSummaryComponent extends Component {
 
   renderAccordians = () => {
     const { groups } = this.state;
-
     const items = [];
-    for (const item of groups) {
+    groups.forEach((item, index) => {
       items.push(
         <AccountSummaryAccordion
           title={item.groupName}
           data={item.accounts}
+          group={groups[Number(index)]}
+          removeGroup={this.removeGroupFromList}
         />
       );
-    }
+    });
     return items;
   }
 
@@ -63,11 +64,11 @@ class AccountSummaryComponent extends Component {
   }
 
   hide = () => {
-    this.setState({ showAddGroupModal: false});
+    this.setState({ showAddGroupModal: false });
   }
 
   show = () => {
-    this.setState({ showAddGroupModal: true});
+    this.setState({ showAddGroupModal: true });
   }
 
   onClickAddNewGroup = () => {
@@ -78,11 +79,36 @@ class AccountSummaryComponent extends Component {
     this.hide();
   }
 
-  onClickAdd = (newHoldingGroup) => {
+  createRandomNumber = () => {
+    return Math.floor(Math.random() * 90000) + 10000;
+  }
+
+  onClickAdd = (holdingGroup) => {
     // this.show();
-    const {addHoldingGroup} = this.props;
-    addHoldingGroup(newHoldingGroup);
-    this.hide();
+    const randomGroupID = this.createRandomNumber();
+    const { addHoldingGroup } = this.props;
+    if (holdingGroup.groupName && holdingGroup.selectedAccounts.length !== 0) {
+      const newHoldingGroup = {
+        "groupName": holdingGroup.groupName,
+        "groupID": randomGroupID,
+        "accounts": holdingGroup.selectedAccounts,
+      };
+      addHoldingGroup(newHoldingGroup);
+      this.hide();
+    }
+    else {
+      showAlert(GlobalStrings.common.appName, `Please enter the group name and account`, GlobalStrings.common.ok);
+    }
+  }
+
+  removeGroupFromList = (groupID) => {
+    const { groups } = this.state;
+    const { removeHoldingGroup } = this.props;
+
+    if (groupID) {
+      const updatedGroup = groups.filter((group) => group.groupID !== groupID );
+      removeHoldingGroup(updatedGroup);
+    }
   }
 
   render() {
@@ -90,7 +116,7 @@ class AccountSummaryComponent extends Component {
     const { groups, showAddGroupModal } = this.state;
     return (
       <View style={styles.container}>
-        <AccountSummaryModal showAddGroupModal = {showAddGroupModal} groups = {groups} onClickAdd = {this.onClickAdd} onClickCancel={this.onClickCancel} />
+        <AccountSummaryModal showAddGroupModal={showAddGroupModal} groups={groups} onClickAdd={this.onClickAdd} onClickCancel={this.onClickCancel} />
         <GHeaderComponent navigation={navigation} />
         {this.tableHeader()}
         <ScrollView style={styles.scrollView}>
@@ -112,15 +138,16 @@ class AccountSummaryComponent extends Component {
 AccountSummaryComponent.propTypes = {
   navigation: PropTypes.instanceOf(Object),
   accountSummaryInitialState: PropTypes.instanceOf(Object),
-  addHoldingGroup: PropTypes.func
+  addHoldingGroup: PropTypes.func,
+  removeHoldingGroup: PropTypes.func,
 };
 
 AccountSummaryComponent.defaultProps = {
   navigation: {},
   accountSummaryInitialState: {},
-  addHoldingGroup: () => {}
+  addHoldingGroup: () => {},
+  removeHoldingGroup: () => {}
 };
-
 
 export default AccountSummaryComponent;
 
