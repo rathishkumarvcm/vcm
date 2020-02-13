@@ -8,15 +8,15 @@ import styles from './styles';
 import { GButtonComponent } from '../../CommonComponents';
 
 
+const callImg = require('../../Images/call.png');
 
 const GuestUserCommunicationCenter = (props) => {   
-
+    
     return (
             <View style={styles.communicationView}>
                 <TouchableOpacity style={styles.phoneImageView} onPress={props.onPressCall}>
                     <Image style={styles.phoneImage}
-                        // eslint-disable-next-line global-require
-                        source={require('../../Images/call.png')}
+                        source={callImg}
                         resizeMode="contain"
                     />
                 </TouchableOpacity>

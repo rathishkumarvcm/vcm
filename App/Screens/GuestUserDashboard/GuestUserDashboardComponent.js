@@ -1,6 +1,3 @@
-/* eslint-disable react-native/no-raw-text */
-/* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { Text, View, ScrollView,FlatList, TouchableOpacity, Platform, Linking} from 'react-native';
 // import RNSecureKeyStore from 'react-native-secure-key-store';
@@ -35,8 +32,10 @@ class GuestUserDashboardComponent extends Component {
                                  Component LifeCycle Methods 
                                                                  -------------------------- */
     componentDidMount() {
-        this.props.newsAndCommentaryActions();
-        this.props.savedItemsActions();
+        const payload = '';
+        const {newsAndCommentaryActions,savedItemsActions} = this.props;
+        newsAndCommentaryActions(payload);
+        savedItemsActions(payload);
 
     }
 
@@ -100,10 +99,13 @@ class GuestUserDashboardComponent extends Component {
 
     getKey = (item) => item.id
 
+    // getNewsKey = (index) => index
+    getNewsKey = (item, index) => (`key ${index}`)
+
     renderNewsList = ({ item }) => (
         <TouchableOpacity style={styles.newsListView}>
             <Text style={styles.newsListText}>
-                {item.id}) {item.title}
+               {item.title}
             </Text>
         </TouchableOpacity>
     )
@@ -138,6 +140,7 @@ class GuestUserDashboardComponent extends Component {
                         bounce
                         repeatSpacer={0}
                         marqueeDelay={0}
+                    // eslint-disable-next-line react-native/no-raw-text
                     >Lorem Ipsum has been the industrys standard dummy text ever since the 1500s
                     </TextTicker>
                     <View style={styles.tileView}>
@@ -185,7 +188,7 @@ class GuestUserDashboardComponent extends Component {
                         <View style={styles.dashboardSection}>
                             <FlatList
                                 data={newsData}
-                                keyExtractor={this.getKey}
+                                keyExtractor={this.getNewsKey}
                                 renderItem={this.renderNewsList}
                             />
                         </View>
@@ -214,5 +217,15 @@ class GuestUserDashboardComponent extends Component {
 
 GuestUserDashboardComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object).isRequired,
+    newsData:PropTypes.instanceOf(Object),
+    savedItemsData:PropTypes.instanceOf(Object),
+    newsAndCommentaryActions:PropTypes.func.isRequired,
+    savedItemsActions:PropTypes.func.isRequired,
+};
+
+
+GuestUserDashboardComponent.defaultProps = {
+    newsData: {},
+    savedItemsData:{}
 };
 export default GuestUserDashboardComponent;

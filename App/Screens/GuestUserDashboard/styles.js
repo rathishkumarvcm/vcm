@@ -55,13 +55,16 @@ const styles = StyleSheet.create({
     },
 
     dashboardSection: {
-        backgroundColor:'#fff',
+        backgroundColor:'#ffff',
         borderColor: '#61285F45',
         borderRadius: scaledHeight(8),
         borderWidth: scaledHeight(1),
-        margin :'4%',
-        padding: '3%',
-        width: '92%',
+        marginHorizontal:'4%',
+        marginVertical:'2%',
+        paddingHorizontal: '3%',
+        paddingTop:'3%'
+        // width: '92%',
+        // paddingBottom:'10%'
     },
 
     dashboardText: {
