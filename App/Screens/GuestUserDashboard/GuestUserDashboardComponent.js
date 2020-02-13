@@ -225,7 +225,7 @@ GuestUserDashboardComponent.propTypes = {
 
 
 GuestUserDashboardComponent.defaultProps = {
-    newsData: {},
+    newsData: [],
     savedItemsData:{}
 };
 export default GuestUserDashboardComponent;
