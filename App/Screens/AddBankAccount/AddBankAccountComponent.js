@@ -28,7 +28,7 @@ class AddBankAccountComponent extends Component {
         const { popularBankInfo } = nextProps;
         const { isFirst } = prevState;
         if (isFirst) {
-            return({ popularAccount: JSON.parse(popularBankInfo),isFirst:false });
+            return({ popularAccount: popularBankInfo,isFirst:false });
         }
         return null;
     }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, ScrollView, Text, FlatList, TouchableOpacity } from 'react-native';
-import PropTypes, { array } from "prop-types";
+import PropTypes from "prop-types";
 import styles from './styles';
 import { GHeaderComponent, GFooterComponent, GIcon, GButtonComponent } from '../../CommonComponents';
 import gblStrings from '../../Constants/GlobalStrings';
@@ -308,7 +308,7 @@ class BankAccountsComponent extends Component {
 
 BankAccountsComponent.propTypes = {
     navigation: PropTypes.instanceOf(Object),
-    bankAccountInfo: PropTypes.instanceOf(array),
+    bankAccountInfo: PropTypes.instanceOf(Array),
     getParam: PropTypes.func,
     getBankAccountInfo: PropTypes.func,
     deleteBankAccount: PropTypes.func,
