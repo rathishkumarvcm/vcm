@@ -5,6 +5,7 @@ import { Auth } from "aws-amplify";
 import styles from './styles';
 import {GButtonComponent,GInputComponent,GHeaderComponent} from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
+import AppUtils from '../../Utils/AppUtils';
 
 class OtpConfirmComponent extends Component {
     constructor(props){
@@ -24,10 +25,10 @@ class OtpConfirmComponent extends Component {
         const {code} = this.state;
         Auth.verifyCurrentUserAttributeSubmit('email',code)
         .then(() => {
-            console.log("email verified");
+            AppUtils.debugLog("email verified");
             navigation.navigate('modifySecurityQues');
         }).catch(e => {
-            console.log('failed with error', e);
+            AppUtils.debugLog('failed with error', e);
         });
     }
 

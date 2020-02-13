@@ -7,6 +7,9 @@ const styles = StyleSheet.create({
         flex: 1,
         width: '100%'
     },
+    emptyView:{
+        height:'50%',
+    },
     filterFundsBtn: {
         alignContent: 'center',
         alignSelf: 'center',
@@ -112,9 +115,11 @@ const styles = StyleSheet.create({
     },
     modalBackgroundView: {
         backgroundColor: 'rgba(0,0,0,0.5)',
-        height: '100%',
-       flexDirection:'column'
+        flexDirection:'column',
+       height: '100%'
     },
+
+    
     modalCancelBtnTxt: {
         color: '#56565A',
         fontSize: scaledHeight(18),
@@ -123,12 +128,10 @@ const styles = StyleSheet.create({
         width: '100%'
     },
 
-    
     modalCheckBoxLabel: {
         color: '#56565A',
         fontSize: scaledHeight(16),
     },
-
     modalCheckBoxSelected: {
         color: '#56565A',
         fontSize: scaledHeight(16),
@@ -142,9 +145,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginBottom:scaledHeight(12),
         width: '50%',
-    },
-    emptyView:{
-        height:'50%',
     },
     modalContainer: {
         backgroundColor: '#FFFFFF',

@@ -5,6 +5,7 @@ import RNSecureKeyStore, {ACCESSIBLE} from 'react-native-secure-key-store';
 import styles from './styles';
 import {GButtonComponent,GHeaderComponent, GFooterComponent} from '../../CommonComponents';
 import { CustomPageWizard } from '../../AppComponents';
+import AppUtils from '../../Utils/AppUtils';
 
 class OtpSeucrityConfirmComponent extends Component {
     constructor(props){
@@ -28,9 +29,9 @@ class OtpSeucrityConfirmComponent extends Component {
         const {navigation} = this.props;
         RNSecureKeyStore.set("authProcessCompleted","true", {accessible: ACCESSIBLE.ALWAYS_THIS_DEVICE_ONLY})
       .then((res) => {
-          console.log("stored",res);
+        AppUtils.debugLog("stored",res);
       }, (err) => {
-          console.log(err);
+        AppUtils.debugLog(err);
       });
 
         

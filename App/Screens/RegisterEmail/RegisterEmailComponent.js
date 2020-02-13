@@ -3,9 +3,7 @@ import { Text,View,ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
 import {GButtonComponent,GInputComponent,GHeaderComponent,GFooterSettingsComponent} from '../../CommonComponents';
-
-
-const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/;
+import { emailRegex } from '../../Constants/RegexConstants';
 
 class RegisterEmailComponent extends Component {
     constructor(props){

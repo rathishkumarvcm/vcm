@@ -3,9 +3,8 @@ import { Text,View,ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import styles from './styles';
 import {GButtonComponent,GInputComponent,GHeaderComponent,GFooterSettingsComponent} from '../../CommonComponents';
+import { emailRegex } from '../../Constants/RegexConstants';
 
-
-const emailRegex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,4})+$/;
 
 class RetrieveOnlineIdComponent extends Component {
     constructor(props){
