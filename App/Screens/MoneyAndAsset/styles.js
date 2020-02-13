@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-        // height: scaledHeight(50),
         justifyContent: 'center',
         width: '50%',
     },
