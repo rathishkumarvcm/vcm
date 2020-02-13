@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import EditAddRelationInformations from '../App/Screens/EditFamilyMemberInformation/EditFamilyMemberComponent';
 
 const navigation = { navigate: jest.fn(), getParam: jest.fn() };
-const props = {};
+// const props = {};
 
 describe('Add Relationship Information', () => {
 
@@ -22,7 +22,9 @@ describe('Add Relationship Information', () => {
 
     // Application Function Calls
     test('function test', () => {
-        const component = shallow(<EditAddRelationInformations {...props} navigation={navigation} />);
+        const component = shallow(<EditAddRelationInformations navigation={navigation} />);
+        // const component = shallow(<EditAddRelationInformations {...props} navigation={navigation} />);
+
         const wrapper = new EditAddRelationInformations();
         component.render();
         wrapper.editFamilyDetailOnCancel();
